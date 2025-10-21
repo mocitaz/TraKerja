@@ -10,6 +10,22 @@ use Illuminate\Support\Str;
 class LogoController extends Controller
 {
     /**
+     * Copy file to public_html for web server access
+     */
+    private function copyToPublicHtml($logoPath)
+    {
+        $publicHtmlPath = base_path('public_html/storage/' . $logoPath);
+        $publicHtmlDir = dirname($publicHtmlPath);
+        
+        if (!is_dir($publicHtmlDir)) {
+            mkdir($publicHtmlDir, 0755, true);
+        }
+        
+        // Copy file to public_html
+        copy(storage_path('app/public/' . $logoPath), $publicHtmlPath);
+        chmod($publicHtmlPath, 0644);
+    }
+    /**
      * Upload profile photo for the authenticated user
      */
     public function upload(Request $request)
@@ -89,6 +105,9 @@ class LogoController extends Controller
                 copy(storage_path('app/public/' . $logoPath), $publicPath);
             }
 
+            // Copy file to public_html for web server access
+            $this->copyToPublicHtml($logoPath);
+
             return response()->json([
                 'success' => true,
                 'message' => 'Profile photo uploaded successfully!',
@@ -120,7 +139,15 @@ class LogoController extends Controller
         $user = Auth::user();
 
         if ($user->logo) {
+            // Delete from storage
             Storage::disk('public')->delete($user->logo);
+            
+            // Delete from public_html
+            $publicHtmlPath = base_path('public_html/storage/' . $user->logo);
+            if (file_exists($publicHtmlPath)) {
+                unlink($publicHtmlPath);
+            }
+            
             $user->update(['logo' => null]);
         }
 

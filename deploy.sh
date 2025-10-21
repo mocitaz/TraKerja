@@ -31,13 +31,24 @@ php artisan view:cache
 echo "🔑 Generating application key..."
 php artisan key:generate --force
 
-# 7. Clear all caches
+# 7. Setup storage link
+echo "🔗 Setting up storage link..."
+php artisan storage:link
+
+# 8. Copy storage files to public_html (for web server access)
+echo "📋 Copying storage files to public_html..."
+mkdir -p public_html/storage/logos
+cp -r public/storage/* public_html/storage/
+chmod -R 755 public_html/storage/
+chmod 644 public_html/storage/logos/*
+
+# 9. Clear all caches
 echo "🧹 Clearing caches..."
 php artisan cache:clear
 php artisan config:clear
 php artisan view:clear
 
-# 8. Re-cache for production
+# 10. Re-cache for production
 echo "⚡ Re-caching for production..."
 php artisan config:cache
 php artisan route:cache
