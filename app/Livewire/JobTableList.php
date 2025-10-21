@@ -88,7 +88,7 @@ class JobTableList extends Component
                 'duration' => 3000
             ]);
             
-            // Dispatch event to refresh other components
+            // Dispatch global events for auto-refresh
             $this->dispatch('job-deleted');
             \Log::info('Job deleted successfully');
         } else {

@@ -14,6 +14,8 @@ class JobApplicationForm extends Component
     public $selectedProvince = '';
     public $selectedCity = '';
     public $cities = [];
+    public $isRemote = false;
+    public $isSeluruhIndonesia = false;
     public $platform = 'JobStreet';
     public $platformOther = '';
     // Deprecated legacy status (removed from UI); keep for backward compatibility when loading old records
@@ -138,7 +140,7 @@ class JobApplicationForm extends Component
     protected $rules = [
         'company_name' => 'required|string|max:255',
         'position' => 'required|string|max:255',
-        'selectedProvince' => 'required|string|max:255',
+        'selectedProvince' => 'nullable|string|max:255',
         'platform' => 'required|string|max:255',
         'platformOther' => 'required_if:platform,Other|string|max:255',
         // Remove old status from validation; application_status replaces it
@@ -349,6 +351,12 @@ class JobApplicationForm extends Component
         // Ensure location is set before validation
         $this->updateLocation();
         
+        // Custom validation for location
+        if (!$this->isRemote && !$this->isSeluruhIndonesia && empty($this->selectedProvince)) {
+            $this->addError('selectedProvince', 'The selected province field is required.');
+            return;
+        }
+        
         $this->validate();
 
         $data = [
@@ -401,17 +409,12 @@ class JobApplicationForm extends Component
             }
         }
 
-        // Close modal for both new applications and edits
-        if (!$this->isEditing) {
-            $this->resetForm();
-            $this->dispatch('job-saved');
-            $this->dispatch('close-modal');
-        } else {
-            // For edits, reset form and close the modal after successful update
-            $this->resetForm();
-            $this->dispatch('job-saved');
-            $this->dispatch('close-modal');
-        }
+        // Dispatch global events for auto-refresh
+        $this->dispatch('job-saved');
+        
+        // Reset form and close modal
+        $this->resetForm();
+        $this->dispatch('close-modal');
     }
 
     public function updatedSelectedProvince()
@@ -436,7 +439,17 @@ class JobApplicationForm extends Component
 
     public function updateLocation()
     {
-        if ($this->selectedProvince && $this->selectedCity) {
+        if ($this->isRemote) {
+            $this->location = 'Remote';
+            $this->selectedProvince = '';
+            $this->selectedCity = '';
+            $this->cities = [];
+        } elseif ($this->isSeluruhIndonesia) {
+            $this->location = 'Seluruh Indonesia';
+            $this->selectedProvince = '';
+            $this->selectedCity = '';
+            $this->cities = [];
+        } elseif ($this->selectedProvince && $this->selectedCity) {
             $this->location = $this->selectedCity . ', ' . $this->selectedProvince;
         } elseif ($this->selectedProvince) {
             $this->location = $this->selectedProvince;
@@ -445,10 +458,34 @@ class JobApplicationForm extends Component
         }
         
         \Log::info('Location updated', [
+            'isRemote' => $this->isRemote,
+            'isSeluruhIndonesia' => $this->isSeluruhIndonesia,
             'selectedProvince' => $this->selectedProvince,
             'selectedCity' => $this->selectedCity,
             'location' => $this->location
         ]);
+    }
+
+    public function updatedIsRemote()
+    {
+        if ($this->isRemote) {
+            $this->isSeluruhIndonesia = false;
+            $this->selectedProvince = '';
+            $this->selectedCity = '';
+            $this->cities = [];
+        }
+        $this->updateLocation();
+    }
+
+    public function updatedIsSeluruhIndonesia()
+    {
+        if ($this->isSeluruhIndonesia) {
+            $this->isRemote = false;
+            $this->selectedProvince = '';
+            $this->selectedCity = '';
+            $this->cities = [];
+        }
+        $this->updateLocation();
     }
 
     public function parseLocation($location)
@@ -459,8 +496,23 @@ class JobApplicationForm extends Component
         $this->selectedProvince = '';
         $this->selectedCity = '';
         $this->cities = [];
+        $this->isRemote = false;
+        $this->isSeluruhIndonesia = false;
         
         if (empty($location)) {
+            return;
+        }
+        
+        // Check for special cases first
+        if ($location === 'Remote') {
+            $this->isRemote = true;
+            \Log::info('Location is Remote');
+            return;
+        }
+        
+        if ($location === 'Seluruh Indonesia') {
+            $this->isSeluruhIndonesia = true;
+            \Log::info('Location is Seluruh Indonesia');
             return;
         }
         
@@ -539,6 +591,8 @@ class JobApplicationForm extends Component
         $this->selectedProvince = '';
         $this->selectedCity = '';
         $this->cities = [];
+        $this->isRemote = false;
+        $this->isSeluruhIndonesia = false;
         $this->platform = 'JobStreet';
         $this->platformOther = '';
         // Reset legacy status though not used in UI

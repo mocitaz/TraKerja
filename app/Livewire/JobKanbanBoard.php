@@ -20,6 +20,7 @@ class JobKanbanBoard extends Component
         'updateStatus' => 'updateStatus',
         'job-deleted' => '$refresh',
         'job-saved' => '$refresh',
+        'status-updated' => '$refresh',
     ];
 
     public function updateStatus($jobId, $newStatus)
@@ -50,6 +51,9 @@ class JobKanbanBoard extends Component
             $this->lastUpdateTime[$jobId] = $now; // Track update time
             
             \Log::info('Job application status updated successfully', ['jobId' => $jobId, 'oldStatus' => $oldStatus, 'newStatus' => $newStatus]);
+            
+            // Dispatch global events for auto-refresh
+            $this->dispatch('status-updated');
             
             // Only send notification if status actually changed and not too recent
             $notificationKey = 'status_updated_' . $jobId . '_' . $newStatus . '_' . now()->format('Y-m-d-H-i');

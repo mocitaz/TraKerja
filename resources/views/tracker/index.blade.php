@@ -34,54 +34,8 @@
 
     <div class="min-h-screen bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <!-- New Analytics Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <!-- On Process Card -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-medium text-gray-600 mb-1">On Process</p>
-                            <p class="text-2xl font-bold text-[#212529]">{{ $onProcessCount }}</p>
-                        </div>
-                        <div class="w-8 h-8 bg-[#0056B3] rounded-lg flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Offering/Accepted Card -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-medium text-gray-600 mb-1">Offering/Accepted</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ $offeringAcceptedCount }}</p>
-                        </div>
-                        <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Declined Card -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-medium text-gray-600 mb-1">Declined</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ $declinedCount }}</p>
-                        </div>
-                        <div class="w-8 h-8 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+            <!-- Live Analytics Cards -->
+            @livewire('analytics-cards')
 
 
             <!-- Compact View Toggle -->
@@ -158,7 +112,7 @@
                         <div class="flex items-center space-x-4">
                             <div class="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm p-1 flex items-center justify-center">
                                 <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                 </svg>
                             </div>
                             <div>
@@ -287,6 +241,15 @@
                 closeJobModal();
             });
             window.jobSavedListener = true;
+        }
+
+        // Listen for close-modal event
+        if (!window.closeModalListener) {
+            window.addEventListener('close-modal', function() {
+                console.log('Close modal event received');
+                closeJobModal();
+            });
+            window.closeModalListener = true;
         }
 
 

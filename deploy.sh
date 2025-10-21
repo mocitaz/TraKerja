@@ -17,38 +17,45 @@ chmod -R 775 bootstrap/cache/
 echo "📦 Installing Composer dependencies..."
 composer install --optimize-autoloader --no-dev
 
-# 4. Run Laravel migrations
+# 4. Install/Update Node dependencies and build assets
+echo "📦 Installing Node dependencies..."
+npm install
+
+echo "🔨 Building frontend assets..."
+npm run build
+
+# 5. Run Laravel migrations
 echo "🗄️ Running database migrations..."
 php artisan migrate --force
 
-# 5. Cache Laravel configuration
+# 6. Cache Laravel configuration
 echo "⚡ Caching Laravel configuration..."
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-# 6. Generate application key (if needed)
+# 7. Generate application key (if needed)
 echo "🔑 Generating application key..."
 php artisan key:generate --force
 
-# 7. Setup storage link
+# 8. Setup storage link
 echo "🔗 Setting up storage link..."
 php artisan storage:link
 
-# 8. Copy storage files to public_html (for web server access)
+# 9. Copy storage files to public_html (for web server access)
 echo "📋 Copying storage files to public_html..."
 mkdir -p public_html/storage/logos
 cp -r public/storage/* public_html/storage/
 chmod -R 755 public_html/storage/
 chmod 644 public_html/storage/logos/*
 
-# 9. Clear all caches
+# 10. Clear all caches
 echo "🧹 Clearing caches..."
 php artisan cache:clear
 php artisan config:clear
 php artisan view:clear
 
-# 10. Re-cache for production
+# 11. Re-cache for production
 echo "⚡ Re-caching for production..."
 php artisan config:cache
 php artisan route:cache
