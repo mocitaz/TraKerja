@@ -11,7 +11,7 @@ class NotificationBell extends Component
     public $showNotifications = false;
 
     protected $listeners = [
-        'showNotification' => 'addActionNotification',
+        'showNotification' => 'handleShowNotification',
         'hideNotification' => 'removeNotification',
         'clearNotifications' => 'clearAllNotifications'
     ];
@@ -74,10 +74,40 @@ class NotificationBell extends Component
         session()->put('user_notifications', $this->notifications);
     }
 
-    public function addActionNotification($data)
+    public function handleShowNotification(...$args)
     {
-        $this->addNotification($data);
+        // Handle different parameter formats from Livewire events
+        if (count($args) === 1 && is_array($args[0])) {
+            // Array format: ['type' => 'success', 'title' => '...', ...]
+            $notificationData = array_merge($args[0], [
+                'id' => $args[0]['id'] ?? uniqid(),
+                'timestamp' => now()
+            ]);
+        } elseif (count($args) === 4) {
+            // Named parameters format: type, title, message, duration
+            $notificationData = [
+                'id' => uniqid(),
+                'type' => $args[0],
+                'title' => $args[1],
+                'message' => $args[2],
+                'duration' => $args[3],
+                'timestamp' => now()
+            ];
+        } else {
+            // Default notification
+            $notificationData = [
+                'id' => uniqid(),
+                'type' => 'info',
+                'title' => 'Notification',
+                'message' => 'You have a new notification',
+                'duration' => 3000,
+                'timestamp' => now()
+            ];
+        }
+        
+        $this->addNotification($notificationData);
     }
+    
 
     public function removeNotification($id)
     {

@@ -348,16 +348,33 @@ class JobApplicationForm extends Component
             'location' => $this->location
         ]);
         
+        
         // Ensure location is set before validation
         $this->updateLocation();
         
         // Custom validation for location
         if (!$this->isRemote && !$this->isSeluruhIndonesia && empty($this->selectedProvince)) {
             $this->addError('selectedProvince', 'The selected province field is required.');
+            $this->dispatch('showNotification', 
+                type: 'error',
+                title: 'Validation Error',
+                message: 'Please select a province for the job location',
+                duration: 4000
+            );
             return;
         }
         
-        $this->validate();
+        try {
+            $this->validate();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $this->dispatch('showNotification', 
+                type: 'error',
+                title: 'Validation Error',
+                message: 'Please check all required fields and try again',
+                duration: 4000
+            );
+            throw $e;
+        }
 
         $data = [
             'user_id' => auth()->id(),
@@ -375,38 +392,43 @@ class JobApplicationForm extends Component
             'notes' => $this->notes,
         ];
 
-        if ($this->isEditing) {
-            $this->jobApplication->update($data);
-            session()->flash('message', 'Job application updated successfully!');
-            \Log::info('Job updated successfully', ['jobId' => $this->jobApplication->id]);
-            
-            // Send notification for job update
-            $notificationKey = 'job_updated_' . $this->jobApplication->id . '_' . now()->format('Y-m-d-H-i');
-            if (!session()->has($notificationKey)) {
-                $this->dispatch('showNotification', [
-                    'type' => 'info',
-                    'title' => 'Job Application Updated',
-                    'message' => "Successfully updated application for {$this->company_name}",
-                    'duration' => 3000
-                ]);
-                session()->put($notificationKey, true);
+        try {
+            if ($this->isEditing) {
+                $this->jobApplication->update($data);
+                session()->flash('message', 'Job application updated successfully!');
+                \Log::info('Job updated successfully', ['jobId' => $this->jobApplication->id]);
+                
+                // Send notification for job update
+                $this->dispatch('showNotification', 
+                    type: 'success',
+                    title: 'Job Application Updated',
+                    message: "Successfully updated application for {$this->company_name}",
+                    duration: 3000
+                );
+            } else {
+                $newJob = JobApplication::create($data);
+                session()->flash('message', 'Job application created successfully!');
+                \Log::info('Job created successfully', ['jobId' => $newJob->id]);
+                
+                // Send notification for new job
+                $this->dispatch('showNotification', 
+                    type: 'success',
+                    title: 'Job Application Added',
+                    message: "Successfully added application for {$this->company_name}",
+                    duration: 3000
+                );
             }
-        } else {
-            $newJob = JobApplication::create($data);
-            session()->flash('message', 'Job application created successfully!');
-            \Log::info('Job created successfully', ['jobId' => $newJob->id]);
+        } catch (\Exception $e) {
+            \Log::error('Failed to save job application', ['error' => $e->getMessage()]);
             
-            // Send notification for new job
-            $notificationKey = 'job_created_' . $newJob->id . '_' . now()->format('Y-m-d-H-i');
-            if (!session()->has($notificationKey)) {
-                $this->dispatch('showNotification', [
-                    'type' => 'success',
-                    'title' => 'Job Application Added',
-                    'message' => "Successfully added application for {$this->company_name}",
-                    'duration' => 3000
-                ]);
-                session()->put($notificationKey, true);
-            }
+            $this->dispatch('showNotification', 
+                type: 'error',
+                title: 'Save Failed',
+                message: 'Failed to save job application. Please try again.',
+                duration: 5000
+            );
+            
+            return;
         }
 
         // Dispatch global events for auto-refresh

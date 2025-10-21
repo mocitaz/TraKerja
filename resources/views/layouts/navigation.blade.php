@@ -68,6 +68,16 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
+                            <!-- Export CSV -->
+                            <a href="{{ route('export.job-applications.csv') }}" 
+                               class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors duration-200"
+                               onclick="showExportNotification()">
+                                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                                Export ke CSV
+                            </a>
+
                             <!-- Authentication -->
                             <button onclick="openLogoutModal()" 
                                     class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600">
@@ -165,6 +175,45 @@ document.addEventListener('keydown', function(e) {
         closeLogoutModal();
     }
 });
+
+// Export notification function
+function showExportNotification() {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'fixed top-4 right-4 bg-white border border-gray-200 rounded-xl shadow-lg z-50 transform translate-x-full transition-all duration-300 backdrop-blur-sm';
+    notification.innerHTML = `
+        <div class="flex items-center px-4 py-3 space-x-3">
+            <div class="w-8 h-8 bg-gradient-to-r from-[#0056B3] to-[#28A745] rounded-full flex items-center justify-center">
+                <svg class="w-4 h-4 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+            </div>
+            <div>
+                <p class="text-sm font-medium text-gray-900">Exporting CSV</p>
+                <p class="text-xs text-gray-500">Download will start shortly...</p>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+        notification.classList.add('translate-x-0');
+    }, 100);
+    
+    // Remove after 2.5 seconds
+    setTimeout(() => {
+        notification.classList.remove('translate-x-0');
+        notification.classList.add('translate-x-full');
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    }, 2500);
+}
 
 // Simple logout handling
 document.addEventListener('DOMContentLoaded', function() {

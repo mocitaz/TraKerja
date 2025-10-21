@@ -197,6 +197,102 @@
     </div>
 
     <script>
+        // Notification system for form actions
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('showNotification', (event) => {
+                console.log('Notification received:', event);
+                showFormNotification(event.type, event.title, event.message, event.duration || 3000);
+            });
+        });
+
+        // Test function for notifications
+        window.testNotification = function() {
+            showFormNotification('success', 'Test Notification', 'This is a test notification', 3000);
+        };
+
+        function showFormNotification(type, title, message, duration) {
+            console.log('Creating notification:', {type, title, message, duration});
+            // Create notification element - same style as CSV export notification
+            const notification = document.createElement('div');
+            
+            // Set notification styles based on type
+            let bgColor, borderColor, iconColor, icon;
+            
+            switch(type) {
+                case 'success':
+                    bgColor = 'bg-white';
+                    borderColor = 'border-green-200';
+                    iconColor = 'text-green-600';
+                    icon = `<div class="w-8 h-8 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>`;
+                    break;
+                case 'error':
+                    bgColor = 'bg-white';
+                    borderColor = 'border-red-200';
+                    iconColor = 'text-red-600';
+                    icon = `<div class="w-8 h-8 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>`;
+                    break;
+                case 'info':
+                    bgColor = 'bg-white';
+                    borderColor = 'border-blue-200';
+                    iconColor = 'text-blue-600';
+                    icon = `<div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                    </div>`;
+                    break;
+                default:
+                    bgColor = 'bg-white';
+                    borderColor = 'border-gray-200';
+                    iconColor = 'text-gray-600';
+                    icon = `<div class="w-8 h-8 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>`;
+            }
+            
+            notification.className = `fixed top-4 right-4 ${bgColor} ${borderColor} border rounded-xl shadow-lg z-50 transform translate-x-full transition-all duration-300 backdrop-blur-sm`;
+            notification.innerHTML = `
+                <div class="flex items-center px-4 py-3 space-x-3">
+                    ${icon}
+                    <div>
+                        <p class="text-sm font-medium text-gray-900">${title}</p>
+                        <p class="text-xs text-gray-500">${message}</p>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+                notification.classList.add('translate-x-0');
+            }, 100);
+            
+            // Auto remove after duration
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    notification.classList.remove('translate-x-0');
+                    notification.classList.add('translate-x-full');
+                    setTimeout(() => {
+                        if (document.body.contains(notification)) {
+                            document.body.removeChild(notification);
+                        }
+                    }, 300);
+                }
+            }, duration);
+        }
+
         // View Toggle with smooth animations
         document.getElementById('kanban-view').addEventListener('click', function() {
             document.getElementById('kanban-container').classList.remove('hidden');

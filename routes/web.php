@@ -6,6 +6,7 @@ use App\Http\Controllers\SummaryController;
 use App\Http\Controllers\GoalsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LogoController;
+use App\Http\Controllers\JobApplicationExportController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\JobApplication;
@@ -49,6 +50,10 @@ Route::middleware('auth')->group(function () {
         abort_unless($job->user_id === auth()->id(), 403);
         return view('jobs.show', ['job' => $job]);
     })->name('jobs.show');
+    
+    // Export routes
+    Route::get('/export/job-applications/csv', [JobApplicationExportController::class, 'exportToCsv'])->name('export.job-applications.csv');
+    Route::get('/export/job-applications/stats', [JobApplicationExportController::class, 'getExportStats'])->name('export.job-applications.stats');
 });
 
 require __DIR__.'/auth.php';

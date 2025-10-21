@@ -26,6 +26,9 @@ class GoalsCadenceManager extends Component
         // Set default dates based on period
         $this->updateDateRange();
         
+        // Clean up old notification sessions (older than 7 days)
+        $this->cleanupOldNotificationSessions();
+        
         // Load current goal if exists
         $userId = Auth::id();
         if ($userId) {
@@ -37,14 +40,39 @@ class GoalsCadenceManager extends Component
                 $this->endDate = $currentGoal->end_date->format('Y-m-d');
             }
 
-            // Only send welcome notification if no goals are set
+            // Only send welcome notification if no goals are set and not already shown today
             if (!$currentGoal) {
-                $this->dispatch('showNotification', [
-                    'type' => 'info',
-                    'title' => 'Welcome to Goals & Cadence',
-                    'message' => 'Set your weekly targets to track your progress!',
-                    'duration' => 4000
-                ]);
+                $welcomeNotificationKey = 'goals_welcome_notification_' . now()->format('Y-m-d');
+                if (!session()->has($welcomeNotificationKey)) {
+                    $this->dispatch('showNotification', [
+                        'type' => 'info',
+                        'title' => 'Welcome to Goals & Cadence',
+                        'message' => 'Set your weekly targets to track your progress!',
+                        'duration' => 4000
+                    ]);
+                    session()->put($welcomeNotificationKey, true);
+                }
+            }
+        }
+    }
+    
+    private function cleanupOldNotificationSessions()
+    {
+        $sevenDaysAgo = now()->subDays(7)->format('Y-m-d');
+        $sessionKeys = [
+            'goals_welcome_notification_',
+            'target_achieved_',
+            'almost_there_'
+        ];
+        
+        foreach ($sessionKeys as $keyPrefix) {
+            // Remove sessions older than 7 days
+            for ($i = 0; $i < 7; $i++) {
+                $date = now()->subDays($i)->format('Y-m-d');
+                $sessionKey = $keyPrefix . $date;
+                if (session()->has($sessionKey) && $date < $sevenDaysAgo) {
+                    session()->forget($sessionKey);
+                }
             }
         }
     }
@@ -193,24 +221,36 @@ class GoalsCadenceManager extends Component
         if ($this->targetAppliedWeekly == 0) return 0;
         $progress = min(100, round(($this->actualApplied / $this->targetAppliedWeekly) * 100, 1));
         
-        // Send notification for milestones
-        if ($progress >= 100 && $this->actualApplied > 0) {
+        // Check for milestone notifications (only once per day)
+        $this->checkMilestoneNotifications($progress);
+        
+        return $progress;
+    }
+    
+    private function checkMilestoneNotifications($progress)
+    {
+        $today = now()->format('Y-m-d');
+        $targetAchievedKey = "target_achieved_{$today}";
+        $almostThereKey = "almost_there_{$today}";
+        
+        // Send notification for milestones (only once per day)
+        if ($progress >= 100 && $this->actualApplied > 0 && !session()->has($targetAchievedKey)) {
             $this->dispatch('showNotification', [
                 'type' => 'success',
                 'title' => '🎯 Target Achieved!',
                 'message' => "You've reached your weekly application target of {$this->targetAppliedWeekly} applications!",
                 'duration' => 5000
             ]);
-        } elseif ($progress >= 80 && $progress < 100) {
+            session()->put($targetAchievedKey, true);
+        } elseif ($progress >= 80 && $progress < 100 && !session()->has($almostThereKey)) {
             $this->dispatch('showNotification', [
                 'type' => 'warning',
                 'title' => '🔥 Almost There!',
                 'message' => "You're {$progress}% to your weekly target. Keep going!",
                 'duration' => 3000
             ]);
+            session()->put($almostThereKey, true);
         }
-        
-        return $progress;
     }
 
     /**

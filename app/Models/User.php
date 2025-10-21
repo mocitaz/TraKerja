@@ -56,5 +56,11 @@ class User extends Authenticatable
         return $this->hasMany(JobApplication::class);
     }
 
-
+    /**
+     * Get the user goals.
+     */
+    public function goals(): HasMany
+    {
+        return $this->hasMany(UserGoal::class);
+    }
 }
