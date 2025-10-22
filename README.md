@@ -284,8 +284,8 @@ If you have any questions or need help:
 
 <div align="center">
 
-**Made with ❤️ by [Your Name](https://github.com/yourusername)**
+**Made with ❤️ by [Luthfi Fauzi](https://github.com/mocitaz)**
 
-[⭐ Star this repo](https://github.com/yourusername/jobtracker) • [🐛 Report Bug](https://github.com/yourusername/jobtracker/issues) • [💡 Request Feature](https://github.com/yourusername/jobtracker/issues)
+[⭐ Star this repo](https://github.com/mocitaz/jobtracker) • [🐛 Report Bug](https://github.com/mocitaz/jobtracker/issues) • [💡 Request Feature](https://github.com/yourusername/jobtracker/issues)
 
 </div>
