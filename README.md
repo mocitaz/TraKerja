@@ -10,7 +10,7 @@
 
 **A comprehensive job application tracking system built with Laravel & Livewire**
 
-[🚀 Live Demo](trakerja.web.id) • [📖 Documentation](#-documentation) • [⚡ Quick Start](#-quick-start) • [🤝 Contributing](#-contributing)
+[🚀 Live Demo](#-live-demo) • [📖 Documentation](#-documentation) • [⚡ Quick Start](#-quick-start) • [🤝 Contributing](#-contributing)
 
 </div>
 
