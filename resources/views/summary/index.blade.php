@@ -44,17 +44,17 @@
                         </div>
                         <div class="flex bg-gray-100 rounded-lg p-0.5">
                             <button onclick="updateTimeFilter('weekly')" 
-                                    class="px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 time-filter-btn {{ $timeFilter === 'weekly' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-600' }}" 
+                                    class="px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 time-filter-btn {{ $timeFilter === 'weekly' ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-600' }}" 
                                     data-filter="weekly">
                                 Weekly
                             </button>
                             <button onclick="updateTimeFilter('monthly')" 
-                                    class="px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 time-filter-btn {{ $timeFilter === 'monthly' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-600' }}" 
+                                    class="px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 time-filter-btn {{ $timeFilter === 'monthly' ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-600' }}" 
                                     data-filter="monthly">
                                 Monthly
                             </button>
                             <button onclick="updateTimeFilter('all')" 
-                                    class="px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 time-filter-btn {{ $timeFilter === 'all' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-600' }}" 
+                                    class="px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 time-filter-btn {{ $timeFilter === 'all' ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-600' }}" 
                                     data-filter="all">
                                 All Time
                             </button>
@@ -171,7 +171,7 @@
                         <div class="text-3xl font-bold text-gray-900 mb-2">{{ $weeklyProgress['this_week_applications'] }}</div>
                         <div class="text-sm text-gray-500 mb-2">This Week</div>
                         <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
-                            <div class="bg-blue-600 h-2 rounded-full" style="width: {{ $weeklyProgress['progress_percentage'] }}%"></div>
+                            <div class="bg-primary-600 h-2 rounded-full" style="width: {{ $weeklyProgress['progress_percentage'] }}%"></div>
                         </div>
                         <div class="text-sm text-gray-600">{{ $weeklyProgress['progress_percentage'] }}% of weekly goal ({{ $weeklyProgress['weekly_goal'] }})</div>
                     </div>
@@ -466,11 +466,11 @@
         function updateTimeFilter(filter) {
             // Update button states
             document.querySelectorAll('.time-filter-btn').forEach(btn => {
-                btn.classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
+                btn.classList.remove('bg-white', 'text-primary-600', 'shadow-sm');
                 btn.classList.add('text-gray-600');
             });
             
-            document.querySelector(`[data-filter="${filter}"]`).classList.add('bg-white', 'text-blue-600', 'shadow-sm');
+            document.querySelector(`[data-filter="${filter}"]`).classList.add('bg-white', 'text-primary-600', 'shadow-sm');
             document.querySelector(`[data-filter="${filter}"]`).classList.remove('text-gray-600');
             
             // Reload page with new filter

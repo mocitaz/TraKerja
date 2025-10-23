@@ -20,9 +20,9 @@
     
             <style>
             :root {
-                --primary: #0056B3;
-                --secondary: #28A745;
-                --accent: #1e40af;
+                --primary: #8b5cf6;
+                --secondary: #a855f7;
+                --accent: #d946ef;
                 --dark: #0f172a;
                 --light: #f8fafc;
             }
@@ -59,7 +59,7 @@
         }
 
         .glow-effect {
-                box-shadow: 0 0 60px rgba(0, 86, 179, 0.4);
+                box-shadow: 0 0 60px rgba(139, 92, 246, 0.4);
                 transition: all 0.3s ease;
             }
 
@@ -77,26 +77,26 @@
 
             .cyber-grid {
                 background-image: 
-                    linear-gradient(rgba(0, 86, 179, 0.1) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(0, 86, 179, 0.1) 1px, transparent 1px);
+                    linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
                 background-size: 50px 50px;
                 animation: gridMove 20s linear infinite;
             }
 
             .neon-glow {
                 box-shadow: 
-                    0 0 20px rgba(0, 86, 179, 0.3),
-                    0 0 40px rgba(0, 86, 179, 0.2),
-                    0 0 60px rgba(0, 86, 179, 0.1);
+                    0 0 20px rgba(139, 92, 246, 0.3),
+                    0 0 40px rgba(139, 92, 246, 0.2),
+                    0 0 60px rgba(139, 92, 246, 0.1);
             }
 
             .holographic {
                 background: linear-gradient(45deg, 
-                    rgba(0, 86, 179, 0.8) 0%, 
-                    rgba(30, 64, 175, 0.6) 25%, 
-                    rgba(40, 167, 69, 0.8) 50%, 
-                    rgba(0, 86, 179, 0.6) 75%, 
-                    rgba(0, 86, 179, 0.8) 100%);
+                    rgba(139, 92, 246, 0.8) 0%, 
+                    rgba(109, 40, 217, 0.6) 25%, 
+                    rgba(168, 85, 247, 0.8) 50%, 
+                    rgba(139, 92, 246, 0.6) 75%, 
+                    rgba(139, 92, 246, 0.8) 100%);
                 background-size: 400% 400%;
                 animation: holographic 4s ease-in-out infinite;
             }
@@ -119,7 +119,7 @@
 
             .feature-card:hover {
                 transform: translateY(-10px) scale(1.02);
-                box-shadow: 0 25px 50px -12px rgba(0, 86, 179, 0.25);
+                box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.25);
             }
 
             .testimonial-card {
@@ -329,7 +329,7 @@
                 <div class="flex items-center">
                     <div class="shrink-0 flex items-center">
                         <a href="{{ url('/') }}" class="group">
-                            <span class="text-xl font-bold bg-gradient-to-r from-[#0056B3] to-[#28A745] bg-clip-text text-transparent">
+                            <span class="text-xl font-bold bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent">
                                 TraKerja
                             </span>
                         </a>
@@ -341,17 +341,17 @@
             @if (Route::has('login'))
                     @auth
                             <a href="{{ url('/tracker') }}" 
-                               class="bg-gradient-to-r from-[#0056B3] to-[#28A745] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:shadow-lg transition-all duration-200">
+                               class="bg-gradient-to-r from-primary-600 to-secondary-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:shadow-lg transition-all duration-200">
                             Dashboard
                         </a>
                     @else
                             <a href="{{ route('login') }}" 
-                               class="text-gray-600 hover:text-[#0056B3] text-sm font-medium transition-colors duration-200">
+                               class="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors duration-200">
                                 Login
                             </a>
                         @if (Route::has('register'))
                                 <a href="{{ route('register') }}" 
-                                   class="bg-gradient-to-r from-[#0056B3] to-[#28A745] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:shadow-lg transition-all duration-200">
+                                   class="bg-gradient-to-r from-primary-600 to-secondary-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:shadow-lg transition-all duration-200">
                                     Daftar
                             </a>
                         @endif
@@ -365,19 +365,19 @@
     <!-- Hero Section -->
     <section class="hero-section relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 cyber-grid">
         <!-- Advanced Background Elements -->
-        <div class="absolute top-20 right-20 w-40 h-40 bg-gradient-to-r from-[#0056B3]/20 to-[#28A745]/20 rounded-full mix-blend-multiply filter blur-2xl floating-animation morphing-blob"></div>
-        <div class="absolute bottom-20 left-20 w-32 h-32 bg-gradient-to-r from-[#28A745]/20 to-[#0056B3]/20 rounded-full mix-blend-multiply filter blur-2xl floating-animation morphing-blob" style="animation-delay: 2s;"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-r from-[#0056B3]/10 to-[#28A745]/10 rounded-full mix-blend-multiply filter blur-3xl pulse-animation morphing-blob"></div>
-        <div class="absolute top-1/4 left-1/4 w-20 h-20 bg-gradient-to-r from-[#1e40af]/30 to-[#28A745]/30 rounded-full mix-blend-multiply filter blur-xl floating-animation" style="animation-delay: 4s;"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-24 h-24 bg-gradient-to-r from-[#28A745]/30 to-[#0056B3]/30 rounded-full mix-blend-multiply filter blur-xl floating-animation" style="animation-delay: 1s;"></div>
+        <div class="absolute top-20 right-20 w-40 h-40 bg-gradient-to-r from-primary-600/20 to-secondary-500/20 rounded-full mix-blend-multiply filter blur-2xl floating-animation morphing-blob"></div>
+        <div class="absolute bottom-20 left-20 w-32 h-32 bg-gradient-to-r from-secondary-500/20 to-primary-600/20 rounded-full mix-blend-multiply filter blur-2xl floating-animation morphing-blob" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full mix-blend-multiply filter blur-3xl pulse-animation morphing-blob"></div>
+        <div class="absolute top-1/4 left-1/4 w-20 h-20 bg-gradient-to-r from-primary-700/30 to-secondary-500/30 rounded-full mix-blend-multiply filter blur-xl floating-animation" style="animation-delay: 4s;"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-24 h-24 bg-gradient-to-r from-secondary-500/30 to-primary-600/30 rounded-full mix-blend-multiply filter blur-xl floating-animation" style="animation-delay: 1s;"></div>
         
         <!-- Cyber Grid Overlay -->
         <div class="absolute inset-0 cyber-grid opacity-30"></div>
         
         <div class="relative z-10 max-w-6xl mx-auto px-4 text-center">
             <!-- Animated Badge -->
-            <div class="inline-flex items-center px-6 py-3 rounded-full glass-effect text-sm font-medium text-[#0056B3] mb-8 neon-glow text-reveal" style="animation-delay: 0.2s;">
-                <span class="w-3 h-3 bg-[#28A745] rounded-full mr-3 pulse-animation"></span>
+            <div class="inline-flex items-center px-6 py-3 rounded-full glass-effect text-sm font-medium text-primary-600 mb-8 neon-glow text-reveal" style="animation-delay: 0.2s;">
+                <span class="w-3 h-3 bg-secondary-500 rounded-full mr-3 pulse-animation"></span>
                 <span class="typing-animation">Smart Job Application Tracking</span>
             </div>
             
@@ -386,15 +386,15 @@
                 Kelola Proses Rekrutmen dengan 
                 <span class="gradient-text relative">
                     TraKerja
-                    <div class="absolute -inset-1 bg-gradient-to-r from-[#0056B3] to-[#28A745] rounded-lg blur opacity-30"></div>
+                    <div class="absolute -inset-1 bg-gradient-to-r from-primary-600 to-secondary-500 rounded-lg blur opacity-30"></div>
                 </span>
             </h1>
             
             <!-- Subheading with Animation -->
             <p class="hero-subtitle text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto text-reveal" style="animation-delay: 0.6s;">
                 Platform tracking job application yang 
-                <span class="font-semibold text-[#0056B3]">simple</span> dan 
-                <span class="font-semibold text-[#28A745]">efektif</span> 
+                <span class="font-semibold text-primary-600">simple</span> dan 
+                <span class="font-semibold text-secondary-500">efektif</span> 
                 untuk job seeker Indonesia
             </p>
             
@@ -402,16 +402,16 @@
             <div class="cta-buttons flex flex-col sm:flex-row gap-6 justify-center mb-16 text-reveal" style="animation-delay: 0.8s;">
                 @auth
                     <a href="{{ url('/tracker') }}" 
-                       class="cta-button bg-gradient-to-r from-[#0056B3] to-[#28A745] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 glow-effect">
+                       class="cta-button bg-gradient-to-r from-primary-600 to-secondary-500 text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 glow-effect">
                         <span class="relative z-10">Buka Dashboard</span>
                     </a>
                 @else
                     <a href="{{ route('register') }}" 
-                       class="cta-button bg-gradient-to-r from-[#0056B3] to-[#28A745] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 glow-effect">
+                       class="cta-button bg-gradient-to-r from-primary-600 to-secondary-500 text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 glow-effect">
                         <span class="relative z-10">Mulai Gratis</span>
                     </a>
                     <a href="{{ route('login') }}" 
-                       class="cta-button border-2 border-[#0056B3] text-[#0056B3] px-10 py-4 rounded-xl font-bold text-lg hover:bg-[#0056B3] hover:text-white transition-all duration-300 hover:shadow-xl">
+                       class="cta-button border-2 border-primary-600 text-primary-600 px-10 py-4 rounded-xl font-bold text-lg hover:bg-primary-600 hover:text-white transition-all duration-300 hover:shadow-xl">
                         <span class="relative z-10">Login</span>
                     </a>
                 @endauth
@@ -420,19 +420,19 @@
             <!-- Enhanced Trust Indicators -->
             <div class="trust-indicators flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600 text-reveal" style="animation-delay: 1s;">
                 <div class="flex items-center glass-effect px-4 py-2 rounded-full hover:scale-105 transition-all duration-300">
-                    <svg class="w-5 h-5 text-[#28A745] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                     <span class="font-semibold">Gratis Selamanya</span>
                 </div>
                 <div class="flex items-center glass-effect px-4 py-2 rounded-full hover:scale-105 transition-all duration-300">
-                    <svg class="w-5 h-5 text-[#28A745] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                     <span class="font-semibold">Setup 2 Menit</span>
                 </div>
                 <div class="flex items-center glass-effect px-4 py-2 rounded-full hover:scale-105 transition-all duration-300">
-                    <svg class="w-5 h-5 text-[#28A745] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                     <span class="font-semibold">Data Aman & Privat</span>
@@ -453,13 +453,13 @@
     <section class="py-20 bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-hidden">
         <!-- Background Elements -->
         <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-20"></div>
-        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-[#0056B3]/10 to-[#28A745]/10 rounded-full blur-2xl floating-animation"></div>
-        <div class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-[#28A745]/10 to-[#0056B3]/10 rounded-full blur-2xl floating-animation" style="animation-delay: 3s;"></div>
+        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full blur-2xl floating-animation"></div>
+        <div class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-secondary-500/10 to-primary-600/10 rounded-full blur-2xl floating-animation" style="animation-delay: 3s;"></div>
         
         <div class="relative z-10 max-w-7xl mx-auto px-4">
             <div class="text-center mb-16">
-                <div class="inline-flex items-center px-4 py-2 rounded-full glass-effect text-sm font-medium text-[#0056B3] mb-6">
-                    <span class="w-2 h-2 bg-[#28A745] rounded-full mr-2 pulse-animation"></span>
+                <div class="inline-flex items-center px-4 py-2 rounded-full glass-effect text-sm font-medium text-primary-600 mb-6">
+                    <span class="w-2 h-2 bg-secondary-500 rounded-full mr-2 pulse-animation"></span>
                     Powerful Features
                 </div>
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -472,85 +472,85 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Feature 1 -->
-                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-[#0056B3]/20 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#0056B3]/5 to-[#28A745]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative z-10">
-                        <div class="w-16 h-16 bg-gradient-to-br from-[#0056B3] to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <div class="w-16 h-16 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2z"></path>
                         </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#0056B3] transition-colors duration-300">Kanban Board</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">Kanban Board</h3>
                         <p class="text-gray-600 leading-relaxed">Kelola aplikasi kerja dengan drag & drop yang mudah. Lihat progress lamaran Anda dalam satu tampilan yang intuitif.</p>
                     </div>
                 </div>
                 
                 <!-- Feature 2 -->
-                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-[#28A745]/20 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#28A745]/5 to-[#0056B3]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-secondary-500/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-secondary-500/5 to-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative z-10">
-                        <div class="w-16 h-16 bg-gradient-to-br from-[#28A745] to-[#16a34a] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#28A745] transition-colors duration-300">Analytics Dashboard</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Analytics Dashboard</h3>
                         <p class="text-gray-600 leading-relaxed">Lihat statistik aplikasi Anda. Platform mana yang paling efektif dan posisi apa yang paling sering dipanggil interview.</p>
                     </div>
                 </div>
                 
                 <!-- Feature 3 -->
-                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-[#0056B3]/20 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#0056B3]/5 to-[#28A745]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative z-10">
-                        <div class="w-16 h-16 bg-gradient-to-br from-[#0056B3] to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <div class="w-16 h-16 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#0056B3] transition-colors duration-300">Smart Reminders</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">Smart Reminders</h3>
                         <p class="text-gray-600 leading-relaxed">Dapatkan notifikasi untuk jadwal interview, deadline tugas, dan waktu yang tepat untuk follow-up.</p>
                     </div>
                 </div>
                 
                 <!-- Feature 4 -->
-                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-[#28A745]/20 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#28A745]/5 to-[#0056B3]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-secondary-500/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-secondary-500/5 to-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative z-10">
-                        <div class="w-16 h-16 bg-gradient-to-br from-[#28A745] to-[#16a34a] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#28A745] transition-colors duration-300">Goal Tracking</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Goal Tracking</h3>
                         <p class="text-gray-600 leading-relaxed">Set target mingguan untuk aplikasi kerja dan pantau progress Anda. Tetap termotivasi dengan streak counter.</p>
                     </div>
                 </div>
                 
                 <!-- Feature 5 -->
-                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-[#0056B3]/20 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#0056B3]/5 to-[#28A745]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative z-10">
-                        <div class="w-16 h-16 bg-gradient-to-br from-[#0056B3] to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <div class="w-16 h-16 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#0056B3] transition-colors duration-300">Real-time Sync</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">Real-time Sync</h3>
                         <p class="text-gray-600 leading-relaxed">Akses data Anda di mana saja. Update otomatis di semua device dan browser Anda dengan teknologi cloud.</p>
                     </div>
                 </div>
                 
                 <!-- Feature 6 -->
-                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-[#28A745]/20 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#28A745]/5 to-[#0056B3]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-secondary-500/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-secondary-500/5 to-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative z-10">
-                        <div class="w-16 h-16 bg-gradient-to-br from-[#28A745] to-[#16a34a] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                     </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#28A745] transition-colors duration-300">Data Aman</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Data Aman</h3>
                         <p class="text-gray-600 leading-relaxed">Data Anda aman dengan enkripsi end-to-end dan backup otomatis. Privasi Anda adalah prioritas kami.</p>
                     </div>
                 </div>
@@ -562,13 +562,13 @@
     <section class="py-20 bg-gradient-to-br from-gray-50 via-white to-slate-50 relative overflow-hidden">
         <!-- Background Elements -->
         <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-10"></div>
-        <div class="absolute top-10 right-10 w-20 h-20 bg-gradient-to-r from-[#0056B3]/20 to-[#28A745]/20 rounded-full blur-xl floating-animation"></div>
-        <div class="absolute bottom-10 left-10 w-16 h-16 bg-gradient-to-r from-[#28A745]/20 to-[#0056B3]/20 rounded-full blur-xl floating-animation" style="animation-delay: 2s;"></div>
+        <div class="absolute top-10 right-10 w-20 h-20 bg-gradient-to-r from-primary-600/20 to-secondary-500/20 rounded-full blur-xl floating-animation"></div>
+        <div class="absolute bottom-10 left-10 w-16 h-16 bg-gradient-to-r from-secondary-500/20 to-primary-600/20 rounded-full blur-xl floating-animation" style="animation-delay: 2s;"></div>
         
         <div class="relative z-10 max-w-6xl mx-auto px-4">
             <div class="text-center mb-16">
-                <div class="inline-flex items-center px-4 py-2 rounded-full glass-effect text-sm font-medium text-[#0056B3] mb-6">
-                    <span class="w-2 h-2 bg-[#28A745] rounded-full mr-2 pulse-animation"></span>
+                <div class="inline-flex items-center px-4 py-2 rounded-full glass-effect text-sm font-medium text-primary-600 mb-6">
+                    <span class="w-2 h-2 bg-secondary-500 rounded-full mr-2 pulse-animation"></span>
                     User Stories
                 </div>
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -581,15 +581,15 @@
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Testimonial 1 -->
-                <div class="testimonial-card group bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-[#0056B3]/20 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#0056B3]/5 to-[#28A745]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="testimonial-card group bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative z-10">
                         <div class="flex items-center mb-6">
-                            <div class="w-14 h-14 bg-gradient-to-br from-[#0056B3] to-[#1e40af] rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <div class="w-14 h-14 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
                                 S
                             </div>
                             <div class="ml-4">
-                                <div class="font-bold text-gray-900 text-lg group-hover:text-[#0056B3] transition-colors duration-300">Sarah</div>
+                                <div class="font-bold text-gray-900 text-lg group-hover:text-primary-600 transition-colors duration-300">Sarah</div>
                                 <div class="text-sm text-gray-500 font-medium">Fresh Graduate</div>
                             </div>
                         </div>
@@ -601,15 +601,15 @@
                 </div>
                 
                 <!-- Testimonial 2 -->
-                <div class="testimonial-card group bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-[#28A745]/20 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#28A745]/5 to-[#0056B3]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="testimonial-card group bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-secondary-500/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-secondary-500/5 to-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative z-10">
                         <div class="flex items-center mb-6">
-                            <div class="w-14 h-14 bg-gradient-to-br from-[#28A745] to-[#16a34a] rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <div class="w-14 h-14 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
                                 A
                             </div>
                             <div class="ml-4">
-                                <div class="font-bold text-gray-900 text-lg group-hover:text-[#28A745] transition-colors duration-300">Ahmad</div>
+                                <div class="font-bold text-gray-900 text-lg group-hover:text-secondary-500 transition-colors duration-300">Ahmad</div>
                                 <div class="text-sm text-gray-500 font-medium">Career Switcher</div>
                             </div>
                         </div>
@@ -621,15 +621,15 @@
                 </div>
                 
                 <!-- Testimonial 3 -->
-                <div class="testimonial-card group bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-[#0056B3]/20 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#0056B3]/5 to-[#28A745]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="testimonial-card group bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative z-10">
                         <div class="flex items-center mb-6">
-                            <div class="w-14 h-14 bg-gradient-to-br from-[#0056B3] to-[#1e40af] rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <div class="w-14 h-14 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
                                 M
                             </div>
                             <div class="ml-4">
-                                <div class="font-bold text-gray-900 text-lg group-hover:text-[#0056B3] transition-colors duration-300">Maya</div>
+                                <div class="font-bold text-gray-900 text-lg group-hover:text-primary-600 transition-colors duration-300">Maya</div>
                                 <div class="text-sm text-gray-500 font-medium">Job Seeker</div>
                             </div>
                         </div>
@@ -647,13 +647,13 @@
     <section class="py-20 bg-white relative overflow-hidden">
         <!-- Background Elements -->
         <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-5"></div>
-        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-[#0056B3]/10 to-[#28A745]/10 rounded-full blur-2xl floating-animation"></div>
-        <div class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-[#28A745]/10 to-[#0056B3]/10 rounded-full blur-2xl floating-animation" style="animation-delay: 2s;"></div>
+        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full blur-2xl floating-animation"></div>
+        <div class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-secondary-500/10 to-primary-600/10 rounded-full blur-2xl floating-animation" style="animation-delay: 2s;"></div>
         
         <div class="relative z-10 max-w-6xl mx-auto px-4">
             <div class="text-center mb-16">
-                <div class="inline-flex items-center px-4 py-2 rounded-full glass-effect text-sm font-medium text-[#0056B3] mb-6">
-                    <span class="w-2 h-2 bg-[#28A745] rounded-full mr-2 pulse-animation"></span>
+                <div class="inline-flex items-center px-4 py-2 rounded-full glass-effect text-sm font-medium text-primary-600 mb-6">
+                    <span class="w-2 h-2 bg-secondary-500 rounded-full mr-2 pulse-animation"></span>
                     Simple Process
                 </div>
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -668,10 +668,10 @@
                 <!-- Step 1 -->
                 <div class="text-center group">
                     <div class="relative mb-8">
-                        <div class="w-20 h-20 bg-gradient-to-br from-[#0056B3] to-[#1e40af] rounded-2xl flex items-center justify-center text-white font-bold text-2xl mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <div class="w-20 h-20 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center text-white font-bold text-2xl mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
                             1
                         </div>
-                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-[#28A745] rounded-full flex items-center justify-center text-white text-sm font-bold">
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-secondary-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
@@ -684,10 +684,10 @@
                 <!-- Step 2 -->
                 <div class="text-center group">
                     <div class="relative mb-8">
-                        <div class="w-20 h-20 bg-gradient-to-br from-[#28A745] to-[#16a34a] rounded-2xl flex items-center justify-center text-white font-bold text-2xl mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <div class="w-20 h-20 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center text-white font-bold text-2xl mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
                             2
                         </div>
-                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-[#0056B3] rounded-full flex items-center justify-center text-white text-sm font-bold">
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
@@ -700,10 +700,10 @@
                 <!-- Step 3 -->
                 <div class="text-center group">
                     <div class="relative mb-8">
-                        <div class="w-20 h-20 bg-gradient-to-br from-[#0056B3] to-[#1e40af] rounded-2xl flex items-center justify-center text-white font-bold text-2xl mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <div class="w-20 h-20 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center text-white font-bold text-2xl mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
                             3
                         </div>
-                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-[#28A745] rounded-full flex items-center justify-center text-white text-sm font-bold">
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-secondary-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
@@ -720,8 +720,8 @@
     <section class="py-20 bg-gradient-to-br from-gray-50 via-white to-slate-50 relative overflow-hidden">
         <!-- Background Elements -->
         <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-10"></div>
-        <div class="absolute top-10 right-10 w-20 h-20 bg-gradient-to-r from-[#0056B3]/20 to-[#28A745]/20 rounded-full blur-xl floating-animation"></div>
-        <div class="absolute bottom-10 left-10 w-16 h-16 bg-gradient-to-r from-[#28A745]/20 to-[#0056B3]/20 rounded-full blur-xl floating-animation" style="animation-delay: 2s;"></div>
+        <div class="absolute top-10 right-10 w-20 h-20 bg-gradient-to-r from-primary-600/20 to-secondary-500/20 rounded-full blur-xl floating-animation"></div>
+        <div class="absolute bottom-10 left-10 w-16 h-16 bg-gradient-to-r from-secondary-500/20 to-primary-600/20 rounded-full blur-xl floating-animation" style="animation-delay: 2s;"></div>
         
         <div class="relative z-10 max-w-6xl mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -840,13 +840,13 @@
     <section class="py-20 bg-white relative overflow-hidden">
         <!-- Background Elements -->
         <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-5"></div>
-        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-[#0056B3]/10 to-[#28A745]/10 rounded-full blur-2xl floating-animation"></div>
-        <div class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-[#28A745]/10 to-[#0056B3]/10 rounded-full blur-2xl floating-animation" style="animation-delay: 2s;"></div>
+        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full blur-2xl floating-animation"></div>
+        <div class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-secondary-500/10 to-primary-600/10 rounded-full blur-2xl floating-animation" style="animation-delay: 2s;"></div>
         
         <div class="relative z-10 max-w-6xl mx-auto px-4">
             <div class="text-center mb-16">
-                <div class="inline-flex items-center px-4 py-2 rounded-full glass-effect text-sm font-medium text-[#0056B3] mb-6">
-                    <span class="w-2 h-2 bg-[#28A745] rounded-full mr-2 pulse-animation"></span>
+                <div class="inline-flex items-center px-4 py-2 rounded-full glass-effect text-sm font-medium text-primary-600 mb-6">
+                    <span class="w-2 h-2 bg-secondary-500 rounded-full mr-2 pulse-animation"></span>
                     Key Benefits
                 </div>
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -859,68 +859,68 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Benefit 1 -->
-                <div class="group bg-gradient-to-br from-[#0056B3]/5 to-[#28A745]/5 rounded-2xl p-8 border border-gray-100/50 hover:border-[#0056B3]/20 transition-all duration-300 hover:shadow-xl">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#0056B3] to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div class="group bg-gradient-to-br from-primary-600/5 to-secondary-500/5 rounded-2xl p-8 border border-gray-100/50 hover:border-primary-600/20 transition-all duration-300 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#0056B3] transition-colors duration-300">100% Gratis</h3>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">100% Gratis</h3>
                     <p class="text-gray-600 leading-relaxed">Tidak ada biaya tersembunyi atau upgrade berbayar. Semua fitur premium tersedia gratis selamanya.</p>
                 </div>
                 
                 <!-- Benefit 2 -->
-                <div class="group bg-gradient-to-br from-[#28A745]/5 to-[#0056B3]/5 rounded-2xl p-8 border border-gray-100/50 hover:border-[#28A745]/20 transition-all duration-300 hover:shadow-xl">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#28A745] to-[#16a34a] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div class="group bg-gradient-to-br from-secondary-500/5 to-primary-600/5 rounded-2xl p-8 border border-gray-100/50 hover:border-secondary-500/20 transition-all duration-300 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#28A745] transition-colors duration-300">Setup 2 Menit</h3>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Setup 2 Menit</h3>
                     <p class="text-gray-600 leading-relaxed">Tidak perlu setup rumit. Daftar, login, langsung bisa mulai tracking aplikasi kerja Anda.</p>
                 </div>
                 
                 <!-- Benefit 3 -->
-                <div class="group bg-gradient-to-br from-[#0056B3]/5 to-[#28A745]/5 rounded-2xl p-8 border border-gray-100/50 hover:border-[#0056B3]/20 transition-all duration-300 hover:shadow-xl">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#0056B3] to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div class="group bg-gradient-to-br from-primary-600/5 to-secondary-500/5 rounded-2xl p-8 border border-gray-100/50 hover:border-primary-600/20 transition-all duration-300 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#0056B3] transition-colors duration-300">Data Aman</h3>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">Data Aman</h3>
                     <p class="text-gray-600 leading-relaxed">Data Anda dienkripsi dan disimpan dengan aman. Privasi dan keamanan adalah prioritas utama kami.</p>
                 </div>
                 
                 <!-- Benefit 4 -->
-                <div class="group bg-gradient-to-br from-[#28A745]/5 to-[#0056B3]/5 rounded-2xl p-8 border border-gray-100/50 hover:border-[#28A745]/20 transition-all duration-300 hover:shadow-xl">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#28A745] to-[#16a34a] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div class="group bg-gradient-to-br from-secondary-500/5 to-primary-600/5 rounded-2xl p-8 border border-gray-100/50 hover:border-secondary-500/20 transition-all duration-300 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#28A745] transition-colors duration-300">Analytics Cerdas</h3>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Analytics Cerdas</h3>
                     <p class="text-gray-600 leading-relaxed">Dapatkan insight tentang performa aplikasi Anda. Platform mana yang paling efektif dan strategi apa yang berhasil.</p>
                 </div>
                 
                 <!-- Benefit 5 -->
-                <div class="group bg-gradient-to-br from-[#0056B3]/5 to-[#28A745]/5 rounded-2xl p-8 border border-gray-100/50 hover:border-[#0056B3]/20 transition-all duration-300 hover:shadow-xl">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#0056B3] to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div class="group bg-gradient-to-br from-primary-600/5 to-secondary-500/5 rounded-2xl p-8 border border-gray-100/50 hover:border-primary-600/20 transition-all duration-300 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#0056B3] transition-colors duration-300">Goal Tracking</h3>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">Goal Tracking</h3>
                     <p class="text-gray-600 leading-relaxed">Set target mingguan dan pantau progress Anda. Tetap termotivasi dengan streak counter dan achievement badges.</p>
                 </div>
                 
                 <!-- Benefit 6 -->
-                <div class="group bg-gradient-to-br from-[#28A745]/5 to-[#0056B3]/5 rounded-2xl p-8 border border-gray-100/50 hover:border-[#28A745]/20 transition-all duration-300 hover:shadow-xl">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#28A745] to-[#16a34a] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div class="group bg-gradient-to-br from-secondary-500/5 to-primary-600/5 rounded-2xl p-8 border border-gray-100/50 hover:border-secondary-500/20 transition-all duration-300 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#28A745] transition-colors duration-300">Real-time Sync</h3>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Real-time Sync</h3>
                     <p class="text-gray-600 leading-relaxed">Akses data Anda di mana saja, kapan saja. Update otomatis di semua device dengan teknologi cloud terdepan.</p>
                 </div>
             </div>
@@ -931,7 +931,7 @@
     <section class="py-20 hero-gradient relative overflow-hidden">
         <!-- Advanced Background Elements -->
         <div class="absolute inset-0 cyber-grid opacity-20"></div>
-        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#0056B3]/20 via-transparent to-[#28A745]/20"></div>
+        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary-600/20 via-transparent to-secondary-500/20"></div>
         <div class="absolute top-20 right-20 w-40 h-40 bg-white/10 rounded-full blur-3xl floating-animation"></div>
         <div class="absolute bottom-20 left-20 w-32 h-32 bg-white/10 rounded-full blur-3xl floating-animation" style="animation-delay: 3s;"></div>
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-white/5 rounded-full blur-3xl pulse-animation"></div>
@@ -954,17 +954,17 @@
             @guest
                 <div class="flex flex-col sm:flex-row gap-6 justify-center mb-12">
                     <a href="{{ route('register') }}" 
-                       class="cta-button bg-white text-[#0056B3] px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+                       class="cta-button bg-white text-primary-600 px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
                         <span class="relative z-10 flex items-center justify-center">
                             <svg class="w-6 h-6 mr-2 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                             </svg>
                         Daftar Gratis Sekarang
                         </span>
-                        <div class="absolute inset-0 bg-gradient-to-r from-[#0056B3] to-[#28A745] opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                     </a>
                     <a href="{{ route('login') }}" 
-                       class="cta-button border-2 border-white text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white hover:text-[#0056B3] transition-all duration-300 hover:shadow-xl relative overflow-hidden group">
+                       class="cta-button border-2 border-white text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white hover:text-primary-600 transition-all duration-300 hover:shadow-xl relative overflow-hidden group">
                         <span class="relative z-10 flex items-center justify-center">
                             <svg class="w-6 h-6 mr-2 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
@@ -975,14 +975,14 @@
                 </div>
             @else
                 <a href="{{ url('/tracker') }}" 
-                   class="cta-button bg-white text-[#0056B3] px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 inline-block relative overflow-hidden group">
+                   class="cta-button bg-white text-primary-600 px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 inline-block relative overflow-hidden group">
                     <span class="relative z-10 flex items-center justify-center">
                         <svg class="w-6 h-6 mr-2 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                     Buka Dashboard
                     </span>
-                    <div class="absolute inset-0 bg-gradient-to-r from-[#0056B3] to-[#28A745] opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                 </a>
             @endguest
             

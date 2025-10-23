@@ -28,7 +28,7 @@
                     <input wire:model.live="company_name" 
                            type="text" 
                            id="company_name" 
-                           class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                           class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm"
                            placeholder="Enter company name"
                            value="{{ $company_name }}"
                            autocomplete="off">
@@ -69,7 +69,7 @@
                     <input wire:model.live="position" 
                            type="text" 
                            id="position" 
-                           class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                           class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm"
                            placeholder="Enter position title"
                            value="{{ $position }}"
                            autocomplete="off">
@@ -115,7 +115,7 @@
                         </svg>
                     </div>
                     <select wire:model="selectedProvince" 
-                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none">
+                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm appearance-none">
                         <option value="">Select Province</option>
                         @foreach($provinces as $province => $cities)
                             <option value="{{ $province }}">{{ $province }}</option>
@@ -136,7 +136,7 @@
                         </svg>
                     </div>
                     <select wire:model="selectedCity" 
-                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none {{ empty($selectedProvince) ? 'opacity-50 cursor-not-allowed' : '' }}"
+                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm appearance-none {{ empty($selectedProvince) ? 'opacity-50 cursor-not-allowed' : '' }}"
                             {{ empty($selectedProvince) ? 'disabled' : '' }}>
                         <option value="">Select City</option>
                         @if(!empty($selectedProvince) && isset($provinces[$selectedProvince]))
@@ -157,11 +157,11 @@
             <!-- Special Location Options (always visible) -->
             <div class="mt-3 flex flex-wrap gap-4">
                 <label class="flex items-center">
-                    <input type="checkbox" wire:model.live="isRemote" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    <input type="checkbox" wire:model.live="isRemote" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
                     <span class="ml-2 text-sm text-gray-700">Remote Work</span>
                 </label>
                 <label class="flex items-center">
-                    <input type="checkbox" wire:model.live="isSeluruhIndonesia" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    <input type="checkbox" wire:model.live="isSeluruhIndonesia" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
                     <span class="ml-2 text-sm text-gray-700">Seluruh Indonesia</span>
                 </label>
             </div>
@@ -189,7 +189,7 @@
                         </svg>
                     </div>
                     <select wire:model="platform" 
-                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none">
+                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm appearance-none">
                         @foreach($platformOptions as $option)
                             @if($option !== 'Other')
                                 <option value="{{ $option }}">{{ $option }}</option>
@@ -224,7 +224,7 @@
                 <input wire:model.live="platformOther" 
                        type="text" 
                        id="platformOther" 
-                       class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                       class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm"
                        placeholder="Enter custom platform name"
                        value="{{ $platformOther }}">
             </div>
@@ -248,7 +248,7 @@
                         </svg>
                     </div>
                     <select wire:model="application_status" 
-                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none">
+                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm appearance-none">
                         @foreach($applicationStatusOptions as $option)
                             <option value="{{ $option }}">{{ $option }}</option>
                         @endforeach
@@ -276,7 +276,7 @@
                         </svg>
                     </div>
                     <select wire:model="recruitment_stage" 
-                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none">
+                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm appearance-none">
                         @foreach($recruitmentStageOptions as $option)
                             <option value="{{ $option }}">{{ $option }}</option>
                         @endforeach
@@ -304,7 +304,7 @@
                         </svg>
                     </div>
                     <select wire:model="career_level" 
-                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none">
+                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm appearance-none">
                         @foreach($careerLevelOptions as $option)
                             <option value="{{ $option }}">{{ $option }}</option>
                         @endforeach
@@ -337,7 +337,7 @@
                     <input wire:model.live="platform_link" 
                            type="url" 
                            id="platform_link" 
-                           class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                           class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm"
                            placeholder="https://example.com/job-posting"
                            value="{{ $platform_link }}">
                 </div>
@@ -360,7 +360,7 @@
                     <input wire:model.live="application_date" 
                            type="date" 
                            id="application_date" 
-                           class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                           class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm"
                            value="{{ $application_date }}">
                 </div>
                 @error('application_date') 
@@ -368,6 +368,102 @@
                 @enderror
             </div>
         </div>
+
+        <!-- Interview Scheduling Section (conditional) -->
+        @if(in_array($recruitment_stage, ['HR - Interview', 'User - Interview', 'LGD', 'Presentation Round']))
+        <div class="bg-primary-50 border border-primary-200 rounded-lg p-4 space-y-4">
+            <div class="flex items-center space-x-2 mb-3">
+                <svg class="h-5 w-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <h3 class="text-sm font-semibold text-primary-900">📅 Interview Scheduling</h3>
+            </div>
+
+            <!-- Row: Interview Date & Time -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Interview Date -->
+                <div>
+                    <label for="interview_date" class="block text-sm font-medium text-gray-700 mb-1">
+                        Interview Date
+                    </label>
+                    <input wire:model.live="interview_date" 
+                           type="date" 
+                           id="interview_date" 
+                           class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm bg-white"
+                           value="{{ $interview_date }}">
+                    @error('interview_date') 
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Interview Time -->
+                <div>
+                    <label for="interview_time" class="block text-sm font-medium text-gray-700 mb-1">
+                        Interview Time
+                    </label>
+                    <input wire:model.live="interview_time" 
+                           type="time" 
+                           id="interview_time" 
+                           class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm bg-white"
+                           value="{{ $interview_time }}">
+                    @error('interview_time') 
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <!-- Row: Interview Type & Location -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Interview Type -->
+                <div>
+                    <label for="interview_type" class="block text-sm font-medium text-gray-700 mb-1">
+                        Interview Type
+                    </label>
+                    <select wire:model="interview_type" 
+                            id="interview_type"
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm appearance-none bg-white">
+                        @foreach($interviewTypeOptions as $option)
+                            <option value="{{ $option }}">{{ $option }}</option>
+                        @endforeach
+                    </select>
+                    @error('interview_type') 
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Interview Location -->
+                <div>
+                    <label for="interview_location" class="block text-sm font-medium text-gray-700 mb-1">
+                        Location / Link
+                    </label>
+                    <input wire:model.live="interview_location" 
+                           type="text" 
+                           id="interview_location" 
+                           class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm bg-white"
+                           placeholder="Office address or meeting link"
+                           value="{{ $interview_location }}">
+                    @error('interview_location') 
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <!-- Interview Notes -->
+            <div>
+                <label for="interview_notes" class="block text-sm font-medium text-gray-700 mb-1">
+                    Interview Notes
+                </label>
+                <textarea wire:model.live="interview_notes" 
+                          id="interview_notes" 
+                          rows="2"
+                          class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm resize-none bg-white"
+                          placeholder="Preparation notes, topics to discuss, etc...">{{ $interview_notes }}</textarea>
+                @error('interview_notes') 
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+        @endif
 
         <!-- Row 6: Notes -->
         <div>
@@ -383,7 +479,7 @@
                 <textarea wire:model.live="notes" 
                           id="notes" 
                           rows="3"
-                          class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm resize-none"
+                          class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm resize-none"
                           placeholder="Add any additional notes about this application...">{{ $notes }}</textarea>
             </div>
             @error('notes') 
@@ -399,7 +495,7 @@
                 Reset
             </button>
             <button type="submit" 
-                    class="px-6 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors duration-200">
+                    class="px-6 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-md transition-colors duration-200">
                 <div class="flex items-center space-x-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>

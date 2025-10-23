@@ -47,7 +47,7 @@
                             <p class="text-xs text-gray-500">Manage and track your applications</p>
                         </div>
                         <div class="flex bg-gray-100 rounded-lg p-0.5">
-                            <button id="table-view" class="px-4 py-2 rounded-md font-medium bg-white text-blue-600 shadow-sm text-sm">
+                            <button id="table-view" class="px-4 py-2 rounded-md font-medium bg-white text-primary-600 shadow-sm text-sm">
                                 <div class="flex items-center space-x-1.5">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0V4a2 2 0 012-2h14a2 2 0 012 2v16a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
@@ -141,19 +141,19 @@
         document.getElementById('kanban-view').addEventListener('click', function() {
             document.getElementById('kanban-container').classList.remove('hidden');
             document.getElementById('table-container').classList.add('hidden');
-            this.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
+            this.classList.add('bg-white', 'text-primary-600', 'shadow-sm');
             this.classList.remove('text-gray-600');
             document.getElementById('table-view').classList.add('text-gray-600');
-            document.getElementById('table-view').classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
+            document.getElementById('table-view').classList.remove('bg-white', 'text-primary-600', 'shadow-sm');
         });
 
         document.getElementById('table-view').addEventListener('click', function() {
             document.getElementById('table-container').classList.remove('hidden');
             document.getElementById('kanban-container').classList.add('hidden');
-            this.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
+            this.classList.add('bg-white', 'text-primary-600', 'shadow-sm');
             this.classList.remove('text-gray-600');
             document.getElementById('kanban-view').classList.add('text-gray-600');
-            document.getElementById('kanban-view').classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
+            document.getElementById('kanban-view').classList.remove('bg-white', 'text-primary-600', 'shadow-sm');
         });
 
         // Enhanced Modal Functions
@@ -313,13 +313,13 @@
             const kanbanContainer = document.getElementById('kanban-container');
             
             // Set table view as active
-            tableView.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
+            tableView.classList.add('bg-white', 'text-primary-600', 'shadow-sm');
             tableView.classList.remove('text-gray-600');
             tableContainer.classList.remove('hidden');
             
             // Set kanban view as inactive
             kanbanView.classList.add('text-gray-600');
-            kanbanView.classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
+            kanbanView.classList.remove('bg-white', 'text-primary-600', 'shadow-sm');
             kanbanContainer.classList.add('hidden');
             
             // Setup drag and drop

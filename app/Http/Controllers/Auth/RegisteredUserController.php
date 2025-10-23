@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Setting;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -36,10 +37,29 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', new StrongPassword()],
         ]);
 
+        // Get current monetization phase
+        $currentPhase = Setting::getMonetizationPhase();
+        
+        // Prepare grandfathered benefits based on registration phase
+        $grandfatheredBenefits = [];
+        
+        if ($currentPhase == 1) {
+            // Phase 1 users get special benefits forever
+            $grandfatheredBenefits = [
+                'cv_templates_3_free',  // 3 CV templates forever
+                'premium_discount_50',  // 50% off premium upgrade
+            ];
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'registered_phase' => $currentPhase,
+            'grandfathered_benefits' => $grandfatheredBenefits,
+            'role' => 'user', // Default role
+            'is_premium' => false,
+            'payment_status' => 'unpaid',
         ]);
 
         event(new Registered($user));

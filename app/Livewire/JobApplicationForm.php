@@ -2,6 +2,9 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\JobApplication;
 use Livewire\Component;
 
@@ -165,7 +168,7 @@ class JobApplicationForm extends Component
     public function updatedCompanyName($value)
     {
         if (strlen($value) >= 2) {
-            $this->companySuggestions = JobApplication::where('user_id', auth()->id())
+            $this->companySuggestions = JobApplication::where('user_id', Auth::id())
                 ->where('company_name', 'like', '%' . $value . '%')
                 ->distinct()
                 ->pluck('company_name')
@@ -181,7 +184,7 @@ class JobApplicationForm extends Component
     public function updatedPosition($value)
     {
         if (strlen($value) >= 2) {
-            $this->positionSuggestions = JobApplication::where('user_id', auth()->id())
+            $this->positionSuggestions = JobApplication::where('user_id', Auth::id())
                 ->where('position', 'like', '%' . $value . '%')
                 ->distinct()
                 ->pluck('position')
@@ -259,11 +262,11 @@ class JobApplicationForm extends Component
 
     public function editJob($jobId)
     {
-        \Log::info('editJob called with jobId:', ['jobId' => $jobId, 'type' => gettype($jobId), 'stack' => debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3)]);
+        Log::info('editJob called with jobId:', ['jobId' => $jobId, 'type' => gettype($jobId), 'stack' => debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3)]);
         
         // Prevent multiple calls for the same job
         if ($this->isEditing && $this->jobApplication && $this->jobApplication->id == $jobId) {
-            \Log::info('Edit job already loaded, skipping...', ['jobId' => $jobId]);
+            Log::info('Edit job already loaded, skipping...', ['jobId' => $jobId]);
             return;
         }
         
@@ -273,14 +276,14 @@ class JobApplicationForm extends Component
         // Store job ID in session to trigger component re-render
         session(['edit-job-id' => $jobId]);
         
-        \Log::info('Searching for job with ID:', ['jobId' => $jobId, 'userId' => auth()->id()]);
+        Log::info('Searching for job with ID:', ['jobId' => $jobId, 'userId' => Auth::id()]);
         
         $jobApplication = JobApplication::where('id', $jobId)
-            ->where('user_id', auth()->id())
+            ->where('user_id', Auth::id())
             ->first();
 
         if ($jobApplication) {
-            \Log::info('Job found, loading data...', ['jobId' => $jobId, 'company' => $jobApplication->company_name]);
+            Log::info('Job found, loading data...', ['jobId' => $jobId, 'company' => $jobApplication->company_name]);
             
             $this->isEditing = true;
             $this->jobApplication = $jobApplication;
@@ -309,7 +312,7 @@ class JobApplicationForm extends Component
             $this->application_date = $jobApplication->application_date->format('Y-m-d');
             $this->notes = $jobApplication->notes;
             
-            \Log::info('Job data loaded successfully', [
+            Log::info('Job data loaded successfully', [
                 'company_name' => $this->company_name,
                 'position' => $this->position,
                 'status' => $this->status,
@@ -331,13 +334,13 @@ class JobApplicationForm extends Component
                 'status' => $this->status
             ]);
         } else {
-            \Log::warning('Job not found or not authorized', ['jobId' => $jobId, 'userId' => auth()->id()]);
+            Log::warning('Job not found or not authorized', ['jobId' => $jobId, 'userId' => Auth::id()]);
         }
     }
 
     public function save()
     {
-        \Log::info('Save method called', [
+        Log::info('Save method called', [
             'isEditing' => $this->isEditing,
             'company_name' => $this->company_name,
             'position' => $this->position,
@@ -377,7 +380,7 @@ class JobApplicationForm extends Component
         }
 
         $data = [
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
             'company_name' => $this->company_name,
             'position' => $this->position,
             'location' => $this->location,
@@ -396,7 +399,7 @@ class JobApplicationForm extends Component
             if ($this->isEditing) {
                 $this->jobApplication->update($data);
                 session()->flash('message', 'Job application updated successfully!');
-                \Log::info('Job updated successfully', ['jobId' => $this->jobApplication->id]);
+                Log::info('Job updated successfully', ['jobId' => $this->jobApplication->id]);
                 
                 // Send notification for job update
                 $this->dispatch('showNotification', 
@@ -408,7 +411,7 @@ class JobApplicationForm extends Component
             } else {
                 $newJob = JobApplication::create($data);
                 session()->flash('message', 'Job application created successfully!');
-                \Log::info('Job created successfully', ['jobId' => $newJob->id]);
+                Log::info('Job created successfully', ['jobId' => $newJob->id]);
                 
                 // Send notification for new job
                 $this->dispatch('showNotification', 
@@ -419,7 +422,7 @@ class JobApplicationForm extends Component
                 );
             }
         } catch (\Exception $e) {
-            \Log::error('Failed to save job application', ['error' => $e->getMessage()]);
+            Log::error('Failed to save job application', ['error' => $e->getMessage()]);
             
             $this->dispatch('showNotification', 
                 type: 'error',
@@ -441,21 +444,21 @@ class JobApplicationForm extends Component
 
     public function updatedSelectedProvince()
     {
-        \Log::info('updatedSelectedProvince called', [
+        Log::info('updatedSelectedProvince called', [
             'selectedProvince' => $this->selectedProvince, 
             'isEditing' => $this->isEditing
         ]);
         
         // Clear selected city when province changes
         $this->selectedCity = '';
-        \Log::info('Selected city cleared due to province change', ['selectedCity' => $this->selectedCity]);
+        Log::info('Selected city cleared due to province change', ['selectedCity' => $this->selectedCity]);
         
         $this->updateLocation();
     }
 
     public function updatedSelectedCity()
     {
-        \Log::info('updatedSelectedCity called', ['selectedCity' => $this->selectedCity]);
+        Log::info('updatedSelectedCity called', ['selectedCity' => $this->selectedCity]);
         $this->updateLocation();
     }
 
@@ -479,7 +482,7 @@ class JobApplicationForm extends Component
             $this->location = '';
         }
         
-        \Log::info('Location updated', [
+        Log::info('Location updated', [
             'isRemote' => $this->isRemote,
             'isSeluruhIndonesia' => $this->isSeluruhIndonesia,
             'selectedProvince' => $this->selectedProvince,
@@ -512,7 +515,7 @@ class JobApplicationForm extends Component
 
     public function parseLocation($location)
     {
-        \Log::info('Parsing location:', ['location' => $location]);
+        Log::info('Parsing location:', ['location' => $location]);
         
         // Reset values
         $this->selectedProvince = '';
@@ -528,13 +531,13 @@ class JobApplicationForm extends Component
         // Check for special cases first
         if ($location === 'Remote') {
             $this->isRemote = true;
-            \Log::info('Location is Remote');
+            Log::info('Location is Remote');
             return;
         }
         
         if ($location === 'Seluruh Indonesia') {
             $this->isSeluruhIndonesia = true;
-            \Log::info('Location is Seluruh Indonesia');
+            Log::info('Location is Seluruh Indonesia');
             return;
         }
         
@@ -544,37 +547,37 @@ class JobApplicationForm extends Component
             $city = trim($parts[0]);
             $province = trim($parts[1]);
             
-            \Log::info('Parsed location parts:', ['city' => $city, 'province' => $province]);
+            Log::info('Parsed location parts:', ['city' => $city, 'province' => $province]);
             
             // Check if province exists in our data
             if (isset($this->provinces[$province])) {
                 $this->selectedProvince = $province;
                 $this->cities = $this->provinces[$province];
                 
-                \Log::info('Province found, cities loaded:', ['cities_count' => count($this->cities)]);
+                Log::info('Province found, cities loaded:', ['cities_count' => count($this->cities)]);
                 
                 // Check if city exists in the province
                 if (in_array($city, $this->cities)) {
                     $this->selectedCity = $city;
-                    \Log::info('City found and selected:', ['selectedCity' => $city]);
+                    Log::info('City found and selected:', ['selectedCity' => $city]);
                 } else {
-                    \Log::warning('City not found in province cities:', ['city' => $city, 'available_cities' => $this->cities]);
+                    Log::warning('City not found in province cities:', ['city' => $city, 'available_cities' => $this->cities]);
                 }
             } else {
-                \Log::warning('Province not found:', ['province' => $province, 'available_provinces' => array_keys($this->provinces)]);
+                Log::warning('Province not found:', ['province' => $province, 'available_provinces' => array_keys($this->provinces)]);
             }
         } else {
             // Check if it's just a province
             if (isset($this->provinces[$location])) {
                 $this->selectedProvince = $location;
                 $this->cities = $this->provinces[$location];
-                \Log::info('Location is a province:', ['province' => $location]);
+                Log::info('Location is a province:', ['province' => $location]);
             } else {
-                \Log::warning('Location not recognized:', ['location' => $location]);
+                Log::warning('Location not recognized:', ['location' => $location]);
             }
         }
         
-        \Log::info('Final parsed values:', [
+        Log::info('Final parsed values:', [
             'selectedProvince' => $this->selectedProvince,
             'selectedCity' => $this->selectedCity,
             'cities_count' => count($this->cities)
@@ -583,19 +586,19 @@ class JobApplicationForm extends Component
 
     public function clearEditJobSession()
     {
-        \Log::info('Clearing edit job session');
+        Log::info('Clearing edit job session');
         session()->forget('edit-job-id');
     }
 
     public function resetFormForNewJob()
     {
-        \Log::info('Resetting form for new job', [
+        Log::info('Resetting form for new job', [
             'current_isEditing' => $this->isEditing,
             'current_jobApplication_id' => $this->jobApplication ? $this->jobApplication->id : null,
             'current_company_name' => $this->company_name
         ]);
         $this->resetForm();
-        \Log::info('Form reset completed', [
+        Log::info('Form reset completed', [
             'new_isEditing' => $this->isEditing,
             'new_jobApplication' => $this->jobApplication,
             'new_company_name' => $this->company_name

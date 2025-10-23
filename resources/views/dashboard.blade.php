@@ -107,7 +107,7 @@
                             <p class="text-xs text-gray-500">Manage and track your applications</p>
                         </div>
                         <div class="flex bg-gray-100 rounded-lg p-0.5">
-                            <button id="kanban-view" class="px-4 py-2 rounded-md font-medium bg-white text-blue-600 shadow-sm text-sm">
+                            <button id="kanban-view" class="px-4 py-2 rounded-md font-medium bg-white text-primary-600 shadow-sm text-sm">
                                 <div class="flex items-center space-x-1.5">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2z"></path>
@@ -241,8 +241,8 @@
                     break;
                 case 'info':
                     bgColor = 'bg-white';
-                    borderColor = 'border-blue-200';
-                    iconColor = 'text-blue-600';
+                    borderColor = 'border-primary-200';
+                    iconColor = 'text-primary-600';
                     icon = `<div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
                         <svg class="w-4 h-4 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
@@ -297,19 +297,19 @@
         document.getElementById('kanban-view').addEventListener('click', function() {
             document.getElementById('kanban-container').classList.remove('hidden');
             document.getElementById('table-container').classList.add('hidden');
-            this.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
+            this.classList.add('bg-white', 'text-primary-600', 'shadow-sm');
             this.classList.remove('text-gray-600');
             document.getElementById('table-view').classList.add('text-gray-600');
-            document.getElementById('table-view').classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
+            document.getElementById('table-view').classList.remove('bg-white', 'text-primary-600', 'shadow-sm');
         });
 
         document.getElementById('table-view').addEventListener('click', function() {
             document.getElementById('table-container').classList.remove('hidden');
             document.getElementById('kanban-container').classList.add('hidden');
-            this.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
+            this.classList.add('bg-white', 'text-primary-600', 'shadow-sm');
             this.classList.remove('text-gray-600');
             document.getElementById('kanban-view').classList.add('text-gray-600');
-            document.getElementById('kanban-view').classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
+            document.getElementById('kanban-view').classList.remove('bg-white', 'text-primary-600', 'shadow-sm');
         });
 
         // Enhanced Modal Functions

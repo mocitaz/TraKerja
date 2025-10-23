@@ -39,7 +39,7 @@
                                     <div class="p-3">
                                         <!-- Company & Position -->
                                         <div class="mb-2">
-                                            <h4 class="font-semibold text-gray-900 text-sm truncate group-hover:text-blue-600 transition-colors">
+                                            <h4 class="font-semibold text-gray-900 text-sm truncate group-hover:text-primary-600 transition-colors">
                                                 {{ $job->company_name }}
                                             </h4>
                                             <p class="text-xs text-gray-600 mt-0.5 truncate">{{ $job->position }}</p>
@@ -64,7 +64,7 @@
 
                                         <!-- Recruitment Stage & Date -->
                                         <div class="flex items-center justify-between">
-                                            <div class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                            <div class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
                                                 <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                                 </svg>
@@ -95,7 +95,7 @@
                                     </div>
                                     <p class="text-xs text-gray-500 mb-3">No applications yet</p>
                                     <button onclick="openJobModal()" 
-                                            class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors duration-200">
+                                            class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-primary-600 bg-primary-50 hover:bg-primary-100 rounded-lg transition-colors duration-200">
                                         <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                                         </svg>
@@ -116,7 +116,7 @@
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">No Job Applications Yet</h3>
                     <p class="text-gray-500 mb-4">Start tracking your job applications by adding your first one.</p>
                     <button onclick="openJobModal()" 
-                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200">
+                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-lg transition-colors duration-200">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                         </svg>

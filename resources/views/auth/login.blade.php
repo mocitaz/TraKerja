@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="min-h-screen bg-gray-50 flex">
         <!-- Left Side - Branding -->
-        <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0056B3] via-[#1e40af] to-[#28A745] relative overflow-hidden">
+        <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-500 relative overflow-hidden">
             <!-- Animated Background Elements -->
             <div class="absolute top-10 left-8 w-72 h-72 bg-white/5 rounded-full mix-blend-multiply filter blur-2xl animate-pulse"></div>
             <div class="absolute top-32 right-16 w-48 h-48 bg-white/8 rounded-full mix-blend-multiply filter blur-xl animate-bounce" style="animation-duration: 3s;"></div>
@@ -42,8 +42,8 @@
                 
                 <!-- Welcome Section -->
                 <div class="mb-10">
-                    <h2 class="text-4xl font-bold mb-4 drop-shadow-lg">Welcome Back</h2>
-                    <p class="text-white/90 text-xl leading-relaxed">Continue your job search journey with intelligent tracking and powerful insights</p>
+                    <h2 class="text-4xl font-bold mb-4 drop-shadow-lg">Selamat Datang Kembali</h2>
+                    <p class="text-white/90 text-xl leading-relaxed">Lanjutkan pencarian kerja Anda dengan tracking cerdas dan insight yang powerful</p>
                 </div>
                 
                 <!-- Enhanced Features -->
@@ -55,8 +55,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-white font-semibold text-lg">Track Applications</h3>
-                            <p class="text-white/80">Monitor all your job applications in one place</p>
+                            <h3 class="text-white font-semibold text-lg">Lacak Aplikasi</h3>
+                            <p class="text-white/80">Monitor semua lamaran kerja Anda di satu tempat</p>
                         </div>
                     </div>
                     
@@ -67,8 +67,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-white font-semibold text-lg">Progress Analytics</h3>
-                            <p class="text-white/80">Get detailed insights on your job search progress</p>
+                            <h3 class="text-white font-semibold text-lg">Analisis Progress</h3>
+                            <p class="text-white/80">Dapatkan insight detail tentang progres pencarian kerja</p>
                         </div>
                     </div>
                     
@@ -79,8 +79,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-white font-semibold text-lg">Stay Organized</h3>
-                            <p class="text-white/80">Keep your job search focused and efficient</p>
+                            <h3 class="text-white font-semibold text-lg">Tetap Terorganisir</h3>
+                            <p class="text-white/80">Jaga pencarian kerja tetap fokus dan efisien</p>
                         </div>
                     </div>
                 </div>
@@ -120,8 +120,8 @@
                 <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8">
                     <!-- Form Header -->
                     <div class="text-center mb-8">
-                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
-                        <p class="text-gray-600">Sign in to continue your journey</p>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Selamat Datang Kembali</h2>
+                        <p class="text-gray-600">Masuk untuk melanjutkan perjalanan Anda</p>
                     </div>
 
                     <!-- Form -->
@@ -130,7 +130,7 @@
 
                         <!-- Email -->
                         <div>
-                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Alamat Email</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -143,8 +143,8 @@
                                        autocomplete="email" 
                                        required 
                                        value="{{ old('email') }}"
-                                       class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('email') border-red-300 bg-red-50/50 @enderror"
-                                       placeholder="Enter your email">
+                                       class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('email') border-red-300 bg-red-50/50 @enderror"
+                                       placeholder="Masukkan email Anda">
                             </div>
                             @error('email')
                                 <p class="mt-2 text-sm text-red-600 flex items-center">
@@ -158,7 +158,7 @@
 
                         <!-- Password -->
                         <div>
-                            <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                            <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Kata Sandi</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,8 +170,8 @@
                                        type="password" 
                                        autocomplete="current-password" 
                                        required
-                                       class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('password') border-red-300 bg-red-50/50 @enderror"
-                                       placeholder="Enter your password">
+                                       class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('password') border-red-300 bg-red-50/50 @enderror"
+                                       placeholder="Masukkan kata sandi Anda">
                             </div>
                             @error('password')
                                 <p class="mt-2 text-sm text-red-600 flex items-center">
@@ -185,40 +185,48 @@
 
                         <!-- Remember Me & Forgot Password -->
                         <div class="flex items-center justify-between">
-                            <div class="flex items-center">
+                            <div class="flex items-center group cursor-pointer">
                                 <input id="remember_me" 
                                        name="remember" 
                                        type="checkbox" 
-                                       class="h-4 w-4 text-[#0056B3] focus:ring-[#0056B3] border-gray-300 rounded">
-                                <label for="remember_me" class="ml-2 block text-sm font-medium text-gray-700">
-                                    Remember me
+                                       class="h-5 w-5 text-primary-600 focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 border-gray-300 rounded cursor-pointer transition-all duration-200">
+                                <label for="remember_me" class="ml-3 block text-sm font-semibold text-gray-700 cursor-pointer group-hover:text-primary-600 transition-colors duration-200">
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1.5 text-primary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                        Ingat Saya
+                                    </span>
                                 </label>
                             </div>
 
                             @if (Route::has('password.request'))
                                 <a href="{{ route('password.request') }}" 
-                                   class="text-sm text-[#0056B3] hover:text-[#003d82] font-semibold transition-colors">
-                                    Forgot password?
+                                   class="text-sm text-primary-600 hover:text-primary-700 font-semibold transition-colors duration-200 flex items-center group">
+                                    Lupa Password?
+                                    <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
                                 </a>
                             @endif
                         </div>
 
                         <!-- Submit Button -->
                         <button type="submit" 
-                                class="w-full flex justify-center items-center py-4 px-6 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-gradient-to-r from-[#0056B3] to-[#28A745] hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0056B3] transition-all duration-200">
+                                class="w-full flex justify-center items-center py-4 px-6 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-gradient-to-r from-primary-600 to-secondary-500 hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-600 transition-all duration-200">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
                             </svg>
-                            Sign In
+                            Masuk
                         </button>
                     </form>
 
                     <!-- Register Link -->
                     <div class="mt-8 text-center">
                         <p class="text-sm text-gray-600">
-                            Don't have an account?
-                            <a href="{{ route('register') }}" class="font-bold text-[#0056B3] hover:text-[#003d82] transition-colors">
-                                Sign up here
+                            Belum punya akun?
+                            <a href="{{ route('register') }}" class="font-bold text-primary-600 hover:text-primary-700 transition-colors">
+                                Daftar di sini
                             </a>
                         </p>
                     </div>

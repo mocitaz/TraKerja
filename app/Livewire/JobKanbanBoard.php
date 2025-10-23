@@ -2,6 +2,9 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\JobApplication;
 use Livewire\Component;
 

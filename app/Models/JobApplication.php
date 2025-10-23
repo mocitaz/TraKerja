@@ -22,6 +22,10 @@ class JobApplication extends Model
         'career_level',
         'platform_link',
         'application_date',
+        'interview_date',
+        'interview_notes',
+        'interview_type',
+        'interview_location',
         'notes',
     ];
 
@@ -46,7 +50,40 @@ class JobApplication extends Model
 
     protected $casts = [
         'application_date' => 'date',
+        'interview_date' => 'datetime',
     ];
+    
+    /**
+     * Check if this application has an interview scheduled
+     */
+    public function hasInterview(): bool
+    {
+        return !is_null($this->interview_date);
+    }
+    
+    /**
+     * Check if interview is upcoming (in the future)
+     */
+    public function hasUpcomingInterview(): bool
+    {
+        return $this->hasInterview() && $this->interview_date->isFuture();
+    }
+    
+    /**
+     * Check if interview was in the past
+     */
+    public function hasPastInterview(): bool
+    {
+        return $this->hasInterview() && $this->interview_date->isPast();
+    }
+    
+    /**
+     * Get formatted interview date
+     */
+    public function getFormattedInterviewDateAttribute(): ?string
+    {
+        return $this->interview_date ? $this->interview_date->format('d M Y, H:i') : null;
+    }
 
     /**
      * Get the user that owns the job application.

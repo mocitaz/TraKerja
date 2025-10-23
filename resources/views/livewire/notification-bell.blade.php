@@ -79,8 +79,8 @@
                                         </svg>
                                     </div>
                                 @else
-                                    <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
-                                        <svg class="w-3 h-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="w-6 h-6 bg-primary-100 rounded-full flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                         </svg>
                                     </div>

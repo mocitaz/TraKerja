@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="min-h-screen bg-gray-50 flex">
         <!-- Left Side - Branding -->
-        <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0056B3] via-[#1e40af] to-[#28A745] relative overflow-hidden">
+        <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-500 relative overflow-hidden">
             <!-- Animated Background Elements -->
             <div class="absolute top-10 left-8 w-72 h-72 bg-white/5 rounded-full mix-blend-multiply filter blur-2xl animate-pulse"></div>
             <div class="absolute top-32 right-16 w-48 h-48 bg-white/8 rounded-full mix-blend-multiply filter blur-xl animate-bounce" style="animation-duration: 3s;"></div>
@@ -143,7 +143,7 @@
                                    autocomplete="name" 
                                    required 
                                    value="{{ old('name') }}"
-                                   class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('name') border-red-300 bg-red-50/50 @enderror"
+                                   class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('name') border-red-300 bg-red-50/50 @enderror"
                                    placeholder="Enter your full name">
                         </div>
                         @error('name')
@@ -171,7 +171,7 @@
                                    autocomplete="email" 
                                    required 
                                    value="{{ old('email') }}"
-                                   class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('email') border-red-300 bg-red-50/50 @enderror"
+                                   class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('email') border-red-300 bg-red-50/50 @enderror"
                                    placeholder="Enter your email">
                         </div>
                         @error('email')
@@ -199,7 +199,7 @@
                                    autocomplete="new-password" 
                                    required
                                    minlength="8"
-                                   class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('password') border-red-300 bg-red-50/50 @enderror"
+                                   class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('password') border-red-300 bg-red-50/50 @enderror"
                                    placeholder="Create a strong password"
                                    oninput="validatePassword(this.value)">
                         </div>
@@ -262,7 +262,7 @@
                                    type="password" 
                                    autocomplete="new-password" 
                                    required
-                                   class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent transition-all duration-200 bg-gray-50/50"
+                                   class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-200 bg-gray-50/50"
                                    placeholder="Confirm your password">
                         </div>
                     </div>
@@ -274,21 +274,21 @@
                                    name="terms" 
                                    type="checkbox" 
                                    required
-                                   class="h-4 w-4 text-[#0056B3] focus:ring-[#0056B3] border-gray-300 rounded">
+                                   class="h-4 w-4 text-primary-600 focus:ring-primary-600 border-gray-300 rounded">
                         </div>
                         <div class="ml-3 text-sm">
                             <label for="terms" class="text-gray-700">
                                 I agree to the 
-                                <a href="#" class="text-[#0056B3] hover:text-[#003d82] font-semibold">Terms of Service</a> 
+                                <a href="#" class="text-primary-600 hover:text-primary-700 font-semibold">Terms of Service</a> 
                                 and 
-                                <a href="#" class="text-[#0056B3] hover:text-[#003d82] font-semibold">Privacy Policy</a>
+                                <a href="#" class="text-primary-600 hover:text-primary-700 font-semibold">Privacy Policy</a>
                             </label>
                         </div>
                     </div>
 
                     <!-- Submit Button -->
                     <button type="submit" 
-                            class="w-full flex justify-center items-center py-4 px-6 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-gradient-to-r from-[#0056B3] to-[#28A745] hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0056B3] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                            class="w-full flex justify-center items-center py-4 px-6 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-gradient-to-r from-primary-600 to-secondary-500 hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
                         </svg>
@@ -300,7 +300,7 @@
                     <div class="mt-8 text-center">
                         <p class="text-sm text-gray-600">
                             Already have an account?
-                            <a href="{{ route('login') }}" class="font-bold text-[#0056B3] hover:text-[#003d82] transition-colors">
+                            <a href="{{ route('login') }}" class="font-bold text-primary-600 hover:text-primary-700 transition-colors">
                                 Sign in here
                             </a>
                         </p>

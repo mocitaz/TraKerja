@@ -51,7 +51,7 @@
                         <th scope="col" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">
                             No
                         </th>
-                        <th scope="col" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider cursor-pointer hover:text-blue-600 transition-colors" 
+                        <th scope="col" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider cursor-pointer hover:text-primary-600 transition-colors" 
                             wire:click="sortBy('company_name')">
                             <div class="flex items-center justify-center space-x-1">
                                 <span>Company</span>
@@ -66,7 +66,7 @@
                                 @endif
                             </div>
                         </th>
-                        <th scope="col" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider cursor-pointer hover:text-blue-600 transition-colors" 
+                        <th scope="col" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider cursor-pointer hover:text-primary-600 transition-colors" 
                             wire:click="sortBy('position')">
                             <div class="flex items-center justify-center space-x-1">
                                 <span>Position</span>
@@ -81,7 +81,7 @@
                                 @endif
                             </div>
                         </th>
-                        <th scope="col" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider cursor-pointer hover:text-blue-600 transition-colors" 
+                        <th scope="col" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider cursor-pointer hover:text-primary-600 transition-colors" 
                             wire:click="sortBy('location')">
                             <div class="flex items-center justify-center space-x-1">
                                 <span>Location</span>
@@ -108,7 +108,7 @@
                         <th scope="col" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">
                             Level
                         </th>
-                        <th scope="col" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider cursor-pointer hover:text-blue-600 transition-colors" 
+                        <th scope="col" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider cursor-pointer hover:text-primary-600 transition-colors" 
                             wire:click="sortBy('application_date')">
                             <div class="flex items-center justify-center space-x-1">
                                 <span>Applied</span>
@@ -136,11 +136,11 @@
                             </td>
                             <td class="px-4 py-3 whitespace-nowrap text-center">
                                 <div>
-                                    <div class="text-sm font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                                    <div class="text-sm font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
                                         {{ $job->company_name }}
                                     </div>
                                     @if($job->platform_link)
-                                        <a href="{{ $job->platform_link }}" target="_blank" class="text-xs text-blue-600 hover:text-blue-800 flex items-center justify-center mt-1">
+                                        <a href="{{ $job->platform_link }}" target="_blank" class="text-xs text-primary-600 hover:text-primary-800 flex items-center justify-center mt-1">
                                             <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
                                             </svg>
@@ -176,7 +176,7 @@
                                 </span>
                             </td>
                             <td class="px-4 py-3 whitespace-nowrap text-center text-sm text-gray-600">
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
                                     {{ $job->recruitment_stage ?? 'Applied' }}
                                 </span>
                             </td>
@@ -196,7 +196,7 @@
                             <td class="px-4 py-3 whitespace-nowrap text-center text-sm font-medium" onclick="event.stopPropagation();">
                                 <div class="flex items-center justify-center space-x-2">
                                     <button wire:click="edit({{ $job->id }})" 
-                                            class="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 group"
+                                            class="p-2 text-gray-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all duration-200 group"
                                             onclick="event.stopPropagation(); event.preventDefault(); console.log('Edit button clicked for job:', {{ $job->id }}); window.dispatchEvent(new CustomEvent('edit-job', { detail: { jobId: {{ $job->id }} } }));">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
@@ -221,7 +221,7 @@
                                     </svg>
                                     <h3 class="text-lg font-medium text-gray-900 mb-2">No job applications found</h3>
                                     <p class="text-gray-500 mb-6">Try adjusting your search or add a new application</p>
-                                    <button onclick="openJobModal()" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                    <button onclick="openJobModal()" class="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
                                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                         </svg>

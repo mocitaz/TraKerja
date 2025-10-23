@@ -28,6 +28,20 @@
                    class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('goals') ? 'bg-[#0056B3]/10 text-[#0056B3]' : 'text-gray-600 hover:text-[#0056B3] hover:bg-gray-50' }}">
                     <span>Goals</span>
                 </a>
+                <a href="{{ route('cv.builder') }}"
+                   class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('cv.*') ? 'bg-[#0056B3]/10 text-[#0056B3]' : 'text-gray-600 hover:text-[#0056B3] hover:bg-gray-50' }}">
+                    <span>CV Builder</span>
+                    @if(is_premium(auth()->user()))
+                        <span class="ml-1 px-1.5 py-0.5 text-xs bg-yellow-100 text-yellow-800 rounded">PRO</span>
+                    @endif
+                </a>
+                @if(auth()->user()->isAdmin())
+                    <a href="{{ route('admin.index') }}"
+                       class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.*') ? 'bg-purple-100 text-purple-600' : 'text-purple-600 hover:bg-purple-50' }}">
+                        <i class="fas fa-shield-alt mr-1"></i>
+                        <span>Admin</span>
+                    </a>
+                @endif
             </div>
 
             <!-- Right Section: User Menu -->
