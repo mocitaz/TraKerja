@@ -1,61 +1,291 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎯 JobTracker
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<div align="center">
 
-## About Laravel
+![Laravel](https://img.shields.io/badge/Laravel-12.x-red.svg?style=for-the-badge&logo=laravel)
+![Livewire](https://img.shields.io/badge/Livewire-3.6-orange.svg?style=for-the-badge)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.1-blue.svg?style=for-the-badge&logo=tailwindcss)
+![PHP](https://img.shields.io/badge/PHP-8.2+-purple.svg?style=for-the-badge&logo=php)
+![Vite](https://img.shields.io/badge/Vite-7.0+-yellow.svg?style=for-the-badge&logo=vite)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**A comprehensive job application tracking system built with Laravel & Livewire**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+[🚀 Live Demo](#-live-demo) • [📖 Documentation](#-documentation) • [⚡ Quick Start](#-quick-start) • [🤝 Contributing](#-contributing)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+</div>
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## ✨ Features
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 📊 **Smart Dashboard & Analytics**
+- **Real-time Analytics Cards** - Track applications, interviews, and success rates
+- **Career Summary Pro** - Comprehensive career insights and statistics
+- **Visual Progress Tracking**  - Beautiful charts and progress indicators
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 📋 **Job Application Management**
+- **Kanban Board** - Drag-and-drop interface for managing application status
+- **Detailed Job Records** - Company info, position, location, platform, and notes
+- **Status Tracking** - On Process, Declined, Accepted with color-coded indicators
+- **Recruitment Stage Management** - Track HR interviews, user interviews, follow-ups
 
-## Laravel Sponsors
+### 🎯 **Goals & Cadence System**
+- **Weekly Goal Setting** - Set targets for applications and follow-ups
+- **Progress Monitoring** - Real-time progress tracking with percentage completion
+- **Streak Tracking** - Monitor consecutive days meeting daily targets
+- **Smart Notifications** - Milestone alerts and achievement celebrations
+- **Cadence Effect Analysis** - Compare performance when goals are met vs missed
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 📈 **Advanced Analytics**
+- **Export Functionality** - CSV export for job applications and statistics
+- **Historical Data** - 8-week history tracking and trend analysis
+- **Performance Insights** - Target achievement rates and improvement suggestions
 
-### Premium Partners
+### 👤 **User Management**
+- **Profile Management** - Customizable user profiles with logo upload
+- **Secure Authentication** - Laravel Breeze with email verification
+- **Password Security** - Strong password validation and secure updates
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 🛠️ Tech Stack
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Backend
+- **Laravel 12.x** - Modern PHP framework
+- **Livewire 3.6** - Full-stack framework for dynamic UIs
+- **SQLite** - Lightweight database (easily configurable for MySQL/PostgreSQL)
 
-## Code of Conduct
+### Frontend
+- **TailwindCSS 3.1** - Utility-first CSS framework
+- **Alpine.js 3.4** - Lightweight JavaScript framework
+- **Vite 7.0** - Fast build tool and dev server
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Development Tools
+- **Laravel Pint** - Code style fixer
+- **PHPUnit** - Testing framework
+- **Faker** - Data generation for testing
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🚀 Quick Start
 
-## License
+### Prerequisites
+- PHP 8.2 or higher
+- Composer
+- Node.js & NPM
+- SQLite (or MySQL/PostgreSQL)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/jobtracker.git
+   cd jobtracker
+   ```
+
+2. **Install dependencies**
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. **Environment setup**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+4. **Database setup**
+   ```bash
+   # For SQLite (default)
+   touch database/database.sqlite
+   php artisan migrate
+   
+   # Or for MySQL/PostgreSQL, update .env and run:
+   # php artisan migrate
+   ```
+
+5. **Build assets**
+   ```bash
+   npm run build
+   ```
+
+6. **Start the application**
+   ```bash
+   php artisan serve
+   ```
+
+7. **Access the application**
+   Open [http://localhost:8000](http://localhost:8000) in your browser
+
+### Development Mode
+
+For development with hot reloading:
+
+```bash
+# Terminal 1: Start Laravel server
+php artisan serve
+
+# Terminal 2: Start Vite dev server
+npm run dev
+
+# Terminal 3: Start queue worker (optional)
+php artisan queue:work
+```
+
+---
+
+## 📱 Screenshots
+
+### Dashboard Overview
+![Dashboard](https://via.placeholder.com/800x400/3B82F6/FFFFFF?text=Dashboard+Overview)
+
+### Kanban Board
+![Kanban Board](https://via.placeholder.com/800x400/10B981/FFFFFF?text=Kanban+Board)
+
+### Goals Management
+![Goals](https://via.placeholder.com/800x400/F59E0B/FFFFFF?text=Goals+Management)
+
+### Analytics
+![Analytics](https://via.placeholder.com/800x400/8B5CF6/FFFFFF?text=Analytics+Dashboard)
+
+---
+
+## 🏗️ Project Structure
+
+```
+JobTracker/
+├── app/
+│   ├── Http/Controllers/     # API and web controllers
+│   ├── Livewire/            # Livewire components
+│   ├── Models/              # Eloquent models
+│   └── Services/            # Business logic services
+├── database/
+│   ├── migrations/          # Database migrations
+│   └── seeders/            # Database seeders
+├── resources/
+│   ├── views/              # Blade templates
+│   └── css/                # Stylesheets
+└── tests/                  # Test files
+```
+
+---
+
+## 🔧 Configuration
+
+### Database Configuration
+Update your `.env` file with your database credentials:
+
+```env
+DB_CONNECTION=sqlite
+DB_DATABASE=/absolute/path/to/database.sqlite
+
+# Or for MySQL/PostgreSQL:
+# DB_CONNECTION=mysql
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=jobtracker
+# DB_USERNAME=root
+# DB_PASSWORD=
+```
+
+### Mail Configuration
+Configure mail settings for notifications:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=your-smtp-host
+MAIL_PORT=587
+MAIL_USERNAME=your-email
+MAIL_PASSWORD=your-password
+MAIL_ENCRYPTION=tls
+```
+
+---
+
+## 🧪 Testing
+
+Run the test suite:
+
+```bash
+# Run all tests
+php artisan test
+
+# Run specific test
+php artisan test --filter=JobApplicationTest
+
+# Run with coverage
+php artisan test --coverage
+```
+
+---
+
+## 📊 API Endpoints
+
+### Job Applications
+- `GET /tracker` - Job tracker dashboard
+- `GET /jobs/{id}` - View specific job application
+- `POST /job-applications` - Create new job application
+- `PUT /job-applications/{id}` - Update job application
+- `DELETE /job-applications/{id}` - Delete job application
+
+### Export
+- `GET /export/job-applications/csv` - Export job applications to CSV
+- `GET /export/job-applications/stats` - Get export statistics
+
+### Goals
+- `GET /goals` - Goals management page
+- `POST /goals` - Set weekly goals
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Guidelines
+- Follow PSR-12 coding standards
+- Write tests for new features
+- Update documentation as needed
+- Use conventional commit messages
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- [Laravel](https://laravel.com) - The amazing PHP framework
+- [Livewire](https://livewire.laravel.com) - Full-stack framework
+- [TailwindCSS](https://tailwindcss.com) - Utility-first CSS framework
+- [Vite](https://vitejs.dev) - Next generation frontend tooling
+
+---
+
+## 📞 Support
+
+If you have any questions or need help:
+
+- 📧 Email: support@jobtracker.com
+- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/jobtracker/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/yourusername/jobtracker/discussions)
+
+---
+
+<div align="center">
+
+**Made with ❤️ by [Luthfi Fauzi](https://github.com/mocitaz)**
+
+[⭐ Star this repo](https://github.com/mocitaz/jobtracker) • [🐛 Report Bug](https://github.com/mocitaz/jobtracker/issues) • [💡 Request Feature](https://github.com/yourusername/jobtracker/issues)
+
+</div>
