@@ -22,24 +22,24 @@ export default {
           200: "#ddd6fe", // Light purple
           300: "#c4b5fd", // Soft purple
           400: "#a78bfa", // Medium light purple
-          500: "#8b5cf6", // Main brand purple (base)
-          600: "#7c3aed", // Medium purple
-          700: "#6d28d9", // Strong purple
-          800: "#5b21b6", // Dark purple
-          900: "#4c1d95", // Darkest purple
-          950: "#2e1065" // Ultra dark purple
+          500: "#a570f0", // Main brand purple (base)
+          600: "#a570f0", // Medium purple
+          700: "#9333ea", // Strong purple
+          800: "#7c3aed", // Dark purple
+          900: "#6d28d9", // Darkest purple
+          950: "#4c1d95" // Ultra dark purple
         },
         secondary: {
-          50: "#faf5ff", // Very light lavender
-          100: "#f3e8ff", // Light lavender
-          200: "#e9d5ff", // Soft lavender
-          300: "#d8b4fe", // Medium lavender
-          400: "#c084fc", // Light violet
-          500: "#a855f7", // Medium violet
-          600: "#9333ea", // Strong violet
-          700: "#7e22ce", // Deep violet
-          800: "#6b21a8", // Dark violet
-          900: "#581c87" // Darkest violet
+          50: "#f0f4ff", // Very light blue-purple
+          100: "#e0e9ff", // Light blue-purple
+          200: "#c1d3ff", // Soft blue-purple
+          300: "#a2bdff", // Medium blue-purple
+          400: "#83a7ff", // Light blue-purple
+          500: "#4e71c5", // Medium blue-purple
+          600: "#4e71c5", // Strong blue-purple
+          700: "#4563b1", // Deep blue-purple
+          800: "#3c559d", // Dark blue-purple
+          900: "#334789" // Darkest blue-purple
         },
         accent: {
           50: "#fdf4ff", // Very light pink-purple

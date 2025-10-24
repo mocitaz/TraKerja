@@ -1,5 +1,5 @@
 <div class="bg-white rounded-xl shadow-lg p-8">
-    <h2 class="text-3xl font-bold mb-6 flex items-center gap-3 bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
+    <h2 class="text-3xl font-bold mb-6 flex items-center gap-3 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
         💎 Monetization Control
     </h2>
     

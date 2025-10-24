@@ -13,7 +13,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
+                        <h2 class="text-2xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
                             CV Generator
                         </h2>
                         <p class="text-xs text-gray-500 mt-0.5">Generate your professional CV</p>

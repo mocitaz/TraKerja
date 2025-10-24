@@ -124,6 +124,18 @@
                         <p class="text-gray-600">Start your job tracking journey</p>
                     </div>
 
+                    <!-- Success Notification -->
+                    @if (session('status') === 'registration-successful')
+                        <div id="registration-success-notification" class="mb-6 bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 p-4 rounded-xl shadow-sm opacity-0 transform -translate-y-2 transition-all duration-300">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <p class="text-sm font-medium text-green-800">Registration successful! Welcome to TraKerja!</p>
+                            </div>
+                        </div>
+                    @endif
+
                 <!-- Form -->
                 <form method="POST" action="{{ route('register') }}" class="space-y-6">
                     @csrf
@@ -361,6 +373,30 @@
             if (passwordInput) {
                 validatePassword(passwordInput.value);
             }
+            
+            // Handle registration success notification
+            @if (session('status') === 'registration-successful')
+                const notification = document.getElementById('registration-success-notification');
+                if (notification) {
+                    // Show notification with animation
+                    setTimeout(() => {
+                        notification.classList.remove('opacity-0', '-translate-y-2');
+                        notification.classList.add('opacity-100', 'translate-y-0');
+                    }, 100);
+                    
+                    // Redirect after 3 seconds
+                    setTimeout(() => {
+                        // Hide notification with animation
+                        notification.classList.remove('opacity-100', 'translate-y-0');
+                        notification.classList.add('opacity-0', '-translate-y-2');
+                        
+                        // Redirect after animation completes
+                        setTimeout(() => {
+                            window.location.href = '{{ route('dashboard') }}';
+                        }, 300);
+                    }, 3000);
+                }
+            @endif
         });
     </script>
 </x-guest-layout>

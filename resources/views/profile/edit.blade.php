@@ -13,9 +13,9 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
+                        <h2 class="text-2xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
                             Profile Settings
-        </h2>
+                        </h2>
                         <p class="text-xs text-gray-500 mt-0.5">Smart Tracking untuk Job Seeker</p>
                     </div>
                 </div>
@@ -47,12 +47,12 @@
             @endif
 
             @if (session('status') === 'personal-info-updated')
-                <div class="mb-6 bg-gradient-to-r from-purple-50 to-purple-100 border-l-4 border-purple-500 p-4 rounded-xl shadow-sm">
+                <div class="mb-6 bg-gradient-to-r from-primary-50 to-primary-100 border-l-4 border-primary-500 p-4 rounded-xl shadow-sm">
                     <div class="flex items-center">
-                        <svg class="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-primary-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        <p class="text-sm font-medium text-purple-800">Personal information updated successfully!</p>
+                        <p class="text-sm font-medium text-primary-800">Personal information updated successfully!</p>
                     </div>
                 </div>
             @endif
@@ -70,7 +70,7 @@
 
             <!-- Profile Header -->
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8">
-                <div class="bg-gradient-to-r from-purple-600 to-purple-800 px-8 py-6">
+                <div class="bg-gradient-to-r from-[#d983e4] to-[#4e71c5] px-8 py-6">
                     <div class="flex items-center space-x-6">
                         <!-- Profile Photo -->
                         <div class="relative">

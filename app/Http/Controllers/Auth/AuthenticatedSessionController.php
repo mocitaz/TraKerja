@@ -28,6 +28,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // Flash success message
+        $request->session()->flash('status', 'login-successful');
+
         // Redirect admin to admin dashboard, regular users to tracker
         if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
             return redirect()->intended(route('admin.index', absolute: false));
