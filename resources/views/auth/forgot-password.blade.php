@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="min-h-screen bg-gray-50 flex">
         <!-- Left Side - Branding -->
-        <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0056B3] via-[#1e40af] to-[#28A745] relative overflow-hidden">
+        <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-500 relative overflow-hidden">
             <!-- Animated Background Elements -->
             <div class="absolute top-10 left-8 w-72 h-72 bg-white/5 rounded-full mix-blend-multiply filter blur-2xl animate-pulse"></div>
             <div class="absolute top-32 right-16 w-48 h-48 bg-white/8 rounded-full mix-blend-multiply filter blur-xl animate-bounce" style="animation-duration: 3s;"></div>
@@ -42,8 +42,8 @@
                 
                 <!-- Welcome Section -->
                 <div class="mb-10">
-                    <h2 class="text-4xl font-bold mb-4 drop-shadow-lg">Forgot Password?</h2>
-                    <p class="text-white/90 text-xl leading-relaxed">Don't worry! We'll help you get back on track quickly and securely</p>
+                    <h2 class="text-4xl font-bold mb-4 drop-shadow-lg">Lupa Password?</h2>
+                    <p class="text-white/90 text-xl leading-relaxed">Jangan khawatir! Kami akan membantu Anda reset password dengan cepat dan aman</p>
                 </div>
                 
                 <!-- Enhanced Features -->
@@ -55,8 +55,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-white font-semibold text-lg">Secure Email Verification</h3>
-                            <p class="text-white/80">We'll send a secure reset link to your email</p>
+                            <h3 class="text-white font-semibold text-lg">Verifikasi Email Aman</h3>
+                            <p class="text-white/80">Kami akan mengirim link reset yang aman ke email Anda</p>
                         </div>
                     </div>
                     
@@ -67,8 +67,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-white font-semibold text-lg">Quick Recovery</h3>
-                            <p class="text-white/80">Reset your password in just a few minutes</p>
+                            <h3 class="text-white font-semibold text-lg">Pemulihan Cepat</h3>
+                            <p class="text-white/80">Reset password Anda hanya dalam beberapa menit</p>
                         </div>
                     </div>
                     
@@ -79,8 +79,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-white font-semibold text-lg">Account Protection</h3>
-                            <p class="text-white/80">Your account security is our top priority</p>
+                            <h3 class="text-white font-semibold text-lg">Perlindungan Akun</h3>
+                            <p class="text-white/80">Keamanan akun Anda adalah prioritas utama kami</p>
                         </div>
                     </div>
                 </div>
@@ -120,8 +120,8 @@
                 <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8">
                     <!-- Form Header -->
                     <div class="text-center mb-8">
-                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Forgot Password?</h2>
-                        <p class="text-gray-600">Enter your email address and we'll send you a password reset link</p>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Lupa Password?</h2>
+                        <p class="text-gray-600">Masukkan alamat email Anda dan kami akan mengirimkan link reset password</p>
                     </div>
 
                 <!-- Status Messages -->
@@ -133,7 +133,7 @@
 
                     <!-- Email -->
                     <div>
-                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Alamat Email</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -146,8 +146,8 @@
                                    autocomplete="email" 
                                    required 
                                    value="{{ old('email') }}"
-                                   class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('email') border-red-300 bg-red-50/50 @enderror"
-                                   placeholder="Enter your email address">
+                                   class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('email') border-red-300 bg-red-50/50 @enderror"
+                                   placeholder="Masukkan alamat email Anda">
                         </div>
                         @error('email')
                             <p class="mt-2 text-sm text-red-600 flex items-center">
@@ -161,39 +161,39 @@
 
                     <!-- Submit Button -->
                     <button type="submit" 
-                            class="w-full flex justify-center items-center py-4 px-6 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-gradient-to-r from-[#0056B3] to-[#28A745] hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0056B3] transition-all duration-200">
+                            class="w-full flex justify-center items-center py-4 px-6 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-gradient-to-r from-primary-600 to-secondary-500 hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-600 transition-all duration-200">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                         </svg>
-                        Send Reset Link
+                        Kirim Link Reset
                     </button>
                 </form>
 
                 <!-- Back to Login -->
                 <div class="mt-8 text-center">
                     <p class="text-sm text-gray-600">
-                        Remember your password?
-                        <a href="{{ route('login') }}" class="font-bold text-[#0056B3] hover:text-[#003d82] transition-colors">
-                            Back to login
+                        Sudah ingat password?
+                        <a href="{{ route('login') }}" class="font-bold text-primary-600 hover:text-primary-700 transition-colors">
+                            Kembali ke login
                         </a>
                     </p>
                 </div>
 
                 <!-- Help Information -->
-                <div class="mt-6 bg-gray-50/50 border border-gray-200 rounded-xl p-4">
+                <div class="mt-6 bg-primary-50/50 border border-primary-200 rounded-xl p-4">
                     <div class="flex items-start space-x-3">
                         <div class="flex-shrink-0">
-                            <div class="w-8 h-8 bg-[#FFC107]/20 rounded-full flex items-center justify-center">
-                                <svg class="w-4 h-4 text-[#FFC107]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                                <svg class="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                             </div>
                         </div>
                         <div>
-                            <h4 class="text-sm font-semibold text-gray-900">Need Help?</h4>
+                            <h4 class="text-sm font-semibold text-gray-900">Butuh Bantuan?</h4>
                             <p class="text-xs text-gray-600 mt-1">
-                                If you don't receive the email within a few minutes, check your spam folder. 
-                                The reset link will expire in 60 minutes for security.
+                                Jika Anda tidak menerima email dalam beberapa menit, cek folder spam. 
+                                Link reset akan kadaluarsa dalam 60 menit untuk keamanan.
                             </p>
                         </div>
                     </div>

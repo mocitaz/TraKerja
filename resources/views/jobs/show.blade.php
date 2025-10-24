@@ -13,20 +13,20 @@
             <div class="bg-white border border-gray-100 shadow-sm rounded-2xl p-6">
                 @php
                     $statusColor = [
-                        'On Process' => '#2563eb', // blue-600
+                        'On Process' => '#9333ea', // purple-600
                         'Declined' => '#dc2626',   // red-600
-                        'Accepted' => '#16a34a',   // green-600
+                        'Accepted' => '#10b981',   // emerald-500
                     ][$job->application_status ?? 'On Process'] ?? '#2563eb';
                     $stageColor = [
-                        'Applied' => '#2563eb',          // blue-600
+                        'Applied' => '#9333ea',          // purple-600
                         'Follow Up' => '#0ea5e9',        // sky-600
                         'Assessment Test' => '#7c3aed',  // violet-600
                         'Psychotest' => '#9333ea',       // purple-600
                         'HR - Interview' => '#f59e0b',   // amber-500
                         'User - Interview' => '#f97316', // orange-500
                         'LGD' => '#1d4ed8',              // blue-700
-                        'Presentation Round' => '#22c55e', // green-500
-                        'Offering' => '#16a34a',         // green-600
+                        'Presentation Round' => '#10b981', // emerald-500
+                        'Offering' => '#059669',         // emerald-600
                         'Not Processed' => '#6b7280',    // gray-500
                     ][$job->recruitment_stage ?? 'Applied'] ?? '#6b7280';
                 @endphp

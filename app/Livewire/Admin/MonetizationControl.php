@@ -10,9 +10,12 @@ use App\Models\User;
 
 class MonetizationControl extends Component
 {
-    public $currentPhase;
-    public $newPhase;
+    public $monetizationEnabled;
     public $showConfirmation = false;
+    public $actionType; // 'enable' or 'disable'
+    
+    // Premium pricing
+    public $premiumPrice;
     
     // Stats
     public $totalUsers = 0;
@@ -21,123 +24,202 @@ class MonetizationControl extends Component
     
     public function mount()
     {
-        $this->currentPhase = Setting::getMonetizationPhase();
+        $this->monetizationEnabled = Setting::get('monetization_enabled', false);
+        $this->premiumPrice = Setting::get('premium_price', 199000);
         $this->loadStats();
     }
     
     public function loadStats()
     {
-        $this->totalUsers = User::count();
-        $this->freeUsers = User::where('is_premium', false)->count();
-        $this->premiumUsers = User::where('is_premium', true)->count();
+        $this->totalUsers = User::where('role', '!=', 'admin')->count();
+        $this->freeUsers = User::where('role', '!=', 'admin')->where('is_premium', false)->count();
+        $this->premiumUsers = User::where('role', '!=', 'admin')->where('is_premium', true)->count();
     }
     
-    public function setPhase($phase)
+    public function toggleMonetization($enable)
     {
-        // Don't confirm if same phase
-        if ($phase == $this->currentPhase) {
-            $this->dispatch('showNotification', [
-                'type' => 'info',
-                'title' => 'Same Phase',
-                'message' => "Already in Phase {$phase}"
-            ]);
+        // Don't confirm if same state
+        if ($enable == $this->monetizationEnabled) {
             return;
         }
         
-        $this->newPhase = $phase;
+        $this->actionType = $enable ? 'enable' : 'disable';
         $this->showConfirmation = true;
     }
     
-    public function confirmSetPhase()
+    public function confirmToggle()
     {
-        // Update phase
-        Setting::set('monetization_phase', $this->newPhase);
+        $newState = $this->actionType === 'enable';
+        $oldState = $this->monetizationEnabled;
         
-        $oldPhase = $this->currentPhase;
-        $this->currentPhase = $this->newPhase;
+        // Update monetization state
+        Setting::set('monetization_enabled', $newState);
+        $this->monetizationEnabled = $newState;
         $this->showConfirmation = false;
         
         // Clear settings cache
         Setting::clearCache();
         
         // Log change
-        Log::info("Monetization phase changed from {$oldPhase} to {$this->newPhase}", [
+        Log::info("Monetization " . ($newState ? 'ENABLED' : 'DISABLED'), [
             'admin_id' => Auth::id(),
             'admin_name' => Auth::user()->name,
             'timestamp' => now(),
-            'total_users_affected' => $this->totalUsers
+            'total_users_affected' => $this->totalUsers,
+            'previous_state' => $oldState ? 'enabled' : 'disabled'
         ]);
+        
+        $message = $newState 
+            ? "Monetization ACTIVATED! Premium features now require payment."
+            : "Monetization DEACTIVATED! All features are now FREE for everyone.";
         
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Phase Updated!',
-            'message' => "Monetization phase successfully changed to Phase {$this->newPhase}: " . phase_name($this->newPhase)
+            'title' => $newState ? '💎 Monetization Enabled' : '🎁 Monetization Disabled',
+            'message' => $message
         ]);
         
         // Reload stats
         $this->loadStats();
     }
     
-    public function cancelSetPhase()
+    public function cancelToggle()
     {
-        $this->newPhase = null;
+        $this->actionType = null;
         $this->showConfirmation = false;
+    }
+    
+    public function updatePremiumPrice()
+    {
+        $this->validate([
+            'premiumPrice' => 'required|numeric|min:0'
+        ]);
+        
+        Setting::set('premium_price', $this->premiumPrice);
+        Setting::clearCache();
+        
+        Log::info("Premium price updated to Rp " . number_format($this->premiumPrice), [
+            'admin_id' => Auth::id(),
+            'admin_name' => Auth::user()->name,
+            'timestamp' => now()
+        ]);
+        
+        $this->dispatch('showNotification', [
+            'type' => 'success',
+            'title' => 'Price Updated!',
+            'message' => 'Premium price has been updated to Rp ' . number_format($this->premiumPrice)
+        ]);
     }
     
     public function render()
     {
-        // Get feature matrix for current phase
+        // Get feature matrix
         $featureMatrix = $this->buildFeatureMatrix();
         
         return view('livewire.admin.monetization-control', [
-            'featureMatrix' => $featureMatrix,
-            'phaseName' => phase_name($this->currentPhase),
-            'phaseEmoji' => phase_emoji($this->currentPhase)
+            'featureMatrix' => $featureMatrix
         ]);
     }
     
     private function buildFeatureMatrix()
     {
-        $featureAccess = Setting::get('feature_access', []);
-        $phaseKey = "phase_{$this->currentPhase}";
-        $phaseConfig = $featureAccess[$phaseKey] ?? [];
-        
-        // Transform phase config into readable matrix
-        $matrix = [
-            'CV Templates' => [
-                'free' => $phaseConfig['cv_templates_free'] ?? $phaseConfig['cv_templates'] ?? 5,
-                'premium' => $phaseConfig['cv_templates_premium'] ?? $phaseConfig['cv_templates'] ?? 5
-            ],
-            'CV Customization' => [
-                'free' => ($phaseConfig['cv_customization'] ?? 'free') === 'free',
-                'premium' => true
-            ],
-            'CV Watermark' => [
-                'free' => ($phaseConfig['cv_watermark_free'] ?? $phaseConfig['cv_watermark'] ?? false) ? 'Yes' : 'No',
-                'premium' => ($phaseConfig['cv_watermark_premium'] ?? false) ? 'Yes' : 'No'
-            ],
-            'CV Exports per Month' => [
-                'free' => $phaseConfig['cv_exports_free'] ?? $phaseConfig['cv_exports'] ?? 'unlimited',
-                'premium' => $phaseConfig['cv_exports_premium'] ?? 'unlimited'
-            ],
-            'Saved CV Configs' => [
-                'free' => $phaseConfig['saved_configs_free'] ?? $phaseConfig['saved_configs'] ?? 'unlimited',
-                'premium' => $phaseConfig['saved_configs_premium'] ?? 'unlimited'
-            ],
-            'Advanced Analytics' => [
-                'free' => ($phaseConfig['advanced_analytics'] ?? 'free') === 'free',
-                'premium' => true
-            ],
-            'Interview Reminders' => [
-                'free' => ($phaseConfig['interview_reminders'] ?? 'free') === 'free',
-                'premium' => true
-            ],
-            'Calendar Export' => [
-                'free' => ($phaseConfig['calendar_export'] ?? 'free') === 'free',
-                'premium' => true
-            ]
-        ];
-        
-        return $matrix;
+        // Define feature access based on monetization state
+        if (!$this->monetizationEnabled) {
+            // All features FREE when monetization is OFF
+            return [
+                'Job Application Tracker' => [
+                    'free' => '✅ Unlimited',
+                    'premium' => '✅ Unlimited'
+                ],
+                'CV Builder Access' => [
+                    'free' => '✅ Yes',
+                    'premium' => '✅ Yes'
+                ],
+                'CV Templates' => [
+                    'free' => '✅ All 5 Templates',
+                    'premium' => '✅ All 5 Templates'
+                ],
+                'CV Exports per Month' => [
+                    'free' => '✅ Unlimited',
+                    'premium' => '✅ Unlimited'
+                ],
+                'CV Customization' => [
+                    'free' => '✅ Full Access',
+                    'premium' => '✅ Full Access'
+                ],
+                'CV Watermark' => [
+                    'free' => '✅ No Watermark',
+                    'premium' => '✅ No Watermark'
+                ],
+                'Job Analytics' => [
+                    'free' => '✅ Advanced Analytics',
+                    'premium' => '✅ Advanced Analytics'
+                ],
+                'Interview Calendar' => [
+                    'free' => '✅ Yes',
+                    'premium' => '✅ Yes'
+                ],
+                'Interview Reminders' => [
+                    'free' => '✅ Enabled',
+                    'premium' => '✅ Enabled'
+                ],
+                'Goals Tracking' => [
+                    'free' => '✅ Unlimited',
+                    'premium' => '✅ Unlimited'
+                ],
+                'Export to CSV' => [
+                    'free' => '✅ Yes',
+                    'premium' => '✅ Yes'
+                ]
+            ];
+        } else {
+            // LIMITED features for FREE, FULL for PREMIUM when monetization is ON
+            return [
+                'Job Application Tracker' => [
+                    'free' => '⚠️ Limited (Max 30 apps)',
+                    'premium' => '✅ Unlimited'
+                ],
+                'CV Builder Access' => [
+                    'free' => '✅ Yes',
+                    'premium' => '✅ Yes'
+                ],
+                'CV Templates' => [
+                    'free' => '⚠️ Only 1 Template',
+                    'premium' => '✅ All 5 Templates'
+                ],
+                'CV Exports per Month' => [
+                    'free' => '✅ Unlimited',
+                    'premium' => '✅ Unlimited'
+                ],
+                'CV Customization' => [
+                    'free' => '✅ Full Access',
+                    'premium' => '✅ Full Access'
+                ],
+                'CV Watermark' => [
+                    'free' => '✅ No Watermark',
+                    'premium' => '✅ No Watermark'
+                ],
+                'Job Analytics' => [
+                    'free' => '✅ Advanced Analytics',
+                    'premium' => '✅ Advanced Analytics'
+                ],
+                'Interview Calendar' => [
+                    'free' => '✅ Yes',
+                    'premium' => '✅ Yes'
+                ],
+                'Interview Reminders' => [
+                    'free' => '✅ Enabled',
+                    'premium' => '✅ Enabled'
+                ],
+                'Goals Tracking' => [
+                    'free' => '⚠️ Max 5 Goals',
+                    'premium' => '✅ Unlimited'
+                ],
+                'Export to CSV' => [
+                    'free' => '✅ Yes',
+                    'premium' => '✅ Yes'
+                ]
+            ];
+        }
     }
 }

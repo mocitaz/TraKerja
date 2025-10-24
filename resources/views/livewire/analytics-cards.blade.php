@@ -6,7 +6,7 @@
                 <p class="text-xs font-medium text-gray-600 mb-1">On Process</p>
                 <p class="text-2xl font-bold text-[#212529]">{{ $onProcessCount }}</p>
             </div>
-            <div class="w-8 h-8 bg-[#0056B3] rounded-lg flex items-center justify-center">
+            <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                 </svg>
@@ -21,7 +21,7 @@
                 <p class="text-xs font-medium text-gray-600 mb-1">Offering/Accepted</p>
                 <p class="text-2xl font-bold text-gray-900">{{ $offeringAcceptedCount }}</p>
             </div>
-            <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+            <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>

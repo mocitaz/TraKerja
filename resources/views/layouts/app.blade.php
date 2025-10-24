@@ -45,6 +45,13 @@
         @livewireScripts
         
         <script>
+        // Reset body overflow when modal closes
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('reset-body-overflow', () => {
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
         // Close notification panel on page navigation
         document.addEventListener('DOMContentLoaded', function() {
             // Listen for navigation events

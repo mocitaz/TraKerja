@@ -7,10 +7,10 @@
                      alt="TraKerja Logo" 
                      class="h-8 w-8"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="h-8 w-8 bg-gradient-to-br from-[#0056B3] to-[#28A745] rounded-lg flex items-center justify-center" style="display: none;">
+                <div class="h-8 w-8 bg-gradient-to-br from-purple-600 to-purple-800 rounded-lg flex items-center justify-center" style="display: none;">
                     <span class="text-white font-bold text-sm">T</span>
                 </div>
-                <span class="text-base font-semibold bg-gradient-to-r from-[#0056B3] to-[#28A745] bg-clip-text text-transparent">TraKerja</span>
+                <span class="text-base font-semibold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">TraKerja</span>
             </div>
 
             <!-- Center Message -->

@@ -11,7 +11,7 @@ class JobApplicationExportController extends Controller
     /**
      * Export job applications to CSV
      */
-    public function exportToCsv(Request $request)
+    public function exportToCsv()
     {
         // Get all job applications for the authenticated user
         $jobApplications = JobApplication::where('user_id', auth()->id())

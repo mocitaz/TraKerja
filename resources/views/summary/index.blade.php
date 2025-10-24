@@ -13,7 +13,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold bg-gradient-to-r from-[#0056B3] to-[#28A745] bg-clip-text text-transparent">
+                        <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
                             Career Summary
                         </h2>
                         <p class="text-xs text-gray-500 mt-0.5">Advanced Analytics & Insights</p>
@@ -22,8 +22,8 @@
             </div>
             <div class="flex items-center space-x-2">
                 <div class="flex items-center space-x-2 bg-green-50 px-3 py-1.5 rounded-full">
-                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span class="text-xs font-medium text-green-700">Live</span>
+                    <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
+                    <span class="text-xs font-medium text-purple-700">Live</span>
                 </div>
                 <div class="text-xs text-gray-400">
                     {{ now()->format('M d, Y') }}
@@ -72,7 +72,7 @@
                             <p class="text-xs font-medium text-gray-600 mb-1">On Process</p>
                             <p class="text-2xl font-bold text-[#212529]">{{ $onProcessCount }}</p>
                         </div>
-                        <div class="w-8 h-8 bg-[#0056B3] rounded-lg flex items-center justify-center">
+                        <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                             </svg>
@@ -87,7 +87,7 @@
                             <p class="text-xs font-medium text-gray-600 mb-1">Offering/Accepted</p>
                             <p class="text-2xl font-bold text-gray-900">{{ $offeringAcceptedCount }}</p>
                         </div>
-                        <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                        <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
@@ -134,12 +134,12 @@
                         <div class="text-sm text-gray-500">Best Streak Ever</div>
                     </div>
                     @if($dailyStreak['is_active'])
-                        <div class="mt-4 p-3 bg-green-50 rounded-lg">
+                        <div class="mt-4 p-3 bg-emerald-50 rounded-lg">
                             <div class="flex items-center">
-                                <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="w-4 h-4 text-emerald-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                 </svg>
-                                <span class="text-sm text-green-700 font-medium">Keep it up! 🔥</span>
+                                <span class="text-sm text-emerald-700 font-medium">Keep it up! 🔥</span>
                             </div>
                         </div>
                     @else
@@ -161,7 +161,7 @@
                             <h3 class="text-lg font-bold text-gray-900">This Week's Progress</h3>
                             <p class="text-sm text-gray-500">Weekly application goals</p>
                         </div>
-                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                             </svg>

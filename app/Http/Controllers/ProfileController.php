@@ -40,6 +40,42 @@ class ProfileController extends Controller
     }
 
     /**
+     * Update the user's personal information.
+     */
+    public function updatePersonalInfo(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'full_name' => ['nullable', 'string', 'max:255'],
+            'phone_number' => ['nullable', 'string', 'max:20'],
+            'domicile' => ['nullable', 'string', 'max:255'],
+            'bio' => ['nullable', 'string', 'max:1000'],
+            'linkedin_url' => ['nullable', 'url', 'max:255'],
+            'github_url' => ['nullable', 'url', 'max:255'],
+            'portfolio_url' => ['nullable', 'url', 'max:255'],
+            'website_url' => ['nullable', 'url', 'max:255'],
+        ]);
+
+        $user = $request->user();
+
+        // Create or update user profile
+        $user->profile()->updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'full_name' => $validated['full_name'] ?? null,
+                'phone_number' => $validated['phone_number'] ?? null,
+                'domicile' => $validated['domicile'] ?? null,
+                'bio' => $validated['bio'] ?? null,
+                'linkedin_url' => $validated['linkedin_url'] ?? null,
+                'github_url' => $validated['github_url'] ?? null,
+                'portfolio_url' => $validated['portfolio_url'] ?? null,
+                'website_url' => $validated['website_url'] ?? null,
+            ]
+        );
+
+        return Redirect::route('profile.edit')->with('status', 'personal-info-updated');
+    }
+
+    /**
      * Verify the user's current password.
      */
     public function verifyPassword(Request $request): JsonResponse

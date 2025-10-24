@@ -53,6 +53,13 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
+     * Valid payment status values
+     */
+    const PAYMENT_STATUS_FREE = 'free';
+    const PAYMENT_STATUS_PAID = 'paid';
+    const PAYMENT_STATUS_EXPIRED = 'expired';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
@@ -63,6 +70,7 @@ class User extends Authenticatable
         'password',
         'logo',
         'role',
+        'is_admin',
         'is_premium',
         'premium_purchased_at',
         'payment_status',
@@ -92,6 +100,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_admin' => 'boolean',
             'is_premium' => 'boolean',
             'premium_purchased_at' => 'datetime',
             'registered_phase' => 'integer',
@@ -99,6 +108,29 @@ class User extends Authenticatable
             'cv_exports_this_month' => 'integer',
             'last_export_reset' => 'date',
         ];
+    }
+
+    /**
+     * The "booting" method of the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Validate payment_status before saving
+        static::saving(function ($user) {
+            $validStatuses = [self::PAYMENT_STATUS_FREE, self::PAYMENT_STATUS_PAID, self::PAYMENT_STATUS_EXPIRED];
+            
+            if ($user->payment_status && !in_array($user->payment_status, $validStatuses)) {
+                // Auto-fix invalid payment_status to 'free'
+                $user->payment_status = self::PAYMENT_STATUS_FREE;
+            }
+            
+            // If payment_status is null, set to 'free'
+            if (empty($user->payment_status)) {
+                $user->payment_status = self::PAYMENT_STATUS_FREE;
+            }
+        });
     }
 
     /**
@@ -202,7 +234,7 @@ class User extends Authenticatable
      */
     public function isPremium(): bool
     {
-        return $this->is_premium && $this->payment_status === 'paid';
+        return $this->is_premium && $this->payment_status === self::PAYMENT_STATUS_PAID;
     }
 
     /**

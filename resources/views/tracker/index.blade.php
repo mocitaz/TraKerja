@@ -13,8 +13,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold bg-gradient-to-r from-[#0056B3] to-[#28A745] bg-clip-text text-transparent">
-                            Tracker
+                                                <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
+                            Job Application Tracker
                         </h2>
                         <p class="text-xs text-gray-500 mt-0.5">Smart tracking untuk Job Seeker</p>
                     </div>
@@ -22,8 +22,8 @@
             </div>
             <div class="flex items-center space-x-2">
                 <div class="flex items-center space-x-2 bg-green-50 px-3 py-1.5 rounded-full">
-                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span class="text-xs font-medium text-green-700">Live</span>
+                    <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
+                    <span class="text-xs font-medium text-purple-700">Live</span>
                 </div>
                 <div class="text-xs text-gray-400">
                     {{ now()->format('M d, Y') }}
@@ -85,7 +85,7 @@
         <!-- Floating Action Button -->
         <div class="fixed bottom-6 right-6 z-40">
             <button onclick="openJobModal()" 
-                    class="group relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 text-white font-medium py-2.5 px-4 rounded-lg shadow-lg border border-white/20">
+                    class="group relative bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 hover:from-purple-700 hover:via-purple-800 hover:to-purple-900 text-white font-medium py-2.5 px-4 rounded-lg shadow-lg border border-white/20">
                 <div class="flex items-center space-x-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>

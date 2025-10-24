@@ -67,10 +67,9 @@
 
     <!-- Modal -->
     @if($showModal)
-        <div class="fixed inset-0 z-50 flex items-center justify-center p-4" 
+                <div class="fixed inset-0 z-50 overflow-y-auto" 
              x-data 
-             x-init="document.body.style.overflow = 'hidden'" 
-             x-destroy="document.body.style.overflow = 'auto'">
+             x-init="document.body.style.overflow = 'hidden'">
             <!-- Backdrop with blur -->
             <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" wire:click="closeModal"></div>
             
@@ -82,7 +81,9 @@
                         <h3 class="text-lg font-semibold text-gray-900">
                             @if($editMode) Edit Skill @else Add New Skill @endif
                         </h3>
-                        <button wire:click="closeModal" class="text-gray-400 hover:text-gray-600">
+                        <button type="button"
+                                @click="closing = true; document.body.style.overflow = 'auto'; $wire.closeModal()" 
+                                class="text-gray-400 hover:text-gray-600 transition">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
@@ -168,10 +169,11 @@
 
                 <!-- Modal Footer -->
                 <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
-                    <div class="flex justify-end space-x-3">
+                                        <!-- Modal Footer -->
+                    <div class="flex justify-end gap-3 pt-6 mt-6 border-t border-gray-200">
                         <button type="button" 
-                                wire:click="closeModal" 
-                                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors duration-200">
+                                @click="closing = true; document.body.style.overflow = 'auto'; $wire.closeModal()"
+                                class="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium">
                             Cancel
                         </button>
                         <button type="button" 

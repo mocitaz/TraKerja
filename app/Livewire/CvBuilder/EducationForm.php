@@ -73,6 +73,7 @@ class EducationForm extends Component
     {
         $this->showModal = false;
         $this->resetForm();
+        $this->dispatch('reset-body-overflow');
     }
 
     public function resetForm()

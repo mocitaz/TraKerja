@@ -10,6 +10,7 @@ use App\Http\Controllers\JobApplicationExportController;
 use App\Http\Controllers\CvBuilderController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Models\JobApplication;
 
 Route::get('/', function () {
@@ -26,19 +27,47 @@ Route::get('/logout-force', function () {
     return redirect('/login');
 })->name('logout.force');
 
-Route::get('/tracker', [TrackerController::class, 'index'])->middleware(['auth', 'verified'])->name('tracker');
-Route::get('/summary', [SummaryController::class, 'index'])->middleware(['auth', 'verified'])->name('summary');
-Route::get('/goals', [GoalsController::class, 'index'])->middleware(['auth', 'verified'])->name('goals');
+// Job Tracker Routes (Only for regular users, not admin)
+Route::get('/tracker', function () {
+    if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+        return redirect()->route('admin.index');
+    }
+    return app(TrackerController::class)->index();
+})->middleware(['auth', 'verified'])->name('tracker');
+
+Route::get('/summary', function (Request $request) {
+    if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+        return redirect()->route('admin.index');
+    }
+    return app(SummaryController::class)->index($request);
+})->middleware(['auth', 'verified'])->name('summary');
+
+Route::get('/goals', function () {
+    if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+        return redirect()->route('admin.index');
+    }
+    return app(GoalsController::class)->index();
+})->middleware(['auth', 'verified'])->name('goals');
+
 Route::get('/interviews', function () {
+    if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+        return redirect()->route('admin.index');
+    }
     return view('interviews.calendar');
 })->middleware(['auth', 'verified'])->name('interviews');
+
 Route::get('/dashboard', function () {
+    if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+        return redirect()->route('admin.index');
+    }
     return redirect()->route('tracker');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// User Routes (Not accessible by admin)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profile/personal', [ProfileController::class, 'updatePersonalInfo'])->name('profile.personal.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
     // Password verification route
@@ -49,22 +78,53 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile-photo/delete', [LogoController::class, 'delete'])->name('profile-photo.delete');
     Route::get('/profile-photo/get', [LogoController::class, 'getLogo'])->name('profile-photo.get');
     
-    // CV Builder routes
+    // CV Builder routes (Only for regular users)
     Route::prefix('cv')->name('cv.')->group(function () {
-        Route::get('/builder', [CvBuilderController::class, 'index'])->name('builder');
-        Route::get('/generator', [CvBuilderController::class, 'generator'])->name('generator');
-        Route::post('/export', [CvBuilderController::class, 'export'])->name('export');
+        Route::get('/builder', function () {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                return redirect()->route('admin.index');
+            }
+            return app(CvBuilderController::class)->index();
+        })->name('builder');
+        
+        Route::get('/generator', function () {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                return redirect()->route('admin.index');
+            }
+            return app(CvBuilderController::class)->generator();
+        })->name('generator');
+        
+        Route::post('/export', function (Illuminate\Http\Request $request) {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot access CV builder');
+            }
+            return app(CvBuilderController::class)->export($request);
+        })->name('export');
     });
     
-    // Job detail page
+    // Job detail page (Only for regular users)
     Route::get('/jobs/{job}', function (JobApplication $job) {
+        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+            return redirect()->route('admin.index');
+        }
         abort_unless($job->user_id === Auth::id(), 403);
         return view('jobs.show', ['job' => $job]);
     })->name('jobs.show');
     
-    // Export routes
-    Route::get('/export/job-applications/csv', [JobApplicationExportController::class, 'exportToCsv'])->name('export.job-applications.csv');
-    Route::get('/export/job-applications/stats', [JobApplicationExportController::class, 'getExportStats'])->name('export.job-applications.stats');
+    // Export routes (Only for regular users)
+    Route::get('/export/job-applications/csv', function () {
+        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+            abort(403, 'Admin cannot export job applications');
+        }
+        return app(JobApplicationExportController::class)->exportToCsv();
+    })->name('export.job-applications.csv');
+    
+    Route::get('/export/job-applications/stats', function () {
+        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+            abort(403, 'Admin cannot access export stats');
+        }
+        return app(JobApplicationExportController::class)->getExportStats();
+    })->name('export.job-applications.stats');
 });
 
 // Admin Routes (protected by admin role)
