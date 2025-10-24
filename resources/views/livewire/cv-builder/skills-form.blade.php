@@ -67,14 +67,16 @@
 
     <!-- Modal -->
     @if($showModal)
-                <div class="fixed inset-0 z-50 overflow-y-auto" 
+        <div class="fixed inset-0 z-50 overflow-y-auto" 
              x-data 
              x-init="document.body.style.overflow = 'hidden'">
             <!-- Backdrop with blur -->
             <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" wire:click="closeModal"></div>
             
-            <!-- Modal Content -->
-            <div class="relative bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col">
+            <!-- Modal Container - Centered -->
+            <div class="flex min-h-full items-center justify-center p-4">
+                <!-- Modal Content -->
+                <div class="relative bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col">
                 <!-- Modal Header - Sticky -->
                 <div class="border-b border-gray-200 px-6 py-4 bg-white rounded-t-lg">
                     <div class="flex items-center justify-between">
@@ -168,9 +170,8 @@
                 </div>
 
                 <!-- Modal Footer -->
-                <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
-                                        <!-- Modal Footer -->
-                    <div class="flex justify-end gap-3 pt-6 mt-6 border-t border-gray-200">
+                <div class="border-t border-gray-200 px-6 py-4 bg-gray-50 rounded-b-lg">
+                    <div class="flex justify-end gap-3">
                         <button type="button" 
                                 @click="closing = true; document.body.style.overflow = 'auto'; $wire.closeModal()"
                                 class="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium">

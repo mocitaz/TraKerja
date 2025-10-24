@@ -4,7 +4,7 @@
             <div class="flex items-center space-x-4">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-white/30">
-                        <img src="{{ asset('storage/logos/icon.png') }}" 
+                        <img src="{{ asset('images/icon.png') }}" 
                              alt="TraKerja Logo" 
                              class="w-6 h-6"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -13,7 +13,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold bg-gradient-to-r from-[#0056B3] to-[#28A745] bg-clip-text text-transparent">
+                        <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
                             Goals & Cadence
                         </h2>
                         <p class="text-xs text-gray-500 mt-0.5">Smart Tracking untuk Job Seeker</p>
@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="flex items-center space-x-2">
-                <div class="flex items-center space-x-2 bg-purple-50 px-3 py-1.5 rounded-full">
+                <div class="flex items-center space-x-2 bg-green-50 px-3 py-1.5 rounded-full">
                     <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
                     <span class="text-xs font-medium text-purple-700">Live</span>
                 </div>

@@ -4,7 +4,7 @@
             <div class="flex items-center space-x-4">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-white/30">
-                        <img src="{{ asset('storage/logos/icon.png') }}" 
+                        <img src="{{ asset('images/icon.png') }}" 
                              alt="TraKerja Logo" 
                              class="w-6 h-6"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -13,7 +13,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold bg-gradient-to-r from-[#0056B3] to-[#28A745] bg-clip-text text-transparent">
+                        <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
                             TraKerja Tracker
         </h2>
                         <p class="text-xs text-gray-500 mt-0.5">Smart tracking untuk Job Seeker</p>
@@ -43,7 +43,7 @@
                             <p class="text-xs font-medium text-gray-600 mb-1">On Process</p>
                             <p class="text-2xl font-bold text-[#212529]">{{ $onProcessCount }}</p>
                         </div>
-                        <div class="w-8 h-8 bg-[#0056B3] rounded-lg flex items-center justify-center">
+                        <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                             </svg>
@@ -160,7 +160,7 @@
     <div id="jobModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50">
         <div class="flex items-center justify-center min-h-screen p-4">
             <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden" id="modalContent">
-                <div class="bg-gradient-to-r from-[#1E40AF] to-[#60A5FA] p-6 text-white relative overflow-hidden">
+                <div class="bg-gradient-to-r from-purple-600 to-purple-800 p-6 text-white relative overflow-hidden">
                     <!-- Background Pattern -->
                     <div class="absolute inset-0 opacity-10">
                         <div class="absolute top-0 right-0 w-32 h-32 bg-white rounded-full -translate-y-16 translate-x-16"></div>

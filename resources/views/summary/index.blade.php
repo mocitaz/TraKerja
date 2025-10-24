@@ -4,7 +4,7 @@
             <div class="flex items-center space-x-4">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-white/30">
-                        <img src="{{ asset('storage/logos/icon.png') }}" 
+                        <img src="{{ asset('images/icon.png') }}" 
                              alt="TraKerja Logo" 
                              class="w-6 h-6"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">

@@ -15,6 +15,9 @@ class JobTableList extends Component
 
     public $search = '';
     public $statusFilter = '';
+    public $platformFilter = '';
+    public $careerLevelFilter = '';
+    public $recruitmentStageFilter = '';
     public $sortField = 'application_date';
     public $sortDirection = 'desc';
     public $perPage = 20;
@@ -25,9 +28,67 @@ class JobTableList extends Component
         'Accepted'
     ];
 
+    public $platformOptions = [
+        '9cv9',
+        'Cake: Cari Lowongan',
+        'Dealls',
+        'Disnakerja.com',
+        'Email',
+        'Fiverr',
+        'Freelancer',
+        'Glassdoor',
+        'Glints',
+        'Google Forms',
+        'Indeed',
+        'JobStreet',
+        'Jobseeker App',
+        'JobsDB',
+        'Jora',
+        'Kalibrr',
+        'Karir.com',
+        'Karirhub (SIAPkerja)',
+        'KitaLulus',
+        'LinkedIn',
+        'Loker.id',
+        'Microsoft Forms',
+        'NusaCrowd',
+        'Pintarnya.com',
+        'SkillAcademy',
+        'SkillTrade',
+        'Talentics',
+        'Tech in Asia',
+        'Urbanhire',
+        'Website Company',
+        'Other'
+    ];
+
+    public $careerLevelOptions = [
+        'Intern',
+        'Full Time',
+        'Contract',
+        'MT',
+        'Freelance'
+    ];
+
+    public $recruitmentStageOptions = [
+        'Applied',
+        'Follow Up',
+        'Assessment Test',
+        'Psychotest',
+        'HR - Interview',
+        'User - Interview',
+        'LGD',
+        'Presentation Round',
+        'Offering',
+        'Not Processed'
+    ];
+
     protected $queryString = [
         'search' => ['except' => ''],
         'statusFilter' => ['except' => ''],
+        'platformFilter' => ['except' => ''],
+        'careerLevelFilter' => ['except' => ''],
+        'recruitmentStageFilter' => ['except' => ''],
         'sortField' => ['except' => 'application_date'],
         'sortDirection' => ['except' => 'desc'],
         'perPage' => ['except' => 20],
@@ -49,8 +110,33 @@ class JobTableList extends Component
         $this->resetPage();
     }
 
+    public function updatingPlatformFilter()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingCareerLevelFilter()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingRecruitmentStageFilter()
+    {
+        $this->resetPage();
+    }
+
     public function updatingPerPage()
     {
+        $this->resetPage();
+    }
+
+    public function clearFilters()
+    {
+        $this->search = '';
+        $this->statusFilter = '';
+        $this->platformFilter = '';
+        $this->careerLevelFilter = '';
+        $this->recruitmentStageFilter = '';
         $this->resetPage();
     }
 
@@ -126,7 +212,20 @@ class JobTableList extends Component
             $query->where('application_status', $this->statusFilter);
         }
 
+        if ($this->platformFilter) {
+            $query->where('platform', $this->platformFilter);
+        }
+
+        if ($this->careerLevelFilter) {
+            $query->where('career_level', $this->careerLevelFilter);
+        }
+
+        if ($this->recruitmentStageFilter) {
+            $query->where('recruitment_stage', $this->recruitmentStageFilter);
+        }
+
         $jobApplications = $query->orderBy($this->sortField, $this->sortDirection)
+            ->orderBy('created_at', 'desc') // Secondary sort by creation time
             ->paginate($this->perPage);
 
         return view('livewire.job-table-list', [

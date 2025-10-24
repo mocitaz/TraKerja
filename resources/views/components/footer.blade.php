@@ -3,7 +3,7 @@
         <div class="flex flex-col md:flex-row justify-between items-center gap-4">
             <!-- Brand -->
             <div class="flex items-center gap-3">
-                <img src="{{ asset('storage/logos/icon.png') }}" 
+                <img src="{{ asset('images/icon.png') }}" 
                      alt="TraKerja Logo" 
                      class="h-8 w-8"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">

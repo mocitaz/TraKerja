@@ -24,7 +24,7 @@
                         <div class="relative">
                             <div class="absolute inset-0 bg-white/20 rounded-3xl blur-lg"></div>
                             <div class="w-20 h-20 rounded-3xl bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30 shadow-2xl">
-                                <img src="{{ asset('storage/logos/icon.png') }}" 
+                                <img src="{{ asset('images/icon.png') }}" 
                                      alt="TraKerja Logo" 
                                      class="w-12 h-12"
                                      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -35,15 +35,15 @@
                         </div>
                         <div>
                             <h1 class="text-5xl font-black mb-3 bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent drop-shadow-lg">TraKerja</h1>
-                            <p class="text-white/90 text-xl font-medium">Smart Tracking untuk Job Seeker</p>
+                            <p class="text-white/90 text-xl font-medium">Smart Tracking for Job Seekers</p>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Welcome Section -->
                 <div class="mb-10">
-                    <h2 class="text-4xl font-bold mb-4 drop-shadow-lg">Selamat Datang Kembali</h2>
-                    <p class="text-white/90 text-xl leading-relaxed">Lanjutkan pencarian kerja Anda dengan tracking cerdas dan insight yang powerful</p>
+                    <h2 class="text-4xl font-bold mb-4 drop-shadow-lg">Welcome Back</h2>
+                    <p class="text-white/90 text-xl leading-relaxed">Continue your job search journey with smart tracking and powerful insights</p>
                 </div>
                 
                 <!-- Enhanced Features -->
@@ -55,8 +55,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-white font-semibold text-lg">Lacak Aplikasi</h3>
-                            <p class="text-white/80">Monitor semua lamaran kerja Anda di satu tempat</p>
+                            <h3 class="text-white font-semibold text-lg">Track Applications</h3>
+                            <p class="text-white/80">Monitor all your job applications in one place</p>
                         </div>
                     </div>
                     
@@ -67,8 +67,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-white font-semibold text-lg">Analisis Progress</h3>
-                            <p class="text-white/80">Dapatkan insight detail tentang progres pencarian kerja</p>
+                            <h3 class="text-white font-semibold text-lg">Progress Analytics</h3>
+                            <p class="text-white/80">Get detailed insights about your job search progress</p>
                         </div>
                     </div>
                     
@@ -79,8 +79,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-white font-semibold text-lg">Tetap Terorganisir</h3>
-                            <p class="text-white/80">Jaga pencarian kerja tetap fokus dan efisien</p>
+                            <h3 class="text-white font-semibold text-lg">Stay Organized</h3>
+                            <p class="text-white/80">Keep your job search focused and efficient</p>
                         </div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                 <div class="lg:hidden text-center mb-8">
                     <div class="flex items-center justify-center space-x-3 mb-4">
                         <div class="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                            <img src="{{ asset('storage/logos/icon.png') }}" 
+                            <img src="{{ asset('images/icon.png') }}" 
                                  alt="TraKerja Logo" 
                                  class="w-8 h-8"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -111,7 +111,7 @@
                         </div>
                         <div>
                             <h1 class="text-2xl font-bold text-gray-900">TraKerja</h1>
-                            <p class="text-gray-600 text-sm">Smart Tracking untuk Job Seeker</p>
+                            <p class="text-gray-600 text-sm">Smart Tracking for Job Seekers</p>
                         </div>
                     </div>
                 </div>
@@ -120,8 +120,8 @@
                 <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8">
                     <!-- Form Header -->
                     <div class="text-center mb-8">
-                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Selamat Datang Kembali</h2>
-                        <p class="text-gray-600">Masuk untuk melanjutkan perjalanan Anda</p>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
+                        <p class="text-gray-600">Sign in to continue your journey</p>
                     </div>
 
                     <!-- Form -->
@@ -130,7 +130,7 @@
 
                         <!-- Email -->
                         <div>
-                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Alamat Email</label>
+                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,7 +144,7 @@
                                        required 
                                        value="{{ old('email') }}"
                                        class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('email') border-red-300 bg-red-50/50 @enderror"
-                                       placeholder="Masukkan email Anda">
+                                       placeholder="Enter your email">
                             </div>
                             @error('email')
                                 <p class="mt-2 text-sm text-red-600 flex items-center">
@@ -158,7 +158,7 @@
 
                         <!-- Password -->
                         <div>
-                            <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Kata Sandi</label>
+                            <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -171,7 +171,7 @@
                                        autocomplete="current-password" 
                                        required
                                        class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('password') border-red-300 bg-red-50/50 @enderror"
-                                       placeholder="Masukkan kata sandi Anda">
+                                       placeholder="Enter your password">
                             </div>
                             @error('password')
                                 <p class="mt-2 text-sm text-red-600 flex items-center">
@@ -195,7 +195,7 @@
                                         <svg class="w-4 h-4 mr-1.5 text-primary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                         </svg>
-                                        Ingat Saya
+                                        Remember Me
                                     </span>
                                 </label>
                             </div>
@@ -203,7 +203,7 @@
                             @if (Route::has('password.request'))
                                 <a href="{{ route('password.request') }}" 
                                    class="text-sm text-primary-600 hover:text-primary-700 font-semibold transition-colors duration-200 flex items-center group">
-                                    Lupa Password?
+                                    Forgot Password?
                                     <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                     </svg>
@@ -217,16 +217,16 @@
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
                             </svg>
-                            Masuk
+                            Sign In
                         </button>
                     </form>
 
                     <!-- Register Link -->
                     <div class="mt-8 text-center">
                         <p class="text-sm text-gray-600">
-                            Belum punya akun?
+                            Don't have an account?
                             <a href="{{ route('register') }}" class="font-bold text-primary-600 hover:text-primary-700 transition-colors">
-                                Daftar di sini
+                                Sign up here
                             </a>
                         </p>
                     </div>

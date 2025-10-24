@@ -24,7 +24,7 @@
                         <div class="relative">
                             <div class="absolute inset-0 bg-white/20 rounded-3xl blur-lg"></div>
                             <div class="w-20 h-20 rounded-3xl bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30 shadow-2xl">
-                                <img src="{{ asset('storage/logos/icon.png') }}" 
+                                <img src="{{ asset('images/icon.png') }}" 
                                      alt="TraKerja Logo" 
                                      class="w-12 h-12"
                                      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -35,15 +35,15 @@
                         </div>
                         <div>
                             <h1 class="text-5xl font-black mb-3 bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent drop-shadow-lg">TraKerja</h1>
-                            <p class="text-white/90 text-xl font-medium">Smart Tracking untuk Job Seeker</p>
+                            <p class="text-white/90 text-xl font-medium">Smart Tracking for Job Seekers</p>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Welcome Section -->
                 <div class="mb-10">
-                    <h2 class="text-4xl font-bold mb-4 drop-shadow-lg">Lupa Password?</h2>
-                    <p class="text-white/90 text-xl leading-relaxed">Jangan khawatir! Kami akan membantu Anda reset password dengan cepat dan aman</p>
+                    <h2 class="text-4xl font-bold mb-4 drop-shadow-lg">Forgot Password?</h2>
+                    <p class="text-white/90 text-xl leading-relaxed">Don't worry! We'll help you reset your password quickly and securely</p>
                 </div>
                 
                 <!-- Enhanced Features -->
@@ -55,8 +55,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-white font-semibold text-lg">Verifikasi Email Aman</h3>
-                            <p class="text-white/80">Kami akan mengirim link reset yang aman ke email Anda</p>
+                            <h3 class="text-white font-semibold text-lg">Secure Email Verification</h3>
+                            <p class="text-white/80">We'll send a secure reset link to your email</p>
                         </div>
                     </div>
                     
@@ -67,8 +67,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-white font-semibold text-lg">Pemulihan Cepat</h3>
-                            <p class="text-white/80">Reset password Anda hanya dalam beberapa menit</p>
+                            <h3 class="text-white font-semibold text-lg">Quick Recovery</h3>
+                            <p class="text-white/80">Reset your password in just a few minutes</p>
                         </div>
                     </div>
                     
@@ -79,8 +79,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-white font-semibold text-lg">Perlindungan Akun</h3>
-                            <p class="text-white/80">Keamanan akun Anda adalah prioritas utama kami</p>
+                            <h3 class="text-white font-semibold text-lg">Account Protection</h3>
+                            <p class="text-white/80">Your account security is our top priority</p>
                         </div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                 <div class="lg:hidden text-center mb-8">
                     <div class="flex items-center justify-center space-x-3 mb-4">
                         <div class="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                            <img src="{{ asset('storage/logos/icon.png') }}" 
+                            <img src="{{ asset('images/icon.png') }}" 
                                  alt="TraKerja Logo" 
                                  class="w-8 h-8"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -111,7 +111,7 @@
                         </div>
                         <div>
                             <h1 class="text-2xl font-bold text-gray-900">TraKerja</h1>
-                            <p class="text-gray-600 text-sm">Smart Tracking untuk Job Seeker</p>
+                            <p class="text-gray-600 text-sm">Smart Tracking for Job Seekers</p>
                         </div>
                     </div>
                 </div>
@@ -120,8 +120,8 @@
                 <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8">
                     <!-- Form Header -->
                     <div class="text-center mb-8">
-                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Lupa Password?</h2>
-                        <p class="text-gray-600">Masukkan alamat email Anda dan kami akan mengirimkan link reset password</p>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Forgot Password?</h2>
+                        <p class="text-gray-600">Enter your email address and we'll send you a password reset link</p>
                     </div>
 
                 <!-- Status Messages -->
@@ -133,7 +133,7 @@
 
                     <!-- Email -->
                     <div>
-                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Alamat Email</label>
+                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -147,7 +147,7 @@
                                    required 
                                    value="{{ old('email') }}"
                                    class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('email') border-red-300 bg-red-50/50 @enderror"
-                                   placeholder="Masukkan alamat email Anda">
+                                   placeholder="Enter your email address">
                         </div>
                         @error('email')
                             <p class="mt-2 text-sm text-red-600 flex items-center">
@@ -165,16 +165,16 @@
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                         </svg>
-                        Kirim Link Reset
+                        Send Reset Link
                     </button>
                 </form>
 
                 <!-- Back to Login -->
                 <div class="mt-8 text-center">
                     <p class="text-sm text-gray-600">
-                        Sudah ingat password?
+                        Remember your password?
                         <a href="{{ route('login') }}" class="font-bold text-primary-600 hover:text-primary-700 transition-colors">
-                            Kembali ke login
+                            Back to login
                         </a>
                     </p>
                 </div>
@@ -190,10 +190,10 @@
                             </div>
                         </div>
                         <div>
-                            <h4 class="text-sm font-semibold text-gray-900">Butuh Bantuan?</h4>
+                            <h4 class="text-sm font-semibold text-gray-900">Need Help?</h4>
                             <p class="text-xs text-gray-600 mt-1">
-                                Jika Anda tidak menerima email dalam beberapa menit, cek folder spam. 
-                                Link reset akan kadaluarsa dalam 60 menit untuk keamanan.
+                                If you don't receive an email within a few minutes, check your spam folder. 
+                                The reset link will expire in 60 minutes for security.
                             </p>
                         </div>
                     </div>

@@ -94,7 +94,7 @@
             <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-[#0056B3] to-[#003D82] rounded-lg flex items-center justify-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-800 rounded-lg flex items-center justify-center">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                             </svg>
@@ -106,7 +106,7 @@
                     </div>
                     <button 
                         wire:click="openGoalModal"
-                        class="px-4 py-2 bg-gradient-to-r from-[#0056B3] to-[#003D82] text-white text-sm font-medium rounded-lg hover:from-[#003D82] hover:to-[#002A5C] transition-all duration-200 flex items-center space-x-2"
+                        class="px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-800 text-white text-sm font-medium rounded-lg hover:from-purple-700 hover:to-purple-900 transition-all duration-200 flex items-center space-x-2"
                     >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -123,7 +123,7 @@
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-3">
                         <div 
-                            class="bg-gradient-to-r from-[#0056B3] to-[#003D82] h-3 rounded-full transition-all duration-500"
+                            class="bg-gradient-to-r from-purple-600 to-purple-800 h-3 rounded-full transition-all duration-500"
                             style="width: {{ min(100, $this->appliedProgress) }}%"
                         ></div>
                     </div>
@@ -147,7 +147,7 @@
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-3">
                         <div 
-                            class="bg-gradient-to-r from-[#28A745] to-[#1E7E34] h-3 rounded-full transition-all duration-500"
+                            class="bg-gradient-to-r from-purple-600 to-purple-800 h-3 rounded-full transition-all duration-500"
                             style="width: {{ min(100, $this->followupProgress) }}%"
                         ></div>
                     </div>
@@ -170,7 +170,7 @@
                             <p class="text-sm font-medium text-primary-900">Interviews {{ $goalPeriod === 'monthly' ? 'This Month' : 'This Week' }}</p>
                             <p class="text-2xl font-bold text-primary-600">{{ $this->actualInterviews }}</p>
                         </div>
-                        <div class="w-8 h-8 bg-[#0056B3] rounded-lg flex items-center justify-center">
+                        <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
@@ -373,7 +373,7 @@
                 <!-- Modal Header -->
                 <div class="flex items-center justify-between p-6 border-b border-gray-200">
                     <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-[#0056B3] to-[#003D82] rounded-lg flex items-center justify-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-800 rounded-lg flex items-center justify-center">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
@@ -407,7 +407,7 @@
                                         type="radio" 
                                         wire:model="goalPeriod" 
                                         value="weekly"
-                                        class="w-4 h-4 text-[#0056B3] border-gray-300 focus:ring-[#0056B3]"
+                                        class="w-4 h-4 text-purple-600 border-gray-300 focus:ring-purple-500"
                                     >
                                     <span class="ml-2 text-sm text-gray-700">Weekly</span>
                                 </label>
@@ -416,7 +416,7 @@
                                         type="radio" 
                                         wire:model="goalPeriod" 
                                         value="monthly"
-                                        class="w-4 h-4 text-[#0056B3] border-gray-300 focus:ring-[#0056B3]"
+                                        class="w-4 h-4 text-purple-600 border-gray-300 focus:ring-purple-500"
                                     >
                                     <span class="ml-2 text-sm text-gray-700">Monthly</span>
                                 </label>
@@ -434,7 +434,7 @@
                                         <button 
                                             type="button"
                                             wire:click="$set('targetAppliedWeekly', {{ $target }})"
-                                            class="px-3 py-2 text-sm font-medium rounded-lg border transition-all duration-200 {{ $targetAppliedWeekly == $target ? 'bg-[#0056B3] text-white border-[#0056B3]' : 'bg-white text-gray-700 border-gray-300 hover:border-[#0056B3] hover:text-[#0056B3]' }}"
+                                            class="px-3 py-2 text-sm font-medium rounded-lg border transition-all duration-200 {{ $targetAppliedWeekly == $target ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-gray-700 border-gray-300 hover:border-purple-600 hover:text-purple-600' }}"
                                         >
                                             {{ $target }}
                                         </button>
@@ -444,7 +444,7 @@
                                         <button 
                                             type="button"
                                             wire:click="$set('targetAppliedWeekly', {{ $target }})"
-                                            class="px-3 py-2 text-sm font-medium rounded-lg border transition-all duration-200 {{ $targetAppliedWeekly == $target ? 'bg-[#0056B3] text-white border-[#0056B3]' : 'bg-white text-gray-700 border-gray-300 hover:border-[#0056B3] hover:text-[#0056B3]' }}"
+                                            class="px-3 py-2 text-sm font-medium rounded-lg border transition-all duration-200 {{ $targetAppliedWeekly == $target ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-gray-700 border-gray-300 hover:border-purple-600 hover:text-purple-600' }}"
                                         >
                                             {{ $target }}
                                         </button>
@@ -455,7 +455,7 @@
                                 <input 
                                     type="number" 
                                     wire:model="targetAppliedWeekly"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0056B3] focus:border-transparent"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                                     placeholder="Custom target (minimum 1)"
                                     min="1"
                                 >
@@ -476,7 +476,7 @@
                                         <button 
                                             type="button"
                                             wire:click="$set('targetFollowupWeekly', {{ $target }})"
-                                            class="px-3 py-2 text-sm font-medium rounded-lg border transition-all duration-200 {{ $targetFollowupWeekly == $target ? 'bg-[#28A745] text-white border-[#28A745]' : 'bg-white text-gray-700 border-gray-300 hover:border-[#28A745] hover:text-[#28A745]' }}"
+                                            class="px-3 py-2 text-sm font-medium rounded-lg border transition-all duration-200 {{ $targetFollowupWeekly == $target ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-gray-700 border-gray-300 hover:border-purple-600 hover:text-purple-600' }}"
                                         >
                                             {{ $target }}
                                         </button>
@@ -486,7 +486,7 @@
                                         <button 
                                             type="button"
                                             wire:click="$set('targetFollowupWeekly', {{ $target }})"
-                                            class="px-3 py-2 text-sm font-medium rounded-lg border transition-all duration-200 {{ $targetFollowupWeekly == $target ? 'bg-[#28A745] text-white border-[#28A745]' : 'bg-white text-gray-700 border-gray-300 hover:border-[#28A745] hover:text-[#28A745]' }}"
+                                            class="px-3 py-2 text-sm font-medium rounded-lg border transition-all duration-200 {{ $targetFollowupWeekly == $target ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-gray-700 border-gray-300 hover:border-purple-600 hover:text-purple-600' }}"
                                         >
                                             {{ $target }}
                                         </button>
@@ -497,7 +497,7 @@
                                 <input 
                                     type="number" 
                                     wire:model="targetFollowupWeekly"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#28A745] focus:border-transparent"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                                     placeholder="Custom target (minimum 0)"
                                     min="0"
                                 >
@@ -516,7 +516,7 @@
                                 <input 
                                     type="date" 
                                     wire:model="startDate"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0056B3] focus:border-transparent"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                                 >
                                 @error('startDate') 
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p> 
@@ -529,7 +529,7 @@
                                 <input 
                                     type="date" 
                                     wire:model="endDate"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0056B3] focus:border-transparent"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                                 >
                                 @error('endDate') 
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p> 
@@ -541,7 +541,7 @@
                         <div class="flex space-x-3 pt-4">
                             <button 
                                 type="submit"
-                                class="flex-1 bg-gradient-to-r from-[#0056B3] to-[#003D82] text-white py-3 px-6 rounded-lg font-medium hover:from-[#003D82] hover:to-[#002A5C] transition-all duration-200 flex items-center justify-center"
+                                class="flex-1 bg-gradient-to-r from-purple-600 to-purple-800 text-white py-3 px-6 rounded-lg font-medium hover:from-purple-700 hover:to-purple-900 transition-all duration-200 flex items-center justify-center"
                             >
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
