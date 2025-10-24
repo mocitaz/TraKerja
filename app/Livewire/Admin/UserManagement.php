@@ -17,11 +17,18 @@ class UserManagement extends Component
     public $perPage = 10;
     
     public $showEditModal = false;
+    public $showCreateAdminModal = false;
     public $editingUserId;
     public $editName;
     public $editEmail;
     public $editIsPremium;
     public $editIsAdmin;
+    
+    // Create Admin properties
+    public $newAdminName;
+    public $newAdminEmail;
+    public $newAdminPassword;
+    public $newAdminPasswordConfirmation;
     
     protected $listeners = ['refreshUsers' => '$refresh'];
     
@@ -42,7 +49,8 @@ class UserManagement extends Component
     
     public function getUsersQuery()
     {
-        $query = User::query();
+        // Only show regular users (exclude admins)
+        $query = User::where('role', '!=', 'admin');
         
         // Search by name or email
         if ($this->search) {
@@ -57,13 +65,6 @@ class UserManagement extends Component
             $query->where('is_premium', true);
         } elseif ($this->filterPremium === 'free') {
             $query->where('is_premium', false);
-        }
-        
-        // Filter by role
-        if ($this->filterRole === 'admin') {
-            $query->where('is_admin', true);
-        } elseif ($this->filterRole === 'user') {
-            $query->where('is_admin', false);
         }
         
         return $query;
@@ -96,6 +97,7 @@ class UserManagement extends Component
             'email' => $this->editEmail,
             'is_premium' => $this->editIsPremium,
             'is_admin' => $this->editIsAdmin,
+            'role' => $this->editIsAdmin ? 'admin' : 'user',
         ]);
         
         $this->showEditModal = false;
@@ -124,8 +126,11 @@ class UserManagement extends Component
     public function toggleAdmin($userId)
     {
         $user = User::findOrFail($userId);
+        $newIsAdmin = !$user->is_admin;
+        
         $user->update([
-            'is_admin' => !$user->is_admin,
+            'is_admin' => $newIsAdmin,
+            'role' => $newIsAdmin ? 'admin' : 'user',
         ]);
         
         $this->dispatch('showNotification', [
@@ -164,17 +169,65 @@ class UserManagement extends Component
         $this->reset(['editingUserId', 'editName', 'editEmail', 'editIsPremium', 'editIsAdmin']);
     }
     
+    public function openCreateAdminModal()
+    {
+        $this->showCreateAdminModal = true;
+    }
+    
+    public function closeCreateAdminModal()
+    {
+        $this->showCreateAdminModal = false;
+        $this->reset(['newAdminName', 'newAdminEmail', 'newAdminPassword', 'newAdminPasswordConfirmation']);
+    }
+    
+    public function createAdmin()
+    {
+        $this->validate([
+            'newAdminName' => 'required|string|max:255',
+            'newAdminEmail' => 'required|email|max:255|unique:users,email',
+            'newAdminPassword' => 'required|min:8|confirmed',
+        ], [
+            'newAdminName.required' => 'Nama harus diisi',
+            'newAdminEmail.required' => 'Email harus diisi',
+            'newAdminEmail.email' => 'Format email tidak valid',
+            'newAdminEmail.unique' => 'Email sudah terdaftar',
+            'newAdminPassword.required' => 'Password harus diisi',
+            'newAdminPassword.min' => 'Password minimal 8 karakter',
+            'newAdminPassword.confirmed' => 'Konfirmasi password tidak cocok',
+        ]);
+        
+        User::create([
+            'name' => $this->newAdminName,
+            'email' => $this->newAdminEmail,
+            'password' => bcrypt($this->newAdminPassword),
+            'role' => 'admin',
+            'is_admin' => true,
+            'is_premium' => true,
+            'payment_status' => 'paid',
+            'email_verified_at' => now(),
+        ]);
+        
+        $this->closeCreateAdminModal();
+        
+        $this->dispatch('showNotification', [
+            'type' => 'success',
+            'title' => 'Admin Created!',
+            'message' => 'Admin user created successfully!',
+        ]);
+    }
+    
     public function render()
     {
         $users = $this->getUsersQuery()
             ->latest()
             ->paginate($this->perPage);
         
+        // Stats only for regular users (exclude admins)
         $stats = [
-            'total' => User::count(),
-            'premium' => User::where('is_premium', true)->count(),
-            'free' => User::where('is_premium', false)->count(),
-            'admins' => User::where('is_admin', true)->count(),
+            'total' => User::where('role', '!=', 'admin')->count(),
+            'premium' => User::where('role', '!=', 'admin')->where('is_premium', true)->count(),
+            'free' => User::where('role', '!=', 'admin')->where('is_premium', false)->count(),
+            'admins' => User::where('role', 'admin')->count(),
         ];
         
         return view('livewire.admin.user-management', [

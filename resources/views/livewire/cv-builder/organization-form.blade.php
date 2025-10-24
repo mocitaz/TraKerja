@@ -74,7 +74,9 @@
              x-init="document.body.style.overflow = 'hidden'" 
              x-destroy="document.body.style.overflow = 'auto'">
             <!-- Backdrop with blur -->
-            <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" wire:click="closeModal"></div>
+            <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" 
+                 wire:click="closeModal" 
+                 @click="document.body.style.overflow = 'auto'"></div>
             
             <!-- Modal Content -->
             <div class="relative bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col">
@@ -85,8 +87,10 @@
                             <h3 class="text-xl font-bold text-gray-900">{{ $editMode ? 'Edit Organization' : 'Add New Organization' }}</h3>
                             <p class="text-sm text-gray-600 mt-1">Add clubs, communities, or volunteer work</p>
                         </div>
-                        <button wire:click="closeModal" class="text-gray-400 hover:text-gray-600">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button type="button"
+                                @click="closing = true; document.body.style.overflow = 'auto'; $wire.closeModal()" 
+                                class="text-gray-400 hover:text-gray-600 transition">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
@@ -140,13 +144,28 @@
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Description (Optional)</label>
-                            <textarea wire:model="description" rows="4" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm" placeholder="Describe your role, responsibilities, and achievements..."></textarea>
-                            <p class="mt-1.5 text-xs text-gray-500">Share your contributions and impact in this organization</p>
+                            <div class="relative">
+                                <textarea wire:model="description" 
+                                          rows="5" 
+                                          class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm font-mono"
+                                          style="line-height: 1.6; padding-left: 2.5rem; background-image: repeating-linear-gradient(transparent, transparent 1.6rem, #f3f4f6 1.6rem, #f3f4f6 calc(1.6rem + 1px)); background-size: 100% 1.6rem; background-attachment: local;"
+                                          placeholder="Led team of 10 members in organizing annual conference&#10;Managed budget of $5,000 and secured 3 sponsors&#10;Coordinated with stakeholders and vendors"></textarea>
+                                <div class="absolute left-3 top-2 bottom-2 flex flex-col justify-start pointer-events-none" style="line-height: 1.6;">
+                                    <div class="text-gray-400 text-sm" style="height: 1.6rem; line-height: 1.6rem;">•</div>
+                                    <div class="text-gray-400 text-sm" style="height: 1.6rem; line-height: 1.6rem;">•</div>
+                                    <div class="text-gray-400 text-sm" style="height: 1.6rem; line-height: 1.6rem;">•</div>
+                                    <div class="text-gray-400 text-sm" style="height: 1.6rem; line-height: 1.6rem;">•</div>
+                                    <div class="text-gray-400 text-sm" style="height: 1.6rem; line-height: 1.6rem;">•</div>
+                                </div>
+                            </div>
+                            <p class="mt-1.5 text-xs text-gray-500">💡 Write one responsibility/achievement per line. Each line will appear as a bullet point in your CV.</p>
                         </div>
                     </div>
 
                     <div class="flex justify-end gap-3 pt-6 mt-6 border-t border-gray-200">
-                        <button type="button" wire:click="closeModal" class="px-6 py-2.5 bg-white border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 font-medium">
+                        <button type="button" 
+                                @click="closing = true; document.body.style.overflow = 'auto'; $wire.closeModal()" 
+                                class="px-6 py-2.5 bg-white border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 font-medium">
                             Cancel
                         </button>
                         <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:scale-105">

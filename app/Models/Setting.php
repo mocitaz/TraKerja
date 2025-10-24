@@ -85,17 +85,29 @@ class Setting extends Model
     }
     
     /**
-     * Get current monetization phase (1, 2, or 3)
+     * Check if monetization is enabled
+     * 
+     * @return bool
+     */
+    public static function isMonetizationEnabled()
+    {
+        return (bool) self::get('monetization_enabled', false);
+    }
+    
+    /**
+     * Get current monetization phase (1, 2, or 3) - DEPRECATED, kept for backward compatibility
+     * Use isMonetizationEnabled() instead
      * 
      * @return int
      */
     public static function getMonetizationPhase()
     {
-        return (int) self::get('monetization_phase', 1);
+        // Convert new boolean system to old phase system for backward compatibility
+        return self::isMonetizationEnabled() ? 2 : 1;
     }
     
     /**
-     * Check if feature is accessible for user based on current phase
+     * Check if feature is accessible for user
      * 
      * @param string $feature Feature name
      * @param \App\Models\User|null $user User instance
@@ -103,35 +115,25 @@ class Setting extends Model
      */
     public static function canAccess($feature, $user = null)
     {
-        $phase = self::getMonetizationPhase();
-        $featureAccess = self::get('feature_access', []);
-        $phaseKey = "phase_{$phase}";
-        
-        // Phase 1: Everything is free
-        if ($phase == 1) {
+        // If monetization is OFF, everything is FREE
+        if (!self::isMonetizationEnabled()) {
             return true;
         }
         
-        // Get feature config for current phase
-        $phaseConfig = $featureAccess[$phaseKey] ?? [];
-        $featureValue = $phaseConfig[$feature] ?? 'free';
-        
-        // If feature is free, allow
-        if ($featureValue === 'free' || $featureValue === true) {
+        // If monetization is ON, check if user is premium
+        if ($user && $user->is_premium && $user->payment_status === \App\Models\User::PAYMENT_STATUS_PAID) {
             return true;
         }
         
-        // If feature is premium, check user status
-        if ($featureValue === 'premium' && $user) {
-            // Check grandfathered benefits first
-            if ($user->hasGrandfatheredBenefit($feature)) {
-                return true;
-            }
-            return $user->is_premium;
-        }
+        // Free users get limited access when monetization is enabled
+        // Define which features are still available for free
+        $freeFeatures = [
+            'job_tracker', 
+            'cv_builder_basic',
+            'interview_calendar'
+        ];
         
-        // Default: free access
-        return true;
+        return in_array($feature, $freeFeatures);
     }
     
     /**
@@ -143,33 +145,25 @@ class Setting extends Model
      */
     public static function getLimit($feature, $user = null)
     {
-        $phase = self::getMonetizationPhase();
-        $featureAccess = self::get('feature_access', []);
-        $phaseKey = "phase_{$phase}";
-        $phaseConfig = $featureAccess[$phaseKey] ?? [];
-        
-        // Phase 1: Unlimited everything
-        if ($phase == 1) {
+        // If monetization is OFF, everything is unlimited
+        if (!self::isMonetizationEnabled()) {
             return 'unlimited';
         }
         
         // Premium users get unlimited
-        if ($user && $user->is_premium) {
-            $premiumKey = $feature . '_premium';
-            return $phaseConfig[$premiumKey] ?? 'unlimited';
+        if ($user && $user->is_premium && $user->payment_status === \App\Models\User::PAYMENT_STATUS_PAID) {
+            return 'unlimited';
         }
         
-        // Check for grandfathered benefits
-        if ($user && $feature === 'cv_templates') {
-            $grandfatheredCount = $user->getCvTemplatesCount();
-            if ($grandfatheredCount > 1) {
-                return $grandfatheredCount;
-            }
-        }
+        // Free users get limits when monetization is enabled
+        $freeLimits = [
+            'cv_templates' => 1,
+            'cv_exports' => 'unlimited', // FREE users can export unlimited times
+            'job_applications' => 30,
+            'goals' => 5
+        ];
         
-        // Free users get limited
-        $freeKey = $feature . '_free';
-        return $phaseConfig[$freeKey] ?? 'unlimited';
+        return $freeLimits[$feature] ?? 'unlimited';
     }
     
     /**

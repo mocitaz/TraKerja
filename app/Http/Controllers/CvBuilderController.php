@@ -69,16 +69,16 @@ class CvBuilderController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
         
-        // Check export limit for free tier (5 exports/month for free, unlimited for premium)
-        if (!$user->is_premium) {
-            $monthlyExports = $user->cv_exports_this_month ?? 0;
-            if ($monthlyExports >= 5) {
-                return back()->with('error', 'You have reached your monthly export limit (5/month). Upgrade to Premium for unlimited exports!');
-            }
-        }
+        // All users (free and premium) have unlimited exports
         
         // Get template
-        $template = $request->input('template', 'modern');
+        $template = $request->input('template', 'minimal');
+        
+        // Check if user has access to the selected template
+        $premiumTemplates = ['professional', 'creative'];
+        if (in_array($template, $premiumTemplates) && !$user->is_premium) {
+            return redirect()->back()->with('error', 'This template is only available for premium users.');
+        }
         
         // Load all user CV data
         $experiences = $user->experiences()->orderBy('display_order')->get();
@@ -98,11 +98,6 @@ class CvBuilderController extends Controller
             'achievements' => $achievements,
             'projects' => $projects,
         ]);
-        
-        // Track export count (increment counter)
-        if (!$user->is_premium) {
-            $user->increment('cv_exports_this_month');
-        }
         
         // Log export activity
         Log::info("CV exported", [

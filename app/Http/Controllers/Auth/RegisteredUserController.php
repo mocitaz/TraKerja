@@ -59,7 +59,7 @@ class RegisteredUserController extends Controller
             'grandfathered_benefits' => $grandfatheredBenefits,
             'role' => 'user', // Default role
             'is_premium' => false,
-            'payment_status' => 'unpaid',
+            'payment_status' => 'free', // Default to 'free' (valid values: free, paid, expired)
         ]);
 
         event(new Registered($user));

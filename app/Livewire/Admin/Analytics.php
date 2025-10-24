@@ -23,6 +23,7 @@ class Analytics extends Component
     public function updatedPeriodFilter()
     {
         $this->loadAnalytics();
+        $this->dispatch('chartUpdated');
     }
 
     public function loadAnalytics()
@@ -35,26 +36,35 @@ class Analytics extends Component
     private function getUserGrowth()
     {
         $days = (int) $this->periodFilter;
-        $startDate = Carbon::now()->subDays($days);
 
-        // Get daily user registrations
-        $growth = User::select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
-            ->where('created_at', '>=', $startDate)
-            ->groupBy('date')
-            ->orderBy('date', 'asc')
-            ->get();
+        // Create a complete date range
+        $dateRange = [];
+        $totalData = [];
+        $premiumData = [];
+        
+        for ($i = $days - 1; $i >= 0; $i--) {
+            $currentDate = Carbon::now()->subDays($i);
+            $dateRange[] = $currentDate->format('M d');
+            
+            // Count total users registered up to this date (excluding admins)
+            $totalCount = User::where('role', '!=', 'admin')
+                ->where('created_at', '<=', $currentDate->endOfDay())
+                ->count();
+            
+            // Count premium users up to this date (excluding admins)
+            $premiumCount = User::where('role', '!=', 'admin')
+                ->where('is_premium', true)
+                ->where('created_at', '<=', $currentDate->endOfDay())
+                ->count();
+            
+            $totalData[] = $totalCount;
+            $premiumData[] = $premiumCount;
+        }
 
         $this->userGrowth = [
-            'labels' => $growth->pluck('date')->map(fn($date) => Carbon::parse($date)->format('M d'))->toArray(),
-            'total' => $growth->pluck('count')->toArray(),
-            'premium' => User::select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
-                ->where('created_at', '>=', $startDate)
-                ->where('is_premium', true)
-                ->groupBy('date')
-                ->orderBy('date', 'asc')
-                ->get()
-                ->pluck('count')
-                ->toArray(),
+            'labels' => $dateRange,
+            'total' => $totalData,
+            'premium' => $premiumData,
         ];
     }
 
@@ -71,32 +81,54 @@ class Analytics extends Component
 
     private function getActiveUsers()
     {
-        $thirtyDaysAgo = Carbon::now()->subDays(30);
+        $days = (int) $this->periodFilter;
+        $startDate = Carbon::now()->subDays($days);
         
-        // Users who have CV data (considered active)
-        $this->activeUsers = User::whereHas('experiences')
-            ->orWhereHas('educations')
-            ->orWhereHas('skills')
-            ->where('created_at', '>=', $thirtyDaysAgo)
+        // Users who have CV data (considered active) - excluding admins - within selected period
+        $this->activeUsers = User::where('role', '!=', 'admin')
+            ->where(function($query) {
+                $query->whereHas('experiences')
+                    ->orWhereHas('educations')
+                    ->orWhereHas('skills');
+            })
+            ->where('created_at', '>=', $startDate)
             ->count();
     }
 
     public function render()
     {
+        $days = (int) $this->periodFilter;
+        $startDate = Carbon::now()->subDays($days);
+        
         $stats = [
-            'totalUsers' => User::count(),
-            'premiumUsers' => User::where('is_premium', true)->count(),
+            'totalUsers' => User::where('role', '!=', 'admin')
+                ->where('created_at', '>=', $startDate)
+                ->count(),
+            'premiumUsers' => User::where('role', '!=', 'admin')
+                ->where('is_premium', true)
+                ->where('created_at', '>=', $startDate)
+                ->count(),
             'activeUsers' => $this->activeUsers,
             'totalExports' => $this->totalExports,
-            'newUsersToday' => User::whereDate('created_at', Carbon::today())->count(),
-            'newUsersWeek' => User::where('created_at', '>=', Carbon::now()->subWeek())->count(),
-            'newUsersMonth' => User::where('created_at', '>=', Carbon::now()->subMonth())->count(),
-            'conversionRate' => User::count() > 0 
-                ? round((User::where('is_premium', true)->count() / User::count()) * 100, 2) 
+            'newUsersToday' => User::where('role', '!=', 'admin')->whereDate('created_at', Carbon::today())->count(),
+            'newUsersWeek' => User::where('role', '!=', 'admin')->where('created_at', '>=', Carbon::now()->subWeek())->count(),
+            'newUsersMonth' => User::where('role', '!=', 'admin')->where('created_at', '>=', Carbon::now()->subMonth())->count(),
+            'conversionRate' => User::where('role', '!=', 'admin')
+                ->where('created_at', '>=', $startDate)
+                ->count() > 0 
+                ? round((User::where('role', '!=', 'admin')
+                    ->where('is_premium', true)
+                    ->where('created_at', '>=', $startDate)
+                    ->count() / User::where('role', '!=', 'admin')
+                    ->where('created_at', '>=', $startDate)
+                    ->count()) * 100, 2) 
                 : 0,
+            'periodDays' => $days,
         ];
 
-        $recentUsers = User::latest()
+        $recentUsers = User::where('role', '!=', 'admin')
+            ->where('created_at', '>=', $startDate)
+            ->latest()
             ->take(10)
             ->get(['id', 'name', 'email', 'is_premium', 'is_admin', 'created_at']);
 

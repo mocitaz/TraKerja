@@ -180,6 +180,7 @@ class ProjectForm extends Component
     {
         $this->showModal = false;
         $this->resetForm();
+        $this->dispatch('reset-body-overflow');
     }
     
     private function resetForm()

@@ -34,11 +34,6 @@
 
                         <!-- Right Side -->
                         <div class="flex items-center space-x-4">
-                            <!-- Back to App -->
-                            <a href="{{ route('tracker') }}" class="text-primary-600 hover:text-primary-900">
-                                <i class="fas fa-arrow-left mr-2"></i>Back to App
-                            </a>
-
                             <!-- User Dropdown -->
                             <div class="relative" x-data="{ open: false }">
                                 <button @click="open = ! open" class="flex items-center text-sm font-medium text-primary-500 hover:text-primary-700 focus:outline-none transition duration-150 ease-in-out">
@@ -61,9 +56,6 @@
                                      class="absolute right-0 z-50 mt-2 w-48 rounded-md shadow-lg origin-top-right bg-white ring-1 ring-black ring-opacity-5"
                                      style="display: none;">
                                     <div class="py-1">
-                                        <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-primary-700 hover:bg-primary-50">
-                                            <i class="fas fa-user-circle mr-2"></i>Profile
-                                        </a>
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
                                             <a href="{{ route('logout') }}" 

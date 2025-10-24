@@ -28,6 +28,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // Redirect admin to admin dashboard, regular users to tracker
+        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+            return redirect()->intended(route('admin.index', absolute: false));
+        }
+
         return redirect()->intended(route('tracker', absolute: false));
     }
 

@@ -79,7 +79,10 @@
              x-init="document.body.style.overflow = 'hidden'" 
              x-destroy="document.body.style.overflow = 'auto'">
             <!-- Backdrop with blur -->
-            <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" wire:click="closeModal"></div>
+                        <!-- Backdrop -->
+            <div class="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity" 
+                 wire:click="closeModal" 
+                 @click="document.body.style.overflow = 'auto'"></div>
             
             <!-- Modal Content -->
             <div class="relative bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col">
@@ -90,7 +93,9 @@
                             <h3 class="text-xl font-bold text-gray-900">{{ $editMode ? 'Edit Education' : 'Add New Education' }}</h3>
                             <p class="text-sm text-gray-500 mt-1">Fill in your educational information</p>
                         </div>
-                        <button wire:click="closeModal" class="text-gray-400 hover:text-gray-600 transition">
+                        <button type="button"
+                                @click="closing = true; document.body.style.overflow = 'auto'; $wire.closeModal()" 
+                                class="text-gray-400 hover:text-gray-600 transition">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
@@ -206,18 +211,28 @@
                         <!-- Description -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Description (Optional)</label>
-                            <textarea wire:model="description" 
-                                      rows="4" 
-                                      class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm" 
-                                      placeholder="Activities, coursework, achievements..."></textarea>
-                            <p class="mt-1 text-xs text-gray-500">Add details about your academic achievements, relevant coursework, or extracurricular activities</p>
+                            <div class="relative">
+                                <textarea wire:model="description" 
+                                          rows="5" 
+                                          class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm font-mono"
+                                          style="line-height: 1.6; padding-left: 2.5rem; background-image: repeating-linear-gradient(transparent, transparent 1.6rem, #f3f4f6 1.6rem, #f3f4f6 calc(1.6rem + 1px)); background-size: 100% 1.6rem; background-attachment: local;"
+                                          placeholder="Participants of POINTS (Path of Informatics Research) 2021&#10;Participants of GOER Faculty of Science and Mathematics 2021&#10;Active member of Computer Science Student Association"></textarea>
+                                <div class="absolute left-3 top-2 bottom-2 flex flex-col justify-start pointer-events-none" style="line-height: 1.6;">
+                                    <div class="text-gray-400 text-sm" style="height: 1.6rem; line-height: 1.6rem;">•</div>
+                                    <div class="text-gray-400 text-sm" style="height: 1.6rem; line-height: 1.6rem;">•</div>
+                                    <div class="text-gray-400 text-sm" style="height: 1.6rem; line-height: 1.6rem;">•</div>
+                                    <div class="text-gray-400 text-sm" style="height: 1.6rem; line-height: 1.6rem;">•</div>
+                                    <div class="text-gray-400 text-sm" style="height: 1.6rem; line-height: 1.6rem;">•</div>
+                                </div>
+                            </div>
+                            <p class="mt-1 text-xs text-gray-500">💡 Write one achievement/activity per line. Each line will appear as a bullet point in your CV.</p>
                         </div>
                     </div>
 
                     <!-- Modal Footer -->
                     <div class="flex justify-end gap-3 pt-6 mt-6 border-t border-gray-200">
                         <button type="button" 
-                                wire:click="closeModal" 
+                                @click="closing = true; document.body.style.overflow = 'auto'; $wire.closeModal()"
                                 class="px-6 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium">
                             Cancel
                         </button>

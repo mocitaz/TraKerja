@@ -123,6 +123,21 @@
                                 @endif
                             </div>
                         </th>
+                        <th scope="col" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider cursor-pointer hover:text-primary-600 transition-colors" 
+                            wire:click="sortBy('interview_date')">
+                            <div class="flex items-center justify-center space-x-1">
+                                <span>Interview</span>
+                                @if($sortField === 'interview_date')
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        @if($sortDirection === 'asc')
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                        @else
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        @endif
+                                    </svg>
+                                @endif
+                            </div>
+                        </th>
                         <th scope="col" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">
                             Actions
                         </th>
@@ -193,6 +208,39 @@
                                     {{ $job->application_date->format('M d, Y') }}
                                 </div>
                             </td>
+                            <td class="px-4 py-3 text-center text-sm">
+                                @if($job->interview_date)
+                                    <div class="flex flex-col items-center space-y-1">
+                                        <div class="flex items-center text-purple-700 font-medium">
+                                            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                            </svg>
+                                            {{ $job->interview_date->format('M d, Y') }}
+                                        </div>
+                                        @if($job->interview_type)
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                @if($job->interview_type === 'Phone')
+                                                    📞
+                                                @elseif($job->interview_type === 'Video')
+                                                    📹
+                                                @elseif($job->interview_type === 'In-person')
+                                                    🏢
+                                                @elseif($job->interview_type === 'Panel')
+                                                    👥
+                                                @endif
+                                                {{ $job->interview_type }}
+                                            </span>
+                                        @endif
+                                        @if($job->interview_location)
+                                            <div class="text-xs text-gray-500">
+                                                📍 {{ Str::limit($job->interview_location, 20) }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                @else
+                                    <span class="text-gray-400 text-xs">No interview</span>
+                                @endif
+                            </td>
                             <td class="px-4 py-3 whitespace-nowrap text-center text-sm font-medium" onclick="event.stopPropagation();">
                                 <div class="flex items-center justify-center space-x-2">
                                     <button wire:click="edit({{ $job->id }})" 
@@ -214,7 +262,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="9" class="px-6 py-24 text-center">
+                            <td colspan="10" class="px-6 py-24 text-center">
                                 <div class="flex flex-col items-center justify-center min-h-[300px]">
                                     <svg class="w-16 h-16 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>

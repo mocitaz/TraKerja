@@ -7,7 +7,7 @@
                 <!-- Brand Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('tracker') }}" class="group">
-                        <span class="text-xl font-bold bg-gradient-to-r from-[#0056B3] to-[#28A745] bg-clip-text text-transparent">
+                        <span class="text-xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
                             TraKerja
                         </span>
                     </a>
@@ -16,30 +16,64 @@
 
             <!-- Center Section: Navigation Links -->
             <div class="flex space-x-2">
-                <a href="{{ route('tracker') }}"
-                   class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('tracker') ? 'bg-[#0056B3]/10 text-[#0056B3]' : 'text-gray-600 hover:text-[#0056B3] hover:bg-gray-50' }}">
-                    <span>Tracker</span>
-                </a>
-                <a href="{{ route('summary') }}"
-                   class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('summary') ? 'bg-[#0056B3]/10 text-[#0056B3]' : 'text-gray-600 hover:text-[#0056B3] hover:bg-gray-50' }}">
-                    <span>Summary</span>
-                </a>
-                <a href="{{ route('goals') }}"
-                   class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('goals') ? 'bg-[#0056B3]/10 text-[#0056B3]' : 'text-gray-600 hover:text-[#0056B3] hover:bg-gray-50' }}">
-                    <span>Goals</span>
-                </a>
-                <a href="{{ route('cv.builder') }}"
-                   class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('cv.*') ? 'bg-[#0056B3]/10 text-[#0056B3]' : 'text-gray-600 hover:text-[#0056B3] hover:bg-gray-50' }}">
-                    <span>CV Builder</span>
-                    @if(is_premium(auth()->user()))
-                        <span class="ml-1 px-1.5 py-0.5 text-xs bg-yellow-100 text-yellow-800 rounded">PRO</span>
-                    @endif
-                </a>
-                @if(auth()->user()->isAdmin())
+                @if(!auth()->user()->isAdmin() && auth()->user()->role !== 'admin')
+                    {{-- Regular User Navigation --}}
+                    <a href="{{ route('tracker') }}"
+                       class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('tracker') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <span>Tracker</span>
+                    </a>
+                    <a href="{{ route('summary') }}"
+                       class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('summary') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <span>Summary</span>
+                    </a>
+                    <a href="{{ route('goals') }}"
+                       class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('goals') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <span>Goals</span>
+                    </a>
+                    <a href="{{ route('cv.builder') }}"
+                       class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('cv.*') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <span>CV Builder</span>
+                        @if(is_premium(auth()->user()))
+                            <span class="ml-1 px-1.5 py-0.5 text-xs bg-gradient-to-r from-secondary-100 to-purple-100 text-purple-800 rounded font-semibold">PRO</span>
+                        @endif
+                    </a>
+                @else
+                    {{-- Admin Navigation --}}
                     <a href="{{ route('admin.index') }}"
-                       class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.*') ? 'bg-purple-100 text-purple-600' : 'text-purple-600 hover:bg-purple-50' }}">
-                        <i class="fas fa-shield-alt mr-1"></i>
-                        <span>Admin</span>
+                       class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.index') ? 'bg-gradient-to-r from-primary-100 to-secondary-100 text-primary-700' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="{{ route('admin.users') }}"
+                       class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.users') ? 'bg-gradient-to-r from-primary-100 to-secondary-100 text-primary-700' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <span>Users</span>
+                    </a>
+                    <a href="{{ route('admin.payments') }}"
+                       class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.payments') ? 'bg-gradient-to-r from-primary-100 to-secondary-100 text-primary-700' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                        </svg>
+                        <span>Payments</span>
+                    </a>
+                    <a href="{{ route('admin.analytics') }}"
+                       class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.analytics') ? 'bg-gradient-to-r from-primary-100 to-secondary-100 text-primary-700' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span>Analytics</span>
+                    </a>
+                    <a href="{{ route('admin.settings') }}"
+                       class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.settings') ? 'bg-gradient-to-r from-primary-100 to-secondary-100 text-primary-700' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span>Settings</span>
                     </a>
                 @endif
             </div>
@@ -53,7 +87,7 @@
                              alt="Profile Photo" 
                              class="h-8 w-8 rounded-full object-cover ring-2 ring-white shadow-sm">
                     @else
-                        <div class="h-8 w-8 bg-gradient-to-br from-[#0056B3] to-[#28A745] rounded-full flex items-center justify-center">
+                        <div class="h-8 w-8 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full flex items-center justify-center">
                             <span class="text-white font-semibold text-sm">{{ substr(Auth::user()->name, 0, 1) }}</span>
                         </div>
                     @endif
@@ -66,7 +100,7 @@
                 <!-- User Dropdown -->
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0056B3] transition-all duration-200 hover:bg-gray-50 p-1">
+                        <button class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200 hover:bg-gray-50 p-1">
                             <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
                             </svg>
@@ -82,15 +116,17 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
-                            <!-- Export CSV -->
-                            <a href="{{ route('export.job-applications.csv') }}" 
-                               class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors duration-200"
-                               onclick="showExportNotification()">
-                                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                </svg>
-                                Export ke CSV
-                            </a>
+                            @if(!auth()->user()->isAdmin() && auth()->user()->role !== 'admin')
+                                <!-- Export CSV (Only for regular users) -->
+                                <a href="{{ route('export.job-applications.csv') }}" 
+                                   class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200"
+                                   onclick="showExportNotification()">
+                                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                    </svg>
+                                    Export ke CSV
+                                </a>
+                            @endif
 
                             <!-- Authentication -->
                             <button onclick="openLogoutModal()" 
