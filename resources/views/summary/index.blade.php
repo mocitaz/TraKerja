@@ -13,7 +13,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
+                        <h2 class="text-2xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
                             Career Summary
                         </h2>
                         <p class="text-xs text-gray-500 mt-0.5">Advanced Analytics & Insights</p>
@@ -22,8 +22,8 @@
             </div>
             <div class="flex items-center space-x-2">
                 <div class="flex items-center space-x-2 bg-green-50 px-3 py-1.5 rounded-full">
-                    <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
-                    <span class="text-xs font-medium text-purple-700">Live</span>
+                    <div class="w-2 h-2 bg-primary-500 rounded-full"></div>
+                    <span class="text-xs font-medium text-primary-700">Live</span>
                 </div>
                 <div class="text-xs text-gray-400">
                     {{ now()->format('M d, Y') }}
@@ -72,7 +72,7 @@
                             <p class="text-xs font-medium text-gray-600 mb-1">On Process</p>
                             <p class="text-2xl font-bold text-[#212529]">{{ $onProcessCount }}</p>
                         </div>
-                        <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                             </svg>
@@ -161,7 +161,7 @@
                             <h3 class="text-lg font-bold text-gray-900">This Week's Progress</h3>
                             <p class="text-sm text-gray-500">Weekly application goals</p>
                         </div>
-                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                             </svg>
@@ -203,7 +203,7 @@
                             <h3 class="text-lg font-bold text-gray-900">The Cadence Effect</h3>
                             <p class="text-sm text-gray-500">Application frequency patterns</p>
                         </div>
-                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                             </svg>

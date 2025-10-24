@@ -94,7 +94,7 @@
             <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-800 rounded-lg flex items-center justify-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-lg flex items-center justify-center">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                             </svg>
@@ -106,7 +106,7 @@
                     </div>
                     <button 
                         wire:click="openGoalModal"
-                        class="px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-800 text-white text-sm font-medium rounded-lg hover:from-purple-700 hover:to-purple-900 transition-all duration-200 flex items-center space-x-2"
+                        class="px-4 py-2 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white text-sm font-medium rounded-lg hover:from-purple-700 hover:to-purple-900 transition-all duration-200 flex items-center space-x-2"
                     >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -123,7 +123,7 @@
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-3">
                         <div 
-                            class="bg-gradient-to-r from-purple-600 to-purple-800 h-3 rounded-full transition-all duration-500"
+                            class="bg-gradient-to-r from-[#d983e4] to-[#4e71c5] h-3 rounded-full transition-all duration-500"
                             style="width: {{ min(100, $this->appliedProgress) }}%"
                         ></div>
                     </div>
@@ -147,7 +147,7 @@
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-3">
                         <div 
-                            class="bg-gradient-to-r from-purple-600 to-purple-800 h-3 rounded-full transition-all duration-500"
+                            class="bg-gradient-to-r from-[#d983e4] to-[#4e71c5] h-3 rounded-full transition-all duration-500"
                             style="width: {{ min(100, $this->followupProgress) }}%"
                         ></div>
                     </div>
@@ -373,7 +373,7 @@
                 <!-- Modal Header -->
                 <div class="flex items-center justify-between p-6 border-b border-gray-200">
                     <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-800 rounded-lg flex items-center justify-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-lg flex items-center justify-center">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
@@ -541,7 +541,7 @@
                         <div class="flex space-x-3 pt-4">
                             <button 
                                 type="submit"
-                                class="flex-1 bg-gradient-to-r from-purple-600 to-purple-800 text-white py-3 px-6 rounded-lg font-medium hover:from-purple-700 hover:to-purple-900 transition-all duration-200 flex items-center justify-center"
+                                class="flex-1 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white py-3 px-6 rounded-lg font-medium hover:from-purple-700 hover:to-purple-900 transition-all duration-200 flex items-center justify-center"
                             >
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>

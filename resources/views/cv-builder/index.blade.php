@@ -13,7 +13,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
+                        <h2 class="text-2xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
                             CV Builder
                             @if(is_premium(auth()->user()))
                                 <span class="ml-2 px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded-full">PREMIUM</span>
@@ -25,8 +25,8 @@
             </div>
             <div class="flex items-center space-x-2">
                 <div class="flex items-center space-x-2 bg-green-50 px-3 py-1.5 rounded-full">
-                    <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
-                    <span class="text-xs font-medium text-purple-700">Live</span>
+                    <div class="w-2 h-2 bg-primary-500 rounded-full"></div>
+                    <span class="text-xs font-medium text-primary-700">Live</span>
                 </div>
                 <div class="text-xs text-gray-400">
                     {{ now()->format('M d, Y') }}

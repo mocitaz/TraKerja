@@ -20,8 +20,8 @@
     
             <style>
             :root {
-                --primary: #8b5cf6;
-                --secondary: #a855f7;
+                --primary: #d983e4;
+                --secondary: #4e71c5;
                 --accent: #d946ef;
                 --dark: #0f172a;
                 --light: #f8fafc;
@@ -36,7 +36,7 @@
             }
 
         .gradient-text {
-                background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 50%, var(--secondary) 100%);
+                background: linear-gradient(135deg, #d983e4 0%, #4e71c5 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -45,7 +45,7 @@
         }
 
         .hero-gradient {
-                background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 50%, var(--secondary) 100%);
+                background: linear-gradient(135deg, #d983e4 0%, #4e71c5 100%);
                 background-size: 200% 200%;
                 animation: gradientShift 8s ease-in-out infinite;
         }
@@ -155,7 +155,7 @@
             .cyber-border {
                 position: relative;
                 border: 2px solid transparent;
-                background: linear-gradient(45deg, var(--primary), var(--secondary)) border-box;
+                background: linear-gradient(45deg, #d983e4, #4e71c5) border-box;
                 border-radius: 12px;
             }
 
@@ -164,7 +164,7 @@
                 position: absolute;
                 inset: 0;
                 padding: 2px;
-                background: linear-gradient(45deg, var(--primary), var(--secondary));
+                background: linear-gradient(45deg, #d983e4, #4e71c5);
                 border-radius: inherit;
                 mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
                 mask-composite: exclude;
@@ -222,7 +222,7 @@
                 left: 0;
                 width: 100%;
                 height: 4px;
-                background: linear-gradient(90deg, var(--primary), var(--secondary));
+                background: linear-gradient(90deg, #d983e4, #4e71c5);
                 transform-origin: left;
                 z-index: 50;
             }
@@ -329,7 +329,7 @@
                 <div class="flex items-center">
                     <div class="shrink-0 flex items-center">
                         <a href="{{ url('/') }}" class="group">
-                            <span class="text-xl font-bold bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent">
+                            <span class="text-xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
                                 TraKerja
                             </span>
                         </a>
@@ -341,17 +341,17 @@
             @if (Route::has('login'))
                     @auth
                             <a href="{{ url('/tracker') }}" 
-                               class="bg-gradient-to-r from-primary-600 to-secondary-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:shadow-lg transition-all duration-200">
+                               class="bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:shadow-lg transition-all duration-200">
                             Dashboard
                         </a>
                     @else
                             <a href="{{ route('login') }}" 
-                               class="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors duration-200">
+                               class="text-gray-600 hover:text-[#d983e4] text-sm font-medium transition-colors duration-200">
                                 Login
                             </a>
                         @if (Route::has('register'))
                                 <a href="{{ route('register') }}" 
-                                   class="bg-gradient-to-r from-primary-600 to-secondary-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:shadow-lg transition-all duration-200">
+                                   class="bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:shadow-lg transition-all duration-200">
                                     Daftar
                             </a>
                         @endif
@@ -386,15 +386,15 @@
                 Kelola Proses Rekrutmen dengan 
                 <span class="gradient-text relative">
                     TraKerja
-                    <div class="absolute -inset-1 bg-gradient-to-r from-primary-600 to-secondary-500 rounded-lg blur opacity-30"></div>
+                    <div class="absolute -inset-1 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] rounded-lg blur opacity-30"></div>
                 </span>
             </h1>
             
             <!-- Subheading with Animation -->
             <p class="hero-subtitle text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto text-reveal" style="animation-delay: 0.6s;">
                 Platform tracking job application yang 
-                <span class="font-semibold text-primary-600">simple</span> dan 
-                <span class="font-semibold text-secondary-500">efektif</span> 
+                <span class="font-semibold text-[#d983e4]">simple</span> dan 
+                <span class="font-semibold text-[#4e71c5]">efektif</span> 
                 untuk job seeker Indonesia
             </p>
             
@@ -402,16 +402,16 @@
             <div class="cta-buttons flex flex-col sm:flex-row gap-6 justify-center mb-16 text-reveal" style="animation-delay: 0.8s;">
                 @auth
                     <a href="{{ url('/tracker') }}" 
-                       class="cta-button bg-gradient-to-r from-primary-600 to-secondary-500 text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 glow-effect">
+                       class="cta-button bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 glow-effect">
                         <span class="relative z-10">Buka Dashboard</span>
                     </a>
                 @else
                     <a href="{{ route('register') }}" 
-                       class="cta-button bg-gradient-to-r from-primary-600 to-secondary-500 text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 glow-effect">
+                       class="cta-button bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 glow-effect">
                         <span class="relative z-10">Mulai Gratis</span>
                     </a>
                     <a href="{{ route('login') }}" 
-                       class="cta-button border-2 border-primary-600 text-primary-600 px-10 py-4 rounded-xl font-bold text-lg hover:bg-primary-600 hover:text-white transition-all duration-300 hover:shadow-xl">
+                       class="cta-button border-2 border-[#d983e4] text-[#d983e4] px-10 py-4 rounded-xl font-bold text-lg hover:bg-[#d983e4] hover:text-white transition-all duration-300 hover:shadow-xl">
                         <span class="relative z-10">Login</span>
                     </a>
                 @endauth
@@ -419,12 +419,6 @@
             
             <!-- Enhanced Trust Indicators -->
             <div class="trust-indicators flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600 text-reveal" style="animation-delay: 1s;">
-                <div class="flex items-center glass-effect px-4 py-2 rounded-full hover:scale-105 transition-all duration-300">
-                    <svg class="w-5 h-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="font-semibold">Gratis Selamanya</span>
-                </div>
                 <div class="flex items-center glass-effect px-4 py-2 rounded-full hover:scale-105 transition-all duration-300">
                     <svg class="w-5 h-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -481,7 +475,7 @@
                         </svg>
                         </div>
                         <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">Kanban Board</h3>
-                        <p class="text-gray-600 leading-relaxed">Kelola aplikasi kerja dengan drag & drop yang mudah. Lihat progress lamaran Anda dalam satu tampilan yang intuitif.</p>
+                        <p class="text-gray-600 leading-relaxed">Kelola lamaran kerja dengan drag & drop yang mudah. Lihat progress lamaran Anda dalam satu tampilan yang intuitif.</p>
                     </div>
                 </div>
                 
@@ -495,7 +489,7 @@
                         </svg>
                         </div>
                         <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Analytics Dashboard</h3>
-                        <p class="text-gray-600 leading-relaxed">Lihat statistik aplikasi Anda. Platform mana yang paling efektif dan posisi apa yang paling sering dipanggil interview.</p>
+                        <p class="text-gray-600 leading-relaxed">Lihat statistik lamaran Anda. Platform mana yang paling efektif dan posisi apa yang paling sering dipanggil interview.</p>
                     </div>
                 </div>
                 
@@ -523,7 +517,7 @@
                         </svg>
                         </div>
                         <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Goal Tracking</h3>
-                        <p class="text-gray-600 leading-relaxed">Set target mingguan untuk aplikasi kerja dan pantau progress Anda. Tetap termotivasi dengan streak counter.</p>
+                        <p class="text-gray-600 leading-relaxed">Set target mingguan untuk lamaran kerja dan pantau progress Anda. Tetap termotivasi dengan streak counter.</p>
                     </div>
                 </div>
                 
@@ -693,7 +687,7 @@
                             </svg>
                         </div>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">Tambah Aplikasi</h3>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Tambah Lamaran</h3>
                     <p class="text-gray-600 leading-relaxed">Input detail lamaran kerja Anda. TraKerja akan otomatis mengorganisir dan mengingatkan follow-up.</p>
                 </div>
                 
@@ -710,7 +704,7 @@
                         </div>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Track & Analyze</h3>
-                    <p class="text-gray-600 leading-relaxed">Pantau progress dan analisis performa aplikasi Anda. Dapatkan insight untuk strategi yang lebih efektif.</p>
+                    <p class="text-gray-600 leading-relaxed">Pantau progress dan analisis performa lamaran Anda. Dapatkan insight untuk strategi yang lebih efektif.</p>
                 </div>
             </div>
         </div>
@@ -739,7 +733,7 @@
                         </h2>
                         <p class="text-lg text-gray-600 mb-8">
                             Job seeker seringkali kesulitan mengorganisir lamaran kerja yang sudah dikirim. 
-                            Akibatnya banyak yang terlewat follow-up atau lupa status aplikasi.
+                            Akibatnya banyak yang terlewat follow-up atau lupa status lamaran.
                         </p>
                     </div>
                     
@@ -793,7 +787,7 @@
                         </h2>
                         <p class="text-lg text-gray-600 mb-8">
                             Platform tracking job application yang dirancang khusus untuk job seeker Indonesia. 
-                            Simple, efektif, dan gratis selamanya.
+                            Simple, efektif, dan mudah digunakan.
                         </p>
                     </div>
                     
@@ -820,7 +814,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
                             </div>
-                            <p class="text-gray-600">Analytics untuk optimasi strategi aplikasi</p>
+                            <p class="text-gray-600">Analytics untuk optimasi strategi lamaran</p>
                         </div>
                         <div class="flex items-start space-x-3">
                             <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
@@ -866,7 +860,7 @@
                         </svg>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">100% Gratis</h3>
-                    <p class="text-gray-600 leading-relaxed">Tidak ada biaya tersembunyi atau upgrade berbayar. Semua fitur premium tersedia gratis selamanya.</p>
+                    <p class="text-gray-600 leading-relaxed">Tidak ada biaya tersembunyi atau upgrade berbayar. Semua fitur premium tersedia untuk semua pengguna.</p>
                 </div>
                 
                 <!-- Benefit 2 -->
@@ -877,7 +871,7 @@
                         </svg>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Setup 2 Menit</h3>
-                    <p class="text-gray-600 leading-relaxed">Tidak perlu setup rumit. Daftar, login, langsung bisa mulai tracking aplikasi kerja Anda.</p>
+                    <p class="text-gray-600 leading-relaxed">Tidak perlu setup rumit. Daftar, login, langsung bisa mulai tracking lamaran kerja Anda.</p>
                 </div>
                 
                 <!-- Benefit 3 -->
@@ -899,7 +893,7 @@
                         </svg>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Analytics Cerdas</h3>
-                    <p class="text-gray-600 leading-relaxed">Dapatkan insight tentang performa aplikasi Anda. Platform mana yang paling efektif dan strategi apa yang berhasil.</p>
+                    <p class="text-gray-600 leading-relaxed">Dapatkan insight tentang performa lamaran Anda. Platform mana yang paling efektif dan strategi apa yang berhasil.</p>
                 </div>
                 
                 <!-- Benefit 5 -->
@@ -948,23 +942,23 @@
             </h2>
             <p class="text-xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed">
                 Bergabunglah dengan job seeker Indonesia yang sudah menggunakan TraKerja. 
-                Mulai gratis dan rasakan perbedaannya dalam mengelola aplikasi kerja Anda.
+                Mulai gratis dan rasakan perbedaannya dalam mengelola lamaran kerja Anda.
             </p>
             
             @guest
                 <div class="flex flex-col sm:flex-row gap-6 justify-center mb-12">
                     <a href="{{ route('register') }}" 
-                       class="cta-button bg-white text-primary-600 px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+                       class="cta-button bg-white text-[#d983e4] px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
                         <span class="relative z-10 flex items-center justify-center">
                             <svg class="w-6 h-6 mr-2 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                             </svg>
                         Daftar Gratis Sekarang
                         </span>
-                        <div class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                     </a>
                     <a href="{{ route('login') }}" 
-                       class="cta-button border-2 border-white text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white hover:text-primary-600 transition-all duration-300 hover:shadow-xl relative overflow-hidden group">
+                       class="cta-button border-2 border-white text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white hover:text-[#d983e4] transition-all duration-300 hover:shadow-xl relative overflow-hidden group">
                         <span class="relative z-10 flex items-center justify-center">
                             <svg class="w-6 h-6 mr-2 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
@@ -975,25 +969,19 @@
                 </div>
             @else
                 <a href="{{ url('/tracker') }}" 
-                   class="cta-button bg-white text-primary-600 px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 inline-block relative overflow-hidden group">
+                   class="cta-button bg-white text-[#d983e4] px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 inline-block relative overflow-hidden group">
                     <span class="relative z-10 flex items-center justify-center">
                         <svg class="w-6 h-6 mr-2 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                     Buka Dashboard
                     </span>
-                    <div class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                 </a>
             @endguest
             
             <!-- Enhanced Trust Indicators -->
             <div class="flex flex-wrap items-center justify-center gap-8 text-white/80 text-sm">
-                <div class="flex items-center glass-effect px-4 py-2 rounded-full hover:scale-105 transition-all duration-300">
-                    <svg class="w-5 h-5 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="font-semibold">Gratis Selamanya</span>
-                </div>
                 <div class="flex items-center glass-effect px-4 py-2 rounded-full hover:scale-105 transition-all duration-300">
                     <svg class="w-5 h-5 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
