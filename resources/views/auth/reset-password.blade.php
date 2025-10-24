@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="min-h-screen bg-gray-50 flex">
         <!-- Left Side - Branding -->
-        <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0056B3] to-[#28A745] relative overflow-hidden">
+        <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-purple-600 to-purple-800 relative overflow-hidden">
             <!-- Background Elements -->
             <div class="absolute top-20 left-10 w-64 h-64 bg-white/10 rounded-full mix-blend-multiply filter blur-xl"></div>
             <div class="absolute bottom-20 right-10 w-64 h-64 bg-white/10 rounded-full mix-blend-multiply filter blur-xl"></div>
@@ -103,7 +103,7 @@
                                        autocomplete="email" 
                                        required 
                                        value="{{ old('email', $request->email) }}"
-                                       class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent transition-colors @error('email') border-red-300 @enderror"
+                                       class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors @error('email') border-red-300 @enderror"
                                        placeholder="Enter your email address">
                             </div>
                             @error('email')
@@ -125,7 +125,7 @@
                                        type="password" 
                                        autocomplete="new-password" 
                                        required
-                                       class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent transition-colors @error('password') border-red-300 @enderror"
+                                       class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors @error('password') border-red-300 @enderror"
                                        placeholder="Enter your new password">
                             </div>
                             @error('password')
@@ -147,14 +147,14 @@
                                        type="password"
                                        autocomplete="new-password" 
                                        required
-                                       class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent transition-colors"
+                                       class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
                                        placeholder="Confirm your new password">
                             </div>
                         </div>
 
                         <!-- Submit Button -->
                         <button type="submit" 
-                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-[#0056B3] to-[#28A745] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0056B3] transition-all duration-200">
+                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-purple-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
@@ -166,7 +166,7 @@
                     <div class="mt-6 text-center">
                         <p class="text-sm text-gray-600">
                             Remember your password?
-                            <a href="{{ route('login') }}" class="font-medium text-[#0056B3] hover:text-[#003d82]">
+                            <a href="{{ route('login') }}" class="font-medium text-purple-600 hover:text-purple-800">
                                 Back to login
                             </a>
                         </p>
@@ -176,8 +176,8 @@
                     <div class="mt-6 bg-gray-50 border border-gray-200 rounded-lg p-4">
                         <div class="flex items-start space-x-3">
                             <div class="flex-shrink-0">
-                                <div class="w-8 h-8 bg-[#28A745]/20 rounded-full flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-[#28A745]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="w-8 h-8 bg-purple-600/20 rounded-full flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                                     </svg>
                                 </div>
@@ -224,7 +224,7 @@
                                    autocomplete="email" 
                                    required 
                                    value="{{ old('email', $request->email) }}"
-                                   class="block w-full pl-10 pr-4 py-3 border border-[#E9ECEF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent transition-colors @error('email') border-red-300 @enderror"
+                                   class="block w-full pl-10 pr-4 py-3 border border-[#E9ECEF] rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors @error('email') border-red-300 @enderror"
                                    placeholder="Enter your email address">
                         </div>
                         @error('email')
@@ -246,7 +246,7 @@
                                    type="password" 
                                    autocomplete="new-password" 
                                    required
-                                   class="block w-full pl-10 pr-4 py-3 border border-[#E9ECEF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent transition-colors @error('password') border-red-300 @enderror"
+                                   class="block w-full pl-10 pr-4 py-3 border border-[#E9ECEF] rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors @error('password') border-red-300 @enderror"
                                    placeholder="Enter your new password">
                         </div>
                         @error('password')
@@ -268,7 +268,7 @@
                                 type="password"
                                    autocomplete="new-password" 
                                    required
-                                   class="block w-full pl-10 pr-4 py-3 border border-[#E9ECEF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent transition-colors"
+                                   class="block w-full pl-10 pr-4 py-3 border border-[#E9ECEF] rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
                                    placeholder="Confirm your new password">
                         </div>
                     </div>
@@ -300,7 +300,7 @@
 
                     <!-- Submit Button -->
                     <button type="submit" 
-                            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#0056B3] hover:bg-[#003d82] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0056B3] transition-all duration-200 transform hover:scale-105">
+                            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200 transform hover:scale-105">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
@@ -312,7 +312,7 @@
                 <div class="mt-6 text-center">
                     <p class="text-sm text-gray-600">
                         Remember your password?
-                        <a href="{{ route('login') }}" class="font-medium text-[#0056B3] hover:text-[#003d82]">
+                        <a href="{{ route('login') }}" class="font-medium text-purple-600 hover:text-purple-800">
                             Back to login
                         </a>
                     </p>
@@ -322,8 +322,8 @@
                 <div class="mt-8 bg-[#E9ECEF]/30 border border-[#E9ECEF] rounded-lg p-4">
                     <div class="flex items-start space-x-3">
                         <div class="flex-shrink-0">
-                            <div class="w-8 h-8 bg-[#28A745]/20 rounded-full flex items-center justify-center">
-                                <svg class="w-4 h-4 text-[#28A745]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-8 h-8 bg-purple-600/20 rounded-full flex items-center justify-center">
+                                <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                                 </svg>
                             </div>

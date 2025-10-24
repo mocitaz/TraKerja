@@ -24,7 +24,7 @@
                         <div class="relative">
                             <div class="absolute inset-0 bg-white/20 rounded-3xl blur-lg"></div>
                             <div class="w-20 h-20 rounded-3xl bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30 shadow-2xl">
-                                <img src="{{ asset('storage/logos/icon.png') }}" 
+                                <img src="{{ asset('images/icon.png') }}" 
                                      alt="TraKerja Logo" 
                                      class="w-12 h-12"
                                      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -35,7 +35,7 @@
                         </div>
                         <div>
                             <h1 class="text-5xl font-black mb-3 bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent drop-shadow-lg">TraKerja</h1>
-                            <p class="text-white/90 text-xl font-medium">Smart Tracking untuk Job Seeker</p>
+                            <p class="text-white/90 text-xl font-medium">Smart Tracking for Job Seekers</p>
                         </div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                 <div class="lg:hidden text-center mb-8">
                     <div class="flex items-center justify-center space-x-3 mb-4">
                         <div class="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                            <img src="{{ asset('storage/logos/icon.png') }}" 
+                            <img src="{{ asset('images/icon.png') }}" 
                                  alt="TraKerja Logo" 
                                  class="w-8 h-8"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -111,7 +111,7 @@
                         </div>
                         <div>
                             <h1 class="text-2xl font-bold text-gray-900">TraKerja</h1>
-                            <p class="text-gray-600 text-sm">Smart Tracking untuk Job Seeker</p>
+                            <p class="text-gray-600 text-sm">Smart Tracking for Job Seekers</p>
                         </div>
                     </div>
                 </div>
@@ -328,13 +328,13 @@
                 
                 if (requirements[req]) {
                     icon.classList.remove('text-gray-400');
-                    icon.classList.add('text-[#28A745]');
+                    icon.classList.add('text-purple-600');
                     text.classList.remove('text-gray-600');
-                    text.classList.add('text-[#28A745]');
+                    text.classList.add('text-purple-600');
                 } else {
-                    icon.classList.remove('text-[#28A745]');
+                    icon.classList.remove('text-purple-600');
                     icon.classList.add('text-gray-400');
-                    text.classList.remove('text-[#28A745]');
+                    text.classList.remove('text-purple-600');
                     text.classList.add('text-gray-600');
                 }
             });

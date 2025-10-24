@@ -2,42 +2,89 @@
     <div class="space-y-6">
         <!-- Compact Search and Filter Bar -->
         <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4">
-            <div class="flex flex-col sm:flex-row gap-3">
-                <!-- Search Input -->
-                <div class="flex-1">
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
+            <div class="space-y-3">
+                <!-- First Row: Search and Items Per Page -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <!-- Search Input -->
+                    <div class="flex-1">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                            <input wire:model.live="search" 
+                                   type="text" 
+                                   placeholder="Search by company, position, location..." 
+                                   class="block w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
                         </div>
-                        <input wire:model.live="search" 
-                               type="text" 
-                               placeholder="Search by company..." 
-                               class="block w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent text-sm">
+                    </div>
+
+                    <!-- Items Per Page -->
+                    <div class="sm:w-32">
+                        <select wire:model.live="perPage" 
+                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
+                            <option value="10">10 per page</option>
+                            <option value="20">20 per page</option>
+                            <option value="50">50 per page</option>
+                            <option value="100">100 per page</option>
+                        </select>
                     </div>
                 </div>
-                
-                <!-- Status Filter -->
-                <div class="sm:w-48">
-                    <select wire:model.live="statusFilter" 
-                            class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent text-sm">
-                        <option value="">All Statuses</option>
-                        @foreach($statusOptions as $status)
-                            <option value="{{ $status }}">{{ $status }}</option>
-                        @endforeach
-                    </select>
-                </div>
 
-                <!-- Items Per Page -->
-                <div class="sm:w-32">
-                    <select wire:model.live="perPage" 
-                            class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0056B3] focus:border-transparent text-sm">
-                        <option value="10">10 per page</option>
-                        <option value="20">20 per page</option>
-                        <option value="50">50 per page</option>
-                        <option value="100">100 per page</option>
-                    </select>
+                <!-- Second Row: Additional Filters -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <!-- Platform Filter -->
+                    <div class="sm:w-48">
+                        <select wire:model.live="platformFilter" 
+                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
+                            <option value="">All Platforms</option>
+                            @foreach($platformOptions as $platform)
+                                <option value="{{ $platform }}">{{ $platform }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Career Level Filter -->
+                    <div class="sm:w-48">
+                        <select wire:model.live="careerLevelFilter" 
+                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
+                            <option value="">All Career Levels</option>
+                            @foreach($careerLevelOptions as $level)
+                                <option value="{{ $level }}">{{ $level }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Recruitment Stage Filter -->
+                    <div class="sm:w-48">
+                        <select wire:model.live="recruitmentStageFilter" 
+                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
+                            <option value="">All Stages</option>
+                            @foreach($recruitmentStageOptions as $stage)
+                                <option value="{{ $stage }}">{{ $stage }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Status Filter -->
+                    <div class="sm:w-48">
+                        <select wire:model.live="statusFilter" 
+                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
+                            <option value="">All App Status</option>
+                            @foreach($statusOptions as $status)
+                                <option value="{{ $status }}">{{ $status }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Clear Filters Button -->
+                    <div class="sm:w-32">
+                        <button wire:click="clearFilters" 
+                                class="w-full px-3 py-2 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 border border-gray-200 rounded-lg transition-colors">
+                            Clear Filters
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -205,7 +252,7 @@
                                     <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                     </svg>
-                                    {{ $job->application_date->format('M d, Y') }}
+                                    {{ $job->application_date->setTimezone('Asia/Jakarta')->format('M d, Y') }}
                                 </div>
                             </td>
                             <td class="px-4 py-3 text-center text-sm">
@@ -215,7 +262,7 @@
                                             <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                             </svg>
-                                            {{ $job->interview_date->format('M d, Y') }}
+                                            {{ $job->interview_date->setTimezone('Asia/Jakarta')->format('M d, Y') }}
                                         </div>
                                         @if($job->interview_type)
                                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">

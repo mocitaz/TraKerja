@@ -4,7 +4,7 @@
             <div class="flex items-center space-x-4">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-white/30">
-                        <img src="{{ asset('storage/logos/icon.png') }}" 
+                        <img src="{{ asset('images/icon.png') }}" 
                              alt="TraKerja Logo" 
                              class="w-6 h-6"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -417,7 +417,7 @@
                                     <div class="mb-4">
                                         <label for="linkedin_url" class="block text-sm font-medium text-gray-700 mb-2">
                                             <div class="flex items-center space-x-2">
-                                                <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                                <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
                                                     <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                                                 </svg>
                                                 <span>LinkedIn</span>
@@ -733,9 +733,9 @@
                     text.classList.remove('text-gray-600');
                     text.classList.add('text-emerald-500');
                 } else {
-                    icon.classList.remove('text-[#28A745]');
+                    icon.classList.remove('text-purple-600');
                     icon.classList.add('text-gray-400');
-                    text.classList.remove('text-[#28A745]');
+                    text.classList.remove('text-purple-600');
                     text.classList.add('text-gray-600');
                 }
             });

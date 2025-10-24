@@ -333,14 +333,14 @@
 
                     {{-- Additional Info --}}
                     <div class="pt-4 border-t border-gray-200">
-                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
                             <div class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <div class="text-sm text-blue-800">
+                                <div class="text-sm text-purple-800">
                                     <p class="font-medium mb-1">Informasi Read-Only</p>
-                                    <p class="text-blue-700">Data pengguna ditampilkan dalam mode baca saja. Untuk mengubah data, gunakan fitur yang sesuai.</p>
+                                    <p class="text-purple-700">Data pengguna ditampilkan dalam mode baca saja. Untuk mengubah data, gunakan fitur yang sesuai.</p>
                                 </div>
                             </div>
                         </div>

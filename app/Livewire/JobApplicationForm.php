@@ -27,6 +27,8 @@ class JobApplicationForm extends Component
     public $recruitment_stage = 'Applied';
     public $career_level = 'Full Time';
     public $platform_link = '';
+    public $application_date = '';
+    public $notes = '';
 
     public $applicationStatusOptions = [
         'On Process',
@@ -128,9 +130,6 @@ class JobApplicationForm extends Component
         'Sumatera Selatan' => ['Baturaja', 'Indralaya', 'Kayu Agung', 'Lubuklinggau', 'Martapura', 'Pagar Alam', 'Palembang', 'Prabumulih'],
         'Sumatera Utara' => ['Binjai', 'Gunungsitoli', 'Medan', 'Padangsidimpuan', 'Pematangsiantar', 'Sibolga', 'Tanjungbalai', 'Tebing Tinggi']
     ];
-
-    public $application_date = '';
-    public $notes = '';
 
     public $isEditing = false;
 
@@ -626,7 +625,7 @@ class JobApplicationForm extends Component
         $this->recruitment_stage = 'Applied';
         $this->career_level = 'Full Time';
         $this->platform_link = '';
-        $this->application_date = now()->format('Y-m-d');
+        $this->application_date = now('Asia/Jakarta')->format('Y-m-d'); // Use WIB timezone
         $this->notes = '';
         $this->isEditing = false;
         $this->jobApplication = null;

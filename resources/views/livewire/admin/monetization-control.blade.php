@@ -260,13 +260,13 @@
     
     {{-- User Statistics --}}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border-2 border-blue-200 shadow-md">
+        <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 border-2 border-purple-200 shadow-md">
             <div class="flex items-center gap-3 mb-2">
                 <span class="text-3xl">👥</span>
-                <p class="text-sm font-semibold text-blue-700">Total Users</p>
+                <p class="text-sm font-semibold text-purple-700">Total Users</p>
             </div>
-            <p class="text-4xl font-black text-blue-900">{{ number_format($totalUsers) }}</p>
-            <p class="text-xs text-blue-600 mt-1">All registered users</p>
+            <p class="text-4xl font-black text-purple-900">{{ number_format($totalUsers) }}</p>
+            <p class="text-xs text-purple-600 mt-1">All registered users</p>
         </div>
         
         <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl p-6 border-2 border-emerald-200 shadow-md">
@@ -293,7 +293,7 @@
     </div>
     
     {{-- Help Text --}}
-    <div class="mt-8 p-5 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 rounded-lg">
+    <div class="mt-8 p-5 bg-gradient-to-r from-purple-50 to-purple-100 border-l-4 border-purple-500 rounded-lg">
         <p class="text-sm text-gray-800 flex items-start gap-2">
             <span class="text-xl">💡</span>
             <span>
