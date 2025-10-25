@@ -1,9 +1,4 @@
 <div class="container mx-auto px-4 py-6">
-    <!-- Header -->
-    <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-900">📅 Interview Calendar</h1>
-        <p class="text-sm text-gray-600 mt-1">Manage and track all your scheduled interviews</p>
-    </div>
 
     <!-- Controls -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
@@ -29,8 +24,8 @@
                 <select wire:model.live="filterType" 
                         class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm">
                     <option value="all">All Interviews</option>
-                    <option value="HR - Interview">👔 HR Interview</option>
-                    <option value="User - Interview">👤 User Interview</option>
+                    <option value="HR - Interview">HR Interview</option>
+                    <option value="User - Interview">User Interview</option>
                 </select>
             </div>
 
@@ -93,7 +88,7 @@
                                                 {{ $interview['recruitment_stage'] === 'User - Interview' ? 'bg-green-100 text-green-800' : '' }}">
                                         <div class="font-medium truncate">{{ $interview['company_name'] }}</div>
                                         <div class="text-xs opacity-75">
-                                            {{ $interview['recruitment_stage'] === 'HR - Interview' ? '👔 HR' : '👤 User' }} - 
+                                            {{ $interview['recruitment_stage'] === 'HR - Interview' ? 'HR' : 'User' }} - 
                                             {{ \Carbon\Carbon::parse($interview['interview_date'])->timezone('Asia/Jakarta')->format('H:i') }}
                                         </div>
                                     </div>
@@ -118,7 +113,7 @@
                                     <span class="px-2 py-1 rounded text-xs font-medium
                                                  {{ $interview->recruitment_stage === 'HR - Interview' ? 'bg-blue-100 text-blue-800' : '' }}
                                                  {{ $interview->recruitment_stage === 'User - Interview' ? 'bg-green-100 text-green-800' : '' }}">
-                                        {{ $interview->recruitment_stage === 'HR - Interview' ? '👔 HR Interview' : '👤 User Interview' }}
+                                        {{ $interview->recruitment_stage === 'HR - Interview' ? 'HR Interview' : 'User Interview' }}
                                     </span>
 
                                     <h3 class="text-lg font-semibold text-gray-900">{{ $interview->company_name }}</h3>
@@ -193,7 +188,7 @@
     <!-- Upcoming Interviews Sidebar (Only in Calendar View) -->
     @if($viewMode === 'month' && count($this->upcomingInterviews) > 0)
         <div class="mt-6 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">🔔 Upcoming Interviews</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Upcoming Interviews</h3>
             <div class="space-y-3">
                 @foreach($this->upcomingInterviews as $interview)
                     <div wire:click="viewInterviewDetails({{ $interview->id }})" 
@@ -208,7 +203,7 @@
                                     <span class="px-2 py-0.5 rounded text-xs
                                                  {{ $interview->recruitment_stage === 'HR - Interview' ? 'bg-blue-100 text-blue-700' : '' }}
                                                  {{ $interview->recruitment_stage === 'User - Interview' ? 'bg-green-100 text-green-700' : '' }}">
-                                        {{ $interview->recruitment_stage === 'HR - Interview' ? '👔 HR' : '👤 User' }}
+                                        {{ $interview->recruitment_stage === 'HR - Interview' ? 'HR' : 'User' }}
                                     </span>
                                     @if($interview->interview_type)
                                         <span class="text-gray-400">•</span>
@@ -266,13 +261,13 @@
                     </div>
 
                     <!-- Modal Content -->
-                    <div class="p-6 space-y-5">
+                    <div class="p-4 space-y-4">
                         <!-- Interview Stage Badge -->
                         <div class="flex items-center space-x-3">
                             <span class="px-4 py-2 rounded-lg text-sm font-semibold
                                          {{ $selectedInterview->recruitment_stage === 'HR - Interview' ? 'bg-blue-100 text-blue-800' : '' }}
                                          {{ $selectedInterview->recruitment_stage === 'User - Interview' ? 'bg-green-100 text-green-800' : '' }}">
-                                {{ $selectedInterview->recruitment_stage === 'HR - Interview' ? '👔 HR Interview' : '👤 User Interview' }}
+                                {{ $selectedInterview->recruitment_stage === 'HR - Interview' ? 'HR Interview' : 'User Interview' }}
                             </span>
                             <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-xs font-medium">
                                 {{ $selectedInterview->application_status }}
@@ -281,24 +276,24 @@
 
                         <!-- Position -->
                         <div>
-                            <label class="text-sm font-medium text-gray-500">Position</label>
-                            <p class="text-lg font-semibold text-gray-900 mt-1">{{ $selectedInterview->position }}</p>
+                            <label class="text-xs font-medium text-gray-500">Position</label>
+                            <p class="text-base font-semibold text-gray-900 mt-1">{{ $selectedInterview->position }}</p>
                         </div>
 
                         <!-- Date & Time -->
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-gray-50 p-3 rounded-lg">
                                 <div class="flex items-center space-x-2 text-gray-500 mb-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                     </svg>
                                     <span class="text-xs font-medium">Date</span>
                                 </div>
-                                <p class="text-sm font-semibold text-gray-900">{{ $selectedInterview->interview_date->format('l, d F Y') }}</p>
+                                <p class="text-sm font-semibold text-gray-900">{{ $selectedInterview->interview_date->format('d M Y') }}</p>
                             </div>
-                            <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="bg-gray-50 p-3 rounded-lg">
                                 <div class="flex items-center space-x-2 text-gray-500 mb-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span class="text-xs font-medium">Time (WIB)</span>
@@ -309,18 +304,18 @@
 
                         <!-- Time Until Interview -->
                         @if($selectedInterview->interview_date->isFuture())
-                            <div class="bg-primary-50 border border-primary-200 rounded-lg p-4">
+                            <div class="bg-purple-50 border border-purple-200 rounded-lg p-3">
                                 <div class="flex items-center space-x-2">
-                                    <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
-                                    <span class="text-sm font-semibold text-primary-900">{{ $selectedInterview->interview_date->diffForHumans() }}</span>
+                                    <span class="text-sm font-semibold text-purple-900">{{ $selectedInterview->interview_date->diffForHumans() }}</span>
                                 </div>
                             </div>
                         @else
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3">
                                 <div class="flex items-center space-x-2">
-                                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span class="text-sm font-medium text-gray-600">Interview completed</span>

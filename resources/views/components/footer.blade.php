@@ -13,14 +13,9 @@
                 <span class="text-base font-semibold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">TraKerja</span>
             </div>
 
-            <!-- Center Message -->
-            <div class="text-sm text-gray-600 text-center">
-                Made for job seekers in Indonesia
-            </div>
-
             <!-- Copyright -->
             <div class="text-sm text-gray-600 text-center md:text-right">
-                © {{ date('Y') }} TraKerja. All rights reserved.
+                © 2025 TraKerja. <a href="https://www.instagram.com/teknalogi.id/" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-800 font-medium transition-colors duration-200">PT Teknologi Transformasi Digital</a>. All rights reserved.
             </div>
         </div>
     </div>

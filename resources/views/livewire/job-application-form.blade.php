@@ -419,10 +419,10 @@
                         <select wire:model="interview_type" 
                                 class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm appearance-none">
                             <option value="">Select Type</option>
-                            <option value="Phone">📞 Phone</option>
-                            <option value="Video">📹 Video</option>
-                            <option value="In-person">🏢 In-person</option>
-                            <option value="Panel">👥 Panel</option>
+                            <option value="Phone">Phone</option>
+                            <option value="Video">Video</option>
+                            <option value="In-person">In-person</option>
+                            <option value="Panel">Panel</option>
                         </select>
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                             <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

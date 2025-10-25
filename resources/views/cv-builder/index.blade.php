@@ -15,7 +15,7 @@
                     <div>
                         <h2 class="text-2xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
                             CV Builder
-                            @if(is_premium(auth()->user()))
+                            @if(auth()->user() && auth()->user()->is_premium && auth()->user()->payment_status === 'paid')
                                 <span class="ml-2 px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded-full">PREMIUM</span>
                             @endif
                         </h2>
@@ -142,9 +142,9 @@
                         </h3>
                         <div class="mt-2 text-sm text-primary-700">
                             <p>Fill in your work experience, education, skills, and other sections. Once complete, click "Generate CV" to create your professional resume!</p>
-                            @if(!is_premium(auth()->user()))
+                            @if(!auth()->user() || !(auth()->user()->is_premium && auth()->user()->payment_status === 'paid'))
                                 <p class="mt-2 font-semibold">
-                                    You have access to {{ cv_templates_count() }} CV template(s). 
+                                    You have access to {{ auth()->user() ? auth()->user()->getCvTemplatesCount() : 1 }} CV template(s). 
                                     <a href="#" class="underline">Upgrade to Premium</a> for 5 templates and unlimited customization!
                                 </p>
                             @endif

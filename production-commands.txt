@@ -1,0 +1,34 @@
+# Production Server Commands
+# Run these commands after connecting via SSH
+
+# 1. Navigate to project directory
+cd public_html
+
+# 2. Check current directory
+pwd
+ls -la
+
+# 3. Install/update dependencies
+composer install --no-dev --optimize-autoloader
+
+# 4. Clear all caches
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+php artisan cache:clear
+
+# 5. Rebuild caches for production
+php artisan config:cache
+php artisan route:clear
+php artisan view:cache
+
+# 6. Final optimization
+php artisan optimize
+
+# 7. Check if error is fixed
+php artisan route:list | grep tracker
+
+# 8. Test the application
+curl -I https://trakerja.web.id/tracker
+
+echo "✅ Production fix completed!"

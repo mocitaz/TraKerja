@@ -101,10 +101,10 @@
                                                 <td style="color: #374151; font-size: 15px;">
                                                     @php
                                                         $types = [
-                                                            'phone' => '📞 Phone Interview',
-                                                            'video' => '📹 Video Call',
-                                                            'in-person' => '🏢 In-Person',
-                                                            'panel' => '👥 Panel Interview'
+                                                            'phone' => 'Phone Interview',
+                                                            'video' => 'Video Call',
+                                                            'in-person' => 'In-Person',
+                                                            'panel' => 'Panel Interview'
                                                         ];
                                                     @endphp
                                                     {{ $types[$application->interview_type] ?? $application->interview_type }}

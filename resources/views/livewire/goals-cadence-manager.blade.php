@@ -53,16 +53,16 @@
 
     <!-- No Goals Set Message -->
     @if(!$this->hasGoals)
-        <div class="mb-6 bg-primary-50 border border-primary-200 rounded-lg p-6">
+        <div class="mb-6 bg-purple-50 border border-purple-200 rounded-lg p-6">
             <div class="flex items-start">
                 <div class="flex-shrink-0">
-                    <svg class="w-6 h-6 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </div>
                 <div class="ml-3 flex-1">
-                    <h3 class="text-lg font-bold text-primary-800">🎯 Ready to Set Your Goals?</h3>
-                    <div class="mt-2 text-primary-700">
+                    <h3 class="text-lg font-bold text-purple-800">🎯 Ready to Set Your Goals?</h3>
+                    <div class="mt-2 text-purple-700">
                         <p class="text-sm">
                             Set weekly or monthly targets to track your job application progress and stay motivated!
                         </p>
@@ -73,7 +73,7 @@
                     <div class="mt-4">
                         <button 
                             wire:click="openGoalModal"
-                            class="inline-flex items-center px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition-colors"
+                            class="inline-flex items-center px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition-colors"
                         >
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -94,8 +94,8 @@
             <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                             </svg>
                         </div>
@@ -106,7 +106,7 @@
                     </div>
                     <button 
                         wire:click="openGoalModal"
-                        class="px-4 py-2 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white text-sm font-medium rounded-lg hover:from-purple-700 hover:to-purple-900 transition-all duration-200 flex items-center space-x-2"
+                        class="px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition-all duration-200 flex items-center space-x-2"
                     >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -164,11 +164,11 @@
                 </div>
 
                 <!-- Interviews Count -->
-                <div class="bg-primary-50 rounded-lg p-4">
+                <div class="bg-purple-50 rounded-lg p-4">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-primary-900">Interviews {{ $goalPeriod === 'monthly' ? 'This Month' : 'This Week' }}</p>
-                            <p class="text-2xl font-bold text-primary-600">{{ $this->actualInterviews }}</p>
+                            <p class="text-sm font-medium text-purple-900">Interviews {{ $goalPeriod === 'monthly' ? 'This Month' : 'This Week' }}</p>
+                            <p class="text-2xl font-bold text-purple-600">{{ $this->actualInterviews }}</p>
                         </div>
                         <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -210,8 +210,8 @@
                             <span class="text-yellow-800 text-sm font-medium">On Fire!</span>
                         </div>
                     @elseif($this->currentStreak >= 3)
-                        <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-100 border border-primary-200 rounded-full">
-                            <span class="text-primary-800 text-sm font-medium">Good Streak!</span>
+                        <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-100 border border-purple-200 rounded-full">
+                            <span class="text-purple-800 text-sm font-medium">Good Streak!</span>
                         </div>
                     @elseif($this->currentStreak >= 1)
                         <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-gray-100 to-gray-100 border border-gray-200 rounded-full">
@@ -255,8 +255,8 @@
         <!-- Cadence Effect Insights -->
         <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
             <div class="flex items-center mb-6">
-                <div class="w-10 h-10 bg-gradient-to-br from-[#6F42C1] to-[#5A2D91] rounded-lg flex items-center justify-center mr-3">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
+                    <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                     </svg>
                 </div>
@@ -302,9 +302,9 @@
 
                     <!-- Difference -->
                     <div class="text-center">
-                        <div class="w-16 h-16 {{ $this->cadenceEffect['difference'] >= 0 ? 'bg-primary-100' : 'bg-orange-100' }} rounded-full flex items-center justify-center mx-auto mb-3">
+                        <div class="w-16 h-16 {{ $this->cadenceEffect['difference'] >= 0 ? 'bg-purple-100' : 'bg-orange-100' }} rounded-full flex items-center justify-center mx-auto mb-3">
                             @if($this->cadenceEffect['difference'] >= 0)
-                                <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
                                 </svg>
                             @else
@@ -313,7 +313,7 @@
                                 </svg>
                             @endif
                         </div>
-                        <h3 class="text-lg font-bold {{ $this->cadenceEffect['difference'] >= 0 ? 'text-primary-600' : 'text-orange-600' }}">
+                        <h3 class="text-lg font-bold {{ $this->cadenceEffect['difference'] >= 0 ? 'text-purple-600' : 'text-orange-600' }}">
                             {{ $this->cadenceEffect['difference'] >= 0 ? '+' : '' }}{{ $this->cadenceEffect['difference'] }}%
                         </h3>
                         <p class="text-sm text-gray-600">Difference<br><span class="font-medium">Cadence Effect</span></p>
@@ -334,12 +334,12 @@
                         </div>
                     @elseif($this->cadenceEffect['difference'] > 0)
                         <div class="flex items-start">
-                            <svg class="w-5 h-5 text-primary-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 text-purple-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             <div>
-                                <h4 class="font-medium text-primary-800">Positive Cadence Effect</h4>
-                                <p class="text-sm text-primary-700 mt-1">Target discipline has a positive impact on conversion rate. Increase consistency for better results.</p>
+                                <h4 class="font-medium text-purple-800">Positive Cadence Effect</h4>
+                                <p class="text-sm text-purple-700 mt-1">Target discipline has a positive impact on conversion rate. Increase consistency for better results.</p>
                             </div>
                         </div>
                     @else
@@ -541,7 +541,7 @@
                         <div class="flex space-x-3 pt-4">
                             <button 
                                 type="submit"
-                                class="flex-1 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white py-3 px-6 rounded-lg font-medium hover:from-purple-700 hover:to-purple-900 transition-all duration-200 flex items-center justify-center"
+                                class="flex-1 bg-purple-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-purple-700 transition-all duration-200 flex items-center justify-center"
                             >
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>

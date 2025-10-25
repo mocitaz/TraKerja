@@ -79,24 +79,6 @@ if (!function_exists('feature_limit')) {
     }
 }
 
-if (!function_exists('is_premium')) {
-    /**
-     * Check if user is premium
-     * 
-     * @param \App\Models\User|null $user User instance (default: authenticated user)
-     * @return bool
-     */
-    function is_premium($user = null): bool
-    {
-        $user = $user ?? Auth::user();
-        
-        if (!$user) {
-            return false;
-        }
-        
-        return $user->is_premium;
-    }
-}
 
 if (!function_exists('premium_price')) {
     /**
