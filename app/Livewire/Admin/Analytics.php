@@ -22,8 +22,10 @@ class Analytics extends Component
 
     public function updatedPeriodFilter()
     {
+        \Log::info('Period filter updated to: ' . $this->periodFilter);
         $this->loadAnalytics();
         $this->dispatch('chartUpdated');
+        $this->dispatch('$refresh');
     }
 
     public function loadAnalytics()

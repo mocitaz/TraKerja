@@ -1,28 +1,28 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-white/30">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                <div class="flex items-center space-x-2 sm:space-x-3">
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-white/30">
                         <img src="{{ asset('images/icon.png') }}" 
                              alt="TraKerja Logo" 
-                             class="w-6 h-6"
+                             class="w-5 h-5 sm:w-6 sm:h-6"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6"></path>
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
+                        <h2 class="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
                             Career Summary
                         </h2>
-                        <p class="text-xs text-gray-500 mt-0.5">Advanced Analytics & Insights</p>
+                        <p class="text-xs text-gray-500 mt-0.5 hidden sm:block">Advanced Analytics & Insights</p>
                     </div>
                 </div>
             </div>
             <div class="flex items-center space-x-2">
-                <div class="flex items-center space-x-2 bg-green-50 px-3 py-1.5 rounded-full">
-                    <div class="w-2 h-2 bg-primary-500 rounded-full"></div>
+                <div class="flex items-center space-x-2 bg-green-50 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full">
+                    <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary-500 rounded-full"></div>
                     <span class="text-xs font-medium text-primary-700">Live</span>
                 </div>
                 <div class="text-xs text-gray-400">
@@ -64,16 +64,16 @@
             </div>
 
             <!-- KPI Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
                 <!-- On Process Card -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-xs font-medium text-gray-600 mb-1">On Process</p>
-                            <p class="text-2xl font-bold text-[#212529]">{{ $onProcessCount }}</p>
+                            <p class="text-xl sm:text-2xl font-bold text-[#212529]">{{ $onProcessCount }}</p>
                         </div>
-                        <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                             </svg>
                         </div>
@@ -81,14 +81,14 @@
                 </div>
 
                 <!-- Offering/Accepted Card -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-xs font-medium text-gray-600 mb-1">Offering/Accepted</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ $offeringAcceptedCount }}</p>
+                            <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ $offeringAcceptedCount }}</p>
                         </div>
-                        <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
@@ -96,14 +96,14 @@
                 </div>
 
                 <!-- Declined Card -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-xs font-medium text-gray-600 mb-1">Declined</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ $declinedCount }}</p>
+                            <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ $declinedCount }}</p>
                         </div>
-                        <div class="w-8 h-8 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </div>
@@ -113,9 +113,9 @@
             </div>
 
             <!-- Productivity Features Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
                 <!-- Daily Streak -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
                     <div class="flex items-center justify-between mb-4">
                         <div>
                             <h3 class="text-lg font-bold text-gray-900">Daily Streak</h3>
@@ -155,7 +155,7 @@
                 </div>
 
                 <!-- This Week's Progress -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
                     <div class="flex items-center justify-between mb-4">
                         <div>
                             <h3 class="text-lg font-bold text-gray-900">This Week's Progress</h3>
@@ -197,7 +197,7 @@
                 </div>
 
                 <!-- The Cadence Effect -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
                     <div class="flex items-center justify-between mb-4">
                         <div>
                             <h3 class="text-lg font-bold text-gray-900">The Cadence Effect</h3>

@@ -136,6 +136,7 @@
                         </div>
                     @endif
 
+
                 <!-- Form -->
                 <form method="POST" action="{{ route('register') }}" class="space-y-6">
                     @csrf
@@ -280,33 +281,419 @@
                     </div>
 
                     <!-- Terms -->
-                    <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                            <input id="terms" 
-                                   name="terms" 
-                                   type="checkbox" 
-                                   required
-                                   class="h-4 w-4 text-primary-600 focus:ring-primary-600 border-gray-300 rounded">
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                <input id="terms" 
+                                       name="terms" 
+                                       type="checkbox" 
+                                       required
+                                       class="h-4 w-4 text-primary-600 focus:ring-primary-600 border-gray-300 rounded"
+                                       disabled>
+                            </div>
+                            <div class="ml-3 text-sm">
+                        <label for="terms" class="text-gray-700">
+                            I agree to the 
+                            <button type="button" onclick="openTerms()" class="text-primary-600 hover:text-primary-700 font-semibold underline">Terms of Service</button> 
+                            and 
+                            <button type="button" onclick="openPrivacy()" class="text-primary-600 hover:text-primary-700 font-semibold underline">Privacy Policy</button>
+                        </label>
+                            </div>
                         </div>
-                        <div class="ml-3 text-sm">
-                            <label for="terms" class="text-gray-700">
-                                I agree to the 
-                                <a href="#" class="text-primary-600 hover:text-primary-700 font-semibold">Terms of Service</a> 
-                                and 
-                                <a href="#" class="text-primary-600 hover:text-primary-700 font-semibold">Privacy Policy</a>
-                            </label>
-                        </div>
+                        
                     </div>
 
                     <!-- Submit Button -->
                     <button type="submit" 
-                            class="w-full flex justify-center items-center py-4 px-6 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-gradient-to-r from-primary-600 to-secondary-500 hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                            onclick="return validateRegistration()"
+                            class="w-full flex justify-center items-center py-4 px-6 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-gradient-to-r from-primary-600 to-secondary-500 hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled>
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
                         </svg>
                         Create Account
                     </button>
                 </form>
+
+                <!-- Professional Modal JavaScript -->
+                <script>
+                // Modal functions
+                function openTerms() {
+                    const modal = document.getElementById('termsModal');
+                    if (modal) {
+                        modal.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                        startTermsReadingProgress();
+                    }
+                }
+                
+                function openPrivacy() {
+                    const modal = document.getElementById('privacyModal');
+                    if (modal) {
+                        modal.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                        startPrivacyReadingProgress();
+                    }
+                }
+                
+                function closeTerms() {
+                    const modal = document.getElementById('termsModal');
+                    if (modal) {
+                        modal.classList.add('hidden');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+                
+                function closePrivacy() {
+                    const modal = document.getElementById('privacyModal');
+                    if (modal) {
+                        modal.classList.add('hidden');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+                
+                // Reading progress functions
+                function startTermsReadingProgress() {
+                    const modal = document.getElementById('termsModal');
+                    const content = modal.querySelector('.max-h-\\[50vh\\]');
+                    const progressBar = document.getElementById('termsProgressBar');
+                    const progressText = document.getElementById('termsProgress');
+                    const checkbox = document.getElementById('termsReadCheckbox');
+                    
+                    let scrollComplete = false;
+                    let timeComplete = false;
+                    
+                    // Time requirement (3 seconds)
+                    setTimeout(() => {
+                        timeComplete = true;
+                        updateProgress();
+                    }, 3000);
+                    
+                    // Scroll requirement
+                    content.addEventListener('scroll', () => {
+                        const scrollTop = content.scrollTop;
+                        const scrollHeight = content.scrollHeight - content.clientHeight;
+                        const progress = Math.min((scrollTop / scrollHeight) * 100, 100);
+                        
+                        progressBar.style.width = progress + '%';
+                        progressText.textContent = Math.round(progress) + '%';
+                        
+                        if (progress >= 95) {
+                            scrollComplete = true;
+                            updateProgress();
+                        }
+                    });
+                    
+                    function updateProgress() {
+                        if (scrollComplete && timeComplete) {
+                            checkbox.disabled = false;
+                            checkbox.classList.add('ring-2', 'ring-purple-500');
+                            checkbox.nextElementSibling.textContent = '✓ I have read and understood the Terms of Service';
+                            updateRegisterButton();
+                        }
+                    }
+                }
+                
+                function startPrivacyReadingProgress() {
+                    const modal = document.getElementById('privacyModal');
+                    const content = modal.querySelector('.max-h-\\[50vh\\]');
+                    const progressBar = document.getElementById('privacyProgressBar');
+                    const progressText = document.getElementById('privacyProgress');
+                    const checkbox = document.getElementById('privacyReadCheckbox');
+                    
+                    let scrollComplete = false;
+                    let timeComplete = false;
+                    
+                    // Time requirement (3 seconds)
+                    setTimeout(() => {
+                        timeComplete = true;
+                        updateProgress();
+                    }, 3000);
+                    
+                    // Scroll requirement
+                    content.addEventListener('scroll', () => {
+                        const scrollTop = content.scrollTop;
+                        const scrollHeight = content.scrollHeight - content.clientHeight;
+                        const progress = Math.min((scrollTop / scrollHeight) * 100, 100);
+                        
+                        progressBar.style.width = progress + '%';
+                        progressText.textContent = Math.round(progress) + '%';
+                        
+                        if (progress >= 95) {
+                            scrollComplete = true;
+                            updateProgress();
+                        }
+                    });
+                    
+                    function updateProgress() {
+                        if (scrollComplete && timeComplete) {
+                            checkbox.disabled = false;
+                            checkbox.classList.add('ring-2', 'ring-purple-500');
+                            checkbox.nextElementSibling.textContent = '✓ I have read and understood the Privacy Policy';
+                            updateRegisterButton();
+                        }
+                    }
+                }
+                
+                function updateRegisterButton() {
+                    const termsCheckbox = document.getElementById('termsReadCheckbox');
+                    const privacyCheckbox = document.getElementById('privacyReadCheckbox');
+                    const mainCheckbox = document.getElementById('terms');
+                    const submitBtn = document.querySelector('button[type="submit"]');
+                    
+                    if (termsCheckbox && privacyCheckbox && mainCheckbox) {
+                        if (termsCheckbox.checked && privacyCheckbox.checked) {
+                            mainCheckbox.disabled = false;
+                            mainCheckbox.checked = true;
+                            submitBtn.disabled = false;
+                        } else {
+                            mainCheckbox.disabled = true;
+                            mainCheckbox.checked = false;
+                            submitBtn.disabled = true;
+                        }
+                    }
+                }
+                
+                // Add event listeners to individual checkboxes to auto-check main checkbox
+                document.addEventListener('DOMContentLoaded', function() {
+                    const termsCheckbox = document.getElementById('termsReadCheckbox');
+                    const privacyCheckbox = document.getElementById('privacyReadCheckbox');
+                    const mainCheckbox = document.getElementById('terms');
+                    
+                    if (termsCheckbox) {
+                        termsCheckbox.addEventListener('change', function() {
+                            updateRegisterButton();
+                        });
+                    }
+                    
+                    if (privacyCheckbox) {
+                        privacyCheckbox.addEventListener('change', function() {
+                            updateRegisterButton();
+                        });
+                    }
+                });
+                
+                function validateRegistration() {
+                    const mainCheckbox = document.getElementById('terms');
+                    if (!mainCheckbox.checked) {
+                        alert('Please read and accept the Terms of Service and Privacy Policy before registering.');
+                        return false;
+                    }
+                    return true;
+                }
+                
+                // ESC key support
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        const termsModal = document.getElementById('termsModal');
+                        const privacyModal = document.getElementById('privacyModal');
+                        
+                        if (termsModal && !termsModal.classList.contains('hidden')) {
+                            closeTerms();
+                        } else if (privacyModal && !privacyModal.classList.contains('hidden')) {
+                            closePrivacy();
+                        }
+                    }
+                });
+                </script>
+
+                <!-- Professional Legal Modals -->
+                <!-- Terms of Service Modal -->
+                <div id="termsModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 overflow-y-auto">
+                    <div class="flex items-center justify-center min-h-screen p-4">
+                        <div class="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden border border-gray-100">
+                            <!-- Modal Header -->
+                            <div class="bg-gradient-to-r from-purple-400 to-purple-500 p-5 text-white relative">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mr-3">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold">Terms of Service</h3>
+                                            <p class="text-white/90 text-sm">Please read and understand our service terms</p>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="closeTerms()" class="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors relative z-10 cursor-pointer">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Modal Content -->
+                            <div class="p-6 max-h-[50vh] overflow-y-auto">
+                                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-5 mb-5 border border-indigo-100">
+                                    <div class="text-center">
+                                        <h4 class="text-lg font-bold text-gray-900 mb-2">Our Commitment to You</h4>
+                                        <p class="text-gray-700 text-sm leading-relaxed">
+                                            At TraKerja, we believe every job seeker deserves a secure, transparent, and trustworthy platform. 
+                                            We provide comprehensive job application tracking tools while building an ecosystem that supports 
+                                            your career success with unwavering integrity and data security.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-3">
+                                    <div class="bg-white border-l-4 border-blue-500 p-4 rounded-r-lg shadow-sm">
+                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">1. Service Agreement & Legal Framework</h5>
+                                        <p class="text-gray-600 text-xs">By using TraKerja, you accept and agree to be bound by these terms and conditions, governed by Indonesian Law No. 19 of 2016 concerning Electronic Information and Transactions (ITE Law) and other applicable Indonesian regulations.</p>
+                                    </div>
+
+                                    <div class="bg-white border-l-4 border-green-500 p-4 rounded-r-lg shadow-sm">
+                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">2. Data Protection & Privacy Rights</h5>
+                                        <p class="text-gray-600 text-xs">We comply with Indonesian Government Regulation No. 71 of 2019 concerning Electronic System and Transaction Operations, ensuring your personal data is protected with AES-256 encryption and never sold to third parties.</p>
+                                    </div>
+
+                                    <div class="bg-white border-l-4 border-purple-500 p-4 rounded-r-lg shadow-sm">
+                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">3. User Rights & Responsibilities</h5>
+                                        <p class="text-gray-600 text-xs">Under Article 26 of ITE Law, you have the right to access, correct, and delete your personal data. You are responsible for maintaining the confidentiality of your account credentials.</p>
+                                    </div>
+
+                                    <div class="bg-white border-l-4 border-orange-500 p-4 rounded-r-lg shadow-sm">
+                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">4. Content & Intellectual Property</h5>
+                                        <p class="text-gray-600 text-xs">All content you upload remains your property. We respect intellectual property rights as protected under Indonesian Law No. 28 of 2014 concerning Copyright.</p>
+                                    </div>
+
+                                    <div class="bg-white border-l-4 border-red-500 p-4 rounded-r-lg shadow-sm">
+                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">5. Prohibited Activities</h5>
+                                        <p class="text-gray-600 text-xs">Users must not engage in activities that violate ITE Law Article 27-29, including defamation, hate speech, or spreading false information. Violations may result in account termination.</p>
+                                    </div>
+
+                                    <div class="bg-white border-l-4 border-teal-500 p-4 rounded-r-lg shadow-sm">
+                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">6. Dispute Resolution</h5>
+                                        <p class="text-gray-600 text-xs">Any disputes will be resolved through Indonesian courts in accordance with Indonesian Civil Code and ITE Law provisions.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Reading Progress -->
+                                <div class="mt-5">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs font-medium text-gray-600">Reading Progress</span>
+                                        <span id="termsProgress" class="text-xs font-medium text-purple-600">0%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-1.5">
+                                        <div id="termsProgressBar" class="bg-gradient-to-r from-purple-400 to-purple-500 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Footer -->
+                            <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="termsReadCheckbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded" disabled>
+                                    <label for="termsReadCheckbox" class="ml-2 text-xs text-gray-700">
+                                        I have read and understood the Terms of Service
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Privacy Policy Modal -->
+                <div id="privacyModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 overflow-y-auto">
+                    <div class="flex items-center justify-center min-h-screen p-4">
+                        <div class="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden border border-gray-100">
+                            <!-- Modal Header -->
+                            <div class="bg-gradient-to-r from-purple-400 to-purple-500 p-5 text-white relative">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mr-3">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold">Privacy Policy</h3>
+                                            <p class="text-white/90 text-sm">Understand how we protect your privacy</p>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="closePrivacy()" class="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors relative z-10 cursor-pointer">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Modal Content -->
+                            <div class="p-6 max-h-[50vh] overflow-y-auto">
+                                <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-5 mb-5 border border-emerald-100">
+                                    <div class="text-center">
+                                        <h4 class="text-lg font-bold text-gray-900 mb-2">Your Privacy is Our Priority</h4>
+                                        <p class="text-gray-700 text-sm leading-relaxed">
+                                            At TraKerja, we understand that your personal data is your most valuable asset. 
+                                            We not only protect your information but ensure that every byte of data is treated 
+                                            with respect, security, and complete transparency in compliance with Indonesian data protection laws.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-3">
+                                    <div class="bg-white border-l-4 border-red-500 p-4 rounded-r-lg shadow-sm">
+                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">1. Data Protection Compliance</h5>
+                                        <p class="text-gray-600 text-xs">We comply with Indonesian Government Regulation No. 71 of 2019 concerning Electronic System and Transaction Operations, ensuring your personal data is never sold or misused.</p>
+                                    </div>
+
+                                    <div class="bg-white border-l-4 border-blue-500 p-4 rounded-r-lg shadow-sm">
+                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">2. Encryption & Security Standards</h5>
+                                        <p class="text-gray-600 text-xs">Your data is protected with AES-256 encryption, meeting international security standards and Indonesian cybersecurity requirements under ITE Law Article 26.</p>
+                                    </div>
+
+                                    <div class="bg-white border-l-4 border-green-500 p-4 rounded-r-lg shadow-sm">
+                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">3. Data Subject Rights</h5>
+                                        <p class="text-gray-600 text-xs">Under ITE Law Article 26, you have the right to access, correct, delete, and port your personal data. We provide complete transparency in data processing activities.</p>
+                                    </div>
+
+                                    <div class="bg-white border-l-4 border-purple-500 p-4 rounded-r-lg shadow-sm">
+                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">4. Data Processing & Retention</h5>
+                                        <p class="text-gray-600 text-xs">We process your data only for legitimate business purposes as permitted under Indonesian Law No. 11 of 2008 concerning Electronic Information and Transactions.</p>
+                                    </div>
+
+                                    <div class="bg-white border-l-4 border-orange-500 p-4 rounded-r-lg shadow-sm">
+                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">5. Third-Party Data Sharing</h5>
+                                        <p class="text-gray-600 text-xs">We do not share your personal data with third parties except as required by Indonesian law or with your explicit consent, in compliance with ITE Law provisions.</p>
+                                    </div>
+
+                                    <div class="bg-white border-l-4 border-teal-500 p-4 rounded-r-lg shadow-sm">
+                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">6. Data Breach Notification</h5>
+                                        <p class="text-gray-600 text-xs">In case of any data breach, we will notify affected users within 72 hours as required by Indonesian Government Regulation No. 71 of 2019.</p>
+                                    </div>
+
+                                    <div class="bg-white border-l-4 border-indigo-500 p-4 rounded-r-lg shadow-sm">
+                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">7. Cross-Border Data Transfer</h5>
+                                        <p class="text-gray-600 text-xs">Any international data transfer complies with Indonesian regulations and ensures adequate protection of your personal data.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Reading Progress -->
+                                <div class="mt-5">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs font-medium text-gray-600">Reading Progress</span>
+                                        <span id="privacyProgress" class="text-xs font-medium text-purple-600">0%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-1.5">
+                                        <div id="privacyProgressBar" class="bg-gradient-to-r from-purple-400 to-purple-500 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Footer -->
+                            <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="privacyReadCheckbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded" disabled>
+                                    <label for="privacyReadCheckbox" class="ml-2 text-xs text-gray-700">
+                                        I have read and understood the Privacy Policy
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                     <!-- Login Link -->
                     <div class="mt-8 text-center">

@@ -7,36 +7,55 @@
                 <!-- Brand Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('tracker') }}" class="group">
-                        <span class="text-xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
+                        <span class="text-lg sm:text-xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
                             TraKerja
                         </span>
                     </a>
                 </div>
             </div>
 
-            <!-- Center Section: Navigation Links -->
-            <div class="flex space-x-1">
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button type="button" 
+                        class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
+                        aria-controls="mobile-menu" 
+                        aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <!-- Hamburger icon -->
+                    <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <!-- Close icon -->
+                    <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex space-x-1">
                 @if(!auth()->user()->isAdmin() && auth()->user()->role !== 'admin')
                     {{-- Regular User Navigation --}}
                     <a href="{{ route('tracker') }}"
-                       class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('tracker') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('tracker') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
                         <span>Tracker</span>
                     </a>
                     <a href="{{ route('summary') }}"
-                       class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('summary') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('summary') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
                         <span>Summary</span>
                     </a>
                     <a href="{{ route('goals') }}"
-                       class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('goals') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('goals') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
                         <span>Goals</span>
                     </a>
                     <a href="{{ route('interviews') }}"
-                       class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('interviews') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('interviews') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
                         <span>Interviews</span>
                     </a>
                     <a href="{{ route('cv.builder') }}"
-                       class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('cv.*') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
-                        <span>CV Builder</span>
+                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('cv.*') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <span class="hidden lg:inline">CV Builder</span>
+                        <span class="lg:hidden">CV</span>
                         @if(auth()->user() && auth()->user()->is_premium && auth()->user()->payment_status === 'paid')
                             <span class="ml-1 px-1.5 py-0.5 text-xs bg-primary-100 text-primary-700 rounded font-semibold">PRO</span>
                         @endif
@@ -44,56 +63,59 @@
                 @else
                     {{-- Admin Navigation --}}
                     <a href="{{ route('admin.index') }}"
-                       class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.index') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
-                        <span>Dashboard</span>
+                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.index') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <span class="hidden lg:inline">Dashboard</span>
+                        <span class="lg:hidden">Home</span>
                     </a>
                     <a href="{{ route('admin.users') }}"
-                       class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.users') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.users') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
                         <span>Users</span>
                     </a>
                     <a href="{{ route('admin.payments') }}"
-                       class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.payments') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
-                        <span>Payments</span>
+                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.payments') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <span class="hidden lg:inline">Payments</span>
+                        <span class="lg:hidden">Pay</span>
                     </a>
                     <a href="{{ route('admin.analytics') }}"
-                       class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.analytics') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.analytics') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
                         <span>Analytics</span>
                     </a>
                     <a href="{{ route('admin.monetization') }}"
-                       class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.monetization') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
-                        <span>Monetization</span>
+                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.monetization') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <span class="hidden lg:inline">Monetization</span>
+                        <span class="lg:hidden">Money</span>
                     </a>
                 @endif
             </div>
 
             <!-- Right Section: User Menu -->
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-2 sm:space-x-4">
                 <!-- User Profile -->
-                <div class="flex items-center space-x-3">
+                <div class="flex items-center space-x-2 sm:space-x-3">
                     @if(Auth::user()->logo)
                         <div class="relative">
                             <img src="{{ Storage::url(Auth::user()->logo) }}" 
                                  alt="Profile Photo" 
-                                 class="h-10 w-10 rounded-full object-cover ring-2 ring-white shadow-lg hover:shadow-xl transition-all duration-200">
+                                 class="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover ring-2 ring-white shadow-lg hover:shadow-xl transition-all duration-200">
                         </div>
                     @else
                         <div class="relative">
-                            <div class="h-10 w-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 ring-2 ring-white">
-                                <span class="text-white font-bold text-sm">{{ substr(Auth::user()->name, 0, 1) }}</span>
+                            <div class="h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 ring-2 ring-white">
+                                <span class="text-white font-bold text-xs sm:text-sm">{{ substr(Auth::user()->name, 0, 1) }}</span>
                             </div>
                         </div>
                     @endif
                     <div class="hidden sm:block">
-                        <p class="text-sm font-semibold text-gray-900">{{ Auth::user()->name }}</p>
-                        <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
+                        <p class="text-sm font-semibold text-gray-900 truncate max-w-32">{{ Auth::user()->name }}</p>
+                        <p class="text-xs text-gray-500 truncate max-w-32">{{ Auth::user()->email }}</p>
                     </div>
                 </div>
 
                 <!-- User Dropdown -->
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200 hover:bg-gray-50 p-2">
-                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200 hover:bg-gray-50 p-1 sm:p-2">
+                            <svg class="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
                             </svg>
                         </button>
@@ -137,6 +159,112 @@
                 <livewire:notification-bell />
             </div>
         </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+                @if(!auth()->user()->isAdmin() && auth()->user()->role !== 'admin')
+                    {{-- Regular User Mobile Navigation --}}
+                    <a href="{{ route('tracker') }}"
+                       class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('tracker') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            Tracker
+                        </div>
+                    </a>
+                    <a href="{{ route('summary') }}"
+                       class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('summary') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            Summary
+                        </div>
+                    </a>
+                    <a href="{{ route('goals') }}"
+                       class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('goals') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Goals
+                        </div>
+                    </a>
+                    <a href="{{ route('interviews') }}"
+                       class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('interviews') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            Interviews
+                        </div>
+                    </a>
+                    <a href="{{ route('cv.builder') }}"
+                       class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('cv.*') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                                CV Builder
+                            </div>
+                            @if(auth()->user() && auth()->user()->is_premium && auth()->user()->payment_status === 'paid')
+                                <span class="px-2 py-1 text-xs bg-primary-100 text-primary-700 rounded font-semibold">PRO</span>
+                            @endif
+                        </div>
+                    </a>
+                @else
+                    {{-- Admin Mobile Navigation --}}
+                    <a href="{{ route('admin.index') }}"
+                       class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('admin.index') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                            </svg>
+                            Dashboard
+                        </div>
+                    </a>
+                    <a href="{{ route('admin.users') }}"
+                       class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('admin.users') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                            Users
+                        </div>
+                    </a>
+                    <a href="{{ route('admin.payments') }}"
+                       class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('admin.payments') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                            </svg>
+                            Payments
+                        </div>
+                    </a>
+                    <a href="{{ route('admin.analytics') }}"
+                       class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('admin.analytics') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            Analytics
+                        </div>
+                    </a>
+                    <a href="{{ route('admin.monetization') }}"
+                       class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('admin.monetization') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Monetization
+                        </div>
+                    </a>
+                @endif
+            </div>
+        </div>
     </div>
 </nav>
 
@@ -178,6 +306,28 @@
 </div>
 
 <script>
+// Mobile menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuButton = document.querySelector('.mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', function() {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            
+            // Toggle aria-expanded
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            
+            // Toggle mobile menu visibility
+            if (isExpanded) {
+                mobileMenu.classList.add('hidden');
+            } else {
+                mobileMenu.classList.remove('hidden');
+            }
+        });
+    }
+});
+
 function openLogoutModal() {
     const modal = document.getElementById('logoutModal');
     const modalContent = document.getElementById('logoutModalContent');

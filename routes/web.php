@@ -17,6 +17,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Legal Pages
+Route::get('/terms-of-service', function () {
+    return view('legal.terms-of-service');
+})->name('legal.terms');
+
+Route::get('/privacy-policy', function () {
+    return view('legal.privacy-policy');
+})->name('legal.privacy');
+
 // Force logout route to avoid browser confirm/CSRF issues when session expired
 Route::get('/logout-force', function () {
     if (Auth::check()) {
