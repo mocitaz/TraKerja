@@ -123,103 +123,41 @@ class MonetizationControl extends Component
     
     private function buildFeatureMatrix()
     {
-        // Define feature access based on monetization state
-        if (!$this->monetizationEnabled) {
-            // All features FREE when monetization is OFF
-            return [
-                'Job Application Tracker' => [
-                    'free' => '✅ Unlimited',
-                    'premium' => '✅ Unlimited'
-                ],
-                'CV Builder Access' => [
-                    'free' => '✅ Yes',
-                    'premium' => '✅ Yes'
-                ],
-                'CV Templates' => [
-                    'free' => '✅ All 5 Templates',
-                    'premium' => '✅ All 5 Templates'
-                ],
-                'CV Exports per Month' => [
-                    'free' => '✅ Unlimited',
-                    'premium' => '✅ Unlimited'
-                ],
-                'CV Customization' => [
-                    'free' => '✅ Full Access',
-                    'premium' => '✅ Full Access'
-                ],
-                'CV Watermark' => [
-                    'free' => '✅ No Watermark',
-                    'premium' => '✅ No Watermark'
-                ],
-                'Job Analytics' => [
-                    'free' => '✅ Advanced Analytics',
-                    'premium' => '✅ Advanced Analytics'
-                ],
-                'Interview Calendar' => [
-                    'free' => '✅ Yes',
-                    'premium' => '✅ Yes'
-                ],
-                'Interview Reminders' => [
-                    'free' => '✅ Enabled',
-                    'premium' => '✅ Enabled'
-                ],
-                'Goals Tracking' => [
-                    'free' => '✅ Unlimited',
-                    'premium' => '✅ Unlimited'
-                ],
-                'Export to CSV' => [
-                    'free' => '✅ Yes',
-                    'premium' => '✅ Yes'
-                ]
-            ];
-        } else {
-            // LIMITED features for FREE, FULL for PREMIUM when monetization is ON
-            return [
-                'Job Application Tracker' => [
-                    'free' => '⚠️ Limited (Max 30 apps)',
-                    'premium' => '✅ Unlimited'
-                ],
-                'CV Builder Access' => [
-                    'free' => '✅ Yes',
-                    'premium' => '✅ Yes'
-                ],
-                'CV Templates' => [
-                    'free' => '⚠️ Only 1 Template',
-                    'premium' => '✅ All 5 Templates'
-                ],
-                'CV Exports per Month' => [
-                    'free' => '✅ Unlimited',
-                    'premium' => '✅ Unlimited'
-                ],
-                'CV Customization' => [
-                    'free' => '✅ Full Access',
-                    'premium' => '✅ Full Access'
-                ],
-                'CV Watermark' => [
-                    'free' => '✅ No Watermark',
-                    'premium' => '✅ No Watermark'
-                ],
-                'Job Analytics' => [
-                    'free' => '✅ Advanced Analytics',
-                    'premium' => '✅ Advanced Analytics'
-                ],
-                'Interview Calendar' => [
-                    'free' => '✅ Yes',
-                    'premium' => '✅ Yes'
-                ],
-                'Interview Reminders' => [
-                    'free' => '✅ Enabled',
-                    'premium' => '✅ Enabled'
-                ],
-                'Goals Tracking' => [
-                    'free' => '⚠️ Max 5 Goals',
-                    'premium' => '✅ Unlimited'
-                ],
-                'Export to CSV' => [
-                    'free' => '✅ Yes',
-                    'premium' => '✅ Yes'
-                ]
-            ];
-        }
+        // Feature matrix shows comparison between FREE USERS vs PREMIUM USERS
+        // This comparison is CONSTANT - shows what users get if they pay
+        return [
+            'Job Application Tracker' => [
+                'free' => $this->monetizationEnabled ? '⚠️ Max 20 Applications' : '✅ Unlimited (Now)',
+                'premium' => '✅ Unlimited'
+            ],
+            'CV Builder Access' => [
+                'free' => '✅ Yes',
+                'premium' => '✅ Yes'
+            ],
+            'CV Templates' => [
+                'free' => $this->monetizationEnabled ? '⚠️ 1 Template Only' : '✅ All 5 Templates (Now)',
+                'premium' => '✅ All 5 Templates'
+            ],
+            'CV Exports per Month' => [
+                'free' => $this->monetizationEnabled ? '⚠️ 5 Exports/Month' : '✅ Unlimited (Now)',
+                'premium' => '✅ Unlimited'
+            ],
+            'CV Customization' => [
+                'free' => '✅ Full Access',
+                'premium' => '✅ Full Access'
+            ],
+            'CV Watermark' => [
+                'free' => '✅ No Watermark',
+                'premium' => '✅ No Watermark'
+            ],
+            'Job Analytics' => [
+                'free' => $this->monetizationEnabled ? '⚠️ Basic Analytics' : '✅ Advanced (Now)',
+                'premium' => '✅ Advanced Analytics'
+            ],
+            'Interview Calendar' => [
+                'free' => '✅ Yes',
+                'premium' => '✅ Yes'
+            ]
+        ];
     }
 }

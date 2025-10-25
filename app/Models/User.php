@@ -261,23 +261,26 @@ class User extends Authenticatable
     }
     
     /**
-     * Get CV templates count for this user (respecting grandfathered benefits)
+     * Get CV templates count for this user
+     * 
+     * FREE MODE: Semua user dapat akses semua template (5 templates)
+     * PREMIUM MODE: Free tier = 1 template, Premium = 5 templates
      * 
      * @return int Number of CV templates available
      */
     public function getCvTemplatesCount(): int
     {
-        // Premium users always get all 5 templates
-        if ($this->is_premium) {
+        // FREE MODE: Unlock semua template untuk semua user
+        if (!Setting::isMonetizationEnabled()) {
             return 5;
         }
         
-        // Phase 1 users (early adopters) get 3 templates FREE forever
-        if ($this->registered_phase == 1 || $this->hasGrandfatheredBenefit('cv_templates_3_free')) {
-            return 3;
+        // PREMIUM MODE: Premium users get all 5 templates
+        if ($this->is_premium && $this->payment_status === self::PAYMENT_STATUS_PAID) {
+            return 5;
         }
         
-        // Everyone else gets 1 (free tier)
+        // PREMIUM MODE: Free tier users only get 1 template
         return 1;
     }
     
@@ -305,24 +308,27 @@ class User extends Authenticatable
     }
     
     /**
-     * Check if user can access feature (respecting phase and grandfather rights)
+     * Check if user can access feature
+     * 
+     * FREE MODE: Semua user dapat akses semua fitur
+     * PREMIUM MODE: Free tier dibatasi, Premium unlimited
      * 
      * @param string $feature Feature name
      * @return bool
      */
     public function canAccessFeature(string $feature): bool
     {
-        // Premium users always get access to everything
-        if ($this->is_premium) {
+        // FREE MODE: Unlock semua untuk semua user
+        if (!Setting::isMonetizationEnabled()) {
             return true;
         }
         
-        // Check grandfathered benefits
-        if ($this->hasGrandfatheredBenefit($feature)) {
+        // PREMIUM MODE: Premium users get full access
+        if ($this->is_premium && $this->payment_status === self::PAYMENT_STATUS_PAID) {
             return true;
         }
         
-        // Check phase-based access
+        // PREMIUM MODE: Free tier limited access
         return Setting::canAccess($feature, $this);
     }
     
@@ -359,25 +365,29 @@ class User extends Authenticatable
     /**
      * Increment CV export counter for free tier limits
      * 
+     * FREE MODE: Tidak perlu tracking (unlimited)
+     * PREMIUM MODE: Track untuk free tier, unlimited untuk premium
+     * 
      * @return bool True if increment successful, false if limit reached
      */
     public function incrementExportCount(): bool
     {
-        // Premium users have unlimited exports
-        if ($this->is_premium) {
+        // FREE MODE: Unlimited exports untuk semua
+        if (!Setting::isMonetizationEnabled()) {
             return true;
         }
         
+        // PREMIUM MODE: Premium users have unlimited exports
+        if ($this->is_premium && $this->payment_status === self::PAYMENT_STATUS_PAID) {
+            return true;
+        }
+        
+        // PREMIUM MODE: Check free tier limit
         // Check and reset counter if needed
         $this->checkExportReset();
         
-        // Get export limit
+        // Get export limit for free tier
         $limit = $this->getFeatureLimit('cv_exports');
-        
-        // Unlimited exports
-        if ($limit === 'unlimited') {
-            return true;
-        }
         
         // Check if limit reached
         if ($this->cv_exports_this_month >= $limit) {
@@ -392,23 +402,28 @@ class User extends Authenticatable
     /**
      * Get remaining CV exports this month
      * 
+     * FREE MODE: Unlimited untuk semua user
+     * PREMIUM MODE: Limited untuk free tier, unlimited untuk premium
+     * 
      * @return mixed "unlimited" or integer remaining
      */
     public function getRemainingExports()
     {
-        // Premium users have unlimited
-        if ($this->is_premium) {
+        // FREE MODE: Unlimited untuk semua
+        if (!Setting::isMonetizationEnabled()) {
             return 'unlimited';
         }
         
+        // PREMIUM MODE: Premium users have unlimited
+        if ($this->is_premium && $this->payment_status === self::PAYMENT_STATUS_PAID) {
+            return 'unlimited';
+        }
+        
+        // PREMIUM MODE: Free tier users have limits
         // Check and reset if needed
         $this->checkExportReset();
         
         $limit = $this->getFeatureLimit('cv_exports');
-        
-        if ($limit === 'unlimited') {
-            return 'unlimited';
-        }
         
         return max(0, $limit - $this->cv_exports_this_month);
     }

@@ -112,19 +112,20 @@ Route::middleware('auth')->group(function () {
     })->name('jobs.show');
     
     // Export routes (Only for regular users)
-    Route::get('/export/job-applications/csv', function () {
-        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-            abort(403, 'Admin cannot export job applications');
-        }
-        return app(JobApplicationExportController::class)->exportToCsv();
-    })->name('export.job-applications.csv');
+    // DISABLED: Export CSV feature temporarily disabled
+    // Route::get('/export/job-applications/csv', function () {
+    //     if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+    //         abort(403, 'Admin cannot export job applications');
+    //     }
+    //     return app(JobApplicationExportController::class)->exportToCsv();
+    // })->name('export.job-applications.csv');
     
-    Route::get('/export/job-applications/stats', function () {
-        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-            abort(403, 'Admin cannot access export stats');
-        }
-        return app(JobApplicationExportController::class)->getExportStats();
-    })->name('export.job-applications.stats');
+    // Route::get('/export/job-applications/stats', function () {
+    //     if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+    //         abort(403, 'Admin cannot access export stats');
+    //     }
+    //     return app(JobApplicationExportController::class)->getExportStats();
+    // })->name('export.job-applications.stats');
 });
 
 // Admin Routes (protected by admin role)
@@ -142,8 +143,25 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         if (!Auth::user()->isAdmin()) {
             abort(403, 'Unauthorized - Admin access required');
         }
-        return view('admin.index'); // Shows monetization control on main dashboard
+        return view('admin.monetization');
     })->name('monetization');
+    
+    // Update premium price
+    Route::put('/update-premium-price', function (Request $request) {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        
+        $validated = $request->validate([
+            'premium_price' => 'required|numeric|min:0'
+        ]);
+        
+        \App\Models\Setting::set('premium_price', $validated['premium_price']);
+        \App\Models\Setting::clearCache();
+        
+        return redirect()->route('admin.monetization')
+            ->with('success', 'Premium price updated successfully to Rp ' . number_format($validated['premium_price'], 0, ',', '.'));
+    })->name('update-premium-price');
     
     // Users management
     Route::get('/users', function () {
@@ -160,14 +178,6 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         }
         return view('admin.payments');
     })->name('payments');
-    
-    // Settings
-    Route::get('/settings', function () {
-        if (!Auth::user()->isAdmin()) {
-            abort(403, 'Unauthorized - Admin access required');
-        }
-        return view('admin.settings');
-    })->name('settings');
     
     // Analytics
     Route::get('/analytics', function () {

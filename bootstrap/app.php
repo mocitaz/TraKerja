@@ -11,7 +11,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
+            'admin.throttle' => \App\Http\Middleware\AdminRateLimiter::class,
+        ]);
+        
+        // Security headers - ONLY enable in production
+        // Uncomment line below when deploying to production with proper CSP config
+        // $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

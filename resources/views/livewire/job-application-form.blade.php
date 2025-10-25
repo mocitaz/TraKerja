@@ -371,6 +371,119 @@
         </div>
 
 
+        <!-- Interview Details Section (Only visible when recruitment_stage = HR or User Interview) -->
+        @if(in_array($recruitment_stage, ['HR - Interview', 'User - Interview']))
+        <div class="bg-purple-50 border-2 border-purple-200 rounded-lg p-4 space-y-4">
+            <div class="flex items-center space-x-2 mb-2">
+                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <h3 class="text-sm font-semibold text-purple-900">Interview Details</h3>
+                <span class="text-xs text-purple-600 italic">(will appear in Interview Calendar)</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Interview Date & Time -->
+                <div>
+                    <label for="interview_date" class="block text-sm font-medium text-gray-700 mb-1">
+                        Interview Date & Time * <span class="text-xs text-gray-500">(WIB)</span>
+                    </label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <input wire:model.live="interview_date" 
+                               type="datetime-local" 
+                               id="interview_date" 
+                               class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm"
+                               value="{{ $interview_date }}">
+                    </div>
+                    @error('interview_date') 
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Interview Type -->
+                <div>
+                    <label for="interview_type" class="block text-sm font-medium text-gray-700 mb-1">
+                        Interview Type *
+                    </label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                        </div>
+                        <select wire:model="interview_type" 
+                                class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm appearance-none">
+                            <option value="">Select Type</option>
+                            <option value="Phone">📞 Phone</option>
+                            <option value="Video">📹 Video</option>
+                            <option value="In-person">🏢 In-person</option>
+                            <option value="Panel">👥 Panel</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    @error('interview_type') 
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <!-- Interview Location -->
+            <div>
+                <label for="interview_location" class="block text-sm font-medium text-gray-700 mb-1">
+                    Interview Location / Link
+                </label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <input wire:model.live="interview_location" 
+                           type="text" 
+                           id="interview_location" 
+                           class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm"
+                           placeholder="e.g., Zoom link, office address, phone number"
+                           value="{{ $interview_location }}">
+                </div>
+                @error('interview_location') 
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Interview Notes -->
+            <div>
+                <label for="interview_notes" class="block text-sm font-medium text-gray-700 mb-1">
+                    Interview Notes
+                </label>
+                <div class="relative">
+                    <div class="absolute top-3 left-3 flex items-start pointer-events-none">
+                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                    </div>
+                    <textarea wire:model.live="interview_notes" 
+                              id="interview_notes" 
+                              rows="2"
+                              class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm resize-none"
+                              placeholder="Preparation checklist, topics to discuss, dress code, etc...">{{ $interview_notes }}</textarea>
+                </div>
+                @error('interview_notes') 
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+        @endif
+
         <!-- Row 6: Notes -->
         <div>
             <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">

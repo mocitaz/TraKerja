@@ -29,6 +29,12 @@ class JobApplicationForm extends Component
     public $platform_link = '';
     public $application_date = '';
     public $notes = '';
+    
+    // Interview fields
+    public $interview_date = '';
+    public $interview_type = '';
+    public $interview_location = '';
+    public $interview_notes = '';
 
     public $applicationStatusOptions = [
         'On Process',
@@ -152,6 +158,11 @@ class JobApplicationForm extends Component
         'platform_link' => 'nullable|url',
         'application_date' => 'required|date',
         'notes' => 'nullable|string',
+        // Interview fields (conditional validation)
+        'interview_date' => 'nullable|date',
+        'interview_type' => 'nullable|string|in:Phone,Video,In-person,Panel',
+        'interview_location' => 'nullable|string|max:500',
+        'interview_notes' => 'nullable|string',
     ];
 
     protected $listeners = [
@@ -311,6 +322,12 @@ class JobApplicationForm extends Component
             $this->application_date = $jobApplication->application_date->format('Y-m-d');
             $this->notes = $jobApplication->notes;
             
+            // Load interview details
+            $this->interview_date = $jobApplication->interview_date ? $jobApplication->interview_date->format('Y-m-d\TH:i') : '';
+            $this->interview_type = $jobApplication->interview_type ?? '';
+            $this->interview_location = $jobApplication->interview_location ?? '';
+            $this->interview_notes = $jobApplication->interview_notes ?? '';
+            
             Log::info('Job data loaded successfully', [
                 'company_name' => $this->company_name,
                 'position' => $this->position,
@@ -392,6 +409,11 @@ class JobApplicationForm extends Component
             'platform_link' => $this->platform_link,
             'application_date' => $this->application_date,
             'notes' => $this->notes,
+            // Interview details (only save if recruitment_stage is HR or User Interview)
+            'interview_date' => (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview'])) ? $this->interview_date : null,
+            'interview_type' => (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview'])) ? $this->interview_type : null,
+            'interview_location' => (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview'])) ? $this->interview_location : null,
+            'interview_notes' => (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview'])) ? $this->interview_notes : null,
         ];
 
         try {
@@ -407,6 +429,11 @@ class JobApplicationForm extends Component
                     message: "Successfully updated application for {$this->company_name}",
                     duration: 3000
                 );
+                
+                // Dispatch interview-updated event for calendar refresh
+                if (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && $this->interview_date) {
+                    $this->dispatch('interview-updated');
+                }
             } else {
                 $newJob = JobApplication::create($data);
                 session()->flash('message', 'Job application created successfully!');
@@ -419,6 +446,11 @@ class JobApplicationForm extends Component
                     message: "Successfully added application for {$this->company_name}",
                     duration: 3000
                 );
+                
+                // Dispatch interview-updated event for calendar refresh
+                if (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && $this->interview_date) {
+                    $this->dispatch('interview-updated');
+                }
             }
         } catch (\Exception $e) {
             Log::error('Failed to save job application', ['error' => $e->getMessage()]);

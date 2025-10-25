@@ -91,11 +91,14 @@
                     </div>
 
                     <!-- Professional Template (PREMIUM) -->
-                    <div class="border-2 {{ auth()->user()->is_premium ? 'border-yellow-400' : 'border-gray-300' }} rounded-lg overflow-hidden {{ auth()->user()->is_premium ? '' : 'opacity-60' }}">
-                        <div class="{{ auth()->user()->is_premium ? 'bg-yellow-50' : 'bg-gray-100' }} p-4 border-b {{ auth()->user()->is_premium ? 'border-yellow-200' : 'border-gray-200' }}">
+                    @php $userTemplateCount = cv_templates_count(); @endphp
+                    <div class="border-2 {{ $userTemplateCount >= 2 ? 'border-purple-400' : 'border-gray-300' }} rounded-lg overflow-hidden {{ $userTemplateCount >= 2 ? '' : 'opacity-60' }}">
+                        <div class="{{ $userTemplateCount >= 2 ? 'bg-purple-50' : 'bg-gray-100' }} p-4 border-b {{ $userTemplateCount >= 2 ? 'border-purple-200' : 'border-gray-200' }}">
                             <div class="flex items-center justify-between mb-2">
                                 <h4 class="font-semibold text-lg">Professional</h4>
-                                <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full font-medium">PREMIUM</span>
+                                <span class="px-2 py-1 {{ $userTemplateCount >= 2 ? 'bg-purple-100 text-purple-800' : 'bg-yellow-100 text-yellow-800' }} text-xs rounded-full font-medium">
+                                    {{ $userTemplateCount >= 2 ? 'UNLOCKED' : 'PREMIUM' }}
+                                </span>
                             </div>
                             <p class="text-sm text-gray-600">Classic design with elegant typography</p>
                         </div>
@@ -108,9 +111,9 @@
                             </div>
                         </div>
                         <div class="p-4 bg-white">
-                            @if(auth()->user()->is_premium)
+                            @if($userTemplateCount >= 2)
                                 <button onclick="Livewire.dispatch('openPreview', { template: 'professional' })"
-                                        class="w-full bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2">
+                                        class="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -129,11 +132,13 @@
                     </div>
 
                     <!-- Creative Template (PREMIUM) -->
-                    <div class="border-2 {{ auth()->user()->is_premium ? 'border-yellow-400' : 'border-gray-300' }} rounded-lg overflow-hidden {{ auth()->user()->is_premium ? '' : 'opacity-60' }}">
-                        <div class="{{ auth()->user()->is_premium ? 'bg-yellow-50' : 'bg-gray-100' }} p-4 border-b {{ auth()->user()->is_premium ? 'border-yellow-200' : 'border-gray-200' }}">
+                    <div class="border-2 {{ $userTemplateCount >= 3 ? 'border-purple-400' : 'border-gray-300' }} rounded-lg overflow-hidden {{ $userTemplateCount >= 3 ? '' : 'opacity-60' }}">
+                        <div class="{{ $userTemplateCount >= 3 ? 'bg-purple-50' : 'bg-gray-100' }} p-4 border-b {{ $userTemplateCount >= 3 ? 'border-purple-200' : 'border-gray-200' }}">
                             <div class="flex items-center justify-between mb-2">
                                 <h4 class="font-semibold text-lg">Creative</h4>
-                                <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full font-medium">PREMIUM</span>
+                                <span class="px-2 py-1 {{ $userTemplateCount >= 3 ? 'bg-purple-100 text-purple-800' : 'bg-yellow-100 text-yellow-800' }} text-xs rounded-full font-medium">
+                                    {{ $userTemplateCount >= 3 ? 'UNLOCKED' : 'PREMIUM' }}
+                                </span>
                             </div>
                             <p class="text-sm text-gray-600">Modern design with creative layout</p>
                         </div>
@@ -146,9 +151,9 @@
                             </div>
                         </div>
                         <div class="p-4 bg-white">
-                            @if(auth()->user()->is_premium)
+                            @if($userTemplateCount >= 3)
                                 <button onclick="Livewire.dispatch('openPreview', { template: 'creative' })"
-                                        class="w-full bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2">
+                                        class="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -168,22 +173,40 @@
                 </div>
 
                 <!-- Premium Upsell -->
-                @if(!auth()->user()->is_premium)
-                    <div class="mt-6 bg-gradient-to-r from-yellow-50 to-yellow-100 border border-yellow-200 rounded-lg p-6">
+                @if($userTemplateCount < 5)
+                    <div class="mt-6 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-6">
                         <div class="flex items-start">
-                            <svg class="w-6 h-6 text-yellow-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-purple-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                             </svg>
                             <div class="flex-1">
-                                <h4 class="font-semibold text-yellow-900 mb-2">Upgrade to Premium</h4>
-                                <ul class="text-sm text-yellow-800 space-y-1 mb-4">
-                                    <li>✓ Access to all 3 templates (Minimal, Professional, Creative)</li>
-                                    <li>✓ No watermarks on exported CVs</li>
-                                    <li>✓ Priority support</li>
-                                </ul>
-                                <p class="text-sm text-yellow-700 font-medium">
-                                    Contact admin for premium upgrade
-                                </p>
+                                <h4 class="font-semibold text-purple-900 mb-2">
+                                    @if(\App\Models\Setting::isMonetizationEnabled())
+                                        Upgrade to Premium
+                                    @else
+                                        More Templates Coming Soon!
+                                    @endif
+                                </h4>
+                                @if(\App\Models\Setting::isMonetizationEnabled())
+                                    <p class="text-sm text-purple-700 mb-3">
+                                        You currently have access to <strong>{{ $userTemplateCount }} template(s)</strong>. 
+                                        Upgrade to premium for all 5 professional templates!
+                                    </p>
+                                    <ul class="text-sm text-purple-800 space-y-1 mb-4">
+                                        <li>✓ Access to all 5 templates (Minimal, Professional, Creative, Modern, Elegant)</li>
+                                        <li>✓ Unlimited CV exports</li>
+                                        <li>✓ No watermarks</li>
+                                        <li>✓ Priority support</li>
+                                    </ul>
+                                    <p class="text-sm text-purple-700 font-medium">
+                                        Contact admin for premium upgrade - Rp {{ number_format(\App\Models\Setting::get('premium_price', 199000), 0, ',', '.') }}
+                                    </p>
+                                @else
+                                    <p class="text-sm text-purple-800">
+                                        🎉 <strong>FREE MODE is currently active!</strong> You have access to <strong>{{ $userTemplateCount }} templates</strong> for free. 
+                                        When admin enables monetization, premium users will get exclusive access to additional templates.
+                                    </p>
+                                @endif
                             </div>
                         </div>
                     </div>
