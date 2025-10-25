@@ -100,12 +100,6 @@
                             Monetization
                         </a>
 
-                        <a href="{{ route('admin.settings') }}" 
-                           class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {{ request()->routeIs('admin.settings') ? 'bg-primary-50 text-primary-900' : 'text-primary-600 hover:bg-primary-50 hover:text-primary-900' }}">
-                            <i class="fas fa-cog mr-4 flex-shrink-0 h-6 w-6 {{ request()->routeIs('admin.settings') ? 'text-primary-600' : 'text-primary-400' }}"></i>
-                            Settings
-                        </a>
-
                         <a href="{{ route('admin.analytics') }}" 
                            class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {{ request()->routeIs('admin.analytics') ? 'bg-primary-50 text-primary-900' : 'text-primary-600 hover:bg-primary-50 hover:text-primary-900' }}">
                             <i class="fas fa-chart-line mr-4 flex-shrink-0 h-6 w-6 {{ request()->routeIs('admin.analytics') ? 'text-primary-600' : 'text-primary-400' }}"></i>

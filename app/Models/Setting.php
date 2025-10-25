@@ -115,22 +115,24 @@ class Setting extends Model
      */
     public static function canAccess($feature, $user = null)
     {
-        // If monetization is OFF, everything is FREE
+        // FREE MODE: Unlock semua fitur untuk semua user
         if (!self::isMonetizationEnabled()) {
             return true;
         }
         
-        // If monetization is ON, check if user is premium
+        // PREMIUM MODE: Check if user is premium
         if ($user && $user->is_premium && $user->payment_status === \App\Models\User::PAYMENT_STATUS_PAID) {
             return true;
         }
         
-        // Free users get limited access when monetization is enabled
-        // Define which features are still available for free
+        // PREMIUM MODE: Free tier users get limited access
+        // These basic features are still available for free
         $freeFeatures = [
             'job_tracker', 
             'cv_builder_basic',
-            'interview_calendar'
+            'interview_calendar',
+            'cv_templates_1',  // 1 template CV
+            'cv_exports_limited' // Limited exports per month
         ];
         
         return in_array($feature, $freeFeatures);
@@ -145,25 +147,26 @@ class Setting extends Model
      */
     public static function getLimit($feature, $user = null)
     {
-        // If monetization is OFF, everything is unlimited
+        // FREE MODE: Unlimited semua untuk semua user
         if (!self::isMonetizationEnabled()) {
             return 'unlimited';
         }
         
-        // Premium users get unlimited
+        // PREMIUM MODE: Premium users get unlimited
         if ($user && $user->is_premium && $user->payment_status === \App\Models\User::PAYMENT_STATUS_PAID) {
             return 'unlimited';
         }
         
-        // Free users get limits when monetization is enabled
-        $freeLimits = [
-            'cv_templates' => 1,
-            'cv_exports' => 'unlimited', // FREE users can export unlimited times
-            'job_applications' => 30,
-            'goals' => 5
+        // PREMIUM MODE: Free tier users get limits
+        $freeTierLimits = [
+            'cv_templates' => 1,        // Only 1 CV template (minimal/basic)
+            'cv_exports' => 5,           // Max 5 exports per month
+            'job_applications' => 20,    // Max 20 job applications
+            'goals' => 3,                // Max 3 goals
+            'analytics' => 'basic'       // Basic analytics only
         ];
         
-        return $freeLimits[$feature] ?? 'unlimited';
+        return $freeTierLimits[$feature] ?? 0;
     }
     
     /**
