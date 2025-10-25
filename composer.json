@@ -33,7 +33,6 @@
     },
     "files": [
       "app/Helpers/LogoHelper.php",
-      "app/Helpers/MonetizationHelper.php",
       "app/helpers.php"
     ]
   },

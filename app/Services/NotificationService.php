@@ -12,6 +12,12 @@ class NotificationService
 {
     public static function checkGoalProgress()
     {
+        // Don't show goal notifications for admin users
+        $user = Auth::user();
+        if ($user && ($user->is_admin || $user->role === 'admin')) {
+            return null;
+        }
+
         // Check if we already showed goal notifications today
         $sessionKey = 'goal_notifications_' . Carbon::today()->format('Y-m-d');
         if (Session::has($sessionKey)) {
@@ -82,6 +88,12 @@ class NotificationService
 
     public static function checkInterviewReminders()
     {
+        // Don't show interview reminders for admin users
+        $user = Auth::user();
+        if ($user && ($user->is_admin || $user->role === 'admin')) {
+            return null;
+        }
+
         // Check if we already showed interview reminders today
         $sessionKey = 'interview_reminders_' . Carbon::today()->format('Y-m-d');
         if (Session::has($sessionKey)) {

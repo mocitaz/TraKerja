@@ -111,10 +111,10 @@
                     <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-primary-50">
                         <div class="text-xs text-primary-500">Current Phase</div>
                         <div class="mt-1 flex items-center">
-                            <span class="text-2xl mr-2">{{ phase_emoji(current_phase()) }}</span>
+                            <span class="text-2xl mr-2">🚀</span>
                             <div>
-                                <div class="font-semibold text-sm">{{ phase_name(current_phase()) }}</div>
-                                <div class="text-xs text-primary-500">Phase {{ current_phase() }}</div>
+                                <div class="font-semibold text-sm">Launch Phase</div>
+                                <div class="text-xs text-primary-500">Phase 1</div>
                             </div>
                         </div>
                     </div>
