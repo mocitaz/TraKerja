@@ -1,12 +1,12 @@
 <div class="container mx-auto px-4 py-6">
 
     <!-- Controls -->
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-3 sm:p-4 mb-4 sm:mb-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
             <!-- View Toggle -->
-            <div class="flex items-center space-x-2">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
                 <button wire:click="toggleViewMode" 
-                        class="flex items-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
+                        class="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm">
                     @if($viewMode === 'month')
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -22,7 +22,7 @@
 
                 <!-- Filter by type -->
                 <select wire:model.live="filterType" 
-                        class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm">
+                        class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm w-full sm:w-auto">
                     <option value="all">All Interviews</option>
                     <option value="HR - Interview">HR Interview</option>
                     <option value="User - Interview">User Interview</option>
@@ -30,7 +30,7 @@
             </div>
 
             <!-- Month Navigation -->
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center justify-between sm:justify-center space-x-2 sm:space-x-4">
                 <button wire:click="previousMonth" 
                         class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                     <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -38,7 +38,7 @@
                     </svg>
                 </button>
 
-                <h2 class="text-lg font-semibold text-gray-900 min-w-[150px] text-center">{{ $monthName }}</h2>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 min-w-[120px] sm:min-w-[150px] text-center">{{ $monthName }}</h2>
 
                 <button wire:click="nextMonth" 
                         class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
@@ -48,7 +48,7 @@
                 </button>
 
                 <button wire:click="goToToday" 
-                        class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium text-gray-700 transition-colors">
+                        class="px-3 sm:px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs sm:text-sm font-medium text-gray-700 transition-colors">
                     Today
                 </button>
             </div>

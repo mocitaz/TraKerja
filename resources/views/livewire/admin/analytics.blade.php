@@ -130,11 +130,9 @@
         
         <!-- Chart Script -->
         <script>
-        let chartCreated = false;
+        let chart = null;
         
         function createChart() {
-            if (chartCreated) return;
-            
             const canvas = document.getElementById('userGrowthChart');
             if (!canvas || typeof Chart === 'undefined') return;
             
@@ -144,7 +142,12 @@
             const premiumData = userGrowthData.premium || [];
             
             try {
-                new Chart(canvas, {
+                // Destroy existing chart if it exists
+                if (chart) {
+                    chart.destroy();
+                }
+                
+                chart = new Chart(canvas, {
                     type: 'line',
                     data: {
                         labels: labels,
@@ -182,12 +185,29 @@
                     }
                 });
                 
-                chartCreated = true;
+                console.log('Chart created/updated successfully');
             } catch (error) {
                 console.error('Chart creation error:', error);
             }
         }
         
+        // Listen for Livewire events
+        document.addEventListener('livewire:init', () => {
+            console.log('Livewire initialized');
+            
+            Livewire.on('chartUpdated', () => {
+                console.log('Chart update event received');
+                createChart();
+            });
+            
+            // Also listen for Livewire updates
+            Livewire.on('$refresh', () => {
+                console.log('Livewire refresh event received');
+                createChart();
+            });
+        });
+        
+        // Initial chart creation
         createChart();
         </script>
 

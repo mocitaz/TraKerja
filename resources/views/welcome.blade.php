@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>TraKerja - Professional Job Application Management Platform</title>
     <meta name="description" content="Transform your job search with TraKerja. The most sophisticated job application tracking platform designed for ambitious professionals in Indonesia.">
@@ -262,6 +262,13 @@
 
             /* Mobile Optimizations */
             @media (max-width: 768px) {
+                /* Improve text rendering on mobile */
+                body {
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                    text-rendering: optimizeLegibility;
+                }
+                
                 .hero-section {
                     min-height: 100vh;
                     padding: 2rem 1rem;
@@ -270,11 +277,15 @@
                 .hero-title {
                     font-size: 2.5rem;
                     line-height: 1.2;
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
                 }
                 
                 .hero-subtitle {
                     font-size: 1.125rem;
                     line-height: 1.6;
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
                 }
                 
                 .feature-card {
@@ -301,12 +312,64 @@
                     text-align: center;
                 }
                 
+                /* Reduce blur effects on mobile for better performance */
                 .floating-animation {
                     display: none;
                 }
                 
                 .cyber-grid {
-                    opacity: 0.1;
+                    opacity: 0.05;
+                }
+                
+                /* Optimize background elements for mobile */
+                .morphing-blob {
+                    filter: blur(1px) !important;
+                }
+                
+                .glass-effect {
+                    backdrop-filter: blur(5px);
+                    background: rgba(255, 255, 255, 0.8);
+                }
+                
+                /* Improve text clarity */
+                .gradient-text {
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                }
+                
+                /* Reduce complex animations on mobile */
+                .pulse-animation {
+                    animation-duration: 4s;
+                }
+                
+                .floating-animation {
+                    animation-duration: 8s;
+                }
+                
+                /* Optimize hero section for mobile */
+                .hero-section {
+                    background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f0fdf4 100%) !important;
+                }
+                
+                /* Remove blur effects from gradient text on mobile */
+                .gradient-text {
+                    background: linear-gradient(135deg, #d983e4 0%, #4e71c5 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    filter: none !important;
+                }
+                
+                /* Optimize badge for mobile */
+                .inline-flex.items-center.px-6.py-3.rounded-full {
+                    background: rgba(255, 255, 255, 0.95) !important;
+                    backdrop-filter: none !important;
+                }
+                
+                /* Optimize trust indicators for mobile */
+                .trust-indicators .flex.items-center {
+                    background: rgba(255, 255, 255, 0.9) !important;
+                    backdrop-filter: none !important;
                 }
             }
 
@@ -363,20 +426,20 @@
                 </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 cyber-grid">
+    <section class="hero-section relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50">
         <!-- Advanced Background Elements -->
-        <div class="absolute top-20 right-20 w-40 h-40 bg-gradient-to-r from-primary-600/20 to-secondary-500/20 rounded-full mix-blend-multiply filter blur-2xl floating-animation morphing-blob"></div>
-        <div class="absolute bottom-20 left-20 w-32 h-32 bg-gradient-to-r from-secondary-500/20 to-primary-600/20 rounded-full mix-blend-multiply filter blur-2xl floating-animation morphing-blob" style="animation-delay: 2s;"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full mix-blend-multiply filter blur-3xl pulse-animation morphing-blob"></div>
-        <div class="absolute top-1/4 left-1/4 w-20 h-20 bg-gradient-to-r from-primary-700/30 to-secondary-500/30 rounded-full mix-blend-multiply filter blur-xl floating-animation" style="animation-delay: 4s;"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-24 h-24 bg-gradient-to-r from-secondary-500/30 to-primary-600/30 rounded-full mix-blend-multiply filter blur-xl floating-animation" style="animation-delay: 1s;"></div>
+        <div class="absolute top-20 right-20 w-40 h-40 bg-gradient-to-r from-primary-600/20 to-secondary-500/20 rounded-full mix-blend-multiply filter blur-2xl floating-animation morphing-blob hidden md:block"></div>
+        <div class="absolute bottom-20 left-20 w-32 h-32 bg-gradient-to-r from-secondary-500/20 to-primary-600/20 rounded-full mix-blend-multiply filter blur-2xl floating-animation morphing-blob hidden md:block" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full mix-blend-multiply filter blur-3xl pulse-animation morphing-blob hidden md:block"></div>
+        <div class="absolute top-1/4 left-1/4 w-20 h-20 bg-gradient-to-r from-primary-700/30 to-secondary-500/30 rounded-full mix-blend-multiply filter blur-xl floating-animation hidden md:block" style="animation-delay: 4s;"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-24 h-24 bg-gradient-to-r from-secondary-500/30 to-primary-600/30 rounded-full mix-blend-multiply filter blur-xl floating-animation hidden md:block" style="animation-delay: 1s;"></div>
         
         <!-- Cyber Grid Overlay -->
-        <div class="absolute inset-0 cyber-grid opacity-30"></div>
+        <div class="absolute inset-0 cyber-grid opacity-30 hidden md:block"></div>
         
         <div class="relative z-10 max-w-6xl mx-auto px-4 text-center">
             <!-- Animated Badge -->
-            <div class="inline-flex items-center px-6 py-3 rounded-full glass-effect text-sm font-medium text-primary-600 mb-8 neon-glow text-reveal" style="animation-delay: 0.2s;">
+            <div class="inline-flex items-center px-6 py-3 rounded-full bg-white/90 text-sm font-medium text-primary-600 mb-8 text-reveal shadow-lg" style="animation-delay: 0.2s;">
                 <span class="w-3 h-3 bg-secondary-500 rounded-full mr-3 pulse-animation"></span>
                 <span class="typing-animation">Smart Job Application Tracking</span>
             </div>
@@ -384,9 +447,8 @@
             <!-- Main Heading with Advanced Typography -->
             <h1 class="hero-title text-5xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight text-reveal" style="animation-delay: 0.4s;">
                 Kelola Proses Rekrutmen dengan 
-                <span class="gradient-text relative">
+                <span class="gradient-text">
                     TraKerja
-                    <div class="absolute -inset-1 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] rounded-lg blur opacity-30"></div>
                 </span>
             </h1>
             
@@ -402,12 +464,12 @@
             <div class="cta-buttons flex flex-col sm:flex-row gap-6 justify-center mb-16 text-reveal" style="animation-delay: 0.8s;">
                 @auth
                     <a href="{{ url('/tracker') }}" 
-                       class="cta-button bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 glow-effect">
+                       class="cta-button bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300">
                         <span class="relative z-10">Buka Dashboard</span>
                     </a>
                 @else
                     <a href="{{ route('register') }}" 
-                       class="cta-button bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 glow-effect">
+                       class="cta-button bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300">
                         <span class="relative z-10">Mulai Gratis</span>
                     </a>
                     <a href="{{ route('login') }}" 
@@ -419,13 +481,13 @@
             
             <!-- Enhanced Trust Indicators -->
             <div class="trust-indicators flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600 text-reveal" style="animation-delay: 1s;">
-                <div class="flex items-center glass-effect px-4 py-2 rounded-full hover:scale-105 transition-all duration-300">
+                <div class="flex items-center bg-white/80 px-4 py-2 rounded-full hover:scale-105 transition-all duration-300 shadow-sm">
                     <svg class="w-5 h-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                     <span class="font-semibold">Setup 2 Menit</span>
                 </div>
-                <div class="flex items-center glass-effect px-4 py-2 rounded-full hover:scale-105 transition-all duration-300">
+                <div class="flex items-center bg-white/80 px-4 py-2 rounded-full hover:scale-105 transition-all duration-300 shadow-sm">
                     <svg class="w-5 h-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
@@ -446,9 +508,9 @@
     <!-- Features Section -->
     <section class="py-20 bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-hidden">
         <!-- Background Elements -->
-        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-20"></div>
-        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full blur-2xl floating-animation"></div>
-        <div class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-secondary-500/10 to-primary-600/10 rounded-full blur-2xl floating-animation" style="animation-delay: 3s;"></div>
+        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-20 hidden md:block"></div>
+        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full blur-2xl floating-animation hidden md:block"></div>
+        <div class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-secondary-500/10 to-primary-600/10 rounded-full blur-2xl floating-animation hidden md:block" style="animation-delay: 3s;"></div>
         
         <div class="relative z-10 max-w-7xl mx-auto px-4">
             <div class="text-center mb-16">
@@ -555,9 +617,9 @@
     <!-- Testimonials Section -->
     <section class="py-20 bg-gradient-to-br from-gray-50 via-white to-slate-50 relative overflow-hidden">
         <!-- Background Elements -->
-        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-10"></div>
-        <div class="absolute top-10 right-10 w-20 h-20 bg-gradient-to-r from-primary-600/20 to-secondary-500/20 rounded-full blur-xl floating-animation"></div>
-        <div class="absolute bottom-10 left-10 w-16 h-16 bg-gradient-to-r from-secondary-500/20 to-primary-600/20 rounded-full blur-xl floating-animation" style="animation-delay: 2s;"></div>
+        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-10 hidden md:block"></div>
+        <div class="absolute top-10 right-10 w-20 h-20 bg-gradient-to-r from-primary-600/20 to-secondary-500/20 rounded-full blur-xl floating-animation hidden md:block"></div>
+        <div class="absolute bottom-10 left-10 w-16 h-16 bg-gradient-to-r from-secondary-500/20 to-primary-600/20 rounded-full blur-xl floating-animation hidden md:block" style="animation-delay: 2s;"></div>
         
         <div class="relative z-10 max-w-6xl mx-auto px-4">
             <div class="text-center mb-16">
@@ -640,9 +702,9 @@
     <!-- How It Works Section -->
     <section class="py-20 bg-white relative overflow-hidden">
         <!-- Background Elements -->
-        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-5"></div>
-        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full blur-2xl floating-animation"></div>
-        <div class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-secondary-500/10 to-primary-600/10 rounded-full blur-2xl floating-animation" style="animation-delay: 2s;"></div>
+        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-5 hidden md:block"></div>
+        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full blur-2xl floating-animation hidden md:block"></div>
+        <div class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-secondary-500/10 to-primary-600/10 rounded-full blur-2xl floating-animation hidden md:block" style="animation-delay: 2s;"></div>
         
         <div class="relative z-10 max-w-6xl mx-auto px-4">
             <div class="text-center mb-16">
@@ -713,9 +775,9 @@
     <!-- Problem Solution Section -->
     <section class="py-20 bg-gradient-to-br from-gray-50 via-white to-slate-50 relative overflow-hidden">
         <!-- Background Elements -->
-        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-10"></div>
-        <div class="absolute top-10 right-10 w-20 h-20 bg-gradient-to-r from-primary-600/20 to-secondary-500/20 rounded-full blur-xl floating-animation"></div>
-        <div class="absolute bottom-10 left-10 w-16 h-16 bg-gradient-to-r from-secondary-500/20 to-primary-600/20 rounded-full blur-xl floating-animation" style="animation-delay: 2s;"></div>
+        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-10 hidden md:block"></div>
+        <div class="absolute top-10 right-10 w-20 h-20 bg-gradient-to-r from-primary-600/20 to-secondary-500/20 rounded-full blur-xl floating-animation hidden md:block"></div>
+        <div class="absolute bottom-10 left-10 w-16 h-16 bg-gradient-to-r from-secondary-500/20 to-primary-600/20 rounded-full blur-xl floating-animation hidden md:block" style="animation-delay: 2s;"></div>
         
         <div class="relative z-10 max-w-6xl mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -833,9 +895,9 @@
     <!-- Benefits Section -->
     <section class="py-20 bg-white relative overflow-hidden">
         <!-- Background Elements -->
-        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-5"></div>
-        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full blur-2xl floating-animation"></div>
-        <div class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-secondary-500/10 to-primary-600/10 rounded-full blur-2xl floating-animation" style="animation-delay: 2s;"></div>
+        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-5 hidden md:block"></div>
+        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full blur-2xl floating-animation hidden md:block"></div>
+        <div class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-secondary-500/10 to-primary-600/10 rounded-full blur-2xl floating-animation hidden md:block" style="animation-delay: 2s;"></div>
         
         <div class="relative z-10 max-w-6xl mx-auto px-4">
             <div class="text-center mb-16">
@@ -924,11 +986,11 @@
     <!-- CTA Section -->
     <section class="py-20 hero-gradient relative overflow-hidden">
         <!-- Advanced Background Elements -->
-        <div class="absolute inset-0 cyber-grid opacity-20"></div>
+        <div class="absolute inset-0 cyber-grid opacity-20 hidden md:block"></div>
         <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary-600/20 via-transparent to-secondary-500/20"></div>
-        <div class="absolute top-20 right-20 w-40 h-40 bg-white/10 rounded-full blur-3xl floating-animation"></div>
-        <div class="absolute bottom-20 left-20 w-32 h-32 bg-white/10 rounded-full blur-3xl floating-animation" style="animation-delay: 3s;"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-white/5 rounded-full blur-3xl pulse-animation"></div>
+        <div class="absolute top-20 right-20 w-40 h-40 bg-white/10 rounded-full blur-3xl floating-animation hidden md:block"></div>
+        <div class="absolute bottom-20 left-20 w-32 h-32 bg-white/10 rounded-full blur-3xl floating-animation hidden md:block" style="animation-delay: 3s;"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-white/5 rounded-full blur-3xl pulse-animation hidden md:block"></div>
         
         <div class="relative z-10 max-w-4xl mx-auto text-center px-4">
             <!-- Animated Badge -->
@@ -1001,8 +1063,8 @@
     <!-- Footer -->
     <footer class="bg-white py-12 relative overflow-hidden">
         <!-- Background Elements -->
-        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-200/30 to-blue-200/30 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-full blur-3xl"></div>
+        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-200/30 to-blue-200/30 rounded-full blur-3xl hidden md:block"></div>
+        <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-full blur-3xl hidden md:block"></div>
         
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">

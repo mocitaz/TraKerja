@@ -1,27 +1,27 @@
 <div>
     <div class="space-y-4">
         <!-- Modern Kanban Board -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             @forelse($statuses as $status)
                 <div class="w-full">
                     <!-- Status Column Header -->
                     <div class="bg-white rounded-lg shadow-sm border border-gray-200 h-full flex flex-col">
-                        <div class="p-4 border-b border-gray-100" style="background: linear-gradient(135deg, {{ $status->color_code }}08, {{ $status->color_code }}03);">
+                        <div class="p-3 sm:p-4 border-b border-gray-100" style="background: linear-gradient(135deg, {{ $status->color_code }}08, {{ $status->color_code }}03);">
                             <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-2 h-2 rounded-full" style="background-color: {{ $status->color_code }};"></div>
-                                    <h3 class="text-sm font-bold text-gray-800">
+                                <div class="flex items-center space-x-2 min-w-0 flex-1">
+                                    <div class="w-2 h-2 rounded-full flex-shrink-0" style="background-color: {{ $status->color_code }};"></div>
+                                    <h3 class="text-xs sm:text-sm font-bold text-gray-800 truncate">
                                         {{ $status->name }}
                                     </h3>
                                 </div>
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-700">
+                                <span class="inline-flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-700 flex-shrink-0 ml-2">
                                     {{ $status->jobApplications->count() }}
                                 </span>
                             </div>
                         </div>
 
                         <!-- Job Cards Container -->
-                        <div class="p-3 space-y-3 flex-1 min-h-48" 
+                        <div class="p-2 sm:p-3 space-y-2 sm:space-y-3 flex-1 min-h-40 sm:min-h-48" 
                              data-status="{{ $status->name }}" 
                              ondrop="drop(event, '{{ $status->name }}')" 
                              ondragover="allowDrop(event)"
@@ -36,10 +36,10 @@
                                      ondragend="dragEnd(event)">
                                     
                                     <!-- Job Card Content -->
-                                    <div class="p-3">
+                                    <div class="p-2 sm:p-3">
                                         <!-- Company & Position -->
                                         <div class="mb-2">
-                                            <h4 class="font-semibold text-gray-900 text-sm truncate group-hover:text-primary-600 transition-colors">
+                                            <h4 class="font-semibold text-gray-900 text-xs sm:text-sm truncate group-hover:text-primary-600 transition-colors">
                                                 {{ $job->company_name }}
                                             </h4>
                                             <p class="text-xs text-gray-600 mt-0.5 truncate">{{ $job->position }}</p>

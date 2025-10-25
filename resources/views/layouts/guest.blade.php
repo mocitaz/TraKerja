@@ -22,9 +22,10 @@
     </head>
     <body class="font-sans text-gray-900 antialiased">
     <div class="min-h-screen flex flex-col">
-        {{ $slot }}
+        {{ $slot ?? '' }}
+        @yield('content')
 
-        @php($noFooterRoutes = ['login', 'register', 'password.request'])
+        @php($noFooterRoutes = ['login', 'register', 'password.request', 'legal.terms', 'legal.privacy'])
         @unless(in_array(Route::currentRouteName(), $noFooterRoutes))
             <!-- Footer -->
             <x-footer />

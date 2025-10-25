@@ -1,27 +1,28 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-white/30">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between space-y-3 sm:space-y-0">
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                <div class="flex items-center space-x-2 sm:space-x-3">
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-white/30">
                         <img src="{{ asset('images/icon.png') }}" 
                              alt="TraKerja Logo" 
-                             class="w-6 h-6"
+                             class="w-5 h-5 sm:w-6 sm:h-6"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6"></path>
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
-                            TraKerja Tracker
-        </h2>
-                        <p class="text-xs text-gray-500 mt-0.5">Smart tracking untuk Job Seeker</p>
+                        <h2 class="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
+                            <span class="hidden sm:inline">TraKerja Tracker</span>
+                            <span class="sm:hidden">Tracker</span>
+                        </h2>
+                        <p class="text-xs text-gray-500 mt-0.5 hidden sm:block">Smart tracking untuk Job Seeker</p>
                     </div>
                 </div>
             </div>
             <div class="flex items-center space-x-2">
-                <div class="flex items-center space-x-2 bg-green-50 px-3 py-1.5 rounded-full">
+                <div class="flex items-center space-x-2 bg-green-50 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full">
                     <div class="w-2 h-2 bg-green-500 rounded-full"></div>
                     <span class="text-xs font-medium text-green-700">Live</span>
                 </div>
@@ -35,16 +36,16 @@
     <div class="min-h-screen bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <!-- New Analytics Cards -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
                 <!-- On Process Card -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4">
                     <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-medium text-gray-600 mb-1">On Process</p>
-                            <p class="text-2xl font-bold text-[#212529]">{{ $onProcessCount }}</p>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-medium text-gray-600 mb-1 truncate">On Process</p>
+                            <p class="text-xl sm:text-2xl font-bold text-[#212529]">{{ $onProcessCount }}</p>
                         </div>
-                        <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-6 h-6 sm:w-8 sm:h-8 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                             </svg>
                         </div>
@@ -52,14 +53,14 @@
                 </div>
 
                 <!-- Offering/Accepted Card -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4">
                     <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-medium text-gray-600 mb-1">Offering/Accepted</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ $offeringAcceptedCount }}</p>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-medium text-gray-600 mb-1 truncate">Offering/Accepted</p>
+                            <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ $offeringAcceptedCount }}</p>
                         </div>
-                        <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
@@ -67,14 +68,14 @@
                 </div>
 
                 <!-- Declined Card -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4">
                     <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-medium text-gray-600 mb-1">Declined</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ $declinedCount }}</p>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-medium text-gray-600 mb-1 truncate">Declined</p>
+                            <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ $declinedCount }}</p>
                         </div>
-                        <div class="w-8 h-8 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </div>
@@ -82,14 +83,14 @@
                 </div>
 
                 <!-- Total Interviews Card -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4">
                     <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-medium text-gray-600 mb-1">Total Interviews</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ $totalInterviewsCount }}</p>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-medium text-gray-600 mb-1 truncate">Total Interviews</p>
+                            <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ $totalInterviewsCount }}</p>
                         </div>
-                        <div class="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
                         </div>
@@ -99,24 +100,25 @@
 
 
             <!-- Compact View Toggle -->
-            <div class="mb-6">
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4">
-                    <div class="flex items-center justify-between">
+            <div class="mb-4 sm:mb-6">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between space-y-3 sm:space-y-0">
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900">Job Applications</h3>
-                            <p class="text-xs text-gray-500">Manage and track your applications</p>
+                            <h3 class="text-base sm:text-lg font-bold text-gray-900">Job Applications</h3>
+                            <p class="text-xs text-gray-500 hidden sm:block">Manage and track your applications</p>
                         </div>
-                        <div class="flex bg-gray-100 rounded-lg p-0.5">
-                            <button id="kanban-view" class="px-4 py-2 rounded-md font-medium bg-white text-primary-600 shadow-sm text-sm">
-                                <div class="flex items-center space-x-1.5">
+                        <div class="flex bg-gray-100 rounded-lg p-0.5 w-full sm:w-auto">
+                            <button id="kanban-view" class="flex-1 sm:flex-none px-3 sm:px-4 py-2 rounded-md font-medium bg-white text-primary-600 shadow-sm text-sm">
+                                <div class="flex items-center justify-center space-x-1.5">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2z"></path>
                                     </svg>
-                                    <span>Kanban</span>
+                                    <span class="hidden sm:inline">Kanban</span>
+                                    <span class="sm:hidden">Board</span>
                                 </div>
                             </button>
-                            <button id="table-view" class="px-4 py-2 rounded-md font-medium text-gray-600 hover:text-gray-900 text-sm">
-                                <div class="flex items-center space-x-1.5">
+                            <button id="table-view" class="flex-1 sm:flex-none px-3 sm:px-4 py-2 rounded-md font-medium text-gray-600 hover:text-gray-900 text-sm">
+                                <div class="flex items-center justify-center space-x-1.5">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0V4a2 2 0 012-2h14a2 2 0 012 2v16a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
                                     </svg>
@@ -143,14 +145,15 @@
         </div>
 
         <!-- Floating Action Button -->
-        <div class="fixed bottom-6 right-6 z-40">
+        <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40">
             <button onclick="openJobModal()" 
-                    class="group relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 text-white font-medium py-2.5 px-4 rounded-lg shadow-lg border border-white/20">
-                <div class="flex items-center space-x-2">
+                    class="group relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 text-white font-medium py-2 sm:py-2.5 px-3 sm:px-4 rounded-lg shadow-lg border border-white/20">
+                <div class="flex items-center space-x-1 sm:space-x-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
-                    <span class="text-xs font-medium">Add Job</span>
+                    <span class="text-xs font-medium hidden sm:inline">Add Job</span>
+                    <span class="text-xs font-medium sm:hidden">Add</span>
                 </div>
             </button>
         </div>
@@ -158,36 +161,36 @@
 
     <!-- Modern Job Application Modal -->
     <div id="jobModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50">
-        <div class="flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden" id="modalContent">
-                <div class="bg-gradient-to-r from-[#d983e4] to-[#4e71c5] p-6 text-white relative overflow-hidden">
+        <div class="flex items-center justify-center min-h-screen p-2 sm:p-4">
+            <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-4xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden" id="modalContent">
+                <div class="bg-gradient-to-r from-[#d983e4] to-[#4e71c5] p-4 sm:p-6 text-white relative overflow-hidden">
                     <!-- Background Pattern -->
                     <div class="absolute inset-0 opacity-10">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-white rounded-full -translate-y-16 translate-x-16"></div>
-                        <div class="absolute bottom-0 left-0 w-24 h-24 bg-white rounded-full translate-y-12 -translate-x-12"></div>
-                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-white rounded-full opacity-5"></div>
+                        <div class="absolute top-0 right-0 w-16 sm:w-32 h-16 sm:h-32 bg-white rounded-full -translate-y-8 sm:-translate-y-16 translate-x-8 sm:translate-x-16"></div>
+                        <div class="absolute bottom-0 left-0 w-12 sm:w-24 h-12 sm:h-24 bg-white rounded-full translate-y-6 sm:translate-y-12 -translate-x-6 sm:-translate-x-12"></div>
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 sm:w-40 h-20 sm:h-40 bg-white rounded-full opacity-5"></div>
                     </div>
                     
                     <div class="relative z-10 flex items-center justify-between">
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm p-1 flex items-center justify-center">
-                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex items-center space-x-2 sm:space-x-4 min-w-0 flex-1">
+                            <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-xl bg-white/20 backdrop-blur-sm p-1 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                 </svg>
                             </div>
-                            <div>
-                                <h3 class="text-2xl font-bold" id="modalTitle">Add New Job Application</h3>
-                                <p class="text-white/90 mt-1" id="modalSubtitle">Fill in the details below to track your application</p>
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-lg sm:text-2xl font-bold truncate" id="modalTitle">Add New Job Application</h3>
+                                <p class="text-white/90 mt-1 text-sm sm:text-base hidden sm:block" id="modalSubtitle">Fill in the details below to track your application</p>
                             </div>
                         </div>
-                        <button onclick="closeJobModal()" class="text-white/80 hover:text-white p-2 hover:bg-white/10 rounded-xl">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button onclick="closeJobModal()" class="text-white/80 hover:text-white p-1 sm:p-2 hover:bg-white/10 rounded-xl flex-shrink-0 ml-2">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
                     </div>
                 </div>
-                <div class="p-8 max-h-[70vh] overflow-y-auto">
+                <div class="p-4 sm:p-8 max-h-[75vh] sm:max-h-[70vh] overflow-y-auto">
                     <div id="job-form-container">
                         @livewire('job-application-form', key('job-application-form-' . (session('edit-job-id', 0))))
                     </div>

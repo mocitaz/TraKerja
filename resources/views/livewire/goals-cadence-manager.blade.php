@@ -89,9 +89,9 @@
     <!-- Main Content - Focus on Progress -->
     <div class="space-y-8">
         <!-- Progress Overview Cards -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             <!-- This Week's Progress -->
-            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
@@ -180,7 +180,7 @@
             </div>
 
             <!-- Daily Streak -->
-            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-gradient-to-br from-[#FF6B35] to-[#E55A2B] rounded-lg flex items-center justify-center">
@@ -253,7 +253,7 @@
         </div>
 
         <!-- Cadence Effect Insights -->
-        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
             <div class="flex items-center mb-6">
                 <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
                     <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -277,7 +277,7 @@
                     <p class="text-gray-600">Need at least 2 weeks of data for cadence effect analysis</p>
                 </div>
             @else
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                     <!-- Target Met Rate -->
                     <div class="text-center">
                         <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
