@@ -21,12 +21,19 @@
                 </button>
 
                 <!-- Filter by type -->
-                <select wire:model.live="filterType" 
-                        class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm w-full sm:w-auto">
-                    <option value="all">All Interviews</option>
-                    <option value="HR - Interview">HR Interview</option>
-                    <option value="User - Interview">User Interview</option>
-                </select>
+                <div class="relative">
+                    <select wire:model.live="filterType" 
+                            class="appearance-none px-4 py-2.5 pr-8 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm w-full sm:w-auto bg-white shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer">
+                        <option value="all">All Interviews</option>
+                        <option value="HR - Interview">HR Interview</option>
+                        <option value="User - Interview">User Interview</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                </div>
             </div>
 
             <!-- Month Navigation -->
@@ -126,13 +133,7 @@
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                         </svg>
-                                        <span>{{ $interview->interview_date->format('D, d M Y') }}</span>
-                                    </div>
-                                    <div class="flex items-center space-x-1">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                        </svg>
-                                        <span>{{ $interview->interview_date->format('H:i') }}</span>
+                                        <span>{{ $interview->interview_date->format('D, d M Y') }} • {{ $interview->interview_date->format('H:i') }}</span>
                                     </div>
                                     @if($interview->interview_type)
                                         <div class="flex items-center space-x-1">
@@ -281,25 +282,14 @@
                         </div>
 
                         <!-- Date & Time -->
-                        <div class="grid grid-cols-2 gap-3">
-                            <div class="bg-gray-50 p-3 rounded-lg">
-                                <div class="flex items-center space-x-2 text-gray-500 mb-1">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                    </svg>
-                                    <span class="text-xs font-medium">Date</span>
-                                </div>
-                                <p class="text-sm font-semibold text-gray-900">{{ $selectedInterview->interview_date->format('d M Y') }}</p>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="flex items-center space-x-2 text-gray-500 mb-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                <span class="text-sm font-medium">Date & Time</span>
                             </div>
-                            <div class="bg-gray-50 p-3 rounded-lg">
-                                <div class="flex items-center space-x-2 text-gray-500 mb-1">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    <span class="text-xs font-medium">Time (WIB)</span>
-                                </div>
-                                <p class="text-sm font-semibold text-gray-900">{{ $selectedInterview->interview_date->format('H:i') }}</p>
-                            </div>
+                            <p class="text-lg font-semibold text-gray-900">{{ $selectedInterview->interview_date->format('D, d M Y') }} • {{ $selectedInterview->interview_date->format('H:i') }} WIB</p>
                         </div>
 
                         <!-- Time Until Interview -->

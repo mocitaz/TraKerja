@@ -30,12 +30,12 @@ return [
     | to expire immediately when the browser is closed then you may
     | indicate that via the expire_on_close configuration option.
     |
-    | Default: 360 minutes (6 hours) for users without "Remember Me"
+    | Default: 300 minutes (5 hours) for users without "Remember Me"
     | With "Remember Me": Uses long-lived cookie (5 years)
     |
     */
 
-    'lifetime' => (int) env('SESSION_LIFETIME', 360),
+    'lifetime' => (int) env('SESSION_LIFETIME', 300),
 
     'expire_on_close' => env('SESSION_EXPIRE_ON_CLOSE', false),
 

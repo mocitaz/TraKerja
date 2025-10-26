@@ -11,13 +11,13 @@
         </div>
     @endif
 
-    <form wire:submit="save" class="space-y-4">
+    <form wire:submit="save" class="space-y-4 sm:space-y-6">
         <!-- Row 1: Company & Position -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <!-- Company Name -->
             <div>
                 <label for="company_name" class="block text-sm font-medium text-gray-700 mb-1">
-                    Company Name *
+                    Company Name <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -28,7 +28,7 @@
                     <input wire:model.live="company_name" 
                            type="text" 
                            id="company_name" 
-                           class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm"
+                           class="block w-full pl-9 pr-3 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation"
                            placeholder="Enter company name"
                            value="{{ $company_name }}"
                            autocomplete="off">
@@ -58,7 +58,7 @@
             <!-- Position -->
             <div>
                 <label for="position" class="block text-sm font-medium text-gray-700 mb-1">
-                    Position *
+                    Position <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -69,7 +69,7 @@
                     <input wire:model.live="position" 
                            type="text" 
                            id="position" 
-                           class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm"
+                           class="block w-full pl-9 pr-3 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation"
                            placeholder="Enter position title"
                            value="{{ $position }}"
                            autocomplete="off">
@@ -100,11 +100,11 @@
         <!-- Row 2: Location -->
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">
-                Location *
+                Location <span class="text-red-500">*</span>
             </label>
             
-            <!-- Regular Location Selection (hidden when Remote or Seluruh Indonesia is selected) -->
-            @if(!$isRemote && !$isSeluruhIndonesia)
+            <!-- Regular Location Selection (hidden when Remote, Seluruh Indonesia, or International is selected) -->
+            @if(!$isRemote && !$isSeluruhIndonesia && !$isInternational)
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Province Dropdown -->
                 <div class="relative">
@@ -115,8 +115,8 @@
                         </svg>
                     </div>
                     <select wire:model="selectedProvince" 
-                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm appearance-none">
-                        <option value="">Select Province</option>
+                            class="block w-full pl-9 pr-8 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation appearance-none">
+                        <option value="" disabled>Select Province</option>
                         @foreach($provinces as $province => $cities)
                             <option value="{{ $province }}">{{ $province }}</option>
                         @endforeach
@@ -136,9 +136,9 @@
                         </svg>
                     </div>
                     <select wire:model="selectedCity" 
-                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm appearance-none {{ empty($selectedProvince) ? 'opacity-50 cursor-not-allowed' : '' }}"
+                            class="block w-full pl-9 pr-8 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation appearance-none {{ empty($selectedProvince) ? 'opacity-50 cursor-not-allowed' : '' }}"
                             {{ empty($selectedProvince) ? 'disabled' : '' }}>
-                        <option value="">Select City</option>
+                        <option value="" disabled>Select City</option>
                         @if(!empty($selectedProvince) && isset($provinces[$selectedProvince]))
                             @foreach($provinces[$selectedProvince] as $city)
                                 <option value="{{ $city }}">{{ $city }}</option>
@@ -154,17 +154,105 @@
             </div>
             @endif
             
-            <!-- Special Location Options (always visible) -->
+            <!-- Special Location Options (disabled when province and city selected) -->
             <div class="mt-3 flex flex-wrap gap-4">
-                <label class="flex items-center">
-                    <input type="checkbox" wire:model.live="isRemote" class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
-                    <span class="ml-2 text-sm text-gray-700">Remote Work</span>
+                <label class="flex items-center {{ ($selectedProvince && $selectedCity) ? 'opacity-50 cursor-not-allowed' : '' }}">
+                    <input type="checkbox" 
+                           wire:model.live="isRemote" 
+                           {{ ($selectedProvince && $selectedCity) ? 'disabled' : '' }}
+                           class="rounded border-gray-300 text-purple-600 focus:ring-purple-500 {{ ($selectedProvince && $selectedCity) ? 'cursor-not-allowed' : '' }}">
+                    <span class="ml-2 text-sm text-gray-700 {{ ($selectedProvince && $selectedCity) ? 'text-gray-400' : '' }}">Remote Work</span>
                 </label>
-                <label class="flex items-center">
-                    <input type="checkbox" wire:model.live="isSeluruhIndonesia" class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
-                    <span class="ml-2 text-sm text-gray-700">Seluruh Indonesia</span>
+                <label class="flex items-center {{ ($selectedProvince && $selectedCity) ? 'opacity-50 cursor-not-allowed' : '' }}">
+                    <input type="checkbox" 
+                           wire:model.live="isSeluruhIndonesia" 
+                           {{ ($selectedProvince && $selectedCity) ? 'disabled' : '' }}
+                           class="rounded border-gray-300 text-purple-600 focus:ring-purple-500 {{ ($selectedProvince && $selectedCity) ? 'cursor-not-allowed' : '' }}">
+                    <span class="ml-2 text-sm text-gray-700 {{ ($selectedProvince && $selectedCity) ? 'text-gray-400' : '' }}">Seluruh Indonesia</span>
+                </label>
+                <label class="flex items-center {{ ($selectedProvince && $selectedCity) ? 'opacity-50 cursor-not-allowed' : '' }}">
+                    <input type="checkbox" 
+                           wire:model.live="isInternational" 
+                           {{ ($selectedProvince && $selectedCity) ? 'disabled' : '' }}
+                           class="rounded border-gray-300 text-purple-600 focus:ring-purple-500 {{ ($selectedProvince && $selectedCity) ? 'cursor-not-allowed' : '' }}">
+                    <span class="ml-2 text-sm text-gray-700 {{ ($selectedProvince && $selectedCity) ? 'text-gray-400' : '' }}">International</span>
                 </label>
             </div>
+            
+            @if($selectedProvince && $selectedCity)
+                <div class="mt-2 text-xs text-gray-500 flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Remote Work, Seluruh Indonesia, and International are not available because a specific location has been selected
+                </div>
+            @endif
+            
+            <!-- International Location Selection -->
+            @if($isInternational)
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Country Selection -->
+                    <div>
+                        <label for="selectedCountry" class="block text-sm font-medium text-gray-700 mb-1">
+                            Country <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <select wire:model.live="selectedCountry" 
+                                    class="block w-full pl-9 pr-8 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation appearance-none">
+                                <option value="" disabled>Select Country</option>
+                                @foreach($countries as $country => $cities)
+                                    <option value="{{ $country }}">{{ $country }}</option>
+                                @endforeach
+                            </select>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        @error('selectedCountry') 
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    
+                    <!-- City Selection -->
+                    <div>
+                        <label for="selectedInternationalCity" class="block text-sm font-medium text-gray-700 mb-1">
+                            City <span class="text-gray-500 text-sm font-normal">(Optional)</span>
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                </svg>
+                            </div>
+                            <select wire:model.live="selectedInternationalCity" 
+                                    class="block w-full pl-9 pr-8 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation appearance-none"
+                                    {{ empty($selectedCountry) ? 'disabled' : '' }}>
+                                <option value="" disabled>Select City</option>
+                                @if(!empty($selectedCountry) && isset($countries[$selectedCountry]))
+                                    @foreach($countries[$selectedCountry] as $city)
+                                        <option value="{{ $city }}">{{ $city }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        @error('selectedInternationalCity') 
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+            @endif
             
             <input type="hidden" wire:model="location" value="{{ $location }}">
             @error('selectedProvince') 
@@ -180,7 +268,7 @@
             <!-- Platform -->
             <div>
                 <label for="platform" class="block text-sm font-medium text-gray-700 mb-1">
-                    Platform *
+                    Platform <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -189,7 +277,8 @@
                         </svg>
                     </div>
                     <select wire:model="platform" 
-                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm appearance-none">
+                            class="block w-full pl-9 pr-8 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation appearance-none">
+                        <option value="" disabled>Select Platform</option>
                         @foreach($platformOptions as $option)
                             @if($option !== 'Other')
                                 <option value="{{ $option }}">{{ $option }}</option>
@@ -206,6 +295,22 @@
                 @error('platform') 
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
+                
+                <!-- Most Used Platforms Quick Select -->
+                @if(count($this->mostUsedPlatforms) > 0)
+                    <div class="mt-3">
+                        <p class="text-xs text-gray-500 mb-2 font-medium">Most used platforms:</p>
+                        <div class="flex flex-wrap gap-2">
+                            @foreach($this->mostUsedPlatforms as $usedPlatform)
+                                <button type="button" 
+                                        wire:click="selectPlatformSuggestion('{{ $usedPlatform }}')"
+                                        class="px-3 py-1.5 text-xs bg-gray-100 hover:bg-primary-100 hover:text-primary-700 text-gray-700 rounded-lg transition-colors duration-200 border border-gray-200 hover:border-primary-300">
+                                    {{ $usedPlatform }}
+                                </button>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -213,7 +318,7 @@
         @if($platform === 'Other')
         <div>
             <label for="platformOther" class="block text-sm font-medium text-gray-700 mb-1">
-                Custom Platform *
+                Custom Platform <span class="text-red-500">*</span>
             </label>
             <div class="relative">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -224,7 +329,7 @@
                 <input wire:model.live="platformOther" 
                        type="text" 
                        id="platformOther" 
-                       class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm"
+                       class="block w-full pl-9 pr-3 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation"
                        placeholder="Enter custom platform name"
                        value="{{ $platformOther }}">
             </div>
@@ -239,7 +344,7 @@
             <!-- Application Status -->
             <div>
                 <label for="application_status" class="block text-sm font-medium text-gray-700 mb-1">
-                    Application Status *
+                    Application Status <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -248,7 +353,8 @@
                         </svg>
                     </div>
                     <select wire:model="application_status" 
-                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm appearance-none">
+                            class="block w-full pl-9 pr-8 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation appearance-none">
+                        <option value="" disabled>Select Application Status</option>
                         @foreach($applicationStatusOptions as $option)
                             <option value="{{ $option }}">{{ $option }}</option>
                         @endforeach
@@ -267,7 +373,7 @@
             <!-- Recruitment Stage -->
             <div>
                 <label for="recruitment_stage" class="block text-sm font-medium text-gray-700 mb-1">
-                    Recruitment Stage *
+                    Recruitment Stage <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -276,7 +382,8 @@
                         </svg>
                     </div>
                     <select wire:model="recruitment_stage" 
-                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm appearance-none">
+                            class="block w-full pl-9 pr-8 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation appearance-none">
+                        <option value="" disabled>Select Recruitment Stage</option>
                         @foreach($recruitmentStageOptions as $option)
                             <option value="{{ $option }}">{{ $option }}</option>
                         @endforeach
@@ -295,7 +402,7 @@
             <!-- Career Level -->
             <div>
                 <label for="career_level" class="block text-sm font-medium text-gray-700 mb-1">
-                    Career Level *
+                    Career Level <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -304,7 +411,8 @@
                         </svg>
                     </div>
                     <select wire:model="career_level" 
-                            class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm appearance-none">
+                            class="block w-full pl-9 pr-8 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation appearance-none">
+                        <option value="" disabled>Select Career Level</option>
                         @foreach($careerLevelOptions as $option)
                             <option value="{{ $option }}">{{ $option }}</option>
                         @endforeach
@@ -326,7 +434,7 @@
             <!-- Platform Link -->
             <div>
                 <label for="platform_link" class="block text-sm font-medium text-gray-700 mb-1">
-                    Platform Link
+                    Platform Link <span class="text-gray-500 text-sm font-normal">(Optional)</span>
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -337,7 +445,7 @@
                     <input wire:model.live="platform_link" 
                            type="url" 
                            id="platform_link" 
-                           class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm"
+                           class="block w-full pl-9 pr-3 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation"
                            placeholder="https://example.com/job-posting"
                            value="{{ $platform_link }}">
                 </div>
@@ -349,7 +457,7 @@
             <!-- Application Date -->
             <div>
                 <label for="application_date" class="block text-sm font-medium text-gray-700 mb-1">
-                    Application Date * <span class="text-xs text-gray-500">(WIB)</span>
+                    Application Date <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -360,7 +468,7 @@
                     <input wire:model.live="application_date" 
                            type="date" 
                            id="application_date" 
-                           class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm"
+                           class="block w-full pl-9 pr-3 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation"
                            value="{{ $application_date }}"
                            max="{{ now()->format('Y-m-d') }}">
                 </div>
@@ -397,7 +505,7 @@
                         <input wire:model.live="interview_date" 
                                type="datetime-local" 
                                id="interview_date" 
-                               class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm"
+                               class="block w-full pl-9 pr-3 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation"
                                value="{{ $interview_date }}">
                     </div>
                     @error('interview_date') 
@@ -417,7 +525,7 @@
                             </svg>
                         </div>
                         <select wire:model="interview_type" 
-                                class="block w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm appearance-none">
+                                class="block w-full pl-9 pr-8 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation appearance-none">
                             <option value="">Select Type</option>
                             <option value="Phone">Phone</option>
                             <option value="Video">Video</option>
@@ -451,7 +559,7 @@
                     <input wire:model.live="interview_location" 
                            type="text" 
                            id="interview_location" 
-                           class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm"
+                           class="block w-full pl-9 pr-3 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation"
                            placeholder="e.g., Zoom link, office address, phone number"
                            value="{{ $interview_location }}">
                 </div>
@@ -474,7 +582,7 @@
                     <textarea wire:model.live="interview_notes" 
                               id="interview_notes" 
                               rows="2"
-                              class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm resize-none"
+                              class="block w-full pl-9 pr-3 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation resize-none"
                               placeholder="Preparation checklist, topics to discuss, dress code, etc...">{{ $interview_notes }}</textarea>
                 </div>
                 @error('interview_notes') 
@@ -487,7 +595,7 @@
         <!-- Row 6: Notes -->
         <div>
             <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">
-                Notes
+                Notes <span class="text-gray-500 text-sm font-normal">(Optional)</span>
             </label>
             <div class="relative">
                 <div class="absolute top-3 left-3 flex items-start pointer-events-none">
@@ -498,7 +606,7 @@
                 <textarea wire:model.live="notes" 
                           id="notes" 
                           rows="3"
-                          class="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm resize-none"
+                          class="block w-full pl-9 pr-3 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation resize-none"
                           placeholder="Add any additional notes about this application...">{{ $notes }}</textarea>
             </div>
             @error('notes') 
@@ -507,15 +615,17 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex items-center justify-end space-x-3 pt-4">
-            <button type="button" 
-                    wire:click="resetForm" 
-                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors duration-200">
-                Reset
-            </button>
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-end space-y-3 sm:space-y-0 sm:space-x-3 pt-4">
+            @if(!$isEditing)
+                <button type="button" 
+                        wire:click="resetForm" 
+                        class="w-full sm:w-auto px-6 py-3 sm:py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200 touch-manipulation">
+                    Reset
+                </button>
+            @endif
             <button type="submit" 
-                    class="px-6 py-2 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md transition-colors duration-200">
-                <div class="flex items-center space-x-2">
+                    class="w-full sm:w-auto px-6 py-3 sm:py-2 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors duration-200 touch-manipulation">
+                <div class="flex items-center justify-center space-x-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>

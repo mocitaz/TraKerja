@@ -2,8 +2,26 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
-            <!-- Left Section: Brand -->
+            <!-- Left Section: Mobile Menu Button + Brand -->
             <div class="flex items-center">
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden mr-3">
+                    <button type="button" 
+                            class="mobile-menu-button group inline-flex items-center justify-center p-2 rounded-xl text-gray-600 hover:text-primary-600 hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200"
+                            aria-controls="mobile-menu" 
+                            aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <!-- Hamburger icon -->
+                        <svg class="block h-6 w-6 transition-transform duration-200 group-hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <!-- Close icon -->
+                        <svg class="hidden h-6 w-6 transition-transform duration-200 group-hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
                 <!-- Brand Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('tracker') }}" class="group">
@@ -12,24 +30,6 @@
                         </span>
                     </a>
                 </div>
-            </div>
-
-            <!-- Mobile Menu Button -->
-            <div class="md:hidden">
-                <button type="button" 
-                        class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
-                        aria-controls="mobile-menu" 
-                        aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
-                    <!-- Hamburger icon -->
-                    <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                    <!-- Close icon -->
-                    <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
             </div>
 
             <!-- Desktop Navigation -->
@@ -101,7 +101,9 @@
                     @else
                         <div class="relative">
                             <div class="h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 ring-2 ring-white">
-                                <span class="text-white font-bold text-xs sm:text-sm">{{ substr(Auth::user()->name, 0, 1) }}</span>
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
                             </div>
                         </div>
                     @endif
@@ -161,60 +163,134 @@
         </div>
 
         <!-- Mobile Navigation Menu -->
-        <div class="md:hidden hidden" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+        <div class="md:hidden hidden transition-all duration-300 ease-out" id="mobile-menu" style="transform: translateY(-10px); opacity: 0;">
+            <div class="px-4 pt-4 pb-6 space-y-2 bg-gradient-to-br from-white to-gray-50 border-t border-gray-200/60 shadow-lg">
                 @if(!auth()->user()->isAdmin() && auth()->user()->role !== 'admin')
                     {{-- Regular User Mobile Navigation --}}
                     <a href="{{ route('tracker') }}"
-                       class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('tracker') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="group block px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 {{ request()->routeIs('tracker') ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/25' : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50 hover:shadow-md' }}">
                         <div class="flex items-center">
-                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                            </svg>
-                            Tracker
+                            <div class="flex-shrink-0 w-10 h-10 rounded-lg {{ request()->routeIs('tracker') ? 'bg-white/20' : 'bg-primary-100' }} flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-200">
+                                <svg class="w-5 h-5 {{ request()->routeIs('tracker') ? 'text-white' : 'text-primary-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Tracker</div>
+                                <div class="text-sm {{ request()->routeIs('tracker') ? 'text-white/80' : 'text-gray-500' }}">Job applications</div>
+                            </div>
                         </div>
                     </a>
                     <a href="{{ route('summary') }}"
-                       class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('summary') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="group block px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 {{ request()->routeIs('summary') ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/25' : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50 hover:shadow-md' }}">
                         <div class="flex items-center">
-                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                            </svg>
-                            Summary
+                            <div class="flex-shrink-0 w-10 h-10 rounded-lg {{ request()->routeIs('summary') ? 'bg-white/20' : 'bg-primary-100' }} flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-200">
+                                <svg class="w-5 h-5 {{ request()->routeIs('summary') ? 'text-white' : 'text-primary-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Summary</div>
+                                <div class="text-sm {{ request()->routeIs('summary') ? 'text-white/80' : 'text-gray-500' }}">Analytics & insights</div>
+                            </div>
                         </div>
                     </a>
                     <a href="{{ route('goals') }}"
-                       class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('goals') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="group block px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 {{ request()->routeIs('goals') ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/25' : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50 hover:shadow-md' }}">
                         <div class="flex items-center">
-                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Goals
+                            <div class="flex-shrink-0 w-10 h-10 rounded-lg {{ request()->routeIs('goals') ? 'bg-white/20' : 'bg-primary-100' }} flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-200">
+                                <svg class="w-5 h-5 {{ request()->routeIs('goals') ? 'text-white' : 'text-primary-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Goals</div>
+                                <div class="text-sm {{ request()->routeIs('goals') ? 'text-white/80' : 'text-gray-500' }}">Track your progress</div>
+                            </div>
                         </div>
                     </a>
                     <a href="{{ route('interviews') }}"
-                       class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('interviews') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="group block px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 {{ request()->routeIs('interviews') ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/25' : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50 hover:shadow-md' }}">
                         <div class="flex items-center">
-                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
-                            Interviews
+                            <div class="flex-shrink-0 w-10 h-10 rounded-lg {{ request()->routeIs('interviews') ? 'bg-white/20' : 'bg-primary-100' }} flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-200">
+                                <svg class="w-5 h-5 {{ request()->routeIs('interviews') ? 'text-white' : 'text-primary-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Interviews</div>
+                                <div class="text-sm {{ request()->routeIs('interviews') ? 'text-white/80' : 'text-gray-500' }}">Schedule & manage</div>
+                            </div>
                         </div>
                     </a>
                     <a href="{{ route('cv.builder') }}"
-                       class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('cv.*') ? 'bg-primary-100 text-primary-600' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="group block px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 {{ request()->routeIs('cv.*') ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/25' : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50 hover:shadow-md' }}">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                </svg>
-                                CV Builder
+                                <div class="flex-shrink-0 w-10 h-10 rounded-lg {{ request()->routeIs('cv.*') ? 'bg-white/20' : 'bg-primary-100' }} flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-200">
+                                    <svg class="w-5 h-5 {{ request()->routeIs('cv.*') ? 'text-white' : 'text-primary-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold">CV Builder</div>
+                                    <div class="text-sm {{ request()->routeIs('cv.*') ? 'text-white/80' : 'text-gray-500' }}">Create professional CV</div>
+                                </div>
                             </div>
                             @if(auth()->user() && auth()->user()->is_premium && auth()->user()->payment_status === 'paid')
-                                <span class="px-2 py-1 text-xs bg-primary-100 text-primary-700 rounded font-semibold">PRO</span>
+                                <span class="px-2 py-1 text-xs {{ request()->routeIs('cv.*') ? 'bg-white/20 text-white' : 'bg-primary-100 text-primary-700' }} rounded-full font-semibold">PRO</span>
                             @endif
                         </div>
                     </a>
+                    
+                    <!-- Mobile User Profile Section -->
+                    <div class="mt-6 pt-4 border-t border-gray-200/60">
+                        <div class="flex items-center px-4 py-3 bg-white/50 rounded-xl">
+                            <div class="flex-shrink-0">
+                                @if(Auth::user()->profile_photo_path)
+                                    <img class="h-10 w-10 rounded-full object-cover ring-2 ring-white shadow-md" 
+                                         src="{{ Auth::user()->profile_photo_url }}" 
+                                         alt="{{ Auth::user()->name }}">
+                                @else
+                                    <div class="h-10 w-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center shadow-md ring-2 ring-white">
+                                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                        </svg>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="ml-3 flex-1 min-w-0">
+                                <p class="text-sm font-semibold text-gray-900 truncate">{{ Auth::user()->name }}</p>
+                                <p class="text-xs text-gray-500 truncate">{{ Auth::user()->email }}</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <a href="{{ route('profile.edit') }}" 
+                                   class="p-2 text-gray-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors duration-200">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Mobile Action Buttons -->
+                        <div class="mt-3 grid grid-cols-2 gap-2">
+                            <a href="{{ route('profile.edit') }}" 
+                               class="flex items-center justify-center px-4 py-2 bg-white/50 text-gray-700 rounded-lg hover:bg-primary-50 hover:text-primary-600 transition-colors duration-200">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                                Profile
+                            </a>
+                            <button onclick="openLogoutModal()" 
+                                    class="flex items-center justify-center px-4 py-2 bg-white/50 text-gray-700 rounded-lg hover:bg-red-50 hover:text-red-600 transition-colors duration-200">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                </svg>
+                                Logout
+                            </button>
+                        </div>
+                    </div>
                 @else
                     {{-- Admin Mobile Navigation --}}
                     <a href="{{ route('admin.index') }}"
@@ -310,6 +386,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuButton = document.querySelector('.mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
+    const hamburgerIcon = mobileMenuButton?.querySelector('.block');
+    const closeIcon = mobileMenuButton?.querySelector('.hidden');
     
     if (mobileMenuButton && mobileMenu) {
         mobileMenuButton.addEventListener('click', function() {
@@ -318,11 +396,45 @@ document.addEventListener('DOMContentLoaded', function() {
             // Toggle aria-expanded
             mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
             
-            // Toggle mobile menu visibility
+            // Toggle mobile menu visibility with smooth animation
             if (isExpanded) {
-                mobileMenu.classList.add('hidden');
+                // Close menu
+                mobileMenu.style.transform = 'translateY(-10px)';
+                mobileMenu.style.opacity = '0';
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 200);
             } else {
+                // Open menu
                 mobileMenu.classList.remove('hidden');
+                setTimeout(() => {
+                    mobileMenu.style.transform = 'translateY(0)';
+                    mobileMenu.style.opacity = '1';
+                }, 10);
+            }
+            
+            // Toggle icons
+            if (hamburgerIcon && closeIcon) {
+                hamburgerIcon.classList.toggle('block');
+                hamburgerIcon.classList.toggle('hidden');
+                closeIcon.classList.toggle('block');
+                closeIcon.classList.toggle('hidden');
+            }
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                if (mobileMenuButton.getAttribute('aria-expanded') === 'true') {
+                    mobileMenuButton.click();
+                }
+            }
+        });
+        
+        // Close menu on escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && mobileMenuButton.getAttribute('aria-expanded') === 'true') {
+                mobileMenuButton.click();
             }
         });
     }
