@@ -10,7 +10,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f9fafb;
             min-height: 100vh;
         }
         /* Fixed action buttons - always visible */
@@ -32,11 +32,10 @@
             align-items: center;
             gap: 6px;
             padding: 8px 14px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
+            background: white;
             border: 1px solid #e5e7eb;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             font-size: 13px;
             font-weight: 600;
             color: #374151;
@@ -54,25 +53,25 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 20px;
+            padding: 10px 16px;
             background: #7c3aed;
             color: white;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             font-size: 14px;
-            box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             cursor: pointer;
             transition: all 0.2s;
         }
         .action-btn-primary:hover {
             background: #6d28d9;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .action-btn-secondary {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -80,24 +79,17 @@
             color: #6b7280;
             border: 1px solid #e5e7eb;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             cursor: pointer;
             transition: all 0.2s;
         }
         .action-btn-secondary:hover {
             background: #f9fafb;
             border-color: #d1d5db;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        /* Pulse animation for download button */
-        @keyframes gentle-pulse {
-            0%, 100% { box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4); }
-            50% { box-shadow: 0 4px 20px rgba(124, 58, 237, 0.6); }
-        }
-        .action-btn-primary {
-            animation: gentle-pulse 2s ease-in-out infinite;
-        }
+        /* Remove pulse animation for cleaner look */
         
         /* Responsive design for mobile */
         @media (max-width: 640px) {
@@ -116,6 +108,7 @@
                 right: 16px;
                 left: 16px;
                 justify-content: space-between;
+                gap: 8px;
             }
             .action-btn-primary {
                 flex: 1;
@@ -132,8 +125,8 @@
                 flex-shrink: 0;
             }
             .preview-container {
-                margin: 0.5rem;
-                border-radius: 4px;
+                margin: 0.75rem;
+                border-radius: 8px;
             }
         }
         
@@ -142,8 +135,8 @@
                 display: none;
             }
             .action-btn-primary {
-                width: 44px;
-                height: 44px;
+                width: 40px;
+                height: 40px;
                 padding: 0;
                 justify-content: center;
                 flex: 0;
@@ -156,10 +149,11 @@
 
         .preview-container {
             max-width: 210mm;
-            margin: 0.75rem auto;
+            margin: 1rem auto;
             background: white;
-            box-shadow: 0 6px 10px -6px rgba(0, 0, 0, 0.08);
-            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
             overflow: hidden;
             animation: slideUp 0.25s ease-out;
         }
@@ -272,65 +266,26 @@
     </div>
 </body>
 </html>
-    <!-- Footer Instructions -->
-    <div class="no-print container mx-auto px-4 pb-8 max-w-4xl">
-        <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-            <div class="flex items-start gap-4">
-                <div class="flex-shrink-0 w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
-                <div class="flex-1">
-                    <h3 class="font-bold text-gray-900 text-lg mb-3">Quick Guide</h3>
-                    <div class="grid sm:grid-cols-2 gap-4">
-                        <div>
-                            <h4 class="font-semibold text-gray-800 text-sm mb-2">Actions:</h4>
-                            <ul class="space-y-1.5 text-sm text-gray-600">
-                                <li class="flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    Click "Download PDF" to export
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    Use floating button to print
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    Close tab to try another template
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-800 text-sm mb-2">Features:</h4>
-                            <ul class="space-y-1.5 text-sm text-gray-600">
-                                <li class="flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    Unlimited exports
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    Professional PDF quality
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    ATS-friendly format
-                                </li>
-                            </ul>
-                        </div>
+    <!-- Compact Footer Instructions -->
+    <div class="no-print container mx-auto px-4 pb-6 max-w-4xl">
+        <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
                     </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 text-sm">CV Preview Ready</h3>
+                        <p class="text-xs text-gray-600">Click download to export as PDF or close to try another template</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 text-xs text-gray-500">
+                    <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span>Professional Quality</span>
                 </div>
             </div>
         </div>
@@ -355,34 +310,31 @@
         window.addEventListener('load', adjustZoom);
         window.addEventListener('resize', adjustZoom);
         
-        // Show success message after download
+        // Simple success message after download
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('downloaded') === 'true') {
-            showNotification('CV Downloaded Successfully! 🎉', 'success');
-        }
-        
-        // Notification system
-        function showNotification(message, type = 'success') {
-            const colors = {
-                success: 'bg-gradient-to-r from-green-500 to-emerald-600',
-                info: 'bg-gradient-to-r from-blue-500 to-cyan-600',
-                warning: 'bg-gradient-to-r from-yellow-500 to-orange-600'
-            };
-            
-            const notification = document.createElement('div');
-            notification.className = `fixed top-24 right-6 ${colors[type]} text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 z-50 animate-slideIn`;
-            notification.style.animation = 'slideInRight 0.5s ease-out';
-            notification.innerHTML = `
-                <svg class="w-6 h-6 animate-bounce" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                </svg>
-                <span class="font-semibold">${message}</span>
-            `;
-            document.body.appendChild(notification);
-            setTimeout(() => {
-                notification.style.animation = 'slideOutRight 0.5s ease-out';
-                setTimeout(() => notification.remove(), 500);
-            }, 3000);
+            // Show subtle success indicator
+            const templateBadge = document.querySelector('.template-badge');
+            if (templateBadge) {
+                templateBadge.style.background = '#f0fdf4';
+                templateBadge.style.borderColor = '#22c55e';
+                templateBadge.innerHTML = `
+                    <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="text-green-700">Downloaded Successfully!</span>
+                `;
+                setTimeout(() => {
+                    templateBadge.style.background = 'white';
+                    templateBadge.style.borderColor = '#e5e7eb';
+                    templateBadge.innerHTML = `
+                        <svg class="template-badge-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                        </svg>
+                        <span>Template: <span class="template-name">{{ $template }}</span></span>
+                    `;
+                }, 3000);
+            }
         }
         
         // Smooth scroll behavior
@@ -396,38 +348,7 @@
             });
         });
         
-        // Add animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInRight {
-                from {
-                    opacity: 0;
-                    transform: translateX(100px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-            }
-            @keyframes slideOutRight {
-                from {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-                to {
-                    opacity: 0;
-                    transform: translateX(100px);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Welcome animation
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                showNotification('Preview loaded successfully! Ready to download. 📄', 'info');
-            }, 500);
-        });
+        // Clean, minimal approach - no extra animations
     </script>
 </body>
 </html>
