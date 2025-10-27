@@ -88,27 +88,34 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile-photo/get', [LogoController::class, 'getLogo'])->name('profile-photo.get');
     
     // CV Builder routes (Only for regular users)
-    Route::prefix('cv')->name('cv.')->group(function () {
+    Route::prefix('cv')->group(function () {
         Route::get('/builder', function () {
             if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
                 return redirect()->route('admin.index');
             }
             return app(CvBuilderController::class)->index();
-        })->name('builder');
+        })->name('cv.builder');
         
         Route::get('/generator', function () {
             if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
                 return redirect()->route('admin.index');
             }
             return app(CvBuilderController::class)->generator();
-        })->name('generator');
+        })->name('cv.generator');
+        
+        Route::post('/preview', function (Illuminate\Http\Request $request) {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot access CV builder');
+            }
+            return app(CvBuilderController::class)->preview($request);
+        })->name('cv-builder.preview');
         
         Route::post('/export', function (Illuminate\Http\Request $request) {
             if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
                 abort(403, 'Admin cannot access CV builder');
             }
             return app(CvBuilderController::class)->export($request);
-        })->name('export');
+        })->name('cv-builder.export');
     });
     
     // Job detail page (Only for regular users)

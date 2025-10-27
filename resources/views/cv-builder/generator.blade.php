@@ -80,117 +80,146 @@
                             </div>
                         </div>
                         <div class="p-4 bg-white">
-                            <button 
-                                    onclick="Livewire.dispatch('openPreview', { template: 'minimal' })"
+                            <form method="POST" action="{{ route('cv-builder.preview') }}" target="_blank" class="w-full">
+                                @csrf
+                                <input type="hidden" name="template" value="minimal">
+                                <button type="submit"
                                     class="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                            </svg>
-                            Preview & Export CV
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                Preview & Export CV
                             </button>
                         </div>
                     </div>
 
-                    <!-- Professional Template (LOCKED) -->
-                    <div class="border-2 border-gray-300 rounded-lg overflow-hidden opacity-60">
-                        <div class="bg-gray-100 p-4 border-b border-gray-200">
+                    <!-- Professional Template -->
+                    <div class="border-2 border-primary-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200">
+                        <div class="bg-gradient-to-r from-primary-50 to-primary-100 p-4 border-b border-primary-200">
                             <div class="flex items-center justify-between mb-2">
-                                <h4 class="font-semibold text-lg">Professional</h4>
-                                <span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full font-medium">
-                                    LOCKED
+                                <h4 class="font-semibold text-lg text-primary-900">Professional</h4>
+                                <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
+                                    AVAILABLE
                                 </span>
                             </div>
                             <p class="text-sm text-gray-600">Classic design with elegant typography</p>
                         </div>
                         <div class="p-4 bg-gray-50 h-48 flex items-center justify-center">
-                            <div class="text-center text-gray-400">
+                            <div class="text-center text-primary-600">
                                 <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                 </svg>
-                                <p class="text-sm">Locked</p>
+                                <p class="text-sm font-medium">Professional Template</p>
                             </div>
                         </div>
                         <div class="p-4 bg-white">
-                            <button disabled class="w-full px-4 py-2 bg-gray-400 text-white rounded-lg cursor-not-allowed flex items-center justify-center gap-2">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                            <form method="POST" action="{{ route('cv-builder.preview') }}" target="_blank" class="w-full">
+                                @csrf
+                                <input type="hidden" name="template" value="professional">
+                                <button type="submit"
+                                    class="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                 </svg>
-                                Template Locked
-                            </button>
+                                Preview & Export CV
+                                </button>
+                            </form>
                         </div>
                     </div>
 
-                    <!-- Creative Template (LOCKED) -->
-                    <div class="border-2 border-gray-300 rounded-lg overflow-hidden opacity-60">
-                        <div class="bg-gray-100 p-4 border-b border-gray-200">
+                    <!-- Creative Template -->
+                    <div class="border-2 border-primary-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200">
+                        <div class="bg-gradient-to-r from-primary-50 to-primary-100 p-4 border-b border-primary-200">
                             <div class="flex items-center justify-between mb-2">
-                                <h4 class="font-semibold text-lg">Creative</h4>
-                                <span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full font-medium">
-                                    LOCKED
+                                <h4 class="font-semibold text-lg text-primary-900">Creative</h4>
+                                <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
+                                    AVAILABLE
                                 </span>
                             </div>
                             <p class="text-sm text-gray-600">Modern design with creative layout</p>
                         </div>
                         <div class="p-4 bg-gray-50 h-48 flex items-center justify-center">
-                            <div class="text-center text-gray-400">
+                            <div class="text-center text-primary-600">
                                 <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
                                 </svg>
-                                <p class="text-sm">Locked</p>
+                                <p class="text-sm font-medium">Creative Template</p>
                             </div>
                         </div>
                         <div class="p-4 bg-white">
-                            <button disabled class="w-full px-4 py-2 bg-gray-400 text-white rounded-lg cursor-not-allowed flex items-center justify-center gap-2">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                            <form method="POST" action="{{ route('cv-builder.preview') }}" target="_blank" class="w-full">
+                                @csrf
+                                <input type="hidden" name="template" value="creative">
+                                <button type="submit"
+                                    class="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                 </svg>
-                                Template Locked
-                            </button>
+                                Preview & Export CV
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Elegant Template -->
+                    <div class="border-2 border-primary-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200">
+                        <div class="bg-gradient-to-r from-primary-50 to-primary-100 p-4 border-b border-primary-200">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-semibold text-lg text-primary-900">Elegant</h4>
+                                <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
+                                    AVAILABLE
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-600">Sophisticated two-column layout with dark sidebar</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 h-48 flex items-center justify-center">
+                            <div class="text-center text-primary-600">
+                                <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                </svg>
+                                <p class="text-sm font-medium">Elegant Template</p>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-white">
+                            <form method="POST" action="{{ route('cv-builder.preview') }}" target="_blank" class="w-full">
+                                @csrf
+                                <input type="hidden" name="template" value="elegant">
+                                <button type="submit"
+                                    class="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                Preview & Export CV
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
 
-                <!-- Premium Upsell -->
-                @php $userTemplateCount = auth()->user() ? auth()->user()->getCvTemplatesCount() : 1; @endphp
-                @if($userTemplateCount < 5)
-                    <div class="mt-6 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-6">
-                        <div class="flex items-start">
-                            <svg class="w-6 h-6 text-purple-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                            <div class="flex-1">
-                                <h4 class="font-semibold text-purple-900 mb-2">
-                                    @if(\App\Models\Setting::isMonetizationEnabled())
-                                        Upgrade to Premium
-                                    @else
-                                        More Templates Coming Soon!
-                                    @endif
-                                </h4>
-                                @if(\App\Models\Setting::isMonetizationEnabled())
-                                    <p class="text-sm text-purple-700 mb-3">
-                                        You currently have access to <strong>{{ $userTemplateCount }} template(s)</strong>. 
-                                        Upgrade to premium for all 5 professional templates!
-                                    </p>
-                                    <ul class="text-sm text-purple-800 space-y-1 mb-4">
-                                        <li>✓ Access to all 5 templates (Minimal, Professional, Creative, Modern, Elegant)</li>
-                                        <li>✓ Unlimited CV exports</li>
-                                        <li>✓ No watermarks</li>
-                                        <li>✓ Priority support</li>
-                                    </ul>
-                                    <p class="text-sm text-purple-700 font-medium">
-                                        Contact admin for premium upgrade - Rp {{ number_format(\App\Models\Setting::get('premium_price', 199000), 0, ',', '.') }}
-                                    </p>
-                                @else
-                                    <p class="text-sm text-purple-800">
-                                        🎉 <strong>FREE MODE is currently active!</strong> You have access to <strong>{{ $userTemplateCount }} templates</strong> for free. 
-                                        When admin enables monetization, premium users will get exclusive access to additional templates.
-                                    </p>
-                                @endif
-                            </div>
+                <!-- Info Banner - All Templates Available -->
+                <div class="mt-6 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-6">
+                    <div class="flex items-start">
+                        <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-green-900 mb-2">🎉 All Templates Available!</h4>
+                            <p class="text-sm text-green-800 mb-3">
+                                <strong>FREE MODE is currently active!</strong> You now have access to all <strong>4 professional CV templates</strong> for free.
+                            </p>
+                            <ul class="text-sm text-green-800 space-y-1">
+                                <li>✓ Access to all 4 templates (Minimal, Professional, Creative, Elegant)</li>
+                                <li>✓ Unlimited CV exports</li>
+                                <li>✓ No restrictions</li>
+                                <li>✓ Professional designs</li>
+                            </ul>
                         </div>
                     </div>
-                @endif
+                </div>
             </div>
 
         </div>

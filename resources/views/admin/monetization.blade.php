@@ -223,7 +223,7 @@
                         <span class="text-2xl">📄</span>
                         <div>
                             <h4 class="font-bold text-gray-800 mb-1">All 5 CV Templates</h4>
-                            <p class="text-sm text-gray-600">Access to all professional CV templates (Minimal, Professional, Creative, Modern, Elegant)</p>
+                            <p class="text-sm text-gray-600">Access to all professional CV templates (Minimal, Professional, Creative, Elegant)</p>
                         </div>
                     </div>
                 </div>

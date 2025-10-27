@@ -234,14 +234,14 @@
             <div class="entry">
                 <div class="entry-header">
                     <span class="entry-date">
-                        {{ \Carbon\Carbon::parse($exp->start_date)->format('M Y') }} - 
+                        {{ $exp->start_date ? $exp->start_date->format('M Y') : '' }} - 
                         @if($exp->is_current)
                             Present
                         @else
-                            {{ \Carbon\Carbon::parse($exp->end_date)->format('M Y') }}
+                            {{ $exp->end_date ? $exp->end_date->format('M Y') : '' }}
                         @endif
                     </span>
-                    <div class="entry-title">{{ $exp->job_title }}</div>
+                    <div class="entry-title">{{ $exp->position }}</div>
                 </div>
                 <div class="entry-subtitle">{{ $exp->company_name }}</div>
                 @if($exp->location)
@@ -252,7 +252,7 @@
                     <ul>
                         @foreach(explode("\n", $exp->description) as $line)
                             @if(trim($line))
-                            <li>{{ trim($line) }}</li>
+                            <li>{{ trim($line, "• -") }}</li>
                             @endif
                         @endforeach
                     </ul>
@@ -271,22 +271,28 @@
             <div class="entry">
                 <div class="entry-header">
                     <span class="entry-date">
-                        {{ \Carbon\Carbon::parse($edu->start_date)->format('M Y') }} - 
+                        {{ $edu->start_date ? $edu->start_date->format('M Y') : '' }} - 
                         @if($edu->is_current)
                             Present
                         @else
-                            {{ \Carbon\Carbon::parse($edu->end_date)->format('M Y') }}
+                            {{ $edu->end_date ? $edu->end_date->format('M Y') : '' }}
                         @endif
                     </span>
-                    <div class="entry-title">{{ $edu->degree }} in {{ $edu->field_of_study }}</div>
+                    <div class="entry-title">{{ $edu->degree }}{{ $edu->major ? ' in ' . $edu->major : '' }}</div>
                 </div>
-                <div class="entry-subtitle">{{ $edu->institution }}</div>
+                <div class="entry-subtitle">{{ $edu->institution_name }}</div>
+                @if($edu->location)
+                <div class="entry-location">{{ $edu->location }}</div>
+                @endif
+                @if($edu->gpa)
+                <div class="entry-location">GPA: {{ $edu->gpa }}</div>
+                @endif
                 @if($edu->description)
                 <div class="entry-description">
                     <ul>
                         @foreach(explode("\n", $edu->description) as $line)
                             @if(trim($line))
-                            <li>{{ trim($line) }}</li>
+                            <li>{{ trim($line, "• -") }}</li>
                             @endif
                         @endforeach
                     </ul>
@@ -307,7 +313,7 @@
                     <div class="skill-category-title">{{ $category }}</div>
                     <div class="skill-tags">
                         @foreach($categorySkills as $skill)
-                        <span class="skill-tag">{{ $skill->name }}</span>
+                        <span class="skill-tag">{{ $skill->skill_name }}</span>
                         @endforeach
                     </div>
                 </div>
@@ -323,16 +329,16 @@
             @foreach($projects as $project)
             <div class="entry">
                 <div class="entry-header">
-                    @if($project->date)
-                    <span class="entry-date">{{ \Carbon\Carbon::parse($project->date)->format('M Y') }}</span>
+                    @if($project->start_date)
+                    <span class="entry-date">{{ $project->start_date->format('M Y') }}</span>
                     @endif
-                    <div class="entry-title">{{ $project->name }}</div>
+                    <div class="entry-title">{{ $project->project_name }}</div>
                 </div>
                 @if($project->description)
                 <div class="entry-description">{{ $project->description }}</div>
                 @endif
                 @if($project->technologies)
-                <div class="entry-description"><strong>Tech Stack:</strong> {{ $project->technologies }}</div>
+                <div class="entry-description"><strong>Tech Stack:</strong> {{ is_array($project->technologies) ? implode(', ', $project->technologies) : $project->technologies }}</div>
                 @endif
             </div>
             @endforeach
@@ -347,14 +353,14 @@
             <div class="entry">
                 <div class="entry-header">
                     <span class="entry-date">
-                        {{ \Carbon\Carbon::parse($org->start_date)->format('M Y') }} - 
+                        {{ $org->start_date ? $org->start_date->format('M Y') : '' }} - 
                         @if($org->is_current)
                             Present
                         @else
-                            {{ \Carbon\Carbon::parse($org->end_date)->format('M Y') }}
+                            {{ $org->end_date ? $org->end_date->format('M Y') : '' }}
                         @endif
                     </span>
-                    <div class="entry-title">{{ $org->position }}</div>
+                    <div class="entry-title">{{ $org->role }}</div>
                 </div>
                 <div class="entry-subtitle">{{ $org->organization_name }}</div>
                 @if($org->description)
@@ -362,7 +368,7 @@
                     <ul>
                         @foreach(explode("\n", $org->description) as $line)
                             @if(trim($line))
-                            <li>{{ trim($line) }}</li>
+                            <li>{{ trim($line, "• -") }}</li>
                             @endif
                         @endforeach
                     </ul>
@@ -383,12 +389,15 @@
                 <div class="achievement-content">
                     <div class="entry-header">
                         @if($achievement->date)
-                        <span class="entry-date">{{ \Carbon\Carbon::parse($achievement->date)->format('M Y') }}</span>
+                        <span class="entry-date">{{ $achievement->date->format('M Y') }}</span>
                         @endif
                         <div class="entry-title">{{ $achievement->title }}</div>
                     </div>
                     @if($achievement->description)
                     <div class="entry-description">{{ $achievement->description }}</div>
+                    @endif
+                    @if($achievement->issuer)
+                    <div class="entry-description"><em>Issued by: {{ $achievement->issuer }}</em></div>
                     @endif
                 </div>
             </div>

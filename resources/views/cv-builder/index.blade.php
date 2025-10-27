@@ -145,7 +145,7 @@
                             @if(!auth()->user() || !(auth()->user()->is_premium && auth()->user()->payment_status === 'paid'))
                                 <p class="mt-2 font-semibold">
                                     You have access to {{ auth()->user() ? auth()->user()->getCvTemplatesCount() : 1 }} CV template(s). 
-                                    <a href="#" class="underline">Upgrade to Premium</a> for 5 templates and unlimited customization!
+                                    <a href="#" class="underline">Upgrade to Premium</a> for 4 templates and unlimited customization!
                                 </p>
                             @endif
                         </div>

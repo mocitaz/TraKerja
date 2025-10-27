@@ -62,22 +62,26 @@ class CvBuilderController extends Controller
     }
     
     /**
-     * Export CV to PDF
+     * Preview CV before export
      */
-    public function export(Request $request)
+    public function preview(Request $request)
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
         
-        // All users (free and premium) have unlimited exports
-        
-        // Get template
+        // Get template and validate
         $template = $request->input('template', 'minimal');
+        $validTemplates = ['minimal', 'professional', 'creative', 'elegant'];
         
-        // Check if user has access to the selected template
-        $premiumTemplates = ['professional', 'creative'];
-        if (in_array($template, $premiumTemplates) && !$user->is_premium) {
-            return redirect()->back()->with('error', 'This template is only available for premium users.');
+        if (!in_array($template, $validTemplates)) {
+            return response()->view('errors.404', [], 404);
+        }
+        
+        // Check if template file exists
+        $templatePath = resource_path("views/cv-templates/{$template}.blade.php");
+        if (!file_exists($templatePath)) {
+            Log::error("Template file not found: {$template}");
+            return response()->view('errors.404', [], 404);
         }
         
         // Load all user CV data
@@ -88,16 +92,77 @@ class CvBuilderController extends Controller
         $achievements = $user->achievements()->orderBy('display_order')->get();
         $projects = $user->projects()->orderBy('display_order')->get();
         
-        // Generate PDF using DomPDF
-        $pdf = Pdf::loadView("cv-templates.{$template}", [
-            'user' => $user,
-            'experiences' => $experiences,
-            'educations' => $educations,
-            'skills' => $skills,
-            'organizations' => $organizations,
-            'achievements' => $achievements,
-            'projects' => $projects,
-        ]);
+        // Return preview view with template
+        return view('cv-builder.preview', compact(
+            'template',
+            'user',
+            'experiences',
+            'educations',
+            'skills',
+            'organizations',
+            'achievements',
+            'projects'
+        ));
+    }
+    
+    /**
+     * Export CV to PDF
+     */
+    public function export(Request $request)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        
+        // All users (free and premium) have unlimited exports
+        
+        // Get template and validate
+        $template = $request->input('template', 'minimal');
+        $validTemplates = ['minimal', 'professional', 'creative', 'elegant'];
+        
+        if (!in_array($template, $validTemplates)) {
+            return redirect()->back()->with('error', 'Invalid template selected.');
+        }
+        
+        // Check if template file exists
+        $templatePath = resource_path("views/cv-templates/{$template}.blade.php");
+        if (!file_exists($templatePath)) {
+            Log::error("Template file not found for export: {$template}");
+            return redirect()->back()->with('error', 'Template file not found.');
+        }
+        
+        // FREE MODE: All templates are available to all users
+        // Check if user has access to the selected template
+        // $premiumTemplates = ['professional', 'creative', 'elegant'];
+        // if (in_array($template, $premiumTemplates) && !$user->is_premium) {
+        //     return redirect()->back()->with('error', 'This template is only available for premium users.');
+        // }
+        
+        // Load all user CV data
+        $experiences = $user->experiences()->orderBy('display_order')->get();
+        $educations = $user->educations()->orderBy('display_order')->get();
+        $skills = $user->skills()->orderBy('display_order')->get();
+        $organizations = $user->organizations()->orderBy('display_order')->get();
+        $achievements = $user->achievements()->orderBy('display_order')->get();
+        $projects = $user->projects()->orderBy('display_order')->get();
+        
+        try {
+            // Generate PDF using DomPDF
+            $pdf = Pdf::loadView("cv-templates.{$template}", [
+                'user' => $user,
+                'experiences' => $experiences,
+                'educations' => $educations,
+                'skills' => $skills,
+                'organizations' => $organizations,
+                'achievements' => $achievements,
+                'projects' => $projects,
+            ]);
+        } catch (\Exception $e) {
+            Log::error("Error generating PDF: " . $e->getMessage(), [
+                'user_id' => $user->id,
+                'template' => $template,
+            ]);
+            return redirect()->back()->with('error', 'Error generating PDF. Please try again or contact support.');
+        }
         
         // Log export activity
         Log::info("CV exported", [
