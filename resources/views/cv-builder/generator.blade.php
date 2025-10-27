@@ -95,13 +95,42 @@
                     </div>
 
                     <!-- Professional Template -->
-                    <div class="border-2 border-primary-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200">
+                    <div class="border-2 @if(current_phase() >= 2 && !auth()->user()->is_premium) border-gray-300 opacity-75 @else border-primary-200 @endif rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 relative">
+                        @if(current_phase() >= 2 && !auth()->user()->is_premium)
+                            <div class="absolute inset-0 bg-gray-900/10 backdrop-blur-[1px] z-10 flex items-center justify-center">
+                                <div class="bg-white rounded-lg p-4 shadow-xl text-center max-w-xs mx-4">
+                                    <svg class="w-12 h-12 mx-auto mb-2 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <p class="font-semibold text-gray-900 mb-1">Premium Template</p>
+                                    <p class="text-xs text-gray-600 mb-3">Upgrade to unlock</p>
+                                    <a href="{{ route('premium') }}" class="inline-block px-4 py-2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white text-sm font-semibold rounded-lg hover:from-yellow-500 hover:to-yellow-600 transition-all">
+                                        Upgrade Now
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
                         <div class="bg-gradient-to-r from-primary-50 to-primary-100 p-4 border-b border-primary-200">
                             <div class="flex items-center justify-between mb-2">
                                 <h4 class="font-semibold text-lg text-primary-900">Professional</h4>
-                                <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
-                                    AVAILABLE
-                                </span>
+                                @if(current_phase() >= 2)
+                                    @if(auth()->user()->is_premium)
+                                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
+                                            UNLOCKED
+                                        </span>
+                                    @else
+                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full font-medium flex items-center gap-1">
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            PREMIUM
+                                        </span>
+                                    @endif
+                                @else
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
+                                        AVAILABLE
+                                    </span>
+                                @endif
                             </div>
                             <p class="text-sm text-gray-600">Classic design with elegant typography</p>
                         </div>
@@ -118,25 +147,59 @@
                                 @csrf
                                 <input type="hidden" name="template" value="professional">
                                 <button type="submit"
-                                    class="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2">
+                                    @if(current_phase() >= 2 && !auth()->user()->is_premium) disabled @endif
+                                    class="w-full @if(current_phase() >= 2 && !auth()->user()->is_premium) bg-gray-300 cursor-not-allowed @else bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 @endif text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                 </svg>
-                                Preview & Export CV
+                                @if(current_phase() >= 2 && !auth()->user()->is_premium)
+                                    Locked - Premium Only
+                                @else
+                                    Preview & Export CV
+                                @endif
                                 </button>
                             </form>
                         </div>
                     </div>
 
                     <!-- Creative Template -->
-                    <div class="border-2 border-primary-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200">
+                    <div class="border-2 @if(current_phase() >= 2 && !auth()->user()->is_premium) border-gray-300 opacity-75 @else border-primary-200 @endif rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 relative">
+                        @if(current_phase() >= 2 && !auth()->user()->is_premium)
+                            <div class="absolute inset-0 bg-gray-900/10 backdrop-blur-[1px] z-10 flex items-center justify-center">
+                                <div class="bg-white rounded-lg p-4 shadow-xl text-center max-w-xs mx-4">
+                                    <svg class="w-12 h-12 mx-auto mb-2 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <p class="font-semibold text-gray-900 mb-1">Premium Template</p>
+                                    <p class="text-xs text-gray-600 mb-3">Upgrade to unlock</p>
+                                    <a href="{{ route('premium') }}" class="inline-block px-4 py-2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white text-sm font-semibold rounded-lg hover:from-yellow-500 hover:to-yellow-600 transition-all">
+                                        Upgrade Now
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
                         <div class="bg-gradient-to-r from-primary-50 to-primary-100 p-4 border-b border-primary-200">
                             <div class="flex items-center justify-between mb-2">
                                 <h4 class="font-semibold text-lg text-primary-900">Creative</h4>
-                                <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
-                                    AVAILABLE
-                                </span>
+                                @if(current_phase() >= 2)
+                                    @if(auth()->user()->is_premium)
+                                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
+                                            UNLOCKED
+                                        </span>
+                                    @else
+                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full font-medium flex items-center gap-1">
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            PREMIUM
+                                        </span>
+                                    @endif
+                                @else
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
+                                        AVAILABLE
+                                    </span>
+                                @endif
                             </div>
                             <p class="text-sm text-gray-600">Modern design with creative layout</p>
                         </div>
@@ -153,25 +216,59 @@
                                 @csrf
                                 <input type="hidden" name="template" value="creative">
                                 <button type="submit"
-                                    class="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2">
+                                    @if(current_phase() >= 2 && !auth()->user()->is_premium) disabled @endif
+                                    class="w-full @if(current_phase() >= 2 && !auth()->user()->is_premium) bg-gray-300 cursor-not-allowed @else bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 @endif text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                 </svg>
-                                Preview & Export CV
+                                @if(current_phase() >= 2 && !auth()->user()->is_premium)
+                                    Locked - Premium Only
+                                @else
+                                    Preview & Export CV
+                                @endif
                                 </button>
                             </form>
                         </div>
                     </div>
 
                     <!-- Elegant Template -->
-                    <div class="border-2 border-primary-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200">
+                    <div class="border-2 @if(current_phase() >= 2 && !auth()->user()->is_premium) border-gray-300 opacity-75 @else border-primary-200 @endif rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 relative">
+                        @if(current_phase() >= 2 && !auth()->user()->is_premium)
+                            <div class="absolute inset-0 bg-gray-900/10 backdrop-blur-[1px] z-10 flex items-center justify-center">
+                                <div class="bg-white rounded-lg p-4 shadow-xl text-center max-w-xs mx-4">
+                                    <svg class="w-12 h-12 mx-auto mb-2 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <p class="font-semibold text-gray-900 mb-1">Premium Template</p>
+                                    <p class="text-xs text-gray-600 mb-3">Upgrade to unlock</p>
+                                    <a href="{{ route('premium') }}" class="inline-block px-4 py-2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white text-sm font-semibold rounded-lg hover:from-yellow-500 hover:to-yellow-600 transition-all">
+                                        Upgrade Now
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
                         <div class="bg-gradient-to-r from-primary-50 to-primary-100 p-4 border-b border-primary-200">
                             <div class="flex items-center justify-between mb-2">
                                 <h4 class="font-semibold text-lg text-primary-900">Elegant</h4>
-                                <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
-                                    AVAILABLE
-                                </span>
+                                @if(current_phase() >= 2)
+                                    @if(auth()->user()->is_premium)
+                                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
+                                            UNLOCKED
+                                        </span>
+                                    @else
+                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full font-medium flex items-center gap-1">
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            PREMIUM
+                                        </span>
+                                    @endif
+                                @else
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
+                                        AVAILABLE
+                                    </span>
+                                @endif
                             </div>
                             <p class="text-sm text-gray-600">Sophisticated two-column layout with dark sidebar</p>
                         </div>
@@ -188,14 +285,21 @@
                                 @csrf
                                 <input type="hidden" name="template" value="elegant">
                                 <button type="submit"
-                                    class="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2">
+                                    @if(current_phase() >= 2 && !auth()->user()->is_premium) disabled @endif
+                                    class="w-full @if(current_phase() >= 2 && !auth()->user()->is_premium) bg-gray-300 cursor-not-allowed @else bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 @endif text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                 </svg>
-                                Preview & Export CV
+                                @if(current_phase() >= 2 && !auth()->user()->is_premium)
+                                    Locked - Premium Only
+                                @else
+                                    Preview & Export CV
+                                @endif
                                 </button>
                             </form>
+                        </div>
+                    </div>
                         </div>
                     </div>
                 </div>

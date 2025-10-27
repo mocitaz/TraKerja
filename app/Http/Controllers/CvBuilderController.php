@@ -66,23 +66,30 @@ class CvBuilderController extends Controller
      */
     public function preview(Request $request)
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
-        
-        // Get template and validate
         $template = $request->input('template', 'minimal');
-        $validTemplates = ['minimal', 'professional', 'creative', 'elegant'];
         
-        if (!in_array($template, $validTemplates)) {
-            return response()->view('errors.404', [], 404);
+        // Validate template exists
+        $allowedTemplates = ['minimal', 'professional', 'creative', 'elegant'];
+        if (!in_array($template, $allowedTemplates)) {
+            return redirect()->back()->with('error', 'Invalid template selected.');
         }
         
         // Check if template file exists
-        $templatePath = resource_path("views/cv-templates/{$template}.blade.php");
-        if (!file_exists($templatePath)) {
-            Log::error("Template file not found: {$template}");
-            return response()->view('errors.404', [], 404);
+        if (!view()->exists("cv-templates.{$template}")) {
+            return redirect()->back()->with('error', 'Template file not found.');
         }
+        
+        // Check template access based on monetization phase
+        $premiumTemplates = ['professional', 'creative', 'elegant'];
+        
+        // Phase 2 & 3: Premium templates are locked for non-premium users
+        if (current_phase() >= 2) {
+            if (in_array($template, $premiumTemplates) && !$user->is_premium) {
+                return redirect()->back()->with('error', 'This template is only available for premium users. Upgrade to access premium templates!');
+            }
+        }
+        // Phase 1: All templates are free and accessible to everyone
         
         // Load all user CV data
         $experiences = $user->experiences()->orderBy('display_order')->get();
@@ -92,10 +99,9 @@ class CvBuilderController extends Controller
         $achievements = $user->achievements()->orderBy('display_order')->get();
         $projects = $user->projects()->orderBy('display_order')->get();
         
-        // Return preview view with template
         return view('cv-builder.preview', compact(
-            'template',
             'user',
+            'template',
             'experiences',
             'educations',
             'skills',
@@ -130,12 +136,16 @@ class CvBuilderController extends Controller
             return redirect()->back()->with('error', 'Template file not found.');
         }
         
-        // FREE MODE: All templates are available to all users
-        // Check if user has access to the selected template
-        // $premiumTemplates = ['professional', 'creative', 'elegant'];
-        // if (in_array($template, $premiumTemplates) && !$user->is_premium) {
-        //     return redirect()->back()->with('error', 'This template is only available for premium users.');
-        // }
+        // Check template access based on monetization phase
+        $premiumTemplates = ['professional', 'creative', 'elegant'];
+        
+        // Phase 2 & 3: Premium templates are locked for non-premium users
+        if (current_phase() >= 2) {
+            if (in_array($template, $premiumTemplates) && !$user->is_premium) {
+                return redirect()->back()->with('error', 'This template is only available for premium users. Upgrade to access premium templates!');
+            }
+        }
+        // Phase 1: All templates are free and accessible to everyone
         
         // Load all user CV data
         $experiences = $user->experiences()->orderBy('display_order')->get();
