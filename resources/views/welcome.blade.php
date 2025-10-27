@@ -1131,7 +1131,7 @@
                 <div class="space-y-4">
                     <div>
                         <p class="text-sm text-gray-500 mb-1">Dikelola oleh</p>
-                        <p class="text-gray-900 font-semibold text-sm">PT Teknologi Transformasi Digital</p>
+                        <p class="text-gray-900 font-semibold text-sm">PT Teknalogi Transformasi Digital</p>
                     </div>
                     <div class="pt-3 border-t border-gray-200">
                         <p class="text-xs text-gray-500">

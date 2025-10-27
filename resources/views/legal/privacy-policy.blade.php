@@ -255,7 +255,7 @@
                 </p>
                 <div class="bg-gray-50 p-4 rounded-lg">
                     <p class="text-gray-700"><strong>Email:</strong> infoteknalogi@gmail.com</p>
-                    <p class="text-gray-700"><strong>Company:</strong> PT Teknologi Transformasi Digital</p>
+                    <p class="text-gray-700"><strong>Company:</strong> PT Teknalogi Transformasi Digital</p>
                     <p class="text-gray-700"><strong>Instagram:</strong> @teknalogi.id</p>
                     <p class="text-gray-700"><strong>Response Time:</strong> We will respond to your inquiries within 48 hours</p>
                 </div>

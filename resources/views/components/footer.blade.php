@@ -15,7 +15,7 @@
 
             <!-- Copyright -->
             <div class="text-xs sm:text-sm text-gray-600 text-center sm:text-right">
-                © 2025 TraKerja. <a href="https://www.instagram.com/teknalogi.id/" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-800 font-medium transition-colors duration-200">PT Teknologi Transformasi Digital</a>. All rights reserved.
+                © 2025 TraKerja. <a href="https://www.instagram.com/teknalogi.id/" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-800 font-medium transition-colors duration-200">PT Teknalogi Transformasi Digital</a>. All rights reserved.
             </div>
         </div>
     </div>

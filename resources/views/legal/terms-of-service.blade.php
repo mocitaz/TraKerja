@@ -189,7 +189,7 @@
             <div class="mb-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">6. Intellectual Property</h2>
                 <p class="text-gray-700 leading-relaxed mb-4">
-                    The service and its original content, features, and functionality are owned by PT Teknologi Transformasi Digital and are protected by international copyright, trademark, and other intellectual property laws.
+                    The service and its original content, features, and functionality are owned by PT Teknalogi Transformasi Digital and are protected by international copyright, trademark, and other intellectual property laws.
                 </p>
                 <p class="text-gray-700 leading-relaxed">
                     You retain ownership of your job application data and content. By using our service, you grant us a limited license to process and store your data to provide the service.
@@ -292,7 +292,7 @@
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-900 mb-3">🏢 Perusahaan</h4>
-                            <p class="text-gray-700 mb-2"><strong>Company:</strong> PT Teknologi Transformasi Digital</p>
+                            <p class="text-gray-700 mb-2"><strong>Company:</strong> PT Teknalogi Transformasi Digital</p>
                             <p class="text-gray-700"><strong>Instagram:</strong> @teknalogi.id</p>
                         </div>
                     </div>
