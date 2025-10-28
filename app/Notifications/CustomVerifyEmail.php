@@ -15,10 +15,9 @@ class CustomVerifyEmail extends VerifyEmail
 
         return (new MailMessage)
             ->subject('[TraKerja] Verify Your Email Address')
-            ->greeting('Welcome to TraKerja!')
-            ->line('Thanks for registering. Please verify your email to activate your account.')
-            ->action('Verify Email', $verificationUrl)
-            ->line('If you did not create an account, no further action is required.');
+            ->view('emails.email-verification', [
+                'actionUrl' => $verificationUrl,
+            ]);
     }
 
     protected function verificationUrl($notifiable)

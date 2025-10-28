@@ -13,11 +13,9 @@ class CustomResetPassword extends ResetPassword
     {
         return (new MailMessage)
             ->subject('[TraKerja] Password Reset Request')
-            ->greeting('Hello!')
-            ->line('You are receiving this email because we received a password reset request for your account.')
-            ->action('Reset Password', $this->resetUrl($notifiable))
-            ->line('This password reset link will expire in '.config('auth.passwords.'.config('auth.defaults.passwords').'.expire').' minutes.')
-            ->line('If you did not request a password reset, no further action is required.');
+            ->view('emails.password-reset', [
+                'actionUrl' => $this->resetUrl($notifiable),
+            ]);
     }
 
     protected function resetUrl($notifiable)
