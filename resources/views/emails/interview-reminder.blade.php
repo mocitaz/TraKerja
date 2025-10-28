@@ -3,177 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pengingat Interview</title>
+    <title>Interview Reminder - TraKerja</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
-    <table role="presentation" style="width: 100%; border-collapse: collapse;">
+<body style="margin:0; padding:0; background:#f6f2ff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color:#111827;">
+    <table role="presentation" style="width:100%; border-collapse:collapse;">
         <tr>
-            <td align="center" style="padding: 40px 0;">
-                <table role="presentation" style="width: 600px; border-collapse: collapse; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                    <!-- Header -->
+            <td align="center" style="padding:36px 16px;">
+                <table role="presentation" style="width:100%; max-width:640px; border-collapse:collapse; background:#ffffff; border-radius:14px; box-shadow:0 8px 24px rgba(107,70,193,0.08), 0 2px 8px rgba(0,0,0,0.03); overflow:hidden;">
+                    <!-- Header with soft gradient -->
                     <tr>
-                        <td style="padding: 40px 40px 20px; text-align: center; background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%); border-radius: 8px 8px 0 0;">
-                            <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700;">
-                                📅 Pengingat Interview
-                            </h1>
-                        </td>
-                    </tr>
-                    
-                    <!-- Content -->
-                    <tr>
-                        <td style="padding: 40px;">
-                            <p style="margin: 0 0 16px; color: #374151; font-size: 16px; line-height: 1.6;">
-                                Halo <strong>{{ $application->user->name }}</strong>,
-                            </p>
-                            
-                            <p style="margin: 0 0 24px; color: #374151; font-size: 16px; line-height: 1.6;">
-                                Ini adalah pengingat untuk interview Anda yang akan datang:
-                            </p>
-                            
-                            <!-- Interview Details -->
-                            <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f9fafb; border-radius: 8px; padding: 24px; margin-bottom: 24px;">
-                                <tr>
-                                    <td style="padding: 12px 0;">
-                                        <table role="presentation" style="width: 100%;">
-                                            <tr>
-                                                <td style="width: 100px; color: #6b7280; font-size: 14px; vertical-align: top;">
-                                                    <strong>Perusahaan:</strong>
-                                                </td>
-                                                <td style="color: #111827; font-size: 16px; font-weight: 600;">
-                                                    {{ $application->company }}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px 0;">
-                                        <table role="presentation" style="width: 100%;">
-                                            <tr>
-                                                <td style="width: 100px; color: #6b7280; font-size: 14px; vertical-align: top;">
-                                                    <strong>Posisi:</strong>
-                                                </td>
-                                                <td style="color: #374151; font-size: 15px;">
-                                                    {{ $application->position }}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                @if($application->interview_date)
-                                <tr>
-                                    <td style="padding: 12px 0;">
-                                        <table role="presentation" style="width: 100%;">
-                                            <tr>
-                                                <td style="width: 100px; color: #6b7280; font-size: 14px; vertical-align: top;">
-                                                    <strong>Tanggal:</strong>
-                                                </td>
-                                                <td style="color: #374151; font-size: 15px;">
-                                                    {{ \Carbon\Carbon::parse($application->interview_date)->format('l, d F Y') }}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px 0;">
-                                        <table role="presentation" style="width: 100%;">
-                                            <tr>
-                                                <td style="width: 100px; color: #6b7280; font-size: 14px; vertical-align: top;">
-                                                    <strong>Waktu:</strong>
-                                                </td>
-                                                <td style="color: #374151; font-size: 15px;">
-                                                    {{ \Carbon\Carbon::parse($application->interview_date)->format('H:i') }} WIB
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                @endif
-                                @if($application->interview_type)
-                                <tr>
-                                    <td style="padding: 12px 0;">
-                                        <table role="presentation" style="width: 100%;">
-                                            <tr>
-                                                <td style="width: 100px; color: #6b7280; font-size: 14px; vertical-align: top;">
-                                                    <strong>Tipe:</strong>
-                                                </td>
-                                                <td style="color: #374151; font-size: 15px;">
-                                                    @php
-                                                        $types = [
-                                                            'phone' => 'Phone Interview',
-                                                            'video' => 'Video Call',
-                                                            'in-person' => 'In-Person',
-                                                            'panel' => 'Panel Interview'
-                                                        ];
-                                                    @endphp
-                                                    {{ $types[$application->interview_type] ?? $application->interview_type }}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                @endif
-                                @if($application->interview_location)
-                                <tr>
-                                    <td style="padding: 12px 0;">
-                                        <table role="presentation" style="width: 100%;">
-                                            <tr>
-                                                <td style="width: 100px; color: #6b7280; font-size: 14px; vertical-align: top;">
-                                                    <strong>Lokasi:</strong>
-                                                </td>
-                                                <td style="color: #374151; font-size: 15px;">
-                                                    {{ $application->interview_location }}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                @endif
-                            </table>
-                            
-                            <!-- Tips -->
-                            <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px; border-radius: 4px; margin-bottom: 24px;">
-                                <p style="margin: 0 0 8px; color: #92400e; font-weight: 600; font-size: 14px;">
-                                    💡 Tips Persiapan Interview:
-                                </p>
-                                <ul style="margin: 0; padding-left: 20px; color: #92400e; font-size: 14px; line-height: 1.6;">
-                                    <li>Riset perusahaan dan posisi yang dilamar</li>
-                                    <li>Siapkan contoh pengalaman kerja yang relevan</li>
-                                    <li>Pastikan koneksi internet stabil (untuk video call)</li>
-                                    <li>Datang 15 menit lebih awal</li>
-                                    <li>Siapkan pertanyaan untuk interviewer</li>
-                                </ul>
-                            </div>
-                            
-                            <!-- CTA Button -->
-                            <table role="presentation" style="width: 100%; border-collapse: collapse; margin: 32px 0;">
+                        <td style="padding:28px; background:linear-gradient(180deg, #efe9ff 0%, #ffffff 70%); text-align:center; border-bottom:1px solid #efeaff;">
+                            <table role="presentation" style="width:100%; border-collapse:collapse;">
                                 <tr>
                                     <td align="center">
-                                        <a href="{{ url('/tracker') }}" style="display: inline-block; padding: 14px 32px; background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%); color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16px;">
-                                            Lihat Detail →
-                                        </a>
+                                        <div style="display:inline-block; padding:10px; border-radius:14px; background:#ffffff; box-shadow:0 4px 10px rgba(107,70,193,0.10); border:1px solid #ece7ff;">
+                                            <img src="{{ config('app.url') }}/images/icon.png" alt="TraKerja" width="48" height="48" style="display:block;">
+                                        </div>
+                                        <h1 style="margin:14px 0 4px; font-size:22px; line-height:28px; font-weight:800; color:#1f2937;">Interview Reminder</h1>
+                                        <p style="margin:0; font-size:13px; line-height:20px; color:#6b7280;">Your upcoming interview details</p>
                                     </td>
                                 </tr>
                             </table>
-                            
-                            <p style="margin: 24px 0 0; color: #6b7280; font-size: 14px; line-height: 1.6;">
-                                Semoga sukses untuk interview Anda! 🍀
-                            </p>
-                            
-                            <p style="margin: 8px 0 0; color: #6b7280; font-size: 14px; line-height: 1.6;">
-                                Salam hangat,<br>
-                                <strong>Tim TraKerja</strong>
-                            </p>
                         </td>
                     </tr>
-                    
-                    <!-- Footer -->
+
+                    <!-- Body -->
                     <tr>
-                        <td style="padding: 24px 40px; background-color: #f9fafb; border-radius: 0 0 8px 8px; text-align: center;">
-                            <p style="margin: 0; color: #9ca3af; font-size: 12px;">
-                                © {{ date('Y') }} TraKerja. All rights reserved.
-                            </p>
+                        <td style="padding:24px 28px 8px;">
+                            <p style="margin:0 0 10px; font-size:14px; line-height:22px; color:#111827;">Hi <strong>{{ $application->user->name }}</strong>,</p>
+                            <p style="margin:0 0 16px; font-size:14px; line-height:22px; color:#374151;">This is a friendly reminder about your upcoming interview. Make sure you're well-prepared and ready to make a great impression.</p>
+
+                            <!-- Interview Details Card -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; background:#fbfaff; border:1px solid #f0eaff; border-radius:10px; overflow:hidden; margin:12px 0 18px;">
+                                <tr>
+                                    <td style="padding:18px 20px;">
+                                        <div style="display:flex; align-items:center; margin-bottom:12px;">
+                                            <div style="width:8px; height:8px; background:#f59e0b; border-radius:50%; margin-right:8px;"></div>
+                                            <span style="font-size:12px; color:#6b7280; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Interview Details</span>
+                                        </div>
+                                        
+                                        <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                            <tr>
+                                                <td style="padding:8px 0; border-bottom:1px solid #f0eaff;">
+                                                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                                                        <span style="font-size:13px; color:#6b7280; font-weight:600;">Company</span>
+                                                        <span style="font-size:14px; color:#1f2937; font-weight:600;">{{ $application->company }}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:8px 0; border-bottom:1px solid #f0eaff;">
+                                                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                                                        <span style="font-size:13px; color:#6b7280; font-weight:600;">Position</span>
+                                                        <span style="font-size:14px; color:#1f2937; font-weight:600;">{{ $application->position }}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @if($application->interview_date)
+                                            <tr>
+                                                <td style="padding:8px 0; border-bottom:1px solid #f0eaff;">
+                                                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                                                        <span style="font-size:13px; color:#6b7280; font-weight:600;">Date</span>
+                                                        <span style="font-size:14px; color:#1f2937; font-weight:600;">{{ \Carbon\Carbon::parse($application->interview_date)->format('l, d F Y') }}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:8px 0; border-bottom:1px solid #f0eaff;">
+                                                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                                                        <span style="font-size:13px; color:#6b7280; font-weight:600;">Time</span>
+                                                        <span style="font-size:14px; color:#1f2937; font-weight:600;">{{ \Carbon\Carbon::parse($application->interview_date)->format('H:i') }} WIB</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endif
+                                            @if($application->interview_type)
+                                            <tr>
+                                                <td style="padding:8px 0; border-bottom:1px solid #f0eaff;">
+                                                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                                                        <span style="font-size:13px; color:#6b7280; font-weight:600;">Type</span>
+                                                        <span style="font-size:14px; color:#1f2937; font-weight:600;">
+                                                            @php
+                                                                $types = [
+                                                                    'phone' => 'Phone Interview',
+                                                                    'video' => 'Video Call',
+                                                                    'in-person' => 'In-Person',
+                                                                    'panel' => 'Panel Interview'
+                                                                ];
+                                                            @endphp
+                                                            {{ $types[$application->interview_type] ?? $application->interview_type }}
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endif
+                                            @if($application->interview_location)
+                                            <tr>
+                                                <td style="padding:8px 0;">
+                                                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                                                        <span style="font-size:13px; color:#6b7280; font-weight:600;">Location</span>
+                                                        <span style="font-size:14px; color:#1f2937; font-weight:600;">{{ $application->interview_location }}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endif
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Preparation Tips -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; background:#fef3c7; border:1px solid #fbbf24; border-radius:10px; margin:12px 0 18px;">
+                                <tr>
+                                    <td style="padding:16px 18px;">
+                                        <p style="margin:0 0 8px; font-size:13px; line-height:20px; color:#92400e; font-weight:700;">Quick Preparation Tips</p>
+                                        <ul style="margin:0; padding-left:16px; font-size:12px; line-height:18px; color:#92400e;">
+                                            <li>Research the company and role thoroughly</li>
+                                            <li>Prepare examples of your relevant experience</li>
+                                            <li>Test your technology setup (for video interviews)</li>
+                                            <li>Arrive 10-15 minutes early</li>
+                                            <li>Prepare thoughtful questions to ask</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- CTA Button -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin:18px 0 12px;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="{{ config('app.url') }}/tracker" style="display:inline-block; padding:12px 22px; background:linear-gradient(135deg, #7c5ce0 0%, #6b46c1 100%); color:#ffffff; text-decoration:none; border-radius:8px; font-weight:700; font-size:14px; letter-spacing:0.2px; box-shadow:0 6px 14px rgba(107,70,193,0.20);">View Application</a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-top:8px;">
+                                <tr>
+                                    <td style="font-size:12px; line-height:18px; color:#6b7280;">Good luck with your interview! You've got this.</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Subtle footer -->
+                    <tr>
+                        <td style="padding:14px 28px 20px; background:#fbfaff; border-top:1px solid #f0eaff; text-align:center;">
+                            <p style="margin:6px 0 0; font-size:12px; line-height:18px; color:#9ca3af;">© {{ date('Y') }} TraKerja. All rights reserved.</p>
                         </td>
                     </tr>
                 </table>

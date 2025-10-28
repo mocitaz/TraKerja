@@ -44,7 +44,7 @@
                                                 <td width="20" style="vertical-align:top; padding-top:2px;"><span style="display:inline-block; width:16px; height:16px; border-radius:4px; background:#6b46c1;
                                                 box-shadow:0 2px 6px rgba(107,70,193,0.35);
                                                 text-align:center; color:#fff; font-size:12px; line-height:16px; font-weight:700;">1</span></td>
-                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Complete your <a href="{{ config('app.url') }}/profile" style="color:#6b46c1; text-decoration:none; font-weight:600;">profile</a> and upload your latest CV.</td>
+                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Complete your <a href="{{ config('app.url') }}/profile" style="color:#6b46c1; text-decoration:none; font-weight:600;">profile</a> and create your CV.</td>
                                             </tr>
                                             <tr>
                                                 <td width="20" style="vertical-align:top; padding-top:6px;"><span style="display:inline-block; width:16px; height:16px; border-radius:4px; background:#6b46c1; text-align:center; color:#fff; font-size:12px; line-height:16px; font-weight:700;">2</span></td>
