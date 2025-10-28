@@ -98,12 +98,8 @@
                         </td>
                     </tr>
 
-                    <!-- Subtle footer -->
-                    <tr>
-                        <td style="padding:14px 28px 20px; background:#fbfaff; border-top:1px solid #f0eaff; text-align:center;">
-                            <p style="margin:6px 0 0; font-size:12px; line-height:18px; color:#9ca3af;">© {{ date('Y') }} TraKerja. All rights reserved.</p>
-                        </td>
-                    </tr>
+                    <!-- Compact Professional Footer -->
+                    @include('emails.partials.footer')
                 </table>
             </td>
         </tr>

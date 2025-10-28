@@ -8,10 +8,10 @@
     <table role="presentation" style="width:100%; border-collapse:collapse;">
         <tr>
             <td align="center" style="padding:36px 16px;">
-                <table role="presentation" style="width:100%; max-width:520px; border-collapse:collapse; background:#ffffff; border-radius:14px; box-shadow:0 8px 24px rgba(107,70,193,0.08), 0 2px 8px rgba(0,0,0,0.03); overflow:hidden;">
+                <table role="presentation" style="width:100%; max-width:640px; border-collapse:collapse; background:#ffffff; border-radius:14px; box-shadow:0 8px 24px rgba(107,70,193,0.08), 0 2px 8px rgba(0,0,0,0.03); overflow:hidden;">
                     <!-- Header -->
                     <tr>
-                        <td style="padding:24px; background:linear-gradient(180deg, #efe9ff 0%, #ffffff 70%); text-align:center; border-bottom:1px solid #efeaff;">
+                        <td style="padding:28px; background:linear-gradient(180deg, #efe9ff 0%, #ffffff 70%); text-align:center; border-bottom:1px solid #efeaff;">
                             <div style="display:inline-block; padding:10px; border-radius:14px; background:#ffffff; box-shadow:0 4px 10px rgba(107,70,193,0.10); border:1px solid #ece7ff;">
                                 <img src="{{ asset('images/icon.png') }}" alt="TraKerja" width="44" height="44" style="display:block;">
                             </div>
@@ -22,7 +22,7 @@
 
                     <!-- Body -->
                     <tr>
-                        <td style="padding:22px 24px 8px;">
+                        <td style="padding:24px 28px 8px;">
                             <p style="margin:0 0 10px; font-size:14px; line-height:22px;">Hi <strong>{{ $user->name }}</strong>,</p>
                             <p style="margin:0 0 16px; font-size:14px; line-height:22px; color:#374151;">Use this One‑Time Password (OTP) to verify your email address. For security reasons, please do not share this code with anyone.</p>
 
@@ -43,12 +43,8 @@
                         </td>
                     </tr>
 
-                    <!-- Footer -->
-                    <tr>
-                        <td style="padding:14px 24px 20px; background:#fbfaff; border-top:1px solid #f0eaff; text-align:center;">
-                            <p style="margin:6px 0 0; font-size:12px; line-height:18px; color:#9ca3af;">© {{ date('Y') }} TraKerja. All rights reserved.</p>
-                        </td>
-                    </tr>
+                    <!-- Compact Professional Footer -->
+                    @include('emails.partials.footer')
                 </table>
             </td>
         </tr>
