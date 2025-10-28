@@ -427,4 +427,51 @@ class User extends Authenticatable
         
         return max(0, $limit - $this->cv_exports_this_month);
     }
+    
+    /**
+     * Generate and send OTP for email verification
+     */
+    public function sendOtpVerification(): void
+    {
+        $otp = str_pad(random_int(100000, 999999), 6, '0', STR_PAD_LEFT);
+        $this->otp_code = $otp;
+        $this->otp_expires_at = now()->addMinutes(10);
+        $this->save();
+        \Mail::to($this->email)->send(new \App\Mail\OtpVerificationMail($this, $otp));
+    }
+
+    /**
+     * Verify OTP code
+     */
+    public function verifyOtp(string $otp): bool
+    {
+        if ($this->otp_code === $otp && $this->otp_expires_at && now()->lessThanOrEqualTo($this->otp_expires_at)) {
+            $this->otp_code = null;
+            $this->otp_expires_at = null;
+            $this->email_verified_at = now();
+            $this->save();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Generate and send OTP for password reset
+     */
+    public function sendOtpPasswordReset(): void
+    {
+        $otp = str_pad(random_int(100000, 999999), 6, '0', STR_PAD_LEFT);
+        $this->otp_code = $otp;
+        $this->otp_expires_at = now()->addMinutes(10);
+        $this->save();
+        \Mail::to($this->email)->send(new \App\Mail\OtpVerificationMail($this, $otp));
+    }
+
+    /**
+     * Check if user can access email notifications (premium restriction)
+     */
+    public function canAccessEmailNotifications(): bool
+    {
+        return $this->canAccessFeature('email_notifications');
+    }
 }

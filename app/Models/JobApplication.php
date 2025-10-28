@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Mail\InterviewReminderMail;
 
 class JobApplication extends Model
 {
@@ -93,5 +94,16 @@ class JobApplication extends Model
         return $this->belongsTo(User::class);
     }
 
-
+    /**
+     * Send interview reminder email (premium restriction)
+     */
+    public function sendInterviewReminder(): bool
+    {
+        $user = $this->user;
+        if ($user && $user->canAccessEmailNotifications()) {
+            \Mail::to($user->email)->send(new InterviewReminderMail($this));
+            return true;
+        }
+        return false;
+    }
 }

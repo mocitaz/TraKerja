@@ -13,12 +13,15 @@ class InterviewReminderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public JobApplication $jobApplication;
+
     /**
      * Create a new message instance.
      */
-    public function __construct(
-        public JobApplication $application
-    ) {}
+    public function __construct(JobApplication $jobApplication)
+    {
+        $this->jobApplication = $jobApplication;
+    }
 
     /**
      * Get the message envelope.
@@ -26,7 +29,7 @@ class InterviewReminderMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Pengingat Interview: ' . $this->application->company,
+            subject: 'Pengingat Interview: ' . $this->jobApplication->company_name,
         );
     }
 
@@ -36,7 +39,10 @@ class InterviewReminderMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.interview-reminder',
+            view: 'emails.interview_reminder',
+            with: [
+                'jobApplication' => $this->jobApplication,
+            ],
         );
     }
 

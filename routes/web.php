@@ -142,6 +142,20 @@ Route::middleware('auth')->group(function () {
     //     }
     //     return app(JobApplicationExportController::class)->getExportStats();
     // })->name('export.job-applications.stats');
+    
+    // Interview reminder email trigger (for testing/integration)
+    Route::post('/jobs/{job}/send-interview-reminder', function (JobApplication $job) {
+        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+            abort(403, 'Admin cannot send interview reminders');
+        }
+        abort_unless($job->user_id === Auth::id(), 403);
+        $sent = $job->sendInterviewReminder();
+        if ($sent) {
+            return response()->json(['success' => true, 'message' => 'Interview reminder email sent.']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Premium required to send interview reminder.']);
+        }
+    })->middleware(['auth', 'verified'])->name('jobs.send-interview-reminder');
 });
 
 // Admin Routes (protected by admin role)
