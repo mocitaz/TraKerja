@@ -25,9 +25,6 @@ class AppServiceProvider extends ServiceProvider
             $appUrl = config('app.url');
             if (! empty($appUrl)) {
                 URL::forceRootUrl($appUrl);
-            }
-
-            if (is_string($appUrl) && str_starts_with($appUrl, 'https://')) {
                 URL::forceScheme('https');
             }
         }

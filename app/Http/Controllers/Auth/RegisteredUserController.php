@@ -66,18 +66,21 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
+        // Auto-send verification email
+        $user->sendEmailVerificationNotification();
 
-        // Send welcome email
+        // Optionally send welcome email
         try {
             Mail::to($user->email)->send(new WelcomeMail($user));
         } catch (\Exception $e) {
             \Log::error('Failed to send welcome email: ' . $e->getMessage());
         }
 
-        // Flash success message
-        $request->session()->flash('status', 'registration-successful');
+        // Logout and redirect to login with notice to verify first
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect()->route('login')->with('status', 'please-verify-email');
     }
 }

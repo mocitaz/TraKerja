@@ -124,14 +124,24 @@
                         <p class="text-gray-600">Sign in to continue your journey</p>
                     </div>
 
-                    <!-- Success Notification -->
-                    @if (session('status') === 'login-successful')
-                        <div id="login-success-notification" class="mb-6 bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 p-4 rounded-xl shadow-sm opacity-0 transform -translate-y-2 transition-all duration-300">
+                    <!-- Notices -->
+                    @if (session('status') === 'please-verify-email')
+                        <div class="mb-6 bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-xl">
                             <div class="flex items-center">
-                                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                <svg class="w-5 h-5 text-yellow-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 6a9 9 0 100 18 9 9 0 000-18z" />
                                 </svg>
-                                <p class="text-sm font-medium text-green-800">Login successful! Welcome back to TraKerja!</p>
+                                <p class="text-sm font-medium text-yellow-800">Registration successful. Please check your email and verify your account before logging in.</p>
+                            </div>
+                        </div>
+                    @endif
+                    @if (session('status') === 'email-not-verified')
+                        <div class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-xl">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-red-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 6a9 9 0 100 18 9 9 0 000-18z" />
+                                </svg>
+                                <p class="text-sm font-medium text-red-700">Your email is not verified yet. Please verify your email from the link we sent.</p>
                             </div>
                         </div>
                     @endif

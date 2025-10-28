@@ -132,6 +132,28 @@
                             </div>
                         </div>
                     </div>
+                    @if (!Auth::user()->hasVerifiedEmail())
+                        <div class="px-6 pt-4">
+                            <div class="p-4 rounded-xl border border-yellow-200 bg-yellow-50 flex items-start space-x-3">
+                                <svg class="w-5 h-5 text-yellow-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 6a9 9 0 100 18 9 9 0 000-18z" /></svg>
+                                <div>
+                                    <p class="text-sm font-medium text-yellow-800">Your email is not verified.</p>
+                                    <p class="text-xs text-yellow-700 mt-1">Click the button below to resend the verification link to <strong>{{ Auth::user()->email }}</strong>.</p>
+                                    <form method="POST" action="{{ route('verification.send') }}" class="mt-3">
+                                        @csrf
+                                        <button type="submit" class="inline-flex items-center px-4 py-2 rounded-lg bg-purple-600 text-white text-xs font-semibold hover:bg-purple-700">Resend Verification Email</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <div class="px-6 pt-4">
+                            <div class="p-3 rounded-lg border border-green-200 bg-green-50 text-sm text-green-700 inline-flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                <span>Email verified</span>
+                            </div>
+                        </div>
+                    @endif
                     
                     <form method="post" action="{{ route('profile.update') }}" class="p-6">
                         @csrf

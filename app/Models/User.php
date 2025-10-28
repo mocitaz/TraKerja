@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Setting;
+use App\Notifications\CustomResetPassword;
+use App\Notifications\CustomVerifyEmail;
 
 /**
  * @property int $id
@@ -47,7 +49,7 @@ use App\Models\Setting;
  * @method bool incrementExportCount()
  * @method mixed getRemainingExports()
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -473,5 +475,21 @@ class User extends Authenticatable
     public function canAccessEmailNotifications(): bool
     {
         return $this->canAccessFeature('email_notifications');
+    }
+
+    /**
+     * Send the email verification notification with custom subject/layout.
+     */
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new CustomVerifyEmail());
+    }
+
+    /**
+     * Send the password reset notification with custom subject/layout.
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new CustomResetPassword($token));
     }
 }
