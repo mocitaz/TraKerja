@@ -13,7 +13,7 @@
                     <tr>
                         <td style="padding:24px; background:linear-gradient(180deg, #efe9ff 0%, #ffffff 70%); text-align:center; border-bottom:1px solid #efeaff;">
                             <div style="display:inline-block; padding:10px; border-radius:14px; background:#ffffff; box-shadow:0 4px 10px rgba(107,70,193,0.10); border:1px solid #ece7ff;">
-                                <img src="{{ config('app.url') }}/images/icon.png" alt="TraKerja" width="44" height="44" style="display:block;">
+                                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" width="44" height="44" style="display:block;">
                             </div>
                             <h1 style="margin:12px 0 2px; font-size:20px; line-height:26px; font-weight:800; color:#1f2937;">Verify your email</h1>
                             <p style="margin:0; font-size:13px; line-height:20px; color:#6b7280;">Enter the code below in TraKerja to continue</p>

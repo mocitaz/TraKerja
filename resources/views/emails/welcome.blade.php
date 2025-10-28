@@ -18,7 +18,7 @@
                                 <tr>
                                     <td align="center">
                                         <div style="display:inline-block; padding:10px; border-radius:14px; background:#ffffff; box-shadow:0 4px 10px rgba(107,70,193,0.10); border:1px solid #ece7ff;">
-                                            <img src="{{ config('app.url') }}/images/icon.png" alt="TraKerja" width="48" height="48" style="display:block;">
+                                            <img src="{{ asset('images/icon.png') }}" alt="TraKerja" width="48" height="48" style="display:block;">
                                         </div>
                                         <h1 style="margin:14px 0 4px; font-size:22px; line-height:28px; font-weight:800; color:#1f2937;">Welcome to TraKerja</h1>
                                         <p style="margin:0; font-size:13px; line-height:20px; color:#6b7280;">Your modern job application tracker</p>
