@@ -5,15 +5,15 @@
             <tr>
                 <td align="center">
                     <!-- Logo Container -->
-                    <div style="display:inline-block; padding:8px; border-radius:12px; background:#ffffff; box-shadow:0 4px 10px rgba(107,70,193,0.10); border:1px solid #ece7ff; margin-bottom:12px;">
-                        <img src="{{ asset('images/icon.png') }}" alt="TraKerja" width="40" height="40" style="display:block;">
+                    <div style="display:inline-block; padding:12px; border-radius:16px; background:#ffffff; box-shadow:0 6px 20px rgba(107,70,193,0.15); border:2px solid #ece7ff; margin-bottom:16px;">
+                        <img src="{{ asset('images/icon.png') }}" alt="TraKerja" width="56" height="56" style="display:block;">
                     </div>
                     
                     <!-- Title -->
-                    <h1 style="margin:0 0 4px; font-size:20px; line-height:26px; font-weight:800; color:#1f2937;">{{ $title ?? 'TraKerja' }}</h1>
+                    <h1 style="margin:0 0 6px; font-size:24px; line-height:30px; font-weight:900; color:#1f2937;">{{ $title ?? 'TraKerja' }}</h1>
                     
                     <!-- Subtitle -->
-                    <p style="margin:0; font-size:12px; line-height:18px; color:#6b7280;">{{ $subtitle ?? 'Professional Job Application Management' }}</p>
+                    <p style="margin:0; font-size:14px; line-height:20px; color:#6b7280; font-weight:500;">{{ $subtitle ?? 'Professional Job Application Management' }}</p>
                 </td>
             </tr>
         </table>

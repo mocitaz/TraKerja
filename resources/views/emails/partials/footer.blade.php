@@ -12,11 +12,11 @@
                                 <table role="presentation" style="border-collapse:collapse;">
                                     <tr>
                                         <td style="padding-bottom:12px;">
-                                            <div style="display:flex; align-items:center; margin-bottom:8px;">
-                                                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" width="14" height="14" style="display:block; margin-right:6px;">
+                                            <div style="display:flex; align-items:center; margin-bottom:12px;">
+                                                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" width="40" height="40" style="display:block; margin-right:12px;">
                                                 <div>
-                                                    <h3 style="margin:0; font-size:12px; font-weight:700; color:#1f2937;">TraKerja</h3>
-                                                    <p style="margin:0; font-size:8px; color:#6b7280;">Professional Job Application Management</p>
+                                                    <h3 style="margin:0; font-size:20px; font-weight:800; color:#1f2937;">TraKerja</h3>
+                                                    <p style="margin:0; font-size:12px; color:#6b7280;">Professional Job Application Management</p>
                                                 </div>
                                             </div>
                                         </td>
@@ -40,8 +40,8 @@
                                     <tr>
                                         <td style="padding-bottom:8px;">
                                             <div style="display:flex; align-items:center;">
-                                                <div style="width:16px; height:16px; margin-right:8px; display:flex; align-items:center; justify-content:center;">
-                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
+                                                <div style="width:20px; height:20px; margin-right:10px; display:flex; align-items:center; justify-content:center; background:#6b46c1; border-radius:4px;">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5">
                                                         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                                                         <polyline points="22,6 12,13 2,6"></polyline>
                                                     </svg>
@@ -56,8 +56,8 @@
                                     <tr>
                                         <td>
                                             <div style="display:flex; align-items:center;">
-                                                <div style="width:16px; height:16px; margin-right:8px; display:flex; align-items:center; justify-content:center;">
-                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
+                                                <div style="width:20px; height:20px; margin-right:10px; display:flex; align-items:center; justify-content:center; background:#e1306c; border-radius:4px;">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5">
                                                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                                                         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                                                         <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
@@ -109,19 +109,23 @@
                                 <p style="margin:0; font-size:11px; color:#6b7280;">For job seekers in Indonesia</p>
                             </td>
                             <td style="width:50%; text-align:right; vertical-align:top;">
-                                <div style="display:inline-flex; align-items:center; gap:8px;">
+                                <div style="display:inline-flex; align-items:center; gap:10px;">
                                     <a href="https://instagram.com/teknalogi.id" style="display:inline-flex; align-items:center; text-decoration:none;">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
-                                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                                        </svg>
+                                        <div style="width:24px; height:24px; background:#e1306c; border-radius:4px; display:flex; align-items:center; justify-content:center;">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5">
+                                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                            </svg>
+                                        </div>
                                     </a>
                                     <a href="mailto:infoteknalogi@gmail.com" style="display:inline-flex; align-items:center; text-decoration:none;">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
-                                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                            <polyline points="22,6 12,13 2,6"></polyline>
-                                        </svg>
+                                        <div style="width:24px; height:24px; background:#6b46c1; border-radius:4px; display:flex; align-items:center; justify-content:center;">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5">
+                                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                                <polyline points="22,6 12,13 2,6"></polyline>
+                                            </svg>
+                                        </div>
                                     </a>
                                 </div>
                             </td>
