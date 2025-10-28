@@ -39,35 +39,27 @@
                                     </tr>
                                     <tr>
                                         <td style="padding-bottom:8px;">
-                                            <div style="display:flex; align-items:center;">
-                                                <div style="width:20px; height:20px; margin-right:10px; display:flex; align-items:center; justify-content:center;">
-                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2.5">
-                                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                                        <polyline points="22,6 12,13 2,6"></polyline>
-                                                    </svg>
-                                                </div>
-                                                <div>
-                                                    <p style="margin:0; font-size:11px; color:#6b7280;">Email</p>
-                                                    <p style="margin:0; font-size:11px; color:#1f2937; font-weight:600;">infoteknalogi@gmail.com</p>
-                                                </div>
-                                            </div>
+                                            <p style="margin:0 0 4px; font-size:11px; color:#6b7280;">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2.5" style="display:inline; vertical-align:middle; margin-right:6px;">
+                                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                                </svg>
+                                                Email
+                                            </p>
+                                            <p style="margin:0; font-size:11px; color:#1f2937; font-weight:600;">infoteknalogi@gmail.com</p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div style="display:flex; align-items:center;">
-                                                <div style="width:20px; height:20px; margin-right:10px; display:flex; align-items:center; justify-content:center;">
-                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2.5">
-                                                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                                                    </svg>
-                                                </div>
-                                                <div>
-                                                    <p style="margin:0; font-size:11px; color:#6b7280;">Instagram</p>
-                                                    <p style="margin:0; font-size:11px; color:#1f2937; font-weight:600;">@teknalogi.id</p>
-                                                </div>
-                                            </div>
+                                            <p style="margin:0 0 4px; font-size:11px; color:#6b7280;">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2.5" style="display:inline; vertical-align:middle; margin-right:6px;">
+                                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                                </svg>
+                                                Instagram
+                                            </p>
+                                            <p style="margin:0; font-size:11px; color:#1f2937; font-weight:600;">@teknalogi.id</p>
                                         </td>
                                     </tr>
                                 </table>
