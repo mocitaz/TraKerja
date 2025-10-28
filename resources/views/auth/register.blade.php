@@ -280,7 +280,38 @@
                         </div>
                     </div>
 
-                    <!-- Terms -->
+                    <!-- Terms Reminder -->
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 mb-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-sm font-semibold text-blue-900 mb-1">Important: Please Read First</h4>
+                                <p class="text-xs text-blue-700 mb-2">Before creating your account, please read our Terms of Service and Privacy Policy to understand your rights and our commitments.</p>
+                                <div class="flex items-center space-x-4">
+                                    <button type="button" onclick="openTerms()" class="text-xs text-blue-600 hover:text-blue-700 font-semibold underline flex items-center">
+                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg>
+                                        Terms of Service
+                                    </button>
+                                    <button type="button" onclick="openPrivacy()" class="text-xs text-blue-600 hover:text-blue-700 font-semibold underline flex items-center">
+                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                        </svg>
+                                        Privacy Policy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms Agreement -->
                     <div class="space-y-4">
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
@@ -292,15 +323,14 @@
                                        disabled>
                             </div>
                             <div class="ml-3 text-sm">
-                        <label for="terms" class="text-gray-700">
-                            I agree to the 
-                            <button type="button" onclick="openTerms()" class="text-primary-600 hover:text-primary-700 font-semibold underline">Terms of Service</button> 
-                            and 
-                            <button type="button" onclick="openPrivacy()" class="text-primary-600 hover:text-primary-700 font-semibold underline">Privacy Policy</button>
-                        </label>
+                                <label for="terms" class="text-gray-700">
+                                    I have read and agree to the 
+                                    <button type="button" onclick="openTerms()" class="text-primary-600 hover:text-primary-700 font-semibold underline">Terms of Service</button> 
+                                    and 
+                                    <button type="button" onclick="openPrivacy()" class="text-primary-600 hover:text-primary-700 font-semibold underline">Privacy Policy</button>
+                                </label>
                             </div>
                         </div>
-                        
                     </div>
 
                     <!-- Submit Button -->
