@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User Registration - TraKerja</title>
+</head>
+<body style="margin:0; padding:0; background:#f6f2ff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color:#111827;">
+    <table role="presentation" style="width:100%; border-collapse:collapse;">
+        <tr>
+            <td align="center" style="padding:36px 16px;">
+                <table role="presentation" style="width:100%; max-width:640px; border-collapse:collapse; background:#ffffff; border-radius:14px; box-shadow:0 8px 24px rgba(107,70,193,0.08), 0 2px 8px rgba(0,0,0,0.03); overflow:hidden;">
+                    <!-- Compact Professional Header -->
+                    @include('emails.partials.header', [
+                        'title' => 'New User Registration',
+                        'subtitle' => 'A new user has joined TraKerja'
+                    ])
+
+                    <!-- Body -->
+                    <tr>
+                        <td style="padding:24px 28px 8px;">
+                            <p style="margin:0 0 10px; font-size:14px; line-height:22px; color:#111827;">Hello Admin,</p>
+                            <p style="margin:0 0 16px; font-size:14px; line-height:22px; color:#374151;">A new user has successfully registered on TraKerja platform. Here are the details:</p>
+
+                            <!-- User Details Card -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; background:#fbfaff; border:1px solid #f0eaff; border-radius:10px; overflow:hidden; margin:12px 0 18px;">
+                                <tr>
+                                    <td style="padding:18px 20px;">
+                                        <div style="display:flex; align-items:center; margin-bottom:12px;">
+                                            <div style="width:8px; height:8px; background:#10b981; border-radius:50%; margin-right:8px;"></div>
+                                            <span style="font-size:12px; color:#6b7280; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">New Registration</span>
+                                        </div>
+                                        <h2 style="margin:0 0 12px; font-size:18px; line-height:24px; font-weight:700; color:#1f2937;">{{ $user->name }}</h2>
+                                        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:12px;">
+                                            <div style="display:flex; align-items:center;">
+                                                <div style="width:16px; height:16px; margin-right:8px; display:flex; align-items:center; justify-content:center; background:#6b46c1; border-radius:3px;">
+                                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5">
+                                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                                    </svg>
+                                                </div>
+                                                <span style="font-size:13px; color:#1f2937; font-weight:600;">{{ $user->email }}</span>
+                                            </div>
+                                        </div>
+                                        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                                            <span style="display:inline-block; padding:4px 10px; background:#dcfce7; color:#15803d; border-radius:6px; font-size:12px; font-weight:600;">Registered</span>
+                                            <span style="font-size:12px; color:#6b7280;">{{ $user->created_at->format('d M Y, H:i') }}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Quick Actions -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; background:#f5f1ff; border:1px solid #ece7ff; border-radius:10px; margin:12px 0 18px;">
+                                <tr>
+                                    <td style="padding:16px; text-align:center;">
+                                        <p style="margin:0 0 8px; font-size:13px; line-height:20px; color:#4b5563; font-weight:700;">Quick Actions</p>
+                                        <p style="margin:0; font-size:13px; line-height:20px; color:#6b7280;">You can view and manage this user from the admin panel.</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- CTA Button -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin:18px 0 12px;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="{{ config('app.url') }}/admin/users" style="display:inline-block; padding:12px 22px; background:linear-gradient(135deg, #7c5ce0 0%, #6b46c1 100%); color:#ffffff; text-decoration:none; border-radius:8px; font-weight:700; font-size:14px; letter-spacing:0.2px; box-shadow:0 6px 14px rgba(107,70,193,0.20);">View Admin Panel</a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-top:8px;">
+                                <tr>
+                                    <td style="font-size:12px; line-height:18px; color:#6b7280;">This notification was sent automatically when a new user registered on TraKerja.</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Compact Professional Footer -->
+                    @include('emails.partials.footer')
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

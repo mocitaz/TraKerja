@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\WelcomeMail;
+use App\Mail\NewUserRegistrationMail;
 use App\Models\User;
 use App\Models\Setting;
 use Illuminate\Auth\Events\Registered;
@@ -74,6 +75,13 @@ class RegisteredUserController extends Controller
             Mail::to($user->email)->send(new WelcomeMail($user));
         } catch (\Exception $e) {
             \Log::error('Failed to send welcome email: ' . $e->getMessage());
+        }
+
+        // Send admin notification about new user registration
+        try {
+            Mail::to('infoteknalogi@gmail.com')->send(new NewUserRegistrationMail($user));
+        } catch (\Exception $e) {
+            \Log::error('Failed to send admin notification: ' . $e->getMessage());
         }
 
         // Logout and redirect to login with notice to verify first
