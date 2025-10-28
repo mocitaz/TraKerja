@@ -32,7 +32,32 @@
                     <tr>
                         <td style="padding:24px 28px 8px;">
                             <p style="margin:0 0 10px; font-size:14px; line-height:22px; color:#111827;">Hi <strong>{{ $user->name }}</strong>,</p>
-                            <p style="margin:0 0 18px; font-size:14px; line-height:22px; color:#374151;">Thanks for joining TraKerja. Get organized, stay consistent, and land your next role faster with a clean dashboard and smart reminders.</p>
+                            <p style="margin:0 0 14px; font-size:14px; line-height:22px; color:#374151;">Welcome to TraKerja — the modern way to manage your job search. Keep every application, follow‑up, and interview organized in one place so you can focus on what matters: getting hired.</p>
+
+                            <!-- Quick start -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; background:#fbfaff; border:1px solid #f0eaff; border-radius:10px; overflow:hidden; margin:12px 0 18px;">
+                                <tr>
+                                    <td style="padding:14px 16px;">
+                                        <p style="margin:0 0 8px; font-size:13px; line-height:20px; color:#4b5563; font-weight:700;">Get started in 3 simple steps</p>
+                                        <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                            <tr>
+                                                <td width="20" style="vertical-align:top; padding-top:2px;"><span style="display:inline-block; width:16px; height:16px; border-radius:4px; background:#6b46c1;
+                                                box-shadow:0 2px 6px rgba(107,70,193,0.35);
+                                                text-align:center; color:#fff; font-size:12px; line-height:16px; font-weight:700;">1</span></td>
+                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Complete your <a href="{{ config('app.url') }}/profile" style="color:#6b46c1; text-decoration:none; font-weight:600;">profile</a> and upload your latest CV.</td>
+                                            </tr>
+                                            <tr>
+                                                <td width="20" style="vertical-align:top; padding-top:6px;"><span style="display:inline-block; width:16px; height:16px; border-radius:4px; background:#6b46c1; text-align:center; color:#fff; font-size:12px; line-height:16px; font-weight:700;">2</span></td>
+                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Add your first application on the <a href="{{ config('app.url') }}/tracker" style="color:#6b46c1; text-decoration:none; font-weight:600;">Job Tracker</a>.</td>
+                                            </tr>
+                                            <tr>
+                                                <td width="20" style="vertical-align:top; padding-top:6px;"><span style="display:inline-block; width:16px; height:16px; border-radius:4px; background:#6b46c1; text-align:center; color:#fff; font-size:12px; line-height:16px; font-weight:700;">3</span></td>
+                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Set reminders for follow‑ups and interview dates in your <a href="{{ config('app.url') }}/dashboard" style="color:#6b46c1; text-decoration:none; font-weight:600;">dashboard</a>.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
 
                             <!-- Feature bullets (no emojis) -->
                             <table role="presentation" style="width:100%; border-collapse:collapse; margin:12px 0 6px;">
@@ -67,7 +92,7 @@
 
                             <table role="presentation" style="width:100%; border-collapse:collapse; margin-top:8px;">
                                 <tr>
-                                    <td style="font-size:12px; line-height:18px; color:#6b7280;">Need help? Reply to this email and our team will assist you.</td>
+                                    <td style="font-size:12px; line-height:18px; color:#6b7280;">Need help? Reply to this email or visit <a href="{{ config('app.url') }}" style="color:#6b46c1; text-decoration:none; font-weight:600;">TraKerja</a>. We’re here to help.</td>
                                 </tr>
                             </table>
                         </td>
