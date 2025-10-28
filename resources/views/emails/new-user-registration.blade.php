@@ -33,8 +33,8 @@
                                         <h2 style="margin:0 0 12px; font-size:18px; line-height:24px; font-weight:700; color:#1f2937;">{{ $user->name }}</h2>
                                         <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:12px;">
                                             <div style="display:flex; align-items:center;">
-                                                <div style="width:16px; height:16px; margin-right:8px; display:flex; align-items:center; justify-content:center; background:#6b46c1; border-radius:3px;">
-                                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5">
+                                                <div style="width:16px; height:16px; margin-right:8px; display:flex; align-items:center; justify-content:center;">
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
                                                         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                                                         <polyline points="22,6 12,13 2,6"></polyline>
                                                     </svg>
