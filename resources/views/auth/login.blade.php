@@ -192,8 +192,19 @@
                                        type="password" 
                                        autocomplete="current-password" 
                                        required
-                                       class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('password') border-red-300 bg-red-50/50 @enderror"
+                                       class="block w-full pl-12 pr-12 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('password') border-red-300 bg-red-50/50 @enderror"
                                        placeholder="Enter your password">
+                                <button type="button" 
+                                        onclick="togglePassword()" 
+                                        class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                                    <svg id="eye-icon" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    <svg id="eye-off-icon" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
+                                    </svg>
+                                </button>
                             </div>
                             @error('password')
                                 <p class="mt-2 text-sm text-red-600 flex items-center">
@@ -206,25 +217,27 @@
                         </div>
 
                         <!-- Remember Me & Forgot Password -->
-                        <div class="flex items-center justify-between">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
                             <div class="flex items-center group cursor-pointer">
-                                <input id="remember_me" 
-                                       name="remember" 
-                                       type="checkbox" 
-                                       class="h-5 w-5 text-primary-600 focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 border-gray-300 rounded cursor-pointer transition-all duration-200">
-                                <label for="remember_me" class="ml-3 block text-sm font-semibold text-gray-700 cursor-pointer group-hover:text-primary-600 transition-colors duration-200">
-                                    <span class="flex items-center">
-                                        <svg class="w-4 h-4 mr-1.5 text-primary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                <div class="relative">
+                                    <input id="remember_me" 
+                                           name="remember" 
+                                           type="checkbox" 
+                                           class="sr-only">
+                                    <div class="w-5 h-5 border-2 border-gray-300 rounded-md flex items-center justify-center transition-all duration-200 group-hover:border-primary-500 checkbox-custom">
+                                        <svg class="w-3 h-3 text-white opacity-0 transition-opacity duration-200 check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
                                         </svg>
-                                        Remember Me
-                                    </span>
+                                    </div>
+                                </div>
+                                <label for="remember_me" class="ml-3 block text-sm font-semibold text-gray-700 cursor-pointer group-hover:text-primary-600 transition-colors duration-200">
+                                    Remember Me
                                 </label>
                             </div>
 
                             @if (Route::has('password.request'))
                                 <a href="{{ route('password.request') }}" 
-                                   class="text-sm text-primary-600 hover:text-primary-700 font-semibold transition-colors duration-200 flex items-center group">
+                                   class="text-sm text-primary-600 hover:text-primary-700 font-semibold transition-colors duration-200 flex items-center group self-start sm:self-auto">
                                     Forgot Password?
                                     <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -258,6 +271,59 @@
     </div>
 
     <script>
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+            const eyeOffIcon = document.getElementById('eye-off-icon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.add('hidden');
+                eyeOffIcon.classList.remove('hidden');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('hidden');
+                eyeOffIcon.classList.add('hidden');
+            }
+        }
+
+        // Custom checkbox functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkbox = document.getElementById('remember_me');
+            const customCheckbox = document.querySelector('.checkbox-custom');
+            const checkIcon = document.querySelector('.check-icon');
+            
+            // Handle checkbox click
+            customCheckbox.addEventListener('click', function() {
+                checkbox.checked = !checkbox.checked;
+                updateCheckboxAppearance();
+            });
+            
+            // Handle label click
+            document.querySelector('label[for="remember_me"]').addEventListener('click', function(e) {
+                e.preventDefault();
+                checkbox.checked = !checkbox.checked;
+                updateCheckboxAppearance();
+            });
+            
+            // Update checkbox appearance
+            function updateCheckboxAppearance() {
+                if (checkbox.checked) {
+                    customCheckbox.classList.add('bg-primary-600', 'border-primary-600');
+                    customCheckbox.classList.remove('border-gray-300');
+                    checkIcon.classList.remove('opacity-0');
+                } else {
+                    customCheckbox.classList.remove('bg-primary-600', 'border-primary-600');
+                    customCheckbox.classList.add('border-gray-300');
+                    checkIcon.classList.add('opacity-0');
+                }
+            }
+            
+            // Initialize checkbox appearance
+            updateCheckboxAppearance();
+        });
+
         // Handle login success notification with delay
         @if (session('status') === 'login-successful')
             document.addEventListener('DOMContentLoaded', function() {
