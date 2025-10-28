@@ -31,16 +31,8 @@
                                             <span style="font-size:12px; color:#6b7280; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">New Registration</span>
                                         </div>
                                         <h2 style="margin:0 0 12px; font-size:18px; line-height:24px; font-weight:700; color:#1f2937;">{{ $user->name }}</h2>
-                                        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:12px;">
-                                            <div style="display:flex; align-items:center;">
-                                                <div style="width:16px; height:16px; margin-right:8px; display:flex; align-items:center; justify-content:center;">
-                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
-                                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                                        <polyline points="22,6 12,13 2,6"></polyline>
-                                                    </svg>
-                                                </div>
-                                                <span style="font-size:13px; color:#1f2937; font-weight:600;">{{ $user->email }}</span>
-                                            </div>
+                                        <div style="margin-bottom:12px;">
+                                            <span style="font-size:13px; color:#1f2937; font-weight:600;">{{ $user->email }}</span>
                                         </div>
                                         <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
                                             <span style="display:inline-block; padding:4px 10px; background:#dcfce7; color:#15803d; border-radius:6px; font-size:12px; font-weight:600;">Registered</span>
