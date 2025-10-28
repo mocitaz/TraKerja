@@ -25,7 +25,7 @@
         {{ $slot ?? '' }}
         @yield('content')
 
-        @php($noFooterRoutes = ['login', 'register', 'password.request', 'legal.terms', 'legal.privacy'])
+        @php($noFooterRoutes = ['login', 'register', 'password.request', 'password.reset', 'legal.terms', 'legal.privacy'])
         @unless(in_array(Route::currentRouteName(), $noFooterRoutes))
             <!-- Footer -->
             <x-footer />

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Setting;
 
 class CvBuilderController extends Controller
 {
@@ -84,7 +85,7 @@ class CvBuilderController extends Controller
         $premiumTemplates = ['professional', 'creative', 'elegant'];
         
         // Phase 2 & 3: Premium templates are locked for non-premium users
-        if (current_phase() >= 2) {
+        if (Setting::getMonetizationPhase() >= 2) {
             if (in_array($template, $premiumTemplates) && !$user->is_premium) {
                 return redirect()->back()->with('error', 'This template is only available for premium users. Upgrade to access premium templates!');
             }
@@ -140,7 +141,7 @@ class CvBuilderController extends Controller
         $premiumTemplates = ['professional', 'creative', 'elegant'];
         
         // Phase 2 & 3: Premium templates are locked for non-premium users
-        if (current_phase() >= 2) {
+        if (Setting::getMonetizationPhase() >= 2) {
             if (in_array($template, $premiumTemplates) && !$user->is_premium) {
                 return redirect()->back()->with('error', 'This template is only available for premium users. Upgrade to access premium templates!');
             }

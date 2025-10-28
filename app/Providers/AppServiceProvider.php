@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Force app URL and HTTPS only in production to avoid cross-domain issues during local dev
+        if (app()->environment('production')) {
+            $appUrl = config('app.url');
+            if (! empty($appUrl)) {
+                URL::forceRootUrl($appUrl);
+            }
+
+            if (is_string($appUrl) && str_starts_with($appUrl, 'https://')) {
+                URL::forceScheme('https');
+            }
+        }
     }
 }
