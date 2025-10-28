@@ -14,7 +14,7 @@ class UserManagement extends Component
     public $search = '';
     public $filterPremium = 'all'; // all, premium, free
     public $filterRole = 'all'; // all, admin, user
-    public $perPage = 10;
+    public $perPage = 10; // supports 10, 20, 50, 100, 'all'
     
     public $showEditModal = false;
     public $showCreateAdminModal = false;
@@ -43,6 +43,11 @@ class UserManagement extends Component
     }
     
     public function updatingFilterRole()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingPerPage()
     {
         $this->resetPage();
     }
@@ -218,9 +223,14 @@ class UserManagement extends Component
     
     public function render()
     {
+        $effectivePerPage = ($this->perPage === 'all') ? 1000000 : (int) $this->perPage;
+        if ($effectivePerPage <= 0) {
+            $effectivePerPage = 10;
+        }
+
         $users = $this->getUsersQuery()
             ->latest()
-            ->paginate($this->perPage);
+            ->paginate($effectivePerPage);
         
         // Stats only for regular users (exclude admins)
         $stats = [

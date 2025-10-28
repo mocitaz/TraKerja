@@ -86,7 +86,7 @@
             </div>
         </div>
         <div class="p-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
                     <input type="text" wire:model.live="search" placeholder="Cari nama atau email..." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all">
@@ -97,6 +97,16 @@
                         <option value="all">Semua Pengguna</option>
                         <option value="premium">Premium Saja</option>
                         <option value="free">Gratis Saja</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Rows per page</label>
+                    <select wire:model.live="perPage" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="all">All</option>
                     </select>
                 </div>
             </div>
@@ -205,8 +215,13 @@
                 </tbody>
             </table>
         </div>
-        <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
-            {{ $users->links() }}
+        <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
+            <div class="text-xs text-gray-500">
+                Showing {{ $users->firstItem() ?? 0 }} to {{ $users->lastItem() ?? $users->count() }} of {{ $users->total() }} users
+            </div>
+            <div>
+                {{ $users->links() }}
+            </div>
         </div>
     </div>
 
