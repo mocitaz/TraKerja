@@ -18,8 +18,8 @@
         </x-slot:subcopy>
     @endisset
 
-    {{-- Footer intentionally removed --}}
+    {{-- Footer --}}
     <x-slot:footer>
-        
+    @include('emails.partials.footer')
     </x-slot:footer>
 </x-mail::layout>
