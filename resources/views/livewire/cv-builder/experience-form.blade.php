@@ -1,12 +1,12 @@
 <div class="space-y-6">
     <!-- Header -->
-    <div class="flex items-center justify-between">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
         <div>
             <h3 class="text-lg font-semibold text-gray-900">Work Experience</h3>
             <p class="text-sm text-gray-600">Add your professional work history</p>
         </div>
         <button wire:click="openModal" 
-                class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition flex items-center gap-2">
+                class="w-full sm:w-auto px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition flex items-center justify-center gap-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
             </svg>
@@ -19,11 +19,11 @@
         <div class="space-y-4">
             @foreach($experiences as $experience)
                 <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
-                    <div class="flex items-start justify-between">
-                        <div class="flex-1">
-                            <h4 class="font-semibold text-gray-900">{{ $experience->position }}</h4>
-                            <p class="text-sm text-gray-700">{{ $experience->company_name }}</p>
-                            <p class="text-sm text-gray-500">
+                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-semibold text-gray-900 truncate">{{ $experience->position }}</h4>
+                            <p class="text-sm text-gray-700 truncate">{{ $experience->company_name }}</p>
+                            <p class="text-sm text-gray-500 break-words">
                                 {{ $experience->employment_type }} • 
                                 {{ $experience->start_date?->format('M Y') }} - 
                                 {{ $experience->is_current ? 'Present' : $experience->end_date?->format('M Y') }}
@@ -32,29 +32,29 @@
                                 @endif
                             </p>
                             @if($experience->description)
-                                <p class="text-sm text-gray-600 mt-2">{{ Str::limit($experience->description, 150) }}</p>
+                                <p class="text-sm text-gray-600 mt-2 break-words">{{ Str::limit($experience->description, 150) }}</p>
                             @endif
                         </div>
 
                         <!-- Actions -->
-                        <div class="flex items-center gap-2 ml-4">
-                            <button wire:click="moveUp({{ $experience->id }})" class="p-1 text-gray-400 hover:text-gray-600">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex items-center justify-end sm:justify-start gap-1 sm:gap-2 flex-shrink-0">
+                            <button wire:click="moveUp({{ $experience->id }})" class="p-1.5 sm:p-1 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </button>
-                            <button wire:click="moveDown({{ $experience->id }})" class="p-1 text-gray-400 hover:text-gray-600">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <button wire:click="moveDown({{ $experience->id }})" class="p-1.5 sm:p-1 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
-                            <button wire:click="edit({{ $experience->id }})" class="p-2 text-primary-600 hover:bg-primary-50 rounded">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <button wire:click="edit({{ $experience->id }})" class="p-1.5 sm:p-2 text-primary-600 hover:bg-primary-50 rounded">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                 </svg>
                             </button>
-                            <button wire:click="delete({{ $experience->id }})" wire:confirm="Delete this experience?" class="p-2 text-red-600 hover:bg-red-50 rounded">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <button wire:click="delete({{ $experience->id }})" wire:confirm="Delete this experience?" class="p-1.5 sm:p-2 text-red-600 hover:bg-red-50 rounded">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                 </svg>
                             </button>
@@ -86,18 +86,18 @@
                  @click="closing = true; document.body.style.overflow = 'auto'; $wire.closeModal()"></div>
             
             <!-- Modal Content -->
-            <div class="relative bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col">
+            <div class="relative bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col mx-4 sm:mx-0">
                 <!-- Modal Header - Sticky -->
-                <div class="border-b border-gray-200 px-6 py-4 bg-white rounded-t-lg">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-900">{{ $editMode ? 'Edit Experience' : 'Add New Experience' }}</h3>
+                <div class="border-b border-gray-200 px-4 sm:px-6 py-4 bg-white rounded-t-lg">
+                    <div class="flex items-start sm:items-center justify-between gap-3">
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-lg sm:text-xl font-bold text-gray-900 truncate">{{ $editMode ? 'Edit Experience' : 'Add New Experience' }}</h3>
                             <p class="text-sm text-gray-500 mt-1">Fill in your work experience details</p>
                         </div>
                         <button type="button"
                                 @click="closing = true; document.body.style.overflow = 'auto'; $wire.closeModal()" 
-                                class="text-gray-400 hover:text-gray-600 transition">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                class="flex-shrink-0 text-gray-400 hover:text-gray-600 transition p-1">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
@@ -105,7 +105,7 @@
                 </div>
 
                 <!-- Modal Body - Scrollable -->
-                <form wire:submit.prevent="save" class="px-6 py-6 overflow-y-auto flex-1">
+                <form wire:submit.prevent="save" class="px-4 sm:px-6 py-4 sm:py-6 overflow-y-auto flex-1">
                     <div class="space-y-6">
                         <!-- Company Name -->
                         <div>
@@ -216,18 +216,18 @@
                     </div>
 
                     <!-- Modal Footer -->
-                    <div class="flex justify-end gap-3 pt-6 mt-6 border-t border-gray-200">
-                            <button type="button" 
-                                @click="closing = true; document.body.style.overflow = 'auto'; $wire.closeModal()"
-                                class="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium">
+                    <div class="flex flex-col sm:flex-row justify-end gap-3 pt-6 mt-6 border-t border-gray-200 px-4 sm:px-6">
+                        <button type="button" 
+                            @click="closing = true; document.body.style.overflow = 'auto'; $wire.closeModal()"
+                            class="w-full sm:w-auto px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium">
                             Cancel
                         </button>
                         <button type="submit" 
-                                class="px-6 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition font-medium shadow-sm">
+                                class="w-full sm:w-auto px-6 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition font-medium shadow-sm">
                             <span wire:loading.remove wire:target="save">
                                 {{ $editMode ? 'Update Experience' : 'Save Experience' }}
                             </span>
-                            <span wire:loading wire:target="save" class="flex items-center gap-2">
+                            <span wire:loading wire:target="save" class="flex items-center justify-center gap-2">
                                 <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>

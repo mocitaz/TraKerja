@@ -73,38 +73,77 @@
             <!-- Tabs Navigation -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6" x-data="{ activeTab: 'experiences' }" x-init="$watch('activeTab', () => { Livewire.dispatch('closeAllModals') })">
                 <div class="border-b border-gray-200">
-                    <nav class="-mb-px flex space-x-8 px-6">
-                        <button @click="activeTab = 'experiences'" 
-                                :class="activeTab === 'experiences' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-                                class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                            <i class="fas fa-briefcase mr-2"></i>Work Experience
-                        </button>
-                        <button @click="activeTab = 'education'" 
-                                :class="activeTab === 'education' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-                                class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                            <i class="fas fa-graduation-cap mr-2"></i>Education
-                        </button>
-                        <button @click="activeTab = 'skills'" 
-                                :class="activeTab === 'skills' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-                                class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                            <i class="fas fa-star mr-2"></i>Skills
-                        </button>
-                        <button @click="activeTab = 'organizations'" 
-                                :class="activeTab === 'organizations' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-                                class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                            <i class="fas fa-users mr-2"></i>Organizations
-                        </button>
-                        <button @click="activeTab = 'achievements'" 
-                                :class="activeTab === 'achievements' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-                                class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                            <i class="fas fa-trophy mr-2"></i>Achievements
-                        </button>
-                        <button @click="activeTab = 'projects'" 
-                                :class="activeTab === 'projects' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-                                class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                            <i class="fas fa-code mr-2"></i>Projects
-                        </button>
-                    </nav>
+                    <!-- Mobile: Scrollable tabs -->
+                    <div class="block sm:hidden">
+                        <nav class="flex space-x-1 px-4 py-2 overflow-x-auto scrollbar-hide">
+                            <button @click="activeTab = 'experiences'" 
+                                    :class="activeTab === 'experiences' ? 'bg-primary-100 text-primary-700 border-primary-200' : 'bg-gray-50 text-gray-600 border-gray-200'"
+                                    class="flex-shrink-0 px-3 py-2 rounded-lg border text-xs font-medium transition-colors">
+                                <i class="fas fa-briefcase mr-1"></i>Experience
+                            </button>
+                            <button @click="activeTab = 'education'" 
+                                    :class="activeTab === 'education' ? 'bg-primary-100 text-primary-700 border-primary-200' : 'bg-gray-50 text-gray-600 border-gray-200'"
+                                    class="flex-shrink-0 px-3 py-2 rounded-lg border text-xs font-medium transition-colors">
+                                <i class="fas fa-graduation-cap mr-1"></i>Education
+                            </button>
+                            <button @click="activeTab = 'skills'" 
+                                    :class="activeTab === 'skills' ? 'bg-primary-100 text-primary-700 border-primary-200' : 'bg-gray-50 text-gray-600 border-gray-200'"
+                                    class="flex-shrink-0 px-3 py-2 rounded-lg border text-xs font-medium transition-colors">
+                                <i class="fas fa-star mr-1"></i>Skills
+                            </button>
+                            <button @click="activeTab = 'organizations'" 
+                                    :class="activeTab === 'organizations' ? 'bg-primary-100 text-primary-700 border-primary-200' : 'bg-gray-50 text-gray-600 border-gray-200'"
+                                    class="flex-shrink-0 px-3 py-2 rounded-lg border text-xs font-medium transition-colors">
+                                <i class="fas fa-users mr-1"></i>Organizations
+                            </button>
+                            <button @click="activeTab = 'achievements'" 
+                                    :class="activeTab === 'achievements' ? 'bg-primary-100 text-primary-700 border-primary-200' : 'bg-gray-50 text-gray-600 border-gray-200'"
+                                    class="flex-shrink-0 px-3 py-2 rounded-lg border text-xs font-medium transition-colors">
+                                <i class="fas fa-trophy mr-1"></i>Achievements
+                            </button>
+                            <button @click="activeTab = 'projects'" 
+                                    :class="activeTab === 'projects' ? 'bg-primary-100 text-primary-700 border-primary-200' : 'bg-gray-50 text-gray-600 border-gray-200'"
+                                    class="flex-shrink-0 px-3 py-2 rounded-lg border text-xs font-medium transition-colors">
+                                <i class="fas fa-code mr-1"></i>Projects
+                            </button>
+                        </nav>
+                    </div>
+                    
+                    <!-- Desktop: Full tabs -->
+                    <div class="hidden sm:block">
+                        <nav class="-mb-px flex space-x-8 px-6">
+                            <button @click="activeTab = 'experiences'" 
+                                    :class="activeTab === 'experiences' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                                <i class="fas fa-briefcase mr-2"></i>Work Experience
+                            </button>
+                            <button @click="activeTab = 'education'" 
+                                    :class="activeTab === 'education' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                                <i class="fas fa-graduation-cap mr-2"></i>Education
+                            </button>
+                            <button @click="activeTab = 'skills'" 
+                                    :class="activeTab === 'skills' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                                <i class="fas fa-star mr-2"></i>Skills
+                            </button>
+                            <button @click="activeTab = 'organizations'" 
+                                    :class="activeTab === 'organizations' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                                <i class="fas fa-users mr-2"></i>Organizations
+                            </button>
+                            <button @click="activeTab = 'achievements'" 
+                                    :class="activeTab === 'achievements' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                                <i class="fas fa-trophy mr-2"></i>Achievements
+                            </button>
+                            <button @click="activeTab = 'projects'" 
+                                    :class="activeTab === 'projects' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                                <i class="fas fa-code mr-2"></i>Projects
+                            </button>
+                        </nav>
+                    </div>
                 </div>
 
                 <!-- Tab Contents -->
@@ -157,5 +196,19 @@
 
     <style>
         [x-cloak] { display: none !important; }
+        
+        /* Hide scrollbar for mobile tabs */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Smooth scrolling for mobile tabs */
+        .overflow-x-auto {
+            scroll-behavior: smooth;
+        }
     </style>
 </x-app-layout>
