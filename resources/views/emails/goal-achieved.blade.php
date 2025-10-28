@@ -10,22 +10,11 @@
         <tr>
             <td align="center" style="padding:36px 16px;">
                 <table role="presentation" style="width:100%; max-width:640px; border-collapse:collapse; background:#ffffff; border-radius:14px; box-shadow:0 8px 24px rgba(107,70,193,0.08), 0 2px 8px rgba(0,0,0,0.03); overflow:hidden;">
-                    <!-- Header with soft gradient -->
-                    <tr>
-                        <td style="padding:28px; background:linear-gradient(180deg, #efe9ff 0%, #ffffff 70%); text-align:center; border-bottom:1px solid #efeaff;">
-                            <table role="presentation" style="width:100%; border-collapse:collapse;">
-                                <tr>
-                                    <td align="center">
-                                        <div style="display:inline-block; padding:10px; border-radius:14px; background:#ffffff; box-shadow:0 4px 10px rgba(107,70,193,0.10); border:1px solid #ece7ff;">
-                                            <img src="{{ asset('images/icon.png') }}" alt="TraKerja" width="48" height="48" style="display:block;">
-                                        </div>
-                                        <h1 style="margin:14px 0 4px; font-size:22px; line-height:28px; font-weight:800; color:#1f2937;">Goal Achieved!</h1>
-                                        <p style="margin:0; font-size:13px; line-height:20px; color:#6b7280;">Congratulations on reaching your milestone</p>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
+                    <!-- Compact Professional Header -->
+                    @include('emails.partials.header', [
+                        'title' => 'Goal Achieved!',
+                        'subtitle' => 'Congratulations on reaching your milestone'
+                    ])
 
                     <!-- Body -->
                     <tr>
