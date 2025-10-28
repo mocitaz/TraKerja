@@ -32,7 +32,7 @@
                                             <tr>
                                                 <td style="padding:6px 0;">
                                                     <div style="display:flex; align-items:center;">
-                                                        <span style="display:inline-block; width:6px; height:6px; background:#6b46c1; border-radius:50%; margin-right:10px;"></span>
+                                                        <span style="display:inline-block; width:6px; height:6px; background:#6b7280; border-radius:50%; margin-right:10px;"></span>
                                                         <span style="font-size:13px; line-height:20px; color:#4b5563;">Access to all job tracking features</span>
                                                     </div>
                                                 </td>
@@ -40,7 +40,7 @@
                                             <tr>
                                                 <td style="padding:6px 0;">
                                                     <div style="display:flex; align-items:center;">
-                                                        <span style="display:inline-block; width:6px; height:6px; background:#6b46c1; border-radius:50%; margin-right:10px;"></span>
+                                                        <span style="display:inline-block; width:6px; height:6px; background:#6b7280; border-radius:50%; margin-right:10px;"></span>
                                                         <span style="font-size:13px; line-height:20px; color:#4b5563;">Receive important notifications</span>
                                                     </div>
                                                 </td>
@@ -48,7 +48,7 @@
                                             <tr>
                                                 <td style="padding:6px 0;">
                                                     <div style="display:flex; align-items:center;">
-                                                        <span style="display:inline-block; width:6px; height:6px; background:#6b46c1; border-radius:50%; margin-right:10px;"></span>
+                                                        <span style="display:inline-block; width:6px; height:6px; background:#6b7280; border-radius:50%; margin-right:10px;"></span>
                                                         <span style="font-size:13px; line-height:20px; color:#4b5563;">Secure account recovery options</span>
                                                     </div>
                                                 </td>

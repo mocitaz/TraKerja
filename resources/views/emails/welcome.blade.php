@@ -30,17 +30,16 @@
                                         <p style="margin:0 0 8px; font-size:13px; line-height:20px; color:#4b5563; font-weight:700;">Get started in 3 simple steps</p>
                                         <table role="presentation" style="width:100%; border-collapse:collapse;">
                                             <tr>
-                                                <td width="20" style="vertical-align:top; padding-top:2px;"><span style="display:inline-block; width:16px; height:16px; border-radius:4px; background:#6b46c1;
-                                                box-shadow:0 2px 6px rgba(107,70,193,0.35);
+                                                <td width="20" style="vertical-align:top; padding-top:2px;"><span style="display:inline-block; width:16px; height:16px; border-radius:4px; background:#6b7280;
                                                 text-align:center; color:#fff; font-size:12px; line-height:16px; font-weight:700;">1</span></td>
                                                 <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Complete your <a href="{{ config('app.url') }}/profile" style="color:#6b46c1; text-decoration:none; font-weight:600;">profile</a> and create your CV.</td>
                                             </tr>
                                             <tr>
-                                                <td width="20" style="vertical-align:top; padding-top:6px;"><span style="display:inline-block; width:16px; height:16px; border-radius:4px; background:#6b46c1; text-align:center; color:#fff; font-size:12px; line-height:16px; font-weight:700;">2</span></td>
+                                                <td width="20" style="vertical-align:top; padding-top:6px;"><span style="display:inline-block; width:16px; height:16px; border-radius:4px; background:#6b7280; text-align:center; color:#fff; font-size:12px; line-height:16px; font-weight:700;">2</span></td>
                                                 <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Add your first application on the <a href="{{ config('app.url') }}/tracker" style="color:#6b46c1; text-decoration:none; font-weight:600;">Job Tracker</a>.</td>
                                             </tr>
                                             <tr>
-                                                <td width="20" style="vertical-align:top; padding-top:6px;"><span style="display:inline-block; width:16px; height:16px; border-radius:4px; background:#6b46c1; text-align:center; color:#fff; font-size:12px; line-height:16px; font-weight:700;">3</span></td>
+                                                <td width="20" style="vertical-align:top; padding-top:6px;"><span style="display:inline-block; width:16px; height:16px; border-radius:4px; background:#6b7280; text-align:center; color:#fff; font-size:12px; line-height:16px; font-weight:700;">3</span></td>
                                                 <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Set reminders for follow‑ups and interview dates in your <a href="{{ config('app.url') }}/dashboard" style="color:#6b46c1; text-decoration:none; font-weight:600;">dashboard</a>.</td>
                                             </tr>
                                         </table>
@@ -54,15 +53,15 @@
                                     <td style="padding:8px 0;">
                                         <table role="presentation" style="border-collapse:collapse; width:100%;">
                                             <tr>
-                                                <td width="12" style="vertical-align:top; padding-top:4px;"><span style="display:inline-block; width:6px; height:6px; background:#6b46c1; border-radius:50%;"></span></td>
+                                                <td width="12" style="vertical-align:top; padding-top:4px;"><span style="display:inline-block; width:6px; height:6px; background:#6b7280; border-radius:50%;"></span></td>
                                                 <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Track every application in a single, elegant board</td>
                                             </tr>
                                             <tr>
-                                                <td width="12" style="vertical-align:top; padding-top:4px;"><span style="display:inline-block; width:6px; height:6px; background:#6b46c1; border-radius:50%;"></span></td>
+                                                <td width="12" style="vertical-align:top; padding-top:4px;"><span style="display:inline-block; width:6px; height:6px; background:#6b7280; border-radius:50%;"></span></td>
                                                 <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Build polished CVs with professional templates</td>
                                             </tr>
                                             <tr>
-                                                <td width="12" style="vertical-align:top; padding-top:4px;"><span style="display:inline-block; width:6px; height:6px; background:#6b46c1; border-radius:50%;"></span></td>
+                                                <td width="12" style="vertical-align:top; padding-top:4px;"><span style="display:inline-block; width:6px; height:6px; background:#6b7280; border-radius:50%;"></span></td>
                                                 <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Stay on schedule with interview reminders</td>
                                             </tr>
                                         </table>
