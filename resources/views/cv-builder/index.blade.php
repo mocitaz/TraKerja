@@ -35,18 +35,18 @@
         </div>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-6 sm:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Progress Indicator -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6 p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold">Profile Completion</h3>
-                    <a href="{{ route('cv.generator') }}" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 flex items-center gap-2">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-4 sm:mb-6 p-4 sm:p-6">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 sm:mb-4">
+                    <h3 class="text-base sm:text-lg font-semibold">Profile Completion</h3>
+                    <a href="{{ route('cv.generator') }}" class="w-full sm:w-auto justify-center px-3 sm:px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 flex items-center gap-2 text-sm">
                         <i class="fas fa-file-pdf"></i>
                         Generate CV
                     </a>
                 </div>
-                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="w-full bg-gray-200 rounded-full h-2">
                     @php
                         $total = 0;
                         $filled = 0;
@@ -65,9 +65,9 @@
                         
                         $percentage = ($filled / $total) * 100;
                     @endphp
-                    <div class="bg-primary-600 h-2.5 rounded-full" style="width: {{ $percentage }}%"></div>
+                    <div class="bg-primary-600 h-2 rounded-full" style="width: {{ $percentage }}%"></div>
                 </div>
-                <p class="text-sm text-gray-600 mt-2">{{ number_format($percentage, 0) }}% Complete</p>
+                <p class="text-xs sm:text-sm text-gray-600 mt-2">{{ number_format($percentage, 0) }}% Complete</p>
             </div>
 
             <!-- Tabs Navigation -->
@@ -75,7 +75,7 @@
                 <div class="border-b border-gray-200">
                     <!-- Mobile: Scrollable tabs -->
                     <div class="block sm:hidden">
-                        <nav class="flex space-x-1 px-4 py-2 overflow-x-auto scrollbar-hide">
+                        <nav class="flex space-x-1 px-3 py-2 overflow-x-auto scrollbar-hide">
                             <button @click="activeTab = 'experiences'" 
                                     :class="activeTab === 'experiences' ? 'bg-primary-100 text-primary-700 border-primary-200' : 'bg-gray-50 text-gray-600 border-gray-200'"
                                     class="flex-shrink-0 px-3 py-2 rounded-lg border text-xs font-medium transition-colors">
@@ -111,7 +111,7 @@
                     
                     <!-- Desktop: Full tabs -->
                     <div class="hidden sm:block">
-                        <nav class="-mb-px flex space-x-8 px-6">
+                        <nav class="-mb-px flex space-x-6 lg:space-x-8 px-4 sm:px-6">
                             <button @click="activeTab = 'experiences'" 
                                     :class="activeTab === 'experiences' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
                                     class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
@@ -147,7 +147,7 @@
                 </div>
 
                 <!-- Tab Contents -->
-                <div class="p-6">
+                <div class="p-4 sm:p-6">
                     <div x-show="activeTab === 'experiences'">
                         @livewire('cv-builder.experience-form')
                     </div>
@@ -170,8 +170,8 @@
             </div>
 
             <!-- Help Text -->
-            <div class="bg-primary-50 border border-primary-200 rounded-lg p-4">
-                <div class="flex">
+            <div class="bg-primary-50 border border-primary-200 rounded-lg p-3 sm:p-4">
+                <div class="flex items-start">
                     <div class="flex-shrink-0">
                         <i class="fas fa-info-circle text-primary-400"></i>
                     </div>
@@ -179,8 +179,8 @@
                         <h3 class="text-sm font-medium text-primary-800">
                             Complete your profile to generate professional CV
                         </h3>
-                        <div class="mt-2 text-sm text-primary-700">
-                            <p>Fill in your work experience, education, skills, and other sections. Once complete, click "Generate CV" to create your professional resume!</p>
+                        <div class="mt-2 text-xs sm:text-sm text-primary-700">
+                            <p>Fill in your work experience, education, skills, and other sections. Once complete, tap "Generate CV" to create your professional resume!</p>
                             @if(!auth()->user() || !(auth()->user()->is_premium && auth()->user()->payment_status === 'paid'))
                                 <p class="mt-2 font-semibold">
                                     You have access to {{ auth()->user() ? auth()->user()->getCvTemplatesCount() : 1 }} CV template(s). 

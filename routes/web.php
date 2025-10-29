@@ -7,6 +7,7 @@ use App\Http\Controllers\GoalsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\JobApplicationExportController;
+use App\Http\Controllers\JobApplicationImportExportController;
 use App\Http\Controllers\CvBuilderController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -127,21 +128,40 @@ Route::middleware('auth')->group(function () {
         return view('jobs.show', ['job' => $job]);
     })->name('jobs.show');
     
-    // Export routes (Only for regular users)
-    // DISABLED: Export CSV feature temporarily disabled
-    // Route::get('/export/job-applications/csv', function () {
-    //     if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-    //         abort(403, 'Admin cannot export job applications');
-    //     }
-    //     return app(JobApplicationExportController::class)->exportToCsv();
-    // })->name('export.job-applications.csv');
-    
-    // Route::get('/export/job-applications/stats', function () {
-    //     if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-    //         abort(403, 'Admin cannot access export stats');
-    //     }
-    //     return app(JobApplicationExportController::class)->getExportStats();
-    // })->name('export.job-applications.stats');
+    // CSV Import/Export routes (Only for regular users)
+    Route::prefix('csv')->group(function () {
+        // Download CSV template
+        Route::get('/template', function () {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot access CSV features');
+            }
+            return app(JobApplicationImportExportController::class)->downloadTemplate();
+        })->name('csv.template');
+        
+        // Export job applications to CSV
+        Route::get('/export', function () {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot export job applications');
+            }
+            return app(JobApplicationImportExportController::class)->exportToCsv();
+        })->name('csv.export');
+        
+        // Show import form
+        Route::get('/import', function () {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot import job applications');
+            }
+            return app(JobApplicationImportExportController::class)->showImportForm();
+        })->name('csv.import');
+        
+        // Process CSV import
+        Route::post('/import', function (Request $request) {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot import job applications');
+            }
+            return app(JobApplicationImportExportController::class)->importFromCsv($request);
+        })->name('csv.import.process');
+    });
     
     // Interview reminder email trigger (for testing/integration)
     Route::post('/jobs/{job}/send-interview-reminder', function (JobApplication $job) {

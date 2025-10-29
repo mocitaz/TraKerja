@@ -305,8 +305,7 @@
                                        name="terms" 
                                        type="checkbox" 
                                        required
-                                       class="h-4 w-4 text-primary-600 focus:ring-primary-600 border-gray-300 rounded"
-                                       disabled>
+                                       class="h-4 w-4 text-primary-600 focus:ring-primary-600 border-gray-300 rounded">
                             </div>
                             <div class="ml-3 text-sm">
                                 <label for="terms" class="text-gray-700">
@@ -459,13 +458,11 @@
                     
                     if (termsCheckbox && privacyCheckbox && mainCheckbox) {
                         if (termsCheckbox.checked && privacyCheckbox.checked) {
-                            mainCheckbox.disabled = false;
+                            // Auto-check the main checkbox if both have been read
                             mainCheckbox.checked = true;
-                            submitBtn.disabled = false;
+                            // Do not disable submit here; password validation controls it
                         } else {
-                            mainCheckbox.disabled = true;
-                            mainCheckbox.checked = false;
-                            submitBtn.disabled = true;
+                            // Leave the main checkbox state as the user set it; never disable it
                         }
                     }
                 }
@@ -492,10 +489,33 @@
                 function validateRegistration() {
                     const mainCheckbox = document.getElementById('terms');
                     if (!mainCheckbox.checked) {
-                        alert('Please read and accept the Terms of Service and Privacy Policy before registering.');
+                        showTermsAlert();
                         return false;
                     }
                     return true;
+                }
+
+                function showTermsAlert() {
+                    const modal = document.getElementById('termsAlertModal');
+                    if (!modal) return;
+                    modal.classList.remove('hidden');
+                    // animate in
+                    const panel = document.getElementById('termsAlertCard');
+                    panel.classList.remove('opacity-0', 'translate-y-4');
+                    panel.classList.add('opacity-100', 'translate-y-0');
+                    document.body.style.overflow = 'hidden';
+                }
+
+                function hideTermsAlert() {
+                    const modal = document.getElementById('termsAlertModal');
+                    if (!modal) return;
+                    const panel = document.getElementById('termsAlertCard');
+                    panel.classList.remove('opacity-100', 'translate-y-0');
+                    panel.classList.add('opacity-0', 'translate-y-4');
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                        document.body.style.overflow = 'auto';
+                    }, 200);
                 }
                 
                 // ESC key support
@@ -503,11 +523,14 @@
                     if (e.key === 'Escape') {
                         const termsModal = document.getElementById('termsModal');
                         const privacyModal = document.getElementById('privacyModal');
+                        const termsAlertModal = document.getElementById('termsAlertModal');
                         
                         if (termsModal && !termsModal.classList.contains('hidden')) {
                             closeTerms();
                         } else if (privacyModal && !privacyModal.classList.contains('hidden')) {
                             closePrivacy();
+                        } else if (termsAlertModal && !termsAlertModal.classList.contains('hidden')) {
+                            hideTermsAlert();
                         }
                     }
                 });
@@ -720,6 +743,32 @@
                             </a>
                         </p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms Alert Modal -->
+    <div id="termsAlertModal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="termsAlertTitle">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm z-0" onclick="hideTermsAlert()"></div>
+        <div id="termsAlertPanel" class="fixed inset-0 z-10 flex items-center justify-center p-4">
+            <div id="termsAlertCard" class="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden opacity-0 translate-y-4 transition-all duration-200 w-full max-w-md">
+                <div class="px-6 py-5">
+                    <div class="flex items-start space-x-3">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 id="termsAlertTitle" class="text-base font-semibold text-gray-900">Action Required</h3>
+                            <p class="mt-1 text-sm text-gray-600">Please read and accept the Terms of Service and Privacy Policy before registering.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-6 pb-5 flex items-center justify-end space-x-3">
+                    <button type="button" onclick="hideTermsAlert()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg border border-gray-200">Close</button>
+                    <button type="button" onclick="openTerms(); hideTermsAlert();" class="px-4 py-2 text-sm font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-lg">Read Terms</button>
                 </div>
             </div>
         </div>

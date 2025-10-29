@@ -37,7 +37,7 @@
             </div>
 
             <!-- Month Navigation -->
-            <div class="flex items-center justify-between sm:justify-center space-x-2 sm:space-x-4">
+            <div class="flex items-center justify-between sm:justify-center gap-2 sm:gap-4">
                 <button wire:click="previousMonth" 
                         class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                     <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,7 +45,7 @@
                     </svg>
                 </button>
 
-                <h2 class="text-base sm:text-lg font-semibold text-gray-900 min-w-[120px] sm:min-w-[150px] text-center">{{ $monthName }}</h2>
+                <h2 class="text-sm sm:text-lg font-semibold text-gray-900 min-w-[110px] sm:min-w-[150px] text-center">{{ $monthName }}</h2>
 
                 <button wire:click="nextMonth" 
                         class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
@@ -55,7 +55,7 @@
                 </button>
 
                 <button wire:click="goToToday" 
-                        class="px-3 sm:px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs sm:text-sm font-medium text-gray-700 transition-colors">
+                        class="px-2.5 sm:px-4 py-1.5 sm:py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs sm:text-sm font-medium text-gray-700 transition-colors">
                     Today
                 </button>
             </div>
@@ -66,21 +66,21 @@
         <!-- Calendar View -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
             <!-- Day Headers -->
-            <div class="grid grid-cols-7 bg-gray-50 border-b border-gray-200">
+            <div class="grid grid-cols-7 bg-gray-50 border-b border-gray-200 text-[10px] sm:text-xs">
                 @foreach(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as $day)
-                    <div class="px-2 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                    <div class="px-1 sm:px-2 py-2 sm:py-3 text-center font-semibold text-gray-700 uppercase tracking-wider">
                         {{ $day }}
                     </div>
                 @endforeach
             </div>
 
             <!-- Calendar Grid -->
-            <div class="grid grid-cols-7 divide-x divide-gray-200">
+            <div class="grid grid-cols-7 divide-x divide-gray-200 text-[10px] sm:text-xs">
                 @foreach($calendarDays as $day)
-                    <div class="min-h-[120px] p-2 border-b border-gray-200 {{ $day['isCurrentMonth'] ? 'bg-white' : 'bg-gray-50' }} {{ $day['isToday'] ? 'bg-primary-50' : '' }}">
+                    <div class="min-h-[90px] sm:min-h-[120px] p-1.5 sm:p-2 border-b border-gray-200 {{ $day['isCurrentMonth'] ? 'bg-white' : 'bg-gray-50' }} {{ $day['isToday'] ? 'bg-primary-50' : '' }}">
                         <!-- Date Number -->
                         <div class="flex justify-between items-start mb-1">
-                            <span class="text-sm font-medium {{ $day['isCurrentMonth'] ? 'text-gray-900' : 'text-gray-400' }} {{ $day['isToday'] ? 'bg-primary-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs' : '' }}">
+                            <span class="text-xs sm:text-sm font-medium {{ $day['isCurrentMonth'] ? 'text-gray-900' : 'text-gray-400' }} {{ $day['isToday'] ? 'bg-primary-600 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-[10px] sm:text-xs' : '' }}">
                                 {{ $day['date']->format('j') }}
                             </span>
                         </div>
@@ -90,7 +90,7 @@
                             <div class="space-y-1">
                                 @foreach($day['interviews'] as $interview)
                                     <div wire:click="viewInterviewDetails({{ $interview['id'] }})" 
-                                         class="p-1.5 rounded text-xs cursor-pointer hover:opacity-80 transition-opacity
+                                         class="p-1 rounded text-[10px] sm:text-xs cursor-pointer hover:opacity-80 transition-opacity
                                                 {{ $interview['recruitment_stage'] === 'HR - Interview' ? 'bg-blue-100 text-blue-800' : '' }}
                                                 {{ $interview['recruitment_stage'] === 'User - Interview' ? 'bg-green-100 text-green-800' : '' }}">
                                         <div class="font-medium truncate">{{ $interview['company_name'] }}</div>

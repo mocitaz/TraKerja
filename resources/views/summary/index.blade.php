@@ -35,26 +35,26 @@
     <div class="min-h-screen bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <!-- Time Filter Controls -->
-            <div class="mb-8">
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4">
-                    <div class="flex items-center justify-between">
+            <div class="mb-6 sm:mb-8">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900">Time Period Filter</h3>
+                            <h3 class="text-base sm:text-lg font-bold text-gray-900">Time Period Filter</h3>
                             <p class="text-xs text-gray-500">Select time range for analytics</p>
                         </div>
-                        <div class="flex bg-gray-100 rounded-lg p-0.5">
+                        <div class="flex flex-wrap gap-1.5 bg-gray-100 rounded-lg p-0.5">
                             <button onclick="updateTimeFilter('weekly')" 
-                                    class="px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 time-filter-btn {{ $timeFilter === 'weekly' ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-600' }}" 
+                                    class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-md font-medium text-xs sm:text-sm transition-all duration-200 time-filter-btn {{ $timeFilter === 'weekly' ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-600' }}" 
                                     data-filter="weekly">
                                 Weekly
                             </button>
                             <button onclick="updateTimeFilter('monthly')" 
-                                    class="px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 time-filter-btn {{ $timeFilter === 'monthly' ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-600' }}" 
+                                    class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-md font-medium text-xs sm:text-sm transition-all duration-200 time-filter-btn {{ $timeFilter === 'monthly' ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-600' }}" 
                                     data-filter="monthly">
                                 Monthly
                             </button>
                             <button onclick="updateTimeFilter('all')" 
-                                    class="px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 time-filter-btn {{ $timeFilter === 'all' ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-600' }}" 
+                                    class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-md font-medium text-xs sm:text-sm transition-all duration-200 time-filter-btn {{ $timeFilter === 'all' ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-600' }}" 
                                     data-filter="all">
                                 All Time
                             </button>
@@ -113,9 +113,9 @@
             </div>
 
             <!-- Productivity Features Section -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8 items-stretch">
                 <!-- Daily Streak -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6 h-full flex flex-col">
                     <div class="flex items-center justify-between mb-4">
                         <div>
                             <h3 class="text-lg font-bold text-gray-900">Daily Streak</h3>
@@ -127,14 +127,14 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="text-center">
+                    <div class="text-center flex-1">
                         <div class="text-3xl font-bold text-gray-900 mb-2">{{ $dailyStreak['current_streak'] }}</div>
                         <div class="text-sm text-gray-500 mb-4">Current Streak</div>
                         <div class="text-lg font-semibold text-orange-600 mb-2">{{ $dailyStreak['best_streak'] }}</div>
                         <div class="text-sm text-gray-500">Best Streak Ever</div>
                     </div>
                     @if($dailyStreak['is_active'])
-                        <div class="mt-4 p-3 bg-emerald-50 rounded-lg">
+                        <div class="mt-auto p-3 bg-emerald-50 rounded-lg">
                             <div class="flex items-center">
                                 <svg class="w-4 h-4 text-emerald-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
@@ -143,7 +143,7 @@
                             </div>
                         </div>
                     @else
-                        <div class="mt-4 p-3 bg-gray-50 rounded-lg">
+                        <div class="mt-auto p-3 bg-gray-50 rounded-lg">
                             <div class="flex items-center">
                                 <svg class="w-4 h-4 text-gray-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -155,7 +155,7 @@
                 </div>
 
                 <!-- This Week's Progress -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6 h-full flex flex-col">
                     <div class="flex items-center justify-between mb-4">
                         <div>
                             <h3 class="text-lg font-bold text-gray-900">This Week's Progress</h3>
@@ -167,7 +167,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="text-center mb-4">
+                    <div class="text-center mb-4 flex-1">
                         <div class="text-3xl font-bold text-gray-900 mb-2">{{ $weeklyProgress['this_week_applications'] }}</div>
                         <div class="text-sm text-gray-500 mb-2">This Week</div>
                         <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
@@ -176,7 +176,7 @@
                         <div class="text-sm text-gray-600">{{ $weeklyProgress['progress_percentage'] }}% of weekly goal ({{ $weeklyProgress['weekly_goal'] }})</div>
                     </div>
                     @if($weeklyProgress['is_on_track'])
-                        <div class="mt-4 p-3 bg-green-50 rounded-lg">
+                        <div class="mt-auto p-3 bg-green-50 rounded-lg">
                             <div class="flex items-center">
                                 <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
@@ -185,7 +185,7 @@
                             </div>
                         </div>
                     @else
-                        <div class="mt-4 p-3 bg-yellow-50 rounded-lg">
+                        <div class="mt-auto p-3 bg-yellow-50 rounded-lg">
                             <div class="flex items-center">
                                 <svg class="w-4 h-4 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
@@ -197,7 +197,7 @@
                 </div>
 
                 <!-- The Cadence Effect -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6 h-full flex flex-col">
                     <div class="flex items-center justify-between mb-4">
                         <div>
                             <h3 class="text-lg font-bold text-gray-900">The Cadence Effect</h3>
@@ -209,14 +209,14 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="text-center mb-4">
+                    <div class="text-center mb-4 flex-1">
                         <div class="text-2xl font-bold text-gray-900 mb-2">{{ $cadenceEffect['average_daily'] }}</div>
                         <div class="text-sm text-gray-500 mb-2">Avg Daily</div>
                         <div class="text-lg font-semibold text-purple-600 mb-2">{{ $cadenceEffect['consistency_score'] }}%</div>
                         <div class="text-sm text-gray-500">Consistency Score</div>
                     </div>
                     @if($cadenceEffect['consistency_score'] >= 70)
-                        <div class="mt-4 p-3 bg-green-50 rounded-lg">
+                        <div class="mt-auto p-3 bg-green-50 rounded-lg">
                             <div class="flex items-center">
                                 <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
@@ -225,7 +225,7 @@
                             </div>
                         </div>
                     @elseif($cadenceEffect['consistency_score'] >= 40)
-                        <div class="mt-4 p-3 bg-yellow-50 rounded-lg">
+                        <div class="mt-auto p-3 bg-yellow-50 rounded-lg">
                             <div class="flex items-center">
                                 <svg class="w-4 h-4 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
@@ -234,7 +234,7 @@
                             </div>
                         </div>
                     @else
-                        <div class="mt-4 p-3 bg-red-50 rounded-lg">
+                        <div class="mt-auto p-3 bg-red-50 rounded-lg">
                             <div class="flex items-center">
                                 <svg class="w-4 h-4 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
@@ -249,82 +249,82 @@
             <!-- Advanced Analytics Section -->
             <div class="space-y-8">
                 <!-- Chart 1: Timeline Activity -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
                     <div class="flex items-center justify-between mb-6">
                         <div>
                             <h3 class="text-lg font-bold text-gray-900">Timeline Activity</h3>
                             <p class="text-sm text-gray-500">Application trends and interview scheduling over time</p>
                         </div>
                     </div>
-                    <div class="h-80">
+                    <div class="h-64 sm:h-80">
                         <canvas id="timelineChart"></canvas>
                     </div>
                 </div>
 
                 <!-- Chart 2: Conversion Funnel -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
                     <div class="flex items-center justify-between mb-6">
                         <div>
                             <h3 class="text-lg font-bold text-gray-900">Conversion Funnel</h3>
                             <p class="text-sm text-gray-500">Recruitment stage progression and bottlenecks</p>
                         </div>
                     </div>
-                    <div class="h-80">
+                    <div class="h-64 sm:h-80">
                         <canvas id="funnelChart"></canvas>
                     </div>
                 </div>
 
                 <!-- Chart 3: Status Distribution -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
                     <div class="flex items-center justify-between mb-6">
                         <div>
                             <h3 class="text-lg font-bold text-gray-900">Status Distribution</h3>
                             <p class="text-sm text-gray-500">Final application status breakdown</p>
                         </div>
                     </div>
-                    <div class="h-80">
+                    <div class="h-64 sm:h-80">
                         <canvas id="statusChart"></canvas>
                     </div>
                 </div>
 
                 <!-- Breakdown Analysis Row -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                     <!-- Platform Effectiveness -->
-                    <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+                    <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
                         <div class="flex items-center justify-between mb-6">
                             <div>
                                 <h3 class="text-lg font-bold text-gray-900">Platform Effectiveness</h3>
                                 <p class="text-sm text-gray-500">Conversion rates by platform</p>
                             </div>
                         </div>
-                        <div class="h-64" style="position: relative; width: 100%; height: 256px; background-color: #f9fafb;">
+                        <div class="h-56 sm:h-64" style="position: relative; width: 100%; background-color: #f9fafb;">
                             <canvas id="platformChart" style="display: block; width: 100%; height: 100%; background-color: white; border: 1px solid #e5e7eb;"></canvas>
                         </div>
                     </div>
 
                     <!-- Career Level Analysis -->
-                    <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+                    <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
                         <div class="flex items-center justify-between mb-6">
                             <div>
                                 <h3 class="text-lg font-bold text-gray-900">Career Level Analysis</h3>
                                 <p class="text-sm text-gray-500">Response rates by career level</p>
                             </div>
                         </div>
-                        <div class="h-64" style="position: relative; width: 100%; height: 256px; background-color: #f9fafb;">
+                        <div class="h-56 sm:h-64" style="position: relative; width: 100%; background-color: #f9fafb;">
                             <canvas id="careerLevelChart" style="display: block; width: 100%; height: 100%; background-color: white; border: 1px solid #e5e7eb;"></canvas>
                         </div>
                     </div>
                 </div>
 
                 <!-- Position Analysis -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
                     <div class="flex items-center justify-between mb-6">
                         <div>
                             <h3 class="text-lg font-bold text-gray-900">Position Analysis</h3>
                             <p class="text-sm text-gray-500">Most applied vs most successful positions</p>
                         </div>
                     </div>
-                    <div class="h-80">
+                    <div class="h-64 sm:h-80">
                         <canvas id="positionChart"></canvas>
                     </div>
                 </div>

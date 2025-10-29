@@ -1,4 +1,4 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
     <!-- Success Message -->
     @if (session()->has('message'))
         <div class="mb-6 bg-green-50 border border-green-200 rounded-lg p-4">
@@ -13,7 +13,7 @@
 
     <!-- Goals Ending Soon Alert -->
     @if($this->goalsEndingSoon)
-        <div class="mb-6 bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-lg p-6">
+        <div class="mb-6 bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-lg p-4 sm:p-6">
             <div class="flex items-start">
                 <div class="flex-shrink-0">
                     <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -53,7 +53,7 @@
 
     <!-- No Goals Set Message -->
     @if(!$this->hasGoals)
-        <div class="mb-6 bg-purple-50 border border-purple-200 rounded-lg p-6">
+        <div class="mb-6 bg-purple-50 border border-purple-200 rounded-lg p-4 sm:p-6">
             <div class="flex items-start">
                 <div class="flex-shrink-0">
                     <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -87,12 +87,12 @@
     @endif
 
     <!-- Main Content - Focus on Progress -->
-    <div class="space-y-8">
+    <div class="space-y-6 sm:space-y-8">
         <!-- Progress Overview Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6 lg:gap-8 items-stretch">
             <!-- This Week's Progress -->
-            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
-                <div class="flex items-center justify-between mb-6">
+            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-6 h-full flex flex-col">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4 sm:mb-6">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
                             <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,7 +106,7 @@
                     </div>
                     <button 
                         wire:click="openGoalModal"
-                        class="px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition-all duration-200 flex items-center space-x-2"
+                        class="px-3 sm:px-4 py-2 bg-purple-600 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-purple-700 transition-all duration-200 flex items-center space-x-2 self-start sm:self-auto"
                     >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -116,7 +116,7 @@
                 </div>
 
                 <!-- Applied Progress -->
-                <div class="mb-6">
+                <div class="mb-4 sm:mb-6">
                     <div class="flex justify-between items-center mb-2">
                         <span class="text-sm font-medium text-gray-700">Applications</span>
                         <span class="text-sm font-bold text-gray-900">{{ $this->actualApplied }} / {{ $targetAppliedWeekly }}</span>
@@ -140,7 +140,7 @@
                 </div>
 
                 <!-- Follow-up Progress -->
-                <div class="mb-6">
+                <div class="mb-4 sm:mb-6">
                     <div class="flex justify-between items-center mb-2">
                         <span class="text-sm font-medium text-gray-700">Follow-ups</span>
                         <span class="text-sm font-bold text-gray-900">{{ $this->followUpCount }} / {{ $targetFollowupWeekly }}</span>
@@ -180,7 +180,7 @@
             </div>
 
             <!-- Daily Streak -->
-            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
+            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-6">
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-gradient-to-br from-[#FF6B35] to-[#E55A2B] rounded-lg flex items-center justify-center">
@@ -200,8 +200,8 @@
                 </div>
                 
                 <!-- Streak Display -->
-                <div class="text-center mb-6">
-                    <div class="text-5xl font-bold text-[#FF6B35] mb-2">{{ $this->currentStreak }}</div>
+                <div class="text-center mb-4 sm:mb-6">
+                    <div class="text-4xl sm:text-5xl font-bold text-[#FF6B35] mb-2">{{ $this->currentStreak }}</div>
                     <p class="text-sm text-gray-600 mb-3">days in a row</p>
                     
                     <!-- Achievement Badge -->
@@ -239,7 +239,7 @@
                 </div>
 
                 <!-- Streak Stats -->
-                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
+                <div class="grid grid-cols-2 gap-3 sm:gap-4 pt-4 border-t border-gray-100">
                     <div class="text-center">
                         <div class="text-lg font-bold text-gray-900">{{ $this->currentStreak }}</div>
                         <div class="text-xs text-gray-500">Current Streak</div>
