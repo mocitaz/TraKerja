@@ -142,10 +142,23 @@ class LogoController extends Controller
             // Delete from storage
             Storage::disk('public')->delete($user->logo);
             
-            // Delete from public_html
+            // Delete from public_html with path traversal protection
             $publicHtmlPath = base_path('public_html/storage/' . $user->logo);
-            if (file_exists($publicHtmlPath)) {
-                unlink($publicHtmlPath);
+            
+            // SECURITY: Validate path to prevent path traversal attacks
+            $realPath = realpath(dirname($publicHtmlPath));
+            $expectedBase = realpath(base_path('public_html/storage'));
+            
+            // Ensure the file is within the allowed directory
+            if ($realPath && $expectedBase && strpos($realPath, $expectedBase) === 0) {
+                if (file_exists($publicHtmlPath)) {
+                    unlink($publicHtmlPath);
+                }
+            } else {
+                \Log::warning('Attempted path traversal in logo deletion', [
+                    'user_id' => $user->id,
+                    'logo_path' => $user->logo
+                ]);
             }
             
             $user->update(['logo' => null]);

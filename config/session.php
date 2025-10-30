@@ -48,9 +48,12 @@ return [
     | should be encrypted before it's stored. All encryption is performed
     | automatically by Laravel and you may use the session like normal.
     |
+    | SECURITY: Set to true in production to encrypt sensitive session data
+    | including user roles, premium status, and authentication information.
+    |
     */
 
-    'encrypt' => env('SESSION_ENCRYPT', false),
+    'encrypt' => env('SESSION_ENCRYPT', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -170,9 +173,12 @@ return [
     | to the server if the browser has a HTTPS connection. This will keep
     | the cookie from being sent to you when it can't be done securely.
     |
+    | SECURITY: Automatically set to true in production environments when using HTTPS.
+    | This prevents session hijacking via man-in-the-middle attacks.
+    |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE'),
+    'secure' => env('SESSION_SECURE_COOKIE', env('APP_ENV') === 'production'),
 
     /*
     |--------------------------------------------------------------------------

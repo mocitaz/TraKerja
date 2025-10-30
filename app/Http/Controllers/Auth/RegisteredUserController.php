@@ -79,7 +79,9 @@ class RegisteredUserController extends Controller
 
         // Send admin notification about new user registration
         try {
-            Mail::to('infoteknalogi@gmail.com')->send(new NewUserRegistrationMail($user));
+            // Use environment variable for admin email for security and flexibility
+            $adminEmail = env('ADMIN_EMAIL', 'infoteknalogi@gmail.com');
+            Mail::to($adminEmail)->send(new NewUserRegistrationMail($user));
         } catch (\Exception $e) {
             \Log::error('Failed to send admin notification: ' . $e->getMessage());
         }
