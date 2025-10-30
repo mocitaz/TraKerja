@@ -1,7 +1,103 @@
 <x-guest-layout>
-    <div class="min-h-screen bg-gray-50 flex">
+    <style>
+        /* Enhanced Animations */
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes floatUp {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+        
+        @keyframes ripple {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(4); opacity: 0; }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(217, 131, 228, 0.3), 0 0 40px rgba(78, 113, 197, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(217, 131, 228, 0.5), 0 0 60px rgba(78, 113, 197, 0.4); }
+        }
+        
+        .gradient-animated {
+            background: linear-gradient(120deg, #6b46c1, #9333ea, #4e71c5, #d983e4);
+            background-size: 300% 300%;
+            animation: gradientFlow 15s ease infinite;
+        }
+        
+        .float-animation {
+            animation: floatUp 6s ease-in-out infinite;
+        }
+        
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 
+                        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+        }
+        
+        .input-glow:focus {
+            box-shadow: 0 0 0 3px rgba(217, 131, 228, 0.15),
+                        0 10px 30px -10px rgba(78, 113, 197, 0.2);
+        }
+        
+        .button-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .button-glow::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+        
+        .button-glow:hover {
+            animation: glow 2s ease-in-out infinite;
+        }
+        
+        .ripple-container {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            animation: ripple 0.6s ease-out;
+        }
+        
+        .particle-float {
+            animation: floatUp 8s ease-in-out infinite;
+        }
+        
+        .input-float {
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .input-float:focus {
+            transform: translateY(-2px);
+        }
+    </style>
+    
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20 flex">
         <!-- Left Side - Branding -->
-        <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-500 relative overflow-hidden">
+        <div class="hidden lg:flex lg:w-1/2 gradient-animated relative overflow-hidden">
             <!-- Animated Background Elements -->
             <div class="absolute top-10 left-8 w-72 h-72 bg-white/5 rounded-full mix-blend-multiply filter blur-2xl animate-pulse"></div>
             <div class="absolute top-32 right-16 w-48 h-48 bg-white/8 rounded-full mix-blend-multiply filter blur-xl animate-bounce" style="animation-duration: 3s;"></div>
@@ -116,8 +212,8 @@
                     </div>
                 </div>
 
-                <!-- Form Card -->
-                <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8">
+                <!-- Form Card with Enhanced Glassmorphism -->
+                <div class="glass-morphism rounded-3xl p-8 transform transition-all duration-500 hover:shadow-2xl">
                     <!-- Form Header -->
                     <div class="text-center mb-8">
                         <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
@@ -165,7 +261,7 @@
                                        autocomplete="email" 
                                        required 
                                        value="{{ old('email') }}"
-                                       class="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('email') border-red-300 bg-red-50/50 @enderror"
+                                       class="input-float input-glow block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-0 focus:border-transparent transition-all duration-300 bg-white/80 backdrop-blur-sm @error('email') border-red-300 bg-red-50/50 @enderror"
                                        placeholder="Enter your email">
                             </div>
                             @error('email')
@@ -192,7 +288,7 @@
                                        type="password" 
                                        autocomplete="current-password" 
                                        required
-                                       class="block w-full pl-12 pr-12 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-200 bg-gray-50/50 @error('password') border-red-300 bg-red-50/50 @enderror"
+                                       class="input-float input-glow block w-full pl-12 pr-12 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-0 focus:border-transparent transition-all duration-300 bg-white/80 backdrop-blur-sm @error('password') border-red-300 bg-red-50/50 @enderror"
                                        placeholder="Enter your password">
                                 <button type="button" 
                                         onclick="togglePassword()" 
@@ -246,13 +342,16 @@
                             @endif
                         </div>
 
-                        <!-- Submit Button -->
+                        <!-- Submit Button with Glow & Ripple Effect -->
                         <button type="submit" 
-                                class="w-full flex justify-center items-center py-4 px-6 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-gradient-to-r from-primary-600 to-secondary-500 hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-600 transition-all duration-200">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
-                            </svg>
-                            Sign In
+                                onclick="createRipple(event)"
+                                class="ripple-container button-glow w-full flex justify-center items-center py-4 px-6 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-gradient-to-r from-primary-600 to-secondary-500 hover:shadow-2xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-600 transition-all duration-300 relative overflow-hidden">
+                            <span class="relative z-10 flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                                </svg>
+                                Sign In
+                            </span>
                         </button>
                     </form>
 
@@ -271,6 +370,26 @@
     </div>
 
     <script>
+        // Ripple Effect
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const circle = document.createElement('span');
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+            
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+            circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+            circle.classList.add('ripple');
+            
+            const ripple = button.getElementsByClassName('ripple')[0];
+            if (ripple) {
+                ripple.remove();
+            }
+            
+            button.appendChild(circle);
+        }
+        
         // Toggle password visibility
         function togglePassword() {
             const passwordInput = document.getElementById('password');
