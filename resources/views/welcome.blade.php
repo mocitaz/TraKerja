@@ -373,6 +373,270 @@
                 }
             }
 
+            /* ========== ADVANCED ANIMATIONS & EFFECTS ========== */
+            
+            /* 3D Tilt Card Effect */
+            .card-3d {
+                transform-style: preserve-3d;
+                transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            }
+            
+            .card-3d:hover {
+                transform: perspective(1000px) rotateX(var(--rotate-x, 0)) rotateY(var(--rotate-y, 0)) scale3d(1.05, 1.05, 1.05);
+            }
+            
+            .card-3d-inner {
+                transform: translateZ(50px);
+            }
+            
+            /* Magnetic Button Effect */
+            .magnetic-button {
+                position: relative;
+                transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            }
+            
+            .magnetic-button:hover {
+                transform: translate(var(--magnetic-x, 0), var(--magnetic-y, 0));
+            }
+            
+            /* Stagger Animation for Cards */
+            @keyframes slideUpFade {
+                from {
+                    opacity: 0;
+                    transform: translateY(60px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .stagger-item {
+                opacity: 0;
+                animation: slideUpFade 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            }
+            
+            .stagger-item:nth-child(1) { animation-delay: 0.1s; }
+            .stagger-item:nth-child(2) { animation-delay: 0.2s; }
+            .stagger-item:nth-child(3) { animation-delay: 0.3s; }
+            .stagger-item:nth-child(4) { animation-delay: 0.4s; }
+            .stagger-item:nth-child(5) { animation-delay: 0.5s; }
+            .stagger-item:nth-child(6) { animation-delay: 0.6s; }
+            
+            /* Animated Gradient Mesh Background */
+            @keyframes gradientMesh {
+                0%, 100% {
+                    background-position: 0% 50%;
+                    background-size: 200% 200%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                    background-size: 220% 220%;
+                }
+            }
+            
+            .gradient-mesh {
+                background: linear-gradient(
+                    120deg,
+                    #f8fafc 0%,
+                    #e0f2fe 20%,
+                    #f0fdf4 40%,
+                    #fef3f2 60%,
+                    #f8fafc 80%,
+                    #e0f2fe 100%
+                );
+                background-size: 200% 200%;
+                animation: gradientMesh 15s ease infinite;
+            }
+            
+            /* Particle Background */
+            .particles {
+                position: absolute;
+                inset: 0;
+                overflow: hidden;
+                pointer-events: none;
+            }
+            
+            .particle {
+                position: absolute;
+                background: radial-gradient(circle, rgba(217, 131, 228, 0.3) 0%, transparent 70%);
+                border-radius: 50%;
+                animation: particleFloat 20s linear infinite;
+            }
+            
+            @keyframes particleFloat {
+                0% {
+                    transform: translateY(100vh) scale(0);
+                    opacity: 0;
+                }
+                10% {
+                    opacity: 1;
+                }
+                90% {
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-100vh) scale(1);
+                    opacity: 0;
+                }
+            }
+            
+            .particle:nth-child(1) { left: 10%; animation-duration: 25s; animation-delay: 0s; }
+            .particle:nth-child(2) { left: 20%; animation-duration: 30s; animation-delay: 2s; }
+            .particle:nth-child(3) { left: 30%; animation-duration: 22s; animation-delay: 4s; }
+            .particle:nth-child(4) { left: 40%; animation-duration: 28s; animation-delay: 1s; }
+            .particle:nth-child(5) { left: 50%; animation-duration: 26s; animation-delay: 3s; }
+            .particle:nth-child(6) { left: 60%; animation-duration: 24s; animation-delay: 5s; }
+            .particle:nth-child(7) { left: 70%; animation-duration: 27s; animation-delay: 2.5s; }
+            .particle:nth-child(8) { left: 80%; animation-duration: 23s; animation-delay: 1.5s; }
+            .particle:nth-child(9) { left: 90%; animation-duration: 29s; animation-delay: 3.5s; }
+            
+            /* Enhanced Glassmorphism */
+            .glass-enhanced {
+                background: rgba(255, 255, 255, 0.7);
+                backdrop-filter: blur(20px) saturate(180%);
+                -webkit-backdrop-filter: blur(20px) saturate(180%);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            }
+            
+            /* Glow Effect on Hover */
+            .glow-effect {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .glow-effect::before {
+                content: '';
+                position: absolute;
+                inset: -2px;
+                background: linear-gradient(45deg, #d983e4, #4e71c5, #d983e4);
+                background-size: 200% 200%;
+                border-radius: inherit;
+                opacity: 0;
+                z-index: -1;
+                transition: opacity 0.5s;
+                animation: glowRotate 3s linear infinite;
+            }
+            
+            .glow-effect:hover::before {
+                opacity: 0.6;
+            }
+            
+            @keyframes glowRotate {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+            
+            /* Text Gradient Animation */
+            .gradient-text-animated {
+                background: linear-gradient(90deg, #d983e4, #4e71c5, #d983e4, #4e71c5);
+                background-size: 300% 100%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                animation: gradientTextFlow 5s linear infinite;
+            }
+            
+            @keyframes gradientTextFlow {
+                0% { background-position: 0% 50%; }
+                100% { background-position: 300% 50%; }
+            }
+            
+            /* Scroll Reveal Animation */
+            .scroll-reveal {
+                opacity: 0;
+                transform: translateY(50px);
+                transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), 
+                            transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            }
+            
+            .scroll-reveal.revealed {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+            /* Spotlight Effect */
+            .spotlight-effect {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .spotlight-effect::after {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+                opacity: 0;
+                transition: opacity 0.5s;
+                pointer-events: none;
+                transform: translate(var(--spotlight-x, 50%), var(--spotlight-y, 50%));
+            }
+            
+            .spotlight-effect:hover::after {
+                opacity: 1;
+            }
+            
+            /* Liquid Blob Animation */
+            @keyframes liquidBlob {
+                0%, 100% {
+                    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                    transform: rotate(0deg) scale(1);
+                }
+                25% {
+                    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+                    transform: rotate(90deg) scale(1.1);
+                }
+                50% {
+                    border-radius: 50% 30% 60% 40% / 30% 50% 60% 70%;
+                    transform: rotate(180deg) scale(0.9);
+                }
+                75% {
+                    border-radius: 40% 70% 30% 60% / 70% 40% 50% 30%;
+                    transform: rotate(270deg) scale(1.05);
+                }
+            }
+            
+            .liquid-blob {
+                animation: liquidBlob 20s ease-in-out infinite;
+            }
+            
+            /* Parallax Effect */
+            .parallax-layer {
+                transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            }
+            
+            /* Hover Lift Effect */
+            .hover-lift {
+                transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), 
+                            box-shadow 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            }
+            
+            .hover-lift:hover {
+                transform: translateY(-12px);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            }
+            
+            /* Number Counter Animation */
+            @keyframes countUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .count-up {
+                animation: countUp 1s ease-out;
+            }
+
             /* Responsive animations */
             @media (prefers-reduced-motion: reduce) {
                 *, *::before, *::after {
@@ -426,13 +690,26 @@
                 </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50">
-        <!-- Advanced Background Elements -->
-        <div class="absolute top-20 right-20 w-40 h-40 bg-gradient-to-r from-primary-600/20 to-secondary-500/20 rounded-full mix-blend-multiply filter blur-2xl floating-animation morphing-blob hidden md:block"></div>
-        <div class="absolute bottom-20 left-20 w-32 h-32 bg-gradient-to-r from-secondary-500/20 to-primary-600/20 rounded-full mix-blend-multiply filter blur-2xl floating-animation morphing-blob hidden md:block" style="animation-delay: 2s;"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full mix-blend-multiply filter blur-3xl pulse-animation morphing-blob hidden md:block"></div>
-        <div class="absolute top-1/4 left-1/4 w-20 h-20 bg-gradient-to-r from-primary-700/30 to-secondary-500/30 rounded-full mix-blend-multiply filter blur-xl floating-animation hidden md:block" style="animation-delay: 4s;"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-24 h-24 bg-gradient-to-r from-secondary-500/30 to-primary-600/30 rounded-full mix-blend-multiply filter blur-xl floating-animation hidden md:block" style="animation-delay: 1s;"></div>
+    <section class="hero-section relative min-h-screen flex items-center justify-center overflow-hidden gradient-mesh">
+        <!-- Particle Background -->
+        <div class="particles hidden md:block">
+            <div class="particle" style="width: 80px; height: 80px;"></div>
+            <div class="particle" style="width: 60px; height: 60px;"></div>
+            <div class="particle" style="width: 100px; height: 100px;"></div>
+            <div class="particle" style="width: 70px; height: 70px;"></div>
+            <div class="particle" style="width: 90px; height: 90px;"></div>
+            <div class="particle" style="width: 50px; height: 50px;"></div>
+            <div class="particle" style="width: 75px; height: 75px;"></div>
+            <div class="particle" style="width: 85px; height: 85px;"></div>
+            <div class="particle" style="width: 65px; height: 65px;"></div>
+        </div>
+        
+        <!-- Enhanced Background Blobs with Liquid Animation -->
+        <div class="absolute top-20 right-20 w-40 h-40 bg-gradient-to-r from-primary-600/20 to-secondary-500/20 mix-blend-multiply filter blur-2xl floating-animation liquid-blob hidden md:block"></div>
+        <div class="absolute bottom-20 left-20 w-32 h-32 bg-gradient-to-r from-secondary-500/20 to-primary-600/20 mix-blend-multiply filter blur-2xl floating-animation liquid-blob hidden md:block" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 mix-blend-multiply filter blur-3xl pulse-animation liquid-blob hidden md:block"></div>
+        <div class="absolute top-1/4 left-1/4 w-20 h-20 bg-gradient-to-r from-primary-700/30 to-secondary-500/30 mix-blend-multiply filter blur-xl floating-animation liquid-blob hidden md:block" style="animation-delay: 4s;"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-24 h-24 bg-gradient-to-r from-secondary-500/30 to-primary-600/30 mix-blend-multiply filter blur-xl floating-animation liquid-blob hidden md:block" style="animation-delay: 1s;"></div>
         
         <!-- Cyber Grid Overlay -->
         <div class="absolute inset-0 cyber-grid opacity-30 hidden md:block"></div>
@@ -447,7 +724,7 @@
             <!-- Main Heading with Advanced Typography -->
             <h1 class="hero-title text-5xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight text-reveal" style="animation-delay: 0.4s;">
                 Kelola Proses Rekrutmen dengan 
-                <span class="gradient-text">
+                <span class="gradient-text-animated">
                     TraKerja
                 </span>
             </h1>
@@ -460,20 +737,20 @@
                 untuk job seeker Indonesia
             </p>
             
-            <!-- Enhanced CTA Buttons -->
+            <!-- Enhanced CTA Buttons with Magnetic & Glow Effects -->
             <div class="cta-buttons flex flex-col sm:flex-row gap-6 justify-center mb-16 text-reveal" style="animation-delay: 0.8s;">
                 @auth
                     <a href="{{ url('/tracker') }}" 
-                       class="cta-button bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300">
+                       class="cta-button magnetic-button glow-effect bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105">
                         <span class="relative z-10">Buka Dashboard</span>
                     </a>
                 @else
                     <a href="{{ route('register') }}" 
-                       class="cta-button bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300">
+                       class="cta-button magnetic-button glow-effect bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105">
                         <span class="relative z-10">Mulai Gratis</span>
                     </a>
                     <a href="{{ route('login') }}" 
-                       class="cta-button border-2 border-[#d983e4] text-[#d983e4] px-10 py-4 rounded-xl font-bold text-lg hover:bg-[#d983e4] hover:text-white transition-all duration-300 hover:shadow-xl">
+                       class="cta-button magnetic-button border-2 border-[#d983e4] text-[#d983e4] px-10 py-4 rounded-xl font-bold text-lg hover:bg-[#d983e4] hover:text-white transition-all duration-300 hover:shadow-xl hover:scale-105">
                         <span class="relative z-10">Login</span>
                     </a>
                 @endauth
@@ -528,9 +805,9 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Feature 1 -->
-                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
+                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="relative z-10">
+                    <div class="relative z-10 card-3d-inner">
                         <div class="w-16 h-16 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2z"></path>
@@ -542,9 +819,9 @@
                 </div>
                 
                 <!-- Feature 2 -->
-                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-secondary-500/20 relative overflow-hidden">
+                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-secondary-500/20 relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-secondary-500/5 to-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="relative z-10">
+                    <div class="relative z-10 card-3d-inner">
                         <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
@@ -556,9 +833,9 @@
                 </div>
                 
                 <!-- Feature 3 -->
-                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
+                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="relative z-10">
+                    <div class="relative z-10 card-3d-inner">
                         <div class="w-16 h-16 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -570,9 +847,9 @@
                 </div>
                 
                 <!-- Feature 4 -->
-                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-secondary-500/20 relative overflow-hidden">
+                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-secondary-500/20 relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-secondary-500/5 to-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="relative z-10">
+                    <div class="relative z-10 card-3d-inner">
                         <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -584,9 +861,9 @@
                 </div>
                 
                 <!-- Feature 5 -->
-                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
+                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="relative z-10">
+                    <div class="relative z-10 card-3d-inner">
                         <div class="w-16 h-16 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
@@ -598,9 +875,9 @@
                 </div>
                 
                 <!-- Feature 6 -->
-                <div class="feature-card group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-secondary-500/20 relative overflow-hidden">
+                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-secondary-500/20 relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-secondary-500/5 to-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="relative z-10">
+                    <div class="relative z-10 card-3d-inner">
                         <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
@@ -1228,6 +1505,115 @@
                 element.style.transform = `translateY(${scrolled * speed}px)`;
             });
         });
+
+        // ========== ADVANCED INTERACTIONS ==========
+        
+        // 3D Card Tilt Effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card-3d');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', function(e) {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+                    
+                    card.style.setProperty('--rotate-x', `${rotateX}deg`);
+                    card.style.setProperty('--rotate-y', `${rotateY}deg`);
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    card.style.setProperty('--rotate-x', '0deg');
+                    card.style.setProperty('--rotate-y', '0deg');
+                });
+            });
+        });
+
+        // Magnetic Button Effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const magneticButtons = document.querySelectorAll('.magnetic-button');
+            
+            magneticButtons.forEach(button => {
+                button.addEventListener('mousemove', function(e) {
+                    const rect = button.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    
+                    const moveX = x * 0.3;
+                    const moveY = y * 0.3;
+                    
+                    button.style.setProperty('--magnetic-x', `${moveX}px`);
+                    button.style.setProperty('--magnetic-y', `${moveY}px`);
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    button.style.setProperty('--magnetic-x', '0px');
+                    button.style.setProperty('--magnetic-y', '0px');
+                });
+            });
+        });
+
+        // Scroll Reveal Animation with Intersection Observer
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollRevealElements = document.querySelectorAll('.scroll-reveal');
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            scrollRevealElements.forEach(el => {
+                revealObserver.observe(el);
+            });
+        });
+
+        // Spotlight Effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const spotlightElements = document.querySelectorAll('.spotlight-effect');
+            
+            spotlightElements.forEach(element => {
+                element.addEventListener('mousemove', function(e) {
+                    const rect = element.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    
+                    element.style.setProperty('--spotlight-x', `${x}%`);
+                    element.style.setProperty('--spotlight-y', `${y}%`);
+                });
+            });
+        });
+
+        // Parallax Layers on Scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const parallaxLayers = document.querySelectorAll('.parallax-layer');
+                
+                parallaxLayers.forEach((layer, index) => {
+                    const speed = 0.2 + (index * 0.15);
+                    const yPos = -(scrolled * speed);
+                    layer.style.transform = `translateY(${yPos}px)`;
+                });
+            });
+        });
+
+        // Smooth performance for animations
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.style.setProperty('--animation-duration', '0.01ms');
+        }
     </script>
     </body>
 </html>
