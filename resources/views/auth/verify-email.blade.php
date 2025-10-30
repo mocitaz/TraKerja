@@ -1,7 +1,29 @@
 <x-guest-layout>
-    <div class="min-h-screen bg-gray-50 flex">
+    <style>
+        /* Enhanced Animations */
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .gradient-animated {
+            background: linear-gradient(120deg, #6b46c1, #9333ea, #4e71c5, #d983e4);
+            background-size: 300% 300%;
+            animation: gradientFlow 15s ease infinite;
+        }
+        
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 
+                        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+        }
+    </style>
+    
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20 flex">
         <!-- Left Side - Branding -->
-        <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-500 relative overflow-hidden">
+        <div class="hidden lg:flex lg:w-1/2 gradient-animated relative overflow-hidden">
             <!-- Animated Background Elements -->
             <div class="absolute top-10 left-8 w-72 h-72 bg-white/5 rounded-full mix-blend-multiply filter blur-2xl animate-pulse"></div>
             <div class="absolute top-32 right-16 w-48 h-48 bg-white/8 rounded-full mix-blend-multiply filter blur-xl animate-bounce" style="animation-duration: 3s;"></div>
@@ -109,11 +131,11 @@
                     </div>
                 </div>
 
-                <!-- Form Card -->
-                <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
+                <!-- Form Card with Enhanced Glassmorphism -->
+                <div class="glass-morphism rounded-3xl p-8 transform transition-all duration-500 hover:shadow-2xl">
                     <!-- Form Header -->
-                    <div class="text-center mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-2">Verify Your Email</h2>
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Verify Your Email</h2>
                         <p class="text-gray-600">Check your inbox for the verification link</p>
                     </div>
 
@@ -157,7 +179,7 @@
                         <form method="POST" action="{{ route('verification.send') }}">
                             @csrf
                             <button type="submit" 
-                                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-[#d983e4] to-[#4e71c5] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200">
+                                    class="w-full flex justify-center items-center py-4 px-6 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-gradient-to-r from-primary-600 to-secondary-500 hover:shadow-2xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-600 transition-all duration-300">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                                 </svg>
