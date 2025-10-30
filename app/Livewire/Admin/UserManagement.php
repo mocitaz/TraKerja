@@ -237,7 +237,10 @@ class UserManagement extends Component
             'total' => User::where('role', '!=', 'admin')->count(),
             'premium' => User::where('role', '!=', 'admin')->where('is_premium', true)->count(),
             'free' => User::where('role', '!=', 'admin')->where('is_premium', false)->count(),
-            'admins' => User::where('role', 'admin')->count(),
+            // Verified = users (non-admin) with verified email
+            'verified' => User::where('role', '!=', 'admin')
+                ->whereNotNull('email_verified_at')
+                ->count(),
         ];
         
         return view('livewire.admin.user-management', [

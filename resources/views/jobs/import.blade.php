@@ -1,34 +1,26 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
-            <div class="flex items-center space-x-3 sm:space-x-4">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4">
+            <div class="flex items-center space-x-2.5 sm:space-x-4 min-w-0">
                 <div class="flex items-center space-x-2 sm:space-x-3">
-                    <div class="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-white/30">
+                    <div class="w-7 h-7 sm:w-10 sm:h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow border border-white/30">
                         <img src="{{ asset('images/icon.png') }}" 
                              alt="TraKerja Logo" 
-                             class="w-5 h-5 sm:w-6 sm:h-6"
+                             class="w-4.5 h-4.5 sm:w-6 sm:h-6"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                         <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
                         </svg>
                     </div>
-                    <div>
-                        <h2 class="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
+                    <div class="min-w-0">
+                        <h2 class="text-base sm:text-2xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent truncate">
                             Import CSV
                         </h2>
                         <p class="text-xs text-gray-500 mt-0.5 hidden sm:block">Import multiple job applications from CSV file</p>
                     </div>
                 </div>
             </div>
-            <div class="flex items-center space-x-2">
-                <a href="{{ route('tracker') }}" 
-                   class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                    </svg>
-                    Back to Tracker
-                </a>
-            </div>
+            <div class="hidden sm:flex items-center space-x-2"></div>
         </div>
     </x-slot>
 

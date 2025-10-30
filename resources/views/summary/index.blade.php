@@ -20,19 +20,19 @@
                     </div>
                 </div>
             </div>
-            <div class="flex items-center space-x-2">
-                <div class="flex items-center space-x-2 bg-green-50 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full">
+            <div class="hidden sm:flex items-center space-x-2">
+                <div class="hidden sm:flex items-center space-x-2 bg-green-50 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full">
                     <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary-500 rounded-full"></div>
                     <span class="text-xs font-medium text-primary-700">Live</span>
                 </div>
-                <div class="text-xs text-gray-400">
+                <div class="text-xs text-gray-400 hidden sm:block">
                     {{ now()->format('M d, Y') }}
                 </div>
             </div>
         </div>
     </x-slot>
 
-    <div class="min-h-screen bg-white">
+    <div class="min-h-screen bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <!-- Time Filter Controls -->
             <div class="mb-6 sm:mb-8">

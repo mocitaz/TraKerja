@@ -1,9 +1,10 @@
 <div>
     <div class="space-y-4">
         <!-- Modern Kanban Board -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+            <div class="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 snap-x snap-mandatory">
             @forelse($statuses as $status)
-                <div class="w-full">
+                <div class="w-full min-w-[260px] snap-start sm:min-w-0">
                     <!-- Status Column Header -->
                     <div class="bg-white rounded-lg shadow-sm border border-gray-200 h-full flex flex-col">
                         <div class="p-3 sm:p-4 border-b border-gray-100" style="background: linear-gradient(135deg, {{ $status->color_code }}08, {{ $status->color_code }}03);">
@@ -124,6 +125,7 @@
                     </button>
                 </div>
             @endforelse
+            </div>
         </div>
 
     </div>
