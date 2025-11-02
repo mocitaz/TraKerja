@@ -9,6 +9,7 @@ use App\Http\Controllers\LogoController;
 use App\Http\Controllers\JobApplicationExportController;
 use App\Http\Controllers\JobApplicationImportExportController;
 use App\Http\Controllers\CvBuilderController;
+use App\Http\Controllers\AiAnalyzerController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -83,7 +84,11 @@ Route::middleware('auth')->group(function () {
     // Password verification route
     Route::post('/password/verify', [ProfileController::class, 'verifyPassword'])->name('password.verify');
     
-    // Profile Photo routes
+    // Profile Photo routes (new methods in ProfileController)
+    Route::post('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo.update');
+    Route::delete('/profile/photo', [ProfileController::class, 'removePhoto'])->name('profile.photo.remove');
+    
+    // Legacy Profile Photo routes (LogoController for AJAX)
     Route::post('/profile-photo/upload', [LogoController::class, 'upload'])->name('profile-photo.upload');
     Route::delete('/profile-photo/delete', [LogoController::class, 'delete'])->name('profile-photo.delete');
     Route::get('/profile-photo/get', [LogoController::class, 'getLogo'])->name('profile-photo.get');
@@ -117,6 +122,23 @@ Route::middleware('auth')->group(function () {
             }
             return app(CvBuilderController::class)->export($request);
         })->name('cv-builder.export');
+    });
+    
+    // AI Analyzer routes (Only for regular users)
+    Route::prefix('ai-analyzer')->group(function () {
+        Route::get('/', function () {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                return redirect()->route('admin.index');
+            }
+            return app(AiAnalyzerController::class)->index();
+        })->name('ai-analyzer.index');
+        
+        Route::post('/analyze', function (Request $request) {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot access AI Analyzer');
+            }
+            return app(AiAnalyzerController::class)->analyze($request);
+        })->name('ai-analyzer.analyze');
     });
     
     // Job detail page (Only for regular users)

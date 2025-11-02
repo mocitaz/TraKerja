@@ -637,124 +637,6 @@
                 animation: countUp 1s ease-out;
             }
 
-            /* Lightning Glow Effect */
-            @keyframes lightningGlow {
-                0%, 100% {
-                    box-shadow: 0 0 20px rgba(217, 131, 228, 0.4),
-                                0 0 40px rgba(78, 113, 197, 0.3),
-                                0 0 60px rgba(217, 131, 228, 0.2);
-                }
-                50% {
-                    box-shadow: 0 0 30px rgba(217, 131, 228, 0.6),
-                                0 0 60px rgba(78, 113, 197, 0.5),
-                                0 0 90px rgba(217, 131, 228, 0.4);
-                }
-            }
-            
-            .lightning-glow {
-                animation: lightningGlow 2s ease-in-out infinite;
-            }
-            
-            /* Ultra Smooth Gradient Flow */
-            @keyframes ultraGradientFlow {
-                0% { background-position: 0% 50%; }
-                50% { background-position: 100% 50%; }
-                100% { background-position: 0% 50%; }
-            }
-            
-            .ultra-gradient {
-                background: linear-gradient(-45deg, #d983e4, #4e71c5, #c573dc, #5b7dd4);
-                background-size: 400% 400%;
-                animation: ultraGradientFlow 10s ease infinite;
-            }
-            
-            /* Neon Border Effect */
-            .neon-border {
-                position: relative;
-            }
-            
-            .neon-border::before {
-                content: '';
-                position: absolute;
-                inset: -2px;
-                border-radius: inherit;
-                padding: 2px;
-                background: linear-gradient(45deg, #d983e4, #4e71c5, #d983e4);
-                background-size: 200% 200%;
-                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor;
-                mask-composite: exclude;
-                animation: ultraGradientFlow 3s linear infinite;
-                opacity: 0.6;
-            }
-            
-            /* Holographic Shimmer */
-            @keyframes holographicShimmer {
-                0% { background-position: -200% center; }
-                100% { background-position: 200% center; }
-            }
-            
-            .holographic-shimmer {
-                background: linear-gradient(
-                    90deg,
-                    rgba(217, 131, 228, 0.8) 0%,
-                    rgba(78, 113, 197, 0.8) 50%,
-                    rgba(217, 131, 228, 0.8) 100%
-                );
-                background-size: 200% 100%;
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-                animation: holographicShimmer 3s linear infinite;
-            }
-            
-            /* Ultra Smooth Float */
-            @keyframes ultraFloat {
-                0%, 100% { 
-                    transform: translateY(0px) translateX(0px) rotate(0deg);
-                    opacity: 1;
-                }
-                33% { 
-                    transform: translateY(-20px) translateX(10px) rotate(2deg);
-                    opacity: 0.9;
-                }
-                66% { 
-                    transform: translateY(-10px) translateX(-10px) rotate(-2deg);
-                    opacity: 0.95;
-                }
-            }
-            
-            .ultra-float {
-                animation: ultraFloat 8s ease-in-out infinite;
-            }
-            
-            /* Particle Glow */
-            .particle-glow {
-                position: relative;
-            }
-            
-            .particle-glow::after {
-                content: '';
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                width: 200%;
-                height: 200%;
-                background: radial-gradient(circle, rgba(217, 131, 228, 0.3) 0%, transparent 70%);
-                transform: translate(-50%, -50%);
-                animation: pulse 3s ease-in-out infinite;
-                pointer-events: none;
-            }
-            
-            /* Ultra Smooth Scale */
-            .ultra-scale {
-                transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            }
-            
-            .ultra-scale:hover {
-                transform: scale(1.08);
-            }
-
             /* Responsive animations */
             @media (prefers-reduced-motion: reduce) {
                 *, *::before, *::after {
@@ -762,7 +644,7 @@
                     animation-iteration-count: 1 !important;
                     transition-duration: 0.01ms !important;
                 }
-            }
+        }
             </style>
     </head>
 <body class="font-sans antialiased bg-white">
@@ -807,324 +689,656 @@
         </div>
                 </nav>
 
-    <!-- Hero Section - Ultra Compact & Amazing -->
-    <section class="hero-section relative min-h-[90vh] flex items-center justify-center overflow-hidden gradient-mesh">
-        <!-- Advanced Particle System -->
+    <!-- Hero Section -->
+    <section class="hero-section relative min-h-screen flex items-center justify-center overflow-hidden gradient-mesh">
+        <!-- Particle Background -->
         <div class="particles hidden md:block">
-            <div class="particle" style="width: 100px; height: 100px; left: 10%;"></div>
-            <div class="particle" style="width: 80px; height: 80px; left: 20%;"></div>
-            <div class="particle" style="width: 120px; height: 120px; left: 30%;"></div>
-            <div class="particle" style="width: 90px; height: 90px; left: 40%;"></div>
-            <div class="particle" style="width: 70px; height: 70px; left: 50%;"></div>
-            <div class="particle" style="width: 110px; height: 110px; left: 60%;"></div>
-            <div class="particle" style="width: 85px; height: 85px; left: 70%;"></div>
-            <div class="particle" style="width: 95px; height: 95px; left: 80%;"></div>
-            <div class="particle" style="width: 75px; height: 75px; left: 90%;"></div>
+            <div class="particle" style="width: 80px; height: 80px;"></div>
+            <div class="particle" style="width: 60px; height: 60px;"></div>
+            <div class="particle" style="width: 100px; height: 100px;"></div>
+            <div class="particle" style="width: 70px; height: 70px;"></div>
+            <div class="particle" style="width: 90px; height: 90px;"></div>
+            <div class="particle" style="width: 50px; height: 50px;"></div>
+            <div class="particle" style="width: 75px; height: 75px;"></div>
+            <div class="particle" style="width: 85px; height: 85px;"></div>
+            <div class="particle" style="width: 65px; height: 65px;"></div>
         </div>
         
-        <!-- Ultra Modern Gradient Orbs -->
-        <div class="absolute top-10 right-10 w-72 h-72 bg-gradient-to-r from-[#d983e4]/30 via-[#4e71c5]/20 to-[#d983e4]/30 mix-blend-multiply filter blur-3xl rounded-full floating-animation liquid-blob hidden md:block"></div>
-        <div class="absolute bottom-10 left-10 w-64 h-64 bg-gradient-to-r from-[#4e71c5]/30 via-[#d983e4]/20 to-[#4e71c5]/30 mix-blend-multiply filter blur-3xl rounded-full floating-animation liquid-blob hidden md:block" style="animation-delay: 2s;"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-[#d983e4]/15 via-[#4e71c5]/10 to-[#d983e4]/15 mix-blend-multiply filter blur-[100px] rounded-full pulse-animation liquid-blob hidden md:block"></div>
+        <!-- Enhanced Background Blobs with Liquid Animation -->
+        <div class="absolute top-20 right-20 w-40 h-40 bg-gradient-to-r from-primary-600/20 to-secondary-500/20 mix-blend-multiply filter blur-2xl floating-animation liquid-blob hidden md:block"></div>
+        <div class="absolute bottom-20 left-20 w-32 h-32 bg-gradient-to-r from-secondary-500/20 to-primary-600/20 mix-blend-multiply filter blur-2xl floating-animation liquid-blob hidden md:block" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 mix-blend-multiply filter blur-3xl pulse-animation liquid-blob hidden md:block"></div>
+        <div class="absolute top-1/4 left-1/4 w-20 h-20 bg-gradient-to-r from-primary-700/30 to-secondary-500/30 mix-blend-multiply filter blur-xl floating-animation liquid-blob hidden md:block" style="animation-delay: 4s;"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-24 h-24 bg-gradient-to-r from-secondary-500/30 to-primary-600/30 mix-blend-multiply filter blur-xl floating-animation liquid-blob hidden md:block" style="animation-delay: 1s;"></div>
         
-        <!-- Animated Grid Overlay -->
-        <div class="absolute inset-0 cyber-grid opacity-20 hidden md:block"></div>
+        <!-- Cyber Grid Overlay -->
+        <div class="absolute inset-0 cyber-grid opacity-30 hidden md:block"></div>
         
-        <!-- Glowing Orb Effect -->
-        <div class="absolute top-1/4 right-1/4 w-32 h-32 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] rounded-full filter blur-2xl opacity-20 pulse-animation hidden md:block"></div>
-        <div class="absolute bottom-1/4 left-1/4 w-28 h-28 bg-gradient-to-r from-[#4e71c5] to-[#d983e4] rounded-full filter blur-2xl opacity-20 pulse-animation hidden md:block" style="animation-delay: 1s;"></div>
-        
-        <div class="relative z-10 max-w-5xl mx-auto px-4 text-center py-20">
-            <!-- Ultra Modern Badge -->
-            <div class="inline-flex items-center px-5 py-2.5 rounded-full bg-white/95 backdrop-blur-lg text-xs font-semibold text-primary-600 mb-6 text-reveal shadow-xl border border-white/50 glow-effect" style="animation-delay: 0.2s;">
-                <span class="w-2.5 h-2.5 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] rounded-full mr-2.5 pulse-animation"></span>
-                <span class="font-bold tracking-wide">✨ Smart Job Tracking Platform</span>
+        <div class="relative z-10 max-w-6xl mx-auto px-4 text-center">
+            <!-- Animated Badge -->
+            <div class="inline-flex items-center px-6 py-3 rounded-full bg-white/90 text-sm font-medium text-primary-600 mb-8 text-reveal shadow-lg" style="animation-delay: 0.2s;">
+                <span class="w-3 h-3 bg-secondary-500 rounded-full mr-3 pulse-animation"></span>
+                <span class="typing-animation">Smart Job Application Tracking</span>
             </div>
             
-            <!-- Ultra Compact Hero Title -->
-            <h1 class="hero-title text-4xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-6 leading-[1.1] text-reveal" style="animation-delay: 0.3s;">
-                Track Lamaran Kerja dengan 
-                <br>
-                <span class="gradient-text-animated inline-block mt-2">
+            <!-- Main Heading with Advanced Typography -->
+            <h1 class="hero-title text-5xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight text-reveal" style="animation-delay: 0.4s;">
+                Kelola Proses Rekrutmen dengan 
+                <span class="gradient-text-animated">
                     TraKerja
                 </span>
             </h1>
             
-            <!-- Compact Subtitle -->
-            <p class="hero-subtitle text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto text-reveal leading-relaxed" style="animation-delay: 0.4s;">
-                Platform 
-                <span class="font-bold text-[#d983e4]">tracking</span> & 
-                <span class="font-bold text-[#4e71c5]">analytics</span> 
+            <!-- Subheading with Animation -->
+            <p class="hero-subtitle text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto text-reveal" style="animation-delay: 0.6s;">
+                Platform tracking job application yang 
+                <span class="font-semibold text-[#d983e4]">simple</span> dan 
+                <span class="font-semibold text-[#4e71c5]">efektif</span> 
                 untuk job seeker Indonesia
             </p>
             
-            <!-- Compact CTA Buttons -->
-            <div class="cta-buttons flex flex-col sm:flex-row gap-4 justify-center mb-10 text-reveal" style="animation-delay: 0.5s;">
+            <!-- Enhanced CTA Buttons with Magnetic & Glow Effects -->
+            <div class="cta-buttons flex flex-col sm:flex-row gap-6 justify-center mb-16 text-reveal" style="animation-delay: 0.8s;">
                 @auth
                     <a href="{{ url('/tracker') }}" 
-                       class="cta-button magnetic-button glow-effect bg-gradient-to-r from-[#d983e4] via-[#c573dc] to-[#4e71c5] text-white px-8 py-3.5 rounded-xl font-bold text-base hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 relative overflow-hidden group">
-                        <span class="relative z-10 flex items-center justify-center">
-                            <svg class="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                            </svg>
-                            Buka Dashboard
-                        </span>
+                       class="cta-button magnetic-button glow-effect bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                        <span class="relative z-10">Buka Dashboard</span>
                     </a>
                 @else
                     <a href="{{ route('register') }}" 
-                       class="cta-button magnetic-button glow-effect bg-gradient-to-r from-[#d983e4] via-[#c573dc] to-[#4e71c5] text-white px-8 py-3.5 rounded-xl font-bold text-base hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 relative overflow-hidden group">
-                        <span class="relative z-10 flex items-center justify-center">
-                            <svg class="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                            Mulai Gratis Sekarang
-                        </span>
+                       class="cta-button magnetic-button glow-effect bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                        <span class="relative z-10">Mulai Gratis</span>
                     </a>
                     <a href="{{ route('login') }}" 
-                       class="cta-button magnetic-button border-2 border-[#d983e4] bg-white/80 backdrop-blur-sm text-[#d983e4] px-8 py-3.5 rounded-xl font-bold text-base hover:bg-[#d983e4] hover:text-white hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
-                        <span class="relative z-10 flex items-center justify-center">
-                            <svg class="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
-                            </svg>
-                            Login
-                        </span>
+                       class="cta-button magnetic-button border-2 border-[#d983e4] text-[#d983e4] px-10 py-4 rounded-xl font-bold text-lg hover:bg-[#d983e4] hover:text-white transition-all duration-300 hover:shadow-xl hover:scale-105">
+                        <span class="relative z-10">Login</span>
                     </a>
                 @endauth
             </div>
             
-            <!-- Ultra Compact Trust Badges -->
-            <div class="trust-indicators flex flex-wrap items-center justify-center gap-4 text-xs text-gray-600 text-reveal" style="animation-delay: 0.6s;">
-                <div class="flex items-center bg-white/90 backdrop-blur-sm px-3.5 py-1.5 rounded-full hover:scale-105 transition-all duration-300 shadow-md border border-gray-100">
-                    <svg class="w-4 h-4 text-[#4e71c5] mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <!-- Enhanced Trust Indicators -->
+            <div class="trust-indicators flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600 text-reveal" style="animation-delay: 1s;">
+                <div class="flex items-center bg-white/80 px-4 py-2 rounded-full hover:scale-105 transition-all duration-300 shadow-sm">
+                    <svg class="w-5 h-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                     <span class="font-semibold">Setup 2 Menit</span>
                 </div>
-                <div class="flex items-center bg-white/90 backdrop-blur-sm px-3.5 py-1.5 rounded-full hover:scale-105 transition-all duration-300 shadow-md border border-gray-100">
-                    <svg class="w-4 h-4 text-[#4e71c5] mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                <div class="flex items-center bg-white/80 px-4 py-2 rounded-full hover:scale-105 transition-all duration-300 shadow-sm">
+                    <svg class="w-5 h-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span class="font-semibold">100% Gratis</span>
-                </div>
-                <div class="flex items-center bg-white/90 backdrop-blur-sm px-3.5 py-1.5 rounded-full hover:scale-105 transition-all duration-300 shadow-md border border-gray-100">
-                    <svg class="w-4 h-4 text-[#4e71c5] mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                    </svg>
-                    <span class="font-semibold">Data Aman</span>
+                    <span class="font-semibold">Data Aman & Privat</span>
                 </div>
             </div>
         </div>
         
-        <!-- Compact Scroll Indicator -->
-        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-gray-400 animate-bounce">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-gray-400 animate-bounce">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
             </svg>
         </div>
     </section>
 
 
-    <!-- Features Section - Ultra Compact -->
-    <section class="py-16 bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-hidden">
-        <!-- Subtle Background Elements -->
-        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-10 hidden md:block"></div>
-        <div class="absolute top-10 right-10 w-40 h-40 bg-gradient-to-r from-[#d983e4]/8 to-[#4e71c5]/8 rounded-full blur-3xl floating-animation hidden md:block"></div>
-        <div class="absolute bottom-10 left-10 w-32 h-32 bg-gradient-to-r from-[#4e71c5]/8 to-[#d983e4]/8 rounded-full blur-3xl floating-animation hidden md:block" style="animation-delay: 2s;"></div>
+    <!-- Features Section -->
+    <section class="py-20 bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-20 hidden md:block"></div>
+        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full blur-2xl floating-animation hidden md:block"></div>
+        <div class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-secondary-500/10 to-primary-600/10 rounded-full blur-2xl floating-animation hidden md:block" style="animation-delay: 3s;"></div>
         
         <div class="relative z-10 max-w-7xl mx-auto px-4">
-            <!-- Compact Header -->
-            <div class="text-center mb-12">
-                <div class="inline-flex items-center px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm text-xs font-semibold text-primary-600 mb-4 shadow-md border border-white/50">
-                    <span class="w-2 h-2 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] rounded-full mr-2 pulse-animation"></span>
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center px-4 py-2 rounded-full glass-effect text-sm font-medium text-primary-600 mb-6">
+                    <span class="w-2 h-2 bg-secondary-500 rounded-full mr-2 pulse-animation"></span>
                     Powerful Features
                 </div>
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-4">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                     Fitur-Fitur <span class="gradient-text">TraKerja</span>
                 </h2>
-                <p class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-                    Tools sederhana tapi powerful untuk tracking lamaran kerja Anda
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Tools sederhana tapi powerful untuk mengelola pencarian kerja Anda dengan teknologi terdepan
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Feature 1 -->
-                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-xl p-6 shadow-xl border border-gray-100/50 hover:border-primary-600/30 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#d983e4]/10 via-[#4e71c5]/5 to-[#d983e4]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative z-10 card-3d-inner">
-                        <div class="w-14 h-14 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-16 h-16 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2z"></path>
                         </svg>
                         </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-3 group-hover:text-[#d983e4] transition-colors duration-300">Kanban Board</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">Kelola lamaran kerja dengan drag & drop yang mudah dan intuitif.</p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">Kanban Board</h3>
+                        <p class="text-gray-600 leading-relaxed">Kelola lamaran kerja dengan drag & drop yang mudah. Lihat progress lamaran Anda dalam satu tampilan yang intuitif.</p>
                     </div>
                 </div>
                 
                 <!-- Feature 2 -->
-                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-xl p-6 shadow-xl border border-gray-100/50 hover:border-[#4e71c5]/30 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#4e71c5]/10 via-[#d983e4]/5 to-[#4e71c5]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-secondary-500/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-secondary-500/5 to-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative z-10 card-3d-inner">
-                        <div class="w-14 h-14 bg-gradient-to-br from-[#4e71c5] to-[#d983e4] rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                         </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-3 group-hover:text-[#4e71c5] transition-colors duration-300">Analytics Dashboard</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">Lihat statistik dan insights tentang performa lamaran kerja Anda.</p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Analytics Dashboard</h3>
+                        <p class="text-gray-600 leading-relaxed">Lihat statistik lamaran Anda. Platform mana yang paling efektif dan posisi apa yang paling sering dipanggil interview.</p>
                     </div>
                 </div>
                 
                 <!-- Feature 3 -->
-                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-xl p-6 shadow-xl border border-gray-100/50 hover:border-[#d983e4]/30 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#d983e4]/10 via-[#4e71c5]/5 to-[#d983e4]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative z-10 card-3d-inner">
-                        <div class="w-14 h-14 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-16 h-16 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-3 group-hover:text-[#d983e4] transition-colors duration-300">Smart Reminders</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">Notifikasi otomatis untuk interview dan waktu follow-up yang tepat.</p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">Smart Reminders</h3>
+                        <p class="text-gray-600 leading-relaxed">Dapatkan notifikasi untuk jadwal interview, deadline tugas, dan waktu yang tepat untuk follow-up.</p>
                     </div>
                 </div>
                 
                 <!-- Feature 4 -->
-                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-xl p-6 shadow-xl border border-gray-100/50 hover:border-[#4e71c5]/30 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#4e71c5]/10 via-[#d983e4]/5 to-[#4e71c5]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-secondary-500/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-secondary-500/5 to-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative z-10 card-3d-inner">
-                        <div class="w-14 h-14 bg-gradient-to-br from-[#4e71c5] to-[#d983e4] rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-3 group-hover:text-[#4e71c5] transition-colors duration-300">Goal Tracking</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">Set target mingguan dan pantau progress dengan streak counter.</p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Goal Tracking</h3>
+                        <p class="text-gray-600 leading-relaxed">Set target mingguan untuk lamaran kerja dan pantau progress Anda. Tetap termotivasi dengan streak counter.</p>
                     </div>
                 </div>
                 
                 <!-- Feature 5 -->
-                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-xl p-6 shadow-xl border border-gray-100/50 hover:border-[#d983e4]/30 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#d983e4]/10 via-[#4e71c5]/5 to-[#d983e4]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative z-10 card-3d-inner">
-                        <div class="w-14 h-14 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-16 h-16 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                         </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-3 group-hover:text-[#d983e4] transition-colors duration-300">Real-time Sync</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">Akses data di mana saja dengan update otomatis real-time.</p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">Real-time Sync</h3>
+                        <p class="text-gray-600 leading-relaxed">Akses data Anda di mana saja. Update otomatis di semua device dan browser Anda dengan teknologi cloud.</p>
                     </div>
                 </div>
                 
                 <!-- Feature 6 -->
-                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-xl p-6 shadow-xl border border-gray-100/50 hover:border-[#4e71c5]/30 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#4e71c5]/10 via-[#d983e4]/5 to-[#4e71c5]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="feature-card stagger-item card-3d hover-lift spotlight-effect group glass-enhanced rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-secondary-500/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-secondary-500/5 to-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="relative z-10 card-3d-inner">
-                        <div class="w-14 h-14 bg-gradient-to-br from-[#4e71c5] to-[#d983e4] rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                     </svg>
                         </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-3 group-hover:text-[#4e71c5] transition-colors duration-300">Data Aman</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">Enkripsi end-to-end dan backup otomatis untuk privasi Anda.</p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Data Aman</h3>
+                        <p class="text-gray-600 leading-relaxed">Data Anda aman dengan enkripsi end-to-end dan backup otomatis. Privasi Anda adalah prioritas kami.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Ultra Compact CTA Section -->
-    <section class="py-16 hero-gradient relative overflow-hidden">
-        <!-- Ultra Modern Background -->
-        <div class="absolute inset-0 bg-gradient-to-br from-[#d983e4]/30 via-[#4e71c5]/20 to-[#d983e4]/30"></div>
-        <div class="absolute inset-0 cyber-grid opacity-15 hidden md:block"></div>
-        <div class="absolute top-10 right-10 w-64 h-64 bg-white/10 rounded-full blur-[80px] floating-animation hidden md:block"></div>
-        <div class="absolute bottom-10 left-10 w-48 h-48 bg-white/10 rounded-full blur-[80px] floating-animation hidden md:block" style="animation-delay: 2s;"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-white/5 rounded-full blur-[100px] pulse-animation hidden md:block"></div>
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gradient-to-br from-gray-50 via-white to-slate-50 relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-10 hidden md:block"></div>
+        <div class="absolute top-10 right-10 w-20 h-20 bg-gradient-to-r from-primary-600/20 to-secondary-500/20 rounded-full blur-xl floating-animation hidden md:block"></div>
+        <div class="absolute bottom-10 left-10 w-16 h-16 bg-gradient-to-r from-secondary-500/20 to-primary-600/20 rounded-full blur-xl floating-animation hidden md:block" style="animation-delay: 2s;"></div>
         
-        <div class="relative z-10 max-w-4xl mx-auto text-center px-4">
-            <!-- Compact Animated Badge -->
-            <div class="inline-flex items-center px-4 py-2 rounded-full bg-white/95 backdrop-blur-lg text-xs font-bold text-[#d983e4] mb-6 shadow-xl border border-white/30 glow-effect">
-                <span class="w-2 h-2 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] rounded-full mr-2 pulse-animation"></span>
-                <span class="font-bold tracking-wide">🚀 Ready to Transform Your Job Search</span>
+        <div class="relative z-10 max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center px-4 py-2 rounded-full glass-effect text-sm font-medium text-primary-600 mb-6">
+                    <span class="w-2 h-2 bg-secondary-500 rounded-full mr-2 pulse-animation"></span>
+                    User Stories
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                    Kata <span class="gradient-text">Pengguna</span> TraKerja
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Feedback dari job seeker yang sudah menggunakan TraKerja dan merasakan manfaatnya
+                </p>
             </div>
             
-            <!-- Ultra Compact Heading -->
-            <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-[1.1]">
-                Siap Mengorganisir 
-                <br>
-                <span class="bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
-                    Pencarian Kerja Anda?
-                </span>
-            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card group bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center mb-6">
+                            <div class="w-14 h-14 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                S
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-bold text-gray-900 text-lg group-hover:text-primary-600 transition-colors duration-300">Sarah</div>
+                                <div class="text-sm text-gray-500 font-medium">Fresh Graduate</div>
+                            </div>
+                        </div>
+                        <div class="flex mb-4">
+                            {!! str_repeat('<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>', 5) !!}
+                        </div>
+                        <p class="text-gray-600 leading-relaxed italic">"TraKerja membantu saya mengorganisir lamaran kerja dengan baik. Sekarang saya tahu mana yang sudah di-apply dan mana yang perlu di-follow up. Sangat membantu untuk fresh graduate seperti saya!"</p>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card group bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-secondary-500/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-secondary-500/5 to-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center mb-6">
+                            <div class="w-14 h-14 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                A
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-bold text-gray-900 text-lg group-hover:text-secondary-500 transition-colors duration-300">Ahmad</div>
+                                <div class="text-sm text-gray-500 font-medium">Career Switcher</div>
+                            </div>
+                        </div>
+                        <div class="flex mb-4">
+                            {!! str_repeat('<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>', 5) !!}
+                        </div>
+                        <p class="text-gray-600 leading-relaxed italic">"Platform yang simple tapi efektif. Analytics-nya membantu saya tahu platform mana yang paling sering memanggil interview. Perfect untuk career switcher!"</p>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card group bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center mb-6">
+                            <div class="w-14 h-14 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                M
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-bold text-gray-900 text-lg group-hover:text-primary-600 transition-colors duration-300">Maya</div>
+                                <div class="text-sm text-gray-500 font-medium">Job Seeker</div>
+                            </div>
+                        </div>
+                        <div class="flex mb-4">
+                            {!! str_repeat('<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>', 5) !!}
+                        </div>
+                        <p class="text-gray-600 leading-relaxed italic">"Goal tracking-nya bagus banget! Membantu saya tetap konsisten apply kerja setiap minggu. Akhirnya dapat kerja juga! Terima kasih TraKerja!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 bg-white relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-5 hidden md:block"></div>
+        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full blur-2xl floating-animation hidden md:block"></div>
+        <div class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-secondary-500/10 to-primary-600/10 rounded-full blur-2xl floating-animation hidden md:block" style="animation-delay: 2s;"></div>
+        
+        <div class="relative z-10 max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center px-4 py-2 rounded-full glass-effect text-sm font-medium text-primary-600 mb-6">
+                    <span class="w-2 h-2 bg-secondary-500 rounded-full mr-2 pulse-animation"></span>
+                    Simple Process
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                    Cara Kerja <span class="gradient-text">TraKerja</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Hanya butuh 3 langkah sederhana untuk mengorganisir pencarian kerja Anda
+                </p>
+            </div>
             
-            <!-- Compact Description -->
-            <p class="text-base md:text-lg text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Bergabunglah dengan job seeker Indonesia. 
-                <span class="font-semibold">Mulai gratis</span> dan rasakan perbedaannya!
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="text-center group">
+                    <div class="relative mb-8">
+                        <div class="w-20 h-20 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center text-white font-bold text-2xl mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            1
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-secondary-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Daftar & Setup</h3>
+                    <p class="text-gray-600 leading-relaxed">Buat akun gratis dalam 2 menit. Tidak perlu verifikasi email yang ribet, langsung bisa pakai!</p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="text-center group">
+                    <div class="relative mb-8">
+                        <div class="w-20 h-20 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center text-white font-bold text-2xl mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            2
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Tambah Lamaran</h3>
+                    <p class="text-gray-600 leading-relaxed">Input detail lamaran kerja Anda. TraKerja akan otomatis mengorganisir dan mengingatkan follow-up.</p>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="text-center group">
+                    <div class="relative mb-8">
+                        <div class="w-20 h-20 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center text-white font-bold text-2xl mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            3
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-secondary-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Track & Analyze</h3>
+                    <p class="text-gray-600 leading-relaxed">Pantau progress dan analisis performa lamaran Anda. Dapatkan insight untuk strategi yang lebih efektif.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Solution Section -->
+    <section class="py-20 bg-gradient-to-br from-gray-50 via-white to-slate-50 relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-10 hidden md:block"></div>
+        <div class="absolute top-10 right-10 w-20 h-20 bg-gradient-to-r from-primary-600/20 to-secondary-500/20 rounded-full blur-xl floating-animation hidden md:block"></div>
+        <div class="absolute bottom-10 left-10 w-16 h-16 bg-gradient-to-r from-secondary-500/20 to-primary-600/20 rounded-full blur-xl floating-animation hidden md:block" style="animation-delay: 2s;"></div>
+        
+        <div class="relative z-10 max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <!-- Problem Side -->
+                <div class="space-y-8">
+                    <div>
+                        <div class="inline-flex items-center px-4 py-2 rounded-full bg-red-100 text-red-700 text-sm font-medium mb-4">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                            Masalah Umum
+                        </div>
+                        <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                            Bingung Kelola <span class="text-red-600">Lamaran Kerja?</span>
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-8">
+                            Job seeker seringkali kesulitan mengorganisir lamaran kerja yang sudah dikirim. 
+                            Akibatnya banyak yang terlewat follow-up atau lupa status lamaran.
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-3 h-3 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-600">Lupa sudah apply di mana saja</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-3 h-3 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-600">Tidak tahu kapan harus follow-up</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-3 h-3 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-600">Tidak ada tracking progress yang jelas</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-3 h-3 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-600">Tidak tahu strategi mana yang efektif</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Solution Side -->
+                <div class="space-y-8">
+                    <div>
+                        <div class="inline-flex items-center px-4 py-2 rounded-full bg-green-100 text-green-700 text-sm font-medium mb-4">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Solusi TraKerja
+                        </div>
+                        <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                            <span class="gradient-text">TraKerja</span> Solusinya!
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-8">
+                            Platform tracking job application yang dirancang khusus untuk job seeker Indonesia. 
+                            Simple, efektif, dan mudah digunakan.
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-600">Semua lamaran terorganisir dalam satu dashboard</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-600">Smart reminder untuk follow-up tepat waktu</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-600">Analytics untuk optimasi strategi lamaran</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-600">Goal tracking untuk tetap termotivasi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="py-20 bg-white relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-5 hidden md:block"></div>
+        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full blur-2xl floating-animation hidden md:block"></div>
+        <div class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-secondary-500/10 to-primary-600/10 rounded-full blur-2xl floating-animation hidden md:block" style="animation-delay: 2s;"></div>
+        
+        <div class="relative z-10 max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center px-4 py-2 rounded-full glass-effect text-sm font-medium text-primary-600 mb-6">
+                    <span class="w-2 h-2 bg-secondary-500 rounded-full mr-2 pulse-animation"></span>
+                    Key Benefits
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                    Mengapa Pilih <span class="gradient-text">TraKerja?</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Platform yang dirancang khusus untuk job seeker Indonesia dengan fitur-fitur yang benar-benar dibutuhkan
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Benefit 1 -->
+                <div class="group bg-gradient-to-br from-primary-600/5 to-secondary-500/5 rounded-2xl p-8 border border-gray-100/50 hover:border-primary-600/20 transition-all duration-300 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">100% Gratis</h3>
+                    <p class="text-gray-600 leading-relaxed">Tidak ada biaya tersembunyi atau upgrade berbayar. Semua fitur premium tersedia untuk semua pengguna.</p>
+                </div>
+                
+                <!-- Benefit 2 -->
+                <div class="group bg-gradient-to-br from-secondary-500/5 to-primary-600/5 rounded-2xl p-8 border border-gray-100/50 hover:border-secondary-500/20 transition-all duration-300 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Setup 2 Menit</h3>
+                    <p class="text-gray-600 leading-relaxed">Tidak perlu setup rumit. Daftar, login, langsung bisa mulai tracking lamaran kerja Anda.</p>
+                </div>
+                
+                <!-- Benefit 3 -->
+                <div class="group bg-gradient-to-br from-primary-600/5 to-secondary-500/5 rounded-2xl p-8 border border-gray-100/50 hover:border-primary-600/20 transition-all duration-300 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">Data Aman</h3>
+                    <p class="text-gray-600 leading-relaxed">Data Anda dienkripsi dan disimpan dengan aman. Privasi dan keamanan adalah prioritas utama kami.</p>
+                </div>
+                
+                <!-- Benefit 4 -->
+                <div class="group bg-gradient-to-br from-secondary-500/5 to-primary-600/5 rounded-2xl p-8 border border-gray-100/50 hover:border-secondary-500/20 transition-all duration-300 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Analytics Cerdas</h3>
+                    <p class="text-gray-600 leading-relaxed">Dapatkan insight tentang performa lamaran Anda. Platform mana yang paling efektif dan strategi apa yang berhasil.</p>
+                </div>
+                
+                <!-- Benefit 5 -->
+                <div class="group bg-gradient-to-br from-primary-600/5 to-secondary-500/5 rounded-2xl p-8 border border-gray-100/50 hover:border-primary-600/20 transition-all duration-300 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">Goal Tracking</h3>
+                    <p class="text-gray-600 leading-relaxed">Set target mingguan dan pantau progress Anda. Tetap termotivasi dengan streak counter dan achievement badges.</p>
+                </div>
+                
+                <!-- Benefit 6 -->
+                <div class="group bg-gradient-to-br from-secondary-500/5 to-primary-600/5 rounded-2xl p-8 border border-gray-100/50 hover:border-secondary-500/20 transition-all duration-300 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-secondary-500 transition-colors duration-300">Real-time Sync</h3>
+                    <p class="text-gray-600 leading-relaxed">Akses data Anda di mana saja, kapan saja. Update otomatis di semua device dengan teknologi cloud terdepan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 hero-gradient relative overflow-hidden">
+        <!-- Advanced Background Elements -->
+        <div class="absolute inset-0 cyber-grid opacity-20 hidden md:block"></div>
+        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary-600/20 via-transparent to-secondary-500/20"></div>
+        <div class="absolute top-20 right-20 w-40 h-40 bg-white/10 rounded-full blur-3xl floating-animation hidden md:block"></div>
+        <div class="absolute bottom-20 left-20 w-32 h-32 bg-white/10 rounded-full blur-3xl floating-animation hidden md:block" style="animation-delay: 3s;"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-white/5 rounded-full blur-3xl pulse-animation hidden md:block"></div>
+        
+        <div class="relative z-10 max-w-4xl mx-auto text-center px-4">
+            <!-- Animated Badge -->
+            <div class="inline-flex items-center px-6 py-3 rounded-full glass-effect text-sm font-medium text-white/90 mb-8 neon-glow">
+                <span class="w-3 h-3 bg-white rounded-full mr-3 pulse-animation"></span>
+                <span class="loading-dots">Ready to Transform Your Job Search</span>
+            </div>
+            
+            <h2 class="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight">
+                Siap Mengorganisir Pencarian Kerja Anda?
+            </h2>
+            <p class="text-xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed">
+                Bergabunglah dengan job seeker Indonesia yang sudah menggunakan TraKerja. 
+                Mulai gratis dan rasakan perbedaannya dalam mengelola lamaran kerja Anda.
             </p>
             
-            <!-- Ultra Compact CTA Buttons -->
             @guest
-                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                <div class="flex flex-col sm:flex-row gap-6 justify-center mb-12">
                     <a href="{{ route('register') }}" 
-                       class="cta-button magnetic-button glow-effect bg-white text-[#d983e4] px-8 py-3.5 rounded-xl font-bold text-base hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+                       class="cta-button bg-white text-[#d983e4] px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
                         <span class="relative z-10 flex items-center justify-center">
-                            <svg class="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 mr-2 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                             </svg>
-                            Daftar Gratis Sekarang
+                        Daftar Gratis Sekarang
                         </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                     </a>
                     <a href="{{ route('login') }}" 
-                       class="cta-button magnetic-button border-2 border-white/90 bg-white/10 backdrop-blur-sm text-white px-8 py-3.5 rounded-xl font-bold text-base hover:bg-white hover:text-[#d983e4] transition-all duration-300 hover:shadow-xl hover:scale-105 relative overflow-hidden group">
+                       class="cta-button border-2 border-white text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white hover:text-[#d983e4] transition-all duration-300 hover:shadow-xl relative overflow-hidden group">
                         <span class="relative z-10 flex items-center justify-center">
-                            <svg class="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                            <svg class="w-6 h-6 mr-2 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
                             </svg>
-                            Login
+                        Login
                         </span>
                     </a>
                 </div>
             @else
                 <a href="{{ url('/tracker') }}" 
-                   class="cta-button magnetic-button glow-effect bg-white text-[#d983e4] px-8 py-3.5 rounded-xl font-bold text-base hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 inline-block hover:scale-105 relative overflow-hidden group">
+                   class="cta-button bg-white text-[#d983e4] px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 inline-block relative overflow-hidden group">
                     <span class="relative z-10 flex items-center justify-center">
-                        <svg class="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 mr-2 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
-                        Buka Dashboard
+                    Buka Dashboard
                     </span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                 </a>
             @endguest
             
-            <!-- Ultra Compact Trust Indicators -->
-            <div class="flex flex-wrap items-center justify-center gap-4 text-white/90 text-xs mt-8">
-                <div class="flex items-center bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full hover:scale-105 transition-all duration-300 shadow-md border border-white/20">
-                    <svg class="w-4 h-4 text-white mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            <!-- Enhanced Trust Indicators -->
+            <div class="flex flex-wrap items-center justify-center gap-8 text-white/80 text-sm">
+                <div class="flex items-center glass-effect px-4 py-2 rounded-full hover:scale-105 transition-all duration-300">
+                    <svg class="w-5 h-5 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <span class="font-semibold">Setup 2 Menit</span>
+                    <span class="font-semibold">Setup dalam 2 Menit</span>
                 </div>
-                <div class="flex items-center bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full hover:scale-105 transition-all duration-300 shadow-md border border-white/20">
-                    <svg class="w-4 h-4 text-white mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                <div class="flex items-center glass-effect px-4 py-2 rounded-full hover:scale-105 transition-all duration-300">
+                    <svg class="w-5 h-5 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                     </svg>
-                    <span class="font-semibold">100% Gratis</span>
-                </div>
-                <div class="flex items-center bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full hover:scale-105 transition-all duration-300 shadow-md border border-white/20">
-                    <svg class="w-4 h-4 text-white mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                    </svg>
-                    <span class="font-semibold">Data Aman</span>
+                    <span class="font-semibold">Data Aman & Privat</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer - Ultra Compact -->
-    <footer class="bg-white py-10 relative overflow-hidden">
+    <!-- Footer -->
+    <footer class="bg-white py-12 relative overflow-hidden">
         <!-- Background Elements -->
         <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-200/30 to-blue-200/30 rounded-full blur-3xl hidden md:block"></div>
         <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-full blur-3xl hidden md:block"></div>

@@ -60,6 +60,12 @@
                             <span class="ml-1 px-1.5 py-0.5 text-xs bg-primary-100 text-primary-700 rounded font-semibold">PRO</span>
                         @endif
                     </a>
+                    {{-- AI Analyzer - Temporarily Hidden --}}
+                    {{-- <a href="{{ route('ai-analyzer.index') }}"
+                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                        <span class="hidden lg:inline">AI Analyzer</span>
+                        <span class="lg:hidden">AI</span>
+                    </a> --}}
                 @else
                     {{-- Admin Navigation --}}
                     <a href="{{ route('admin.index') }}"
@@ -307,6 +313,21 @@
                             @endif
                         </div>
                     </a>
+                    {{-- AI Analyzer - Temporarily Hidden --}}
+                    {{-- <a href="{{ route('ai-analyzer.index') }}"
+                       class="group block px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/25' : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50 hover:shadow' }}">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-lg {{ request()->routeIs('ai-analyzer.*') ? 'bg-white/20' : 'bg-primary-100' }} flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-200">
+                                <svg class="w-4 h-4 {{ request()->routeIs('ai-analyzer.*') ? 'text-white' : 'text-primary-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="font-semibold">AI Analyzer</div>
+                                <div class="text-xs {{ request()->routeIs('ai-analyzer.*') ? 'text-white/80' : 'text-gray-500' }}">Analyze & improve your CV</div>
+                            </div>
+                        </div>
+                    </a> --}}
                     
                     <!-- Mobile User Profile Section -->
                     <div class="mt-4 pt-3 border-t border-gray-200/60">

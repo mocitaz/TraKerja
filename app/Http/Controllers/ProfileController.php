@@ -45,32 +45,23 @@ class ProfileController extends Controller
     public function updatePersonalInfo(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'full_name' => ['nullable', 'string', 'max:255'],
-            'phone_number' => ['nullable', 'string', 'max:20'],
-            'domicile' => ['nullable', 'string', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'location' => ['nullable', 'string', 'max:255'],
+            'linkedin' => ['nullable', 'url', 'max:255'],
+            'website' => ['nullable', 'url', 'max:255'],
             'bio' => ['nullable', 'string', 'max:1000'],
-            'linkedin_url' => ['nullable', 'url', 'max:255'],
-            'github_url' => ['nullable', 'url', 'max:255'],
-            'portfolio_url' => ['nullable', 'url', 'max:255'],
-            'website_url' => ['nullable', 'url', 'max:255'],
         ]);
 
         $user = $request->user();
 
-        // Create or update user profile
-        $user->profile()->updateOrCreate(
-            ['user_id' => $user->id],
-            [
-                'full_name' => $validated['full_name'] ?? null,
-                'phone_number' => $validated['phone_number'] ?? null,
-                'domicile' => $validated['domicile'] ?? null,
-                'bio' => $validated['bio'] ?? null,
-                'linkedin_url' => $validated['linkedin_url'] ?? null,
-                'github_url' => $validated['github_url'] ?? null,
-                'portfolio_url' => $validated['portfolio_url'] ?? null,
-                'website_url' => $validated['website_url'] ?? null,
-            ]
-        );
+        // Update user fields directly
+        $user->update([
+            'phone' => $validated['phone'] ?? null,
+            'location' => $validated['location'] ?? null,
+            'linkedin' => $validated['linkedin'] ?? null,
+            'website' => $validated['website'] ?? null,
+            'bio' => $validated['bio'] ?? null,
+        ]);
 
         return Redirect::route('profile.edit')->with('status', 'personal-info-updated');
     }
@@ -91,6 +82,44 @@ class ProfileController extends Controller
             'valid' => $isValid,
             'message' => $isValid ? 'Password is correct' : 'Password is incorrect'
         ]);
+    }
+
+    /**
+     * Update profile photo
+     */
+    public function updatePhoto(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        $user = $request->user();
+
+        // Delete old photo if exists
+        if ($user->logo && \Storage::disk('public')->exists($user->logo)) {
+            \Storage::disk('public')->delete($user->logo);
+        }
+
+        // Store new photo
+        $logoPath = $request->file('logo')->store('logos', 'public');
+        $user->update(['logo' => $logoPath]);
+
+        return Redirect::route('profile.edit')->with('status', 'photo-updated');
+    }
+
+    /**
+     * Remove profile photo
+     */
+    public function removePhoto(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+
+        if ($user->logo) {
+            \Storage::disk('public')->delete($user->logo);
+            $user->update(['logo' => null]);
+        }
+
+        return Redirect::route('profile.edit')->with('status', 'photo-removed');
     }
 
     /**

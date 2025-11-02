@@ -63,19 +63,7 @@ class JobApplicationImportExportController extends Controller
         // Add BOM for UTF-8 encoding in Excel
         fwrite($output, "\xEF\xBB\xBF");
         
-        // Simple Template Header
-        $templateInfo = [
-            ['TraKerja - Import Template'],
-            ['* = Required fields'],
-            ['Date format: YYYY-MM-DD'],
-            ['']
-        ];
-        
-        foreach ($templateInfo as $line) {
-            fputcsv($output, $line);
-        }
-        
-        // Column Headers
+        // Column Headers (baris 1)
         $headers = [
             'Company Name *',
             'Position *',
@@ -95,7 +83,7 @@ class JobApplicationImportExportController extends Controller
         
         fputcsv($output, $headers);
         
-        // Simple Example Row
+        // Example Row (baris 2)
         $example = [
             'PT Contoh Perusahaan',
             'Software Engineer',
@@ -105,25 +93,15 @@ class JobApplicationImportExportController extends Controller
             'Applied',
             'Full Time',
             '2024-01-15',
-            '',
-            '',
-            '',
-            '',
-            '',
-            ''
+            'https://linkedin.com/jobs/example',
+            'Contoh catatan aplikasi',
+            '2024-01-20 14:00',
+            'Video',
+            'Zoom Meeting',
+            'Contoh catatan interview'
         ];
         
         fputcsv($output, $example);
-        
-        // Simple Footer
-        $footer = [
-            [''],
-            ['Save as CSV and upload to TraKerja']
-        ];
-        
-        foreach ($footer as $line) {
-            fputcsv($output, $line);
-        }
         
         rewind($output);
         $csvContent = stream_get_contents($output);
@@ -313,8 +291,9 @@ class JobApplicationImportExportController extends Controller
                 rewind($handle);
             }
             
-            // Read headers
+            // Read headers (first line)
             $headers = fgetcsv($handle);
+            
             if (!$headers) {
                 return $this->importError('CSV file is empty or invalid format.');
             }

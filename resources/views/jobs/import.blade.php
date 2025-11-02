@@ -20,7 +20,15 @@
                     </div>
                 </div>
             </div>
-            <div class="hidden sm:flex items-center space-x-2"></div>
+            <div class="hidden sm:flex items-center space-x-2">
+                <div class="hidden sm:flex items-center space-x-2 bg-green-50 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full">
+                    <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary-500 rounded-full animate-pulse"></div>
+                    <span class="text-xs font-medium text-primary-700">Live</span>
+                </div>
+                <div class="text-xs text-gray-400 hidden sm:block">
+                    {{ now()->format('M d, Y') }}
+                </div>
+            </div>
         </div>
     </x-slot>
 
@@ -124,9 +132,9 @@
                                 Select CSV File
                                 <span class="text-red-500">*</span>
                             </label>
-                            <div class="mt-2 flex justify-center px-6 pt-8 pb-8 border-2 border-gray-300 border-dashed rounded-xl hover:border-primary-400 hover:bg-primary-50/30 transition-all duration-200 group">
+                            <div id="upload-area" class="mt-2 flex justify-center px-6 pt-8 pb-8 border-2 border-gray-300 border-dashed rounded-xl hover:border-primary-400 hover:bg-primary-50/30 transition-all duration-200 group">
                                 <div class="space-y-3 text-center">
-                                    <div class="mx-auto w-12 h-12 text-gray-400 group-hover:text-primary-500 transition-colors duration-200">
+                                    <div id="upload-icon" class="mx-auto w-12 h-12 text-gray-400 group-hover:text-primary-500 transition-colors duration-200">
                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                                         </svg>
@@ -146,6 +154,32 @@
                             @error('csv_file')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
+                            
+                            <!-- File Success Indicator -->
+                            <div id="file-success" class="mt-3 hidden">
+                                <div class="bg-green-50 border-l-4 border-green-400 p-3 rounded-r-lg">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0">
+                                            <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3 flex-1">
+                                            <p class="text-sm font-medium text-green-800">
+                                                File berhasil dipilih: <span id="file-name" class="font-semibold"></span>
+                                            </p>
+                                            <p class="text-xs text-green-700 mt-0.5">
+                                                Ukuran: <span id="file-size"></span> • Siap untuk diimport
+                                            </p>
+                                        </div>
+                                        <button type="button" id="remove-file" class="ml-3 flex-shrink-0 text-green-600 hover:text-green-800 transition-colors">
+                                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Action Buttons -->
@@ -271,5 +305,81 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // File upload feedback
+        const csvFileInput = document.getElementById('csv_file');
+        const uploadArea = document.getElementById('upload-area');
+        const fileSuccess = document.getElementById('file-success');
+        const fileName = document.getElementById('file-name');
+        const fileSize = document.getElementById('file-size');
+        const removeFileBtn = document.getElementById('remove-file');
+        
+        csvFileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Check file type
+                const validTypes = ['.csv', '.txt', 'text/csv', 'text/plain', 'application/csv'];
+                const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+                const isValid = validTypes.includes(fileExtension) || validTypes.includes(file.type);
+                
+                if (!isValid) {
+                    alert('Please select a valid CSV or TXT file.');
+                    csvFileInput.value = '';
+                    return;
+                }
+                
+                // Calculate file size
+                let sizeText;
+                if (file.size < 1024) {
+                    sizeText = file.size + ' B';
+                } else if (file.size < 1024 * 1024) {
+                    sizeText = (file.size / 1024).toFixed(2) + ' KB';
+                } else {
+                    sizeText = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+                }
+                
+                // Display file info
+                fileName.textContent = file.name;
+                fileSize.textContent = sizeText;
+                fileSuccess.classList.remove('hidden');
+                
+                // Change upload area style
+                uploadArea.classList.remove('border-gray-300', 'hover:border-primary-400', 'hover:bg-primary-50/30');
+                uploadArea.classList.add('border-green-400', 'bg-green-50');
+            }
+        });
+        
+        removeFileBtn.addEventListener('click', function() {
+            csvFileInput.value = '';
+            fileSuccess.classList.add('hidden');
+            uploadArea.classList.remove('border-green-400', 'bg-green-50');
+            uploadArea.classList.add('border-gray-300', 'hover:border-primary-400', 'hover:bg-primary-50/30');
+        });
+        
+        // Drag and drop support
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadArea.classList.add('border-primary-500', 'bg-primary-50');
+        });
+        
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('border-primary-500', 'bg-primary-50');
+        });
+        
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('border-primary-500', 'bg-primary-50');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                csvFileInput.files = files;
+                // Trigger change event
+                const event = new Event('change', { bubbles: true });
+                csvFileInput.dispatchEvent(event);
+            }
+        });
+    </script>
 </x-app-layout>
 

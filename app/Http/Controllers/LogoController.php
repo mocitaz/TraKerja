@@ -35,10 +35,11 @@ class LogoController extends Controller
             $request->validate([
                 'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
             ], [
-                'logo.required' => 'Please select a photo to upload.',
-                'logo.image' => 'The file must be an image.',
-                'logo.mimes' => 'The image must be a file of type: jpeg, png, jpg, gif, svg.',
-                'logo.max' => 'The image may not be greater than 2MB.'
+                'logo.required' => 'Please select a profile photo to upload.',
+                'logo.image' => 'The profile photo must be an image.',
+                'logo.mimes' => 'The profile photo must be a file of type: jpeg, png, jpg, gif, svg.',
+                'logo.max' => 'The profile photo may not be greater than 2MB.',
+                'logo.uploaded' => 'The profile photo failed to upload. Please try again.'
             ]);
 
             $user = Auth::user();
@@ -47,7 +48,7 @@ class LogoController extends Controller
             if (!$request->hasFile('logo')) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'No file was uploaded.',
+                    'message' => 'No profile photo was uploaded.',
                     'error_type' => 'no_file'
                 ], 400);
             }
@@ -58,7 +59,7 @@ class LogoController extends Controller
             if ($file->getSize() > 2048 * 1024) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'File size is too large. Maximum size is 2MB.',
+                    'message' => 'Profile photo size is too large. Maximum size is 2MB.',
                     'error_type' => 'file_too_large'
                 ], 400);
             }
@@ -68,7 +69,7 @@ class LogoController extends Controller
             if (!in_array($file->getMimeType(), $allowedTypes)) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Invalid file type. Please upload a JPEG, PNG, JPG, GIF, or SVG image.',
+                    'message' => 'Invalid profile photo type. Please upload a JPEG, PNG, JPG, GIF, or SVG image.',
                     'error_type' => 'invalid_file_type'
                 ], 400);
             }
@@ -85,7 +86,7 @@ class LogoController extends Controller
             if (!$logoPath) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Failed to store the image. Please try again.',
+                    'message' => 'Failed to store the profile photo. Please try again.',
                     'error_type' => 'storage_failed'
                 ], 500);
             }
@@ -151,8 +152,8 @@ class LogoController extends Controller
             
             // Ensure the file is within the allowed directory
             if ($realPath && $expectedBase && strpos($realPath, $expectedBase) === 0) {
-                if (file_exists($publicHtmlPath)) {
-                    unlink($publicHtmlPath);
+            if (file_exists($publicHtmlPath)) {
+                unlink($publicHtmlPath);
                 }
             } else {
                 \Log::warning('Attempted path traversal in logo deletion', [
