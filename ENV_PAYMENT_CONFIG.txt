@@ -1,0 +1,83 @@
+============================================
+YUKK PAYMENT GATEWAY - ENV CONFIGURATION
+============================================
+
+Copy paste konfigurasi ini ke file .env Anda (di server atau local):
+
+----------------------------------------
+TAMBAHKAN DI AKHIR FILE .env:
+----------------------------------------
+
+# YUKK Payment Gateway Configuration
+YUKK_ENVIRONMENT=sandbox
+YUKK_CLIENT_ID=bdd79914-832e-3fd5-9bac-11be9d90aa92
+YUKK_CLIENT_SECRET=CxZ4PNfYPRDT3efwX2ErbWvnGiqGu28WSSvdHo5r
+YUKK_MID="PG Sandbox 49197"
+
+# Premium Pricing
+PREMIUM_PRICE=15000
+
+----------------------------------------
+CARA SETUP DI SERVER (hPanel):
+----------------------------------------
+
+1. Login ke SSH:
+   ssh username@trakerja.web.id
+
+2. Masuk ke directory project:
+   cd domains/trakerja.web.id/public_html
+
+3. Edit file .env:
+   nano .env
+
+4. Scroll ke bawah, tambahkan konfigurasi di atas
+
+5. Save & exit (Ctrl+X, Y, Enter)
+
+6. Jalankan commands:
+   php artisan migrate
+   php artisan config:clear
+   php artisan cache:clear
+   php artisan route:clear
+   php artisan view:clear
+   php artisan optimize:clear
+   composer dump-autoload
+
+7. Test payment:
+   https://trakerja.web.id/payment
+
+----------------------------------------
+UNTUK PRODUCTION (nanti):
+----------------------------------------
+
+Ganti dengan credentials production:
+YUKK_ENVIRONMENT=production
+YUKK_CLIENT_ID=<production_client_id>
+YUKK_CLIENT_SECRET=<production_client_secret>
+YUKK_MID=<production_mid>
+
+Lalu jalankan:
+php artisan config:clear
+
+----------------------------------------
+TESTING:
+----------------------------------------
+
+1. Akses: https://trakerja.web.id/payment
+2. Pilih payment method (VA BCA recommended)
+3. Klik "Bayar Sekarang"
+4. Akan dapat nomor VA
+5. Test payment di simulator: https://simulator.yukk.co.id/
+
+----------------------------------------
+TROUBLESHOOTING:
+----------------------------------------
+
+Jika error:
+- Cek logs: tail -f storage/logs/laravel.log
+- Pastikan APP_URL sudah benar di .env
+- Pastikan webhook URL accessible dari internet
+- Cek payment record di database: select * from payments;
+
+============================================
+

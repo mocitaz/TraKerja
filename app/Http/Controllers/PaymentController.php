@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PaymentSuccessMail;
 use App\Models\Payment;
 use App\Models\User;
 use App\Services\YukkPaymentService;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class PaymentController extends Controller
@@ -289,9 +291,26 @@ class PaymentController extends Controller
                     'is_premium' => true,
                     'payment_status' => 'paid',
                     'premium_until' => now()->addDays($premiumDuration),
+                    'premium_purchased_at' => now(),
                 ]);
 
                 $payment->markAsSuccess();
+
+                // Send success email notification
+                try {
+                    Mail::to($user->email)->send(new PaymentSuccessMail($payment));
+                    Log::info('Payment success email sent', [
+                        'user_id' => $user->id,
+                        'order_id' => $orderId,
+                    ]);
+                } catch (\Exception $e) {
+                    Log::error('Failed to send payment success email', [
+                        'user_id' => $user->id,
+                        'order_id' => $orderId,
+                        'error' => $e->getMessage(),
+                    ]);
+                    // Don't fail the webhook if email fails
+                }
 
                 Log::info('User upgraded to premium', [
                     'user_id' => $user->id,
@@ -367,6 +386,28 @@ class PaymentController extends Controller
         }
 
         return view('payment.waiting', compact('payment'));
+    }
+
+    /**
+     * Show payment history page
+     */
+    public function history()
+    {
+        $user = Auth::user();
+        
+        $payments = Payment::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        // Calculate stats
+        $stats = [
+            'total' => Payment::where('user_id', $user->id)->count(),
+            'success' => Payment::where('user_id', $user->id)->where('status', 'SUCCESS')->count(),
+            'pending' => Payment::where('user_id', $user->id)->whereIn('status', ['PENDING', 'WAITING'])->count(),
+            'failed' => Payment::where('user_id', $user->id)->whereIn('status', ['FAILED', 'CANCELED'])->count(),
+        ];
+
+        return view('payment.history', compact('payments', 'stats'));
     }
 
     /**

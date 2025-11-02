@@ -11,6 +11,7 @@ use App\Http\Controllers\JobApplicationImportExportController;
 use App\Http\Controllers\CvBuilderController;
 use App\Http\Controllers\AiAnalyzerController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -245,12 +246,11 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     })->name('users');
     
     // Payments monitoring
-    Route::get('/payments', function () {
-        if (!Auth::user()->isAdmin()) {
-            abort(403, 'Unauthorized - Admin access required');
-        }
-        return view('admin.payments');
-    })->name('payments');
+    Route::get('/payments', [AdminPaymentController::class, 'index'])->name('payments');
+    Route::get('/payments/{id}', [AdminPaymentController::class, 'show'])->name('payments.show');
+    Route::post('/payments/{id}/cancel', [AdminPaymentController::class, 'cancel'])->name('payments.cancel');
+    Route::get('/payments/export/csv', [AdminPaymentController::class, 'export'])->name('payments.export');
+    Route::get('/payments/analytics/data', [AdminPaymentController::class, 'analytics'])->name('payments.analytics');
     
     // Analytics
     Route::get('/analytics', function () {
@@ -265,6 +265,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 Route::middleware(['auth'])->prefix('payment')->name('payment.')->group(function () {
     // Payment selection page
     Route::get('/', [PaymentController::class, 'index'])->name('index');
+    
+    // Payment history
+    Route::get('/history', [PaymentController::class, 'history'])->name('history');
     
     // Checkout and create payment
     Route::post('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
