@@ -60,12 +60,31 @@
                             <span class="ml-1 px-1.5 py-0.5 text-xs bg-primary-100 text-primary-700 rounded font-semibold">PRO</span>
                         @endif
                     </a>
-                    {{-- AI Analyzer - Temporarily Hidden --}}
-                    {{-- <a href="{{ route('ai-analyzer.index') }}"
-                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
-                        <span class="hidden lg:inline">AI Analyzer</span>
-                        <span class="lg:hidden">AI</span>
-                    </a> --}}
+                    {{-- AI Analyzer - Premium Only --}}
+                    @if(auth()->user() && auth()->user()->is_premium && auth()->user()->payment_status === 'paid')
+                        <a href="{{ route('ai-analyzer.index') }}"
+                           class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                            <span class="hidden lg:inline">AI Analyzer</span>
+                            <span class="lg:hidden">AI</span>
+                            <span class="ml-1 px-1.5 py-0.5 text-xs bg-purple-100 text-purple-700 rounded font-semibold">PRO</span>
+                        </a>
+                    @else
+                        <button type="button" onclick="showPremiumModal('ai-analyzer')"
+                                class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-gray-400 cursor-not-allowed opacity-60">
+                            <span class="hidden lg:inline">AI Analyzer</span>
+                            <span class="lg:hidden">AI</span>
+                            <svg class="inline-block w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                    @endif
+                    {{-- Payment - Coming Soon --}}
+                    <a href="{{ route('payment.coming-soon') }}"
+                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('payment.coming-soon') ? 'bg-amber-100 text-amber-600 shadow-sm' : 'text-gray-600 hover:text-amber-600 hover:bg-amber-50' }}">
+                        <span class="hidden lg:inline">Payment</span>
+                        <span class="lg:hidden">Pay</span>
+                        <span class="ml-1 px-1.5 py-0.5 text-xs bg-amber-100 text-amber-700 rounded font-semibold">Soon</span>
+                    </a>
                 @else
                     {{-- Admin Navigation --}}
                     <a href="{{ route('admin.index') }}"
@@ -313,21 +332,64 @@
                             @endif
                         </div>
                     </a>
-                    {{-- AI Analyzer - Temporarily Hidden --}}
-                    {{-- <a href="{{ route('ai-analyzer.index') }}"
-                       class="group block px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/25' : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50 hover:shadow' }}">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0 w-8 h-8 rounded-lg {{ request()->routeIs('ai-analyzer.*') ? 'bg-white/20' : 'bg-primary-100' }} flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-200">
-                                <svg class="w-4 h-4 {{ request()->routeIs('ai-analyzer.*') ? 'text-white' : 'text-primary-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    {{-- AI Analyzer - Premium Only --}}
+                    @if(auth()->user() && auth()->user()->is_premium && auth()->user()->payment_status === 'paid')
+                        <a href="{{ route('ai-analyzer.index') }}"
+                           class="group block px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-gradient-to-r from-purple-500 to-blue-600 text-white shadow-lg shadow-purple-500/25' : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50 hover:shadow' }}">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-lg {{ request()->routeIs('ai-analyzer.*') ? 'bg-white/20' : 'bg-purple-100' }} flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-200">
+                                        <svg class="w-4 h-4 {{ request()->routeIs('ai-analyzer.*') ? 'text-white' : 'text-purple-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold">AI Analyzer</div>
+                                        <div class="text-xs {{ request()->routeIs('ai-analyzer.*') ? 'text-white/80' : 'text-gray-500' }}">Analyze & improve your CV</div>
+                                    </div>
+                                </div>
+                                <span class="px-1.5 py-0.5 text-[10px] {{ request()->routeIs('ai-analyzer.*') ? 'bg-white/20 text-white' : 'bg-purple-100 text-purple-700' }} rounded-full font-semibold">PRO</span>
+                            </div>
+                        </a>
+                    @else
+                        <button type="button" onclick="showPremiumModal('ai-analyzer')"
+                                class="group w-full block px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-gray-400 hover:bg-gray-50">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center mr-3">
+                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="text-left">
+                                        <div class="font-semibold">AI Analyzer</div>
+                                        <div class="text-xs text-gray-400">Premium feature</div>
+                                    </div>
+                                </div>
+                                <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
                                 </svg>
                             </div>
-                            <div>
-                                <div class="font-semibold">AI Analyzer</div>
-                                <div class="text-xs {{ request()->routeIs('ai-analyzer.*') ? 'text-white/80' : 'text-gray-500' }}">Analyze & improve your CV</div>
+                        </button>
+                    @endif
+                    {{-- Payment - Coming Soon --}}
+                    <a href="{{ route('payment.coming-soon') }}"
+                       class="group block px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('payment.coming-soon') ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg shadow-amber-500/25' : 'text-gray-700 hover:text-amber-600 hover:bg-amber-50 hover:shadow' }}">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 w-8 h-8 rounded-lg {{ request()->routeIs('payment.coming-soon') ? 'bg-white/20' : 'bg-amber-100' }} flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-200">
+                                    <svg class="w-4 h-4 {{ request()->routeIs('payment.coming-soon') ? 'text-white' : 'text-amber-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                    </svg>
+                                </div>
+                                <div class="text-left">
+                                    <div class="font-semibold">Payment</div>
+                                    <div class="text-xs {{ request()->routeIs('payment.coming-soon') ? 'text-white/80' : 'text-gray-500' }}">Coming soon</div>
+                                </div>
                             </div>
+                            <span class="px-1.5 py-0.5 text-[10px] {{ request()->routeIs('payment.coming-soon') ? 'bg-white/20 text-white' : 'bg-amber-100 text-amber-700' }} rounded-full font-semibold">Soon</span>
                         </div>
-                    </a> --}}
+                    </a>
                     
                     <!-- Mobile User Profile Section -->
                     <div class="mt-4 pt-3 border-t border-gray-200/60">
@@ -626,4 +688,174 @@ function prepareLogout() {
     // Restore confirm after a few seconds (page likely navigated already)
     setTimeout(function() { window.confirm = originalConfirm; }, 8000);
 }
+
+// Premium Modal Function
+function showPremiumModal(feature) {
+    const modal = document.createElement('div');
+    modal.id = 'premiumModal';
+    modal.className = 'fixed inset-0 z-50 overflow-y-auto';
+    modal.innerHTML = `
+        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" onclick="closePremiumModal()"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+            <div class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="px-6 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-gradient-to-r from-purple-500 to-blue-600 rounded-full sm:mx-0 sm:h-10 sm:w-10">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg font-semibold leading-6 text-gray-900">
+                                Premium Feature
+                            </h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500">
+                                    ${feature === 'ai-analyzer' ? 'AI Analyzer' : 'This feature'} is only available for Premium members.
+                                </p>
+                                <p class="mt-2 text-sm font-medium text-gray-700">
+                                    Upgrade to Premium to unlock:
+                                </p>
+                                <ul class="mt-2 text-sm text-gray-600 space-y-1">
+                                    <li class="flex items-center">
+                                        <svg class="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        AI-Powered CV Analysis
+                                    </li>
+                                    <li class="flex items-center">
+                                        <svg class="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        All CV Templates
+                                    </li>
+                                    <li class="flex items-center">
+                                        <svg class="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        Unlimited Exports
+                                    </li>
+                                    <li class="flex items-center">
+                                        <svg class="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        Email Notifications
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button disabled class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-gray-500 bg-gray-300 border border-transparent rounded-md shadow-sm cursor-not-allowed opacity-60 sm:ml-3 sm:w-auto sm:text-sm">
+                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        Premium Coming Soon
+                    </button>
+                    <button type="button" onclick="closePremiumModal()" class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+function closePremiumModal() {
+    const modal = document.getElementById('premiumModal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// Coming Soon Modal Function
+function showComingSoonModal() {
+    const modal = document.createElement('div');
+    modal.id = 'comingSoonModal';
+    modal.className = 'fixed inset-0 z-50 overflow-y-auto';
+    modal.innerHTML = `
+        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" onclick="closeComingSoonModal()"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+            <div class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="px-6 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-gradient-to-r from-amber-500 to-orange-600 rounded-full sm:mx-0 sm:h-10 sm:w-10">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg font-semibold leading-6 text-gray-900">
+                                Coming Soon for Premium Members!
+                            </h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500">
+                                    We're working on an amazing payment system that will be exclusively available for Premium members.
+                                </p>
+                                <p class="mt-3 text-sm font-medium text-gray-700">
+                                    What's coming:
+                                </p>
+                                <ul class="mt-2 text-sm text-gray-600 space-y-1">
+                                    <li class="flex items-center">
+                                        <svg class="w-4 h-4 mr-2 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                        </svg>
+                                        Secure Payment Gateway
+                                    </li>
+                                    <li class="flex items-center">
+                                        <svg class="w-4 h-4 mr-2 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                        </svg>
+                                        Multiple Payment Methods
+                                    </li>
+                                    <li class="flex items-center">
+                                        <svg class="w-4 h-4 mr-2 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                        </svg>
+                                        Transaction History
+                                    </li>
+                                    <li class="flex items-center">
+                                        <svg class="w-4 h-4 mr-2 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                        </svg>
+                                        Automatic Invoicing
+                                    </li>
+                                </ul>
+                                <p class="mt-3 text-xs text-gray-400 italic">
+                                    Stay tuned for updates!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" onclick="closeComingSoonModal()" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-gradient-to-r from-amber-600 to-orange-600 border border-transparent rounded-md shadow-sm hover:from-amber-700 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        Got it!
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+function closeComingSoonModal() {
+    const modal = document.getElementById('comingSoonModal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// Close modals with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closePremiumModal();
+        closeComingSoonModal();
+    }
+});
+
 </script>

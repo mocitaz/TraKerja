@@ -2,15 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Setting;
-use App\Notifications\CustomResetPassword;
-use App\Notifications\CustomVerifyEmail;
 
 /**
  * @property int $id
@@ -49,7 +47,7 @@ use App\Notifications\CustomVerifyEmail;
  * @method bool incrementExportCount()
  * @method mixed getRemainingExports()
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -75,7 +73,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_admin',
         'is_premium',
         'premium_purchased_at',
-        'premium_until',
         'payment_status',
         'registered_phase',
         'grandfathered_benefits',
@@ -106,7 +103,6 @@ class User extends Authenticatable implements MustVerifyEmail
             'is_admin' => 'boolean',
             'is_premium' => 'boolean',
             'premium_purchased_at' => 'datetime',
-            'premium_until' => 'datetime',
             'registered_phase' => 'integer',
             'grandfathered_benefits' => 'array',
             'cv_exports_this_month' => 'integer',
@@ -477,21 +473,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function canAccessEmailNotifications(): bool
     {
         return $this->canAccessFeature('email_notifications');
-    }
-
-    /**
-     * Send the email verification notification with custom subject/layout.
-     */
-    public function sendEmailVerificationNotification(): void
-    {
-        $this->notify(new CustomVerifyEmail());
-    }
-
-    /**
-     * Send the password reset notification with custom subject/layout.
-     */
-    public function sendPasswordResetNotification($token): void
-    {
-        $this->notify(new CustomResetPassword($token));
     }
 }

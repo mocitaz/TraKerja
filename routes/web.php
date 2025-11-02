@@ -8,9 +8,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\JobApplicationExportController;
 use App\Http\Controllers\JobApplicationImportExportController;
-use App\Http\Controllers\CvBuilderController;
-use App\Http\Controllers\AiAnalyzerController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\AiAnalyzerController;
+use App\Http\Controllers\CvBuilderController;
 use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -69,6 +69,12 @@ Route::get('/interviews', function () {
     return view('interviews.calendar');
 })->middleware(['auth', 'verified'])->name('interviews');
 
+// AI Analyzer routes (Only for regular users)
+Route::prefix('ai-analyzer')->middleware(['auth', 'verified'])->name('ai-analyzer.')->group(function () {
+    Route::get('/', [AiAnalyzerController::class, 'index'])->name('index');
+    Route::post('/analyze', [AiAnalyzerController::class, 'analyze'])->name('analyze');
+});
+
 Route::get('/dashboard', function () {
     if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
         return redirect()->route('admin.index');
@@ -86,11 +92,7 @@ Route::middleware('auth')->group(function () {
     // Password verification route
     Route::post('/password/verify', [ProfileController::class, 'verifyPassword'])->name('password.verify');
     
-    // Profile Photo routes (new methods in ProfileController)
-    Route::post('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo.update');
-    Route::delete('/profile/photo', [ProfileController::class, 'removePhoto'])->name('profile.photo.remove');
-    
-    // Legacy Profile Photo routes (LogoController for AJAX)
+    // Profile Photo routes
     Route::post('/profile-photo/upload', [LogoController::class, 'upload'])->name('profile-photo.upload');
     Route::delete('/profile-photo/delete', [LogoController::class, 'delete'])->name('profile-photo.delete');
     Route::get('/profile-photo/get', [LogoController::class, 'getLogo'])->name('profile-photo.get');
@@ -126,23 +128,6 @@ Route::middleware('auth')->group(function () {
         })->name('cv-builder.export');
     });
     
-    // AI Analyzer routes (Only for regular users)
-    Route::prefix('ai-analyzer')->group(function () {
-        Route::get('/', function () {
-            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-                return redirect()->route('admin.index');
-            }
-            return app(AiAnalyzerController::class)->index();
-        })->name('ai-analyzer.index');
-        
-        Route::post('/analyze', function (Request $request) {
-            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-                abort(403, 'Admin cannot access AI Analyzer');
-            }
-            return app(AiAnalyzerController::class)->analyze($request);
-        })->name('ai-analyzer.analyze');
-    });
-    
     // Job detail page (Only for regular users)
     Route::get('/jobs/{job}', function (JobApplication $job) {
         if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
@@ -152,40 +137,21 @@ Route::middleware('auth')->group(function () {
         return view('jobs.show', ['job' => $job]);
     })->name('jobs.show');
     
-    // CSV Import/Export routes (Only for regular users)
-    Route::prefix('csv')->group(function () {
-        // Download CSV template
-        Route::get('/template', function () {
-            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-                abort(403, 'Admin cannot access CSV features');
-            }
-            return app(JobApplicationImportExportController::class)->downloadTemplate();
-        })->name('csv.template');
-        
-        // Export job applications to CSV
-        Route::get('/export', function () {
-            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-                abort(403, 'Admin cannot export job applications');
-            }
-            return app(JobApplicationImportExportController::class)->exportToCsv();
-        })->name('csv.export');
-        
-        // Show import form
-        Route::get('/import', function () {
-            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-                abort(403, 'Admin cannot import job applications');
-            }
-            return app(JobApplicationImportExportController::class)->showImportForm();
-        })->name('csv.import');
-        
-        // Process CSV import
-        Route::post('/import', function (Request $request) {
-            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-                abort(403, 'Admin cannot import job applications');
-            }
-            return app(JobApplicationImportExportController::class)->importFromCsv($request);
-        })->name('csv.import.process');
-    });
+    // Export routes (Only for regular users)
+    // DISABLED: Export CSV feature temporarily disabled
+    // Route::get('/export/job-applications/csv', function () {
+    //     if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+    //         abort(403, 'Admin cannot export job applications');
+    //     }
+    //     return app(JobApplicationExportController::class)->exportToCsv();
+    // })->name('export.job-applications.csv');
+    
+    // Route::get('/export/job-applications/stats', function () {
+    //     if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+    //         abort(403, 'Admin cannot access export stats');
+    //     }
+    //     return app(JobApplicationExportController::class)->getExportStats();
+    // })->name('export.job-applications.stats');
     
     // Interview reminder email trigger (for testing/integration)
     Route::post('/jobs/{job}/send-interview-reminder', function (JobApplication $job) {
@@ -200,6 +166,102 @@ Route::middleware('auth')->group(function () {
             return response()->json(['success' => false, 'message' => 'Premium required to send interview reminder.']);
         }
     })->middleware(['auth', 'verified'])->name('jobs.send-interview-reminder');
+    
+    // CSV Import/Export routes (Only for regular users)
+    Route::get('/csv/template', function () {
+        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+            abort(403, 'Admin cannot download CSV template');
+        }
+        return app(JobApplicationImportExportController::class)->downloadTemplate();
+    })->name('csv.template');
+    
+    Route::get('/csv/export', function () {
+        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+            abort(403, 'Admin cannot export CSV');
+        }
+        return app(JobApplicationImportExportController::class)->exportToCsv();
+    })->name('csv.export');
+    
+    Route::get('/csv/import', function () {
+        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+            abort(403, 'Admin cannot access CSV import');
+        }
+        return app(JobApplicationImportExportController::class)->showImportForm();
+    })->name('csv.import');
+    
+    Route::post('/csv/import', function (Request $request) {
+        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+            abort(403, 'Admin cannot import CSV');
+        }
+        return app(JobApplicationImportExportController::class)->importFromCsv($request);
+    })->name('csv.import.process');
+    
+    // Payment routes (Only for regular users)
+    Route::prefix('payment')->name('payment.')->group(function () {
+        Route::get('/', function () {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot access payment');
+            }
+            return app(PaymentController::class)->index();
+        })->name('index');
+        
+        Route::get('/coming-soon', function () {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot access payment');
+            }
+            return view('payment.coming-soon');
+        })->name('coming-soon');
+        
+        Route::post('/checkout', function (Request $request) {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot checkout');
+            }
+            return app(PaymentController::class)->checkout($request);
+        })->name('checkout');
+        
+        Route::get('/waiting/{orderId}', function (string $orderId) {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot access payment');
+            }
+            return app(PaymentController::class)->waiting($orderId);
+        })->name('waiting');
+        
+        Route::get('/success/{orderId}', function (string $orderId) {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot access payment');
+            }
+            return app(PaymentController::class)->success($orderId);
+        })->name('success');
+        
+        Route::get('/failed/{orderId}', function (string $orderId) {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot access payment');
+            }
+            return app(PaymentController::class)->failed($orderId);
+        })->name('failed');
+        
+        Route::get('/check-status/{orderId}', function (string $orderId) {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot check payment status');
+            }
+            return app(PaymentController::class)->checkStatus($orderId);
+        })->name('check-status');
+        
+        Route::get('/history', function () {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot access payment history');
+            }
+            return app(PaymentController::class)->history();
+        })->name('history');
+        
+        Route::post('/webhook', function (Request $request) {
+            return app(PaymentController::class)->webhook($request);
+        })->withoutMiddleware(['auth', 'verified'])->name('webhook');
+        
+        Route::get('/callback', function (Request $request) {
+            return app(PaymentController::class)->callback($request);
+        })->withoutMiddleware(['auth', 'verified'])->name('callback');
+    });
 });
 
 // Admin Routes (protected by admin role)
@@ -246,11 +308,44 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     })->name('users');
     
     // Payments monitoring
-    Route::get('/payments', [AdminPaymentController::class, 'index'])->name('payments');
-    Route::get('/payments/{id}', [AdminPaymentController::class, 'show'])->name('payments.show');
-    Route::post('/payments/{id}/cancel', [AdminPaymentController::class, 'cancel'])->name('payments.cancel');
-    Route::get('/payments/export/csv', [AdminPaymentController::class, 'export'])->name('payments.export');
-    Route::get('/payments/analytics/data', [AdminPaymentController::class, 'analytics'])->name('payments.analytics');
+    Route::get('/payments', function () {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return app(AdminPaymentController::class)->index(request());
+    })->name('payments');
+    
+    // Export payments
+    Route::get('/payments/export', function () {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return app(AdminPaymentController::class)->export(request());
+    })->name('payments.export');
+    
+    // Payment details
+    Route::get('/payments/{id}', function (string $id) {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return app(AdminPaymentController::class)->show($id);
+    })->name('payments.show');
+    
+    // Cancel payment
+    Route::post('/payments/{id}/cancel', function (string $id) {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return app(AdminPaymentController::class)->cancel($id);
+    })->name('payments.cancel');
+    
+    // Payment analytics
+    Route::get('/payments/analytics/data', function () {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return app(AdminPaymentController::class)->analytics(request());
+    })->name('payments.analytics');
     
     // Analytics
     Route::get('/analytics', function () {
@@ -260,29 +355,5 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         return view('admin.analytics');
     })->name('analytics');
 });
-
-// Payment Routes (YUKK Payment Gateway)
-Route::middleware(['auth'])->prefix('payment')->name('payment.')->group(function () {
-    // Payment selection page
-    Route::get('/', [PaymentController::class, 'index'])->name('index');
-    
-    // Payment history
-    Route::get('/history', [PaymentController::class, 'history'])->name('history');
-    
-    // Checkout and create payment
-    Route::post('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
-    
-    // Check payment status (AJAX)
-    Route::get('/check-status/{orderId}', [PaymentController::class, 'checkStatus'])->name('check-status');
-    
-    // Payment result pages
-    Route::get('/success/{orderId}', [PaymentController::class, 'success'])->name('success');
-    Route::get('/failed/{orderId}', [PaymentController::class, 'failed'])->name('failed');
-    Route::get('/waiting/{orderId}', [PaymentController::class, 'waiting'])->name('waiting');
-});
-
-// Payment Callback & Webhook (no auth middleware)
-Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
-Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('payment.webhook');
 
 require __DIR__.'/auth.php';
