@@ -10,6 +10,7 @@ use App\Http\Controllers\JobApplicationExportController;
 use App\Http\Controllers\JobApplicationImportExportController;
 use App\Http\Controllers\CvBuilderController;
 use App\Http\Controllers\AiAnalyzerController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -259,5 +260,26 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         return view('admin.analytics');
     })->name('analytics');
 });
+
+// Payment Routes (YUKK Payment Gateway)
+Route::middleware(['auth'])->prefix('payment')->name('payment.')->group(function () {
+    // Payment selection page
+    Route::get('/', [PaymentController::class, 'index'])->name('index');
+    
+    // Checkout and create payment
+    Route::post('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
+    
+    // Check payment status (AJAX)
+    Route::get('/check-status/{orderId}', [PaymentController::class, 'checkStatus'])->name('check-status');
+    
+    // Payment result pages
+    Route::get('/success/{orderId}', [PaymentController::class, 'success'])->name('success');
+    Route::get('/failed/{orderId}', [PaymentController::class, 'failed'])->name('failed');
+    Route::get('/waiting/{orderId}', [PaymentController::class, 'waiting'])->name('waiting');
+});
+
+// Payment Callback & Webhook (no auth middleware)
+Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
+Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('payment.webhook');
 
 require __DIR__.'/auth.php';

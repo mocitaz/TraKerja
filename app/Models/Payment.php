@@ -5,36 +5,51 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Payment extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'user_id',
-        'transaction_id',
         'order_id',
+        'yukk_transaction_code',
+        'yukk_token',
         'amount',
-        'currency',
-        'payment_gateway',
-        'payment_method',
-        'payment_channel',
+        'payment_channel_code',
+        'payment_channel_name',
+        'payment_category',
+        'va_number',
+        'va_account_id',
+        'va_expired_at',
+        'customer_name',
+        'customer_email',
+        'customer_phone',
         'status',
+        'request_at',
         'paid_at',
         'expired_at',
-        'payment_details',
+        'redirect_url',
+        'callback_url',
+        'notification_url',
         'notes',
+        'metadata',
+        'webhook_data',
     ];
 
     protected $casts = [
-        'amount' => 'decimal:2',
+        'amount' => 'integer',
+        'request_at' => 'datetime',
         'paid_at' => 'datetime',
         'expired_at' => 'datetime',
-        'payment_details' => 'array',
+        'va_expired_at' => 'datetime',
+        'metadata' => 'array',
+        'webhook_data' => 'array',
     ];
 
     /**
-     * Get the user that owns the payment.
+     * Get the user that owns the payment
      */
     public function user(): BelongsTo
     {
@@ -42,19 +57,43 @@ class Payment extends Model
     }
 
     /**
-     * Check if payment is successful
-     */
-    public function isSuccess(): bool
-    {
-        return $this->status === 'success';
-    }
-
-    /**
      * Check if payment is pending
      */
     public function isPending(): bool
     {
-        return $this->status === 'pending';
+        return $this->status === 'PENDING';
+    }
+
+    /**
+     * Check if payment is waiting for customer action
+     */
+    public function isWaiting(): bool
+    {
+        return $this->status === 'WAITING';
+    }
+
+    /**
+     * Check if payment is successful
+     */
+    public function isSuccess(): bool
+    {
+        return $this->status === 'SUCCESS';
+    }
+
+    /**
+     * Check if payment is failed
+     */
+    public function isFailed(): bool
+    {
+        return $this->status === 'FAILED';
+    }
+
+    /**
+     * Check if payment is canceled
+     */
+    public function isCanceled(): bool
+    {
+        return $this->status === 'CANCELED';
     }
 
     /**
@@ -62,15 +101,15 @@ class Payment extends Model
      */
     public function isExpired(): bool
     {
-        if ($this->status === 'expired') {
-            return true;
-        }
-        
-        if ($this->expired_at && now()->isAfter($this->expired_at)) {
-            return true;
-        }
-        
-        return false;
+        return $this->status === 'EXPIRED';
+    }
+
+    /**
+     * Mark payment as waiting
+     */
+    public function markAsWaiting(): void
+    {
+        $this->update(['status' => 'WAITING']);
     }
 
     /**
@@ -79,15 +118,8 @@ class Payment extends Model
     public function markAsSuccess(): void
     {
         $this->update([
-            'status' => 'success',
+            'status' => 'SUCCESS',
             'paid_at' => now(),
-        ]);
-
-        // Update user premium status
-        $this->user->update([
-            'is_premium' => true,
-            'premium_purchased_at' => now(),
-            'payment_status' => 'paid',
         ]);
     }
 
@@ -96,44 +128,62 @@ class Payment extends Model
      */
     public function markAsFailed(): void
     {
-        $this->update([
-            'status' => 'failed',
-        ]);
+        $this->update(['status' => 'FAILED']);
     }
 
     /**
-     * Generate unique order ID
+     * Mark payment as canceled
      */
-    public static function generateOrderId(): string
+    public function markAsCanceled(): void
     {
-        return 'TRK-' . now()->format('Ymd') . '-' . strtoupper(substr(md5(uniqid()), 0, 8));
+        $this->update(['status' => 'CANCELED']);
     }
 
     /**
-     * Scope for successful payments
+     * Mark payment as expired
+     */
+    public function markAsExpired(): void
+    {
+        $this->update(['status' => 'EXPIRED']);
+    }
+
+    /**
+     * Scope to filter by status
+     */
+    public function scopeStatus($query, string $status)
+    {
+        return $query->where('status', $status);
+    }
+
+    /**
+     * Scope to get successful payments
      */
     public function scopeSuccessful($query)
     {
-        return $query->where('status', 'success');
+        return $query->where('status', 'SUCCESS');
     }
 
     /**
-     * Scope for pending payments
+     * Scope to get pending/waiting payments
      */
-    public function scopePending($query)
+    public function scopePendingOrWaiting($query)
     {
-        return $query->where('status', 'pending');
+        return $query->whereIn('status', ['PENDING', 'WAITING']);
     }
 
     /**
-     * Get formatted amount with currency
+     * Format amount as currency
      */
     public function getFormattedAmountAttribute(): string
     {
-        if ($this->currency === 'IDR') {
-            return 'Rp ' . number_format($this->amount, 0, ',', '.');
-        }
-        
-        return $this->currency . ' ' . number_format($this->amount, 2);
+        return 'Rp ' . number_format($this->amount, 0, ',', '.');
+    }
+
+    /**
+     * Get payment method display name
+     */
+    public function getPaymentMethodAttribute(): string
+    {
+        return $this->payment_channel_name ?? $this->payment_channel_code ?? 'Unknown';
     }
 }
