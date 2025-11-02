@@ -257,23 +257,18 @@
                             </td>
                             <td class="px-4 py-3 text-center text-sm">
                                 @if($job->interview_date)
-                                    <div class="flex flex-col items-center space-y-3">
-                                        <!-- Date -->
-                                        <div class="flex items-center text-gray-600 text-sm max-w-[120px]">
-                                            <svg class="w-4 h-4 mr-2 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                            </svg>
-                                            <span class="truncate">{{ $job->interview_date->setTimezone('Asia/Jakarta')->format('M d, Y') }}</span>
-                                        </div>
+                                    <div class="flex items-center justify-center text-gray-600 text-sm">
+                                        <svg class="w-4 h-4 mr-2 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <span class="truncate">{{ $job->interview_date->setTimezone('Asia/Jakarta')->format('M d, Y') }}</span>
                                     </div>
                                 @else
-                                    <div class="flex flex-col items-center space-y-2">
-                                        <span class="text-gray-400 text-xs font-medium">No interview</span>
-                                        <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
-                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                            </svg>
-                                        </div>
+                                    <div class="flex items-center justify-center text-gray-400 text-xs">
+                                        <svg class="w-4 h-4 mr-1.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <span>No interview</span>
                                     </div>
                                 @endif
                             </td>

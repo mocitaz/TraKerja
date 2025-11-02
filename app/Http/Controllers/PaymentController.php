@@ -15,102 +15,118 @@ use Illuminate\Support\Str;
 
 class PaymentController extends Controller
 {
-    private YukkPaymentService $yukkService;
+    private ?YukkPaymentService $yukkService = null;
 
-    public function __construct(YukkPaymentService $yukkService)
+    public function __construct()
     {
-        $this->yukkService = $yukkService;
+        // Lazy load YukkPaymentService only when needed (for checkout, etc)
+        // This prevents errors when config is missing
     }
 
     /**
-     * Show payment selection page (choose payment method)
+     * Get YukkPaymentService instance (lazy loaded)
+     */
+    private function getYukkService(): YukkPaymentService
+    {
+        if ($this->yukkService === null) {
+            $this->yukkService = app(YukkPaymentService::class);
+        }
+        return $this->yukkService;
+    }
+
+    /**
+     * Show payment coming soon page
      */
     public function index()
     {
-        $user = Auth::user();
+        // TODO: Uncomment when payment feature is ready
+        
+        // $user = Auth::user();
+        //
+        // // Check if user is already premium
+        // if ($user->is_premium && $user->payment_status === 'paid') {
+        //     return redirect()->route('profile.edit')
+        //         ->with('info', 'Anda sudah menjadi member Premium!');
+        // }
+        //
+        // // Get available payment channels from YUKK
+        // $paymentChannels = $this->yukkService->getPaymentChannels();
+        //
+        // // Fallback: Use static payment channels if API fails
+        // if (empty($paymentChannels)) {
+        //     Log::warning('YUKK API returned empty payment channels, using fallback static channels');
+        //     
+        //     $paymentChannels = [
+        //         // Bank Transfer (Virtual Account)
+        //         [
+        //             'code' => 'VA_BCA',
+        //             'name' => 'Virtual Account BCA',
+        //             'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/va-bca.png',
+        //             'category' => ['code' => 'BANK_TRANSFER', 'name' => 'Bank Transfer']
+        //         ],
+        //         [
+        //             'code' => 'VA_MANDIRI',
+        //             'name' => 'Virtual Account MANDIRI',
+        //             'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/va-mandiri.png',
+        //             'category' => ['code' => 'BANK_TRANSFER', 'name' => 'Bank Transfer']
+        //         ],
+        //         [
+        //             'code' => 'VA_BNI',
+        //             'name' => 'Virtual Account BNI',
+        //             'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/va-bni.png',
+        //             'category' => ['code' => 'BANK_TRANSFER', 'name' => 'Bank Transfer']
+        //         ],
+        //         [
+        //             'code' => 'VA_BRI',
+        //             'name' => 'Virtual Account BRI',
+        //             'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/va-bri.png',
+        //             'category' => ['code' => 'BANK_TRANSFER', 'name' => 'Bank Transfer']
+        //         ],
+        //         [
+        //             'code' => 'VA_PERMATA',
+        //             'name' => 'Virtual Account PERMATA',
+        //             'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/va-permata.png',
+        //             'category' => ['code' => 'BANK_TRANSFER', 'name' => 'Bank Transfer']
+        //         ],
+        //         // E-Wallet
+        //         [
+        //             'code' => 'OVO',
+        //             'name' => 'OVO',
+        //             'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/ovo.png',
+        //             'category' => ['code' => 'E_WALLET', 'name' => 'E-Wallet']
+        //         ],
+        //         [
+        //             'code' => 'SHOPEEPAY',
+        //             'name' => 'ShopeePay',
+        //             'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/shopeepay.png',
+        //             'category' => ['code' => 'E_WALLET', 'name' => 'E-Wallet']
+        //         ],
+        //         // QRIS
+        //         [
+        //             'code' => 'QRIS',
+        //             'name' => 'QRIS',
+        //             'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/qris.png',
+        //             'category' => ['code' => 'QRIS', 'name' => 'QRIS']
+        //         ],
+        //         // Credit Card
+        //         [
+        //             'code' => 'CREDIT_CARD',
+        //             'name' => 'Credit Card',
+        //             'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/credit-card.png',
+        //             'category' => ['code' => 'CREDIT_CARD', 'name' => 'Credit Card']
+        //         ],
+        //     ];
+        // }
+        //
+        // // Group payment channels by category
+        // $groupedChannels = collect($paymentChannels)->groupBy('category.code');
+        //
+        // $premiumPrice = config('yukk.premium_price');
+        // $premiumDuration = config('yukk.premium_duration_days');
+        //
+        // return view('payment.index', compact('groupedChannels', 'premiumPrice', 'premiumDuration'));
 
-        // Check if user is already premium
-        if ($user->is_premium && $user->payment_status === 'paid') {
-            return redirect()->route('profile.edit')
-                ->with('info', 'Anda sudah menjadi member Premium!');
-        }
-
-        // Get available payment channels from YUKK
-        $paymentChannels = $this->yukkService->getPaymentChannels();
-
-        // Fallback: Use static payment channels if API fails
-        if (empty($paymentChannels)) {
-            Log::warning('YUKK API returned empty payment channels, using fallback static channels');
-            
-            $paymentChannels = [
-                // Bank Transfer (Virtual Account)
-                [
-                    'code' => 'VA_BCA',
-                    'name' => 'Virtual Account BCA',
-                    'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/va-bca.png',
-                    'category' => ['code' => 'BANK_TRANSFER', 'name' => 'Bank Transfer']
-                ],
-                [
-                    'code' => 'VA_MANDIRI',
-                    'name' => 'Virtual Account MANDIRI',
-                    'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/va-mandiri.png',
-                    'category' => ['code' => 'BANK_TRANSFER', 'name' => 'Bank Transfer']
-                ],
-                [
-                    'code' => 'VA_BNI',
-                    'name' => 'Virtual Account BNI',
-                    'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/va-bni.png',
-                    'category' => ['code' => 'BANK_TRANSFER', 'name' => 'Bank Transfer']
-                ],
-                [
-                    'code' => 'VA_BRI',
-                    'name' => 'Virtual Account BRI',
-                    'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/va-bri.png',
-                    'category' => ['code' => 'BANK_TRANSFER', 'name' => 'Bank Transfer']
-                ],
-                [
-                    'code' => 'VA_PERMATA',
-                    'name' => 'Virtual Account PERMATA',
-                    'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/va-permata.png',
-                    'category' => ['code' => 'BANK_TRANSFER', 'name' => 'Bank Transfer']
-                ],
-                // E-Wallet
-                [
-                    'code' => 'OVO',
-                    'name' => 'OVO',
-                    'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/ovo.png',
-                    'category' => ['code' => 'E_WALLET', 'name' => 'E-Wallet']
-                ],
-                [
-                    'code' => 'SHOPEEPAY',
-                    'name' => 'ShopeePay',
-                    'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/shopeepay.png',
-                    'category' => ['code' => 'E_WALLET', 'name' => 'E-Wallet']
-                ],
-                // QRIS
-                [
-                    'code' => 'QRIS',
-                    'name' => 'QRIS',
-                    'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/qris.png',
-                    'category' => ['code' => 'QRIS', 'name' => 'QRIS']
-                ],
-                // Credit Card
-                [
-                    'code' => 'CREDIT_CARD',
-                    'name' => 'Credit Card',
-                    'image_url' => 'https://dev.api.yukkpay.com/storage/images/payment-channels/credit-card.png',
-                    'category' => ['code' => 'CREDIT_CARD', 'name' => 'Credit Card']
-                ],
-            ];
-        }
-
-        // Group payment channels by category
-        $groupedChannels = collect($paymentChannels)->groupBy('category.code');
-
-        $premiumPrice = config('yukk.premium_price');
-        $premiumDuration = config('yukk.premium_duration_days');
-
-        return view('payment.index', compact('groupedChannels', 'premiumPrice', 'premiumDuration'));
+        return view('payment.coming-soon');
     }
 
     /**
@@ -149,7 +165,7 @@ class PaymentController extends Controller
             ]);
 
             // Prepare payment request data
-            $paymentData = $this->yukkService->formatPaymentRequest(
+            $paymentData = $this->getYukkService()->formatPaymentRequest(
                 orderId: $orderId,
                 amount: $amount,
                 paymentChannelCode: $request->payment_channel_code,
@@ -161,7 +177,7 @@ class PaymentController extends Controller
             );
 
             // Request payment to YUKK
-            $response = $this->yukkService->requestPayment($paymentData);
+            $response = $this->getYukkService()->requestPayment($paymentData);
 
             if (!$response['success']) {
                 DB::rollBack();
@@ -251,7 +267,7 @@ class PaymentController extends Controller
         $signature = $request->header('Signature');
         $data = $request->all();
 
-        if (!$this->yukkService->verifyWebhookSignature($signature, $data)) {
+        if (!$this->getYukkService()->verifyWebhookSignature($signature, $data)) {
             Log::warning('Webhook signature verification failed', [
                 'signature' => $signature,
             ]);
@@ -426,7 +442,7 @@ class PaymentController extends Controller
 
         // Check status from YUKK API if transaction code exists
         if ($payment->yukk_transaction_code) {
-            $response = $this->yukkService->checkPaymentStatus($payment->yukk_transaction_code);
+            $response = $this->getYukkService()->checkPaymentStatus($payment->yukk_transaction_code);
             
             if ($response['success']) {
                 $status = $response['data']['status'] ?? $payment->status;

@@ -37,40 +37,40 @@
                 @if(!auth()->user()->isAdmin() && auth()->user()->role !== 'admin')
                     {{-- Regular User Navigation --}}
                     <a href="{{ route('tracker') }}"
-                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('tracker') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('tracker') ? 'bg-primary-100 text-primary-600 font-semibold' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
                         <span>Tracker</span>
                     </a>
                     <a href="{{ route('summary') }}"
-                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('summary') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('summary') ? 'bg-primary-100 text-primary-600 font-semibold' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
                         <span>Summary</span>
                     </a>
                     <a href="{{ route('goals') }}"
-                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('goals') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('goals') ? 'bg-primary-100 text-primary-600 font-semibold' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
                         <span>Goals</span>
                     </a>
                     <a href="{{ route('interviews') }}"
-                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('interviews') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('interviews') ? 'bg-primary-100 text-primary-600 font-semibold' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
                         <span>Interviews</span>
                     </a>
                     <a href="{{ route('cv.builder') }}"
-                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('cv.*') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                       class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('cv.*') ? 'bg-primary-100 text-primary-600 font-semibold' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
                         <span class="hidden lg:inline">CV Builder</span>
                         <span class="lg:hidden">CV</span>
                         @if(auth()->user() && auth()->user()->is_premium && auth()->user()->payment_status === 'paid')
-                            <span class="ml-1 px-1.5 py-0.5 text-xs bg-primary-100 text-primary-700 rounded font-semibold">PRO</span>
+                            <span class="ml-1 px-1 py-0.5 text-[10px] bg-primary-100 text-primary-700 rounded">PRO</span>
                         @endif
                     </a>
                     {{-- AI Analyzer - Premium Only --}}
                     @if(auth()->user() && auth()->user()->is_premium && auth()->user()->payment_status === 'paid')
                         <a href="{{ route('ai-analyzer.index') }}"
-                           class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
+                           class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-primary-100 text-primary-600 font-semibold' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
                             <span class="hidden lg:inline">AI Analyzer</span>
                             <span class="lg:hidden">AI</span>
-                            <span class="ml-1 px-1.5 py-0.5 text-xs bg-purple-100 text-purple-700 rounded font-semibold">PRO</span>
+                            <span class="ml-1 px-1 py-0.5 text-[10px] bg-purple-100 text-purple-700 rounded">PRO</span>
                         </a>
                     @else
                         <button type="button" onclick="showPremiumModal('ai-analyzer')"
-                                class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-gray-400 cursor-not-allowed opacity-60">
+                                class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 text-gray-400 cursor-not-allowed opacity-60">
                             <span class="hidden lg:inline">AI Analyzer</span>
                             <span class="lg:hidden">AI</span>
                             <svg class="inline-block w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
@@ -78,12 +78,11 @@
                             </svg>
                         </button>
                     @endif
-                    {{-- Payment - Coming Soon --}}
-                    <a href="{{ route('payment.coming-soon') }}"
-                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('payment.coming-soon') ? 'bg-amber-100 text-amber-600 shadow-sm' : 'text-gray-600 hover:text-amber-600 hover:bg-amber-50' }}">
-                        <span class="hidden lg:inline">Payment</span>
-                        <span class="lg:hidden">Pay</span>
-                        <span class="ml-1 px-1.5 py-0.5 text-xs bg-amber-100 text-amber-700 rounded font-semibold">Soon</span>
+                    {{-- Payment --}}
+                    <a href="{{ route('payment.index') }}"
+                       class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('payment.*') ? 'bg-amber-100 text-amber-700 font-semibold' : 'text-gray-600 hover:text-amber-600 hover:bg-amber-50' }}">
+                        <span>Payment</span>
+                        <span class="ml-1 px-1 py-0.5 text-[10px] bg-amber-100 text-amber-700 rounded">Soon</span>
                     </a>
                 @else
                     {{-- Admin Navigation --}}
@@ -197,7 +196,7 @@
                                          x-transition:leave="transition ease-in duration-75"
                                          x-transition:leave-start="opacity-100 transform scale-100"
                                          x-transition:leave-end="opacity-0 transform scale-95"
-                                         class="sm:absolute sm:left-full sm:top-0 sm:ml-1 w-full sm:w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 z-50"
+                                         class="sm:absolute sm:right-full sm:left-auto sm:top-0 sm:mr-1 w-full sm:w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 z-50"
                                          style="display: none;"
                                          @mouseenter.window="if(window.innerWidth>=640){open=true}"
                                          @mouseleave.window="if(window.innerWidth>=640){open=false}">
@@ -237,7 +236,7 @@
 
                             <!-- Authentication -->
                             <button onclick="openLogoutModal()" 
-                                    class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors duration-200">
+                                    class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors duration-200">
                                 <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                                 </svg>
@@ -431,7 +430,7 @@
                                 Profile
                             </a>
                             <button onclick="openLogoutModal()" 
-                                    class="flex items-center justify-center px-3 py-2 bg-white/50 text-gray-700 rounded-lg hover:bg-red-50 hover:text-red-600 transition-colors duration-200 text-sm">
+                                    class="flex items-center justify-center px-3 py-2 bg-white/50 text-red-600 rounded-lg hover:bg-red-50 hover:text-red-700 transition-colors duration-200 text-sm">
                                 <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                                 </svg>
