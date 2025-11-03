@@ -70,13 +70,6 @@ class CvBuilderController extends Controller
         $user = Auth::user();
         $template = $request->input('template', 'minimal');
         
-        // Log untuk debugging
-        Log::info('CV Preview requested', [
-            'user_id' => $user->id,
-            'template' => $template,
-            'all_inputs' => $request->all()
-        ]);
-        
         // Validate template exists
         $allowedTemplates = ['minimal', 'professional', 'creative', 'elegant'];
         if (!in_array($template, $allowedTemplates)) {

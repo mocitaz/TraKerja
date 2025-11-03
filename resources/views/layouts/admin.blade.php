@@ -106,12 +106,6 @@
                             Users
                         </a>
 
-                        <a href="{{ route('admin.payments') }}" 
-                           class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {{ request()->routeIs('admin.payments*') ? 'bg-primary-50 text-primary-900' : 'text-primary-600 hover:bg-primary-50 hover:text-primary-900' }}">
-                            <i class="fas fa-credit-card mr-4 flex-shrink-0 h-6 w-6 {{ request()->routeIs('admin.payments*') ? 'text-primary-600' : 'text-primary-400' }}"></i>
-                            Payments
-                        </a>
-
                         <a href="{{ route('admin.monetization') }}" 
                            class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {{ request()->routeIs('admin.monetization') ? 'bg-primary-50 text-primary-900' : 'text-primary-600 hover:bg-primary-50 hover:text-primary-900' }}">
                             <i class="fas fa-dollar-sign mr-4 flex-shrink-0 h-6 w-6 {{ request()->routeIs('admin.monetization') ? 'text-primary-600' : 'text-primary-400' }}"></i>
@@ -122,6 +116,12 @@
                            class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {{ request()->routeIs('admin.analytics') ? 'bg-primary-50 text-primary-900' : 'text-primary-600 hover:bg-primary-50 hover:text-primary-900' }}">
                             <i class="fas fa-chart-line mr-4 flex-shrink-0 h-6 w-6 {{ request()->routeIs('admin.analytics') ? 'text-primary-600' : 'text-primary-400' }}"></i>
                             Analytics
+                        </a>
+
+                        <a href="{{ route('admin.email-blast') }}" 
+                           class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {{ request()->routeIs('admin.email-blast*') ? 'bg-primary-50 text-primary-900' : 'text-primary-600 hover:bg-primary-50 hover:text-primary-900' }}">
+                            <i class="fas fa-envelope mr-4 flex-shrink-0 h-6 w-6 {{ request()->routeIs('admin.email-blast*') ? 'text-primary-600' : 'text-primary-400' }}"></i>
+                            Email Blast
                         </a>
                     </nav>
 
@@ -172,12 +172,6 @@
                                     Users
                                 </a>
 
-                                <a href="{{ route('admin.payments') }}" 
-                                   class="group flex items-center px-2 py-2 text-base font-medium rounded-md {{ request()->routeIs('admin.payments*') ? 'bg-primary-50 text-primary-900' : 'text-primary-600 hover:bg-primary-50 hover:text-primary-900' }}">
-                                    <i class="fas fa-credit-card mr-4 flex-shrink-0 h-6 w-6 {{ request()->routeIs('admin.payments*') ? 'text-primary-600' : 'text-primary-400' }}"></i>
-                                    Payments
-                                </a>
-
                                 <a href="{{ route('admin.monetization') }}" 
                                    class="group flex items-center px-2 py-2 text-base font-medium rounded-md {{ request()->routeIs('admin.monetization') ? 'bg-primary-50 text-primary-900' : 'text-primary-600 hover:bg-primary-50 hover:text-primary-900' }}">
                                     <i class="fas fa-dollar-sign mr-4 flex-shrink-0 h-6 w-6 {{ request()->routeIs('admin.monetization') ? 'text-primary-600' : 'text-primary-400' }}"></i>
@@ -188,6 +182,12 @@
                                    class="group flex items-center px-2 py-2 text-base font-medium rounded-md {{ request()->routeIs('admin.analytics') ? 'bg-primary-50 text-primary-900' : 'text-primary-600 hover:bg-primary-50 hover:text-primary-900' }}">
                                     <i class="fas fa-chart-line mr-4 flex-shrink-0 h-6 w-6 {{ request()->routeIs('admin.analytics') ? 'text-primary-600' : 'text-primary-400' }}"></i>
                                     Analytics
+                                </a>
+
+                                <a href="{{ route('admin.email-blast') }}" 
+                                   class="group flex items-center px-2 py-2 text-base font-medium rounded-md {{ request()->routeIs('admin.email-blast*') ? 'bg-primary-50 text-primary-900' : 'text-primary-600 hover:bg-primary-50 hover:text-primary-900' }}">
+                                    <i class="fas fa-envelope mr-4 flex-shrink-0 h-6 w-6 {{ request()->routeIs('admin.email-blast*') ? 'text-primary-600' : 'text-primary-400' }}"></i>
+                                    Email Blast
                                 </a>
                             </nav>
                         </div>

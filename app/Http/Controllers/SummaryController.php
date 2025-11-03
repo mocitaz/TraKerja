@@ -12,13 +12,6 @@ class SummaryController extends Controller
     {
         $userId = auth()->id();
         $timeFilter = $request->get('timeFilter', 'monthly'); // Default to monthly
-        
-        // Debug: Check if controller is being called
-        \Log::info('SummaryController::index called', [
-            'userId' => $userId,
-            'timeFilter' => $timeFilter,
-            'request_url' => $request->url(),
-        ]);
 
         // Get date range based on time filter
         $dateRange = $this->getDateRange($timeFilter);
@@ -105,7 +98,7 @@ class SummaryController extends Controller
 
     private function getDateRange($timeFilter)
     {
-        $now = Carbon::now();
+        $now = Carbon::now('Asia/Jakarta');
         
         switch ($timeFilter) {
             case 'weekly':
@@ -138,19 +131,19 @@ class SummaryController extends Controller
             $groupBy = 'DATE(application_date)';
             $labels = [];
             for ($i = 6; $i >= 0; $i--) {
-                $labels[] = Carbon::now()->subDays($i)->format('M d');
+                $labels[] = Carbon::now('Asia/Jakarta')->subDays($i)->format('M d');
             }
         } elseif ($timeFilter === 'monthly') {
             $groupBy = 'DATE(application_date)';
             $labels = [];
             for ($i = 29; $i >= 0; $i--) {
-                $labels[] = Carbon::now()->subDays($i)->format('M d');
+                $labels[] = Carbon::now('Asia/Jakarta')->subDays($i)->format('M d');
             }
         } else {
             $groupBy = 'DATE_FORMAT(application_date, "%Y-%m")';
             $labels = [];
             for ($i = 11; $i >= 0; $i--) {
-                $labels[] = Carbon::now()->subMonths($i)->format('M Y');
+                $labels[] = Carbon::now('Asia/Jakarta')->subMonths($i)->format('M Y');
             }
         }
         
@@ -179,7 +172,7 @@ class SummaryController extends Controller
         
         if ($timeFilter === 'weekly') {
             for ($i = 6; $i >= 0; $i--) {
-                $date = Carbon::now()->subDays($i)->format('Y-m-d');
+                $date = Carbon::now('Asia/Jakarta')->subDays($i)->format('Y-m-d');
                 $appCount = $applications->where('period', $date)->first();
                 $intCount = $interviews->where('period', $date)->first();
                 
@@ -188,7 +181,7 @@ class SummaryController extends Controller
             }
         } elseif ($timeFilter === 'monthly') {
             for ($i = 29; $i >= 0; $i--) {
-                $date = Carbon::now()->subDays($i)->format('Y-m-d');
+                $date = Carbon::now('Asia/Jakarta')->subDays($i)->format('Y-m-d');
                 $appCount = $applications->where('period', $date)->first();
                 $intCount = $interviews->where('period', $date)->first();
                 
@@ -197,7 +190,7 @@ class SummaryController extends Controller
             }
         } else {
             for ($i = 11; $i >= 0; $i--) {
-                $period = Carbon::now()->subMonths($i)->format('Y-m');
+                $period = Carbon::now('Asia/Jakarta')->subMonths($i)->format('Y-m');
                 $appCount = $applications->where('period', $period)->first();
                 $intCount = $interviews->where('period', $period)->first();
                 
@@ -447,7 +440,7 @@ class SummaryController extends Controller
 
     private function getDailyStreak($userId)
     {
-        $today = Carbon::now()->startOfDay();
+        $today = Carbon::now('Asia/Jakarta')->startOfDay();
         $streak = 0;
         $currentDate = $today->copy();
         
@@ -468,7 +461,7 @@ class SummaryController extends Controller
         // Get streak history for the last 30 days
         $streakHistory = [];
         for ($i = 29; $i >= 0; $i--) {
-            $date = Carbon::now()->subDays($i);
+            $date = Carbon::now('Asia/Jakarta')->subDays($i);
             $hasApplication = JobApplication::where('user_id', $userId)
                 ->whereDate('application_date', $date)
                 ->exists();
@@ -493,8 +486,8 @@ class SummaryController extends Controller
 
     private function getWeeklyProgress($userId)
     {
-        $startOfWeek = Carbon::now()->startOfWeek();
-        $endOfWeek = Carbon::now()->endOfWeek();
+        $startOfWeek = Carbon::now('Asia/Jakarta')->startOfWeek();
+        $endOfWeek = Carbon::now('Asia/Jakarta')->endOfWeek();
         
         // This week's applications
         $thisWeekApplications = JobApplication::where('user_id', $userId)
@@ -551,7 +544,7 @@ class SummaryController extends Controller
     private function getCadenceEffect($userId)
     {
         // Get applications from the last 90 days
-        $startDate = Carbon::now()->subDays(90);
+        $startDate = Carbon::now('Asia/Jakarta')->subDays(90);
         $applications = JobApplication::where('user_id', $userId)
             ->where('application_date', '>=', $startDate)
             ->orderBy('application_date')

@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AiAnalyzerFreeTrialAnnouncementMail extends Mailable
+class JobApplicationReminderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -26,7 +26,7 @@ class AiAnalyzerFreeTrialAnnouncementMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'GRATIS! AI Resume Analyzer - Tingkatkan CV Anda Sekarang',
+            subject: 'Apa anda belum melamar pekerjaan lagi?',
         );
     }
 
@@ -36,7 +36,7 @@ class AiAnalyzerFreeTrialAnnouncementMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.ai_analyzer_free_trial_announcement',
+            view: 'emails.job_application_reminder',
         );
     }
 
@@ -50,3 +50,4 @@ class AiAnalyzerFreeTrialAnnouncementMail extends Mailable
         return [];
     }
 }
+

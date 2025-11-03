@@ -358,9 +358,9 @@ class CareerSummaryPro extends Component
     {
         switch ($this->timeFilter) {
             case 'weekly':
-                return Carbon::now()->subWeek();
+                return Carbon::now('Asia/Jakarta')->subWeek();
             case 'monthly':
-                return Carbon::now()->subMonth();
+                return Carbon::now('Asia/Jakarta')->subMonth();
             case 'all':
             default:
                 return null;
@@ -387,16 +387,16 @@ class CareerSummaryPro extends Component
 
         if ($this->timeFilter === 'weekly') {
             for ($i = 6; $i >= 0; $i--) {
-                $labels[] = Carbon::now()->subDays($i)->format('M d');
+                $labels[] = Carbon::now('Asia/Jakarta')->subDays($i)->format('M d');
             }
         } elseif ($this->timeFilter === 'monthly') {
             for ($i = 11; $i >= 0; $i--) {
-                $labels[] = Carbon::now()->subMonths($i)->format('M Y');
+                $labels[] = Carbon::now('Asia/Jakarta')->subMonths($i)->format('M Y');
             }
         } else {
             // All time - show last 12 months
             for ($i = 11; $i >= 0; $i--) {
-                $labels[] = Carbon::now()->subMonths($i)->format('M Y');
+                $labels[] = Carbon::now('Asia/Jakarta')->subMonths($i)->format('M Y');
             }
         }
 

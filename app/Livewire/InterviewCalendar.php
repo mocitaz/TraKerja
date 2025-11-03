@@ -33,16 +33,16 @@ class InterviewCalendar extends Component
     
     public function mount()
     {
-        $this->currentMonth = now()->month;
-        $this->currentYear = now()->year;
+        $this->currentMonth = Carbon::now('Asia/Jakarta')->month;
+        $this->currentYear = Carbon::now('Asia/Jakarta')->year;
         $this->loadInterviews();
         $this->generateCalendar();
     }
     
     public function loadInterviews()
     {
-        $startOfMonth = Carbon::create($this->currentYear, $this->currentMonth, 1)->startOfDay();
-        $endOfMonth = Carbon::create($this->currentYear, $this->currentMonth, 1)->endOfMonth()->endOfDay();
+        $startOfMonth = Carbon::create($this->currentYear, $this->currentMonth, 1, 0, 0, 0, 'Asia/Jakarta')->startOfDay();
+        $endOfMonth = Carbon::create($this->currentYear, $this->currentMonth, 1, 0, 0, 0, 'Asia/Jakarta')->endOfMonth()->endOfDay();
         
         $query = JobApplication::where('user_id', Auth::id())
             ->whereNotNull('interview_date')
@@ -61,7 +61,7 @@ class InterviewCalendar extends Component
     
     public function generateCalendar()
     {
-        $firstDayOfMonth = Carbon::create($this->currentYear, $this->currentMonth, 1);
+        $firstDayOfMonth = Carbon::create($this->currentYear, $this->currentMonth, 1, 0, 0, 0, 'Asia/Jakarta');
         $lastDayOfMonth = $firstDayOfMonth->copy()->endOfMonth();
         
         // Start from Sunday of the week containing the 1st
@@ -110,8 +110,8 @@ class InterviewCalendar extends Component
     
     public function goToToday()
     {
-        $this->currentMonth = now()->month;
-        $this->currentYear = now()->year;
+        $this->currentMonth = Carbon::now('Asia/Jakarta')->month;
+        $this->currentYear = Carbon::now('Asia/Jakarta')->year;
         $this->loadInterviews();
         $this->generateCalendar();
     }
@@ -166,7 +166,7 @@ class InterviewCalendar extends Component
         return JobApplication::where('user_id', Auth::id())
             ->whereNotNull('interview_date')
             ->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview'])
-            ->where('interview_date', '>=', now())
+            ->where('interview_date', '>=', Carbon::now('Asia/Jakarta'))
             ->orderBy('interview_date', 'asc')
             ->limit(5)
             ->get();
@@ -189,7 +189,7 @@ class InterviewCalendar extends Component
     public function render()
     {
         return view('livewire.interview-calendar', [
-            'monthName' => Carbon::create($this->currentYear, $this->currentMonth, 1)->format('F Y'),
+            'monthName' => Carbon::create($this->currentYear, $this->currentMonth, 1, 0, 0, 0, 'Asia/Jakarta')->format('F Y'),
         ]);
     }
 }

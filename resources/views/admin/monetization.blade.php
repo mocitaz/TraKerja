@@ -70,8 +70,11 @@
                                 FREE MODE ACTIVE
                             @endif
                         </span>
-                        <a href="{{ route('admin.index') }}" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm font-medium">
-                            Go to Dashboard
+                        <a href="{{ route('admin.payments') }}" class="px-4 py-2 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white rounded-lg transition-colors text-sm font-medium flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                            </svg>
+                            Payment Monitoring
                         </a>
                     </div>
                 </div>
@@ -203,142 +206,23 @@
             </form>
         </div>
 
-        {{-- Premium Benefits Overview --}}
-        <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-800">Premium Benefits</h3>
-                    <p class="text-sm text-gray-500">What premium users get for Rp {{ number_format($premiumPrice, 0, ',', '.') }}</p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="p-4 bg-purple-50 border-2 border-purple-200 rounded-xl">
-                    <div class="flex items-start gap-3">
-                        <span class="text-2xl">📄</span>
-                        <div>
-                            <h4 class="font-bold text-gray-800 mb-1">All 5 CV Templates</h4>
-                            <p class="text-sm text-gray-600">Access to all professional CV templates (Minimal, Professional, Creative, Elegant)</p>
-                        </div>
+        {{-- Monetization Control --}}
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
                     </div>
-                </div>
-
-                <div class="p-4 bg-purple-50 border-2 border-purple-200 rounded-xl">
-                    <div class="flex items-start gap-3">
-                        <span class="text-2xl">📤</span>
-                        <div>
-                            <h4 class="font-bold text-gray-800 mb-1">Unlimited CV Exports</h4>
-                            <p class="text-sm text-gray-600">Export your CV as many times as needed, no monthly limits</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-4 bg-purple-50 border-2 border-purple-200 rounded-xl">
-                    <div class="flex items-start gap-3">
-                        <span class="text-2xl">💼</span>
-                        <div>
-                            <h4 class="font-bold text-gray-800 mb-1">Unlimited Job Applications</h4>
-                            <p class="text-sm text-gray-600">Track unlimited job applications in your dashboard</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-4 bg-purple-50 border-2 border-purple-200 rounded-xl">
-                    <div class="flex items-start gap-3">
-                        <span class="text-2xl">📊</span>
-                        <div>
-                            <h4 class="font-bold text-gray-800 mb-1">Advanced Analytics</h4>
-                            <p class="text-sm text-gray-600">Get detailed insights and statistics about your job search progress</p>
-                        </div>
+                    <div class="min-w-0 flex-1">
+                        <h3 class="text-lg font-semibold text-gray-900">Monetization Control</h3>
+                        <p class="text-sm text-gray-500">Manage pricing phases and premium features</p>
                     </div>
                 </div>
             </div>
-        </div>
-
-        {{-- Free vs Premium Comparison --}}
-        <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
-            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Plan Comparison</h3>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {{-- Free Plan --}}
-                <div class="border-2 border-gray-300 rounded-2xl p-6">
-                    <div class="text-center mb-6">
-                        <span class="text-4xl">🆓</span>
-                        <h4 class="text-2xl font-black text-gray-800 mt-2">Free Plan</h4>
-                        <p class="text-3xl font-black text-gray-400 mt-2">Rp 0</p>
-                        <p class="text-sm text-gray-500">Forever free</p>
-                    </div>
-                    <ul class="space-y-3">
-                        <li class="flex items-center gap-2">
-                            <span class="text-emerald-500">✓</span>
-                            <span class="text-sm">Job Application Tracker</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-emerald-500">✓</span>
-                            <span class="text-sm">CV Builder Access</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-yellow-500">⚠️</span>
-                            <span class="text-sm"><strong>1 CV Template</strong> (Minimal only)</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-yellow-500">⚠️</span>
-                            <span class="text-sm"><strong>5 Exports/Month</strong></span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-yellow-500">⚠️</span>
-                            <span class="text-sm"><strong>Max 20</strong> Job Applications</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-yellow-500">⚠️</span>
-                            <span class="text-sm"><strong>Basic</strong> Analytics</span>
-                        </li>
-                    </ul>
-                </div>
-
-                {{-- Premium Plan --}}
-                <div class="border-4 border-purple-500 rounded-2xl p-6 relative bg-gradient-to-br from-purple-50 to-pink-50">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs font-bold rounded-full">
-                        RECOMMENDED
-                    </div>
-                    <div class="text-center mb-6">
-                        <span class="text-4xl">💎</span>
-                        <h4 class="text-2xl font-black text-purple-800 mt-2">Premium Plan</h4>
-                        <p class="text-3xl font-black text-purple-700 mt-2">Rp {{ number_format($premiumPrice, 0, ',', '.') }}</p>
-                        <p class="text-sm text-purple-600">One-time payment</p>
-                    </div>
-                    <ul class="space-y-3">
-                        <li class="flex items-center gap-2">
-                            <span class="text-purple-500">✓</span>
-                            <span class="text-sm font-semibold">Everything in Free, plus:</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-purple-500">💎</span>
-                            <span class="text-sm"><strong>All 5 CV Templates</strong></span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-purple-500">💎</span>
-                            <span class="text-sm"><strong>Unlimited</strong> CV Exports</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-purple-500">💎</span>
-                            <span class="text-sm"><strong>Unlimited</strong> Job Applications</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-purple-500">💎</span>
-                            <span class="text-sm"><strong>Advanced</strong> Analytics</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-purple-500">💎</span>
-                            <span class="text-sm"><strong>Priority</strong> Support</span>
-                        </li>
-                    </ul>
-                </div>
+            <div class="p-6">
+                @livewire('admin.monetization-control')
             </div>
         </div>
 

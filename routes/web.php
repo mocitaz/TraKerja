@@ -354,6 +354,21 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         }
         return view('admin.analytics');
     })->name('analytics');
+    
+    // Email Blast
+    Route::get('/email-blast', function () {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return app(\App\Http\Controllers\Admin\EmailBlastController::class)->index();
+    })->name('email-blast');
+    
+    Route::post('/email-blast/send', function (Request $request) {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return app(\App\Http\Controllers\Admin\EmailBlastController::class)->send($request);
+    })->name('email-blast.send');
 });
 
 require __DIR__.'/auth.php';

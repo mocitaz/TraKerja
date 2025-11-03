@@ -43,7 +43,7 @@ class GoalsCadenceManager extends Component
 
             // Only send welcome notification if no goals are set and not already shown today
             if (!$currentGoal) {
-                $welcomeNotificationKey = 'goals_welcome_notification_' . now()->format('Y-m-d');
+                $welcomeNotificationKey = 'goals_welcome_notification_' . Carbon::now('Asia/Jakarta')->format('Y-m-d');
                 if (!session()->has($welcomeNotificationKey)) {
                     $this->dispatch('showNotification', [
                         'type' => 'info',
@@ -81,11 +81,11 @@ class GoalsCadenceManager extends Component
     public function updateDateRange()
     {
         if ($this->goalPeriod === 'monthly') {
-            $this->startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
-            $this->endDate = Carbon::now()->endOfMonth()->format('Y-m-d');
+            $this->startDate = Carbon::now('Asia/Jakarta')->startOfMonth()->format('Y-m-d');
+            $this->endDate = Carbon::now('Asia/Jakarta')->endOfMonth()->format('Y-m-d');
         } else {
-            $this->startDate = Carbon::now()->startOfWeek()->format('Y-m-d');
-            $this->endDate = Carbon::now()->endOfWeek()->format('Y-m-d');
+            $this->startDate = Carbon::now('Asia/Jakarta')->startOfWeek()->format('Y-m-d');
+            $this->endDate = Carbon::now('Asia/Jakarta')->endOfWeek()->format('Y-m-d');
         }
     }
 
@@ -172,8 +172,8 @@ class GoalsCadenceManager extends Component
         $userId = Auth::id();
         if (!$userId) return 0;
         
-        $startOfWeek = $this->startDate ? Carbon::parse($this->startDate) : Carbon::now()->startOfWeek();
-        $endOfWeek = $this->endDate ? Carbon::parse($this->endDate) : Carbon::now()->endOfWeek();
+        $startOfWeek = $this->startDate ? Carbon::parse($this->startDate) : Carbon::now('Asia/Jakarta')->startOfWeek();
+        $endOfWeek = $this->endDate ? Carbon::parse($this->endDate) : Carbon::now('Asia/Jakarta')->endOfWeek();
         
         return JobApplication::where('user_id', $userId)
             ->whereBetween('application_date', [$startOfWeek, $endOfWeek])
@@ -188,8 +188,8 @@ class GoalsCadenceManager extends Component
         $userId = Auth::id();
         if (!$userId) return 0;
         
-        $startOfWeek = $this->startDate ? Carbon::parse($this->startDate) : Carbon::now()->startOfWeek();
-        $endOfWeek = $this->endDate ? Carbon::parse($this->endDate) : Carbon::now()->endOfWeek();
+        $startOfWeek = $this->startDate ? Carbon::parse($this->startDate) : Carbon::now('Asia/Jakarta')->startOfWeek();
+        $endOfWeek = $this->endDate ? Carbon::parse($this->endDate) : Carbon::now('Asia/Jakarta')->endOfWeek();
         
         return JobApplication::where('user_id', $userId)
             ->whereBetween('application_date', [$startOfWeek, $endOfWeek])
@@ -205,8 +205,8 @@ class GoalsCadenceManager extends Component
         $userId = Auth::id();
         if (!$userId) return 0;
         
-        $startOfWeek = $this->startDate ? Carbon::parse($this->startDate) : Carbon::now()->startOfWeek();
-        $endOfWeek = $this->endDate ? Carbon::parse($this->endDate) : Carbon::now()->endOfWeek();
+        $startOfWeek = $this->startDate ? Carbon::parse($this->startDate) : Carbon::now('Asia/Jakarta')->startOfWeek();
+        $endOfWeek = $this->endDate ? Carbon::parse($this->endDate) : Carbon::now('Asia/Jakarta')->endOfWeek();
         
         return JobApplication::where('user_id', $userId)
             ->whereBetween('application_date', [$startOfWeek, $endOfWeek])
@@ -230,7 +230,7 @@ class GoalsCadenceManager extends Component
     
     private function checkMilestoneNotifications($progress)
     {
-        $today = now()->format('Y-m-d');
+        $today = Carbon::now('Asia/Jakarta')->format('Y-m-d');
         $targetAchievedKey = "target_achieved_{$today}";
         $almostThereKey = "almost_there_{$today}";
         
@@ -273,7 +273,7 @@ class GoalsCadenceManager extends Component
         
         $dailyTarget = max(1, ceil($this->targetAppliedWeekly / 5)); // Minimum 1 application per day
         $streak = 0;
-        $currentDate = Carbon::now();
+        $currentDate = Carbon::now('Asia/Jakarta');
         
         // Check backwards from today
         for ($i = 0; $i < 30; $i++) { // Check up to 30 days back
@@ -375,7 +375,7 @@ class GoalsCadenceManager extends Component
             return false;
         }
 
-        $now = Carbon::now();
+        $now = Carbon::now('Asia/Jakarta');
         $endDate = Carbon::parse($currentGoal->end_date);
         $daysLeft = $now->diffInDays($endDate, false);
         
@@ -405,7 +405,7 @@ class GoalsCadenceManager extends Component
             return null;
         }
 
-        $now = Carbon::now();
+        $now = Carbon::now('Asia/Jakarta');
         $endDate = Carbon::parse($currentGoal->end_date);
         $daysLeft = $now->diffInDays($endDate, false);
         

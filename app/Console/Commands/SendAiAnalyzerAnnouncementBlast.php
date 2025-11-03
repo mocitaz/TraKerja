@@ -39,9 +39,8 @@ class SendAiAnalyzerAnnouncementBlast extends Command
         // Find users who:
         // 1. Not premium (is_premium = false OR payment_status != 'paid')
         // 2. Not admin (admins don't need this)
-        // 3. Email verified (only send to verified users)
+        // 3. All users (not just verified)
         $query = User::where('role', '!=', 'admin')
-            ->whereNotNull('email_verified_at')
             ->where(function($q) {
                 $q->where('is_premium', false)
                   ->orWhere('payment_status', '!=', 'paid');

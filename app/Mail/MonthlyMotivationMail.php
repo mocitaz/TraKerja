@@ -3,22 +3,30 @@
 namespace App\Mail;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AiAnalyzerFreeTrialAnnouncementMail extends Mailable
+class MonthlyMotivationMail extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $monthName;
+    public $year;
 
     /**
      * Create a new message instance.
      */
     public function __construct(
         public User $user,
-    ) {}
+    ) {
+        $now = Carbon::now('Asia/Jakarta');
+        $this->monthName = $now->locale('id')->monthName;
+        $this->year = $now->year;
+    }
 
     /**
      * Get the message envelope.
@@ -26,7 +34,7 @@ class AiAnalyzerFreeTrialAnnouncementMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'GRATIS! AI Resume Analyzer - Tingkatkan CV Anda Sekarang',
+            subject: "Bulan Baru Semangat Baru - {$this->monthName} {$this->year}",
         );
     }
 
@@ -36,7 +44,11 @@ class AiAnalyzerFreeTrialAnnouncementMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.ai_analyzer_free_trial_announcement',
+            view: 'emails.monthly_motivation',
+            with: [
+                'monthName' => $this->monthName,
+                'year' => $this->year,
+            ],
         );
     }
 
@@ -50,3 +62,4 @@ class AiAnalyzerFreeTrialAnnouncementMail extends Mailable
         return [];
     }
 }
+
