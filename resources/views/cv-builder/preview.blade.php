@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>CV Preview - {{ ucfirst($template) }} Template</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -230,7 +233,12 @@
         <svg class="template-badge-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
         </svg>
-        <span>Template: <span class="template-name">{{ $template }}</span></span>
+        <span>Template: <strong class="template-name">{{ ucfirst($template ?? 'unknown') }}</strong></span>
+    </div>
+    
+    <!-- Debug info (temporary) -->
+    <div class="no-print" style="position: fixed; top: 10px; right: 10px; background: black; color: white; padding: 5px 10px; font-size: 11px; z-index: 9999; border-radius: 4px;">
+        Raw: {{ $template ?? 'NULL' }}
     </div>
 
     <!-- Fixed action buttons - always visible -->
@@ -331,7 +339,7 @@
                         <svg class="template-badge-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
                         </svg>
-                        <span>Template: <span class="template-name">{{ $template }}</span></span>
+                        <span>Template: <span class="template-name">{{ ucfirst($template) }}</span></span>
                     `;
                 }, 3000);
             }

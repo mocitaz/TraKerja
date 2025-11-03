@@ -70,6 +70,13 @@ class CvBuilderController extends Controller
         $user = Auth::user();
         $template = $request->input('template', 'minimal');
         
+        // Log untuk debugging
+        Log::info('CV Preview requested', [
+            'user_id' => $user->id,
+            'template' => $template,
+            'all_inputs' => $request->all()
+        ]);
+        
         // Validate template exists
         $allowedTemplates = ['minimal', 'professional', 'creative', 'elegant'];
         if (!in_array($template, $allowedTemplates)) {
@@ -120,7 +127,13 @@ class CvBuilderController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
         
-        // All users (free and premium) have unlimited exports
+        // Check CV generation limit for free tier
+        if (!$user->incrementCvGenerationCount()) {
+            $remaining = $user->getRemainingCvGenerations();
+            return redirect()->back()->with('error', 
+                "You've reached your CV generation limit (3 per month). Upgrade to Premium for unlimited CV generations!"
+            );
+        }
         
         // Get template and validate
         $template = $request->input('template', 'minimal');

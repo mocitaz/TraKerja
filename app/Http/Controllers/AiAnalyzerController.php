@@ -22,7 +22,18 @@ class AiAnalyzerController extends Controller
             return redirect()->route('admin.index');
         }
 
-        return view('ai-analyzer.index');
+        $user = Auth::user();
+        $canAccess = $user->canAccessAiAnalyzerWithLimit();
+        $hasUsedTrial = $user->hasUsedAiAnalyzerTrial();
+        $isPremium = $user->isPremium();
+        $remainingUses = $user->getRemainingAiAnalyzer();
+
+        return view('ai-analyzer.index', [
+            'canAccess' => $canAccess,
+            'hasUsedTrial' => $hasUsedTrial,
+            'isPremium' => $isPremium,
+            'remainingUses' => $remainingUses,
+        ]);
     }
 
     /**
@@ -33,6 +44,20 @@ class AiAnalyzerController extends Controller
         // Redirect admin users
         if (Auth::user() && (Auth::user()->isAdmin() || Auth::user()->role === 'admin')) {
             abort(403, 'Admin cannot access AI Analyzer');
+        }
+
+        $user = Auth::user();
+
+        // Check if user can access AI Analyzer with monthly limit
+        if (!$user->canAccessAiAnalyzerWithLimit()) {
+            $isPremium = $user->isPremium();
+            $errorMsg = $isPremium 
+                ? 'Anda sudah mencapai batas 5x analisa bulan ini. Batas akan reset bulan depan.'
+                : 'Anda sudah menggunakan free trial AI Analyzer (1x). Upgrade ke Premium untuk 5x analisa per bulan!';
+            
+            return back()->withErrors([
+                'analyze_error' => $errorMsg
+            ])->withInput();
         }
 
         // Increase execution time limit for API call (AI analysis can take time)
@@ -151,6 +176,14 @@ class AiAnalyzerController extends Controller
             }
 
             $analysisResult = $response->json();
+
+            // Increment AI Analyzer usage count
+            $user->incrementAiAnalyzerCount();
+            
+            // Also mark trial as used for tracking (backward compatibility)
+            if (!$user->isPremium() && !$user->has_used_ai_analyzer_trial) {
+                $user->useAiAnalyzerTrial();
+            }
 
             // Return view with results
             return view('ai-analyzer.result', [

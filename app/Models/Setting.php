@@ -159,12 +159,28 @@ class Setting extends Model
         
         // PREMIUM MODE: Free tier users get limits
         $freeTierLimits = [
-            'cv_templates' => 1,        // Only 1 CV template (minimal/basic)
+            'cv_templates' => 1,         // Only 1 CV template (minimal)
+            'cv_generated' => 3,         // Max 3 CV generations per month
             'cv_exports' => 5,           // Max 5 exports per month
-            'job_applications' => 20,    // Max 20 job applications
-            'goals' => 3,                // Max 3 goals
-            'analytics' => 'basic'       // Basic analytics only
+            'job_applications' => 50,    // Max 50 job applications
+            'ai_analyzer' => 1,          // 1x AI Analyzer usage
+            'goals' => 0,                // No goals for free tier
+            'analytics' => 'timeline'    // Only timeline activity
         ];
+        
+        // PREMIUM MODE: Premium users get higher limits
+        if ($user && $user->is_premium && $user->payment_status === \App\Models\User::PAYMENT_STATUS_PAID) {
+            $premiumLimits = [
+                'cv_templates' => 'unlimited',
+                'cv_generated' => 'unlimited',
+                'cv_exports' => 'unlimited',
+                'job_applications' => 'unlimited',
+                'ai_analyzer' => 5,          // Premium: 5x per month
+                'goals' => 'unlimited',
+                'analytics' => 'full'
+            ];
+            return $premiumLimits[$feature] ?? 'unlimited';
+        }
         
         return $freeTierLimits[$feature] ?? 0;
     }

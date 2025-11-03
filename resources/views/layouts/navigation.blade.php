@@ -60,15 +60,25 @@
                             <span class="ml-1 px-1 py-0.5 text-[10px] bg-primary-100 text-primary-700 rounded">PRO</span>
                         @endif
                     </a>
-                    {{-- AI Analyzer - Premium Only --}}
+                    {{-- AI Analyzer - Premium + Free Trial --}}
                     @if(auth()->user() && auth()->user()->is_premium && auth()->user()->payment_status === 'paid')
+                        {{-- Premium users: unlimited access --}}
                         <a href="{{ route('ai-analyzer.index') }}"
                            class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-primary-100 text-primary-600 font-semibold' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
                             <span class="hidden lg:inline">AI Analyzer</span>
                             <span class="lg:hidden">AI</span>
                             <span class="ml-1 px-1 py-0.5 text-[10px] bg-purple-100 text-purple-700 rounded">PRO</span>
                         </a>
+                    @elseif(auth()->user() && !auth()->user()->has_used_ai_analyzer_trial)
+                        {{-- Free users with trial available --}}
+                        <a href="{{ route('ai-analyzer.index') }}"
+                           class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-green-100 text-green-600 font-semibold' : 'text-gray-600 hover:text-green-600 hover:bg-green-50' }}">
+                            <span class="hidden lg:inline">AI Analyzer</span>
+                            <span class="lg:hidden">AI</span>
+                            <span class="ml-1 px-1 py-0.5 text-[10px] bg-green-100 text-green-700 rounded">FREE</span>
+                        </a>
                     @else
+                        {{-- Free users who used trial --}}
                         <button type="button" onclick="showPremiumModal('ai-analyzer')"
                                 class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 text-gray-400 cursor-not-allowed opacity-60">
                             <span class="hidden lg:inline">AI Analyzer</span>
@@ -338,8 +348,9 @@
                             @endif
                         </div>
                     </a>
-                    {{-- AI Analyzer - Premium Only --}}
+                    {{-- AI Analyzer - Premium + Free Trial --}}
                     @if(auth()->user() && auth()->user()->is_premium && auth()->user()->payment_status === 'paid')
+                        {{-- Premium: unlimited --}}
                         <a href="{{ route('ai-analyzer.index') }}"
                            class="group block px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-gradient-to-r from-purple-500 to-blue-600 text-white shadow-lg shadow-purple-500/25' : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50 hover:shadow' }}">
                             <div class="flex items-center justify-between">
@@ -357,7 +368,27 @@
                                 <span class="px-1.5 py-0.5 text-[10px] {{ request()->routeIs('ai-analyzer.*') ? 'bg-white/20 text-white' : 'bg-purple-100 text-purple-700' }} rounded-full font-semibold">PRO</span>
                             </div>
                         </a>
+                    @elseif(auth()->user() && !auth()->user()->has_used_ai_analyzer_trial)
+                        {{-- Free users with trial --}}
+                        <a href="{{ route('ai-analyzer.index') }}"
+                           class="group block px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg shadow-green-500/25' : 'text-gray-700 hover:text-green-600 hover:bg-green-50 hover:shadow' }}">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-lg {{ request()->routeIs('ai-analyzer.*') ? 'bg-white/20' : 'bg-green-100' }} flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-200">
+                                        <svg class="w-4 h-4 {{ request()->routeIs('ai-analyzer.*') ? 'text-white' : 'text-green-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold">AI Analyzer</div>
+                                        <div class="text-xs {{ request()->routeIs('ai-analyzer.*') ? 'text-white/80' : 'text-gray-500' }}">🎁 Free trial available!</div>
+                                    </div>
+                                </div>
+                                <span class="px-1.5 py-0.5 text-[10px] {{ request()->routeIs('ai-analyzer.*') ? 'bg-white/20 text-white' : 'bg-green-100 text-green-700' }} rounded-full font-semibold">FREE</span>
+                            </div>
+                        </a>
                     @else
+                        {{-- Free users who used trial --}}
                         <button type="button" onclick="showPremiumModal('ai-analyzer')"
                                 class="group w-full block px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-gray-400 hover:bg-gray-50">
                             <div class="flex items-center justify-between">

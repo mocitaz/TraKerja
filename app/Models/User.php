@@ -78,8 +78,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'grandfathered_benefits',
         'cv_exports_this_month',
         'last_export_reset',
+        'cv_generated_this_month',
+        'last_cv_generation_reset',
+        'ai_analyzer_count_this_month',
+        'last_ai_analyzer_reset',
         'last_verification_reminder_sent_at',
         'verification_reminder_count',
+        'has_used_ai_analyzer_trial',
+        'ai_analyzer_trial_used_at',
     ];
 
     /**
@@ -109,8 +115,14 @@ class User extends Authenticatable implements MustVerifyEmail
             'grandfathered_benefits' => 'array',
             'cv_exports_this_month' => 'integer',
             'last_export_reset' => 'date',
+            'cv_generated_this_month' => 'integer',
+            'last_cv_generation_reset' => 'date',
+            'ai_analyzer_count_this_month' => 'integer',
+            'last_ai_analyzer_reset' => 'date',
             'last_verification_reminder_sent_at' => 'datetime',
             'verification_reminder_count' => 'integer',
+            'has_used_ai_analyzer_trial' => 'boolean',
+            'ai_analyzer_trial_used_at' => 'datetime',
         ];
     }
 
@@ -478,4 +490,247 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->canAccessFeature('email_notifications');
     }
+
+    /**
+     * Check if user can access AI Analyzer
+     * Premium users: unlimited access
+     * Free users: 1 free trial
+     */
+    public function canAccessAiAnalyzer(): bool
+    {
+        // Premium users have unlimited access
+        if ($this->isPremium()) {
+            return true;
+        }
+        
+        // Free users: check if they still have free trial
+        return !$this->has_used_ai_analyzer_trial;
+    }
+
+    /**
+     * Use AI Analyzer trial (for free users)
+     */
+    public function useAiAnalyzerTrial(): void
+    {
+        if (!$this->isPremium() && !$this->has_used_ai_analyzer_trial) {
+            $this->has_used_ai_analyzer_trial = true;
+            $this->ai_analyzer_trial_used_at = now();
+            $this->save();
+        }
+    }
+
+    /**
+     * Check if user has used AI Analyzer trial
+     */
+    public function hasUsedAiAnalyzerTrial(): bool
+    {
+        return $this->has_used_ai_analyzer_trial;
+    }
+    
+    /**
+     * Get total job applications count for this user
+     */
+    public function getJobApplicationsCount(): int
+    {
+        return $this->jobApplications()->count();
+    }
+    
+    /**
+     * Check if user can create new job application
+     * 
+     * FREE MODE: Unlimited
+     * PREMIUM MODE: Free tier = 50, Premium = unlimited
+     */
+    public function canCreateJobApplication(): bool
+    {
+        // FREE MODE: Unlimited
+        if (!Setting::isMonetizationEnabled()) {
+            return true;
+        }
+        
+        // PREMIUM MODE: Premium users unlimited
+        if ($this->isPremium()) {
+            return true;
+        }
+        
+        // PREMIUM MODE: Check free tier limit
+        $limit = $this->getFeatureLimit('job_applications');
+        $currentCount = $this->getJobApplicationsCount();
+        
+        return $currentCount < $limit;
+    }
+    
+    /**
+     * Get remaining job applications slots
+     */
+    public function getRemainingJobApplications()
+    {
+        // FREE MODE: Unlimited
+        if (!Setting::isMonetizationEnabled()) {
+            return 'unlimited';
+        }
+        
+        // PREMIUM MODE: Premium users unlimited
+        if ($this->isPremium()) {
+            return 'unlimited';
+        }
+        
+        // PREMIUM MODE: Calculate remaining
+        $limit = $this->getFeatureLimit('job_applications');
+        $currentCount = $this->getJobApplicationsCount();
+        
+        return max(0, $limit - $currentCount);
+    }
+    
+    /**
+     * Check and reset monthly CV generation counter if needed
+     */
+    public function checkCvGenerationReset(): void
+    {
+        $now = now();
+        $lastReset = $this->last_cv_generation_reset;
+        
+        // Reset if it's a new month or never reset before
+        if (!$lastReset || $lastReset->month !== $now->month || $lastReset->year !== $now->year) {
+            $this->update([
+                'cv_generated_this_month' => 0,
+                'last_cv_generation_reset' => $now->toDateString()
+            ]);
+        }
+    }
+    
+    /**
+     * Increment CV generation counter for free tier limits
+     * 
+     * FREE MODE: Unlimited
+     * PREMIUM MODE: Track untuk free tier (max 3), unlimited untuk premium
+     */
+    public function incrementCvGenerationCount(): bool
+    {
+        // FREE MODE: Unlimited
+        if (!Setting::isMonetizationEnabled()) {
+            return true;
+        }
+        
+        // PREMIUM MODE: Premium users unlimited
+        if ($this->isPremium()) {
+            return true;
+        }
+        
+        // PREMIUM MODE: Check free tier limit
+        $this->checkCvGenerationReset();
+        
+        $limit = $this->getFeatureLimit('cv_generated');
+        
+        if ($this->cv_generated_this_month >= $limit) {
+            return false;
+        }
+        
+        $this->increment('cv_generated_this_month');
+        return true;
+    }
+    
+    /**
+     * Get remaining CV generations this month
+     */
+    public function getRemainingCvGenerations()
+    {
+        // FREE MODE: Unlimited
+        if (!Setting::isMonetizationEnabled()) {
+            return 'unlimited';
+        }
+        
+        // PREMIUM MODE: Premium users unlimited
+        if ($this->isPremium()) {
+            return 'unlimited';
+        }
+        
+        // PREMIUM MODE: Calculate remaining
+        $this->checkCvGenerationReset();
+        
+        $limit = $this->getFeatureLimit('cv_generated');
+        
+        return max(0, $limit - $this->cv_generated_this_month);
+    }
+    
+    /**
+     * Check and reset monthly AI Analyzer counter if needed
+     */
+    public function checkAiAnalyzerReset(): void
+    {
+        $now = now();
+        $lastReset = $this->last_ai_analyzer_reset;
+        
+        // Reset if it's a new month or never reset before
+        if (!$lastReset || $lastReset->month !== $now->month || $lastReset->year !== $now->year) {
+            $this->update([
+                'ai_analyzer_count_this_month' => 0,
+                'last_ai_analyzer_reset' => $now->toDateString()
+            ]);
+        }
+    }
+    
+    /**
+     * Increment AI Analyzer counter
+     * 
+     * FREE MODE: Unlimited
+     * PREMIUM MODE: Free tier = 1x, Premium = 5x per month
+     */
+    public function incrementAiAnalyzerCount(): bool
+    {
+        // FREE MODE: Unlimited
+        if (!Setting::isMonetizationEnabled()) {
+            return true;
+        }
+        
+        // Check and reset if needed
+        $this->checkAiAnalyzerReset();
+        
+        $limit = $this->getFeatureLimit('ai_analyzer');
+        
+        // Check if limit reached
+        if ($this->ai_analyzer_count_this_month >= $limit) {
+            return false;
+        }
+        
+        $this->increment('ai_analyzer_count_this_month');
+        return true;
+    }
+    
+    /**
+     * Get remaining AI Analyzer uses this month
+     */
+    public function getRemainingAiAnalyzer()
+    {
+        // FREE MODE: Unlimited
+        if (!Setting::isMonetizationEnabled()) {
+            return 'unlimited';
+        }
+        
+        // Check and reset if needed
+        $this->checkAiAnalyzerReset();
+        
+        $limit = $this->getFeatureLimit('ai_analyzer');
+        
+        return max(0, $limit - $this->ai_analyzer_count_this_month);
+    }
+    
+    /**
+     * Updated canAccessAiAnalyzer with monthly limit
+     */
+    public function canAccessAiAnalyzerWithLimit(): bool
+    {
+        // FREE MODE: Unlimited
+        if (!Setting::isMonetizationEnabled()) {
+            return true;
+        }
+        
+        // Check and reset if needed
+        $this->checkAiAnalyzerReset();
+        
+        $remaining = $this->getRemainingAiAnalyzer();
+        
+        return $remaining === 'unlimited' || $remaining > 0;
+    }
 }
+

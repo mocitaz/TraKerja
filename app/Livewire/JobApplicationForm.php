@@ -1334,6 +1334,20 @@ class JobApplicationForm extends Component
             'location' => $this->location
         ]);
         
+        // Check job application limit for new entries
+        if (!$this->isEditing) {
+            $user = Auth::user();
+            if (!$user->canCreateJobApplication()) {
+                $remaining = $user->getRemainingJobApplications();
+                $this->dispatch('showNotification', 
+                    type: 'error',
+                    title: 'Limit Reached',
+                    message: "You've reached your job application limit (50 applications). Upgrade to Premium for unlimited access!",
+                    duration: 6000
+                );
+                return;
+            }
+        }
         
         // Ensure location is set before validation
         $this->updateLocation();

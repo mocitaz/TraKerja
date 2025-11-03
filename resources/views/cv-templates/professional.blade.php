@@ -11,122 +11,147 @@
         }
         
         body {
-            font-family: 'Georgia', 'Times New Roman', serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             font-size: 10pt;
             line-height: 1.5;
-            color: #2c3e50;
+            color: #000000;
         }
         
         .container {
             max-width: 210mm;
             margin: 0 auto;
-            padding: 25mm;
+            padding: 20mm 25mm;
         }
         
         /* Header */
         .header {
-            text-align: center;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #34495e;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #000000;
         }
         
         .header .name {
-            font-size: 24pt;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
+            font-size: 28pt;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
         }
         
         .header .contact {
             font-size: 9pt;
-            color: #555;
-            font-family: Arial, sans-serif;
+            color: #333333;
+            line-height: 1.8;
         }
         
         .header .contact a {
-            color: #34495e;
+            color: #000000;
             text-decoration: none;
+        }
+        
+        .header .contact a:hover {
+            text-decoration: underline;
         }
         
         /* Sections */
         .section {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            page-break-inside: avoid;
         }
         
         .section-title {
-            font-size: 14pt;
-            font-weight: bold;
-            color: #34495e;
-            margin-bottom: 12px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #bdc3c7;
+            font-size: 13pt;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 14px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #cccccc;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         /* Entry styles */
         .entry {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
+            page-break-inside: avoid;
         }
         
         .entry-header {
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
         }
         
         .entry-title {
-            font-weight: bold;
+            font-weight: 700;
             font-size: 11pt;
-            color: #2c3e50;
+            color: #000000;
+            flex: 1;
         }
         
         .entry-date {
-            float: right;
             font-size: 9pt;
-            color: #7f8c8d;
-            font-style: italic;
-            font-family: Arial, sans-serif;
+            color: #555555;
+            font-weight: 500;
+            white-space: nowrap;
+            margin-left: 15px;
         }
         
         .entry-subtitle {
             font-size: 10pt;
-            font-style: italic;
-            color: #555;
+            font-weight: 600;
+            color: #333333;
             margin-bottom: 4px;
         }
         
         .entry-location {
             font-size: 9pt;
-            color: #7f8c8d;
+            color: #555555;
             margin-bottom: 8px;
         }
         
         .entry-description {
-            font-size: 10pt;
+            font-size: 9.5pt;
             line-height: 1.6;
-            clear: both;
+            color: #000000;
         }
         
         .entry-description ul {
-            margin: 5px 0;
+            margin: 6px 0;
             padding-left: 20px;
         }
         
         .entry-description li {
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
         
         /* Skills */
         .skills-list {
-            font-size: 10pt;
-            line-height: 1.8;
+            font-size: 9.5pt;
+            line-height: 1.9;
+            color: #000000;
+        }
+        
+        .skills-list strong {
+            color: #000000;
+            font-weight: 600;
         }
         
         /* Summary */
         .summary {
             font-size: 10pt;
-            line-height: 1.6;
+            line-height: 1.7;
             text-align: justify;
-            color: #555;
+            color: #000000;
+        }
+        
+        /* Print optimization */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
         }
     </style>
 </head>
@@ -172,6 +197,7 @@
             @foreach($experiences as $exp)
             <div class="entry">
                 <div class="entry-header">
+                    <div class="entry-title">{{ $exp->position }}</div>
                     <span class="entry-date">
                         {{ $exp->start_date ? $exp->start_date->format('M Y') : '' }} - 
                         @if($exp->is_current)
@@ -180,7 +206,6 @@
                             {{ $exp->end_date ? $exp->end_date->format('M Y') : '' }}
                         @endif
                     </span>
-                    <div class="entry-title">{{ $exp->position }}</div>
                 </div>
                 <div class="entry-subtitle">{{ $exp->company_name }}</div>
                 @if($exp->location)
@@ -209,6 +234,7 @@
             @foreach($educations as $edu)
             <div class="entry">
                 <div class="entry-header">
+                    <div class="entry-title">{{ $edu->degree }}{{ $edu->major ? ' in ' . $edu->major : '' }}</div>
                     <span class="entry-date">
                         {{ $edu->start_date ? $edu->start_date->format('M Y') : '' }} - 
                         @if($edu->is_current)
@@ -217,7 +243,6 @@
                             {{ $edu->end_date ? $edu->end_date->format('M Y') : '' }}
                         @endif
                     </span>
-                    <div class="entry-title">{{ $edu->degree }}{{ $edu->major ? ' in ' . $edu->major : '' }}</div>
                 </div>
                 <div class="entry-subtitle">{{ $edu->institution_name }}</div>
                 @if($edu->location)
@@ -249,6 +274,7 @@
             @foreach($organizations as $org)
             <div class="entry">
                 <div class="entry-header">
+                    <div class="entry-title">{{ $org->role }}</div>
                     <span class="entry-date">
                         {{ $org->start_date ? $org->start_date->format('M Y') : '' }} - 
                         @if($org->is_current)
@@ -257,7 +283,6 @@
                             {{ $org->end_date ? $org->end_date->format('M Y') : '' }}
                         @endif
                     </span>
-                    <div class="entry-title">{{ $org->role }}</div>
                 </div>
                 <div class="entry-subtitle">{{ $org->organization_name }}</div>
                 @if($org->description)
@@ -283,16 +308,16 @@
             @foreach($projects as $project)
             <div class="entry">
                 <div class="entry-header">
+                    <div class="entry-title">{{ $project->project_name }}</div>
                     @if($project->start_date)
                     <span class="entry-date">{{ $project->start_date->format('M Y') }}</span>
                     @endif
-                    <div class="entry-title">{{ $project->project_name }}</div>
                 </div>
                 @if($project->description)
                 <div class="entry-description">{{ $project->description }}</div>
                 @endif
                 @if($project->technologies)
-                <div class="entry-description"><em>Technologies:</em> {{ is_array($project->technologies) ? implode(', ', $project->technologies) : $project->technologies }}</div>
+                <div class="entry-description" style="margin-top: 4px;"><strong>Technologies:</strong> {{ is_array($project->technologies) ? implode(', ', $project->technologies) : $project->technologies }}</div>
                 @endif
             </div>
             @endforeach
@@ -318,16 +343,16 @@
             @foreach($achievements as $achievement)
             <div class="entry">
                 <div class="entry-header">
+                    <div class="entry-title">{{ $achievement->title }}</div>
                     @if($achievement->date)
                     <span class="entry-date">{{ $achievement->date->format('M Y') }}</span>
                     @endif
-                    <div class="entry-title">{{ $achievement->title }}</div>
                 </div>
+                @if($achievement->issuer)
+                <div class="entry-subtitle">{{ $achievement->issuer }}</div>
+                @endif
                 @if($achievement->description)
                 <div class="entry-description">{{ $achievement->description }}</div>
-                @endif
-                @if($achievement->issuer)
-                <div class="entry-description"><em>Issued by: {{ $achievement->issuer }}</em></div>
                 @endif
             </div>
             @endforeach
