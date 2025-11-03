@@ -28,25 +28,20 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // If not verified, force logout and show notice
-        if (! Auth::user()->hasVerifiedEmail()) {
-            // Allow legacy users (registered in phase 1 or null) to login without verification
-            $legacy = is_null(Auth::user()->registered_phase) || Auth::user()->registered_phase <= 1;
-            if ($legacy) {
-                // Let them in, but show a banner later to encourage verification
-            } else {
-            Auth::logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            return redirect()->route('login')->with('status', 'email-not-verified');
-            }
-        }
-
-        // Redirect admin to admin dashboard, regular users to tracker
+        // Admin users skip email verification
         if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
             return redirect()->intended(route('admin.index', absolute: false));
         }
 
+        // For non-admin users, check email verification
+        if (! Auth::user()->hasVerifiedEmail()) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect()->route('login')->with('status', 'email-not-verified');
+        }
+
+        // Regular users go to tracker
         return redirect()->intended(route('tracker', absolute: false));
     }
 

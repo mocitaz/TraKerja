@@ -70,13 +70,6 @@ class RegisteredUserController extends Controller
         // Auto-send verification email
         $user->sendEmailVerificationNotification();
 
-        // Optionally send welcome email
-        try {
-            Mail::to($user->email)->send(new WelcomeMail($user));
-        } catch (\Exception $e) {
-            \Log::error('Failed to send welcome email: ' . $e->getMessage());
-        }
-
         // Send admin notification about new user registration
         try {
             // Use environment variable for admin email for security and flexibility

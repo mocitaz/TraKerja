@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
             'admin.throttle' => \App\Http\Middleware\AdminRateLimiter::class,
             'premium' => \App\Http\Middleware\EnsureUserIsPremium::class,
+            'verified' => \App\Http\Middleware\EnsureEmailIsVerifiedExceptAdmin::class,
         ]);
         
         // Security headers - ONLY enable in production

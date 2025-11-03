@@ -78,12 +78,6 @@
                             </svg>
                         </button>
                     @endif
-                    {{-- Payment --}}
-                    <a href="{{ route('payment.index') }}"
-                       class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('payment.*') ? 'bg-amber-100 text-amber-700 font-semibold' : 'text-gray-600 hover:text-amber-600 hover:bg-amber-50' }}">
-                        <span>Payment</span>
-                        <span class="ml-1 px-1 py-0.5 text-[10px] bg-amber-100 text-amber-700 rounded">Soon</span>
-                    </a>
                 @else
                     {{-- Admin Navigation --}}
                     <a href="{{ route('admin.index') }}"
@@ -232,6 +226,19 @@
                                 
                                 <!-- Divider -->
                                 <div class="border-t border-gray-200 my-1"></div>
+                                
+                                <!-- Payment - Coming Soon -->
+                                <a href="{{ route('payment.coming-soon') }}"
+                                   class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors duration-200">
+                                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                    </svg>
+                                    <span>Payment</span>
+                                    <span class="ml-auto px-1.5 py-0.5 text-[10px] bg-amber-100 text-amber-700 rounded-full font-semibold">Soon</span>
+                                </a>
+                                
+                                <!-- Divider -->
+                                <div class="border-t border-gray-200 my-1"></div>
                             @endif
 
                             <!-- Authentication -->
@@ -371,24 +378,6 @@
                             </div>
                         </button>
                     @endif
-                    {{-- Payment - Coming Soon --}}
-                    <a href="{{ route('payment.coming-soon') }}"
-                       class="group block px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('payment.coming-soon') ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg shadow-amber-500/25' : 'text-gray-700 hover:text-amber-600 hover:bg-amber-50 hover:shadow' }}">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 w-8 h-8 rounded-lg {{ request()->routeIs('payment.coming-soon') ? 'bg-white/20' : 'bg-amber-100' }} flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-200">
-                                    <svg class="w-4 h-4 {{ request()->routeIs('payment.coming-soon') ? 'text-white' : 'text-amber-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
-                                    </svg>
-                                </div>
-                                <div class="text-left">
-                                    <div class="font-semibold">Payment</div>
-                                    <div class="text-xs {{ request()->routeIs('payment.coming-soon') ? 'text-white/80' : 'text-gray-500' }}">Coming soon</div>
-                                </div>
-                            </div>
-                            <span class="px-1.5 py-0.5 text-[10px] {{ request()->routeIs('payment.coming-soon') ? 'bg-white/20 text-white' : 'bg-amber-100 text-amber-700' }} rounded-full font-semibold">Soon</span>
-                        </div>
-                    </a>
                     
                     <!-- Mobile User Profile Section -->
                     <div class="mt-4 pt-3 border-t border-gray-200/60">
@@ -421,17 +410,25 @@
                         </div>
                         
                         <!-- Mobile Action Buttons -->
-                        <div class="mt-2.5 grid grid-cols-2 gap-2">
+                        <div class="mt-2.5 grid grid-cols-3 gap-2">
                             <a href="{{ route('profile.edit') }}" 
-                               class="flex items-center justify-center px-3 py-2 bg-white/50 text-gray-700 rounded-lg hover:bg-primary-50 hover:text-primary-600 transition-colors duration-200 text-sm">
-                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                               class="flex items-center justify-center px-2 py-2 bg-white/50 text-gray-700 rounded-lg hover:bg-primary-50 hover:text-primary-600 transition-colors duration-200 text-xs">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                 </svg>
                                 Profile
                             </a>
+                            <a href="{{ route('payment.coming-soon') }}"
+                               class="flex items-center justify-center px-2 py-2 bg-white/50 text-gray-700 rounded-lg hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 text-xs relative">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                </svg>
+                                Payment
+                                <span class="absolute -top-1 -right-1 px-1 py-0.5 text-[9px] bg-amber-100 text-amber-700 rounded-full font-semibold">Soon</span>
+                            </a>
                             <button onclick="openLogoutModal()" 
-                                    class="flex items-center justify-center px-3 py-2 bg-white/50 text-red-600 rounded-lg hover:bg-red-50 hover:text-red-700 transition-colors duration-200 text-sm">
-                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    class="flex items-center justify-center px-2 py-2 bg-white/50 text-red-600 rounded-lg hover:bg-red-50 hover:text-red-700 transition-colors duration-200 text-xs">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                                 </svg>
                                 Logout
@@ -497,20 +494,27 @@
         <div class="p-6">
             <!-- Header -->
             <div class="flex items-center space-x-3 mb-4">
-                <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
-                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                <div class="w-12 h-12 bg-gradient-to-br from-red-100 to-orange-100 rounded-full flex items-center justify-center">
+                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">Konfirmasi Logout</h3>
-                    <p class="text-sm text-gray-500">Apakah Anda yakin ingin keluar?</p>
+                    <h3 class="text-xl font-bold text-gray-900">Logout dari Akun</h3>
+                    <p class="text-sm text-gray-500">Pastikan pekerjaan Anda sudah tersimpan</p>
                 </div>
             </div>
             
             <!-- Content -->
             <div class="mb-6">
-                <p class="text-gray-600 text-sm">Apakah Anda yakin ingin keluar?</p>
+                <p class="text-gray-700 text-sm leading-relaxed mb-3">
+                    Anda akan keluar dari akun <span class="font-semibold text-purple-600">{{ Auth::user()->name }}</span>.
+                </p>
+                <div class="bg-amber-50 border-l-4 border-amber-400 p-3 rounded-r">
+                    <p class="text-amber-800 text-xs leading-relaxed">
+                        <strong>💡 Tip:</strong> Pastikan semua data aplikasi pekerjaan dan progress Anda sudah tersimpan sebelum logout.
+                    </p>
+                </div>
             </div>
             
             <!-- Actions -->
