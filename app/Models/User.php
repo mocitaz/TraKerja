@@ -238,6 +238,22 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get the AI analyzer results for the user.
+     */
+    public function aiAnalyzerResults(): HasMany
+    {
+        return $this->hasMany(AiAnalyzerResult::class);
+    }
+
+    /**
+     * Get the email address that should be used for verification.
+     */
+    public function getEmailForVerification(): string
+    {
+        return $this->email;
+    }
+
+    /**
      * Check if user is admin.
      */
     public function isAdmin(): bool

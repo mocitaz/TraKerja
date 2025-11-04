@@ -141,13 +141,13 @@
                                 placeholder="Salin dan tempel deskripsi pekerjaan dari lowongan yang ingin Anda lamar di sini..."
                                 required
                                 minlength="50"
-                                maxlength="10000"
+                                maxlength="2500"
                             >{{ old('job_description') }}</textarea>
                             @error('job_description')
                                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                             <p class="mt-2 text-xs text-gray-500">
-                                <span id="char-count">0</span> / 10000 karakter (minimal 50 karakter)
+                                <span id="char-count">0</span> / 2500 karakter (minimal 50 karakter)
                             </p>
                         </div>
 

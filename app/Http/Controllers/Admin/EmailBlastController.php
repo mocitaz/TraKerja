@@ -7,10 +7,12 @@ use App\Models\User;
 use App\Mail\AiAnalyzerFreeTrialAnnouncementMail;
 use App\Mail\JobApplicationReminderMail;
 use App\Mail\MonthlyMotivationMail;
+use App\Mail\WelcomeMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class EmailBlastController extends Controller
 {
@@ -28,8 +30,8 @@ class EmailBlastController extends Controller
     public function send(Request $request)
     {
         $request->validate([
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation',
-            'target_user' => 'required|in:all,verified,premium,free',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification',
+            'target_user' => 'required|in:all,verified,premium,free,new,unverified',
         ]);
 
         $emailType = $request->email_type;
@@ -41,6 +43,13 @@ class EmailBlastController extends Controller
         switch ($targetUser) {
             case 'verified':
                 $query->whereNotNull('email_verified_at');
+                break;
+            case 'unverified':
+                $query->whereNull('email_verified_at');
+                break;
+            case 'new':
+                // User baru: registrasi dalam 7 hari terakhir
+                $query->where('created_at', '>=', Carbon::now()->subDays(7));
                 break;
             case 'premium':
                 $query->where(function($q) {
@@ -60,7 +69,7 @@ class EmailBlastController extends Controller
                 break;
         }
 
-        $users = $query->get(['id', 'email', 'name']);
+        $users = $query->get(['id', 'email', 'name', 'created_at', 'email_verified_at']);
 
         if ($users->isEmpty()) {
             return back()->with('error', 'Tidak ada user yang ditemukan untuk target yang dipilih.');
@@ -83,6 +92,15 @@ class EmailBlastController extends Controller
                         break;
                     case 'monthly_motivation':
                         Mail::to($user->email)->send(new MonthlyMotivationMail($user));
+                        break;
+                    case 'welcome':
+                        Mail::to($user->email)->send(new WelcomeMail($user));
+                        break;
+                    case 'verification':
+                        // Kirim verification email untuk user yang belum terverifikasi
+                        if (!$user->hasVerifiedEmail()) {
+                            $user->sendEmailVerificationNotification();
+                        }
                         break;
                 }
                 $successCount++;

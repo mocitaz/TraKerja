@@ -68,6 +68,40 @@
                             </label>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
+                                    <input type="radio" name="email_type" value="welcome" class="sr-only" required>
+                                    <div class="flex-1">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
+                                                </div>
+                                            </div>
+                                            <div class="ml-3 flex-1">
+                                                <p class="text-sm font-medium text-gray-900">Welcome Email</p>
+                                                <p class="text-xs text-gray-500 mt-1">Email selamat datang untuk user baru</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
+                                    <input type="radio" name="email_type" value="verification" class="sr-only" required>
+                                    <div class="flex-1">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
+                                                </div>
+                                            </div>
+                                            <div class="ml-3 flex-1">
+                                                <p class="text-sm font-medium text-gray-900">Verification Email</p>
+                                                <p class="text-xs text-gray-500 mt-1">Kirim email verifikasi untuk user</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
                                     <input type="radio" name="email_type" value="ai_analyzer" class="sr-only" required>
                                     <div class="flex-1">
                                         <div class="flex items-center">
@@ -138,6 +172,40 @@
                                             <div class="ml-3 flex-1">
                                                 <p class="text-sm font-medium text-gray-900">Semua User</p>
                                                 <p class="text-xs text-gray-500 mt-1">Semua user yang terdaftar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
+                                    <input type="radio" name="target_user" value="new" class="sr-only" required>
+                                    <div class="flex-1">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
+                                                </div>
+                                            </div>
+                                            <div class="ml-3 flex-1">
+                                                <p class="text-sm font-medium text-gray-900">User Baru</p>
+                                                <p class="text-xs text-gray-500 mt-1">User yang registrasi dalam 7 hari terakhir</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
+                                    <input type="radio" name="target_user" value="unverified" class="sr-only" required>
+                                    <div class="flex-1">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
+                                                </div>
+                                            </div>
+                                            <div class="ml-3 flex-1">
+                                                <p class="text-sm font-medium text-gray-900">User Belum Terverifikasi</p>
+                                                <p class="text-xs text-gray-500 mt-1">User yang belum verifikasi email</p>
                                             </div>
                                         </div>
                                     </div>
@@ -402,12 +470,16 @@
             }
             
             const emailTypeText = {
+                'welcome': 'Welcome Email',
+                'verification': 'Verification Email',
                 'ai_analyzer': 'AI Resume Analyzer',
                 'job_reminder': 'Job Application Reminder',
                 'monthly_motivation': 'Monthly Motivation'
             }[emailType] || 'Email Blast';
             const targetText = {
                 'all': 'Semua User',
+                'new': 'User Baru',
+                'unverified': 'User Belum Terverifikasi',
                 'verified': 'User Terverifikasi',
                 'premium': 'User Premium',
                 'free': 'User Free'

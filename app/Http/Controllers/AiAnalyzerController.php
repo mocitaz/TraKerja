@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AiAnalyzerResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
@@ -71,14 +72,14 @@ class AiAnalyzerController extends Controller
         // Validate request
         $validated = $request->validate([
             'resume' => 'required|file|mimes:pdf|max:10240', // Max 10MB
-            'job_description' => 'required|string|min:50|max:10000', // Increased limit
+            'job_description' => 'required|string|min:50|max:2500', // Max 2500 characters
         ], [
             'resume.required' => 'File resume wajib diunggah.',
             'resume.mimes' => 'File resume harus berupa PDF.',
             'resume.max' => 'Ukuran file resume maksimal 10MB.',
             'job_description.required' => 'Job description wajib diisi.',
             'job_description.min' => 'Job description minimal 50 karakter.',
-            'job_description.max' => 'Job description maksimal 10000 karakter.',
+            'job_description.max' => 'Job description maksimal 2500 karakter.',
         ]);
 
         try {
@@ -183,6 +184,22 @@ class AiAnalyzerController extends Controller
             // Also mark trial as used for tracking (backward compatibility)
             if (!$user->isPremium() && !$user->has_used_ai_analyzer_trial) {
                 $user->useAiAnalyzerTrial();
+            }
+
+            // Save analysis result to database
+            try {
+                AiAnalyzerResult::create([
+                    'user_id' => $user->id,
+                    'job_description' => $jobDescription,
+                    'resume_file_name' => $file->getClientOriginalName(),
+                    'analysis_result' => $analysisResult,
+                ]);
+            } catch (\Exception $e) {
+                \Log::error('Failed to save AI Analyzer result to database: ' . $e->getMessage(), [
+                    'user_id' => $user->id,
+                    'exception' => $e,
+                ]);
+                // Continue to show result even if save fails
             }
 
             // Return view with results

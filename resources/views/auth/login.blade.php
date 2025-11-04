@@ -223,11 +223,14 @@
                     <!-- Notices -->
                     @if (session('status') === 'please-verify-email')
                         <div class="mb-6 bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-xl">
-                            <div class="flex items-center">
-                                <svg class="w-5 h-5 text-yellow-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="flex items-start">
+                                <svg class="w-5 h-5 text-yellow-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 6a9 9 0 100 18 9 9 0 000-18z" />
                                 </svg>
-                                <p class="text-sm font-medium text-yellow-800">Registration successful. Please check your email and verify your account before logging in.</p>
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-yellow-800 mb-1">Registration successful. Please check your email and verify your account before logging in.</p>
+                                    <p class="text-xs text-yellow-700 mt-1">If you don't see the email in your inbox, please check your <strong>Spam</strong> or <strong>Promotions</strong> folder.</p>
+                                </div>
                             </div>
                         </div>
                     @endif
