@@ -133,9 +133,21 @@
                         <tr class="hover:bg-gray-50 transition-colors duration-200">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-10 w-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
-                                        <span class="text-white font-semibold text-sm">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
-                                    </div>
+                                    @if($user->logo)
+                                        <div class="flex-shrink-0 h-10 w-10 rounded-lg overflow-hidden ring-2 ring-gray-100">
+                                            <img src="{{ Storage::url($user->logo) }}" 
+                                                 alt="{{ $user->name }}" 
+                                                 class="w-full h-full object-cover"
+                                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                            <div class="w-full h-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center" style="display: none;">
+                                                <span class="text-white font-semibold text-sm">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="flex-shrink-0 h-10 w-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
+                                            <span class="text-white font-semibold text-sm">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                                        </div>
+                                    @endif
                                     <div class="ml-4">
                                         <div class="text-sm font-semibold text-gray-900">{{ $user->name }}</div>
                                         <div class="text-xs text-gray-500">ID: #{{ $user->id }}</div>
@@ -256,6 +268,25 @@
 
                 {{-- Modal Body --}}
                 <div class="p-6 space-y-4">
+                    @php
+                        $editingUser = $editingUserId ? \App\Models\User::find($editingUserId) : null;
+                    @endphp
+                    
+                    {{-- Profile Photo --}}
+                    @if($editingUser && $editingUser->logo)
+                        <div class="flex justify-center mb-4">
+                            <div class="w-24 h-24 rounded-xl overflow-hidden ring-4 ring-gray-100 shadow-lg">
+                                <img src="{{ Storage::url($editingUser->logo) }}" 
+                                     alt="{{ $editName ?? 'User' }}" 
+                                     class="w-full h-full object-cover"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="w-full h-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center" style="display: none;">
+                                    <span class="text-white font-semibold text-2xl">{{ strtoupper(substr($editName ?? 'U', 0, 1)) }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    
                     {{-- User Info Grid --}}
                     <div class="space-y-4">
                         {{-- Name --}}
