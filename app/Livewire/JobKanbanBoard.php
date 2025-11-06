@@ -24,7 +24,49 @@ class JobKanbanBoard extends Component
         'job-deleted' => '$refresh',
         'job-saved' => '$refresh',
         'status-updated' => '$refresh',
+        'job-pinned' => '$refresh',
     ];
+
+    public function togglePin($jobId)
+    {
+        $job = JobApplication::where('id', $jobId)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if ($job) {
+            // If trying to pin, check if user already has 5 pinned items
+            if (!$job->is_pinned) {
+                $pinnedCount = JobApplication::where('user_id', auth()->id())
+                    ->where('is_pinned', true)
+                    ->count();
+                
+                if ($pinnedCount >= 5) {
+                    $this->dispatch('showNotification', [
+                        'type' => 'error',
+                        'title' => 'Pin Limit Reached',
+                        'message' => 'You can only pin up to 5 jobs. Unpin another job first.',
+                        'duration' => 3000
+                    ]);
+                    return;
+                }
+            }
+            
+            $job->update(['is_pinned' => !$job->is_pinned]);
+            
+            $message = $job->is_pinned 
+                ? "Pinned {$job->company_name} to top" 
+                : "Unpinned {$job->company_name}";
+            
+            $this->dispatch('showNotification', [
+                'type' => 'info',
+                'title' => $job->is_pinned ? 'Job Pinned' : 'Job Unpinned',
+                'message' => $message,
+                'duration' => 2000
+            ]);
+            
+            $this->dispatch('job-pinned');
+        }
+    }
 
     public function updateStatus($jobId, $newStatus)
     {
@@ -82,6 +124,7 @@ class JobKanbanBoard extends Component
         $statuses = collect($this->statusOptions)->map(function ($status) {
             $jobApplications = JobApplication::where('user_id', auth()->id())
                 ->where('application_status', $status)
+                ->orderBy('is_pinned', 'desc') // Pinned items first
                 ->orderBy('application_date', 'desc')
                 ->get();
 

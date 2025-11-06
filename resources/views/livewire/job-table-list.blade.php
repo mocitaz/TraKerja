@@ -90,9 +90,9 @@
         </div>
 
     <!-- Compact Table -->
-    <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
+    <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] overflow-x-auto">
+        <div class="inline-block min-w-full">
+        <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col" class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">
@@ -192,98 +192,84 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-100">
                     @forelse($jobApplications as $index => $job)
-                        <tr class="{{ $index % 2 == 0 ? 'bg-white' : 'bg-gray-50' }} hover:bg-gray-100 transition-colors duration-200 group cursor-pointer" onclick="window.location.href='{{ route('jobs.show', $job) }}'">
-                            <td class="px-4 py-3 whitespace-nowrap text-center text-sm font-medium text-gray-500">
+                        <tr class="{{ $index % 2 == 0 ? 'bg-white' : 'bg-gray-50' }} hover:bg-gray-100 transition-colors duration-200 group cursor-pointer {{ $job->is_pinned ? 'bg-purple-50/50' : '' }}" onclick="window.location.href='{{ route('jobs.show', $job) }}'">
+                            <td class="px-4 py-2.5 whitespace-nowrap text-center text-sm font-medium text-gray-500">
                                 {{ ($jobApplications->currentPage() - 1) * $jobApplications->perPage() + $index + 1 }}
                             </td>
-                            <td class="px-4 py-3 whitespace-nowrap text-center">
-                                <div>
-                                    <div class="text-sm font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
+                            <td class="px-4 py-2.5 whitespace-nowrap text-center">
+                                <div class="flex items-center justify-center gap-2">
+                                    @if($job->is_pinned)
+                                        <svg class="w-4 h-4 text-purple-600 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M16 12V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v8c-1.66 0-3 1.34-3 3v1c0 .55.45 1 1 1h5v5c0 .55.45 1 1 1s1-.45 1-1v-5h5c.55 0 1-.45 1-1v-1c0-1.66-1.34-3-3-3z"/>
+                                        </svg>
+                                    @endif
+                                    <div class="text-sm font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
                                         {{ $job->company_name }}
                                     </div>
-                                    @if($job->platform_link)
-                                        <a href="{{ $job->platform_link }}" target="_blank" class="text-xs text-primary-600 hover:text-primary-800 flex items-center justify-center mt-1">
-                                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                                            </svg>
-                                            View Job
-                                        </a>
-                                    @endif
                                 </div>
                             </td>
-                            <td class="px-4 py-3 whitespace-nowrap text-center">
+                            <td class="px-4 py-2.5 whitespace-nowrap text-center">
                                 <div class="text-sm font-medium text-gray-900">{{ $job->position }}</div>
                             </td>
-                            <td class="px-4 py-3 whitespace-nowrap text-center">
-                                <div class="flex items-center justify-center text-sm text-gray-600">
-                                    <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>
-                                    {{ $job->location }}
-                                </div>
+                            <td class="px-4 py-2.5 whitespace-nowrap text-center text-sm text-gray-600">
+                                {{ $job->location }}
                             </td>
-                            <td class="px-4 py-3 whitespace-nowrap text-center">
-                                <div class="flex items-center justify-center text-sm text-gray-600">
-                                    <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"></path>
-                                    </svg>
-                                    {{ $job->platform }}
-                                </div>
+                            <td class="px-4 py-2.5 whitespace-nowrap text-center text-sm text-gray-600">
+                                {{ $job->platform }}
                             </td>
-                            <td class="px-4 py-3 whitespace-nowrap text-center">
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold"
+                            <td class="px-4 py-2.5 whitespace-nowrap text-center">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold"
                                       style="background-color: {{ $this->getStatusColor($job->application_status) }}20; color: {{ $this->getStatusColor($job->application_status) }};">
                                     {{ $job->application_status ?? 'On Process' }}
                                 </span>
                             </td>
-                            <td class="px-4 py-3 whitespace-nowrap text-center text-sm text-gray-600">
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                            <td class="px-4 py-2.5 whitespace-nowrap text-center text-sm text-gray-600">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
                                     {{ $job->recruitment_stage ?? 'Applied' }}
                                 </span>
                             </td>
-                            <td class="px-4 py-3 whitespace-nowrap text-center text-sm text-gray-600">
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                            <td class="px-4 py-2.5 whitespace-nowrap text-center text-sm text-gray-600">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                                     {{ $job->career_level ?? 'Full Time' }}
                                 </span>
                             </td>
-                            <td class="px-4 py-3 whitespace-nowrap text-center text-sm text-gray-600">
-                                <div class="flex items-center justify-center">
-                                    <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                    </svg>
-                                    {{ $job->application_date->setTimezone('Asia/Jakarta')->format('M d, Y') }}
-                                </div>
+                            <td class="px-4 py-2.5 whitespace-nowrap text-center text-xs text-gray-600">
+                                {{ $job->application_date->setTimezone('Asia/Jakarta')->format('M d, Y') }}
                             </td>
-                            <td class="px-4 py-3 text-center text-sm">
+                            <td class="px-4 py-2.5 text-center text-xs text-gray-600">
                                 @if($job->interview_date)
-                                    <div class="flex items-center justify-center text-gray-600 text-sm">
-                                        <svg class="w-4 h-4 mr-2 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                        </svg>
-                                        <span class="truncate">{{ $job->interview_date->setTimezone('Asia/Jakarta')->format('M d, Y') }}</span>
-                                    </div>
+                                    {{ $job->interview_date->setTimezone('Asia/Jakarta')->format('M d, Y') }}
                                 @else
-                                    <div class="flex items-center justify-center text-gray-400 text-xs">
-                                        <svg class="w-4 h-4 mr-1.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                        </svg>
-                                        <span>No interview</span>
-                                    </div>
+                                    <span class="text-gray-400">-</span>
                                 @endif
                             </td>
-                            <td class="px-4 py-3 whitespace-nowrap text-center text-sm font-medium" onclick="event.stopPropagation();">
-                                <div class="flex items-center justify-center space-x-2">
-                                    <button wire:click="edit({{ $job->id }})" 
-                                            class="p-2 text-gray-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all duration-200 group"
-                                            onclick="event.stopPropagation(); event.preventDefault(); console.log('Edit button clicked for job:', {{ $job->id }}); window.dispatchEvent(new CustomEvent('edit-job', { detail: { jobId: {{ $job->id }} } }));">
+                            <td class="px-4 py-2.5 whitespace-nowrap text-center text-sm font-medium" onclick="event.stopPropagation();">
+                                <div class="flex items-center justify-center gap-1">
+                                    <!-- Pin Button -->
+                                    <button wire:click="togglePin({{ $job->id }})" 
+                                            class="p-2 rounded-lg transition-colors flex-shrink-0 @if($job->is_pinned) text-purple-600 bg-purple-100 hover:bg-purple-200 @else text-gray-400 hover:text-purple-600 hover:bg-purple-50 @endif"
+                                            onclick="event.stopPropagation();"
+                                            title="{{ $job->is_pinned ? 'Unpin' : 'Pin to Top' }}">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M16 12V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v8c-1.66 0-3 1.34-3 3v1c0 .55.45 1 1 1h5v5c0 .55.45 1 1 1s1-.45 1-1v-5h5c.55 0 1-.45 1-1v-1c0-1.66-1.34-3-3-3z"/>
+                                        </svg>
+                                    </button>
+                                    
+                                    <!-- Edit Button -->
+                                    <button wire:click="edit({{ $job->id }})"
+                                            class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors flex-shrink-0"
+                                            onclick="event.stopPropagation(); event.preventDefault(); window.dispatchEvent(new CustomEvent('edit-job', { detail: { jobId: {{ $job->id }} } }));"
+                                            title="Edit">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                         </svg>
                                     </button>
+                                    
+                                    <!-- Delete Button -->
                                     <button type="button" 
-                                            class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 group"
-                                            onclick="event.stopPropagation(); openDeleteModal({{ $job->id }}, '{{ addslashes($job->company_name) }}', '{{ addslashes($job->position) }}')">
+                                            class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors flex-shrink-0"
+                                            onclick="event.stopPropagation(); openDeleteModal({{ $job->id }}, '{{ addslashes($job->company_name) }}', '{{ addslashes($job->position) }}')"
+                                            title="Delete">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                         </svg>
@@ -312,14 +298,24 @@
                     @endforelse
                 </tbody>
             </table>
-        </div>
 
         <!-- Modern Pagination -->
         @if($jobApplications->hasPages())
-            <div class="bg-gray-50/50 px-4 py-3 border-t border-gray-100">
-                {{ $jobApplications->links() }}
+            <div class="bg-gray-50/50 border-t border-gray-100">
+                <div class="px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <!-- Results Info -->
+                    <div class="text-sm text-gray-600 whitespace-nowrap">
+                        Showing {{ $jobApplications->firstItem() }} to {{ $jobApplications->lastItem() }} of {{ $jobApplications->total() }} results
+                    </div>
+                    
+                    <!-- Pagination Links -->
+                    <div class="flex-shrink-0">
+                        {{ $jobApplications->links() }}
+                    </div>
+                </div>
             </div>
         @endif
+        </div>
     </div>
 
         <!-- Delete Confirmation Modal -->

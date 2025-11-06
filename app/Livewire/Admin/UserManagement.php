@@ -14,6 +14,7 @@ class UserManagement extends Component
     public $search = '';
     public $filterPremium = 'all'; // all, premium, free
     public $filterRole = 'all'; // all, admin, user
+    public $filterAiAnalyzer = 'all'; // all, used, not_used
     public $perPage = 10; // supports 10, 20, 50, 100, 'all'
     
     public $showEditModal = false;
@@ -47,6 +48,11 @@ class UserManagement extends Component
         $this->resetPage();
     }
 
+    public function updatingFilterAiAnalyzer()
+    {
+        $this->resetPage();
+    }
+
     public function updatingPerPage()
     {
         $this->resetPage();
@@ -70,6 +76,16 @@ class UserManagement extends Component
             $query->where('is_premium', true);
         } elseif ($this->filterPremium === 'free') {
             $query->where('is_premium', false);
+        }
+        
+        // Filter by AI Analyzer usage
+        if ($this->filterAiAnalyzer === 'used') {
+            $query->where('has_used_ai_analyzer_trial', true);
+        } elseif ($this->filterAiAnalyzer === 'not_used') {
+            $query->where(function($q) {
+                $q->where('has_used_ai_analyzer_trial', false)
+                  ->orWhereNull('has_used_ai_analyzer_trial');
+            });
         }
         
         return $query;
@@ -240,6 +256,10 @@ class UserManagement extends Component
             // Verified = users (non-admin) with verified email
             'verified' => User::where('role', '!=', 'admin')
                 ->whereNotNull('email_verified_at')
+                ->count(),
+            // AI Analyzer free trial users
+            'ai_analyzer_trial_used' => User::where('role', '!=', 'admin')
+                ->where('has_used_ai_analyzer_trial', true)
                 ->count(),
         ];
         

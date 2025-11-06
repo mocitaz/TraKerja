@@ -30,7 +30,7 @@
                              style="background: linear-gradient(135deg, {{ $status->color_code }}03, transparent);">
                             
                             @forelse($status->jobApplications as $job)
-                                <div class="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 cursor-move"
+                                <div class="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 {{ $job->is_pinned ? 'ring-2 ring-purple-400 border-purple-400' : '' }}"
                                      draggable="true"
                                      data-job-id="{{ $job->id }}"
                                      ondragstart="dragStart(event, {{ $job->id }})"
@@ -38,53 +38,61 @@
                                     
                                     <!-- Job Card Content -->
                                     <div class="p-2 sm:p-3">
-                                        <!-- Company & Position -->
-                                        <div class="mb-2">
-                                            <h4 class="font-semibold text-gray-900 text-xs sm:text-sm truncate group-hover:text-primary-600 transition-colors">
-                                                {{ $job->company_name }}
-                                            </h4>
-                                            <p class="text-xs text-gray-600 mt-0.5 truncate">{{ $job->position }}</p>
+                                        <!-- Header with Company, Position & Dropdown -->
+                                        <div class="flex items-start justify-between mb-2 gap-2">
+                                            <div class="flex-1 min-w-0">
+                                                <div class="flex items-center gap-1.5 mb-0.5">
+                                                    @if($job->is_pinned)
+                                                        <svg class="w-3.5 h-3.5 text-purple-600 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M16 12V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v8c-1.66 0-3 1.34-3 3v1c0 .55.45 1 1 1h5v5c0 .55.45 1 1 1s1-.45 1-1v-5h5c.55 0 1-.45 1-1v-1c0-1.66-1.34-3-3-3z"/>
+                                                        </svg>
+                                                    @endif
+                                                    <h4 class="font-semibold text-gray-900 text-xs sm:text-sm truncate group-hover:text-primary-600 transition-colors cursor-pointer">
+                                                        {{ $job->company_name }}
+                                                    </h4>
+                                                </div>
+                                                <p class="text-xs text-gray-600 truncate">{{ $job->position }}</p>
+                                            </div>
+                                            
+                                            <!-- Action Buttons -->
+                                            <div class="inline-flex items-center gap-0.5 flex-shrink-0">
+                                                <!-- Pin Button -->
+                                                <button wire:click="togglePin({{ $job->id }})" 
+                                                        class="p-1 rounded transition-colors @if($job->is_pinned) text-purple-600 bg-purple-50 hover:bg-purple-100 @else text-gray-400 hover:text-purple-600 hover:bg-purple-50 @endif"
+                                                        onclick="event.stopPropagation();"
+                                                        title="{{ $job->is_pinned ? 'Unpin' : 'Pin' }}">
+                                                    <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M16 12V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v8c-1.66 0-3 1.34-3 3v1c0 .55.45 1 1 1h5v5c0 .55.45 1 1 1s1-.45 1-1v-5h5c.55 0 1-.45 1-1v-1c0-1.66-1.34-3-3-3z"/>
+                                                    </svg>
+                                                </button>
+                                                
+                                                <!-- View Button -->
+                                                <a href="{{ route('jobs.show', $job) }}"
+                                                   class="p-1 text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                                                   title="View">
+                                                    <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                                    </svg>
+                                                </a>
+                                            </div>
                                         </div>
 
-                                        <!-- Location & Platform -->
-                                        <div class="space-y-1.5 mb-2">
-                                            <div class="flex items-center text-xs text-gray-500">
-                                                <svg class="w-3 h-3 mr-1.5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                </svg>
-                                                <span class="truncate">{{ $job->location }}</span>
-                                            </div>
-                                            <div class="flex items-center text-xs text-gray-500">
-                                                <svg class="w-3 h-3 mr-1.5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"></path>
-                                                </svg>
-                                                <span class="truncate">{{ $job->platform }}</span>
-                                            </div>
+                                        <!-- Location & Platform - Compact -->
+                                        <div class="space-y-1 mb-2 text-xs text-gray-500">
+                                            <div class="truncate">{{ $job->location }}</div>
+                                            <div class="truncate">{{ $job->platform }}</div>
                                         </div>
 
                                         <!-- Recruitment Stage & Date -->
                                         <div class="flex items-center justify-between">
-                                            <div class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
-                                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                                </svg>
+                                            <div class="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-800">
                                                 {{ $job->recruitment_stage ?? 'Applied' }}
                                             </div>
-                                            <div class="flex items-center text-xs text-gray-500">
-                                                <svg class="w-3 h-3 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                                </svg>
-                                                <span>{{ $job->application_date->format('M d') }}</span>
+                                            <div class="text-xs text-gray-500">
+                                                {{ $job->application_date->format('M d') }}
                                             </div>
                                         </div>
-
-                                        <!-- Notes Preview -->
-                                        @if($job->notes)
-                                            <div class="mt-2 pt-2 border-t border-gray-100">
-                                                <p class="text-xs text-gray-600 line-clamp-2">{{ Str::limit($job->notes, 50) }}</p>
-                                            </div>
-                                        @endif
                                     </div>
                                 </div>
                             @empty
@@ -129,4 +137,5 @@
         </div>
 
     </div>
+</div>
 </div>

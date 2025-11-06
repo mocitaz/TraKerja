@@ -1,6 +1,6 @@
 <div class="space-y-8">
     {{-- Stats Cards --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
         {{-- Total Users --}}
         <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
             <div class="flex items-center justify-between">
@@ -60,6 +60,21 @@
                 </div>
             </div>
         </div>
+
+        {{-- AI Analyzer Free Trial Users --}}
+        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-gray-600 mb-1">AI Trial Used</p>
+                    <p class="text-2xl font-bold text-[#212529]">{{ $stats['ai_analyzer_trial_used'] }}</p>
+                </div>
+                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
     </div>
 
     {{-- Filters & Search --}}
@@ -86,7 +101,7 @@
             </div>
         </div>
         <div class="p-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
                     <input type="text" wire:model.live="search" placeholder="Cari nama atau email..." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all">
@@ -97,6 +112,14 @@
                         <option value="all">Semua Pengguna</option>
                         <option value="premium">Premium Saja</option>
                         <option value="free">Gratis Saja</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">AI Analyzer Trial</label>
+                    <select wire:model.live="filterAiAnalyzer" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all">
+                        <option value="all">Semua</option>
+                        <option value="used">Sudah Pakai Trial</option>
+                        <option value="not_used">Belum Pakai Trial</option>
                     </select>
                 </div>
                 <div>
@@ -123,6 +146,7 @@
                         <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                         <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email Verified</th>
                         <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AI Trial</th>
                         <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
                         <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Joined</th>
                         <th class="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -186,6 +210,25 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
+                                @if($user->has_used_ai_analyzer_trial)
+                                    <div class="flex flex-col gap-1">
+                                        <span class="px-2 py-1 inline-flex items-center gap-1.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                            </svg>
+                                            Used
+                                        </span>
+                                        @if($user->ai_analyzer_trial_used_at)
+                                            <span class="text-xs text-gray-500">{{ $user->ai_analyzer_trial_used_at->format('d M Y') }}</span>
+                                        @endif
+                                    </div>
+                                @else
+                                    <span class="px-2 py-1 inline-flex text-xs font-medium rounded-full bg-gray-100 text-gray-600">
+                                        Not Used
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
                                 @if($user->is_admin || $user->role === 'admin')
                                     <span class="px-2 py-1 inline-flex text-xs font-medium rounded-full bg-orange-100 text-orange-800">
                                         Admin
@@ -201,17 +244,27 @@
                                 <div class="text-xs text-gray-500">{{ $user->created_at->diffForHumans() }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <button wire:click="editUser({{ $user->id }})" class="text-blue-600 hover:text-blue-900 hover:bg-blue-50 p-2 rounded-lg transition-colors" title="View Details">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                    </svg>
-                                </button>
+                                <div class="flex items-center justify-end gap-2">
+                                    <button wire:click="editUser({{ $user->id }})" class="text-blue-600 hover:text-blue-900 hover:bg-blue-50 p-2 rounded-lg transition-colors" title="View Details">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                        </svg>
+                                    </button>
+                                    <button 
+                                        onclick="confirmDeleteUser({{ $user->id }}, '{{ addslashes($user->name) }}', '{{ addslashes($user->email) }}')"
+                                        class="text-red-600 hover:text-red-900 hover:bg-red-50 p-2 rounded-lg transition-colors" 
+                                        title="Delete User">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                        </svg>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="px-6 py-12 text-center">
+                            <td colspan="8" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center justify-center">
                                     <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                                         <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -340,6 +393,74 @@
                                     @endif
                                 </div>
                             </div>
+                        </div>
+                        
+                        {{-- AI Analyzer Section --}}
+                        <div class="pt-4 border-t border-gray-200">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                </svg>
+                                AI Analyzer Usage
+                            </h4>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                {{-- Free Trial Status --}}
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-500 mb-1.5">Free Trial</label>
+                                    <div class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg">
+                                        @if($editingUser && $editingUser->has_used_ai_analyzer_trial)
+                                            <span class="inline-flex items-center gap-1.5 text-blue-600 font-medium text-sm">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                Sudah Dipakai
+                                            </span>
+                                        @else
+                                            <span class="text-gray-600 text-sm">Belum Dipakai</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                
+                                {{-- Usage Date --}}
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-500 mb-1.5">Tanggal Pakai</label>
+                                    <div class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg">
+                                        @if($editingUser && $editingUser->ai_analyzer_trial_used_at)
+                                            <span class="text-gray-900 font-medium text-sm">
+                                                {{ $editingUser->ai_analyzer_trial_used_at->format('d M Y') }}
+                                            </span>
+                                            <div class="text-xs text-gray-500 mt-0.5">
+                                                {{ $editingUser->ai_analyzer_trial_used_at->diffForHumans() }}
+                                            </div>
+                                        @else
+                                            <span class="text-gray-400 text-sm">-</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {{-- Monthly Usage Stats --}}
+                            @if($editingUser)
+                                <div class="mt-3 p-3 bg-blue-50 border border-blue-100 rounded-lg">
+                                    <div class="flex items-start gap-2">
+                                        <svg class="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                        </svg>
+                                        <div class="flex-1">
+                                            <p class="text-xs font-semibold text-blue-900">Usage Bulan Ini</p>
+                                            <p class="text-sm text-blue-800 mt-1">
+                                                <span class="font-bold">{{ $editingUser->ai_analyzer_count_this_month ?? 0 }}x</span> digunakan
+                                            </p>
+                                            @if($editingUser->last_ai_analyzer_reset)
+                                                <p class="text-xs text-blue-700 mt-1">
+                                                    Reset terakhir: {{ $editingUser->last_ai_analyzer_reset->format('d M Y') }}
+                                                </p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
 
@@ -495,5 +616,111 @@
             </div>
         </div>
     @endif
+
+    {{-- Delete Confirmation Modal --}}
+    <div id="deleteUserModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-[100]">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-95" id="deleteUserModalContent">
+                <div class="p-6">
+                    <!-- Icon -->
+                    <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-red-100">
+                        <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                        </svg>
+                    </div>
+
+                    <!-- Title -->
+                    <h3 class="text-xl font-bold text-gray-900 text-center mb-1">Delete User</h3>
+                    <p class="text-sm text-gray-500 text-center mb-4">Are you sure you want to delete this user?</p>
+
+                    <!-- User Info -->
+                    <div class="text-center mb-6">
+                        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                            <p class="text-sm font-semibold text-gray-900" id="deleteUserName"></p>
+                            <p class="text-xs text-gray-500 mt-1" id="deleteUserEmail"></p>
+                        </div>
+                        <p class="text-red-600 text-sm mt-4 font-medium">⚠️ This action cannot be undone!</p>
+                        <p class="text-gray-500 text-xs mt-1">All user data including job applications will be permanently deleted.</p>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex space-x-3">
+                        <button type="button" 
+                                onclick="closeDeleteUserModal()"
+                                class="flex-1 px-4 py-3 border border-gray-200 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors duration-200">
+                            Cancel
+                        </button>
+                        <button type="button" 
+                                onclick="confirmDeleteUserAction()"
+                                class="flex-1 px-4 py-3 rounded-xl font-semibold text-white bg-red-600 hover:bg-red-700 transition-all duration-200">
+                            Yes, Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    let deleteUserId = null;
+
+    function confirmDeleteUser(userId, userName, userEmail) {
+        deleteUserId = userId;
+        
+        // Update modal content
+        document.getElementById('deleteUserName').textContent = userName;
+        document.getElementById('deleteUserEmail').textContent = userEmail;
+        
+        // Show modal
+        const modal = document.getElementById('deleteUserModal');
+        const content = document.getElementById('deleteUserModalContent');
+        
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+        
+        // Animate modal in
+        setTimeout(() => {
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }, 10);
+    }
+
+    function closeDeleteUserModal() {
+        const modal = document.getElementById('deleteUserModal');
+        const content = document.getElementById('deleteUserModalContent');
+        
+        // Animate modal out
+        content.classList.remove('scale-100');
+        content.classList.add('scale-95');
+        
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+            deleteUserId = null;
+        }, 200);
+    }
+
+    function confirmDeleteUserAction() {
+        if (deleteUserId) {
+            // Call Livewire method
+            @this.call('deleteUser', deleteUserId);
+            closeDeleteUserModal();
+        }
+    }
+
+    // Close modal when clicking outside
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'deleteUserModal') {
+            closeDeleteUserModal();
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !document.getElementById('deleteUserModal').classList.contains('hidden')) {
+            closeDeleteUserModal();
+        }
+    });
+</script>
 </div>

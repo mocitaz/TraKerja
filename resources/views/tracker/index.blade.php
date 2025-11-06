@@ -136,6 +136,105 @@
         </div>
     </div>
 
+    <!-- Email Verification Success Modal -->
+    <div id="verificationSuccessModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-[100]">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-95" id="verificationModalContent">
+                <div class="p-8 text-center">
+                    <!-- Success Icon -->
+                    <div class="flex items-center justify-center w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-green-400 to-green-600 shadow-lg">
+                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+
+                    <!-- Title -->
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Email Verified Successfully!</h3>
+                    <p class="text-gray-600 mb-2">Welcome to TraKerja! 🎉</p>
+                    <p class="text-sm text-gray-500 mb-6">Your email has been verified and your account is now active. You can start tracking your job applications!</p>
+
+                    <!-- Features List -->
+                    <div class="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-4 mb-6 text-left">
+                        <p class="text-xs font-semibold text-gray-700 mb-3">What you can do now:</p>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span>Track unlimited job applications</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span>Get AI-powered resume analysis (1 free trial)</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span>Use advanced CV builder</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span>Manage interview schedules</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Action Button -->
+                    <button onclick="closeVerificationModal()" 
+                            class="w-full px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-[#d983e4] to-[#4e71c5] hover:from-[#c775d8] hover:to-[#4565b3] transition-all duration-200 shadow-lg">
+                        Let's Get Started!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check for verification success on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('verified') === '1') {
+                showVerificationSuccessModal();
+                // Remove the query parameter from URL without page reload
+                const newUrl = window.location.pathname;
+                window.history.replaceState({}, '', newUrl);
+            }
+        });
+
+        function showVerificationSuccessModal() {
+            const modal = document.getElementById('verificationSuccessModal');
+            const content = document.getElementById('verificationModalContent');
+            
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+            
+            // Animate modal in
+            setTimeout(() => {
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeVerificationModal() {
+            const modal = document.getElementById('verificationSuccessModal');
+            const content = document.getElementById('verificationModalContent');
+            
+            // Animate modal out
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }, 200);
+        }
+    </script>
+
     <script>
         // View Toggle with smooth animations
         document.getElementById('kanban-view').addEventListener('click', function() {

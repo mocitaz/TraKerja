@@ -28,6 +28,7 @@ class JobApplication extends Model
         'interview_type',
         'interview_location',
         'notes',
+        'is_pinned',
     ];
 
     protected static function boot()
@@ -52,6 +53,7 @@ class JobApplication extends Model
     protected $casts = [
         'application_date' => 'date',
         'interview_date' => 'datetime',
+        'is_pinned' => 'boolean',
     ];
     
     /**

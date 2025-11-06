@@ -264,6 +264,33 @@
                             </div>
                         </div>
 
+                        <!-- Anti-Spam Warning -->
+                        <div class="bg-red-50 border-2 border-red-300 rounded-lg p-4 mb-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <h3 class="text-sm font-bold text-red-800 mb-2">⚠️ DILARANG SPAM!</h3>
+                                    <div class="text-sm text-red-700 space-y-1.5">
+                                        <p class="font-semibold">Gunakan fitur ini dengan bijaksana:</p>
+                                        <ul class="list-disc list-inside space-y-1 ml-1">
+                                            <li>Jangan kirim email berlebihan dalam waktu singkat</li>
+                                            <li>Pastikan konten email relevan untuk target user</li>
+                                            <li>Hormati privasi dan inbox pengguna</li>
+                                            <li>Email spam dapat merusak reputasi domain</li>
+                                            <li>Dapat menyebabkan akun email di-blacklist</li>
+                                        </ul>
+                                        <p class="font-semibold mt-3 bg-red-100 p-2 rounded">
+                                            💡 Tips: Gunakan target user yang spesifik dan kirim hanya saat diperlukan.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Warning -->
                         <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                             <div class="flex">
@@ -367,6 +394,19 @@
                             <div class="flex justify-between items-center">
                                 <span class="text-sm font-medium text-gray-700">Target User:</span>
                                 <span id="confirmTargetUser" class="text-sm font-semibold text-gray-900"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Anti-Spam Reminder -->
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-3 mb-3">
+                        <div class="flex items-start gap-2">
+                            <svg class="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                            <div class="text-xs leading-relaxed text-red-800">
+                                <p class="font-bold mb-1">⚠️ Ingat: DILARANG SPAM!</p>
+                                <p>Gunakan fitur ini dengan bijaksana. Email spam dapat merusak reputasi dan menyebabkan blacklist.</p>
                             </div>
                         </div>
                     </div>
