@@ -111,18 +111,18 @@
             </div>
 
             <!-- Right Section: User Menu -->
-            <div class="flex items-center space-x-2 sm:space-x-4">
+            <div class="flex items-center space-x-2 sm:space-x-3">
                 <!-- User Profile -->
                 <div class="flex items-center space-x-2 sm:space-x-3">
                     @if(Auth::user()->logo)
                         <div class="relative">
                             <img src="{{ Storage::url(Auth::user()->logo) }}" 
                                  alt="Profile Photo" 
-                                 class="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover ring-2 ring-white shadow-lg hover:shadow-xl transition-all duration-200">
+                                 class="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover ring-2 ring-gray-100 shadow-sm hover:shadow-md hover:ring-primary-200 transition-all duration-200">
                         </div>
                     @else
                         <div class="relative">
-                            <div class="h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 ring-2 ring-white">
+                            <div class="h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center shadow-sm hover:shadow-md ring-2 ring-gray-100 hover:ring-primary-200 transition-all duration-200">
                                 <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                 </svg>
@@ -130,16 +130,34 @@
                         </div>
                     @endif
                     <div class="hidden sm:block">
-                        <p class="text-base font-semibold text-gray-900 truncate max-w-32">{{ Auth::user()->name }}</p>
-                        <p class="text-xs text-gray-500 truncate max-w-32">{{ Auth::user()->email }}</p>
+                        <div class="flex items-center gap-1.5">
+                            <p class="text-sm font-semibold text-gray-900 truncate max-w-36">{{ Auth::user()->name }}</p>
+                            @if(Auth::user()->email_verified_at)
+                                <div class="group/verify relative flex-shrink-0">
+                                    <svg class="w-4 h-4 transition-transform duration-200 group-hover/verify:scale-110" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" fill="#3B82F6"/>
+                                        <circle cx="12" cy="12" r="10" stroke="white" stroke-width="1.5" fill="none"/>
+                                        <path d="M8.5 12L10.5 14L15.5 9" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                    </svg>
+                                    <!-- Tooltip -->
+                                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1.5 px-1.5 py-1 bg-gray-900 text-white text-[10px] font-medium rounded shadow-lg opacity-0 invisible group-hover/verify:opacity-100 group-hover/verify:visible transition-all duration-200 whitespace-nowrap pointer-events-none z-[60]">
+                                        Email Verified
+                                        <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-0.5">
+                                            <div class="w-1 h-1 bg-gray-900 rotate-45"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                        <p class="text-xs text-gray-500 truncate max-w-36">{{ Auth::user()->email }}</p>
                     </div>
                 </div>
 
                 <!-- User Dropdown -->
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200 hover:bg-gray-50 p-1 sm:p-2">
-                            <svg class="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button class="flex items-center text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 hover:bg-gray-100 p-1.5 sm:p-2">
+                            <svg class="h-4 w-4 sm:h-5 sm:w-5 text-gray-500 hover:text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
                             </svg>
                         </button>
@@ -437,7 +455,28 @@
                                 @endif
                             </div>
                             <div class="ml-2.5 flex-1 min-w-0">
-                                <p class="text-sm font-semibold text-gray-900 truncate">{{ Auth::user()->name }}</p>
+                                <div class="flex items-center gap-1.5">
+                                    <p class="text-sm font-semibold text-gray-900 truncate">{{ Auth::user()->name }}</p>
+                                    @if(Auth::user()->email_verified_at)
+                                        <div class="group relative flex-shrink-0">
+                                            <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:scale-110" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <!-- Circle badge -->
+                                                <circle cx="12" cy="12" r="10" fill="#3B82F6"/>
+                                                <!-- White border -->
+                                                <circle cx="12" cy="12" r="10" stroke="white" stroke-width="1.5" fill="none"/>
+                                                <!-- Checkmark -->
+                                                <path d="M8.5 12L10.5 14L15.5 9" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                            </svg>
+                                            <!-- Tooltip -->
+                                            <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-1.5 px-1.5 py-1 bg-gray-900 text-white text-[10px] font-medium rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap pointer-events-none z-[60]">
+                                                Email Verified
+                                                <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 -mt-0.5">
+                                                    <div class="w-1 h-1 bg-gray-900 rotate-45"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
                                 <p class="text-xs text-gray-500 truncate">{{ Auth::user()->email }}</p>
                             </div>
                             <div class="flex-shrink-0">
