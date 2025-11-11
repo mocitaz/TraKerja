@@ -926,9 +926,9 @@
             <div class="flex items-center justify-between h-16">
                 <!-- Brand -->
                 <a href="{{ url('/') }}" class="flex items-center space-x-2 group">
-                    <div class="w-8 h-8 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
-                        <span class="text-white font-bold text-sm">T</span>
-                    </div>
+                    <img src="{{ asset('images/icon.png') }}"
+                         alt="TraKerja Logo"
+                         class="w-8 h-8 transform group-hover:scale-110 transition-transform duration-300">
                     <span class="text-xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
                         TraKerja
                     </span>
@@ -1659,17 +1659,17 @@
             <div class="space-y-4">
                 <!-- FAQ 1 -->
                 <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
-                    <button class="faq-question w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-gray-900">Apakah TraKerja benar-benar gratis?</span>
-                        <svg class="w-5 h-5 text-gray-500 faq-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
-                    <div class="faq-answer hidden px-6 pb-4">
-                        <p class="text-sm text-gray-600">Ya, TraKerja 100% gratis tanpa biaya tersembunyi. Semua fitur premium seperti Kanban Board, Analytics Dashboard, Smart Reminders, dan Goal Tracking tersedia untuk semua pengguna tanpa perlu upgrade berbayar.</p>
-                    </div>
+             <button class="faq-question w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleFaq(this)">
+                <span class="font-semibold text-gray-900">Apakah TraKerja benar-benar gratis?</span>
+                <svg class="w-5 h-5 text-gray-500 faq-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+                </button>
+                <div class="faq-answer hidden px-6 pb-4">
+                    <p class="text-sm text-gray-600">TraKerja menawarkan paket gratis dengan fitur dasar. Namun, untuk mengakses fitur premium seperti Kanban Board, Analytics Dashboard, Smart Reminders, dan Goal Tracking, pengguna perlu berlangganan ke paket berbayar.</p>
                 </div>
-                
+            </div>
+
                 <!-- FAQ 2 -->
                 <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
                     <button class="faq-question w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleFaq(this)">
@@ -1679,7 +1679,7 @@
                         </svg>
                     </button>
                     <div class="faq-answer hidden px-6 pb-4">
-                        <p class="text-sm text-gray-600">Sangat mudah! Cukup daftar akun gratis (perlu verifikasi email), lalu tambahkan lamaran kerja Anda. TraKerja akan otomatis mengorganisir semua lamaran dalam Kanban Board dan mengingatkan Anda untuk follow-up. Setup hanya butuh 2 menit!</p>
+                        <p class="text-sm text-gray-600">Sangat mudah! Cukup daftar akun gratis, lalu tambahkan lamaran kerja Anda. TraKerja akan otomatis mengorganisir semua lamaran dalam Kanban Board dan mengingatkan Anda untuk follow-up. Setup hanya butuh 2 menit!</p>
                     </div>
                 </div>
                 
