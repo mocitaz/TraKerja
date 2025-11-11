@@ -21,53 +21,47 @@
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-50 flex flex-col">
+        <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow-sm border-b border-gray-200">
-                    <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+            @if (isset($header))
+                <header class="bg-white shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
-            @endisset
+            @endif
 
             <!-- Page Content -->
-            <main class="flex-1">
+            <main>
                 {{ $slot }}
             </main>
-
-            <!-- Footer -->
-            <x-footer />
         </div>
-        
+
         @livewireScripts
         
+        {{-- Fallback: Load Livewire from CDN if local file fails --}}
         <script>
-        // Reset body overflow when modal closes
-        document.addEventListener('livewire:init', () => {
-            Livewire.on('reset-body-overflow', () => {
-                document.body.style.overflow = 'auto';
-            });
-        });
-        
-        // Close notification panel on page navigation
-        document.addEventListener('DOMContentLoaded', function() {
-            // Listen for navigation events
-            const links = document.querySelectorAll('a[href]');
-            links.forEach(link => {
-                link.addEventListener('click', function() {
-                    // Close notification panel if open
-                    if (window.Livewire) {
-                        const notificationComponent = window.Livewire.find(document.querySelector('[wire\\:id]').getAttribute('wire:id'));
-                        if (notificationComponent && notificationComponent.get('showNotifications')) {
-                            notificationComponent.call('closePanel');
-                        }
+        // Wait a bit for Livewire to load, then check
+        setTimeout(function() {
+            if (typeof window.Livewire === 'undefined') {
+                console.warn('Livewire not loaded from local assets, loading from CDN...');
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/livewire@3/dist/livewire.min.js';
+                script.onerror = function() {
+                    console.error('Failed to load Livewire from CDN');
+                };
+                script.onload = function() {
+                    console.log('Livewire loaded from CDN successfully');
+                    // Re-initialize Livewire after CDN load
+                    if (window.Livewire && typeof window.Livewire.start === 'function') {
+                        window.Livewire.start();
                     }
-                });
-            });
-        });
+                };
+                document.head.appendChild(script);
+            }
+        }, 1000);
         </script>
     </body>
 </html>
