@@ -409,4 +409,14 @@ Route::get('/livewire/{file}', function ($file) {
         ->header('Cache-Control', 'public, max-age=31536000');
 })->where('file', '.*');
 
+// Test Error Pages (Development/Testing only)
+// Remove or comment these routes in production
+Route::get('/test/error/{code}', function ($code) {
+    $allowedCodes = [404, 403, 500, 419, 429, 503];
+    if (!in_array((int)$code, $allowedCodes)) {
+        abort(404, 'Error code not found');
+    }
+    abort((int)$code);
+})->where('code', '[0-9]+')->name('test.error');
+
 require __DIR__.'/auth.php';
