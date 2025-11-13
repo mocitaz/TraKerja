@@ -926,38 +926,40 @@
             <div class="flex items-center justify-between h-16">
                 <!-- Brand -->
                 <a href="{{ url('/') }}" class="flex items-center space-x-2 group">
-                    <img src="{{ asset('images/icon.png') }}"
-                         alt="TraKerja Logo"
-                         class="w-8 h-8 transform group-hover:scale-110 transition-transform duration-300">
+                    <img src="{{ asset('images/icon.png') }}" 
+                         alt="TraKerja" 
+                         class="w-8 h-8 transform group-hover:scale-110 transition-transform duration-300"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="w-8 h-8 bg-[#d983e4] rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300" style="display: none;">
+                        <span class="text-white font-bold text-sm">T</span>
+                    </div>
                     <span class="text-xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
                         TraKerja
                     </span>
                 </a>
 
                 <!-- Auth Links -->
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2 sm:space-x-3">
                     @if (Route::has('login'))
                         @auth
                             <a href="{{ url('/tracker') }}" 
-                               class="relative px-5 py-2.5 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white rounded-xl text-sm font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 overflow-hidden group">
-                                <span class="relative z-10 flex items-center">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                                    </svg>
-                                    Dashboard
-                                </span>
-                                <div class="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                               class="px-3 sm:px-4 py-2 bg-[#4e71c5] text-white rounded-lg text-xs sm:text-sm font-semibold hover:bg-[#3d5ba3] hover:shadow-md transition-all duration-200 flex items-center">
+                                <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1 sm:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                                <span class="hidden sm:inline">Dashboard</span>
+                                <span class="sm:hidden">Dash</span>
                             </a>
                         @else
                             <a href="{{ route('login') }}" 
-                               class="text-gray-700 hover:text-[#d983e4] text-sm font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50">
+                               class="px-3 sm:px-4 py-2 text-gray-700 hover:text-[#4e71c5] text-xs sm:text-sm font-medium transition-colors duration-200 rounded-lg hover:bg-gray-50">
                                 Login
                             </a>
                             @if (Route::has('register'))
                                 <a href="{{ route('register') }}" 
-                                   class="relative px-5 py-2.5 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white rounded-xl text-sm font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 overflow-hidden group">
-                                    <span class="relative z-10">Daftar Gratis</span>
-                                    <div class="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                                   class="px-3 sm:px-4 py-2 bg-[#4e71c5] text-white rounded-lg text-xs sm:text-sm font-semibold hover:bg-[#3d5ba3] hover:shadow-md transition-all duration-200">
+                                    <span class="hidden sm:inline">Daftar Gratis</span>
+                                    <span class="sm:hidden">Daftar</span>
                                 </a>
                             @endif
                         @endauth
@@ -995,11 +997,11 @@
                     
                     <!-- Subheading -->
                     <p class="text-base sm:text-lg md:text-xl text-gray-600 mb-8 max-w-xl mx-auto lg:mx-0">
-                        Platform tracking job application yang 
-                        <span class="font-semibold text-[#d983e4]">simple</span>, 
+                        Platform pelacakan lamaran kerja yang 
+                        <span class="font-semibold text-[#d983e4]">sederhana</span>, 
                         <span class="font-semibold text-[#4e71c5]">efektif</span>, dan 
-                        <span class="font-semibold text-gray-900">powerful</span>
-                        untuk job seeker Indonesia
+                        <span class="font-semibold text-gray-900">handal</span>
+                        untuk pencari kerja Indonesia
                     </p>
                     
                     <!-- CTA Buttons -->
@@ -1053,7 +1055,7 @@
                             <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            <span class="font-medium">100% Gratis</span>
+                            <span class="font-medium">Mulai Gratis</span>
                         </div>
                     </div>
                 </div>
@@ -1088,7 +1090,7 @@
                     Fitur-Fitur <span class="text-[#d983e4]">TraKerja</span>
                 </h2>
                 <p class="text-gray-600 max-w-2xl mx-auto">
-                    Tools sederhana tapi <span class="font-semibold text-[#d983e4]">powerful</span> untuk mengelola pencarian kerja Anda
+                    Alat sederhana tapi <span class="font-semibold text-[#d983e4]">handal</span> untuk mengelola pencarian kerja Anda
                 </p>
             </div>
             
@@ -1096,8 +1098,8 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Feature 1 -->
                 <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#d983e4]/50 transition-colors">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="mb-4">
+                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2z"></path>
                         </svg>
                     </div>
@@ -1107,8 +1109,8 @@
                 
                 <!-- Feature 2 -->
                 <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#4e71c5]/50 transition-colors">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#4e71c5] to-[#d983e4] rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="mb-4">
+                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                     </div>
@@ -1118,8 +1120,8 @@
                 
                 <!-- Feature 3 -->
                 <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#d983e4]/50 transition-colors">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="mb-4">
+                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
@@ -1129,8 +1131,8 @@
                 
                 <!-- Feature 4 -->
                 <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#4e71c5]/50 transition-colors">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#4e71c5] to-[#d983e4] rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="mb-4">
+                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
@@ -1140,8 +1142,8 @@
                 
                 <!-- Feature 5 -->
                 <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#d983e4]/50 transition-colors">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="mb-4">
+                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
@@ -1151,8 +1153,8 @@
                 
                 <!-- Feature 6 -->
                 <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#4e71c5]/50 transition-colors">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#4e71c5] to-[#d983e4] rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="mb-4">
+                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                         </svg>
                     </div>
@@ -1163,157 +1165,29 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="py-24 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
-        <!-- Background -->
-        <div class="absolute inset-0 cyber-grid opacity-[0.02] hidden md:block"></div>
-        
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
-            <div class="text-center mb-16">
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#4e71c5]/10 text-xs font-semibold text-[#4e71c5] mb-4">
-                    <span class="w-1.5 h-1.5 bg-[#4e71c5] rounded-full pulse-animation"></span>
-                    User Stories
-                </div>
-                <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-4">
-                    Kata <span class="gradient-text">Pengguna</span> TraKerja
-                </h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Feedback dari job seeker yang sudah menggunakan TraKerja
-                </p>
-            </div>
-            
-            <!-- Testimonials Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Testimonial 1 -->
-                <div class="testimonial-card group bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="relative z-10">
-                        <div class="flex items-center mb-6">
-                            <div class="w-14 h-14 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                S
-                            </div>
-                            <div class="ml-4">
-                                <div class="font-bold text-gray-900 text-lg group-hover:text-primary-600 transition-colors duration-300">Sarah</div>
-                                <div class="text-sm text-gray-500 font-medium">Fresh Graduate</div>
-                            </div>
-                        </div>
-                        <div class="flex mb-4">
-                            {!! str_repeat('<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>', 5) !!}
-                        </div>
-                        <p class="text-gray-600 leading-relaxed italic">"TraKerja membantu saya mengorganisir lamaran kerja dengan baik. Sekarang saya tahu mana yang sudah di-apply dan mana yang perlu di-follow up. Sangat membantu untuk fresh graduate seperti saya!"</p>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 2 -->
-                <div class="testimonial-card group bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-secondary-500/20 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-secondary-500/5 to-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="relative z-10">
-                        <div class="flex items-center mb-6">
-                            <div class="w-14 h-14 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                A
-                            </div>
-                            <div class="ml-4">
-                                <div class="font-bold text-gray-900 text-lg group-hover:text-secondary-500 transition-colors duration-300">Ahmad</div>
-                                <div class="text-sm text-gray-500 font-medium">Career Switcher</div>
-                            </div>
-                        </div>
-                        <div class="flex mb-4">
-                            {!! str_repeat('<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>', 5) !!}
-                        </div>
-                        <p class="text-gray-600 leading-relaxed italic">"Platform yang simple tapi efektif. Analytics-nya membantu saya tahu platform mana yang paling sering memanggil interview. Perfect untuk career switcher!"</p>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 3 -->
-                <div class="testimonial-card group bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100/50 hover:border-primary-600/20 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="relative z-10">
-                        <div class="flex items-center mb-6">
-                            <div class="w-14 h-14 bg-gradient-to-br from-primary-600 to-[#1e40af] rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                M
-                            </div>
-                            <div class="ml-4">
-                                <div class="font-bold text-gray-900 text-lg group-hover:text-primary-600 transition-colors duration-300">Maya</div>
-                                <div class="text-sm text-gray-500 font-medium">Job Seeker</div>
-                            </div>
-                        </div>
-                        <div class="flex mb-4">
-                            {!! str_repeat('<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>', 5) !!}
-                        </div>
-                        <p class="text-gray-600 leading-relaxed italic">"Goal tracking-nya bagus banget! Membantu saya tetap konsisten apply kerja setiap minggu. Akhirnya dapat kerja juga! Terima kasih TraKerja!"</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section class="py-12 bg-white">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-10">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-                    Cara Kerja <span class="text-[#d983e4]">TraKerja</span>
-                </h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    Hanya butuh 3 langkah sederhana untuk mengorganisir pencarian kerja Anda
-                </p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Step 1 -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-xl flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
-                        1
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Daftar & Setup</h3>
-                    <p class="text-sm text-gray-600">Buat akun gratis dalam 2 menit. Tidak perlu verifikasi email yang ribet, langsung bisa pakai!</p>
-                </div>
-                
-                <!-- Step 2 -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#4e71c5] to-[#d983e4] rounded-xl flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
-                        2
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Tambah Lamaran</h3>
-                    <p class="text-sm text-gray-600">Input detail lamaran kerja Anda. TraKerja akan otomatis mengorganisir dan mengingatkan follow-up.</p>
-                </div>
-                
-                <!-- Step 3 -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-xl flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
-                        3
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Track & Analyze</h3>
-                    <p class="text-sm text-gray-600">Pantau progress dan analisis performa lamaran Anda. Dapatkan insight untuk strategi yang lebih efektif.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Problem Solution Section -->
-    <section class="py-20 bg-gradient-to-br from-gray-50 via-white to-slate-50 relative overflow-hidden">
+    <section class="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 via-white to-slate-50 relative overflow-hidden">
         <!-- Background Elements -->
         <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-10 hidden md:block"></div>
         <div class="absolute top-10 right-10 w-20 h-20 bg-gradient-to-r from-primary-600/20 to-secondary-500/20 rounded-full blur-xl floating-animation hidden md:block"></div>
         <div class="absolute bottom-10 left-10 w-16 h-16 bg-gradient-to-r from-secondary-500/20 to-primary-600/20 rounded-full blur-xl floating-animation hidden md:block" style="animation-delay: 2s;"></div>
         
-        <div class="relative z-10 max-w-6xl mx-auto px-4">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
                 <!-- Problem Side -->
-                <div class="space-y-8">
+                <div class="space-y-6 md:space-y-8">
                     <div>
-                        <div class="inline-flex items-center px-4 py-2 rounded-full bg-red-100 text-red-700 text-sm font-medium mb-4">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-red-100 text-red-700 text-xs sm:text-sm font-medium mb-4">
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
                             </svg>
                             Masalah Umum
                         </div>
-                        <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
                             Bingung Kelola <span class="text-red-600">Lamaran Kerja?</span>
                         </h2>
-                        <p class="text-lg text-gray-600 mb-8">
-                            Job seeker seringkali kesulitan mengorganisir lamaran kerja yang sudah dikirim. 
+                        <p class="text-sm sm:text-base md:text-lg text-gray-600 mb-6 md:mb-8">
+                            Pencari kerja seringkali kesulitan mengorganisir lamaran kerja yang sudah dikirim. 
                             Akibatnya banyak yang terlewat follow-up atau lupa status lamaran.
                         </p>
                     </div>
@@ -1355,20 +1229,20 @@
                 </div>
                 
                 <!-- Solution Side -->
-                <div class="space-y-8">
+                <div class="space-y-6 md:space-y-8">
                     <div>
-                        <div class="inline-flex items-center px-4 py-2 rounded-full bg-green-100 text-green-700 text-sm font-medium mb-4">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-green-100 text-green-700 text-xs sm:text-sm font-medium mb-4">
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             Solusi TraKerja
                         </div>
-                        <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
                             <span class="gradient-text">TraKerja</span> Solusinya!
                         </h2>
-                        <p class="text-lg text-gray-600 mb-8">
-                            Platform tracking job application yang dirancang khusus untuk job seeker Indonesia. 
-                            Simple, efektif, dan mudah digunakan.
+                        <p class="text-sm sm:text-base md:text-lg text-gray-600 mb-6 md:mb-8">
+                            Platform pelacakan lamaran kerja yang dirancang khusus untuk pencari kerja Indonesia. 
+                            Sederhana, efektif, dan mudah digunakan.
                         </p>
                     </div>
                     
@@ -1412,33 +1286,33 @@
     </section>
 
     <!-- Benefits Section -->
-    <section class="py-12 bg-white">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-10">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+    <section class="py-12 sm:py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8 md:mb-10">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-3">
                     Mengapa Pilih <span class="text-[#d983e4]">TraKerja?</span>
                 </h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    Platform yang dirancang khusus untuk job seeker Indonesia dengan fitur-fitur yang benar-benar dibutuhkan
+                <p class="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
+                    Platform yang dirancang khusus untuk pencari kerja Indonesia dengan fitur-fitur yang benar-benar dibutuhkan
                 </p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Benefit 1 -->
                 <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#d983e4]/50 transition-colors">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="mb-4">
+                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">100% Gratis</h3>
-                    <p class="text-sm text-gray-600">Tidak ada biaya tersembunyi atau upgrade berbayar. Semua fitur premium tersedia untuk semua pengguna.</p>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Mulai Gratis, Upgrade Kapan Saja</h3>
+                    <p class="text-sm text-gray-600">Versi gratis sudah lengkap untuk kebutuhan tracking dasar. Upgrade ke Premium untuk fitur advanced seperti unlimited lamaran, advanced analytics, dan priority support.</p>
                 </div>
                 
                 <!-- Benefit 2 -->
                 <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#4e71c5]/50 transition-colors">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#4e71c5] to-[#d983e4] rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="mb-4">
+                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
@@ -1448,8 +1322,8 @@
                 
                 <!-- Benefit 3 -->
                 <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#d983e4]/50 transition-colors">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="mb-4">
+                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                         </svg>
                     </div>
@@ -1459,8 +1333,8 @@
                 
                 <!-- Benefit 4 -->
                 <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#4e71c5]/50 transition-colors">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#4e71c5] to-[#d983e4] rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="mb-4">
+                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                     </div>
@@ -1470,8 +1344,8 @@
                 
                 <!-- Benefit 5 -->
                 <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#d983e4]/50 transition-colors">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="mb-4">
+                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
@@ -1481,8 +1355,8 @@
                 
                 <!-- Benefit 6 -->
                 <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#4e71c5]/50 transition-colors">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#4e71c5] to-[#d983e4] rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="mb-4">
+                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
@@ -1493,24 +1367,126 @@
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section class="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+        <!-- Background -->
+        <div class="absolute inset-0 cyber-grid opacity-[0.02] hidden md:block"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center mb-8 md:mb-10">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-3">
+                    Kata <span class="text-[#d983e4]">Pengguna</span> TraKerja
+                </h2>
+                <p class="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
+                    Ulasan dari pencari kerja yang sudah menggunakan TraKerja
+                </p>
+            </div>
+            
+            <!-- Testimonials - Asymmetric Layout -->
+            <div class="space-y-6">
+                <!-- Testimonial 1 - Sarah (Left aligned with photo) -->
+                <div class="group relative bg-white rounded-2xl p-6 border border-gray-200 hover:border-[#d983e4]/50 transition-all duration-300 hover:shadow-lg">
+                    <div class="flex flex-col md:flex-row gap-5 items-start">
+                        <!-- Photo -->
+                        <div class="flex-shrink-0">
+                            <div class="relative">
+                                <img src="{{ asset('images/sarah.png') }}" 
+                                     alt="Sarah" 
+                                     class="w-20 h-20 rounded-2xl object-cover border-2 border-[#d983e4]/20 group-hover:border-[#d983e4] transition-colors shadow-md">
+                                <div class="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-full flex items-center justify-center">
+                                    <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Content -->
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h3 class="font-bold text-gray-900 text-lg">Sarah</h3>
+                                <span class="text-xs px-2 py-1 bg-[#d983e4]/10 text-[#d983e4] rounded-full font-medium">Fresh Graduate</span>
+                            </div>
+                            <p class="text-sm text-gray-600 leading-relaxed">"TraKerja membantu saya mengorganisir lamaran kerja dengan baik. Sekarang saya tahu mana yang sudah di-apply dan mana yang perlu di-follow up. Sangat membantu untuk fresh graduate seperti saya!"</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 - Ahmad (Right aligned with photo) -->
+                <div class="group relative bg-white rounded-2xl p-6 border border-gray-200 hover:border-[#4e71c5]/50 transition-all duration-300 hover:shadow-lg md:ml-4 lg:ml-8">
+                    <div class="flex flex-col md:flex-row gap-5 items-start">
+                        <!-- Content -->
+                        <div class="flex-1 min-w-0 order-2 md:order-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h3 class="font-bold text-gray-900 text-lg">Ahmad</h3>
+                                <span class="text-xs px-2 py-1 bg-[#4e71c5]/10 text-[#4e71c5] rounded-full font-medium">Career Switcher</span>
+                            </div>
+                            <p class="text-sm text-gray-600 leading-relaxed">"Platform yang sederhana tapi efektif. Analytics-nya membantu saya tahu platform mana yang paling sering memanggil interview. Sempurna untuk yang ingin pindah karier!"</p>
+                        </div>
+                        <!-- Photo -->
+                        <div class="flex-shrink-0 order-1 md:order-2">
+                            <div class="relative">
+                                <img src="{{ asset('images/ahmad.png') }}" 
+                                     alt="Ahmad" 
+                                     class="w-20 h-20 rounded-2xl object-cover border-2 border-[#4e71c5]/20 group-hover:border-[#4e71c5] transition-colors shadow-md">
+                                <div class="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-[#4e71c5] to-[#d983e4] rounded-full flex items-center justify-center">
+                                    <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 - Maya (Left aligned with photo) -->
+                <div class="group relative bg-white rounded-2xl p-6 border border-gray-200 hover:border-[#d983e4]/50 transition-all duration-300 hover:shadow-lg">
+                    <div class="flex flex-col md:flex-row gap-5 items-start">
+                        <!-- Photo -->
+                        <div class="flex-shrink-0">
+                            <div class="relative">
+                                <img src="{{ asset('images/maya.png') }}" 
+                                     alt="Fakhri" 
+                                     class="w-20 h-20 rounded-2xl object-cover border-2 border-[#d983e4]/20 group-hover:border-[#d983e4] transition-colors shadow-md">
+                                <div class="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-full flex items-center justify-center">
+                                    <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Content -->
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h3 class="font-bold text-gray-900 text-lg">Fakhri</h3>
+                                <span class="text-xs px-2 py-1 bg-[#d983e4]/10 text-[#d983e4] rounded-full font-medium">Pencari Kerja</span>
+                            </div>
+                            <p class="text-sm text-gray-600 leading-relaxed">"Goal tracking-nya bagus banget! Membantu saya tetap konsisten apply kerja setiap minggu. Akhirnya dapat kerja juga! Terima kasih TraKerja!"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Photo Gallery Section -->
-    <section class="py-20 bg-gradient-to-br from-white via-gray-50 to-slate-50 relative overflow-hidden" id="gallery">
+    <section class="py-8 sm:py-10 md:py-12 bg-gradient-to-br from-white via-gray-50 to-slate-50 relative overflow-hidden" id="gallery">
         <!-- Background Elements -->
         <div class="absolute top-0 left-0 w-full h-full cyber-grid opacity-5 hidden md:block"></div>
         <div class="absolute top-20 right-20 w-40 h-40 bg-gradient-to-r from-primary-600/10 to-secondary-500/10 rounded-full blur-3xl floating-animation hidden md:block"></div>
         <div class="absolute bottom-20 left-20 w-32 h-32 bg-gradient-to-r from-secondary-500/10 to-primary-600/10 rounded-full blur-3xl floating-animation hidden md:block" style="animation-delay: 3s;"></div>
         
-        <div class="relative z-10 max-w-7xl mx-auto px-4">
-            <div class="text-center mb-16">
-                <div class="inline-flex items-center px-4 py-2 rounded-full glass-effect text-sm font-medium text-primary-600 mb-6">
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-6 md:mb-8">
+                <div class="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full glass-effect text-xs sm:text-sm font-medium text-primary-600 mb-3 md:mb-4">
                     <span class="w-2 h-2 bg-secondary-500 rounded-full mr-2 pulse-animation"></span>
                     Gallery
                 </div>
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-3">
                     TraKerja <span class="gradient-text">In Action</span>
                 </h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Lihat bagaimana TraKerja membantu job seeker Indonesia mengorganisir pencarian kerja mereka
+                <p class="text-xs sm:text-sm md:text-base text-gray-600 max-w-2xl mx-auto px-4">
+                    Lihat bagaimana TraKerja membantu pencari kerja Indonesia mengorganisir pencarian kerja mereka
                 </p>
             </div>
             
@@ -1518,10 +1494,10 @@
             <div class="flex justify-center">
                 <img src="{{ asset('images/image.png') }}" 
                      alt="TraKerja In Action" 
-                     class="w-full max-w-5xl h-auto rounded-2xl shadow-xl"
+                     class="w-full max-w-2xl md:max-w-3xl h-auto rounded-xl shadow-lg"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <!-- Fallback jika foto tidak ada -->
-                <div class="w-full max-w-5xl aspect-video bg-gradient-to-br from-[#d983e4]/20 to-[#4e71c5]/20 rounded-2xl flex items-center justify-center" style="display: none;">
+                <div class="w-full max-w-2xl md:max-w-3xl aspect-video bg-gradient-to-br from-[#d983e4]/20 to-[#4e71c5]/20 rounded-xl flex items-center justify-center" style="display: none;">
                     <p class="text-gray-500 text-sm">Tambahkan foto di: public/images/image.png</p>
                 </div>
             </div>
@@ -1567,158 +1543,270 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="py-20 hero-gradient relative overflow-hidden">
-        <!-- Advanced Background Elements -->
-        <div class="absolute inset-0 cyber-grid opacity-20 hidden md:block"></div>
-        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary-600/20 via-transparent to-secondary-500/20"></div>
-        <div class="absolute top-20 right-20 w-40 h-40 bg-white/10 rounded-full blur-3xl floating-animation hidden md:block"></div>
-        <div class="absolute bottom-20 left-20 w-32 h-32 bg-white/10 rounded-full blur-3xl floating-animation hidden md:block" style="animation-delay: 3s;"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-white/5 rounded-full blur-3xl pulse-animation hidden md:block"></div>
-        
-        <div class="relative z-10 max-w-4xl mx-auto text-center px-4">
-            <!-- Animated Badge -->
-            <div class="inline-flex items-center px-6 py-3 rounded-full glass-effect text-sm font-medium text-white/90 mb-8 neon-glow">
-                <span class="w-3 h-3 bg-white rounded-full mr-3 pulse-animation"></span>
-                <span class="loading-dots">Ready to Transform Your Job Search</span>
+    <!-- How It Works Section -->
+    <section class="pt-12 sm:pt-16 pb-12 sm:pb-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-6 md:mb-8">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                    Cara Kerja <span class="text-[#d983e4]">TraKerja</span>
+                </h2>
+                <p class="text-xs sm:text-sm text-gray-600 px-4">
+                    Hanya butuh 3 langkah sederhana untuk mengorganisir pencarian kerja Anda
+                </p>
             </div>
             
-            <h2 class="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight">
-                Siap Mengorganisir Pencarian Kerja Anda?
-            </h2>
-            <p class="text-xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed">
-                Bergabunglah dengan job seeker Indonesia yang sudah menggunakan TraKerja. 
-                Mulai gratis dan rasakan perbedaannya dalam mengelola lamaran kerja Anda.
-            </p>
-            
-            @guest
-                <div class="flex flex-col sm:flex-row gap-6 justify-center mb-12">
-                    <a href="{{ route('register') }}" 
-                       class="cta-button bg-white text-[#d983e4] px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
-                        <span class="relative z-10 flex items-center justify-center">
-                            <svg class="w-6 h-6 mr-2 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
+                <!-- Left: Accordion Steps -->
+                <div class="space-y-3">
+                    <!-- Step 1 -->
+                    <div class="how-it-works-item bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-[#d983e4]/50 transition-all duration-300" style="margin-top: 0;">
+                        <button class="how-it-works-btn w-full px-5 py-4 text-left flex items-center justify-between group" data-step="1" onclick="toggleHowItWorks(this)">
+                            <div class="flex items-center gap-4">
+                                <span class="text-[#d983e4] font-bold text-3xl flex-shrink-0">01</span>
+                                <h3 class="font-semibold text-gray-900 text-base">Daftar & Setup</h3>
+                            </div>
+                            <svg class="w-5 h-5 text-gray-400 how-it-works-icon transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        Daftar Gratis Sekarang
-                        </span>
-                        <div class="absolute inset-0 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-                    </a>
-                    <a href="{{ route('login') }}" 
-                       class="cta-button border-2 border-white text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white hover:text-[#d983e4] transition-all duration-300 hover:shadow-xl relative overflow-hidden group">
-                        <span class="relative z-10 flex items-center justify-center">
-                            <svg class="w-6 h-6 mr-2 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+                        </button>
+                        <div class="how-it-works-content hidden px-5 pb-4 pl-16">
+                            <p class="text-sm text-gray-600 leading-relaxed">Buat akun gratis dalam 2 menit. Tidak perlu verifikasi email yang ribet, langsung bisa pakai!</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="how-it-works-item bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-[#4e71c5]/50 transition-all duration-300">
+                        <button class="how-it-works-btn w-full px-5 py-4 text-left flex items-center justify-between group" data-step="2" onclick="toggleHowItWorks(this)">
+                            <div class="flex items-center gap-4">
+                                <span class="text-[#4e71c5] font-bold text-3xl flex-shrink-0">02</span>
+                                <h3 class="font-semibold text-gray-900 text-base">Tambah Lamaran</h3>
+                            </div>
+                            <svg class="w-5 h-5 text-gray-400 how-it-works-icon transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        Login
-                        </span>
-                    </a>
+                        </button>
+                        <div class="how-it-works-content hidden px-5 pb-4 pl-16">
+                            <p class="text-sm text-gray-600 leading-relaxed">Input detail lamaran kerja Anda. TraKerja akan otomatis mengorganisir dan mengingatkan follow-up.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="how-it-works-item bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-[#d983e4]/50 transition-all duration-300">
+                        <button class="how-it-works-btn w-full px-5 py-4 text-left flex items-center justify-between group" data-step="3" onclick="toggleHowItWorks(this)">
+                            <div class="flex items-center gap-4">
+                                <span class="text-[#d983e4] font-bold text-3xl flex-shrink-0">03</span>
+                                <h3 class="font-semibold text-gray-900 text-base">Track & Analyze</h3>
+                            </div>
+                            <svg class="w-5 h-5 text-gray-400 how-it-works-icon transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="how-it-works-content hidden px-5 pb-4 pl-16">
+                            <p class="text-sm text-gray-600 leading-relaxed">Pantau progress dan analisis performa lamaran Anda. Dapatkan insight untuk strategi yang lebih efektif.</p>
+                        </div>
+                    </div>
                 </div>
-            @else
-                <a href="{{ url('/tracker') }}" 
-                   class="cta-button bg-white text-[#d983e4] px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 inline-block relative overflow-hidden group">
-                    <span class="relative z-10 flex items-center justify-center">
-                        <svg class="w-6 h-6 mr-2 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
-                    Buka Dashboard
-                    </span>
-                    <div class="absolute inset-0 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-                </a>
-            @endguest
-            
-            <!-- Enhanced Trust Indicators -->
-            <div class="flex flex-wrap items-center justify-center gap-8 text-white/80 text-sm">
-                <div class="flex items-center glass-effect px-4 py-2 rounded-full hover:scale-105 transition-all duration-300">
-                    <svg class="w-5 h-5 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span class="font-semibold">Setup dalam 2 Menit</span>
+                
+                <!-- Right: Visual Elements with Images -->
+                <div class="relative hidden lg:block" style="margin-top: 0; padding-top: 0;">
+                    <div class="relative" style="margin-top: 0;">
+                        <!-- Step 1 Image: Daftar & Setup (Default) -->
+                        <img id="how-it-works-img-1" 
+                             src="{{ asset('images/how-it-works-1.png') }}" 
+                             alt="Daftar & Setup" 
+                             class="how-it-works-image w-full h-auto object-contain transition-opacity duration-500 rounded-xl"
+                             style="opacity: 1; margin-top: 0; padding-top: 0;"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="w-full h-full flex items-center justify-center rounded-xl" style="display: none;">
+                            <p class="text-gray-400 text-sm text-center px-4">Tambahkan gambar di: public/images/how-it-works-1.png</p>
+                        </div>
+                        
+                        <!-- Step 2 Image: Tambah Lamaran -->
+                        <img id="how-it-works-img-2" 
+                             src="{{ asset('images/how-it-works-2.png') }}" 
+                             alt="Tambah Lamaran" 
+                             class="how-it-works-image absolute top-0 left-0 w-full h-auto object-contain transition-opacity duration-500 hidden rounded-xl"
+                             style="margin-top: 0; padding-top: 0;"
+                             onerror="this.style.display='none';">
+                        
+                        <!-- Step 3 Image: Track & Analyze -->
+                        <img id="how-it-works-img-3" 
+                             src="{{ asset('images/how-it-works-3.png') }}" 
+                             alt="Track & Analyze" 
+                             class="how-it-works-image absolute top-0 left-0 w-full h-auto object-contain transition-opacity duration-500 hidden rounded-xl"
+                             style="margin-top: 0; padding-top: 0;"
+                             onerror="this.style.display='none';">
+                    </div>
                 </div>
-                <div class="flex items-center glass-effect px-4 py-2 rounded-full hover:scale-105 transition-all duration-300">
-                    <svg class="w-5 h-5 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                    </svg>
-                    <span class="font-semibold">Data Aman & Privat</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-8 sm:py-10 bg-gradient-to-r from-[#4e71c5] to-[#d983e4] relative overflow-hidden mt-6 sm:mt-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl border border-white/20 p-5 sm:p-6 md:p-8">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
+                    <!-- Left: Text Content -->
+                    <div class="flex-1 text-center md:text-left">
+                        <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
+                            Siap Mengorganisir Pencarian Kerja Anda?
+                        </h2>
+                        <p class="text-white/90 text-xs sm:text-sm mb-3 md:mb-4">
+                            Bergabunglah dengan pencari kerja Indonesia yang sudah menggunakan TraKerja. Mulai gratis dan rasakan perbedaannya.
+                        </p>
+                        <!-- Trust Indicators - Compact -->
+                        <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 text-white/80 text-xs">
+                            <div class="flex items-center gap-1.5">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Setup 2 Menit</span>
+                            </div>
+                            <div class="w-1 h-1 bg-white/50 rounded-full"></div>
+                            <div class="flex items-center gap-1.5">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                </svg>
+                                <span>Data Aman & Privat</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right: Action Buttons -->
+                    <div class="flex-shrink-0">
+                        @guest
+                            <div class="flex flex-col sm:flex-row gap-2.5">
+                                <a href="{{ route('register') }}" 
+                                   class="bg-white text-[#4e71c5] px-5 py-2.5 rounded-lg font-semibold text-xs hover:shadow-lg transition-all duration-200 hover:scale-105 inline-flex items-center justify-center whitespace-nowrap">
+                                    <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                    Daftar Gratis
+                                </a>
+                                <a href="{{ route('login') }}" 
+                                   class="bg-white/10 backdrop-blur-sm border border-white/30 text-white px-5 py-2.5 rounded-lg font-semibold text-xs hover:bg-white/20 transition-all duration-200 inline-flex items-center justify-center whitespace-nowrap">
+                                    <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                                    </svg>
+                                    Login
+                                </a>
+                            </div>
+                        @else
+                            <a href="{{ url('/tracker') }}" 
+                               class="bg-white text-[#4e71c5] px-5 py-2.5 rounded-lg font-semibold text-xs hover:shadow-lg transition-all duration-200 hover:scale-105 inline-flex items-center justify-center whitespace-nowrap">
+                                <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                                Buka Dashboard
+                            </a>
+                        @endguest
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FAQ Section -->
-    <section class="py-12 bg-gray-50">
-        <div class="max-w-4xl mx-auto px-4">
-            <div class="text-center mb-10">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+    <section class="py-12 sm:py-16 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-6 md:mb-8">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
                     Pertanyaan <span class="text-[#d983e4]">Umum</span>
                 </h2>
-                <p class="text-gray-600">
+                <p class="text-xs sm:text-sm text-gray-600 px-4">
                     Jawaban untuk pertanyaan yang sering ditanyakan tentang TraKerja
                 </p>
             </div>
             
-            <div class="space-y-4">
+            <div class="space-y-3">
                 <!-- FAQ 1 -->
-                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
-             <button class="faq-question w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleFaq(this)">
-                <span class="font-semibold text-gray-900">Apakah TraKerja benar-benar gratis?</span>
-                <svg class="w-5 h-5 text-gray-500 faq-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-                </button>
-                <div class="faq-answer hidden px-6 pb-4">
-                    <p class="text-sm text-gray-600">TraKerja menawarkan paket gratis dengan fitur dasar. Namun, untuk mengakses fitur premium seperti Kanban Board, Analytics Dashboard, Smart Reminders, dan Goal Tracking, pengguna perlu berlangganan ke paket berbayar.</p>
-                </div>
-            </div>
-
-                <!-- FAQ 2 -->
-                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
-                    <button class="faq-question w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-gray-900">Bagaimana cara menggunakan TraKerja?</span>
-                        <svg class="w-5 h-5 text-gray-500 faq-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white border-l-4 border-[#4e71c5] rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
+                    <button class="faq-question w-full px-5 py-3.5 text-left flex items-center justify-between group" onclick="toggleFaq(this)">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-[#4e71c5] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span class="font-semibold text-gray-900 text-sm">Apakah TraKerja gratis?</span>
+                        </div>
+                        <svg class="w-4 h-4 text-gray-400 faq-icon transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-4">
-                        <p class="text-sm text-gray-600">Sangat mudah! Cukup daftar akun gratis, lalu tambahkan lamaran kerja Anda. TraKerja akan otomatis mengorganisir semua lamaran dalam Kanban Board dan mengingatkan Anda untuk follow-up. Setup hanya butuh 2 menit!</p>
+                    <div class="faq-answer hidden px-5 pb-3.5 pl-13">
+                        <p class="text-xs text-gray-600 leading-relaxed">Ya! TraKerja menawarkan paket <strong>Gratis</strong> yang sudah lengkap dengan fitur-fitur penting seperti Kanban Board, Smart Reminders, dan Goal Tracking untuk mengelola hingga 20 lamaran kerja. Untuk kebutuhan yang lebih advanced, Anda bisa upgrade ke <strong>Premium</strong> untuk mendapatkan unlimited lamaran, advanced analytics dengan insights mendalam, export data, dan priority support. Mulai gratis dulu, upgrade kapan saja sesuai kebutuhan Anda!</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ 2 -->
+                <div class="bg-white border-l-4 border-[#d983e4] rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
+                    <button class="faq-question w-full px-5 py-3.5 text-left flex items-center justify-between group" onclick="toggleFaq(this)">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-[#d983e4] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <span class="font-semibold text-gray-900 text-sm">Bagaimana cara menggunakan TraKerja?</span>
+                        </div>
+                        <svg class="w-4 h-4 text-gray-400 faq-icon transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer hidden px-5 pb-3.5 pl-13">
+                        <p class="text-xs text-gray-600 leading-relaxed">Sangat mudah! Cukup daftar akun gratis (tidak perlu verifikasi email), lalu tambahkan lamaran kerja Anda. TraKerja akan otomatis mengorganisir semua lamaran dalam Kanban Board dan mengingatkan Anda untuk follow-up. Setup hanya butuh 2 menit!</p>
                     </div>
                 </div>
                 
                 <!-- FAQ 3 -->
-                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
-                    <button class="faq-question w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-gray-900">Data saya aman di TraKerja?</span>
-                        <svg class="w-5 h-5 text-gray-500 faq-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white border-l-4 border-[#4e71c5] rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
+                    <button class="faq-question w-full px-5 py-3.5 text-left flex items-center justify-between group" onclick="toggleFaq(this)">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-[#4e71c5] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                            <span class="font-semibold text-gray-900 text-sm">Data saya aman di TraKerja?</span>
+                        </div>
+                        <svg class="w-4 h-4 text-gray-400 faq-icon transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-4">
-                        <p class="text-sm text-gray-600">Keamanan data adalah prioritas utama kami. Semua data Anda dienkripsi dengan teknologi end-to-end dan disimpan dengan aman. Kami juga melakukan backup otomatis untuk memastikan data Anda tidak hilang. Privasi Anda terjaga dan kami tidak akan membagikan data Anda ke pihak ketiga.</p>
+                    <div class="faq-answer hidden px-5 pb-3.5 pl-13">
+                        <p class="text-xs text-gray-600 leading-relaxed">Keamanan data adalah prioritas utama kami. Semua data Anda dienkripsi dengan teknologi end-to-end dan disimpan dengan aman. Kami juga melakukan backup otomatis untuk memastikan data Anda tidak hilang. Privasi Anda terjaga dan kami tidak akan membagikan data Anda ke pihak ketiga.</p>
                     </div>
                 </div>
                 
                 <!-- FAQ 4 -->
-                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
-                    <button class="faq-question w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-gray-900">Bisakah saya akses TraKerja dari berbagai device?</span>
-                        <svg class="w-5 h-5 text-gray-500 faq-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white border-l-4 border-[#d983e4] rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
+                    <button class="faq-question w-full px-5 py-3.5 text-left flex items-center justify-between group" onclick="toggleFaq(this)">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-[#d983e4] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                            </svg>
+                            <span class="font-semibold text-gray-900 text-sm">Bisakah saya akses TraKerja dari berbagai device?</span>
+                        </div>
+                        <svg class="w-4 h-4 text-gray-400 faq-icon transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-4">
-                        <p class="text-sm text-gray-600">Tentu saja! TraKerja menggunakan teknologi cloud yang memungkinkan Anda mengakses data dari mana saja dan kapan saja. Semua perubahan akan tersinkronisasi secara real-time di semua device dan browser Anda, baik dari laptop, tablet, maupun smartphone.</p>
+                    <div class="faq-answer hidden px-5 pb-3.5 pl-13">
+                        <p class="text-xs text-gray-600 leading-relaxed">Tentu saja! TraKerja menggunakan teknologi cloud yang memungkinkan Anda mengakses data dari mana saja dan kapan saja. Semua perubahan akan tersinkronisasi secara real-time di semua device dan browser Anda, baik dari laptop, tablet, maupun smartphone.</p>
                     </div>
                 </div>
                 
                 <!-- FAQ 5 -->
-                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
-                    <button class="faq-question w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-gray-900">Apa keuntungan menggunakan TraKerja dibanding spreadsheet?</span>
-                        <svg class="w-5 h-5 text-gray-500 faq-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white border-l-4 border-[#4e71c5] rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
+                    <button class="faq-question w-full px-5 py-3.5 text-left flex items-center justify-between group" onclick="toggleFaq(this)">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-[#4e71c5] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            <span class="font-semibold text-gray-900 text-sm">Apa keuntungan menggunakan TraKerja dibanding spreadsheet?</span>
+                        </div>
+                        <svg class="w-4 h-4 text-gray-400 faq-icon transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-4">
-                        <p class="text-sm text-gray-600">TraKerja dirancang khusus untuk tracking lamaran kerja dengan fitur-fitur yang tidak ada di spreadsheet biasa: Kanban Board visual untuk melihat progress, Analytics Dashboard untuk analisis performa, Smart Reminders otomatis untuk follow-up, Goal Tracking dengan streak counter, dan sinkronisasi real-time di semua device. Semua ini membuat proses tracking lebih efisien dan terorganisir.</p>
+                    <div class="faq-answer hidden px-5 pb-3.5 pl-13">
+                        <p class="text-xs text-gray-600 leading-relaxed">TraKerja dirancang khusus untuk tracking lamaran kerja dengan fitur-fitur yang tidak ada di spreadsheet biasa: Kanban Board visual untuk melihat progress, Analytics Dashboard untuk analisis performa, Smart Reminders otomatis untuk follow-up, Goal Tracking dengan streak counter, dan sinkronisasi real-time di semua device. Semua ini membuat proses tracking lebih efisien dan terorganisir.</p>
                     </div>
                 </div>
             </div>
@@ -1751,8 +1839,8 @@
                         </div>
                     </div>
                     <p class="text-gray-600 leading-relaxed text-sm">
-                        Platform tracking job application yang dirancang khusus untuk job seeker Indonesia. 
-                        Simple, efektif, dan mudah digunakan.
+                        Platform pelacakan lamaran kerja yang dirancang khusus untuk pencari kerja Indonesia. 
+                        Sederhana, efektif, dan mudah digunakan.
                     </p>
                 </div>
 
@@ -1796,7 +1884,7 @@
                 <div class="space-y-4">
                     <div>
                         <p class="text-sm text-gray-500 mb-1">Dikelola oleh</p>
-                        <p class="text-gray-900 font-semibold text-sm">PT Teknologi Transformasi Digital</p>
+                        <p class="text-gray-900 font-semibold text-sm">PT Teknalogi Transformasi Digital</p>
                     </div>
                     <div class="pt-3 border-t border-gray-200">
                         <p class="text-xs text-gray-500">
@@ -1810,7 +1898,7 @@
             <div class="mt-8 pt-6 border-t border-gray-200">
                 <div class="flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
                     <p class="text-sm text-gray-500 text-center md:text-left">
-                        For job seekers in Indonesia
+                        Untuk pencari kerja di Indonesia
                     </p>
                     <div class="flex items-center space-x-4">
                         <a href="https://www.instagram.com/teknalogi.id/" target="_blank" rel="noopener noreferrer" 
@@ -2253,6 +2341,79 @@
                 icon.style.transform = 'rotate(180deg)';
             }
         }
+
+        // How It Works Toggle Function
+        function toggleHowItWorks(button) {
+            if (!button) return;
+            
+            // Find the content div - try nextElementSibling first, then search by class
+            let content = button.nextElementSibling;
+            if (!content || !content.classList.contains('how-it-works-content')) {
+                const parent = button.closest('.how-it-works-item');
+                if (parent) {
+                    content = parent.querySelector('.how-it-works-content');
+                }
+            }
+            
+            if (!content) return;
+            
+            const icon = button.querySelector('.how-it-works-icon');
+            const step = button.getAttribute('data-step');
+            const isOpen = !content.classList.contains('hidden');
+            
+            // Close all accordions first
+            document.querySelectorAll('.how-it-works-content').forEach(item => {
+                item.classList.add('hidden');
+            });
+            document.querySelectorAll('.how-it-works-icon').forEach(item => {
+                item.style.transform = 'rotate(0deg)';
+            });
+            
+            // Toggle current item
+            if (isOpen) {
+                content.classList.add('hidden');
+                if (icon) icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.remove('hidden');
+                if (icon) icon.style.transform = 'rotate(180deg)';
+                
+                // Change image based on step
+                if (step) {
+                    changeHowItWorksImage(step);
+                }
+            }
+        }
+
+        // Change Image Function
+        function changeHowItWorksImage(step) {
+            // Hide all images with fade out
+            document.querySelectorAll('.how-it-works-image').forEach(img => {
+                img.style.opacity = '0';
+                setTimeout(() => {
+                    img.classList.add('hidden');
+                }, 250);
+            });
+            
+            // Show selected step image with fade in
+            setTimeout(() => {
+                const targetImg = document.getElementById(`how-it-works-img-${step}`);
+                if (targetImg) {
+                    targetImg.classList.remove('hidden');
+                    setTimeout(() => {
+                        targetImg.style.opacity = '1';
+                    }, 50);
+                }
+            }, 250);
+        }
+
+        // Initialize: Set default image (Step 1) on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const defaultImg = document.getElementById('how-it-works-img-1');
+            if (defaultImg) {
+                defaultImg.style.opacity = '1';
+                defaultImg.classList.remove('hidden');
+            }
+        });
     </script>
     </body>
 </html>

@@ -3,9 +3,15 @@
 namespace App\Livewire\Admin;
 
 use App\Models\User;
+use App\Mail\AiAnalyzerFreeTrialAnnouncementMail;
+use App\Mail\JobApplicationReminderMail;
+use App\Mail\MonthlyMotivationMail;
+use App\Mail\WelcomeMail;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class UserManagement extends Component
 {
@@ -19,6 +25,7 @@ class UserManagement extends Component
     
     public $showEditModal = false;
     public $showCreateAdminModal = false;
+    public $showSendEmailModal = false;
     public $editingUserId;
     public $editName;
     public $editEmail;
@@ -30,6 +37,12 @@ class UserManagement extends Component
     public $newAdminEmail;
     public $newAdminPassword;
     public $newAdminPasswordConfirmation;
+    
+    // Send Email properties
+    public $emailTargetUserId;
+    public $emailTargetUserName;
+    public $emailTargetUserEmail;
+    public $emailType = 'welcome';
     
     protected $listeners = ['refreshUsers' => '$refresh'];
     
@@ -235,6 +248,101 @@ class UserManagement extends Component
             'title' => 'Admin Created!',
             'message' => 'Admin user created successfully!',
         ]);
+    }
+    
+    public function openSendEmailModal($userId)
+    {
+        $user = User::findOrFail($userId);
+        
+        $this->emailTargetUserId = $user->id;
+        $this->emailTargetUserName = $user->name;
+        $this->emailTargetUserEmail = $user->email;
+        $this->emailType = 'welcome';
+        
+        $this->showSendEmailModal = true;
+    }
+    
+    public function closeSendEmailModal()
+    {
+        $this->showSendEmailModal = false;
+        $this->reset(['emailTargetUserId', 'emailTargetUserName', 'emailTargetUserEmail', 'emailType']);
+    }
+    
+    public function sendEmail()
+    {
+        $this->validate([
+            'emailType' => 'required|in:welcome,verification,ai_analyzer,job_reminder,monthly_motivation',
+        ]);
+        
+        $user = User::findOrFail($this->emailTargetUserId);
+        
+        try {
+            switch ($this->emailType) {
+                case 'welcome':
+                    Mail::to($user->email)->send(new WelcomeMail($user));
+                    break;
+                case 'verification':
+                    if (!$user->hasVerifiedEmail()) {
+                        $user->sendEmailVerificationNotification();
+                    } else {
+                        $this->dispatch('showNotification', [
+                            'type' => 'warning',
+                            'title' => 'Email Sudah Terverifikasi',
+                            'message' => 'User ini sudah memiliki email terverifikasi.',
+                        ]);
+                        return;
+                    }
+                    break;
+                case 'ai_analyzer':
+                    Mail::to($user->email)->send(new AiAnalyzerFreeTrialAnnouncementMail($user));
+                    break;
+                case 'job_reminder':
+                    Mail::to($user->email)->send(new JobApplicationReminderMail($user));
+                    break;
+                case 'monthly_motivation':
+                    Mail::to($user->email)->send(new MonthlyMotivationMail($user));
+                    break;
+            }
+            
+            Log::info('Admin sent email to user', [
+                'admin_id' => Auth::id(),
+                'admin_name' => Auth::user()->name,
+                'user_id' => $user->id,
+                'user_email' => $user->email,
+                'email_type' => $this->emailType,
+            ]);
+            
+            $this->closeSendEmailModal();
+            
+            $emailTypeNames = [
+                'welcome' => 'Welcome Email',
+                'verification' => 'Verification Email',
+                'ai_analyzer' => 'AI Analyzer Announcement',
+                'job_reminder' => 'Job Application Reminder',
+                'monthly_motivation' => 'Monthly Motivation',
+            ];
+            
+            $this->dispatch('showNotification', [
+                'type' => 'success',
+                'title' => 'Email Terkirim!',
+                'message' => $emailTypeNames[$this->emailType] . ' berhasil dikirim ke ' . $user->email,
+            ]);
+            
+        } catch (\Exception $e) {
+            Log::error('Failed to send email to user', [
+                'admin_id' => Auth::id(),
+                'user_id' => $user->id,
+                'user_email' => $user->email,
+                'email_type' => $this->emailType,
+                'error' => $e->getMessage(),
+            ]);
+            
+            $this->dispatch('showNotification', [
+                'type' => 'error',
+                'title' => 'Gagal Mengirim Email',
+                'message' => 'Error: ' . $e->getMessage(),
+            ]);
+        }
     }
     
     public function render()

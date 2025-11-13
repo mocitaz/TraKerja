@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Config;
 use Carbon\Carbon;
 
 class AppServiceProvider extends ServiceProvider
@@ -32,6 +33,10 @@ class AppServiceProvider extends ServiceProvider
                 URL::forceRootUrl($appUrl);
                 URL::forceScheme('https');
             }
+            
+            // Note: Livewire assets should be served as static files
+            // Files are in public_html/livewire/ and public_html/vendor/livewire/
+            // .htaccess will handle serving these files directly
         }
     }
 }

@@ -1,5 +1,128 @@
 <div>
     <div class="space-y-4">
+        <!-- Advanced Search and Filter Bar for Kanban -->
+        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] overflow-hidden">
+            <!-- Header with Toggle -->
+            <div class="p-3 sm:p-4 border-b border-gray-100">
+                <div class="flex items-center justify-between gap-3">
+                    <div class="flex-1">
+                        <!-- Search Input -->
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                            <input wire:model.live.debounce.300ms="search" 
+                                   type="text" 
+                                   placeholder="Search company, position, location..." 
+                                   class="block w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile: Advanced Filters Toggle -->
+                    <button wire:click="toggleAdvancedFilters" 
+                            class="sm:hidden px-3 py-2 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg transition-colors flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                        </svg>
+                        <span>Filters</span>
+                        @if($platformFilter || $careerLevelFilter || $recruitmentStageFilter || $locationFilter || $dateFromFilter || $dateToFilter)
+                            <span class="px-1.5 py-0.5 text-xs font-bold bg-purple-600 text-white rounded-full">{{ 
+                                ($platformFilter ? 1 : 0) + 
+                                ($careerLevelFilter ? 1 : 0) + 
+                                ($recruitmentStageFilter ? 1 : 0) + 
+                                ($locationFilter ? 1 : 0) + 
+                                ($dateFromFilter ? 1 : 0) + 
+                                ($dateToFilter ? 1 : 0) 
+                            }}</span>
+                        @endif
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters Panel (Collapsible on Mobile) -->
+            <div class="{{ $showAdvancedFilters ? 'block' : 'hidden' }} sm:block p-3 sm:p-4 space-y-3 sm:space-y-0 sm:space-x-3 sm:flex sm:flex-wrap sm:items-end border-t border-gray-100">
+                <!-- Quick Filters Row -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3 flex-1">
+                    <!-- Platform Filter -->
+                    <div class="col-span-2 sm:col-span-1">
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Platform</label>
+                        <select wire:model.live="platformFilter" 
+                                class="block w-full px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-xs sm:text-sm">
+                            <option value="">All Platforms</option>
+                            @foreach($platformOptions as $platform)
+                                <option value="{{ $platform }}">{{ $platform }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Career Level Filter -->
+                    <div class="col-span-2 sm:col-span-1">
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Level</label>
+                        <select wire:model.live="careerLevelFilter" 
+                                class="block w-full px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-xs sm:text-sm">
+                            <option value="">All Levels</option>
+                            @foreach($careerLevelOptions as $level)
+                                <option value="{{ $level }}">{{ $level }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Recruitment Stage Filter -->
+                    <div class="col-span-2 sm:col-span-1">
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Stage</label>
+                        <select wire:model.live="recruitmentStageFilter" 
+                                class="block w-full px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-xs sm:text-sm">
+                            <option value="">All Stages</option>
+                            @foreach($recruitmentStageOptions as $stage)
+                                <option value="{{ $stage }}">{{ $stage }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Location Filter -->
+                    <div class="col-span-2 sm:col-span-1">
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Location</label>
+                        <input wire:model.live.debounce.300ms="locationFilter" 
+                               type="text" 
+                               placeholder="City, Region..." 
+                               class="block w-full px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-xs sm:text-sm">
+                    </div>
+
+                    <!-- Date Range -->
+                    <div class="col-span-2 sm:col-span-2 grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">From</label>
+                            <input wire:model.live="dateFromFilter" 
+                                   type="date" 
+                                   class="block w-full px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-xs sm:text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">To</label>
+                            <input wire:model.live="dateToFilter" 
+                                   type="date" 
+                                   class="block w-full px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-xs sm:text-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex gap-2 pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-100">
+                    <button wire:click="clearFilters" 
+                            class="px-3 py-1.5 sm:py-2 text-xs sm:text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 border border-gray-200 rounded-lg transition-colors">
+                        Clear
+                    </button>
+                    @if($platformFilter || $careerLevelFilter || $recruitmentStageFilter || $locationFilter || $dateFromFilter || $dateToFilter)
+                        <button wire:click="toggleAdvancedFilters" 
+                                class="sm:hidden px-3 py-1.5 text-xs text-white bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors">
+                            Apply
+                        </button>
+                    @endif
+                </div>
+            </div>
+        </div>
+
         <!-- Modern Kanban Board -->
         <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
             <div class="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 snap-x snap-mandatory">

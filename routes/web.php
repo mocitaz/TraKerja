@@ -11,6 +11,7 @@ use App\Http\Controllers\JobApplicationImportExportController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AiAnalyzerController;
 use App\Http\Controllers\CvBuilderController;
+use App\Http\Controllers\LandingPagePhotoController;
 use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,16 @@ use App\Models\JobApplication;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+// Landing Page Photos (Public)
+Route::get('/api/landing-photos', [LandingPagePhotoController::class, 'index'])->name('landing-photos.index');
+
+// Landing Page Photos Management (Admin only)
+Route::middleware(['auth', 'verified'])->prefix('admin/landing-photos')->name('admin.landing-photos.')->group(function () {
+    Route::post('/upload', [LandingPagePhotoController::class, 'upload'])->name('upload');
+    Route::delete('/{id}', [LandingPagePhotoController::class, 'delete'])->name('delete');
+    Route::post('/update-order', [LandingPagePhotoController::class, 'updateOrder'])->name('update-order');
 });
 
 // Legal Pages
@@ -370,5 +381,32 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         return app(\App\Http\Controllers\Admin\EmailBlastController::class)->send($request);
     })->name('email-blast.send');
 });
+
+// Livewire assets fallback route (if static files don't work)
+Route::get('/livewire/{file}', function ($file) {
+    $allowedFiles = ['livewire.min.js', 'livewire.js', 'livewire.esm.js', 'manifest.json'];
+    
+    if (!in_array($file, $allowedFiles)) {
+        abort(404);
+    }
+    
+    $path = base_path('public_html/livewire/' . $file);
+    
+    // Fallback to public/vendor/livewire if not in public_html
+    if (!file_exists($path)) {
+        $path = public_path('vendor/livewire/' . $file);
+    }
+    
+    if (!file_exists($path)) {
+        abort(404);
+    }
+    
+    $content = file_get_contents($path);
+    $mimeType = str_ends_with($file, '.js') ? 'application/javascript' : 'application/json';
+    
+    return response($content, 200)
+        ->header('Content-Type', $mimeType)
+        ->header('Cache-Control', 'public, max-age=31536000');
+})->where('file', '.*');
 
 require __DIR__.'/auth.php';

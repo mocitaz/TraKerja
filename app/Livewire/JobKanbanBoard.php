@@ -15,6 +15,70 @@ class JobKanbanBoard extends Component
         'Declined',
         'Accepted'
     ];
+
+    public $platformOptions = [
+        '9cv9',
+        'Cake: Cari Lowongan',
+        'Dealls',
+        'Disnakerja.com',
+        'Email',
+        'Fiverr',
+        'Freelancer',
+        'Glassdoor',
+        'Glints',
+        'Google Forms',
+        'Indeed',
+        'JobStreet',
+        'Jobseeker App',
+        'JobsDB',
+        'Jora',
+        'Kalibrr',
+        'Karir.com',
+        'Karirhub (SIAPkerja)',
+        'KitaLulus',
+        'LinkedIn',
+        'Loker.id',
+        'Microsoft Forms',
+        'NusaCrowd',
+        'Pintarnya.com',
+        'SkillAcademy',
+        'SkillTrade',
+        'Talentics',
+        'Tech in Asia',
+        'Urbanhire',
+        'Website Company',
+        'Other'
+    ];
+
+    public $careerLevelOptions = [
+        'Intern',
+        'Full Time',
+        'Contract',
+        'MT',
+        'Freelance'
+    ];
+
+    public $recruitmentStageOptions = [
+        'Applied',
+        'Follow Up',
+        'Assessment Test',
+        'Psychotest',
+        'HR - Interview',
+        'User - Interview',
+        'LGD',
+        'Presentation Round',
+        'Offering',
+        'Not Processed'
+    ];
+    
+    public $search = '';
+    public $platformFilter = '';
+    public $careerLevelFilter = '';
+    public $recruitmentStageFilter = '';
+    public $locationFilter = '';
+    public $dateFromFilter = '';
+    public $dateToFilter = '';
+    public $showAdvancedFilters = false;
     
     // Track last update to prevent spam
     private $lastUpdateTime = [];
@@ -26,6 +90,57 @@ class JobKanbanBoard extends Component
         'status-updated' => '$refresh',
         'job-pinned' => '$refresh',
     ];
+
+    public function updatingSearch()
+    {
+        // Reset not needed for kanban
+    }
+
+    public function updatingPlatformFilter()
+    {
+        // Reset not needed for kanban
+    }
+
+    public function updatingCareerLevelFilter()
+    {
+        // Reset not needed for kanban
+    }
+
+    public function updatingRecruitmentStageFilter()
+    {
+        // Reset not needed for kanban
+    }
+
+    public function updatingLocationFilter()
+    {
+        // Reset not needed for kanban
+    }
+
+    public function updatingDateFromFilter()
+    {
+        // Reset not needed for kanban
+    }
+
+    public function updatingDateToFilter()
+    {
+        // Reset not needed for kanban
+    }
+
+    public function toggleAdvancedFilters()
+    {
+        $this->showAdvancedFilters = !$this->showAdvancedFilters;
+    }
+
+    public function clearFilters()
+    {
+        $this->search = '';
+        $this->platformFilter = '';
+        $this->careerLevelFilter = '';
+        $this->recruitmentStageFilter = '';
+        $this->locationFilter = '';
+        $this->dateFromFilter = '';
+        $this->dateToFilter = '';
+    }
 
     public function togglePin($jobId)
     {
@@ -122,9 +237,43 @@ class JobKanbanBoard extends Component
     public function render()
     {
         $statuses = collect($this->statusOptions)->map(function ($status) {
-            $jobApplications = JobApplication::where('user_id', auth()->id())
-                ->where('application_status', $status)
-                ->orderBy('is_pinned', 'desc') // Pinned items first
+            $query = JobApplication::where('user_id', auth()->id())
+                ->where('application_status', $status);
+
+            // Apply filters
+            if ($this->search) {
+                $query->where(function ($q) {
+                    $q->where('company_name', 'like', '%' . $this->search . '%')
+                      ->orWhere('position', 'like', '%' . $this->search . '%')
+                      ->orWhere('location', 'like', '%' . $this->search . '%');
+                });
+            }
+
+            if ($this->platformFilter) {
+                $query->where('platform', $this->platformFilter);
+            }
+
+            if ($this->careerLevelFilter) {
+                $query->where('career_level', $this->careerLevelFilter);
+            }
+
+            if ($this->recruitmentStageFilter) {
+                $query->where('recruitment_stage', $this->recruitmentStageFilter);
+            }
+
+            if ($this->locationFilter) {
+                $query->where('location', 'like', '%' . $this->locationFilter . '%');
+            }
+
+            if ($this->dateFromFilter) {
+                $query->whereDate('application_date', '>=', $this->dateFromFilter);
+            }
+
+            if ($this->dateToFilter) {
+                $query->whereDate('application_date', '<=', $this->dateToFilter);
+            }
+
+            $jobApplications = $query->orderBy('is_pinned', 'desc') // Pinned items first
                 ->orderBy('application_date', 'desc')
                 ->get();
 

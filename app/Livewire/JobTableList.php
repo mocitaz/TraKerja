@@ -18,9 +18,13 @@ class JobTableList extends Component
     public $platformFilter = '';
     public $careerLevelFilter = '';
     public $recruitmentStageFilter = '';
+    public $locationFilter = '';
+    public $dateFromFilter = '';
+    public $dateToFilter = '';
     public $sortField = 'application_date';
     public $sortDirection = 'desc';
     public $perPage = 20;
+    public $showAdvancedFilters = false;
 
     public $statusOptions = [
         'On Process',
@@ -89,6 +93,9 @@ class JobTableList extends Component
         'platformFilter' => ['except' => ''],
         'careerLevelFilter' => ['except' => ''],
         'recruitmentStageFilter' => ['except' => ''],
+        'locationFilter' => ['except' => ''],
+        'dateFromFilter' => ['except' => ''],
+        'dateToFilter' => ['except' => ''],
         'sortField' => ['except' => 'application_date'],
         'sortDirection' => ['except' => 'desc'],
         'perPage' => ['except' => 20],
@@ -126,9 +133,29 @@ class JobTableList extends Component
         $this->resetPage();
     }
 
+    public function updatingLocationFilter()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingDateFromFilter()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingDateToFilter()
+    {
+        $this->resetPage();
+    }
+
     public function updatingPerPage()
     {
         $this->resetPage();
+    }
+
+    public function toggleAdvancedFilters()
+    {
+        $this->showAdvancedFilters = !$this->showAdvancedFilters;
     }
 
     public function clearFilters()
@@ -138,6 +165,9 @@ class JobTableList extends Component
         $this->platformFilter = '';
         $this->careerLevelFilter = '';
         $this->recruitmentStageFilter = '';
+        $this->locationFilter = '';
+        $this->dateFromFilter = '';
+        $this->dateToFilter = '';
         $this->resetPage();
     }
 
@@ -264,6 +294,18 @@ class JobTableList extends Component
 
         if ($this->recruitmentStageFilter) {
             $query->where('recruitment_stage', $this->recruitmentStageFilter);
+        }
+
+        if ($this->locationFilter) {
+            $query->where('location', 'like', '%' . $this->locationFilter . '%');
+        }
+
+        if ($this->dateFromFilter) {
+            $query->whereDate('application_date', '>=', $this->dateFromFilter);
+        }
+
+        if ($this->dateToFilter) {
+            $query->whereDate('application_date', '<=', $this->dateToFilter);
         }
 
         $jobApplications = $query->orderBy('is_pinned', 'desc') // Pinned items first

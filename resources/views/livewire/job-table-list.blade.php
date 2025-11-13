@@ -1,43 +1,68 @@
 <div>
-    <div class="space-y-6">
-        <!-- Compact Search and Filter Bar -->
-        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4">
-            <div class="space-y-3">
-                <!-- First Row: Search and Items Per Page -->
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <!-- Search Input -->
+    <div class="space-y-4 sm:space-y-6">
+        <!-- Advanced Search and Filter Bar -->
+        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] overflow-hidden">
+            <!-- Header with Toggle -->
+            <div class="p-3 sm:p-4 border-b border-gray-100">
+                <div class="flex items-center justify-between gap-3">
                     <div class="flex-1">
+                        <!-- Search Input -->
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                                 </svg>
                             </div>
-                            <input wire:model.live="search" 
+                            <input wire:model.live.debounce.300ms="search" 
                                    type="text" 
-                                   placeholder="Search by company, position, location..." 
+                                   placeholder="Search company, position, location..." 
                                    class="block w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
                         </div>
                     </div>
+                    
+                    <!-- Mobile: Advanced Filters Toggle -->
+                    <button wire:click="toggleAdvancedFilters" 
+                            class="sm:hidden px-3 py-2 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg transition-colors flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                        </svg>
+                        <span>Filters</span>
+                        @if($statusFilter || $platformFilter || $careerLevelFilter || $recruitmentStageFilter || $locationFilter || $dateFromFilter || $dateToFilter)
+                            <span class="px-1.5 py-0.5 text-xs font-bold bg-purple-600 text-white rounded-full">{{ 
+                                ($statusFilter ? 1 : 0) + 
+                                ($platformFilter ? 1 : 0) + 
+                                ($careerLevelFilter ? 1 : 0) + 
+                                ($recruitmentStageFilter ? 1 : 0) + 
+                                ($locationFilter ? 1 : 0) + 
+                                ($dateFromFilter ? 1 : 0) + 
+                                ($dateToFilter ? 1 : 0) 
+                            }}</span>
+                        @endif
+                    </button>
+                </div>
+            </div>
 
-                    <!-- Items Per Page -->
-                    <div class="sm:w-32">
-                        <select wire:model.live="perPage" 
-                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
-                            <option value="10">10 per page</option>
-                            <option value="20">20 per page</option>
-                            <option value="50">50 per page</option>
-                            <option value="100">100 per page</option>
+            <!-- Filters Panel (Collapsible on Mobile) -->
+            <div class="{{ $showAdvancedFilters ? 'block' : 'hidden' }} sm:block p-4 border-t border-gray-100">
+                <!-- Main Filters Row -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 mb-3">
+                    <!-- Status Filter -->
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1.5">Status</label>
+                        <select wire:model.live="statusFilter" 
+                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
+                            <option value="">All Status</option>
+                            @foreach($statusOptions as $status)
+                                <option value="{{ $status }}">{{ $status }}</option>
+                            @endforeach
                         </select>
                     </div>
-                </div>
 
-                <!-- Second Row: Additional Filters -->
-                <div class="flex flex-col sm:flex-row gap-3">
                     <!-- Platform Filter -->
-                    <div class="sm:w-48">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1.5">Platform</label>
                         <select wire:model.live="platformFilter" 
-                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
+                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
                             <option value="">All Platforms</option>
                             @foreach($platformOptions as $platform)
                                 <option value="{{ $platform }}">{{ $platform }}</option>
@@ -46,10 +71,11 @@
                     </div>
 
                     <!-- Career Level Filter -->
-                    <div class="sm:w-48">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1.5">Level</label>
                         <select wire:model.live="careerLevelFilter" 
-                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
-                            <option value="">All Career Levels</option>
+                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
+                            <option value="">All Levels</option>
                             @foreach($careerLevelOptions as $level)
                                 <option value="{{ $level }}">{{ $level }}</option>
                             @endforeach
@@ -57,9 +83,10 @@
                     </div>
 
                     <!-- Recruitment Stage Filter -->
-                    <div class="sm:w-48">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1.5">Stage</label>
                         <select wire:model.live="recruitmentStageFilter" 
-                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
+                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
                             <option value="">All Stages</option>
                             @foreach($recruitmentStageOptions as $stage)
                                 <option value="{{ $stage }}">{{ $stage }}</option>
@@ -67,30 +94,76 @@
                         </select>
                     </div>
 
-                    <!-- Status Filter -->
-                    <div class="sm:w-48">
-                        <select wire:model.live="statusFilter" 
-                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
-                            <option value="">All App Status</option>
-                            @foreach($statusOptions as $status)
-                                <option value="{{ $status }}">{{ $status }}</option>
-                            @endforeach
+                    <!-- Location Filter -->
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1.5">Location</label>
+                        <input wire:model.live.debounce.300ms="locationFilter" 
+                               type="text" 
+                               placeholder="City, Region..." 
+                               class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
+                    </div>
+
+                    <!-- Items Per Page (Desktop) -->
+                    <div class="hidden sm:block">
+                        <label class="block text-xs font-medium text-gray-700 mb-1.5">Per Page</label>
+                        <select wire:model.live="perPage" 
+                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
                         </select>
                     </div>
 
-                    <!-- Clear Filters Button -->
-                    <div class="sm:w-32">
+                    <!-- Date From -->
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1.5">From Date</label>
+                        <input wire:model.live="dateFromFilter" 
+                               type="date" 
+                               class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
+                    </div>
+
+                    <!-- Date To -->
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1.5">To Date</label>
+                        <input wire:model.live="dateToFilter" 
+                               type="date" 
+                               class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
+                    </div>
+                </div>
+
+                <!-- Action Buttons Row -->
+                <div class="flex items-center justify-between gap-3 pt-3 border-t border-gray-100">
+                    <div class="flex items-center gap-2">
                         <button wire:click="clearFilters" 
-                                class="w-full px-3 py-2 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 border border-gray-200 rounded-lg transition-colors">
+                                class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 border border-gray-200 rounded-lg transition-colors">
                             Clear Filters
                         </button>
+                        @if($statusFilter || $platformFilter || $careerLevelFilter || $recruitmentStageFilter || $locationFilter || $dateFromFilter || $dateToFilter)
+                            <button wire:click="toggleAdvancedFilters" 
+                                    class="sm:hidden px-4 py-2 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors">
+                                Apply
+                            </button>
+                        @endif
+                    </div>
+                    
+                    <!-- Mobile: Items Per Page -->
+                    <div class="sm:hidden">
+                        <label class="block text-xs font-medium text-gray-700 mb-1.5">Per Page</label>
+                        <select wire:model.live="perPage" 
+                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
                     </div>
                 </div>
             </div>
         </div>
 
-    <!-- Compact Table -->
-    <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] overflow-x-auto">
+        <!-- Desktop Table View -->
+        <div class="hidden sm:block bg-white rounded-lg shadow-sm border border-[#E9ECEF] overflow-x-auto">
         <div class="inline-block min-w-full">
         <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
@@ -279,7 +352,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="10" class="px-6 py-24 text-center">
+                            <td colspan="11" class="px-6 py-24 text-center">
                                 <div class="flex flex-col items-center justify-center min-h-[300px]">
                                     <svg class="w-16 h-16 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -298,6 +371,111 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+        </div>
+
+        <!-- Mobile Table View (Compact) -->
+        <div class="sm:hidden bg-white rounded-lg shadow-sm border border-[#E9ECEF] overflow-x-auto">
+            <div class="inline-block min-w-full">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-2 py-2 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                Company
+                            </th>
+                            <th scope="col" class="px-2 py-2 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                Status
+                            </th>
+                            <th scope="col" class="px-2 py-2 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                Stage
+                            </th>
+                            <th scope="col" class="px-2 py-2 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-100">
+                        @forelse($jobApplications as $index => $job)
+                            <tr class="{{ $index % 2 == 0 ? 'bg-white' : 'bg-gray-50' }} hover:bg-gray-100 transition-colors duration-200 group cursor-pointer {{ $job->is_pinned ? 'bg-purple-50/50' : '' }}" onclick="window.location.href='{{ route('jobs.show', $job) }}'">
+                                <td class="px-2 py-2 whitespace-nowrap">
+                                    <div class="flex items-center gap-1.5">
+                                        @if($job->is_pinned)
+                                            <svg class="w-3 h-3 text-purple-600 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M16 12V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v8c-1.66 0-3 1.34-3 3v1c0 .55.45 1 1 1h5v5c0 .55.45 1 1 1s1-.45 1-1v-5h5c.55 0 1-.45 1-1v-1c0-1.66-1.34-3-3-3z"/>
+                                            </svg>
+                                        @endif
+                                        <div class="min-w-0 flex-1">
+                                            <div class="text-xs font-semibold text-gray-900 truncate group-hover:text-primary-600 transition-colors">
+                                                {{ $job->company_name }}
+                                            </div>
+                                            <div class="text-xs text-gray-500 truncate">{{ $job->position }}</div>
+                                            <div class="text-xs text-gray-400 truncate">{{ $job->location }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-2 py-2 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold"
+                                          style="background-color: {{ $this->getStatusColor($job->application_status) }}20; color: {{ $this->getStatusColor($job->application_status) }};">
+                                        {{ $job->application_status ?? 'On Process' }}
+                                    </span>
+                                </td>
+                                <td class="px-2 py-2 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                                        {{ $job->recruitment_stage ?? 'Applied' }}
+                                    </span>
+                                </td>
+                                <td class="px-2 py-2 whitespace-nowrap text-sm font-medium" onclick="event.stopPropagation();">
+                                    <div class="flex items-center gap-0.5">
+                                        <button wire:click="togglePin({{ $job->id }})" 
+                                                class="p-1 rounded transition-colors flex-shrink-0 @if($job->is_pinned) text-purple-600 bg-purple-100 hover:bg-purple-200 @else text-gray-400 hover:text-purple-600 hover:bg-purple-50 @endif"
+                                                onclick="event.stopPropagation();"
+                                                title="{{ $job->is_pinned ? 'Unpin' : 'Pin' }}">
+                                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M16 12V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v8c-1.66 0-3 1.34-3 3v1c0 .55.45 1 1 1h5v5c0 .55.45 1 1 1s1-.45 1-1v-5h5c.55 0 1-.45 1-1v-1c0-1.66-1.34-3-3-3z"/>
+                                            </svg>
+                                        </button>
+                                        <button wire:click="edit({{ $job->id }})"
+                                                class="p-1 text-blue-600 hover:bg-blue-50 rounded transition-colors flex-shrink-0"
+                                                onclick="event.stopPropagation(); event.preventDefault(); window.dispatchEvent(new CustomEvent('edit-job', { detail: { jobId: {{ $job->id }} } }));"
+                                                title="Edit">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                            </svg>
+                                        </button>
+                                        <button type="button" 
+                                                class="p-1 text-red-600 hover:bg-red-50 rounded transition-colors flex-shrink-0"
+                                                onclick="event.stopPropagation(); openDeleteModal({{ $job->id }}, '{{ addslashes($job->company_name) }}', '{{ addslashes($job->position) }}')"
+                                                title="Delete">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="px-4 py-12 text-center">
+                                    <div class="flex flex-col items-center justify-center">
+                                        <svg class="w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg>
+                                        <h3 class="text-sm font-medium text-gray-900 mb-1">No job applications found</h3>
+                                        <p class="text-xs text-gray-500 mb-4">Try adjusting your search</p>
+                                        <button onclick="openJobModal()" class="inline-flex items-center px-3 py-1.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-xs">
+                                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                            Add New
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
         <!-- Modern Pagination -->
         @if($jobApplications->hasPages())
@@ -315,10 +493,9 @@
                 </div>
             </div>
         @endif
-        </div>
     </div>
 
-        <!-- Delete Confirmation Modal -->
+    <!-- Delete Confirmation Modal -->
         <div id="deleteModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-[70] transition-all duration-300">
             <div class="flex items-center justify-center min-h-screen p-4">
                 <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-95" id="deleteModalContent">
@@ -361,9 +538,8 @@
             </div>
         </div>
     </div>
-</div>
 
-<script>
+    <script>
 let currentDeleteJobId = null;
 let currentDeleteJobCompany = '';
 let currentDeleteJobPosition = '';
@@ -438,3 +614,4 @@ document.addEventListener('keydown', function(e) {
     }
 });
 </script>
+</div>
