@@ -7,9 +7,9 @@
         }
         
         .gradient-animated {
-            background: linear-gradient(120deg, #6b46c1, #9333ea, #4e71c5, #d983e4);
-            background-size: 300% 300%;
-            animation: gradientFlow 15s ease infinite;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #667eea 100%);
+            background-size: 400% 400%;
+            animation: gradientFlow 20s ease infinite;
         }
         
         .glass-morphism {
@@ -37,94 +37,97 @@
     <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20 flex">
         <!-- Left Side - Branding -->
         <div class="hidden lg:flex lg:w-1/2 gradient-animated relative overflow-hidden">
-            <!-- Animated Background Elements -->
-            <div class="absolute top-10 left-8 w-72 h-72 bg-white/5 rounded-full mix-blend-multiply filter blur-2xl animate-pulse"></div>
-            <div class="absolute top-32 right-16 w-48 h-48 bg-white/8 rounded-full mix-blend-multiply filter blur-xl animate-bounce" style="animation-duration: 3s;"></div>
-            <div class="absolute bottom-20 left-20 w-64 h-64 bg-white/6 rounded-full mix-blend-multiply filter blur-2xl animate-pulse" style="animation-delay: 1s;"></div>
-            <div class="absolute bottom-32 right-8 w-56 h-56 bg-white/4 rounded-full mix-blend-multiply filter blur-xl animate-bounce" style="animation-duration: 4s; animation-delay: 2s;"></div>
+            <!-- Animated Background Elements - More Compact -->
+            <div class="absolute top-8 left-6 w-56 h-56 bg-white/6 rounded-full mix-blend-overlay filter blur-3xl animate-pulse"></div>
+            <div class="absolute top-24 right-12 w-40 h-40 bg-white/8 rounded-full mix-blend-overlay filter blur-2xl animate-pulse" style="animation-duration: 4s; animation-delay: 1s;"></div>
+            <div class="absolute bottom-16 left-16 w-48 h-48 bg-white/5 rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-24 right-6 w-36 h-36 bg-white/7 rounded-full mix-blend-overlay filter blur-2xl animate-pulse" style="animation-duration: 5s; animation-delay: 0.5s;"></div>
             
-            <!-- Floating Geometric Shapes -->
-            <div class="absolute top-24 right-24 w-4 h-4 bg-white/30 rounded-full animate-ping"></div>
-            <div class="absolute top-40 left-32 w-3 h-3 bg-white/40 rounded-full animate-ping" style="animation-delay: 0.5s;"></div>
-            <div class="absolute bottom-40 right-40 w-5 h-5 bg-white/25 rounded-full animate-ping" style="animation-delay: 1.5s;"></div>
-            <div class="absolute bottom-24 left-16 w-2 h-2 bg-white/35 rounded-full animate-ping" style="animation-delay: 2.5s;"></div>
+            <!-- Floating Geometric Shapes - Subtle -->
+            <div class="absolute top-20 right-20 w-3 h-3 bg-white/40 rounded-full animate-ping" style="animation-duration: 3s;"></div>
+            <div class="absolute top-36 left-28 w-2.5 h-2.5 bg-white/35 rounded-full animate-ping" style="animation-duration: 4s; animation-delay: 1s;"></div>
+            <div class="absolute bottom-32 right-32 w-3.5 h-3.5 bg-white/30 rounded-full animate-ping" style="animation-duration: 3.5s; animation-delay: 2s;"></div>
             
-            <!-- Gradient Overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+            <!-- Gradient Overlay - Subtle -->
+            <div class="absolute inset-0 bg-gradient-to-br from-black/10 via-transparent to-black/5"></div>
             
-            <div class="relative z-10 flex flex-col justify-center p-12 text-white">
-                <!-- Logo Section -->
-                <div class="mb-10">
-                    <div class="flex items-center space-x-5 mb-6">
+            <div class="relative z-10 flex flex-col justify-center p-8 xl:p-12 text-white">
+                <!-- Logo Section - Compact -->
+                <div class="mb-8">
+                    <div class="flex items-center space-x-4 mb-4">
                         <div class="relative">
-                            <div class="absolute inset-0 bg-white/20 rounded-3xl blur-lg"></div>
-                            <div class="w-20 h-20 rounded-3xl bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30 shadow-2xl">
+                            <div class="absolute inset-0 bg-white/25 rounded-2xl blur-md"></div>
+                            <div class="relative w-16 h-16 rounded-2xl bg-white/25 backdrop-blur-md flex items-center justify-center border border-white/40 shadow-xl">
                                 <img src="{{ asset('images/icon.png') }}" 
                                      alt="TraKerja Logo" 
-                                     class="w-12 h-12"
+                                     class="w-10 h-10"
                                      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                                <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6"></path>
                                 </svg>
                             </div>
                         </div>
-                        <div>
-                            <h1 class="text-5xl font-black mb-3 bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent drop-shadow-lg">TraKerja</h1>
-                            <p class="text-white/90 text-xl font-medium">Smart Tracking for Job Seekers</p>
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-3 mb-1.5">
+                                <h1 class="text-4xl xl:text-5xl font-black bg-gradient-to-r from-white via-white/95 to-white/85 bg-clip-text text-transparent drop-shadow-lg">TraKerja</h1>
+                                <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-white/15 backdrop-blur-sm border border-white/25 hover:bg-white/20 hover:border-white/35 transition-all duration-300 group">
+                                    <img src="{{ asset('images/teknalogi-logo.png') }}" 
+                                         alt="Teknalogi Logo" 
+                                         class="h-4 w-auto opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                                         onerror="this.style.display='none';">
+                                    <span class="text-white/85 text-[10px] xl:text-xs font-medium tracking-wide group-hover:text-white transition-colors duration-300">
+                                        powered by <span class="font-semibold">Teknalogi</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-white/90 text-base xl:text-lg font-medium">Smart Tracking for Job Seekers</p>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Welcome Section -->
-                <div class="mb-10">
-                    <h2 class="text-4xl font-bold mb-4 drop-shadow-lg">Join TraKerja</h2>
-                    <p class="text-white/90 text-xl leading-relaxed">Start your journey with the most intelligent job tracking platform</p>
+                <!-- Welcome Section - Compact -->
+                <div class="mb-6">
+                    <h2 class="text-3xl xl:text-4xl font-bold mb-2 drop-shadow-lg">Join TraKerja</h2>
+                    <p class="text-white/85 text-base xl:text-lg leading-relaxed">Start your journey with the most intelligent job tracking platform</p>
                 </div>
                 
-                <!-- Enhanced Features -->
-                <div class="space-y-6">
-                    <div class="flex items-center space-x-4 group">
-                        <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:bg-white/30 transition-all duration-300 group-hover:scale-110">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <!-- Enhanced Features - Compact Grid -->
+                <div class="space-y-3">
+                    <div class="flex items-start space-x-3 group p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer">
+                        <div class="w-10 h-10 bg-gradient-to-br from-white/25 to-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:from-white/35 group-hover:to-white/25 transition-all duration-300 flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
                         </div>
-                        <div>
-                            <h3 class="text-white font-semibold text-lg">Centralized Tracking</h3>
-                            <p class="text-white/80">Manage all applications in one powerful dashboard</p>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-white font-semibold text-base mb-0.5">Centralized Tracking</h3>
+                            <p class="text-white/75 text-sm leading-snug">Manage all applications in one powerful dashboard</p>
                         </div>
                     </div>
                     
-                    <div class="flex items-center space-x-4 group">
-                        <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:bg-white/30 transition-all duration-300 group-hover:scale-110">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="flex items-start space-x-3 group p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer">
+                        <div class="w-10 h-10 bg-gradient-to-br from-white/25 to-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:from-white/35 group-hover:to-white/25 transition-all duration-300 flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                             </svg>
                         </div>
-                        <div>
-                            <h3 class="text-white font-semibold text-lg">Visual Kanban Board</h3>
-                            <p class="text-white/80">Drag and drop interface for seamless workflow</p>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-white font-semibold text-base mb-0.5">Visual Kanban Board</h3>
+                            <p class="text-white/75 text-sm leading-snug">Drag and drop interface for seamless workflow</p>
                         </div>
                     </div>
                     
-                    <div class="flex items-center space-x-4 group">
-                        <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:bg-white/30 transition-all duration-300 group-hover:scale-110">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="flex items-start space-x-3 group p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer">
+                        <div class="w-10 h-10 bg-gradient-to-br from-white/25 to-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:from-white/35 group-hover:to-white/25 transition-all duration-300 flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                             </svg>
                         </div>
-                        <div>
-                            <h3 class="text-white font-semibold text-lg">Smart Analytics</h3>
-                            <p class="text-white/80">Get insights that help you land your dream job</p>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-white font-semibold text-base mb-0.5">Smart Analytics</h3>
+                            <p class="text-white/75 text-sm leading-snug">Get insights that help you land your dream job</p>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Bottom Decoration -->
-                <div class="mt-12 flex items-center space-x-2">
-                    <div class="w-2 h-2 bg-white/60 rounded-full animate-pulse"></div>
-                    <div class="w-2 h-2 bg-white/40 rounded-full animate-pulse" style="animation-delay: 0.2s;"></div>
-                    <div class="w-2 h-2 bg-white/60 rounded-full animate-pulse" style="animation-delay: 0.4s;"></div>
                 </div>
             </div>
         </div>
@@ -134,21 +137,19 @@
             <div class="w-full max-w-md">
                 <!-- Mobile Logo -->
                 <div class="lg:hidden text-center mb-8">
-                    <div class="flex items-center justify-center space-x-3 mb-4">
-                        <div class="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                            <img src="{{ asset('images/icon.png') }}" 
-                                 alt="TraKerja Logo" 
-                                 class="w-8 h-8"
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <h1 class="text-2xl font-bold text-gray-900">TraKerja</h1>
-                            <p class="text-gray-600 text-sm">Smart Tracking for Job Seekers</p>
+                    <div class="flex items-center justify-center space-x-2 mb-1">
+                        <h1 class="text-2xl font-bold text-gray-900">TraKerja</h1>
+                        <div class="flex items-center space-x-1.5 px-2 py-0.5 rounded-md bg-gray-100/80 backdrop-blur-sm border border-gray-200/50 hover:bg-gray-100 transition-all duration-300 group">
+                            <img src="{{ asset('images/teknalogi-logo.png') }}" 
+                                 alt="Teknalogi Logo" 
+                                 class="h-3.5 w-auto opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                                 onerror="this.style.display='none';">
+                            <span class="text-gray-600 text-[10px] font-medium tracking-wide group-hover:text-gray-700 transition-colors duration-300">
+                                powered by <span class="font-semibold">Teknalogi</span>
+                            </span>
                         </div>
                     </div>
+                    <p class="text-gray-600 text-sm">Smart Tracking for Job Seekers</p>
                 </div>
 
                 <!-- Form Card with Enhanced Glassmorphism -->
@@ -356,10 +357,10 @@
                     <!-- Submit Button -->
                     <button type="submit" 
                             onclick="return validateRegistration()"
-                            class="w-full flex justify-center items-center py-4 px-6 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-gradient-to-r from-primary-600 to-secondary-500 hover:shadow-2xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                            class="w-full flex justify-center items-center py-3 px-5 border border-transparent rounded-lg shadow-md text-sm font-semibold text-white bg-gradient-to-r from-primary-600 via-primary-500 to-secondary-500 hover:from-primary-700 hover:via-primary-600 hover:to-secondary-600 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500/50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-md relative overflow-hidden group"
                             disabled>
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                        <svg class="w-4 h-4 mr-2 group-hover:rotate-90 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
                         </svg>
                         Create Account
                     </button>
@@ -370,45 +371,69 @@
                 // Modal functions
                 function openTerms() {
                     const modal = document.getElementById('termsModal');
-                    if (modal) {
+                    const modalContent = document.getElementById('termsModalContent');
+                    if (modal && modalContent) {
                         modal.classList.remove('hidden');
                         document.body.style.overflow = 'hidden';
+                        // Trigger animation
+                        setTimeout(() => {
+                            modalContent.classList.remove('scale-95', 'opacity-0');
+                            modalContent.classList.add('scale-100', 'opacity-100');
+                        }, 10);
                         startTermsReadingProgress();
                     }
                 }
                 
                 function openPrivacy() {
                     const modal = document.getElementById('privacyModal');
-                    if (modal) {
+                    const modalContent = document.getElementById('privacyModalContent');
+                    if (modal && modalContent) {
                         modal.classList.remove('hidden');
                         document.body.style.overflow = 'hidden';
+                        // Trigger animation
+                        setTimeout(() => {
+                            modalContent.classList.remove('scale-95', 'opacity-0');
+                            modalContent.classList.add('scale-100', 'opacity-100');
+                        }, 10);
                         startPrivacyReadingProgress();
                     }
                 }
                 
                 function closeTerms() {
                     const modal = document.getElementById('termsModal');
-                    if (modal) {
-                        modal.classList.add('hidden');
-                        document.body.style.overflow = 'auto';
+                    const modalContent = document.getElementById('termsModalContent');
+                    if (modal && modalContent) {
+                        modalContent.classList.remove('scale-100', 'opacity-100');
+                        modalContent.classList.add('scale-95', 'opacity-0');
+                        setTimeout(() => {
+                            modal.classList.add('hidden');
+                            document.body.style.overflow = 'auto';
+                        }, 300);
                     }
                 }
                 
                 function closePrivacy() {
                     const modal = document.getElementById('privacyModal');
-                    if (modal) {
-                        modal.classList.add('hidden');
-                        document.body.style.overflow = 'auto';
+                    const modalContent = document.getElementById('privacyModalContent');
+                    if (modal && modalContent) {
+                        modalContent.classList.remove('scale-100', 'opacity-100');
+                        modalContent.classList.add('scale-95', 'opacity-0');
+                        setTimeout(() => {
+                            modal.classList.add('hidden');
+                            document.body.style.overflow = 'auto';
+                        }, 300);
                     }
                 }
                 
                 // Reading progress functions
                 function startTermsReadingProgress() {
-                    const modal = document.getElementById('termsModal');
-                    const content = modal.querySelector('.max-h-\\[50vh\\]');
+                    const modalContent = document.getElementById('termsModalContent');
+                    const content = modalContent ? modalContent.querySelector('[class*="max-h"]') : null;
                     const progressBar = document.getElementById('termsProgressBar');
                     const progressText = document.getElementById('termsProgress');
                     const checkbox = document.getElementById('termsReadCheckbox');
+                    
+                    if (!content || !progressBar || !progressText || !checkbox) return;
                     
                     let scrollComplete = false;
                     let timeComplete = false;
@@ -445,11 +470,13 @@
                 }
                 
                 function startPrivacyReadingProgress() {
-                    const modal = document.getElementById('privacyModal');
-                    const content = modal.querySelector('.max-h-\\[50vh\\]');
+                    const modalContent = document.getElementById('privacyModalContent');
+                    const content = modalContent ? modalContent.querySelector('[class*="max-h"]') : null;
                     const progressBar = document.getElementById('privacyProgressBar');
                     const progressText = document.getElementById('privacyProgress');
                     const checkbox = document.getElementById('privacyReadCheckbox');
+                    
+                    if (!content || !progressBar || !progressText || !checkbox) return;
                     
                     let scrollComplete = false;
                     let timeComplete = false;
@@ -571,205 +598,7 @@
                 });
                 </script>
 
-                <!-- Professional Legal Modals -->
-                <!-- Terms of Service Modal -->
-                <div id="termsModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 overflow-y-auto">
-                    <div class="flex items-center justify-center min-h-screen p-4">
-                        <div class="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden border border-gray-100">
-                            <!-- Modal Header -->
-                            <div class="bg-gradient-to-r from-purple-400 to-purple-500 p-5 text-white relative">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center">
-                                        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mr-3">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <h3 class="text-xl font-bold">Terms of Service</h3>
-                                            <p class="text-white/90 text-sm">Please read and understand our service terms</p>
-                                        </div>
-                                    </div>
-                                    <button type="button" onclick="closeTerms()" class="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors relative z-10 cursor-pointer">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Modal Content -->
-                            <div class="p-6 max-h-[50vh] overflow-y-auto">
-                                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-5 mb-5 border border-indigo-100">
-                                    <div class="text-center">
-                                        <h4 class="text-lg font-bold text-gray-900 mb-2">Our Commitment to You</h4>
-                                        <p class="text-gray-700 text-sm leading-relaxed">
-                                            At TraKerja, we believe every job seeker deserves a secure, transparent, and trustworthy platform. 
-                                            We provide comprehensive job application tracking tools while building an ecosystem that supports 
-                                            your career success with unwavering integrity and data security.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="space-y-3">
-                                    <div class="bg-white border-l-4 border-blue-500 p-4 rounded-r-lg shadow-sm">
-                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">1. Service Agreement & Legal Framework</h5>
-                                        <p class="text-gray-600 text-xs">By using TraKerja, you accept and agree to be bound by these terms and conditions, governed by Indonesian Law No. 19 of 2016 concerning Electronic Information and Transactions (ITE Law) and other applicable Indonesian regulations.</p>
-                                    </div>
-
-                                    <div class="bg-white border-l-4 border-green-500 p-4 rounded-r-lg shadow-sm">
-                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">2. Data Protection & Privacy Rights</h5>
-                                        <p class="text-gray-600 text-xs">We comply with Indonesian Government Regulation No. 71 of 2019 concerning Electronic System and Transaction Operations, ensuring your personal data is protected with AES-256 encryption and never sold to third parties.</p>
-                                    </div>
-
-                                    <div class="bg-white border-l-4 border-purple-500 p-4 rounded-r-lg shadow-sm">
-                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">3. User Rights & Responsibilities</h5>
-                                        <p class="text-gray-600 text-xs">Under Article 26 of ITE Law, you have the right to access, correct, and delete your personal data. You are responsible for maintaining the confidentiality of your account credentials.</p>
-                                    </div>
-
-                                    <div class="bg-white border-l-4 border-orange-500 p-4 rounded-r-lg shadow-sm">
-                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">4. Content & Intellectual Property</h5>
-                                        <p class="text-gray-600 text-xs">All content you upload remains your property. We respect intellectual property rights as protected under Indonesian Law No. 28 of 2014 concerning Copyright.</p>
-                                    </div>
-
-                                    <div class="bg-white border-l-4 border-red-500 p-4 rounded-r-lg shadow-sm">
-                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">5. Prohibited Activities</h5>
-                                        <p class="text-gray-600 text-xs">Users must not engage in activities that violate ITE Law Article 27-29, including defamation, hate speech, or spreading false information. Violations may result in account termination.</p>
-                                    </div>
-
-                                    <div class="bg-white border-l-4 border-teal-500 p-4 rounded-r-lg shadow-sm">
-                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">6. Dispute Resolution</h5>
-                                        <p class="text-gray-600 text-xs">Any disputes will be resolved through Indonesian courts in accordance with Indonesian Civil Code and ITE Law provisions.</p>
-                                    </div>
-                                </div>
-
-                                <!-- Reading Progress -->
-                                <div class="mt-5">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-xs font-medium text-gray-600">Reading Progress</span>
-                                        <span id="termsProgress" class="text-xs font-medium text-purple-600">0%</span>
-                                    </div>
-                                    <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                        <div id="termsProgressBar" class="bg-gradient-to-r from-purple-400 to-purple-500 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Modal Footer -->
-                            <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="termsReadCheckbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded" disabled>
-                                    <label for="termsReadCheckbox" class="ml-2 text-xs text-gray-700">
-                                        I have read and understood the Terms of Service
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Privacy Policy Modal -->
-                <div id="privacyModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 overflow-y-auto">
-                    <div class="flex items-center justify-center min-h-screen p-4">
-                        <div class="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden border border-gray-100">
-                            <!-- Modal Header -->
-                            <div class="bg-gradient-to-r from-purple-400 to-purple-500 p-5 text-white relative">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center">
-                                        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mr-3">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <h3 class="text-xl font-bold">Privacy Policy</h3>
-                                            <p class="text-white/90 text-sm">Understand how we protect your privacy</p>
-                                        </div>
-                                    </div>
-                                    <button type="button" onclick="closePrivacy()" class="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors relative z-10 cursor-pointer">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Modal Content -->
-                            <div class="p-6 max-h-[50vh] overflow-y-auto">
-                                <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-5 mb-5 border border-emerald-100">
-                                    <div class="text-center">
-                                        <h4 class="text-lg font-bold text-gray-900 mb-2">Your Privacy is Our Priority</h4>
-                                        <p class="text-gray-700 text-sm leading-relaxed">
-                                            At TraKerja, we understand that your personal data is your most valuable asset. 
-                                            We not only protect your information but ensure that every byte of data is treated 
-                                            with respect, security, and complete transparency in compliance with Indonesian data protection laws.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="space-y-3">
-                                    <div class="bg-white border-l-4 border-red-500 p-4 rounded-r-lg shadow-sm">
-                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">1. Data Protection Compliance</h5>
-                                        <p class="text-gray-600 text-xs">We comply with Indonesian Government Regulation No. 71 of 2019 concerning Electronic System and Transaction Operations, ensuring your personal data is never sold or misused.</p>
-                                    </div>
-
-                                    <div class="bg-white border-l-4 border-blue-500 p-4 rounded-r-lg shadow-sm">
-                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">2. Encryption & Security Standards</h5>
-                                        <p class="text-gray-600 text-xs">Your data is protected with AES-256 encryption, meeting international security standards and Indonesian cybersecurity requirements under ITE Law Article 26.</p>
-                                    </div>
-
-                                    <div class="bg-white border-l-4 border-green-500 p-4 rounded-r-lg shadow-sm">
-                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">3. Data Subject Rights</h5>
-                                        <p class="text-gray-600 text-xs">Under ITE Law Article 26, you have the right to access, correct, delete, and port your personal data. We provide complete transparency in data processing activities.</p>
-                                    </div>
-
-                                    <div class="bg-white border-l-4 border-purple-500 p-4 rounded-r-lg shadow-sm">
-                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">4. Data Processing & Retention</h5>
-                                        <p class="text-gray-600 text-xs">We process your data only for legitimate business purposes as permitted under Indonesian Law No. 11 of 2008 concerning Electronic Information and Transactions.</p>
-                                    </div>
-
-                                    <div class="bg-white border-l-4 border-orange-500 p-4 rounded-r-lg shadow-sm">
-                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">5. Third-Party Data Sharing</h5>
-                                        <p class="text-gray-600 text-xs">We do not share your personal data with third parties except as required by Indonesian law or with your explicit consent, in compliance with ITE Law provisions.</p>
-                                    </div>
-
-                                    <div class="bg-white border-l-4 border-teal-500 p-4 rounded-r-lg shadow-sm">
-                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">6. Data Breach Notification</h5>
-                                        <p class="text-gray-600 text-xs">In case of any data breach, we will notify affected users within 72 hours as required by Indonesian Government Regulation No. 71 of 2019.</p>
-                                    </div>
-
-                                    <div class="bg-white border-l-4 border-indigo-500 p-4 rounded-r-lg shadow-sm">
-                                        <h5 class="font-semibold text-gray-900 mb-1 text-sm">7. Cross-Border Data Transfer</h5>
-                                        <p class="text-gray-600 text-xs">Any international data transfer complies with Indonesian regulations and ensures adequate protection of your personal data.</p>
-                                    </div>
-                                </div>
-
-                                <!-- Reading Progress -->
-                                <div class="mt-5">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-xs font-medium text-gray-600">Reading Progress</span>
-                                        <span id="privacyProgress" class="text-xs font-medium text-purple-600">0%</span>
-                                    </div>
-                                    <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                        <div id="privacyProgressBar" class="bg-gradient-to-r from-purple-400 to-purple-500 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Modal Footer -->
-                            <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="privacyReadCheckbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded" disabled>
-                                    <label for="privacyReadCheckbox" class="ml-2 text-xs text-gray-700">
-                                        I have read and understood the Privacy Policy
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                    <!-- Login Link -->
+                <!-- Login Link -->
                     <div class="mt-8 text-center">
                         <p class="text-sm text-gray-600">
                             Already have an account?
@@ -777,6 +606,210 @@
                                 Sign in here
                             </a>
                         </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professional Legal Modals -->
+    <!-- Terms of Service Modal -->
+    <div id="termsModal" class="fixed inset-0 z-[9999] hidden overflow-y-auto">
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300" onclick="closeTerms()"></div>
+        <!-- Modal Content Wrapper -->
+        <div class="fixed inset-0 flex items-center justify-center p-4 pointer-events-none">
+            <div class="relative bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden border border-gray-100 transform transition-all duration-300 scale-95 opacity-0 pointer-events-auto" id="termsModalContent">
+                <!-- Modal Header -->
+                <div class="bg-gradient-to-r from-purple-400 to-purple-500 p-5 text-white relative">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mr-3">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">Terms of Service</h3>
+                                <p class="text-white/90 text-sm">Please read and understand our service terms</p>
+                            </div>
+                        </div>
+                        <button type="button" onclick="closeTerms()" class="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors relative z-10 cursor-pointer">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modal Content -->
+                <div class="p-6 max-h-[50vh] overflow-y-auto">
+                    <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-5 mb-5 border border-indigo-100">
+                        <div class="text-center">
+                            <h4 class="text-lg font-bold text-gray-900 mb-2">Our Commitment to You</h4>
+                            <p class="text-gray-700 text-sm leading-relaxed">
+                                At TraKerja, we believe every job seeker deserves a secure, transparent, and trustworthy platform. 
+                                We provide comprehensive job application tracking tools while building an ecosystem that supports 
+                                your career success with unwavering integrity and data security.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="bg-white border-l-4 border-blue-500 p-4 rounded-r-lg shadow-sm">
+                            <h5 class="font-semibold text-gray-900 mb-1 text-sm">1. Service Agreement & Legal Framework</h5>
+                            <p class="text-gray-600 text-xs">By using TraKerja, you accept and agree to be bound by these terms and conditions, governed by Indonesian Law No. 19 of 2016 concerning Electronic Information and Transactions (ITE Law) and other applicable Indonesian regulations.</p>
+                        </div>
+
+                        <div class="bg-white border-l-4 border-green-500 p-4 rounded-r-lg shadow-sm">
+                            <h5 class="font-semibold text-gray-900 mb-1 text-sm">2. Data Protection & Privacy Rights</h5>
+                            <p class="text-gray-600 text-xs">We comply with Indonesian Government Regulation No. 71 of 2019 concerning Electronic System and Transaction Operations, ensuring your personal data is protected with AES-256 encryption and never sold to third parties.</p>
+                        </div>
+
+                        <div class="bg-white border-l-4 border-purple-500 p-4 rounded-r-lg shadow-sm">
+                            <h5 class="font-semibold text-gray-900 mb-1 text-sm">3. User Rights & Responsibilities</h5>
+                            <p class="text-gray-600 text-xs">Under Article 26 of ITE Law, you have the right to access, correct, and delete your personal data. You are responsible for maintaining the confidentiality of your account credentials.</p>
+                        </div>
+
+                        <div class="bg-white border-l-4 border-orange-500 p-4 rounded-r-lg shadow-sm">
+                            <h5 class="font-semibold text-gray-900 mb-1 text-sm">4. Content & Intellectual Property</h5>
+                            <p class="text-gray-600 text-xs">All content you upload remains your property. We respect intellectual property rights as protected under Indonesian Law No. 28 of 2014 concerning Copyright.</p>
+                        </div>
+
+                        <div class="bg-white border-l-4 border-red-500 p-4 rounded-r-lg shadow-sm">
+                            <h5 class="font-semibold text-gray-900 mb-1 text-sm">5. Prohibited Activities</h5>
+                            <p class="text-gray-600 text-xs">Users must not engage in activities that violate ITE Law Article 27-29, including defamation, hate speech, or spreading false information. Violations may result in account termination.</p>
+                        </div>
+
+                        <div class="bg-white border-l-4 border-teal-500 p-4 rounded-r-lg shadow-sm">
+                            <h5 class="font-semibold text-gray-900 mb-1 text-sm">6. Dispute Resolution</h5>
+                            <p class="text-gray-600 text-xs">Any disputes will be resolved through Indonesian courts in accordance with Indonesian Civil Code and ITE Law provisions.</p>
+                        </div>
+                    </div>
+
+                    <!-- Reading Progress -->
+                    <div class="mt-5">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-medium text-gray-600">Reading Progress</span>
+                            <span id="termsProgress" class="text-xs font-medium text-purple-600">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-1.5">
+                            <div id="termsProgressBar" class="bg-gradient-to-r from-purple-400 to-purple-500 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="termsReadCheckbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded" disabled>
+                        <label for="termsReadCheckbox" class="ml-2 text-xs text-gray-700">
+                            I have read and understood the Terms of Service
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="fixed inset-0 z-[9999] hidden overflow-y-auto">
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300" onclick="closePrivacy()"></div>
+        <!-- Modal Content Wrapper -->
+        <div class="fixed inset-0 flex items-center justify-center p-4 pointer-events-none">
+            <div class="relative bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden border border-gray-100 transform transition-all duration-300 scale-95 opacity-0 pointer-events-auto" id="privacyModalContent">
+                <!-- Modal Header -->
+                <div class="bg-gradient-to-r from-purple-400 to-purple-500 p-5 text-white relative">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mr-3">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">Privacy Policy</h3>
+                                <p class="text-white/90 text-sm">Understand how we protect your privacy</p>
+                            </div>
+                        </div>
+                        <button type="button" onclick="closePrivacy()" class="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors relative z-10 cursor-pointer">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modal Content -->
+                <div class="p-6 max-h-[50vh] overflow-y-auto">
+                    <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-5 mb-5 border border-emerald-100">
+                        <div class="text-center">
+                            <h4 class="text-lg font-bold text-gray-900 mb-2">Your Privacy is Our Priority</h4>
+                            <p class="text-gray-700 text-sm leading-relaxed">
+                                At TraKerja, we understand that your personal data is your most valuable asset. 
+                                We not only protect your information but ensure that every byte of data is treated 
+                                with respect, security, and complete transparency in compliance with Indonesian data protection laws.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="bg-white border-l-4 border-red-500 p-4 rounded-r-lg shadow-sm">
+                            <h5 class="font-semibold text-gray-900 mb-1 text-sm">1. Data Protection Compliance</h5>
+                            <p class="text-gray-600 text-xs">We comply with Indonesian Government Regulation No. 71 of 2019 concerning Electronic System and Transaction Operations, ensuring your personal data is never sold or misused.</p>
+                        </div>
+
+                        <div class="bg-white border-l-4 border-blue-500 p-4 rounded-r-lg shadow-sm">
+                            <h5 class="font-semibold text-gray-900 mb-1 text-sm">2. Encryption & Security Standards</h5>
+                            <p class="text-gray-600 text-xs">Your data is protected with AES-256 encryption, meeting international security standards and Indonesian cybersecurity requirements under ITE Law Article 26.</p>
+                        </div>
+
+                        <div class="bg-white border-l-4 border-green-500 p-4 rounded-r-lg shadow-sm">
+                            <h5 class="font-semibold text-gray-900 mb-1 text-sm">3. Data Subject Rights</h5>
+                            <p class="text-gray-600 text-xs">Under ITE Law Article 26, you have the right to access, correct, delete, and port your personal data. We provide complete transparency in data processing activities.</p>
+                        </div>
+
+                        <div class="bg-white border-l-4 border-purple-500 p-4 rounded-r-lg shadow-sm">
+                            <h5 class="font-semibold text-gray-900 mb-1 text-sm">4. Data Processing & Retention</h5>
+                            <p class="text-gray-600 text-xs">We process your data only for legitimate business purposes as permitted under Indonesian Law No. 11 of 2008 concerning Electronic Information and Transactions.</p>
+                        </div>
+
+                        <div class="bg-white border-l-4 border-orange-500 p-4 rounded-r-lg shadow-sm">
+                            <h5 class="font-semibold text-gray-900 mb-1 text-sm">5. Third-Party Data Sharing</h5>
+                            <p class="text-gray-600 text-xs">We do not share your personal data with third parties except as required by Indonesian law or with your explicit consent, in compliance with ITE Law provisions.</p>
+                        </div>
+
+                        <div class="bg-white border-l-4 border-teal-500 p-4 rounded-r-lg shadow-sm">
+                            <h5 class="font-semibold text-gray-900 mb-1 text-sm">6. Data Breach Notification</h5>
+                            <p class="text-gray-600 text-xs">In case of any data breach, we will notify affected users within 72 hours as required by Indonesian Government Regulation No. 71 of 2019.</p>
+                        </div>
+
+                        <div class="bg-white border-l-4 border-indigo-500 p-4 rounded-r-lg shadow-sm">
+                            <h5 class="font-semibold text-gray-900 mb-1 text-sm">7. Cross-Border Data Transfer</h5>
+                            <p class="text-gray-600 text-xs">Any international data transfer complies with Indonesian regulations and ensures adequate protection of your personal data.</p>
+                        </div>
+                    </div>
+
+                    <!-- Reading Progress -->
+                    <div class="mt-5">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-medium text-gray-600">Reading Progress</span>
+                            <span id="privacyProgress" class="text-xs font-medium text-purple-600">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-1.5">
+                            <div id="privacyProgressBar" class="bg-gradient-to-r from-purple-400 to-purple-500 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="privacyReadCheckbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded" disabled>
+                        <label for="privacyReadCheckbox" class="ml-2 text-xs text-gray-700">
+                            I have read and understood the Privacy Policy
+                        </label>
                     </div>
                 </div>
             </div>
