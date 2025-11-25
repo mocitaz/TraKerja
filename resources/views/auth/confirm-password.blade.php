@@ -71,12 +71,15 @@
                             <div class="flex items-center space-x-3 mb-1.5">
                                 <h1 class="text-4xl xl:text-5xl font-black bg-gradient-to-r from-white via-white/95 to-white/85 bg-clip-text text-transparent drop-shadow-lg">TraKerja</h1>
                                 <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-white/15 backdrop-blur-sm border border-white/25 hover:bg-white/20 hover:border-white/35 transition-all duration-300 group">
+                                    <span class="text-white/85 text-[10px] xl:text-xs font-medium tracking-wide group-hover:text-white transition-colors duration-300 mr-1.5">
+                                        powered by
+                                    </span>
                                     <img src="{{ asset('images/teknalogi-logo.png') }}" 
                                          alt="Teknalogi Logo" 
-                                         class="h-4 w-auto opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                                         class="h-4 w-auto opacity-90 group-hover:opacity-100 transition-opacity duration-300 mr-0.5"
                                          onerror="this.style.display='none';">
-                                    <span class="text-white/85 text-[10px] xl:text-xs font-medium tracking-wide group-hover:text-white transition-colors duration-300">
-                                        powered by <span class="font-semibold">Teknalogi</span>
+                                    <span class="text-white/85 text-[10px] xl:text-xs font-semibold group-hover:text-white transition-colors duration-300">
+                                        Teknalogi
                                     </span>
                                 </div>
                             </div>
@@ -140,12 +143,15 @@
                     <div class="flex items-center justify-center space-x-2 mb-1">
                         <h1 class="text-2xl font-bold text-gray-900">TraKerja</h1>
                         <div class="flex items-center space-x-1.5 px-2 py-0.5 rounded-md bg-gray-100/80 backdrop-blur-sm border border-gray-200/50 hover:bg-gray-100 transition-all duration-300 group">
+                            <span class="text-gray-600 text-[10px] font-medium tracking-wide group-hover:text-gray-700 transition-colors duration-300 mr-1.5">
+                                powered by
+                            </span>
                             <img src="{{ asset('images/teknalogi-logo.png') }}" 
                                  alt="Teknalogi Logo" 
-                                 class="h-3.5 w-auto opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                                 class="h-3.5 w-auto opacity-90 group-hover:opacity-100 transition-opacity duration-300 mr-0.5"
                                  onerror="this.style.display='none';">
-                            <span class="text-gray-600 text-[10px] font-medium tracking-wide group-hover:text-gray-700 transition-colors duration-300">
-                                powered by <span class="font-semibold">Teknalogi</span>
+                            <span class="text-gray-600 text-[10px] font-semibold group-hover:text-gray-700 transition-colors duration-300">
+                                Teknalogi
                             </span>
                         </div>
                     </div>

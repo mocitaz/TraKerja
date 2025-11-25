@@ -79,6 +79,7 @@ class JobKanbanBoard extends Component
     public $dateFromFilter = '';
     public $dateToFilter = '';
     public $showAdvancedFilters = false;
+    public $showArchived = false;
     
     // Track last update to prevent spam
     private $lastUpdateTime = [];
@@ -135,11 +136,12 @@ class JobKanbanBoard extends Component
     {
         $this->search = '';
         $this->platformFilter = '';
-        $this->careerLevelFilter = '';
         $this->recruitmentStageFilter = '';
-        $this->locationFilter = '';
-        $this->dateFromFilter = '';
-        $this->dateToFilter = '';
+    }
+
+    public function toggleArchived()
+    {
+        $this->showArchived = !$this->showArchived;
     }
 
     public function togglePin($jobId)
@@ -236,9 +238,15 @@ class JobKanbanBoard extends Component
 
     public function render()
     {
+        // Get archived count
+        $archivedCount = JobApplication::where('user_id', auth()->id())
+            ->where('is_archived', true)
+            ->count();
+
         $statuses = collect($this->statusOptions)->map(function ($status) {
             $query = JobApplication::where('user_id', auth()->id())
-                ->where('application_status', $status);
+                ->where('application_status', $status)
+                ->where('is_archived', $this->showArchived);
 
             // Apply filters
             if ($this->search) {
@@ -253,24 +261,8 @@ class JobKanbanBoard extends Component
                 $query->where('platform', $this->platformFilter);
             }
 
-            if ($this->careerLevelFilter) {
-                $query->where('career_level', $this->careerLevelFilter);
-            }
-
             if ($this->recruitmentStageFilter) {
                 $query->where('recruitment_stage', $this->recruitmentStageFilter);
-            }
-
-            if ($this->locationFilter) {
-                $query->where('location', 'like', '%' . $this->locationFilter . '%');
-            }
-
-            if ($this->dateFromFilter) {
-                $query->whereDate('application_date', '>=', $this->dateFromFilter);
-            }
-
-            if ($this->dateToFilter) {
-                $query->whereDate('application_date', '<=', $this->dateToFilter);
             }
 
             $jobApplications = $query->orderBy('is_pinned', 'desc') // Pinned items first
@@ -286,6 +278,7 @@ class JobKanbanBoard extends Component
 
         return view('livewire.job-kanban-board', [
             'statuses' => $statuses,
+            'archivedCount' => $archivedCount,
         ]);
     }
 

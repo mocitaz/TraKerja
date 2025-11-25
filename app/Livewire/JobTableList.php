@@ -25,6 +25,7 @@ class JobTableList extends Component
     public $sortDirection = 'desc';
     public $perPage = 20;
     public $showAdvancedFilters = false;
+    public $showArchived = false;
 
     public $statusOptions = [
         'On Process',
@@ -99,6 +100,7 @@ class JobTableList extends Component
         'sortField' => ['except' => 'application_date'],
         'sortDirection' => ['except' => 'desc'],
         'perPage' => ['except' => 20],
+        'showArchived' => ['except' => false],
     ];
 
     protected $listeners = [
@@ -153,6 +155,17 @@ class JobTableList extends Component
         $this->resetPage();
     }
 
+    public function updatingShowArchived()
+    {
+        $this->resetPage();
+    }
+
+    public function toggleArchived()
+    {
+        $this->showArchived = !$this->showArchived;
+        $this->resetPage();
+    }
+
     public function toggleAdvancedFilters()
     {
         $this->showAdvancedFilters = !$this->showAdvancedFilters;
@@ -163,11 +176,7 @@ class JobTableList extends Component
         $this->search = '';
         $this->statusFilter = '';
         $this->platformFilter = '';
-        $this->careerLevelFilter = '';
         $this->recruitmentStageFilter = '';
-        $this->locationFilter = '';
-        $this->dateFromFilter = '';
-        $this->dateToFilter = '';
         $this->resetPage();
     }
 
@@ -270,7 +279,14 @@ class JobTableList extends Component
 
     public function render()
     {
-        $query = JobApplication::where('user_id', auth()->id());
+        // Get archived count
+        $archivedCount = JobApplication::where('user_id', auth()->id())
+            ->where('is_archived', true)
+            ->count();
+
+        // Build query based on showArchived flag
+        $query = JobApplication::where('user_id', auth()->id())
+            ->where('is_archived', $this->showArchived);
 
         if ($this->search) {
             $query->where(function ($q) {
@@ -288,24 +304,8 @@ class JobTableList extends Component
             $query->where('platform', $this->platformFilter);
         }
 
-        if ($this->careerLevelFilter) {
-            $query->where('career_level', $this->careerLevelFilter);
-        }
-
         if ($this->recruitmentStageFilter) {
             $query->where('recruitment_stage', $this->recruitmentStageFilter);
-        }
-
-        if ($this->locationFilter) {
-            $query->where('location', 'like', '%' . $this->locationFilter . '%');
-        }
-
-        if ($this->dateFromFilter) {
-            $query->whereDate('application_date', '>=', $this->dateFromFilter);
-        }
-
-        if ($this->dateToFilter) {
-            $query->whereDate('application_date', '<=', $this->dateToFilter);
         }
 
         $jobApplications = $query->orderBy('is_pinned', 'desc') // Pinned items first
@@ -315,6 +315,7 @@ class JobTableList extends Component
 
         return view('livewire.job-table-list', [
             'jobApplications' => $jobApplications,
+            'archivedCount' => $archivedCount,
         ]);
     }
 

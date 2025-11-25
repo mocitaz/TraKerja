@@ -24,8 +24,15 @@
                 
                 <!-- Brand Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('tracker') }}" class="group">
-                        <span class="text-base sm:text-xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent leading-none">
+                    <a href="{{ route('tracker') }}" class="group flex items-center space-x-2">
+                        <img src="{{ asset('images/icon.png') }}" 
+                             alt="TraKerja Logo" 
+                             class="w-8 h-8 transform group-hover:scale-110 transition-transform duration-300"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="w-8 h-8 bg-[#d983e4] rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300" style="display: none;">
+                            <span class="text-white font-bold text-sm">T</span>
+                        </div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
                             TraKerja
                         </span>
                     </a>

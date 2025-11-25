@@ -29,6 +29,8 @@ class JobApplication extends Model
         'interview_location',
         'notes',
         'is_pinned',
+        'is_archived',
+        'archived_at',
     ];
 
     protected static function boot()
@@ -47,6 +49,42 @@ class JobApplication extends Model
             if (empty($jobApplication->location)) {
                 throw new \Exception('Location is required');
             }
+            
+            // Auto-archive logic: Archive if status is Declined or recruitment_stage is Not Processed
+            $shouldBeArchived = $jobApplication->application_status === 'Declined' 
+                || $jobApplication->recruitment_stage === 'Not Processed';
+            
+            // Get original values before update
+            $originalStatus = $jobApplication->getOriginal('application_status');
+            $originalStage = $jobApplication->getOriginal('recruitment_stage');
+            $wasArchived = $jobApplication->getOriginal('is_archived') ?? false;
+            
+            // Check if original status was also archived
+            $wasOriginallyArchived = ($originalStatus === 'Declined' || $originalStage === 'Not Processed');
+            
+            if ($shouldBeArchived && !$wasArchived) {
+                // Archive the job automatically
+                $jobApplication->is_archived = true;
+                $jobApplication->archived_at = now();
+            } elseif (!$shouldBeArchived && $wasArchived) {
+                // Un-archive if status changed from archived to non-archived
+                // This allows user to change status from Declined/Not Processed to other status
+                $jobApplication->is_archived = false;
+                $jobApplication->archived_at = null;
+            }
+        });
+        
+        static::created(function ($jobApplication) {
+            // Auto-archive on creation if status is Declined or Not Processed
+            $shouldBeArchived = $jobApplication->application_status === 'Declined' 
+                || $jobApplication->recruitment_stage === 'Not Processed';
+            
+            if ($shouldBeArchived) {
+                $jobApplication->update([
+                    'is_archived' => true,
+                    'archived_at' => now(),
+                ]);
+            }
         });
     }
 
@@ -54,6 +92,8 @@ class JobApplication extends Model
         'application_date' => 'date',
         'interview_date' => 'datetime',
         'is_pinned' => 'boolean',
+        'is_archived' => 'boolean',
+        'archived_at' => 'datetime',
     ];
     
     /**

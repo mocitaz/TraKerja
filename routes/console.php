@@ -20,3 +20,10 @@ Schedule::command('email:send-verification-reminders --min-days=3 --max-reminder
     ->dailyAt('10:00')
     ->timezone('Asia/Jakarta')
     ->description('Send verification reminders to users who registered at least 3 days ago but haven\'t verified');
+
+// Schedule archive old declined and not processed jobs
+// Runs daily to ensure any old data gets archived automatically
+Schedule::command('jobs:archive-old-declined')
+    ->dailyAt('02:00')
+    ->timezone('Asia/Jakarta')
+    ->description('Archive old job applications with Declined status or Not Processed stage');

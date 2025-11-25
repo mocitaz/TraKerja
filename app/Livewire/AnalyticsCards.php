@@ -35,6 +35,7 @@ class AnalyticsCards extends Component
         // On Process (Aktif): Hitung jumlah lamaran dengan application_status = 'On Process'
         $this->onProcessCount = JobApplication::where('user_id', $userId)
             ->where('application_status', 'On Process')
+            ->where('is_archived', false)
             ->count();
 
         // Offering / Accepted: Hitung jumlah lamaran yang memiliki recruitment_stage = 'Offering' ATAU application_status = 'Accepted' ATAU application_status = 'Offering'
@@ -44,15 +45,18 @@ class AnalyticsCards extends Component
                       ->orWhere('application_status', 'Accepted')
                       ->orWhere('application_status', 'Offering');
             })
+            ->where('is_archived', false)
             ->count();
 
-        // Declined: Hitung jumlah lamaran dengan application_status = 'Declined'
+        // Declined: Hitung jumlah lamaran dengan application_status = 'Declined' (termasuk yang archived)
         $this->declinedCount = JobApplication::where('user_id', $userId)
             ->where('application_status', 'Declined')
             ->count();
 
         // Total Applications
-        $this->totalApplications = JobApplication::where('user_id', $userId)->count();
+        $this->totalApplications = JobApplication::where('user_id', $userId)
+            ->where('is_archived', false)
+            ->count();
         
         \Log::info('AnalyticsCards: Updated counts', [
             'onProcess' => $this->onProcessCount,

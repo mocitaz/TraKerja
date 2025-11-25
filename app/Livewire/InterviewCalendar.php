@@ -47,6 +47,7 @@ class InterviewCalendar extends Component
         $query = JobApplication::where('user_id', Auth::id())
             ->whereNotNull('interview_date')
             ->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview'])
+            ->where('is_archived', false)
             ->whereBetween('interview_date', [$startOfMonth, $endOfMonth])
             ->orderBy('interview_date', 'asc');
             
@@ -166,6 +167,7 @@ class InterviewCalendar extends Component
         return JobApplication::where('user_id', Auth::id())
             ->whereNotNull('interview_date')
             ->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview'])
+            ->where('is_archived', false)
             ->where('interview_date', '>=', Carbon::now('Asia/Jakarta'))
             ->orderBy('interview_date', 'asc')
             ->limit(5)
@@ -177,6 +179,7 @@ class InterviewCalendar extends Component
         $query = JobApplication::where('user_id', Auth::id())
             ->whereNotNull('interview_date')
             ->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview'])
+            ->where('is_archived', false)
             ->orderBy('interview_date', 'desc');
             
         if ($this->filterType !== 'all') {
