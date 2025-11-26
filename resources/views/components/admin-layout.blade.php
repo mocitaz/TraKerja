@@ -1,3 +1,19 @@
+@props(['title' => 'Admin Dashboard'])
+
+@php
+    $totalUsers = \App\Models\User::where('role', '!=', 'admin')->count();
+    $verifiedUsers = \App\Models\User::where('role', '!=', 'admin')->whereNotNull('email_verified_at')->count();
+    $activeUsers = \App\Models\User::where('role', '!=', 'admin')
+        ->where(function ($query) {
+            $query->whereHas('experiences')
+                ->orWhereHas('educations')
+                ->orWhereHas('skills');
+        })
+        ->count();
+    $totalApplications = \App\Models\JobApplication::count();
+    $verifiedRatio = $totalUsers > 0 ? round(($verifiedUsers / $totalUsers) * 100, 1) : 0;
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -20,82 +36,66 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
     </head>
-    <body class="font-sans text-gray-900 antialiased bg-gray-50 overflow-hidden">
+    <body class="font-sans text-gray-900 antialiased bg-slate-100 overflow-hidden">
         <div class="h-screen flex overflow-hidden">
             <!-- Sidebar -->
-            <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 lg:static lg:inset-0 flex-shrink-0">
+            <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-white text-slate-900 shadow-2xl backdrop-blur-xl transform transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 lg:static lg:inset-0 flex-shrink-0 border border-slate-200">
                 <div class="flex flex-col h-full">
                     <!-- Logo & Brand -->
-                    <div class="flex items-center justify-between h-16 px-4 border-b border-gray-200 flex-shrink-0">
-                        <div class="flex items-center space-x-2">
-                            <img src="{{ asset('images/icon.png') }}" 
-                                 alt="TraKerja Logo" 
-                                 class="h-8 w-8"
-                                 onerror="this.style.display='none';">
-                            <span class="text-lg font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
-                                Admin
-                            </span>
+                    <div class="flex flex-col gap-3 px-5 pb-5 pt-5 border-b border-slate-200 flex-shrink-0">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="h-10 w-10 rounded-2xl bg-white/10 flex items-center justify-center ring-1 ring-white/30">
+                                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="h-6 w-6" onerror="this.style.display='none';">
+                                </div>
+                            <div>
+                                <p class="text-sm font-semibold tracking-[0.3em] uppercase text-slate-800">TraKerja</p>
+                                <p class="text-xl font-bold text-slate-900 leading-tight">Admin</p>
+                            </div>
                         </div>
-                        <button id="sidebar-close" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <button id="sidebar-close" class="lg:hidden p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
+                        </div>
+                        <p class="text-[11px] uppercase tracking-[0.3em] text-slate-500">
+                            Kontrol, insight, notifikasi real-time
+                        </p>
+                        <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-600">
+                            <p class="font-semibold text-slate-800">Control Room</p>
+                            <p class="text-[11px] text-slate-500">Pantau metrik utama di satu tempat.</p>
+                        </div>
                     </div>
 
                     <!-- Navigation -->
-                    <nav class="flex-1 px-3 py-4 space-y-1 overflow-hidden">
-                        <a href="{{ route('admin.index') }}"
-                           class="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.index') ? 'bg-primary-100 text-primary-600' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900' }}">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    <nav class="flex-1 px-3 py-4 flex flex-col gap-3 overflow-hidden">
+                        @php
+                            $navLinks = [
+                                ['route'=>'admin.index','label'=>'Dashboard','icon'=>'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'],
+                                ['route'=>'admin.users','label'=>'Users','icon'=>'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z'],
+                                ['route'=>'admin.analytics','label'=>'Analytics','icon'=>'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'],
+                                ['route'=>'admin.payments','label'=>'Payments','icon'=>'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v10a3 3 0 003 3z'],
+                                ['route'=>'admin.monetization','label'=>'Monetization','icon'=>'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z'],
+                                ['route'=>'admin.email-blast','label'=>'Email Blast','icon'=>'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'],
+                            ];
+                        @endphp
+                        @foreach($navLinks as $link)
+                            @php $isActive = request()->routeIs($link['route'].'*'); @endphp
+                            <a href="{{ route($link['route']) }}"
+                               class="group flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-medium transition-all duration-200 {{ $isActive ? 'border-transparent bg-gradient-to-r from-purple-50/70 via-purple-100/70 to-purple-50/70 text-purple-900 shadow-lg shadow-purple-100' : 'border-slate-200 text-slate-600 hover:border-purple-200 hover:text-purple-900' }}">
+                                <span class="h-2 w-2 rounded-full bg-purple-500 {{ $isActive ? 'opacity-100' : 'opacity-20 group-hover:opacity-90' }}"></span>
+                                <span class="flex-1 truncate">{{ $link['label'] }}</span>
+                                <svg class="w-5 h-5 text-current" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $link['icon'] }}"/>
                             </svg>
-                            <span>Dashboard</span>
-                        </a>
-
-                        <a href="{{ route('admin.users') }}"
-                           class="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.users') ? 'bg-primary-100 text-primary-600' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900' }}">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                            </svg>
-                            <span>Users</span>
-                        </a>
-
-                        <a href="{{ route('admin.analytics') }}"
-                           class="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.analytics') ? 'bg-primary-100 text-primary-600' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900' }}">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                            </svg>
-                            <span>Analytics</span>
-                        </a>
-
-                        <a href="{{ route('admin.payments') }}"
-                           class="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.payments*') ? 'bg-primary-100 text-primary-600' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900' }}">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
-                            </svg>
-                            <span>Payments</span>
-                        </a>
-
-                        <a href="{{ route('admin.monetization') }}"
-                           class="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.monetization') ? 'bg-primary-100 text-primary-600' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900' }}">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            <span>Monetization</span>
-                        </a>
-
-                        <a href="{{ route('admin.email-blast') }}"
-                           class="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.email-blast*') ? 'bg-primary-100 text-primary-600' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900' }}">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                            </svg>
-                            <span>Email Blast</span>
-                        </a>
+                            </a>
+                        @endforeach
                     </nav>
 
+
                     <!-- User Section -->
-                    <div class="border-t border-gray-200 p-4 flex-shrink-0">
+                    <div class="border-t border-slate-200 p-4 flex-shrink-0">
                         <div class="flex items-center space-x-3 mb-3">
                             @php
                                 $user = Auth::user();
@@ -116,7 +116,14 @@
                                 <p class="text-xs text-gray-500 truncate">{{ $user->email ?? 'admin@example.com' }}</p>
                             </div>
                         </div>
-                        <button type="button" onclick="openLogoutModal()" class="w-full flex items-center justify-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors border border-gray-200">
+                        <a href="{{ route('profile.edit') }}" class="mt-3 inline-flex w-full items-center justify-center rounded-xl border border-purple-200 px-3 py-2 text-sm font-semibold text-purple-800 hover:bg-purple-50 transition">
+                            <svg class="w-4 h-4 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0118 19.864M12 14l-6.16-3.422A12.083 12.083 0 006 19.864"></path>
+                            </svg>
+                            Edit Profile
+                        </a>
+                        <button type="button" onclick="openLogoutModal()" class="mt-3 w-full inline-flex items-center justify-center space-x-2 px-3 py-2 rounded-xl bg-red-600 text-white text-sm font-semibold shadow-sm shadow-red-500/40 transition hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-red-200">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                             </svg>
@@ -127,61 +134,142 @@
             </aside>
 
             <!-- Sidebar Overlay (Mobile) -->
-            <div id="sidebar-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-40 lg:hidden hidden"></div>
+                <div id="sidebar-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-35 z-40 lg:hidden hidden"></div>
 
             <!-- Main Content -->
             <div class="flex-1 flex flex-col lg:ml-0 min-w-0">
                 <!-- Mobile Menu Button (Floating) -->
-                <button id="sidebar-toggle" class="fixed top-4 left-4 z-50 lg:hidden p-3 bg-white rounded-lg shadow-lg hover:bg-gray-50 transition-colors border border-gray-200">
+                <button id="sidebar-toggle" class="fixed top-4 left-4 z-50 lg:hidden p-3 bg-white rounded-xl shadow-2xl hover:bg-gray-50 transition-colors border border-gray-200">
                     <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
 
-            <!-- Page Content -->
-                <main class="flex-1 overflow-y-auto h-screen">
+                <main class="flex-1 overflow-y-auto">
+                    <div class="relative px-4 sm:px-6 lg:px-8 py-6">
+                        <div class="max-w-6xl mx-auto space-y-5">
+                            <div class="rounded-[32px] border border-slate-100 bg-white shadow-lg p-6 sm:p-8">
+                                <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                                    <div class="space-y-1">
+                                        <p class="text-[10px] uppercase tracking-[0.3em] text-slate-400">TraKerja Control Room</p>
+                                        <div class="flex items-baseline gap-2">
+                                            <h1 class="text-2xl font-semibold text-slate-900">{{ $title }}</h1>
+                                            <span class="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.3em] text-slate-500">Live</span>
+                                        </div>
+                                        <p class="text-xs sm:text-sm text-slate-500 max-w-2xl">
+                                            Pantau metrik penting tanpa padding yang berlebihan – cepat, langsung dan responsif.
+                                        </p>
+                                    </div>
+                                    <div class="mt-5 rounded-2xl border border-slate-100 bg-white/80 p-4 shadow-sm">
+                                    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                                            <article class="text-center rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+                                                <div class="flex h-full flex-col items-center justify-center space-y-2 text-center">
+                                                    <p class="text-[10px] uppercase tracking-[0.4em] text-slate-400">Total Users</p>
+                                                    <p class="text-2xl font-bold text-slate-900">{{ number_format($totalUsers) }}</p>
+                                                    <p class="text-[11px] text-slate-500">{{ number_format($verifiedUsers) }} verified ({{ $verifiedRatio }}%)</p>
+                                                </div>
+                                            </article>
+                                            <article class="text-center rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+                                                <div class="flex h-full flex-col items-center justify-center space-y-2 text-center">
+                                                    <p class="text-[10px] uppercase tracking-[0.4em] text-slate-400">Verified Users</p>
+                                                    <p class="text-2xl font-bold text-slate-900">{{ number_format($verifiedUsers) }}</p>
+                                                    <p class="text-[11px] text-slate-500">Akun siap diverifikasi/disetujui.</p>
+                                                </div>
+                                            </article>
+                                            <article class="text-center rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+                                                <div class="flex h-full flex-col items-center justify-center space-y-2 text-center">
+                                                    <p class="text-[10px] uppercase tracking-[0.4em] text-slate-400">Active Users</p>
+                                                    <p class="text-2xl font-bold text-slate-900">{{ number_format($activeUsers) }}</p>
+                                                    <p class="text-[11px] text-slate-500">Profil lengkap pengalaman/skill.</p>
+                                                </div>
+                                            </article>
+                                            <article class="text-center rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+                                                <div class="flex h-full flex-col items-center justify-center space-y-2 text-center">
+                                                    <p class="text-[10px] uppercase tracking-[0.4em] text-slate-400">App.</p>
+                                                    <p class="text-2xl font-bold text-slate-900">{{ number_format($totalApplications) }}</p>
+                                                    <p class="text-[11px] text-slate-500">Status siap diproses.</p>
+                                                </div>
+                                            </article>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2 text-xs font-semibold">
+                                        <a href="{{ route('admin.analytics') }}"
+                                           class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-100 via-purple-100 to-purple-200 px-4 py-2 text-purple-800 shadow-sm shadow-purple-200 transition hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-100">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m4-12h-6l-2 2H5v12h14V7z"></path>
+                                            </svg>
+                                            Analitik
+                                        </a>
+                                        <a href="{{ route('admin.email-blast') }}"
+                                           class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-100 via-purple-100 to-purple-200 px-4 py-2 text-purple-800 shadow-sm shadow-purple-200 transition hover:border-purple-300">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                            </svg>
+                                            Email
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="relative z-10 space-y-6">
+                                <div class="h-px w-full bg-slate-100"></div>
+                                <section class="space-y-6">
                 {{ $slot }}
+                                </section>
+                            </div>
+                        </div>
+                    </div>
             </main>
             </div>
         </div>
 
         <!-- Logout Confirmation Modal -->
-        <div id="logoutModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-[100] flex items-center justify-center p-4">
-            <div class="bg-white rounded-xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-95" id="logoutModalContent">
-                <div class="p-6">
+        <div id="logoutModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-[100] flex items-center justify-center p-4">
+            <div class="relative w-full max-w-md rounded-3xl border border-slate-200 bg-white/95 shadow-2xl p-1" id="logoutModalContent">
+                <div class="rounded-3xl bg-white shadow-inner px-6 py-6">
                     <!-- Header -->
-                    <div class="flex items-center space-x-3 mb-4">
-                        <div class="w-12 h-12 bg-gradient-to-br from-red-100 to-orange-100 rounded-full flex items-center justify-center">
-                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="flex items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="h-12 w-12 rounded-2xl bg-purple-50 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-gray-900">Sign Out</h3>
-                            <p class="text-sm text-gray-500">Yakin anda mau logout?</p>
+                                <p class="text-xs uppercase tracking-[0.4em] text-slate-400">TraKerja Control Room</p>
+                                <h3 class="text-xl font-semibold text-slate-900">Sign Out</h3>
+                            </div>
                         </div>
+                        <button class="rounded-full p-2 text-slate-500 hover:text-slate-700 transition" onclick="closeLogoutModal()" aria-label="Close">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
                     </div>
                     
-                    <!-- Content -->
-                    <div class="mb-6">
-                        <p class="text-gray-700 text-sm leading-relaxed mb-3">
-                            Anda akan keluar dari akun <span class="font-semibold text-purple-600">{{ Auth::user()->name }}</span>.
+                    <!-- Body -->
+                    <div class="space-y-4 pt-4">
+                        <p class="text-sm text-slate-700">
+                            Anda akan keluar dari akun <span class="font-semibold text-purple-600">{{ Auth::user()->name }}</span>. Pastikan semua pekerjaan sudah disimpan sebelum melanjutkan.
                         </p>
-                        <div class="bg-blue-50 border-l-4 border-blue-400 p-3 rounded-r">
-                            <p class="text-blue-800 text-xs leading-relaxed">
-                                <strong>ℹ️ Catatan:</strong> Saat logout, sesi Anda akan berakhir secara otomatis. Pastikan semua pekerjaan Anda sudah disimpan sebelum melanjutkan.
+                        <div class="rounded-2xl border border-purple-100 bg-purple-50 px-4 py-3 text-sm text-purple-800 flex items-start gap-2">
+                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <p class="text-xs text-purple-900 leading-relaxed">
+                                Catatan: Saat logout, sesi akan berakhir otomatis. Pastikan tidak ada aktivitas yang belum tersimpan.
                             </p>
                         </div>
                     </div>
                     
                     <!-- Actions -->
-                    <div class="flex space-x-3">
+                    <div class="mt-6 flex flex-wrap gap-3 justify-end">
                         <button onclick="closeLogoutModal()" 
-                                class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-200">
+                                class="px-4 py-2 rounded-2xl border border-purple-200 text-purple-800 text-sm font-semibold hover:border-purple-300 transition">
                             Batal
                         </button>
                         <a href="{{ route('logout.force') }}" onclick="prepareLogout()"
-                           class="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200 text-center">
+                           class="px-5 py-2 rounded-2xl bg-red-600 text-white text-sm font-semibold shadow-sm shadow-red-500/40 transition hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-red-200 text-center">
                             Ya, Logout
                         </a>
                     </div>
