@@ -343,20 +343,20 @@
                                            name="remember" 
                                            type="checkbox" 
                                            class="sr-only">
-                                    <div class="w-5 h-5 border-2 border-gray-300 rounded-md flex items-center justify-center transition-all duration-200 group-hover:border-purple-500 checkbox-custom">
+                                    <div class="w-5 h-5 border-2 border-gray-300 rounded-md flex items-center justify-center transition-all duration-200 group-hover:border-primary-500 checkbox-custom">
                                         <svg class="w-3 h-3 text-white opacity-0 transition-opacity duration-200 check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
                                         </svg>
                                     </div>
                                 </div>
-                                <label for="remember_me" class="ml-3 block text-sm font-semibold text-gray-700 cursor-pointer group-hover:text-purple-700 transition-colors duration-200">
+                                <label for="remember_me" class="ml-3 block text-sm font-semibold text-gray-700 cursor-pointer group-hover:text-primary-600 transition-colors duration-200">
                                     Remember Me
                                 </label>
                             </div>
 
                             @if (Route::has('password.request'))
                                 <a href="{{ route('password.request') }}" 
-                                   class="text-sm text-purple-700 hover:text-purple-800 font-semibold transition-colors duration-200 flex items-center group self-start sm:self-auto">
+                                   class="text-sm text-primary-600 hover:text-primary-700 font-semibold transition-colors duration-200 flex items-center group self-start sm:self-auto">
                                     Forgot Password?
                                     <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -368,7 +368,7 @@
                         <!-- Submit Button with Glow & Ripple Effect -->
                         <button type="submit" 
                                 onclick="createRipple(event)"
-                                class="ripple-container button-glow w-full flex justify-center items-center py-3 px-5 border border-transparent rounded-lg shadow-md text-sm font-semibold text-white bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 hover:from-purple-700 hover:via-purple-600 hover:to-purple-500 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500/50 transition-all duration-200 relative overflow-hidden group">
+                                class="ripple-container button-glow w-full flex justify-center items-center py-3 px-5 border border-transparent rounded-lg shadow-md text-sm font-semibold text-white bg-gradient-to-r from-primary-600 via-primary-500 to-secondary-500 hover:from-primary-700 hover:via-primary-600 hover:to-secondary-600 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500/50 transition-all duration-200 relative overflow-hidden group">
                             <span class="relative z-10 flex items-center">
                                 <svg class="w-4 h-4 mr-2 group-hover:translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
@@ -379,14 +379,14 @@
                     </form>
 
                     <!-- Register Link -->
-                        <div class="mt-8 text-center">
-                            <p class="text-sm text-gray-600">
-                                Don't have an account?
-                                <a href="{{ route('register') }}" class="font-bold text-purple-700 hover:text-purple-800 transition-colors">
-                                    Sign up here
-                                </a>
-                            </p>
-                        </div>
+                    <div class="mt-8 text-center">
+                        <p class="text-sm text-gray-600">
+                            Don't have an account?
+                            <a href="{{ route('register') }}" class="font-bold text-primary-600 hover:text-primary-700 transition-colors">
+                                Sign up here
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -452,11 +452,11 @@
             // Update checkbox appearance
             function updateCheckboxAppearance() {
                 if (checkbox.checked) {
-                customCheckbox.classList.add('bg-purple-600', 'border-purple-600');
+                    customCheckbox.classList.add('bg-primary-600', 'border-primary-600');
                     customCheckbox.classList.remove('border-gray-300');
                     checkIcon.classList.remove('opacity-0');
                 } else {
-                customCheckbox.classList.remove('bg-purple-600', 'border-purple-600');
+                    customCheckbox.classList.remove('bg-primary-600', 'border-primary-600');
                     customCheckbox.classList.add('border-gray-300');
                     checkIcon.classList.add('opacity-0');
                 }

@@ -323,18 +323,18 @@
                     </div>
 
                     <!-- Terms Reminder -->
-                    <div class="bg-gradient-to-r from-purple-50 to-purple-100 border border-purple-200 rounded-xl p-4 mb-4">
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 mb-4">
                         <div class="flex items-start space-x-3">
                             <div class="flex-shrink-0">
                                 <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                 </div>
                             </div>
                             <div class="flex-1">
-                                <h4 class="text-sm font-semibold text-purple-900 mb-1">Important: Please Read First</h4>
-                                <p class="text-xs text-purple-700">Before creating your account, please read our Terms of Service and Privacy Policy to understand your rights and our commitments.</p>
+                                <h4 class="text-sm font-semibold text-blue-900 mb-1">Important: Please Read First</h4>
+                                <p class="text-xs text-blue-700">Before creating your account, please read our Terms of Service and Privacy Policy to understand your rights and our commitments.</p>
                             </div>
                         </div>
                     </div>
@@ -347,14 +347,14 @@
                                        name="terms" 
                                        type="checkbox" 
                                        required
-                                       class="h-4 w-4 text-purple-600 focus:ring-purple-600 border-gray-300 rounded">
+                                       class="h-4 w-4 text-primary-600 focus:ring-primary-600 border-gray-300 rounded">
                             </div>
                             <div class="ml-3 text-sm">
                                 <label for="terms" class="text-gray-700">
                                     I have read and agree to the 
-                                    <button type="button" onclick="openTerms()" class="text-purple-700 hover:text-purple-800 font-semibold underline">Terms of Service</button> 
+                                    <button type="button" onclick="openTerms()" class="text-primary-600 hover:text-primary-700 font-semibold underline">Terms of Service</button> 
                                     and 
-                                    <button type="button" onclick="openPrivacy()" class="text-purple-700 hover:text-purple-800 font-semibold underline">Privacy Policy</button>
+                                    <button type="button" onclick="openPrivacy()" class="text-primary-600 hover:text-primary-700 font-semibold underline">Privacy Policy</button>
                                 </label>
                             </div>
                         </div>
@@ -363,7 +363,7 @@
                     <!-- Submit Button -->
                     <button type="submit" 
                             onclick="return validateRegistration()"
-                            class="w-full flex justify-center items-center py-3 px-5 border border-transparent rounded-lg shadow-md text-sm font-semibold text-white bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 hover:from-purple-700 hover:via-purple-600 hover:to-purple-500 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500/50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-md relative overflow-hidden group"
+                            class="w-full flex justify-center items-center py-3 px-5 border border-transparent rounded-lg shadow-md text-sm font-semibold text-white bg-gradient-to-r from-primary-600 via-primary-500 to-secondary-500 hover:from-primary-700 hover:via-primary-600 hover:to-secondary-600 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500/50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-md relative overflow-hidden group"
                             disabled>
                         <svg class="w-4 h-4 mr-2 group-hover:rotate-90 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
@@ -608,7 +608,7 @@
                     <div class="mt-8 text-center">
                         <p class="text-sm text-gray-600">
                             Already have an account?
-                            <a href="{{ route('login') }}" class="font-bold text-purple-700 hover:text-purple-800 transition-colors">
+                            <a href="{{ route('login') }}" class="font-bold text-primary-600 hover:text-primary-700 transition-colors">
                                 Sign in here
                             </a>
                         </p>
@@ -842,7 +842,7 @@
                 </div>
                 <div class="px-6 pb-5 flex items-center justify-end space-x-3">
                     <button type="button" onclick="hideTermsAlert()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg border border-gray-200">Close</button>
-                    <button type="button" onclick="openTerms(); hideTermsAlert();" class="px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 rounded-lg">Read Terms</button>
+                    <button type="button" onclick="openTerms(); hideTermsAlert();" class="px-4 py-2 text-sm font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-lg">Read Terms</button>
                 </div>
             </div>
         </div>
