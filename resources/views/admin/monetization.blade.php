@@ -1,7 +1,7 @@
 <x-admin-layout>
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
+    <div class="py-4 sm:py-6 lg:py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-6 lg:space-y-8">
         
         {{-- Success Message --}}
         @if(session('success'))
@@ -24,15 +24,15 @@
         @endphp
 
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-200">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 {{ $monetizationEnabled ? 'bg-purple-100' : 'bg-emerald-100' }} rounded-lg flex items-center justify-center">
-                            <span class="text-lg">{{ $monetizationEnabled ? '💎' : '🎁' }}</span>
+            <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+                    <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 {{ $monetizationEnabled ? 'bg-purple-100' : 'bg-emerald-100' }} rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-base sm:text-lg">{{ $monetizationEnabled ? '💎' : '🎁' }}</span>
                         </div>
-                        <div>
-                            <h3 class="text-lg font-semibold text-gray-900">Monetization Status</h3>
-                            <p class="text-sm text-gray-500">
+                        <div class="min-w-0 flex-1">
+                            <h3 class="text-base sm:text-lg font-semibold text-gray-900 truncate">Monetization Status</h3>
+                            <p class="text-xs sm:text-sm text-gray-500">
                                 @if($monetizationEnabled)
                                     Premium features are monetized • Current price: Rp {{ number_format($premiumPrice, 0, ',', '.') }}
                                 @else
@@ -41,19 +41,20 @@
                             </p>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <span class="px-3 py-1 text-sm font-medium {{ $monetizationEnabled ? 'bg-purple-100 text-purple-800' : 'bg-emerald-100 text-emerald-800' }} rounded-full">
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                        <span class="px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium {{ $monetizationEnabled ? 'bg-purple-100 text-purple-800' : 'bg-emerald-100 text-emerald-800' }} rounded-full text-center">
                             @if($monetizationEnabled)
                                 PREMIUM MODE ACTIVE
                             @else
                                 FREE MODE ACTIVE
                             @endif
                         </span>
-                        <a href="{{ route('admin.payments') }}" class="px-4 py-2 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white rounded-lg transition-colors text-sm font-medium flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('admin.payments') }}" class="px-3 sm:px-4 py-2 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white rounded-lg transition-colors text-xs sm:text-sm font-medium flex items-center justify-center gap-2">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
                             </svg>
-                            Payment Monitoring
+                            <span class="hidden sm:inline">Payment Monitoring</span>
+                            <span class="sm:hidden">Payments</span>
                         </a>
                     </div>
                 </div>
@@ -61,46 +62,46 @@
         </div>
 
         {{-- Revenue Stats --}}
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
                 <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-xs font-medium text-gray-600 mb-1">Total Users</p>
-                        <p class="text-2xl font-bold text-[#212529]">{{ number_format($totalUsers) }}</p>
-                        <p class="text-xs text-gray-500 mt-1">All registered</p>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">Total Users</p>
+                        <p class="text-xl sm:text-2xl font-bold text-[#212529]">{{ number_format($totalUsers) }}</p>
+                        <p class="text-[10px] sm:text-xs text-gray-500 mt-1">All registered</p>
                     </div>
-                    <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                        <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
                     </div>
                 </div>
             </div>
             
-            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
                 <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-xs font-medium text-gray-600 mb-1">Free Users</p>
-                        <p class="text-2xl font-bold text-[#212529]">{{ number_format($freeUsers) }}</p>
-                        <p class="text-xs text-gray-500 mt-1">{{ $totalUsers > 0 ? number_format($freeUsers / $totalUsers * 100, 1) : 0 }}% of total</p>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">Free Users</p>
+                        <p class="text-xl sm:text-2xl font-bold text-[#212529]">{{ number_format($freeUsers) }}</p>
+                        <p class="text-[10px] sm:text-xs text-gray-500 mt-1">{{ $totalUsers > 0 ? number_format($freeUsers / $totalUsers * 100, 1) : 0 }}% of total</p>
                     </div>
-                    <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                        <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                         </svg>
                     </div>
                 </div>
             </div>
             
-            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
                 <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-xs font-medium text-gray-600 mb-1">Premium Users</p>
-                        <p class="text-2xl font-bold text-[#212529]">{{ number_format($premiumUsers) }}</p>
-                        <p class="text-xs text-gray-500 mt-1">{{ $totalUsers > 0 ? number_format($premiumUsers / $totalUsers * 100, 1) : 0 }}% conversion</p>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">Premium Users</p>
+                        <p class="text-xl sm:text-2xl font-bold text-[#212529]">{{ number_format($premiumUsers) }}</p>
+                        <p class="text-[10px] sm:text-xs text-gray-500 mt-1">{{ $totalUsers > 0 ? number_format($premiumUsers / $totalUsers * 100, 1) : 0 }}% conversion</p>
                     </div>
-                    <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
-                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                        <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                         </svg>
                     </div>
@@ -118,24 +119,24 @@
         </div>
 
         {{-- Premium Pricing Configuration --}}
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 lg:p-8">
+            <div class="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </div>
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-800">Premium Pricing</h3>
-                    <p class="text-sm text-gray-500">Set the subscription price for premium features</p>
+                <div class="min-w-0 flex-1">
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-800 truncate">Premium Pricing</h3>
+                    <p class="text-xs sm:text-sm text-gray-500">Set the subscription price for premium features</p>
                 </div>
             </div>
 
-            <form action="{{ route('admin.update-premium-price') }}" method="POST" class="space-y-6">
+            <form action="{{ route('admin.update-premium-price') }}" method="POST" class="space-y-4 sm:space-y-6">
                 @csrf
                 @method('PUT')
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">
                             Premium Price (IDR)
@@ -172,13 +173,13 @@
                     </div>
                 </div>
 
-                <div class="flex gap-4">
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     <button 
                         type="submit"
-                        class="px-8 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl font-bold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 shadow-lg">
+                        class="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl text-sm sm:text-base font-bold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 shadow-lg">
                         💾 Update Premium Price
                     </button>
-                    <a href="{{ route('admin.index') }}" class="px-8 py-3 bg-gray-200 text-gray-700 rounded-xl font-bold hover:bg-gray-300 transition-colors">
+                    <a href="{{ route('admin.index') }}" class="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 bg-gray-200 text-gray-700 rounded-xl text-sm sm:text-base font-bold hover:bg-gray-300 transition-colors text-center">
                         Cancel
                     </a>
                 </div>
@@ -187,20 +188,20 @@
 
         {{-- Monetization Control --}}
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-200">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
                     <div class="min-w-0 flex-1">
-                        <h3 class="text-lg font-semibold text-gray-900">Monetization Control</h3>
-                        <p class="text-sm text-gray-500">Manage pricing phases and premium features</p>
+                        <h3 class="text-base sm:text-lg font-semibold text-gray-900 truncate">Monetization Control</h3>
+                        <p class="text-xs sm:text-sm text-gray-500">Manage pricing phases and premium features</p>
                     </div>
                 </div>
             </div>
-            <div class="p-6">
+            <div class="p-4 sm:p-6">
                 @livewire('admin.monetization-control')
             </div>
         </div>

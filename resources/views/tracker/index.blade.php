@@ -105,62 +105,129 @@
     </div>
 
     <!-- Email Verification Success Modal -->
-    <div id="verificationSuccessModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-[100]">
+    <div id="verificationSuccessModal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden z-[100] animate-fade-in">
         <div class="flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-95" id="verificationModalContent">
-                <div class="p-8 text-center">
-                    <!-- Success Icon -->
-                    <div class="flex items-center justify-center w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-green-400 to-green-600 shadow-lg">
-                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
+            <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full transform transition-all duration-500 scale-95 opacity-0 relative overflow-hidden" id="verificationModalContent">
+                <!-- Animated Background Gradient -->
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 opacity-50"></div>
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-200/30 to-transparent rounded-full blur-2xl"></div>
+                <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-blue-200/30 to-transparent rounded-full blur-xl"></div>
+                
+                <div class="relative p-6 text-center">
+                    <!-- Success Icon with Animation -->
+                    <div class="relative mb-4">
+                        <div class="flex items-center justify-center w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-emerald-400 via-green-500 to-teal-600 shadow-xl shadow-green-500/30 animate-bounce-in">
+                            <svg class="w-8 h-8 text-white animate-checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <!-- Ripple Effect -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-16 h-16 rounded-full bg-green-400/20 animate-ping"></div>
+                        </div>
                     </div>
 
-                    <!-- Title -->
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Email Verified Successfully!</h3>
-                    <p class="text-gray-600 mb-2">Welcome to TraKerja! 🎉</p>
-                    <p class="text-sm text-gray-500 mb-6">Your email has been verified and your account is now active. You can start tracking your job applications!</p>
+                    <!-- Title with Gradient -->
+                    <h3 class="text-xl font-bold bg-gradient-to-r from-gray-900 via-purple-600 to-blue-600 bg-clip-text text-transparent mb-1">
+                        Email Verified! ✨
+                    </h3>
+                    <p class="text-xs text-gray-500 mb-4">Welcome to TraKerja 🎉</p>
 
-                    <!-- Features List -->
-                    <div class="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-4 mb-6 text-left">
-                        <p class="text-xs font-semibold text-gray-700 mb-3">What you can do now:</p>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li class="flex items-start gap-2">
-                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    <!-- Compact Features Grid -->
+                    <div class="bg-gradient-to-br from-purple-50/80 to-blue-50/80 backdrop-blur-sm rounded-xl p-3 mb-4 border border-purple-100/50">
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div class="flex items-center gap-1.5 text-gray-700">
+                                <svg class="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                 </svg>
-                                <span>Track unlimited job applications</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                <span class="font-medium">Unlimited Tracking</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 text-gray-700">
+                                <svg class="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                 </svg>
-                                <span>Get AI-powered resume analysis (1 free trial)</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                <span class="font-medium">AI Resume Analysis</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 text-gray-700">
+                                <svg class="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                 </svg>
-                                <span>Use advanced CV builder</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                <span class="font-medium">CV Builder</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 text-gray-700">
+                                <svg class="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                 </svg>
-                                <span>Manage interview schedules</span>
-                            </li>
-                        </ul>
+                                <span class="font-medium">Interview Calendar</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Action Button -->
+                    <!-- Action Button with Hover Effect -->
                     <button onclick="closeVerificationModal()" 
-                            class="w-full px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-[#d983e4] to-[#4e71c5] hover:from-[#c775d8] hover:to-[#4565b3] transition-all duration-200 shadow-lg">
-                        Let's Get Started!
+                            class="group w-full px-5 py-2.5 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 hover:from-purple-700 hover:via-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            <span>Let's Get Started!</span>
+                            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                     </button>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+        @keyframes bounce-in {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes checkmark {
+            0% {
+                stroke-dasharray: 0 50;
+                stroke-dashoffset: 0;
+            }
+            100% {
+                stroke-dasharray: 50 0;
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .animate-bounce-in {
+            animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+        
+        .animate-checkmark {
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: checkmark 0.8s ease-out 0.3s forwards;
+        }
+        
+        .animate-fade-in {
+            animation: fade-in 0.3s ease-out;
+        }
+    </style>
 
     <script>
         // Check for verification success on page load
@@ -181,25 +248,62 @@
             modal.classList.remove('hidden');
             document.body.classList.add('overflow-hidden');
             
-            // Animate modal in
+            // Animate modal in with fade and scale
             setTimeout(() => {
-                content.classList.remove('scale-95');
-                content.classList.add('scale-100');
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
             }, 10);
+            
+            // Create confetti effect
+            createConfetti();
+        }
+        
+        function createConfetti() {
+            const colors = ['#a855f7', '#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
+            const confettiCount = 30;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.width = '8px';
+                    confetti.style.height = '8px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = '50%';
+                    confetti.style.pointerEvents = 'none';
+                    confetti.style.zIndex = '9999';
+                    confetti.style.opacity = '0.8';
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    
+                    document.body.appendChild(confetti);
+                    
+                    const animation = confetti.animate([
+                        { transform: 'translateY(0) rotate(0deg)', opacity: 0.8 },
+                        { transform: `translateY(${window.innerHeight + 100}px) rotate(720deg)`, opacity: 0 }
+                    ], {
+                        duration: 2000 + Math.random() * 1000,
+                        easing: 'cubic-bezier(0.5, 0, 0.5, 1)'
+                    });
+                    
+                    animation.onfinish = () => confetti.remove();
+                }, i * 50);
+            }
         }
 
         function closeVerificationModal() {
             const modal = document.getElementById('verificationSuccessModal');
             const content = document.getElementById('verificationModalContent');
             
-            // Animate modal out
-            content.classList.remove('scale-100');
-            content.classList.add('scale-95');
+            // Animate modal out with fade and scale
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
             
             setTimeout(() => {
                 modal.classList.add('hidden');
                 document.body.classList.remove('overflow-hidden');
-            }, 200);
+            }, 300);
         }
     </script>
 

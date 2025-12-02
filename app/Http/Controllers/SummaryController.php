@@ -36,7 +36,10 @@ class SummaryController extends Controller
             })
             ->count();
 
-        // Declined count should include archived jobs
+        // Declined: Hitung jumlah lamaran dengan application_status = 'Declined' saja
+        // CATATAN: Hanya menghitung yang benar-benar Declined, TIDAK termasuk Not Processed
+        // Not Processed adalah recruitment_stage, bukan application_status, jadi tidak dihitung di sini
+        // Include archived jobs karena declined biasanya di-archive
         $declinedCount = JobApplication::where('user_id', $userId)
             ->where('application_status', 'Declined')
             ->when($dateRange['start'], function ($query) use ($dateRange) {

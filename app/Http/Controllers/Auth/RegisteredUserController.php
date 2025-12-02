@@ -40,8 +40,13 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', new StrongPassword()],
         ]);
 
-        // Get current monetization phase
-        $currentPhase = Setting::getMonetizationPhase();
+        // Get current monetization phase (default to 1 if settings table doesn't exist)
+        try {
+            $currentPhase = Setting::getMonetizationPhase();
+        } catch (\Exception $e) {
+            \Log::warning('Error getting monetization phase, defaulting to 1: ' . $e->getMessage());
+            $currentPhase = 1; // Default to phase 1 (free mode)
+        }
         
         // Prepare grandfathered benefits based on registration phase
         $grandfatheredBenefits = [];

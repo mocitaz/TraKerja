@@ -1,15 +1,16 @@
 <x-admin-layout>
 
-    <div class="py-6 sm:py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="py-4 sm:py-6 lg:py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-6">
             <!-- Export Button -->
             <div class="flex justify-end">
                 <a href="{{ route('admin.payments.export', request()->all()) }}" 
-                   class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all duration-200 text-sm font-medium shadow-sm hover:shadow-md">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   class="inline-flex items-center px-3 sm:px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all duration-200 text-xs sm:text-sm font-medium shadow-sm hover:shadow-md">
+                    <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                     </svg>
-                    Export CSV
+                    <span class="hidden sm:inline">Export CSV</span>
+                    <span class="sm:hidden">Export</span>
                 </a>
             </div>
             <!-- Statistics Cards -->
@@ -118,14 +119,14 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-between">
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 sm:gap-4">
                         <button type="submit" 
-                                class="px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition-colors">
+                                class="w-full sm:w-auto px-4 py-2 bg-primary-600 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-primary-700 transition-colors">
                             Apply Filters
                         </button>
                         @if(request()->hasAny(['search', 'status', 'date_from', 'date_to']))
                             <a href="{{ route('admin.payments') }}" 
-                               class="text-sm text-gray-600 hover:text-gray-900">
+                               class="w-full sm:w-auto text-center text-xs sm:text-sm text-gray-600 hover:text-gray-900">
                                 Clear Filters
                             </a>
                         @endif
@@ -136,13 +137,13 @@
             <!-- Payment Methods Distribution -->
             @if($paymentMethods->count() > 0)
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
-                <h3 class="text-sm font-semibold text-gray-900 mb-4">Payment Methods Distribution</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <h3 class="text-xs sm:text-sm font-semibold text-gray-900 mb-3 sm:mb-4">Payment Methods Distribution</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
                     @foreach($paymentMethods as $method)
-                        <div class="border border-gray-200 rounded-lg p-3">
-                            <p class="text-xs text-gray-500 mb-1">{{ $method->payment_channel_code }}</p>
-                            <p class="text-lg font-bold text-gray-900">{{ $method->count }}</p>
-                            <p class="text-xs text-gray-500">Rp {{ number_format($method->revenue, 0, ',', '.') }}</p>
+                        <div class="border border-gray-200 rounded-lg p-2 sm:p-3">
+                            <p class="text-[10px] sm:text-xs text-gray-500 mb-1 truncate">{{ $method->payment_channel_code }}</p>
+                            <p class="text-base sm:text-lg font-bold text-gray-900">{{ $method->count }}</p>
+                            <p class="text-[10px] sm:text-xs text-gray-500 truncate">Rp {{ number_format($method->revenue, 0, ',', '.') }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -155,58 +156,59 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Method</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                <th class="px-3 sm:px-4 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                                <th class="px-3 sm:px-4 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">User</th>
+                                <th class="px-3 sm:px-4 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                <th class="px-3 sm:px-4 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Method</th>
+                                <th class="px-3 sm:px-4 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-3 sm:px-4 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">Date</th>
+                                <th class="px-3 sm:px-4 py-2 sm:py-3 text-right text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse($payments as $payment)
                                 <tr class="hover:bg-gray-50">
-                                    <td class="px-4 py-3 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-gray-900">{{ $payment->order_id }}</div>
+                                    <td class="px-3 sm:px-4 py-2 sm:py-3">
+                                        <div class="text-xs sm:text-sm font-medium text-gray-900 truncate max-w-[120px] sm:max-w-none">{{ $payment->order_id }}</div>
                                         @if($payment->yukk_transaction_code)
-                                            <div class="text-xs text-gray-500">{{ $payment->yukk_transaction_code }}</div>
+                                            <div class="text-[10px] sm:text-xs text-gray-500 truncate max-w-[120px] sm:max-w-none">{{ $payment->yukk_transaction_code }}</div>
                                         @endif
                                     </td>
-                                    <td class="px-4 py-3 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">{{ $payment->user->name ?? 'N/A' }}</div>
-                                        <div class="text-xs text-gray-500">{{ $payment->user->email ?? 'N/A' }}</div>
+                                    <td class="px-3 sm:px-4 py-2 sm:py-3 hidden sm:table-cell">
+                                        <div class="text-xs sm:text-sm text-gray-900 truncate max-w-[150px]">{{ $payment->user->name ?? 'N/A' }}</div>
+                                        <div class="text-[10px] sm:text-xs text-gray-500 truncate max-w-[150px]">{{ $payment->user->email ?? 'N/A' }}</div>
                                     </td>
-                                    <td class="px-4 py-3 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-gray-900">{{ $payment->formatted_amount }}</div>
+                                    <td class="px-3 sm:px-4 py-2 sm:py-3">
+                                        <div class="text-xs sm:text-sm font-medium text-gray-900">{{ $payment->formatted_amount }}</div>
+                                        <div class="text-[10px] sm:text-xs text-gray-500 sm:hidden truncate">{{ $payment->user->name ?? 'N/A' }}</div>
                                     </td>
-                                    <td class="px-4 py-3 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">{{ $payment->payment_method }}</div>
+                                    <td class="px-3 sm:px-4 py-2 sm:py-3 hidden md:table-cell">
+                                        <div class="text-xs sm:text-sm text-gray-900 truncate">{{ $payment->payment_method }}</div>
                                     </td>
-                                    <td class="px-4 py-3 whitespace-nowrap">
+                                    <td class="px-3 sm:px-4 py-2 sm:py-3">
                                         @if($payment->status === 'SUCCESS')
-                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Success</span>
+                                            <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs leading-4 sm:leading-5 font-semibold rounded-full bg-green-100 text-green-800">Success</span>
                                         @elseif(in_array($payment->status, ['PENDING', 'WAITING']))
-                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                                            <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs leading-4 sm:leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
                                         @elseif(in_array($payment->status, ['FAILED', 'CANCELED', 'EXPIRED']))
-                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">{{ $payment->status }}</span>
+                                            <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs leading-4 sm:leading-5 font-semibold rounded-full bg-red-100 text-red-800 truncate">{{ $payment->status }}</span>
                                         @else
-                                            <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">{{ $payment->status }}</span>
+                                            <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs leading-4 sm:leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 truncate">{{ $payment->status }}</span>
                                         @endif
                                     </td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                                        <div>{{ $payment->created_at->format('d M Y') }}</div>
-                                        <div class="text-xs">{{ $payment->created_at->format('H:i') }}</div>
+                                    <td class="px-3 sm:px-4 py-2 sm:py-3 hidden lg:table-cell">
+                                        <div class="text-xs sm:text-sm text-gray-500">{{ $payment->created_at->format('d M Y') }}</div>
+                                        <div class="text-[10px] sm:text-xs text-gray-400">{{ $payment->created_at->format('H:i') }}</div>
                                     </td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                        <div class="flex items-center justify-end space-x-2">
+                                    <td class="px-3 sm:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm font-medium">
+                                        <div class="flex items-center justify-end gap-1 sm:gap-2">
                                             <button onclick="showPaymentDetail('{{ $payment->id }}')" 
-                                                    class="text-primary-600 hover:text-primary-900 text-xs">
+                                                    class="text-primary-600 hover:text-primary-900 text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded hover:bg-primary-50">
                                                 View
                                             </button>
                                             @if(in_array($payment->status, ['PENDING', 'WAITING']) && $payment->yukk_transaction_code)
                                                 <button onclick="cancelPayment('{{ $payment->id }}', '{{ $payment->order_id }}')" 
-                                                        class="text-red-600 hover:text-red-900 text-xs">
+                                                        class="text-red-600 hover:text-red-900 text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded hover:bg-red-50">
                                                     Cancel
                                                 </button>
                                             @endif
@@ -215,7 +217,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="px-4 py-8 text-center text-sm text-gray-500">
+                                    <td colspan="7" class="px-4 sm:px-6 py-8 sm:py-12 text-center text-xs sm:text-sm text-gray-500">
                                         No payments found
                                     </td>
                                 </tr>
@@ -226,7 +228,7 @@
 
                 <!-- Pagination -->
                 @if($payments->hasPages())
-                    <div class="px-4 py-3 border-t border-gray-200">
+                    <div class="px-3 sm:px-4 py-2 sm:py-3 border-t border-gray-200">
                         {{ $payments->links() }}
                     </div>
                 @endif
@@ -237,15 +239,15 @@
     <!-- Payment Detail Modal -->
     <div id="paymentDetailModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
-                <h3 class="text-lg font-semibold text-gray-900">Payment Details</h3>
+            <div class="p-4 sm:p-6 border-b border-gray-200 flex items-center justify-between">
+                <h3 class="text-base sm:text-lg font-semibold text-gray-900">Payment Details</h3>
                 <button onclick="closePaymentDetail()" class="text-gray-400 hover:text-gray-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
             </div>
-            <div id="paymentDetailContent" class="p-6">
+            <div id="paymentDetailContent" class="p-4 sm:p-6">
                 <!-- Content loaded via AJAX -->
                 <div class="text-center py-8">
                     <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mx-auto"></div>

@@ -256,11 +256,31 @@
                     @endif
                     @if (session('status') === 'email-not-verified')
                         <div class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-xl">
-                            <div class="flex items-center">
-                                <svg class="w-5 h-5 text-red-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="flex items-start">
+                                <svg class="w-5 h-5 text-red-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 6a9 9 0 100 18 9 9 0 000-18z" />
                                 </svg>
-                                <p class="text-sm font-medium text-red-700">Your email is not verified yet. Please verify your email from the link we sent.</p>
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-red-800 mb-1">Email belum terverifikasi</p>
+                                    <p class="text-xs text-red-700">Silakan verifikasi email Anda terlebih dahulu sebelum login. Cek inbox atau folder spam untuk link verifikasi.</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if ($errors->has('email') && !$errors->has('password'))
+                        <div class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-xl">
+                            <div class="flex items-start">
+                                <svg class="w-5 h-5 text-red-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-red-800 mb-1">Login Gagal</p>
+                                    <p class="text-xs text-red-700">{{ $errors->first('email') }}</p>
+                                    @if (str_contains($errors->first('email'), 'throttle'))
+                                        <p class="text-xs text-red-600 mt-2">Terlalu banyak percobaan login. Silakan tunggu beberapa saat sebelum mencoba lagi.</p>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     @endif
@@ -289,10 +309,10 @@
                             </div>
                             @error('email')
                                 <p class="mt-2 text-sm text-red-600 flex items-center">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
-                                    {{ $message }}
+                                    <span>{{ $message }}</span>
                                 </p>
                             @enderror
                         </div>
@@ -327,10 +347,10 @@
                             </div>
                             @error('password')
                                 <p class="mt-2 text-sm text-red-600 flex items-center">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
-                                    {{ $message }}
+                                    <span>{{ $message }}</span>
                                 </p>
                             @enderror
                         </div>
