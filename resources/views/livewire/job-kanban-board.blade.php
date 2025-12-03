@@ -159,7 +159,8 @@
 
                                         <!-- Recruitment Stage & Date -->
                                         <div class="flex items-center justify-between">
-                                            <div class="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-800">
+                                            <div class="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium"
+                                                 style="background-color: {{ $this->getStageColor($job->recruitment_stage ?? 'Applied') }}20; color: {{ $this->getStageColor($job->recruitment_stage ?? 'Applied') }};">
                                                 {{ $job->recruitment_stage ?? 'Applied' }}
                                             </div>
                                             <div class="text-xs text-gray-500">

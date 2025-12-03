@@ -42,7 +42,7 @@ class RegisteredUserController extends Controller
 
         // Get current monetization phase (default to 1 if settings table doesn't exist)
         try {
-            $currentPhase = Setting::getMonetizationPhase();
+        $currentPhase = Setting::getMonetizationPhase();
         } catch (\Exception $e) {
             \Log::warning('Error getting monetization phase, defaulting to 1: ' . $e->getMessage());
             $currentPhase = 1; // Default to phase 1 (free mode)

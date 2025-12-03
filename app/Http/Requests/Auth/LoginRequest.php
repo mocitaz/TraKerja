@@ -99,7 +99,7 @@ class LoginRequest extends FormRequest
         $decayMinutes = 1; // 1 menit
         
         if (RateLimiter::tooManyAttempts($key, $maxAttempts)) {
-            event(new Lockout($this));
+        event(new Lockout($this));
 
             $seconds = RateLimiter::availableIn($key);
 
@@ -109,12 +109,12 @@ class LoginRequest extends FormRequest
                 'seconds_remaining' => $seconds
             ]);
 
-            throw ValidationException::withMessages([
-                'email' => trans('auth.throttle', [
-                    'seconds' => $seconds,
-                    'minutes' => ceil($seconds / 60),
-                ]),
-            ]);
+        throw ValidationException::withMessages([
+            'email' => trans('auth.throttle', [
+                'seconds' => $seconds,
+                'minutes' => ceil($seconds / 60),
+            ]),
+        ]);
         }
     }
 

@@ -19,21 +19,21 @@ class Setting extends Model
     public static function get($key, $default = null)
     {
         try {
-            return Cache::remember("setting_{$key}", 3600, function() use ($key, $default) {
+        return Cache::remember("setting_{$key}", 3600, function() use ($key, $default) {
                 // Check if table exists
                 if (!\Schema::hasTable('settings')) {
                     \Log::warning("Settings table does not exist, returning default for key: {$key}");
                     return $default;
                 }
                 
-                $setting = self::where('key', $key)->first();
-                
-                if (!$setting) {
-                    return $default;
-                }
-                
-                return self::castValue($setting->value, $setting->type);
-            });
+            $setting = self::where('key', $key)->first();
+            
+            if (!$setting) {
+                return $default;
+            }
+            
+            return self::castValue($setting->value, $setting->type);
+        });
         } catch (\Exception $e) {
             \Log::error("Error getting setting '{$key}': " . $e->getMessage());
             return $default;

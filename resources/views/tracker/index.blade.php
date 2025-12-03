@@ -65,37 +65,38 @@
     </div>
 
     <!-- Modern Job Application Modal -->
-    <div id="jobModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50">
-        <div class="flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden" id="modalContent">
-                <div class="bg-gradient-to-r from-[#d983e4] to-[#4e71c5] p-6 text-white relative overflow-hidden">
+    <div id="jobModal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden z-50 animate-fade-in">
+        <div class="flex items-center justify-center min-h-screen p-3 sm:p-4">
+            <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-4xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden transform transition-all" id="modalContent">
+                <!-- Header -->
+                <div class="bg-gradient-to-r from-[#d983e4] via-[#c973d4] to-[#4e71c5] p-4 sm:p-6 text-white relative overflow-hidden">
                     <!-- Background Pattern -->
                     <div class="absolute inset-0 opacity-10">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-white rounded-full -translate-y-16 translate-x-16"></div>
-                        <div class="absolute bottom-0 left-0 w-24 h-24 bg-white rounded-full translate-y-12 -translate-x-12"></div>
-                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-white rounded-full opacity-5"></div>
+                        <div class="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-white rounded-full -translate-y-12 translate-x-12 sm:-translate-y-16 sm:translate-x-16"></div>
+                        <div class="absolute bottom-0 left-0 w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-full translate-y-10 -translate-x-10 sm:translate-y-12 sm:-translate-x-12"></div>
                     </div>
                     
-                    <div class="relative z-10 flex items-center justify-between">
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm p-1 flex items-center justify-center">
-                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="relative z-10 flex items-center justify-between gap-3 sm:gap-4">
+                        <div class="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/20 backdrop-blur-sm p-2 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                 </svg>
                             </div>
-                            <div>
-                                <h3 class="text-2xl font-bold" id="modalTitle">Add New Job Application</h3>
-                                <p class="text-white/90 mt-1" id="modalSubtitle">Fill in the details below to track your application</p>
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-lg sm:text-xl md:text-2xl font-bold truncate" id="modalTitle">Add New Job Application</h3>
+                                <p class="text-white/90 mt-0.5 sm:mt-1 text-xs sm:text-sm truncate" id="modalSubtitle">Fill in the details below to track your application</p>
                             </div>
                         </div>
-                        <button onclick="closeJobModal()" class="text-white/80 hover:text-white p-2 hover:bg-white/10 rounded-xl">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button onclick="closeJobModal()" class="text-white/80 hover:text-white p-1.5 sm:p-2 hover:bg-white/10 rounded-xl transition-all flex-shrink-0">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
                     </div>
                 </div>
-                <div class="p-8 max-h-[70vh] overflow-y-auto">
+                <!-- Form Content -->
+                <div class="p-4 sm:p-6 md:p-8 max-h-[calc(95vh-120px)] sm:max-h-[calc(90vh-140px)] overflow-y-auto custom-scrollbar">
                     <div id="job-form-container">
                         @livewire('job-application-form', key('job-application-form-' . (session('edit-job-id', 'new'))))
                     </div>
@@ -119,7 +120,7 @@
                         <div class="flex items-center justify-center w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-emerald-400 via-green-500 to-teal-600 shadow-xl shadow-green-500/30 animate-bounce-in">
                             <svg class="w-8 h-8 text-white animate-checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
-                            </svg>
+                        </svg>
                         </div>
                         <!-- Ripple Effect -->
                         <div class="absolute inset-0 flex items-center justify-center">
@@ -629,6 +630,45 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+        }
+
+        /* Custom Scrollbar for Modal */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #d983e4, #4e71c5);
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #c973d4, #3d5fa3);
+        }
+
+        /* Fade in animation */
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .animate-fade-in {
+            animation: fade-in 0.3s ease-out;
+        }
+
+        /* Input focus enhancement */
+        input:focus, select:focus, textarea:focus {
+            border-color: #d983e4 !important;
+            box-shadow: 0 0 0 3px rgba(217, 131, 228, 0.1) !important;
         }
     </style>
 

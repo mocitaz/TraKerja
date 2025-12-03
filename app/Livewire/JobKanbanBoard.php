@@ -293,4 +293,22 @@ class JobKanbanBoard extends Component
 
         return $colors[$status] ?? '#6B7280';
     }
+
+    public function getStageColor($stage)
+    {
+        $colors = [
+            'Applied' => '#3B82F6',           // Blue - baru apply
+            'Follow Up' => '#06B6D4',          // Cyan - sedang follow up
+            'Assessment Test' => '#8B5CF6',    // Purple - test assessment
+            'Psychotest' => '#6366F1',         // Indigo - test psikologi
+            'HR - Interview' => '#10B981',     // Green - interview HR
+            'User - Interview' => '#059669',    // Emerald - interview user
+            'LGD' => '#F59E0B',                // Amber - group discussion
+            'Presentation Round' => '#F97316', // Orange - presentasi
+            'Offering' => '#14B8A6',           // Teal - offer
+            'Not Processed' => '#EF4444',     // Red - tidak diproses (mirip declined)
+        ];
+
+        return $colors[$stage] ?? '#6B7280';
+    }
 }

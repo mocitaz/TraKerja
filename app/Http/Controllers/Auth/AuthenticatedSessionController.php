@@ -25,25 +25,25 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         try {
-            $request->authenticate();
+        $request->authenticate();
 
-            $request->session()->regenerate();
+        $request->session()->regenerate();
 
-            // Admin users skip email verification
-            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-                return redirect()->intended(route('admin.index', absolute: false));
-            }
+        // Admin users skip email verification
+        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+            return redirect()->intended(route('admin.index', absolute: false));
+        }
 
-            // For non-admin users, check email verification
-            if (! Auth::user()->hasVerifiedEmail()) {
-                Auth::logout();
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
-                return redirect()->route('login')->with('status', 'email-not-verified');
-            }
+        // For non-admin users, check email verification
+        if (! Auth::user()->hasVerifiedEmail()) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect()->route('login')->with('status', 'email-not-verified');
+        }
 
-            // Regular users go to tracker
-            return redirect()->intended(route('tracker', absolute: false));
+        // Regular users go to tracker
+        return redirect()->intended(route('tracker', absolute: false));
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Re-throw validation exceptions (like rate limiting, wrong credentials)
             throw $e;
