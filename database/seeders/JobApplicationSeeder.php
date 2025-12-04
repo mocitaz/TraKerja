@@ -14,16 +14,42 @@ class JobApplicationSeeder extends Seeder
      */
     public function run(): void
     {
+        // Get user email from environment variable or use default
+        $userEmail = env('SEED_USER_EMAIL', 'luthfafiwork@gmail.com');
+        
         // Get specific user by email
-        $user = User::where('email', 'luthfafiwork@gmail.com')->first();
+        $user = User::where('email', $userEmail)->first();
         
         if (!$user) {
-            $this->command->error('User with email luthfafiwork@gmail.com not found.');
+            $this->command->error("User with email {$userEmail} not found.");
+            $this->command->info('Available options:');
+            $this->command->info('1. Set SEED_USER_EMAIL environment variable: SEED_USER_EMAIL=user@example.com php artisan db:seed --class=JobApplicationSeeder');
+            $this->command->info('2. Or modify the default email in the seeder file.');
             return;
         }
 
         $this->command->info('Found user: ' . $user->email . ' (ID: ' . $user->id . ')');
         $this->command->info('Creating 30 job applications...');
+        
+        // Clear existing applications for this user to prevent duplicates
+        // Check if we should clear existing data (from env or non-interactive mode)
+        $clearExisting = env('SEED_CLEAR_EXISTING', false);
+        $existingCount = JobApplication::where('user_id', $user->id)->count();
+        
+        if ($existingCount > 0) {
+            if ($clearExisting || $this->command->option('force')) {
+                JobApplication::where('user_id', $user->id)->delete();
+                $this->command->info("Cleared {$existingCount} existing job applications.");
+            } elseif (!$this->command->option('no-interaction')) {
+                $this->command->warn("Found {$existingCount} existing applications for this user.");
+                if ($this->command->confirm('Do you want to clear existing applications before seeding?', false)) {
+                    JobApplication::where('user_id', $user->id)->delete();
+                    $this->command->info('Cleared existing job applications.');
+                }
+            } else {
+                $this->command->warn("Found {$existingCount} existing applications. Skipping clear (use --force or SEED_CLEAR_EXISTING=true to clear).");
+            }
+        }
         
         $this->createJobApplicationsForUser($user);
         
