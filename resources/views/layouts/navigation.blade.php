@@ -1,7 +1,18 @@
-<nav class="bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-sm sticky top-0 z-40">
+<nav class="relative bg-gradient-to-r from-white via-purple-50/30 to-blue-50/30 backdrop-blur-xl border-b border-transparent shadow-lg sticky top-0 z-40">
+    <!-- Decorative Pattern Overlay -->
+    <div class="absolute inset-0 opacity-5 pointer-events-none">
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, rgba(139, 92, 246, 0.3) 1px, transparent 0); background-size: 24px 24px;"></div>
+    </div>
+    <!-- Gradient Bottom Border -->
+    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-300/50 to-transparent"></div>
+    <!-- Shine Effect -->
+    <div class="absolute inset-0 -translate-x-full animate-shine pointer-events-none">
+        <div class="h-full w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent transform skew-x-12"></div>
+    </div>
+    
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-12 sm:h-16">
+        <div class="relative flex items-center justify-between h-14 sm:h-16">
             <!-- Left Section: Mobile Menu Button + Brand -->
             <div class="flex items-center">
                 <!-- Mobile Menu Button -->
@@ -24,15 +35,18 @@
                 
                 <!-- Brand Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('tracker') }}" class="group flex items-center space-x-2">
-                        <img src="{{ asset('images/icon.png') }}" 
-                             alt="TraKerja Logo" 
-                             class="w-8 h-8 transform group-hover:scale-110 transition-transform duration-300"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <div class="w-8 h-8 bg-[#d983e4] rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300" style="display: none;">
-                            <span class="text-white font-bold text-sm">T</span>
+                    <a href="{{ route('tracker') }}" class="group flex items-center space-x-2.5 relative">
+                        <div class="relative">
+                            <img src="{{ asset('images/icon.png') }}" 
+                                 alt="TraKerja Logo" 
+                                 class="w-9 h-9 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 drop-shadow-sm"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <div class="w-9 h-9 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-xl flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-purple-500/30" style="display: none;">
+                                <span class="text-white font-bold text-base">T</span>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-br from-purple-400/20 to-blue-400/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></div>
                         </div>
-                        <span class="text-xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
+                        <span class="text-xl font-bold bg-gradient-to-r from-[#d983e4] via-purple-600 to-[#4e71c5] bg-clip-text text-transparent group-hover:from-[#4e71c5] group-hover:via-[#d983e4] group-hover:to-purple-600 transition-all duration-300">
                             TraKerja
                         </span>
                     </a>
@@ -40,79 +54,232 @@
             </div>
 
             <!-- Desktop Navigation -->
-            <div class="hidden md:flex space-x-1">
+            <div class="hidden md:flex items-center space-x-1.5">
                 @if(!auth()->user()->isAdmin() && auth()->user()->role !== 'admin')
                     {{-- Regular User Navigation --}}
                     <a href="{{ route('tracker') }}"
-                       class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('tracker') ? 'bg-primary-100 text-primary-600 font-semibold' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
-                        <span>Tracker</span>
-                    </a>
-                    <a href="{{ route('summary') }}"
-                       class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('summary') ? 'bg-primary-100 text-primary-600 font-semibold' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
-                        <span>Summary</span>
-                    </a>
-                    <a href="{{ route('goals') }}"
-                       class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('goals') ? 'bg-primary-100 text-primary-600 font-semibold' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
-                        <span>Goals</span>
-                    </a>
-                    <a href="{{ route('interviews') }}"
-                       class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('interviews') ? 'bg-primary-100 text-primary-600 font-semibold' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
-                        <span>Interviews</span>
-                    </a>
-                    <a href="{{ route('cv.builder') }}"
-                       class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('cv.*') ? 'bg-primary-100 text-primary-600 font-semibold' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
-                        <span class="hidden lg:inline">CV Builder</span>
-                        <span class="lg:hidden">CV</span>
-                        @if(auth()->user() && auth()->user()->is_premium && auth()->user()->payment_status === 'paid')
-                            <span class="ml-1 px-1 py-0.5 text-[10px] bg-primary-100 text-primary-700 rounded">PRO</span>
+                       class="group relative px-3 py-2 rounded-xl text-xs font-medium transition-all duration-300 {{ request()->routeIs('tracker') ? 'bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-lg shadow-primary-500/30' : 'text-gray-700 hover:text-primary-600 hover:bg-gradient-to-r hover:from-primary-50 hover:to-purple-50' }}">
+                        <div class="flex items-center space-x-1.5">
+                            <svg class="w-3.5 h-3.5 {{ request()->routeIs('tracker') ? 'text-white' : 'text-gray-500 group-hover:text-primary-600' }} transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                            </svg>
+                            <span>Tracker</span>
+                        </div>
+                        @if(request()->routeIs('tracker'))
+                            <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-primary-400 to-purple-400 rounded-full"></div>
                         @endif
                     </a>
-                    {{-- AI Analyzer - Premium + Free Trial --}}
-                    @if(auth()->user() && auth()->user()->is_premium && auth()->user()->payment_status === 'paid')
-                        {{-- Premium users: unlimited access --}}
-                        <a href="{{ route('ai-analyzer.index') }}"
-                           class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-primary-100 text-primary-600 font-semibold' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
-                            <span class="hidden lg:inline">AI Analyzer</span>
-                            <span class="lg:hidden">AI</span>
-                            <span class="ml-1 px-1 py-0.5 text-[10px] bg-purple-100 text-purple-700 rounded">PRO</span>
-                        </a>
-                    @elseif(auth()->user() && !auth()->user()->has_used_ai_analyzer_trial)
-                        {{-- Free users with trial available --}}
-                        <a href="{{ route('ai-analyzer.index') }}"
-                           class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-green-100 text-green-600 font-semibold' : 'text-gray-600 hover:text-green-600 hover:bg-green-50' }}">
-                            <span class="hidden lg:inline">AI Analyzer</span>
-                            <span class="lg:hidden">AI</span>
-                            <span class="ml-1 px-1 py-0.5 text-[10px] bg-green-100 text-green-700 rounded">FREE</span>
-                        </a>
-                    @else
-                        {{-- Free users who used trial --}}
-                        <button type="button" onclick="showPremiumModal('ai-analyzer')"
-                                class="px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 text-gray-400 cursor-not-allowed opacity-60">
-                            <span class="hidden lg:inline">AI Analyzer</span>
-                            <span class="lg:hidden">AI</span>
-                            <svg class="inline-block w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                    <a href="{{ route('summary') }}"
+                       class="group relative px-3 py-2 rounded-xl text-xs font-medium transition-all duration-300 {{ request()->routeIs('summary') ? 'bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-lg shadow-primary-500/30' : 'text-gray-700 hover:text-primary-600 hover:bg-gradient-to-r hover:from-primary-50 hover:to-purple-50' }}">
+                        <div class="flex items-center space-x-1.5">
+                            <svg class="w-3.5 h-3.5 {{ request()->routeIs('summary') ? 'text-white' : 'text-gray-500 group-hover:text-primary-600' }} transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
+                            <span>Summary</span>
+                        </div>
+                        @if(request()->routeIs('summary'))
+                            <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-primary-400 to-purple-400 rounded-full"></div>
+                        @endif
+                    </a>
+                    {{-- Resources Dropdown --}}
+                    <div class="relative" x-data="{ open: false }" @click.away="open = false">
+                        <button @click="open = !open"
+                                class="group relative px-3 py-2 rounded-xl text-xs font-medium transition-all duration-300 flex items-center space-x-1.5 {{ request()->routeIs('goals') || request()->routeIs('interviews') || request()->routeIs('cv.*') || request()->routeIs('ai-analyzer.*') ? 'bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-lg shadow-primary-500/30' : 'text-gray-700 hover:text-primary-600 hover:bg-gradient-to-r hover:from-primary-50 hover:to-purple-50' }}">
+                            <svg class="w-3.5 h-3.5 {{ request()->routeIs('goals') || request()->routeIs('interviews') || request()->routeIs('cv.*') || request()->routeIs('ai-analyzer.*') ? 'text-white' : 'text-gray-500 group-hover:text-primary-600' }} transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                            <span>Resources</span>
+                            <svg class="w-3 h-3 transition-transform duration-300" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                            @if(request()->routeIs('goals') || request()->routeIs('interviews') || request()->routeIs('cv.*') || request()->routeIs('ai-analyzer.*'))
+                                <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-primary-400 to-purple-400 rounded-full"></div>
+                            @endif
                         </button>
-                    @endif
+                        <div x-show="open"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                             x-transition:leave="transition ease-in duration-150"
+                             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                             x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+                             class="absolute top-full left-0 mt-2 w-64 bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-200/50 py-2 z-[100] overflow-hidden"
+                             style="display: none;"
+                             x-cloak>
+                            <div class="absolute inset-0 bg-gradient-to-br from-purple-50/50 to-blue-50/50 opacity-50"></div>
+                            <div class="relative">
+                            <a href="{{ route('goals') }}"
+                               class="group block px-4 py-2.5 text-xs text-gray-700 hover:bg-gradient-to-r hover:from-primary-50 hover:to-purple-50 hover:text-primary-600 transition-all duration-200 {{ request()->routeIs('goals') ? 'bg-gradient-to-r from-primary-50 to-purple-50 text-primary-600 font-semibold border-l-2 border-primary-500' : '' }}">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2.5">
+                                        <div class="w-8 h-8 rounded-lg {{ request()->routeIs('goals') ? 'bg-gradient-to-br from-primary-500 to-purple-600' : 'bg-primary-100 group-hover:bg-primary-200' }} flex items-center justify-center transition-all duration-200">
+                                            <svg class="w-4 h-4 {{ request()->routeIs('goals') ? 'text-white' : 'text-primary-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium">Goals</div>
+                                            <div class="text-[10px] text-gray-500 group-hover:text-primary-500">Track progress</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="{{ route('interviews') }}"
+                               class="group block px-4 py-2.5 text-xs text-gray-700 hover:bg-gradient-to-r hover:from-primary-50 hover:to-purple-50 hover:text-primary-600 transition-all duration-200 {{ request()->routeIs('interviews') ? 'bg-gradient-to-r from-primary-50 to-purple-50 text-primary-600 font-semibold border-l-2 border-primary-500' : '' }}">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2.5">
+                                        <div class="w-8 h-8 rounded-lg {{ request()->routeIs('interviews') ? 'bg-gradient-to-br from-primary-500 to-purple-600' : 'bg-primary-100 group-hover:bg-primary-200' }} flex items-center justify-center transition-all duration-200">
+                                            <svg class="w-4 h-4 {{ request()->routeIs('interviews') ? 'text-white' : 'text-primary-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium">Interviews</div>
+                                            <div class="text-[10px] text-gray-500 group-hover:text-primary-500">Schedule & manage</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="{{ route('cv.builder') }}"
+                               class="group block px-4 py-2.5 text-xs text-gray-700 hover:bg-gradient-to-r hover:from-primary-50 hover:to-purple-50 hover:text-primary-600 transition-all duration-200 {{ request()->routeIs('cv.*') ? 'bg-gradient-to-r from-primary-50 to-purple-50 text-primary-600 font-semibold border-l-2 border-primary-500' : '' }}">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2.5">
+                                        <div class="w-8 h-8 rounded-lg {{ request()->routeIs('cv.*') ? 'bg-gradient-to-br from-primary-500 to-purple-600' : 'bg-primary-100 group-hover:bg-primary-200' }} flex items-center justify-center transition-all duration-200">
+                                            <svg class="w-4 h-4 {{ request()->routeIs('cv.*') ? 'text-white' : 'text-primary-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center space-x-1.5">
+                                                <span class="font-medium">CV Builder</span>
+                                                @if(auth()->user() && auth()->user()->is_premium && auth()->user()->payment_status === 'paid')
+                                                    <span class="px-1.5 py-0.5 text-[9px] bg-gradient-to-r from-primary-500 to-purple-600 text-white rounded font-semibold shadow-sm">PRO</span>
+                                                @endif
+                                            </div>
+                                            <div class="text-[10px] text-gray-500 group-hover:text-primary-500">Create professional CV</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            @if(auth()->user() && auth()->user()->is_premium && auth()->user()->payment_status === 'paid')
+                                {{-- Premium users: unlimited access --}}
+                                <a href="{{ route('ai-analyzer.index') }}"
+                                   class="group block px-4 py-2.5 text-xs text-gray-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50 hover:text-purple-600 transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-gradient-to-r from-purple-50 to-blue-50 text-purple-600 font-semibold border-l-2 border-purple-500' : '' }}">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-2.5">
+                                            <div class="w-8 h-8 rounded-lg {{ request()->routeIs('ai-analyzer.*') ? 'bg-gradient-to-br from-purple-500 to-blue-600' : 'bg-purple-100 group-hover:bg-purple-200' }} flex items-center justify-center transition-all duration-200">
+                                                <svg class="w-4 h-4 {{ request()->routeIs('ai-analyzer.*') ? 'text-white' : 'text-purple-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <div class="flex items-center space-x-1.5">
+                                                    <span class="font-medium">AI Analyzer</span>
+                                                    <span class="px-1.5 py-0.5 text-[9px] bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded font-semibold shadow-sm">PRO</span>
+                                                </div>
+                                                <div class="text-[10px] text-gray-500 group-hover:text-purple-500">Analyze & improve</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            @elseif(auth()->user() && !auth()->user()->has_used_ai_analyzer_trial)
+                                {{-- Free users with trial available --}}
+                                <a href="{{ route('ai-analyzer.index') }}"
+                                   class="group block px-4 py-2.5 text-xs text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 hover:text-green-600 transition-all duration-200 {{ request()->routeIs('ai-analyzer.*') ? 'bg-gradient-to-r from-green-50 to-emerald-50 text-green-600 font-semibold border-l-2 border-green-500' : '' }}">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-2.5">
+                                            <div class="w-8 h-8 rounded-lg {{ request()->routeIs('ai-analyzer.*') ? 'bg-gradient-to-br from-green-500 to-emerald-600' : 'bg-green-100 group-hover:bg-green-200' }} flex items-center justify-center transition-all duration-200">
+                                                <svg class="w-4 h-4 {{ request()->routeIs('ai-analyzer.*') ? 'text-white' : 'text-green-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <div class="flex items-center space-x-1.5">
+                                                    <span class="font-medium">AI Analyzer</span>
+                                                    <span class="px-1.5 py-0.5 text-[9px] bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded font-semibold shadow-sm animate-pulse">FREE</span>
+                                                </div>
+                                                <div class="text-[10px] text-gray-500 group-hover:text-green-500">🎁 Free trial!</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            @else
+                                {{-- Free users who used trial --}}
+                                <button type="button" onclick="showPremiumModal('ai-analyzer')"
+                                        class="group w-full block px-4 py-2.5 text-xs text-gray-400 hover:bg-gray-50 transition-all duration-200 text-left cursor-not-allowed opacity-60">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-2.5">
+                                            <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center">
+                                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <div class="flex items-center space-x-1.5">
+                                                    <span class="font-medium">AI Analyzer</span>
+                                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="text-[10px] text-gray-400">Premium feature</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            @endif
+                            </div>
+                        </div>
+                    </div>
                 @else
                     {{-- Admin Navigation --}}
                     <a href="{{ route('admin.index') }}"
-                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.index') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
-                        <span class="hidden lg:inline">Dashboard</span>
-                        <span class="lg:hidden">Home</span>
+                       class="group relative px-3 lg:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 {{ request()->routeIs('admin.index') ? 'bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-lg shadow-primary-500/30' : 'text-gray-700 hover:text-primary-600 hover:bg-gradient-to-r hover:from-primary-50 hover:to-purple-50' }}">
+                        <div class="flex items-center space-x-1.5">
+                            <svg class="w-4 h-4 {{ request()->routeIs('admin.index') ? 'text-white' : 'text-gray-500 group-hover:text-primary-600' }} transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                            </svg>
+                            <span class="hidden lg:inline">Dashboard</span>
+                            <span class="lg:hidden">Home</span>
+                        </div>
+                        @if(request()->routeIs('admin.index'))
+                            <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-primary-400 to-purple-400 rounded-full"></div>
+                        @endif
                     </a>
                     <a href="{{ route('admin.users') }}"
-                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.users') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
-                        <span>Users</span>
+                       class="group relative px-3 lg:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 {{ request()->routeIs('admin.users') ? 'bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-lg shadow-primary-500/30' : 'text-gray-700 hover:text-primary-600 hover:bg-gradient-to-r hover:from-primary-50 hover:to-purple-50' }}">
+                        <div class="flex items-center space-x-1.5">
+                            <svg class="w-4 h-4 {{ request()->routeIs('admin.users') ? 'text-white' : 'text-gray-500 group-hover:text-primary-600' }} transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                            <span>Users</span>
+                        </div>
+                        @if(request()->routeIs('admin.users'))
+                            <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-primary-400 to-purple-400 rounded-full"></div>
+                        @endif
                     </a>
                     <a href="{{ route('admin.analytics') }}"
-                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.analytics') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
-                        <span>Analytics</span>
+                       class="group relative px-3 lg:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 {{ request()->routeIs('admin.analytics') ? 'bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-lg shadow-primary-500/30' : 'text-gray-700 hover:text-primary-600 hover:bg-gradient-to-r hover:from-primary-50 hover:to-purple-50' }}">
+                        <div class="flex items-center space-x-1.5">
+                            <svg class="w-4 h-4 {{ request()->routeIs('admin.analytics') ? 'text-white' : 'text-gray-500 group-hover:text-primary-600' }} transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            <span>Analytics</span>
+                        </div>
+                        @if(request()->routeIs('admin.analytics'))
+                            <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-primary-400 to-purple-400 rounded-full"></div>
+                        @endif
                     </a>
                     <a href="{{ route('admin.email-blast') }}"
-                       class="px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.email-blast*') ? 'bg-primary-100 text-primary-600 shadow-sm' : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50' }}">
-                        <span>Email Blast</span>
+                       class="group relative px-3 lg:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 {{ request()->routeIs('admin.email-blast*') ? 'bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-lg shadow-primary-500/30' : 'text-gray-700 hover:text-primary-600 hover:bg-gradient-to-r hover:from-primary-50 hover:to-purple-50' }}">
+                        <div class="flex items-center space-x-1.5">
+                            <svg class="w-4 h-4 {{ request()->routeIs('admin.email-blast*') ? 'text-white' : 'text-gray-500 group-hover:text-primary-600' }} transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            <span>Email Blast</span>
+                        </div>
+                        @if(request()->routeIs('admin.email-blast*'))
+                            <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-primary-400 to-purple-400 rounded-full"></div>
+                        @endif
                     </a>
                 @endif
             </div>
@@ -120,16 +287,18 @@
             <!-- Right Section: User Menu -->
             <div class="flex items-center space-x-2 sm:space-x-3">
                 <!-- User Profile -->
-                <div class="flex items-center space-x-2 sm:space-x-3">
+                <div class="flex items-center space-x-2.5 sm:space-x-3">
                     @if(Auth::user()->logo)
-                        <div class="relative">
+                        <div class="relative group">
+                            <div class="absolute inset-0 bg-gradient-to-r from-primary-400 to-purple-400 rounded-full opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300"></div>
                             <img src="{{ Storage::url(Auth::user()->logo) }}" 
                                  alt="Profile Photo" 
-                                 class="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover ring-2 ring-gray-100 shadow-sm hover:shadow-md hover:ring-primary-200 transition-all duration-200">
+                                 class="relative h-9 w-9 sm:h-11 sm:w-11 rounded-full object-cover ring-2 ring-gray-200 shadow-md hover:shadow-xl hover:ring-primary-300 transition-all duration-300 transform group-hover:scale-105">
                         </div>
                     @else
-                        <div class="relative">
-                            <div class="h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center shadow-sm hover:shadow-md ring-2 ring-gray-100 hover:ring-primary-200 transition-all duration-200">
+                        <div class="relative group">
+                            <div class="absolute inset-0 bg-gradient-to-r from-primary-400 to-purple-400 rounded-full opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300"></div>
+                            <div class="relative h-9 w-9 sm:h-11 sm:w-11 bg-gradient-to-br from-primary-500 via-purple-500 to-primary-600 rounded-full flex items-center justify-center shadow-md hover:shadow-xl ring-2 ring-gray-200 hover:ring-primary-300 transition-all duration-300 transform group-hover:scale-105">
                                 <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                 </svg>
@@ -138,25 +307,26 @@
                     @endif
                     <div class="hidden sm:block">
                         <div class="flex items-center gap-1.5">
-                            <p class="text-sm font-semibold text-gray-900 truncate max-w-36">{{ Auth::user()->name }}</p>
+                            <p class="text-sm font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent truncate max-w-36">{{ Auth::user()->name }}</p>
                             @if(Auth::user()->email_verified_at)
                                 <div class="group/verify relative flex-shrink-0">
-                                    <svg class="w-4 h-4 transition-transform duration-200 group-hover/verify:scale-110" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div class="absolute inset-0 bg-blue-400 rounded-full opacity-0 group-hover/verify:opacity-20 blur-sm transition-opacity duration-300"></div>
+                                    <svg class="relative w-4 h-4 transition-all duration-300 group-hover/verify:scale-110 group-hover/verify:rotate-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <circle cx="12" cy="12" r="10" fill="#3B82F6"/>
                                         <circle cx="12" cy="12" r="10" stroke="white" stroke-width="1.5" fill="none"/>
                                         <path d="M8.5 12L10.5 14L15.5 9" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                                     </svg>
                                     <!-- Tooltip - Muncul ke bawah -->
-                                    <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-1.5 px-2 py-1 bg-gray-900 text-white text-[10px] font-medium rounded shadow-lg opacity-0 invisible group-hover/verify:opacity-100 group-hover/verify:visible transition-all duration-200 whitespace-nowrap pointer-events-none z-[60]">
+                                    <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-1.5 px-2.5 py-1 bg-gradient-to-r from-gray-900 to-gray-800 text-white text-[10px] font-medium rounded-lg shadow-xl opacity-0 invisible group-hover/verify:opacity-100 group-hover/verify:visible transition-all duration-200 whitespace-nowrap pointer-events-none z-[60]">
                                         Email Verified
                                         <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-0.5">
-                                            <div class="w-1.5 h-1.5 bg-gray-900 rotate-45"></div>
+                                            <div class="w-2 h-2 bg-gray-900 rotate-45"></div>
                                         </div>
                                     </div>
                                 </div>
                             @endif
                         </div>
-                        <p class="text-xs text-gray-500 truncate max-w-36">{{ Auth::user()->email }}</p>
+                        <p class="text-xs text-gray-500 truncate max-w-36 mt-0.5">{{ Auth::user()->email }}</p>
                     </div>
                 </div>
 
@@ -235,7 +405,7 @@
                                          x-transition:leave="transition ease-in duration-75"
                                          x-transition:leave-start="opacity-100 transform scale-100"
                                          x-transition:leave-end="opacity-0 transform scale-95"
-                                         class="sm:absolute sm:right-full sm:left-auto sm:top-0 sm:mr-1 w-full sm:w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 z-50"
+                                         class="sm:absolute sm:right-full sm:left-auto sm:top-0 sm:mr-1 w-full sm:w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 z-[100]"
                                          style="display: none;"
                                          @mouseenter.window="if(window.innerWidth>=640){open=true}"
                                          @mouseleave.window="if(window.innerWidth>=640){open=false}">
@@ -940,3 +1110,39 @@ document.addEventListener('keydown', function(e) {
 });
 
 </script>
+
+<style>
+@keyframes shine {
+    0% {
+        transform: translateX(-100%) skewX(-12deg);
+    }
+    100% {
+        transform: translateX(200%) skewX(-12deg);
+    }
+}
+
+.animate-shine {
+    animation: shine 3s infinite;
+}
+
+/* Smooth transitions for navigation items */
+nav a, nav button {
+    position: relative;
+    overflow: hidden;
+}
+
+nav a::before, nav button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+nav a:hover::before, nav button:hover::before {
+    left: 100%;
+}
+</style>

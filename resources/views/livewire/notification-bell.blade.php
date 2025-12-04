@@ -9,10 +9,12 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
             </svg>
             
-            <!-- Notification Count Badge -->
+            <!-- Notification Count Badge - Inside Bell -->
             @if(count($notifications) > 0)
-                <span class="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg animate-pulse">
-                    {{ count($notifications) }}
+                <span class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <span class="w-4 h-4 bg-gradient-to-r from-red-500 to-red-600 text-white text-[10px] rounded-full flex items-center justify-center font-bold shadow-md animate-pulse leading-none">
+                        {{ count($notifications) > 9 ? '9+' : count($notifications) }}
+                    </span>
                 </span>
             @endif
         </button>
@@ -26,7 +28,7 @@
         x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100 transform scale-100 translate-y-0"
         x-transition:leave-end="opacity-0 transform scale-95 translate-y-2"
-        class="absolute right-0 top-12 w-80 max-h-96 overflow-hidden bg-white rounded-2xl shadow-2xl border border-gray-200 z-50"
+        class="absolute right-0 top-12 w-80 max-h-96 overflow-hidden bg-white rounded-2xl shadow-2xl border border-gray-200 z-[100]"
     >
         <!-- Header -->
         <div class="p-4 border-b border-gray-200 bg-white">

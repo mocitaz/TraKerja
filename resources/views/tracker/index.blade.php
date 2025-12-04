@@ -1,21 +1,34 @@
 <x-app-layout>
 
-    <div class="min-h-screen bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50/20 to-blue-50/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+            <!-- Header Section -->
+            <div class="mb-6 sm:mb-8">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-1">
+                        Job Applications
+                    </h1>
+                    <p class="text-sm text-gray-600 font-medium">Manage and track your applications</p>
+                </div>
+            </div>
+
             <!-- Live Analytics Cards -->
             @livewire('analytics-cards')
 
-
-            <!-- Compact View Toggle -->
-            <div class="mb-6">
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4">
-                    <div class="flex items-center justify-between">
+            <!-- View Toggle -->
+            <div class="mb-6 sm:mb-8">
+                <div class="group relative bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-gray-200/50 p-4 sm:p-5 hover:shadow-xl transition-all duration-300 overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-500/3 to-purple-600/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900">Job Applications</h3>
-                            <p class="text-xs text-gray-500">Manage and track your applications</p>
+                            <h3 class="text-base sm:text-lg font-bold text-gray-900 flex items-center gap-2">
+                                <span class="w-1 h-6 bg-gradient-to-b from-primary-500 to-purple-600 rounded-full"></span>
+                                View Mode
+                            </h3>
+                            <p class="text-xs sm:text-sm text-gray-500 mt-1">Switch between table and kanban view</p>
                         </div>
-                        <div class="flex bg-gray-100 rounded-lg p-0.5">
-                            <button id="table-view" class="px-4 py-2 rounded-md font-medium bg-white text-primary-600 shadow-sm text-sm">
+                        <div class="flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-gray-200/50 p-1.5">
+                            <button id="table-view" class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg font-medium text-xs sm:text-sm transition-all duration-200 bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-md shadow-primary-500/30">
                                 <div class="flex items-center space-x-1.5">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0V4a2 2 0 012-2h14a2 2 0 012 2v16a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
@@ -23,7 +36,7 @@
                                     <span>Table</span>
                                 </div>
                             </button>
-                            <button id="kanban-view" class="px-4 py-2 rounded-md font-medium text-gray-600 hover:text-gray-900 text-sm">
+                            <button id="kanban-view" class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg font-medium text-xs sm:text-sm transition-all duration-200 text-gray-600 hover:text-primary-600 hover:bg-gray-50">
                                 <div class="flex items-center space-x-1.5">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2z"></path>
@@ -37,7 +50,7 @@
             </div>
 
             <!-- Content Area -->
-            <div class="space-y-6">
+            <div class="space-y-5 sm:space-y-6">
                 <!-- Kanban Board -->
                 <div id="kanban-container" class="hidden">
                     @livewire('job-kanban-board')
@@ -53,13 +66,16 @@
         <!-- Floating Action Button -->
         <div class="fixed bottom-6 right-6 z-40">
             <button onclick="openJobModal()" 
-                    class="group relative bg-gradient-to-r from-primary-500 to-primary-700 hover:from-primary-600 hover:to-primary-800 text-white font-medium py-2.5 px-4 rounded-lg shadow-lg border border-white/20">
+                    class="group relative bg-gradient-to-r from-primary-500 via-purple-600 to-indigo-600 hover:from-primary-600 hover:via-purple-700 hover:to-indigo-700 text-white font-semibold py-3 px-5 rounded-xl shadow-xl shadow-primary-500/30 hover:shadow-2xl hover:shadow-primary-500/40 border border-white/20 hover:scale-105 active:scale-95 transition-all duration-300">
                 <div class="flex items-center space-x-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                    </svg>
-                    <span class="text-xs font-medium">Add Job</span>
+                    <div class="w-5 h-5 bg-white/20 rounded-lg flex items-center justify-center group-hover:rotate-90 transition-transform duration-300">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </div>
+                    <span class="text-sm font-semibold">Add Job</span>
                 </div>
+                <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 rounded-xl"></div>
             </button>
         </div>
     </div>
@@ -313,19 +329,19 @@
         document.getElementById('kanban-view').addEventListener('click', function() {
             document.getElementById('kanban-container').classList.remove('hidden');
             document.getElementById('table-container').classList.add('hidden');
-            this.classList.add('bg-white', 'text-primary-600', 'shadow-sm');
-            this.classList.remove('text-gray-600');
-            document.getElementById('table-view').classList.add('text-gray-600');
-            document.getElementById('table-view').classList.remove('bg-white', 'text-primary-600', 'shadow-sm');
+            this.classList.add('bg-gradient-to-r', 'from-primary-500', 'to-purple-600', 'text-white', 'shadow-md', 'shadow-primary-500/30');
+            this.classList.remove('text-gray-600', 'hover:text-primary-600', 'hover:bg-gray-50');
+            document.getElementById('table-view').classList.add('text-gray-600', 'hover:text-primary-600', 'hover:bg-gray-50');
+            document.getElementById('table-view').classList.remove('bg-gradient-to-r', 'from-primary-500', 'to-purple-600', 'text-white', 'shadow-md', 'shadow-primary-500/30');
         });
 
         document.getElementById('table-view').addEventListener('click', function() {
             document.getElementById('table-container').classList.remove('hidden');
             document.getElementById('kanban-container').classList.add('hidden');
-            this.classList.add('bg-white', 'text-primary-600', 'shadow-sm');
-            this.classList.remove('text-gray-600');
-            document.getElementById('kanban-view').classList.add('text-gray-600');
-            document.getElementById('kanban-view').classList.remove('bg-white', 'text-primary-600', 'shadow-sm');
+            this.classList.add('bg-gradient-to-r', 'from-primary-500', 'to-purple-600', 'text-white', 'shadow-md', 'shadow-primary-500/30');
+            this.classList.remove('text-gray-600', 'hover:text-primary-600', 'hover:bg-gray-50');
+            document.getElementById('kanban-view').classList.add('text-gray-600', 'hover:text-primary-600', 'hover:bg-gray-50');
+            document.getElementById('kanban-view').classList.remove('bg-gradient-to-r', 'from-primary-500', 'to-purple-600', 'text-white', 'shadow-md', 'shadow-primary-500/30');
         });
 
         // Enhanced Modal Functions
@@ -485,13 +501,13 @@
             const kanbanContainer = document.getElementById('kanban-container');
             
             // Set table view as active
-            tableView.classList.add('bg-white', 'text-primary-600', 'shadow-sm');
-            tableView.classList.remove('text-gray-600');
+            tableView.classList.add('bg-gradient-to-r', 'from-primary-500', 'to-purple-600', 'text-white', 'shadow-md', 'shadow-primary-500/30');
+            tableView.classList.remove('text-gray-600', 'hover:text-primary-600', 'hover:bg-gray-50');
             tableContainer.classList.remove('hidden');
             
             // Set kanban view as inactive
-            kanbanView.classList.add('text-gray-600');
-            kanbanView.classList.remove('bg-white', 'text-primary-600', 'shadow-sm');
+            kanbanView.classList.add('text-gray-600', 'hover:text-primary-600', 'hover:bg-gray-50');
+            kanbanView.classList.remove('bg-gradient-to-r', 'from-primary-500', 'to-purple-600', 'text-white', 'shadow-md', 'shadow-primary-500/30');
             kanbanContainer.classList.add('hidden');
             
             // Setup drag and drop

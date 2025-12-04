@@ -83,6 +83,21 @@ class SummaryController extends Controller
         // The Cadence Effect Data
         $cadenceEffect = $this->getCadenceEffect($userId);
 
+        // Comparison Data (This Month vs Last Month)
+        $comparisonData = $this->getComparisonData($userId);
+        
+        // Trend Analysis Data
+        $trendData = $this->getTrendAnalysisData($userId);
+        
+        // Sankey Diagram Data (Flow from Applied to Accepted)
+        $sankeyData = $this->getSankeyData($userId, $dateRange);
+        
+        // Gantt Chart Data (Application Timeline)
+        $ganttData = $this->getGanttData($userId, $dateRange);
+        
+        // Heatmap Data (Activity per day/week)
+        $heatmapData = $this->getHeatmapData($userId);
+
         return view('summary.index', [
             'timeFilter' => $timeFilter,
             'onProcessCount' => $onProcessCount,
@@ -99,6 +114,11 @@ class SummaryController extends Controller
             'dailyStreak' => $dailyStreak,
             'weeklyProgress' => $weeklyProgress,
             'cadenceEffect' => $cadenceEffect,
+            'comparisonData' => $comparisonData,
+            'trendData' => $trendData,
+            'sankeyData' => $sankeyData,
+            'ganttData' => $ganttData,
+            'heatmapData' => $heatmapData,
         ]);
     }
 
@@ -681,5 +701,304 @@ class SummaryController extends Controller
         }
         
         return max($bestStreak, $currentStreak);
+    }
+
+    private function getComparisonData($userId)
+    {
+        $now = Carbon::now('Asia/Jakarta');
+        
+        // This month
+        $thisMonthStart = $now->copy()->startOfMonth();
+        $thisMonthEnd = $now->copy()->endOfMonth();
+        
+        // Last month
+        $lastMonthStart = $now->copy()->subMonth()->startOfMonth();
+        $lastMonthEnd = $now->copy()->subMonth()->endOfMonth();
+        
+        $thisMonthData = JobApplication::where('user_id', $userId)
+            ->where('is_archived', false)
+            ->whereBetween('application_date', [$thisMonthStart, $thisMonthEnd])
+            ->get();
+        
+        $lastMonthData = JobApplication::where('user_id', $userId)
+            ->where('is_archived', false)
+            ->whereBetween('application_date', [$lastMonthStart, $lastMonthEnd])
+            ->get();
+        
+        return [
+            'this_month' => [
+                'total' => $thisMonthData->count(),
+                'on_process' => $thisMonthData->where('application_status', 'On Process')->count(),
+                'accepted' => $thisMonthData->where('application_status', 'Accepted')->count(),
+                'declined' => $thisMonthData->where('application_status', 'Declined')->count(),
+                'interviews' => $thisMonthData->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview'])->count(),
+            ],
+            'last_month' => [
+                'total' => $lastMonthData->count(),
+                'on_process' => $lastMonthData->where('application_status', 'On Process')->count(),
+                'accepted' => $lastMonthData->where('application_status', 'Accepted')->count(),
+                'declined' => $lastMonthData->where('application_status', 'Declined')->count(),
+                'interviews' => $lastMonthData->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview'])->count(),
+            ],
+            'labels' => [
+                'this_month' => $thisMonthStart->format('M Y'),
+                'last_month' => $lastMonthStart->format('M Y'),
+            ]
+        ];
+    }
+
+    private function getTrendAnalysisData($userId)
+    {
+        // Get data for last 6 months
+        $now = Carbon::now('Asia/Jakarta');
+        $months = [];
+        
+        for ($i = 5; $i >= 0; $i--) {
+            $monthStart = $now->copy()->subMonths($i)->startOfMonth();
+            $monthEnd = $now->copy()->subMonths($i)->endOfMonth();
+            
+            $applications = JobApplication::where('user_id', $userId)
+                ->where('is_archived', false)
+                ->whereBetween('application_date', [$monthStart, $monthEnd])
+                ->get();
+            
+            $months[] = [
+                'month' => $monthStart->format('M Y'),
+                'total' => $applications->count(),
+                'accepted' => $applications->where('application_status', 'Accepted')->count(),
+                'declined' => $applications->where('application_status', 'Declined')->count(),
+                'on_process' => $applications->where('application_status', 'On Process')->count(),
+                'interviews' => $applications->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview'])->count(),
+            ];
+        }
+        
+        // Calculate trend (simple linear regression for prediction)
+        $totals = array_column($months, 'total');
+        $n = count($totals);
+        $x = range(1, $n);
+        $y = $totals;
+        
+        $sumX = array_sum($x);
+        $sumY = array_sum($y);
+        $sumXY = 0;
+        $sumX2 = 0;
+        
+        for ($i = 0; $i < $n; $i++) {
+            $sumXY += $x[$i] * $y[$i];
+            $sumX2 += $x[$i] * $x[$i];
+        }
+        
+        $slope = ($n * $sumXY - $sumX * $sumY) / ($n * $sumX2 - $sumX * $sumX);
+        $intercept = ($sumY - $slope * $sumX) / $n;
+        
+        // Predict next month
+        $nextMonthValue = round($slope * ($n + 1) + $intercept);
+        $nextMonthValue = max(0, $nextMonthValue); // Ensure non-negative
+        
+        // Calculate trend direction
+        $trend = $slope > 0 ? 'increasing' : ($slope < 0 ? 'decreasing' : 'stable');
+        $trendPercentage = $n > 1 ? abs(($totals[$n-1] - $totals[0]) / max($totals[0], 1) * 100) : 0;
+        
+        return [
+            'months' => $months,
+            'prediction' => [
+                'next_month' => $nextMonthValue,
+                'trend' => $trend,
+                'trend_percentage' => round($trendPercentage, 1),
+            ]
+        ];
+    }
+
+    private function getSankeyData($userId, $dateRange)
+    {
+        $baseQuery = JobApplication::where('user_id', $userId)
+            ->where('is_archived', false);
+        
+        if ($dateRange['start']) {
+            $baseQuery->where('application_date', '>=', $dateRange['start']);
+        }
+        
+        $applications = $baseQuery->get();
+        
+        // Define stages
+        $stages = [
+            'Applied',
+            'Follow Up',
+            'Assessment Test',
+            'Psychotest',
+            'HR - Interview',
+            'User - Interview',
+            'LGD',
+            'Presentation Round',
+            'Offering',
+            'Accepted',
+            'Declined',
+            'Not Processed'
+        ];
+        
+        // Build flow data
+        $nodes = [];
+        $links = [];
+        
+        foreach ($stages as $index => $stage) {
+            $nodes[] = [
+                'id' => $index,
+                'name' => $stage
+            ];
+        }
+        
+        // Count applications at each stage
+        $stageCounts = [];
+        foreach ($stages as $index => $stage) {
+            if ($stage === 'Applied') {
+                $stageCounts[$index] = $applications->count();
+            } elseif ($stage === 'Accepted') {
+                $stageCounts[$index] = $applications->where('application_status', 'Accepted')->count();
+            } elseif ($stage === 'Declined') {
+                $stageCounts[$index] = $applications->where('application_status', 'Declined')->count();
+            } elseif ($stage === 'Not Processed') {
+                $stageCounts[$index] = $applications->where('recruitment_stage', 'Not Processed')->count();
+            } else {
+                $stageCounts[$index] = $applications->where('recruitment_stage', $stage)->count();
+            }
+        }
+        
+        // Create links (flow from one stage to next)
+        for ($i = 0; $i < count($stages) - 1; $i++) {
+            $currentStage = $stages[$i];
+            $nextStage = $stages[$i + 1];
+            
+            // Calculate flow (simplified: assume linear progression)
+            $flow = min($stageCounts[$i], $stageCounts[$i + 1]);
+            
+            if ($flow > 0) {
+                $links[] = [
+                    'source' => $i,
+                    'target' => $i + 1,
+                    'value' => $flow
+                ];
+            }
+        }
+        
+        return [
+            'nodes' => $nodes,
+            'links' => $links,
+            'stage_counts' => $stageCounts
+        ];
+    }
+
+    private function getGanttData($userId, $dateRange)
+    {
+        $baseQuery = JobApplication::where('user_id', $userId)
+            ->where('is_archived', false)
+            ->orderBy('application_date', 'desc')
+            ->limit(20); // Limit to 20 most recent for performance
+        
+        if ($dateRange['start']) {
+            $baseQuery->where('application_date', '>=', $dateRange['start']);
+        }
+        
+        $applications = $baseQuery->get();
+        
+        $ganttData = [];
+        foreach ($applications as $app) {
+            $startDate = Carbon::parse($app->application_date);
+            $endDate = $app->interview_date ? Carbon::parse($app->interview_date) : $startDate->copy()->addDays(30);
+            
+            // Determine status color
+            $color = '#3B82F6'; // Default blue
+            if ($app->application_status === 'Accepted') {
+                $color = '#10B981'; // Green
+            } elseif ($app->application_status === 'Declined') {
+                $color = '#EF4444'; // Red
+            } elseif ($app->recruitment_stage === 'Offering') {
+                $color = '#F59E0B'; // Amber
+            }
+            
+            $ganttData[] = [
+                'id' => $app->id,
+                'company' => $app->company_name,
+                'position' => $app->position,
+                'start' => $startDate->format('Y-m-d'),
+                'end' => $endDate->format('Y-m-d'),
+                'status' => $app->application_status,
+                'stage' => $app->recruitment_stage,
+                'color' => $color,
+            ];
+        }
+        
+        return $ganttData;
+    }
+
+    private function getHeatmapData($userId)
+    {
+        $now = Carbon::now('Asia/Jakarta');
+        $startDate = $now->copy()->subDays(364); // Last year
+        $endDate = $now->copy();
+        
+        $applications = JobApplication::where('user_id', $userId)
+            ->where('is_archived', false)
+            ->whereBetween('application_date', [$startDate, $endDate])
+            ->get()
+            ->groupBy(function ($app) {
+                return Carbon::parse($app->application_date)->format('Y-m-d');
+            })
+            ->map->count();
+        
+        // Build heatmap data structure
+        $heatmapData = [];
+        $currentDate = $startDate->copy();
+        
+        while ($currentDate <= $endDate) {
+            $dateStr = $currentDate->format('Y-m-d');
+            $count = $applications->get($dateStr, 0);
+            
+            $heatmapData[] = [
+                'date' => $dateStr,
+                'value' => $count,
+                'day' => $currentDate->format('D'),
+                'week' => $currentDate->format('W'),
+                'month' => $currentDate->format('M'),
+            ];
+            
+            $currentDate->addDay();
+        }
+        
+        // Group by week for weekly view
+        $weeklyData = [];
+        $currentWeek = null;
+        $weekApplications = [];
+        
+        foreach ($heatmapData as $day) {
+            $week = Carbon::parse($day['date'])->format('Y-W');
+            
+            if ($currentWeek !== $week) {
+                if ($currentWeek !== null) {
+                    $weeklyData[] = [
+                        'week' => $currentWeek,
+                        'total' => array_sum($weekApplications),
+                        'days' => $weekApplications
+                    ];
+                }
+                $currentWeek = $week;
+                $weekApplications = [];
+            }
+            
+            $weekApplications[] = $day['value'];
+        }
+        
+        if ($currentWeek !== null) {
+            $weeklyData[] = [
+                'week' => $currentWeek,
+                'total' => array_sum($weekApplications),
+                'days' => $weekApplications
+            ];
+        }
+        
+        return [
+            'daily' => $heatmapData,
+            'weekly' => $weeklyData,
+            'max_value' => $applications->max() ?: 1
+        ];
     }
 }
