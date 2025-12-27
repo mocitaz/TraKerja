@@ -8,6 +8,7 @@ use App\Mail\AiAnalyzerFreeTrialAnnouncementMail;
 use App\Mail\JobApplicationReminderMail;
 use App\Mail\MonthlyMotivationMail;
 use App\Mail\WelcomeMail;
+use App\Mail\CustomEmailBlastMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
@@ -18,6 +19,11 @@ class EmailBlastController extends Controller
 {
     /**
      * Display the email blast page
+     * 
+     * Fitur Email Blast mendukung:
+     * - Predefined email templates (welcome, verification, ai_analyzer, job_reminder, monthly_motivation)
+     * - Custom email dengan konten yang dapat dikustomisasi
+     * - Target user spesifik (all, verified, premium, free, new, unverified)
      */
     public function index()
     {
@@ -26,13 +32,37 @@ class EmailBlastController extends Controller
 
     /**
      * Send email blast synchronously
+     * 
+     * Support email types:
+     * - welcome: Welcome email untuk user baru
+     * - verification: Email verifikasi
+     * - ai_analyzer: Pengumuman AI Resume Analyzer free trial
+     * - job_reminder: Reminder untuk mencatat lamaran kerja
+     * - monthly_motivation: Motivasi bulanan
+     * - custom: Custom email dengan subject, content, dan button yang dapat dikustomisasi
+     * 
+     * Custom email fields:
+     * - custom_subject (required): Subject email
+     * - custom_content (required): Konten email
+     * - custom_button_text (optional): Teks button CTA
+     * - custom_button_url (optional): URL untuk button CTA
      */
     public function send(Request $request)
     {
-        $request->validate([
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification',
+        $validationRules = [
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,custom',
             'target_user' => 'required|in:all,verified,premium,free,new,unverified',
-        ]);
+        ];
+
+        // Add validation for custom email fields
+        if ($request->email_type === 'custom') {
+            $validationRules['custom_subject'] = 'required|string|max:255';
+            $validationRules['custom_content'] = 'required|string|max:5000';
+            $validationRules['custom_button_text'] = 'nullable|string|max:100';
+            $validationRules['custom_button_url'] = 'nullable|url|max:500';
+        }
+
+        $request->validate($validationRules);
 
         $emailType = $request->email_type;
         $targetUser = $request->target_user;
@@ -101,6 +131,15 @@ class EmailBlastController extends Controller
                         if (!$user->hasVerifiedEmail()) {
                             $user->sendEmailVerificationNotification();
                         }
+                        break;
+                    case 'custom':
+                        Mail::to($user->email)->send(new CustomEmailBlastMail(
+                            $user,
+                            $request->custom_subject,
+                            $request->custom_content,
+                            $request->custom_button_text,
+                            $request->custom_button_url
+                        ));
                         break;
                 }
                 $successCount++;

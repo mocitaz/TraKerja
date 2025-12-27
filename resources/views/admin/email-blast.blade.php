@@ -151,6 +151,110 @@
                                         </div>
                                     </div>
                                 </label>
+
+                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
+                                    <input type="radio" name="email_type" value="custom" class="sr-only" required onchange="toggleCustomEmailFields()">
+                                    <div class="flex-1">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
+                                                </div>
+                                            </div>
+                                            <div class="ml-3 flex-1">
+                                                <p class="text-sm font-medium text-gray-900">✨ Custom Email</p>
+                                                <p class="text-xs text-gray-500 mt-1">Buat email kustom dengan konten sendiri</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Custom Email Fields (Hidden by default) -->
+                        <div id="customEmailFields" class="hidden space-y-4 bg-gradient-to-br from-purple-50 to-indigo-50 border-2 border-purple-200 rounded-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <svg class="w-6 h-6 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                </svg>
+                                <h3 class="text-lg font-semibold text-gray-900">Konten Custom Email</h3>
+                            </div>
+
+                            <div>
+                                <label for="custom_subject" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Subject Email <span class="text-red-500">*</span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    name="custom_subject" 
+                                    id="custom_subject"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+                                    placeholder="Contoh: Update Fitur Terbaru TraKerja"
+                                    maxlength="255"
+                                >
+                                <p class="text-xs text-gray-500 mt-1">Judul email yang akan diterima user (max 255 karakter)</p>
+                            </div>
+
+                            <div>
+                                <label for="custom_content" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Isi Email <span class="text-red-500">*</span>
+                                </label>
+                                <textarea 
+                                    name="custom_content" 
+                                    id="custom_content"
+                                    rows="8"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+                                    placeholder="Tulis konten email di sini...&#10;&#10;Contoh:&#10;Kami dengan senang hati mengumumkan fitur baru yang akan membantu Anda dalam proses pencarian kerja.&#10;&#10;Fitur unggulan:&#10;• AI Resume Analyzer&#10;• Job Application Tracker&#10;• Interview Calendar"
+                                    maxlength="5000"
+                                ></textarea>
+                                <p class="text-xs text-gray-500 mt-1">Konten utama email yang akan dikirim ke user (max 5000 karakter)</p>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="custom_button_text" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Teks Button (Opsional)
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        name="custom_button_text" 
+                                        id="custom_button_text"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+                                        placeholder="Contoh: Coba Sekarang"
+                                        maxlength="100"
+                                    >
+                                </div>
+
+                                <div>
+                                    <label for="custom_button_url" class="block text-sm font-medium text-gray-700 mb-2">
+                                        URL Button (Opsional)
+                                    </label>
+                                    <input 
+                                        type="url" 
+                                        name="custom_button_url" 
+                                        id="custom_button_url"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+                                        placeholder="https://example.com"
+                                        maxlength="500"
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                <div class="flex items-start">
+                                    <svg class="w-5 h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div class="text-sm text-blue-800">
+                                        <p class="font-semibold mb-1">Tips membuat email yang efektif:</p>
+                                        <ul class="list-disc list-inside space-y-1 ml-1">
+                                            <li>Gunakan bahasa yang jelas dan mudah dipahami</li>
+                                            <li>Personalisasi dengan menyapa nama user</li>
+                                            <li>Sertakan call-to-action yang jelas</li>
+                                            <li>Pastikan konten relevan dengan target user</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -433,6 +537,24 @@
     </div>
 
     <script>
+        // Toggle custom email fields visibility
+        function toggleCustomEmailFields() {
+            const customEmailRadio = document.querySelector('input[name="email_type"][value="custom"]');
+            const customEmailFields = document.getElementById('customEmailFields');
+            
+            if (customEmailRadio && customEmailRadio.checked) {
+                customEmailFields.classList.remove('hidden');
+                // Make custom fields required
+                document.getElementById('custom_subject').setAttribute('required', 'required');
+                document.getElementById('custom_content').setAttribute('required', 'required');
+            } else {
+                customEmailFields.classList.add('hidden');
+                // Remove required attribute when hidden
+                document.getElementById('custom_subject').removeAttribute('required');
+                document.getElementById('custom_content').removeAttribute('required');
+            }
+        }
+
         // Radio button styling
         function updateRadioStyles() {
             const form = document.getElementById('emailBlastForm');
@@ -471,11 +593,18 @@
             if (!form) return;
             
             form.querySelectorAll('input[type="radio"]').forEach(radio => {
-                radio.addEventListener('change', updateRadioStyles);
+                radio.addEventListener('change', function() {
+                    updateRadioStyles();
+                    // Check if custom email is selected
+                    if (radio.name === 'email_type') {
+                        toggleCustomEmailFields();
+                    }
+                });
             });
             
             // Initialize on page load
             updateRadioStyles();
+            toggleCustomEmailFields();
         });
 
         // Show error modal
@@ -508,14 +637,36 @@
                 showErrorModal(message);
                 return;
             }
+
+            // Validate custom email fields if custom is selected
+            if (emailType === 'custom') {
+                const customSubject = document.getElementById('custom_subject').value.trim();
+                const customContent = document.getElementById('custom_content').value.trim();
+                
+                if (!customSubject || !customContent) {
+                    showErrorModal('Harap isi Subject Email dan Isi Email untuk custom email.');
+                    return;
+                }
+
+                // Validate button fields if one is filled
+                const buttonText = document.getElementById('custom_button_text').value.trim();
+                const buttonUrl = document.getElementById('custom_button_url').value.trim();
+                
+                if ((buttonText && !buttonUrl) || (!buttonText && buttonUrl)) {
+                    showErrorModal('Jika ingin menambahkan button, harap isi Teks Button dan URL Button.');
+                    return;
+                }
+            }
             
             const emailTypeText = {
                 'welcome': 'Welcome Email',
                 'verification': 'Verification Email',
                 'ai_analyzer': 'AI Resume Analyzer',
                 'job_reminder': 'Job Application Reminder',
-                'monthly_motivation': 'Monthly Motivation'
+                'monthly_motivation': 'Monthly Motivation',
+                'custom': '✨ Custom Email'
             }[emailType] || 'Email Blast';
+            
             const targetText = {
                 'all': 'Semua User',
                 'new': 'User Baru',

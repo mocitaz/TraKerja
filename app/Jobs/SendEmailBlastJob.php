@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Mail\AiAnalyzerFreeTrialAnnouncementMail;
 use App\Mail\JobApplicationReminderMail;
 use App\Mail\MonthlyMotivationMail;
+use App\Mail\CustomEmailBlastMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Mail;
@@ -24,7 +25,11 @@ class SendEmailBlastJob implements ShouldQueue
      */
     public function __construct(
         public User $user,
-        public string $emailType
+        public string $emailType,
+        public ?string $customSubject = null,
+        public ?string $customContent = null,
+        public ?string $customButtonText = null,
+        public ?string $customButtonUrl = null
     ) {}
 
     /**
@@ -42,6 +47,15 @@ class SendEmailBlastJob implements ShouldQueue
                     break;
                 case 'monthly_motivation':
                     Mail::to($this->user->email)->send(new MonthlyMotivationMail($this->user));
+                    break;
+                case 'custom':
+                    Mail::to($this->user->email)->send(new CustomEmailBlastMail(
+                        $this->user,
+                        $this->customSubject,
+                        $this->customContent,
+                        $this->customButtonText,
+                        $this->customButtonUrl
+                    ));
                     break;
             }
         } catch (Throwable $e) {
