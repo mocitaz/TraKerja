@@ -1,37 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between space-y-3 sm:space-y-0">
-            <div class="flex items-center space-x-3 sm:space-x-4">
-                <div class="flex items-center space-x-2 sm:space-x-3">
-                    <div class="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-white/30">
-                        <img src="{{ asset('images/icon.png') }}" 
-                             alt="TraKerja Logo" 
-                             class="w-5 h-5 sm:w-6 sm:h-6"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h2 class="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
-                            <span class="hidden sm:inline">TraKerja Tracker</span>
-                            <span class="sm:hidden">Tracker</span>
-                        </h2>
-                        <p class="text-xs text-gray-500 mt-0.5 hidden sm:block">Smart tracking untuk Job Seeker</p>
-                    </div>
-                </div>
-            </div>
-            <div class="hidden sm:flex items-center space-x-2">
-                <div class="hidden sm:flex items-center space-x-2 bg-green-50 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full">
-                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span class="text-xs font-medium text-green-700">Live</span>
-                </div>
-                <div class="text-xs text-gray-400 hidden sm:block">
-                    {{ now()->format('M d, Y') }}
-                </div>
-            </div>
-        </div>
-    </x-slot>
 
     <div class="min-h-screen bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -98,40 +65,8 @@
                 </div>
             </div>
 
-
-            <!-- Compact View Toggle -->
-            <div class="mb-4 sm:mb-6">
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between space-y-3 sm:space-y-0">
-                        <div>
-                            <h3 class="text-base sm:text-lg font-bold text-gray-900">Job Applications</h3>
-                            <p class="text-xs text-gray-500 hidden sm:block">Manage and track your applications</p>
-                        </div>
-                        <div class="flex bg-gray-100 rounded-lg p-0.5 w-full sm:w-auto">
-                            <button id="kanban-view" class="flex-1 sm:flex-none px-3 sm:px-4 py-2 rounded-md font-medium bg-white text-primary-600 shadow-sm text-sm">
-                                <div class="flex items-center justify-center space-x-1.5">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2z"></path>
-                                    </svg>
-                                    <span class="hidden sm:inline">Kanban</span>
-                                    <span class="sm:hidden">Board</span>
-                                </div>
-                            </button>
-                            <button id="table-view" class="flex-1 sm:flex-none px-3 sm:px-4 py-2 rounded-md font-medium text-gray-600 hover:text-gray-900 text-sm">
-                                <div class="flex items-center justify-center space-x-1.5">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0V4a2 2 0 012-2h14a2 2 0 012 2v16a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
-                                    </svg>
-                                    <span>Table</span>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Content Area -->
-            <div class="space-y-6">
+            <div class="space-y-6 relative">
                 <!-- Kanban Board -->
                 <div id="kanban-container">
                     @livewire('job-kanban-board')
@@ -140,6 +75,29 @@
                 <!-- Table View -->
                 <div id="table-container" class="hidden">
                     @livewire('job-table-list')
+                </div>
+
+                <!-- View Toggle - Bottom Right -->
+                <div class="fixed bottom-20 right-4 sm:bottom-24 sm:right-6 z-30">
+                    <div class="bg-white rounded-lg shadow-lg border border-gray-200 p-1 flex gap-1 backdrop-blur-sm bg-white/95">
+                        <button id="kanban-view" class="px-3 sm:px-4 py-2 rounded-md font-medium bg-white text-primary-600 shadow-sm text-sm transition-all">
+                            <div class="flex items-center justify-center space-x-1.5">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2z"></path>
+                                </svg>
+                                <span class="hidden sm:inline">Kanban</span>
+                                <span class="sm:hidden">Board</span>
+                            </div>
+                        </button>
+                        <button id="table-view" class="px-3 sm:px-4 py-2 rounded-md font-medium text-gray-600 hover:text-gray-900 text-sm transition-all">
+                            <div class="flex items-center justify-center space-x-1.5">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0V4a2 2 0 012-2h14a2 2 0 012 2v16a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                                </svg>
+                                <span>Table</span>
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

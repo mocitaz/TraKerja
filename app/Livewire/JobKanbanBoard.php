@@ -79,6 +79,7 @@ class JobKanbanBoard extends Component
     public $dateFromFilter = '';
     public $dateToFilter = '';
     public $showAdvancedFilters = false;
+    public $showArchived = false;
     
     // Track last update to prevent spam
     private $lastUpdateTime = [];
@@ -135,11 +136,12 @@ class JobKanbanBoard extends Component
     {
         $this->search = '';
         $this->platformFilter = '';
-        $this->careerLevelFilter = '';
         $this->recruitmentStageFilter = '';
-        $this->locationFilter = '';
-        $this->dateFromFilter = '';
-        $this->dateToFilter = '';
+    }
+
+    public function toggleArchived()
+    {
+        $this->showArchived = !$this->showArchived;
     }
 
     public function togglePin($jobId)
@@ -236,9 +238,15 @@ class JobKanbanBoard extends Component
 
     public function render()
     {
+        // Get archived count
+        $archivedCount = JobApplication::where('user_id', auth()->id())
+            ->where('is_archived', true)
+            ->count();
+
         $statuses = collect($this->statusOptions)->map(function ($status) {
             $query = JobApplication::where('user_id', auth()->id())
-                ->where('application_status', $status);
+                ->where('application_status', $status)
+                ->where('is_archived', $this->showArchived);
 
             // Apply filters
             if ($this->search) {
@@ -253,24 +261,8 @@ class JobKanbanBoard extends Component
                 $query->where('platform', $this->platformFilter);
             }
 
-            if ($this->careerLevelFilter) {
-                $query->where('career_level', $this->careerLevelFilter);
-            }
-
             if ($this->recruitmentStageFilter) {
                 $query->where('recruitment_stage', $this->recruitmentStageFilter);
-            }
-
-            if ($this->locationFilter) {
-                $query->where('location', 'like', '%' . $this->locationFilter . '%');
-            }
-
-            if ($this->dateFromFilter) {
-                $query->whereDate('application_date', '>=', $this->dateFromFilter);
-            }
-
-            if ($this->dateToFilter) {
-                $query->whereDate('application_date', '<=', $this->dateToFilter);
             }
 
             $jobApplications = $query->orderBy('is_pinned', 'desc') // Pinned items first
@@ -286,6 +278,7 @@ class JobKanbanBoard extends Component
 
         return view('livewire.job-kanban-board', [
             'statuses' => $statuses,
+            'archivedCount' => $archivedCount,
         ]);
     }
 
@@ -299,5 +292,23 @@ class JobKanbanBoard extends Component
         ];
 
         return $colors[$status] ?? '#6B7280';
+    }
+
+    public function getStageColor($stage)
+    {
+        $colors = [
+            'Applied' => '#3B82F6',           // Blue - baru apply
+            'Follow Up' => '#06B6D4',          // Cyan - sedang follow up
+            'Assessment Test' => '#8B5CF6',    // Purple - test assessment
+            'Psychotest' => '#6366F1',         // Indigo - test psikologi
+            'HR - Interview' => '#10B981',     // Green - interview HR
+            'User - Interview' => '#059669',    // Emerald - interview user
+            'LGD' => '#F59E0B',                // Amber - group discussion
+            'Presentation Round' => '#F97316', // Orange - presentasi
+            'Offering' => '#14B8A6',           // Teal - offer
+            'Not Processed' => '#EF4444',     // Red - tidak diproses (mirip declined)
+        ];
+
+        return $colors[$stage] ?? '#6B7280';
     }
 }

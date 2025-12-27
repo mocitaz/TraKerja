@@ -1,22 +1,32 @@
-<div class="space-y-4">
+<div class="space-y-5 sm:space-y-6">
 
     @if (session()->has('message'))
-        <div class="bg-green-50 border border-green-200 rounded-lg p-3">
+        <div class="bg-green-50 border-l-4 border-green-500 rounded-lg p-3 sm:p-4 shadow-sm">
             <div class="flex items-center">
-                <svg class="h-4 w-4 text-emerald-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="h-5 w-5 text-emerald-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <p class="text-sm font-medium text-green-800">{{ session('message') }}</p>
+                <p class="text-sm sm:text-base font-medium text-green-800">{{ session('message') }}</p>
             </div>
         </div>
     @endif
 
-    <form wire:submit="save" class="space-y-4 sm:space-y-6">
+    <form wire:submit="save" class="space-y-5 sm:space-y-6">
+        <!-- Section: Basic Information -->
+        <div class="border-b border-gray-200 pb-4 mb-5">
+            <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <svg class="w-5 h-5 text-[#d983e4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                </svg>
+                Basic Information
+            </h3>
+        </div>
+
         <!-- Row 1: Company & Position -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
             <!-- Company Name -->
             <div>
-                <label for="company_name" class="block text-sm font-medium text-gray-700 mb-1">
+                <label for="company_name" class="block text-sm font-semibold text-gray-900 mb-2">
                     Company Name <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
@@ -28,7 +38,7 @@
                     <input wire:model.live="company_name" 
                            type="text" 
                            id="company_name" 
-                           class="block w-full pl-9 pr-3 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation"
+                           class="block w-full pl-9 pr-3 py-2.5 sm:py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#d983e4]/50 focus:border-[#d983e4] text-sm sm:text-base touch-manipulation transition-all bg-white hover:border-gray-400"
                            placeholder="Enter company name"
                            value="{{ $company_name }}"
                            autocomplete="off">
@@ -57,7 +67,7 @@
 
             <!-- Position -->
             <div>
-                <label for="position" class="block text-sm font-medium text-gray-700 mb-1">
+                <label for="position" class="block text-sm font-semibold text-gray-900 mb-2">
                     Position <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
@@ -69,7 +79,7 @@
                     <input wire:model.live="position" 
                            type="text" 
                            id="position" 
-                           class="block w-full pl-9 pr-3 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation"
+                           class="block w-full pl-9 pr-3 py-2.5 sm:py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#d983e4]/50 focus:border-[#d983e4] text-sm sm:text-base touch-manipulation transition-all bg-white hover:border-gray-400"
                            placeholder="Enter position title"
                            value="{{ $position }}"
                            autocomplete="off">
@@ -98,8 +108,8 @@
         </div>
 
         <!-- Row 2: Location -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">
+        <div class="pt-2">
+            <label class="block text-sm font-semibold text-gray-900 mb-2">
                 Location <span class="text-red-500">*</span>
             </label>
             
@@ -115,7 +125,7 @@
                         </svg>
                     </div>
                     <select wire:model="selectedProvince" 
-                            class="block w-full pl-9 pr-8 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation appearance-none">
+                            class="block w-full pl-9 pr-8 py-2.5 sm:py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#d983e4]/50 focus:border-[#d983e4] text-sm sm:text-base touch-manipulation appearance-none transition-all bg-white hover:border-gray-400">
                         <option value="" disabled>Select Province</option>
                         @foreach($provinces as $province => $cities)
                             <option value="{{ $province }}">{{ $province }}</option>
@@ -136,7 +146,7 @@
                         </svg>
                     </div>
                     <select wire:model="selectedCity" 
-                            class="block w-full pl-9 pr-8 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation appearance-none {{ empty($selectedProvince) ? 'opacity-50 cursor-not-allowed' : '' }}"
+                            class="block w-full pl-9 pr-8 py-2.5 sm:py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#d983e4]/50 focus:border-[#d983e4] text-sm sm:text-base touch-manipulation appearance-none transition-all bg-white hover:border-gray-400 {{ empty($selectedProvince) ? 'opacity-50 cursor-not-allowed' : '' }}"
                             {{ empty($selectedProvince) ? 'disabled' : '' }}>
                         <option value="" disabled>Select City</option>
                         @if(!empty($selectedProvince) && isset($provinces[$selectedProvince]))
@@ -263,11 +273,21 @@
             @enderror
         </div>
 
+        <!-- Section: Application Details -->
+        <div class="border-t border-gray-200 pt-5 mt-5">
+            <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <svg class="w-5 h-5 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                Application Details
+            </h3>
+        </div>
+
         <!-- Row 3: Platform -->
-        <div class="grid grid-cols-1 gap-4">
+        <div class="grid grid-cols-1 gap-4 sm:gap-5">
             <!-- Platform -->
             <div>
-                <label for="platform" class="block text-sm font-medium text-gray-700 mb-1">
+                <label for="platform" class="block text-sm font-semibold text-gray-900 mb-2">
                     Platform <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
@@ -340,10 +360,10 @@
         @endif
 
         <!-- Row 4: Application Details -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             <!-- Application Status -->
             <div>
-                <label for="application_status" class="block text-sm font-medium text-gray-700 mb-1">
+                <label for="application_status" class="block text-sm font-semibold text-gray-900 mb-2">
                     Application Status <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
@@ -372,7 +392,7 @@
 
             <!-- Recruitment Stage -->
             <div>
-                <label for="recruitment_stage" class="block text-sm font-medium text-gray-700 mb-1">
+                <label for="recruitment_stage" class="block text-sm font-semibold text-gray-900 mb-2">
                     Recruitment Stage <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
@@ -401,7 +421,7 @@
 
             <!-- Career Level -->
             <div>
-                <label for="career_level" class="block text-sm font-medium text-gray-700 mb-1">
+                <label for="career_level" class="block text-sm font-semibold text-gray-900 mb-2">
                     Career Level <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
@@ -430,11 +450,11 @@
         </div>
 
         <!-- Row 5: Platform Link & Application Date -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
             <!-- Platform Link -->
             <div>
-                <label for="platform_link" class="block text-sm font-medium text-gray-700 mb-1">
-                    Platform Link <span class="text-gray-500 text-sm font-normal">(Optional)</span>
+                <label for="platform_link" class="block text-sm font-semibold text-gray-900 mb-2">
+                    Platform Link <span class="text-gray-500 text-xs font-normal">(Optional)</span>
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -456,7 +476,7 @@
 
             <!-- Application Date -->
             <div>
-                <label for="application_date" class="block text-sm font-medium text-gray-700 mb-1">
+                <label for="application_date" class="block text-sm font-semibold text-gray-900 mb-2">
                     Application Date <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
@@ -481,20 +501,21 @@
 
         <!-- Interview Details Section (Only visible when recruitment_stage = HR or User Interview) -->
         @if(in_array($recruitment_stage, ['HR - Interview', 'User - Interview']))
-        <div class="bg-purple-50 border-2 border-purple-200 rounded-lg p-4 space-y-4">
-            <div class="flex items-center space-x-2 mb-2">
-                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                </svg>
-                <h3 class="text-sm font-semibold text-purple-900">Interview Details</h3>
-                <span class="text-xs text-purple-600 italic">(will appear in Interview Calendar)</span>
-            </div>
+        <div class="border-t border-gray-200 pt-5 mt-5">
+            <div class="bg-gradient-to-r from-purple-50 to-indigo-50 border-l-4 border-[#d983e4] rounded-lg p-4 sm:p-5 space-y-4 sm:space-y-5">
+                <div class="flex items-center gap-2 mb-3">
+                    <svg class="w-5 h-5 text-[#d983e4] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-900">Interview Details</h3>
+                    <span class="text-xs text-gray-600 italic hidden sm:inline">(will appear in Interview Calendar)</span>
+                </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                 <!-- Interview Date & Time -->
                 <div>
-                    <label for="interview_date" class="block text-sm font-medium text-gray-700 mb-1">
-                        Interview Date & Time * <span class="text-xs text-gray-500">(WIB)</span>
+                    <label for="interview_date" class="block text-sm font-semibold text-gray-900 mb-2">
+                        Interview Date & Time <span class="text-red-500">*</span> <span class="text-xs text-gray-500 font-normal">(WIB)</span>
                     </label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -515,8 +536,8 @@
 
                 <!-- Interview Type -->
                 <div>
-                    <label for="interview_type" class="block text-sm font-medium text-gray-700 mb-1">
-                        Interview Type *
+                    <label for="interview_type" class="block text-sm font-semibold text-gray-900 mb-2">
+                        Interview Type <span class="text-red-500">*</span>
                     </label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -546,8 +567,8 @@
 
             <!-- Interview Location -->
             <div>
-                <label for="interview_location" class="block text-sm font-medium text-gray-700 mb-1">
-                    Interview Location / Link
+                <label for="interview_location" class="block text-sm font-semibold text-gray-900 mb-2">
+                    Interview Location / Link <span class="text-gray-500 text-xs font-normal">(Optional)</span>
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -570,8 +591,8 @@
 
             <!-- Interview Notes -->
             <div>
-                <label for="interview_notes" class="block text-sm font-medium text-gray-700 mb-1">
-                    Interview Notes
+                <label for="interview_notes" class="block text-sm font-semibold text-gray-900 mb-2">
+                    Interview Notes <span class="text-gray-500 text-xs font-normal">(Optional)</span>
                 </label>
                 <div class="relative">
                     <div class="absolute top-3 left-3 flex items-start pointer-events-none">
@@ -593,9 +614,9 @@
         @endif
 
         <!-- Row 6: Notes -->
-        <div>
-            <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">
-                Notes <span class="text-gray-500 text-sm font-normal">(Optional)</span>
+        <div class="border-t border-gray-200 pt-5 mt-5">
+            <label for="notes" class="block text-sm font-semibold text-gray-900 mb-2">
+                Additional Notes <span class="text-gray-500 text-xs font-normal">(Optional)</span>
             </label>
             <div class="relative">
                 <div class="absolute top-3 left-3 flex items-start pointer-events-none">
@@ -615,18 +636,18 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-end space-y-3 sm:space-y-0 sm:space-x-3 pt-4">
+        <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-6 border-t border-gray-200 mt-6">
             @if(!$isEditing)
                 <button type="button" 
                         wire:click="resetForm" 
-                        class="w-full sm:w-auto px-6 py-3 sm:py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200 touch-manipulation">
+                        class="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-200 touch-manipulation shadow-sm hover:shadow">
                     Reset
                 </button>
             @endif
             <button type="submit" 
-                    class="w-full sm:w-auto px-6 py-3 sm:py-2 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors duration-200 touch-manipulation">
-                <div class="flex items-center justify-center space-x-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-[#d983e4] to-[#4e71c5] hover:from-[#c973d4] hover:to-[#3d5fa3] rounded-xl transition-all duration-200 touch-manipulation shadow-lg hover:shadow-xl transform hover:scale-[1.02]">
+                <div class="flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                     <span>{{ $isEditing ? 'Update Application' : 'Add Application' }}</span>

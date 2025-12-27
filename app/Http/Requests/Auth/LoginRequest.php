@@ -41,15 +41,50 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        $credentials = $this->only('email', 'password');
+        
+        // Log login attempt for debugging
+        \Log::info('Login attempt', [
+            'email' => $credentials['email'],
+            'ip' => $this->ip()
+        ]);
+
+        // Check if user exists first
+        $user = \App\Models\User::where('email', $credentials['email'])->first();
+        
+        if (!$user) {
             RateLimiter::hit($this->throttleKey());
 
+            \Log::warning('Login failed - User not found', [
+                'email' => $credentials['email'],
+                'ip' => $this->ip()
+            ]);
+
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => 'Email atau password yang Anda masukkan salah.',
+            ]);
+        }
+
+        if (! Auth::attempt($credentials, $this->boolean('remember'))) {
+            RateLimiter::hit($this->throttleKey());
+
+            \Log::warning('Login failed - Invalid password', [
+                'email' => $credentials['email'],
+                'user_id' => $user->id,
+                'ip' => $this->ip()
+            ]);
+
+            throw ValidationException::withMessages([
+                'email' => 'Email atau password yang Anda masukkan salah.',
             ]);
         }
 
         RateLimiter::clear($this->throttleKey());
+        
+        \Log::info('Login successful', [
+            'user_id' => Auth::id(),
+            'email' => $credentials['email']
+        ]);
     }
 
     /**
@@ -59,13 +94,20 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
-            return;
-        }
-
+        $key = $this->throttleKey();
+        $maxAttempts = 5;
+        $decayMinutes = 1; // 1 menit
+        
+        if (RateLimiter::tooManyAttempts($key, $maxAttempts)) {
         event(new Lockout($this));
 
-        $seconds = RateLimiter::availableIn($this->throttleKey());
+            $seconds = RateLimiter::availableIn($key);
+
+            \Log::warning('Login rate limited', [
+                'email' => $this->input('email'),
+                'ip' => $this->ip(),
+                'seconds_remaining' => $seconds
+            ]);
 
         throw ValidationException::withMessages([
             'email' => trans('auth.throttle', [
@@ -73,6 +115,7 @@ class LoginRequest extends FormRequest
                 'minutes' => ceil($seconds / 60),
             ]),
         ]);
+        }
     }
 
     /**

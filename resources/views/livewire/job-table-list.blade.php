@@ -1,56 +1,30 @@
 <div>
-    <div class="space-y-4 sm:space-y-6">
-        <!-- Advanced Search and Filter Bar -->
+    <div class="space-y-3">
+        <!-- Compact Search and Filter Bar -->
         <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] overflow-hidden">
-            <!-- Header with Toggle -->
-            <div class="p-3 sm:p-4 border-b border-gray-100">
-                <div class="flex items-center justify-between gap-3">
-                    <div class="flex-1">
-                        <!-- Search Input -->
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                </svg>
-                            </div>
-                            <input wire:model.live.debounce.300ms="search" 
-                                   type="text" 
-                                   placeholder="Search company, position, location..." 
-                                   class="block w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
+            <div class="p-3">
+                <!-- Search Input -->
+                <div class="mb-2.5">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
                         </div>
+                        <input wire:model.live.debounce.300ms="search" 
+                               type="text" 
+                               placeholder="Search company, position, location..." 
+                               class="block w-full pl-8 pr-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
                     </div>
-                    
-                    <!-- Mobile: Advanced Filters Toggle -->
-                    <button wire:click="toggleAdvancedFilters" 
-                            class="sm:hidden px-3 py-2 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg transition-colors flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
-                        </svg>
-                        <span>Filters</span>
-                        @if($statusFilter || $platformFilter || $careerLevelFilter || $recruitmentStageFilter || $locationFilter || $dateFromFilter || $dateToFilter)
-                            <span class="px-1.5 py-0.5 text-xs font-bold bg-purple-600 text-white rounded-full">{{ 
-                                ($statusFilter ? 1 : 0) + 
-                                ($platformFilter ? 1 : 0) + 
-                                ($careerLevelFilter ? 1 : 0) + 
-                                ($recruitmentStageFilter ? 1 : 0) + 
-                                ($locationFilter ? 1 : 0) + 
-                                ($dateFromFilter ? 1 : 0) + 
-                                ($dateToFilter ? 1 : 0) 
-                            }}</span>
-                        @endif
-                    </button>
                 </div>
-            </div>
 
-            <!-- Filters Panel (Collapsible on Mobile) -->
-            <div class="{{ $showAdvancedFilters ? 'block' : 'hidden' }} sm:block p-4 border-t border-gray-100">
-                <!-- Main Filters Row -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 mb-3">
+                <!-- Filters Row - Desktop Only -->
+                <div class="hidden sm:grid grid-cols-4 gap-2.5 mb-2.5">
                     <!-- Status Filter -->
                     <div>
-                        <label class="block text-xs font-medium text-gray-700 mb-1.5">Status</label>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Status</label>
                         <select wire:model.live="statusFilter" 
-                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
+                                class="block w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
                             <option value="">All Status</option>
                             @foreach($statusOptions as $status)
                                 <option value="{{ $status }}">{{ $status }}</option>
@@ -60,9 +34,9 @@
 
                     <!-- Platform Filter -->
                     <div>
-                        <label class="block text-xs font-medium text-gray-700 mb-1.5">Platform</label>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Platform</label>
                         <select wire:model.live="platformFilter" 
-                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
+                                class="block w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
                             <option value="">All Platforms</option>
                             @foreach($platformOptions as $platform)
                                 <option value="{{ $platform }}">{{ $platform }}</option>
@@ -70,23 +44,11 @@
                         </select>
                     </div>
 
-                    <!-- Career Level Filter -->
-                    <div>
-                        <label class="block text-xs font-medium text-gray-700 mb-1.5">Level</label>
-                        <select wire:model.live="careerLevelFilter" 
-                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
-                            <option value="">All Levels</option>
-                            @foreach($careerLevelOptions as $level)
-                                <option value="{{ $level }}">{{ $level }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
                     <!-- Recruitment Stage Filter -->
                     <div>
-                        <label class="block text-xs font-medium text-gray-700 mb-1.5">Stage</label>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Stage</label>
                         <select wire:model.live="recruitmentStageFilter" 
-                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
+                                class="block w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
                             <option value="">All Stages</option>
                             @foreach($recruitmentStageOptions as $stage)
                                 <option value="{{ $stage }}">{{ $stage }}</option>
@@ -94,70 +56,56 @@
                         </select>
                     </div>
 
-                    <!-- Location Filter -->
+                    <!-- Per Page - Compact -->
                     <div>
-                        <label class="block text-xs font-medium text-gray-700 mb-1.5">Location</label>
-                        <input wire:model.live.debounce.300ms="locationFilter" 
-                               type="text" 
-                               placeholder="City, Region..." 
-                               class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
-                    </div>
-
-                    <!-- Items Per Page (Desktop) -->
-                    <div class="hidden sm:block">
-                        <label class="block text-xs font-medium text-gray-700 mb-1.5">Per Page</label>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Per Page</label>
                         <select wire:model.live="perPage" 
-                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
+                                class="block w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
                             <option value="10">10</option>
                             <option value="20">20</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
                         </select>
-                    </div>
-
-                    <!-- Date From -->
-                    <div>
-                        <label class="block text-xs font-medium text-gray-700 mb-1.5">From Date</label>
-                        <input wire:model.live="dateFromFilter" 
-                               type="date" 
-                               class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
-                    </div>
-
-                    <!-- Date To -->
-                    <div>
-                        <label class="block text-xs font-medium text-gray-700 mb-1.5">To Date</label>
-                        <input wire:model.live="dateToFilter" 
-                               type="date" 
-                               class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
                     </div>
                 </div>
 
-                <!-- Action Buttons Row -->
-                <div class="flex items-center justify-between gap-3 pt-3 border-t border-gray-100">
-                    <div class="flex items-center gap-2">
-                        <button wire:click="clearFilters" 
-                                class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 border border-gray-200 rounded-lg transition-colors">
-                            Clear Filters
-                        </button>
-                        @if($statusFilter || $platformFilter || $careerLevelFilter || $recruitmentStageFilter || $locationFilter || $dateFromFilter || $dateToFilter)
-                            <button wire:click="toggleAdvancedFilters" 
-                                    class="sm:hidden px-4 py-2 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors">
-                                Apply
-                            </button>
+                <!-- Action Buttons - Compact Single Row -->
+                <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-gray-100">
+                    <!-- Mobile Filter Icon Button -->
+                    <button onclick="openFilterModal()" 
+                            class="sm:hidden relative p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                        </svg>
+                        @if($statusFilter || $platformFilter || $recruitmentStageFilter)
+                            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
+                                <span class="text-[8px] font-bold text-white">{{ ($statusFilter ? 1 : 0) + ($platformFilter ? 1 : 0) + ($recruitmentStageFilter ? 1 : 0) }}</span>
+                            </span>
                         @endif
-                    </div>
-                    
-                    <!-- Mobile: Items Per Page -->
-                    <div class="sm:hidden">
-                        <label class="block text-xs font-medium text-gray-700 mb-1.5">Per Page</label>
-                        <select wire:model.live="perPage" 
-                                class="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                    </div>
+                    </button>
+                    <button wire:click="clearFilters" 
+                            class="hidden sm:inline-flex px-3 py-1.5 text-xs font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 border border-gray-200 rounded-lg transition-colors whitespace-nowrap">
+                        Clear Filters
+                    </button>
+                    <button wire:click="toggleArchived" 
+                            class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap {{ $showArchived ? 'bg-purple-600 text-white hover:bg-purple-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200' }}">
+                        <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                        </svg>
+                        <span class="hidden sm:inline">{{ $showArchived ? 'Show Active' : 'Show Archived' }}</span>
+                        <span class="sm:hidden">{{ $showArchived ? 'Active' : 'Archived' }}</span>
+                    </button>
+                    @if($showArchived && $archivedCount > 0)
+                        <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-gray-700 bg-gray-50 rounded-lg border border-gray-200 whitespace-nowrap">
+                            <span class="font-bold text-purple-600">{{ $archivedCount }}</span>
+                            <span class="hidden sm:inline">Archived</span>
+                        </span>
+                    @endif
+                    @if($statusFilter || $platformFilter || $recruitmentStageFilter)
+                        <span class="hidden sm:inline-flex ml-auto px-2 py-1 text-xs font-medium text-purple-600 bg-purple-50 rounded-lg">
+                            {{ ($statusFilter ? 1 : 0) + ($platformFilter ? 1 : 0) + ($recruitmentStageFilter ? 1 : 0) }} active
+                        </span>
+                    @endif
                 </div>
             </div>
         </div>
@@ -297,12 +245,14 @@
                                 </span>
                             </td>
                             <td class="px-4 py-2.5 whitespace-nowrap text-center text-sm text-gray-600">
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium"
+                                      style="background-color: {{ $this->getStageColor($job->recruitment_stage ?? 'Applied') }}20; color: {{ $this->getStageColor($job->recruitment_stage ?? 'Applied') }};">
                                     {{ $job->recruitment_stage ?? 'Applied' }}
                                 </span>
                             </td>
                             <td class="px-4 py-2.5 whitespace-nowrap text-center text-sm text-gray-600">
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium"
+                                      style="background-color: {{ $this->getCareerLevelColor($job->career_level ?? 'Full Time') }}20; color: {{ $this->getCareerLevelColor($job->career_level ?? 'Full Time') }};">
                                     {{ $job->career_level ?? 'Full Time' }}
                                 </span>
                             </td>
@@ -420,7 +370,8 @@
                                     </span>
                                 </td>
                                 <td class="px-2 py-2 whitespace-nowrap">
-                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium"
+                                          style="background-color: {{ $this->getStageColor($job->recruitment_stage ?? 'Applied') }}20; color: {{ $this->getStageColor($job->recruitment_stage ?? 'Applied') }};">
                                         {{ $job->recruitment_stage ?? 'Applied' }}
                                     </span>
                                 </td>
@@ -495,7 +446,7 @@
         @endif
     </div>
 
-    <!-- Delete Confirmation Modal -->
+        <!-- Delete Confirmation Modal -->
         <div id="deleteModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-[70] transition-all duration-300">
             <div class="flex items-center justify-center min-h-screen p-4">
                 <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-95" id="deleteModalContent">
@@ -537,9 +488,8 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
+        <script>
 let currentDeleteJobId = null;
 let currentDeleteJobCompany = '';
 let currentDeleteJobPosition = '';
@@ -611,7 +561,151 @@ document.addEventListener('click', function(e) {
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         closeDeleteModal();
+        closeFilterModal();
+    }
+});
+
+// Filter Modal Functions
+function openFilterModal() {
+    const modal = document.getElementById('filterModal');
+    const modalContent = document.getElementById('filterModalContent');
+    
+    modal.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+    
+    setTimeout(() => {
+        modalContent.classList.remove('scale-95');
+        modalContent.classList.add('scale-100');
+    }, 10);
+}
+
+function closeFilterModal() {
+    const modal = document.getElementById('filterModal');
+    const modalContent = document.getElementById('filterModalContent');
+    
+    modalContent.classList.remove('scale-100');
+    modalContent.classList.add('scale-95');
+    
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }, 300);
+}
+
+function applyFilters() {
+    const statusFilter = document.getElementById('modalStatusFilter').value;
+    const platformFilter = document.getElementById('modalPlatformFilter').value;
+    const recruitmentStageFilter = document.getElementById('modalRecruitmentStageFilter').value;
+    const perPage = document.getElementById('modalPerPage').value;
+    
+    @this.set('statusFilter', statusFilter);
+    @this.set('platformFilter', platformFilter);
+    @this.set('recruitmentStageFilter', recruitmentStageFilter);
+    @this.set('perPage', parseInt(perPage));
+    
+    closeFilterModal();
+}
+
+function clearFilterModal() {
+    document.getElementById('modalStatusFilter').value = '';
+    document.getElementById('modalPlatformFilter').value = '';
+    document.getElementById('modalRecruitmentStageFilter').value = '';
+    document.getElementById('modalPerPage').value = '20';
+    
+    @this.call('clearFilters');
+    closeFilterModal();
+}
+
+// Close filter modal when clicking outside
+document.addEventListener('click', function(e) {
+    if (e.target.id === 'filterModal') {
+        closeFilterModal();
     }
 });
 </script>
+
+        <!-- Mobile Filter Modal -->
+        <div id="filterModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-[60] transition-all duration-300">
+            <div class="flex items-center justify-center min-h-screen p-4">
+                <div id="filterModalContent" class="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-95 max-h-[90vh] overflow-hidden flex flex-col">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-[#d983e4] to-[#4e71c5] p-4 sm:p-6 text-white flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                            </svg>
+                            <h3 class="text-lg sm:text-xl font-bold">Filters</h3>
+                        </div>
+                        <button onclick="closeFilterModal()" class="p-2 hover:bg-white/10 rounded-xl transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Filter Content -->
+                    <div class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
+                        <!-- Status Filter -->
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-900 mb-2">Status</label>
+                            <select id="modalStatusFilter" 
+                                    class="block w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#d983e4]/50 focus:border-[#d983e4] text-sm bg-white">
+                                <option value="">All Status</option>
+                                @foreach($statusOptions as $status)
+                                    <option value="{{ $status }}" {{ $statusFilter === $status ? 'selected' : '' }}>{{ $status }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Platform Filter -->
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-900 mb-2">Platform</label>
+                            <select id="modalPlatformFilter" 
+                                    class="block w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#d983e4]/50 focus:border-[#d983e4] text-sm bg-white">
+                                <option value="">All Platforms</option>
+                                @foreach($platformOptions as $platform)
+                                    <option value="{{ $platform }}" {{ $platformFilter === $platform ? 'selected' : '' }}>{{ $platform }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Recruitment Stage Filter -->
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-900 mb-2">Stage</label>
+                            <select id="modalRecruitmentStageFilter" 
+                                    class="block w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#d983e4]/50 focus:border-[#d983e4] text-sm bg-white">
+                                <option value="">All Stages</option>
+                                @foreach($recruitmentStageOptions as $stage)
+                                    <option value="{{ $stage }}" {{ $recruitmentStageFilter === $stage ? 'selected' : '' }}>{{ $stage }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Per Page -->
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-900 mb-2">Per Page</label>
+                            <select id="modalPerPage" 
+                                    class="block w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#d983e4]/50 focus:border-[#d983e4] text-sm bg-white">
+                                <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
+                                <option value="20" {{ $perPage == 20 ? 'selected' : '' }}>20</option>
+                                <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Footer Actions -->
+                    <div class="p-4 sm:p-6 border-t border-gray-200 bg-gray-50 space-y-2">
+                        <button onclick="clearFilterModal()" 
+                                class="w-full px-4 py-3 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors">
+                            Clear Filters
+                        </button>
+                        <button onclick="applyFilters()" 
+                                class="w-full px-4 py-3 text-sm font-semibold text-white bg-gradient-to-r from-[#d983e4] to-[#4e71c5] rounded-xl hover:shadow-lg transition-all">
+                            Apply Filters
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>

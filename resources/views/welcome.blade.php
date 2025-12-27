@@ -101,6 +101,136 @@
                 animation: holographic 4s ease-in-out infinite;
             }
 
+            /* Enhanced Scroll Animations - Smooth & Modern */
+            .scroll-fade-in {
+                opacity: 0;
+                transform: translateY(40px);
+                transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                            transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .scroll-fade-in.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .scroll-slide-left {
+                opacity: 0;
+                transform: translateX(-50px);
+                transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                            transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .scroll-slide-left.visible {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .scroll-slide-right {
+                opacity: 0;
+                transform: translateX(50px);
+                transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                            transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .scroll-slide-right.visible {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .scroll-scale {
+                opacity: 0;
+                transform: scale(0.85);
+                transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                            transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+
+            .scroll-scale.visible {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            .scroll-rotate {
+                opacity: 0;
+                transform: translateY(30px) rotate(-5deg);
+                transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                            transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .scroll-rotate.visible {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+
+            .scroll-blur {
+                opacity: 0;
+                filter: blur(10px);
+                transform: translateY(20px);
+                transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                            transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                            filter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .scroll-blur.visible {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateY(0);
+            }
+
+            .scroll-bounce {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+                transition: opacity 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55), 
+                            transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+
+            .scroll-bounce.visible {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+            .scroll-flip {
+                opacity: 0;
+                transform: perspective(1000px) rotateX(20deg) translateY(30px);
+                transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                            transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .scroll-flip.visible {
+                opacity: 1;
+                transform: perspective(1000px) rotateX(0deg) translateY(0);
+            }
+
+            /* Stagger animations for grid items */
+            .scroll-stagger > * {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                            transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .scroll-stagger.visible > *:nth-child(1) { transition-delay: 0.1s; }
+            .scroll-stagger.visible > *:nth-child(2) { transition-delay: 0.2s; }
+            .scroll-stagger.visible > *:nth-child(3) { transition-delay: 0.3s; }
+            .scroll-stagger.visible > *:nth-child(4) { transition-delay: 0.4s; }
+            .scroll-stagger.visible > *:nth-child(5) { transition-delay: 0.5s; }
+            .scroll-stagger.visible > *:nth-child(6) { transition-delay: 0.6s; }
+            .scroll-stagger.visible > *:nth-child(7) { transition-delay: 0.7s; }
+            .scroll-stagger.visible > *:nth-child(8) { transition-delay: 0.8s; }
+
+            .scroll-stagger.visible > * {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* Delay classes */
+            .scroll-delay-100 { transition-delay: 0.1s; }
+            .scroll-delay-200 { transition-delay: 0.2s; }
+            .scroll-delay-300 { transition-delay: 0.3s; }
+            .scroll-delay-400 { transition-delay: 0.4s; }
+            .scroll-delay-500 { transition-delay: 0.5s; }
+            .scroll-delay-600 { transition-delay: 0.6s; }
+
             .morphing-blob {
                 border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
                 animation: morph 8s ease-in-out infinite;
@@ -952,12 +1082,12 @@
                             </a>
                         @else
                             <a href="{{ route('login') }}" 
-                               class="px-3 sm:px-4 py-2 text-gray-700 hover:text-[#4e71c5] text-xs sm:text-sm font-medium transition-colors duration-200 rounded-lg hover:bg-gray-50">
+                               class="px-3 sm:px-4 py-2 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white rounded-lg text-xs sm:text-sm font-semibold hover:from-[#c973d4] hover:to-[#3d5ba3] hover:shadow-md transition-all duration-200">
                                 Login
                             </a>
                             @if (Route::has('register'))
                                 <a href="{{ route('register') }}" 
-                                   class="px-3 sm:px-4 py-2 bg-[#4e71c5] text-white rounded-lg text-xs sm:text-sm font-semibold hover:bg-[#3d5ba3] hover:shadow-md transition-all duration-200">
+                                   class="px-3 sm:px-4 py-2 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] text-white rounded-lg text-xs sm:text-sm font-semibold hover:from-[#c973d4] hover:to-[#3d5ba3] hover:shadow-md transition-all duration-200">
                                     <span class="hidden sm:inline">Daftar Gratis</span>
                                     <span class="sm:hidden">Daftar</span>
                                 </a>
@@ -985,18 +1115,18 @@
                 <!-- Left Side - Text Content -->
                 <div class="text-center lg:text-left space-y-6">
                     <!-- Badge -->
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200/50 text-xs font-medium text-gray-700 mb-6 shadow-sm hover:shadow-md transition-all duration-300">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200/50 text-xs font-medium text-gray-700 mb-2 shadow-sm hover:shadow-md transition-all duration-300 scroll-bounce">
                         <span class="w-1.5 h-1.5 bg-gradient-to-r from-[#d983e4] to-[#4e71c5] rounded-full pulse-animation"></span>
                         <span>#1 Job Tracking Platform Indonesia</span>
                     </div>
                     
                     <!-- Main Heading -->
-                    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 mb-4 leading-tight">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 mb-4 leading-tight scroll-fade-in">
                         Kelola <span class="gradient-text-animated">Rekrutmen</span> Lebih Cerdas
                     </h1>
                     
                     <!-- Subheading -->
-                    <p class="text-base sm:text-lg md:text-xl text-gray-600 mb-8 max-w-xl mx-auto lg:mx-0">
+                    <p class="text-base sm:text-lg md:text-xl text-gray-600 mb-8 max-w-xl mx-auto lg:mx-0 scroll-blur">
                         Platform pelacakan lamaran kerja yang 
                         <span class="font-semibold text-[#d983e4]">sederhana</span>, 
                         <span class="font-semibold text-[#4e71c5]">efektif</span>, dan 
@@ -1085,7 +1215,7 @@
     <section class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
-            <div class="text-center mb-12">
+            <div class="text-center mb-12 scroll-fade-in">
                 <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
                     Fitur-Fitur <span class="text-[#d983e4]">TraKerja</span>
                 </h2>
@@ -1095,9 +1225,9 @@
             </div>
             
             <!-- Features Grid -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 scroll-stagger">
                 <!-- Feature 1 -->
-                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#d983e4]/50 transition-colors">
+                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#d983e4]/50 transition-colors scroll-fade-in scroll-delay-100">
                     <div class="mb-4">
                         <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2z"></path>
@@ -1108,7 +1238,7 @@
                 </div>
                 
                 <!-- Feature 2 -->
-                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#4e71c5]/50 transition-colors">
+                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#4e71c5]/50 transition-colors scroll-fade-in scroll-delay-200">
                     <div class="mb-4">
                         <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
@@ -1119,7 +1249,7 @@
                 </div>
                 
                 <!-- Feature 3 -->
-                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#d983e4]/50 transition-colors">
+                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#d983e4]/50 transition-colors scroll-fade-in scroll-delay-300">
                     <div class="mb-4">
                         <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -1130,7 +1260,7 @@
                 </div>
                 
                 <!-- Feature 4 -->
-                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#4e71c5]/50 transition-colors">
+                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#4e71c5]/50 transition-colors scroll-fade-in scroll-delay-100">
                     <div class="mb-4">
                         <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -1141,7 +1271,7 @@
                 </div>
                 
                 <!-- Feature 5 -->
-                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#d983e4]/50 transition-colors">
+                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#d983e4]/50 transition-colors scroll-fade-in scroll-delay-200">
                     <div class="mb-4">
                         <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
@@ -1152,7 +1282,7 @@
                 </div>
                 
                 <!-- Feature 6 -->
-                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#4e71c5]/50 transition-colors">
+                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#4e71c5]/50 transition-colors scroll-fade-in scroll-delay-300">
                     <div class="mb-4">
                         <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
@@ -1175,7 +1305,7 @@
         <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
                 <!-- Problem Side -->
-                <div class="space-y-6 md:space-y-8">
+                <div class="space-y-6 md:space-y-8 scroll-slide-left">
                     <div>
                         <div class="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-red-100 text-red-700 text-xs sm:text-sm font-medium mb-4">
                             <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1229,7 +1359,7 @@
                 </div>
                 
                 <!-- Solution Side -->
-                <div class="space-y-6 md:space-y-8">
+                <div class="space-y-6 md:space-y-8 scroll-slide-right">
                     <div>
                         <div class="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-green-100 text-green-700 text-xs sm:text-sm font-medium mb-4">
                             <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1285,83 +1415,120 @@
         </div>
     </section>
 
-    <!-- Benefits Section -->
-    <section class="py-12 sm:py-16 bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-8 md:mb-10">
-                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-3">
-                    Mengapa Pilih <span class="text-[#d983e4]">TraKerja?</span>
+    <!-- Benefits Section - Compact & Soft Design -->
+    <section class="py-12 sm:py-16 bg-gray-50 relative overflow-hidden">
+        <!-- Subtle Background -->
+        <div class="absolute inset-0">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-[#d983e4]/3 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-[#4e71c5]/3 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center mb-8 md:mb-10 scroll-fade-in">
+                <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/60 backdrop-blur-sm border border-gray-200/60 text-xs font-medium text-gray-600 mb-3">
+                    <span class="w-1.5 h-1.5 bg-[#4e71c5] rounded-full mr-2"></span>
+                    Keunggulan TraKerja
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+                    Mengapa Pilih <span class="text-[#4e71c5]">TraKerja?</span>
                 </h2>
-                <p class="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
+                <p class="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
                     Platform yang dirancang khusus untuk pencari kerja Indonesia dengan fitur-fitur yang benar-benar dibutuhkan
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Benefit 1 -->
-                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#d983e4]/50 transition-colors">
-                    <div class="mb-4">
-                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
+            <!-- Compact Staggered Layout -->
+            <div class="space-y-4 md:space-y-5">
+                <!-- Row 1: Featured Card - Compact -->
+                <div class="group relative scroll-fade-in scroll-delay-100">
+                    <div class="relative bg-gradient-to-r from-[#d983e4]/8 via-[#4e71c5]/8 to-[#d983e4]/8 rounded-xl p-5 md:p-6 border border-[#d983e4]/20 hover:border-[#d983e4]/30 hover:shadow-lg transition-all duration-300 overflow-hidden">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-[#d983e4]/5 rounded-bl-full"></div>
+                        <div class="relative z-10 flex items-center gap-4 md:gap-5">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-[#d983e4] to-[#4e71c5] flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-1.5">Mulai Gratis, Upgrade Kapan Saja</h3>
+                                <p class="text-sm text-gray-600 leading-relaxed">Versi gratis sudah lengkap untuk kebutuhan tracking dasar. Upgrade ke Premium untuk fitur advanced seperti unlimited lamaran, advanced analytics, dan priority support.</p>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Mulai Gratis, Upgrade Kapan Saja</h3>
-                    <p class="text-sm text-gray-600">Versi gratis sudah lengkap untuk kebutuhan tracking dasar. Upgrade ke Premium untuk fitur advanced seperti unlimited lamaran, advanced analytics, dan priority support.</p>
                 </div>
                 
-                <!-- Benefit 2 -->
-                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#4e71c5]/50 transition-colors">
-                    <div class="mb-4">
-                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
+                <!-- Row 2: Two Cards -->
+                <div class="grid md:grid-cols-2 gap-4 md:gap-5">
+                    <!-- Card 2 -->
+                    <div class="group relative scroll-slide-left scroll-delay-200">
+                        <div class="relative h-full bg-white rounded-xl p-5 border border-gray-200 hover:border-[#4e71c5]/30 hover:shadow-md transition-all duration-300">
+                            <div class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-[#4e71c5]/10 mb-3 group-hover:scale-105 transition-transform duration-300">
+                                <svg class="w-5 h-5 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 mb-2">Setup 2 Menit</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">Tidak perlu setup rumit. Daftar, login, langsung bisa mulai tracking lamaran kerja Anda.</p>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Setup 2 Menit</h3>
-                    <p class="text-sm text-gray-600">Tidak perlu setup rumit. Daftar, login, langsung bisa mulai tracking lamaran kerja Anda.</p>
+                    
+                    <!-- Card 3 -->
+                    <div class="group relative scroll-slide-right scroll-delay-300">
+                        <div class="relative h-full bg-white rounded-xl p-5 border border-gray-200 hover:border-green-400/30 hover:shadow-md transition-all duration-300">
+                            <div class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-green-50 mb-3 group-hover:scale-105 transition-transform duration-300">
+                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 mb-2">Data Aman</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">Data Anda dienkripsi dan disimpan dengan aman. Privasi dan keamanan adalah prioritas utama kami.</p>
+                        </div>
+                    </div>
                 </div>
                 
-                <!-- Benefit 3 -->
-                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#d983e4]/50 transition-colors">
-                    <div class="mb-4">
-                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                        </svg>
+                <!-- Row 3: Three Cards -->
+                <div class="grid md:grid-cols-3 gap-4 md:gap-5">
+                    <!-- Card 4 -->
+                    <div class="group relative scroll-scale scroll-delay-100">
+                        <div class="relative h-full bg-white rounded-xl p-5 border border-gray-200 hover:border-purple-300/30 hover:shadow-md transition-all duration-300">
+                            <div class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-purple-50 mb-3 group-hover:scale-105 transition-transform duration-300">
+                                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 mb-2">Analytics Cerdas</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">Dapatkan insight tentang performa lamaran Anda. Platform mana yang paling efektif dan strategi apa yang berhasil.</p>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Data Aman</h3>
-                    <p class="text-sm text-gray-600">Data Anda dienkripsi dan disimpan dengan aman. Privasi dan keamanan adalah prioritas utama kami.</p>
-                </div>
-                
-                <!-- Benefit 4 -->
-                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#4e71c5]/50 transition-colors">
-                    <div class="mb-4">
-                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
+                    
+                    <!-- Card 5 -->
+                    <div class="group relative scroll-scale scroll-delay-200">
+                        <div class="relative h-full bg-white rounded-xl p-5 border border-gray-200 hover:border-amber-300/30 hover:shadow-md transition-all duration-300">
+                            <div class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-amber-50 mb-3 group-hover:scale-105 transition-transform duration-300">
+                                <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 mb-2">Goal Tracking</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">Set target mingguan dan pantau progress Anda. Tetap termotivasi dengan streak counter dan achievement badges.</p>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Analytics Cerdas</h3>
-                    <p class="text-sm text-gray-600">Dapatkan insight tentang performa lamaran Anda. Platform mana yang paling efektif dan strategi apa yang berhasil.</p>
-                </div>
-                
-                <!-- Benefit 5 -->
-                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#d983e4]/50 transition-colors">
-                    <div class="mb-4">
-                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
+                    
+                    <!-- Card 6 -->
+                    <div class="group relative scroll-scale scroll-delay-300">
+                        <div class="relative h-full bg-white rounded-xl p-5 border border-gray-200 hover:border-cyan-300/30 hover:shadow-md transition-all duration-300">
+                            <div class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-cyan-50 mb-3 group-hover:scale-105 transition-transform duration-300">
+                                <svg class="w-5 h-5 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 mb-2">Real-time Sync</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">Akses data Anda di mana saja, kapan saja. Update otomatis di semua device dengan teknologi cloud terdepan.</p>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Goal Tracking</h3>
-                    <p class="text-sm text-gray-600">Set target mingguan dan pantau progress Anda. Tetap termotivasi dengan streak counter dan achievement badges.</p>
-                </div>
-                
-                <!-- Benefit 6 -->
-                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-[#4e71c5]/50 transition-colors">
-                    <div class="mb-4">
-                        <svg class="w-6 h-6 text-[#4e71c5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Real-time Sync</h3>
-                    <p class="text-sm text-gray-600">Akses data Anda di mana saja, kapan saja. Update otomatis di semua device dengan teknologi cloud terdepan.</p>
                 </div>
             </div>
         </div>
@@ -1374,7 +1541,7 @@
         
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
-            <div class="text-center mb-8 md:mb-10">
+            <div class="text-center mb-8 md:mb-10 scroll-fade-in">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-3">
                     Kata <span class="text-[#d983e4]">Pengguna</span> TraKerja
                 </h2>
@@ -1384,7 +1551,7 @@
             </div>
             
             <!-- Testimonials - Asymmetric Layout -->
-            <div class="space-y-6">
+            <div class="space-y-6 scroll-stagger">
                 <!-- Testimonial 1 - Sarah (Left aligned with photo) -->
                 <div class="group relative bg-white rounded-2xl p-6 border border-gray-200 hover:border-[#d983e4]/50 transition-all duration-300 hover:shadow-lg">
                     <div class="flex flex-col md:flex-row gap-5 items-start">
@@ -1546,7 +1713,7 @@
     <!-- How It Works Section -->
     <section class="pt-12 sm:pt-16 pb-12 sm:pb-16 bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-6 md:mb-8">
+            <div class="text-center mb-6 md:mb-8 scroll-fade-in">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
                     Cara Kerja <span class="text-[#d983e4]">TraKerja</span>
                 </h2>
@@ -1557,7 +1724,7 @@
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
                 <!-- Left: Accordion Steps -->
-                <div class="space-y-3">
+                <div class="space-y-3 scroll-flip">
                     <!-- Step 1 -->
                     <div class="how-it-works-item bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-[#d983e4]/50 transition-all duration-300" style="margin-top: 0;">
                         <button class="how-it-works-btn w-full px-5 py-4 text-left flex items-center justify-between group" data-step="1" onclick="toggleHowItWorks(this)">
@@ -1645,7 +1812,7 @@
     <!-- CTA Section -->
     <section class="py-8 sm:py-10 bg-gradient-to-r from-[#4e71c5] to-[#d983e4] relative overflow-hidden mt-6 sm:mt-8">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl border border-white/20 p-5 sm:p-6 md:p-8">
+            <div class="bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl border border-white/20 p-5 sm:p-6 md:p-8 scroll-scale">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
                     <!-- Left: Text Content -->
                     <div class="flex-1 text-center md:text-left">
@@ -1710,7 +1877,7 @@
     <!-- FAQ Section -->
     <section class="py-12 sm:py-16 bg-gray-50">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-6 md:mb-8">
+            <div class="text-center mb-6 md:mb-8 scroll-fade-in">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
                     Pertanyaan <span class="text-[#d983e4]">Umum</span>
                 </h2>
@@ -1719,7 +1886,7 @@
                 </p>
             </div>
             
-            <div class="space-y-3">
+            <div class="space-y-3 scroll-stagger">
                 <!-- FAQ 1 -->
                 <div class="bg-white border-l-4 border-[#4e71c5] rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
                     <button class="faq-question w-full px-5 py-3.5 text-left flex items-center justify-between group" onclick="toggleFaq(this)">
@@ -2414,6 +2581,50 @@
                 defaultImg.classList.remove('hidden');
             }
         });
+        // Scroll Animations with Intersection Observer (Lightweight)
+        (function() {
+            'use strict';
+            
+            // Check if Intersection Observer is supported
+            if (!('IntersectionObserver' in window)) {
+                // Fallback: show all elements immediately
+                document.querySelectorAll('.scroll-fade-in, .scroll-slide-left, .scroll-slide-right, .scroll-scale').forEach(el => {
+                    el.classList.add('visible');
+                });
+                return;
+            }
+
+            // Enhanced observer with better performance
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -80px 0px', // Trigger when element is 80px from viewport
+                threshold: [0, 0.1, 0.2] // Multiple thresholds for smoother detection
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add visible class with slight delay for smoother animation
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, 50);
+                        // Unobserve after animation to improve performance
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all elements with scroll animation classes
+            document.addEventListener('DOMContentLoaded', () => {
+                const animatedElements = document.querySelectorAll(
+                    '.scroll-fade-in, .scroll-slide-left, .scroll-slide-right, .scroll-scale, .scroll-rotate, .scroll-blur, .scroll-bounce, .scroll-flip, .scroll-stagger'
+                );
+                
+                animatedElements.forEach(el => {
+                    observer.observe(el);
+                });
+            });
+        })();
     </script>
     </body>
 </html>

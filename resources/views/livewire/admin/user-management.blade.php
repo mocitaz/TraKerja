@@ -1,15 +1,15 @@
-<div class="space-y-8">
+<div class="space-y-4 sm:space-y-6 lg:space-y-8">
     {{-- Stats Cards --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
         {{-- Total Users --}}
-        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4 lg:p-6">
             <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs font-medium text-gray-600 mb-1">Total Users</p>
-                    <p class="text-2xl font-bold text-[#212529]">{{ $stats['total'] }}</p>
+                <div class="min-w-0 flex-1">
+                    <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">Total Users</p>
+                    <p class="text-lg sm:text-xl lg:text-2xl font-bold text-[#212529]">{{ $stats['total'] }}</p>
                 </div>
-                <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                    <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                     </svg>
                 </div>
@@ -17,14 +17,14 @@
         </div>
 
         {{-- Premium Users --}}
-        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4 lg:p-6">
             <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs font-medium text-gray-600 mb-1">Premium Users</p>
-                    <p class="text-2xl font-bold text-[#212529]">{{ $stats['premium'] }}</p>
+                <div class="min-w-0 flex-1">
+                    <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">Premium Users</p>
+                    <p class="text-lg sm:text-xl lg:text-2xl font-bold text-[#212529]">{{ $stats['premium'] }}</p>
                 </div>
-                <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
-                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                    <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                     </svg>
                 </div>
@@ -32,14 +32,14 @@
         </div>
 
         {{-- Free Users --}}
-        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4 lg:p-6">
             <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs font-medium text-gray-600 mb-1">Free Users</p>
-                    <p class="text-2xl font-bold text-[#212529]">{{ $stats['free'] }}</p>
+                <div class="min-w-0 flex-1">
+                    <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">Free Users</p>
+                    <p class="text-lg sm:text-xl lg:text-2xl font-bold text-[#212529]">{{ $stats['free'] }}</p>
                 </div>
-                <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                    <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                     </svg>
                 </div>
@@ -47,14 +47,14 @@
         </div>
 
         {{-- Verified Users --}}
-        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4 lg:p-6">
             <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs font-medium text-gray-600 mb-1">Verified Users</p>
-                    <p class="text-2xl font-bold text-[#212529]">{{ $stats['verified'] }}</p>
+                <div class="min-w-0 flex-1">
+                    <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">Verified Users</p>
+                    <p class="text-lg sm:text-xl lg:text-2xl font-bold text-[#212529]">{{ $stats['verified'] }}</p>
                 </div>
-                <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                    <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                     </svg>
                 </div>
@@ -62,14 +62,14 @@
         </div>
 
         {{-- AI Analyzer Free Trial Users --}}
-        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-6">
+        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4 lg:p-6">
             <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs font-medium text-gray-600 mb-1">AI Trial Used</p>
-                    <p class="text-2xl font-bold text-[#212529]">{{ $stats['ai_analyzer_trial_used'] }}</p>
+                <div class="min-w-0 flex-1">
+                    <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">AI Trial Used</p>
+                    <p class="text-lg sm:text-xl lg:text-2xl font-bold text-[#212529]">{{ $stats['ai_analyzer_trial_used'] }}</p>
                 </div>
-                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
-                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                    <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                     </svg>
                 </div>
@@ -79,29 +79,29 @@
 
     {{-- Filters & Search --}}
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                        <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
                         </svg>
                     </div>
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-900">Filter & Search</h3>
-                        <p class="text-sm text-gray-500">Cari dan filter pengguna</p>
+                    <div class="min-w-0 flex-1">
+                        <h3 class="text-base sm:text-lg font-semibold text-gray-900 truncate">Filter & Search</h3>
+                        <p class="text-xs sm:text-sm text-gray-500">Cari dan filter pengguna</p>
                     </div>
                 </div>
-                <button wire:click="openCreateAdminModal" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button wire:click="openCreateAdminModal" class="w-full sm:w-auto px-3 sm:px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center gap-2 text-xs sm:text-sm">
+                    <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
                     Add Admin
                 </button>
             </div>
         </div>
-        <div class="p-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="p-4 sm:p-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
                     <input type="text" wire:model.live="search" placeholder="Cari nama atau email..." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all">
@@ -142,46 +142,47 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email Verified</th>
-                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AI Trial</th>
-                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Joined</th>
-                        <th class="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Email</th>
+                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Email Verified</th>
+                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">AI Trial</th>
+                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">Role</th>
+                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden xl:table-cell">Joined</th>
+                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-right text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-100">
                     @forelse($users as $user)
                         <tr class="hover:bg-gray-50 transition-colors duration-200">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
+                            <td class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4">
+                                <div class="flex items-center min-w-0">
                                     @if($user->logo)
-                                        <div class="flex-shrink-0 h-10 w-10 rounded-lg overflow-hidden ring-2 ring-gray-100">
+                                        <div class="flex-shrink-0 h-8 w-8 sm:h-10 sm:w-10 rounded-lg overflow-hidden ring-2 ring-gray-100">
                                             <img src="{{ Storage::url($user->logo) }}" 
                                                  alt="{{ $user->name }}" 
                                                  class="w-full h-full object-cover"
                                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                             <div class="w-full h-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center" style="display: none;">
-                                                <span class="text-white font-semibold text-sm">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                                                <span class="text-white font-semibold text-xs sm:text-sm">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                                             </div>
                                         </div>
                                     @else
-                                        <div class="flex-shrink-0 h-10 w-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
-                                            <span class="text-white font-semibold text-sm">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                                        <div class="flex-shrink-0 h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
+                                            <span class="text-white font-semibold text-xs sm:text-sm">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                                         </div>
                                     @endif
-                                    <div class="ml-4">
-                                        <div class="text-sm font-semibold text-gray-900">{{ $user->name }}</div>
-                                        <div class="text-xs text-gray-500">ID: #{{ $user->id }}</div>
+                                    <div class="ml-2 sm:ml-4 min-w-0 flex-1">
+                                        <div class="text-xs sm:text-sm font-semibold text-gray-900 truncate">{{ $user->name }}</div>
+                                        <div class="text-[10px] sm:text-xs text-gray-500">ID: #{{ $user->id }}</div>
+                                        <div class="text-[10px] sm:text-xs text-gray-500 sm:hidden truncate">{{ $user->email }}</div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $user->email }}</div>
+                            <td class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 whitespace-nowrap hidden sm:table-cell">
+                                <div class="text-xs sm:text-sm text-gray-900 truncate max-w-[150px]">{{ $user->email }}</div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 whitespace-nowrap hidden md:table-cell">
                                 @if($user->hasVerifiedEmail())
                                     <span class="px-2 py-1 inline-flex items-center gap-1.5 text-xs font-medium rounded-full bg-green-100 text-green-800">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -198,69 +199,69 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 whitespace-nowrap">
                                 @if($user->is_premium)
-                                    <span class="px-2 py-1 inline-flex text-xs font-medium rounded-full bg-purple-100 text-purple-800">
+                                    <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs font-medium rounded-full bg-purple-100 text-purple-800">
                                         Premium
                                     </span>
                                 @else
-                                    <span class="px-2 py-1 inline-flex text-xs font-medium rounded-full bg-gray-100 text-gray-800">
+                                    <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs font-medium rounded-full bg-gray-100 text-gray-800">
                                         Free
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 whitespace-nowrap hidden lg:table-cell">
                                 @if($user->has_used_ai_analyzer_trial)
                                     <div class="flex flex-col gap-1">
-                                        <span class="px-2 py-1 inline-flex items-center gap-1.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex items-center gap-1 text-[10px] sm:text-xs font-medium rounded-full bg-blue-100 text-blue-800">
+                                            <svg class="w-2.5 h-2.5 sm:w-3 sm:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                             </svg>
                                             Used
                                         </span>
                                         @if($user->ai_analyzer_trial_used_at)
-                                            <span class="text-xs text-gray-500">{{ $user->ai_analyzer_trial_used_at->format('d M Y') }}</span>
+                                            <span class="text-[10px] sm:text-xs text-gray-500">{{ $user->ai_analyzer_trial_used_at->format('d M Y') }}</span>
                                         @endif
                                     </div>
                                 @else
-                                    <span class="px-2 py-1 inline-flex text-xs font-medium rounded-full bg-gray-100 text-gray-600">
+                                    <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs font-medium rounded-full bg-gray-100 text-gray-600">
                                         Not Used
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 whitespace-nowrap hidden lg:table-cell">
                                 @if($user->is_admin || $user->role === 'admin')
-                                    <span class="px-2 py-1 inline-flex text-xs font-medium rounded-full bg-orange-100 text-orange-800">
+                                    <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs font-medium rounded-full bg-orange-100 text-orange-800">
                                         Admin
                                     </span>
                                 @else
-                                    <span class="px-2 py-1 inline-flex text-xs font-medium rounded-full bg-blue-100 text-blue-800">
+                                    <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs font-medium rounded-full bg-blue-100 text-blue-800">
                                         User
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $user->created_at->format('d M Y') }}</div>
-                                <div class="text-xs text-gray-500">{{ $user->created_at->diffForHumans() }}</div>
+                            <td class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 whitespace-nowrap hidden xl:table-cell">
+                                <div class="text-xs sm:text-sm text-gray-900">{{ $user->created_at->format('d M Y') }}</div>
+                                <div class="text-[10px] sm:text-xs text-gray-500">{{ $user->created_at->diffForHumans() }}</div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <div class="flex items-center justify-end gap-2">
-                                    <button wire:click="openSendEmailModal({{ $user->id }})" class="text-green-600 hover:text-green-900 hover:bg-green-50 p-2 rounded-lg transition-colors" title="Send Email">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <td class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 whitespace-nowrap text-right text-xs sm:text-sm font-medium">
+                                <div class="flex items-center justify-end gap-1 sm:gap-2">
+                                    <button wire:click="openSendEmailModal({{ $user->id }})" class="text-green-600 hover:text-green-900 hover:bg-green-50 p-1.5 sm:p-2 rounded-lg transition-colors" title="Send Email">
+                                        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                                         </svg>
                                     </button>
-                                    <button wire:click="editUser({{ $user->id }})" class="text-blue-600 hover:text-blue-900 hover:bg-blue-50 p-2 rounded-lg transition-colors" title="View Details">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <button wire:click="editUser({{ $user->id }})" class="text-blue-600 hover:text-blue-900 hover:bg-blue-50 p-1.5 sm:p-2 rounded-lg transition-colors" title="View Details">
+                                        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                         </svg>
                                     </button>
                                     <button 
                                         onclick="confirmDeleteUser({{ $user->id }}, '{{ addslashes($user->name) }}', '{{ addslashes($user->email) }}')"
-                                        class="text-red-600 hover:text-red-900 hover:bg-red-50 p-2 rounded-lg transition-colors" 
+                                        class="text-red-600 hover:text-red-900 hover:bg-red-50 p-1.5 sm:p-2 rounded-lg transition-colors" 
                                         title="Delete User">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                         </svg>
                                     </button>
@@ -269,15 +270,15 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="px-6 py-12 text-center">
+                            <td colspan="8" class="px-4 sm:px-6 py-8 sm:py-12 text-center">
                                 <div class="flex flex-col items-center justify-center">
-                                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+                                        <svg class="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                         </svg>
                                     </div>
-                                    <p class="text-lg font-medium text-gray-900 mb-1">Tidak Ada User Ditemukan</p>
-                                    <p class="text-sm text-gray-500">Coba ubah filter atau pencarian Anda</p>
+                                    <p class="text-sm sm:text-base lg:text-lg font-medium text-gray-900 mb-1">Tidak Ada User Ditemukan</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">Coba ubah filter atau pencarian Anda</p>
                                 </div>
                             </td>
                         </tr>
@@ -285,11 +286,11 @@
                 </tbody>
             </table>
         </div>
-        <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
-            <div class="text-xs text-gray-500">
+        <div class="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4">
+            <div class="text-[10px] sm:text-xs text-gray-500 text-center sm:text-left">
                 Showing {{ $users->firstItem() ?? 0 }} to {{ $users->lastItem() ?? $users->count() }} of {{ $users->total() }} users
             </div>
-            <div>
+            <div class="w-full sm:w-auto">
                 {{ $users->links() }}
             </div>
         </div>
@@ -299,25 +300,25 @@
     @if($showEditModal)
         <div class="fixed inset-0 z-50 overflow-y-auto">
             <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" wire:click="closeModal"></div>
-            <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="relative min-h-screen flex items-center justify-center p-3 sm:p-4">
             <div class="relative w-full max-w-lg bg-white rounded-lg shadow-xl border border-gray-200 transform transition-all" wire:click.stop>
                 {{-- Modal Header --}}
-                <div class="px-6 py-4 border-b border-gray-200">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                                <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between gap-2 sm:gap-3">
+                        <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                            <div class="w-7 h-7 sm:w-8 sm:h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                 </svg>
                             </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-900">User Details</h3>
-                                <p class="text-sm text-gray-500">Lihat informasi pengguna</p>
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-base sm:text-lg font-semibold text-gray-900 truncate">User Details</h3>
+                                <p class="text-xs sm:text-sm text-gray-500">Lihat informasi pengguna</p>
                             </div>
                         </div>
-                        <button wire:click="closeModal" class="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg p-2 transition-all">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button wire:click="closeModal" class="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg p-1.5 sm:p-2 transition-all flex-shrink-0">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
@@ -325,7 +326,7 @@
                 </div>
 
                 {{-- Modal Body --}}
-                <div class="p-6 space-y-4">
+                <div class="p-4 sm:p-6 space-y-3 sm:space-y-4 max-h-[70vh] overflow-y-auto">
                     @php
                         $editingUser = $editingUserId ? \App\Models\User::find($editingUserId) : null;
                     @endphp
@@ -488,11 +489,11 @@
                 </div>
 
                 {{-- Modal Footer --}}
-                <div class="px-6 py-4 bg-gray-50 rounded-b-lg flex justify-end">
+                <div class="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 rounded-b-lg flex justify-end">
                     <button 
                         type="button"
                         wire:click="closeModal"
-                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all font-medium">
+                        class="w-full sm:w-auto px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all text-sm sm:text-base font-medium">
                         Tutup
                     </button>
                 </div>
@@ -505,24 +506,24 @@
     @if($showCreateAdminModal)
         <div class="fixed inset-0 z-50 overflow-y-auto">
             <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" wire:click="closeCreateAdminModal"></div>
-            <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="relative min-h-screen flex items-center justify-center p-3 sm:p-4">
             <div class="relative w-full max-w-lg bg-white rounded-lg shadow-xl transform transition-all z-10" wire:click.stop>
                 {{-- Modal Header --}}
-                <div class="px-6 py-4 border-b border-gray-200">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                                <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between gap-2 sm:gap-3">
+                        <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                            <div class="w-7 h-7 sm:w-8 sm:h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                                 </svg>
                             </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-900">Tambah Admin Baru</h3>
-                                <p class="text-sm text-gray-500">Buat akun administrator baru</p>
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-base sm:text-lg font-semibold text-gray-900 truncate">Tambah Admin Baru</h3>
+                                <p class="text-xs sm:text-sm text-gray-500">Buat akun administrator baru</p>
                             </div>
                         </div>
-                        <button wire:click="closeCreateAdminModal" class="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg p-2 transition-all">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button wire:click="closeCreateAdminModal" class="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg p-1.5 sm:p-2 transition-all flex-shrink-0">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
@@ -530,7 +531,7 @@
                 </div>
 
                 {{-- Modal Body --}}
-                <form wire:submit.prevent="createAdmin" class="p-6 space-y-4">
+                <form wire:submit.prevent="createAdmin" class="p-4 sm:p-6 space-y-3 sm:space-y-4 max-h-[70vh] overflow-y-auto">
                     {{-- Name Field --}}
                     <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -609,11 +610,11 @@
                 </form>
 
                 {{-- Modal Footer --}}
-                <div class="px-6 py-4 bg-gray-50 rounded-b-lg flex justify-end gap-3">
-                    <button type="button" wire:click="closeCreateAdminModal" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all font-medium">
+                <div class="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 rounded-b-lg flex flex-col sm:flex-row justify-end gap-2 sm:gap-3">
+                    <button type="button" wire:click="closeCreateAdminModal" class="w-full sm:w-auto px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all text-sm sm:text-base font-medium">
                         Batal
                     </button>
-                    <button type="submit" wire:click="createAdmin" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all font-medium">
+                    <button type="submit" wire:click="createAdmin" class="w-full sm:w-auto px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all text-sm sm:text-base font-medium">
                         Buat Admin
                     </button>
                 </div>
@@ -626,24 +627,24 @@
     @if($showSendEmailModal)
         <div class="fixed inset-0 z-50 overflow-y-auto">
             <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" wire:click="closeSendEmailModal"></div>
-            <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="relative min-h-screen flex items-center justify-center p-3 sm:p-4">
                 <div class="relative w-full max-w-2xl bg-white rounded-lg shadow-xl border border-gray-200 transform transition-all" wire:click.stop>
                     {{-- Modal Header --}}
-                    <div class="px-6 py-4 border-b border-gray-200">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
+                        <div class="flex items-center justify-between gap-2 sm:gap-3">
+                            <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                                     </svg>
                                 </div>
-                                <div>
-                                    <h3 class="text-lg font-semibold text-gray-900">Kirim Email</h3>
-                                    <p class="text-sm text-gray-500">Pilih tipe email yang akan dikirim</p>
+                                <div class="min-w-0 flex-1">
+                                    <h3 class="text-base sm:text-lg font-semibold text-gray-900 truncate">Kirim Email</h3>
+                                    <p class="text-xs sm:text-sm text-gray-500">Pilih tipe email yang akan dikirim</p>
                                 </div>
                             </div>
-                            <button wire:click="closeSendEmailModal" class="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg p-2 transition-all">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <button wire:click="closeSendEmailModal" class="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg p-1.5 sm:p-2 transition-all flex-shrink-0">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                 </svg>
                             </button>
@@ -651,7 +652,7 @@
                     </div>
 
                     {{-- Modal Body --}}
-                    <div class="p-6 space-y-6">
+                    <div class="p-4 sm:p-6 space-y-4 sm:space-y-6 max-h-[70vh] overflow-y-auto">
                         {{-- Target User Info --}}
                         <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
                             <div class="flex items-center gap-3">
@@ -724,18 +725,18 @@
                     </div>
 
                     {{-- Modal Footer --}}
-                    <div class="px-6 py-4 bg-gray-50 rounded-b-lg flex justify-end gap-3">
+                    <div class="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 rounded-b-lg flex flex-col sm:flex-row justify-end gap-2 sm:gap-3">
                         <button 
                             type="button"
                             wire:click="closeSendEmailModal"
-                            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all font-medium">
+                            class="w-full sm:w-auto px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all text-sm sm:text-base font-medium">
                             Batal
                         </button>
                         <button 
                             type="button"
                             wire:click="sendEmail"
-                            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all font-medium flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all text-sm sm:text-base font-medium flex items-center justify-center gap-2">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                             </svg>
                             Kirim Email

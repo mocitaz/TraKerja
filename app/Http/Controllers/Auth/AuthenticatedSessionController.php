@@ -24,6 +24,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        try {
         $request->authenticate();
 
         $request->session()->regenerate();
@@ -43,6 +44,20 @@ class AuthenticatedSessionController extends Controller
 
         // Regular users go to tracker
         return redirect()->intended(route('tracker', absolute: false));
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Re-throw validation exceptions (like rate limiting, wrong credentials)
+            throw $e;
+        } catch (\Exception $e) {
+            // Log unexpected errors
+            \Log::error('Login error', [
+                'email' => $request->email,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return redirect()->route('login')
+                ->withErrors(['email' => 'Terjadi kesalahan saat login. Silakan coba lagi atau hubungi support jika masalah berlanjut.']);
+        }
     }
 
     /**

@@ -44,29 +44,65 @@ class NotificationBell extends Component
         // Get existing notification IDs to avoid duplicates
         $existingIds = array_column($this->notifications, 'id');
         
-        // Check goal progress
+        // Only check important notifications to reduce spam
+        // Check goal progress (only achievements, not reminders)
         $goalNotification = NotificationService::checkGoalProgress();
         if ($goalNotification && !in_array('goal_progress', $dismissed) && !in_array('goal_progress', $existingIds)) {
-            $this->addNotification(array_merge($goalNotification, ['id' => 'goal_progress']));
+            // Pastikan message ada
+            if (empty($goalNotification['message']) && !empty($goalNotification['title'])) {
+                $goalNotification['message'] = $goalNotification['title'];
+            }
+            // Skip jika tidak ada message
+            if (!empty($goalNotification['message'])) {
+                // Only show if it's an achievement (success type)
+                if ($goalNotification['type'] === 'success') {
+                    $notificationData = array_merge($goalNotification, ['id' => 'goal_progress', 'important' => true]);
+                    $this->addNotification($notificationData);
+                    $this->dispatch('showToast', $notificationData);
+                }
+            }
         }
 
-        // Check new applications
-        $appNotification = NotificationService::checkNewApplications();
-        if ($appNotification && !in_array('new_applications', $dismissed) && !in_array('new_applications', $existingIds)) {
-            $this->addNotification(array_merge($appNotification, ['id' => 'new_applications']));
-        }
-
-        // Check interview reminders
+        // Skip new applications notification (too spammy)
+        // Check interview reminders (only if urgent - within 24 hours)
         $interviewNotification = NotificationService::checkInterviewReminders();
         if ($interviewNotification && !in_array('interview_reminders', $dismissed) && !in_array('interview_reminders', $existingIds)) {
-            $this->addNotification(array_merge($interviewNotification, ['id' => 'interview_reminders']));
+            // Pastikan message ada
+            if (empty($interviewNotification['message']) && !empty($interviewNotification['title'])) {
+                $interviewNotification['message'] = $interviewNotification['title'];
+            }
+            // Skip jika tidak ada message
+            if (!empty($interviewNotification['message'])) {
+                $notificationData = array_merge($interviewNotification, ['id' => 'interview_reminders', 'important' => true]);
+                $this->addNotification($notificationData);
+                $this->dispatch('showToast', $notificationData);
+            }
         }
     }
 
     public function addNotification($data)
     {
+        // Pastikan message ada
+        if (empty($data['message']) && !empty($data['title'])) {
+            $data['message'] = $data['title'];
+        }
+        
+        // Skip jika tidak ada message
+        if (empty($data['message'])) {
+            return;
+        }
+        
+        $notificationId = $data['id'] ?? uniqid();
+        
+        // Cek duplikasi berdasarkan ID
+        $existingIds = array_column($this->notifications, 'id');
+        if (in_array($notificationId, $existingIds)) {
+            // Skip jika sudah ada notifikasi dengan ID yang sama
+            return;
+        }
+        
         $notification = array_merge($data, [
-            'id' => $data['id'] ?? uniqid(),
+            'id' => $notificationId,
             'timestamp' => now()
         ]);
         
@@ -96,18 +132,53 @@ class NotificationBell extends Component
                 'timestamp' => now()
             ];
         } else {
-            // Default notification
-            $notificationData = [
-                'id' => uniqid(),
-                'type' => 'info',
-                'title' => 'Notification',
-                'message' => 'You have a new notification',
-                'duration' => 3000,
-                'timestamp' => now()
-            ];
+            // Skip default notification - harus ada message yang jelas
+            return;
         }
         
-        $this->addNotification($notificationData);
+        // Pastikan message selalu ada, jika tidak ada gunakan title
+        if (empty($notificationData['message'])) {
+            if (!empty($notificationData['title'])) {
+                $notificationData['message'] = $notificationData['title'];
+            } else {
+                // Jika tidak ada message dan title, skip notifikasi ini
+                return;
+            }
+        }
+        
+        // Cek duplikasi berdasarkan ID
+        $existingIds = array_column($this->notifications, 'id');
+        if (in_array($notificationData['id'], $existingIds)) {
+            // Skip jika sudah ada notifikasi dengan ID yang sama
+            return;
+        }
+        
+        // Filter: Only show important notifications (success, error, warning, interview, goals)
+        // Skip regular info notifications to reduce spam
+        $importantTypes = ['success', 'error', 'warning'];
+        $importantKeywords = ['interview', 'goal', 'achieved', 'milestone', 'reminder', 'accepted', 'declined'];
+        
+        $isImportant = in_array($notificationData['type'], $importantTypes);
+        $hasImportantKeyword = false;
+        
+        if (!$isImportant) {
+            $titleLower = strtolower($notificationData['title'] ?? '');
+            $messageLower = strtolower($notificationData['message'] ?? '');
+            foreach ($importantKeywords as $keyword) {
+                if (str_contains($titleLower, $keyword) || str_contains($messageLower, $keyword)) {
+                    $hasImportantKeyword = true;
+                    break;
+                }
+            }
+        }
+        
+        // Only add if it's important or explicitly marked as important
+        if ($isImportant || $hasImportantKeyword || ($notificationData['important'] ?? false)) {
+            $this->addNotification($notificationData);
+            
+            // Dispatch to show toast notification
+            $this->dispatch('showToast', $notificationData);
+        }
     }
     
 

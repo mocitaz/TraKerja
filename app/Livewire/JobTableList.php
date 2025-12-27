@@ -25,6 +25,7 @@ class JobTableList extends Component
     public $sortDirection = 'desc';
     public $perPage = 20;
     public $showAdvancedFilters = false;
+    public $showArchived = false;
 
     public $statusOptions = [
         'On Process',
@@ -99,6 +100,7 @@ class JobTableList extends Component
         'sortField' => ['except' => 'application_date'],
         'sortDirection' => ['except' => 'desc'],
         'perPage' => ['except' => 20],
+        'showArchived' => ['except' => false],
     ];
 
     protected $listeners = [
@@ -153,6 +155,17 @@ class JobTableList extends Component
         $this->resetPage();
     }
 
+    public function updatingShowArchived()
+    {
+        $this->resetPage();
+    }
+
+    public function toggleArchived()
+    {
+        $this->showArchived = !$this->showArchived;
+        $this->resetPage();
+    }
+
     public function toggleAdvancedFilters()
     {
         $this->showAdvancedFilters = !$this->showAdvancedFilters;
@@ -163,11 +176,7 @@ class JobTableList extends Component
         $this->search = '';
         $this->statusFilter = '';
         $this->platformFilter = '';
-        $this->careerLevelFilter = '';
         $this->recruitmentStageFilter = '';
-        $this->locationFilter = '';
-        $this->dateFromFilter = '';
-        $this->dateToFilter = '';
         $this->resetPage();
     }
 
@@ -268,9 +277,47 @@ class JobTableList extends Component
         return $colors[$status] ?? '#6B7280';
     }
 
+    public function getStageColor($stage)
+    {
+        $colors = [
+            'Applied' => '#3B82F6',           // Blue - baru apply
+            'Follow Up' => '#06B6D4',          // Cyan - sedang follow up
+            'Assessment Test' => '#8B5CF6',    // Purple - test assessment
+            'Psychotest' => '#6366F1',         // Indigo - test psikologi
+            'HR - Interview' => '#10B981',     // Green - interview HR
+            'User - Interview' => '#059669',    // Emerald - interview user
+            'LGD' => '#F59E0B',                // Amber - group discussion
+            'Presentation Round' => '#F97316', // Orange - presentasi
+            'Offering' => '#14B8A6',           // Teal - offer
+            'Not Processed' => '#EF4444',     // Red - tidak diproses (mirip declined)
+        ];
+
+        return $colors[$stage] ?? '#6B7280';
+    }
+
+    public function getCareerLevelColor($level)
+    {
+        $colors = [
+            'Intern' => '#EC4899',           // Pink - intern/magang
+            'Full Time' => '#10B981',         // Green - full time
+            'Contract' => '#F59E0B',          // Amber - kontrak
+            'MT' => '#8B5CF6',                // Purple - management trainee
+            'Freelance' => '#06B6D4',         // Cyan - freelance
+        ];
+
+        return $colors[$level] ?? '#6B7280';
+    }
+
     public function render()
     {
-        $query = JobApplication::where('user_id', auth()->id());
+        // Get archived count
+        $archivedCount = JobApplication::where('user_id', auth()->id())
+            ->where('is_archived', true)
+            ->count();
+
+        // Build query based on showArchived flag
+        $query = JobApplication::where('user_id', auth()->id())
+            ->where('is_archived', $this->showArchived);
 
         if ($this->search) {
             $query->where(function ($q) {
@@ -288,24 +335,8 @@ class JobTableList extends Component
             $query->where('platform', $this->platformFilter);
         }
 
-        if ($this->careerLevelFilter) {
-            $query->where('career_level', $this->careerLevelFilter);
-        }
-
         if ($this->recruitmentStageFilter) {
             $query->where('recruitment_stage', $this->recruitmentStageFilter);
-        }
-
-        if ($this->locationFilter) {
-            $query->where('location', 'like', '%' . $this->locationFilter . '%');
-        }
-
-        if ($this->dateFromFilter) {
-            $query->whereDate('application_date', '>=', $this->dateFromFilter);
-        }
-
-        if ($this->dateToFilter) {
-            $query->whereDate('application_date', '<=', $this->dateToFilter);
         }
 
         $jobApplications = $query->orderBy('is_pinned', 'desc') // Pinned items first
@@ -315,6 +346,7 @@ class JobTableList extends Component
 
         return view('livewire.job-table-list', [
             'jobApplications' => $jobApplications,
+            'archivedCount' => $archivedCount,
         ]);
     }
 

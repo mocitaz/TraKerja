@@ -1,36 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
-            <div class="flex items-center space-x-3 sm:space-x-4">
-                <div class="flex items-center space-x-2 sm:space-x-3">
-                    <div class="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-white/30">
-                        <img src="{{ asset('images/icon.png') }}" 
-                             alt="TraKerja Logo" 
-                             class="w-5 h-5 sm:w-6 sm:h-6"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h2 class="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
-                            Payment
-                        </h2>
-                        <p class="text-xs text-gray-500 mt-0.5 hidden sm:block">Coming Soon for Premium Members</p>
-                    </div>
-                </div>
-            </div>
-            <div class="hidden sm:flex items-center space-x-2">
-                <div class="hidden sm:flex items-center space-x-2 bg-green-50 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full">
-                    <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary-500 rounded-full animate-pulse"></div>
-                    <span class="text-xs font-medium text-primary-700">Live</span>
-                </div>
-                <div class="text-xs text-gray-400 hidden sm:block">
-                    {{ now()->format('M d, Y') }}
-                </div>
-            </div>
-        </div>
-    </x-slot>
 
     <div class="min-h-screen bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">

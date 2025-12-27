@@ -1,28 +1,7 @@
 <x-admin-layout>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <div class="w-10 h-10 rounded-lg bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center">
-                    <img src="{{ asset('images/icon.png') }}" 
-                         alt="TraKerja Logo" 
-                         class="w-6 h-6"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24" style="display: none;">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                    </svg>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
-                        Email Blast
-                    </h2>
-                    <p class="text-xs text-gray-500 mt-0.5">Kirim email ke user TraKerja</p>
-                </div>
-            </div>
-        </div>
-    </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-4 sm:py-6 lg:py-8">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Success/Error Messages -->
             @if(session('success'))
                 <div class="mb-6 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg">
@@ -60,13 +39,13 @@
                 <form action="{{ route('admin.email-blast.send') }}" method="POST" id="emailBlastForm">
                     @csrf
 
-                    <div class="p-6 space-y-6">
+                    <div class="p-4 sm:p-6 space-y-4 sm:space-y-6">
                         <!-- Email Type Selection -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-3">
                                 Pilih Tipe Email
                             </label>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                                 <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
                                     <input type="radio" name="email_type" value="welcome" class="sr-only" required>
                                     <div class="flex-1">
@@ -263,7 +242,7 @@
                             <label class="block text-sm font-medium text-gray-700 mb-3">
                                 Target User
                             </label>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                 <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
                                     <input type="radio" name="target_user" value="all" class="sr-only" checked required>
                                     <div class="flex-1">
@@ -410,11 +389,11 @@
                     </div>
 
                     <!-- Form Actions -->
-                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
-                        <button type="button" onclick="window.location.href='{{ route('admin.index') }}'" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                    <div class="bg-gray-50 px-4 sm:px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row justify-end gap-3">
+                        <button type="button" onclick="window.location.href='{{ route('admin.index') }}'" class="w-full sm:w-auto px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                             Batal
                         </button>
-                        <button type="button" onclick="showConfirmModal()" class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                        <button type="button" onclick="showConfirmModal()" class="w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                             Kirim Email Blast
                         </button>
                     </div>
