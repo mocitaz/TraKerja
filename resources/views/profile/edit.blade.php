@@ -233,14 +233,14 @@
                                     <!-- Phone -->
                                     <div>
                                         <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                                        <input type="text" name="phone" id="phone" value="{{ old('phone', $user->phone) }}"
+                                        <input type="text" name="phone" id="phone" value="{{ old('phone', $user->profile->phone_number ?? '') }}"
                                                class="w-full rounded-lg border-gray-300 focus:border-primary-500 focus:ring-primary-500 text-sm">
                                     </div>
 
                                     <!-- Location -->
                                     <div>
                                         <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                                        <input type="text" name="location" id="location" value="{{ old('location', $user->location) }}"
+                                        <input type="text" name="location" id="location" value="{{ old('location', $user->profile->domicile ?? '') }}"
                                                class="w-full rounded-lg border-gray-300 focus:border-primary-500 focus:ring-primary-500 text-sm">
                                     </div>
                                             </div>
@@ -249,7 +249,7 @@
                                     <!-- LinkedIn -->
                                     <div>
                                         <label for="linkedin" class="block text-sm font-medium text-gray-700 mb-1">LinkedIn</label>
-                                        <input type="url" name="linkedin" id="linkedin" value="{{ old('linkedin', $user->linkedin) }}"
+                                        <input type="url" name="linkedin" id="linkedin" value="{{ old('linkedin', $user->profile->linkedin_url ?? '') }}"
                                                placeholder="https://linkedin.com/in/username"
                                                class="w-full rounded-lg border-gray-300 focus:border-primary-500 focus:ring-primary-500 text-sm">
                                     </div>
@@ -257,7 +257,7 @@
                                     <!-- Website -->
                                     <div>
                                         <label for="website" class="block text-sm font-medium text-gray-700 mb-1">Website</label>
-                                        <input type="url" name="website" id="website" value="{{ old('website', $user->website) }}"
+                                        <input type="url" name="website" id="website" value="{{ old('website', $user->profile->website_url ?? '') }}"
                                                placeholder="https://yourwebsite.com"
                                                class="w-full rounded-lg border-gray-300 focus:border-primary-500 focus:ring-primary-500 text-sm">
                                     </div>
@@ -268,7 +268,7 @@
                                     <label for="bio" class="block text-sm font-medium text-gray-700 mb-1">Bio / About</label>
                                     <textarea name="bio" id="bio" rows="4"
                                               class="w-full rounded-lg border-gray-300 focus:border-primary-500 focus:ring-primary-500 text-sm"
-                                              placeholder="Tell us about yourself...">{{ old('bio', $user->bio) }}</textarea>
+                                              placeholder="Tell us about yourself...">{{ old('bio', $user->profile->bio ?? '') }}</textarea>
                         </div>
 
                                 <div class="flex items-center justify-end pt-4 border-t border-gray-100">

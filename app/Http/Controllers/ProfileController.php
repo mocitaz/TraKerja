@@ -54,14 +54,17 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
-        // Update user fields directly
-        $user->update([
-            'phone' => $validated['phone'] ?? null,
-            'location' => $validated['location'] ?? null,
-            'linkedin' => $validated['linkedin'] ?? null,
-            'website' => $validated['website'] ?? null,
-            'bio' => $validated['bio'] ?? null,
-        ]);
+        // Update or create user profile
+        $user->profile()->updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'phone_number' => $validated['phone'] ?? null,
+                'domicile' => $validated['location'] ?? null,
+                'linkedin_url' => $validated['linkedin'] ?? null,
+                'website_url' => $validated['website'] ?? null,
+                'bio' => $validated['bio'] ?? null,
+            ]
+        );
 
         return Redirect::route('profile.edit')->with('status', 'personal-info-updated');
     }
