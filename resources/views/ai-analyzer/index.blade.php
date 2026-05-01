@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-col">
             <h1 class="text-2xl font-black text-slate-900 leading-tight tracking-tight">
-                AI <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-purple-600 to-[#4e71c5]">Analyzer</span>
+                AI <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-primary-600 to-[#4e71c5]">Analyzer</span>
             </h1>
             <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mt-1">Smart resume matching against job requirements</p>
         </div>
@@ -18,21 +18,21 @@
             100% { transform: translateY(400%); opacity: 0; }
         }
         @keyframes pulse-border {
-            0%, 100% { border-color: rgb(199,210,254); }
-            50%       { border-color: rgb(99,102,241); }
+            0%, 100% { border-color: rgb(221, 214, 254); }
+            50%       { border-color: rgb(165, 112, 240); }
         }
         .upload-scanning::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, transparent, rgba(99,102,241,0.06) 50%, transparent);
+            background: linear-gradient(to bottom, transparent, rgba(165,112,240,0.06) 50%, transparent);
             animation: scanLine 2s ease-in-out infinite;
             pointer-events: none;
             border-radius: inherit;
         }
         .drag-active {
-            border-color: rgb(99,102,241) !important;
-            background-color: rgb(238,242,255) !important;
+            border-color: rgb(165,112,240) !important;
+            background-color: rgb(245,243,255) !important;
         }
         .char-bar-fill { transition: width 0.3s ease; }
     </style>
@@ -58,7 +58,7 @@
                         {{-- ── Step 1: Upload ─── --}}
                         <div class="bg-white border border-slate-200/70 rounded-3xl shadow-sm overflow-hidden mb-5">
                             <div class="px-7 pt-6 pb-4 border-b border-slate-100 flex items-center gap-3">
-                                <div class="w-8 h-8 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black text-xs">1</div>
+                                <div class="w-8 h-8 bg-primary-600 rounded-xl flex items-center justify-center text-white font-black text-xs">1</div>
                                 <div>
                                     <h3 class="text-sm font-black text-slate-900 tracking-tight">Upload Resume</h3>
                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">PDF format only</p>
@@ -68,18 +68,18 @@
                             <div class="p-7">
                                 {{-- Drop Zone --}}
                                 <div id="upload-area"
-                                     class="relative group border-2 border-dashed border-slate-200 rounded-2xl p-10 text-center cursor-pointer transition-all duration-200 hover:border-indigo-400 hover:bg-indigo-50/30 overflow-hidden"
+                                     class="relative group border-2 border-dashed border-slate-200 rounded-2xl p-10 text-center cursor-pointer transition-all duration-200 hover:border-primary-400 hover:bg-primary-50/30 overflow-hidden"
                                      ondragover="handleDragOver(event)"
                                      ondragleave="handleDragLeave(event)"
                                      ondrop="handleDrop(event)">
                                     <input id="resume" name="resume" type="file" accept=".pdf"
                                            class="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full" required>
                                     <div class="relative z-10 flex flex-col items-center gap-3">
-                                        <div class="w-14 h-14 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-center group-hover:bg-indigo-50 group-hover:border-indigo-200 transition-all">
-                                            <i class="ph-bold ph-file-arrow-up text-slate-400 group-hover:text-indigo-500 text-2xl transition-colors"></i>
+                                        <div class="w-14 h-14 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-center group-hover:bg-primary-50 group-hover:border-primary-200 transition-all">
+                                            <i class="ph-bold ph-file-arrow-up text-slate-400 group-hover:text-primary-500 text-2xl transition-colors"></i>
                                         </div>
                                         <div>
-                                            <p class="text-sm font-black text-slate-800">Drop your PDF here or <span class="text-indigo-600">browse</span></p>
+                                            <p class="text-sm font-black text-slate-800">Drop your PDF here or <span class="text-primary-600">browse</span></p>
                                             <p class="text-xs text-slate-400 mt-0.5">PDF only · Max 10 MB</p>
                                         </div>
                                     </div>
@@ -109,7 +109,7 @@
                         {{-- ── Step 2: Job Description ─── --}}
                         <div class="bg-white border border-slate-200/70 rounded-3xl shadow-sm overflow-hidden mb-5">
                             <div class="px-7 pt-6 pb-4 border-b border-slate-100 flex items-center gap-3">
-                                <div class="w-8 h-8 bg-purple-600 rounded-xl flex items-center justify-center text-white font-black text-xs">2</div>
+                                <div class="w-8 h-8 bg-primary-600 rounded-xl flex items-center justify-center text-white font-black text-xs">2</div>
                                 <div>
                                     <h3 class="text-sm font-black text-slate-900 tracking-tight">Target Job Description</h3>
                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Paste requirements & responsibilities</p>
@@ -119,7 +119,7 @@
                             <div class="p-7">
                                 <div class="relative">
                                     <textarea id="job_description" name="job_description" rows="10"
-                                              class="w-full px-5 pt-4 pb-10 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-400 focus:bg-white transition-all outline-none resize-none leading-relaxed"
+                                              class="w-full px-5 pt-4 pb-10 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 focus:bg-white transition-all outline-none resize-none leading-relaxed"
                                               placeholder="Paste the full job description — requirements, responsibilities, and qualifications..." required minlength="50" maxlength="2500">{{ old('job_description') }}</textarea>
 
                                     {{-- Char counter bar --}}
@@ -146,7 +146,7 @@
                                 <i class="ph-bold ph-arrow-left text-sm"></i> Cancel
                             </a>
                             <button type="submit" id="submit-btn"
-                                    class="group flex items-center gap-2.5 px-8 py-3.5 bg-slate-900 text-white rounded-2xl font-black text-sm hover:bg-indigo-600 transition-all shadow-xl shadow-slate-200 active:scale-95">
+                                    class="group flex items-center gap-2.5 px-8 py-3.5 bg-slate-900 text-white rounded-2xl font-black text-sm hover:bg-primary-600 transition-all shadow-xl shadow-slate-200 active:scale-95">
                                 <i id="loading-spinner" class="ph-bold ph-spinner animate-spin hidden text-sm"></i>
                                 <i id="submit-icon" class="ph-bold ph-sparkle text-sm group-hover:rotate-12 transition-transform"></i>
                                 <span id="submit-text">Run AI Analysis</span>
@@ -163,9 +163,9 @@
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-5">How It Works</p>
                         <div class="space-y-4">
                             @foreach([
-                                ['ph-upload-simple',    'indigo',   'Upload Your Resume',  'PDF up to 10 MB. The AI will parse your skills, experience, and qualifications.'],
-                                ['ph-clipboard-text',   'purple',   'Add Job Description', 'Paste the full job post. More detail = more accurate matching score.'],
-                                ['ph-chart-bar',        'violet',   'Get Instant Results',  'A match score, keyword gaps, and actionable tips to improve your CV.'],
+                                ['ph-upload-simple',    'primary',   'Upload Your Resume',  'PDF up to 10 MB. The AI will parse your skills, experience, and qualifications.'],
+                                ['ph-clipboard-text',   'primary',   'Add Job Description', 'Paste the full job post. More detail = more accurate matching score.'],
+                                ['ph-chart-bar',        'primary',   'Get Instant Results',  'A match score, keyword gaps, and actionable tips to improve your CV.'],
                             ] as [$icon, $color, $title, $desc])
                             <div class="flex gap-3">
                                 <div class="w-8 h-8 bg-{{ $color }}-50 rounded-xl flex items-center justify-center shrink-0">
@@ -182,11 +182,11 @@
 
                     {{-- Privacy card --}}
                     <div class="bg-slate-900 rounded-3xl p-6 text-white relative overflow-hidden">
-                        <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-indigo-600/15 rounded-full blur-2xl pointer-events-none"></div>
-                        <div class="absolute -left-4 -top-4 w-20 h-20 bg-violet-500/10 rounded-full blur-xl pointer-events-none"></div>
+                        <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-primary-600/15 rounded-full blur-2xl pointer-events-none"></div>
+                        <div class="absolute -left-4 -top-4 w-20 h-20 bg-primary-500/10 rounded-full blur-xl pointer-events-none"></div>
                         <div class="relative z-10">
                             <div class="w-9 h-9 bg-white/10 border border-white/10 rounded-xl flex items-center justify-center mb-4">
-                                <i class="ph-bold ph-shield-check text-indigo-400 text-base"></i>
+                                <i class="ph-bold ph-shield-check text-primary-400 text-base"></i>
                             </div>
                             <h4 class="text-sm font-black tracking-tight mb-1.5">Privacy First</h4>
                             <p class="text-xs text-slate-400 leading-relaxed">
@@ -257,7 +257,8 @@
             e.preventDefault();
             uploadArea.classList.remove('drag-active');
             const file = e.dataTransfer.files[0];
-            if (file && file.type === 'application/pdf') {
+            // Relaxed check: accept if it's PDF or if the name ends in .pdf
+            if (file && (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'))) {
                 const dt = new DataTransfer();
                 dt.items.add(file);
                 resumeInput.files = dt.files;

@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-col">
             <h1 class="text-2xl font-black text-slate-900 leading-tight tracking-tight">
-                Profile <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-purple-600 to-[#4e71c5]">Settings</span>
+                Profile <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-primary-600 to-[#4e71c5]">Settings</span>
             </h1>
             <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mt-1">Manage your account and professional identity</p>
         </div>
@@ -27,8 +27,8 @@
     <div class="bg-[#f8fafc] min-h-screen pb-20 relative overflow-hidden">
         {{-- Subtle Ambient Background --}}
         <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
-            <div class="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-indigo-50/50 rounded-full blur-[120px]"></div>
-            <div class="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-50/50 rounded-full blur-[100px]"></div>
+            <div class="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary-50/50 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary-50/50 rounded-full blur-[100px]"></div>
         </div>
 
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 relative z-10">
@@ -53,10 +53,10 @@
                 <div class="lg:col-span-4 space-y-6">
                     {{-- User Card --}}
                     <div class="bg-white rounded-[2.5rem] border border-slate-200/60 overflow-hidden shadow-sm relative group">
-                        <div class="h-32 bg-gradient-to-br from-[#d983e4] via-purple-600 to-[#4e71c5] relative overflow-hidden">
+                        <div class="h-32 bg-gradient-to-br from-[#d983e4] via-primary-600 to-[#4e71c5] relative overflow-hidden">
                             <div class="absolute inset-0 bg-black/10"></div>
                             <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl animate-pulse"></div>
-                            <div class="absolute left-10 bottom-5 w-20 h-20 bg-indigo-400/20 rounded-full blur-xl"></div>
+                            <div class="absolute left-10 bottom-5 w-20 h-20 bg-primary-400/20 rounded-full blur-xl"></div>
                         </div>
                         
                         <div class="px-8 pb-8 flex flex-col items-center">
@@ -70,7 +70,7 @@
                                         </div>
                                     @endif
                                 </div>
-                                <button onclick="openProfilePhotoModal()" class="absolute -bottom-2 -right-2 w-11 h-11 bg-slate-900 text-white rounded-2xl flex items-center justify-center shadow-lg hover:bg-indigo-600 hover:scale-110 transition-all border-4 border-white">
+                                <button onclick="openProfilePhotoModal()" class="absolute -bottom-2 -right-2 w-11 h-11 bg-slate-900 text-white rounded-2xl flex items-center justify-center shadow-lg hover:bg-primary-600 hover:scale-110 transition-all border-4 border-white">
                                     <i class="ph-bold ph-camera-plus text-lg"></i>
                                 </button>
                             </div>
@@ -91,7 +91,7 @@
                                             <span class="text-[8px] font-black text-amber-500 bg-white px-2 py-1 rounded-full border border-amber-100 uppercase tracking-widest group-hover/prem:scale-110 transition-transform">ACTIVE</span>
                                         </div>
                                     @else
-                                        <a href="{{ route('payment.index') }}" class="relative overflow-hidden group/upgrade bg-indigo-600 text-white rounded-2xl p-4 text-[10px] font-black uppercase tracking-widest hover:bg-indigo-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-100">
+                                        <a href="{{ route('payment.index') }}" class="relative overflow-hidden group/upgrade bg-primary-600 text-white rounded-2xl p-4 text-[10px] font-black uppercase tracking-widest hover:bg-primary-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary-100">
                                             <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/upgrade:translate-x-full transition-transform duration-1000"></div>
                                             <i class="ph-bold ph-lightning"></i>
                                             Upgrade to Premium
@@ -106,10 +106,10 @@
                     <div class="bg-white rounded-3xl border border-slate-200/70 p-5 shadow-sm">
                         <div class="flex items-center justify-between mb-3">
                             <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Profile Completeness</h4>
-                            <span class="text-[10px] font-black {{ $percentage === 100 ? 'text-emerald-600 bg-emerald-50' : 'text-indigo-600 bg-indigo-50' }} px-2 py-0.5 rounded-full">{{ $percentage }}%</span>
+                            <span class="text-[10px] font-black {{ $percentage === 100 ? 'text-emerald-600 bg-emerald-50' : 'text-primary-600 bg-primary-50' }} px-2 py-0.5 rounded-full">{{ $percentage }}%</span>
                         </div>
                         <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden mb-4">
-                            <div class="h-full {{ $percentage === 100 ? 'bg-emerald-500' : 'bg-gradient-to-r from-indigo-500 to-purple-500' }} transition-all duration-1000 ease-out" style="width: {{ $percentage }}%"></div>
+                            <div class="h-full {{ $percentage === 100 ? 'bg-emerald-500' : 'bg-gradient-to-r from-primary-500 to-primary-500' }} transition-all duration-1000 ease-out" style="width: {{ $percentage }}%"></div>
                         </div>
                         <div class="space-y-1.5">
                             @php
@@ -162,10 +162,10 @@
                     {{-- Account --}}
                     <div id="section-account" class="content-section">
                         <div class="bg-white rounded-[2.5rem] border border-slate-200/60 p-8 sm:p-10 shadow-sm relative overflow-hidden">
-                            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-indigo-50/30 rounded-full blur-3xl"></div>
+                            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-primary-50/30 rounded-full blur-3xl"></div>
                             <div class="relative">
                                 <div class="flex items-center gap-5 mb-10">
-                                    <div class="w-14 h-14 bg-indigo-50 rounded-[1.25rem] flex items-center justify-center text-indigo-600 shadow-inner">
+                                    <div class="w-14 h-14 bg-primary-50 rounded-[1.25rem] flex items-center justify-center text-primary-600 shadow-inner">
                                         <i class="ph-bold ph-user-focus text-2xl"></i>
                                     </div>
                                     <div>
@@ -183,10 +183,10 @@
                     {{-- Personal --}}
                     <div id="section-personal" class="content-section hidden">
                         <div class="bg-white rounded-[2.5rem] border border-slate-200/60 p-8 sm:p-10 shadow-sm relative overflow-hidden">
-                            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-purple-50/30 rounded-full blur-3xl"></div>
+                            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-primary-50/30 rounded-full blur-3xl"></div>
                             <div class="relative">
                                 <div class="flex items-center gap-5 mb-10">
-                                    <div class="w-14 h-14 bg-purple-50 rounded-[1.25rem] flex items-center justify-center text-purple-600 shadow-inner">
+                                    <div class="w-14 h-14 bg-primary-50 rounded-[1.25rem] flex items-center justify-center text-primary-600 shadow-inner">
                                         <i class="ph-bold ph-fingerprint text-2xl"></i>
                                     </div>
                                     <div>
@@ -201,50 +201,50 @@
 
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                                         <div class="group/field space-y-2">
-                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-indigo-600 transition-colors">Phone Number</label>
+                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-primary-600 transition-colors">Phone Number</label>
                                             <div class="relative">
-                                                <div class="absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-indigo-100 group-focus-within/field:text-indigo-600 transition-all">
+                                                <div class="absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
                                                     <i class="ph-bold ph-phone"></i>
                                                 </div>
-                                                <input type="text" name="phone" value="{{ old('phone', $user->profile->phone_number ?? '') }}" class="w-full pl-16 pr-6 py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all border-none ring-1 ring-slate-200">
+                                                <input type="text" name="phone" value="{{ old('phone', $user->profile->phone_number ?? '') }}" class="w-full pl-16 pr-6 py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200">
                                             </div>
                                         </div>
                                         <div class="group/field space-y-2">
-                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-indigo-600 transition-colors">Domicile / Location</label>
+                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-primary-600 transition-colors">Domicile / Location</label>
                                             <div class="relative">
-                                                <div class="absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-indigo-100 group-focus-within/field:text-indigo-600 transition-all">
+                                                <div class="absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
                                                     <i class="ph-bold ph-map-pin"></i>
                                                 </div>
-                                                <input type="text" name="location" value="{{ old('location', $user->profile->domicile ?? '') }}" class="w-full pl-16 pr-6 py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all border-none ring-1 ring-slate-200">
+                                                <input type="text" name="location" value="{{ old('location', $user->profile->domicile ?? '') }}" class="w-full pl-16 pr-6 py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200">
                                             </div>
                                         </div>
                                         <div class="group/field space-y-2">
-                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-indigo-600 transition-colors">LinkedIn URL</label>
+                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-primary-600 transition-colors">LinkedIn URL</label>
                                             <div class="relative">
-                                                <div class="absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-indigo-100 group-focus-within/field:text-indigo-600 transition-all">
+                                                <div class="absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
                                                     <i class="ph-bold ph-linkedin-logo"></i>
                                                 </div>
-                                                <input type="url" name="linkedin" value="{{ old('linkedin', $user->profile->linkedin_url ?? '') }}" class="w-full pl-16 pr-6 py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all border-none ring-1 ring-slate-200" placeholder="https://linkedin.com/in/...">
+                                                <input type="url" name="linkedin" value="{{ old('linkedin', $user->profile->linkedin_url ?? '') }}" class="w-full pl-16 pr-6 py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200" placeholder="https://linkedin.com/in/...">
                                             </div>
                                         </div>
                                         <div class="group/field space-y-2">
-                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-indigo-600 transition-colors">Personal Website</label>
+                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-primary-600 transition-colors">Personal Website</label>
                                             <div class="relative">
-                                                <div class="absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-indigo-100 group-focus-within/field:text-indigo-600 transition-all">
+                                                <div class="absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
                                                     <i class="ph-bold ph-globe"></i>
                                                 </div>
-                                                <input type="url" name="website" value="{{ old('website', $user->profile->website_url ?? '') }}" class="w-full pl-16 pr-6 py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all border-none ring-1 ring-slate-200" placeholder="https://...">
+                                                <input type="url" name="website" value="{{ old('website', $user->profile->website_url ?? '') }}" class="w-full pl-16 pr-6 py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200" placeholder="https://...">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="group/field space-y-2">
-                                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-indigo-600 transition-colors">Professional Biography</label>
-                                        <textarea name="bio" rows="6" class="w-full px-8 py-6 bg-slate-50 border-none ring-1 ring-slate-200 rounded-[2.5rem] text-sm font-medium text-slate-700 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all leading-relaxed" placeholder="Describe your professional background and aspirations...">{{ old('bio', $user->profile->bio ?? '') }}</textarea>
+                                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-primary-600 transition-colors">Professional Biography</label>
+                                        <textarea name="bio" rows="6" class="w-full px-8 py-6 bg-slate-50 border-none ring-1 ring-slate-200 rounded-[2.5rem] text-sm font-medium text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all leading-relaxed" placeholder="Describe your professional background and aspirations...">{{ old('bio', $user->profile->bio ?? '') }}</textarea>
                                     </div>
 
                                     <div class="flex justify-end pt-4">
-                                        <button type="submit" class="group/btn px-10 py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-indigo-600 transition-all shadow-xl shadow-slate-100 active:scale-95 flex items-center gap-3">
+                                        <button type="submit" class="group/btn px-10 py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-600 transition-all shadow-xl shadow-slate-100 active:scale-95 flex items-center gap-3">
                                             <i class="ph-bold ph-check-circle text-lg group-hover/btn:scale-110 transition-transform"></i>
                                             Save Profile Details
                                         </button>
@@ -300,7 +300,7 @@
     {{-- Profile Photo Modal --}}
     <div id="profilePhotoModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center z-[1000] p-4" onclick="if(event.target === this) closeProfilePhotoModal()">
         <div class="bg-white rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.2)] max-w-md w-full p-10 transform transition-all animate-scale-in border border-slate-200/60 overflow-hidden relative">
-            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500"></div>
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary-500 via-primary-500 to-primary-500"></div>
             
             <div class="flex items-center justify-between mb-10">
                 <div class="flex flex-col">
@@ -339,7 +339,7 @@
                 </div>
 
                 <div class="flex flex-col gap-3">
-                    <button type="button" onclick="uploadProfilePhoto()" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-indigo-600 transition-all flex items-center justify-center gap-3 active:scale-95 shadow-xl shadow-slate-100">
+                    <button type="button" onclick="uploadProfilePhoto()" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-600 transition-all flex items-center justify-center gap-3 active:scale-95 shadow-xl shadow-slate-100">
                         <i class="ph-bold ph-cloud-arrow-up text-lg"></i>
                         SAVE NEW IDENTITY
                     </button>
@@ -371,7 +371,7 @@
         .premium-form-wrapper input:not([type="checkbox"]):not([type="radio"]), 
         .premium-form-wrapper textarea,
         .premium-form-wrapper select {
-            @apply w-full rounded-2xl border-none ring-1 ring-slate-200 bg-slate-50/50 py-4 px-6 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all !important;
+            @apply w-full rounded-2xl border-none ring-1 ring-slate-200 bg-slate-50/50 py-4 px-6 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all !important;
         }
         
         .premium-form-wrapper label {
@@ -379,7 +379,7 @@
         }
         
         .premium-form-wrapper button[type="submit"] {
-            @apply px-10 py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-indigo-600 transition-all shadow-xl shadow-slate-100 active:scale-95 !important;
+            @apply px-10 py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-600 transition-all shadow-xl shadow-slate-100 active:scale-95 !important;
         }
 
         .content-section { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1); }

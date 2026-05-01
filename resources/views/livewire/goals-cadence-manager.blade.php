@@ -6,7 +6,7 @@
             <div class="lg:col-span-8 bg-white rounded-[2.5rem] border border-slate-200/60 shadow-sm overflow-hidden flex flex-col relative group">
                 <div class="px-8 py-6 border-b border-slate-50 flex items-center justify-between bg-slate-50/30">
                     <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-100">
+                        <div class="w-10 h-10 rounded-2xl bg-primary-600 flex items-center justify-center text-white shadow-lg shadow-primary-100">
                             <i class="ph-fill ph-target text-xl"></i>
                         </div>
                         <div>
@@ -15,8 +15,8 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
-                        <span class="px-4 py-1.5 bg-indigo-50 text-indigo-600 rounded-full text-[9px] font-black uppercase tracking-widest border border-indigo-100">{{ $goalPeriod }}</span>
-                        <button wire:click="openGoalModal" class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 text-slate-400 hover:text-indigo-600 hover:bg-white hover:shadow-sm transition-all active:scale-95">
+                        <span class="px-4 py-1.5 bg-primary-50 text-primary-600 rounded-full text-[9px] font-black uppercase tracking-widest border border-primary-100">{{ $goalPeriod }}</span>
+                        <button wire:click="openGoalModal" class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 text-slate-400 hover:text-primary-600 hover:bg-white hover:shadow-sm transition-all active:scale-95">
                             <i class="ph-bold ph-gear-six text-lg"></i>
                         </button>
                     </div>
@@ -27,17 +27,17 @@
                     <div class="space-y-6">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 bg-indigo-600 rounded-full"></div>
+                                <div class="w-2 h-2 bg-primary-600 rounded-full"></div>
                                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Applications</p>
                             </div>
-                            <span class="text-xs font-black text-indigo-600">{{ min(100, $this->appliedProgress) }}%</span>
+                            <span class="text-xs font-black text-primary-600">{{ min(100, $this->appliedProgress) }}%</span>
                         </div>
                         <div class="flex items-baseline gap-3">
                             <span class="text-5xl font-black text-slate-900 tracking-tighter leading-none italic">{{ $this->actualApplied }}</span>
                             <span class="text-slate-300 font-black text-lg">/ {{ $targetAppliedWeekly }}</span>
                         </div>
                         <div class="h-3 w-full bg-slate-100 rounded-full overflow-hidden p-0.5">
-                            <div class="h-full bg-indigo-600 rounded-full transition-all duration-1000 shadow-[0_0_12px_rgba(79,70,229,0.3)]" style="width: {{ min(100, $this->appliedProgress) }}%"></div>
+                            <div class="h-full bg-primary-600 rounded-full transition-all duration-1000 shadow-[0_0_12px_rgba(165,112,240,0.3)]" style="width: {{ min(100, $this->appliedProgress) }}%"></div>
                         </div>
                     </div>
 
@@ -45,23 +45,23 @@
                     <div class="space-y-6 border-l border-slate-100 md:pl-12">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 bg-violet-600 rounded-full"></div>
+                                <div class="w-2 h-2 bg-primary-600 rounded-full"></div>
                                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Follow-ups</p>
                             </div>
-                            <span class="text-xs font-black text-violet-600">{{ min(100, $this->followupProgress) }}%</span>
+                            <span class="text-xs font-black text-primary-600">{{ min(100, $this->followupProgress) }}%</span>
                         </div>
                         <div class="flex items-baseline gap-3">
                             <span class="text-5xl font-black text-slate-900 tracking-tighter leading-none italic">{{ $this->followUpCount }}</span>
                             <span class="text-slate-300 font-black text-lg">/ {{ $targetFollowupWeekly }}</span>
                         </div>
                         <div class="h-3 w-full bg-slate-100 rounded-full overflow-hidden p-0.5">
-                            <div class="h-full bg-violet-600 rounded-full transition-all duration-1000 shadow-[0_0_12px_rgba(139,92,246,0.3)]" style="width: {{ min(100, $this->followupProgress) }}%"></div>
+                            <div class="h-full bg-primary-600 rounded-full transition-all duration-1000 shadow-[0_0_12px_rgba(165,112,240,0.3)]" style="width: {{ min(100, $this->followupProgress) }}%"></div>
                         </div>
                     </div>
                 </div>
                 
                 {{-- Subtle Background Glow --}}
-                <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-indigo-50 rounded-full blur-3xl opacity-50"></div>
+                <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-primary-50 rounded-full blur-3xl opacity-50"></div>
             </div>
 
             {{-- Streak Bento --}}
@@ -83,18 +83,18 @@
             </div>
 
             {{-- Interviews Bento - High Impact --}}
-            <div class="lg:col-span-4 bg-indigo-600 rounded-[2.5rem] p-10 shadow-xl shadow-indigo-100 flex flex-col justify-between relative overflow-hidden group">
+            <div class="lg:col-span-4 bg-primary-600 rounded-[2.5rem] p-10 shadow-xl shadow-primary-100 flex flex-col justify-between relative overflow-hidden group">
                 <div class="relative z-10">
                     <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-white backdrop-blur-md mb-8 border border-white/10">
                         <i class="ph-bold ph-calendar-check text-2xl"></i>
                     </div>
-                    <p class="text-[10px] font-black text-indigo-200 uppercase tracking-[3px] mb-2">Interviews Secured</p>
+                    <p class="text-[10px] font-black text-primary-200 uppercase tracking-[3px] mb-2">Interviews Secured</p>
                     <p class="text-6xl font-black text-white tracking-tighter leading-none italic">{{ $this->actualInterviews }}</p>
                 </div>
                 
                 {{-- Progress mini --}}
                 <div class="relative z-10 mt-10">
-                    <p class="text-[9px] font-black text-indigo-300 uppercase tracking-widest mb-2 italic">Active momentum protocol</p>
+                    <p class="text-[9px] font-black text-primary-300 uppercase tracking-widest mb-2 italic">Active momentum protocol</p>
                     <div class="h-1 w-full bg-white/10 rounded-full overflow-hidden">
                         <div class="h-full bg-white rounded-full transition-all duration-1000" style="width: {{ min(100, ($this->actualInterviews / 5) * 100) }}%"></div>
                     </div>
@@ -106,20 +106,20 @@
 
             {{-- Consistency Bento - Information Dense --}}
             <div class="lg:col-span-8 bg-slate-900 rounded-[2.5rem] p-10 flex flex-col md:flex-row items-center justify-between gap-10 relative overflow-hidden group">
-                <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(79,70,229,0.15),transparent)]"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(165,112,240,0.15),transparent)]"></div>
                 
                 <div class="relative z-10 space-y-6">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-indigo-400">
+                        <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary-400">
                             <i class="ph-fill ph-chart-line-up text-2xl"></i>
                         </div>
                         <div>
                             <h3 class="text-base font-black text-white tracking-tight">Consistency Tier</h3>
-                            <p class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest mt-1">High Velocity Mode Enabled</p>
+                            <p class="text-[10px] font-bold text-primary-400 uppercase tracking-widest mt-1">High Velocity Mode Enabled</p>
                         </div>
                     </div>
                     <p class="text-sm font-medium text-slate-400 leading-relaxed max-w-sm">
-                        You're currently in the <span class="text-indigo-400 font-bold">Top 5%</span> of active job seekers. Maintain your daily cadence to unlock premium insights.
+                        You're currently in the <span class="text-primary-400 font-bold">Top 5%</span> of active job seekers. Maintain your daily cadence to unlock premium insights.
                     </p>
                 </div>
 
@@ -138,53 +138,97 @@
         </div>
 
         {{-- Configuration Modal --}}
-        @if($showGoalModal)
-            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-xl flex items-center justify-center z-[100] p-4" x-data="{ show: @entangle('showGoalModal') }" x-show="show">
-                <div class="bg-white rounded-[3rem] shadow-2xl max-w-lg w-full overflow-hidden animate-modal-enter border border-slate-200/60">
-                    <div class="p-8 border-b border-slate-50 flex items-center justify-between">
+        <template x-teleport="body">
+            <div x-show="$wire.showGoalModal" 
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="fixed inset-0 bg-slate-900/60 backdrop-blur-xl flex items-center justify-center z-[9999] p-4"
+                 style="display: none;">
+                
+                <div @click.away="$wire.showGoalModal = false"
+                     x-show="$wire.showGoalModal"
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 scale-95 translateY(10px)"
+                     x-transition:enter-end="opacity-100 scale-100 translateY(0)"
+                     class="bg-white rounded-[2.5rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.2)] max-w-lg w-full overflow-hidden border border-slate-100 flex flex-col">
+                    
+                    {{-- Modal Header --}}
+                    <div class="bg-white px-8 py-6 flex justify-between items-center border-b border-slate-50 shrink-0">
                         <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600">
-                                <i class="ph-bold ph-path text-xl"></i>
+                            <div class="w-11 h-11 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center shadow-sm">
+                                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-6 h-6 object-contain">
                             </div>
-                            <h2 class="text-lg font-black text-slate-900 tracking-tight">CONFIGURE CYCLE</h2>
+                            <div>
+                                <h3 class="text-base font-black text-slate-900 tracking-tight">Configure Cycle</h3>
+                                <p class="text-slate-400 text-[9px] font-bold uppercase tracking-widest mt-0.5">Goal Cadence Setting</p>
+                            </div>
                         </div>
-                        <button wire:click="closeGoalModal" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-slate-100 transition-all text-slate-400">
+                        <button @click="$wire.showGoalModal = false" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-slate-50 transition-all text-slate-400 hover:text-slate-900">
                             <i class="ph-bold ph-x text-lg"></i>
                         </button>
                     </div>
-                    <div class="p-8 sm:p-10">
-                        <form wire:submit.prevent="setWeeklyGoals" class="space-y-8">
-                            <div class="flex p-1.5 bg-slate-100 rounded-[1.5rem]">
-                                <button type="button" wire:click="$set('goalPeriod', 'weekly')" class="flex-1 py-3 text-[10px] font-black uppercase rounded-[1.1rem] transition-all {{ $goalPeriod === 'weekly' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-400 hover:text-slate-600' }}">Weekly Cycle</button>
-                                <button type="button" wire:click="$set('goalPeriod', 'monthly')" class="flex-1 py-3 text-[10px] font-black uppercase rounded-[1.1rem] transition-all {{ $goalPeriod === 'monthly' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-400 hover:text-slate-600' }}">Monthly Cycle</button>
+
+                    {{-- Modal Body --}}
+                    <div class="p-8 sm:p-10 overflow-y-auto max-h-[70vh]">
+                        <form wire:submit.prevent="setWeeklyGoals" class="space-y-10">
+                            {{-- Cycle Switcher --}}
+                            <div class="space-y-4">
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Frequency</label>
+                                <div class="flex p-1.5 bg-slate-100 rounded-[1.8rem]">
+                                    <button type="button" wire:click="$set('goalPeriod', 'weekly')" 
+                                            class="flex-1 py-3.5 text-[10px] font-black uppercase rounded-[1.4rem] transition-all {{ $goalPeriod === 'weekly' ? 'bg-white text-primary-600 shadow-sm' : 'text-slate-400 hover:text-slate-600' }}">
+                                        Weekly Cycle
+                                    </button>
+                                    <button type="button" wire:click="$set('goalPeriod', 'monthly')" 
+                                            class="flex-1 py-3.5 text-[10px] font-black uppercase rounded-[1.4rem] transition-all {{ $goalPeriod === 'monthly' ? 'bg-white text-primary-600 shadow-sm' : 'text-slate-400 hover:text-slate-600' }}">
+                                        Monthly Cycle
+                                    </button>
+                                </div>
                             </div>
                             
+                            {{-- Input Fields --}}
                             <div class="grid grid-cols-2 gap-8">
-                                <div class="space-y-3">
+                                <div class="space-y-4">
                                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Applications</label>
-                                    <div class="relative">
-                                        <i class="ph-bold ph-paper-plane-tilt absolute left-5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                                        <input type="number" wire:model="targetAppliedWeekly" class="w-full pl-12 pr-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl font-black text-slate-900 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-2xl tracking-tighter outline-none">
+                                    <div class="relative group">
+                                        <div class="absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center transition-colors group-focus-within:bg-primary-50">
+                                            <i class="ph-bold ph-paper-plane-tilt text-slate-400 group-focus-within:text-primary-500"></i>
+                                        </div>
+                                        <input type="number" wire:model="targetAppliedWeekly" 
+                                               class="w-full pl-16 pr-6 py-5 bg-slate-50 border border-slate-200 rounded-[1.5rem] font-black text-slate-900 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white transition-all text-2xl tracking-tighter outline-none">
                                     </div>
                                 </div>
-                                <div class="space-y-3">
+                                <div class="space-y-4">
                                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Follow-ups</label>
-                                    <div class="relative">
-                                        <i class="ph-bold ph-arrows-clockwise absolute left-5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                                        <input type="number" wire:model="targetFollowupWeekly" class="w-full pl-12 pr-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl font-black text-slate-900 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-2xl tracking-tighter outline-none">
+                                    <div class="relative group">
+                                        <div class="absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center transition-colors group-focus-within:bg-primary-50">
+                                            <i class="ph-bold ph-arrows-clockwise text-slate-400 group-focus-within:text-primary-500"></i>
+                                        </div>
+                                        <input type="number" wire:model="targetFollowupWeekly" 
+                                               class="w-full pl-16 pr-6 py-5 bg-slate-50 border border-slate-200 rounded-[1.5rem] font-black text-slate-900 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white transition-all text-2xl tracking-tighter outline-none">
                                     </div>
                                 </div>
                             </div>
 
-                            <button type="submit" class="w-full py-5 bg-slate-900 text-white rounded-[1.5rem] font-black uppercase tracking-[2px] text-[10px] hover:bg-indigo-600 transition-all shadow-xl shadow-slate-200 active:scale-95 flex items-center justify-center gap-3">
-                                <i class="ph-bold ph-check"></i>
-                                APPLY NEW CYCLE
-                            </button>
+                            {{-- Footer Actions --}}
+                            <div class="pt-6 border-t border-slate-50 flex items-center gap-4">
+                                <button type="button" @click="$wire.showGoalModal = false" class="flex-1 py-4 bg-slate-100 text-slate-500 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-200 transition-all">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="flex-[2] py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-[2px] text-[10px] hover:bg-primary-600 transition-all shadow-xl shadow-slate-200 active:scale-95 flex items-center justify-center gap-3">
+                                    <i class="ph-bold ph-check-circle text-base"></i>
+                                    Save New Cycle
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
-        @endif
+        </template>
     </div>
 
     <style>

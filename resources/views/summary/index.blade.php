@@ -9,8 +9,85 @@
     </x-slot>
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    {{-- Move Chart.js to top to ensure it is loaded --}}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{-- Chart function definitions must come BEFORE Chart.js CDN so they
+         are already in scope when the onload callback fires. --}}
+    <script>
+        function initAllCharts() {
+            initTimelineChart();
+            initPlatformChart();
+            initCareerLevelChart();
+            initProvinceChart();
+            initCityChart();
+        }
+
+        function initTimelineChart() {
+            const ctx = document.getElementById('timelineChart')?.getContext('2d');
+            if (!ctx) return;
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: @json($timelineData['labels'] ?? []),
+                    datasets: [
+                        { label: 'Applications', data: @json($timelineData['applications'] ?? []), borderColor: '#4f46e5', tension: 0.4, fill: true, backgroundColor: 'rgba(79, 70, 229, 0.05)' },
+                        { label: 'Interviews',   data: @json($timelineData['interviews']   ?? []), borderColor: '#10b981', tension: 0.4, fill: true, backgroundColor: 'rgba(16, 185, 129, 0.05)' }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } } }
+            });
+        }
+
+        function initPlatformChart() {
+            const ctx = document.getElementById('platformChart')?.getContext('2d');
+            if (!ctx) return;
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: @json(collect($platformEffectiveness)->pluck('platform')),
+                    datasets: [{ data: @json(collect($platformEffectiveness)->pluck('total_applications')), backgroundColor: ['#4f46e5','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4','#f43f5e'] }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '75%' }
+            });
+        }
+
+        function initCareerLevelChart() {
+            const ctx = document.getElementById('careerLevelChart')?.getContext('2d');
+            if (!ctx) return;
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @json(collect($careerLevelAnalysis)->pluck('career_level')),
+                    datasets: [{ label: 'Applications', data: @json(collect($careerLevelAnalysis)->pluck('total_applications')), backgroundColor: '#4f46e5', borderRadius: 12 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        function initProvinceChart() {
+            const ctx = document.getElementById('provinceChart')?.getContext('2d');
+            if (!ctx) return;
+            const prov = @json($locationAnalysis['provinces'] ?? []);
+            new Chart(ctx, {
+                type: 'polarArea',
+                data: { labels: Object.keys(prov), datasets: [{ data: Object.values(prov), backgroundColor: ['rgba(79,70,229,.6)','rgba(16,185,129,.6)','rgba(245,158,11,.6)','rgba(239,68,68,.6)','rgba(139,92,246,.6)'] }] },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        function initCityChart() {
+            const ctx = document.getElementById('cityChart')?.getContext('2d');
+            if (!ctx) return;
+            const cities = @json($locationAnalysis['cities'] ?? []);
+            new Chart(ctx, {
+                type: 'pie',
+                data: { labels: Object.keys(cities), datasets: [{ data: Object.values(cities), backgroundColor: ['#4f46e5','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4','#f43f5e'] }] },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+    </script>
+
+    {{-- Load Chart.js; onload fires right after it executes, so Chart is
+         guaranteed defined before initAllCharts() is called. --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" onload="initAllCharts()"></script>
 
     <div class="bg-[#f8fafc] min-h-screen pb-20">
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8">
@@ -18,7 +95,7 @@
             {{-- Top Bar with responsive behavior --}}
             <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6 sm:mb-8">
                 <div class="flex items-center gap-3 sm:gap-4 min-w-0 w-full md:w-auto">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white border border-slate-200/60 rounded-xl sm:rounded-2xl flex items-center justify-center text-indigo-600 shadow-sm shrink-0">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white border border-slate-200/60 rounded-xl sm:rounded-2xl flex items-center justify-center text-primary-600 shadow-sm shrink-0">
                         <i class="ph-duotone ph-chart-line-up text-xl sm:text-2xl"></i>
                     </div>
                     <div class="flex flex-col min-w-0">
@@ -29,13 +106,13 @@
 
                 <div class="flex w-full md:w-auto p-1.5 bg-white border border-slate-200/60 rounded-xl sm:rounded-2xl shadow-sm backdrop-blur-md shrink-0">
                     <button onclick="updateTimeFilter('weekly')" 
-                        class="flex-1 md:flex-none px-2 sm:px-4 md:px-6 py-2 text-[10px] sm:text-xs font-black rounded-lg sm:rounded-xl transition-all duration-300 time-filter-btn {{ $timeFilter === 'weekly' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'text-slate-400 hover:text-indigo-600 hover:bg-slate-50' }}" 
+                        class="flex-1 md:flex-none px-2 sm:px-4 md:px-6 py-2 text-[10px] sm:text-xs font-black rounded-lg sm:rounded-xl transition-all duration-300 time-filter-btn {{ $timeFilter === 'weekly' ? 'bg-primary-600 text-white shadow-lg shadow-primary-100' : 'text-slate-400 hover:text-primary-600 hover:bg-slate-50' }}" 
                         data-filter="weekly">Weekly</button>
                     <button onclick="updateTimeFilter('monthly')" 
-                        class="flex-1 md:flex-none px-2 sm:px-4 md:px-6 py-2 text-[10px] sm:text-xs font-black rounded-lg sm:rounded-xl transition-all duration-300 time-filter-btn {{ $timeFilter === 'monthly' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'text-slate-400 hover:text-indigo-600 hover:bg-slate-50' }}" 
+                        class="flex-1 md:flex-none px-2 sm:px-4 md:px-6 py-2 text-[10px] sm:text-xs font-black rounded-lg sm:rounded-xl transition-all duration-300 time-filter-btn {{ $timeFilter === 'monthly' ? 'bg-primary-600 text-white shadow-lg shadow-primary-100' : 'text-slate-400 hover:text-primary-600 hover:bg-slate-50' }}" 
                         data-filter="monthly">Monthly</button>
                     <button onclick="updateTimeFilter('all')" 
-                        class="flex-1 md:flex-none px-2 sm:px-4 md:px-6 py-2 text-[10px] sm:text-xs font-black rounded-lg sm:rounded-xl transition-all duration-300 time-filter-btn {{ $timeFilter === 'all' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'text-slate-400 hover:text-indigo-600 hover:bg-slate-50' }}" 
+                        class="flex-1 md:flex-none px-2 sm:px-4 md:px-6 py-2 text-[10px] sm:text-xs font-black rounded-lg sm:rounded-xl transition-all duration-300 time-filter-btn {{ $timeFilter === 'all' ? 'bg-primary-600 text-white shadow-lg shadow-primary-100' : 'text-slate-400 hover:text-primary-600 hover:bg-slate-50' }}" 
                         data-filter="all">All Time</button>
                 </div>
             </div>
@@ -112,9 +189,9 @@
                     </div>
                 </div>
 
-                <div class="bg-white border border-slate-200/60 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center justify-between hover:border-indigo-600/50 transition-all group shadow-sm">
+                <div class="bg-white border border-slate-200/60 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center justify-between hover:border-primary-600/50 transition-all group shadow-sm">
                     <div class="flex items-center gap-3 sm:gap-4">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-primary-50 flex items-center justify-center text-primary-600">
                             <i class="ph-bold ph-target text-xl sm:text-2xl"></i>
                         </div>
                         <div class="flex flex-col">
@@ -148,7 +225,7 @@
                 <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden">
                     <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-100 bg-slate-50/50">
                         <div class="flex items-center gap-3 sm:gap-4">
-                            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-50 rounded-xl sm:rounded-2xl flex items-center justify-center text-indigo-600 shadow-inner shrink-0">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-primary-50 rounded-xl sm:rounded-2xl flex items-center justify-center text-primary-600 shadow-inner shrink-0">
                                 <i class="ph-duotone ph-chart-line text-xl sm:text-2xl"></i>
                             </div>
                             <div class="min-w-0">
@@ -275,99 +352,5 @@
             url.searchParams.set('timeFilter', filter);
             window.location.href = url.toString();
         }
-
-        function initAllCharts() {
-            initTimelineChart();
-            initPlatformChart();
-            initCareerLevelChart();
-            initProvinceChart();
-            initCityChart();
-        }
-
-        function initTimelineChart() {
-            const ctx = document.getElementById('timelineChart')?.getContext('2d');
-            if (!ctx) return;
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: @json($timelineData['labels'] ?? []),
-                    datasets: [
-                        { label: 'Applications', data: @json($timelineData['applications'] ?? []), borderColor: '#4f46e5', tension: 0.4, fill: true, backgroundColor: 'rgba(79, 70, 229, 0.05)' },
-                        { label: 'Interviews', data: @json($timelineData['interviews'] ?? []), borderColor: '#10b981', tension: 0.4, fill: true, backgroundColor: 'rgba(16, 185, 129, 0.05)' }
-                    ]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } } }
-            });
-        }
-
-        function initPlatformChart() {
-            const ctx = document.getElementById('platformChart')?.getContext('2d');
-            if (!ctx) return;
-            new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: @json(collect($platformEffectiveness)->pluck('platform')),
-                    datasets: [{ 
-                        data: @json(collect($platformEffectiveness)->pluck('total_applications')), 
-                        backgroundColor: ['#4f46e5', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#f43f5e'] 
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, cutout: '75%' }
-            });
-        }
-
-        function initCareerLevelChart() {
-            const ctx = document.getElementById('careerLevelChart')?.getContext('2d');
-            if (!ctx) return;
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: @json(collect($careerLevelAnalysis)->pluck('career_level')),
-                    datasets: [{ 
-                        label: 'Applications', 
-                        data: @json(collect($careerLevelAnalysis)->pluck('total_applications')), 
-                        backgroundColor: '#4f46e5', 
-                        borderRadius: 12 
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-        }
-
-        function initProvinceChart() {
-            const ctx = document.getElementById('provinceChart')?.getContext('2d');
-            if (!ctx) return;
-            const data = @json($locationAnalysis['provinces'] ?? []);
-            new Chart(ctx, {
-                type: 'polarArea',
-                data: {
-                    labels: Object.keys(data),
-                    datasets: [{ 
-                        data: Object.values(data), 
-                        backgroundColor: ['rgba(79, 70, 229, 0.6)', 'rgba(16, 185, 129, 0.6)', 'rgba(245, 158, 11, 0.6)', 'rgba(239, 68, 68, 0.6)', 'rgba(139, 92, 246, 0.6)'] 
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-        }
-
-        function initCityChart() {
-            const ctx = document.getElementById('cityChart')?.getContext('2d');
-            if (!ctx) return;
-            const data = @json($locationAnalysis['cities'] ?? []);
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(data),
-                    datasets: [{ 
-                        data: Object.values(data), 
-                        backgroundColor: ['#4f46e5', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#f43f5e'] 
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', initAllCharts);
     </script>
 </x-app-layout>

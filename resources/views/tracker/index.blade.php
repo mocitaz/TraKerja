@@ -20,11 +20,11 @@
             <!-- Action Bar: Switcher & Add Button (Back to Original Place) -->
             <div class="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6 mb-6">
                 <div class="flex w-full md:w-auto p-1.5 bg-white border border-slate-200/60 rounded-2xl shadow-sm backdrop-blur-md">
-                    <button onclick="switchView('table')" id="table-view-btn" class="flex-1 md:flex-none justify-center flex items-center gap-2 px-8 py-2.5 text-sm font-black rounded-xl transition-all duration-300 bg-indigo-600 text-white shadow-lg shadow-indigo-100">
+                    <button onclick="switchView('table')" id="table-view-btn" class="flex-1 md:flex-none justify-center flex items-center gap-2 px-8 py-2.5 text-sm font-black rounded-xl transition-all duration-300 bg-primary-600 text-white shadow-lg shadow-primary-100">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
                         <span>List</span>
                     </button>
-                    <button onclick="switchView('kanban')" id="kanban-view-btn" class="flex-1 md:flex-none justify-center flex items-center gap-2 px-8 py-2.5 text-sm font-bold text-slate-400 rounded-xl hover:text-indigo-600 hover:bg-slate-50 transition-all duration-300">
+                    <button onclick="switchView('kanban')" id="kanban-view-btn" class="flex-1 md:flex-none justify-center flex items-center gap-2 px-8 py-2.5 text-sm font-bold text-slate-400 rounded-xl hover:text-primary-600 hover:bg-slate-50 transition-all duration-300">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2z"></path></svg>
                         <span>Kanban</span>
                     </button>
@@ -117,16 +117,16 @@
             if (type === 'table') {
                 listCont.classList.remove('hidden');
                 kanbanCont.classList.add('hidden');
-                listBtn.classList.add('bg-indigo-600', 'text-white', 'shadow-lg');
+                listBtn.classList.add('bg-primary-600', 'text-white', 'shadow-lg');
                 listBtn.classList.remove('text-slate-400');
-                kanbanBtn.classList.remove('bg-indigo-600', 'text-white', 'shadow-lg');
+                kanbanBtn.classList.remove('bg-primary-600', 'text-white', 'shadow-lg');
                 kanbanBtn.classList.add('text-slate-400');
             } else {
                 kanbanCont.classList.remove('hidden');
                 listCont.classList.add('hidden');
-                kanbanBtn.classList.add('bg-indigo-600', 'text-white', 'shadow-lg');
+                kanbanBtn.classList.add('bg-primary-600', 'text-white', 'shadow-lg');
                 kanbanBtn.classList.remove('text-slate-400');
-                listBtn.classList.remove('bg-indigo-600', 'text-white', 'shadow-lg');
+                listBtn.classList.remove('bg-primary-600', 'text-white', 'shadow-lg');
                 listBtn.classList.add('text-slate-400');
             }
 

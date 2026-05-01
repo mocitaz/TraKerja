@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-col">
             <h1 class="text-2xl font-black text-slate-900 leading-tight tracking-tight">
-                CV <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600">Generator</span>
+                CV <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-600">Generator</span>
             </h1>
             <p class="text-[11px] text-slate-400 font-semibold uppercase tracking-widest mt-1">Select a template · Preview · Export as PDF</p>
         </div>
@@ -72,7 +72,7 @@
                         'color'   => 'blue',
                         'accent'  => 'bg-blue-50 text-blue-600',
                         'border'  => 'hover:border-blue-300/50',
-                        'preview' => 'bg-gradient-to-br from-blue-50 to-indigo-50',
+                        'preview' => 'bg-gradient-to-br from-blue-50 to-primary-50',
                         'icon'    => 'ph-briefcase',
                         'lines'   => ['bg-blue-300', 'bg-blue-200', 'bg-blue-200', 'bg-blue-100'],
                     ],
@@ -81,12 +81,12 @@
                         'name'    => 'Creative',
                         'desc'    => 'Dynamic, unique design for designers, developers, and creative professionals.',
                         'badge'   => 'Creative',
-                        'color'   => 'violet',
-                        'accent'  => 'bg-violet-50 text-violet-600',
-                        'border'  => 'hover:border-violet-300/50',
-                        'preview' => 'bg-gradient-to-br from-violet-50 to-fuchsia-50',
+                        'color'   => 'primary',
+                        'accent'  => 'bg-primary-50 text-primary-600',
+                        'border'  => 'hover:border-primary-300/50',
+                        'preview' => 'bg-gradient-to-br from-primary-50 to-fuchsia-50',
                         'icon'    => 'ph-paint-brush-broad',
-                        'lines'   => ['bg-violet-300', 'bg-violet-200', 'bg-fuchsia-200', 'bg-violet-100'],
+                        'lines'   => ['bg-primary-300', 'bg-primary-200', 'bg-fuchsia-200', 'bg-primary-100'],
                     ],
                     [
                         'key'     => 'elegant',
@@ -173,7 +173,7 @@
                     <div class="flex -space-x-1">
                         <span class="w-7 h-7 rounded-full bg-slate-200 border-2 border-white flex items-center justify-center text-[10px] font-bold text-slate-600">✓</span>
                         <span class="w-7 h-7 rounded-full bg-blue-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-blue-600">✓</span>
-                        <span class="w-7 h-7 rounded-full bg-violet-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-violet-600">✓</span>
+                        <span class="w-7 h-7 rounded-full bg-primary-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-primary-600">✓</span>
                     </div>
                     <span class="text-xs font-bold text-slate-500">4/4 templates</span>
                 </div>

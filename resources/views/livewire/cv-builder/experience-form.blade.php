@@ -2,7 +2,7 @@
     <!-- Header: Compact & Premium -->
     <div class="flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="flex items-center gap-4">
-            <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 shadow-inner">
+            <div class="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-600 shadow-inner">
                 <i class="ph-duotone ph-briefcase text-2xl"></i>
             </div>
             <div>
@@ -21,16 +21,16 @@
     @if($experiences->count() > 0)
         <div class="grid grid-cols-1 gap-4">
             @foreach($experiences as $experience)
-                <div class="bg-white border border-slate-200/60 rounded-3xl p-5 hover:border-indigo-600/30 transition-all group flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div class="bg-white border border-slate-200/60 rounded-3xl p-5 hover:border-primary-600/30 transition-all group flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div class="flex items-start gap-5 min-w-0">
-                        <div class="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-all shrink-0">
+                        <div class="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:bg-primary-50 group-hover:text-primary-600 transition-all shrink-0">
                             <i class="ph-bold ph-buildings text-xl"></i>
                         </div>
                         <div class="min-w-0">
                             <h4 class="text-base font-black text-slate-900 tracking-tight truncate">{{ $experience->position }}</h4>
                             <p class="text-sm font-bold text-slate-500 mb-1">{{ $experience->company_name }}</p>
                             <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-                                <span class="text-[10px] font-black text-indigo-600 uppercase tracking-widest bg-indigo-50 px-2 py-0.5 rounded-lg">{{ $experience->employment_type }}</span>
+                                <span class="text-[10px] font-black text-primary-600 uppercase tracking-widest bg-primary-50 px-2 py-0.5 rounded-lg">{{ $experience->employment_type }}</span>
                                 <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                                     {{ $experience->start_date?->format('M Y') }} - {{ $experience->is_current ? 'PRESENT' : $experience->end_date?->format('M Y') }}
                                 </span>
@@ -46,14 +46,14 @@
                     <!-- Actions -->
                     <div class="flex items-center gap-2 md:opacity-0 group-hover:opacity-100 transition-all">
                         <div class="flex bg-slate-50 p-1 rounded-xl border border-slate-100">
-                            <button wire:click="moveUp({{ $experience->id }})" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-indigo-600 rounded-lg transition-all">
+                            <button wire:click="moveUp({{ $experience->id }})" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-primary-600 rounded-lg transition-all">
                                 <i class="ph-bold ph-caret-up"></i>
                             </button>
-                            <button wire:click="moveDown({{ $experience->id }})" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-indigo-600 rounded-lg transition-all">
+                            <button wire:click="moveDown({{ $experience->id }})" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-primary-600 rounded-lg transition-all">
                                 <i class="ph-bold ph-caret-down"></i>
                             </button>
                         </div>
-                        <button wire:click="edit({{ $experience->id }})" class="w-10 h-10 flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all">
+                        <button wire:click="edit({{ $experience->id }})" class="w-10 h-10 flex items-center justify-center bg-primary-50 text-primary-600 rounded-xl hover:bg-primary-600 hover:text-white transition-all">
                             <i class="ph-bold ph-pencil-simple"></i>
                         </button>
                         <button wire:click="delete({{ $experience->id }})" wire:confirm="Delete this experience?" class="w-10 h-10 flex items-center justify-center bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-600 hover:text-white transition-all">
@@ -69,7 +69,7 @@
                 <i class="ph-duotone ph-briefcase text-4xl"></i>
             </div>
             <p class="text-sm font-bold text-slate-500 mb-4">No work experience added yet</p>
-            <button wire:click="openModal" class="text-xs font-black text-indigo-600 uppercase tracking-widest hover:text-indigo-700">
+            <button wire:click="openModal" class="text-xs font-black text-primary-600 uppercase tracking-widest hover:text-primary-700">
                 ADD YOUR FIRST EXPERIENCE
             </button>
         </div>
@@ -83,8 +83,8 @@
                 <!-- Header -->
                 <div class="bg-white px-6 py-5 flex justify-between items-center border-b border-slate-100 shrink-0">
                     <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center">
-                            <i class="ph-fill ph-briefcase text-indigo-600 text-base"></i>
+                        <div class="w-9 h-9 rounded-xl bg-primary-50 border border-primary-100 flex items-center justify-center">
+                            <i class="ph-fill ph-briefcase text-primary-600 text-base"></i>
                         </div>
                         <div>
                             <h3 class="text-sm font-black text-slate-900 tracking-tight">{{ $editMode ? 'Edit Experience' : 'Add Experience' }}</h3>
@@ -103,7 +103,7 @@
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Company Name</label>
                             <div class="relative">
                                 <input type="text" wire:model="company_name"
-                                       class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all"
+                                       class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all"
                                        placeholder="e.g. Google, Microsoft">
                                 <i class="ph ph-buildings absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
                             </div>
@@ -114,7 +114,7 @@
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Job Title</label>
                             <div class="relative">
                                 <input type="text" wire:model="position"
-                                       class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all"
+                                       class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all"
                                        placeholder="e.g. Senior Software Engineer">
                                 <i class="ph ph-user-focus absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
                             </div>
@@ -123,7 +123,7 @@
 
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Employment Type</label>
-                            <select wire:model="employment_type" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all">
+                            <select wire:model="employment_type" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all">
                                 <option value="">Select Type</option>
                                 @foreach($employmentTypes as $type)
                                     <option value="{{ $type }}">{{ $type }}</option>
@@ -136,7 +136,7 @@
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Location</label>
                             <div class="relative">
                                 <input type="text" wire:model="location"
-                                       class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all"
+                                       class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all"
                                        placeholder="e.g. Jakarta, Indonesia">
                                 <i class="ph ph-map-pin absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
                             </div>
@@ -144,18 +144,18 @@
 
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Start Date</label>
-                            <input type="date" wire:model="start_date" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all">
+                            <input type="date" wire:model="start_date" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all">
                             @error('start_date') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
                         </div>
 
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">End Date</label>
-                            <input type="date" wire:model="end_date" :disabled="$wire.is_current" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all disabled:opacity-40">
+                            <input type="date" wire:model="end_date" :disabled="$wire.is_current" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all disabled:opacity-40">
                         </div>
 
                         <div class="md:col-span-2">
-                            <label class="flex items-center gap-2.5 p-3 bg-indigo-50/60 border border-indigo-100 rounded-xl cursor-pointer hover:bg-indigo-50 transition-all">
-                                <input type="checkbox" wire:model="is_current" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300">
+                            <label class="flex items-center gap-2.5 p-3 bg-primary-50/60 border border-primary-100 rounded-xl cursor-pointer hover:bg-primary-50 transition-all">
+                                <input type="checkbox" wire:model="is_current" class="w-4 h-4 rounded text-primary-600 focus:ring-primary-500 border-slate-300">
                                 <span class="text-sm font-semibold text-slate-700">I currently work here</span>
                             </label>
                         </div>
@@ -163,7 +163,7 @@
                         <div class="md:col-span-2">
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Job Description</label>
                             <textarea wire:model="description" rows="4"
-                                      class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all leading-relaxed"
+                                      class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all leading-relaxed"
                                       placeholder="• Describe your key responsibilities and achievements..."></textarea>
                             <p class="mt-1 text-[10px] text-slate-400">💡 One bullet point per line</p>
                         </div>
@@ -172,7 +172,7 @@
                     <!-- Footer -->
                     <div class="flex justify-end gap-2 mt-5 pt-5 border-t border-slate-100">
                         <button type="button" wire:click="closeModal" class="px-4 py-2 text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition-all">Cancel</button>
-                        <button type="submit" class="px-5 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all shadow-sm active:scale-95">
+                        <button type="submit" class="px-5 py-2 text-sm font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-xl transition-all shadow-sm active:scale-95">
                             <span wire:loading.remove wire:target="save">{{ $editMode ? 'Update' : 'Save Experience' }}</span>
                             <span wire:loading wire:target="save" class="flex items-center gap-1.5"><i class="ph-bold ph-spinner animate-spin text-sm"></i> Saving...</span>
                         </button>

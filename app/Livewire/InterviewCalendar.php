@@ -21,9 +21,8 @@ class InterviewCalendar extends Component
     // Filter by recruitment stage (HR or User Interview)
     public $filterType = 'all';
     
-    // Modal state
-    public $showModal = false;
-    public $selectedInterview = null;
+    // Modal state is now handled by Alpine in the page view.
+    // Livewire dispatches a browser event; no Livewire-owned modal props needed.
     
     protected $listeners = [
         'job-saved' => 'refreshCalendar',
@@ -141,19 +140,28 @@ class InterviewCalendar extends Component
     
     public function viewInterviewDetails($jobId)
     {
-        $this->selectedInterview = JobApplication::where('id', $jobId)
+        $interview = JobApplication::where('id', $jobId)
             ->where('user_id', Auth::id())
             ->first();
-        
-        if ($this->selectedInterview) {
-            $this->showModal = true;
+
+        if ($interview) {
+            // Dispatch a browser event so the Alpine modal in calendar.blade.php
+            // can open without any @teleport / cloneNode conflict.
+            $this->dispatch('open-interview-modal', interview: [
+                'id'                 => $interview->id,
+                'company_name'       => $interview->company_name,
+                'position'           => $interview->position,
+                'recruitment_stage'  => $interview->recruitment_stage,
+                'application_status' => $interview->application_status,
+                'date_formatted'     => $interview->interview_date?->format('D, d M Y'),
+                'time_formatted'     => $interview->interview_date?->setTimezone('Asia/Jakarta')->format('H:i'),
+                'is_future'          => $interview->interview_date?->isFuture() ?? false,
+                'diff_humans'        => $interview->interview_date?->diffForHumans(),
+                'interview_type'     => $interview->interview_type,
+                'interview_location' => $interview->interview_location,
+                'interview_notes'    => $interview->interview_notes,
+            ]);
         }
-    }
-    
-    public function closeModal()
-    {
-        $this->showModal = false;
-        $this->selectedInterview = null;
     }
     
     public function editInterview($jobId)

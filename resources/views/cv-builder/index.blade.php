@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-col">
             <h1 class="text-2xl font-black text-slate-900 leading-tight tracking-tight">
-                CV <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-purple-600 to-[#4e71c5]">Builder</span>
+                CV <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-primary-600 to-[#4e71c5]">Builder</span>
             </h1>
             <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mt-1">Craft your professional identity</p>
         </div>
@@ -18,7 +18,7 @@
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
                     <div class="flex-1">
                         <div class="flex items-center gap-4 mb-4">
-                            <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 shadow-inner">
+                            <div class="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-600 shadow-inner">
                                 <i class="ph-duotone ph-user-circle-gear text-2xl"></i>
                             </div>
                             <div>
@@ -43,7 +43,7 @@
                                 <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ $filled }} / {{ $total }} SECTIONS</span>
                             </div>
                             <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
-                                <div class="bg-gradient-to-r from-[#d983e4] via-purple-600 to-[#4e71c5] h-full rounded-full transition-all duration-1000 ease-out" style="width: {{ $percentage }}%"></div>
+                                <div class="bg-gradient-to-r from-[#d983e4] via-primary-600 to-[#4e71c5] h-full rounded-full transition-all duration-1000 ease-out" style="width: {{ $percentage }}%"></div>
                             </div>
                         </div>
                     </div>
@@ -69,37 +69,37 @@
                 <div class="bg-slate-50/50 border-b border-slate-100">
                     <nav class="flex items-center gap-2 p-2 overflow-x-auto scrollbar-hide">
                         <button @click="activeTab = 'experiences'" 
-                                :class="activeTab === 'experiences' ? 'bg-white text-indigo-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
+                                :class="activeTab === 'experiences' ? 'bg-white text-primary-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
                                 class="flex items-center gap-2 px-6 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap">
                             <i class="ph-bold ph-briefcase"></i>
                             Experience
                         </button>
                         <button @click="activeTab = 'education'" 
-                                :class="activeTab === 'education' ? 'bg-white text-indigo-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
+                                :class="activeTab === 'education' ? 'bg-white text-primary-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
                                 class="flex items-center gap-2 px-6 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap">
                             <i class="ph-bold ph-graduation-cap"></i>
                             Education
                         </button>
                         <button @click="activeTab = 'skills'" 
-                                :class="activeTab === 'skills' ? 'bg-white text-indigo-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
+                                :class="activeTab === 'skills' ? 'bg-white text-primary-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
                                 class="flex items-center gap-2 px-6 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap">
                             <i class="ph-bold ph-star"></i>
                             Skills
                         </button>
                         <button @click="activeTab = 'organizations'" 
-                                :class="activeTab === 'organizations' ? 'bg-white text-indigo-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
+                                :class="activeTab === 'organizations' ? 'bg-white text-primary-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
                                 class="flex items-center gap-2 px-6 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap">
                             <i class="ph-bold ph-users-three"></i>
                             Organizations
                         </button>
                         <button @click="activeTab = 'achievements'" 
-                                :class="activeTab === 'achievements' ? 'bg-white text-indigo-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
+                                :class="activeTab === 'achievements' ? 'bg-white text-primary-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
                                 class="flex items-center gap-2 px-6 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap">
                             <i class="ph-bold ph-trophy"></i>
                             Achievements
                         </button>
                         <button @click="activeTab = 'projects'" 
-                                :class="activeTab === 'projects' ? 'bg-white text-indigo-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
+                                :class="activeTab === 'projects' ? 'bg-white text-primary-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
                                 class="flex items-center gap-2 px-6 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap">
                             <i class="ph-bold ph-code"></i>
                             Projects
@@ -131,9 +131,9 @@
             </div>
 
             {{-- Pro Tip / Info Box --}}
-            <div class="flex items-center gap-3 px-4 py-3 bg-indigo-50 border border-indigo-200 rounded-2xl text-sm">
-                <i class="ph-duotone ph-lightbulb text-indigo-500 text-lg shrink-0"></i>
-                <p class="text-indigo-700 font-medium leading-snug">
+            <div class="flex items-center gap-3 px-4 py-3 bg-primary-50 border border-primary-200 rounded-2xl text-sm">
+                <i class="ph-duotone ph-lightbulb text-primary-500 text-lg shrink-0"></i>
+                <p class="text-primary-700 font-medium leading-snug">
                     <span class="font-black">Pro Tip:</span> Complete all sections to boost your ATS score. Use <span class="font-black">Generate CV</span> to export your resume.
                 </p>
             </div>

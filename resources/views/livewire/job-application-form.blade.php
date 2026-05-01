@@ -104,6 +104,51 @@
             </div>
         </div>
 
+        {{-- Interview Fields (visible when status = Interview or stage = HR/User Interview) --}}
+        @if(in_array($application_status, ['Interview']) || in_array($recruitment_stage, ['HR - Interview', 'User - Interview']))
+        <div class="bg-indigo-50/60 border border-indigo-100 rounded-2xl p-4 space-y-3">
+            <div class="flex items-center gap-2 mb-1">
+                <div class="w-5 h-5 bg-indigo-100 rounded-md flex items-center justify-center">
+                    <i class="ph-bold ph-chats-circle text-indigo-600 text-[10px]"></i>
+                </div>
+                <span class="text-[10px] font-black text-indigo-700 uppercase tracking-widest">Interview Details</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Interview Date & Time</label>
+                    <input wire:model.live="interview_date" type="datetime-local"
+                           class="block w-full px-3 py-2.5 bg-white border border-indigo-200 rounded-xl text-[11px] font-bold text-slate-700 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all">
+                    @error('interview_date') <p class="text-rose-500 text-[9px] font-bold mt-1 ml-1">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Interview Type</label>
+                    <select wire:model.live="interview_type"
+                            class="block w-full px-3 py-2.5 bg-white border border-indigo-200 rounded-xl text-[11px] font-bold text-slate-700 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all">
+                        <option value="">Select Type</option>
+                        @foreach(['Phone', 'Video', 'In-person', 'Panel'] as $t)
+                            <option value="{{ $t }}">{{ $t }}</option>
+                        @endforeach
+                    </select>
+                    @error('interview_type') <p class="text-rose-500 text-[9px] font-bold mt-1 ml-1">{{ $message }}</p> @enderror
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">
+                    {{ in_array($interview_type, ['Phone','Video']) ? 'Meeting Link' : 'Location / Link' }}
+                </label>
+                <div class="relative">
+                    <i class="ph-bold {{ in_array($interview_type, ['Phone','Video']) ? 'ph-video-camera' : 'ph-map-pin' }} absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input wire:model.live="interview_location" type="text"
+                           class="block w-full pl-9 pr-4 py-2.5 bg-white border border-indigo-200 rounded-xl text-[11px] font-bold text-slate-700 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all"
+                           placeholder="{{ in_array($interview_type, ['Phone','Video']) ? 'https://meet.google.com/...' : 'Office address or meeting link' }}">
+                </div>
+            </div>
+        </div>
+        @endif
+
         {{-- Notes --}}
         <div>
             <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Brief Notes</label>

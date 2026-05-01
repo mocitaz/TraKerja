@@ -13,7 +13,7 @@
                 <i class="ph-bold ph-caret-right"></i>
             </button>
             <div class="w-px h-6 bg-slate-100 mx-1"></div>
-            <button wire:click="goToToday" class="px-5 py-2 text-xs font-black text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all">
+            <button wire:click="goToToday" class="px-5 py-2 text-xs font-black text-primary-600 hover:bg-primary-50 rounded-xl transition-all">
                 TODAY
             </button>
         </div>
@@ -23,11 +23,11 @@
             <!-- View Mode Switcher -->
             <div class="flex p-1.5 bg-white border border-slate-200/60 rounded-2xl shadow-sm">
                 <button wire:click="$set('viewMode', 'month')" 
-                    class="w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300 {{ $viewMode === 'month' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'text-slate-400 hover:text-indigo-600 hover:bg-slate-50' }}">
+                    class="w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300 {{ $viewMode === 'month' ? 'bg-primary-600 text-white shadow-lg shadow-primary-100' : 'text-slate-400 hover:text-primary-600 hover:bg-slate-50' }}">
                     <i class="ph-bold ph-calendar"></i>
                 </button>
                 <button wire:click="$set('viewMode', 'list')" 
-                    class="w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300 {{ $viewMode === 'list' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'text-slate-400 hover:text-indigo-600 hover:bg-slate-50' }}">
+                    class="w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300 {{ $viewMode === 'list' ? 'bg-primary-600 text-white shadow-lg shadow-primary-100' : 'text-slate-400 hover:text-primary-600 hover:bg-slate-50' }}">
                     <i class="ph-bold ph-list-bullets"></i>
                 </button>
             </div>
@@ -35,7 +35,7 @@
             <!-- Filter Type -->
             <div class="relative group">
                 <select wire:model.live="filterType" 
-                        class="appearance-none pl-11 pr-10 py-3 bg-white border border-slate-200/60 rounded-2xl text-xs font-black text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all cursor-pointer shadow-sm min-w-[180px]">
+                        class="appearance-none pl-11 pr-10 py-3 bg-white border border-slate-200/60 rounded-2xl text-xs font-black text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all cursor-pointer shadow-sm min-w-[180px]">
                     <option value="all">ALL INTERVIEWS</option>
                     <option value="HR - Interview">HR INTERVIEW</option>
                     <option value="User - Interview">USER INTERVIEW</option>
@@ -65,11 +65,11 @@
             <!-- Calendar Grid -->
             <div class="grid grid-cols-7 divide-x divide-slate-100">
                 @foreach($calendarDays as $day)
-                    <div class="min-h-[140px] p-3 border-b border-slate-100 transition-colors {{ $day['isCurrentMonth'] ? 'bg-white' : 'bg-slate-50/30 opacity-40' }} {{ $day['isToday'] ? 'bg-indigo-50/30' : '' }} group">
+                    <div class="min-h-[140px] p-3 border-b border-slate-100 transition-colors {{ $day['isCurrentMonth'] ? 'bg-white' : 'bg-slate-50/30 opacity-40' }} {{ $day['isToday'] ? 'bg-primary-50/30' : '' }} group">
                         <!-- Date Number -->
                         <div class="flex justify-between items-start mb-3">
                             <span class="inline-flex items-center justify-center w-8 h-8 text-sm font-black transition-all rounded-xl 
-                                {{ $day['isToday'] ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : ($day['isCurrentMonth'] ? 'text-slate-900 group-hover:text-indigo-600' : 'text-slate-300') }}">
+                                {{ $day['isToday'] ? 'bg-primary-600 text-white shadow-lg shadow-primary-100' : ($day['isCurrentMonth'] ? 'text-slate-900 group-hover:text-primary-600' : 'text-slate-300') }}">
                                 {{ $day['date']->format('j') }}
                             </span>
                         </div>
@@ -98,7 +98,7 @@
         <div class="space-y-4">
             @forelse($this->allInterviewsList as $interview)
                 <div wire:click="viewInterviewDetails({{ $interview->id }})" 
-                     class="bg-white p-5 rounded-2xl border border-slate-200/60 hover:border-indigo-600/30 hover:shadow-md transition-all cursor-pointer group flex flex-col md:flex-row md:items-center justify-between gap-6">
+                     class="bg-white p-5 rounded-2xl border border-slate-200/60 hover:border-primary-600/30 hover:shadow-md transition-all cursor-pointer group flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div class="flex items-center gap-5">
                         <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 
                              {{ $interview->recruitment_stage === 'HR - Interview' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600' }}">
@@ -124,12 +124,12 @@
                         <div class="flex flex-col text-right min-w-[120px]">
                             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Countdown</span>
                             @if($interview->interview_date->isFuture())
-                                <span class="text-sm font-black text-indigo-600">{{ $interview->interview_date->diffForHumans() }}</span>
+                                <span class="text-sm font-black text-primary-600">{{ $interview->interview_date->diffForHumans() }}</span>
                             @else
                                 <span class="text-sm font-black text-slate-400 italic">Past Event</span>
                             @endif
                         </div>
-                        <i class="ph-bold ph-arrow-right text-slate-300 group-hover:text-indigo-600 group-hover:translate-x-1 transition-all"></i>
+                        <i class="ph-bold ph-arrow-right text-slate-300 group-hover:text-primary-600 group-hover:translate-x-1 transition-all"></i>
                     </div>
                 </div>
             @empty
@@ -143,98 +143,5 @@
             @endforelse
         </div>
     @endif
-
-    <!-- Interview Detail Modal: Modern Glassmorphism -->
-    @if($showModal && $selectedInterview)
-        <div class="fixed inset-0 z-[60] overflow-y-auto" x-data="{ closing: false }">
-            <!-- Backdrop -->
-            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-md transition-opacity" 
-                 wire:click="closeModal" x-show="!closing"></div>
-            
-            <!-- Modal Container -->
-            <div class="flex min-h-screen items-center justify-center p-4">
-                <div class="relative bg-white rounded-[2.5rem] shadow-2xl w-full max-w-xl overflow-hidden border border-white/20">
-                    
-                    <!-- Modal Top: Large Header -->
-                    <div class="relative p-8 pb-4">
-                        <button wire:click="closeModal" class="absolute right-6 top-6 w-10 h-10 flex items-center justify-center rounded-2xl hover:bg-slate-50 text-slate-400 transition-all">
-                            <i class="ph-bold ph-x text-xl"></i>
-                        </button>
-
-                        <div class="flex items-center gap-5 mb-6">
-                            <div class="w-16 h-16 rounded-3xl flex items-center justify-center shrink-0 shadow-lg
-                                 {{ $selectedInterview->recruitment_stage === 'HR - Interview' ? 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-blue-200' : 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-emerald-200' }}">
-                                <i class="ph-duotone {{ $selectedInterview->recruitment_stage === 'HR - Interview' ? 'ph-users' : 'ph-user-focus' }} text-3xl"></i>
-                            </div>
-                            <div>
-                                <div class="flex items-center gap-3">
-                                    <h3 class="text-2xl font-black text-slate-900 tracking-tight">{{ $selectedInterview->company_name }}</h3>
-                                </div>
-                                <p class="text-base font-bold text-slate-500 mt-1">{{ $selectedInterview->position }}</p>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-wrap gap-3">
-                            <span class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest
-                                         {{ $selectedInterview->recruitment_stage === 'HR - Interview' ? 'bg-blue-50 text-blue-700' : 'bg-emerald-50 text-emerald-700' }}">
-                                {{ $selectedInterview->recruitment_stage }}
-                            </span>
-                            <span class="px-4 py-2 bg-slate-100 text-slate-600 rounded-xl text-[10px] font-black uppercase tracking-widest">
-                                {{ $selectedInterview->application_status }}
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- Modal Body -->
-                    <div class="p-8 pt-4 space-y-6">
-                        <!-- Date & Location Cards -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
-                                <div class="flex items-center gap-2 text-slate-400 mb-2">
-                                    <i class="ph-bold ph-calendar-check text-base"></i>
-                                    <span class="text-[10px] font-black uppercase tracking-widest">Schedule</span>
-                                </div>
-                                <p class="text-sm font-black text-slate-800">{{ $selectedInterview->interview_date->format('D, d M Y') }}</p>
-                                <p class="text-base font-black text-indigo-600 mt-1">{{ $selectedInterview->interview_date->format('H:i') }} WIB</p>
-                            </div>
-                            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
-                                <div class="flex items-center gap-2 text-slate-400 mb-2">
-                                    <i class="ph-bold ph-map-pin text-base"></i>
-                                    <span class="text-[10px] font-black uppercase tracking-widest">Type / Link</span>
-                                </div>
-                                <p class="text-sm font-black text-slate-800">{{ $selectedInterview->interview_type ?? 'Unspecified' }}</p>
-                                <p class="text-xs font-bold text-slate-500 mt-1 truncate">{{ $selectedInterview->interview_location ?? 'No location added' }}</p>
-                            </div>
-                        </div>
-
-                        <!-- Notes Area -->
-                        @if($selectedInterview->interview_notes)
-                            <div class="bg-indigo-50/30 p-6 rounded-2xl border border-indigo-100">
-                                <div class="flex items-center gap-2 text-indigo-600 mb-3">
-                                    <i class="ph-bold ph-note-pencil text-base"></i>
-                                    <span class="text-[10px] font-black uppercase tracking-widest">Preparation Notes</span>
-                                </div>
-                                <p class="text-sm text-slate-700 font-medium leading-relaxed whitespace-pre-line">{{ $selectedInterview->interview_notes }}</p>
-                            </div>
-                        @endif
-
-                        <!-- Countdown -->
-                        @if($selectedInterview->interview_date->isFuture())
-                            <div class="flex items-center justify-center gap-3 py-3 px-6 bg-amber-50 rounded-2xl border border-amber-100 text-amber-700">
-                                <i class="ph-bold ph-hourglass-high animate-pulse"></i>
-                                <span class="text-xs font-black uppercase tracking-widest">Starting {{ $selectedInterview->interview_date->diffForHumans() }}</span>
-                            </div>
-                        @endif
-                    </div>
-
-                    <!-- Modal Action -->
-                    <div class="p-8 pt-0">
-                        <button wire:click="closeModal" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-black text-xs uppercase tracking-[2px] hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 active:scale-[0.98]">
-                            DISMISS DETAILS
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
+    {{-- Modal is rendered in calendar.blade.php as pure Alpine, outside this component --}}
 </div>
