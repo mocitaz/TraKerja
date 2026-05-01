@@ -1,215 +1,148 @@
 <div>
-    <div class="space-y-3">
-        <!-- Compact Search and Filter Bar for Kanban -->
-        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] overflow-hidden">
-            <div class="p-3">
-                <!-- Search Input -->
-                <div class="mb-2.5">
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
-                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                        </div>
-                        <input wire:model.live.debounce.300ms="search" 
-                               type="text" 
-                               placeholder="Search company, position, location..." 
-                               class="block w-full pl-8 pr-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
-                    </div>
+    <div class="space-y-6">
+        <!-- Search & Filter Bar (Identical to Table) -->
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-4 p-4 bg-white border border-slate-200 rounded-2xl shadow-sm">
+            <div class="relative w-full lg:w-80 group">
+                <input wire:model.live.debounce.300ms="search" type="text" placeholder="Search in kanban..." class="block w-full pl-10 pr-4 py-2 bg-slate-50 border-none rounded-xl text-xs font-bold transition-all focus:ring-4 focus:ring-indigo-600/5">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
+            </div>
 
-                <!-- Filters Row - Compact 2 columns -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-2.5">
-                    <!-- Platform Filter -->
-                    <div>
-                        <label class="block text-xs font-medium text-gray-700 mb-1">Platform</label>
-                        <select wire:model.live="platformFilter" 
-                                class="block w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
-                            <option value="">All Platforms</option>
-                            @foreach($platformOptions as $platform)
-                                <option value="{{ $platform }}">{{ $platform }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <!-- Recruitment Stage Filter -->
-                    <div>
-                        <label class="block text-xs font-medium text-gray-700 mb-1">Stage</label>
-                        <select wire:model.live="recruitmentStageFilter" 
-                                class="block w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white">
-                            <option value="">All Stages</option>
-                            @foreach($recruitmentStageOptions as $stage)
-                                <option value="{{ $stage }}">{{ $stage }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Action Buttons - Compact -->
-                <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-gray-100">
-                    <button wire:click="clearFilters" 
-                            class="px-3 py-1.5 text-xs font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 border border-gray-200 rounded-lg transition-colors whitespace-nowrap">
-                        Clear Filters
-                    </button>
-                    <button wire:click="toggleArchived" 
-                            class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap {{ $showArchived ? 'bg-purple-600 text-white hover:bg-purple-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200' }}">
-                        <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-                        </svg>
-                        <span>{{ $showArchived ? 'Show Active' : 'Show Archived' }}</span>
-                    </button>
-                    @if($showArchived && $archivedCount > 0)
-                        <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-gray-700 bg-gray-50 rounded-lg border border-gray-200 whitespace-nowrap">
-                            <span class="font-bold text-purple-600">{{ $archivedCount }}</span>
-                            <span>Archived</span>
-                        </span>
-                    @endif
-                    @if($platformFilter || $recruitmentStageFilter)
-                        <span class="px-2 py-1 text-xs font-medium text-purple-600 bg-purple-50 rounded-lg">
-                            {{ ($platformFilter ? 1 : 0) + ($recruitmentStageFilter ? 1 : 0) }} active
-                        </span>
-                    @endif
-                </div>
+            <div class="grid grid-cols-2 sm:flex sm:items-center gap-2 w-full lg:w-auto">
+                <select wire:model.live="platformFilter" class="w-full bg-slate-50 border-none rounded-lg text-[10px] font-black text-slate-600 focus:ring-4 focus:ring-indigo-600/5">
+                    <option value="">PLATFORM</option>
+                    @foreach($platformOptions as $platform) <option value="{{ $platform }}">{{ strtoupper($platform) }}</option> @endforeach
+                </select>
+                <button wire:click="toggleArchived" class="w-full sm:w-auto px-4 py-2.5 sm:py-2 rounded-lg text-[10px] font-black uppercase tracking-widest border transition-all {{ $showArchived ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg' : 'bg-white border-slate-200 text-slate-500 hover:border-indigo-600' }}">
+                    {{ $showArchived ? 'Active' : 'Archive' }}
+                </button>
             </div>
         </div>
 
-        <!-- Modern Kanban Board -->
-        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-            <div class="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 snap-x snap-mandatory">
-            @forelse($statuses as $status)
-                <div class="w-full min-w-[260px] snap-start sm:min-w-0">
-                    <!-- Status Column Header -->
-                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 h-full flex flex-col">
-                        <div class="p-3 sm:p-4 border-b border-gray-100" style="background: linear-gradient(135deg, {{ $status->color_code }}08, {{ $status->color_code }}03);">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-2 min-w-0 flex-1">
-                                    <div class="w-2 h-2 rounded-full flex-shrink-0" style="background-color: {{ $status->color_code }};"></div>
-                                    <h3 class="text-xs sm:text-sm font-bold text-gray-800 truncate">
-                                        {{ $status->name }}
-                                    </h3>
+        <!-- Clean 3-Column Kanban Board -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full items-start">
+            @foreach($statuses as $status)
+                <div class="flex flex-col bg-slate-50/50 rounded-3xl p-4 border border-slate-200/60 shadow-sm"
+                     ondragover="allowDrop(event)" 
+                     ondrop="drop(event, '{{ $status->name }}')"
+                     data-status-container="{{ $status->name }}">
+                    
+                    <!-- Column Header -->
+                    <div class="flex items-center justify-between mb-5 px-2">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-2 h-2 rounded-full" style="background-color: {{ $status->color_code }}; shadow: 0 0 10px {{ $status->color_code }}40;"></div>
+                            <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">{{ $status->name }}</h3>
+                        </div>
+                        <span class="text-[9px] font-black bg-white text-slate-400 px-2.5 py-1 rounded-full border border-slate-100 shadow-sm">
+                            {{ $status->jobApplications->count() }}
+                        </span>
+                    </div>
+
+                    <!-- Job Cards Container -->
+                    <div class="space-y-3 min-h-[150px]">
+                        {{-- Skeleton Loading Cards --}}
+                        <div wire:loading.class.remove="hidden" class="hidden space-y-3">
+                            @for($i = 0; $i < 2; $i++)
+                                <div class="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="w-9 h-9 rounded-xl bg-slate-100 skeleton"></div>
+                                        <div class="space-y-2 flex-1">
+                                            <div class="h-3 w-3/4 bg-slate-100 rounded skeleton"></div>
+                                            <div class="h-2 w-1/2 bg-slate-100 rounded skeleton"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-center pt-3 border-t border-slate-50">
+                                        <div class="h-5 w-16 bg-slate-100 rounded skeleton"></div>
+                                        <div class="h-3 w-10 bg-slate-100 rounded skeleton"></div>
+                                    </div>
                                 </div>
-                                <span class="inline-flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-700 flex-shrink-0 ml-2">
-                                    {{ $status->jobApplications->count() }}
-                                </span>
-                            </div>
+                            @endfor
                         </div>
 
-                        <!-- Job Cards Container -->
-                        <div class="p-2 sm:p-3 space-y-2 sm:space-y-3 flex-1 min-h-40 sm:min-h-48" 
-                             data-status="{{ $status->name }}" 
-                             ondrop="drop(event, '{{ $status->name }}')" 
-                             ondragover="allowDrop(event)"
-                             ondragleave="dragLeave(event)"
-                             style="background: linear-gradient(135deg, {{ $status->color_code }}03, transparent);">
-                            
+                        <div wire:loading.remove class="space-y-3">
                             @forelse($status->jobApplications as $job)
-                                <div class="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 {{ $job->is_pinned ? 'ring-2 ring-purple-400 border-purple-400' : '' }}"
-                                     draggable="true"
-                                     data-job-id="{{ $job->id }}"
-                                     ondragstart="dragStart(event, {{ $job->id }})"
-                                     ondragend="dragEnd(event)">
-                                    
-                                    <!-- Job Card Content -->
-                                    <div class="p-2 sm:p-3">
-                                        <!-- Header with Company, Position & Dropdown -->
-                                        <div class="flex items-start justify-between mb-2 gap-2">
-                                            <div class="flex-1 min-w-0">
-                                                <div class="flex items-center gap-1.5 mb-0.5">
-                                                    @if($job->is_pinned)
-                                                        <svg class="w-3.5 h-3.5 text-purple-600 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                                                            <path d="M16 12V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v8c-1.66 0-3 1.34-3 3v1c0 .55.45 1 1 1h5v5c0 .55.45 1 1 1s1-.45 1-1v-5h5c.55 0 1-.45 1-1v-1c0-1.66-1.34-3-3-3z"/>
-                                                        </svg>
-                                                    @endif
-                                                    <h4 class="font-semibold text-gray-900 text-xs sm:text-sm truncate group-hover:text-primary-600 transition-colors cursor-pointer">
-                                                        {{ $job->company_name }}
-                                                    </h4>
-                                                </div>
-                                                <p class="text-xs text-gray-600 truncate">{{ $job->position }}</p>
-                                            </div>
-                                            
-                                            <!-- Action Buttons -->
-                                            <div class="inline-flex items-center gap-0.5 flex-shrink-0">
-                                                <!-- Pin Button -->
-                                                <button wire:click="togglePin({{ $job->id }})" 
-                                                        class="p-1 rounded transition-colors @if($job->is_pinned) text-purple-600 bg-purple-50 hover:bg-purple-100 @else text-gray-400 hover:text-purple-600 hover:bg-purple-50 @endif"
-                                                        onclick="event.stopPropagation();"
-                                                        title="{{ $job->is_pinned ? 'Unpin' : 'Pin' }}">
-                                                    <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                                                        <path d="M16 12V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v8c-1.66 0-3 1.34-3 3v1c0 .55.45 1 1 1h5v5c0 .55.45 1 1 1s1-.45 1-1v-5h5c.55 0 1-.45 1-1v-1c0-1.66-1.34-3-3-3z"/>
-                                                    </svg>
-                                                </button>
-                                                
-                                                <!-- View Button -->
-                                                <a href="{{ route('jobs.show', $job) }}"
-                                                   class="p-1 text-blue-600 hover:bg-blue-50 rounded transition-colors"
-                                                   title="View">
-                                                    <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                                    </svg>
-                                                </a>
-                                            </div>
+                            <div class="group bg-white rounded-2xl p-4 border border-slate-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_35px_rgba(0,0,0,0.06)] hover:border-indigo-400 transition-all duration-300 cursor-grab active:cursor-grabbing {{ $job->is_pinned ? 'ring-2 ring-indigo-500/10 border-indigo-400' : '' }}"
+                                 draggable="true"
+                                 id="job-card-{{ $job->id }}"
+                                 ondragstart="drag(event, '{{ $job->id }}')"
+                                 onclick="window.location.href='{{ route('jobs.show', $job) }}'">
+                                
+                                <div class="flex items-start justify-between gap-3 mb-3">
+                                    <div class="flex items-center gap-3 min-w-0">
+                                        <div class="w-9 h-9 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-indigo-600 font-black text-sm shrink-0">
+                                            {{ substr($job->company_name, 0, 1) }}
                                         </div>
-
-                                        <!-- Location & Platform - Compact -->
-                                        <div class="space-y-1 mb-2 text-xs text-gray-500">
-                                            <div class="truncate">{{ $job->location }}</div>
-                                            <div class="truncate">{{ $job->platform }}</div>
-                                        </div>
-
-                                        <!-- Recruitment Stage & Date -->
-                                        <div class="flex items-center justify-between">
-                                            <div class="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium"
-                                                 style="background-color: {{ $this->getStageColor($job->recruitment_stage ?? 'Applied') }}20; color: {{ $this->getStageColor($job->recruitment_stage ?? 'Applied') }};">
-                                                {{ $job->recruitment_stage ?? 'Applied' }}
-                                            </div>
-                                            <div class="text-xs text-gray-500">
-                                                {{ $job->application_date->format('M d') }}
-                                            </div>
+                                        <div class="min-w-0">
+                                            <h4 class="text-[13px] font-black text-slate-900 group-hover:text-indigo-600 transition-colors leading-none truncate">{{ $job->company_name }}</h4>
+                                            <p class="text-[10px] font-bold text-slate-400 italic mt-1 truncate">{{ $job->position }}</p>
                                         </div>
                                     </div>
+                                    @if($job->is_pinned)
+                                        <svg class="w-3.5 h-3.5 text-amber-400 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
+                                    @endif
                                 </div>
-                            @empty
-                                <div class="text-center py-8">
-                                    <div class="w-8 h-8 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
-                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                        </svg>
+
+                                <div class="flex items-center justify-between pt-3 border-t border-slate-50">
+                                    <div class="flex items-center gap-2">
+                                        <button wire:click.stop="edit('{{ $job->id }}')" class="p-1.5 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-600 hover:text-white transition-all duration-300">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h10a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                        </button>
+                                        <button wire:click.stop="delete('{{ $job->id }}')" wire:confirm="Hapus lamaran ini?" class="p-1.5 bg-rose-50 text-rose-600 rounded-lg hover:bg-rose-600 hover:text-white transition-all duration-300">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                        </button>
                                     </div>
-                                    <p class="text-xs text-gray-500 mb-3">No applications yet</p>
-                                    <button onclick="openJobModal()" 
-                                            class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-primary-600 bg-primary-50 hover:bg-primary-100 rounded-lg transition-colors duration-200">
-                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                                        </svg>
-                                        Add First
-                                    </button>
+                                    <div class="flex items-center gap-1">
+                                        <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z"></path></svg>
+                                        <span class="text-[9px] font-bold text-slate-400 italic">{{ $job->application_date->format('d M') }}</span>
+                                    </div>
                                 </div>
-                            @endforelse
-                        </div>
-                    </div>
-                </div>
-            @empty
-                <div class="col-span-full text-center py-12">
-                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
-                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">No Job Applications Yet</h3>
-                    <p class="text-gray-500 mb-4">Start tracking your job applications by adding your first one.</p>
-                    <button onclick="openJobModal()" 
-                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-lg transition-colors duration-200">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                        </svg>
-                        Add Your First Application
-                    </button>
-                </div>
-            @endforelse
-            </div>
+                                
+                                @if($job->recruitment_stage)
+                                    <div class="mt-3 flex">
+                                        <span class="px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest"
+                                              style="background-color: {{ $this->getStageColor($job->recruitment_stage) }}10; color: {{ $this->getStageColor($job->recruitment_stage) }}; border: 1px solid {{ $this->getStageColor($job->recruitment_stage) }}20;">
+                                            {{ $job->recruitment_stage }}
+                                        </span>
+                                    </div>
+                                @endif
+                            </div>
+                        @empty
+                            <div class="flex flex-col items-center justify-center py-10 bg-white/30 rounded-2xl border border-dashed border-slate-200">
+                                <span class="text-[9px] font-black text-slate-300 uppercase tracking-widest italic">No Jobs</span>
+                            </div>
+                        @endforelse
+                    </div> <!-- end wire:loading.remove -->
+                </div> <!-- end space-y-3 min-h-[150px] -->
+            </div> <!-- end column wrapper bg-slate-50/50 -->
+        @endforeach
         </div>
-
     </div>
-</div>
+
+    <!-- Drag & Drop Scripts -->
+    <script>
+        function allowDrop(ev) {
+            ev.preventDefault();
+            const container = ev.target.closest('[data-status-container]');
+            if (container) container.classList.add('bg-indigo-50/50', 'border-indigo-200');
+        }
+
+        function drag(ev, jobId) {
+            ev.dataTransfer.setData("jobId", jobId);
+            ev.target.classList.add('opacity-40', 'scale-95');
+        }
+
+        function drop(ev, newStatus) {
+            ev.preventDefault();
+            const jobId = ev.dataTransfer.getData("jobId");
+            const container = ev.target.closest('[data-status-container]');
+            if (container) container.classList.remove('bg-indigo-50/50', 'border-indigo-200');
+            @this.call('updateStatus', jobId, newStatus);
+        }
+
+        document.addEventListener('dragleave', function(ev) {
+            const container = ev.target.closest('[data-status-container]');
+            if (container) container.classList.remove('bg-indigo-50/50', 'border-indigo-200');
+        });
+    </script>
 </div>

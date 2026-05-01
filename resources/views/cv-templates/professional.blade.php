@@ -3,7 +3,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>{{ $user->name }} - CV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
         * {
             margin: 0;
             padding: 0;
@@ -11,147 +16,113 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-            font-size: 10pt;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 9.5pt;
             line-height: 1.5;
-            color: #000000;
+            color: #111827;
+            background: white;
+            -webkit-font-smoothing: antialiased;
         }
         
         .container {
-            max-width: 210mm;
-            margin: 0 auto;
-            padding: 20mm 25mm;
+            width: 100%;
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
         }
         
         /* Header */
         .header {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 3px solid #000000;
+            border-bottom: 4px solid #111827;
         }
         
         .header .name {
-            font-size: 28pt;
-            font-weight: 700;
-            color: #000000;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
+            font-size: 24pt;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: #000;
+            margin-bottom: 5px;
+            text-transform: uppercase;
         }
         
         .header .contact {
             font-size: 9pt;
-            color: #333333;
-            line-height: 1.8;
-        }
-        
-        .header .contact a {
-            color: #000000;
-            text-decoration: none;
-        }
-        
-        .header .contact a:hover {
-            text-decoration: underline;
+            color: #4b5563;
         }
         
         /* Sections */
         .section {
-            margin-bottom: 24px;
-            page-break-inside: avoid;
+            margin-bottom: 20px;
+            break-inside: avoid;
         }
         
         .section-title {
-            font-size: 13pt;
-            font-weight: 700;
-            color: #000000;
-            margin-bottom: 14px;
-            padding-bottom: 6px;
-            border-bottom: 2px solid #cccccc;
+            font-size: 11pt;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 10px;
+            padding-bottom: 3px;
+            border-bottom: 1.5px solid #111827;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
         
         /* Entry styles */
         .entry {
-            margin-bottom: 18px;
-            page-break-inside: avoid;
+            margin-bottom: 15px;
+            break-inside: avoid;
         }
         
         .entry-header {
-            margin-bottom: 6px;
             display: flex;
             justify-content: space-between;
             align-items: baseline;
+            margin-bottom: 2px;
         }
         
         .entry-title {
             font-weight: 700;
             font-size: 11pt;
-            color: #000000;
-            flex: 1;
+            color: #000;
         }
         
         .entry-date {
             font-size: 9pt;
-            color: #555555;
-            font-weight: 500;
-            white-space: nowrap;
-            margin-left: 15px;
+            color: #111827;
+            font-weight: 700;
         }
         
+        .entry-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
         .entry-subtitle {
             font-size: 10pt;
             font-weight: 600;
-            color: #333333;
-            margin-bottom: 4px;
+            color: #374151;
         }
         
         .entry-location {
             font-size: 9pt;
-            color: #555555;
-            margin-bottom: 8px;
+            color: #6b7280;
+            font-style: italic;
         }
         
         .entry-description {
             font-size: 9.5pt;
-            line-height: 1.6;
-            color: #000000;
+            color: #1f2937;
+            margin-top: 3px;
         }
-        
+
         .entry-description ul {
-            margin: 6px 0;
-            padding-left: 20px;
+            margin-left: 15px;
+            margin-top: 4px;
         }
-        
-        .entry-description li {
-            margin-bottom: 5px;
-        }
-        
-        /* Skills */
-        .skills-list {
-            font-size: 9.5pt;
-            line-height: 1.9;
-            color: #000000;
-        }
-        
-        .skills-list strong {
-            color: #000000;
-            font-weight: 600;
-        }
-        
-        /* Summary */
-        .summary {
-            font-size: 10pt;
-            line-height: 1.7;
-            text-align: justify;
-            color: #000000;
-        }
-        
-        /* Print optimization */
+
         @media print {
-            body {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
+            body { margin: 0; padding: 0; }
         }
     </style>
 </head>
@@ -161,24 +132,13 @@
         <div class="header">
             <div class="name">{{ $user->name }}</div>
             <div class="contact">
-                @if($user->profile && $user->profile->phone_number)
-                    {{ $user->profile->phone_number }}
-                @endif
-                @if($user->email)
-                    @if($user->profile && $user->profile->phone_number) • @endif
-                    {{ $user->email }}
-                @endif
-                @if($user->profile && $user->profile->linkedin_url)
-                    @if($user->email || ($user->profile && $user->profile->phone_number)) • @endif
-                    <a href="{{ $user->profile->linkedin_url }}">LinkedIn</a>
-                @endif
-                @if($user->profile && $user->profile->github_url)
-                    @if($user->email || ($user->profile && ($user->profile->phone_number || $user->profile->linkedin_url))) • @endif
-                    <a href="{{ $user->profile->github_url }}">GitHub</a>
-                @endif
-                @if($user->profile && $user->profile->domicile)
-                    <br>{{ $user->profile->domicile }}
-                @endif
+                @php
+                    $contact = [];
+                    if($user->profile && $user->profile->phone_number) $contact[] = $user->profile->phone_number;
+                    if($user->email) $contact[] = $user->email;
+                    if($user->profile && $user->profile->domicile) $contact[] = $user->profile->domicile;
+                @endphp
+                {{ implode(' • ', $contact) }}
             </div>
         </div>
 
@@ -186,7 +146,9 @@
         @if($user->profile && $user->profile->bio)
         <div class="section">
             <div class="section-title">Professional Summary</div>
-            <div class="summary">{{ $user->profile->bio }}</div>
+            <div class="entry-description">
+                {!! format_cv_text($user->profile->bio) !!}
+            </div>
         </div>
         @endif
 
@@ -197,29 +159,16 @@
             @foreach($experiences as $exp)
             <div class="entry">
                 <div class="entry-header">
-                    <div class="entry-title">{{ $exp->position }}</div>
-                    <span class="entry-date">
-                        {{ $exp->start_date ? $exp->start_date->format('M Y') : '' }} - 
-                        @if($exp->is_current)
-                            Present
-                        @else
-                            {{ $exp->end_date ? $exp->end_date->format('M Y') : '' }}
-                        @endif
-                    </span>
+                    <div class="entry-title">{{ $exp->company_name }}</div>
+                    <div class="entry-date">{{ format_date_range($exp->start_date, $exp->end_date, $exp->is_current) }}</div>
                 </div>
-                <div class="entry-subtitle">{{ $exp->company_name }}</div>
-                @if($exp->location)
-                <div class="entry-location">{{ $exp->location }}</div>
-                @endif
+                <div class="entry-row">
+                    <div class="entry-subtitle">{{ $exp->position }}</div>
+                    <div class="entry-location">{{ $exp->location }}</div>
+                </div>
                 @if($exp->description)
                 <div class="entry-description">
-                    <ul>
-                        @foreach(explode("\n", $exp->description) as $line)
-                            @if(trim($line))
-                            <li>{{ trim($line, "• -") }}</li>
-                            @endif
-                        @endforeach
-                    </ul>
+                    {!! format_cv_text($exp->description) !!}
                 </div>
                 @endif
             </div>
@@ -234,90 +183,15 @@
             @foreach($educations as $edu)
             <div class="entry">
                 <div class="entry-header">
-                    <div class="entry-title">{{ $edu->degree }}{{ $edu->major ? ' in ' . $edu->major : '' }}</div>
-                    <span class="entry-date">
-                        {{ $edu->start_date ? $edu->start_date->format('M Y') : '' }} - 
-                        @if($edu->is_current)
-                            Present
-                        @else
-                            {{ $edu->end_date ? $edu->end_date->format('M Y') : '' }}
-                        @endif
-                    </span>
+                    <div class="entry-title">{{ $edu->institution_name }}</div>
+                    <div class="entry-date">{{ format_date_range($edu->start_date, $edu->end_date, $edu->is_current) }}</div>
                 </div>
-                <div class="entry-subtitle">{{ $edu->institution_name }}</div>
-                @if($edu->location)
-                <div class="entry-location">{{ $edu->location }}</div>
-                @endif
+                <div class="entry-row">
+                    <div class="entry-subtitle">{{ $edu->degree }}{{ $edu->major ? ', ' . $edu->major : '' }}</div>
+                    <div class="entry-location">{{ $edu->location }}</div>
+                </div>
                 @if($edu->gpa)
-                <div class="entry-location">GPA: {{ $edu->gpa }}</div>
-                @endif
-                @if($edu->description)
-                <div class="entry-description">
-                    <ul>
-                        @foreach(explode("\n", $edu->description) as $line)
-                            @if(trim($line))
-                            <li>{{ trim($line, "• -") }}</li>
-                            @endif
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-            </div>
-            @endforeach
-        </div>
-        @endif
-
-        <!-- Organizations -->
-        @if($organizations->count() > 0)
-        <div class="section">
-            <div class="section-title">Leadership & Organizations</div>
-            @foreach($organizations as $org)
-            <div class="entry">
-                <div class="entry-header">
-                    <div class="entry-title">{{ $org->role }}</div>
-                    <span class="entry-date">
-                        {{ $org->start_date ? $org->start_date->format('M Y') : '' }} - 
-                        @if($org->is_current)
-                            Present
-                        @else
-                            {{ $org->end_date ? $org->end_date->format('M Y') : '' }}
-                        @endif
-                    </span>
-                </div>
-                <div class="entry-subtitle">{{ $org->organization_name }}</div>
-                @if($org->description)
-                <div class="entry-description">
-                    <ul>
-                        @foreach(explode("\n", $org->description) as $line)
-                            @if(trim($line))
-                            <li>{{ trim($line, "• -") }}</li>
-                            @endif
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-            </div>
-            @endforeach
-        </div>
-        @endif
-
-        <!-- Projects -->
-        @if($projects->count() > 0)
-        <div class="section">
-            <div class="section-title">Notable Projects</div>
-            @foreach($projects as $project)
-            <div class="entry">
-                <div class="entry-header">
-                    <div class="entry-title">{{ $project->project_name }}</div>
-                    @if($project->start_date)
-                    <span class="entry-date">{{ $project->start_date->format('M Y') }}</span>
-                    @endif
-                </div>
-                @if($project->description)
-                <div class="entry-description">{{ $project->description }}</div>
-                @endif
-                @if($project->technologies)
-                <div class="entry-description" style="margin-top: 4px;"><strong>Technologies:</strong> {{ is_array($project->technologies) ? implode(', ', $project->technologies) : $project->technologies }}</div>
+                <div class="entry-description" style="font-weight: 700; font-style: italic;">GPA: {{ $edu->gpa }}</div>
                 @endif
             </div>
             @endforeach
@@ -328,34 +202,11 @@
         @if($skills->count() > 0)
         <div class="section">
             <div class="section-title">Skills & Competencies</div>
-            <div class="skills-list">
+            <div class="entry-description">
                 @foreach($skills->groupBy('category') as $category => $categorySkills)
-                    <strong>{{ $category }}:</strong> {{ $categorySkills->pluck('skill_name')->join(', ') }}<br>
+                    <p style="margin-bottom: 4px;"><strong>{{ $category }}:</strong> {{ $categorySkills->pluck('skill_name')->join(', ') }}</p>
                 @endforeach
             </div>
-        </div>
-        @endif
-
-        <!-- Achievements -->
-        @if($achievements->count() > 0)
-        <div class="section">
-            <div class="section-title">Honors & Achievements</div>
-            @foreach($achievements as $achievement)
-            <div class="entry">
-                <div class="entry-header">
-                    <div class="entry-title">{{ $achievement->title }}</div>
-                    @if($achievement->date)
-                    <span class="entry-date">{{ $achievement->date->format('M Y') }}</span>
-                    @endif
-                </div>
-                @if($achievement->issuer)
-                <div class="entry-subtitle">{{ $achievement->issuer }}</div>
-                @endif
-                @if($achievement->description)
-                <div class="entry-description">{{ $achievement->description }}</div>
-                @endif
-            </div>
-            @endforeach
         </div>
         @endif
     </div>

@@ -84,6 +84,8 @@ Route::get('/interviews', function () {
 Route::prefix('ai-analyzer')->middleware(['auth', 'verified'])->name('ai-analyzer.')->group(function () {
     Route::get('/', [AiAnalyzerController::class, 'index'])->name('index');
     Route::post('/analyze', [AiAnalyzerController::class, 'analyze'])->name('analyze');
+    Route::get('/analyze', function() { return redirect()->route('ai-analyzer.index'); });
+    Route::get('/result/{result}', [AiAnalyzerController::class, 'show'])->name('show');
 });
 
 Route::get('/dashboard', function () {
@@ -373,6 +375,23 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         }
         return app(\App\Http\Controllers\Admin\EmailBlastController::class)->index();
     })->name('email-blast');
+    
+    // Global Settings
+    Route::get('/settings', function () {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return view('admin.settings');
+    })->name('settings');
+
+    // Integration Hub (Livewire)
+    Route::get('/integration-hub', \App\Livewire\Admin\IntegrationHub::class)->name('integration-hub');
+
+    // Database & Maintenance (Livewire)
+    Route::get('/database-maintenance', \App\Livewire\Admin\DatabaseMaintenance::class)->name('database-maintenance');
+    
+    // Backup Download (Controller)
+    Route::get('/database/download-backup', [\App\Http\Controllers\Admin\DatabaseMaintenanceController::class, 'downloadBackup'])->name('database.download');
     
     Route::post('/email-blast/send', function (Request $request) {
         if (!Auth::user()->isAdmin()) {

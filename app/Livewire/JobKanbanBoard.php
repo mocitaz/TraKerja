@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-
 use App\Models\JobApplication;
 use Livewire\Component;
 
@@ -12,76 +11,34 @@ class JobKanbanBoard extends Component
 {
     public $statusOptions = [
         'On Process',
-        'Declined',
-        'Accepted'
+        'Accepted',
+        'Rejected'
     ];
 
     public $platformOptions = [
-        '9cv9',
-        'Cake: Cari Lowongan',
-        'Dealls',
-        'Disnakerja.com',
-        'Email',
-        'Fiverr',
-        'Freelancer',
-        'Glassdoor',
-        'Glints',
-        'Google Forms',
-        'Indeed',
-        'JobStreet',
-        'Jobseeker App',
-        'JobsDB',
-        'Jora',
-        'Kalibrr',
-        'Karir.com',
-        'Karirhub (SIAPkerja)',
-        'KitaLulus',
-        'LinkedIn',
-        'Loker.id',
-        'Microsoft Forms',
-        'NusaCrowd',
-        'Pintarnya.com',
-        'SkillAcademy',
-        'SkillTrade',
-        'Talentics',
-        'Tech in Asia',
-        'Urbanhire',
-        'Website Company',
-        'Other'
+        '9cv9', 'Cake: Cari Lowongan', 'Dealls', 'Disnakerja.com', 'Email', 'Fiverr', 'Freelancer',
+        'Glassdoor', 'Glints', 'Google Forms', 'Indeed', 'JobStreet', 'Jobseeker App', 'JobsDB',
+        'Jora', 'Kalibrr', 'Karir.com', 'Karirhub (SIAPkerja)', 'KitaLulus', 'LinkedIn', 'Loker.id',
+        'Microsoft Forms', 'NusaCrowd', 'Pintarnya.com', 'SkillAcademy', 'SkillTrade', 'Talentics',
+        'Tech in Asia', 'Urbanhire', 'Website Company', 'Other'
     ];
 
     public $careerLevelOptions = [
-        'Intern',
-        'Full Time',
-        'Contract',
-        'MT',
-        'Freelance'
+        'Intern', 'Full Time', 'Contract', 'MT', 'Freelance'
     ];
 
     public $recruitmentStageOptions = [
-        'Applied',
-        'Follow Up',
-        'Assessment Test',
-        'Psychotest',
-        'HR - Interview',
-        'User - Interview',
-        'LGD',
-        'Presentation Round',
-        'Offering',
-        'Not Processed'
+        'Applied', 'Follow Up', 'Assessment Test', 'Psychotest', 'HR - Interview',
+        'User - Interview', 'LGD', 'Presentation Round', 'Offering', 'Not Processed'
     ];
     
     public $search = '';
     public $platformFilter = '';
     public $careerLevelFilter = '';
     public $recruitmentStageFilter = '';
-    public $locationFilter = '';
-    public $dateFromFilter = '';
-    public $dateToFilter = '';
     public $showAdvancedFilters = false;
     public $showArchived = false;
     
-    // Track last update to prevent spam
     private $lastUpdateTime = [];
 
     protected $listeners = [
@@ -92,40 +49,18 @@ class JobKanbanBoard extends Component
         'job-pinned' => '$refresh',
     ];
 
-    public function updatingSearch()
+    public function edit($jobId)
     {
-        // Reset not needed for kanban
+        $this->dispatch('edit-job', jobId: $jobId);
     }
 
-    public function updatingPlatformFilter()
+    public function toggleArchived()
     {
-        // Reset not needed for kanban
+        $this->showArchived = !$this->showArchived;
     }
 
-    public function updatingCareerLevelFilter()
-    {
-        // Reset not needed for kanban
-    }
-
-    public function updatingRecruitmentStageFilter()
-    {
-        // Reset not needed for kanban
-    }
-
-    public function updatingLocationFilter()
-    {
-        // Reset not needed for kanban
-    }
-
-    public function updatingDateFromFilter()
-    {
-        // Reset not needed for kanban
-    }
-
-    public function updatingDateToFilter()
-    {
-        // Reset not needed for kanban
-    }
+    public function updatingSearch() { }
+    public function updatingPlatformFilter() { }
 
     public function toggleAdvancedFilters()
     {
@@ -139,116 +74,48 @@ class JobKanbanBoard extends Component
         $this->recruitmentStageFilter = '';
     }
 
-    public function toggleArchived()
+    public function delete($jobId)
     {
-        $this->showArchived = !$this->showArchived;
-    }
-
-    public function togglePin($jobId)
-    {
-        $job = JobApplication::where('id', $jobId)
-            ->where('user_id', auth()->id())
-            ->first();
-
+        $job = JobApplication::where('id', $jobId)->where('user_id', auth()->id())->first();
         if ($job) {
-            // If trying to pin, check if user already has 5 pinned items
-            if (!$job->is_pinned) {
-                $pinnedCount = JobApplication::where('user_id', auth()->id())
-                    ->where('is_pinned', true)
-                    ->count();
-                
-                if ($pinnedCount >= 5) {
-                    $this->dispatch('showNotification', [
-                        'type' => 'error',
-                        'title' => 'Pin Limit Reached',
-                        'message' => 'You can only pin up to 5 jobs. Unpin another job first.',
-                        'duration' => 3000
-                    ]);
-                    return;
-                }
-            }
-            
-            $job->update(['is_pinned' => !$job->is_pinned]);
-            
-            $message = $job->is_pinned 
-                ? "Pinned {$job->company_name} to top" 
-                : "Unpinned {$job->company_name}";
-            
+            $companyName = $job->company_name;
+            $job->delete();
             $this->dispatch('showNotification', [
-                'type' => 'info',
-                'title' => $job->is_pinned ? 'Job Pinned' : 'Job Unpinned',
-                'message' => $message,
-                'duration' => 2000
+                'type' => 'warning',
+                'title' => 'Job Application Deleted',
+                'message' => "Successfully deleted application for {$companyName}",
+                'duration' => 3000
             ]);
-            
-            $this->dispatch('job-pinned');
+            $this->dispatch('job-deleted');
         }
     }
 
     public function updateStatus($jobId, $newStatus)
     {
-        \Log::info('updateStatus called', ['jobId' => $jobId, 'newStatus' => $newStatus]);
-        
-        $job = JobApplication::where('id', $jobId)
-            ->where('user_id', auth()->id())
-            ->first();
-
+        $job = JobApplication::where('id', $jobId)->where('user_id', auth()->id())->first();
         if ($job) {
-            // Check if status is actually different to prevent unnecessary updates
-            if ($job->application_status === $newStatus) {
-                \Log::info('Status unchanged, skipping update', ['jobId' => $jobId, 'currentStatus' => $job->application_status]);
-                return;
-            }
+            if ($job->application_status === $newStatus) return;
             
-            // Check if this job was updated recently (within 3 seconds) to prevent spam
-            $now = time();
-            $lastUpdate = $this->lastUpdateTime[$jobId] ?? 0;
-            if (($now - $lastUpdate) < 3) {
-                \Log::info('Job updated too recently, skipping notification', ['jobId' => $jobId, 'lastUpdate' => $lastUpdate, 'now' => $now]);
-                return;
-            }
-            
-            $oldStatus = $job->application_status;
             $job->update(['application_status' => $newStatus]);
-            $this->lastUpdateTime[$jobId] = $now; // Track update time
-            
-            \Log::info('Job application status updated successfully', ['jobId' => $jobId, 'oldStatus' => $oldStatus, 'newStatus' => $newStatus]);
-            
-            // Dispatch global events for auto-refresh
             $this->dispatch('status-updated');
-            
-            // Only send notification if status actually changed and not too recent
-            $notificationKey = 'status_updated_' . $jobId . '_' . $newStatus . '_' . now()->format('Y-m-d-H-i');
-            if (!session()->has($notificationKey)) {
-                $this->dispatch('showNotification', [
-                    'type' => 'info',
-                    'title' => 'Status Updated',
-                    'message' => "Application for {$job->company_name} updated to {$newStatus}",
-                    'duration' => 3000
-                ]);
-                session()->put($notificationKey, true);
-            }
-            
-            $this->dispatch('status-updated');
-        } else {
-            \Log::warning('Job not found or not authorized', ['jobId' => $jobId]);
+            $this->dispatch('showNotification', [
+                'type' => 'info',
+                'title' => 'Status Updated',
+                'message' => "Application for {$job->company_name} updated to {$newStatus}",
+                'duration' => 3000
+            ]);
         }
     }
 
-
     public function render()
     {
-        // Get archived count
-        $archivedCount = JobApplication::where('user_id', auth()->id())
-            ->where('is_archived', true)
-            ->count();
+        $archivedCount = JobApplication::where('user_id', auth()->id())->where('is_archived', true)->count();
 
         $statuses = collect($this->statusOptions)->map(function ($status) {
             $query = JobApplication::where('user_id', auth()->id())
                 ->where('application_status', $status)
                 ->where('is_archived', $this->showArchived);
 
-            // Apply filters
             if ($this->search) {
                 $query->where(function ($q) {
                     $q->where('company_name', 'like', '%' . $this->search . '%')
@@ -257,17 +124,10 @@ class JobKanbanBoard extends Component
                 });
             }
 
-            if ($this->platformFilter) {
-                $query->where('platform', $this->platformFilter);
-            }
+            if ($this->platformFilter) $query->where('platform', $this->platformFilter);
+            if ($this->recruitmentStageFilter) $query->where('recruitment_stage', $this->recruitmentStageFilter);
 
-            if ($this->recruitmentStageFilter) {
-                $query->where('recruitment_stage', $this->recruitmentStageFilter);
-            }
-
-            $jobApplications = $query->orderBy('is_pinned', 'desc') // Pinned items first
-                ->orderBy('application_date', 'desc')
-                ->get();
+            $jobApplications = $query->orderBy('is_pinned', 'desc')->orderBy('application_date', 'desc')->get();
 
             return (object) [
                 'name' => $status,
@@ -282,33 +142,27 @@ class JobKanbanBoard extends Component
         ]);
     }
 
-
     private function getStatusColor($status)
     {
         $colors = [
-            'On Process' => '#3B82F6',
+            'Applied' => '#64748b', 
+            'On Process' => '#3B82F6', 
+            'Interview' => '#8B5CF6',
+            'Offering' => '#14B8A6', 
+            'Accepted' => '#10B981', 
+            'Rejected' => '#EF4444',
             'Declined' => '#EF4444',
-            'Accepted' => '#047857',
         ];
-
         return $colors[$status] ?? '#6B7280';
     }
 
     public function getStageColor($stage)
     {
         $colors = [
-            'Applied' => '#3B82F6',           // Blue - baru apply
-            'Follow Up' => '#06B6D4',          // Cyan - sedang follow up
-            'Assessment Test' => '#8B5CF6',    // Purple - test assessment
-            'Psychotest' => '#6366F1',         // Indigo - test psikologi
-            'HR - Interview' => '#10B981',     // Green - interview HR
-            'User - Interview' => '#059669',    // Emerald - interview user
-            'LGD' => '#F59E0B',                // Amber - group discussion
-            'Presentation Round' => '#F97316', // Orange - presentasi
-            'Offering' => '#14B8A6',           // Teal - offer
-            'Not Processed' => '#EF4444',     // Red - tidak diproses (mirip declined)
+            'Applied' => '#3B82F6', 'Follow Up' => '#06B6D4', 'Assessment Test' => '#8B5CF6',
+            'Psychotest' => '#6366F1', 'HR - Interview' => '#10B981', 'User - Interview' => '#059669',
+            'LGD' => '#F59E0B', 'Presentation Round' => '#F97316', 'Offering' => '#14B8A6', 'Not Processed' => '#EF4444',
         ];
-
         return $colors[$stage] ?? '#6B7280';
     }
 }

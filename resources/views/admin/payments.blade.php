@@ -1,257 +1,324 @@
 <x-admin-layout>
-
-    <div class="py-4 sm:py-6 lg:py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-6">
-            <!-- Export Button -->
-            <div class="flex justify-end">
-                <a href="{{ route('admin.payments.export', request()->all()) }}" 
-                   class="inline-flex items-center px-3 sm:px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all duration-200 text-xs sm:text-sm font-medium shadow-sm hover:shadow-md">
-                    <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                    </svg>
-                    <span class="hidden sm:inline">Export CSV</span>
-                    <span class="sm:hidden">Export</span>
-                </a>
+    <div class="space-y-6">
+        
+        {{-- Header & Export --}}
+        <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
+            <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/50">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center flex-shrink-0 text-primary-600 shadow-inner">
+                            <i class="ph-duotone ph-receipt text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-extrabold text-slate-900 truncate">Payments Center</h3>
+                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Pantau seluruh transaksi</p>
+                        </div>
+                    </div>
+                    <div class="relative w-full sm:w-auto">
+                        <a href="{{ route('admin.payments.export', request()->all()) }}" 
+                           class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-slate-800 text-white rounded-xl text-sm font-bold hover:bg-slate-900 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-2 focus:ring-slate-400 focus:outline-none">
+                            <i class="ph-bold ph-download-simple mr-2"></i>
+                            <span class="hidden sm:inline">Export CSV</span>
+                            <span class="sm:hidden">Export</span>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <!-- Statistics Cards -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div class="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs sm:text-sm text-gray-500 mb-1">Total Payments</p>
-                            <p class="text-2xl sm:text-3xl font-bold text-gray-900">{{ number_format($stats['total']) }}</p>
-                        </div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+        </div>
 
-                <div class="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-green-200 bg-green-50">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs sm:text-sm text-green-600 mb-1">Successful</p>
-                            <p class="text-2xl sm:text-3xl font-bold text-green-700">{{ number_format($stats['success']) }}</p>
-                        </div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
+        {{-- Statistics Grid (Bento Grid) --}}
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {{-- Total Payments --}}
+            <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-slate-300 transition-colors">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-blue-50 to-blue-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Transaksi</p>
+                        <h3 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{{ number_format($stats['total']) }}</h3>
+                        <p class="text-[10px] font-bold text-slate-400 mt-1">Keseluruhan order</p>
                     </div>
-                </div>
-
-                <div class="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-yellow-200 bg-yellow-50">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs sm:text-sm text-yellow-600 mb-1">Pending</p>
-                            <p class="text-2xl sm:text-3xl font-bold text-yellow-700">{{ number_format($stats['pending']) }}</p>
-                        </div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs sm:text-sm text-gray-500 mb-1">Total Revenue</p>
-                            <p class="text-lg sm:text-xl font-bold text-gray-900">Rp {{ number_format($stats['total_revenue'], 0, ',', '.') }}</p>
-                            <p class="text-xs text-gray-500 mt-1">Today: Rp {{ number_format($stats['today_revenue'], 0, ',', '.') }}</p>
-                        </div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 shadow-inner">
+                        <i class="ph-duotone ph-shopping-cart text-2xl"></i>
                     </div>
                 </div>
             </div>
 
-            <!-- Filters -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+            {{-- Successful --}}
+            <div class="bg-white rounded-2xl p-5 border border-emerald-100/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-emerald-200 transition-colors">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Berhasil</p>
+                        <h3 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{{ number_format($stats['success']) }}</h3>
+                        <p class="text-[10px] font-bold text-emerald-500 mt-1">Pembayaran diterima</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shadow-inner">
+                        <i class="ph-duotone ph-check-circle text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Pending --}}
+            <div class="bg-white rounded-2xl p-5 border border-amber-100/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-amber-200 transition-colors">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-amber-50 to-amber-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-amber-400 uppercase tracking-widest mb-1">Pending</p>
+                        <h3 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{{ number_format($stats['pending']) }}</h3>
+                        <p class="text-[10px] font-bold text-amber-500 mt-1">Menunggu pembayaran</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shadow-inner">
+                        <i class="ph-duotone ph-clock-counter-clockwise text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Total Revenue --}}
+            <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-slate-300 transition-colors">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-purple-50 to-purple-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Revenue</p>
+                        <h3 class="text-xl lg:text-2xl font-black text-slate-900 tracking-tight mt-1">Rp {{ number_format($stats['total_revenue'] / 1000000, 1) }}M</h3>
+                        <p class="text-[10px] font-bold text-purple-500 mt-1">Hari ini: Rp {{ number_format($stats['today_revenue'], 0, ',', '.') }}</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 shadow-inner">
+                        <i class="ph-duotone ph-money text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Bento Grid: Filter & Methods --}}
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            {{-- Filter Section (2/3 width) --}}
+            <div class="lg:col-span-2 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-6">
+                <div class="flex items-center justify-between mb-5">
+                    <h3 class="text-sm font-bold text-slate-900">Filter Transaksi</h3>
+                    @if(request()->hasAny(['search', 'status', 'date_from', 'date_to']))
+                        <a href="{{ route('admin.payments') }}" class="text-[11px] font-bold text-slate-400 hover:text-slate-800 transition-colors flex items-center gap-1">
+                            <i class="ph-bold ph-x-circle"></i> Clear Filters
+                        </a>
+                    @endif
+                </div>
+
                 <form method="GET" action="{{ route('admin.payments') }}" class="space-y-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                        <!-- Search -->
-                        <div>
-                            <label class="block text-xs font-medium text-gray-700 mb-1">Search</label>
-                            <input type="text" 
-                                   name="search" 
-                                   value="{{ request('search') }}"
-                                   placeholder="Order ID, User, Email..."
-                                   class="w-full rounded-lg border-gray-300 text-sm focus:border-primary-500 focus:ring-primary-500">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                        {{-- Search --}}
+                        <div class="col-span-1 sm:col-span-2 md:col-span-1">
+                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Search</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                    <i class="ph-regular ph-magnifying-glass"></i>
+                                </div>
+                                <input type="text" name="search" value="{{ request('search') }}" placeholder="Order ID / User..." class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white transition-colors font-medium text-slate-700">
+                            </div>
                         </div>
 
-                        <!-- Status Filter -->
+                        {{-- Status Filter --}}
                         <div>
-                            <label class="block text-xs font-medium text-gray-700 mb-1">Status</label>
-                            <select name="status" class="w-full rounded-lg border-gray-300 text-sm focus:border-primary-500 focus:ring-primary-500">
-                                <option value="">All Status</option>
-                                <option value="SUCCESS" {{ request('status') === 'SUCCESS' ? 'selected' : '' }}>Success</option>
-                                <option value="PENDING" {{ request('status') === 'PENDING' ? 'selected' : '' }}>Pending</option>
-                                <option value="WAITING" {{ request('status') === 'WAITING' ? 'selected' : '' }}>Waiting</option>
-                                <option value="FAILED" {{ request('status') === 'FAILED' ? 'selected' : '' }}>Failed</option>
-                                <option value="CANCELED" {{ request('status') === 'CANCELED' ? 'selected' : '' }}>Canceled</option>
-                            </select>
+                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Status</label>
+                            <div class="relative group">
+                                <select name="status" class="w-full appearance-none pl-4 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white transition-colors font-bold text-slate-700 cursor-pointer">
+                                    <option value="">Semua Status</option>
+                                    <option value="SUCCESS" {{ request('status') === 'SUCCESS' ? 'selected' : '' }}>Success</option>
+                                    <option value="PENDING" {{ request('status') === 'PENDING' ? 'selected' : '' }}>Pending</option>
+                                    <option value="WAITING" {{ request('status') === 'WAITING' ? 'selected' : '' }}>Waiting</option>
+                                    <option value="FAILED" {{ request('status') === 'FAILED' ? 'selected' : '' }}>Failed</option>
+                                    <option value="CANCELED" {{ request('status') === 'CANCELED' ? 'selected' : '' }}>Canceled</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400 group-hover:text-primary-500 transition-colors">
+                                    <i class="ph-bold ph-caret-down"></i>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- Date From -->
+                        {{-- Date From --}}
                         <div>
-                            <label class="block text-xs font-medium text-gray-700 mb-1">From Date</label>
-                            <input type="date" 
-                                   name="date_from" 
-                                   value="{{ request('date_from') }}"
-                                   class="w-full rounded-lg border-gray-300 text-sm focus:border-primary-500 focus:ring-primary-500">
+                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Tanggal Awal</label>
+                            <input type="date" name="date_from" value="{{ request('date_from') }}" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white transition-colors font-medium text-slate-700">
                         </div>
 
-                        <!-- Date To -->
+                        {{-- Date To --}}
                         <div>
-                            <label class="block text-xs font-medium text-gray-700 mb-1">To Date</label>
-                            <input type="date" 
-                                   name="date_to" 
-                                   value="{{ request('date_to') }}"
-                                   class="w-full rounded-lg border-gray-300 text-sm focus:border-primary-500 focus:ring-primary-500">
+                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Tanggal Akhir</label>
+                            <input type="date" name="date_to" value="{{ request('date_to') }}" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white transition-colors font-medium text-slate-700">
                         </div>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 sm:gap-4">
-                        <button type="submit" 
-                                class="w-full sm:w-auto px-4 py-2 bg-primary-600 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-primary-700 transition-colors">
-                            Apply Filters
+                    <div class="flex justify-end pt-2">
+                        <button type="submit" class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-500 text-white font-bold text-sm rounded-xl hover:from-primary-700 hover:to-primary-600 shadow-md hover:shadow-lg transition-all focus:ring-2 focus:ring-primary-300 focus:outline-none flex items-center justify-center gap-2">
+                            <i class="ph-bold ph-funnel"></i> Terapkan Filter
                         </button>
-                        @if(request()->hasAny(['search', 'status', 'date_from', 'date_to']))
-                            <a href="{{ route('admin.payments') }}" 
-                               class="w-full sm:w-auto text-center text-xs sm:text-sm text-gray-600 hover:text-gray-900">
-                                Clear Filters
-                            </a>
-                        @endif
                     </div>
                 </form>
             </div>
 
-            <!-- Payment Methods Distribution -->
-            @if($paymentMethods->count() > 0)
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
-                <h3 class="text-xs sm:text-sm font-semibold text-gray-900 mb-3 sm:mb-4">Payment Methods Distribution</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
-                    @foreach($paymentMethods as $method)
-                        <div class="border border-gray-200 rounded-lg p-2 sm:p-3">
-                            <p class="text-[10px] sm:text-xs text-gray-500 mb-1 truncate">{{ $method->payment_channel_code }}</p>
-                            <p class="text-base sm:text-lg font-bold text-gray-900">{{ $method->count }}</p>
-                            <p class="text-[10px] sm:text-xs text-gray-500 truncate">Rp {{ number_format($method->revenue, 0, ',', '.') }}</p>
+            {{-- Payment Methods (1/3 width) --}}
+            <div class="lg:col-span-1 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-6 flex flex-col">
+                <h3 class="text-sm font-bold text-slate-900 mb-5">Distribusi Metode</h3>
+                
+                @if($paymentMethods->count() > 0)
+                    <div class="grid grid-cols-2 gap-3 flex-1">
+                        @foreach($paymentMethods->take(4) as $method)
+                            <div class="p-3 bg-slate-50 border border-slate-100 rounded-xl relative overflow-hidden group hover:bg-slate-100 transition-colors">
+                                <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 truncate">{{ $method->payment_channel_code }}</p>
+                                <p class="text-lg font-black text-slate-900">{{ $method->count }}</p>
+                                <p class="text-[10px] font-medium text-slate-400 mt-1 truncate">Rp {{ number_format($method->revenue, 0, ',', '.') }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="flex-1 flex flex-col items-center justify-center text-center p-6 border-2 border-dashed border-slate-100 rounded-xl">
+                        <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mb-3">
+                            <i class="ph-duotone ph-wallet text-2xl text-slate-400"></i>
                         </div>
-                    @endforeach
-                </div>
-            </div>
-            @endif
-
-            <!-- Payments Table -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-3 sm:px-4 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
-                                <th class="px-3 sm:px-4 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">User</th>
-                                <th class="px-3 sm:px-4 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                                <th class="px-3 sm:px-4 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Method</th>
-                                <th class="px-3 sm:px-4 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th class="px-3 sm:px-4 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">Date</th>
-                                <th class="px-3 sm:px-4 py-2 sm:py-3 text-right text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @forelse($payments as $payment)
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-3 sm:px-4 py-2 sm:py-3">
-                                        <div class="text-xs sm:text-sm font-medium text-gray-900 truncate max-w-[120px] sm:max-w-none">{{ $payment->order_id }}</div>
-                                        @if($payment->yukk_transaction_code)
-                                            <div class="text-[10px] sm:text-xs text-gray-500 truncate max-w-[120px] sm:max-w-none">{{ $payment->yukk_transaction_code }}</div>
-                                        @endif
-                                    </td>
-                                    <td class="px-3 sm:px-4 py-2 sm:py-3 hidden sm:table-cell">
-                                        <div class="text-xs sm:text-sm text-gray-900 truncate max-w-[150px]">{{ $payment->user->name ?? 'N/A' }}</div>
-                                        <div class="text-[10px] sm:text-xs text-gray-500 truncate max-w-[150px]">{{ $payment->user->email ?? 'N/A' }}</div>
-                                    </td>
-                                    <td class="px-3 sm:px-4 py-2 sm:py-3">
-                                        <div class="text-xs sm:text-sm font-medium text-gray-900">{{ $payment->formatted_amount }}</div>
-                                        <div class="text-[10px] sm:text-xs text-gray-500 sm:hidden truncate">{{ $payment->user->name ?? 'N/A' }}</div>
-                                    </td>
-                                    <td class="px-3 sm:px-4 py-2 sm:py-3 hidden md:table-cell">
-                                        <div class="text-xs sm:text-sm text-gray-900 truncate">{{ $payment->payment_method }}</div>
-                                    </td>
-                                    <td class="px-3 sm:px-4 py-2 sm:py-3">
-                                        @if($payment->status === 'SUCCESS')
-                                            <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs leading-4 sm:leading-5 font-semibold rounded-full bg-green-100 text-green-800">Success</span>
-                                        @elseif(in_array($payment->status, ['PENDING', 'WAITING']))
-                                            <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs leading-4 sm:leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
-                                        @elseif(in_array($payment->status, ['FAILED', 'CANCELED', 'EXPIRED']))
-                                            <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs leading-4 sm:leading-5 font-semibold rounded-full bg-red-100 text-red-800 truncate">{{ $payment->status }}</span>
-                                        @else
-                                            <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs leading-4 sm:leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 truncate">{{ $payment->status }}</span>
-                                        @endif
-                                    </td>
-                                    <td class="px-3 sm:px-4 py-2 sm:py-3 hidden lg:table-cell">
-                                        <div class="text-xs sm:text-sm text-gray-500">{{ $payment->created_at->format('d M Y') }}</div>
-                                        <div class="text-[10px] sm:text-xs text-gray-400">{{ $payment->created_at->format('H:i') }}</div>
-                                    </td>
-                                    <td class="px-3 sm:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm font-medium">
-                                        <div class="flex items-center justify-end gap-1 sm:gap-2">
-                                            <button onclick="showPaymentDetail('{{ $payment->id }}')" 
-                                                    class="text-primary-600 hover:text-primary-900 text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded hover:bg-primary-50">
-                                                View
-                                            </button>
-                                            @if(in_array($payment->status, ['PENDING', 'WAITING']) && $payment->yukk_transaction_code)
-                                                <button onclick="cancelPayment('{{ $payment->id }}', '{{ $payment->order_id }}')" 
-                                                        class="text-red-600 hover:text-red-900 text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded hover:bg-red-50">
-                                                    Cancel
-                                                </button>
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="7" class="px-4 sm:px-6 py-8 sm:py-12 text-center text-xs sm:text-sm text-gray-500">
-                                        No payments found
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Pagination -->
-                @if($payments->hasPages())
-                    <div class="px-3 sm:px-4 py-2 sm:py-3 border-t border-gray-200">
-                        {{ $payments->links() }}
+                        <p class="text-sm font-bold text-slate-600 mb-1">Belum Ada Data</p>
+                        <p class="text-xs text-slate-400">Metode pembayaran kosong</p>
                     </div>
                 @endif
             </div>
+
         </div>
+
+        {{-- Payments Data Table --}}
+        <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50/50 border-b border-slate-100">
+                            <th class="py-4 px-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest w-[20%]">Order ID</th>
+                            <th class="py-4 px-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest w-[25%] hidden sm:table-cell">User Info</th>
+                            <th class="py-4 px-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest w-[15%]">Nominal</th>
+                            <th class="py-4 px-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest w-[10%] hidden md:table-cell">Metode</th>
+                            <th class="py-4 px-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest w-[10%]">Status</th>
+                            <th class="py-4 px-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest w-[15%] hidden lg:table-cell">Waktu</th>
+                            <th class="py-4 px-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest text-right w-[5%]">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-50">
+                        @forelse($payments as $payment)
+                            <tr class="hover:bg-slate-50/50 transition-colors group">
+                                <td class="py-3 px-5">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0 text-slate-500 group-hover:bg-primary-50 group-hover:text-primary-600 transition-colors">
+                                            <i class="ph-bold ph-receipt text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-bold text-slate-900 truncate max-w-[120px] lg:max-w-none">{{ $payment->order_id }}</p>
+                                            @if($payment->yukk_transaction_code)
+                                                <p class="text-[10px] font-medium text-slate-400 truncate max-w-[120px] lg:max-w-none">{{ $payment->yukk_transaction_code }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-3 px-5 hidden sm:table-cell">
+                                    <p class="text-sm font-bold text-slate-900 truncate max-w-[150px]">{{ $payment->user->name ?? 'N/A' }}</p>
+                                    <p class="text-[11px] text-slate-500 truncate max-w-[150px]">{{ $payment->user->email ?? 'N/A' }}</p>
+                                </td>
+                                <td class="py-3 px-5">
+                                    <p class="text-sm font-bold text-slate-900">{{ $payment->formatted_amount }}</p>
+                                    <p class="text-[10px] text-slate-400 sm:hidden truncate max-w-[100px] mt-0.5">{{ $payment->user->name ?? 'N/A' }}</p>
+                                </td>
+                                <td class="py-3 px-5 hidden md:table-cell">
+                                    <div class="inline-flex items-center px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold uppercase tracking-wider rounded-md">
+                                        {{ $payment->payment_method ?: 'N/A' }}
+                                    </div>
+                                </td>
+                                <td class="py-3 px-5">
+                                    @if($payment->status === 'SUCCESS')
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-100 uppercase tracking-widest">
+                                            Success
+                                        </span>
+                                    @elseif(in_array($payment->status, ['PENDING', 'WAITING']))
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold bg-amber-50 text-amber-600 border border-amber-100 uppercase tracking-widest">
+                                            Pending
+                                        </span>
+                                    @elseif(in_array($payment->status, ['FAILED', 'CANCELED', 'EXPIRED']))
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold bg-red-50 text-red-600 border border-red-100 uppercase tracking-widest">
+                                            {{ $payment->status }}
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200 uppercase tracking-widest">
+                                            {{ $payment->status }}
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="py-3 px-5 hidden lg:table-cell">
+                                    <p class="text-[13px] font-medium text-slate-700">{{ $payment->created_at->format('d M Y') }}</p>
+                                    <p class="text-[11px] text-slate-400">{{ $payment->created_at->format('H:i') }}</p>
+                                </td>
+                                <td class="py-3 px-5 text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <button onclick="showPaymentDetail('{{ $payment->id }}')" 
+                                                class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-500 flex items-center justify-center hover:bg-primary-50 hover:text-primary-600 hover:border-primary-100 transition-colors shadow-sm"
+                                                title="View Detail">
+                                            <i class="ph-bold ph-eye"></i>
+                                        </button>
+                                        @if(in_array($payment->status, ['PENDING', 'WAITING']) && $payment->yukk_transaction_code)
+                                            <button onclick="cancelPayment('{{ $payment->id }}', '{{ $payment->order_id }}')" 
+                                                    class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-500 flex items-center justify-center hover:bg-red-50 hover:text-red-600 hover:border-red-100 transition-colors shadow-sm"
+                                                    title="Cancel Payment">
+                                                <i class="ph-bold ph-x"></i>
+                                            </button>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="py-16 text-center">
+                                    <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                        <i class="ph-duotone ph-receipt text-3xl text-slate-400"></i>
+                                    </div>
+                                    <h4 class="text-sm font-bold text-slate-900 mb-1">Tidak ada transaksi</h4>
+                                    <p class="text-xs text-slate-500 max-w-sm mx-auto">Belum ada data pembayaran yang sesuai dengan filter yang dipilih.</p>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            {{-- Pagination --}}
+            @if($payments->hasPages())
+                <div class="p-5 border-t border-slate-100 bg-slate-50/30">
+                    {{ $payments->links() }}
+                </div>
+            @endif
+        </div>
+
     </div>
 
-    <!-- Payment Detail Modal -->
-    <div id="paymentDetailModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div class="p-4 sm:p-6 border-b border-gray-200 flex items-center justify-between">
-                <h3 class="text-base sm:text-lg font-semibold text-gray-900">Payment Details</h3>
-                <button onclick="closePaymentDetail()" class="text-gray-400 hover:text-gray-600">
-                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-            <div id="paymentDetailContent" class="p-4 sm:p-6">
-                <!-- Content loaded via AJAX -->
-                <div class="text-center py-8">
-                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mx-auto"></div>
-                    <p class="text-sm text-gray-500 mt-2">Loading...</p>
+    {{-- Payment Detail Modal (Premium UI) --}}
+    <div id="paymentDetailModal" class="fixed inset-0 z-[100] overflow-y-auto hidden">
+        <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closePaymentDetail()"></div>
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="relative w-full max-w-2xl bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-slate-100 transform transition-all" onclick="event.stopPropagation()">
+                {{-- Modal Header --}}
+                <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 rounded-t-2xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center text-primary-600 shadow-inner">
+                            <i class="ph-bold ph-receipt text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-extrabold text-slate-900">Payment Details</h3>
+                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Rincian Transaksi</p>
+                        </div>
+                    </div>
+                    <button type="button" onclick="closePaymentDetail()" class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors">
+                        <i class="ph-bold ph-x text-lg"></i>
+                    </button>
+                </div>
+
+                {{-- Modal Body --}}
+                <div id="paymentDetailContent" class="p-6">
+                    <!-- Content loaded via AJAX -->
+                    <div class="text-center py-12">
+                        <div class="inline-block animate-spin w-8 h-8 border-4 border-slate-200 border-t-primary-600 rounded-full mb-3"></div>
+                        <p class="text-sm font-bold text-slate-500">Memuat Rincian...</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -264,10 +331,12 @@
             const content = document.getElementById('paymentDetailContent');
             
             modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+            
             content.innerHTML = `
-                <div class="text-center py-8">
-                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mx-auto"></div>
-                    <p class="text-sm text-gray-500 mt-2">Loading...</p>
+                <div class="text-center py-12">
+                    <div class="inline-block animate-spin w-8 h-8 border-4 border-slate-200 border-t-primary-600 rounded-full mb-3"></div>
+                    <p class="text-sm font-bold text-slate-500">Memuat Rincian...</p>
                 </div>
             `;
 
@@ -278,55 +347,83 @@
                         const payment = data.payment;
                         const user = data.user;
                         
+                        let statusBadge = '';
+                        if(payment.status === 'SUCCESS') {
+                            statusBadge = `<span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-100 uppercase tracking-widest">SUCCESS</span>`;
+                        } else if(['PENDING', 'WAITING'].includes(payment.status)) {
+                            statusBadge = `<span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold bg-amber-50 text-amber-600 border border-amber-100 uppercase tracking-widest">PENDING</span>`;
+                        } else {
+                            statusBadge = `<span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold bg-red-50 text-red-600 border border-red-100 uppercase tracking-widest">${payment.status}</span>`;
+                        }
+
                         content.innerHTML = `
-                            <div class="space-y-4">
-                                <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-6">
+                                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center justify-between">
                                     <div>
-                                        <label class="text-xs font-medium text-gray-500">Order ID</label>
-                                        <p class="text-sm font-medium text-gray-900 mt-1">${payment.order_id}</p>
+                                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Nominal Transaksi</p>
+                                        <p class="text-2xl font-black text-slate-900">Rp ${parseInt(payment.amount).toLocaleString('id-ID')}</p>
                                     </div>
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">Status</label>
-                                        <p class="text-sm font-medium text-gray-900 mt-1">${payment.status}</p>
+                                    <div class="text-right">
+                                        ${statusBadge}
+                                        <p class="text-[11px] font-medium text-slate-400 mt-2">${new Date(payment.created_at).toLocaleString('id-ID', { dateStyle: 'long', timeStyle: 'short' })}</p>
                                     </div>
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">Amount</label>
-                                        <p class="text-sm font-medium text-gray-900 mt-1">Rp ${parseInt(payment.amount).toLocaleString('id-ID')}</p>
-                                    </div>
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">Payment Method</label>
-                                        <p class="text-sm font-medium text-gray-900 mt-1">${payment.payment_method || payment.payment_channel_code || 'N/A'}</p>
-                                    </div>
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">User</label>
-                                        <p class="text-sm font-medium text-gray-900 mt-1">${user ? user.name : 'N/A'}</p>
-                                        <p class="text-xs text-gray-500">${user ? user.email : 'N/A'}</p>
-                                    </div>
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">Created At</label>
-                                        <p class="text-sm font-medium text-gray-900 mt-1">${new Date(payment.created_at).toLocaleString('id-ID')}</p>
-                                    </div>
-                                    ${payment.va_number ? `
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">VA Number</label>
-                                        <p class="text-sm font-medium text-gray-900 mt-1">${payment.va_number}</p>
-                                    </div>
-                                    ` : ''}
-                                    ${payment.yukk_transaction_code ? `
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">YUKK Transaction Code</label>
-                                        <p class="text-sm font-medium text-gray-900 mt-1">${payment.yukk_transaction_code}</p>
-                                    </div>
-                                    ` : ''}
                                 </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div class="p-4 rounded-xl border border-slate-100 bg-white shadow-sm">
+                                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Order ID</p>
+                                        <p class="text-sm font-bold text-slate-900">${payment.order_id}</p>
+                                    </div>
+                                    <div class="p-4 rounded-xl border border-slate-100 bg-white shadow-sm">
+                                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Payment Method</p>
+                                        <p class="text-sm font-bold text-slate-900">${payment.payment_method || payment.payment_channel_code || 'N/A'}</p>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 rounded-xl border border-slate-100 bg-white shadow-sm">
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">User Information</p>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+                                            <i class="ph-bold ph-user"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-bold text-slate-900">${user ? user.name : 'Unknown User'}</p>
+                                            <p class="text-xs text-slate-500">${user ? user.email : 'No email'}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                ${(payment.va_number || payment.yukk_transaction_code) ? `
+                                <div class="p-4 rounded-xl border border-slate-100 bg-white shadow-sm">
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Payment Gateway Data</p>
+                                    <div class="grid grid-cols-1 gap-3">
+                                        ${payment.va_number ? `
+                                        <div>
+                                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">VA Number</p>
+                                            <p class="text-sm font-bold text-slate-900 font-mono bg-slate-50 px-2 py-1 rounded inline-block">${payment.va_number}</p>
+                                        </div>
+                                        ` : ''}
+                                        ${payment.yukk_transaction_code ? `
+                                        <div>
+                                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">YUKK Code</p>
+                                            <p class="text-sm font-bold text-slate-900 font-mono bg-slate-50 px-2 py-1 rounded inline-block">${payment.yukk_transaction_code}</p>
+                                        </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                                ` : ''}
                             </div>
                         `;
                     }
                 })
                 .catch(error => {
                     content.innerHTML = `
-                        <div class="text-center py-8">
-                            <p class="text-sm text-red-600">Error loading payment details</p>
+                        <div class="text-center py-12">
+                            <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center text-red-500 mx-auto mb-3">
+                                <i class="ph-bold ph-warning-circle text-2xl"></i>
+                            </div>
+                            <p class="text-sm font-bold text-slate-900">Gagal Memuat</p>
+                            <p class="text-xs text-slate-500 mt-1">Terjadi kesalahan sistem</p>
                         </div>
                     `;
                 });
@@ -334,7 +431,15 @@
 
         function closePaymentDetail() {
             document.getElementById('paymentDetailModal').classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
         }
+
+        // Fix Escape key to close modal
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closePaymentDetail();
+            }
+        });
 
         function cancelPayment(paymentId, orderId) {
             if (!confirm(`Yakin ingin membatalkan payment dengan Order ID: ${orderId}?`)) {
@@ -361,13 +466,6 @@
                 alert('Error: ' + error.message);
             });
         }
-
-        // Close modal when clicking outside
-        document.getElementById('paymentDetailModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closePaymentDetail();
-            }
-        });
     </script>
     @endpush
 </x-admin-layout>

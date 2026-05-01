@@ -3,7 +3,7 @@
 namespace App\Livewire\CvBuilder;
 
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Validator;
 use App\Models\UserExperience;
 use Livewire\Component;
 
@@ -84,16 +84,39 @@ class ExperienceForm extends Component
     
     public function save()
     {
-        $this->validate([
-            'company_name' => 'required|string|max:255',
-            'position' => 'required|string|max:255',
+        $validator = Validator::make([
+            'company_name'    => $this->company_name,
+            'position'        => $this->position,
+            'employment_type' => $this->employment_type,
+            'location'        => $this->location,
+            'start_date'      => $this->start_date,
+            'end_date'        => $this->end_date,
+            'description'     => $this->description,
+        ], [
+            'company_name'    => 'required|string|max:255',
+            'position'        => 'required|string|max:255',
             'employment_type' => 'required|string',
-            'location' => 'nullable|string|max:255',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after:start_date',
-            'description' => 'nullable|string',
+            'location'        => 'nullable|string|max:255',
+            'start_date'      => 'required|date',
+            'end_date'        => 'nullable|date|after:start_date',
+            'description'     => 'nullable|string',
+        ], [
+            'company_name.required'    => 'Company name is required.',
+            'position.required'        => 'Job title is required.',
+            'employment_type.required' => 'Employment type is required.',
+            'start_date.required'      => 'Start date is required.',
+            'end_date.after'           => 'End date must be after start date.',
         ]);
-        
+
+        if ($validator->fails()) {
+            $this->setErrorBag($validator->errors());
+            $this->dispatch('showNotification', [
+                'type'    => 'error',
+                'title'   => 'Incomplete Form',
+                'message' => $validator->errors()->first(),
+            ]);
+            return;
+        }
         $data = [
             'user_id' => Auth::id(),
             'company_name' => $this->company_name,

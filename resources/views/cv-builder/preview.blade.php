@@ -4,359 +4,327 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>CV Preview - {{ ucfirst($template) }} Template</title>
+    <title>CV Preview — {{ ucfirst($template) }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
+        * { box-sizing: border-box; }
         body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
             margin: 0;
-            padding: 0;
-            background: #f9fafb;
-            min-height: 100vh;
+            overflow-x: hidden;
         }
-        /* Fixed action buttons - always visible */
-        .action-buttons {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 60;
+
+        /* Top Bar */
+        .preview-header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            height: 64px;
             display: flex;
-            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
         }
+
+        /* Paper area */
+        .main-content {
+            padding-top: 64px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #f1f5f9;
+        }
+
+        .paper-wrapper {
+            padding: 40px 20px 60px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .paper-container {
+            background: white;
+            width: 210mm;
+            min-height: 297mm;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 20px 60px rgba(0,0,0,0.08);
+            transform-origin: top center;
+            transition: transform 0.2s cubic-bezier(0.4,0,0.2,1);
+            position: relative;
+            padding: 15mm;
+            border-radius: 2px;
+        }
+
+        /* Zoom controls */
+        .zoom-pill {
+            display: flex;
+            align-items: center;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 3px;
+            gap: 2px;
+        }
+
+        .zoom-btn {
+            width: 28px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 7px;
+            color: #64748b;
+            transition: all 0.15s;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .zoom-btn:hover {
+            background: white;
+            color: #4f46e5;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .zoom-value {
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+            min-width: 36px;
+            text-align: center;
+            letter-spacing: 0.05em;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-dark {
+            background: #0f172a;
+            color: white;
+            border: 1px solid #0f172a;
+        }
+        .btn-dark:hover {
+            background: #1e293b;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(15,23,42,0.2);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: #64748b;
+            border: 1px solid #e2e8f0;
+        }
+        .btn-ghost:hover {
+            background: #f8fafc;
+            color: #1e293b;
+            border-color: #cbd5e1;
+        }
+
+        .btn-indigo {
+            background: #4f46e5;
+            color: white;
+            border: 1px solid #4338ca;
+        }
+        .btn-indigo:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(79,70,229,0.3);
+        }
+
         /* Template badge */
         .template-badge {
-            position: fixed;
-            top: 16px;
-            left: 16px;
-            z-index: 60;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 14px;
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            font-size: 13px;
-            font-weight: 600;
-            color: #374151;
+            padding: 4px 10px;
+            background: #eef2ff;
+            color: #4f46e5;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
         }
-        .template-badge-icon {
-            width: 18px;
-            height: 18px;
-            color: #7c3aed;
-        }
-        .template-name {
-            color: #7c3aed;
-            text-transform: capitalize;
-        }
-        .action-btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 16px;
-            background: #7c3aed;
+
+        /* Page indicator */
+        .page-info {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15,23,42,0.75);
+            backdrop-filter: blur(8px);
             color: white;
-            border: none;
-            border-radius: 8px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 600;
-            font-size: 14px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: all 0.2s;
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        .action-btn-primary:hover {
-            background: #6d28d9;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .action-btn-secondary {
-            width: 40px;
-            height: 40px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            color: #6b7280;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .action-btn-secondary:hover {
-            background: #f9fafb;
-            border-color: #d1d5db;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        /* Remove pulse animation for cleaner look */
-        
-        /* Responsive design for mobile */
-        @media (max-width: 640px) {
-            .template-badge {
-                top: 12px;
-                left: 12px;
-                padding: 6px 10px;
-                font-size: 11px;
+        .page-info.show { opacity: 1; }
+
+        @media print {
+            .no-print { display: none !important; }
+            body {
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
-            .template-badge-icon {
-                width: 16px;
-                height: 16px;
-            }
-            .action-buttons {
-                bottom: 16px;
-                right: 16px;
-                left: 16px;
-                justify-content: space-between;
-                gap: 8px;
-            }
-            .action-btn-primary {
-                flex: 1;
-                justify-content: center;
-                padding: 10px 16px;
-                font-size: 13px;
-            }
-            .action-btn-primary span {
-                display: inline;
-            }
-            .action-btn-secondary {
-                width: 40px;
-                height: 40px;
-                flex-shrink: 0;
-            }
-            .preview-container {
-                margin: 0.75rem;
-                border-radius: 8px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .action-btn-primary span {
-                display: none;
-            }
-            .action-btn-primary {
-                width: 40px;
-                height: 40px;
-                padding: 0;
-                justify-content: center;
-                flex: 0;
-            }
-            .action-buttons {
-                gap: 8px;
-                justify-content: flex-end;
+            .main-content { padding: 0 !important; display: block !important; }
+            .paper-wrapper { padding: 0 !important; display: block !important; }
+            .paper-container {
+                box-shadow: none !important;
+                transform: none !important;
+                width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                border-radius: 0 !important;
             }
         }
 
-        .preview-container {
-            max-width: 210mm;
-            margin: 1rem auto;
-            background: white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            overflow: hidden;
-            animation: slideUp 0.25s ease-out;
-        }
-        .btn-primary {
-            background: #7c3aed;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            font-size: 0.875rem;
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-primary:hover {
-            background: #6d28d9;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 6px rgba(124, 58, 237, 0.3);
-        }
-        .btn-secondary {
-            background: white;
-            color: #374151;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            font-size: 0.875rem;
-            transition: all 0.2s;
-            border: 1px solid #d1d5db;
-            cursor: pointer;
-        }
-        .btn-secondary:hover {
-            background: #f9fafb;
-            border-color: #9ca3af;
-        }
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-        }
-        .pulse {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        @media print {
-            .no-print {
-                display: none !important;
-            }
-            body {
-                background: white;
-            }
-            .preview-container {
-                margin: 0;
-                box-shadow: none;
-                border-radius: 0;
-            }
+        @media (max-width: 1024px) {
+            .paper-container { width: 100%; }
         }
     </style>
 </head>
 <body>
-    <!-- Template Badge -->
-    <div class="template-badge no-print">
-        <svg class="template-badge-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
-        </svg>
-        <span>Template: <strong class="template-name">{{ ucfirst($template ?? 'unknown') }}</strong></span>
-    </div>
-    
-    <!-- Debug info (temporary) -->
-    <div class="no-print" style="position: fixed; top: 10px; right: 10px; background: black; color: white; padding: 5px 10px; font-size: 11px; z-index: 9999; border-radius: 4px;">
-        Raw: {{ $template ?? 'NULL' }}
-    </div>
-
-    <!-- Fixed action buttons - always visible -->
-    <div class="action-buttons no-print">
-        <form method="POST" action="{{ route('cv-builder.export') }}">
-            @csrf
-            <input type="hidden" name="template" value="{{ $template }}">
-            <button type="submit" class="action-btn-primary">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                </svg>
-                <span>Download PDF</span>
+    <!-- Premium Header Bar -->
+    <header class="preview-header no-print">
+        <!-- Left: Close + Title -->
+        <div class="flex items-center gap-4">
+            <button onclick="window.history.back()" class="w-9 h-9 flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-all" title="Back">
+                <i class="ph ph-arrow-left text-lg"></i>
             </button>
-        </form>
-        <button onclick="window.close()" class="action-btn-secondary" title="Close">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-        </button>
-    </div>
-
-    <!-- CV Preview -->
-    <div class="preview-container">
-        @include("cv-templates.{$template}", [
-            'user' => $user,
-            'experiences' => $experiences,
-            'educations' => $educations,
-            'skills' => $skills,
-            'organizations' => $organizations,
-            'achievements' => $achievements,
-            'projects' => $projects,
-        ])
-    </div>
-</body>
-</html>
-    <!-- Compact Footer Instructions -->
-    <div class="no-print container mx-auto px-4 pb-6 max-w-4xl">
-        <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                        <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
+            <div class="h-5 w-px bg-slate-200"></div>
+            <div class="flex items-center gap-3">
+                <div>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">CV Preview</p>
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-bold text-slate-800">{{ Auth::user()->name }}</span>
+                        <span class="template-badge"><i class="ph-fill ph-layout text-[10px]"></i>{{ $template }}</span>
                     </div>
-                    <div>
-                        <h3 class="font-semibold text-gray-900 text-sm">CV Preview Ready</h3>
-                        <p class="text-xs text-gray-600">Click download to export as PDF or close to try another template</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2 text-xs text-gray-500">
-                    <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span>Professional Quality</span>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Center: Zoom Controls -->
+        <div class="flex items-center gap-3 no-print">
+            <div class="zoom-pill">
+                <button onclick="changeZoom(-0.1)" class="zoom-btn" title="Zoom Out">
+                    <i class="ph ph-minus text-sm"></i>
+                </button>
+                <span id="zoom-text" class="zoom-value">100%</span>
+                <button onclick="changeZoom(0.1)" class="zoom-btn" title="Zoom In">
+                    <i class="ph ph-plus text-sm"></i>
+                </button>
+            </div>
+            <button onclick="resetZoom()" class="text-[11px] font-bold text-slate-400 hover:text-primary-600 transition-colors px-1">Reset</button>
+        </div>
+
+        <!-- Right: Actions -->
+        <div class="flex items-center gap-2 no-print">
+            <a href="{{ route('cv.builder') }}" class="btn btn-ghost">
+                <i class="ph ph-pencil-simple text-base"></i>
+                Edit
+            </a>
+            <button onclick="window.print()" class="btn btn-indigo">
+                <i class="ph ph-printer text-base"></i>
+                Print / Save PDF
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- CV Paper -->
+        <div class="paper-wrapper">
+            <div id="cv-paper" class="paper-container">
+                @include("cv-templates.{$template}", [
+                    'user'          => $user,
+                    'experiences'   => $experiences,
+                    'educations'    => $educations,
+                    'skills'        => $skills,
+                    'organizations' => $organizations,
+                    'achievements'  => $achievements,
+                    'projects'      => $projects,
+                ])
+            </div>
+        </div>
+    </main>
+
+    <!-- Page Indicator (shows on zoom change) -->
+    <div id="page-info" class="page-info no-print">A4 · 210 × 297mm</div>
 
     <script>
-        // Auto-adjust zoom for better preview on different screen sizes
-        function adjustZoom() {
-            const preview = document.querySelector('.preview-container');
-            const windowWidth = window.innerWidth;
-            
-            if (windowWidth < 1024) {
-                preview.style.transform = 'scale(0.85)';
-                preview.style.transformOrigin = 'top center';
-                preview.style.marginBottom = '3rem';
-            } else {
-                preview.style.transform = 'scale(1)';
-                preview.style.marginBottom = '2rem';
-            }
+        let currentZoom = 1;
+        const paper = document.getElementById('cv-paper');
+        const zoomText = document.getElementById('zoom-text');
+        const pageInfo = document.getElementById('page-info');
+        let hideTimer;
+
+        function changeZoom(delta) {
+            currentZoom = Math.min(Math.max(0.4, currentZoom + delta), 1.5);
+            updateZoom();
         }
-        
-        window.addEventListener('load', adjustZoom);
-        window.addEventListener('resize', adjustZoom);
-        
-        // Simple success message after download
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('downloaded') === 'true') {
-            // Show subtle success indicator
-            const templateBadge = document.querySelector('.template-badge');
-            if (templateBadge) {
-                templateBadge.style.background = '#f0fdf4';
-                templateBadge.style.borderColor = '#22c55e';
-                templateBadge.innerHTML = `
-                    <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span class="text-green-700">Downloaded Successfully!</span>
-                `;
-                setTimeout(() => {
-                    templateBadge.style.background = 'white';
-                    templateBadge.style.borderColor = '#e5e7eb';
-                    templateBadge.innerHTML = `
-                        <svg class="template-badge-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
-                        </svg>
-                        <span>Template: <span class="template-name">{{ ucfirst($template) }}</span></span>
-                    `;
-                }, 3000);
-            }
+
+        function resetZoom() {
+            currentZoom = window.innerWidth < 1200 ? 0.75 : 1;
+            updateZoom();
         }
-        
-        // Smooth scroll behavior
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
+
+        function updateZoom() {
+            paper.style.transform = `scale(${currentZoom})`;
+            zoomText.innerText = `${Math.round(currentZoom * 100)}%`;
+
+            // Show page info pill
+            pageInfo.classList.add('show');
+            clearTimeout(hideTimer);
+            hideTimer = setTimeout(() => pageInfo.classList.remove('show'), 2000);
+        }
+
+        // Auto-scale on small screens
+        if (window.innerWidth < 1200) {
+            currentZoom = 0.75;
+            updateZoom();
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.metaKey || e.ctrlKey) {
+                if (e.key === '=' || e.key === '+') { e.preventDefault(); changeZoom(0.1); }
+                if (e.key === '-') { e.preventDefault(); changeZoom(-0.1); }
+                if (e.key === '0') { e.preventDefault(); resetZoom(); }
+                if (e.key === 'p') { e.preventDefault(); window.print(); }
+            }
         });
-        
-        // Clean, minimal approach - no extra animations
     </script>
 </body>
 </html>

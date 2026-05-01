@@ -1089,9 +1089,9 @@ class JobApplicationForm extends Component
         'platform' => 'required|string|max:255',
         'platformOther' => 'required_if:platform,Other|string|max:255',
         // Remove old status from validation; application_status replaces it
-        'application_status' => 'required|string|in:On Process,Declined,Accepted',
+        'application_status' => 'required|string|in:Applied,Pending,On Process,Interview,Offering,Accepted,Declined,Rejected',
         'recruitment_stage' => 'required|string|in:Applied,Follow Up,Assessment Test,Psychotest,HR - Interview,User - Interview,LGD,Presentation Round,Offering,Not Processed',
-        'career_level' => 'required|string|in:Intern,Full Time,Contract,MT,Freelance',
+        'career_level' => 'nullable|string|in:Intern,Full Time,Contract,MT,Freelance',
         'platform_link' => 'nullable|url',
         'application_date' => 'required|date',
         'notes' => 'nullable|string',

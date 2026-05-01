@@ -44,6 +44,12 @@ class UserManagement extends Component
     public $emailTargetUserEmail;
     public $emailType = 'welcome';
     
+    // Premium Confirmation properties
+    public $showPremiumConfirmModal = false;
+    public $confirmTargetUserId;
+    public $confirmTargetUserName;
+    public $confirmTargetUserIsPremium;
+    
     protected $listeners = ['refreshUsers' => '$refresh'];
     
     public function updatingSearch()
@@ -145,15 +151,61 @@ class UserManagement extends Component
     public function togglePremium($userId)
     {
         $user = User::findOrFail($userId);
-        $user->update([
-            'is_premium' => !$user->is_premium,
-            'payment_status' => $user->is_premium ? 'unpaid' : 'paid',
-        ]);
+        $user->is_premium = !$user->is_premium;
+        $user->payment_status = $user->is_premium ? 'paid' : 'free';
+        $user->save();
         
         $this->dispatch('showNotification', [
-            'type' => 'info',
-            'title' => 'Updated',
-            'message' => 'Premium status toggled!',
+            'type' => 'success',
+            'title' => 'Status Diperbarui',
+            'message' => 'Status premium ' . $user->name . ' berhasil diubah.',
+        ]);
+    }
+
+    public function openPremiumConfirmModal($userId)
+    {
+        $user = User::findOrFail($userId);
+        $this->confirmTargetUserId = $user->id;
+        $this->confirmTargetUserName = $user->name;
+        $this->confirmTargetUserIsPremium = $user->is_premium;
+        $this->showPremiumConfirmModal = true;
+    }
+
+    public function closePremiumConfirmModal()
+    {
+        $this->showPremiumConfirmModal = false;
+        $this->reset(['confirmTargetUserId', 'confirmTargetUserName', 'confirmTargetUserIsPremium']);
+    }
+
+    public function toggleManualPremium()
+    {
+        $user = User::findOrFail($this->confirmTargetUserId);
+        
+        // Toggle is_premium
+        $user->is_premium = !$user->is_premium;
+        
+        // Jika jadi premium, set status ke paid (Manual Override)
+        // Jika jadi free, set status ke free
+        $user->payment_status = $user->is_premium ? User::PAYMENT_STATUS_PAID : User::PAYMENT_STATUS_FREE;
+        
+        if ($user->is_premium) {
+            $user->premium_purchased_at = now();
+        }
+        
+        $user->save();
+
+        Log::info('Admin toggled manual premium status', [
+            'admin_id' => Auth::id(),
+            'user_id' => $user->id,
+            'new_status' => $user->is_premium ? 'PREMIUM' : 'FREE',
+        ]);
+
+        $this->closePremiumConfirmModal();
+
+        $this->dispatch('showNotification', [
+            'type' => 'success',
+            'title' => 'Manual Override Sukses!',
+            'message' => 'User ' . $user->name . ' sekarang berstatus ' . ($user->is_premium ? 'PREMIUM' : 'FREE'),
         ]);
     }
     
@@ -375,5 +427,56 @@ class UserManagement extends Component
             'users' => $users,
             'stats' => $stats,
         ]);
+    }
+
+    public function exportUsers()
+    {
+        $users = $this->getUsersQuery()->latest()->get();
+
+        $filename = 'users_export_' . date('Y-m-d_H-i-s') . '.csv';
+
+        $headers = [
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$filename",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+
+        $columns = [
+            'ID', 
+            'Nama', 
+            'Email', 
+            'Status Premium', 
+            'AI Trial', 
+            'Role', 
+            'Tanggal Daftar', 
+            'Terverifikasi'
+        ];
+
+        $callback = function() use($users, $columns) {
+            $file = fopen('php://output', 'w');
+            // Add BOM for proper UTF-8 Excel support
+            fputs($file, "\xEF\xBB\xBF");
+            fputcsv($file, $columns);
+
+            foreach ($users as $user) {
+                $row = [
+                    $user->id,
+                    $user->name,
+                    $user->email,
+                    $user->is_premium ? 'Premium' : 'Free',
+                    $user->has_used_ai_analyzer_trial ? 'Sudah' : 'Belum',
+                    $user->is_admin ? 'Admin' : 'User',
+                    $user->created_at ? $user->created_at->format('d M Y H:i') : '-',
+                    $user->email_verified_at ? 'Ya' : 'Tidak'
+                ];
+                fputcsv($file, $row);
+            }
+
+            fclose($file);
+        };
+
+        return response()->streamDownload($callback, $filename, $headers);
     }
 }

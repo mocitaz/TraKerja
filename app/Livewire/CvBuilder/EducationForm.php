@@ -5,6 +5,7 @@ namespace App\Livewire\CvBuilder;
 use Livewire\Component;
 use App\Models\UserEducation;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class EducationForm extends Component
 {
@@ -113,8 +114,33 @@ class EducationForm extends Component
 
     public function save()
     {
-        $this->validate();
+        $validator = Validator::make([
+            'institution_name' => $this->institution_name,
+            'degree'           => $this->degree,
+            'major'            => $this->major,
+            'gpa'              => $this->gpa,
+            'location'         => $this->location,
+            'start_date'       => $this->start_date,
+            'end_date'         => $this->end_date,
+            'is_current'       => $this->is_current,
+            'description'      => $this->description,
+        ], $this->rules, [
+            'institution_name.required' => 'Institution name is required.',
+            'degree.required'           => 'Degree / education level is required.',
+            'major.required'            => 'Major / field of study is required.',
+            'start_date.required'       => 'Start date is required.',
+            'end_date.after'            => 'End date must be after start date.',
+        ]);
 
+        if ($validator->fails()) {
+            $this->setErrorBag($validator->errors());
+            $this->dispatch('showNotification', [
+                'type'    => 'error',
+                'title'   => 'Incomplete Form',
+                'message' => $validator->errors()->first(),
+            ]);
+            return;
+        }
         if ($this->is_current) {
             $this->end_date = null;
         }

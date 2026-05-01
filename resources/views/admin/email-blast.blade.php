@@ -1,704 +1,646 @@
 <x-admin-layout>
+@php
+    $baseQuery = \App\Models\User::where('role', '!=', 'admin');
+    
+    // Calculate Audience Stats
+    $stats = [
+        'all' => (clone $baseQuery)->count(),
+        'new' => (clone $baseQuery)->where('created_at', '>=', \Carbon\Carbon::now()->subDays(7))->count(),
+        'unverified' => (clone $baseQuery)->whereNull('email_verified_at')->count(),
+        'verified' => (clone $baseQuery)->whereNotNull('email_verified_at')->count(),
+        'premium' => (clone $baseQuery)->where(function($q) {
+            $q->where('is_premium', true)->orWhere('payment_status', 'paid');
+        })->count(),
+        'free' => (clone $baseQuery)->where(function($q) {
+            $q->where('is_premium', false)->orWhereNull('payment_status')->orWhere('payment_status', '!=', 'paid');
+        })->count(),
+    ];
+@endphp
 
-    <div class="py-4 sm:py-6 lg:py-8">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Success/Error Messages -->
-            @if(session('success'))
-                <div class="mb-6 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg">
-                    <div class="flex items-center">
-                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span>{{ session('success') }}</span>
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
+        <div class="px-5 py-6 sm:px-8 sm:py-8 border-b border-slate-100 bg-slate-50/50 relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-primary-100 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 relative z-10">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 bg-gradient-to-br from-primary-500 to-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary-500/30">
+                        <i class="ph-duotone ph-paper-plane-tilt text-3xl"></i>
                     </div>
-                    @if(session('details'))
-                        <div class="mt-3 text-sm">
-                            <p>Total: {{ session('details')['total'] }} user</p>
-                            <p>Berhasil: {{ session('details')['success'] }} user</p>
-                            @if(isset(session('details')['failed']) && session('details')['failed'] > 0)
-                                <p class="text-red-600">Gagal: {{ session('details')['failed'] }} user</p>
-                            @endif
-                        </div>
-                    @endif
-                </div>
-            @endif
-
-            @if(session('error'))
-                <div class="mb-6 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
-                    <div class="flex items-center">
-                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-                        </svg>
-                        <span>{{ session('error') }}</span>
+                    <div>
+                        <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Email Blast Center</h1>
+                        <p class="text-sm font-medium text-slate-500 mt-1">Kelola dan kirim kampanye email massal kepada pengguna.</p>
                     </div>
                 </div>
-            @endif
+            </div>
+        </div>
+    </div>
 
-            <!-- Email Blast Form -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                <form action="{{ route('admin.email-blast.send') }}" method="POST" id="emailBlastForm">
-                    @csrf
+    <!-- Success/Error Messages -->
+    @if(session('success'))
+        <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 px-5 py-4 rounded-2xl shadow-sm flex items-start gap-3">
+            <i class="ph-fill ph-check-circle text-2xl text-emerald-500 mt-0.5"></i>
+            <div>
+                <h3 class="text-sm font-bold">{{ session('success') }}</h3>
+                @if(session('details'))
+                    <div class="mt-2 text-xs space-y-1 text-emerald-700 bg-emerald-100/50 p-3 rounded-xl">
+                        <p class="font-medium">Total Audience: {{ session('details')['total'] }} users</p>
+                        <p class="font-medium">Berhasil Terkirim: {{ session('details')['success'] }} users</p>
+                        @if(isset(session('details')['failed']) && session('details')['failed'] > 0)
+                            <p class="font-bold text-red-600 mt-1">Gagal Terkirim: {{ session('details')['failed'] }} users</p>
+                        @endif
+                    </div>
+                @endif
+            </div>
+        </div>
+    @endif
 
-                    <div class="p-4 sm:p-6 space-y-4 sm:space-y-6">
-                        <!-- Email Type Selection -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-3">
-                                Pilih Tipe Email
+    @if(session('error'))
+        <div class="bg-red-50 border border-red-200 text-red-800 px-5 py-4 rounded-2xl shadow-sm flex items-start gap-3">
+            <i class="ph-fill ph-warning-circle text-2xl text-red-500 mt-0.5"></i>
+            <div>
+                <h3 class="text-sm font-bold">{{ session('error') }}</h3>
+            </div>
+        </div>
+    @endif
+
+    <!-- Main Layout -->
+    <form action="{{ route('admin.email-blast.send') }}" method="POST" id="emailBlastForm">
+        @csrf
+        <div class="space-y-6">
+            
+            <!-- Top Section: Email Configuration -->
+            <div class="space-y-6">
+                
+                <!-- Email Type Selection -->
+                <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
+                    <div class="px-6 py-5 border-b border-slate-100">
+                        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <i class="ph-duotone ph-envelope-open text-primary-500 text-xl"></i>
+                            Pilih Tipe Kampanye
+                        </h2>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">Template Email yang Akan Dikirim</p>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 gap-4">
+                            <!-- Welcome -->
+                            <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                <input type="radio" name="email_type" value="welcome" class="sr-only" required>
+                                <div class="flex items-center gap-4 w-full">
+                                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i class="ph-duotone ph-hand-waving text-2xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-sm font-bold text-slate-900">Welcome Email</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Sambut pengguna baru ke platform TraKerja.</p>
+                                    </div>
+                                    <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                        <i class="ph-bold ph-check text-xs"></i>
+                                    </div>
+                                </div>
                             </label>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
-                                    <input type="radio" name="email_type" value="welcome" class="sr-only" required>
-                                    <div class="flex-1">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
-                                                </div>
-                                            </div>
-                                            <div class="ml-3 flex-1">
-                                                <p class="text-sm font-medium text-gray-900">Welcome Email</p>
-                                                <p class="text-xs text-gray-500 mt-1">Email selamat datang untuk user baru</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </label>
 
-                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
-                                    <input type="radio" name="email_type" value="verification" class="sr-only" required>
-                                    <div class="flex-1">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
-                                                </div>
-                                            </div>
-                                            <div class="ml-3 flex-1">
-                                                <p class="text-sm font-medium text-gray-900">Verification Email</p>
-                                                <p class="text-xs text-gray-500 mt-1">Kirim email verifikasi untuk user</p>
-                                            </div>
-                                        </div>
+                            <!-- Verification -->
+                            <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                <input type="radio" name="email_type" value="verification" class="sr-only" required>
+                                <div class="flex items-center gap-4 w-full">
+                                    <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i class="ph-duotone ph-shield-check text-2xl"></i>
                                     </div>
-                                </label>
+                                    <div class="flex-1">
+                                        <h3 class="text-sm font-bold text-slate-900">Verification Email</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Kirim ulang link verifikasi akun.</p>
+                                    </div>
+                                    <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                        <i class="ph-bold ph-check text-xs"></i>
+                                    </div>
+                                </div>
+                            </label>
 
-                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
-                                    <input type="radio" name="email_type" value="ai_analyzer" class="sr-only" required>
-                                    <div class="flex-1">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
-                                                </div>
-                                            </div>
-                                            <div class="ml-3 flex-1">
-                                                <p class="text-sm font-medium text-gray-900">AI Resume Analyzer</p>
-                                                <p class="text-xs text-gray-500 mt-1">Pengumuman trial gratis AI Analyzer</p>
-                                            </div>
-                                        </div>
+                            <!-- AI Analyzer -->
+                            <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                <input type="radio" name="email_type" value="ai_analyzer" class="sr-only" required>
+                                <div class="flex items-center gap-4 w-full">
+                                    <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i class="ph-duotone ph-sparkle text-2xl"></i>
                                     </div>
-                                </label>
+                                    <div class="flex-1">
+                                        <h3 class="text-sm font-bold text-slate-900">AI Analyzer Trial</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Promosikan fitur AI Review Resume.</p>
+                                    </div>
+                                    <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                        <i class="ph-bold ph-check text-xs"></i>
+                                    </div>
+                                </div>
+                            </label>
 
-                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
-                                    <input type="radio" name="email_type" value="job_reminder" class="sr-only" required>
-                                    <div class="flex-1">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
-                                                </div>
-                                            </div>
-                                            <div class="ml-3 flex-1">
-                                                <p class="text-sm font-medium text-gray-900">Job Application Reminder</p>
-                                                <p class="text-xs text-gray-500 mt-1">Ajakan untuk catat lamaran kerja</p>
-                                            </div>
-                                        </div>
+                            <!-- Job Reminder -->
+                            <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                <input type="radio" name="email_type" value="job_reminder" class="sr-only" required>
+                                <div class="flex items-center gap-4 w-full">
+                                    <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i class="ph-duotone ph-bell-ringing text-2xl"></i>
                                     </div>
-                                </label>
+                                    <div class="flex-1">
+                                        <h3 class="text-sm font-bold text-slate-900">Job Reminder</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Pengingat mencatat riwayat lamaran.</p>
+                                    </div>
+                                    <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                        <i class="ph-bold ph-check text-xs"></i>
+                                    </div>
+                                </div>
+                            </label>
 
-                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
-                                    <input type="radio" name="email_type" value="monthly_motivation" class="sr-only" required>
-                                    <div class="flex-1">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
-                                                </div>
-                                            </div>
-                                            <div class="ml-3 flex-1">
-                                                <p class="text-sm font-medium text-gray-900">Monthly Motivation</p>
-                                                <p class="text-xs text-gray-500 mt-1">Bulan baru semangat baru</p>
-                                            </div>
-                                        </div>
+                            <!-- Monthly Motivation -->
+                            <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                <input type="radio" name="email_type" value="monthly_motivation" class="sr-only" required>
+                                <div class="flex items-center gap-4 w-full">
+                                    <div class="w-10 h-10 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i class="ph-duotone ph-fire text-2xl"></i>
                                     </div>
-                                </label>
+                                    <div class="flex-1">
+                                        <h3 class="text-sm font-bold text-slate-900">Monthly Motivation</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Pesan motivasi awal bulan.</p>
+                                    </div>
+                                    <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                        <i class="ph-bold ph-check text-xs"></i>
+                                    </div>
+                                </div>
+                            </label>
 
-                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
-                                    <input type="radio" name="email_type" value="custom" class="sr-only" required onchange="toggleCustomEmailFields()">
-                                    <div class="flex-1">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
-                                                </div>
-                                            </div>
-                                            <div class="ml-3 flex-1">
-                                                <p class="text-sm font-medium text-gray-900">✨ Custom Email</p>
-                                                <p class="text-xs text-gray-500 mt-1">Buat email kustom dengan konten sendiri</p>
-                                            </div>
-                                        </div>
+                            <!-- Custom Email -->
+                            <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                <input type="radio" name="email_type" value="custom" class="sr-only" required onchange="toggleCustomEmailFields()">
+                                <div class="flex items-center gap-4 w-full">
+                                    <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                        <i class="ph-duotone ph-pencil-simple text-2xl"></i>
                                     </div>
-                                </label>
-                            </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-sm font-bold text-slate-900">Custom Email</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Buat pesan spesifik Anda sendiri.</p>
+                                    </div>
+                                    <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                        <i class="ph-bold ph-check text-xs"></i>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Email Fields Container -->
+                <div id="customEmailFields" class="hidden transform transition-all duration-300">
+                    <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden relative">
+                        <!-- Decorative glow -->
+                        <div class="absolute -left-20 -top-20 w-40 h-40 bg-indigo-100 rounded-full blur-3xl opacity-50"></div>
+                        
+                        <div class="px-6 py-5 border-b border-slate-100 relative z-10 bg-white/50 backdrop-blur-sm">
+                            <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                                <i class="ph-duotone ph-pencil-line text-indigo-500 text-xl"></i>
+                                Tulis Pesan Custom
+                            </h2>
+                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">Rancang Konten Email Anda</p>
                         </div>
 
-                        <!-- Custom Email Fields (Hidden by default) -->
-                        <div id="customEmailFields" class="hidden space-y-4 bg-gradient-to-br from-purple-50 to-indigo-50 border-2 border-purple-200 rounded-lg p-6">
-                            <div class="flex items-center mb-4">
-                                <svg class="w-6 h-6 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                </svg>
-                                <h3 class="text-lg font-semibold text-gray-900">Konten Custom Email</h3>
-                            </div>
-
+                        <div class="p-6 space-y-6 relative z-10">
                             <div>
-                                <label for="custom_subject" class="block text-sm font-medium text-gray-700 mb-2">
+                                <label for="custom_subject" class="block text-sm font-bold text-slate-700 mb-2">
                                     Subject Email <span class="text-red-500">*</span>
                                 </label>
                                 <input 
                                     type="text" 
                                     name="custom_subject" 
                                     id="custom_subject"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
-                                    placeholder="Contoh: Update Fitur Terbaru TraKerja"
+                                    class="w-full px-4 py-3 bg-slate-50/50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium text-sm text-slate-900 placeholder:text-slate-400"
+                                    placeholder="Contoh: Info Update Fitur Terbaru"
                                     maxlength="255"
                                 >
-                                <p class="text-xs text-gray-500 mt-1">Judul email yang akan diterima user (max 255 karakter)</p>
                             </div>
 
                             <div>
-                                <label for="custom_content" class="block text-sm font-medium text-gray-700 mb-2">
-                                    Isi Email <span class="text-red-500">*</span>
+                                <label for="custom_content" class="block text-sm font-bold text-slate-700 mb-2">
+                                    Isi Konten Email <span class="text-red-500">*</span>
                                 </label>
                                 <textarea 
                                     name="custom_content" 
                                     id="custom_content"
                                     rows="8"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
-                                    placeholder="Tulis konten email di sini...&#10;&#10;Contoh:&#10;Kami dengan senang hati mengumumkan fitur baru yang akan membantu Anda dalam proses pencarian kerja.&#10;&#10;Fitur unggulan:&#10;• AI Resume Analyzer&#10;• Job Application Tracker&#10;• Interview Calendar"
+                                    class="w-full px-4 py-3 bg-slate-50/50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium text-sm text-slate-900 placeholder:text-slate-400 resize-none"
+                                    placeholder="Tulis pesan Anda di sini..."
                                     maxlength="5000"
                                 ></textarea>
-                                <p class="text-xs text-gray-500 mt-1">Konten utama email yang akan dikirim ke user (max 5000 karakter)</p>
+                                <div class="flex justify-between items-center mt-2">
+                                    <p class="text-[11px] font-bold text-slate-400">Gunakan Markdown atau HTML dasar jika diperlukan.</p>
+                                    <p class="text-[11px] font-bold text-slate-400">Max 5000 chars</p>
+                                </div>
                             </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 gap-4">
                                 <div>
-                                    <label for="custom_button_text" class="block text-sm font-medium text-gray-700 mb-2">
-                                        Teks Button (Opsional)
+                                    <label for="custom_button_text" class="block text-sm font-bold text-slate-700 mb-2">
+                                        Teks Tombol (Opsional)
                                     </label>
                                     <input 
                                         type="text" 
                                         name="custom_button_text" 
                                         id="custom_button_text"
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
-                                        placeholder="Contoh: Coba Sekarang"
+                                        class="w-full px-4 py-3 bg-slate-50/50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium text-sm text-slate-900 placeholder:text-slate-400"
+                                        placeholder="Misal: Coba Fitur Sekarang"
                                         maxlength="100"
                                     >
                                 </div>
-
                                 <div>
-                                    <label for="custom_button_url" class="block text-sm font-medium text-gray-700 mb-2">
-                                        URL Button (Opsional)
+                                    <label for="custom_button_url" class="block text-sm font-bold text-slate-700 mb-2">
+                                        URL Tujuan (Opsional)
                                     </label>
-                                    <input 
-                                        type="url" 
-                                        name="custom_button_url" 
-                                        id="custom_button_url"
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
-                                        placeholder="https://example.com"
-                                        maxlength="500"
-                                    >
-                                </div>
-                            </div>
-
-                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                                <div class="flex items-start">
-                                    <svg class="w-5 h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    <div class="text-sm text-blue-800">
-                                        <p class="font-semibold mb-1">Tips membuat email yang efektif:</p>
-                                        <ul class="list-disc list-inside space-y-1 ml-1">
-                                            <li>Gunakan bahasa yang jelas dan mudah dipahami</li>
-                                            <li>Personalisasi dengan menyapa nama user</li>
-                                            <li>Sertakan call-to-action yang jelas</li>
-                                            <li>Pastikan konten relevan dengan target user</li>
-                                        </ul>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="ph-bold ph-link text-slate-400"></i>
+                                        </div>
+                                        <input 
+                                            type="url" 
+                                            name="custom_button_url" 
+                                            id="custom_button_url"
+                                            class="w-full pl-10 pr-4 py-3 bg-slate-50/50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium text-sm text-slate-900 placeholder:text-slate-400"
+                                            placeholder="https://..."
+                                            maxlength="500"
+                                        >
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Target User Selection -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-3">
-                                Target User
-                            </label>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
-                                    <input type="radio" name="target_user" value="all" class="sr-only" checked required>
-                                    <div class="flex-1">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
-                                                </div>
-                                            </div>
-                                            <div class="ml-3 flex-1">
-                                                <p class="text-sm font-medium text-gray-900">Semua User</p>
-                                                <p class="text-xs text-gray-500 mt-1">Semua user yang terdaftar</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </label>
-
-                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
-                                    <input type="radio" name="target_user" value="new" class="sr-only" required>
-                                    <div class="flex-1">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
-                                                </div>
-                                            </div>
-                                            <div class="ml-3 flex-1">
-                                                <p class="text-sm font-medium text-gray-900">User Baru</p>
-                                                <p class="text-xs text-gray-500 mt-1">User yang registrasi dalam 7 hari terakhir</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </label>
-
-                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
-                                    <input type="radio" name="target_user" value="unverified" class="sr-only" required>
-                                    <div class="flex-1">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
-                                                </div>
-                                            </div>
-                                            <div class="ml-3 flex-1">
-                                                <p class="text-sm font-medium text-gray-900">User Belum Terverifikasi</p>
-                                                <p class="text-xs text-gray-500 mt-1">User yang belum verifikasi email</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </label>
-
-                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
-                                    <input type="radio" name="target_user" value="verified" class="sr-only" required>
-                                    <div class="flex-1">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
-                                                </div>
-                                            </div>
-                                            <div class="ml-3 flex-1">
-                                                <p class="text-sm font-medium text-gray-900">User Terverifikasi</p>
-                                                <p class="text-xs text-gray-500 mt-1">Hanya user yang sudah verifikasi email</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </label>
-
-                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
-                                    <input type="radio" name="target_user" value="premium" class="sr-only" required>
-                                    <div class="flex-1">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
-                                                </div>
-                                            </div>
-                                            <div class="ml-3 flex-1">
-                                                <p class="text-sm font-medium text-gray-900">User Premium</p>
-                                                <p class="text-xs text-gray-500 mt-1">User dengan status premium/paid</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </label>
-
-                                <label class="relative flex cursor-pointer rounded-lg border-2 border-gray-200 p-4 focus:outline-none hover:border-primary-500 transition-colors">
-                                    <input type="radio" name="target_user" value="free" class="sr-only" required>
-                                    <div class="flex-1">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="h-5 w-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                    <div class="h-2 w-2 rounded-full bg-primary-600 hidden"></div>
-                                                </div>
-                                            </div>
-                                            <div class="ml-3 flex-1">
-                                                <p class="text-sm font-medium text-gray-900">User Free</p>
-                                                <p class="text-xs text-gray-500 mt-1">User dengan status free tier</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Anti-Spam Warning -->
-                        <div class="bg-red-50 border-2 border-red-300 rounded-lg p-4 mb-4">
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0">
-                                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <h3 class="text-sm font-bold text-red-800 mb-2">⚠️ DILARANG SPAM!</h3>
-                                    <div class="text-sm text-red-700 space-y-1.5">
-                                        <p class="font-semibold">Gunakan fitur ini dengan bijaksana:</p>
-                                        <ul class="list-disc list-inside space-y-1 ml-1">
-                                            <li>Jangan kirim email berlebihan dalam waktu singkat</li>
-                                            <li>Pastikan konten email relevan untuk target user</li>
-                                            <li>Hormati privasi dan inbox pengguna</li>
-                                            <li>Email spam dapat merusak reputasi domain</li>
-                                            <li>Dapat menyebabkan akun email di-blacklist</li>
-                                        </ul>
-                                        <p class="font-semibold mt-3 bg-red-100 p-2 rounded">
-                                            💡 Tips: Gunakan target user yang spesifik dan kirim hanya saat diperlukan.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Warning -->
-                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                            <div class="flex">
-                                <svg class="w-5 h-5 text-yellow-600 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                                </svg>
-                                <div class="text-sm text-yellow-800">
-                                    <p class="font-medium">Perhatian!</p>
-                                    <p class="mt-1">Email akan dikirim ke semua user sesuai target yang dipilih. Pastikan Anda sudah memilih dengan benar.</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-
-                    <!-- Form Actions -->
-                    <div class="bg-gray-50 px-4 sm:px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row justify-end gap-3">
-                        <button type="button" onclick="window.location.href='{{ route('admin.index') }}'" class="w-full sm:w-auto px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                            Batal
-                        </button>
-                        <button type="button" onclick="showConfirmModal()" class="w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                            Kirim Email Blast
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Error Modal -->
-    <div id="errorModal" class="hidden fixed inset-0 z-50 overflow-y-auto" aria-labelledby="error-modal-title" role="dialog" aria-modal="true">
-        <!-- Backdrop -->
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="hideErrorModal()"></div>
-
-        <!-- Modal Container -->
-        <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-            <!-- Modal Panel -->
-            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div class="bg-white px-6 pt-6 pb-4">
-                    <!-- Icon -->
-                    <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 mb-4">
-                        <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-
-                    <!-- Title -->
-                    <div class="text-center mb-5">
-                        <h3 class="text-lg font-semibold leading-6 text-gray-900 mb-2" id="error-modal-title">
-                            Perhatian
-                        </h3>
-                        <p id="errorMessage" class="text-sm text-gray-600">
-                            <!-- Error message will be inserted here -->
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Actions -->
-                <div class="bg-gray-50 px-6 py-4 flex justify-center">
-                    <button type="button" onclick="hideErrorModal()" class="w-full sm:w-auto inline-flex items-center justify-center rounded-lg border border-transparent bg-primary-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                        Mengerti
-                    </button>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Confirmation Modal -->
-    <div id="confirmModal" class="hidden fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <!-- Backdrop -->
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="hideConfirmModal()"></div>
-
-        <!-- Modal Container -->
-        <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-            <!-- Modal Panel -->
-            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div class="bg-white px-6 pt-6 pb-4">
-                    <!-- Icon -->
-                    <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100 mb-4">
-                        <svg class="h-6 w-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                        </svg>
-                    </div>
-
-                    <!-- Title -->
-                    <div class="text-center mb-5">
-                        <h3 class="text-lg font-semibold leading-6 text-gray-900 mb-2" id="modal-title">
-                            Konfirmasi Email Blast
-                        </h3>
-                        <p class="text-sm text-gray-500">
-                            Apakah Anda yakin ingin mengirim email blast?
-                        </p>
-                    </div>
-
-                    <!-- Details -->
-                    <div class="bg-gray-50 rounded-lg p-4 mb-4">
-                        <div class="space-y-3">
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm font-medium text-gray-700">Tipe Email:</span>
-                                <span id="confirmEmailType" class="text-sm font-semibold text-gray-900"></span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm font-medium text-gray-700">Target User:</span>
-                                <span id="confirmTargetUser" class="text-sm font-semibold text-gray-900"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Anti-Spam Reminder -->
-                    <div class="bg-red-50 border border-red-200 rounded-lg p-3 mb-3">
-                        <div class="flex items-start gap-2">
-                            <svg class="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                            </svg>
-                            <div class="text-xs leading-relaxed text-red-800">
-                                <p class="font-bold mb-1">⚠️ Ingat: DILARANG SPAM!</p>
-                                <p>Gunakan fitur ini dengan bijaksana. Email spam dapat merusak reputasi dan menyebabkan blacklist.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Warning -->
-                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                        <p class="text-xs leading-relaxed text-yellow-800">
-                            <strong>Perhatian:</strong> Email akan dikirim ke semua user sesuai target yang dipilih. Pastikan Anda sudah memilih dengan benar.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Actions -->
-                <div class="bg-gray-50 px-6 py-4 flex flex-row-reverse gap-3">
-                    <button type="button" onclick="submitEmailBlast()" class="w-full sm:w-auto inline-flex items-center justify-center rounded-lg border border-transparent bg-gradient-to-r from-primary-600 to-primary-700 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                        Ya, Kirim Sekarang
-                    </button>
-                    <button type="button" onclick="hideConfirmModal()" class="w-full sm:w-auto inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                        Batal
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Toggle custom email fields visibility
-        function toggleCustomEmailFields() {
-            const customEmailRadio = document.querySelector('input[name="email_type"][value="custom"]');
-            const customEmailFields = document.getElementById('customEmailFields');
-            
-            if (customEmailRadio && customEmailRadio.checked) {
-                customEmailFields.classList.remove('hidden');
-                // Make custom fields required
-                document.getElementById('custom_subject').setAttribute('required', 'required');
-                document.getElementById('custom_content').setAttribute('required', 'required');
-            } else {
-                customEmailFields.classList.add('hidden');
-                // Remove required attribute when hidden
-                document.getElementById('custom_subject').removeAttribute('required');
-                document.getElementById('custom_content').removeAttribute('required');
-            }
-        }
-
-        // Radio button styling
-        function updateRadioStyles() {
-            const form = document.getElementById('emailBlastForm');
-            if (!form) return;
-            
-            form.querySelectorAll('input[type="radio"]').forEach(r => {
-                const label = r.closest('label');
-                if (!label) return;
+            <!-- Bottom Section: Target Audience & Actions -->
+            <div class="space-y-6">
                 
-                const indicator = label.querySelector('.h-2.w-2');
-                const border = label.querySelector('.border-gray-200, .border-primary-500');
+                <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
+                    <div class="px-6 py-5 border-b border-slate-100">
+                        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <i class="ph-duotone ph-users-three text-emerald-500 text-xl"></i>
+                            Pilih Target Audience
+                        </h2>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">Grup Penerima Kampanye</p>
+                    </div>
+
+                    <div class="p-4 space-y-3">
+                        <!-- All Users -->
+                        <label class="group relative flex items-center justify-between cursor-pointer rounded-xl border border-slate-100 p-4 focus:outline-none hover:border-emerald-200 hover:bg-emerald-50/30 transition-all">
+                            <input type="radio" name="target_user" value="all" class="sr-only" checked required>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center group-hover:bg-emerald-100 group-hover:text-emerald-600 transition-colors">
+                                    <i class="ph-duotone ph-globe text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-bold text-slate-900">Semua User</h3>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-bold">{{ number_format($stats['all']) }} users</span>
+                                <div class="target-indicator hidden w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center flex-shrink-0">
+                                    <i class="ph-bold ph-check text-xs"></i>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Premium Users -->
+                        <label class="group relative flex items-center justify-between cursor-pointer rounded-xl border border-slate-100 p-4 focus:outline-none hover:border-emerald-200 hover:bg-emerald-50/30 transition-all">
+                            <input type="radio" name="target_user" value="premium" class="sr-only" required>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center group-hover:bg-amber-100 group-hover:text-amber-600 transition-colors">
+                                    <i class="ph-duotone ph-crown text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-bold text-slate-900">Premium Users</h3>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-bold">{{ number_format($stats['premium']) }} users</span>
+                                <div class="target-indicator hidden w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center flex-shrink-0">
+                                    <i class="ph-bold ph-check text-xs"></i>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Free Users -->
+                        <label class="group relative flex items-center justify-between cursor-pointer rounded-xl border border-slate-100 p-4 focus:outline-none hover:border-emerald-200 hover:bg-emerald-50/30 transition-all">
+                            <input type="radio" name="target_user" value="free" class="sr-only" required>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center group-hover:bg-slate-200 group-hover:text-slate-800 transition-colors">
+                                    <i class="ph-duotone ph-user text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-bold text-slate-900">Free Users</h3>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-bold">{{ number_format($stats['free']) }} users</span>
+                                <div class="target-indicator hidden w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center flex-shrink-0">
+                                    <i class="ph-bold ph-check text-xs"></i>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Verified Users -->
+                        <label class="group relative flex items-center justify-between cursor-pointer rounded-xl border border-slate-100 p-4 focus:outline-none hover:border-emerald-200 hover:bg-emerald-50/30 transition-all">
+                            <input type="radio" name="target_user" value="verified" class="sr-only" required>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">
+                                    <i class="ph-duotone ph-seal-check text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-bold text-slate-900">Terverifikasi</h3>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-bold">{{ number_format($stats['verified']) }} users</span>
+                                <div class="target-indicator hidden w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center flex-shrink-0">
+                                    <i class="ph-bold ph-check text-xs"></i>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Unverified Users -->
+                        <label class="group relative flex items-center justify-between cursor-pointer rounded-xl border border-slate-100 p-4 focus:outline-none hover:border-emerald-200 hover:bg-emerald-50/30 transition-all">
+                            <input type="radio" name="target_user" value="unverified" class="sr-only" required>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center group-hover:bg-red-100 group-hover:text-red-600 transition-colors">
+                                    <i class="ph-duotone ph-seal-warning text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-bold text-slate-900">Belum Verifikasi</h3>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-bold">{{ number_format($stats['unverified']) }} users</span>
+                                <div class="target-indicator hidden w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center flex-shrink-0">
+                                    <i class="ph-bold ph-check text-xs"></i>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- New Users -->
+                        <label class="group relative flex items-center justify-between cursor-pointer rounded-xl border border-slate-100 p-4 focus:outline-none hover:border-emerald-200 hover:bg-emerald-50/30 transition-all">
+                            <input type="radio" name="target_user" value="new" class="sr-only" required>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center group-hover:bg-pink-100 group-hover:text-pink-600 transition-colors">
+                                    <i class="ph-duotone ph-user-plus text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-bold text-slate-900">User Baru (7 Hari)</h3>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-bold">{{ number_format($stats['new']) }} users</span>
+                                <div class="target-indicator hidden w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center flex-shrink-0">
+                                    <i class="ph-bold ph-check text-xs"></i>
+                                </div>
+                            </div>
+                        </label>
+
+                    </div>
+                </div>
+
+                <!-- Anti Spam Warning -->
+                <div class="bg-rose-50 border border-rose-200 rounded-2xl p-5 shadow-sm">
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center flex-shrink-0">
+                            <i class="ph-duotone ph-warning-octagon text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-extrabold text-rose-900 mb-1">DILARANG SPAM!</h3>
+                            <p class="text-xs font-medium text-rose-700 leading-relaxed mb-3">Email yang dikirim berlebihan dapat merusak reputasi domain, menyebabkan *blacklist* oleh penyedia email (Gmail, dll).</p>
+                            <ul class="text-[11px] font-bold text-rose-800 space-y-1 bg-rose-100/50 p-3 rounded-xl border border-rose-200">
+                                <li class="flex items-center gap-2"><i class="ph-bold ph-x text-rose-500"></i> Jangan kirim email harian</li>
+                                <li class="flex items-center gap-2"><i class="ph-bold ph-check text-emerald-500"></i> Gunakan segmentasi target yang tepat</li>
+                                <li class="flex items-center gap-2"><i class="ph-bold ph-check text-emerald-500"></i> Kirim info yang relevan dan penting</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <button type="button" onclick="showConfirmModal()" class="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-6 py-4 rounded-xl text-sm font-bold shadow-lg shadow-slate-900/20 transition-all hover:scale-[1.02] active:scale-95">
+                    <i class="ph-bold ph-paper-plane-right text-lg"></i>
+                    Kirim Email Blast Sekarang
+                </button>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Dark Backdrop Modals (z-[100]) -->
+
+<!-- Error Modal -->
+<div id="errorModal" class="hidden fixed inset-0 z-[100] overflow-y-auto" aria-labelledby="error-modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="hideErrorModal()"></div>
+    <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+        <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-slate-100 transition-all sm:my-8 sm:w-full sm:max-w-md w-full" onclick="event.stopPropagation()">
+            <div class="px-6 py-6 text-center">
+                <div class="mx-auto w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mb-4">
+                    <i class="ph-duotone ph-warning-circle text-4xl text-red-500"></i>
+                </div>
+                <h3 class="text-xl font-extrabold text-slate-900 mb-2">Validasi Gagal</h3>
+                <p id="errorMessage" class="text-sm font-medium text-slate-500 leading-relaxed"></p>
+            </div>
+            <div class="bg-slate-50 px-6 py-4 flex justify-center border-t border-slate-100">
+                <button type="button" onclick="hideErrorModal()" class="w-full inline-flex justify-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white shadow-md hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-200 transition-all">
+                    Mengerti, Perbaiki
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div id="confirmModal" class="hidden fixed inset-0 z-[100] overflow-y-auto" aria-labelledby="confirm-modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="hideConfirmModal()"></div>
+    <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+        <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-slate-100 transition-all sm:my-8 sm:w-full sm:max-w-md w-full" onclick="event.stopPropagation()">
+            <div class="px-6 py-6 text-center">
+                <div class="mx-auto w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mb-4 relative">
+                    <i class="ph-duotone ph-paper-plane-right text-4xl text-primary-500"></i>
+                    <div class="absolute -right-1 -top-1 w-4 h-4 bg-primary-500 rounded-full animate-ping"></div>
+                </div>
+                <h3 class="text-xl font-extrabold text-slate-900 mb-2">Konfirmasi Pengiriman</h3>
+                <p class="text-sm font-medium text-slate-500 leading-relaxed mb-6">Email akan segera diproses dan dikirimkan secara serentak ke kotak masuk target audience Anda.</p>
+                
+                <div class="bg-slate-50 rounded-xl p-4 text-left border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Tipe Kampanye</span>
+                        <span id="confirmEmailType" class="text-sm font-extrabold text-slate-900 bg-white px-2 py-1 rounded shadow-sm"></span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Target Audience</span>
+                        <span id="confirmTargetUser" class="text-sm font-extrabold text-emerald-600 bg-emerald-50 px-2 py-1 rounded shadow-sm border border-emerald-100"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-slate-50 px-6 py-4 flex flex-row-reverse gap-3 border-t border-slate-100">
+                <button type="button" onclick="submitEmailBlast()" class="flex-1 inline-flex justify-center rounded-xl bg-primary-600 px-4 py-3 text-sm font-bold text-white shadow-md hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-100 transition-all">
+                    <i class="ph-bold ph-rocket-launch mr-2 text-lg"></i>
+                    Kirim Sekarang
+                </button>
+                <button type="button" onclick="hideConfirmModal()" class="flex-1 inline-flex justify-center rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-700 border border-slate-200 hover:bg-slate-50 focus:outline-none transition-all">
+                    Batal
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Radio selection styling logic
+    function setupRadioStyles(groupName, activeBorderClass, activeBgClass, indicatorClass) {
+        const radios = document.querySelectorAll(`input[name="${groupName}"]`);
+        
+        function update() {
+            radios.forEach(r => {
+                const label = r.closest('label');
+                const indicator = label.querySelector(indicatorClass);
                 
                 if (r.checked) {
-                    if (indicator) {
-                        indicator.classList.remove('hidden');
-                    }
-                    if (border) {
-                        border.classList.remove('border-gray-200');
-                        border.classList.add('border-primary-500');
-                    }
+                    label.classList.add(activeBorderClass, activeBgClass);
+                    label.classList.remove('border-slate-100');
+                    if(indicator) indicator.classList.remove('hidden');
                 } else {
-                    if (indicator) {
-                        indicator.classList.add('hidden');
-                    }
-                    if (border) {
-                        border.classList.remove('border-primary-500');
-                        border.classList.add('border-gray-200');
-                    }
+                    label.classList.remove(activeBorderClass, activeBgClass);
+                    label.classList.add('border-slate-100');
+                    if(indicator) indicator.classList.add('hidden');
                 }
             });
         }
+        
+        radios.forEach(r => r.addEventListener('change', update));
+        update();
+    }
 
-        // Add event listeners to radio buttons
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('emailBlastForm');
-            if (!form) return;
+    function toggleCustomEmailFields() {
+        const customEmailRadio = document.querySelector('input[name="email_type"][value="custom"]');
+        const customEmailFields = document.getElementById('customEmailFields');
+        
+        if (customEmailRadio && customEmailRadio.checked) {
+            customEmailFields.classList.remove('hidden');
+            // Slight delay to allow display block to process before adding transform (for fade-in effect)
+            setTimeout(() => {
+                customEmailFields.classList.remove('opacity-0', '-translate-y-4');
+            }, 10);
             
-            form.querySelectorAll('input[type="radio"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    updateRadioStyles();
-                    // Check if custom email is selected
-                    if (radio.name === 'email_type') {
-                        toggleCustomEmailFields();
-                    }
-                });
-            });
+            document.getElementById('custom_subject').setAttribute('required', 'required');
+            document.getElementById('custom_content').setAttribute('required', 'required');
+        } else {
+            customEmailFields.classList.add('opacity-0', '-translate-y-4');
+            setTimeout(() => {
+                customEmailFields.classList.add('hidden');
+            }, 300);
             
-            // Initialize on page load
-            updateRadioStyles();
-            toggleCustomEmailFields();
+            document.getElementById('custom_subject').removeAttribute('required');
+            document.getElementById('custom_content').removeAttribute('required');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Init Custom fields UI state
+        const customEmailFields = document.getElementById('customEmailFields');
+        customEmailFields.classList.add('opacity-0', '-translate-y-4');
+        
+        // Setup styled radios
+        setupRadioStyles('email_type', 'border-primary-500', 'bg-primary-50/30', '.indicator');
+        setupRadioStyles('target_user', 'border-emerald-500', 'bg-emerald-50/50', '.target-indicator');
+        
+        // Listeners
+        document.querySelectorAll('input[name="email_type"]').forEach(r => {
+            r.addEventListener('change', toggleCustomEmailFields);
         });
+        
+        toggleCustomEmailFields();
+    });
 
-        // Show error modal
-        function showErrorModal(message) {
-            document.getElementById('errorMessage').textContent = message;
-            document.getElementById('errorModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+    // Modals
+    function showErrorModal(message) {
+        document.getElementById('errorMessage').textContent = message;
+        document.getElementById('errorModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function hideErrorModal() {
+        document.getElementById('errorModal').classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
+    function showConfirmModal() {
+        const emailType = document.querySelector('input[name="email_type"]:checked')?.value;
+        const targetUser = document.querySelector('input[name="target_user"]:checked')?.value;
+        
+        if (!emailType || !targetUser) {
+            let message = 'Harap pilih ';
+            if (!emailType && !targetUser) message += 'tipe email dan target user terlebih dahulu.';
+            else if (!emailType) message += 'tipe kampanye terlebih dahulu.';
+            else message += 'target audience terlebih dahulu.';
+            showErrorModal(message);
+            return;
         }
 
-        // Hide error modal
-        function hideErrorModal() {
-            document.getElementById('errorModal').classList.add('hidden');
-            document.body.style.overflow = '';
-        }
-
-        // Show confirmation modal
-        function showConfirmModal() {
-            const emailType = document.querySelector('input[name="email_type"]:checked')?.value;
-            const targetUser = document.querySelector('input[name="target_user"]:checked')?.value;
+        if (emailType === 'custom') {
+            const customSubject = document.getElementById('custom_subject').value.trim();
+            const customContent = document.getElementById('custom_content').value.trim();
             
-            if (!emailType || !targetUser) {
-                let message = 'Harap pilih ';
-                if (!emailType && !targetUser) {
-                    message += 'tipe email dan target user terlebih dahulu.';
-                } else if (!emailType) {
-                    message += 'tipe email terlebih dahulu.';
-                } else {
-                    message += 'target user terlebih dahulu.';
-                }
-                showErrorModal(message);
+            if (!customSubject || !customContent) {
+                showErrorModal('Harap isi Subject dan Isi Konten Email untuk tipe Custom.');
                 return;
             }
 
-            // Validate custom email fields if custom is selected
-            if (emailType === 'custom') {
-                const customSubject = document.getElementById('custom_subject').value.trim();
-                const customContent = document.getElementById('custom_content').value.trim();
-                
-                if (!customSubject || !customContent) {
-                    showErrorModal('Harap isi Subject Email dan Isi Email untuk custom email.');
-                    return;
-                }
-
-                // Validate button fields if one is filled
-                const buttonText = document.getElementById('custom_button_text').value.trim();
-                const buttonUrl = document.getElementById('custom_button_url').value.trim();
-                
-                if ((buttonText && !buttonUrl) || (!buttonText && buttonUrl)) {
-                    showErrorModal('Jika ingin menambahkan button, harap isi Teks Button dan URL Button.');
-                    return;
-                }
-            }
+            const buttonText = document.getElementById('custom_button_text').value.trim();
+            const buttonUrl = document.getElementById('custom_button_url').value.trim();
             
-            const emailTypeText = {
-                'welcome': 'Welcome Email',
-                'verification': 'Verification Email',
-                'ai_analyzer': 'AI Resume Analyzer',
-                'job_reminder': 'Job Application Reminder',
-                'monthly_motivation': 'Monthly Motivation',
-                'custom': '✨ Custom Email'
-            }[emailType] || 'Email Blast';
-            
-            const targetText = {
-                'all': 'Semua User',
-                'new': 'User Baru',
-                'unverified': 'User Belum Terverifikasi',
-                'verified': 'User Terverifikasi',
-                'premium': 'User Premium',
-                'free': 'User Free'
-            }[targetUser];
-
-            // Update modal content
-            document.getElementById('confirmEmailType').textContent = emailTypeText;
-            document.getElementById('confirmTargetUser').textContent = targetText;
-            
-            // Show modal
-            document.getElementById('confirmModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        // Hide confirmation modal
-        function hideConfirmModal() {
-            document.getElementById('confirmModal').classList.add('hidden');
-            document.body.style.overflow = '';
-        }
-
-        // Submit form
-        function submitEmailBlast() {
-            document.getElementById('emailBlastForm').submit();
-        }
-
-        // Close modal on backdrop click
-        document.getElementById('confirmModal').addEventListener('click', function(e) {
-            if (e.target.id === 'confirmModal') {
-                hideConfirmModal();
+            if ((buttonText && !buttonUrl) || (!buttonText && buttonUrl)) {
+                showErrorModal('Jika ingin menyertakan tombol aksi, harap isi Teks Tombol dan URL Tujuan.');
+                return;
             }
-        });
+        }
+        
+        const emailTypeText = {
+            'welcome': 'Welcome Email',
+            'verification': 'Verification Email',
+            'ai_analyzer': 'AI Analyzer Trial',
+            'job_reminder': 'Job Reminder',
+            'monthly_motivation': 'Monthly Motivation',
+            'custom': 'Custom Email'
+        }[emailType] || 'Email Blast';
+        
+        const targetText = {
+            'all': 'Semua User',
+            'new': 'User Baru',
+            'unverified': 'Belum Verifikasi',
+            'verified': 'Terverifikasi',
+            'premium': 'Premium Users',
+            'free': 'Free Users'
+        }[targetUser];
 
-        document.getElementById('errorModal').addEventListener('click', function(e) {
-            if (e.target.id === 'errorModal') {
-                hideErrorModal();
-            }
-        });
+        document.getElementById('confirmEmailType').textContent = emailTypeText;
+        document.getElementById('confirmTargetUser').textContent = targetText;
+        
+        document.getElementById('confirmModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
 
-        // Close modal on ESC key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                if (!document.getElementById('confirmModal').classList.contains('hidden')) {
-                    hideConfirmModal();
-                }
-                if (!document.getElementById('errorModal').classList.contains('hidden')) {
-                    hideErrorModal();
-                }
-            }
-        });
-    </script>
+    function hideConfirmModal() {
+        document.getElementById('confirmModal').classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
+    function submitEmailBlast() {
+        // Change button state
+        const btn = document.querySelector('#confirmModal button[onclick="submitEmailBlast()"]');
+        btn.innerHTML = '<i class="ph-bold ph-spinner animate-spin mr-2 text-lg"></i> Memproses...';
+        btn.classList.add('opacity-75', 'cursor-not-allowed');
+        
+        document.getElementById('emailBlastForm').submit();
+    }
+</script>
 </x-admin-layout>
-

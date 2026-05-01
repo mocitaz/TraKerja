@@ -3,6 +3,7 @@
 namespace App\Livewire\CvBuilder;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Models\UserOrganization;
 use Livewire\Component;
 
@@ -71,15 +72,36 @@ class OrganizationForm extends Component
     
     public function save()
     {
-        $this->validate([
+        $validator = Validator::make([
+            'organization_name' => $this->organization_name,
+            'position'          => $this->position,
+            'location'          => $this->location,
+            'start_date'        => $this->start_date,
+            'end_date'          => $this->end_date,
+            'description'       => $this->description,
+        ], [
             'organization_name' => 'required|string|max:255',
-            'position' => 'required|string|max:255',
-            'location' => 'nullable|string|max:255',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after:start_date',
-            'description' => 'nullable|string',
+            'position'          => 'required|string|max:255',
+            'location'          => 'nullable|string|max:255',
+            'start_date'        => 'required|date',
+            'end_date'          => 'nullable|date|after:start_date',
+            'description'       => 'nullable|string',
+        ], [
+            'organization_name.required' => 'Organization name is required.',
+            'position.required'          => 'Your role/position is required.',
+            'start_date.required'        => 'Start date is required.',
+            'end_date.after'             => 'End date must be after start date.',
         ]);
-        
+
+        if ($validator->fails()) {
+            $this->setErrorBag($validator->errors());
+            $this->dispatch('showNotification', [
+                'type'    => 'error',
+                'title'   => 'Incomplete Form',
+                'message' => $validator->errors()->first(),
+            ]);
+            return;
+        }
         $data = [
             'user_id' => Auth::id(),
             'organization_name' => $this->organization_name,

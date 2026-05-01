@@ -188,25 +188,27 @@ class AiAnalyzerController extends Controller
 
             // Save analysis result to database
             try {
-                AiAnalyzerResult::create([
+                $result = AiAnalyzerResult::create([
                     'user_id' => $user->id,
                     'job_description' => $jobDescription,
                     'resume_file_name' => $file->getClientOriginalName(),
                     'analysis_result' => $analysisResult,
                 ]);
+
+                // Redirect to show page to avoid MethodNotAllowed on refresh
+                return redirect()->route('ai-analyzer.show', $result->id);
             } catch (\Exception $e) {
                 \Log::error('Failed to save AI Analyzer result to database: ' . $e->getMessage(), [
                     'user_id' => $user->id,
                     'exception' => $e,
                 ]);
-                // Continue to show result even if save fails
+                
+                // If saving fails, we still need to show the result
+                return view('ai-analyzer.result', [
+                    'result' => $analysisResult,
+                    'job_description' => $jobDescription,
+                ]);
             }
-
-            // Return view with results
-            return view('ai-analyzer.result', [
-                'result' => $analysisResult,
-                'job_description' => $jobDescription,
-            ]);
 
         } catch (\Illuminate\Http\Client\ConnectionException $e) {
             return back()->withErrors([
@@ -241,5 +243,21 @@ class AiAnalyzerController extends Controller
                 'analyze_error' => 'Terjadi kesalahan: ' . $e->getMessage()
             ])->withInput();
         }
+    }
+
+    /**
+     * Display a specific AI analysis result
+     */
+    public function show(AiAnalyzerResult $result): View
+    {
+        // Check if user owns this result
+        if ($result->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized access to analysis result');
+        }
+
+        return view('ai-analyzer.result', [
+            'result' => $result->analysis_result,
+            'job_description' => $result->job_description,
+        ]);
     }
 }

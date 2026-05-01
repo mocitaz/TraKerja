@@ -9,7 +9,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[#d983e4] to-[#4e71c5] bg-clip-text text-transparent">
+                        <h2 class="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[#d983e4] via-purple-600 to-[#4e71c5] bg-clip-text text-transparent">
                             Upgrade to Premium
                         </h2>
                         <p class="text-xs sm:text-sm text-white/80 mt-0.5">Pilih metode pembayaran</p>

@@ -1,353 +1,230 @@
 <x-app-layout>
+    <x-slot name="header">
+        <div class="flex flex-col">
+            <h1 class="text-2xl font-black text-slate-900 leading-tight tracking-tight">
+                Bulk <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-purple-600 to-[#4e71c5]">Importer</span>
+            </h1>
+            <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mt-1">Supercharge your job tracking data</p>
+        </div>
+    </x-slot>
 
-    <div class="py-6 sm:py-8">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-2xl">
-                <div class="p-6 sm:p-8">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-                    <!-- Instructions -->
-                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 sm:p-6 mb-6">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0">
-                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
+    <div class="bg-[#f8fafc] min-h-screen pb-20 relative overflow-hidden">
+        {{-- Subtle Ambient Glows --}}
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-100/40 rounded-full blur-[120px] -mr-64 -mt-64"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-100/40 rounded-full blur-[100px] -ml-48 -mb-48"></div>
+
+        <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 relative z-10">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                
+                {{-- Main Action Area --}}
+                <div class="lg:col-span-8 space-y-6">
+                    
+                    {{-- Compact Import Card --}}
+                    <div class="bg-white rounded-[2.5rem] border border-slate-200/60 shadow-xl shadow-slate-200/20 overflow-hidden relative group">
+                        <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
+                        
+                        <div class="p-8 sm:p-10">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-10">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-14 h-14 bg-indigo-50 rounded-[1.5rem] flex items-center justify-center text-indigo-600 shadow-inner group-hover:scale-110 transition-transform duration-500">
+                                        <i class="ph-bold ph-file-arrow-up text-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-black text-slate-900 tracking-tight">CSV Data Intake</h3>
+                                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Select your job application database</p>
+                                    </div>
                                 </div>
+                                
+                                <a href="{{ route('csv.template') }}" class="inline-flex items-center gap-2 px-5 py-3 bg-emerald-50 text-emerald-600 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-emerald-600 hover:text-white transition-all shadow-sm">
+                                    <i class="ph-bold ph-microsoft-excel-logo text-lg"></i>
+                                    Download Template
+                                </a>
                             </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-3">Import Guidelines</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-gray-700">
-                                    <div class="flex items-start">
-                                        <span class="text-blue-500 mr-2">•</span>
-                                        <span>Use the provided CSV template format</span>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <span class="text-blue-500 mr-2">•</span>
-                                        <span>Fields marked with <span class="font-semibold text-red-600">*</span> are <span class="font-semibold">required</span></span>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <span class="text-blue-500 mr-2">•</span>
-                                        <span>Date format: <code class="bg-blue-100 px-1 rounded text-xs">YYYY-MM-DD</code></span>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <span class="text-blue-500 mr-2">•</span>
-                                        <span>Interview time: <code class="bg-blue-100 px-1 rounded text-xs">YYYY-MM-DD HH:MM</code></span>
-                                    </div>
-                                    <div class="flex items-start md:col-span-2">
-                                        <span class="text-blue-500 mr-2">•</span>
-                                        <span>Invalid format will prompt template download</span>
+
+                            <form action="{{ route('csv.import.process') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                                @csrf
+                                
+                                <div id="upload-area" class="relative group/upload">
+                                    <input type="file" id="csv_file" name="csv_file" accept=".csv,.txt" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" required>
+                                    <div class="border-2 border-dashed border-slate-200 rounded-[2.5rem] p-10 sm:p-16 text-center group-hover/upload:border-indigo-400 group-hover/upload:bg-indigo-50/30 transition-all duration-500 relative overflow-hidden">
+                                        {{-- Background Decorative Icons --}}
+                                        <i class="ph ph-table absolute -left-4 -bottom-4 text-8xl text-slate-50/50 group-hover/upload:text-indigo-100/50 transition-colors"></i>
+                                        <i class="ph ph-file-csv absolute -right-4 -top-4 text-8xl text-slate-50/50 group-hover/upload:text-indigo-100/50 transition-colors"></i>
+                                        
+                                        <div class="relative z-10">
+                                            <div class="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover/upload:scale-110 group-hover/upload:bg-indigo-600 group-hover/upload:text-white transition-all duration-500 shadow-sm group-hover/upload:shadow-xl group-hover/upload:shadow-indigo-200">
+                                                <i class="ph-bold ph-upload-simple text-3xl"></i>
+                                            </div>
+                                            <h4 class="text-sm font-black text-slate-900 uppercase tracking-[2px] mb-2">Drop your CSV here</h4>
+                                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">or click to explore file manager</p>
+                                        </div>
                                     </div>
                                 </div>
+
+                                {{-- Success Feedback (Hidden by default) --}}
+                                <div id="file-success" class="hidden transform scale-95 opacity-0 transition-all duration-500">
+                                    <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 rounded-3xl p-6 flex items-center gap-5 shadow-sm">
+                                        <div class="w-12 h-12 bg-emerald-500 text-white rounded-[1.25rem] flex items-center justify-center shadow-lg shadow-emerald-100">
+                                            <i class="ph-bold ph-check text-2xl"></i>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-[10px] font-black text-emerald-600 uppercase tracking-widest">Verification Success</p>
+                                            <p id="file-name" class="text-sm font-black text-slate-900 truncate"></p>
+                                        </div>
+                                        <button type="button" id="remove-file" class="w-10 h-10 flex items-center justify-center rounded-xl bg-emerald-100/50 text-emerald-600 hover:bg-rose-500 hover:text-white transition-all">
+                                            <i class="ph-bold ph-trash text-lg"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                @if($errors->any())
+                                    <div class="bg-rose-50 border border-rose-100 rounded-[2rem] p-6 animate-shake">
+                                        <div class="flex items-start gap-4">
+                                            <div class="w-10 h-10 bg-rose-500 text-white rounded-xl flex items-center justify-center shrink-0">
+                                                <i class="ph-bold ph-warning-octagon text-xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <h4 class="text-[10px] font-black text-rose-600 uppercase tracking-widest mb-2">Structure Errors Detected</h4>
+                                                <ul class="text-xs text-rose-700 font-bold space-y-1">
+                                                    @foreach($errors->all() as $error)
+                                                        <li class="flex items-center gap-2">
+                                                            <span class="w-1 h-1 bg-rose-400 rounded-full"></span>
+                                                            {{ $error }}
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                <div class="flex flex-col sm:flex-row items-center gap-4 pt-8">
+                                    <button type="submit" class="w-full sm:flex-1 py-5 bg-slate-900 text-white rounded-[1.5rem] font-black text-[10px] uppercase tracking-[3px] hover:bg-indigo-600 transition-all shadow-2xl shadow-slate-200 active:scale-95 flex items-center justify-center gap-3 group/btn">
+                                        <i class="ph-bold ph-arrow-circle-up text-xl group-hover:scale-110 transition-transform"></i>
+                                        Process Import Now
+                                    </button>
+                                    <a href="{{ route('tracker') }}" class="w-full sm:w-auto px-10 py-5 bg-white border border-slate-200 text-slate-500 rounded-[1.5rem] font-black text-[10px] uppercase tracking-[2px] hover:bg-slate-50 transition-all flex items-center justify-center">
+                                        Cancel
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    {{-- Desktop Field Specs (Hidden on Mobile) --}}
+                    <div class="hidden md:grid grid-cols-2 gap-6">
+                        <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 shadow-sm">
+                            <h4 class="text-[10px] font-black text-rose-500 uppercase tracking-[2px] mb-4 flex items-center gap-2">
+                                <i class="ph-fill ph-warning-circle text-lg"></i> Required Columns
+                            </h4>
+                            <div class="flex flex-wrap gap-2">
+                                @foreach(['Company Name', 'Position', 'Location', 'Platform', 'Status', 'Date'] as $f)
+                                    <span class="px-3 py-1.5 bg-slate-50 rounded-lg text-[9px] font-black text-slate-500 border border-slate-100">{{ $f }}</span>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 shadow-sm">
+                            <h4 class="text-[10px] font-black text-indigo-500 uppercase tracking-[2px] mb-4 flex items-center gap-2">
+                                <i class="ph-fill ph-plus-circle text-lg"></i> Optional Columns
+                            </h4>
+                            <div class="flex flex-wrap gap-2">
+                                @foreach(['Platform Link', 'Interview Date', 'Interview Type', 'Notes'] as $f)
+                                    <span class="px-3 py-1.5 bg-slate-50 rounded-lg text-[9px] font-black text-slate-500 border border-slate-100">{{ $f }}</span>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Side Panel: Instructions & Mobile Specs --}}
+                <div class="lg:col-span-4 space-y-6">
+                    {{-- Guideline Card --}}
+                    <div class="bg-indigo-600 rounded-[2.5rem] p-8 text-white shadow-xl shadow-indigo-100 relative overflow-hidden group/guide">
+                        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-2xl group-hover/guide:scale-150 transition-transform duration-700"></div>
+                        <div class="relative z-10">
+                            <h3 class="text-lg font-black tracking-tight mb-6">Quick Guide</h3>
+                            <div class="space-y-4">
+                                @foreach([
+                                    ['icon' => 'ph-layout', 'title' => 'Standard Format', 'desc' => 'Use the provided CSV template'],
+                                    ['icon' => 'ph-calendar-blank', 'title' => 'Date Format', 'desc' => 'YYYY-MM-DD (e.g. 2024-05-01)'],
+                                    ['icon' => 'ph-clock', 'title' => 'Time Format', 'desc' => 'YYYY-MM-DD HH:MM (24-hour)'],
+                                ] as $guide)
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center shrink-0 border border-white/10">
+                                            <i class="ph-bold {{ $guide['icon'] }} text-indigo-200"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-[11px] font-black uppercase tracking-widest text-white">{{ $guide['title'] }}</p>
+                                            <p class="text-[10px] font-medium text-indigo-100/70 mt-0.5">{{ $guide['desc'] }}</p>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
 
-                    <!-- Success Message -->
-                    @if(session('success'))
-                        <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0">
-                                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    <!-- Error Messages -->
-                    @if($errors->any() || session('download_template'))
-                        <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0">
-                                    <svg class="w-5 h-5 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                </div>
-                                <div class="ml-3 flex-1">
-                                    <h3 class="text-sm font-semibold text-red-800 mb-2">Import Error</h3>
-                                    @if($errors->has('csv_file'))
-                                        <p class="text-sm text-red-700 mb-3">{{ $errors->first('csv_file') }}</p>
-                                    @endif
-                                    
-                                    @if(session('download_template'))
-                                        <div class="mt-3">
-                                            <a href="{{ route('csv.template') }}" 
-                                               class="inline-flex items-center px-3 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors duration-200">
-                                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                                                </svg>
-                                                Download Template
-                                            </a>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    <!-- Import Form -->
-                    <form action="{{ route('csv.import.process') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
-                        @csrf
-
-                        <!-- File Upload -->
+                    {{-- Mobile-only Field Specs (Collapsible/Simplified) --}}
+                    <div class="md:hidden bg-white rounded-[2rem] p-6 border border-slate-200/60 shadow-sm">
+                        <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Quick Field Check</h4>
                         <div class="space-y-2">
-                            <label for="csv_file" class="block text-sm font-medium text-gray-700">
-                                Select CSV File
-                                <span class="text-red-500">*</span>
-                            </label>
-                            <div id="upload-area" class="mt-2 flex justify-center px-6 pt-8 pb-8 border-2 border-gray-300 border-dashed rounded-xl hover:border-primary-400 hover:bg-primary-50/30 transition-all duration-200 group">
-                                <div class="space-y-3 text-center">
-                                    <div id="upload-icon" class="mx-auto w-12 h-12 text-gray-400 group-hover:text-primary-500 transition-colors duration-200">
-                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="space-y-1">
-                                        <div class="flex text-sm text-gray-600">
-                                            <label for="csv_file" class="relative cursor-pointer font-medium text-primary-600 hover:text-primary-700 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500">
-                                                <span>Choose file</span>
-                                                <input id="csv_file" name="csv_file" type="file" accept=".csv,.txt" class="sr-only" required>
-                                            </label>
-                                            <span class="ml-1">or drag and drop</span>
-                                        </div>
-                                        <p class="text-xs text-gray-500">CSV, TXT up to 10MB</p>
-                                    </div>
-                                </div>
+                            <div class="flex justify-between text-[10px] font-bold">
+                                <span class="text-slate-500">Required:</span>
+                                <span class="text-slate-900">Company, Position, Status, Date...</span>
                             </div>
-                            @error('csv_file')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                            
-                            <!-- File Success Indicator -->
-                            <div id="file-success" class="mt-3 hidden">
-                                <div class="bg-green-50 border-l-4 border-green-400 p-3 rounded-r-lg">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0">
-                                            <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
-                                        <div class="ml-3 flex-1">
-                                            <p class="text-sm font-medium text-green-800">
-                                                File berhasil dipilih: <span id="file-name" class="font-semibold"></span>
-                                            </p>
-                                            <p class="text-xs text-green-700 mt-0.5">
-                                                Ukuran: <span id="file-size"></span> • Siap untuk diimport
-                                            </p>
-                                        </div>
-                                        <button type="button" id="remove-file" class="ml-3 flex-shrink-0 text-green-600 hover:text-green-800 transition-colors">
-                                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
+                            <div class="flex justify-between text-[10px] font-bold">
+                                <span class="text-slate-500">Optional:</span>
+                                <span class="text-slate-900">Link, Interview, Notes</span>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Action Buttons -->
-                        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6 border-t border-gray-200">
-                            <a href="{{ route('tracker') }}" 
-                               class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                                Cancel
-                            </a>
-                            
-                            <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-                                <a href="{{ route('csv.template') }}" 
-                                   class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200 text-sm font-medium">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                                    </svg>
-                                    Download Template
-                                </a>
-                                
-                                <button type="submit" 
-                                        class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200 text-sm font-medium">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
-                                    </svg>
-                                    Import CSV
-                                </button>
-                            </div>
+                    {{-- Support Card --}}
+                    <div class="bg-white rounded-[2.5rem] border border-slate-200/60 p-8 shadow-sm text-center">
+                        <div class="w-14 h-14 bg-slate-50 text-slate-400 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="ph-bold ph-question text-2xl"></i>
                         </div>
-                    </form>
-
-                    <!-- Template Information -->
-                    <div class="mt-8 bg-gray-50 rounded-xl p-4 sm:p-6">
-                        <div class="flex items-center mb-4">
-                            <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
-                                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                </svg>
-                            </div>
-                            <h3 class="text-lg font-semibold text-gray-900">CSV Template Format</h3>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                            <!-- Required Fields -->
-                            <div>
-                                <h4 class="text-sm font-semibold text-gray-800 mb-3 flex items-center">
-                                    <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
-                                    Required Fields
-                                </h4>
-                                <div class="space-y-2 text-sm">
-                                    <div class="flex justify-between items-center py-1">
-                                        <span class="text-gray-700">Company Name</span>
-                                        <span class="text-xs text-gray-500">Text (255 chars)</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-1">
-                                        <span class="text-gray-700">Position</span>
-                                        <span class="text-xs text-gray-500">Text (255 chars)</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-1">
-                                        <span class="text-gray-700">Location</span>
-                                        <span class="text-xs text-gray-500">Text (255 chars)</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-1">
-                                        <span class="text-gray-700">Platform</span>
-                                        <span class="text-xs text-gray-500">Text (255 chars)</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-1">
-                                        <span class="text-gray-700">Application Status</span>
-                                        <span class="text-xs text-gray-500">On Process, Declined, Accepted</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-1">
-                                        <span class="text-gray-700">Recruitment Stage</span>
-                                        <span class="text-xs text-gray-500">Applied, Follow Up, etc.</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-1">
-                                        <span class="text-gray-700">Career Level</span>
-                                        <span class="text-xs text-gray-500">Intern, Full Time, etc.</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-1">
-                                        <span class="text-gray-700">Application Date</span>
-                                        <span class="text-xs text-gray-500">YYYY-MM-DD</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Optional Fields -->
-                            <div>
-                                <h4 class="text-sm font-semibold text-gray-800 mb-3 flex items-center">
-                                    <span class="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
-                                    Optional Fields
-                                </h4>
-                                <div class="space-y-2 text-sm">
-                                    <div class="flex justify-between items-center py-1">
-                                        <span class="text-gray-700">Platform Link</span>
-                                        <span class="text-xs text-gray-500">URL</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-1">
-                                        <span class="text-gray-700">Notes</span>
-                                        <span class="text-xs text-gray-500">Text</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-1">
-                                        <span class="text-gray-700">Interview Date</span>
-                                        <span class="text-xs text-gray-500">YYYY-MM-DD HH:MM</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-1">
-                                        <span class="text-gray-700">Interview Type</span>
-                                        <span class="text-xs text-gray-500">Phone, Video, etc.</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-1">
-                                        <span class="text-gray-700">Interview Location</span>
-                                        <span class="text-xs text-gray-500">Text</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-1">
-                                        <span class="text-gray-700">Interview Notes</span>
-                                        <span class="text-xs text-gray-500">Text</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <h4 class="text-sm font-black text-slate-900 uppercase tracking-widest mb-2">Need help?</h4>
+                        <p class="text-[10px] font-medium text-slate-500 leading-relaxed px-4">Contact our support if you're having trouble with the bulk import process.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <style>
+        .animate-fadeIn { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
+    </style>
+
     <script>
-        // File upload feedback
         const csvFileInput = document.getElementById('csv_file');
-        const uploadArea = document.getElementById('upload-area');
+        const uploadArea = document.querySelector('#upload-area > div');
         const fileSuccess = document.getElementById('file-success');
         const fileName = document.getElementById('file-name');
-        const fileSize = document.getElementById('file-size');
         const removeFileBtn = document.getElementById('remove-file');
         
         csvFileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
-                // Check file type
-                const validTypes = ['.csv', '.txt', 'text/csv', 'text/plain', 'application/csv'];
-                const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
-                const isValid = validTypes.includes(fileExtension) || validTypes.includes(file.type);
-                
-                if (!isValid) {
-                    alert('Please select a valid CSV or TXT file.');
-                    csvFileInput.value = '';
-                    return;
-                }
-                
-                // Calculate file size
-                let sizeText;
-                if (file.size < 1024) {
-                    sizeText = file.size + ' B';
-                } else if (file.size < 1024 * 1024) {
-                    sizeText = (file.size / 1024).toFixed(2) + ' KB';
-                } else {
-                    sizeText = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
-                }
-                
-                // Display file info
                 fileName.textContent = file.name;
-                fileSize.textContent = sizeText;
                 fileSuccess.classList.remove('hidden');
-                
-                // Change upload area style
-                uploadArea.classList.remove('border-gray-300', 'hover:border-primary-400', 'hover:bg-primary-50/30');
-                uploadArea.classList.add('border-green-400', 'bg-green-50');
+                fileSuccess.classList.add('flex', 'animate-fadeIn');
+                uploadArea.classList.add('border-emerald-400', 'bg-emerald-50/20');
+                uploadArea.querySelector('.ph-upload-simple').className = 'ph-bold ph-check text-emerald-600';
             }
         });
         
         removeFileBtn.addEventListener('click', function() {
             csvFileInput.value = '';
             fileSuccess.classList.add('hidden');
-            uploadArea.classList.remove('border-green-400', 'bg-green-50');
-            uploadArea.classList.add('border-gray-300', 'hover:border-primary-400', 'hover:bg-primary-50/30');
-        });
-        
-        // Drag and drop support
-        uploadArea.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            uploadArea.classList.add('border-primary-500', 'bg-primary-50');
-        });
-        
-        uploadArea.addEventListener('dragleave', function(e) {
-            e.preventDefault();
-            uploadArea.classList.remove('border-primary-500', 'bg-primary-50');
-        });
-        
-        uploadArea.addEventListener('drop', function(e) {
-            e.preventDefault();
-            uploadArea.classList.remove('border-primary-500', 'bg-primary-50');
-            
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                csvFileInput.files = files;
-                // Trigger change event
-                const event = new Event('change', { bubbles: true });
-                csvFileInput.dispatchEvent(event);
-            }
+            fileSuccess.classList.remove('flex');
+            uploadArea.classList.remove('border-emerald-400', 'bg-emerald-50/20');
+            uploadArea.querySelector('.ph-bold').className = 'ph-bold ph-upload-simple';
         });
     </script>
 </x-app-layout>
-

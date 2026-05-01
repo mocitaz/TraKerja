@@ -1,130 +1,127 @@
-<div class="space-y-4 sm:space-y-6 lg:space-y-8">
-    {{-- Stats Cards --}}
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
+<div class="space-y-6">
+    {{-- Stats Cards (Premium Bento Grid) --}}
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
         {{-- Total Users --}}
-        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4 lg:p-6">
-            <div class="flex items-center justify-between">
-                <div class="min-w-0 flex-1">
-                    <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">Total Users</p>
-                    <p class="text-lg sm:text-xl lg:text-2xl font-bold text-[#212529]">{{ $stats['total'] }}</p>
+        <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-slate-300 transition-colors">
+            <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-slate-50 to-slate-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+            <div class="flex items-start justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Users</p>
+                    <h3 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{{ $stats['total'] }}</h3>
                 </div>
-                <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
-                    <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                    </svg>
+                <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-600 shadow-inner">
+                    <i class="ph-duotone ph-users-three text-2xl"></i>
                 </div>
             </div>
         </div>
 
         {{-- Premium Users --}}
-        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4 lg:p-6">
-            <div class="flex items-center justify-between">
-                <div class="min-w-0 flex-1">
-                    <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">Premium Users</p>
-                    <p class="text-lg sm:text-xl lg:text-2xl font-bold text-[#212529]">{{ $stats['premium'] }}</p>
+        <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-purple-200 transition-colors">
+            <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-purple-50 to-purple-100/50 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+            <div class="flex items-start justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-purple-400 uppercase tracking-widest mb-1">Premium</p>
+                    <h3 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{{ $stats['premium'] }}</h3>
                 </div>
-                <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
-                    <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                    </svg>
+                <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 shadow-inner">
+                    <i class="ph-duotone ph-crown-simple text-2xl"></i>
                 </div>
             </div>
         </div>
 
         {{-- Free Users --}}
-        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4 lg:p-6">
-            <div class="flex items-center justify-between">
-                <div class="min-w-0 flex-1">
-                    <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">Free Users</p>
-                    <p class="text-lg sm:text-xl lg:text-2xl font-bold text-[#212529]">{{ $stats['free'] }}</p>
+        <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-emerald-200 transition-colors">
+            <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-emerald-50 to-emerald-100/50 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+            <div class="flex items-start justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Free</p>
+                    <h3 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{{ $stats['free'] }}</h3>
                 </div>
-                <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
-                    <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                    </svg>
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shadow-inner">
+                    <i class="ph-duotone ph-user-circle text-2xl"></i>
                 </div>
             </div>
         </div>
 
         {{-- Verified Users --}}
-        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4 lg:p-6">
-            <div class="flex items-center justify-between">
-                <div class="min-w-0 flex-1">
-                    <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">Verified Users</p>
-                    <p class="text-lg sm:text-xl lg:text-2xl font-bold text-[#212529]">{{ $stats['verified'] }}</p>
+        <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-blue-200 transition-colors">
+            <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+            <div class="flex items-start justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-blue-400 uppercase tracking-widest mb-1">Verified</p>
+                    <h3 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{{ $stats['verified'] }}</h3>
                 </div>
-                <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
-                    <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
+                <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 shadow-inner">
+                    <i class="ph-duotone ph-seal-check text-2xl"></i>
                 </div>
             </div>
         </div>
 
-        {{-- AI Analyzer Free Trial Users --}}
-        <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4 lg:p-6">
-            <div class="flex items-center justify-between">
-                <div class="min-w-0 flex-1">
-                    <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">AI Trial Used</p>
-                    <p class="text-lg sm:text-xl lg:text-2xl font-bold text-[#212529]">{{ $stats['ai_analyzer_trial_used'] }}</p>
+        {{-- AI Trial Used --}}
+        <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-amber-200 transition-colors">
+            <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-amber-50 to-amber-100/50 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+            <div class="flex items-start justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-amber-400 uppercase tracking-widest mb-1">AI Trial</p>
+                    <h3 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{{ $stats['ai_analyzer_trial_used'] }}</h3>
                 </div>
-                <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
-                    <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                    </svg>
+                <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shadow-inner">
+                    <i class="ph-duotone ph-sparkle text-2xl"></i>
                 </div>
             </div>
         </div>
     </div>
 
     {{-- Filters & Search --}}
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-        <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-                <div class="flex items-center gap-2 sm:gap-3">
-                    <div class="w-7 h-7 sm:w-8 sm:h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
-                        </svg>
+    {{-- Filters & Search --}}
+    <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
+        <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/50">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center flex-shrink-0 text-indigo-600 shadow-inner">
+                        <i class="ph-fill ph-funnel text-xl"></i>
                     </div>
                     <div class="min-w-0 flex-1">
-                        <h3 class="text-base sm:text-lg font-semibold text-gray-900 truncate">Filter & Search</h3>
-                        <p class="text-xs sm:text-sm text-gray-500">Cari dan filter pengguna</p>
+                        <h3 class="text-lg font-extrabold text-slate-900 truncate">Filter & Search</h3>
+                        <p class="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Cari dan filter pengguna</p>
                     </div>
                 </div>
-                <button wire:click="openCreateAdminModal" class="w-full sm:w-auto px-3 sm:px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center gap-2 text-xs sm:text-sm">
-                    <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                    </svg>
+                <button wire:click="openCreateAdminModal" class="w-full sm:w-auto px-4 py-2.5 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors flex items-center justify-center gap-2 text-sm font-bold shadow-sm shadow-primary-500/20">
+                    <i class="ph-fill ph-user-plus text-lg"></i>
                     Add Admin
                 </button>
             </div>
         </div>
-        <div class="p-4 sm:p-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div class="p-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
-                    <input type="text" wire:model.live="search" placeholder="Cari nama atau email..." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all">
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Search</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="ph ph-magnifying-glass text-slate-400"></i>
+                        </div>
+                        <input type="text" wire:model.live="search" placeholder="Cari nama atau email..." class="w-full pl-9 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all placeholder:text-slate-400">
+                    </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Premium Status</label>
-                    <select wire:model.live="filterPremium" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all">
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Premium Status</label>
+                    <select wire:model.live="filterPremium" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
                         <option value="all">Semua Pengguna</option>
                         <option value="premium">Premium Saja</option>
                         <option value="free">Gratis Saja</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">AI Analyzer Trial</label>
-                    <select wire:model.live="filterAiAnalyzer" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all">
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">AI Analyzer Trial</label>
+                    <select wire:model.live="filterAiAnalyzer" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
                         <option value="all">Semua</option>
                         <option value="used">Sudah Pakai Trial</option>
                         <option value="not_used">Belum Pakai Trial</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Rows per page</label>
-                    <select wire:model.live="perPage" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all">
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Rows per page</label>
+                    <select wire:model.live="perPage" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="50">50</option>
@@ -137,19 +134,20 @@
     </div>
 
     {{-- Users Table --}}
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+            <table class="min-w-full divide-y divide-slate-100/80">
+                <thead class="bg-slate-50/50">
                     <tr>
-                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Email</th>
-                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Email Verified</th>
-                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">AI Trial</th>
-                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">Role</th>
-                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider hidden xl:table-cell">Joined</th>
-                        <th class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 text-right text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider">User</th>
+                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider hidden sm:table-cell">Email</th>
+                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider hidden md:table-cell">Email Verified</th>
+                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider">Status</th>
+                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider hidden lg:table-cell">AI Trial</th>
+                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider hidden lg:table-cell">Last Activity</th>
+                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider hidden lg:table-cell">Role</th>
+                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider hidden xl:table-cell">Joined</th>
+                        <th class="px-4 lg:px-6 py-4 text-right text-[11px] font-bold text-slate-400 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-100">
@@ -172,113 +170,120 @@
                                             <span class="text-white font-semibold text-xs sm:text-sm">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                                         </div>
                                     @endif
-                                    <div class="ml-2 sm:ml-4 min-w-0 flex-1">
-                                        <div class="text-xs sm:text-sm font-semibold text-gray-900 truncate">{{ $user->name }}</div>
-                                        <div class="text-[10px] sm:text-xs text-gray-500">ID: #{{ $user->id }}</div>
-                                        <div class="text-[10px] sm:text-xs text-gray-500 sm:hidden truncate">{{ $user->email }}</div>
+                                    <div class="ml-4 min-w-0 flex-1">
+                                        <div class="text-sm font-extrabold text-slate-900 truncate">{{ $user->name }}</div>
+                                        <div class="text-[10px] font-bold text-slate-400">ID: #{{ $user->id }}</div>
+                                        <div class="text-[10px] font-medium text-slate-500 sm:hidden truncate">{{ $user->email }}</div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 whitespace-nowrap hidden sm:table-cell">
-                                <div class="text-xs sm:text-sm text-gray-900 truncate max-w-[150px]">{{ $user->email }}</div>
+                            <td class="px-4 lg:px-6 py-4 whitespace-nowrap hidden sm:table-cell">
+                                <div class="text-sm font-medium text-slate-600 truncate max-w-[150px]">{{ $user->email }}</div>
                             </td>
-                            <td class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 whitespace-nowrap hidden md:table-cell">
+                            <td class="px-4 lg:px-6 py-4 whitespace-nowrap hidden md:table-cell">
                                 @if($user->hasVerifiedEmail())
-                                    <span class="px-2 py-1 inline-flex items-center gap-1.5 text-xs font-medium rounded-full bg-green-100 text-green-800">
-                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                        </svg>
+                                    <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center w-fit gap-1.5">
+                                        <i class="ph-fill ph-check-circle text-xs"></i>
                                         Verified
                                     </span>
                                 @else
-                                    <span class="px-2 py-1 inline-flex items-center gap-1.5 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800">
-                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M4.93 19.07A10 10 0 1119.07 4.93 10 10 0 014.93 19.07z" />
-                                        </svg>
+                                    <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md bg-amber-50 text-amber-600 border border-amber-100 flex items-center w-fit gap-1.5">
+                                        <i class="ph-fill ph-warning-circle text-xs"></i>
                                         Unverified
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 whitespace-nowrap">
+                            <td class="px-4 lg:px-6 py-4 whitespace-nowrap">
                                 @if($user->is_premium)
-                                    <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs font-medium rounded-full bg-purple-100 text-purple-800">
+                                    <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md bg-purple-50 text-purple-600 border border-purple-100">
                                         Premium
                                     </span>
                                 @else
-                                    <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs font-medium rounded-full bg-gray-100 text-gray-800">
+                                    <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md bg-slate-100 text-slate-600 border border-slate-200">
                                         Free
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 whitespace-nowrap hidden lg:table-cell">
+                            <td class="px-4 lg:px-6 py-4 whitespace-nowrap hidden lg:table-cell">
                                 @if($user->has_used_ai_analyzer_trial)
                                     <div class="flex flex-col gap-1">
-                                        <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex items-center gap-1 text-[10px] sm:text-xs font-medium rounded-full bg-blue-100 text-blue-800">
-                                            <svg class="w-2.5 h-2.5 sm:w-3 sm:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                            </svg>
+                                        <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md bg-blue-50 text-blue-600 border border-blue-100 w-fit">
                                             Used
                                         </span>
                                         @if($user->ai_analyzer_trial_used_at)
-                                            <span class="text-[10px] sm:text-xs text-gray-500">{{ $user->ai_analyzer_trial_used_at->format('d M Y') }}</span>
+                                            <span class="text-[10px] font-medium text-slate-400">{{ $user->ai_analyzer_trial_used_at->format('d M Y') }}</span>
                                         @endif
                                     </div>
                                 @else
-                                    <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs font-medium rounded-full bg-gray-100 text-gray-600">
+                                    <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md bg-slate-100 text-slate-500 border border-slate-200">
                                         Not Used
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 whitespace-nowrap hidden lg:table-cell">
+                            <td class="px-4 lg:px-6 py-4 whitespace-nowrap hidden lg:table-cell">
+                                @if($user->last_activity_at)
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-bold {{ $user->last_activity_at->diffInMinutes(now()) < 5 ? 'text-emerald-600' : 'text-slate-700' }}">
+                                            {{ $user->last_activity_at->diffForHumans() }}
+                                        </span>
+                                        @if($user->last_activity_at->diffInMinutes(now()) < 5)
+                                            <span class="text-[9px] font-black text-emerald-500 uppercase tracking-tighter">Online Now</span>
+                                        @endif
+                                    </div>
+                                @else
+                                    <span class="text-xs font-medium text-slate-400 italic">Never</span>
+                                @endif
+                            </td>
+                            <td class="px-4 lg:px-6 py-4 whitespace-nowrap hidden lg:table-cell">
                                 @if($user->is_admin || $user->role === 'admin')
-                                    <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs font-medium rounded-full bg-orange-100 text-orange-800">
+                                    <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md bg-orange-50 text-orange-600 border border-orange-100">
                                         Admin
                                     </span>
                                 @else
-                                    <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 inline-flex text-[10px] sm:text-xs font-medium rounded-full bg-blue-100 text-blue-800">
+                                    <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md bg-indigo-50 text-indigo-600 border border-indigo-100">
                                         User
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 whitespace-nowrap hidden xl:table-cell">
-                                <div class="text-xs sm:text-sm text-gray-900">{{ $user->created_at->format('d M Y') }}</div>
-                                <div class="text-[10px] sm:text-xs text-gray-500">{{ $user->created_at->diffForHumans() }}</div>
+                            <td class="px-4 lg:px-6 py-4 whitespace-nowrap hidden xl:table-cell">
+                                <div class="text-sm font-bold text-slate-900">{{ $user->created_at->format('d M Y') }}</div>
+                                <div class="text-[10px] font-medium text-slate-500">{{ $user->created_at->diffForHumans() }}</div>
                             </td>
-                            <td class="px-3 sm:px-4 lg:px-6 py-3 sm:py-4 whitespace-nowrap text-right text-xs sm:text-sm font-medium">
-                                <div class="flex items-center justify-end gap-1 sm:gap-2">
-                                    <button wire:click="openSendEmailModal({{ $user->id }})" class="text-green-600 hover:text-green-900 hover:bg-green-50 p-1.5 sm:p-2 rounded-lg transition-colors" title="Send Email">
-                                        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                        </svg>
+                            <td class="px-4 lg:px-6 py-4 whitespace-nowrap text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <button wire:click="openSendEmailModal({{ $user->id }})" class="text-emerald-600 bg-emerald-50 hover:bg-emerald-100 p-2 rounded-xl transition-colors border border-emerald-100" title="Send Email">
+                                        <i class="ph-fill ph-paper-plane-tilt text-lg"></i>
                                     </button>
-                                    <button wire:click="editUser({{ $user->id }})" class="text-blue-600 hover:text-blue-900 hover:bg-blue-50 p-1.5 sm:p-2 rounded-lg transition-colors" title="View Details">
-                                        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                        </svg>
+
+                                    {{-- Manual Premium Override Button --}}
+                                    <button 
+                                        wire:click="openPremiumConfirmModal({{ $user->id }})" 
+                                        class="p-2 rounded-xl transition-all border {{ $user->is_premium ? 'text-purple-600 bg-purple-50 hover:bg-purple-100 border-purple-100' : 'text-slate-400 bg-slate-50 hover:bg-slate-100 border-slate-200 hover:text-purple-600' }}" 
+                                        title="Manual Premium Override">
+                                        <i class="ph-fill ph-crown text-lg"></i>
+                                    </button>
+
+                                    <button wire:click="editUser({{ $user->id }})" class="text-primary-600 bg-primary-50 hover:bg-primary-100 p-2 rounded-xl transition-colors border border-primary-100" title="View Details">
+                                        <i class="ph-fill ph-eye text-lg"></i>
                                     </button>
                                     <button 
                                         onclick="confirmDeleteUser({{ $user->id }}, '{{ addslashes($user->name) }}', '{{ addslashes($user->email) }}')"
-                                        class="text-red-600 hover:text-red-900 hover:bg-red-50 p-1.5 sm:p-2 rounded-lg transition-colors" 
+                                        class="text-red-600 bg-red-50 hover:bg-red-100 p-2 rounded-xl transition-colors border border-red-100" 
                                         title="Delete User">
-                                        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                        </svg>
+                                        <i class="ph-fill ph-trash text-lg"></i>
                                     </button>
                                 </div>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="px-4 sm:px-6 py-8 sm:py-12 text-center">
+                            <td colspan="8" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center justify-center">
-                                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-full flex items-center justify-center mb-3 sm:mb-4">
-                                        <svg class="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                        </svg>
+                                    <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4 border border-slate-100">
+                                        <i class="ph-fill ph-users text-3xl text-slate-300"></i>
                                     </div>
-                                    <p class="text-sm sm:text-base lg:text-lg font-medium text-gray-900 mb-1">Tidak Ada User Ditemukan</p>
-                                    <p class="text-xs sm:text-sm text-gray-500">Coba ubah filter atau pencarian Anda</p>
+                                    <p class="text-lg font-extrabold text-slate-900 mb-1">Tidak Ada User Ditemukan</p>
+                                    <p class="text-sm font-medium text-slate-500">Coba sesuaikan filter atau kata kunci pencarian Anda.</p>
                                 </div>
                             </td>
                         </tr>
@@ -286,9 +291,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4">
-            <div class="text-[10px] sm:text-xs text-gray-500 text-center sm:text-left">
-                Showing {{ $users->firstItem() ?? 0 }} to {{ $users->lastItem() ?? $users->count() }} of {{ $users->total() }} users
+        <div class="px-6 py-4 bg-slate-50/50 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-xs font-medium text-slate-500 text-center sm:text-left">
+                Showing <span class="font-bold text-slate-900">{{ $users->firstItem() ?? 0 }}</span> to <span class="font-bold text-slate-900">{{ $users->lastItem() ?? $users->count() }}</span> of <span class="font-bold text-slate-900">{{ $users->total() }}</span> users
             </div>
             <div class="w-full sm:w-auto">
                 {{ $users->links() }}
@@ -296,151 +301,169 @@
         </div>
     </div>
 
-    {{-- Edit Modal --}}
+    {{-- Edit User Modal / User Details --}}
     @if($showEditModal)
-        <div class="fixed inset-0 z-50 overflow-y-auto">
-            <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" wire:click="closeModal"></div>
-            <div class="relative min-h-screen flex items-center justify-center p-3 sm:p-4">
-            <div class="relative w-full max-w-lg bg-white rounded-lg shadow-xl border border-gray-200 transform transition-all" wire:click.stop>
-                {{-- Modal Header --}}
-                <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
-                    <div class="flex items-center justify-between gap-2 sm:gap-3">
-                        <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                            <div class="w-7 h-7 sm:w-8 sm:h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                </svg>
-                            </div>
-                            <div class="min-w-0 flex-1">
-                                <h3 class="text-base sm:text-lg font-semibold text-gray-900 truncate">User Details</h3>
-                                <p class="text-xs sm:text-sm text-gray-500">Lihat informasi pengguna</p>
-                            </div>
-                        </div>
-                        <button wire:click="closeModal" class="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg p-1.5 sm:p-2 transition-all flex-shrink-0">
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                {{-- Modal Body --}}
-                <div class="p-4 sm:p-6 space-y-3 sm:space-y-4 max-h-[70vh] overflow-y-auto">
-                    @php
-                        $editingUser = $editingUserId ? \App\Models\User::find($editingUserId) : null;
-                    @endphp
-                    
-                    {{-- Profile Photo --}}
-                    @if($editingUser && $editingUser->logo)
-                        <div class="flex justify-center mb-4">
-                            <div class="w-24 h-24 rounded-xl overflow-hidden ring-4 ring-gray-100 shadow-lg">
-                                <img src="{{ Storage::url($editingUser->logo) }}" 
-                                     alt="{{ $editName ?? 'User' }}" 
-                                     class="w-full h-full object-cover"
-                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                <div class="w-full h-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center" style="display: none;">
-                                    <span class="text-white font-semibold text-2xl">{{ strtoupper(substr($editName ?? 'U', 0, 1)) }}</span>
+        <div class="fixed inset-0 z-[100] overflow-y-auto">
+            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" wire:click="closeModal"></div>
+            <div class="relative min-h-screen flex items-center justify-center p-4">
+                <div class="relative w-full max-w-2xl bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-slate-100 transform transition-all z-10" wire:click.stop>
+                    {{-- Modal Header --}}
+                    <div class="px-6 py-5 border-b border-slate-100 bg-slate-50/50 rounded-t-2xl">
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-3 min-w-0 flex-1">
+                                <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0 text-blue-600 shadow-inner">
+                                    <i class="ph-fill ph-user-circle text-xl"></i>
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <h3 class="text-lg font-extrabold text-slate-900 truncate">User Details</h3>
+                                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Lihat informasi pengguna</p>
                                 </div>
                             </div>
+                            <button wire:click="closeModal" class="text-slate-400 hover:text-slate-600 bg-white hover:bg-slate-100 rounded-xl p-2 transition-all flex-shrink-0 border border-slate-100 shadow-sm">
+                                <i class="ph-bold ph-x text-lg"></i>
+                            </button>
                         </div>
-                    @endif
-                    
-                    {{-- User Info Grid --}}
-                    <div class="space-y-4">
-                        {{-- Name --}}
-                        <div>
-                            <label class="block text-sm font-medium text-gray-500 mb-2">Nama</label>
-                            <div class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 font-medium">
-                                {{ $editName ?? '-' }}
-                            </div>
-                        </div>
+                    </div>
 
-                        {{-- Email --}}
-                        <div>
-                            <label class="block text-sm font-medium text-gray-500 mb-2">Email</label>
-                            <div class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 font-medium break-all">
-                                {{ $editEmail ?? '-' }}
+                    {{-- Modal Body --}}
+                    <div class="p-6 space-y-6 max-h-[70vh] overflow-y-auto">
+                        @php
+                            $editingUser = $editingUserId ? \App\Models\User::find($editingUserId) : null;
+                        @endphp
+                        
+                        {{-- Profile Photo --}}
+                        @if($editingUser && $editingUser->logo)
+                            <div class="flex justify-center mb-2">
+                                <div class="w-24 h-24 rounded-2xl overflow-hidden ring-4 ring-slate-50 shadow-lg border border-slate-100">
+                                    <img src="{{ Storage::url($editingUser->logo) }}" 
+                                         alt="{{ $editName ?? 'User' }}" 
+                                         class="w-full h-full object-cover"
+                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="w-full h-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center" style="display: none;">
+                                        <span class="text-white font-extrabold text-3xl">{{ strtoupper(substr($editName ?? 'U', 0, 1)) }}</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        @endif
+                        
+                        {{-- User Info Grid --}}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            {{-- Name --}}
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Nama</label>
+                                <div class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900">
+                                    {{ $editName ?? '-' }}
+                                </div>
+                            </div>
 
-                        {{-- Status Grid --}}
-                        <div class="grid grid-cols-2 gap-4">
+                            {{-- Email --}}
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Email</label>
+                                <div class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 truncate">
+                                    {{ $editEmail ?? '-' }}
+                                </div>
+                            </div>
+
                             {{-- Premium Status --}}
                             <div>
-                                <label class="block text-sm font-medium text-gray-500 mb-2">Status Premium</label>
-                                <div class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg">
+                                <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Status Premium</label>
+                                <div class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl">
                                     @if($editIsPremium)
-                                        <span class="inline-flex items-center gap-1.5 text-purple-600 font-medium">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                                            </svg>
+                                        <span class="inline-flex items-center gap-1.5 text-amber-600 font-bold text-sm">
+                                            <i class="ph-fill ph-crown"></i>
                                             Premium
                                         </span>
                                     @else
-                                        <span class="text-gray-600">Free</span>
+                                        <span class="inline-flex items-center gap-1.5 text-slate-500 font-bold text-sm">
+                                            <i class="ph-bold ph-user"></i>
+                                            Free
+                                        </span>
                                     @endif
                                 </div>
                             </div>
 
                             {{-- Admin Status --}}
                             <div>
-                                <label class="block text-sm font-medium text-gray-500 mb-2">Status Admin</label>
-                                <div class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg">
+                                <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Status Admin</label>
+                                <div class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl">
                                     @if($editIsAdmin)
-                                        <span class="inline-flex items-center gap-1.5 text-purple-600 font-medium">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                                            </svg>
+                                        <span class="inline-flex items-center gap-1.5 text-primary-600 font-bold text-sm">
+                                            <i class="ph-fill ph-shield-check"></i>
                                             Admin
                                         </span>
                                     @else
-                                        <span class="text-gray-600">User</span>
+                                        <span class="inline-flex items-center gap-1.5 text-slate-500 font-bold text-sm">
+                                            <i class="ph-bold ph-user"></i>
+                                            User
+                                        </span>
                                     @endif
+                                </div>
+                            </div>
+
+                            {{-- Total Lamaran --}}
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Total Lamaran</label>
+                                <div class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl">
+                                    <span class="inline-flex items-center gap-1.5 text-slate-900 font-bold text-sm">
+                                        <i class="ph-fill ph-briefcase text-slate-500"></i>
+                                        {{ $editingUser ? $editingUser->getJobApplicationsCount() : 0 }} Lamaran
+                                    </span>
+                                </div>
+                            </div>
+
+                            {{-- Tanggal Bergabung --}}
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Bergabung Sejak</label>
+                                <div class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl">
+                                    <span class="inline-flex items-center gap-1.5 text-slate-900 font-bold text-sm">
+                                        <i class="ph-fill ph-calendar-blank text-slate-500"></i>
+                                        {{ $editingUser && $editingUser->created_at ? $editingUser->created_at->format('d M Y') : '-' }}
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         
                         {{-- AI Analyzer Section --}}
-                        <div class="pt-4 border-t border-gray-200">
-                            <h4 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
-                                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                                </svg>
+                        <div class="pt-6 border-t border-slate-100">
+                            <h4 class="text-sm font-extrabold text-slate-900 mb-4 flex items-center gap-2">
+                                <div class="w-6 h-6 bg-blue-50 text-blue-600 rounded-md flex items-center justify-center">
+                                    <i class="ph-fill ph-robot text-sm"></i>
+                                </div>
                                 AI Analyzer Usage
                             </h4>
                             
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                                 {{-- Free Trial Status --}}
                                 <div>
-                                    <label class="block text-xs font-medium text-gray-500 mb-1.5">Free Trial</label>
-                                    <div class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg">
+                                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Free Trial</label>
+                                    <div class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl">
                                         @if($editingUser && $editingUser->has_used_ai_analyzer_trial)
-                                            <span class="inline-flex items-center gap-1.5 text-blue-600 font-medium text-sm">
-                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                                </svg>
+                                            <span class="inline-flex items-center gap-1.5 text-emerald-600 font-bold text-sm">
+                                                <i class="ph-fill ph-check-circle"></i>
                                                 Sudah Dipakai
                                             </span>
                                         @else
-                                            <span class="text-gray-600 text-sm">Belum Dipakai</span>
+                                            <span class="inline-flex items-center gap-1.5 text-slate-500 font-bold text-sm">
+                                                <i class="ph-bold ph-minus-circle"></i>
+                                                Belum Dipakai
+                                            </span>
                                         @endif
                                     </div>
                                 </div>
                                 
                                 {{-- Usage Date --}}
                                 <div>
-                                    <label class="block text-xs font-medium text-gray-500 mb-1.5">Tanggal Pakai</label>
-                                    <div class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg">
+                                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Tanggal Pakai</label>
+                                    <div class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl">
                                         @if($editingUser && $editingUser->ai_analyzer_trial_used_at)
-                                            <span class="text-gray-900 font-medium text-sm">
+                                            <div class="text-sm font-bold text-slate-900">
                                                 {{ $editingUser->ai_analyzer_trial_used_at->format('d M Y') }}
-                                            </span>
-                                            <div class="text-xs text-gray-500 mt-0.5">
+                                            </div>
+                                            <div class="text-[10px] text-slate-500 font-medium mt-0.5 uppercase tracking-wider">
                                                 {{ $editingUser->ai_analyzer_trial_used_at->diffForHumans() }}
                                             </div>
                                         @else
-                                            <span class="text-gray-400 text-sm">-</span>
+                                            <span class="text-sm font-bold text-slate-400">-</span>
                                         @endif
                                     </div>
                                 </div>
@@ -448,18 +471,16 @@
                             
                             {{-- Monthly Usage Stats --}}
                             @if($editingUser)
-                                <div class="mt-3 p-3 bg-blue-50 border border-blue-100 rounded-lg">
-                                    <div class="flex items-start gap-2">
-                                        <svg class="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                                        </svg>
+                                <div class="mt-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100/50 rounded-xl">
+                                    <div class="flex items-start gap-3">
+                                        <i class="ph-fill ph-chart-line-up text-xl text-blue-500 mt-0.5"></i>
                                         <div class="flex-1">
-                                            <p class="text-xs font-semibold text-blue-900">Usage Bulan Ini</p>
-                                            <p class="text-sm text-blue-800 mt-1">
-                                                <span class="font-bold">{{ $editingUser->ai_analyzer_count_this_month ?? 0 }}x</span> digunakan
+                                            <p class="text-[11px] font-bold text-blue-400 uppercase tracking-wider">Usage Bulan Ini</p>
+                                            <p class="text-sm font-bold text-blue-900 mt-1">
+                                                <span class="text-lg text-blue-600 mr-1">{{ $editingUser->ai_analyzer_count_this_month ?? 0 }}x</span> digunakan
                                             </p>
                                             @if($editingUser->last_ai_analyzer_reset)
-                                                <p class="text-xs text-blue-700 mt-1">
+                                                <p class="text-[10px] font-medium text-blue-500 mt-1.5 uppercase tracking-wider">
                                                     Reset terakhir: {{ $editingUser->last_ai_analyzer_reset->format('d M Y') }}
                                                 </p>
                                             @endif
@@ -468,210 +489,174 @@
                                 </div>
                             @endif
                         </div>
-                    </div>
 
-                    {{-- Additional Info --}}
-                    <div class="pt-4 border-t border-gray-200">
-                        <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
-                            <div class="flex items-start gap-3">
-                                <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                    <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                </div>
-                                <div class="text-sm">
-                                    <p class="font-semibold text-purple-900 mb-1">Informasi Read-Only</p>
-                                    <p class="text-purple-800 text-xs leading-relaxed">Data pengguna ditampilkan dalam mode baca saja. Untuk mengubah data, gunakan fitur yang sesuai.</p>
+                        {{-- Additional Info --}}
+                        <div class="pt-6 border-t border-slate-100">
+                            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 bg-white border border-slate-200 rounded-lg flex items-center justify-center flex-shrink-0 text-slate-400">
+                                        <i class="ph-fill ph-info text-lg"></i>
+                                    </div>
+                                    <div class="text-sm">
+                                        <p class="font-extrabold text-slate-900 mb-0.5">Informasi Read-Only</p>
+                                        <p class="text-slate-500 text-xs font-medium leading-relaxed">Data pengguna ditampilkan dalam mode baca saja. Untuk mengubah data, gunakan fitur yang sesuai.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {{-- Modal Footer --}}
-                <div class="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 rounded-b-lg flex justify-end">
-                    <button 
-                        type="button"
-                        wire:click="closeModal"
-                        class="w-full sm:w-auto px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all text-sm sm:text-base font-medium">
-                        Tutup
-                    </button>
+                    {{-- Modal Footer --}}
+                    <div class="px-6 py-4 bg-slate-50/50 border-t border-slate-100 rounded-b-2xl flex justify-end">
+                        <button type="button" wire:click="closeModal" class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 hover:text-slate-900 transition-all text-sm font-bold shadow-sm flex items-center gap-2">
+                            <i class="ph-bold ph-x"></i>
+                            Tutup
+                        </button>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     @endif
 
     {{-- Create Admin Modal --}}
     @if($showCreateAdminModal)
-        <div class="fixed inset-0 z-50 overflow-y-auto">
-            <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" wire:click="closeCreateAdminModal"></div>
-            <div class="relative min-h-screen flex items-center justify-center p-3 sm:p-4">
-            <div class="relative w-full max-w-lg bg-white rounded-lg shadow-xl transform transition-all z-10" wire:click.stop>
-                {{-- Modal Header --}}
-                <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
-                    <div class="flex items-center justify-between gap-2 sm:gap-3">
-                        <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                            <div class="w-7 h-7 sm:w-8 sm:h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                                </svg>
+        <div class="fixed inset-0 z-[100] overflow-y-auto">
+            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" wire:click="closeCreateAdminModal"></div>
+            <div class="relative min-h-screen flex items-center justify-center p-4">
+                <div class="relative w-full max-w-lg bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-slate-100 transform transition-all z-10" wire:click.stop>
+                    {{-- Modal Header --}}
+                    <div class="px-6 py-5 border-b border-slate-100 bg-slate-50/50 rounded-t-2xl">
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-3 min-w-0 flex-1">
+                                <div class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center flex-shrink-0 text-primary-600 shadow-inner">
+                                    <i class="ph-fill ph-user-plus text-xl"></i>
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <h3 class="text-lg font-extrabold text-slate-900 truncate">Tambah Admin Baru</h3>
+                                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Buat akun administrator baru</p>
+                                </div>
                             </div>
-                            <div class="min-w-0 flex-1">
-                                <h3 class="text-base sm:text-lg font-semibold text-gray-900 truncate">Tambah Admin Baru</h3>
-                                <p class="text-xs sm:text-sm text-gray-500">Buat akun administrator baru</p>
-                            </div>
+                            <button wire:click="closeCreateAdminModal" class="text-slate-400 hover:text-slate-600 bg-white hover:bg-slate-100 rounded-xl p-2 transition-all flex-shrink-0 border border-slate-100 shadow-sm">
+                                <i class="ph-bold ph-x text-lg"></i>
+                            </button>
                         </div>
-                        <button wire:click="closeCreateAdminModal" class="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg p-1.5 sm:p-2 transition-all flex-shrink-0">
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
                     </div>
-                </div>
 
-                {{-- Modal Body --}}
-                <form wire:submit.prevent="createAdmin" class="p-4 sm:p-6 space-y-3 sm:space-y-4 max-h-[70vh] overflow-y-auto">
-                    {{-- Name Field --}}
-                    <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Nama Lengkap *
-                            </label>
-                            <input type="text" wire:model="newAdminName" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all" placeholder="Masukkan nama lengkap admin">
+                    {{-- Modal Body --}}
+                    <form wire:submit.prevent="createAdmin" class="p-6 space-y-5 max-h-[70vh] overflow-y-auto">
+                        {{-- Name Field --}}
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Nama Lengkap *</label>
+                            <input type="text" wire:model="newAdminName" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all placeholder:text-slate-400" placeholder="Masukkan nama lengkap admin">
                             @error('newAdminName') 
-                                <p class="text-red-500 text-sm mt-1.5 flex items-center gap-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    {{ $message }}
+                                <p class="text-red-500 text-xs mt-1.5 flex items-center gap-1.5 font-medium">
+                                    <i class="ph-fill ph-warning-circle"></i> {{ $message }}
                                 </p>
                             @enderror
                         </div>
 
                         {{-- Email Field --}}
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Alamat Email *
-                            </label>
-                            <input type="email" wire:model="newAdminEmail" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all" placeholder="admin@example.com">
+                            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Alamat Email *</label>
+                            <input type="email" wire:model="newAdminEmail" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all placeholder:text-slate-400" placeholder="admin@example.com">
                             @error('newAdminEmail') 
-                                <p class="text-red-500 text-sm mt-1.5 flex items-center gap-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    {{ $message }}
+                                <p class="text-red-500 text-xs mt-1.5 flex items-center gap-1.5 font-medium">
+                                    <i class="ph-fill ph-warning-circle"></i> {{ $message }}
                                 </p>
                             @enderror
                         </div>
 
-                    {{-- Password Fields in Grid --}}
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {{-- Password Field --}}
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Password *
-                            </label>
-                            <input type="password" wire:model="newAdminPassword" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all" placeholder="Min. 8 karakter">
-                            @error('newAdminPassword') 
-                                <p class="text-red-500 text-sm mt-1.5 flex items-center gap-1">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    {{ $message }}
-                                </p>
-                            @enderror
+                        {{-- Password Fields in Grid --}}
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Password *</label>
+                                <input type="password" wire:model="newAdminPassword" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all placeholder:text-slate-400" placeholder="Min. 8 karakter">
+                                @error('newAdminPassword') 
+                                    <p class="text-red-500 text-xs mt-1.5 flex items-center gap-1.5 font-medium">
+                                        <i class="ph-fill ph-warning-circle"></i> {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Konfirmasi Password *</label>
+                                <input type="password" wire:model="newAdminPasswordConfirmation" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all placeholder:text-slate-400" placeholder="Ulangi password">
+                            </div>
                         </div>
 
-                        {{-- Confirm Password Field --}}
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Konfirmasi Password *
-                            </label>
-                            <input type="password" wire:model="newAdminPasswordConfirmation" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all" placeholder="Ulangi password">
-                        </div>
-                    </div>
-
-                    {{-- Info Box --}}
-                    <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
-                        <div class="flex items-start gap-3">
-                            <div class="flex-shrink-0">
-                                <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                                    <svg class="h-4 w-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
+                        {{-- Info Box --}}
+                        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4">
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0 text-indigo-600">
+                                    <i class="ph-fill ph-info text-lg"></i>
+                                </div>
+                                <div>
+                                    <p class="font-extrabold text-indigo-900 text-sm mb-0.5">Hak Akses Administrator</p>
+                                    <p class="text-indigo-800 text-xs font-medium leading-relaxed">Admin baru otomatis mendapatkan akses penuh ke admin panel, status premium, dan email terverifikasi.</p>
                                 </div>
                             </div>
-                            <div class="text-sm">
-                                <p class="font-semibold text-purple-900 mb-1">Hak Akses Administrator</p>
-                                <p class="text-purple-800 text-xs leading-relaxed">Admin baru akan otomatis mendapatkan akses penuh ke admin panel, status premium, dan email terverifikasi.</p>
-                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
 
-                {{-- Modal Footer --}}
-                <div class="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 rounded-b-lg flex flex-col sm:flex-row justify-end gap-2 sm:gap-3">
-                    <button type="button" wire:click="closeCreateAdminModal" class="w-full sm:w-auto px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all text-sm sm:text-base font-medium">
-                        Batal
-                    </button>
-                    <button type="submit" wire:click="createAdmin" class="w-full sm:w-auto px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all text-sm sm:text-base font-medium">
-                        Buat Admin
-                    </button>
+                    {{-- Modal Footer --}}
+                    <div class="px-6 py-4 bg-slate-50/50 border-t border-slate-100 rounded-b-2xl flex justify-end gap-3">
+                        <button type="button" wire:click="closeCreateAdminModal" class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 hover:text-slate-900 transition-all text-sm font-bold shadow-sm">
+                            Batal
+                        </button>
+                        <button type="submit" wire:click="createAdmin" class="px-5 py-2.5 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-all text-sm font-bold shadow-sm shadow-primary-500/20 flex items-center gap-2">
+                            <i class="ph-bold ph-plus"></i>
+                            Buat Admin
+                        </button>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     @endif
 
     {{-- Send Email Modal --}}
     @if($showSendEmailModal)
-        <div class="fixed inset-0 z-50 overflow-y-auto">
-            <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" wire:click="closeSendEmailModal"></div>
-            <div class="relative min-h-screen flex items-center justify-center p-3 sm:p-4">
-                <div class="relative w-full max-w-2xl bg-white rounded-lg shadow-xl border border-gray-200 transform transition-all" wire:click.stop>
+        <div class="fixed inset-0 z-[100] overflow-y-auto">
+            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" wire:click="closeSendEmailModal"></div>
+            <div class="relative min-h-screen flex items-center justify-center p-4">
+                <div class="relative w-full max-w-2xl bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-slate-100 transform transition-all z-10" wire:click.stop>
                     {{-- Modal Header --}}
-                    <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
-                        <div class="flex items-center justify-between gap-2 sm:gap-3">
-                            <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                                <div class="w-7 h-7 sm:w-8 sm:h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                    <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                    </svg>
+                    <div class="px-6 py-5 border-b border-slate-100 bg-slate-50/50 rounded-t-2xl">
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-3 min-w-0 flex-1">
+                                <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center flex-shrink-0 text-emerald-600 shadow-inner">
+                                    <i class="ph-fill ph-paper-plane-tilt text-xl"></i>
                                 </div>
                                 <div class="min-w-0 flex-1">
-                                    <h3 class="text-base sm:text-lg font-semibold text-gray-900 truncate">Kirim Email</h3>
-                                    <p class="text-xs sm:text-sm text-gray-500">Pilih tipe email yang akan dikirim</p>
+                                    <h3 class="text-lg font-extrabold text-slate-900 truncate">Kirim Email</h3>
+                                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Pilih tipe email yang akan dikirim</p>
                                 </div>
                             </div>
-                            <button wire:click="closeSendEmailModal" class="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg p-1.5 sm:p-2 transition-all flex-shrink-0">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
+                            <button wire:click="closeSendEmailModal" class="text-slate-400 hover:text-slate-600 bg-white hover:bg-slate-100 rounded-xl p-2 transition-all flex-shrink-0 border border-slate-100 shadow-sm">
+                                <i class="ph-bold ph-x text-lg"></i>
                             </button>
                         </div>
                     </div>
 
                     {{-- Modal Body --}}
-                    <div class="p-4 sm:p-6 space-y-4 sm:space-y-6 max-h-[70vh] overflow-y-auto">
+                    <div class="p-6 space-y-6 max-h-[70vh] overflow-y-auto">
                         {{-- Target User Info --}}
-                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
-                                    <span class="text-white font-semibold text-sm">{{ strtoupper(substr($emailTargetUserName ?? 'U', 0, 1)) }}</span>
+                        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center shadow-inner">
+                                    <span class="text-white font-bold text-lg">{{ strtoupper(substr($emailTargetUserName ?? 'U', 0, 1)) }}</span>
                                 </div>
                                 <div>
-                                    <p class="text-sm font-semibold text-gray-900">{{ $emailTargetUserName ?? '-' }}</p>
-                                    <p class="text-xs text-gray-500">{{ $emailTargetUserEmail ?? '-' }}</p>
+                                    <p class="text-base font-extrabold text-slate-900">{{ $emailTargetUserName ?? '-' }}</p>
+                                    <p class="text-xs font-medium text-slate-500">{{ $emailTargetUserEmail ?? '-' }}</p>
                                 </div>
                             </div>
                         </div>
 
                         {{-- Email Type Selection --}}
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-3">
+                            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-3">
                                 Pilih Tipe Email
                             </label>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 @php
                                     $emailTypes = [
                                         'welcome' => ['label' => 'Welcome Email', 'desc' => 'Email selamat datang'],
@@ -685,23 +670,23 @@
                                 @foreach($emailTypes as $type => $info)
                                     @php
                                         $isSelected = $emailType === $type;
-                                        $borderClass = $isSelected ? 'border-green-500 bg-green-50' : 'border-gray-200 hover:border-green-300';
-                                        $dotBorderClass = $isSelected ? 'border-green-500' : 'border-gray-300';
+                                        $borderClass = $isSelected ? 'border-primary-500 bg-primary-50/50 ring-1 ring-primary-500 shadow-sm' : 'border-slate-200 hover:border-primary-300 hover:bg-slate-50';
+                                        $dotClass = $isSelected ? 'border-primary-500 bg-primary-500' : 'border-slate-300';
                                     @endphp
-                                    <label class="relative flex cursor-pointer rounded-lg border-2 {{ $borderClass }} p-4 transition-colors {{ $type === 'monthly_motivation' ? 'md:col-span-2' : '' }}">
+                                    <label class="relative flex cursor-pointer rounded-2xl border-2 {{ $borderClass }} p-4 transition-all {{ $type === 'monthly_motivation' ? 'md:col-span-2' : '' }}">
                                         <input type="radio" wire:model.live="emailType" value="{{ $type }}" class="sr-only">
                                         <div class="flex-1">
                                             <div class="flex items-center gap-3">
                                                 <div class="flex-shrink-0">
-                                                    <div class="h-5 w-5 rounded-full border-2 {{ $dotBorderClass }} flex items-center justify-center">
+                                                    <div class="h-5 w-5 rounded-full border-2 {{ $isSelected ? 'border-primary-500' : 'border-slate-300' }} flex items-center justify-center transition-colors">
                                                         @if($isSelected)
-                                                            <div class="h-2 w-2 rounded-full bg-green-500"></div>
+                                                            <div class="h-2 w-2 rounded-full bg-primary-500"></div>
                                                         @endif
                                                     </div>
                                                 </div>
                                                 <div class="flex-1">
-                                                    <p class="text-sm font-medium text-gray-900">{{ $info['label'] }}</p>
-                                                    <p class="text-xs text-gray-500 mt-1">{{ $info['desc'] }}</p>
+                                                    <p class="text-sm font-bold text-slate-900">{{ $info['label'] }}</p>
+                                                    <p class="text-[11px] font-medium text-slate-500 mt-0.5">{{ $info['desc'] }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -711,34 +696,24 @@
                         </div>
 
                         {{-- Warning --}}
-                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                            <div class="flex items-start gap-2">
-                                <svg class="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                                </svg>
-                                <div class="text-sm text-yellow-800">
-                                    <p class="font-medium">Perhatian!</p>
-                                    <p class="mt-1">Email akan dikirim langsung ke <strong>{{ $emailTargetUserEmail ?? '-' }}</strong>. Pastikan Anda sudah memilih tipe email yang benar.</p>
+                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                            <div class="flex items-start gap-3">
+                                <i class="ph-fill ph-warning-circle text-xl text-amber-600 mt-0.5"></i>
+                                <div class="text-sm text-amber-800">
+                                    <p class="font-bold">Perhatian!</p>
+                                    <p class="mt-1 font-medium text-xs">Email akan dikirim langsung ke <strong class="font-bold text-amber-900">{{ $emailTargetUserEmail ?? '-' }}</strong>. Pastikan Anda sudah memilih tipe email yang benar.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     {{-- Modal Footer --}}
-                    <div class="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 rounded-b-lg flex flex-col sm:flex-row justify-end gap-2 sm:gap-3">
-                        <button 
-                            type="button"
-                            wire:click="closeSendEmailModal"
-                            class="w-full sm:w-auto px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all text-sm sm:text-base font-medium">
+                    <div class="px-6 py-4 bg-slate-50/50 border-t border-slate-100 rounded-b-2xl flex justify-end gap-3">
+                        <button type="button" wire:click="closeSendEmailModal" class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 hover:text-slate-900 transition-all text-sm font-bold shadow-sm">
                             Batal
                         </button>
-                        <button 
-                            type="button"
-                            wire:click="sendEmail"
-                            class="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all text-sm sm:text-base font-medium flex items-center justify-center gap-2">
-                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                            </svg>
+                        <button type="button" wire:click="sendEmail" class="px-5 py-2.5 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 transition-all text-sm font-bold shadow-sm shadow-emerald-500/20 flex items-center gap-2">
+                            <i class="ph-bold ph-paper-plane-tilt"></i>
                             Kirim Email
                         </button>
                     </div>
@@ -747,45 +722,85 @@
         </div>
     @endif
 
-    {{-- Delete Confirmation Modal --}}
-    <div id="deleteUserModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-[100]">
-        <div class="flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-95" id="deleteUserModalContent">
-                <div class="p-6">
-                    <!-- Icon -->
-                    <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-red-100">
-                        <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                        </svg>
-                    </div>
-
-                    <!-- Title -->
-                    <h3 class="text-xl font-bold text-gray-900 text-center mb-1">Delete User</h3>
-                    <p class="text-sm text-gray-500 text-center mb-4">Are you sure you want to delete this user?</p>
-
-                    <!-- User Info -->
-                    <div class="text-center mb-6">
-                        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                            <p class="text-sm font-semibold text-gray-900" id="deleteUserName"></p>
-                            <p class="text-xs text-gray-500 mt-1" id="deleteUserEmail"></p>
+    {{-- Manual Premium Confirmation Modal --}}
+    @if($showPremiumConfirmModal)
+        <div class="fixed inset-0 z-[100] overflow-y-auto">
+            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" wire:click="closePremiumConfirmModal"></div>
+            <div class="flex min-h-screen items-center justify-center p-4">
+                <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-xl border border-slate-200 transition-all sm:w-full sm:max-w-sm animate-in zoom-in-95 duration-200">
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-xl {{ $confirmTargetUserIsPremium ? 'bg-slate-100 text-slate-400' : 'bg-purple-50 text-purple-600' }}">
+                                <i class="ph-fill ph-crown text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900">Manual Premium Override</h3>
+                                <p class="text-xs text-slate-500 font-medium">Ubah status akses pengguna secara manual.</p>
+                            </div>
                         </div>
-                        <p class="text-red-600 text-sm mt-4 font-medium">⚠️ This action cannot be undone!</p>
-                        <p class="text-gray-500 text-xs mt-1">All user data including job applications will be permanently deleted.</p>
-                    </div>
 
-                    <!-- Buttons -->
-                    <div class="flex space-x-3">
-                        <button type="button" 
-                                onclick="closeDeleteUserModal()"
-                                class="flex-1 px-4 py-3 border border-gray-200 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors duration-200">
-                            Cancel
-                        </button>
-                        <button type="button" 
-                                onclick="confirmDeleteUserAction()"
-                                class="flex-1 px-4 py-3 rounded-xl font-semibold text-white bg-red-600 hover:bg-red-700 transition-all duration-200">
-                            Yes, Delete
-                        </button>
+                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 mb-6">
+                            <div class="text-sm font-bold text-slate-900">{{ $confirmTargetUserName }}</div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">
+                                Current: {{ $confirmTargetUserIsPremium ? 'Premium' : 'Free Tier' }}
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                            <button 
+                                wire:click="toggleManualPremium" 
+                                class="w-full py-2.5 {{ $confirmTargetUserIsPremium ? 'bg-slate-900' : 'bg-primary-600' }} text-white rounded-xl font-bold text-xs shadow-sm hover:opacity-90 transition-all">
+                                {{ $confirmTargetUserIsPremium ? 'Downgrade to Free' : 'Upgrade to Premium' }}
+                            </button>
+                            <button 
+                                wire:click="closePremiumConfirmModal" 
+                                class="w-full py-2.5 bg-white text-slate-500 rounded-xl font-bold text-xs border border-slate-200 hover:bg-slate-50 transition-all">
+                                Cancel
+                            </button>
+                        </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    {{-- Delete Confirmation Modal --}}
+    <div id="deleteUserModal" class="fixed inset-0 z-[100] hidden overflow-y-auto">
+        <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closeDeleteUserModal()"></div>
+        <div class="flex min-h-screen items-center justify-center p-4 text-center sm:p-0">
+            <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-slate-100 transition-all sm:my-8 sm:w-full sm:max-w-lg scale-95 opacity-0 duration-300" id="deleteUserModalContent">
+                <div class="bg-white px-6 pb-6 pt-8 sm:p-8 sm:pb-6">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-red-50 sm:mx-0 sm:h-12 sm:w-12 border border-red-100">
+                            <i class="ph-bold ph-trash text-2xl text-red-600"></i>
+                        </div>
+                        <div class="mt-4 text-center sm:ml-4 sm:mt-0 sm:text-left flex-1">
+                            <h3 class="text-xl font-extrabold leading-6 text-slate-900" id="modal-title">Delete User</h3>
+                            <div class="mt-2">
+                                <p class="text-sm font-medium text-slate-500">Are you sure you want to delete this user? This action cannot be undone.</p>
+                            </div>
+                            
+                            {{-- User Info --}}
+                            <div class="mt-4 bg-slate-50 rounded-xl p-4 border border-slate-200">
+                                <p class="text-base font-extrabold text-slate-900" id="deleteUserName"></p>
+                                <p class="text-xs font-medium text-slate-500 mt-0.5" id="deleteUserEmail"></p>
+                            </div>
+                            
+                            <p class="text-red-600 text-[11px] uppercase tracking-wider font-bold mt-4 flex items-center gap-1.5 justify-center sm:justify-start">
+                                <i class="ph-fill ph-warning-circle text-sm"></i>
+                                All user data will be permanently deleted.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-50/50 px-6 py-4 border-t border-slate-100 sm:flex sm:flex-row-reverse gap-3">
+                    <button type="button" onclick="confirmDeleteUserAction()" class="inline-flex w-full justify-center rounded-xl bg-red-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm shadow-red-500/20 hover:bg-red-700 transition-colors sm:w-auto flex items-center gap-2">
+                        <i class="ph-bold ph-trash"></i>
+                        Yes, Delete
+                    </button>
+                    <button type="button" onclick="closeDeleteUserModal()" class="mt-3 inline-flex w-full justify-center rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-slate-700 shadow-sm border border-slate-200 hover:bg-slate-50 transition-colors sm:mt-0 sm:w-auto">
+                        Cancel
+                    </button>
                 </div>
             </div>
         </div>
@@ -811,8 +826,8 @@
         
         // Animate modal in
         setTimeout(() => {
-            content.classList.remove('scale-95');
-            content.classList.add('scale-100');
+            content.classList.remove('scale-95', 'opacity-0');
+            content.classList.add('scale-100', 'opacity-100');
         }, 10);
     }
 
@@ -821,8 +836,8 @@
         const content = document.getElementById('deleteUserModalContent');
         
         // Animate modal out
-        content.classList.remove('scale-100');
-        content.classList.add('scale-95');
+        content.classList.remove('scale-100', 'opacity-100');
+        content.classList.add('scale-95', 'opacity-0');
         
         setTimeout(() => {
             modal.classList.add('hidden');

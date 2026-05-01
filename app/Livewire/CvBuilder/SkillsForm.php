@@ -3,6 +3,7 @@
 namespace App\Livewire\CvBuilder;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Models\UserSkill;
 use Livewire\Component;
 
@@ -83,13 +84,31 @@ class SkillsForm extends Component
     
     public function save()
     {
-        $this->validate([
-            'skill_name' => 'required|string|max:255',
-            'category' => 'required|string|max:100',
-            'proficiency' => 'required|string|max:50',
+        $validator = Validator::make([
+            'skill_name'          => $this->skill_name,
+            'category'            => $this->category,
+            'proficiency'         => $this->proficiency,
+            'years_of_experience' => $this->years_of_experience,
+        ], [
+            'skill_name'          => 'required|string|max:255',
+            'category'            => 'required|string|max:100',
+            'proficiency'         => 'required|string|max:50',
             'years_of_experience' => 'nullable|integer|min:0|max:50',
+        ], [
+            'skill_name.required' => 'Skill name is required.',
+            'category.required'   => 'Category is required.',
+            'proficiency.required' => 'Proficiency level is required.',
         ]);
-        
+
+        if ($validator->fails()) {
+            $this->setErrorBag($validator->errors());
+            $this->dispatch('showNotification', [
+                'type'    => 'error',
+                'title'   => 'Incomplete Form',
+                'message' => $validator->errors()->first(),
+            ]);
+            return;
+        }
         $data = [
             'user_id' => Auth::id(),
             'skill_name' => $this->skill_name,

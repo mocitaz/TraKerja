@@ -1,371 +1,238 @@
-<div class="container mx-auto px-4 py-6">
+<div class="w-full">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- Controls -->
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-3 sm:p-4 mb-4 sm:mb-6">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
-            <!-- View Toggle -->
-            <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
-                <button wire:click="toggleViewMode" 
-                        class="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm">
-                    @if($viewMode === 'month')
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                        </svg>
-                        <span>List View</span>
-                    @else
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                        <span>Calendar View</span>
-                    @endif
+    <!-- Controls Bar: Compact & Premium -->
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+        <!-- Left: Month Navigation -->
+        <div class="flex items-center gap-4 bg-white border border-slate-200/60 p-1.5 rounded-2xl shadow-sm">
+            <button wire:click="previousMonth" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-slate-50 text-slate-500 transition-all">
+                <i class="ph-bold ph-caret-left"></i>
+            </button>
+            <h2 class="text-base font-black text-slate-900 min-w-[140px] text-center tracking-tight">{{ $monthName }}</h2>
+            <button wire:click="nextMonth" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-slate-50 text-slate-500 transition-all">
+                <i class="ph-bold ph-caret-right"></i>
+            </button>
+            <div class="w-px h-6 bg-slate-100 mx-1"></div>
+            <button wire:click="goToToday" class="px-5 py-2 text-xs font-black text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all">
+                TODAY
+            </button>
+        </div>
+
+        <!-- Right: View Toggle & Filter -->
+        <div class="flex items-center gap-4">
+            <!-- View Mode Switcher -->
+            <div class="flex p-1.5 bg-white border border-slate-200/60 rounded-2xl shadow-sm">
+                <button wire:click="$set('viewMode', 'month')" 
+                    class="w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300 {{ $viewMode === 'month' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'text-slate-400 hover:text-indigo-600 hover:bg-slate-50' }}">
+                    <i class="ph-bold ph-calendar"></i>
                 </button>
-
-                <!-- Filter by type -->
-                <div class="relative">
-                    <select wire:model.live="filterType" 
-                            class="appearance-none px-4 py-2.5 pr-8 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm w-full sm:w-auto bg-white shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer">
-                        <option value="all">All Interviews</option>
-                        <option value="HR - Interview">HR Interview</option>
-                        <option value="User - Interview">User Interview</option>
-                    </select>
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </div>
-                </div>
+                <button wire:click="$set('viewMode', 'list')" 
+                    class="w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300 {{ $viewMode === 'list' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'text-slate-400 hover:text-indigo-600 hover:bg-slate-50' }}">
+                    <i class="ph-bold ph-list-bullets"></i>
+                </button>
             </div>
 
-            <!-- Month Navigation -->
-            <div class="flex items-center justify-between sm:justify-center gap-2 sm:gap-4">
-                <button wire:click="previousMonth" 
-                        class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                    </svg>
-                </button>
-
-                <h2 class="text-sm sm:text-lg font-semibold text-gray-900 min-w-[110px] sm:min-w-[150px] text-center">{{ $monthName }}</h2>
-
-                <button wire:click="nextMonth" 
-                        class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </button>
-
-                <button wire:click="goToToday" 
-                        class="px-2.5 sm:px-4 py-1.5 sm:py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs sm:text-sm font-medium text-gray-700 transition-colors">
-                    Today
-                </button>
+            <!-- Filter Type -->
+            <div class="relative group">
+                <select wire:model.live="filterType" 
+                        class="appearance-none pl-11 pr-10 py-3 bg-white border border-slate-200/60 rounded-2xl text-xs font-black text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all cursor-pointer shadow-sm min-w-[180px]">
+                    <option value="all">ALL INTERVIEWS</option>
+                    <option value="HR - Interview">HR INTERVIEW</option>
+                    <option value="User - Interview">USER INTERVIEW</option>
+                </select>
+                <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                    <i class="ph-bold ph-funnel text-base"></i>
+                </div>
+                <div class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
+                    <i class="ph-bold ph-caret-down text-xs"></i>
+                </div>
             </div>
         </div>
     </div>
 
     @if($viewMode === 'month')
-        <!-- Calendar View -->
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+        <!-- Calendar View: Grid Modern -->
+        <div class="bg-white rounded-[2rem] shadow-sm border border-slate-200/60 overflow-hidden">
             <!-- Day Headers -->
-            <div class="grid grid-cols-7 bg-gray-50 border-b border-gray-200 text-[10px] sm:text-xs">
+            <div class="grid grid-cols-7 bg-slate-50/50 border-b border-slate-100">
                 @foreach(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as $day)
-                    <div class="px-1 sm:px-2 py-2 sm:py-3 text-center font-semibold text-gray-700 uppercase tracking-wider">
+                    <div class="px-2 py-4 text-center text-[10px] font-black text-slate-400 uppercase tracking-[2px]">
                         {{ $day }}
                     </div>
                 @endforeach
             </div>
 
             <!-- Calendar Grid -->
-            <div class="grid grid-cols-7 divide-x divide-gray-200 text-[10px] sm:text-xs">
+            <div class="grid grid-cols-7 divide-x divide-slate-100">
                 @foreach($calendarDays as $day)
-                    <div class="min-h-[90px] sm:min-h-[120px] p-1.5 sm:p-2 border-b border-gray-200 {{ $day['isCurrentMonth'] ? 'bg-white' : 'bg-gray-50' }} {{ $day['isToday'] ? 'bg-primary-50' : '' }}">
+                    <div class="min-h-[140px] p-3 border-b border-slate-100 transition-colors {{ $day['isCurrentMonth'] ? 'bg-white' : 'bg-slate-50/30 opacity-40' }} {{ $day['isToday'] ? 'bg-indigo-50/30' : '' }} group">
                         <!-- Date Number -->
-                        <div class="flex justify-between items-start mb-1">
-                            <span class="text-xs sm:text-sm font-medium {{ $day['isCurrentMonth'] ? 'text-gray-900' : 'text-gray-400' }} {{ $day['isToday'] ? 'bg-primary-600 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-[10px] sm:text-xs' : '' }}">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="inline-flex items-center justify-center w-8 h-8 text-sm font-black transition-all rounded-xl 
+                                {{ $day['isToday'] ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : ($day['isCurrentMonth'] ? 'text-slate-900 group-hover:text-indigo-600' : 'text-slate-300') }}">
                                 {{ $day['date']->format('j') }}
                             </span>
                         </div>
 
                         <!-- Interviews on this day -->
-                        @if(count($day['interviews']) > 0)
-                            <div class="space-y-1">
-                                @foreach($day['interviews'] as $interview)
-                                    <div wire:click="viewInterviewDetails({{ $interview['id'] }})" 
-                                         class="p-1 rounded text-[10px] sm:text-xs cursor-pointer hover:opacity-80 transition-opacity
-                                                {{ $interview['recruitment_stage'] === 'HR - Interview' ? 'bg-blue-100 text-blue-800' : '' }}
-                                                {{ $interview['recruitment_stage'] === 'User - Interview' ? 'bg-green-100 text-green-800' : '' }}">
-                                        <div class="font-medium truncate">{{ $interview['company_name'] }}</div>
-                                        <div class="text-xs opacity-75">
-                                            {{ $interview['recruitment_stage'] === 'HR - Interview' ? 'HR' : 'User' }} - 
-                                            {{ \Carbon\Carbon::parse($interview['interview_date'])->timezone('Asia/Jakarta')->format('H:i') }}
-                                        </div>
+                        <div class="space-y-1.5">
+                            @foreach($day['interviews'] as $interview)
+                                <button wire:click="viewInterviewDetails({{ $interview['id'] }})" 
+                                     class="w-full text-left p-2 rounded-xl text-[10px] font-black transition-all hover:scale-[1.02] active:scale-95 shadow-sm
+                                            {{ $interview['recruitment_stage'] === 'HR - Interview' ? 'bg-blue-50 text-blue-700 border border-blue-100 hover:bg-blue-100' : '' }}
+                                            {{ $interview['recruitment_stage'] === 'User - Interview' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100 hover:bg-emerald-100' : '' }}">
+                                    <div class="truncate uppercase tracking-tight">{{ $interview['company_name'] }}</div>
+                                    <div class="mt-0.5 opacity-60 flex items-center gap-1">
+                                        <i class="ph-bold ph-clock"></i>
+                                        {{ \Carbon\Carbon::parse($interview['interview_date'])->timezone('Asia/Jakarta')->format('H:i') }}
                                     </div>
-                                @endforeach
-                            </div>
-                        @endif
+                                </button>
+                            @endforeach
+                        </div>
                     </div>
                 @endforeach
             </div>
         </div>
     @else
-        <!-- List View -->
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 divide-y divide-gray-200">
-            @if(count($this->allInterviewsList) > 0)
-                @foreach($this->allInterviewsList as $interview)
-                    <div wire:click="viewInterviewDetails({{ $interview->id }})" 
-                         class="p-4 hover:bg-gray-50 cursor-pointer transition-colors">
-                        <div class="flex items-start justify-between">
-                            <div class="flex-1">
-                                <div class="flex items-center space-x-3">
-                                    <!-- Interview Stage Badge -->
-                                    <span class="px-2 py-1 rounded text-xs font-medium
-                                                 {{ $interview->recruitment_stage === 'HR - Interview' ? 'bg-blue-100 text-blue-800' : '' }}
-                                                 {{ $interview->recruitment_stage === 'User - Interview' ? 'bg-green-100 text-green-800' : '' }}">
-                                        {{ $interview->recruitment_stage === 'HR - Interview' ? 'HR Interview' : 'User Interview' }}
-                                    </span>
-
-                                    <h3 class="text-lg font-semibold text-gray-900">{{ $interview->company_name }}</h3>
-                                </div>
-
-                                <p class="text-sm text-gray-600 mt-1">{{ $interview->position }}</p>
-
-                                <div class="flex items-center space-x-4 mt-2 text-sm text-gray-500">
-                                    <div class="flex items-center space-x-1">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                        </svg>
-                                        <span>{{ $interview->interview_date->format('D, d M Y') }} • {{ $interview->interview_date->format('H:i') }}</span>
-                                    </div>
-                                    @if($interview->interview_type)
-                                        <div class="flex items-center space-x-1">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                                            </svg>
-                                            <span>{{ $interview->interview_type }}</span>
-                                        </div>
-                                    @endif
-                                    @if($interview->interview_location)
-                                        <div class="flex items-center space-x-1">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                            </svg>
-                                            <span class="truncate max-w-xs">{{ $interview->interview_location }}</span>
-                                        </div>
-                                    @endif
-                                </div>
-
-                                @if($interview->interview_notes)
-                                    <p class="text-sm text-gray-600 mt-2 italic">{{ Str::limit($interview->interview_notes, 100) }}</p>
-                                @endif
+        <!-- List View: Modern Stack -->
+        <div class="space-y-4">
+            @forelse($this->allInterviewsList as $interview)
+                <div wire:click="viewInterviewDetails({{ $interview->id }})" 
+                     class="bg-white p-5 rounded-2xl border border-slate-200/60 hover:border-indigo-600/30 hover:shadow-md transition-all cursor-pointer group flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div class="flex items-center gap-5">
+                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 
+                             {{ $interview->recruitment_stage === 'HR - Interview' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600' }}">
+                            <i class="ph-duotone {{ $interview->recruitment_stage === 'HR - Interview' ? 'ph-users' : 'ph-user-focus' }} text-2xl"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-3 mb-1">
+                                <h3 class="text-lg font-black text-slate-900 tracking-tight">{{ $interview->company_name }}</h3>
+                                <span class="px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest
+                                             {{ $interview->recruitment_stage === 'HR - Interview' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700' }}">
+                                    {{ $interview->recruitment_stage === 'HR - Interview' ? 'HR' : 'User' }}
+                                </span>
                             </div>
-
-                            <!-- Time Until Interview -->
-                            <div class="text-right ml-4">
-                                @if($interview->interview_date->isFuture())
-                                    <span class="text-xs font-medium text-primary-600">
-                                        {{ $interview->interview_date->diffForHumans() }}
-                                    </span>
-                                @else
-                                    <span class="text-xs font-medium text-gray-400">
-                                        Past
-                                    </span>
-                                @endif
-                            </div>
+                            <p class="text-sm font-bold text-slate-500">{{ $interview->position }}</p>
                         </div>
                     </div>
-                @endforeach
-            @else
-                <div class="p-12 text-center">
-                    <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                    </svg>
-                    <h3 class="text-lg font-medium text-gray-900 mb-2">No Upcoming Interviews</h3>
-                    <p class="text-sm text-gray-600">Schedule interviews by updating your job applications to interview stage</p>
+
+                    <div class="flex flex-wrap items-center gap-6">
+                        <div class="flex flex-col text-right">
+                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Schedule</span>
+                            <span class="text-sm font-black text-slate-700">{{ $interview->interview_date->format('D, d M • H:i') }}</span>
+                        </div>
+                        <div class="flex flex-col text-right min-w-[120px]">
+                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Countdown</span>
+                            @if($interview->interview_date->isFuture())
+                                <span class="text-sm font-black text-indigo-600">{{ $interview->interview_date->diffForHumans() }}</span>
+                            @else
+                                <span class="text-sm font-black text-slate-400 italic">Past Event</span>
+                            @endif
+                        </div>
+                        <i class="ph-bold ph-arrow-right text-slate-300 group-hover:text-indigo-600 group-hover:translate-x-1 transition-all"></i>
+                    </div>
                 </div>
-            @endif
-        </div>
-    @endif
-
-    <!-- Upcoming Interviews Sidebar (Only in Calendar View) -->
-    @if($viewMode === 'month' && count($this->upcomingInterviews) > 0)
-        <div class="mt-6 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Upcoming Interviews</h3>
-            <div class="space-y-3">
-                @foreach($this->upcomingInterviews as $interview)
-                    <div wire:click="viewInterviewDetails({{ $interview->id }})" 
-                         class="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors">
-                        <div class="flex items-center justify-between">
-                            <div class="flex-1">
-                                <h4 class="font-medium text-gray-900">{{ $interview->company_name }}</h4>
-                                <p class="text-xs text-gray-600 mt-1">{{ $interview->position }}</p>
-                                <div class="flex items-center space-x-2 mt-2 text-xs text-gray-500">
-                                    <span>{{ $interview->interview_date->format('d M, H:i') }}</span>
-                                    <span class="text-gray-400">•</span>
-                                    <span class="px-2 py-0.5 rounded text-xs
-                                                 {{ $interview->recruitment_stage === 'HR - Interview' ? 'bg-blue-100 text-blue-700' : '' }}
-                                                 {{ $interview->recruitment_stage === 'User - Interview' ? 'bg-green-100 text-green-700' : '' }}">
-                                        {{ $interview->recruitment_stage === 'HR - Interview' ? 'HR' : 'User' }}
-                                    </span>
-                                    @if($interview->interview_type)
-                                        <span class="text-gray-400">•</span>
-                                        <span>{{ $interview->interview_type }}</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="text-right text-xs font-medium text-primary-600">
-                                {{ $interview->interview_date->diffForHumans() }}
-                            </div>
-                        </div>
+            @empty
+                <div class="bg-white rounded-3xl p-20 text-center border border-slate-200/60 shadow-sm">
+                    <div class="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center text-slate-300 mx-auto mb-6">
+                        <i class="ph-duotone ph-calendar-blank text-5xl"></i>
                     </div>
-                @endforeach
-            </div>
+                    <h3 class="text-xl font-black text-slate-900 mb-2">No Interviews Found</h3>
+                    <p class="text-slate-500 font-medium">Update your job applications to "Interview" stage to see them here.</p>
+                </div>
+            @endforelse
         </div>
     @endif
 
-    <!-- Interview Detail Modal -->
+    <!-- Interview Detail Modal: Modern Glassmorphism -->
     @if($showModal && $selectedInterview)
-        <div class="fixed inset-0 z-50 overflow-y-auto" 
-             x-data="{ closing: false }" 
-             x-init="document.body.style.overflow = 'hidden'"
-             @keydown.escape.window="closing = true; document.body.style.overflow = 'auto'; $wire.closeModal()">
-            
+        <div class="fixed inset-0 z-[60] overflow-y-auto" x-data="{ closing: false }">
             <!-- Backdrop -->
-            <div class="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity" 
-                 @click="closing = true; document.body.style.overflow = 'auto'; $wire.closeModal()"></div>
+            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-md transition-opacity" 
+                 wire:click="closeModal" x-show="!closing"></div>
             
             <!-- Modal Container -->
             <div class="flex min-h-screen items-center justify-center p-4">
-                <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl">
+                <div class="relative bg-white rounded-[2.5rem] shadow-2xl w-full max-w-xl overflow-hidden border border-white/20">
                     
-                    <!-- Modal Header -->
-                    <div class="sticky top-0 z-10 bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4 rounded-t-2xl">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-white">Interview Details</h3>
-                                    <p class="text-white/80 text-sm">{{ $selectedInterview->company_name }}</p>
-                                </div>
-                            </div>
-                            <button type="button"
-                                    @click="closing = true; document.body.style.overflow = 'auto'; $wire.closeModal()" 
-                                    class="text-white/80 hover:text-white transition p-2 hover:bg-white/10 rounded-lg">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
+                    <!-- Modal Top: Large Header -->
+                    <div class="relative p-8 pb-4">
+                        <button wire:click="closeModal" class="absolute right-6 top-6 w-10 h-10 flex items-center justify-center rounded-2xl hover:bg-slate-50 text-slate-400 transition-all">
+                            <i class="ph-bold ph-x text-xl"></i>
+                        </button>
 
-                    <!-- Modal Content -->
-                    <div class="p-4 space-y-4">
-                        <!-- Interview Stage Badge -->
-                        <div class="flex items-center space-x-3">
-                            <span class="px-4 py-2 rounded-lg text-sm font-semibold
-                                         {{ $selectedInterview->recruitment_stage === 'HR - Interview' ? 'bg-blue-100 text-blue-800' : '' }}
-                                         {{ $selectedInterview->recruitment_stage === 'User - Interview' ? 'bg-green-100 text-green-800' : '' }}">
-                                {{ $selectedInterview->recruitment_stage === 'HR - Interview' ? 'HR Interview' : 'User Interview' }}
+                        <div class="flex items-center gap-5 mb-6">
+                            <div class="w-16 h-16 rounded-3xl flex items-center justify-center shrink-0 shadow-lg
+                                 {{ $selectedInterview->recruitment_stage === 'HR - Interview' ? 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-blue-200' : 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-emerald-200' }}">
+                                <i class="ph-duotone {{ $selectedInterview->recruitment_stage === 'HR - Interview' ? 'ph-users' : 'ph-user-focus' }} text-3xl"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-3">
+                                    <h3 class="text-2xl font-black text-slate-900 tracking-tight">{{ $selectedInterview->company_name }}</h3>
+                                </div>
+                                <p class="text-base font-bold text-slate-500 mt-1">{{ $selectedInterview->position }}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest
+                                         {{ $selectedInterview->recruitment_stage === 'HR - Interview' ? 'bg-blue-50 text-blue-700' : 'bg-emerald-50 text-emerald-700' }}">
+                                {{ $selectedInterview->recruitment_stage }}
                             </span>
-                            <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-xs font-medium">
+                            <span class="px-4 py-2 bg-slate-100 text-slate-600 rounded-xl text-[10px] font-black uppercase tracking-widest">
                                 {{ $selectedInterview->application_status }}
                             </span>
                         </div>
-
-                        <!-- Position -->
-                        <div>
-                            <label class="text-xs font-medium text-gray-500">Position</label>
-                            <p class="text-base font-semibold text-gray-900 mt-1">{{ $selectedInterview->position }}</p>
-                        </div>
-
-                        <!-- Date & Time -->
-                        <div class="bg-gray-50 p-4 rounded-lg">
-                            <div class="flex items-center space-x-2 text-gray-500 mb-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                </svg>
-                                <span class="text-sm font-medium">Date & Time</span>
-                            </div>
-                            <p class="text-lg font-semibold text-gray-900">{{ $selectedInterview->interview_date->format('D, d M Y') }} • {{ $selectedInterview->interview_date->format('H:i') }} WIB</p>
-                        </div>
-
-                        <!-- Time Until Interview -->
-                        @if($selectedInterview->interview_date->isFuture())
-                            <div class="bg-purple-50 border border-purple-200 rounded-lg p-3">
-                                <div class="flex items-center space-x-2">
-                                    <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    <span class="text-sm font-semibold text-purple-900">{{ $selectedInterview->interview_date->diffForHumans() }}</span>
-                                </div>
-                            </div>
-                        @else
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3">
-                                <div class="flex items-center space-x-2">
-                                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    <span class="text-sm font-medium text-gray-600">Interview completed</span>
-                                </div>
-                            </div>
-                        @endif
-
-                        <!-- Interview Type -->
-                        @if($selectedInterview->interview_type)
-                            <div>
-                                <label class="text-sm font-medium text-gray-500">Interview Type</label>
-                                <p class="text-base font-medium text-gray-900 mt-1">{{ $selectedInterview->interview_type }}</p>
-                            </div>
-                        @endif
-
-                        <!-- Location -->
-                        @if($selectedInterview->interview_location)
-                            <div>
-                                <label class="text-sm font-medium text-gray-500 flex items-center space-x-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>
-                                    <span>Location / Link</span>
-                                </label>
-                                <p class="text-sm text-gray-900 mt-1 break-all">{{ $selectedInterview->interview_location }}</p>
-                            </div>
-                        @endif
-
-                        <!-- Notes -->
-                        @if($selectedInterview->interview_notes)
-                            <div>
-                                <label class="text-sm font-medium text-gray-500 flex items-center space-x-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                                    </svg>
-                                    <span>Notes</span>
-                                </label>
-                                <div class="mt-1 bg-gray-50 p-3 rounded-lg">
-                                    <p class="text-sm text-gray-700 whitespace-pre-line">{{ $selectedInterview->interview_notes }}</p>
-                                </div>
-                            </div>
-                        @endif
-
-                        <!-- Job Location -->
-                        <div class="pt-4 border-t border-gray-200">
-                            <label class="text-sm font-medium text-gray-500">Job Location</label>
-                            <p class="text-sm text-gray-900 mt-1">{{ $selectedInterview->location }}</p>
-                        </div>
                     </div>
 
-                    <!-- Modal Footer -->
-                    <div class="sticky bottom-0 bg-gray-50 border-t border-gray-200 px-6 py-4 rounded-b-2xl flex items-center justify-end gap-3">
-                        <button type="button"
-                                @click="closing = true; document.body.style.overflow = 'auto'; $wire.closeModal()"
-                                class="px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition font-medium">
-                            Close
+                    <!-- Modal Body -->
+                    <div class="p-8 pt-4 space-y-6">
+                        <!-- Date & Location Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
+                                <div class="flex items-center gap-2 text-slate-400 mb-2">
+                                    <i class="ph-bold ph-calendar-check text-base"></i>
+                                    <span class="text-[10px] font-black uppercase tracking-widest">Schedule</span>
+                                </div>
+                                <p class="text-sm font-black text-slate-800">{{ $selectedInterview->interview_date->format('D, d M Y') }}</p>
+                                <p class="text-base font-black text-indigo-600 mt-1">{{ $selectedInterview->interview_date->format('H:i') }} WIB</p>
+                            </div>
+                            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
+                                <div class="flex items-center gap-2 text-slate-400 mb-2">
+                                    <i class="ph-bold ph-map-pin text-base"></i>
+                                    <span class="text-[10px] font-black uppercase tracking-widest">Type / Link</span>
+                                </div>
+                                <p class="text-sm font-black text-slate-800">{{ $selectedInterview->interview_type ?? 'Unspecified' }}</p>
+                                <p class="text-xs font-bold text-slate-500 mt-1 truncate">{{ $selectedInterview->interview_location ?? 'No location added' }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Notes Area -->
+                        @if($selectedInterview->interview_notes)
+                            <div class="bg-indigo-50/30 p-6 rounded-2xl border border-indigo-100">
+                                <div class="flex items-center gap-2 text-indigo-600 mb-3">
+                                    <i class="ph-bold ph-note-pencil text-base"></i>
+                                    <span class="text-[10px] font-black uppercase tracking-widest">Preparation Notes</span>
+                                </div>
+                                <p class="text-sm text-slate-700 font-medium leading-relaxed whitespace-pre-line">{{ $selectedInterview->interview_notes }}</p>
+                            </div>
+                        @endif
+
+                        <!-- Countdown -->
+                        @if($selectedInterview->interview_date->isFuture())
+                            <div class="flex items-center justify-center gap-3 py-3 px-6 bg-amber-50 rounded-2xl border border-amber-100 text-amber-700">
+                                <i class="ph-bold ph-hourglass-high animate-pulse"></i>
+                                <span class="text-xs font-black uppercase tracking-widest">Starting {{ $selectedInterview->interview_date->diffForHumans() }}</span>
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- Modal Action -->
+                    <div class="p-8 pt-0">
+                        <button wire:click="closeModal" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-black text-xs uppercase tracking-[2px] hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 active:scale-[0.98]">
+                            DISMISS DETAILS
                         </button>
                     </div>
-
                 </div>
             </div>
         </div>

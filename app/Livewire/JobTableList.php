@@ -28,9 +28,12 @@ class JobTableList extends Component
     public $showArchived = false;
 
     public $statusOptions = [
+        'Applied',
         'On Process',
-        'Declined',
-        'Accepted'
+        'Interview',
+        'Offering',
+        'Accepted',
+        'Rejected'
     ];
 
     public $platformOptions = [
@@ -192,7 +195,7 @@ class JobTableList extends Component
 
     public function edit($jobId)
     {
-        $this->dispatch('edit-job', jobId: $jobId)->to('job-application-form');
+        $this->dispatch('edit-job', jobId: $jobId);
     }
 
     public function togglePin($jobId)
@@ -269,9 +272,13 @@ class JobTableList extends Component
     public function getStatusColor($status)
     {
         $colors = [
-            'On Process' => '#3B82F6',
+            'Applied' => '#64748b', 
+            'On Process' => '#3B82F6', 
+            'Interview' => '#8B5CF6',
+            'Offering' => '#14B8A6', 
+            'Accepted' => '#10B981', 
+            'Rejected' => '#EF4444',
             'Declined' => '#EF4444',
-            'Accepted' => '#047857',
         ];
 
         return $colors[$status] ?? '#6B7280';

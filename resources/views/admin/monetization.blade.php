@@ -1,207 +1,198 @@
 <x-admin-layout>
+    @php
+        $monetizationEnabled = \App\Models\Setting::get('monetization_enabled', false);
+        $premiumPrice = \App\Models\Setting::get('premium_price', 199000);
+        $totalUsers = \App\Models\User::where('role', '!=', 'admin')->count();
+        $freeUsers = \App\Models\User::where('role', '!=', 'admin')->where('is_premium', false)->count();
+        $premiumUsers = \App\Models\User::where('role', '!=', 'admin')->where('is_premium', true)->count();
+        $revenue = \App\Models\Payment::where('status', 'SUCCESS')->sum('amount'); // more accurate than $premiumUsers * $premiumPrice
+    @endphp
 
-    <div class="py-4 sm:py-6 lg:py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-6 lg:space-y-8">
+    <div class="space-y-6">
         
         {{-- Success Message --}}
         @if(session('success'))
-            <div class="p-4 bg-emerald-100 border-2 border-emerald-500 rounded-xl flex items-center gap-3 text-emerald-800">
-                <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <span class="font-semibold">{{ session('success') }}</span>
+            <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex items-center gap-3 text-emerald-800 shadow-sm">
+                <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i class="ph-bold ph-check-circle text-emerald-600 text-xl"></i>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold">{{ session('success') }}</h4>
+                </div>
             </div>
         @endif
-
-        {{-- Current Status Banner --}}
-        @php
-            $monetizationEnabled = \App\Models\Setting::get('monetization_enabled', false);
-            $premiumPrice = \App\Models\Setting::get('premium_price', 199000);
-            $totalUsers = \App\Models\User::where('role', '!=', 'admin')->count();
-            $freeUsers = \App\Models\User::where('role', '!=', 'admin')->where('is_premium', false)->count();
-            $premiumUsers = \App\Models\User::where('role', '!=', 'admin')->where('is_premium', true)->count();
-            $revenue = $premiumUsers * $premiumPrice;
-        @endphp
-
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-            <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-                    <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 {{ $monetizationEnabled ? 'bg-purple-100' : 'bg-emerald-100' }} rounded-lg flex items-center justify-center flex-shrink-0">
-                            <span class="text-base sm:text-lg">{{ $monetizationEnabled ? '💎' : '🎁' }}</span>
-                        </div>
-                        <div class="min-w-0 flex-1">
-                            <h3 class="text-base sm:text-lg font-semibold text-gray-900 truncate">Monetization Status</h3>
-                            <p class="text-xs sm:text-sm text-gray-500">
-                                @if($monetizationEnabled)
-                                    Premium features are monetized • Current price: Rp {{ number_format($premiumPrice, 0, ',', '.') }}
-                                @else
-                                    All features are free for everyone • No payment required
-                                @endif
-                            </p>
-                        </div>
+        
+        {{-- Header --}}
+        <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
+            <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/50">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center flex-shrink-0 text-primary-600 shadow-inner">
+                        <i class="ph-duotone ph-currency-circle-dollar text-xl"></i>
                     </div>
-                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                        <span class="px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium {{ $monetizationEnabled ? 'bg-purple-100 text-purple-800' : 'bg-emerald-100 text-emerald-800' }} rounded-full text-center">
-                            @if($monetizationEnabled)
-                                PREMIUM MODE ACTIVE
-                            @else
-                                FREE MODE ACTIVE
-                            @endif
-                        </span>
-                        <a href="{{ route('admin.payments') }}" class="px-3 sm:px-4 py-2 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white rounded-lg transition-colors text-xs sm:text-sm font-medium flex items-center justify-center gap-2">
-                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
-                            </svg>
-                            <span class="hidden sm:inline">Payment Monitoring</span>
-                            <span class="sm:hidden">Payments</span>
-                        </a>
+                    <div>
+                        <h3 class="text-lg font-extrabold text-slate-900 truncate">Monetization Control</h3>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Atur strategi pendapatan & harga</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        {{-- Revenue Stats --}}
-        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
-            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
-                <div class="flex items-center justify-between">
-                    <div class="min-w-0 flex-1">
-                        <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">Total Users</p>
-                        <p class="text-xl sm:text-2xl font-bold text-[#212529]">{{ number_format($totalUsers) }}</p>
-                        <p class="text-[10px] sm:text-xs text-gray-500 mt-1">All registered</p>
-                    </div>
-                    <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
-                        <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
+        {{-- Executive Summary Stats (Bento Grid) --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             
-            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
-                <div class="flex items-center justify-between">
-                    <div class="min-w-0 flex-1">
-                        <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">Free Users</p>
-                        <p class="text-xl sm:text-2xl font-bold text-[#212529]">{{ number_format($freeUsers) }}</p>
-                        <p class="text-[10px] sm:text-xs text-gray-500 mt-1">{{ $totalUsers > 0 ? number_format($freeUsers / $totalUsers * 100, 1) : 0 }}% of total</p>
+            {{-- Total Users --}}
+            <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-slate-300 transition-colors">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-blue-50 to-blue-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Users</p>
+                        <h3 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{{ number_format($totalUsers) }}</h3>
+                        <p class="text-[10px] font-bold text-slate-400 mt-1">Semua pengguna terdaftar</p>
                     </div>
-                    <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
-                        <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-4 sm:p-6">
-                <div class="flex items-center justify-between">
-                    <div class="min-w-0 flex-1">
-                        <p class="text-[10px] sm:text-xs font-medium text-gray-600 mb-1 truncate">Premium Users</p>
-                        <p class="text-xl sm:text-2xl font-bold text-[#212529]">{{ number_format($premiumUsers) }}</p>
-                        <p class="text-[10px] sm:text-xs text-gray-500 mt-1">{{ $totalUsers > 0 ? number_format($premiumUsers / $totalUsers * 100, 1) : 0 }}% conversion</p>
-                    </div>
-                    <div class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
-                        <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                        </svg>
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 shadow-inner">
+                        <i class="ph-duotone ph-users-three text-2xl"></i>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl p-8 border-2 border-amber-200 shadow-md">
-                <div class="flex items-center gap-3 mb-2">
-                    <span class="text-3xl">�</span>
-                    <p class="text-sm font-semibold text-amber-700">Total Revenue</p>
+            {{-- Total Free --}}
+            <div class="bg-white rounded-2xl p-5 border border-emerald-100/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-emerald-200 transition-colors">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Free Users</p>
+                        <h3 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{{ number_format($freeUsers) }}</h3>
+                        <p class="text-[10px] font-bold text-emerald-500 mt-1">Pengguna gratisan</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shadow-inner">
+                        <i class="ph-duotone ph-gift text-2xl"></i>
+                    </div>
                 </div>
-                <p class="text-3xl font-black text-amber-900">Rp {{ number_format($revenue / 1000000, 1) }}M</p>
-                <p class="text-xs text-amber-600 mt-1">From premium subs</p>
             </div>
+
+            {{-- Premium Users --}}
+            <div class="bg-white rounded-2xl p-5 border border-purple-100/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-purple-200 transition-colors">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-purple-50 to-purple-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-purple-400 uppercase tracking-widest mb-1">Premium Users</p>
+                        <h3 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{{ number_format($premiumUsers) }}</h3>
+                        <p class="text-[10px] font-bold text-purple-500 mt-1">{{ $totalUsers > 0 ? number_format($premiumUsers / $totalUsers * 100, 1) : 0 }}% conversion rate</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 shadow-inner">
+                        <i class="ph-duotone ph-crown text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Total Revenue --}}
+            <div class="bg-white rounded-2xl p-5 border border-amber-100/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-amber-200 transition-colors">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-amber-50 to-amber-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-amber-500 uppercase tracking-widest mb-1">Total Revenue</p>
+                        <h3 class="text-xl lg:text-2xl font-black text-amber-600 tracking-tight mt-1">Rp {{ number_format($revenue / 1000000, 1) }}M</h3>
+                        <p class="text-[10px] font-bold text-amber-500 mt-1">Dari premium subs</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shadow-inner">
+                        <i class="ph-duotone ph-vault text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         {{-- Premium Pricing Configuration --}}
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 lg:p-8">
-            <div class="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
+        <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-6">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner">
+                    <i class="ph-duotone ph-tag text-2xl text-primary-600"></i>
                 </div>
-                <div class="min-w-0 flex-1">
-                    <h3 class="text-xl sm:text-2xl font-bold text-gray-800 truncate">Premium Pricing</h3>
-                    <p class="text-xs sm:text-sm text-gray-500">Set the subscription price for premium features</p>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">Premium Pricing Configuration</h3>
+                    <p class="text-sm font-medium text-slate-500">Atur harga langganan untuk akses fitur premium</p>
                 </div>
             </div>
 
-            <form action="{{ route('admin.update-premium-price') }}" method="POST" class="space-y-4 sm:space-y-6">
+            <form action="{{ route('admin.update-premium-price') }}" method="POST" class="space-y-6">
                 @csrf
                 @method('PUT')
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {{-- Price Input --}}
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">
-                            Premium Price (IDR)
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-widest mb-3">
+                            Harga Premium Saat Ini (IDR)
                         </label>
-                        <div class="relative">
-                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">Rp</span>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 font-black">
+                                Rp
+                            </div>
                             <input 
                                 type="number" 
                                 name="premium_price"
                                 value="{{ $premiumPrice }}"
-                                class="w-full pl-12 pr-4 py-3 border-2 border-purple-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-lg font-bold"
+                                class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xl font-black text-slate-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white transition-all shadow-sm group-hover:border-slate-300"
                                 min="0"
                                 step="1000"
                                 required>
                         </div>
-                        <p class="text-xs text-gray-500 mt-2">Current: <strong class="text-purple-700">Rp {{ number_format($premiumPrice, 0, ',', '.') }}</strong></p>
+                        <div class="mt-3 flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                            <p class="text-xs font-bold text-slate-500">Active Price: <span class="text-primary-600">Rp {{ number_format($premiumPrice, 0, ',', '.') }}</span></p>
+                        </div>
                     </div>
 
+                    {{-- Suggested Pricing --}}
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">
-                            Suggested Pricing
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-widest mb-3">
+                            Rekomendasi Harga
                         </label>
-                        <div class="space-y-2">
-                            <button type="button" onclick="document.querySelector('input[name=premium_price]').value = 99000" class="w-full text-left px-4 py-2 bg-gray-50 hover:bg-purple-50 border border-gray-200 rounded-lg transition-colors">
-                                <span class="font-semibold">Rp 99.000</span> <span class="text-xs text-gray-500">- Budget friendly</span>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <button type="button" onclick="document.querySelector('input[name=premium_price]').value = 99000" class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl hover:bg-primary-50 hover:border-primary-200 hover:text-primary-700 transition-all group cursor-pointer shadow-sm">
+                                <span class="text-lg font-black text-slate-800 group-hover:text-primary-700">99k</span>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase mt-1">Budget</span>
                             </button>
-                            <button type="button" onclick="document.querySelector('input[name=premium_price]').value = 199000" class="w-full text-left px-4 py-2 bg-gray-50 hover:bg-purple-50 border border-gray-200 rounded-lg transition-colors">
-                                <span class="font-semibold">Rp 199.000</span> <span class="text-xs text-gray-500">- Recommended</span>
+                            <button type="button" onclick="document.querySelector('input[name=premium_price]').value = 199000" class="flex flex-col items-center justify-center p-3 bg-white border border-primary-500 rounded-xl hover:bg-primary-50 transition-all group cursor-pointer shadow-md relative overflow-hidden">
+                                <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary-400 to-primary-600"></div>
+                                <span class="text-lg font-black text-primary-700">199k</span>
+                                <span class="text-[10px] font-bold text-primary-500 uppercase mt-1">Recommended</span>
                             </button>
-                            <button type="button" onclick="document.querySelector('input[name=premium_price]').value = 299000" class="w-full text-left px-4 py-2 bg-gray-50 hover:bg-purple-50 border border-gray-200 rounded-lg transition-colors">
-                                <span class="font-semibold">Rp 299.000</span> <span class="text-xs text-gray-500">- Premium tier</span>
+                            <button type="button" onclick="document.querySelector('input[name=premium_price]').value = 299000" class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl hover:bg-purple-50 hover:border-purple-200 hover:text-purple-700 transition-all group cursor-pointer shadow-sm">
+                                <span class="text-lg font-black text-slate-800 group-hover:text-purple-700">299k</span>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase mt-1">Premium</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-100">
                     <button 
                         type="submit"
-                        class="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl text-sm sm:text-base font-bold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 shadow-lg">
-                        💾 Update Premium Price
+                        class="w-full sm:w-auto px-8 py-3 bg-slate-900 text-white rounded-xl text-sm font-bold hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                        <i class="ph-bold ph-floppy-disk"></i> Simpan Harga
                     </button>
-                    <a href="{{ route('admin.index') }}" class="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 bg-gray-200 text-gray-700 rounded-xl text-sm sm:text-base font-bold hover:bg-gray-300 transition-colors text-center">
-                        Cancel
+                    <a href="{{ route('admin.index') }}" class="w-full sm:w-auto px-8 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl text-sm font-bold hover:bg-slate-50 transition-colors text-center">
+                        Batal
                     </a>
                 </div>
             </form>
         </div>
 
-        {{-- Monetization Control --}}
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-            <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
-                <div class="flex items-center gap-2 sm:gap-3">
-                    <div class="w-7 h-7 sm:w-8 sm:h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
+        {{-- Monetization Control (Livewire Component) --}}
+        <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0 text-purple-600">
+                        <i class="ph-duotone ph-toggle-left text-lg"></i>
                     </div>
-                    <div class="min-w-0 flex-1">
-                        <h3 class="text-base sm:text-lg font-semibold text-gray-900 truncate">Monetization Control</h3>
-                        <p class="text-xs sm:text-sm text-gray-500">Manage pricing phases and premium features</p>
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900">Monetization Control Panel</h3>
+                        <p class="text-[11px] font-medium text-slate-500">Atur akses fitur dan mode monetisasi (Free vs Premium)</p>
                     </div>
                 </div>
             </div>
-            <div class="p-4 sm:p-6">
+            <div class="p-6">
                 @livewire('admin.monetization-control')
             </div>
         </div>

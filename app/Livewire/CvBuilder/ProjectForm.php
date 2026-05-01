@@ -3,6 +3,7 @@
 namespace App\Livewire\CvBuilder;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Models\UserProject;
 use Livewire\Component;
 
@@ -73,16 +74,38 @@ class ProjectForm extends Component
     
     public function save()
     {
-        $this->validate([
+        $validator = Validator::make([
+            'project_name' => $this->project_name,
+            'role'         => $this->role,
+            'start_date'   => $this->start_date,
+            'end_date'     => $this->end_date,
+            'project_url'  => $this->project_url,
+            'technologies' => $this->technologies,
+            'description'  => $this->description,
+        ], [
             'project_name' => 'required|string|max:255',
-            'role' => 'nullable|string|max:255',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after:start_date',
-            'project_url' => 'nullable|url|max:500',
+            'role'         => 'nullable|string|max:255',
+            'start_date'   => 'required|date',
+            'end_date'     => 'nullable|date|after:start_date',
+            'project_url'  => 'nullable|url|max:500',
             'technologies' => 'nullable|string|max:500',
-            'description' => 'nullable|string',
+            'description'  => 'nullable|string',
+        ], [
+            'project_name.required' => 'Project name is required.',
+            'start_date.required'   => 'Start date is required.',
+            'end_date.after'        => 'End date must be after start date.',
+            'project_url.url'       => 'Project URL must be a valid URL.',
         ]);
-        
+
+        if ($validator->fails()) {
+            $this->setErrorBag($validator->errors());
+            $this->dispatch('showNotification', [
+                'type'    => 'error',
+                'title'   => 'Incomplete Form',
+                'message' => $validator->errors()->first(),
+            ]);
+            return;
+        }
         $data = [
             'user_id' => Auth::id(),
             'project_name' => $this->project_name,

@@ -1,149 +1,145 @@
 <x-app-layout>
+    <x-slot name="header">
+        <div class="flex flex-col">
+            <h1 class="text-2xl font-bold text-slate-900 leading-tight tracking-tight">
+                AI <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-purple-600 to-[#4e71c5]">Analyzer</span>
+            </h1>
+            <p class="text-xs text-slate-500 font-medium mt-1">Optimize your resume against specific job requirements using AI</p>
+        </div>
+    </x-slot>
 
-    <div class="py-6 sm:py-12">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Info Card -->
-            <div class="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-4 sm:p-6 mb-6">
-                <div class="flex items-start space-x-3">
-                    <div class="flex-shrink-0">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="text-sm sm:text-base font-semibold text-gray-900 mb-1">Cara Menggunakan</h3>
-                        <ul class="text-xs sm:text-sm text-gray-700 space-y-1">
-                            <li>1. Upload file CV/Resume Anda dalam format PDF</li>
-                            <li>2. Masukkan deskripsi pekerjaan yang ingin Anda lamar</li>
-                            <li>3. Tunggu AI menganalisis dan memberikan rekomendasi perbaikan</li>
-                            <li>4. Terima rekomendasi perbaikan untuk setiap bagian CV Anda</li>
-                        </ul>
+    <div class="bg-gray-50 min-h-screen pb-20">
+        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                {{-- Main Analysis Form --}}
+                <div class="lg:col-span-8">
+                    <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+                        {{-- Widget Header --}}
+                        <div class="px-8 py-8 bg-slate-50/50 border-b border-slate-100">
+                            <h2 class="text-xl font-black text-slate-900 tracking-tight">Analysis Configuration</h2>
+                            <p class="text-sm text-slate-500 mt-1 font-medium">Provide your resume and the target job details to start the deep-scan process.</p>
+                        </div>
+
+                        <div class="p-8 sm:p-12">
+                            <form action="{{ route('ai-analyzer.analyze') }}" method="POST" enctype="multipart/form-data" id="analyzeForm" class="space-y-10">
+                                @csrf
+
+                                @if ($errors->has('analyze_error'))
+                                    <div class="bg-red-50 border border-red-100 rounded-xl p-4 flex items-center gap-3 text-red-700">
+                                        <i class="ph-bold ph-warning-circle text-lg"></i>
+                                        <p class="text-sm font-semibold">{{ $errors->first('analyze_error') }}</p>
+                                    </div>
+                                @endif
+
+                                {{-- Section 1: Resume Upload --}}
+                                <div class="space-y-6">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-900 font-bold text-sm">1</div>
+                                        <h3 class="text-base font-bold text-slate-900">Upload Resume</h3>
+                                    </div>
+                                    
+                                    <div id="upload-area" class="relative group border-2 border-dashed border-slate-200 rounded-2xl p-12 transition-all hover:border-indigo-500 hover:bg-slate-50/50 cursor-pointer text-center">
+                                        <input id="resume" name="resume" type="file" accept=".pdf" class="absolute inset-0 opacity-0 cursor-pointer z-10" required>
+                                        <div class="flex flex-col items-center">
+                                            <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:text-indigo-600 transition-colors mb-4">
+                                                <i class="ph ph-file-arrow-up text-3xl"></i>
+                                            </div>
+                                            <p class="text-sm font-bold text-slate-900 mb-1">Click to upload or drag and drop</p>
+                                            <p class="text-xs text-slate-500">PDF format only (Max. 10MB)</p>
+                                        </div>
+                                    </div>
+
+                                    {{-- Selected File State --}}
+                                    <div id="file-success" class="hidden">
+                                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 flex items-center justify-between">
+                                            <div class="flex items-center gap-4">
+                                                <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-indigo-600 border border-slate-100 shadow-sm">
+                                                    <i class="ph-fill ph-file-pdf text-2xl"></i>
+                                                </div>
+                                                <div class="min-w-0">
+                                                    <p id="file-name" class="text-sm font-bold text-slate-900 truncate max-w-[200px] sm:max-w-md"></p>
+                                                    <p id="file-size" class="text-[11px] text-slate-500 font-medium"></p>
+                                                </div>
+                                            </div>
+                                            <button type="button" id="remove-file" class="p-2 text-slate-400 hover:text-red-500 transition-colors">
+                                                <i class="ph-bold ph-trash text-lg"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Section 2: Job Description --}}
+                                <div class="space-y-6">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-900 font-bold text-sm">2</div>
+                                        <h3 class="text-base font-bold text-slate-900">Target Job Description</h3>
+                                    </div>
+                                    
+                                    <div class="relative">
+                                        <textarea id="job_description" name="job_description" rows="12" 
+                                                  class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all outline-none resize-none leading-relaxed" 
+                                                  placeholder="Paste the requirements and responsibilities of the job you're targeting..." required minlength="50" maxlength="2500">{{ old('job_description') }}</textarea>
+                                        <div class="absolute bottom-4 right-5 flex items-center gap-2">
+                                            <div id="char-indicator" class="w-2 h-2 rounded-full bg-slate-200"></div>
+                                            <span class="text-[11px] font-bold text-slate-400">
+                                                <span id="char-count">0</span> / 2500 characters
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Actions --}}
+                                <div class="flex items-center justify-end gap-4 pt-4">
+                                    <a href="{{ route('tracker') }}" class="px-6 py-3 text-sm font-bold text-slate-500 hover:text-slate-900 transition-colors">Cancel</a>
+                                    <button type="submit" id="submit-btn" class="magnetic-btn px-10 py-3.5 bg-indigo-600 text-white rounded-xl font-bold text-sm hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 active:scale-95 flex items-center gap-3">
+                                        <i id="loading-spinner" class="ph-bold ph-spinner animate-spin hidden"></i>
+                                        <span id="submit-text">Run AI Analysis</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Upload Form -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <form action="{{ route('ai-analyzer.analyze') }}" method="POST" enctype="multipart/form-data" id="analyzeForm">
-                    @csrf
-
-                    <!-- Error Messages -->
-                    @if ($errors->has('analyze_error'))
-                        <div class="bg-red-50 border-l-4 border-red-400 p-4 m-4 sm:m-6">
-                            <div class="flex">
-                                <div class="flex-shrink-0">
-                                    <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm text-red-700">{{ $errors->first('analyze_error') }}</p>
-                                </div>
+                {{-- Sidebar: Guidance --}}
+                <div class="lg:col-span-4 space-y-8">
+                    <div class="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm">
+                        <h4 class="text-sm font-bold text-slate-900 uppercase tracking-widest mb-6">Instructions</h4>
+                        <div class="space-y-6">
+                            <div class="flex gap-4">
+                                <div class="w-6 h-6 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 text-xs font-bold shrink-0">1</div>
+                                <p class="text-sm text-slate-600 leading-relaxed">Upload your current resume in **PDF format** for the AI to parse your skills and experience.</p>
                             </div>
-                        </div>
-                    @endif
-
-                    <div class="p-4 sm:p-6 space-y-6">
-                        <!-- Resume Upload -->
-                        <div>
-                            <label for="resume" class="block text-sm font-medium text-gray-700 mb-2">
-                                Upload CV/Resume (PDF)
-                                <span class="text-red-500">*</span>
-                            </label>
-                            <div id="upload-area" class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-purple-400 transition-colors">
-                                <div class="space-y-1 text-center">
-                                    <svg id="upload-icon" class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-                                    <div class="flex text-sm text-gray-600">
-                                        <label for="resume" class="relative cursor-pointer bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-purple-500">
-                                            <span>Pilih file</span>
-                                            <input id="resume" name="resume" type="file" accept=".pdf" class="sr-only" required>
-                                        </label>
-                                        <p class="pl-1">atau drag & drop</p>
-                                    </div>
-                                    <p class="text-xs text-gray-500">PDF hingga 10MB</p>
-                                </div>
+                            <div class="flex gap-4">
+                                <div class="w-6 h-6 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 text-xs font-bold shrink-0">2</div>
+                                <p class="text-sm text-slate-600 leading-relaxed">Provide the **complete job description** including requirements to ensure accurate matching.</p>
                             </div>
-                            @error('resume')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                            <!-- Success message when file is uploaded -->
-                            <div id="file-success" class="mt-3 hidden">
-                                <div class="bg-green-50 border-l-4 border-green-400 p-3 rounded-r-lg">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0">
-                                            <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
-                                        <div class="ml-3 flex-1">
-                                            <p class="text-sm font-medium text-green-800">
-                                                File berhasil diunggah: <span id="file-name" class="font-semibold"></span>
-                                            </p>
-                                            <p class="text-xs text-green-700 mt-0.5">
-                                                Ukuran: <span id="file-size"></span>
-                                            </p>
-                                        </div>
-                                        <button type="button" id="remove-file" class="ml-3 flex-shrink-0 text-green-600 hover:text-green-800 transition-colors">
-                                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
+                            <div class="flex gap-4">
+                                <div class="w-6 h-6 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 text-xs font-bold shrink-0">3</div>
+                                <p class="text-sm text-slate-600 leading-relaxed">Our AI will generate a **Match Score** and suggest specific improvements for your CV.</p>
                             </div>
-                        </div>
-
-                        <!-- Job Description -->
-                        <div>
-                            <label for="job_description" class="block text-sm font-medium text-gray-700 mb-2">
-                                Deskripsi Pekerjaan (Job Description)
-                                <span class="text-red-500">*</span>
-                            </label>
-                                <textarea
-                                id="job_description"
-                                name="job_description"
-                                rows="8"
-                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm @error('job_description') border-red-300 @enderror"
-                                placeholder="Salin dan tempel deskripsi pekerjaan dari lowongan yang ingin Anda lamar di sini..."
-                                required
-                                minlength="50"
-                                maxlength="2500"
-                            >{{ old('job_description') }}</textarea>
-                            @error('job_description')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                            <p class="mt-2 text-xs text-gray-500">
-                                <span id="char-count">0</span> / 2500 karakter (minimal 50 karakter)
-                            </p>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div class="flex items-center justify-end space-x-3 pt-4 border-t border-gray-200">
-                            <a href="{{ route('tracker') }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                                Batal
-                            </a>
-                            <button
-                                type="submit"
-                                id="submit-btn"
-                                class="px-6 py-2 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center space-x-2"
-                            >
-                                <svg id="loading-spinner" class="hidden animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                                <span id="submit-text">Analisis dengan AI</span>
-                            </button>
                         </div>
                     </div>
-                </form>
+
+                    <div class="bg-slate-900 rounded-3xl p-8 text-white relative overflow-hidden">
+                        <div class="relative z-10">
+                            <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center mb-6">
+                                <i class="ph-bold ph-shield-check text-xl text-indigo-400"></i>
+                            </div>
+                            <h4 class="text-base font-bold mb-3 tracking-tight">Privacy & Security</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Your data is processed securely and is only used to provide your analysis. Resumes are not stored permanently.
+                            </p>
+                        </div>
+                        <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-indigo-600/10 rounded-full blur-2xl"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // File upload handling with success indicator
         const resumeInput = document.getElementById('resume');
         const uploadArea = document.getElementById('upload-area');
         const fileSuccess = document.getElementById('file-success');
@@ -154,66 +150,43 @@
         resumeInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
-                // Format file size
                 const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
-                
-                // Update file info
                 fileName.textContent = file.name;
                 fileSize.textContent = sizeInMB + ' MB';
-                
-                // Show success message
                 fileSuccess.classList.remove('hidden');
-                
-                // Update upload area styling
-                uploadArea.classList.remove('border-gray-300');
-                uploadArea.classList.add('border-green-400', 'bg-green-50');
+                uploadArea.classList.add('hidden');
             }
         });
         
-        // Remove file handler
         removeFileBtn.addEventListener('click', function() {
-            // Clear file input
             resumeInput.value = '';
-            
-            // Hide success message
             fileSuccess.classList.add('hidden');
-            
-            // Reset upload area styling
-            uploadArea.classList.remove('border-green-400', 'bg-green-50');
-            uploadArea.classList.add('border-gray-300');
+            uploadArea.classList.remove('hidden');
         });
 
-        // Character counter
         const jobDescTextarea = document.getElementById('job_description');
         const charCount = document.getElementById('char-count');
+        const charIndicator = document.getElementById('char-indicator');
         
         jobDescTextarea.addEventListener('input', function() {
             const length = this.value.length;
             charCount.textContent = length;
             
             if (length < 50) {
-                charCount.classList.add('text-red-600');
-                charCount.classList.remove('text-gray-500');
+                charIndicator.className = 'w-2 h-2 rounded-full bg-red-400';
+            } else if (length < 500) {
+                charIndicator.className = 'w-2 h-2 rounded-full bg-amber-400';
             } else {
-                charCount.classList.remove('text-red-600');
-                charCount.classList.add('text-gray-500');
+                charIndicator.className = 'w-2 h-2 rounded-full bg-emerald-400';
             }
         });
 
-        // Update char count on load if there's old input
-        if (jobDescTextarea.value) {
-            jobDescTextarea.dispatchEvent(new Event('input'));
-        }
-
-        // Form submission loading state
         document.getElementById('analyzeForm').addEventListener('submit', function() {
-            const submitBtn = document.getElementById('submit-btn');
-            const submitText = document.getElementById('submit-text');
-            const loadingSpinner = document.getElementById('loading-spinner');
-            
-            submitBtn.disabled = true;
-            submitText.textContent = 'Menganalisis...';
-            loadingSpinner.classList.remove('hidden');
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+            document.getElementById('submit-text').textContent = 'Analyzing...';
+            document.getElementById('loading-spinner').classList.remove('hidden');
         });
     </script>
 </x-app-layout>

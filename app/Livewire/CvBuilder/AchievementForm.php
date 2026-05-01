@@ -3,6 +3,7 @@
 namespace App\Livewire\CvBuilder;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Models\UserAchievement;
 use Livewire\Component;
 
@@ -69,15 +70,36 @@ class AchievementForm extends Component
     
     public function save()
     {
-        $this->validate([
-            'title' => 'required|string|max:255',
-            'issuer' => 'required|string|max:255',
-            'issue_date' => 'required|date',
-            'credential_id' => 'nullable|string|max:255',
+        $validator = Validator::make([
+            'title'          => $this->title,
+            'issuer'         => $this->issuer,
+            'issue_date'     => $this->issue_date,
+            'credential_id'  => $this->credential_id,
+            'credential_url' => $this->credential_url,
+            'description'    => $this->description,
+        ], [
+            'title'          => 'required|string|max:255',
+            'issuer'         => 'required|string|max:255',
+            'issue_date'     => 'required|date',
+            'credential_id'  => 'nullable|string|max:255',
             'credential_url' => 'nullable|url|max:500',
-            'description' => 'nullable|string',
+            'description'    => 'nullable|string',
+        ], [
+            'title.required'      => 'Achievement/certificate title is required.',
+            'issuer.required'     => 'Issuing organization is required.',
+            'issue_date.required' => 'Issue date is required.',
+            'credential_url.url'  => 'Credential URL must be a valid URL.',
         ]);
-        
+
+        if ($validator->fails()) {
+            $this->setErrorBag($validator->errors());
+            $this->dispatch('showNotification', [
+                'type'    => 'error',
+                'title'   => 'Incomplete Form',
+                'message' => $validator->errors()->first(),
+            ]);
+            return;
+        }
         $data = [
             'user_id' => Auth::id(),
             'title' => $this->title,

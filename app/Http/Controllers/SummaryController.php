@@ -11,7 +11,7 @@ class SummaryController extends Controller
     public function index(Request $request)
     {
         $userId = auth()->id();
-        $timeFilter = $request->get('timeFilter', 'monthly'); // Default to monthly
+        $timeFilter = $request->get('timeFilter', 'all'); // Default to all
 
         // Get date range based on time filter
         $dateRange = $this->getDateRange($timeFilter);
