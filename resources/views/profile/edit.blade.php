@@ -103,41 +103,54 @@
                     </div>
 
                     {{-- Profile Completeness --}}
-                    <div class="bg-white rounded-[2rem] border border-slate-200/60 p-6 shadow-sm">
-                        <div class="flex items-center justify-between mb-4">
-                            <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Completeness</h4>
-                            <span class="text-[10px] font-black text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">{{ $percentage }}%</span>
+                    <div class="bg-white rounded-3xl border border-slate-200/70 p-5 shadow-sm">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Profile Completeness</h4>
+                            <span class="text-[10px] font-black {{ $percentage === 100 ? 'text-emerald-600 bg-emerald-50' : 'text-indigo-600 bg-indigo-50' }} px-2 py-0.5 rounded-full">{{ $percentage }}%</span>
                         </div>
-                        <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden mb-4">
-                            <div class="h-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-1000 ease-out" style="width: {{ $percentage }}%"></div>
+                        <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden mb-4">
+                            <div class="h-full {{ $percentage === 100 ? 'bg-emerald-500' : 'bg-gradient-to-r from-indigo-500 to-purple-500' }} transition-all duration-1000 ease-out" style="width: {{ $percentage }}%"></div>
                         </div>
-                        <p class="text-[9px] font-bold text-slate-400 leading-relaxed uppercase tracking-wider">
-                            @if($percentage < 100)
-                                Complete your profile to stand out in CV generation.
-                            @else
-                                Your profile is perfectly complete! 🚀
-                            @endif
-                        </p>
+                        <div class="space-y-1.5">
+                            @php
+                                $items = [
+                                    ['Photo',    (bool)$user->logo],
+                                    ['Bio',      (bool)($profile?->bio)],
+                                    ['Phone',    (bool)($profile?->phone_number)],
+                                    ['Location', (bool)($profile?->domicile)],
+                                    ['LinkedIn', (bool)($profile?->linkedin_url)],
+                                    ['Website',  (bool)($profile?->website_url)],
+                                ];
+                            @endphp
+                            @foreach($items as [$label, $done])
+                            <div class="flex items-center gap-2">
+                                <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0 {{ $done ? 'bg-emerald-100' : 'bg-slate-100' }}">
+                                    <i class="ph-bold {{ $done ? 'ph-check text-emerald-600' : 'ph-minus text-slate-300' }} text-[8px]"></i>
+                                </div>
+                                <span class="text-[11px] font-{{ $done ? 'bold text-slate-700' : 'medium text-slate-400' }}">{{ $label }}</span>
+                            </div>
+                            @endforeach
+                        </div>
                     </div>
 
                     {{-- Navigation Tabs --}}
-                    <div class="bg-white rounded-[2rem] border border-slate-200/60 p-3 shadow-sm">
-                        <nav class="flex flex-col gap-1.5">
-                            <button onclick="switchTab('account')" id="tab-account" class="tab-btn active flex items-center gap-4 px-5 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">
-                                <i class="ph-bold ph-user text-xl"></i>
-                                <span>Account Info</span>
+                    <div class="bg-white rounded-3xl border border-slate-200/70 p-2.5 shadow-sm">
+                        <nav class="flex flex-col gap-1">
+                            @foreach([
+                                ['account',  'ph-user',               'Account Info'],
+                                ['personal', 'ph-identification-card', 'Personal Info'],
+                                ['security', 'ph-shield-check',       'Security'],
+                            ] as [$tab, $icon, $label])
+                            <button onclick="switchTab('{{ $tab }}')" id="tab-{{ $tab }}"
+                                    class="tab-btn {{ $tab === 'account' ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">
+                                <i class="ph-bold {{ $icon }} text-base"></i>
+                                <span>{{ $label }}</span>
                             </button>
-                            <button onclick="switchTab('personal')" id="tab-personal" class="tab-btn flex items-center gap-4 px-5 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">
-                                <i class="ph-bold ph-identification-card text-xl"></i>
-                                <span>Personal Info</span>
-                            </button>
-                            <button onclick="switchTab('security')" id="tab-security" class="tab-btn flex items-center gap-4 px-5 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">
-                                <i class="ph-bold ph-shield-check text-xl"></i>
-                                <span>Security</span>
-                            </button>
-                            <div class="my-2 border-t border-slate-50"></div>
-                            <button onclick="switchTab('danger')" id="tab-danger" class="tab-btn flex items-center gap-4 px-5 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all hover:bg-rose-50 hover:text-rose-600">
-                                <i class="ph-bold ph-warning-octagon text-xl"></i>
+                            @endforeach
+                            <div class="my-1.5 border-t border-slate-100"></div>
+                            <button onclick="switchTab('danger')" id="tab-danger"
+                                    class="tab-btn flex items-center gap-3 px-4 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all hover:bg-rose-50 hover:text-rose-600">
+                                <i class="ph-bold ph-warning-octagon text-base"></i>
                                 <span>Danger Zone</span>
                             </button>
                         </nav>

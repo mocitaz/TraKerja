@@ -131,27 +131,11 @@
             </div>
 
             {{-- Pro Tip / Info Box --}}
-            <div class="bg-indigo-900 rounded-3xl p-8 text-white relative overflow-hidden shadow-xl shadow-indigo-100">
-                <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                    <div class="w-20 h-20 bg-white/10 backdrop-blur-xl rounded-[2rem] flex items-center justify-center text-white shrink-0 border border-white/20">
-                        <i class="ph-duotone ph-lightbulb text-4xl"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-xl font-black tracking-tight mb-2">Pro Tip: Complete Everything</h4>
-                        <p class="text-indigo-100 font-medium leading-relaxed max-w-2xl">
-                            Filling in all sections like Work Experience and Projects significantly increases your ATS score. Once you're done, use the 
-                            <span class="text-white font-black">Generate CV</span> button to select a professional template and export your resume!
-                        </p>
-                    </div>
-                    <div class="md:ml-auto">
-                        <button class="px-6 py-3 bg-white text-indigo-900 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-indigo-50 transition-all">
-                            LEARN MORE
-                        </button>
-                    </div>
-                </div>
-                {{-- Decorative background element --}}
-                <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl"></div>
-                <div class="absolute -left-20 -top-20 w-48 h-48 bg-violet-500/20 rounded-full blur-3xl"></div>
+            <div class="flex items-center gap-3 px-4 py-3 bg-indigo-50 border border-indigo-200 rounded-2xl text-sm">
+                <i class="ph-duotone ph-lightbulb text-indigo-500 text-lg shrink-0"></i>
+                <p class="text-indigo-700 font-medium leading-snug">
+                    <span class="font-black">Pro Tip:</span> Complete all sections to boost your ATS score. Use <span class="font-black">Generate CV</span> to export your resume.
+                </p>
             </div>
         </div>
     </div>
