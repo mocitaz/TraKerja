@@ -154,9 +154,166 @@
             </div>
         </div>
 
+        {{-- Premium Toast Container --}}
+        <div id="toast-container" class="fixed bottom-8 right-8 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
+
         @livewireScripts
         
+        {{-- Premium Confirmation Modal (Aligned with Job Modal) --}}
+        <div id="confirmation-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xl hidden z-[10001] flex items-center justify-center p-4 transition-all duration-300 pointer-events-none">
+            <div class="bg-white rounded-[2rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.2)] max-w-sm w-full flex flex-col overflow-hidden border border-slate-100 transform scale-95 opacity-0 transition-all duration-300 pointer-events-auto">
+                <!-- Modal Header: Match Add/Edit Style -->
+                <div class="bg-white px-6 py-5 text-slate-900 flex justify-between items-center border-b border-slate-100 shrink-0">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shadow-sm">
+                            <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-6 h-6 object-contain">
+                        </div>
+                        <div>
+                            <h3 id="confirm-title" class="text-sm font-black tracking-tight">Confirm Action</h3>
+                            <p class="text-slate-400 text-[8px] font-black uppercase tracking-widest mt-0.5">Career Growth Tracking</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-8 text-center">
+                    <div class="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-rose-100/50">
+                        <i class="ph-fill ph-trash text-rose-500 text-3xl"></i>
+                    </div>
+                    <p id="confirm-message" class="text-[11px] font-bold text-slate-500 leading-relaxed mb-8 px-4">Are you sure you want to proceed with this action? This cannot be undone.</p>
+                    <div class="flex items-center gap-3">
+                        <button onclick="closeConfirmModal()" class="flex-1 px-6 py-3.5 bg-slate-50 text-slate-400 text-[10px] font-black rounded-xl hover:bg-slate-100 transition-all uppercase tracking-widest">Cancel</button>
+                        <button id="confirm-button" class="flex-1 px-6 py-3.5 bg-rose-600 text-white text-[10px] font-black rounded-xl hover:bg-rose-700 transition-all shadow-xl shadow-rose-100 active:scale-95 uppercase tracking-widest">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
+            let activeConfirmCallback = null;
+
+            function openConfirmModal(title, message, btnText, callback) {
+                const modal = document.getElementById('confirmation-modal');
+                const content = modal.querySelector('div');
+                
+                document.getElementById('confirm-title').innerText = title;
+                document.getElementById('confirm-message').innerText = message;
+                document.getElementById('confirm-button').innerText = btnText;
+                
+                activeConfirmCallback = callback;
+                
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                setTimeout(() => {
+                    content.classList.remove('scale-95', 'opacity-0');
+                }, 10);
+            }
+
+            function closeConfirmModal() {
+                const modal = document.getElementById('confirmation-modal');
+                const content = modal.querySelector('div');
+                
+                content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }, 300);
+            }
+
+            document.getElementById('confirm-button').onclick = function() {
+                if (activeConfirmCallback) activeConfirmCallback();
+                closeConfirmModal();
+            };
+
+            function confirmLogout(formId = 'logout-form') {
+                if (typeof window.openConfirmModal === 'function') {
+                    window.openConfirmModal(
+                        'Sign Out?',
+                        'Are you sure you want to end your current session? You will need to sign in again to access your tracker.',
+                        'Sign Out Now',
+                        function() {
+                            const form = document.getElementById(formId) || document.getElementById('logout-form');
+                            if (form) form.submit();
+                        }
+                    );
+                } else {
+                    if (confirm('Are you sure you want to sign out?')) {
+                        const form = document.getElementById(formId) || document.getElementById('logout-form');
+                        if (form) form.submit();
+                    }
+                }
+            }
+
+            // Listen for Livewire confirm-action
+            document.addEventListener('livewire:init', () => {
+                Livewire.on('confirm-action', (event) => {
+                    const data = Array.isArray(event) ? event[0] : event;
+                    openConfirmModal(data.title, data.message, data.btnText, () => {
+                        Livewire.dispatch(data.onConfirm, data.params || {});
+                    });
+                });
+            });
+
+            // Toast Notification System
+            function showToast(type, title, message, duration = 4000) {
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                
+                const icons = {
+                    success: 'ph-fill ph-check-circle text-emerald-500',
+                    error: 'ph-fill ph-warning-circle text-rose-500',
+                    info: 'ph-fill ph-info text-indigo-500',
+                    warning: 'ph-fill ph-warning text-amber-500'
+                };
+
+                const bgColors = {
+                    success: 'bg-emerald-50 border-emerald-100',
+                    error: 'bg-rose-50 border-rose-100',
+                    info: 'bg-indigo-50 border-indigo-100',
+                    warning: 'bg-amber-50 border-amber-100'
+                };
+
+                toast.className = `flex items-start gap-4 p-4 rounded-[1.25rem] border shadow-[0_20px_40px_-12px_rgba(0,0,0,0.1)] backdrop-blur-md pointer-events-auto transition-all duration-500 transform translate-x-12 opacity-0 ${bgColors[type] || bgColors.info}`;
+                toast.style.minWidth = '320px';
+                toast.style.maxWidth = '420px';
+
+                toast.innerHTML = `
+                    <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0">
+                        <i class="ph-bold ${icons[type] || icons.info} text-xl"></i>
+                    </div>
+                    <div class="flex-1 pt-0.5">
+                        <h4 class="text-[11px] font-black text-slate-900 uppercase tracking-widest">${title}</h4>
+                        <p class="text-[10px] font-bold text-slate-500 mt-1 leading-relaxed">${message}</p>
+                    </div>
+                    <button class="text-slate-300 hover:text-slate-600 transition-colors pt-1">
+                        <i class="ph-bold ph-x text-xs"></i>
+                    </button>
+                `;
+
+                container.appendChild(toast);
+
+                // Animate In
+                setTimeout(() => {
+                    toast.classList.remove('translate-x-12', 'opacity-0');
+                }, 10);
+
+                const removeToast = () => {
+                    toast.classList.add('translate-x-12', 'opacity-0');
+                    setTimeout(() => toast.remove(), 500);
+                };
+
+                toast.querySelector('button').onclick = removeToast;
+                if (duration > 0) setTimeout(removeToast, duration);
+            }
+
+            // Listen for Livewire showNotification
+            document.addEventListener('livewire:init', () => {
+                Livewire.on('showNotification', (event) => {
+                    // Support both object and spread arguments
+                    const data = Array.isArray(event) ? event[0] : event;
+                    showToast(data.type, data.title, data.message, data.duration);
+                });
+            });
+
             // Page & View Transitions
             window.addEventListener('view-switched', (e) => {
                 const container = document.getElementById(`${e.detail.type}-view-container`);

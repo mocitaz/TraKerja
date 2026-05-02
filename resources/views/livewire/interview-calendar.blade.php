@@ -77,10 +77,11 @@
                         <!-- Interviews on this day -->
                         <div class="space-y-1.5">
                             @foreach($day['interviews'] as $interview)
-                                <button wire:click="viewInterviewDetails({{ $interview['id'] }})" 
-                                     class="w-full text-left p-2 rounded-xl text-[10px] font-black transition-all hover:scale-[1.02] active:scale-95 shadow-sm
-                                            {{ $interview['recruitment_stage'] === 'HR - Interview' ? 'bg-blue-50 text-blue-700 border border-blue-100 hover:bg-blue-100' : '' }}
-                                            {{ $interview['recruitment_stage'] === 'User - Interview' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100 hover:bg-emerald-100' : '' }}">
+                                    <button wire:click="viewInterviewDetails({{ $interview['id'] }})" 
+                                         class="w-full text-left p-2 rounded-xl text-[10px] font-black transition-all hover:scale-[1.02] active:scale-95 shadow-sm border
+                                                {{ in_array($interview['recruitment_stage'], ['HR - Interview', 'Psychotest']) ? 'bg-blue-50 text-blue-700 border-blue-100 hover:bg-blue-100' : '' }}
+                                                {{ in_array($interview['recruitment_stage'], ['User - Interview', 'Presentation Round']) ? 'bg-emerald-50 text-emerald-700 border-emerald-100 hover:bg-emerald-100' : '' }}
+                                                {{ in_array($interview['recruitment_stage'], ['Assessment Test', 'LGD']) ? 'bg-purple-50 text-purple-700 border-purple-100 hover:bg-purple-100' : '' }}">
                                     <div class="truncate uppercase tracking-tight">{{ $interview['company_name'] }}</div>
                                     <div class="mt-0.5 opacity-60 flex items-center gap-1">
                                         <i class="ph-bold ph-clock"></i>
@@ -107,9 +108,11 @@
                         <div>
                             <div class="flex items-center gap-3 mb-1">
                                 <h3 class="text-lg font-black text-slate-900 tracking-tight">{{ $interview->company_name }}</h3>
-                                <span class="px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest
-                                             {{ $interview->recruitment_stage === 'HR - Interview' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700' }}">
-                                    {{ $interview->recruitment_stage === 'HR - Interview' ? 'HR' : 'User' }}
+                                <span class="px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border
+                                             {{ in_array($interview->recruitment_stage, ['HR - Interview', 'Psychotest']) ? 'bg-blue-100 text-blue-700 border-blue-200' : '' }}
+                                             {{ in_array($interview->recruitment_stage, ['User - Interview', 'Presentation Round']) ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : '' }}
+                                             {{ in_array($interview->recruitment_stage, ['Assessment Test', 'LGD']) ? 'bg-purple-100 text-purple-700 border-purple-200' : '' }}">
+                                    {{ $interview->recruitment_stage }}
                                 </span>
                             </div>
                             <p class="text-sm font-bold text-slate-500">{{ $interview->position }}</p>

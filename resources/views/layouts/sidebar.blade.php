@@ -175,9 +175,9 @@
                 <p class="text-[10px] font-semibold text-slate-400 truncate uppercase tracking-widest mt-0.5">{{ $user->is_premium ? 'Premium' : 'Free Plan' }}</p>
             </div>
         </div>
-        <form x-show="$store.sidebar.open" x-transition.opacity.duration.300ms method="POST" action="{{ route('logout') }}" class="mt-2">
+        <form x-show="$store.sidebar.open" x-transition.opacity.duration.300ms method="POST" action="{{ route('logout') }}" class="mt-2" id="logout-form-sidebar">
             @csrf
-            <button type="submit" class="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-red-500 hover:bg-red-50 rounded-xl transition-colors text-left">
+            <button type="button" onclick="confirmLogout('logout-form-sidebar')" class="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-rose-500 hover:bg-rose-50 rounded-xl transition-colors text-left">
                 <i class="ph ph-sign-out text-base"></i>
                 Sign Out
             </button>

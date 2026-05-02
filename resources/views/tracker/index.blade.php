@@ -134,6 +134,13 @@
             window.dispatchEvent(new CustomEvent('view-switched', { detail: { type: type } }));
         }
 
+        // Livewire Event Listeners
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('close-modal', () => {
+                window.closeJobModal();
+            });
+        });
+
         // Auto-open edit modal if parameter exists in URL
         window.addEventListener('load', () => {
             const urlParams = new URLSearchParams(window.location.search);

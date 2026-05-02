@@ -23,7 +23,7 @@
             @foreach($skills as $skill)
                 <div class="bg-white border border-slate-200/60 rounded-3xl p-5 hover:border-primary-600/30 transition-all group relative overflow-hidden">
                     <div class="flex items-center justify-between gap-4 mb-4">
-                        <h4 class="text-base font-black text-slate-900 tracking-tight truncate">{{ $skill->name }}</h4>
+                        <h4 class="text-base font-black text-slate-900 tracking-tight truncate">{{ $skill->skill_name }}</h4>
                         <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all">
                             <button wire:click="edit({{ $skill->id }})" class="w-8 h-8 flex items-center justify-center bg-primary-50 text-primary-600 rounded-lg hover:bg-primary-600 hover:text-white transition-all">
                                 <i class="ph-bold ph-pencil-simple text-sm"></i>
@@ -35,14 +35,14 @@
                     </div>
                     <div class="space-y-2">
                         <div class="flex justify-between items-center">
-                            <span class="text-[10px] font-black text-primary-600 uppercase tracking-widest bg-primary-50 px-2 py-0.5 rounded-lg">{{ $skill->level }}</span>
+                            <span class="text-[10px] font-black text-primary-600 uppercase tracking-widest bg-primary-50 px-2 py-0.5 rounded-lg">{{ $skill->proficiency }}</span>
                             @if($skill->category)
                                 <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ $skill->category }}</span>
                             @endif
                         </div>
                         <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                             @php
-                                $width = match($skill->level) {
+                                $width = match($skill->proficiency) {
                                     'Beginner' => '25%',
                                     'Intermediate' => '50%',
                                     'Advanced' => '75%',
@@ -91,21 +91,21 @@
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Skill Name</label>
                             <div class="relative">
-                                <input type="text" wire:model="name" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all" placeholder="e.g. Laravel, UI Design, Marketing">
+                                <input type="text" wire:model="skill_name" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all" placeholder="e.g. Laravel, UI Design, Marketing">
                                 <i class="ph ph-lightning absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
                             </div>
-                            @error('name') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
+                            @error('skill_name') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Proficiency Level</label>
-                            <select wire:model="level" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all">
+                            <select wire:model="proficiency" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all">
                                 <option value="">Select Level</option>
                                 <option value="Beginner">Beginner</option>
                                 <option value="Intermediate">Intermediate</option>
                                 <option value="Advanced">Advanced</option>
                                 <option value="Expert">Expert</option>
                             </select>
-                            @error('level') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
+                            @error('proficiency') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Category (Optional)</label>

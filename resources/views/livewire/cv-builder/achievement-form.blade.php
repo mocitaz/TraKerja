@@ -30,7 +30,7 @@
                             <h4 class="text-base font-black text-slate-900 tracking-tight truncate">{{ $achievement->title }}</h4>
                             <p class="text-sm font-bold text-slate-500 mb-1">{{ $achievement->issuer }}</p>
                             <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                                {{ $achievement->date?->format('d M Y') }}
+                                {{ $achievement->issue_date?->format('d M Y') }}
                             </span>
                         </div>
                     </div>
@@ -97,8 +97,8 @@
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Date Received</label>
-                            <input type="date" wire:model="date" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all">
-                            @error('date') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
+                            <input type="date" wire:model="issue_date" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all">
+                            @error('issue_date') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Description (Optional)</label>

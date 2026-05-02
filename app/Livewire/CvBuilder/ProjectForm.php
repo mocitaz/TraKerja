@@ -64,7 +64,7 @@ class ProjectForm extends Component
         $this->end_date = $project->end_date?->format('Y-m-d');
         $this->is_ongoing = $project->is_ongoing;
         $this->project_url = $project->project_url ?? '';
-        $this->technologies = $project->technologies ?? '';
+        $this->technologies = is_array($project->technologies) ? implode(', ', $project->technologies) : ($project->technologies ?? '');
         $this->description = $project->description ?? '';
         $this->display_order = $project->display_order;
         
@@ -114,7 +114,7 @@ class ProjectForm extends Component
             'end_date' => $this->is_ongoing ? null : $this->end_date,
             'is_ongoing' => $this->is_ongoing,
             'project_url' => $this->project_url,
-            'technologies' => $this->technologies,
+            'technologies' => is_string($this->technologies) ? array_map('trim', explode(',', $this->technologies)) : $this->technologies,
             'description' => $this->description,
             'display_order' => $this->display_order,
         ];

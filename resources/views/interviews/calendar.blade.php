@@ -69,13 +69,14 @@
 
             {{-- Modal Content --}}
             <div class="p-6 bg-white overflow-y-auto custom-scrollbar space-y-5">
-
                 {{-- Quick Info Badges --}}
                 <div class="flex flex-wrap gap-2">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border"
-                          :class="iv.recruitment_stage === 'HR - Interview'
-                            ? 'bg-blue-50 text-blue-700 border-blue-100'
-                            : 'bg-emerald-50 text-emerald-700 border-emerald-100'">
+                          :class="{
+                            'bg-blue-50 text-blue-700 border-blue-100': ['HR - Interview', 'Psychotest'].includes(iv.recruitment_stage),
+                            'bg-emerald-50 text-emerald-700 border-emerald-100': ['User - Interview', 'Presentation Round'].includes(iv.recruitment_stage),
+                            'bg-purple-50 text-purple-700 border-purple-100': ['Assessment Test', 'LGD'].includes(iv.recruitment_stage),
+                          }">
                         <i class="ph-bold text-[10px]" :class="iv.recruitment_stage === 'HR - Interview' ? 'ph-users' : 'ph-user-focus'"></i>
                         <span x-text="iv.recruitment_stage"></span>
                     </span>
@@ -146,23 +147,19 @@
 
     {{-- Bridge: wire window event → Alpine component --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            function bindInterviewModal() {
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('open-interview-modal', (event) => {
                 const root = document.getElementById('interview-modal-root');
-                if (!root || !window.Alpine) return;
-
-                window.addEventListener('open-interview-modal', function (e) {
-                    const data = e.detail?.interview ?? e.detail;
-                    const component = Alpine.$data(root);
-                    if (component && data) {
-                        component.openModal(data);
-                    }
-                });
-            }
-
-            bindInterviewModal();
-            document.addEventListener('livewire:initialized', bindInterviewModal);
-            document.addEventListener('alpine:initialized', bindInterviewModal);
+                if (!root) return;
+                
+                // Livewire 3 passes data directly or in an array
+                const data = event.interview || (Array.isArray(event) ? event[0].interview : event);
+                const alpine = Alpine.$data(root);
+                
+                if (alpine && data) {
+                    alpine.openModal(data);
+                }
+            });
         });
     </script>
     @endpush

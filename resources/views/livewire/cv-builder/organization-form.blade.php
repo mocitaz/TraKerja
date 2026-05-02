@@ -28,7 +28,7 @@
                         </div>
                         <div class="min-w-0">
                             <h4 class="text-base font-black text-slate-900 tracking-tight truncate">{{ $org->organization_name }}</h4>
-                            <p class="text-sm font-bold text-slate-500 mb-1">{{ $org->role }}</p>
+                            <p class="text-sm font-bold text-slate-500 mb-1">{{ $org->position }}</p>
                             <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                                 {{ $org->start_date?->format('M Y') }} - {{ $org->is_current ? 'PRESENT' : $org->end_date?->format('M Y') }}
                             </span>
@@ -98,10 +98,10 @@
                         <div class="md:col-span-2">
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Role</label>
                             <div class="relative">
-                                <input type="text" wire:model="role" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all" placeholder="e.g. President, Volunteer">
+                                <input type="text" wire:model="position" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all" placeholder="e.g. President, Volunteer">
                                 <i class="ph ph-user-focus absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
                             </div>
-                            @error('role') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
+                            @error('position') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Start Date</label>

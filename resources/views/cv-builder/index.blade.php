@@ -10,139 +10,180 @@
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <div class="bg-[#f8fafc] min-h-screen pb-20">
+    <div class="bg-[#f8fafc] min-h-screen pb-20 relative overflow-hidden">
+        {{-- Decorative Background Elements --}}
+        <div class="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-primary-50/30 to-transparent -z-10"></div>
+        <div class="absolute top-40 -right-24 w-96 h-96 bg-primary-200/10 blur-[120px] rounded-full -z-10"></div>
+        <div class="absolute bottom-20 -left-24 w-80 h-80 bg-purple-200/10 blur-[120px] rounded-full -z-10"></div>
+
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             
-            {{-- Profile Completion & Quick Actions --}}
-            <div class="bg-white rounded-3xl border border-slate-200/60 p-6 sm:p-8 shadow-sm mb-8">
-                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-600 shadow-inner">
-                                <i class="ph-duotone ph-user-circle-gear text-2xl"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-black text-slate-900 tracking-tight">Profile Completion</h3>
-                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mt-1.5">Prepare your data for export</p>
-                            </div>
-                        </div>
-
-                        @php
-                            $total = 4;
-                            $filled = 0;
-                            if ($profile) $filled++;
-                            if ($experiences->count() > 0) $filled++;
-                            if ($educations->count() > 0) $filled++;
-                            if ($skills->count() > 0) $filled++;
-                            $percentage = ($filled / $total) * 100;
-                        @endphp
-
-                        <div class="space-y-3">
-                            <div class="flex justify-between items-end">
-                                <span class="text-xs font-black text-slate-700 uppercase tracking-widest">{{ number_format($percentage, 0) }}% COMPLETE</span>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ $filled }} / {{ $total }} SECTIONS</span>
-                            </div>
-                            <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
-                                <div class="bg-gradient-to-r from-[#d983e4] via-primary-600 to-[#4e71c5] h-full rounded-full transition-all duration-1000 ease-out" style="width: {{ $percentage }}%"></div>
-                            </div>
-                        </div>
+            {{-- Header Action Bar: Re-aligned for precision --}}
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+                <div class="flex items-center gap-5">
+                    <div class="w-16 h-16 bg-white rounded-3xl shadow-sm border border-slate-200/60 flex items-center justify-center text-primary-600 shrink-0">
+                        <i class="ph-duotone ph-briefcase-metal text-4xl"></i>
                     </div>
+                    <div>
+                        <div class="flex items-center gap-3 mb-1.5">
+                            <h2 class="text-2xl font-black text-slate-900 tracking-tight leading-none">Curriculum Vitae</h2>
+                            <span class="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-[9px] font-black uppercase tracking-widest border border-emerald-100">Live</span>
+                        </div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">Editor Mode • Ready to build</p>
+                    </div>
+                </div>
 
-                    <div class="flex flex-col sm:flex-row gap-4 shrink-0">
-                        <a href="{{ route('cv.generator') }}" class="magnetic-btn group relative px-8 py-4 bg-primary-600 text-white rounded-2xl font-black text-xs uppercase tracking-[2px] hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 flex items-center justify-center gap-3 active:scale-95">
-                            <i class="ph-bold ph-file-pdf text-base group-hover:scale-110 transition-transform"></i>
-                            GENERATE CV
+                <div class="flex items-center gap-3 w-full lg:w-auto">
+                    <a href="{{ route('cv.generator') }}" class="flex-1 lg:flex-none group relative px-8 py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-600 transition-all shadow-xl shadow-slate-200 flex items-center justify-center gap-3 active:scale-95">
+                        <i class="ph-bold ph-magic-wand text-base"></i>
+                        Generate CV
+                    </a>
+                    @if(!auth()->user()->is_premium)
+                        <a href="{{ route('payment.premium') }}" class="px-6 py-4 bg-white text-amber-600 border border-amber-200 rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-amber-50 transition-all flex items-center justify-center gap-2 shadow-sm">
+                            <i class="ph-bold ph-crown text-base"></i>
+                            Upgrade
                         </a>
-                        @if(!auth()->user()->is_premium)
-                            <a href="#" class="px-8 py-4 bg-amber-50 text-amber-700 border border-amber-200 rounded-2xl font-black text-xs uppercase tracking-[2px] hover:bg-amber-100 transition-all flex items-center justify-center gap-3">
-                                <i class="ph-bold ph-crown text-base"></i>
-                                UPGRADE
-                            </a>
-                        @endif
-                    </div>
+                    @endif
                 </div>
             </div>
 
-            {{-- Main Tabs Navigation --}}
-            <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-200/60 overflow-hidden mb-8" x-data="{ activeTab: 'experiences' }">
-                {{-- Horizontal Tabs Bar --}}
-                <div class="bg-slate-50/50 border-b border-slate-100">
-                    <nav class="flex items-center gap-2 p-2 overflow-x-auto scrollbar-hide">
-                        <button @click="activeTab = 'experiences'" 
-                                :class="activeTab === 'experiences' ? 'bg-white text-primary-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
-                                class="flex items-center gap-2 px-6 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap">
-                            <i class="ph-bold ph-briefcase"></i>
-                            Experience
-                        </button>
-                        <button @click="activeTab = 'education'" 
-                                :class="activeTab === 'education' ? 'bg-white text-primary-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
-                                class="flex items-center gap-2 px-6 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap">
-                            <i class="ph-bold ph-graduation-cap"></i>
-                            Education
-                        </button>
-                        <button @click="activeTab = 'skills'" 
-                                :class="activeTab === 'skills' ? 'bg-white text-primary-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
-                                class="flex items-center gap-2 px-6 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap">
-                            <i class="ph-bold ph-star"></i>
-                            Skills
-                        </button>
-                        <button @click="activeTab = 'organizations'" 
-                                :class="activeTab === 'organizations' ? 'bg-white text-primary-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
-                                class="flex items-center gap-2 px-6 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap">
-                            <i class="ph-bold ph-users-three"></i>
-                            Organizations
-                        </button>
-                        <button @click="activeTab = 'achievements'" 
-                                :class="activeTab === 'achievements' ? 'bg-white text-primary-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
-                                class="flex items-center gap-2 px-6 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap">
-                            <i class="ph-bold ph-trophy"></i>
-                            Achievements
-                        </button>
-                        <button @click="activeTab = 'projects'" 
-                                :class="activeTab === 'projects' ? 'bg-white text-primary-600 shadow-sm border-slate-200/60' : 'text-slate-400 hover:text-slate-600 border-transparent'"
-                                class="flex items-center gap-2 px-6 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap">
-                            <i class="ph-bold ph-code"></i>
-                            Projects
-                        </button>
-                    </nav>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch" x-data="{ activeTab: 'experiences' }">
+                {{-- Left Sidebar: Navigation & Strength --}}
+                <div class="lg:col-span-4 space-y-6">
+                    {{-- Profile Strength Card: Absolute Precision Padding --}}
+                    <div class="bg-white rounded-[2.5rem] border border-slate-200/60 p-8 shadow-sm overflow-hidden relative h-fit">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-8">
+                                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[2px]">Profile Strength</h3>
+                                <div class="w-8 h-8 bg-primary-50 rounded-lg flex items-center justify-center text-primary-600">
+                                    <i class="ph-bold ph-chart-pie-slice"></i>
+                                </div>
+                            </div>
+                            
+                            @php
+                                $total = 6;
+                                $filled = 0;
+                                if ($profile) $filled++;
+                                if ($experiences->count() > 0) $filled++;
+                                if ($educations->count() > 0) $filled++;
+                                if ($skills->count() > 0) $filled++;
+                                if ($organizations->count() > 0) $filled++;
+                                if ($projects->count() > 0) $filled++;
+                                $percentage = ($filled / $total) * 100;
+                            @endphp
+
+                            <div class="relative w-40 h-40 mx-auto mb-8">
+                                <svg class="w-full h-full transform -rotate-90">
+                                    <circle cx="80" cy="80" r="70" stroke="currentColor" stroke-width="14" fill="transparent" class="text-slate-50" />
+                                    <circle cx="80" cy="80" r="70" stroke="currentColor" stroke-width="14" fill="transparent" 
+                                        stroke-dasharray="439.8" 
+                                        stroke-dashoffset="{{ 439.8 - (439.8 * $percentage / 100) }}" 
+                                        class="text-primary-600 transition-all duration-1000 ease-out" 
+                                        stroke-linecap="round" />
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <span class="text-3xl font-black text-slate-900 leading-none">{{ number_format($percentage, 0) }}<span class="text-sm font-bold text-slate-400">%</span></span>
+                                    <span class="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1">Optimized</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 rounded-2xl p-4 text-center">
+                                <p class="text-[11px] font-bold text-slate-600 leading-relaxed">
+                                    {{ $filled < $total ? 'Complete ' . ($total - $filled) . ' more sections to reach peak performance.' : 'Your profile is 100% complete and perfectly optimized.' }}
+                                </p>
+                            </div>
+                        </div>
+                        {{-- Background Accent --}}
+                        <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-primary-100/50 rounded-full blur-3xl"></div>
+                    </div>
+
+                    {{-- Vertical Section Navigation --}}
+                    <div class="bg-white rounded-[2.5rem] border border-slate-200/60 p-3 shadow-sm h-fit">
+                        <nav class="space-y-1">
+                            @php
+                                $tabs = [
+                                    ['key' => 'experiences', 'label' => 'Experience', 'icon' => 'ph-briefcase', 'count' => $experiences->count()],
+                                    ['key' => 'education', 'label' => 'Education', 'icon' => 'ph-graduation-cap', 'count' => $educations->count()],
+                                    ['key' => 'skills', 'label' => 'Skills', 'icon' => 'ph-star', 'count' => $skills->count()],
+                                    ['key' => 'organizations', 'label' => 'Organizations', 'icon' => 'ph-users-three', 'count' => $organizations->count()],
+                                    ['key' => 'achievements', 'label' => 'Achievements', 'icon' => 'ph-trophy', 'count' => $achievements->count()],
+                                    ['key' => 'projects', 'label' => 'Projects', 'icon' => 'ph-code', 'count' => $projects->count()],
+                                ];
+                            @endphp
+
+                            @foreach($tabs as $tab)
+                            <button @click="activeTab = '{{ $tab['key'] }}'" 
+                                    :class="activeTab === '{{ $tab['key'] }}' ? 'bg-primary-600 text-white shadow-lg shadow-primary-100 border-primary-600' : 'text-slate-500 hover:bg-slate-50 border-transparent'"
+                                    class="w-full flex items-center justify-between px-6 py-4 rounded-2xl border transition-all duration-300 group">
+                                <div class="flex items-center gap-4">
+                                    <i class="ph-duotone {{ $tab['icon'] }} text-xl transition-transform duration-300 group-hover:scale-110"></i>
+                                    <span class="text-xs font-black uppercase tracking-widest">{{ $tab['label'] }}</span>
+                                </div>
+                                @if($tab['count'] > 0)
+                                    <div :class="activeTab === '{{ $tab['key'] }}' ? 'bg-white/20' : 'bg-emerald-50 text-emerald-600'" class="w-5 h-5 rounded-md flex items-center justify-center">
+                                        <i class="ph-bold ph-check text-[10px]"></i>
+                                    </div>
+                                @else
+                                    <div class="w-5 h-5 border-2 border-slate-100 rounded-md"></div>
+                                @endif
+                            </button>
+                            @endforeach
+                        </nav>
+                    </div>
                 </div>
 
-                {{-- Tab Content Panel --}}
-                <div class="p-8">
-                    <div x-show="activeTab === 'experiences'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
-                        @livewire('cv-builder.experience-form')
-                    </div>
-                    <div x-show="activeTab === 'education'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
-                        @livewire('cv-builder.education-form')
-                    </div>
-                    <div x-show="activeTab === 'skills'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
-                        @livewire('cv-builder.skills-form')
-                    </div>
-                    <div x-show="activeTab === 'organizations'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
-                        @livewire('cv-builder.organization-form')
-                    </div>
-                    <div x-show="activeTab === 'achievements'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
-                        @livewire('cv-builder.achievement-form')
-                    </div>
-                    <div x-show="activeTab === 'projects'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
-                        @livewire('cv-builder.project-form')
+                {{-- Right Content: Form Panel --}}
+                <div class="lg:col-span-8">
+                    <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-200/60 overflow-hidden min-h-full flex flex-col relative">
+                        {{-- Purple Header Removed for Cleanliness & Precision --}}
+                        
+                        {{-- Absolute Precision Padding: p-8 matching sidebar exactly --}}
+                        <div class="p-8 flex-1">
+                            <div x-show="activeTab === 'experiences'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+                                @livewire('cv-builder.experience-form')
+                            </div>
+
+                            <div x-show="activeTab === 'education'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+                                @livewire('cv-builder.education-form')
+                            </div>
+
+                            <div x-show="activeTab === 'skills'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+                                @livewire('cv-builder.skills-form')
+                            </div>
+
+                            <div x-show="activeTab === 'organizations'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+                                @livewire('cv-builder.organization-form')
+                            </div>
+
+                            <div x-show="activeTab === 'achievements'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+                                @livewire('cv-builder.achievement-form')
+                            </div>
+
+                            <div x-show="activeTab === 'projects'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+                                @livewire('cv-builder.project-form')
+                            </div>
+                        </div>
+
+                        {{-- Precision Footer --}}
+                        <div class="px-8 py-6 bg-slate-50/50 border-t border-slate-100 flex items-center gap-4 group">
+                            <div class="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center text-primary-500 shrink-0 group-hover:rotate-12 transition-transform">
+                                <i class="ph-duotone ph-lightbulb text-xl"></i>
+                            </div>
+                            <p class="text-[11px] text-slate-500 font-medium leading-relaxed">
+                                <span class="font-black text-slate-700">Expert Advice:</span> Quantify your achievements with numbers to make your CV stand out.
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            {{-- Pro Tip / Info Box --}}
-            <div class="flex items-center gap-3 px-4 py-3 bg-primary-50 border border-primary-200 rounded-2xl text-sm">
-                <i class="ph-duotone ph-lightbulb text-primary-500 text-lg shrink-0"></i>
-                <p class="text-primary-700 font-medium leading-snug">
-                    <span class="font-black">Pro Tip:</span> Complete all sections to boost your ATS score. Use <span class="font-black">Generate CV</span> to export your resume.
-                </p>
             </div>
         </div>
     </div>
 
     <style>
         [x-cloak] { display: none !important; }
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        .magnetic-btn { transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1); }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
     </style>
 </x-app-layout>

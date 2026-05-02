@@ -1653,8 +1653,8 @@ class JobApplicationForm extends Component
         $this->platformOther = '';
         // Reset legacy status though not used in UI
         $this->status = 'Applied';
-        $this->application_status = '';
-        $this->recruitment_stage = '';
+        $this->application_status = 'On Process';
+        $this->recruitment_stage = 'Applied';
         $this->career_level = '';
         $this->platform_link = '';
         $this->application_date = now('Asia/Jakarta')->format('Y-m-d'); // Use WIB timezone

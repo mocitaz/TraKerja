@@ -148,7 +148,7 @@
                                     {{ $index + 1 }}
                                 </div>
                                 <div class="pt-1">
-                                    <p class="text-sm font-bold text-slate-800 leading-relaxed">{{ $action }}</p>
+                                    <p class="text-sm font-bold text-slate-800 leading-relaxed text-justify">{{ $action }}</p>
                                 </div>
                             </div>
                         @endforeach
@@ -175,7 +175,7 @@
     </div>
 
     <style>
-        .formatted-content { line-height: 1.8; }
+        .formatted-content { line-height: 1.8; text-align: justify; }
         .formatted-content strong { font-weight: 900; color: #0f172a; }
     </style>
 

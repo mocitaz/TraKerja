@@ -9,15 +9,116 @@
     </x-slot>
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    {{-- Chart function definitions must come BEFORE Chart.js CDN so they
-         are already in scope when the onload callback fires. --}}
+    {{-- Load Chart.js at the bottom or with defer to ensure DOM is ready --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <script>
+        // Use a flag to prevent multiple initializations if needed
+        let chartsInitialized = false;
+
         function initAllCharts() {
-            initTimelineChart();
-            initPlatformChart();
-            initCareerLevelChart();
-            initProvinceChart();
-            initCityChart();
+            // Wait a tiny bit to ensure DOM elements are fully rendered by Livewire/Alpine
+            setTimeout(() => {
+                initTimelineChart();
+                initPlatformChart();
+                initCareerLevelChart();
+                initProvinceChart();
+                initCityChart();
+                initRolesChart();
+                initDayOfWeekChart();
+                initVelocityChart();
+                chartsInitialized = true;
+            }, 50);
+        }
+
+        function initDayOfWeekChart() {
+            const ctx = document.getElementById('dayOfWeekChart')?.getContext('2d');
+            if (!ctx) return;
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @json(collect($dayOfWeekActivity)->pluck('day')),
+                    datasets: [{ 
+                        label: 'Applications', 
+                        data: @json(collect($dayOfWeekActivity)->pluck('count')), 
+                        backgroundColor: '#6366f1',
+                        borderRadius: 6
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                }
+            });
+        }
+
+        function initVelocityChart() {
+            const ctx = document.getElementById('velocityChart')?.getContext('2d');
+            if (!ctx) return;
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: @json(collect($velocityData)->pluck('week')),
+                    datasets: [{ 
+                        label: 'Apps/Week', 
+                        data: @json(collect($velocityData)->pluck('count')), 
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#10b981'
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                }
+            });
+        }
+
+        function initRolesChart() {
+            const ctx = document.getElementById('rolesChart')?.getContext('2d');
+            if (!ctx) return;
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @json(collect($positionAnalysis)->pluck('position')),
+                    datasets: [{ 
+                        label: 'Applications', 
+                        data: @json(collect($positionAnalysis)->pluck('total_applications')), 
+                        backgroundColor: [
+                            '#4f46e5', // Indigo
+                            '#10b981', // Emerald
+                            '#f59e0b', // Amber
+                            '#ef4444', // Rose
+                            '#8b5cf6', // Violet
+                            '#06b6d4', // Cyan
+                            '#f43f5e', // Pink
+                            '#84cc16', // Lime
+                            '#3b82f6', // Blue
+                            '#6366f1'  // Indigo 500
+                        ],
+                        borderRadius: 8
+                    }]
+                },
+                options: { 
+                    indexAxis: 'y',
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { grid: { display: false } }
+                    }
+                }
+            });
         }
 
         function initTimelineChart() {
@@ -56,9 +157,27 @@
                 type: 'bar',
                 data: {
                     labels: @json(collect($careerLevelAnalysis)->pluck('career_level')),
-                    datasets: [{ label: 'Applications', data: @json(collect($careerLevelAnalysis)->pluck('total_applications')), backgroundColor: '#4f46e5', borderRadius: 12 }]
+                    datasets: [{ 
+                        label: 'Applications', 
+                        data: @json(collect($careerLevelAnalysis)->pluck('total_applications')), 
+                        backgroundColor: [
+                            '#4f46e5', // Indigo
+                            '#10b981', // Emerald
+                            '#f59e0b', // Amber
+                            '#ef4444', // Rose
+                            '#8b5cf6', // Violet
+                            '#06b6d4', // Cyan
+                        ],
+                        borderRadius: 12 
+                    }]
                 },
-                options: { responsive: true, maintainAspectRatio: false }
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
             });
         }
 
@@ -67,9 +186,22 @@
             if (!ctx) return;
             const prov = @json($locationAnalysis['provinces'] ?? []);
             new Chart(ctx, {
-                type: 'polarArea',
-                data: { labels: Object.keys(prov), datasets: [{ data: Object.values(prov), backgroundColor: ['rgba(79,70,229,.6)','rgba(16,185,129,.6)','rgba(245,158,11,.6)','rgba(239,68,68,.6)','rgba(139,92,246,.6)'] }] },
-                options: { responsive: true, maintainAspectRatio: false }
+                type: 'pie',
+                data: { labels: Object.keys(prov), datasets: [{ data: Object.values(prov), backgroundColor: ['#4f46e5','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4','#f43f5e'] }] },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true,
+                                font: { size: 10, weight: '600' }
+                            }
+                        }
+                    }
+                }
             });
         }
 
@@ -83,11 +215,21 @@
                 options: { responsive: true, maintainAspectRatio: false }
             });
         }
-    </script>
 
-    {{-- Load Chart.js; onload fires right after it executes, so Chart is
-         guaranteed defined before initAllCharts() is called. --}}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js" onload="initAllCharts()"></script>
+        // Support for standard page refresh
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof Chart !== 'undefined') {
+                initAllCharts();
+            }
+        });
+
+        // Support for Livewire wire:navigate
+        document.addEventListener('livewire:navigated', () => {
+            if (typeof Chart !== 'undefined') {
+                initAllCharts();
+            }
+        });
+    </script>
 
     <div class="bg-[#f8fafc] min-h-screen pb-20">
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8">
@@ -126,8 +268,8 @@
                             <i class="ph-duotone ph-briefcase text-lg sm:text-2xl"></i>
                         </div>
                         <div class="flex flex-col min-w-0">
-                            <span class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1 sm:mb-1.5">On Process</span>
-                            <span class="text-xl sm:text-2xl font-black text-slate-900 leading-none">{{ $onProcessCount }}</span>
+                            <span class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1 sm:mb-1.5">Interviews</span>
+                            <span class="text-xl sm:text-2xl font-black text-slate-900 leading-none">{{ $interviews }}</span>
                         </div>
                     </div>
                 </div>
@@ -152,8 +294,13 @@
                             <i class="ph-duotone ph-x-circle text-lg sm:text-2xl"></i>
                         </div>
                         <div class="flex flex-col min-w-0">
-                            <span class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1 sm:mb-1.5">Declined</span>
-                            <span class="text-xl sm:text-2xl font-black text-slate-900 leading-none">{{ $declinedCount }}</span>
+                            <span class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1 sm:mb-1.5">Success Rate</span>
+                            @php
+                                $rejectedCount = $funnelData['Rejected'] ?? 0;
+                                $processedCount = $offeringAcceptedCount + $rejectedCount;
+                                $successRate = $processedCount > 0 ? round(($offeringAcceptedCount / $processedCount) * 100) : 0;
+                            @endphp
+                            <span class="text-xl sm:text-2xl font-black text-slate-900 leading-none">{{ $successRate }}%</span>
                         </div>
                     </div>
                 </div>
@@ -166,7 +313,7 @@
                         </div>
                         <div class="flex flex-col min-w-0">
                             <span class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1 sm:mb-1.5">Total Apps</span>
-                            <span class="text-xl sm:text-2xl font-black text-slate-900 leading-none">{{ $timelineData['applications']->sum() ?? 0 }}</span>
+                            <span class="text-xl sm:text-2xl font-black text-slate-900 leading-none">{{ $applicationsCount }}</span>
                         </div>
                     </div>
                 </div>
@@ -255,9 +402,9 @@
                         </div>
                     </div>
                     <div class="p-4 sm:p-6">
-                        @if(count($funnelData) > 0)
+                        @if(isset($funnelData) && count($funnelData) > 0)
                             @php
-                                $totalApps = array_sum(array_values($funnelData));
+                                $totalApps = $funnelData['Applied'] ?? 0;
                                 $statusColors = [
                                     'Applied' => 'bg-blue-500',
                                     'Interview' => 'bg-amber-500',
@@ -271,8 +418,11 @@
                             <div class="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
                                 @foreach($flow as $index => $label)
                                     @php
-                                        $count = isset($funnelData[$label]) ? $funnelData[$label] : 0;
-                                        $conversionRate = $prevCount > 0 ? round(($count / $prevCount) * 100) : 0;
+                                        $count = $funnelData[$label] ?? 0;
+                                        // Use total apps as base for Applied, otherwise use previous stage for conversion
+                                        $conversionRate = ($index === 0) 
+                                            ? ($totalApps > 0 ? 100 : 0)
+                                            : ($prevCount > 0 ? round(($count / $prevCount) * 100) : 0);
                                     @endphp
                                     <div class="bg-slate-50/50 p-3 sm:p-4 rounded-xl sm:rounded-3xl border border-slate-100">
                                         <div class="flex items-center justify-between mb-3 sm:mb-4">
@@ -283,10 +433,10 @@
                                         </div>
                                         <h4 class="text-2xl sm:text-3xl font-black text-slate-900">{{ number_format($count) }}</h4>
                                         <div class="w-full h-1 sm:h-1.5 bg-slate-200 rounded-full mt-3 sm:mt-4 overflow-hidden">
-                                            <div class="h-full {{ $statusColors[$label] ?? 'bg-indigo-500' }}" style="width: {{ $conversionRate }}%"></div>
+                                            <div class="h-full {{ $statusColors[$label] ?? 'bg-indigo-500' }}" style="width: {{ min(100, $conversionRate) }}%"></div>
                                         </div>
                                     </div>
-                                    @php $prevCount = $count > 0 ? $count : $prevCount; @endphp
+                                    @php if($count > 0) $prevCount = $count; @endphp
                                 @endforeach
                             </div>
                         @else
@@ -295,11 +445,61 @@
                     </div>
                 </div>
 
+                {{-- Productivity Insights (Day of Week & Velocity) --}}
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 pb-2">
+                    <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden">
+                        <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-100 bg-slate-50/50">
+                            <div class="flex items-center gap-3 sm:gap-4">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-50 rounded-lg sm:rounded-xl flex items-center justify-center text-indigo-600 shadow-inner shrink-0">
+                                    <i class="ph-duotone ph-calendar-check text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <h3 class="text-sm sm:text-base font-black text-slate-900 tracking-tight truncate">Day-of-the-Week Activity</h3>
+                                    <p class="text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none mt-1">Productivity distribution</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <div class="relative h-64 sm:h-72 w-full">
+                                <canvas id="dayOfWeekChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden">
+                        <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-100 bg-slate-50/50">
+                            <div class="flex items-center gap-3 sm:gap-4">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-emerald-50 rounded-lg sm:rounded-xl flex items-center justify-center text-emerald-600 shadow-inner shrink-0">
+                                    <i class="ph-duotone ph-speedometer text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <h3 class="text-sm sm:text-base font-black text-slate-900 tracking-tight truncate">Application Velocity</h3>
+                                    <p class="text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none mt-1">Weekly speed trend</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <div class="relative h-64 sm:h-72 w-full">
+                                <canvas id="velocityChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 {{-- Advanced Analytics Grid --}}
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                     <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden">
                         <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-100 bg-slate-50/50">
-                            <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight truncate">Platform Effectiveness</h3>
+                            <div class="flex items-center gap-3 sm:gap-4">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-50 rounded-lg sm:rounded-xl flex items-center justify-center text-indigo-600 shadow-inner shrink-0">
+                                    <i class="ph-duotone ph-globe text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <h3 class="text-sm sm:text-base font-black text-slate-900 tracking-tight truncate">Platform Effectiveness</h3>
+                                    <p class="text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none mt-1">Source distribution</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="p-4 sm:p-6">
                             <div class="relative h-64 sm:h-80 w-full">
@@ -309,7 +509,15 @@
                     </div>
                     <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden">
                         <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-100 bg-slate-50/50">
-                            <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight truncate">Career Level</h3>
+                            <div class="flex items-center gap-3 sm:gap-4">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-amber-50 rounded-lg sm:rounded-xl flex items-center justify-center text-amber-600 shadow-inner shrink-0">
+                                    <i class="ph-duotone ph-stairs text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <h3 class="text-sm sm:text-base font-black text-slate-900 tracking-tight truncate">Career Level</h3>
+                                    <p class="text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none mt-1">Job type analysis</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="p-4 sm:p-6">
                             <div class="relative h-64 sm:h-80 w-full">
@@ -322,7 +530,15 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                     <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden">
                         <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-100 bg-slate-50/50">
-                            <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight truncate">Province Demographics</h3>
+                            <div class="flex items-center gap-3 sm:gap-4">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-50 rounded-lg sm:rounded-xl flex items-center justify-center text-blue-600 shadow-inner shrink-0">
+                                    <i class="ph-duotone ph-map-trifold text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <h3 class="text-sm sm:text-base font-black text-slate-900 tracking-tight truncate">Province Demographics</h3>
+                                    <p class="text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none mt-1">Regional distribution</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="p-4 sm:p-6">
                             <div class="relative h-64 sm:h-80 w-full">
@@ -332,11 +548,88 @@
                     </div>
                     <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden">
                         <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-100 bg-slate-50/50">
-                            <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight truncate">City Demographics</h3>
+                            <div class="flex items-center gap-3 sm:gap-4">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-emerald-50 rounded-lg sm:rounded-xl flex items-center justify-center text-emerald-600 shadow-inner shrink-0">
+                                    <i class="ph-duotone ph-buildings text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <h3 class="text-sm sm:text-base font-black text-slate-900 tracking-tight truncate">City Demographics</h3>
+                                    <p class="text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none mt-1">Urban analysis</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="p-4 sm:p-6">
                             <div class="relative h-64 sm:h-80 w-full">
                                 <canvas id="cityChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                    {{-- Top Companies Leaderboard --}}
+                    <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden">
+                        <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-100 bg-slate-50/50">
+                            <div class="flex items-center gap-3 sm:gap-4">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-rose-50 rounded-lg sm:rounded-xl flex items-center justify-center text-rose-600 shadow-inner shrink-0">
+                                    <i class="ph-duotone ph-crown text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <h3 class="text-sm sm:text-base font-black text-slate-900 tracking-tight truncate">Top Hiring Companies</h3>
+                                    <p class="text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none mt-1">Hiring leaderboard</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <div class="space-y-4">
+                                @forelse($topCompanies as $index => $company)
+                                <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50/50 border border-slate-100 group hover:bg-white hover:shadow-md hover:border-primary-100 transition-all duration-300">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-xs shrink-0 {{ ['bg-amber-100 text-amber-700', 'bg-slate-100 text-slate-700', 'bg-orange-100 text-orange-700'][$index] ?? 'bg-blue-50 text-blue-700' }}">
+                                            {{ substr($company['company_name'], 0, 2) }}
+                                        </div>
+                                        <div class="flex flex-col min-w-0">
+                                            <span class="text-sm font-black text-slate-800 truncate">{{ $company['company_name'] }}</span>
+                                            <div class="flex items-center gap-2 mt-1">
+                                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ $company['applications'] }} Apps</span>
+                                                @if($company['accepted'] > 0)
+                                                <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
+                                                <span class="text-[10px] font-black text-emerald-600 uppercase">Offering</span>
+                                                @elseif($company['interviews'] > 0)
+                                                <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
+                                                <span class="text-[10px] font-black text-amber-600 uppercase">Interviewing</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-xs font-black text-slate-900">{{ round(($company['applications'] / $applicationsCount) * 100) }}%</span>
+                                        <span class="text-[8px] font-bold text-slate-400 uppercase tracking-tighter">Share</span>
+                                    </div>
+                                </div>
+                                @empty
+                                <div class="py-12 text-center text-slate-400 font-bold text-sm">No data available</div>
+                                @endforelse
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Popular Roles Chart --}}
+                    <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden">
+                        <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-100 bg-slate-50/50">
+                            <div class="flex items-center gap-3 sm:gap-4">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-violet-50 rounded-lg sm:rounded-xl flex items-center justify-center text-violet-600 shadow-inner shrink-0">
+                                    <i class="ph-duotone ph-briefcase-metal text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <h3 class="text-sm sm:text-base font-black text-slate-900 tracking-tight truncate">Popular Roles</h3>
+                                    <p class="text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none mt-1">Target position analysis</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <div class="relative h-64 sm:h-80 w-full">
+                                <canvas id="rolesChart"></canvas>
                             </div>
                         </div>
                     </div>

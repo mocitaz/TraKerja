@@ -209,7 +209,7 @@
                     <div class="entry-title">{{ $org->organization_name }}</div>
                     <div class="entry-date">{{ format_date_range($org->start_date, $org->end_date, $org->is_current) }}</div>
                 </div>
-                <div class="entry-subtitle">{{ $org->role }}</div>
+                <div class="entry-subtitle">{{ $org->position }}</div>
                 @if($org->description)
                 <div class="entry-description">
                     {!! format_cv_text($org->description) !!}
@@ -220,13 +220,65 @@
         </div>
         @endif
 
+        <!-- Projects -->
+        @if($projects->count() > 0)
+        <div class="section">
+            <div class="section-title">Key Projects</div>
+            @foreach($projects as $project)
+            <div class="entry">
+                <div class="entry-row">
+                    <div class="entry-title">{{ $project->project_name }}</div>
+                    <div class="entry-date">{{ format_date_range($project->start_date, $project->end_date, $project->is_ongoing) }}</div>
+                </div>
+                <div class="entry-row">
+                    <div class="entry-subtitle">{{ $project->role }}</div>
+                    @if($project->project_url)
+                        <div class="entry-location">{{ $project->project_url }}</div>
+                    @endif
+                </div>
+                @if($project->technologies && is_array($project->technologies))
+                    <div class="entry-description" style="font-size: 8pt; color: #6b7280; margin: 4px 0;">
+                        <strong>Technologies:</strong> {{ implode(', ', $project->technologies) }}
+                    </div>
+                @endif
+                @if($project->description)
+                <div class="entry-description">
+                    {!! format_cv_text($project->description) !!}
+                </div>
+                @endif
+            </div>
+            @endforeach
+        </div>
+        @endif
+
+        <!-- Achievements -->
+        @if($achievements->count() > 0)
+        <div class="section">
+            <div class="section-title">Achievements & Certifications</div>
+            @foreach($achievements as $achievement)
+            <div class="entry">
+                <div class="entry-row">
+                    <div class="entry-title">{{ $achievement->title }}</div>
+                    <div class="entry-date">{{ $achievement->issue_date?->format('M Y') }}</div>
+                </div>
+                <div class="entry-subtitle">{{ $achievement->issuer }}</div>
+                @if($achievement->description)
+                <div class="entry-description">
+                    {!! format_cv_text($achievement->description) !!}
+                </div>
+                @endif
+            </div>
+            @endforeach
+        </div>
+        @endif
+
         <!-- Skills -->
         @if($skills->count() > 0)
         <div class="section">
-            <div class="section-title">Skills</div>
+            <div class="section-title">Skills & Expertise</div>
             <div class="entry-description">
                 @foreach($skills->groupBy('category') as $category => $categorySkills)
-                    <p><strong>{{ $category }}:</strong> {{ $categorySkills->pluck('skill_name')->join(', ') }}</p>
+                    <p style="margin-bottom: 4px;"><strong>{{ $category }}:</strong> {{ $categorySkills->pluck('skill_name')->join(', ') }}</p>
                 @endforeach
             </div>
         </div>

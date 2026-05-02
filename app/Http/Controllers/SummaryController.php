@@ -16,36 +16,47 @@ class SummaryController extends Controller
         // Get date range based on time filter
         $dateRange = $this->getDateRange($timeFilter);
 
-        // Basic KPI Metrics with time filtering
-        $onProcessCount = JobApplication::where('user_id', $userId)
-            ->where('application_status', 'On Process')
-            ->where('is_archived', false)
-            ->when($dateRange['start'], function ($query) use ($dateRange) {
-                return $query->where('application_date', '>=', $dateRange['start']);
+        $interviews = JobApplication::where('user_id', $userId)
+            ->where(function($query) use ($dateRange) {
+                // If we have a date filter, we check if either:
+                // 1. The interview is scheduled in this period
+                // 2. OR the application was made in this period and is in interview stage
+                if ($dateRange['start']) {
+                    $query->where(function($q) use ($dateRange) {
+                        $q->whereBetween('interview_date', [$dateRange['start'], $dateRange['end']]);
+                    })->orWhere(function($q) use ($dateRange) {
+                        $q->whereBetween('application_date', [$dateRange['start'], $dateRange['end']])
+                          ->whereIn('recruitment_stage', [
+                              'HR - Interview', 'User - Interview', 'Psychotest', 
+                              'Assessment Test', 'LGD', 'Presentation Round'
+                          ]);
+                    });
+                } else {
+                    // All time: just check if it has interview date or is in interview stage
+                    $query->whereNotNull('interview_date')
+                          ->orWhereIn('recruitment_stage', [
+                              'HR - Interview', 'User - Interview', 'Psychotest', 
+                              'Assessment Test', 'LGD', 'Presentation Round'
+                          ]);
+                }
             })
             ->count();
 
         $offeringAcceptedCount = JobApplication::where('user_id', $userId)
-            ->where(function ($query) {
-                $query->where('recruitment_stage', 'Offering')
-                    ->orWhere('application_status', 'Accepted');
+            ->where(function($query) {
+                $query->where('application_status', 'Accepted')
+                      ->orWhere('recruitment_stage', 'Offering');
             })
-            ->where('is_archived', false)
             ->when($dateRange['start'], function ($query) use ($dateRange) {
                 return $query->where('application_date', '>=', $dateRange['start']);
             })
             ->count();
 
-        // Declined: Hitung jumlah lamaran dengan application_status = 'Declined' saja
-        // CATATAN: Hanya menghitung yang benar-benar Declined, TIDAK termasuk Not Processed
-        // Not Processed adalah recruitment_stage, bukan application_status, jadi tidak dihitung di sini
-        // Include archived jobs karena declined biasanya di-archive
-        $declinedCount = JobApplication::where('user_id', $userId)
-            ->where('application_status', 'Declined')
+        $applicationsCount = JobApplication::where('user_id', $userId)
             ->when($dateRange['start'], function ($query) use ($dateRange) {
                 return $query->where('application_date', '>=', $dateRange['start']);
             })
-            ->count();
+            ->count(); // Include all (archived and non-archived)
 
 
         // Timeline Activity Data (Weekly/Monthly)
@@ -100,15 +111,17 @@ class SummaryController extends Controller
 
         return view('summary.index', [
             'timeFilter' => $timeFilter,
-            'onProcessCount' => $onProcessCount,
+            'interviews' => $interviews,
             'offeringAcceptedCount' => $offeringAcceptedCount,
-            'declinedCount' => $declinedCount,
+            'applicationsCount' => $applicationsCount,
             'timelineData' => $timelineData,
             'funnelData' => $funnelData,
             'statusDistribution' => $statusDistribution,
             'platformEffectiveness' => $platformEffectiveness,
             'positionAnalysis' => $positionAnalysis,
             'careerLevelAnalysis' => $careerLevelAnalysis,
+            'dayOfWeekActivity' => $this->getDayOfWeekActivity($userId),
+            'velocityData' => $this->getApplicationVelocity($userId),
             'topCompanies' => $topCompanies,
             'locationAnalysis' => $locationAnalysis,
             'dailyStreak' => $dailyStreak,
@@ -174,7 +187,6 @@ class SummaryController extends Controller
         }
         
         $applications = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false)
             ->when($startDate, function ($query) use ($startDate, $endDate) {
                 return $query->whereBetween('application_date', [$startDate, $endDate]);
             })
@@ -183,13 +195,14 @@ class SummaryController extends Controller
             ->orderBy('period')
             ->get();
 
+        $interviewGroupBy = str_replace('application_date', 'interview_date', $groupBy);
+        
         $interviews = JobApplication::where('user_id', $userId)
-            ->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview'])
-            ->where('is_archived', false)
+            ->whereNotNull('interview_date')
             ->when($startDate, function ($query) use ($startDate, $endDate) {
-                return $query->whereBetween('application_date', [$startDate, $endDate]);
+                return $query->whereBetween('interview_date', [$startDate, $endDate]);
             })
-            ->selectRaw($groupBy . ' as period, COUNT(*) as interviews')
+            ->selectRaw($interviewGroupBy . ' as period, COUNT(*) as interviews')
             ->groupBy('period')
             ->orderBy('period')
             ->get();
@@ -236,23 +249,41 @@ class SummaryController extends Controller
 
     private function getFunnelData($userId, $dateRange)
     {
-        $baseQuery = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false);
+        // For funnel, we want to see the progression, so we include archived data 
+        // to show where things dropped off.
+        $baseQuery = JobApplication::where('user_id', $userId);
         
         if ($dateRange['start']) {
             $baseQuery->where('application_date', '>=', $dateRange['start']);
         }
         
+        $allJobs = (clone $baseQuery)->get();
+        
+        // Map detailed stages into simplified funnel categories
         $stages = [
-            'Applied' => (clone $baseQuery)->count(),
-            'Follow Up' => (clone $baseQuery)->where('recruitment_stage', 'Follow Up')->count(),
-            'Assessment Test' => (clone $baseQuery)->where('recruitment_stage', 'Assessment Test')->count(),
-            'Psychotest' => (clone $baseQuery)->where('recruitment_stage', 'Psychotest')->count(),
-            'HR - Interview' => (clone $baseQuery)->where('recruitment_stage', 'HR - Interview')->count(),
-            'User - Interview' => (clone $baseQuery)->where('recruitment_stage', 'User - Interview')->count(),
-            'LGD' => (clone $baseQuery)->where('recruitment_stage', 'LGD')->count(),
-            'Presentation Round' => (clone $baseQuery)->where('recruitment_stage', 'Presentation Round')->count(),
-            'Offering' => (clone $baseQuery)->where('recruitment_stage', 'Offering')->count(),
+            'Applied' => $allJobs->count(), // Total awareness/entry
+            
+            'Interview' => $allJobs->filter(function($job) {
+                return !is_null($job->interview_date) || in_array($job->recruitment_stage, [
+                    'Assessment Test', 'Psychotest', 'HR - Interview', 
+                    'User - Interview', 'LGD', 'Presentation Round'
+                ]);
+            })->count(),
+            
+            'Accepted' => $allJobs->filter(function($job) {
+                return $job->application_status === 'Accepted' || $job->recruitment_stage === 'Offering';
+            })->count(),
+            
+            'Rejected' => $allJobs->filter(function($job) {
+                return $job->application_status === 'Declined' || $job->recruitment_stage === 'Not Processed';
+            })->count(),
+            
+            'Pending' => $allJobs->filter(function($job) {
+                // Not accepted, not rejected
+                $isAccepted = $job->application_status === 'Accepted' || $job->recruitment_stage === 'Offering';
+                $isRejected = $job->application_status === 'Declined' || $job->recruitment_stage === 'Not Processed';
+                return !$isAccepted && !$isRejected;
+            })->count(),
         ];
 
         return $stages;
@@ -260,8 +291,7 @@ class SummaryController extends Controller
 
     private function getStatusDistribution($userId, $dateRange)
     {
-        $query = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false);
+        $query = JobApplication::where('user_id', $userId);
         
         if ($dateRange['start']) {
             $query->where('application_date', '>=', $dateRange['start']);
@@ -276,8 +306,7 @@ class SummaryController extends Controller
 
     private function getPlatformEffectiveness($userId, $dateRange)
     {
-        $baseQuery = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false);
+        $baseQuery = JobApplication::where('user_id', $userId);
         
         if ($dateRange['start']) {
             $baseQuery->where('application_date', '>=', $dateRange['start']);
@@ -311,8 +340,7 @@ class SummaryController extends Controller
 
     private function getPositionAnalysis($userId, $dateRange)
     {
-        $baseQuery = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false);
+        $baseQuery = JobApplication::where('user_id', $userId);
         
         if ($dateRange['start']) {
             $baseQuery->where('application_date', '>=', $dateRange['start']);
@@ -344,8 +372,7 @@ class SummaryController extends Controller
 
     private function getCareerLevelAnalysis($userId, $dateRange)
     {
-        $baseQuery = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false);
+        $baseQuery = JobApplication::where('user_id', $userId);
         
         if ($dateRange['start']) {
             $baseQuery->where('application_date', '>=', $dateRange['start']);
@@ -379,26 +406,36 @@ class SummaryController extends Controller
 
     private function getTopCompanies($userId, $dateRange)
     {
-        $query = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false);
+        $query = JobApplication::where('user_id', $userId);
         
         if ($dateRange['start']) {
             $query->where('application_date', '>=', $dateRange['start']);
         }
         
-        $companies = $query->selectRaw('company_name, COUNT(*) as applications, MIN(application_date) as first_application, MAX(application_date) as last_application')
+        $companies = $query->get()
             ->groupBy('company_name')
-            ->orderByDesc('applications')
+            ->map(function ($jobs, $company) {
+                return [
+                    'company_name' => $company,
+                    'applications' => $jobs->count(),
+                    'interviews' => $jobs->filter(function($j) {
+                        return $j->interview_date || in_array($j->recruitment_stage, ['HR - Interview', 'User - Interview', 'Psychotest', 'Assessment Test']);
+                    })->count(),
+                    'accepted' => $jobs->filter(function($j) {
+                        return $j->application_status === 'Accepted' || $j->recruitment_stage === 'Offering';
+                    })->count(),
+                ];
+            })
+            ->sortByDesc('applications')
             ->take(5)
-            ->get();
+            ->values();
 
         return $companies;
     }
 
     private function getLocationAnalysis($userId, $dateRange)
     {
-        $baseQuery = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false);
+        $baseQuery = JobApplication::where('user_id', $userId);
         
         if ($dateRange['start']) {
             $baseQuery->where('application_date', '>=', $dateRange['start']);
@@ -409,36 +446,52 @@ class SummaryController extends Controller
             ->where('location', '!=', '')
             ->get()
             ->map(function ($job) {
-                // Parse location to get province
                 $location = $job->location;
+                
+                // Case 1: Standard format "City, Province"
                 if (strpos($location, ',') !== false) {
                     $parts = explode(',', $location);
-                    return trim($parts[1]); // Province is usually the second part
+                    $prov = trim($parts[1]);
+                    // Standardize Jakarta
+                    if (stripos($prov, 'Jakarta') !== false) return 'DKI Jakarta';
+                    return $prov;
                 }
-                return $location; // If no comma, assume it's province only
+                
+                // Case 2: No comma, but contains "Jakarta" (e.g. "Jakarta / Remote")
+                if (stripos($location, 'Jakarta') !== false) return 'DKI Jakarta';
+                
+                // Case 3: Just "Remote"
+                if (stripos($location, 'Remote') !== false) return 'Remote';
+                
+                return $location;
             })
             ->filter()
             ->countBy()
             ->sortDesc()
-            ->take(10); // Top 10 provinces
+            ->take(10);
 
-        // Get location distribution by city (if available)
+        // Get location distribution by city
         $cityData = (clone $baseQuery)->whereNotNull('location')
             ->where('location', '!=', '')
             ->get()
             ->map(function ($job) {
-                // Parse location to get city
                 $location = $job->location;
+                
+                // Case 1: Standard format "City, Province"
                 if (strpos($location, ',') !== false) {
                     $parts = explode(',', $location);
-                    return trim($parts[0]); // City is usually the first part
+                    return trim($parts[0]);
                 }
-                return null; // If no comma, we can't determine city
+                
+                // Case 2: No comma, but contains "Jakarta"
+                if (stripos($location, 'Jakarta') !== false) return 'Jakarta';
+                
+                return $location;
             })
             ->filter()
             ->countBy()
             ->sortDesc()
-            ->take(15); // Top 15 cities
+            ->take(15);
 
         // Get location success rate (Accepted vs Total by location)
         $locationSuccess = (clone $baseQuery)->whereNotNull('location')
@@ -448,8 +501,12 @@ class SummaryController extends Controller
                 $location = $job->location;
                 if (strpos($location, ',') !== false) {
                     $parts = explode(',', $location);
-                    return trim($parts[1]); // Group by province
+                    $prov = trim($parts[1]);
+                    if (stripos($prov, 'Jakarta') !== false) return 'DKI Jakarta';
+                    return $prov;
                 }
+                if (stripos($location, 'Jakarta') !== false) return 'DKI Jakarta';
+                if (stripos($location, 'Remote') !== false) return 'Remote';
                 return $location;
             })
             ->map(function ($jobs) {
@@ -482,7 +539,6 @@ class SummaryController extends Controller
         // Check consecutive days starting from today
         while (true) {
             $hasApplication = JobApplication::where('user_id', $userId)
-                ->where('is_archived', false)
                 ->whereDate('application_date', $currentDate)
                 ->exists();
                 
@@ -499,7 +555,6 @@ class SummaryController extends Controller
         for ($i = 29; $i >= 0; $i--) {
             $date = Carbon::now('Asia/Jakarta')->subDays($i);
             $hasApplication = JobApplication::where('user_id', $userId)
-                ->where('is_archived', false)
                 ->whereDate('application_date', $date)
                 ->exists();
                 
@@ -528,7 +583,6 @@ class SummaryController extends Controller
         
         // This week's applications
         $thisWeekApplications = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false)
             ->whereBetween('application_date', [$startOfWeek, $endOfWeek])
             ->count();
             
@@ -537,7 +591,6 @@ class SummaryController extends Controller
         $lastWeekEnd = $endOfWeek->copy()->subWeek();
         
         $lastWeekApplications = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false)
             ->whereBetween('application_date', [$lastWeekStart, $lastWeekEnd])
             ->count();
             
@@ -550,7 +603,6 @@ class SummaryController extends Controller
         for ($i = 0; $i < 7; $i++) {
             $date = $startOfWeek->copy()->addDays($i);
             $applications = JobApplication::where('user_id', $userId)
-                ->where('is_archived', false)
                 ->whereDate('application_date', $date)
                 ->count();
                 
@@ -586,7 +638,6 @@ class SummaryController extends Controller
         // Get applications from the last 90 days
         $startDate = Carbon::now('Asia/Jakarta')->subDays(90);
         $applications = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false)
             ->where('application_date', '>=', $startDate)
             ->orderBy('application_date')
             ->get();
@@ -673,7 +724,6 @@ class SummaryController extends Controller
     private function calculateBestStreak($userId)
     {
         $applications = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false)
             ->orderBy('application_date')
             ->get();
             
@@ -716,12 +766,10 @@ class SummaryController extends Controller
         $lastMonthEnd = $now->copy()->subMonth()->endOfMonth();
         
         $thisMonthData = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false)
             ->whereBetween('application_date', [$thisMonthStart, $thisMonthEnd])
             ->get();
         
         $lastMonthData = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false)
             ->whereBetween('application_date', [$lastMonthStart, $lastMonthEnd])
             ->get();
         
@@ -758,7 +806,6 @@ class SummaryController extends Controller
             $monthEnd = $now->copy()->subMonths($i)->endOfMonth();
             
             $applications = JobApplication::where('user_id', $userId)
-                ->where('is_archived', false)
                 ->whereBetween('application_date', [$monthStart, $monthEnd])
                 ->get();
             
@@ -811,8 +858,7 @@ class SummaryController extends Controller
 
     private function getSankeyData($userId, $dateRange)
     {
-        $baseQuery = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false);
+        $baseQuery = JobApplication::where('user_id', $userId);
         
         if ($dateRange['start']) {
             $baseQuery->where('application_date', '>=', $dateRange['start']);
@@ -890,7 +936,6 @@ class SummaryController extends Controller
     private function getGanttData($userId, $dateRange)
     {
         $baseQuery = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false)
             ->orderBy('application_date', 'desc')
             ->limit(20); // Limit to 20 most recent for performance
         
@@ -937,7 +982,6 @@ class SummaryController extends Controller
         $endDate = $now->copy();
         
         $applications = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false)
             ->whereBetween('application_date', [$startDate, $endDate])
             ->get()
             ->groupBy(function ($app) {
@@ -1000,5 +1044,46 @@ class SummaryController extends Controller
             'weekly' => $weeklyData,
             'max_value' => $applications->max() ?: 1
         ];
+    }
+    private function getDayOfWeekActivity($userId)
+    {
+        $applications = JobApplication::where('user_id', $userId)
+            ->get()
+            ->groupBy(function ($app) {
+                return \Carbon\Carbon::parse($app->application_date)->format('w'); // 0 (Sun) - 6 (Sat)
+            })
+            ->map->count();
+
+        $days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        $data = [];
+        foreach ($days as $index => $day) {
+            $data[] = [
+                'day' => $day,
+                'count' => $applications->get($index, 0)
+            ];
+        }
+        return $data;
+    }
+
+    private function getApplicationVelocity($userId)
+    {
+        // Last 8 weeks trend
+        $now = \Carbon\Carbon::now('Asia/Jakarta');
+        $velocity = [];
+        
+        for ($i = 7; $i >= 0; $i--) {
+            $start = $now->copy()->subWeeks($i)->startOfWeek();
+            $end = $now->copy()->subWeeks($i)->endOfWeek();
+            
+            $count = JobApplication::where('user_id', $userId)
+                ->whereBetween('application_date', [$start, $end])
+                ->count();
+                
+            $velocity[] = [
+                'week' => 'W' . $start->format('W'),
+                'count' => $count
+            ];
+        }
+        return $velocity;
     }
 }

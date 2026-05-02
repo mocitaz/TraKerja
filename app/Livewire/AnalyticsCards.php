@@ -45,7 +45,6 @@ class AnalyticsCards extends Component
                       ->orWhere('application_status', 'Accepted')
                       ->orWhere('application_status', 'Offering');
             })
-            ->where('is_archived', false)
             ->count();
 
         // Declined: Hitung jumlah lamaran dengan application_status = 'Declined' saja
@@ -55,9 +54,8 @@ class AnalyticsCards extends Component
             ->where('application_status', 'Declined')
             ->count();
 
-        // Total Applications
+        // Total Applications - Semua data termasuk yang di-arsip
         $this->totalApplications = JobApplication::where('user_id', $userId)
-            ->where('is_archived', false)
             ->count();
         
         \Log::info('AnalyticsCards: Updated counts', [

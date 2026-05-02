@@ -47,6 +47,7 @@ class JobKanbanBoard extends Component
         'job-saved' => '$refresh',
         'status-updated' => '$refresh',
         'job-pinned' => '$refresh',
+        'delete-confirmed' => 'delete',
     ];
 
     public function edit($jobId)
@@ -72,6 +73,20 @@ class JobKanbanBoard extends Component
         $this->search = '';
         $this->platformFilter = '';
         $this->recruitmentStageFilter = '';
+    }
+
+    public function confirmDelete($jobId)
+    {
+        $job = JobApplication::where('id', $jobId)->where('user_id', auth()->id())->first();
+        if ($job) {
+            $this->dispatch('confirm-action', [
+                'title' => 'Delete Application?',
+                'message' => "Are you sure you want to remove your application for {$job->company_name} from your board? This action cannot be undone.",
+                'btnText' => 'Delete Now',
+                'onConfirm' => 'delete-confirmed',
+                'params' => ['jobId' => $jobId]
+            ]);
+        }
     }
 
     public function delete($jobId)

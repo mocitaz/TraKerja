@@ -39,6 +39,15 @@
                                     </a>
                                 @endif
                             </div>
+                            @if($project->technologies && is_array($project->technologies))
+                                <div class="flex flex-wrap gap-2 mt-3">
+                                    @foreach($project->technologies as $tech)
+                                        <span class="px-2 py-0.5 bg-slate-50 text-slate-500 text-[9px] font-bold rounded-md border border-slate-100 group-hover:bg-primary-50 group-hover:text-primary-600 group-hover:border-primary-100 transition-colors">
+                                            {{ $tech }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
                     </div>
 
