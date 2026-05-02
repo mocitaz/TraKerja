@@ -47,8 +47,8 @@ class PaymentController extends Controller
         }
 
         // Pakasir is simpler, we just need a price and duration
-        $premiumPrice = config('pakasir.premium_price', 15000);
-        $premiumDuration = config('pakasir.premium_duration_days', 365);
+        $premiumPrice = (int) config('pakasir.premium_price', 15000);
+        $premiumDuration = (int) config('pakasir.premium_duration_days', 365);
 
         // Group payment channels by category for the view (Hardcoded for Pakasir common options)
         $groupedChannels = collect([
@@ -112,7 +112,7 @@ class PaymentController extends Controller
             $orderId = 'TRAKERJA-' . strtoupper(Str::random(10)) . '-' . time();
 
             // Get premium price
-            $amount = config('pakasir.premium_price', 15000);
+            $amount = (int) config('pakasir.premium_price', 15000);
 
             // Create payment record
             $payment = Payment::create([
@@ -275,7 +275,7 @@ class PaymentController extends Controller
             ]);
 
             $user = $payment->user;
-            $premiumDuration = config('pakasir.premium_duration_days', 365);
+            $premiumDuration = (int) config('pakasir.premium_duration_days', 365);
             
             $user->update([
                 'is_premium' => true,
