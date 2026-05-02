@@ -35,20 +35,31 @@
             background-color: rgb(245,243,255) !important;
         }
         .char-bar-fill { transition: width 0.3s ease; }
+        
+        .mesh-gradient-ai {
+            background-color: #ffffff;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(217, 131, 228, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(78, 113, 197, 0.05) 0px, transparent 50%);
+        }
+        .bento-step-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
     </style>
 
     <div class="bg-[#f8fafc] min-h-screen pb-20">
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8">
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
                 {{-- ── Main Form ─────────────────────────────────────── --}}
-                <div class="lg:col-span-8 space-y-5">
+                <div class="lg:col-span-8 space-y-6">
 
                     @if ($errors->has('analyze_error'))
-                    <div class="flex items-start gap-3 bg-rose-50 border border-rose-200 rounded-2xl px-5 py-4">
-                        <i class="ph-bold ph-warning-circle text-rose-500 text-xl shrink-0 mt-0.5"></i>
-                        <p class="text-sm font-semibold text-rose-700">{{ $errors->first('analyze_error') }}</p>
+                    <div class="flex items-start gap-4 bg-rose-50 border border-rose-200 rounded-3xl px-6 py-5 shadow-sm">
+                        <i class="ph-bold ph-warning-circle text-rose-500 text-2xl shrink-0"></i>
+                        <p class="text-sm font-bold text-rose-700 leading-relaxed">{{ $errors->first('analyze_error') }}</p>
                     </div>
                     @endif
 
@@ -56,49 +67,49 @@
                         @csrf
 
                         {{-- ── Step 1: Upload ─── --}}
-                        <div class="bg-white border border-slate-200/70 rounded-3xl shadow-sm overflow-hidden mb-5">
-                            <div class="px-7 pt-6 pb-4 border-b border-slate-100 flex items-center gap-3">
-                                <div class="w-8 h-8 bg-primary-600 rounded-xl flex items-center justify-center text-white font-black text-xs">1</div>
+                        <div class="mesh-gradient-ai border border-slate-200/70 rounded-[2.5rem] shadow-sm overflow-hidden mb-6 bento-step-card">
+                            <div class="px-8 pt-7 pb-5 border-b border-slate-100 flex items-center gap-4">
+                                <div class="w-10 h-10 bg-primary-600 rounded-2xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-primary-100">1</div>
                                 <div>
-                                    <h3 class="text-sm font-black text-slate-900 tracking-tight">Upload Resume</h3>
-                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">PDF format only</p>
+                                    <h3 class="text-base font-black text-slate-900 tracking-tight">Upload Resume</h3>
+                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">High precision parsing</p>
                                 </div>
                             </div>
 
-                            <div class="p-7">
+                            <div class="p-8">
                                 {{-- Drop Zone --}}
                                 <div id="upload-area"
-                                     class="relative group border-2 border-dashed border-slate-200 rounded-2xl p-10 text-center cursor-pointer transition-all duration-200 hover:border-primary-400 hover:bg-primary-50/30 overflow-hidden"
+                                     class="relative group border-2 border-dashed border-slate-200 rounded-[2rem] p-12 text-center cursor-pointer transition-all duration-300 hover:border-primary-400 hover:bg-white hover:shadow-xl hover:shadow-primary-50/50 overflow-hidden"
                                      ondragover="handleDragOver(event)"
                                      ondragleave="handleDragLeave(event)"
                                      ondrop="handleDrop(event)">
                                     <input id="resume" name="resume" type="file" accept=".pdf"
                                            class="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full" required>
-                                    <div class="relative z-10 flex flex-col items-center gap-3">
-                                        <div class="w-14 h-14 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-center group-hover:bg-primary-50 group-hover:border-primary-200 transition-all">
-                                            <i class="ph-bold ph-file-arrow-up text-slate-400 group-hover:text-primary-500 text-2xl transition-colors"></i>
+                                    <div class="relative z-10 flex flex-col items-center gap-4">
+                                        <div class="w-16 h-16 bg-slate-50 border border-slate-200 rounded-3xl flex items-center justify-center group-hover:bg-primary-50 group-hover:border-primary-200 transition-all shadow-sm">
+                                            <i class="ph-bold ph-file-arrow-up text-slate-400 group-hover:text-primary-500 text-3xl transition-colors"></i>
                                         </div>
                                         <div>
-                                            <p class="text-sm font-black text-slate-800">Drop your PDF here or <span class="text-primary-600">browse</span></p>
-                                            <p class="text-xs text-slate-400 mt-0.5">PDF only · Max 10 MB</p>
+                                            <p class="text-base font-black text-slate-800">Drop your PDF here or <span class="text-primary-600 underline decoration-2 underline-offset-4">browse</span></p>
+                                            <p class="text-xs text-slate-400 font-bold mt-1.5 uppercase tracking-widest">PDF format · Max 10 MB</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 {{-- File selected state --}}
                                 <div id="file-success" class="hidden mt-4">
-                                    <div class="flex items-center gap-4 bg-emerald-50 border border-emerald-200 rounded-2xl px-5 py-4">
-                                        <div class="w-11 h-11 bg-white border border-emerald-200 rounded-xl flex items-center justify-center shrink-0 shadow-sm">
-                                            <i class="ph-fill ph-file-pdf text-rose-500 text-xl"></i>
+                                    <div class="flex items-center gap-5 bg-white border border-emerald-200 rounded-[1.5rem] px-6 py-5 shadow-lg shadow-emerald-50/50">
+                                        <div class="w-14 h-14 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center justify-center shrink-0">
+                                            <i class="ph-fill ph-file-pdf text-rose-500 text-3xl"></i>
                                         </div>
                                         <div class="flex-1 min-w-0">
-                                            <p id="file-name" class="text-sm font-black text-slate-900 truncate"></p>
-                                            <p id="file-size" class="text-[11px] text-slate-500 font-medium mt-0.5"></p>
+                                            <p id="file-name" class="text-[15px] font-black text-slate-900 truncate tracking-tight"></p>
+                                            <p id="file-size" class="text-[11px] text-slate-500 font-black mt-1 uppercase tracking-tighter"></p>
                                         </div>
-                                        <div class="flex items-center gap-2 shrink-0">
-                                            <span class="text-[10px] font-black text-emerald-600 bg-emerald-100 px-2.5 py-1 rounded-full uppercase tracking-wide">Ready</span>
-                                            <button type="button" id="remove-file" class="w-7 h-7 flex items-center justify-center text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all">
-                                                <i class="ph-bold ph-x text-sm"></i>
+                                        <div class="flex items-center gap-3 shrink-0">
+                                            <span class="text-[10px] font-black text-emerald-600 bg-emerald-50 border border-emerald-100 px-3 py-1.5 rounded-full uppercase tracking-widest">Analysis Ready</span>
+                                            <button type="button" id="remove-file" class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all border border-transparent hover:border-rose-100">
+                                                <i class="ph-bold ph-trash text-lg"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -107,32 +118,32 @@
                         </div>
 
                         {{-- ── Step 2: Job Description ─── --}}
-                        <div class="bg-white border border-slate-200/70 rounded-3xl shadow-sm overflow-hidden mb-5">
-                            <div class="px-7 pt-6 pb-4 border-b border-slate-100 flex items-center gap-3">
-                                <div class="w-8 h-8 bg-primary-600 rounded-xl flex items-center justify-center text-white font-black text-xs">2</div>
+                        <div class="mesh-gradient-ai border border-slate-200/70 rounded-[2.5rem] shadow-sm overflow-hidden mb-8 bento-step-card">
+                            <div class="px-8 pt-7 pb-5 border-b border-slate-100 flex items-center gap-4">
+                                <div class="w-10 h-10 bg-primary-600 rounded-2xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-primary-100">2</div>
                                 <div>
-                                    <h3 class="text-sm font-black text-slate-900 tracking-tight">Target Job Description</h3>
-                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Paste requirements & responsibilities</p>
+                                    <h3 class="text-base font-black text-slate-900 tracking-tight">Job Requirements</h3>
+                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">contextual matching engine</p>
                                 </div>
                             </div>
 
-                            <div class="p-7">
-                                <div class="relative">
+                            <div class="p-8">
+                                <div class="relative group">
                                     <textarea id="job_description" name="job_description" rows="10"
-                                              class="w-full px-5 pt-4 pb-10 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 focus:bg-white transition-all outline-none resize-none leading-relaxed"
-                                              placeholder="Paste the full job description — requirements, responsibilities, and qualifications..." required minlength="50" maxlength="2500">{{ old('job_description') }}</textarea>
+                                              class="w-full px-6 pt-5 pb-12 bg-slate-50/50 border border-slate-200 rounded-[1.5rem] text-[15px] font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/5 focus:border-primary-400 focus:bg-white transition-all outline-none resize-none leading-relaxed shadow-inner"
+                                              placeholder="Paste the job description here. Include requirements, responsibilities, and key skills for best results..." required minlength="50" maxlength="2500">{{ old('job_description') }}</textarea>
 
                                     {{-- Char counter bar --}}
-                                    <div class="absolute bottom-3 left-5 right-5">
-                                        <div class="flex items-center justify-between mb-1">
-                                            <div class="flex items-center gap-1.5">
-                                                <div id="char-indicator" class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
-                                                <span class="text-[10px] font-bold text-slate-400"><span id="char-count">0</span> / 2500</span>
+                                    <div class="absolute bottom-4 left-6 right-6">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div id="char-indicator" class="w-2 h-2 rounded-full bg-slate-300"></div>
+                                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest"><span id="char-count">0</span> / 2500</span>
                                             </div>
-                                            <span id="char-hint" class="text-[10px] font-bold text-slate-400">Minimum 50 characters</span>
+                                            <span id="char-hint" class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Detail is key</span>
                                         </div>
-                                        <div class="h-1 bg-slate-100 rounded-full overflow-hidden">
-                                            <div id="char-bar" class="char-bar-fill h-full rounded-full bg-slate-300" style="width:0%"></div>
+                                        <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden shadow-inner">
+                                            <div id="char-bar" class="char-bar-fill h-full rounded-full bg-slate-300 shadow-sm" style="width:0%"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -140,40 +151,40 @@
                         </div>
 
                         {{-- ── Actions ─── --}}
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between px-2">
                             <a href="{{ route('tracker') }}"
-                               class="flex items-center gap-1.5 text-sm font-bold text-slate-400 hover:text-slate-700 transition-colors">
-                                <i class="ph-bold ph-arrow-left text-sm"></i> Cancel
+                               class="flex items-center gap-2 text-sm font-black text-slate-400 hover:text-slate-900 transition-colors uppercase tracking-[0.15em]">
+                                <i class="ph ph-arrow-left text-base"></i> Back
                             </a>
                             <button type="submit" id="submit-btn"
-                                    class="group flex items-center gap-2.5 px-8 py-3.5 bg-primary-600 text-white rounded-2xl font-black text-sm hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 active:scale-95">
-                                <i id="loading-spinner" class="ph-bold ph-spinner animate-spin hidden text-sm"></i>
-                                <i id="submit-icon" class="ph-bold ph-sparkle text-sm group-hover:rotate-12 transition-transform"></i>
-                                <span id="submit-text">Run AI Analysis</span>
+                                    class="group flex items-center gap-3 px-10 py-4 bg-primary-600 text-white rounded-[1.25rem] font-black text-sm hover:bg-primary-700 transition-all shadow-2xl shadow-primary-200 active:scale-95">
+                                <i id="loading-spinner" class="ph ph-spinner animate-spin hidden text-lg"></i>
+                                <i id="submit-icon" class="ph ph-lightning text-lg group-hover:scale-125 transition-transform"></i>
+                                <span id="submit-text" class="uppercase tracking-widest">Start Analysis</span>
                             </button>
                         </div>
                     </form>
                 </div>
 
                 {{-- ── Sidebar ────────────────────────────────────────── --}}
-                <div class="lg:col-span-4 space-y-5">
+                <div class="lg:col-span-4 space-y-6">
 
                     {{-- How it works --}}
-                    <div class="bg-white border border-slate-200/70 rounded-3xl p-6 shadow-sm">
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-5">How It Works</p>
-                        <div class="space-y-4">
+                    <div class="bg-white border border-slate-200/70 rounded-[2.5rem] p-8 shadow-sm bento-step-card">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.25em] mb-7">Analysis Engine</p>
+                        <div class="space-y-6">
                             @foreach([
-                                ['ph-upload-simple',    'primary',   'Upload Your Resume',  'PDF up to 10 MB. The AI will parse your skills, experience, and qualifications.'],
-                                ['ph-clipboard-text',   'primary',   'Add Job Description', 'Paste the full job post. More detail = more accurate matching score.'],
-                                ['ph-chart-bar',        'primary',   'Get Instant Results',  'A match score, keyword gaps, and actionable tips to improve your CV.'],
+                                ['ph-upload-simple',    'blue',      'Data Extraction',  'Advanced NLP parsing of your professional history and skills.'],
+                                ['ph-clipboard-text',   'purple',    'Contextual Mapping', 'Cross-referencing resume data with job intent and keywords.'],
+                                ['ph-sparkle',          'indigo',    'Actionable Insights',  'Generating gap analysis and specific improvement roadmaps.'],
                             ] as [$icon, $color, $title, $desc])
-                            <div class="flex gap-3">
-                                <div class="w-8 h-8 bg-{{ $color }}-50 rounded-xl flex items-center justify-center shrink-0">
-                                    <i class="ph-bold {{ $icon }} text-{{ $color }}-500 text-sm"></i>
+                            <div class="flex gap-4 group">
+                                <div class="w-10 h-10 bg-{{ $color }}-50 rounded-2xl flex items-center justify-center shrink-0 shadow-sm transition-transform group-hover:scale-110">
+                                    <i class="ph-bold {{ $icon }} text-{{ $color }}-500 text-lg"></i>
                                 </div>
-                                <div>
-                                    <p class="text-xs font-black text-slate-900">{{ $title }}</p>
-                                    <p class="text-[11px] text-slate-500 leading-snug mt-0.5">{{ $desc }}</p>
+                                <div class="min-w-0">
+                                    <p class="text-sm font-black text-slate-900 tracking-tight leading-none mb-1.5">{{ $title }}</p>
+                                    <p class="text-[11px] text-slate-500 font-bold leading-relaxed">{{ $desc }}</p>
                                 </div>
                             </div>
                             @endforeach
@@ -181,33 +192,35 @@
                     </div>
 
                     {{-- Privacy card --}}
-                    <div class="bg-slate-900 rounded-3xl p-6 text-white relative overflow-hidden">
-                        <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-primary-600/15 rounded-full blur-2xl pointer-events-none"></div>
-                        <div class="absolute -left-4 -top-4 w-20 h-20 bg-primary-500/10 rounded-full blur-xl pointer-events-none"></div>
+                    <div class="bg-slate-900 rounded-[2.5rem] p-8 text-white relative overflow-hidden shadow-2xl">
+                        <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-primary-600/20 rounded-full blur-3xl pointer-events-none"></div>
+                        <div class="absolute -left-4 -top-4 w-24 h-24 bg-primary-500/10 rounded-full blur-2xl pointer-events-none"></div>
                         <div class="relative z-10">
-                            <div class="w-9 h-9 bg-white/10 border border-white/10 rounded-xl flex items-center justify-center mb-4">
-                                <i class="ph-bold ph-shield-check text-primary-400 text-base"></i>
+                            <div class="w-11 h-11 bg-white/10 border border-white/10 rounded-2xl flex items-center justify-center mb-5 shadow-lg">
+                                <i class="ph-fill ph-shield-check text-primary-400 text-xl"></i>
                             </div>
-                            <h4 class="text-sm font-black tracking-tight mb-1.5">Privacy First</h4>
-                            <p class="text-xs text-slate-400 leading-relaxed">
-                                Your resume is processed securely and never stored permanently. Analysis runs in an isolated session.
+                            <h4 class="text-[15px] font-black tracking-tight mb-2 uppercase tracking-wide">Privacy Standard</h4>
+                            <p class="text-xs text-slate-400 font-bold leading-relaxed italic opacity-80">
+                                Secure end-to-end processing. Your data is analyzed in-memory and never persistent on our storage.
                             </p>
                         </div>
                     </div>
 
                     {{-- Tips --}}
-                    <div class="bg-amber-50 border border-amber-200 rounded-3xl p-5">
-                        <div class="flex items-center gap-2 mb-3">
-                            <i class="ph-duotone ph-lightbulb text-amber-500 text-base"></i>
-                            <p class="text-[10px] font-black text-amber-700 uppercase tracking-widest">Tips for best results</p>
+                    <div class="bg-amber-50 border border-amber-200/60 rounded-[2rem] p-7 shadow-sm">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-8 h-8 bg-amber-100 rounded-xl flex items-center justify-center text-amber-600">
+                                <i class="ph-fill ph-lightbulb text-lg"></i>
+                            </div>
+                            <p class="text-[10px] font-black text-amber-700 uppercase tracking-[0.15em]">Pro Tips</p>
                         </div>
-                        <ul class="space-y-2">
+                        <ul class="space-y-3">
                             @foreach([
-                                'Use a text-based PDF (not scanned image)',
-                                'Include the full job description, not just the title',
-                                'Paste requirements and responsibilities sections',
+                                'Use standard PDF encoding',
+                                'Paste full requirements text',
+                                'Clear, structured resume layout',
                             ] as $tip)
-                            <li class="flex items-start gap-2 text-[11px] text-amber-800 font-medium">
+                            <li class="flex items-start gap-3 text-[11px] text-amber-800 font-black italic">
                                 <i class="ph-bold ph-check text-amber-500 text-xs mt-0.5 shrink-0"></i>
                                 {{ $tip }}
                             </li>
@@ -215,6 +228,9 @@
                         </ul>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
             </div>
         </div>
     </div>

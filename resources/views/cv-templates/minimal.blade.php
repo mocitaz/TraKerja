@@ -110,6 +110,7 @@
             line-height: 1.5;
             color: #374151;
             margin-top: 2px;
+            text-align: justify;
         }
         
         .entry-description ul {

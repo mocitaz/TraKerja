@@ -5,7 +5,7 @@
         'translate-x-0': mobileSidebarOpen,
         '-translate-x-full': !mobileSidebarOpen 
     }"
-    class="fixed inset-y-0 left-0 z-[60] bg-white border-r border-slate-200/80 transform transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] lg:translate-x-0 lg:static flex-shrink-0 flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.02)]"
+    class="fixed inset-y-0 left-0 z-[60] bg-white/70 backdrop-blur-xl border-r border-white/20 transform transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] lg:translate-x-0 lg:static flex-shrink-0 flex flex-col shadow-[1px_0_10px_rgba(0,0,0,0.01)]"
 >
     <!-- Desktop Collapse Button -->
     <button @click="$store.sidebar.toggle()" 

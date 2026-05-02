@@ -97,11 +97,12 @@
         }
 
         .job-title {
-            font-size: 12pt;
-            font-weight: 600;
-            color: #1e40af; /* Executive Blue */
+            font-size: 11pt;
+            font-weight: 700;
+            color: #475569;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2.5px;
+            margin-top: 4px;
         }
 
         .section {

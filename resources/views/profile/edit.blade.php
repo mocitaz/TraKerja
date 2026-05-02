@@ -20,8 +20,8 @@
     <div class="bg-[#f8fafc] min-h-screen pb-20 relative overflow-hidden">
         {{-- Subtle Ambient Background --}}
         <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
-            <div class="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary-50/50 rounded-full blur-[120px]"></div>
-            <div class="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary-50/50 rounded-full blur-[100px]"></div>
+            <div class="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-primary-100/30 rounded-full blur-[140px]"></div>
+            <div class="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#d983e4]/10 rounded-full blur-[120px]"></div>
         </div>
 
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 relative z-10">
@@ -65,8 +65,8 @@
                 <div class="md:col-span-12 group">
                     <div class="bg-white rounded-[3rem] border border-slate-200/60 p-10 shadow-sm hover:shadow-xl hover:shadow-primary-500/5 transition-all duration-500 relative overflow-hidden">
                         {{-- Decorative Background Elements --}}
-                        <div class="absolute -right-20 -top-20 w-64 h-64 bg-primary-50/30 rounded-full blur-3xl group-hover:bg-primary-100/40 transition-colors duration-700"></div>
-                        <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-slate-50/50 rounded-full blur-3xl"></div>
+                        <div class="absolute -right-20 -top-20 w-80 h-80 bg-gradient-to-br from-primary-100/40 via-[#d983e4]/10 to-transparent rounded-full blur-3xl group-hover:bg-primary-100/60 transition-colors duration-700"></div>
+                        <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-slate-50/80 rounded-full blur-3xl"></div>
                         
                         <div class="relative flex flex-col md:flex-row items-center gap-10">
                             {{-- Profile Aura Avatar --}}
@@ -157,7 +157,8 @@
                 {{-- [BENTO 3] Quick Stats / Premium (Small) --}}
                 <div class="md:col-span-5">
                     <div class="bg-slate-900 rounded-[3rem] p-8 shadow-xl relative overflow-hidden h-full flex flex-col justify-between group">
-                        <div class="absolute right-0 top-0 w-32 h-32 bg-primary-500/20 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-1000"></div>
+                        <div class="absolute right-0 top-0 w-48 h-48 bg-primary-500/30 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-1000"></div>
+                        <div class="absolute left-0 bottom-0 w-32 h-32 bg-[#d983e4]/20 rounded-full blur-2xl"></div>
                         
                         <div class="relative">
                             <h4 class="text-[10px] font-black text-primary-400 uppercase tracking-[0.3em] mb-2">Member Status</h4>

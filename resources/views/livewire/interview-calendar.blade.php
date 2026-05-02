@@ -4,16 +4,16 @@
     <!-- Controls Bar: Compact & Premium -->
     <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
         <!-- Left: Month Navigation -->
-        <div class="flex items-center gap-4 bg-white border border-slate-200/60 p-1.5 rounded-2xl shadow-sm">
-            <button wire:click="previousMonth" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-slate-50 text-slate-500 transition-all">
+        <div class="flex items-center gap-4 bg-white border border-slate-200/60 p-2 rounded-[1.5rem] shadow-[inset_0_1px_2px_rgba(255,255,255,0.8),0_4px_6px_-1px_rgba(0,0,0,0.02)]">
+            <button wire:click="previousMonth" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-slate-50 text-slate-500 transition-all active:scale-90">
                 <i class="ph-bold ph-caret-left"></i>
             </button>
-            <h2 class="text-base font-black text-slate-900 min-w-[140px] text-center tracking-tight">{{ $monthName }}</h2>
-            <button wire:click="nextMonth" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-slate-50 text-slate-500 transition-all">
+            <h2 class="text-base font-black text-slate-900 min-w-[150px] text-center tracking-tight">{{ $monthName }}</h2>
+            <button wire:click="nextMonth" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-slate-50 text-slate-500 transition-all active:scale-90">
                 <i class="ph-bold ph-caret-right"></i>
             </button>
             <div class="w-px h-6 bg-slate-100 mx-1"></div>
-            <button wire:click="goToToday" class="px-5 py-2 text-xs font-black text-primary-600 hover:bg-primary-50 rounded-xl transition-all">
+            <button wire:click="goToToday" class="px-6 py-2 text-[10px] font-black text-primary-600 hover:bg-primary-50 rounded-xl transition-all uppercase tracking-widest">
                 TODAY
             </button>
         </div>
@@ -21,29 +21,29 @@
         <!-- Right: View Toggle & Filter -->
         <div class="flex items-center gap-4">
             <!-- View Mode Switcher -->
-            <div class="flex p-1.5 bg-white border border-slate-200/60 rounded-2xl shadow-sm">
+            <div class="flex p-1.5 bg-white border border-slate-200/60 rounded-[1.5rem] shadow-sm">
                 <button wire:click="$set('viewMode', 'month')" 
-                    class="w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300 {{ $viewMode === 'month' ? 'bg-primary-600 text-white shadow-lg shadow-primary-100' : 'text-slate-400 hover:text-primary-600 hover:bg-slate-50' }}">
-                    <i class="ph-bold ph-calendar"></i>
+                    class="w-11 h-11 flex items-center justify-center rounded-xl transition-all duration-500 {{ $viewMode === 'month' ? 'bg-primary-600 text-white shadow-xl shadow-primary-200 scale-105' : 'text-slate-400 hover:text-primary-600 hover:bg-slate-50' }}">
+                    <i class="ph-bold ph-calendar-blank text-lg"></i>
                 </button>
                 <button wire:click="$set('viewMode', 'list')" 
-                    class="w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300 {{ $viewMode === 'list' ? 'bg-primary-600 text-white shadow-lg shadow-primary-100' : 'text-slate-400 hover:text-primary-600 hover:bg-slate-50' }}">
-                    <i class="ph-bold ph-list-bullets"></i>
+                    class="w-11 h-11 flex items-center justify-center rounded-xl transition-all duration-500 {{ $viewMode === 'list' ? 'bg-primary-600 text-white shadow-xl shadow-primary-200 scale-105' : 'text-slate-400 hover:text-primary-600 hover:bg-slate-50' }}">
+                    <i class="ph-bold ph-list-bullets text-lg"></i>
                 </button>
             </div>
 
             <!-- Filter Type -->
             <div class="relative group">
                 <select wire:model.live="filterType" 
-                        class="appearance-none pl-11 pr-10 py-3 bg-white border border-slate-200/60 rounded-2xl text-xs font-black text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all cursor-pointer shadow-sm min-w-[180px]">
+                        class="appearance-none pl-12 pr-12 py-3.5 bg-white border border-slate-200/60 rounded-[1.5rem] text-[10px] font-black text-slate-600 focus:ring-4 focus:ring-primary-500/5 focus:border-primary-500 transition-all cursor-pointer shadow-sm min-w-[200px] uppercase tracking-widest">
                     <option value="all">ALL INTERVIEWS</option>
                     <option value="HR - Interview">HR INTERVIEW</option>
                     <option value="User - Interview">USER INTERVIEW</option>
                 </select>
-                <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                    <i class="ph-bold ph-funnel text-base"></i>
+                <div class="absolute left-4 top-1/2 -translate-y-1/2 text-primary-600">
+                    <i class="ph-fill ph-funnel text-base"></i>
                 </div>
-                <div class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
+                <div class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 group-hover:translate-y-[-40%] transition-transform">
                     <i class="ph-bold ph-caret-down text-xs"></i>
                 </div>
             </div>
@@ -52,7 +52,7 @@
 
     @if($viewMode === 'month')
         <!-- Calendar View: Grid Modern -->
-        <div class="bg-white rounded-[2rem] shadow-sm border border-slate-200/60 overflow-hidden">
+        <div class="bg-white rounded-[2.5rem] shadow-[inset_0_1px_2px_rgba(255,255,255,0.8),0_10px_30px_-5px_rgba(0,0,0,0.04)] border border-slate-200/60 overflow-hidden">
             <!-- Day Headers -->
             <div class="grid grid-cols-7 bg-slate-50/50 border-b border-slate-100">
                 @foreach(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as $day)

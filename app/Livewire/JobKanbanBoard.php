@@ -113,11 +113,18 @@ class JobKanbanBoard extends Component
             
             $job->update(['application_status' => $newStatus]);
             $this->dispatch('status-updated');
+
+            if ($newStatus === 'Accepted') {
+                $this->dispatch('confetti');
+            }
+
             $this->dispatch('showNotification', [
-                'type' => 'info',
-                'title' => 'Status Updated',
-                'message' => "Application for {$job->company_name} updated to {$newStatus}",
-                'duration' => 3000
+                'type' => $newStatus === 'Accepted' ? 'success' : 'info',
+                'title' => $newStatus === 'Accepted' ? 'Congratulations' : 'Status Updated',
+                'message' => $newStatus === 'Accepted' 
+                    ? "Incredible news! Your application for {$job->company_name} was accepted" 
+                    : "Application for {$job->company_name} updated to {$newStatus}",
+                'duration' => $newStatus === 'Accepted' ? 6000 : 3000
             ]);
         }
     }

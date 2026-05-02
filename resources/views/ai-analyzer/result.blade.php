@@ -16,7 +16,8 @@
             {{-- Compact Top Dashboard --}}
             <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-8">
                 {{-- Score Card --}}
-                <div class="md:col-span-3 bg-white rounded-[2.5rem] p-8 border border-slate-200/60 shadow-sm flex flex-col items-center justify-center relative overflow-hidden">
+                <div class="md:col-span-3 bg-white rounded-[2.5rem] p-8 border border-slate-200/60 shadow-[inset_0_1px_2px_rgba(255,255,255,0.8),0_4px_6px_-1px_rgba(0,0,0,0.02)] flex flex-col items-center justify-center relative overflow-hidden group">
+                    <div class="absolute -right-10 -top-10 w-32 h-32 bg-primary-50/50 rounded-full blur-2xl group-hover:bg-primary-100 transition-colors duration-500"></div>
                     <div class="relative w-28 h-28 mb-4">
                         <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                             <circle class="text-slate-100" stroke-width="8" stroke="currentColor" fill="none" r="42" cx="50" cy="50" />
@@ -35,11 +36,13 @@
                 {{-- Key Insights Card --}}
                 <div class="md:col-span-9 bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-xl shadow-primary-100 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
                     <div class="relative z-10 flex-1">
-                        <div class="flex items-center gap-3 mb-3">
-                            <i class="ph-bold ph-lightning text-primary-400 text-lg"></i>
-                            <h3 class="text-[10px] font-black uppercase tracking-[2px] text-primary-300">Executive Summary</h3>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-8 h-8 bg-primary-400/20 rounded-xl flex items-center justify-center shadow-inner">
+                                <i class="ph-bold ph-lightning text-primary-300 text-sm"></i>
+                            </div>
+                            <h3 class="text-[10px] font-black uppercase tracking-[0.3em] text-primary-300">Executive Summary</h3>
                         </div>
-                        <p class="text-base font-medium text-primary-50 leading-relaxed italic">
+                        <p class="text-[15px] font-medium text-primary-50 leading-relaxed italic text-justify">
                             "Your technical background is impressive. To reach the next level, focus on quantifying your impact with metrics and aligning your skill descriptions more closely with the specific industry jargon used in this JD."
                         </p>
                     </div>

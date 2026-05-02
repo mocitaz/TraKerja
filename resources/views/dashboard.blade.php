@@ -1,65 +1,106 @@
 <x-app-layout>
 
     <div class="min-h-screen bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <style>
+                .mesh-gradient-blue {
+                    background-color: #ffffff;
+                    background-image: 
+                        radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.03) 0px, transparent 50%),
+                        radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.03) 0px, transparent 50%);
+                }
+                .mesh-gradient-emerald {
+                    background-color: #ffffff;
+                    background-image: 
+                        radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.03) 0px, transparent 50%),
+                        radial-gradient(at 100% 100%, rgba(5, 150, 105, 0.03) 0px, transparent 50%);
+                }
+                .mesh-gradient-rose {
+                    background-color: #ffffff;
+                    background-image: 
+                        radial-gradient(at 0% 0%, rgba(244, 63, 94, 0.03) 0px, transparent 50%),
+                        radial-gradient(at 100% 100%, rgba(225, 29, 72, 0.03) 0px, transparent 50%);
+                }
+                .mesh-gradient-orange {
+                    background-color: #ffffff;
+                    background-image: 
+                        radial-gradient(at 0% 0%, rgba(245, 158, 11, 0.03) 0px, transparent 50%),
+                        radial-gradient(at 100% 100%, rgba(217, 119, 6, 0.03) 0px, transparent 50%);
+                }
+                .bento-card-stat {
+                    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+                }
+                .bento-card-stat:hover {
+                    transform: translateY(-4px);
+                    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+                }
+            </style>
+
             <!-- New Analytics Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
-                <!-- On Process Card -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4">
-                    <div class="flex items-center justify-between">
-                        <div class="min-w-0 flex-1">
-                            <p class="text-xs font-medium text-gray-600 mb-1 truncate">On Process</p>
-                            <p class="text-xl sm:text-2xl font-bold text-[#212529]">{{ $onProcessCount }}</p>
+            <div class="max-w-5xl mx-auto mb-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                    <!-- On Process Card -->
+                    <div class="bento-card-stat mesh-gradient-blue rounded-[2rem] border border-slate-100 p-4 sm:p-5 flex flex-col justify-between group relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 transition-transform group-hover:scale-110">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-[9px] font-black text-blue-600 uppercase tracking-[1.5px] bg-blue-50/50 px-2 py-0.5 rounded-full">Process</span>
                         </div>
-                        <div class="w-6 h-6 sm:w-8 sm:h-8 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
-                            <svg class="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Offering/Accepted Card -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4">
-                    <div class="flex items-center justify-between">
-                        <div class="min-w-0 flex-1">
-                            <p class="text-xs font-medium text-gray-600 mb-1 truncate">Offering/Accepted</p>
-                            <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ $offeringAcceptedCount }}</p>
-                        </div>
-                        <div class="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
-                            <svg class="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
+                        <div>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">On Process</p>
+                            <p class="text-2xl font-black text-slate-900 tracking-tighter">{{ $onProcessCount }}</p>
                         </div>
                     </div>
-                </div>
 
-                <!-- Declined Card -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4">
-                    <div class="flex items-center justify-between">
-                        <div class="min-w-0 flex-1">
-                            <p class="text-xs font-medium text-gray-600 mb-1 truncate">Declined</p>
-                            <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ $declinedCount }}</p>
+                    <!-- Offering/Accepted Card -->
+                    <div class="bento-card-stat mesh-gradient-emerald rounded-[2rem] border border-slate-100 p-4 sm:p-5 flex flex-col justify-between group relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 transition-transform group-hover:scale-110">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-[9px] font-black text-emerald-600 uppercase tracking-[1.5px] bg-emerald-50/50 px-2 py-0.5 rounded-full">Success</span>
                         </div>
-                        <div class="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
-                            <svg class="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
+                        <div>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Accepted</p>
+                            <p class="text-2xl font-black text-slate-900 tracking-tighter">{{ $offeringAcceptedCount }}</p>
                         </div>
                     </div>
-                </div>
 
-                <!-- Total Interviews Card -->
-                <div class="bg-white rounded-lg shadow-sm border border-[#E9ECEF] p-3 sm:p-4">
-                    <div class="flex items-center justify-between">
-                        <div class="min-w-0 flex-1">
-                            <p class="text-xs font-medium text-gray-600 mb-1 truncate">Total Interviews</p>
-                            <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ $totalInterviewsCount }}</p>
+                    <!-- Declined Card -->
+                    <div class="bento-card-stat mesh-gradient-rose rounded-[2rem] border border-slate-100 p-4 sm:p-5 flex flex-col justify-between group relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 bg-rose-50 rounded-xl flex items-center justify-center text-rose-600 transition-transform group-hover:scale-110">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </div>
+                            <span class="text-[9px] font-black text-rose-600 uppercase tracking-[1.5px] bg-rose-50/50 px-2 py-0.5 rounded-full">Declined</span>
                         </div>
-                        <div class="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
-                            <svg class="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
+                        <div>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Rejected</p>
+                            <p class="text-2xl font-black text-slate-900 tracking-tighter">{{ $declinedCount }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Total Interviews Card -->
+                    <div class="bento-card-stat mesh-gradient-orange rounded-[2rem] border border-slate-100 p-4 sm:p-5 flex flex-col justify-between group relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600 transition-transform group-hover:scale-110">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-[9px] font-black text-orange-600 uppercase tracking-[1.5px] bg-orange-50/50 px-2 py-0.5 rounded-full">Meetings</span>
+                        </div>
+                        <div>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Interviews</p>
+                            <p class="text-2xl font-black text-slate-900 tracking-tighter">{{ $totalInterviewsCount }}</p>
                         </div>
                     </div>
                 </div>

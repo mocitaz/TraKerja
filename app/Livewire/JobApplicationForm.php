@@ -1386,14 +1386,20 @@ class JobApplicationForm extends Component
                 // Send notification for job update
                 $this->dispatch('showNotification', 
                     type: 'success',
-                    title: 'Job Application Updated',
-                    message: "Successfully updated application for {$this->company_name}",
-                    duration: 3000
+                    title: $this->application_status === 'Accepted' ? 'Congratulations' : 'Job Application Updated',
+                    message: $this->application_status === 'Accepted' 
+                        ? "Incredible! Your application for {$this->company_name} is now Accepted" 
+                        : "Successfully updated application for {$this->company_name}",
+                    duration: $this->application_status === 'Accepted' ? 6000 : 3000
                 );
                 
                 // Dispatch interview-updated event for calendar refresh
                 if (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && $this->interview_date) {
                     $this->dispatch('interview-updated');
+                }
+
+                if ($this->application_status === 'Accepted') {
+                    $this->dispatch('confetti');
                 }
             } else {
                 $newJob = JobApplication::create($data);
@@ -1401,15 +1407,21 @@ class JobApplicationForm extends Component
                 
                 // Send notification for new job
                 $this->dispatch('showNotification', 
-                    type: 'success',
-                    title: 'Job Application Added',
-                    message: "Successfully added application for {$this->company_name}",
-                    duration: 3000
+                    type: $this->application_status === 'Accepted' ? 'success' : 'success',
+                    title: $this->application_status === 'Accepted' ? 'Congratulations' : 'Job Application Added',
+                    message: $this->application_status === 'Accepted' 
+                        ? "Amazing! You've just added an Accepted application for {$this->company_name}" 
+                        : "Successfully added application for {$this->company_name}",
+                    duration: $this->application_status === 'Accepted' ? 6000 : 3000
                 );
                 
                 // Dispatch interview-updated event for calendar refresh
                 if (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && $this->interview_date) {
                     $this->dispatch('interview-updated');
+                }
+
+                if ($this->application_status === 'Accepted') {
+                    $this->dispatch('confetti');
                 }
             }
         } catch (\Exception $e) {

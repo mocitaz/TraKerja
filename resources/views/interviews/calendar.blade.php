@@ -4,7 +4,7 @@
             <h1 class="text-2xl font-black text-slate-900 leading-tight tracking-tight">
                 Interview <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-primary-600 to-[#4e71c5]">Calendar</span>
             </h1>
-            <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mt-1">Manage and track your interview schedule</p>
+            <p class="text-[11px] text-slate-500 font-black uppercase tracking-[0.25em] mt-1">Strategic schedule management</p>
         </div>
     </x-slot>
 
@@ -47,7 +47,7 @@
             x-transition:leave="transition ease-in duration-100"
             x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 scale-95"
-            class="relative bg-white rounded-[2rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.2)] max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-100 z-10"
+            class="relative bg-white rounded-[2.5rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.18)] max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-100 z-10"
             style="display:none"
             @click.stop
         >
