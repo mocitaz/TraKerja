@@ -66,6 +66,18 @@
                     <i class="ph ph-user-circle w-6 text-lg text-slate-400"></i>
                     My Profile
                 </a>
+
+                @if(!Auth::user()->is_premium)
+                <a href="{{ route('payment.premium') }}" wire:navigate class="flex items-center px-5 py-2.5 text-sm font-black text-primary-600 hover:bg-primary-50 transition-colors group">
+                    <i class="ph-fill ph-crown w-6 text-lg text-primary-500 group-hover:scale-110 transition-transform"></i>
+                    Get Premium
+                </a>
+                @else
+                <a href="{{ route('payment.premium') }}" wire:navigate class="flex items-center px-5 py-2.5 text-sm font-semibold text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-colors">
+                    <i class="ph-fill ph-crown w-6 text-lg text-amber-500"></i>
+                    Premium Features
+                </a>
+                @endif
                 <a href="{{ route('csv.import') }}" wire:navigate class="flex items-center px-5 py-2.5 text-sm font-semibold text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-colors">
                     <i class="ph ph-file-csv w-6 text-lg text-slate-400"></i>
                     CSV Tools

@@ -34,6 +34,17 @@ class PaymentController extends Controller
     }
 
     /**
+     * Show premium landing page
+     */
+    public function premium()
+    {
+        $user = Auth::user();
+        $premiumPrice = (int) config('pakasir.premium_price', 15000);
+        
+        return view('premium.index', compact('user', 'premiumPrice'));
+    }
+
+    /**
      * Show payment index page
      */
     public function index()

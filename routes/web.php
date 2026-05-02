@@ -211,6 +211,13 @@ Route::middleware('auth')->group(function () {
     
     // Payment routes (Only for regular users)
     Route::prefix('payment')->name('payment.')->group(function () {
+        Route::get('/premium', function () {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot access premium page');
+            }
+            return app(PaymentController::class)->premium();
+        })->name('premium');
+
         Route::get('/', function () {
             if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
                 abort(403, 'Admin cannot access payment');

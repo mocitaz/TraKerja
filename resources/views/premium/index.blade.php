@@ -1,0 +1,183 @@
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-primary-600/10 border border-primary-600/20 flex items-center justify-center">
+                <i class="ph-fill ph-crown text-xl text-primary-600"></i>
+            </div>
+            <div>
+                <h1 class="text-xl font-black text-slate-900 tracking-tight">TraKerja Pro</h1>
+                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">The ultimate career acceleration tool</p>
+            </div>
+        </div>
+    </x-slot>
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        [x-cloak] { display: none !important; }
+        
+        .premium-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .benefit-card {
+            background: white;
+            border: 1px solid #f1f5f9;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .benefit-card:hover {
+            border-color: #e2e8f0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+            transform: translateY(-2px);
+        }
+
+        .pricing-section {
+            background: #0f172a;
+            border-radius: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.1), transparent 70%);
+        }
+
+        .check-icon {
+            width: 18px;
+            height: 18px;
+            background: #ecfdf5;
+            color: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+    </style>
+
+    <div class="bg-[#fcfcfd] min-h-screen pb-24">
+        <div class="premium-container px-4 pt-16">
+            
+            {{-- ── Centered Hero ────────────────────────── --}}
+            <div class="text-center max-w-3xl mx-auto mb-20 space-y-8">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-slate-200 rounded-full shadow-sm">
+                    <span class="text-[9px] font-black text-primary-600 uppercase tracking-widest">Upgrade to Lifetime Pro</span>
+                </div>
+                
+                <h2 class="text-5xl sm:text-6xl font-black text-slate-900 tracking-tighter leading-[1.05]">
+                    Lupakan Cara Lama. <br/> Upgrade <span class="text-primary-600">Strategi</span> Anda.
+                </h2>
+                
+                <p class="text-slate-500 text-base sm:text-lg leading-relaxed font-medium">
+                    TraKerja Pro memberikan alat bantu berbasis AI dan manajemen data tanpa batas untuk memastikan setiap lamaran Anda memiliki peluang menang yang maksimal.
+                </p>
+
+                <div class="flex items-center justify-center gap-4 pt-4">
+                    <a href="{{ route('payment.index') }}" class="px-8 py-4 bg-slate-900 text-white rounded-xl font-black text-[11px] uppercase tracking-[0.2em] shadow-2xl hover:bg-primary-600 hover:-translate-y-1 transition-all active:scale-95">
+                        Upgrade Sekarang — Rp {{ number_format($premiumPrice, 0, ',', '.') }}
+                    </a>
+                </div>
+            </div>
+
+            {{-- ── Precision Grid ────────────────────────── --}}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+                <div class="benefit-card p-10 rounded-[2rem] flex flex-col items-center text-center">
+                    <div class="w-14 h-14 rounded-2xl bg-primary-50 flex items-center justify-center mb-8">
+                        <i class="ph-fill ph-magic-wand text-2xl text-primary-600"></i>
+                    </div>
+                    <h3 class="text-lg font-black text-slate-900 tracking-tight mb-4">AI Analysis</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed font-medium">Analisis kecocokan CV dengan job description secara instan menggunakan teknologi GPT terbaru.</p>
+                </div>
+
+                <div class="benefit-card p-10 rounded-[2rem] flex flex-col items-center text-center">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-8">
+                        <i class="ph-fill ph-infinity text-2xl text-emerald-600"></i>
+                    </div>
+                    <h3 class="text-lg font-black text-slate-900 tracking-tight mb-4">Unlimited Jobs</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed font-medium">Lacak lamaran kerja tanpa batas. Simpan seluruh riwayat karier Anda dalam satu tempat aman.</p>
+                </div>
+
+                <div class="benefit-card p-10 rounded-[2rem] flex flex-col items-center text-center">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-8">
+                        <i class="ph-fill ph-layout text-2xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-lg font-black text-slate-900 tracking-tight mb-4">50+ Templates</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed font-medium">Buka akses ke semua template CV ATS-friendly yang didesain secara khusus oleh pakar rekrutmen.</p>
+                </div>
+            </div>
+
+            {{-- ── Pricing & CTA ─────────────────────────── --}}
+            <div class="pricing-section p-12 sm:p-20 flex flex-col lg:flex-row items-center gap-16 text-white shadow-2xl">
+                <div class="lg:w-1/2 space-y-8">
+                    <div class="space-y-4">
+                        <h4 class="text-xs font-black text-primary-400 uppercase tracking-widest">Kenapa Pro?</h4>
+                        <h3 class="text-4xl font-black tracking-tight leading-tight">Sekali Bayar. <br/> Akses Selamanya.</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="flex items-center gap-3">
+                            <div class="check-icon"><i class="ph-bold ph-check"></i></div>
+                            <span class="text-xs font-bold text-slate-200">AI Cover Letter Gen</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="check-icon"><i class="ph-bold ph-check"></i></div>
+                            <span class="text-xs font-bold text-slate-200">Bulk Import Tools</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="check-icon"><i class="ph-bold ph-check"></i></div>
+                            <span class="text-xs font-bold text-slate-200">Priority AI Queue</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="check-icon"><i class="ph-bold ph-check"></i></div>
+                            <span class="text-xs font-bold text-slate-200">Smart Job Alerts</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2 w-full">
+                    <div class="bg-white/5 backdrop-blur-md border border-white/10 p-10 rounded-[2rem] text-center space-y-8">
+                        <div class="space-y-2">
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Penawaran Spesial</p>
+                            <div class="flex items-center justify-center gap-3">
+                                <span class="text-5xl font-black">Rp {{ number_format($premiumPrice, 0, ',', '.') }}</span>
+                                <span class="text-slate-500 line-through text-sm">Rp 150.000</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <a href="{{ route('payment.index') }}" class="block w-full py-5 bg-white text-slate-900 rounded-xl font-black text-xs uppercase tracking-[0.2em] shadow-xl hover:bg-slate-100 transition-all active:scale-95">
+                                Klaim Akses Pro
+                            </a>
+                            <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">No subscription. No hidden fees.</p>
+                        </div>
+
+                        <div class="flex items-center justify-center gap-6 pt-4 border-t border-white/5 opacity-50 grayscale">
+                            <img src="{{ asset('images/qris.png') }}" class="h-4">
+                            <div class="w-[1px] h-4 bg-white/20"></div>
+                            <div class="flex items-center gap-2">
+                                <i class="ph-fill ph-shield-check text-xl"></i>
+                                <span class="text-[9px] font-black uppercase tracking-widest">Secure</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- ── Footer Note ────────────────────────────── --}}
+            <div class="mt-16 text-center">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] leading-relaxed">
+                    Bergabunglah dengan <span class="text-slate-900">1.200+ pengguna</span> yang telah meng-upgrade strategi karier mereka minggu ini.
+                </p>
+            </div>
+        </div>
+    </div>
+</x-app-layout>

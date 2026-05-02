@@ -1,118 +1,121 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center space-x-3 sm:space-x-4">
-            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-white/30">
-                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-            </div>
-            <div>
-                <h2 class="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[#d983e4] via-purple-600 to-[#4e71c5] bg-clip-text text-transparent">
-                    Pembayaran Berhasil
-                </h2>
-                <p class="text-xs sm:text-sm text-white/80 mt-0.5">Selamat! Anda sekarang member Premium</p>
-            </div>
+        <div class="flex flex-col items-center text-center">
+            <h1 class="text-xl font-black text-slate-900 tracking-tight">Payment Status</h1>
+            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Konfirmasi transaksi berhasil</p>
         </div>
     </x-slot>
 
-    <div class="py-6 sm:py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <!-- Success Card -->
-            <div class="bg-white rounded-2xl shadow-sm p-8 text-center">
-                <!-- Success Icon -->
-                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        .success-checkmark {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            background: #ecfdf5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #fff;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
+        }
+        
+        .success-checkmark i {
+            font-size: 40px;
+            color: #10b981;
+            animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .premium-badge-glow {
+            background: linear-gradient(135deg, #a570f0 0%, #6366f1 100%);
+            box-shadow: 0 10px 20px rgba(165, 112, 240, 0.2);
+        }
+    </style>
+
+    <div class="bg-[#f8fafc] min-h-screen pb-20 pt-10">
+        <div class="max-w-[480px] mx-auto px-4">
+            
+            <div class="bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-slate-100 overflow-hidden">
+                
+                {{-- ── Success Header ────────────────────────── --}}
+                <div class="p-10 text-center space-y-6">
+                    <div class="success-checkmark">
+                        <i class="ph-fill ph-check-circle"></i>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <h2 class="text-2xl font-black text-slate-900 tracking-tight">Pembayaran Berhasil!</h2>
+                        <p class="text-[11px] text-slate-400 font-bold uppercase tracking-widest leading-relaxed px-10">
+                            Selamat! Akun Anda kini aktif sebagai <span class="text-primary-600">Lifetime Premium</span>.
+                        </p>
+                    </div>
                 </div>
 
-                <h3 class="text-2xl font-bold text-gray-900 mb-2">Pembayaran Berhasil!</h3>
-                <p class="text-gray-600 mb-8">Terima kasih! Akun Anda telah di-upgrade ke Premium.</p>
-
-                <!-- Payment Details -->
-                <div class="bg-gray-50 rounded-xl p-6 mb-8 text-left">
-                    <h4 class="font-semibold text-gray-900 mb-4">Detail Pembayaran</h4>
-                    <div class="space-y-3">
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-600">Order ID:</span>
-                            <span class="font-medium text-gray-900">{{ $payment->order_id }}</span>
+                {{-- ── Transaction Details ────────────────────── --}}
+                <div class="px-10 pb-10 space-y-8">
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
+                        <div class="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-slate-400">
+                            <span>Order ID</span>
+                            <span class="text-slate-900">{{ $payment->order_id }}</span>
                         </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-600">Metode Pembayaran:</span>
-                            <span class="font-medium text-gray-900">{{ $payment->payment_method }}</span>
+                        <div class="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-slate-400">
+                            <span>Metode</span>
+                            <span class="text-slate-900">{{ strtoupper($payment->payment_method ?? 'QRIS') }}</span>
                         </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-600">Jumlah:</span>
-                            <span class="font-medium text-gray-900">{{ $payment->formatted_amount }}</span>
+                        <div class="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-slate-400">
+                            <span>Total Bayar</span>
+                            <span class="text-primary-600">Rp {{ number_format($payment->amount, 0, ',', '.') }}</span>
                         </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-600">Status:</span>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                Berhasil
+                        <div class="pt-4 border-t border-slate-200/60 flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-slate-400">
+                            <span>Status</span>
+                            <span class="flex items-center gap-1.5 text-emerald-600">
+                                <i class="ph-fill ph-seal-check text-base"></i> Terverifikasi
                             </span>
                         </div>
-                        @if($payment->paid_at)
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-600">Waktu Pembayaran:</span>
-                            <span class="font-medium text-gray-900">{{ $payment->paid_at->format('d M Y, H:i') }}</span>
+                    </div>
+
+                    <div class="premium-badge-glow p-6 rounded-2xl text-white">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                                <i class="ph-fill ph-sparkle text-xl text-white"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-black uppercase tracking-widest opacity-80">Membership Aktif</p>
+                                <p class="text-xs font-black tracking-tight">Semua Fitur Premium Terbuka</p>
+                            </div>
                         </div>
-                        @endif
+                    </div>
+
+                    <div class="space-y-3 pt-2">
+                        <a href="{{ route('dashboard') }}" class="w-full py-4 bg-slate-900 text-white rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl hover:bg-primary-600 transition-all flex items-center justify-center gap-2 group">
+                            <i class="ph-bold ph-layout text-base group-hover:rotate-12 transition-transform"></i>
+                            Ke Dashboard
+                        </a>
+                        <a href="{{ route('tracker') }}" class="w-full py-4 bg-white text-slate-900 border border-slate-200 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-slate-50 transition-all flex items-center justify-center gap-2">
+                            Mulai Melacak Pekerjaan <i class="ph-bold ph-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Premium Benefits -->
-                <div class="bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl p-6 mb-8">
-                    <h4 class="font-semibold text-gray-900 mb-4">Fitur Premium Anda</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
-                        <div class="flex items-start space-x-2">
-                            <svg class="w-5 h-5 text-primary-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="text-sm text-gray-700">AI CV Analyzer</span>
-                        </div>
-                        <div class="flex items-start space-x-2">
-                            <svg class="w-5 h-5 text-primary-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="text-sm text-gray-700">Professional CV Templates</span>
-                        </div>
-                        <div class="flex items-start space-x-2">
-                            <svg class="w-5 h-5 text-primary-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="text-sm text-gray-700">Unlimited Exports</span>
-                        </div>
-                        <div class="flex items-start space-x-2">
-                            <svg class="w-5 h-5 text-primary-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="text-sm text-gray-700">Priority Support</span>
-                        </div>
-                    </div>
+                {{-- ── Footer Note ────────────────────────────── --}}
+                <div class="p-6 bg-slate-50 text-center border-t border-slate-100">
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                        Email konfirmasi telah dikirim ke <span class="text-slate-900">{{ Auth::user()->email }}</span>
+                    </p>
                 </div>
-
-                <!-- Action Buttons -->
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <a href="{{ route('tracker') }}" 
-                       class="flex-1 bg-gradient-to-r from-primary-500 to-primary-700 hover:from-primary-600 hover:to-primary-800 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                        </svg>
-                        <span>Ke Dashboard</span>
-                    </a>
-                    <a href="{{ route('cv.builder') }}" 
-                       class="flex-1 border-2 border-primary-500 text-primary-600 hover:bg-primary-50 font-semibold py-3 px-6 rounded-xl transition-all duration-200 flex items-center justify-center space-x-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                        <span>Buat CV</span>
-                    </a>
-                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Butuh Bantuan? Hubungi support@trakerja.com</p>
             </div>
         </div>
     </div>
 </x-app-layout>
-
