@@ -85,6 +85,36 @@
     <body class="font-sans antialiased bg-[#F8FAFC] text-slate-900"
           x-data="{ mobileSidebarOpen: false }"
           @keydown.escape="mobileSidebarOpen = false">
+        
+        {{-- Premium Page Loader --}}
+        <div id="page-loader" class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#F8FAFC]/95 backdrop-blur-xl transition-all duration-700">
+            <div class="relative flex flex-col items-center">
+                {{-- Minimalist Circular Progress Container --}}
+                <div class="relative flex items-center justify-center">
+                    {{-- Rotating Track --}}
+                    <svg class="w-32 h-32 transform -rotate-90">
+                        <circle cx="64" cy="64" r="60" stroke="currentColor" stroke-width="1.5" fill="transparent" class="text-slate-100" />
+                        <circle cx="64" cy="64" r="60" stroke="currentColor" stroke-width="1.5" fill="transparent" class="text-primary-500 animate-progress-ring" stroke-dasharray="377" stroke-dashoffset="377" stroke-linecap="round" />
+                    </svg>
+                    
+                    {{-- TraKerja Icon --}}
+                    <div class="absolute w-20 h-20 bg-white rounded-full shadow-[0_15px_35px_rgba(0,0,0,0.05)] flex items-center justify-center border border-slate-100 transition-transform duration-500 hover:scale-105">
+                        <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-10 h-10 object-contain animate-pulse-subtle">
+                    </div>
+                </div>
+                
+                {{-- Professional Branding --}}
+                <div class="mt-10 flex flex-col items-center">
+                    <h2 class="text-[14px] font-black text-slate-800 uppercase tracking-[0.6em] leading-none">TraKerja</h2>
+                    <div class="mt-4 flex items-center gap-2">
+                        <span class="h-[1px] w-4 bg-slate-200"></span>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em]">Elevating Identity</p>
+                        <span class="h-[1px] w-4 bg-slate-200"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="h-screen flex overflow-hidden">
             <!-- Sidebar -->
             @include('layouts.sidebar')
@@ -108,7 +138,17 @@
                 @php($noFooterRoutes = ['login', 'register', 'password.request', 'password.reset', 'verification.notice', 'legal.terms', 'legal.privacy'])
                 @unless(in_array(Route::currentRouteName(), $noFooterRoutes))
                     <div class="mt-auto px-4 sm:px-6 lg:px-8 pb-6">
-                        <x-footer />
+                        <footer class="bg-white/50 backdrop-blur-md border border-slate-200/60 rounded-[2rem] p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-white rounded-lg shadow-sm border border-slate-100 flex items-center justify-center">
+                                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-5 h-5 object-contain">
+                                </div>
+                                <span class="text-sm font-black text-slate-900 tracking-tight">TraKerja</span>
+                            </div>
+                            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center md:text-right">
+                                © {{ date('Y') }} TraKerja. PT Teknalogi Transformasi Digital . All rights reserved.
+                            </p>
+                        </footer>
                     </div>
                 @endunless
             </div>
@@ -116,8 +156,28 @@
 
         @livewireScripts
         
-        <!-- Global Motion Engine (Magnetic Buttons & Transitions) -->
         <script>
+            // Page & View Transitions
+            window.addEventListener('view-switched', (e) => {
+                const container = document.getElementById(`${e.detail.type}-view-container`);
+                if (container) {
+                    container.classList.add('animate-view-fade-in');
+                    setTimeout(() => container.classList.remove('animate-view-fade-in'), 600);
+                }
+            });
+
+            document.addEventListener('alpine:init', () => {
+                Alpine.store('sidebar', {
+                    open: false,
+                    toggle() {
+                        this.open = !this.open;
+                    },
+                    close() {
+                        this.open = false;
+                    }
+                });
+            });
+
             // Magnetic Button Logic
             function initMagneticButtons() {
                 const buttons = document.querySelectorAll('.magnetic-btn, [onclick^="switchView"]');
@@ -142,37 +202,39 @@
                 });
             }
 
-            // Page & View Transitions
-            window.addEventListener('view-switched', (e) => {
-                const container = document.getElementById(`${e.detail.type}-view-container`);
-                if (container) {
-                    container.classList.add('animate-view-fade-in');
-                    setTimeout(() => container.classList.remove('animate-view-fade-in'), 600);
+            function hidePageLoader() {
+                const loader = document.getElementById('page-loader');
+                if (loader) {
+                    loader.classList.add('opacity-0');
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 700);
                 }
-            });
+            }
 
-            document.addEventListener('alpine:init', () => {
-                Alpine.store('sidebar', {
-                    open: false,
-                    toggle() {
-                        this.open = !this.open;
-                    },
-                    close() {
-                        this.open = false;
-                    }
-                });
-            });
+            function showPageLoader() {
+                const loader = document.getElementById('page-loader');
+                if (loader) {
+                    loader.style.display = 'flex';
+                    loader.classList.remove('opacity-0');
+                }
+            }
 
-            // Auto-close sidebar on Livewire page navigation
-            document.addEventListener('livewire:navigating', () => {
+            // Initial hide
+            window.addEventListener('load', () => setTimeout(hidePageLoader, 2300));
+            document.addEventListener('DOMContentLoaded', () => setTimeout(hidePageLoader, 2300));
+
+            // Handle Livewire Navigation
+            document.addEventListener('livewire:navigate', showPageLoader);
+            document.addEventListener('livewire:navigated', () => {
+                setTimeout(hidePageLoader, 2300);
+                initMagneticButtons();
                 if (window.Alpine && Alpine.store('sidebar')) {
                     Alpine.store('sidebar').close();
                 }
             });
 
             document.addEventListener('DOMContentLoaded', initMagneticButtons);
-            document.addEventListener('livewire:navigated', initMagneticButtons);
-
 
             // Fallback: Load Livewire from CDN if local file fails
             setTimeout(function() {
@@ -204,6 +266,25 @@
             }
             .magnetic-btn {
                 transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+            }
+            
+            @keyframes progress-ring {
+                0% { stroke-dashoffset: 377; }
+                50% { stroke-dashoffset: 180; }
+                100% { stroke-dashoffset: 0; }
+            }
+            @keyframes pulse-subtle {
+                0%, 100% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(0.95); opacity: 0.9; }
+            }
+            .animate-progress-ring {
+                animation: progress-ring 2.3s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+            }
+            .animate-pulse-subtle {
+                animation: pulse-subtle 3s ease-in-out infinite;
+            }
+            #page-loader.opacity-0 {
+                pointer-events: none;
             }
         </style>
         @stack('modals')

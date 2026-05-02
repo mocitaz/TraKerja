@@ -1,12 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex flex-col">
-            <h1 class="text-2xl font-black text-slate-900 leading-tight tracking-tight">
-                Profile <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-primary-600 to-[#4e71c5]">Settings</span>
-            </h1>
-            <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mt-1">Manage your account and professional identity</p>
-        </div>
-    </x-slot>
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
@@ -33,6 +25,23 @@
 
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 relative z-10">
             
+            {{-- Floating Pill Navigation (Moved out of topbar) --}}
+            <div class="flex justify-center mb-10">
+                <nav class="flex p-1.5 bg-white border border-slate-200/60 rounded-[2rem] shadow-sm">
+                    @foreach([
+                        ['account',  'ph-user',               'Identity'],
+                        ['personal', 'ph-identification-card', 'Contact'],
+                        ['security', 'ph-shield-check',       'Security'],
+                    ] as [$tab, $icon, $label])
+                    <button onclick="switchTab('{{ $tab }}')" id="tab-{{ $tab }}"
+                            class="tab-btn {{ $tab === 'account' ? 'active' : '' }} flex items-center gap-2 px-8 py-3 rounded-[1.5rem] text-[10px] font-black uppercase tracking-widest transition-all hover:bg-slate-50">
+                        <i class="ph-bold {{ $icon }} text-base"></i>
+                        <span>{{ $label }}</span>
+                    </button>
+                    @endforeach
+                </nav>
+            </div>
+
             {{-- Notifications --}}
             <div id="notifications" class="fixed top-24 right-8 z-[100] space-y-3 pointer-events-none">
                 @foreach(['profile-updated' => 'Profile updated!', 'personal-info-updated' => 'Personal info saved!', 'password-updated' => 'Password changed!', 'photo-updated' => 'Photo updated!', 'photo-removed' => 'Photo removed!'] as $key => $msg)
@@ -48,117 +57,103 @@
                 @endforeach
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                {{-- Sidebar --}}
-                <div class="lg:col-span-4 space-y-6">
-                    {{-- User Card --}}
-                    <div class="bg-white rounded-[2.5rem] border border-slate-200/60 overflow-hidden shadow-sm relative group">
-                        <div class="h-32 bg-gradient-to-br from-[#d983e4] via-primary-600 to-[#4e71c5] relative overflow-hidden">
-                            <div class="absolute inset-0 bg-black/10"></div>
-                            <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl animate-pulse"></div>
-                            <div class="absolute left-10 bottom-5 w-20 h-20 bg-primary-400/20 rounded-full blur-xl"></div>
-                        </div>
+            {{-- Bento Grid Layout --}}
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                
+                {{-- [BENTO 1] Hero Identity Card (Wide) --}}
+                <div class="md:col-span-8 group">
+                    <div class="bg-white rounded-[3rem] border border-slate-200/60 p-10 shadow-sm hover:shadow-xl hover:shadow-primary-500/5 transition-all duration-500 h-full relative overflow-hidden">
+                        {{-- Decorative Background Elements --}}
+                        <div class="absolute -right-20 -top-20 w-64 h-64 bg-primary-50/30 rounded-full blur-3xl group-hover:bg-primary-100/40 transition-colors duration-700"></div>
+                        <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-slate-50/50 rounded-full blur-3xl"></div>
                         
-                        <div class="px-8 pb-8 flex flex-col items-center">
-                            <div class="relative -mt-16 mb-6 group/avatar">
-                                <div class="w-32 h-32 rounded-[2.5rem] overflow-hidden bg-white shadow-2xl border-4 border-white ring-1 ring-slate-100 transition-transform duration-500 group-hover/avatar:scale-105">
+                        <div class="relative flex flex-col md:flex-row items-center gap-10">
+                            {{-- Profile Aura Avatar --}}
+                            <div class="relative group/avatar">
+                                <div class="absolute inset-0 bg-primary-100 rounded-full animate-spin-slow opacity-20 scale-110"></div>
+                                <svg class="absolute inset-[-10px] w-[calc(100%+20px)] h-[calc(100%+20px)] transform -rotate-90">
+                                    <circle cx="50%" cy="50%" r="48%" stroke="currentColor" stroke-width="3" fill="transparent" class="text-slate-100" />
+                                    <circle cx="50%" cy="50%" r="48%" stroke="currentColor" stroke-width="3" fill="transparent" class="text-primary-500 transition-all duration-1000" stroke-dasharray="100" stroke-dashoffset="{{ 100 - $percentage }}" stroke-linecap="round" />
+                                </svg>
+                                
+                                <div class="relative w-36 h-36 rounded-full overflow-hidden bg-white shadow-2xl border-4 border-white transition-transform duration-500 group-hover/avatar:scale-105">
                                     @if(Auth::user()->logo)
                                         <img src="{{ Storage::url(Auth::user()->logo) }}" alt="Avatar" class="w-full h-full object-cover">
                                     @else
                                         <div class="w-full h-full bg-slate-50 flex items-center justify-center text-slate-300">
-                                            <i class="ph-fill ph-user text-5xl"></i>
+                                            <i class="ph-fill ph-user text-6xl"></i>
                                         </div>
                                     @endif
                                 </div>
-                                <button onclick="openProfilePhotoModal()" class="absolute -bottom-2 -right-2 w-11 h-11 bg-slate-900 text-white rounded-2xl flex items-center justify-center shadow-lg hover:bg-primary-600 hover:scale-110 transition-all border-4 border-white">
-                                    <i class="ph-bold ph-camera-plus text-lg"></i>
+                                <button onclick="openProfilePhotoModal()" class="absolute bottom-1 right-1 w-10 h-10 bg-slate-900 text-white rounded-2xl flex items-center justify-center shadow-lg hover:bg-primary-600 transition-all border-4 border-white">
+                                    <i class="ph-bold ph-camera text-base"></i>
                                 </button>
                             </div>
 
-                            <div class="text-center w-full">
-                                <h3 class="text-xl font-black text-slate-900 tracking-tight">{{ $user->name }}</h3>
-                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">{{ $user->email }}</p>
-                                
-                                <div class="mt-6 pt-6 border-t border-slate-100 flex flex-col gap-3">
+                            <div class="flex-1 text-center md:text-left">
+                                <div class="flex flex-col md:flex-row md:items-center gap-3 mb-2">
+                                    <h3 class="text-3xl font-black text-slate-900 tracking-tighter">{{ $user->name }}</h3>
                                     @if($user->is_premium)
-                                        <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-100 rounded-2xl p-4 flex items-center justify-between group/prem">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
-                                                    <i class="ph-fill ph-crown text-amber-500 text-lg"></i>
-                                                </div>
-                                                <span class="text-[10px] font-black text-amber-700 uppercase tracking-widest">Premium Plan</span>
-                                            </div>
-                                            <span class="text-[8px] font-black text-amber-500 bg-white px-2 py-1 rounded-full border border-amber-100 uppercase tracking-widest group-hover/prem:scale-110 transition-transform">ACTIVE</span>
-                                        </div>
-                                    @else
-                                        <a href="{{ route('payment.index') }}" class="relative overflow-hidden group/upgrade bg-primary-600 text-white rounded-2xl p-4 text-[10px] font-black uppercase tracking-widest hover:bg-primary-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary-100">
-                                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/upgrade:translate-x-full transition-transform duration-1000"></div>
-                                            <i class="ph-bold ph-lightning"></i>
-                                            Upgrade to Premium
-                                        </a>
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-600 border border-amber-100 rounded-full text-[9px] font-black uppercase tracking-widest self-center">
+                                            <i class="ph-fill ph-crown"></i> PRO
+                                        </span>
                                     @endif
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Profile Completeness --}}
-                    <div class="bg-white rounded-3xl border border-slate-200/70 p-5 shadow-sm">
-                        <div class="flex items-center justify-between mb-3">
-                            <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Profile Completeness</h4>
-                            <span class="text-[10px] font-black {{ $percentage === 100 ? 'text-emerald-600 bg-emerald-50' : 'text-primary-600 bg-primary-50' }} px-2 py-0.5 rounded-full">{{ $percentage }}%</span>
-                        </div>
-                        <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden mb-4">
-                            <div class="h-full {{ $percentage === 100 ? 'bg-emerald-500' : 'bg-gradient-to-r from-primary-500 to-primary-500' }} transition-all duration-1000 ease-out" style="width: {{ $percentage }}%"></div>
-                        </div>
-                        <div class="space-y-1.5">
-                            @php
-                                $items = [
-                                    ['Photo',    (bool)$user->logo],
-                                    ['Bio',      (bool)($profile?->bio)],
-                                    ['Phone',    (bool)($profile?->phone_number)],
-                                    ['Location', (bool)($profile?->domicile)],
-                                    ['LinkedIn', (bool)($profile?->linkedin_url)],
-                                    ['Website',  (bool)($profile?->website_url)],
-                                ];
-                            @endphp
-                            @foreach($items as [$label, $done])
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0 {{ $done ? 'bg-emerald-100' : 'bg-slate-100' }}">
-                                    <i class="ph-bold {{ $done ? 'ph-check text-emerald-600' : 'ph-minus text-slate-300' }} text-[8px]"></i>
+                                <p class="text-sm font-bold text-slate-400 mb-6">{{ $user->email }}</p>
+                                
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="bg-slate-50/50 rounded-2xl p-4 border border-slate-100">
+                                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Completeness</p>
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-lg font-black text-slate-800">{{ $percentage }}%</span>
+                                            <div class="flex-1 h-1 bg-slate-200 rounded-full overflow-hidden">
+                                                <div class="h-full bg-primary-500" style="width: {{ $percentage }}%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 rounded-2xl p-4 border border-slate-100">
+                                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Member Since</p>
+                                        <p class="text-sm font-black text-slate-800">{{ Auth::user()->created_at->format('M Y') }}</p>
+                                    </div>
                                 </div>
-                                <span class="text-[11px] font-{{ $done ? 'bold text-slate-700' : 'medium text-slate-400' }}">{{ $label }}</span>
                             </div>
-                            @endforeach
                         </div>
-                    </div>
-
-                    {{-- Navigation Tabs --}}
-                    <div class="bg-white rounded-3xl border border-slate-200/70 p-2.5 shadow-sm">
-                        <nav class="flex flex-col gap-1">
-                            @foreach([
-                                ['account',  'ph-user',               'Account Info'],
-                                ['personal', 'ph-identification-card', 'Personal Info'],
-                                ['security', 'ph-shield-check',       'Security'],
-                            ] as [$tab, $icon, $label])
-                            <button onclick="switchTab('{{ $tab }}')" id="tab-{{ $tab }}"
-                                    class="tab-btn {{ $tab === 'account' ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">
-                                <i class="ph-bold {{ $icon }} text-base"></i>
-                                <span>{{ $label }}</span>
-                            </button>
-                            @endforeach
-                            <div class="my-1.5 border-t border-slate-100"></div>
-                            <button onclick="switchTab('danger')" id="tab-danger"
-                                    class="tab-btn flex items-center gap-3 px-4 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all hover:bg-rose-50 hover:text-rose-600">
-                                <i class="ph-bold ph-warning-octagon text-base"></i>
-                                <span>Danger Zone</span>
-                            </button>
-                        </nav>
                     </div>
                 </div>
 
-                {{-- Content Area --}}
-                <div class="lg:col-span-8">
+                {{-- [BENTO 2] Quick Stats / Premium (Small) --}}
+                <div class="md:col-span-4">
+                    <div class="bg-slate-900 rounded-[3rem] p-8 shadow-xl relative overflow-hidden h-full flex flex-col justify-between group">
+                        <div class="absolute right-0 top-0 w-32 h-32 bg-primary-500/20 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-1000"></div>
+                        
+                        <div class="relative">
+                            <h4 class="text-[10px] font-black text-primary-400 uppercase tracking-[0.3em] mb-2">Member Status</h4>
+                            @if($user->is_premium)
+                                <p class="text-2xl font-black text-white tracking-tight leading-tight">Elevated to<br>Premium Access</p>
+                            @else
+                                <p class="text-2xl font-black text-white tracking-tight leading-tight">Unlock Your<br>Full Potential</p>
+                            @endif
+                        </div>
+
+                        <div class="mt-8 relative">
+                            @if(!$user->is_premium)
+                                <a href="{{ route('payment.index') }}" class="group/btn bg-white text-slate-900 h-14 rounded-2xl flex items-center justify-between px-6 font-black text-[10px] uppercase tracking-widest hover:bg-primary-50 transition-all">
+                                    <span>Upgrade Now</span>
+                                    <i class="ph-bold ph-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
+                                </a>
+                            @else
+                                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 flex items-center justify-between">
+                                    <span class="text-[9px] font-black text-white/60 uppercase tracking-widest">Active Plan</span>
+                                    <span class="text-[9px] font-black text-primary-300 uppercase tracking-widest">Enterprise</span>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                {{-- [BENTO 3] Main Content Sections (Identity, Contact, Security) --}}
+                <div class="md:col-span-12 lg:col-span-12">
+                    <div class="space-y-6">
                     {{-- Account --}}
                     <div id="section-account" class="content-section">
                         <div class="bg-white rounded-[2.5rem] border border-slate-200/60 p-8 sm:p-10 shadow-sm relative overflow-hidden">
@@ -358,13 +353,11 @@
     <form id="removePhotoForm" method="POST" action="{{ route('profile-photo.delete') }}" class="hidden">@csrf @method('delete')</form>
 
     <style>
-        .tab-btn { color: #94a3b8; border: 1px solid transparent; }
-        .tab-btn:hover { background-color: #f8fafc; color: #64748b; }
+        .tab-btn { color: #94a3b8; }
         .tab-btn.active { 
-            background-color: #0f172a; 
-            color: white; 
-            box-shadow: 0 15px 30px -5px rgba(15, 23, 42, 0.2); 
-            transform: translateX(4px);
+            background-color: #f8fafc; 
+            color: #0f172a; 
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
         
         /* Premium Form Styling Overrides */
@@ -380,6 +373,14 @@
         
         .premium-form-wrapper button[type="submit"] {
             @apply px-10 py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-600 transition-all shadow-xl shadow-slate-100 active:scale-95 !important;
+        }
+
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: spin-slow 12s linear infinite;
         }
 
         .content-section { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
