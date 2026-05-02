@@ -219,7 +219,7 @@
                                 <button type="button" @click="$wire.showGoalModal = false" class="flex-1 py-4 bg-slate-100 text-slate-500 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-200 transition-all">
                                     Cancel
                                 </button>
-                                <button type="submit" class="flex-[2] py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-[2px] text-[10px] hover:bg-primary-600 transition-all shadow-xl shadow-slate-200 active:scale-95 flex items-center justify-center gap-3">
+                                <button type="submit" class="flex-[2] py-4 bg-primary-600 text-white rounded-2xl font-black uppercase tracking-[2px] text-[10px] hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 active:scale-95 flex items-center justify-center gap-3">
                                     <i class="ph-bold ph-check-circle text-base"></i>
                                     Save New Cycle
                                 </button>

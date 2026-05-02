@@ -1,6 +1,7 @@
 <x-app-layout>
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @php
         $profile = $user->profile;
@@ -60,9 +61,9 @@
             {{-- Bento Grid Layout --}}
             <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
                 
-                {{-- [BENTO 1] Hero Identity Card (Wide) --}}
-                <div class="md:col-span-8 group">
-                    <div class="bg-white rounded-[3rem] border border-slate-200/60 p-10 shadow-sm hover:shadow-xl hover:shadow-primary-500/5 transition-all duration-500 h-full relative overflow-hidden">
+                {{-- [BENTO 1] Hero Identity Card (Full Width) --}}
+                <div class="md:col-span-12 group">
+                    <div class="bg-white rounded-[3rem] border border-slate-200/60 p-10 shadow-sm hover:shadow-xl hover:shadow-primary-500/5 transition-all duration-500 relative overflow-hidden">
                         {{-- Decorative Background Elements --}}
                         <div class="absolute -right-20 -top-20 w-64 h-64 bg-primary-50/30 rounded-full blur-3xl group-hover:bg-primary-100/40 transition-colors duration-700"></div>
                         <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-slate-50/50 rounded-full blur-3xl"></div>
@@ -121,8 +122,40 @@
                     </div>
                 </div>
 
-                {{-- [BENTO 2] Quick Stats / Premium (Small) --}}
-                <div class="md:col-span-4">
+                {{-- [BENTO 2] Skill Matrix (Radar Chart) --}}
+                <div class="md:col-span-7">
+                    <div class="bg-white rounded-[3rem] border border-slate-200/60 p-8 shadow-sm h-full relative overflow-hidden group">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h4 class="text-[10px] font-black text-primary-500 uppercase tracking-[0.3em] mb-1">Professional Matrix</h4>
+                                <p class="text-lg font-black text-slate-800 tracking-tight">Skill Proficiency</p>
+                            </div>
+                            <div class="w-10 h-10 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:text-primary-500 transition-colors">
+                                <i class="ph-bold ph-strategy text-lg"></i>
+                            </div>
+                        </div>
+
+                        <div class="relative aspect-square max-h-[300px] mx-auto">
+                            <canvas id="skillMatrixChart"></canvas>
+                        </div>
+
+                        {{-- Legend Placeholder or Small Stats --}}
+                        <div class="mt-8 grid grid-cols-3 gap-4">
+                            @php
+                                $categories = $user->skills->groupBy('category');
+                            @endphp
+                            @foreach($categories->take(3) as $cat => $skills)
+                                <div class="text-center">
+                                    <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">{{ $cat ?: 'General' }}</p>
+                                    <p class="text-xs font-bold text-slate-700">{{ $skills->count() }} Skills</p>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+                {{-- [BENTO 3] Quick Stats / Premium (Small) --}}
+                <div class="md:col-span-5">
                     <div class="bg-slate-900 rounded-[3rem] p-8 shadow-xl relative overflow-hidden h-full flex flex-col justify-between group">
                         <div class="absolute right-0 top-0 w-32 h-32 bg-primary-500/20 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-1000"></div>
                         
@@ -151,7 +184,7 @@
                     </div>
                 </div>
 
-                {{-- [BENTO 3] Main Content Sections (Identity, Contact, Security) --}}
+                {{-- [BENTO 4] Main Content Sections (Tabbed) --}}
                 <div class="md:col-span-12 lg:col-span-12">
                     <div class="space-y-6">
                     {{-- Account --}}
@@ -239,7 +272,7 @@
                                     </div>
 
                                     <div class="flex justify-end pt-4">
-                                        <button type="submit" class="group/btn px-10 py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-600 transition-all shadow-xl shadow-slate-100 active:scale-95 flex items-center gap-3">
+                                        <button type="submit" class="group/btn px-10 py-4 bg-primary-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 active:scale-95 flex items-center gap-3">
                                             <i class="ph-bold ph-check-circle text-lg group-hover/btn:scale-110 transition-transform"></i>
                                             Save Profile Details
                                         </button>
@@ -334,7 +367,7 @@
                 </div>
 
                 <div class="flex flex-col gap-3">
-                    <button type="button" onclick="uploadProfilePhoto()" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-600 transition-all flex items-center justify-center gap-3 active:scale-95 shadow-xl shadow-slate-100">
+                    <button type="button" onclick="uploadProfilePhoto()" class="w-full py-4 bg-primary-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-700 transition-all flex items-center justify-center gap-3 active:scale-95 shadow-xl shadow-primary-100">
                         <i class="ph-bold ph-cloud-arrow-up text-lg"></i>
                         SAVE NEW IDENTITY
                     </button>
@@ -480,6 +513,62 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Skill Matrix Chart
+            const ctx = document.getElementById('skillMatrixChart');
+            if (ctx) {
+                @php
+                    $skillData = $user->skills->take(6);
+                    $labels = $skillData->pluck('skill_name')->toArray();
+                    $values = $skillData->pluck('proficiency_level')->toArray();
+                    
+                    // Fallback if no skills
+                    if(empty($labels)) {
+                        $labels = ['Technical', 'Communication', 'Leadership', 'Creativity', 'Problem Solving', 'Organization'];
+                        $values = [80, 70, 90, 65, 85, 75];
+                    }
+                @endphp
+
+                new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: {!! json_encode($labels) !!},
+                        datasets: [{
+                            label: 'Proficiency',
+                            data: {!! json_encode($values) !!},
+                            fill: true,
+                            backgroundColor: 'rgba(165, 112, 240, 0.15)',
+                            borderColor: '#a570f0',
+                            pointBackgroundColor: '#a570f0',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#a570f0',
+                            borderWidth: 2,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                angleLines: { display: true, color: 'rgba(0,0,0,0.05)' },
+                                grid: { color: 'rgba(0,0,0,0.05)' },
+                                pointLabels: {
+                                    font: { size: 9, weight: '900', family: 'Inter' },
+                                    color: '#94a3b8'
+                                },
+                                ticks: { display: false, stepSize: 20 },
+                                min: 0,
+                                max: 100
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+
             // Auto-hide notifications
             setTimeout(() => {
                 document.querySelectorAll('.notification-toast').forEach(t => {

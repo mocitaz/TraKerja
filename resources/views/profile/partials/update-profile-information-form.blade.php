@@ -11,7 +11,7 @@
         <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
         <input id="name" name="name" type="text" 
                value="{{ old('name', $user->name) }}" 
-               required autofocus autocomplete="name"
+               required autocomplete="name"
                class="w-full rounded-lg border-gray-300 focus:border-primary-500 focus:ring-primary-500 text-sm @error('name') border-red-300 @enderror">
         @error('name')
             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

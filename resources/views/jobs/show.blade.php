@@ -197,7 +197,7 @@
                 <!-- Right Column: Actions & Details -->
                 <div class="space-y-6">
                     <!-- Edit Button Action -->
-                    <a href="{{ $editUrl }}" class="w-full flex items-center justify-center gap-3 px-6 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl transition-all font-black text-sm shadow-xl shadow-indigo-100 active:scale-95 group">
+                    <a href="{{ $editUrl }}" class="w-full flex items-center justify-center gap-3 px-6 py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-2xl transition-all font-black text-sm shadow-xl shadow-primary-100 active:scale-95 group">
                         <i class="ph-bold ph-pencil-simple text-xl group-hover:rotate-12 transition-transform"></i>
                         Edit Job Details
                     </a>

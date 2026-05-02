@@ -146,7 +146,7 @@
                                 <i class="ph-bold ph-arrow-left text-sm"></i> Cancel
                             </a>
                             <button type="submit" id="submit-btn"
-                                    class="group flex items-center gap-2.5 px-8 py-3.5 bg-slate-900 text-white rounded-2xl font-black text-sm hover:bg-primary-600 transition-all shadow-xl shadow-slate-200 active:scale-95">
+                                    class="group flex items-center gap-2.5 px-8 py-3.5 bg-primary-600 text-white rounded-2xl font-black text-sm hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 active:scale-95">
                                 <i id="loading-spinner" class="ph-bold ph-spinner animate-spin hidden text-sm"></i>
                                 <i id="submit-icon" class="ph-bold ph-sparkle text-sm group-hover:rotate-12 transition-transform"></i>
                                 <span id="submit-text">Run AI Analysis</span>

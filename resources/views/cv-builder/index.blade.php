@@ -49,7 +49,7 @@
                     </div>
 
                     <div class="flex flex-col sm:flex-row gap-4 shrink-0">
-                        <a href="{{ route('cv.generator') }}" class="magnetic-btn group relative px-8 py-4 bg-slate-900 text-white rounded-2xl font-black text-xs uppercase tracking-[2px] hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 flex items-center justify-center gap-3 active:scale-95">
+                        <a href="{{ route('cv.generator') }}" class="magnetic-btn group relative px-8 py-4 bg-primary-600 text-white rounded-2xl font-black text-xs uppercase tracking-[2px] hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 flex items-center justify-center gap-3 active:scale-95">
                             <i class="ph-bold ph-file-pdf text-base group-hover:scale-110 transition-transform"></i>
                             GENERATE CV
                         </a>

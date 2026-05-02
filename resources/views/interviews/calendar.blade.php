@@ -137,7 +137,7 @@
                     <span class="text-[10px] font-black text-slate-400 tracking-widest uppercase">TraKerja Tracker</span>
                 </div>
                 <button @click="closeModal()"
-                        class="px-8 py-2.5 bg-slate-900 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg active:scale-95">
+                        class="px-8 py-2.5 bg-primary-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-primary-700 transition-all shadow-lg active:scale-95">
                     Dismiss
                 </button>
             </div>

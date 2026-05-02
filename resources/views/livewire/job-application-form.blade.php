@@ -160,7 +160,7 @@
             <button type="button" wire:click="resetForm" class="text-[10px] font-black text-slate-300 hover:text-rose-500 uppercase tracking-[2px] transition-colors">Reset</button>
             <div class="flex items-center gap-4">
                 <button type="button" onclick="closeJobModal()" class="text-[10px] font-black text-slate-400 hover:text-slate-600 uppercase tracking-[2px] transition-all">Cancel</button>
-                <button type="submit" class="magnetic-btn px-10 py-3 bg-slate-900 text-white text-[10px] font-black rounded-xl hover:bg-indigo-600 transition-all shadow-xl shadow-slate-200 active:scale-95 uppercase tracking-[2px] flex items-center gap-2 group">
+                <button type="submit" class="magnetic-btn px-10 py-3 bg-primary-600 text-white text-[10px] font-black rounded-xl hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 active:scale-95 uppercase tracking-[2px] flex items-center gap-2 group">
                     <span wire:loading.remove wire:target="save" class="flex items-center gap-2">
                         <i class="ph-bold ph-check text-base"></i>
                         {{ $isEditing ? 'UPDATE' : 'SAVE' }}

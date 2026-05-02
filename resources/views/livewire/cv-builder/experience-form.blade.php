@@ -11,7 +11,7 @@
             </div>
         </div>
         <button wire:click="openModal" 
-                class="w-full md:w-auto px-6 py-3 bg-slate-900 text-white rounded-2xl font-black text-xs uppercase tracking-[2px] hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 flex items-center justify-center gap-2 active:scale-95">
+                class="w-full md:w-auto px-6 py-3 bg-primary-600 text-white rounded-2xl font-black text-xs uppercase tracking-[2px] hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 flex items-center justify-center gap-2 active:scale-95">
             <i class="ph-bold ph-plus text-base"></i>
             ADD EXPERIENCE
         </button>
