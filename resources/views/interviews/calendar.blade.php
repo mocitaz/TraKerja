@@ -33,7 +33,7 @@
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
         class="fixed inset-0 z-[9999] flex items-center justify-center p-4"
-        style="display:none"
+        x-cloak
     >
         {{-- Backdrop --}}
         <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-xl" @click="closeModal()"></div>
@@ -48,7 +48,6 @@
             x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 scale-95"
             class="relative bg-white rounded-[2.5rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.18)] max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-100 z-10"
-            style="display:none"
             @click.stop
         >
             {{-- Modal Header: Clean White with Icon --}}
@@ -150,14 +149,27 @@
         document.addEventListener('livewire:init', () => {
             Livewire.on('open-interview-modal', (event) => {
                 const root = document.getElementById('interview-modal-root');
-                if (!root) return;
+                if (!root) {
+                    console.error('Interview modal root not found');
+                    return;
+                }
                 
-                // Livewire 3 passes data directly or in an array
-                const data = event.interview || (Array.isArray(event) ? event[0].interview : event);
-                const alpine = Alpine.$data(root);
-                
-                if (alpine && data) {
-                    alpine.openModal(data);
+                // Livewire 3 passes data directly or in an array. 
+                // We handle various dispatch formats here.
+                let data = null;
+                if (event.interview) {
+                    data = event.interview;
+                } else if (Array.isArray(event) && event[0] && event[0].interview) {
+                    data = event[0].interview;
+                } else if (typeof event === 'object') {
+                    data = event;
+                }
+
+                if (data) {
+                    const alpine = Alpine.$data(root);
+                    if (alpine) {
+                        alpine.openModal(data);
+                    }
                 }
             });
         });

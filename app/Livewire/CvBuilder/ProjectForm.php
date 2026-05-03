@@ -138,6 +138,17 @@ class ProjectForm extends Component
         $this->loadProjects();
     }
     
+    public function confirmDelete($id)
+    {
+        $this->dispatch('confirm-action', [
+            'title' => 'Delete Project?',
+            'message' => 'Are you sure you want to delete this project? This action cannot be undone.',
+            'btnText' => 'Delete Now',
+            'onConfirm' => 'delete',
+            'params' => ['id' => $id]
+        ]);
+    }
+
     public function delete($id)
     {
         $project = UserProject::findOrFail($id);

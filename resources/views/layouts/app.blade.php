@@ -83,6 +83,8 @@
                 background-size: 1000px 100%;
                 animation: shimmer 2s infinite linear;
             }
+
+            [x-cloak] { display: none !important; }
         </style>
     </head>
     <body class="font-sans antialiased bg-[#F8FAFC] text-slate-900"
@@ -403,13 +405,13 @@
             }
 
             // Initial hide
-            window.addEventListener('load', () => setTimeout(hidePageLoader, 2300));
-            document.addEventListener('DOMContentLoaded', () => setTimeout(hidePageLoader, 2300));
+            window.addEventListener('load', () => setTimeout(hidePageLoader, 800));
+            document.addEventListener('DOMContentLoaded', () => setTimeout(hidePageLoader, 800));
 
             // Handle Livewire Navigation
             document.addEventListener('livewire:navigate', showPageLoader);
             document.addEventListener('livewire:navigated', () => {
-                setTimeout(hidePageLoader, 2300);
+                setTimeout(hidePageLoader, 800);
                 initMagneticButtons();
                 if (window.Alpine && Alpine.store('sidebar')) {
                     Alpine.store('sidebar').close();
@@ -460,7 +462,7 @@
                 50% { transform: scale(0.95); opacity: 0.9; }
             }
             .animate-progress-ring {
-                animation: progress-ring 2.3s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+                animation: progress-ring 0.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
             }
             .animate-pulse-subtle {
                 animation: pulse-subtle 3s ease-in-out infinite;

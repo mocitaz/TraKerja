@@ -149,6 +149,17 @@ class ExperienceForm extends Component
         $this->loadExperiences();
     }
     
+    public function confirmDelete($id)
+    {
+        $this->dispatch('confirm-action', [
+            'title' => 'Delete Experience?',
+            'message' => 'Are you sure you want to delete this work experience? This action cannot be undone.',
+            'btnText' => 'Delete Now',
+            'onConfirm' => 'delete',
+            'params' => ['id' => $id]
+        ]);
+    }
+    
     public function delete($id)
     {
         $experience = UserExperience::findOrFail($id);

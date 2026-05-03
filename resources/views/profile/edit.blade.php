@@ -43,20 +43,32 @@
                 </nav>
             </div>
 
-            {{-- Notifications --}}
-            <div id="notifications" class="fixed top-24 right-8 z-[100] space-y-3 pointer-events-none">
-                @foreach(['profile-updated' => 'Profile updated!', 'personal-info-updated' => 'Personal info saved!', 'password-updated' => 'Password changed!', 'photo-updated' => 'Photo updated!', 'photo-removed' => 'Photo removed!'] as $key => $msg)
-                    @if (session('status') === $key)
-                        <div class="notification-toast bg-slate-900 text-white rounded-2xl p-4 pl-6 pr-12 shadow-2xl flex items-center gap-3 pointer-events-auto animate-slide-in relative border border-white/10">
-                            <i class="ph-bold ph-check-circle text-emerald-400 text-xl"></i>
-                            <p class="text-xs font-black uppercase tracking-widest">{{ $msg }}</p>
-                            <button onclick="this.parentElement.remove()" class="absolute right-4 text-slate-400 hover:text-white transition-colors">
-                                <i class="ph-bold ph-x text-sm"></i>
-                            </button>
-                        </div>
-                    @endif
-                @endforeach
-            </div>
+            {{-- Global Toast Trigger for Session Status (Fallback for direct access) --}}
+            @if (session('status'))
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        showProfileToast("{{ session('status') }}");
+                    });
+                </script>
+            @endif
+
+            <script>
+                function showProfileToast(status) {
+                    const statusMap = {
+                        'profile-updated': { type: 'success', title: 'Identity Updated', message: 'Your basic profile information has been successfully saved.' },
+                        'personal-info-updated': { type: 'success', title: 'Contact Saved', message: 'Your personal and contact details have been updated.' },
+                        'password-updated': { type: 'success', title: 'Security Updated', message: 'Your account password has been changed successfully.' },
+                        'photo-updated': { type: 'success', title: 'Photo Updated', message: 'Your profile identity photo has been updated.' },
+                        'photo-removed': { type: 'info', title: 'Photo Removed', message: 'Your profile photo has been removed from your account.' },
+                        'verification-link-sent': { type: 'info', title: 'Link Sent', message: 'A new verification link has been sent to your email.' }
+                    };
+                    
+                    const config = statusMap[status];
+                    if (config && typeof window.showToast === 'function') {
+                        window.showToast(config.type, config.title, config.message);
+                    }
+                }
+            </script>
 
             {{-- Bento Grid Layout --}}
             <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -224,7 +236,7 @@
                                     </div>
                                 </div>
                                 
-                                <form method="post" action="{{ route('profile.personal.update') }}" class="space-y-8">
+                                <form id="personalInfoForm" method="post" action="{{ route('profile.personal.update') }}" class="space-y-8">
                                     @csrf
                                     @method('patch')
 
@@ -487,7 +499,8 @@
                 if (data.success) {
                     statusDiv.className = 'mt-6 bg-emerald-500 rounded-2xl p-4 flex items-center gap-3 text-white shadow-lg shadow-emerald-100';
                     statusDiv.innerHTML = `<i class="ph-bold ph-check-circle text-xl"></i><span class="text-[10px] font-black uppercase tracking-widest">${data.message}</span>`;
-                    setTimeout(() => window.location.reload(), 1000);
+                    showProfileToast('photo-updated');
+                    setTimeout(() => window.location.reload(), 1500);
                 } else {
                     statusDiv.className = 'mt-6 bg-rose-500 rounded-2xl p-4 flex items-center gap-3 text-white shadow-lg shadow-rose-100';
                     statusDiv.innerHTML = `<i class="ph-bold ph-warning text-xl"></i><span class="text-[10px] font-black uppercase tracking-widest">${data.message}</span>`;
@@ -508,7 +521,14 @@
                     headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content }
                 })
                 .then(r => r.json())
-                .then(data => { if (data.success) window.location.reload(); else alert(data.message); })
+                .then(data => { 
+                    if (data.success) {
+                        showProfileToast('photo-removed');
+                        setTimeout(() => window.location.reload(), 1500);
+                    } else {
+                        window.showToast('error', 'Removal Failed', data.message);
+                    }
+                })
                 .catch(() => alert('Failed to remove photo.'));
             }
         }
@@ -579,6 +599,87 @@
                     setTimeout(() => t.remove(), 600);
                 });
             }, 5000);
+
+            // AJAX Form Handling
+            const profileFormIds = ['identityUpdateForm', 'personalInfoForm', 'passwordUpdateForm'];
+
+            profileFormIds.forEach(id => {
+                const form = document.getElementById(id);
+                if (!form) return;
+
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const btn = form.querySelector('button[type="submit"]');
+                    const originalBtnHtml = btn.innerHTML;
+                    const formData = new FormData(form);
+                    
+                    // Show loading state
+                    btn.disabled = true;
+                    btn.innerHTML = `<i class="ph-bold ph-spinner animate-spin text-lg"></i><span>Updating...</span>`;
+
+                    fetch(form.action, {
+                        method: 'POST', // Always POST for Laravel with _method field
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(err => { throw err; });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        btn.disabled = false;
+                        btn.innerHTML = originalBtnHtml;
+
+                        if (data.success || data.status) {
+                            showProfileToast(data.status || 'profile-updated');
+                            
+                            // Clear password fields if it was a password update
+                            if (id === 'passwordUpdateForm') {
+                                form.reset();
+                                if (typeof checkPasswordStrength === 'function') checkPasswordStrength();
+                            }
+
+                            // Clear previous error messages
+                            form.querySelectorAll('.validation-error').forEach(el => el.remove());
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Profile Update Error:', error);
+                        btn.disabled = false;
+                        btn.innerHTML = originalBtnHtml;
+                        
+                        if (error.errors) {
+                            // Show first validation error in a toast
+                            const firstKey = Object.keys(error.errors)[0];
+                            window.showToast('error', 'Validation Error', error.errors[firstKey][0]);
+                            
+                            // Optionally show inline errors
+                            Object.keys(error.errors).forEach(key => {
+                                const input = form.querySelector(`[name="${key}"]`);
+                                if (input) {
+                                    // Remove existing error if any
+                                    const existing = input.parentElement.querySelector('.validation-error');
+                                    if (existing) existing.remove();
+                                    
+                                    const errEl = document.createElement('p');
+                                    errEl.className = 'validation-error mt-1 text-xs text-rose-500 font-bold uppercase tracking-wider';
+                                    errEl.textContent = error.errors[key][0];
+                                    input.parentElement.appendChild(errEl);
+                                }
+                            });
+                        } else {
+                            window.showToast('error', 'Update Failed', 'An unexpected error occurred. Please try again.');
+                        }
+                    });
+                });
+            });
         });
     </script>
 </x-app-layout>

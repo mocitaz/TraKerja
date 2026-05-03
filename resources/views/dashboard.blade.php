@@ -38,7 +38,7 @@
             </style>
 
             <!-- New Analytics Cards -->
-            <div class="max-w-5xl mx-auto mb-8">
+            <div class="max-w-5xl mb-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                     <!-- On Process Card -->
                     <div class="bento-card-stat mesh-gradient-blue rounded-[2rem] border border-slate-100 p-4 sm:p-5 flex flex-col justify-between group relative overflow-hidden">
@@ -102,7 +102,6 @@
                             <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Interviews</p>
                             <p class="text-2xl font-black text-slate-900 tracking-tighter">{{ $totalInterviewsCount }}</p>
                         </div>
-                    </div>
                 </div>
             </div>
 

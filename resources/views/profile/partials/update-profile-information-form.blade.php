@@ -2,7 +2,7 @@
     @csrf
 </form>
 
-<form method="post" action="{{ route('profile.update') }}" class="space-y-4">
+<form method="post" action="{{ route('profile.update') }}" class="space-y-4" id="identityUpdateForm">
     @csrf
     @method('patch')
 

@@ -173,10 +173,27 @@ class EducationForm extends Component
         $this->loadEducations();
     }
 
+    public function confirmDelete($id)
+    {
+        $this->dispatch('confirm-action', [
+            'title' => 'Delete Education?',
+            'message' => 'Are you sure you want to delete this education record? This action cannot be undone.',
+            'btnText' => 'Delete Now',
+            'onConfirm' => 'delete',
+            'params' => ['id' => $id]
+        ]);
+    }
+
     public function delete($id)
     {
         UserEducation::where('user_id', Auth::id())->findOrFail($id)->delete();
-        session()->flash('message', 'Education deleted successfully.');
+        
+        $this->dispatch('showNotification', [
+            'type' => 'info',
+            'title' => 'Deleted',
+            'message' => 'Education deleted successfully!',
+        ]);
+        
         $this->loadEducations();
     }
 

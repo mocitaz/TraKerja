@@ -130,6 +130,17 @@ class AchievementForm extends Component
         $this->loadAchievements();
     }
     
+    public function confirmDelete($id)
+    {
+        $this->dispatch('confirm-action', [
+            'title' => 'Delete Achievement?',
+            'message' => 'Are you sure you want to delete this achievement? This action cannot be undone.',
+            'btnText' => 'Delete Now',
+            'onConfirm' => 'delete',
+            'params' => ['id' => $id]
+        ]);
+    }
+
     public function delete($id)
     {
         $achievement = UserAchievement::findOrFail($id);

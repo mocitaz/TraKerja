@@ -26,7 +26,7 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(ProfileUpdateRequest $request): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         $request->user()->fill($request->validated());
 
@@ -35,14 +35,18 @@ class ProfileController extends Controller
         }
 
         $request->user()->save();
-
+        
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true, 'status' => 'profile-updated']);
+        }
+        
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**
      * Update the user's personal information.
      */
-    public function updatePersonalInfo(Request $request): RedirectResponse
+    public function updatePersonalInfo(Request $request): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         $validated = $request->validate([
             'phone' => ['nullable', 'string', 'max:20'],
@@ -65,6 +69,10 @@ class ProfileController extends Controller
                 'bio' => $validated['bio'] ?? null,
             ]
         );
+
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true, 'status' => 'personal-info-updated']);
+        }
 
         return Redirect::route('profile.edit')->with('status', 'personal-info-updated');
     }
@@ -90,7 +98,7 @@ class ProfileController extends Controller
     /**
      * Update profile photo
      */
-    public function updatePhoto(Request $request): RedirectResponse
+    public function updatePhoto(Request $request): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         $request->validate([
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
@@ -107,19 +115,27 @@ class ProfileController extends Controller
         $logoPath = $request->file('logo')->store('logos', 'public');
         $user->update(['logo' => $logoPath]);
 
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true, 'status' => 'photo-updated', 'message' => 'Profile photo updated successfully']);
+        }
+
         return Redirect::route('profile.edit')->with('status', 'photo-updated');
     }
 
     /**
      * Remove profile photo
      */
-    public function removePhoto(Request $request): RedirectResponse
+    public function removePhoto(Request $request): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         $user = $request->user();
 
         if ($user->logo) {
             \Storage::disk('public')->delete($user->logo);
             $user->update(['logo' => null]);
+        }
+
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true, 'status' => 'photo-removed', 'message' => 'Profile photo removed successfully']);
         }
 
         return Redirect::route('profile.edit')->with('status', 'photo-removed');

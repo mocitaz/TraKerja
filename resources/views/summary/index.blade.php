@@ -235,31 +235,38 @@
 
     <style>
         .mesh-gradient-blue {
-            background-color: #f8fafc;
+            background-color: #ffffff;
             background-image:
-                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.05) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.03) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.03) 0px, transparent 50%);
         }
 
         .mesh-gradient-emerald {
-            background-color: #f8fafc;
+            background-color: #ffffff;
             background-image:
-                radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(5, 150, 105, 0.05) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.03) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(5, 150, 105, 0.03) 0px, transparent 50%);
         }
 
         .mesh-gradient-rose {
-            background-color: #f8fafc;
+            background-color: #ffffff;
             background-image:
-                radial-gradient(at 0% 0%, rgba(244, 63, 94, 0.05) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(225, 29, 72, 0.05) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(244, 63, 94, 0.03) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(225, 29, 72, 0.03) 0px, transparent 50%);
+        }
+
+        .mesh-gradient-orange {
+            background-color: #ffffff;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(245, 158, 11, 0.03) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(217, 119, 6, 0.03) 0px, transparent 50%);
         }
 
         .mesh-gradient-purple {
-            background-color: #f8fafc;
+            background-color: #ffffff;
             background-image:
-                radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.05) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.05) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.03) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.03) 0px, transparent 50%);
         }
 
         .bento-card {
@@ -269,6 +276,15 @@
 
         .bento-card:hover {
             transform: translateY(-4px) scale(1.01);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .bento-card-stat {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+        .bento-card-stat:hover {
+            transform: translateY(-4px);
             box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
         }
     </style>
@@ -307,78 +323,75 @@
             </div>
 
             {{-- Stats Grid --}}
-            <div class="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
-                <!-- Compact On Process -->
-                <div
-                    class="bento-card mesh-gradient-blue border border-white rounded-[2rem] p-4 sm:p-5 flex flex-col hover:border-blue-200/50 transition-all group min-w-0">
-                    <div class="flex items-center gap-3 sm:gap-4 mb-3">
-                        <div
-                            class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white border border-blue-100 flex items-center justify-center text-blue-600 shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                            <i class="ph-duotone ph-briefcase text-xl sm:text-2xl"></i>
+            <div class="max-w-5xl mb-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                    <!-- On Process Card -->
+                    <div class="bento-card-stat mesh-gradient-blue rounded-[2rem] border border-slate-100 p-4 sm:p-5 flex flex-col justify-between group relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 transition-transform group-hover:scale-110">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-[9px] font-black text-blue-600 uppercase tracking-[1.5px] bg-blue-50/50 px-2 py-0.5 rounded-full">Active</span>
                         </div>
-                        <div class="flex flex-col min-w-0">
-                            <span
-                                class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Interviews</span>
-                            <span
-                                class="text-xl sm:text-2xl font-black text-slate-900 leading-none tracking-tighter">{{ $interviews }}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Compact Accepted -->
-                <div
-                    class="bento-card mesh-gradient-emerald border border-white rounded-[2rem] p-4 sm:p-5 flex flex-col hover:border-emerald-200/50 transition-all group min-w-0">
-                    <div class="flex items-center gap-3 sm:gap-4 mb-3">
-                        <div
-                            class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                            <i class="ph-duotone ph-check-circle text-xl sm:text-2xl"></i>
-                        </div>
-                        <div class="flex flex-col min-w-0">
-                            <span
-                                class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Accepted</span>
-                            <span
-                                class="text-xl sm:text-2xl font-black text-slate-900 leading-none tracking-tighter">{{ $offeringAcceptedCount }}</span>
+                        <div>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">On Process</p>
+                            @php
+                                $onProcess = $statusDistribution->where('application_status', 'On Process')->first()->count ?? 0;
+                            @endphp
+                            <p class="text-2xl font-black text-slate-900 tracking-tighter">{{ $onProcess }}</p>
                         </div>
                     </div>
-                </div>
 
-                <!-- Compact Success Rate -->
-                <div
-                    class="bento-card mesh-gradient-rose border border-white rounded-[2rem] p-4 sm:p-5 flex flex-col hover:border-rose-200/50 transition-all group min-w-0">
-                    <div class="flex items-center gap-3 sm:gap-4 mb-3">
-                        <div
-                            class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white border border-rose-100 flex items-center justify-center text-rose-600 shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                            <i class="ph-duotone ph-chart-pie text-xl sm:text-2xl"></i>
+                    <!-- Offering/Accepted Card -->
+                    <div class="bento-card-stat mesh-gradient-emerald rounded-[2rem] border border-slate-100 p-4 sm:p-5 flex flex-col justify-between group relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 transition-transform group-hover:scale-110">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-[9px] font-black text-emerald-600 uppercase tracking-[1.5px] bg-emerald-50/50 px-2 py-0.5 rounded-full">Hired</span>
                         </div>
-                        <div class="flex flex-col min-w-0">
-                            <span
-                                class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Success
-                                Rate</span>
+                        <div>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Accepted</p>
+                            <p class="text-2xl font-black text-slate-900 tracking-tighter">{{ $offeringAcceptedCount }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Declined Card -->
+                    <div class="bento-card-stat mesh-gradient-rose rounded-[2rem] border border-slate-100 p-4 sm:p-5 flex flex-col justify-between group relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 bg-rose-50 rounded-xl flex items-center justify-center text-rose-600 transition-transform group-hover:scale-110">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </div>
+                            <span class="text-[9px] font-black text-rose-600 uppercase tracking-[1.5px] bg-rose-50/50 px-2 py-0.5 rounded-full">Closed</span>
+                        </div>
+                        <div>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Rejected</p>
                             @php
                                 $rejectedCount = $funnelData['Rejected'] ?? 0;
-                                $processedCount = $offeringAcceptedCount + $rejectedCount;
-                                $successRate = $processedCount > 0 ? round(($offeringAcceptedCount / $processedCount) * 100) : 0;
                             @endphp
-                            <span
-                                class="text-xl sm:text-2xl font-black text-slate-900 leading-none tracking-tighter">{{ $successRate }}%</span>
+                            <p class="text-2xl font-black text-slate-900 tracking-tighter">{{ $rejectedCount }}</p>
                         </div>
                     </div>
-                </div>
 
-                <!-- Compact Total Apps -->
-                <div
-                    class="bento-card mesh-gradient-purple border border-white rounded-[2rem] p-4 sm:p-5 flex flex-col hover:border-purple-200/50 transition-all group min-w-0">
-                    <div class="flex items-center gap-3 sm:gap-4 mb-3">
-                        <div
-                            class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white border border-purple-100 flex items-center justify-center text-purple-600 shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                            <i class="ph-duotone ph-paper-plane-tilt text-xl sm:text-2xl"></i>
+                    <!-- Total Interviews Card -->
+                    <div class="bento-card-stat mesh-gradient-orange rounded-[2rem] border border-slate-100 p-4 sm:p-5 flex flex-col justify-between group relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600 transition-transform group-hover:scale-110">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-[9px] font-black text-orange-600 uppercase tracking-[1.5px] bg-orange-50/50 px-2 py-0.5 rounded-full">Meetings</span>
                         </div>
-                        <div class="flex flex-col min-w-0">
-                            <span
-                                class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Total
-                                Apps</span>
-                            <span
-                                class="text-xl sm:text-2xl font-black text-slate-900 leading-none tracking-tighter">{{ $applicationsCount }}</span>
+                        <div>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Interviews</p>
+                            <p class="text-2xl font-black text-slate-900 tracking-tighter">{{ $interviews }}</p>
                         </div>
                     </div>
                 </div>

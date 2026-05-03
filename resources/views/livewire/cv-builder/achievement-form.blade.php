@@ -40,7 +40,7 @@
                         <button wire:click="edit({{ $achievement->id }})" class="w-10 h-10 flex items-center justify-center bg-primary-50 text-primary-600 rounded-xl hover:bg-primary-600 hover:text-white transition-all">
                             <i class="ph-bold ph-pencil-simple"></i>
                         </button>
-                        <button wire:click="delete({{ $achievement->id }})" wire:confirm="Delete this achievement?" class="w-10 h-10 flex items-center justify-center bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-600 hover:text-white transition-all">
+                        <button wire:click="confirmDelete({{ $achievement->id }})" class="w-10 h-10 flex items-center justify-center bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-600 hover:text-white transition-all">
                             <i class="ph-bold ph-trash"></i>
                         </button>
                     </div>

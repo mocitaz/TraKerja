@@ -133,6 +133,17 @@ class OrganizationForm extends Component
         $this->loadOrganizations();
     }
     
+    public function confirmDelete($id)
+    {
+        $this->dispatch('confirm-action', [
+            'title' => 'Delete Organization?',
+            'message' => 'Are you sure you want to delete this organization? This action cannot be undone.',
+            'btnText' => 'Delete Now',
+            'onConfirm' => 'delete',
+            'params' => ['id' => $id]
+        ]);
+    }
+
     public function delete($id)
     {
         $organization = UserOrganization::findOrFail($id);

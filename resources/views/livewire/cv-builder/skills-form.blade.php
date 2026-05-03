@@ -28,7 +28,7 @@
                             <button wire:click="edit({{ $skill->id }})" class="w-8 h-8 flex items-center justify-center bg-primary-50 text-primary-600 rounded-lg hover:bg-primary-600 hover:text-white transition-all">
                                 <i class="ph-bold ph-pencil-simple text-sm"></i>
                             </button>
-                            <button wire:click="delete({{ $skill->id }})" wire:confirm="Delete this skill?" class="w-8 h-8 flex items-center justify-center bg-rose-50 text-rose-600 rounded-lg hover:bg-rose-600 hover:text-white transition-all">
+                            <button wire:click="confirmDelete({{ $skill->id }})" class="w-10 h-10 flex items-center justify-center bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-600 hover:text-white transition-all">
                                 <i class="ph-bold ph-trash text-sm"></i>
                             </button>
                         </div>

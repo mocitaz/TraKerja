@@ -137,6 +137,17 @@ class SkillsForm extends Component
         $this->loadSkills();
     }
     
+    public function confirmDelete($id)
+    {
+        $this->dispatch('confirm-action', [
+            'title' => 'Delete Skill?',
+            'message' => 'Are you sure you want to delete this skill? This action cannot be undone.',
+            'btnText' => 'Delete Now',
+            'onConfirm' => 'delete',
+            'params' => ['id' => $id]
+        ]);
+    }
+
     public function delete($id)
     {
         $skill = UserSkill::findOrFail($id);
