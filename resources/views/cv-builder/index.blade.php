@@ -10,7 +10,7 @@
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <div class="bg-[#f8fafc] min-h-screen pb-20 relative overflow-hidden">
+    <div class="bg-[#f8fafc] min-h-screen pb-20 relative overflow-hidden" x-data="{ activeTab: 'experiences', previewOpen: false }">
         {{-- Decorative Background Elements --}}
         <div class="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-primary-50/30 to-transparent -z-10"></div>
         <div class="absolute top-40 -right-24 w-96 h-96 bg-primary-200/10 blur-[120px] rounded-full -z-10"></div>
@@ -34,6 +34,10 @@
                 </div>
 
                 <div class="flex items-center gap-3 w-full lg:w-auto">
+                    <button @click="previewOpen = true" class="flex-1 lg:flex-none px-6 py-4 bg-white text-slate-900 border border-slate-200 rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-slate-50 transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95">
+                        <i class="ph-bold ph-eye text-base"></i>
+                        Quick Preview
+                    </button>
                     <a href="{{ route('cv.generator') }}" class="flex-1 lg:flex-none group relative px-8 py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-600 transition-all shadow-xl shadow-slate-200 flex items-center justify-center gap-3 active:scale-95">
                         <i class="ph-bold ph-magic-wand text-base"></i>
                         Generate CV
@@ -47,7 +51,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch" x-data="{ activeTab: 'experiences' }">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                 {{-- Left Sidebar: Navigation & Strength --}}
                 <div class="lg:col-span-4 space-y-6">
                     {{-- Profile Strength Card: Absolute Precision Padding --}}
@@ -177,6 +181,91 @@
                 </div>
             </div>
         </div>
+
+        {{-- Live Preview Modal --}}
+        <template x-teleport="body">
+            <div x-show="previewOpen" 
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-10"
+                 style="display: none;">
+                
+                {{-- Backdrop --}}
+                <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-xl" @click="previewOpen = false"></div>
+
+                {{-- Modal Container --}}
+                <div class="relative w-full h-full max-w-5xl bg-white rounded-[2.5rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.2)] overflow-hidden border border-slate-100 flex flex-col"
+                     x-show="previewOpen"
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 scale-95 translate-y-10"
+                     x-transition:enter-end="opacity-100 scale-100 translate-y-0">
+                    
+                    {{-- Modal Header --}}
+                    <div class="px-8 py-5 border-b border-slate-50 flex items-center justify-between bg-white shrink-0">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-600">
+                                <i class="ph-fill ph-eye text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-black text-slate-900 tracking-tight uppercase">Live CV Preview</h3>
+                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Real-time visualization</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="flex p-1 bg-slate-50 rounded-xl border border-slate-100">
+                                <a href="{{ route('cv.generator') }}" class="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-primary-600 transition-colors">
+                                    Change Template
+                                </a>
+                            </div>
+                            <button @click="previewOpen = false" class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all border border-transparent hover:border-rose-100">
+                                <i class="ph-bold ph-x text-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    {{-- Modal Content: The Iframe --}}
+                    <div class="flex-1 bg-slate-100/50 p-4 relative overflow-hidden">
+                        <div class="w-full h-full rounded-2xl bg-white shadow-inner overflow-hidden relative">
+                            <iframe id="cvPreviewFrame" 
+                                    :src="previewOpen ? '{{ route('cv-builder.preview.get') }}' : 'about:blank'" 
+                                    class="w-full h-full border-none"
+                                    loading="lazy"></iframe>
+                            
+                            {{-- Loading Overlay for iframe --}}
+                            <div class="absolute inset-0 bg-white flex flex-col items-center justify-center gap-4 z-10 transition-opacity duration-500"
+                                 id="iframeLoader"
+                                 x-init="const frame = document.getElementById('cvPreviewFrame'); 
+                                         if(frame) { frame.onload = () => { document.getElementById('iframeLoader').style.opacity = '0'; setTimeout(() => { document.getElementById('iframeLoader').style.display = 'none'; }, 500); } }">
+                                <div class="w-12 h-12 border-4 border-primary-100 border-t-primary-600 rounded-full animate-spin"></div>
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest animate-pulse">Rendering Resume...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Modal Footer --}}
+                    <div class="px-8 py-5 border-t border-slate-50 bg-slate-50/50 flex items-center justify-between shrink-0">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                            <i class="ph-fill ph-info mr-1"></i> Data syncs automatically on save
+                        </p>
+                        <div class="flex items-center gap-3">
+                            <button @click="document.getElementById('cvPreviewFrame').contentWindow.window.print()" 
+                                    class="px-6 py-3 bg-white border border-slate-200 text-slate-900 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm flex items-center gap-2">
+                                <i class="ph-bold ph-printer text-base"></i>
+                                Print CV
+                            </button>
+                            <a href="{{ route('cv.generator') }}" class="px-6 py-3 bg-primary-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 flex items-center gap-2">
+                                <i class="ph-bold ph-download-simple text-base"></i>
+                                Export Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
     </div>
 
     <style>

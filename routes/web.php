@@ -126,6 +126,13 @@ Route::middleware('auth')->group(function () {
             return app(CvBuilderController::class)->generator();
         })->name('cv.generator');
         
+        Route::get('/preview', function (Illuminate\Http\Request $request) {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot access CV builder');
+            }
+            return app(CvBuilderController::class)->preview($request);
+        })->name('cv-builder.preview.get');
+        
         Route::post('/preview', function (Illuminate\Http\Request $request) {
             if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
                 abort(403, 'Admin cannot access CV builder');

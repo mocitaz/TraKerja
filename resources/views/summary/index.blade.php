@@ -323,75 +323,74 @@
             </div>
 
             {{-- Stats Grid --}}
-            <div class="max-w-5xl mb-8">
+            <div class="mb-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                    @php
+                        $onProcess = $statusDistribution->where('application_status', 'On Process')->first()->count ?? 0;
+                        $rejectedCount = $funnelData['Rejected'] ?? 0;
+                    @endphp
+
                     <!-- On Process Card -->
-                    <div class="bento-card-stat mesh-gradient-blue rounded-[2rem] border border-slate-100 p-4 sm:p-5 flex flex-col justify-between group relative overflow-hidden">
-                        <div class="flex items-center justify-between mb-3">
+                    <div class="bento-card-stat mesh-gradient-blue rounded-[2rem] border border-slate-100 p-5 flex flex-col group relative overflow-hidden">
+                        <div class="h-10 flex items-center justify-between mb-4">
                             <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 transition-transform group-hover:scale-110">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                 </svg>
                             </div>
-                            <span class="text-[9px] font-black text-blue-600 uppercase tracking-[1.5px] bg-blue-50/50 px-2 py-0.5 rounded-full">Active</span>
+                            <span class="text-[9px] font-black text-blue-600 uppercase tracking-[1.5px] bg-blue-50/50 px-2 py-0.5 rounded-full shrink-0">Active</span>
                         </div>
-                        <div>
-                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">On Process</p>
-                            @php
-                                $onProcess = $statusDistribution->where('application_status', 'On Process')->first()->count ?? 0;
-                            @endphp
-                            <p class="text-2xl font-black text-slate-900 tracking-tighter">{{ $onProcess }}</p>
+                        <div class="flex flex-col">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1 leading-none">On Process</p>
+                            <p class="text-2xl font-black text-slate-900 tracking-tighter leading-none">{{ $onProcess }}</p>
                         </div>
                     </div>
 
                     <!-- Offering/Accepted Card -->
-                    <div class="bento-card-stat mesh-gradient-emerald rounded-[2rem] border border-slate-100 p-4 sm:p-5 flex flex-col justify-between group relative overflow-hidden">
-                        <div class="flex items-center justify-between mb-3">
+                    <div class="bento-card-stat mesh-gradient-emerald rounded-[2rem] border border-slate-100 p-5 flex flex-col group relative overflow-hidden">
+                        <div class="h-10 flex items-center justify-between mb-4">
                             <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 transition-transform group-hover:scale-110">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                             </div>
-                            <span class="text-[9px] font-black text-emerald-600 uppercase tracking-[1.5px] bg-emerald-50/50 px-2 py-0.5 rounded-full">Hired</span>
+                            <span class="text-[9px] font-black text-emerald-600 uppercase tracking-[1.5px] bg-emerald-50/50 px-2 py-0.5 rounded-full shrink-0">Hired</span>
                         </div>
-                        <div>
-                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Accepted</p>
-                            <p class="text-2xl font-black text-slate-900 tracking-tighter">{{ $offeringAcceptedCount }}</p>
+                        <div class="flex flex-col">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1 leading-none">Accepted</p>
+                            <p class="text-2xl font-black text-slate-900 tracking-tighter leading-none">{{ $offeringAcceptedCount }}</p>
                         </div>
                     </div>
 
                     <!-- Declined Card -->
-                    <div class="bento-card-stat mesh-gradient-rose rounded-[2rem] border border-slate-100 p-4 sm:p-5 flex flex-col justify-between group relative overflow-hidden">
-                        <div class="flex items-center justify-between mb-3">
+                    <div class="bento-card-stat mesh-gradient-rose rounded-[2rem] border border-slate-100 p-5 flex flex-col group relative overflow-hidden">
+                        <div class="h-10 flex items-center justify-between mb-4">
                             <div class="w-10 h-10 bg-rose-50 rounded-xl flex items-center justify-center text-rose-600 transition-transform group-hover:scale-110">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                 </svg>
                             </div>
-                            <span class="text-[9px] font-black text-rose-600 uppercase tracking-[1.5px] bg-rose-50/50 px-2 py-0.5 rounded-full">Closed</span>
+                            <span class="text-[9px] font-black text-rose-600 uppercase tracking-[1.5px] bg-rose-50/50 px-2 py-0.5 rounded-full shrink-0">Closed</span>
                         </div>
-                        <div>
-                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Rejected</p>
-                            @php
-                                $rejectedCount = $funnelData['Rejected'] ?? 0;
-                            @endphp
-                            <p class="text-2xl font-black text-slate-900 tracking-tighter">{{ $rejectedCount }}</p>
+                        <div class="flex flex-col">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1 leading-none">Rejected</p>
+                            <p class="text-2xl font-black text-slate-900 tracking-tighter leading-none">{{ $rejectedCount }}</p>
                         </div>
                     </div>
 
                     <!-- Total Interviews Card -->
-                    <div class="bento-card-stat mesh-gradient-orange rounded-[2rem] border border-slate-100 p-4 sm:p-5 flex flex-col justify-between group relative overflow-hidden">
-                        <div class="flex items-center justify-between mb-3">
+                    <div class="bento-card-stat mesh-gradient-orange rounded-[2rem] border border-slate-100 p-5 flex flex-col group relative overflow-hidden">
+                        <div class="h-10 flex items-center justify-between mb-4">
                             <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600 transition-transform group-hover:scale-110">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 002 2z"></path>
                                 </svg>
                             </div>
-                            <span class="text-[9px] font-black text-orange-600 uppercase tracking-[1.5px] bg-orange-50/50 px-2 py-0.5 rounded-full">Meetings</span>
+                            <span class="text-[9px] font-black text-orange-600 uppercase tracking-[1.5px] bg-orange-50/50 px-2 py-0.5 rounded-full shrink-0">Meetings</span>
                         </div>
-                        <div>
-                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Interviews</p>
-                            <p class="text-2xl font-black text-slate-900 tracking-tighter">{{ $interviews }}</p>
+                        <div class="flex flex-col">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1 leading-none">Interviews</p>
+                            <p class="text-2xl font-black text-slate-900 tracking-tighter leading-none">{{ $interviews }}</p>
                         </div>
                     </div>
                 </div>
