@@ -24,7 +24,7 @@ class UserProfile extends Model
     ];
 
     protected $casts = [
-        'additional_links' => 'array', // JSON to array
+        'additional_links' => 'array', 
     ];
 
     /**

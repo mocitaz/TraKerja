@@ -86,6 +86,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'verification_reminder_count',
         'has_used_ai_analyzer_trial',
         'ai_analyzer_trial_used_at',
+        'portfolio_slug',
+        'is_portfolio_published',
     ];
 
     /**

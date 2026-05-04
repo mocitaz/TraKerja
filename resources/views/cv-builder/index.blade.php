@@ -20,20 +20,12 @@
             
             {{-- Header Action Bar: Re-aligned for precision --}}
             <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
-                <div class="flex items-center gap-5">
-                    <div class="w-16 h-16 bg-white rounded-3xl shadow-sm border border-slate-200/60 flex items-center justify-center text-primary-600 shrink-0">
-                        <i class="ph-duotone ph-briefcase-metal text-4xl"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-3 mb-1.5">
-                            <h2 class="text-2xl font-black text-slate-900 tracking-tight leading-none">Curriculum Vitae</h2>
-                            <span class="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-[9px] font-black uppercase tracking-widest border border-emerald-100">Live</span>
-                        </div>
-                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">Editor Mode • Ready to build</p>
-                    </div>
-                </div>
 
                 <div class="flex items-center gap-3 w-full lg:w-auto">
+                    <button @click="$dispatch('openPublishModal')" class="flex-1 lg:flex-none px-6 py-4 bg-primary-50 text-primary-600 border border-primary-100 rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-100 transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95">
+                        <i class="ph-bold ph-globe text-base"></i>
+                        Publish Site
+                    </button>
                     <button @click="previewOpen = true" class="flex-1 lg:flex-none px-6 py-4 bg-white text-slate-900 border border-slate-200 rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-slate-50 transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95">
                         <i class="ph-bold ph-eye text-base"></i>
                         Quick Preview
@@ -50,6 +42,20 @@
                     @endif
                 </div>
             </div>
+
+            @if(session('success'))
+                <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center gap-3 text-emerald-700 animate-fade-in-down">
+                    <i class="ph-bold ph-check-circle text-xl"></i>
+                    <p class="text-xs font-bold uppercase tracking-wider">{{ session('success') }}</p>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="mb-6 p-4 bg-rose-50 border border-rose-200 rounded-2xl flex items-center gap-3 text-rose-700 animate-fade-in-down">
+                    <i class="ph-bold ph-warning-circle text-xl"></i>
+                    <p class="text-xs font-bold uppercase tracking-wider">{{ session('error') }}</p>
+                </div>
+            @endif
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                 {{-- Left Sidebar: Navigation & Strength --}}
@@ -274,5 +280,12 @@
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        
+        @keyframes fade-in-down {
+            0% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-down { animation: fade-in-down 0.4s ease-out forwards; }
     </style>
+    @livewire('cv-builder.portfolio-publish-modal')
 </x-app-layout>

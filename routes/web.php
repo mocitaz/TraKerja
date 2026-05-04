@@ -139,6 +139,7 @@ Route::middleware('auth')->group(function () {
             }
             return app(CvBuilderController::class)->preview($request);
         })->name('cv-builder.preview');
+
         
         Route::post('/export', function (Illuminate\Http\Request $request) {
             if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
@@ -453,3 +454,6 @@ Route::get('/test/error/{code}', function ($code) {
 })->where('code', '[0-9]+')->name('test.error');
 
 require __DIR__.'/auth.php';
+
+// Public Portfolios (TraKerja Sites)
+Route::get('/@{slug}', [\App\Http\Controllers\PortfolioController::class, 'show'])->name('portfolio.show');
