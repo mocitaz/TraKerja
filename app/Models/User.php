@@ -306,16 +306,16 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         // FREE MODE: Unlock semua template untuk semua user
         if (!Setting::isMonetizationEnabled()) {
-            return 5;
+            return 4;
         }
         
-        // PREMIUM MODE: Premium users get all 5 templates
-        if ($this->is_premium && $this->payment_status === self::PAYMENT_STATUS_PAID) {
-            return 5;
+        // PREMIUM MODE: Premium users get all 4 templates
+        if ($this->isPremium()) {
+            return 4;
         }
         
-        // PREMIUM MODE: Free tier users only get 1 template
-        return 1;
+        // PREMIUM MODE: Free tier users only get 2 template
+        return 2;
     }
     
     /**
@@ -511,38 +511,26 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Check if user can access AI Analyzer
-     * Premium users: unlimited access
-     * Free users: 1 free trial
      */
     public function canAccessAiAnalyzer(): bool
     {
-        // Premium users have unlimited access
-        if ($this->isPremium()) {
-            return true;
-        }
-        
-        // Free users: check if they still have free trial
-        return !$this->has_used_ai_analyzer_trial;
+        return $this->canAccessAiAnalyzerWithLimit();
     }
 
     /**
-     * Use AI Analyzer trial (for free users)
+     * Use AI Analyzer trial (for free users) - Deprecated
      */
     public function useAiAnalyzerTrial(): void
     {
-        if (!$this->isPremium() && !$this->has_used_ai_analyzer_trial) {
-            $this->has_used_ai_analyzer_trial = true;
-            $this->ai_analyzer_trial_used_at = now();
-            $this->save();
-        }
+        $this->incrementAiAnalyzerCount();
     }
 
     /**
-     * Check if user has used AI Analyzer trial
+     * Check if user has used AI Analyzer trial - Deprecated
      */
     public function hasUsedAiAnalyzerTrial(): bool
     {
-        return $this->has_used_ai_analyzer_trial;
+        return $this->ai_credits <= 0;
     }
     
     /**
@@ -672,27 +660,10 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     
     /**
-     * Check and reset monthly AI Analyzer counter if needed
-     */
-    public function checkAiAnalyzerReset(): void
-    {
-        $now = now();
-        $lastReset = $this->last_ai_analyzer_reset;
-        
-        // Reset if it's a new month or never reset before
-        if (!$lastReset || $lastReset->month !== $now->month || $lastReset->year !== $now->year) {
-            $this->update([
-                'ai_analyzer_count_this_month' => 0,
-                'last_ai_analyzer_reset' => $now->toDateString()
-            ]);
-        }
-    }
-    
-    /**
-     * Increment AI Analyzer counter
+     * Increment AI Analyzer counter (Deduct credit)
      * 
      * FREE MODE: Unlimited
-     * PREMIUM MODE: Free tier = 1x, Premium = 5x per month
+     * PREMIUM MODE: Deduct from ai_credits balance
      */
     public function incrementAiAnalyzerCount(): bool
     {
@@ -701,22 +672,17 @@ class User extends Authenticatable implements MustVerifyEmail
             return true;
         }
         
-        // Check and reset if needed
-        $this->checkAiAnalyzerReset();
-        
-        $limit = $this->getFeatureLimit('ai_analyzer');
-        
-        // Check if limit reached
-        if ($this->ai_analyzer_count_this_month >= $limit) {
+        // Check if balance > 0
+        if ($this->ai_credits <= 0) {
             return false;
         }
         
-        $this->increment('ai_analyzer_count_this_month');
+        $this->decrement('ai_credits');
         return true;
     }
     
     /**
-     * Get remaining AI Analyzer uses this month
+     * Get remaining AI Analyzer uses (credit balance)
      */
     public function getRemainingAiAnalyzer()
     {
@@ -725,16 +691,11 @@ class User extends Authenticatable implements MustVerifyEmail
             return 'unlimited';
         }
         
-        // Check and reset if needed
-        $this->checkAiAnalyzerReset();
-        
-        $limit = $this->getFeatureLimit('ai_analyzer');
-        
-        return max(0, $limit - $this->ai_analyzer_count_this_month);
+        return $this->ai_credits;
     }
     
     /**
-     * Updated canAccessAiAnalyzer with monthly limit
+     * Check if user has enough AI credits
      */
     public function canAccessAiAnalyzerWithLimit(): bool
     {
@@ -743,12 +704,75 @@ class User extends Authenticatable implements MustVerifyEmail
             return true;
         }
         
-        // Check and reset if needed
-        $this->checkAiAnalyzerReset();
+        return $this->ai_credits > 0;
+    }
+
+    /**
+     * Add AI credits to user balance (e.g. from Add-on Top-up or Premium upgrade)
+     * 
+     * @param int $amount Number of credits to add
+     * @return void
+     */
+    public function addAiCredits(int $amount): void
+    {
+        if ($amount > 0) {
+            $this->increment('ai_credits', $amount);
+        }
+    }
+
+    /**
+     * Increment Cover Letter counter (Deduct credit)
+     */
+    public function incrementCoverLetterCount(): bool
+    {
+        // FREE MODE: Unlimited
+        if (!Setting::isMonetizationEnabled()) {
+            return true;
+        }
         
-        $remaining = $this->getRemainingAiAnalyzer();
+        // Check if balance > 0
+        if ($this->cl_credits <= 0) {
+            return false;
+        }
         
-        return $remaining === 'unlimited' || $remaining > 0;
+        $this->decrement('cl_credits');
+        return true;
+    }
+    
+    /**
+     * Get remaining Cover Letter uses (credit balance)
+     */
+    public function getRemainingCoverLetter()
+    {
+        // FREE MODE: Unlimited
+        if (!Setting::isMonetizationEnabled()) {
+            return 'unlimited';
+        }
+        
+        return $this->cl_credits;
+    }
+    
+    /**
+     * Check if user has enough Cover Letter credits
+     */
+    public function canAccessCoverLetterWithLimit(): bool
+    {
+        // FREE MODE: Unlimited
+        if (!Setting::isMonetizationEnabled()) {
+            return true;
+        }
+        
+        return $this->cl_credits > 0;
+    }
+
+    /**
+     * Add Cover Letter credits to user balance (e.g. from Add-on Top-up or Premium upgrade)
+     */
+    public function addClCredits(int $amount): void
+    {
+        if ($amount > 0) {
+            $this->increment('cl_credits', $amount);
+        }
     }
 }
 

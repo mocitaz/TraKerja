@@ -146,33 +146,46 @@
 
     {{-- Bridge: wire window event → Alpine component --}}
     <script>
-        document.addEventListener('livewire:init', () => {
-            Livewire.on('open-interview-modal', (event) => {
+        if (typeof window.interviewModalInitialized === 'undefined') {
+            window.interviewModalInitialized = true;
+            
+            const handleOpenModal = (event) => {
                 const root = document.getElementById('interview-modal-root');
-                if (!root) {
-                    console.error('Interview modal root not found');
-                    return;
-                }
+                if (!root) return;
                 
-                // Livewire 3 passes data directly or in an array. 
-                // We handle various dispatch formats here.
                 let data = null;
-                if (event.interview) {
+                // Check all possible wrapper variations from Livewire dispatch
+                if (event.detail && event.detail.interview) {
+                    data = event.detail.interview;
+                } else if (event.interview) {
                     data = event.interview;
                 } else if (Array.isArray(event) && event[0] && event[0].interview) {
                     data = event[0].interview;
-                } else if (typeof event === 'object') {
+                } else if (event.detail) {
+                    data = event.detail;
+                } else if (typeof event === 'object' && !event.detail) {
                     data = event;
                 }
-
+                
                 if (data) {
-                    const alpine = Alpine.$data(root);
-                    if (alpine) {
-                        alpine.openModal(data);
+                    // Safe access to Alpine data
+                    if (window.Alpine) {
+                        const alpine = Alpine.$data(root);
+                        if (alpine) {
+                            alpine.openModal(data);
+                        }
                     }
                 }
+            };
+            
+            // Listen to browser-dispatched custom events
+            window.addEventListener('open-interview-modal', handleOpenModal);
+            
+            // Also listen to Livewire events for extra reliability
+            document.addEventListener('livewire:init', () => {
+                Livewire.on('open-interview-modal', handleOpenModal);
             });
-        });
+        }
     </script>
     @endpush
 </x-app-layout>

@@ -90,9 +90,14 @@
                 <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-amber-50 to-amber-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
                 <div class="flex items-start justify-between">
                     <div>
-                        <p class="text-[11px] font-bold text-amber-500 uppercase tracking-widest mb-1">Total Revenue</p>
-                        <h3 class="text-xl lg:text-2xl font-black text-amber-600 tracking-tight mt-1">Rp {{ number_format($revenue / 1000000, 1) }}M</h3>
-                        <p class="text-[10px] font-bold text-amber-500 mt-1">Dari premium subs</p>
+                        <h3 class="text-xl lg:text-2xl font-black text-amber-600 tracking-tight mt-1">
+                            @if($revenue >= 1000000)
+                                Rp {{ number_format($revenue / 1000000, 1) }} Jt
+                            @else
+                                Rp {{ number_format($revenue, 0, ',', '.') }}
+                            @endif
+                        </h3>
+                        <p class="text-[10px] font-bold text-amber-500 mt-1">Total Pendapatan Sukses</p>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shadow-inner">
                         <i class="ph-duotone ph-vault text-2xl"></i>
@@ -118,7 +123,7 @@
                 @csrf
                 @method('PUT')
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="max-w-md">
                     {{-- Price Input --}}
                     <div>
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-widest mb-3">
@@ -140,28 +145,6 @@
                         <div class="mt-3 flex items-center gap-2">
                             <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
                             <p class="text-xs font-bold text-slate-500">Active Price: <span class="text-primary-600">Rp {{ number_format($premiumPrice, 0, ',', '.') }}</span></p>
-                        </div>
-                    </div>
-
-                    {{-- Suggested Pricing --}}
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-widest mb-3">
-                            Rekomendasi Harga
-                        </label>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            <button type="button" onclick="document.querySelector('input[name=premium_price]').value = 99000" class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl hover:bg-primary-50 hover:border-primary-200 hover:text-primary-700 transition-all group cursor-pointer shadow-sm">
-                                <span class="text-lg font-black text-slate-800 group-hover:text-primary-700">99k</span>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase mt-1">Budget</span>
-                            </button>
-                            <button type="button" onclick="document.querySelector('input[name=premium_price]').value = 199000" class="flex flex-col items-center justify-center p-3 bg-white border border-primary-500 rounded-xl hover:bg-primary-50 transition-all group cursor-pointer shadow-md relative overflow-hidden">
-                                <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary-400 to-primary-600"></div>
-                                <span class="text-lg font-black text-primary-700">199k</span>
-                                <span class="text-[10px] font-bold text-primary-500 uppercase mt-1">Recommended</span>
-                            </button>
-                            <button type="button" onclick="document.querySelector('input[name=premium_price]').value = 299000" class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl hover:bg-purple-50 hover:border-purple-200 hover:text-purple-700 transition-all group cursor-pointer shadow-sm">
-                                <span class="text-lg font-black text-slate-800 group-hover:text-purple-700">299k</span>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase mt-1">Premium</span>
-                            </button>
                         </div>
                     </div>
                 </div>

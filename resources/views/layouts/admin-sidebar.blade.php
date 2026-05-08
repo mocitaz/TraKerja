@@ -54,6 +54,9 @@
                 <x-sidebar-link :href="route('admin.email-blast')" :active="request()->routeIs('admin.email-blast*')" icon="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75">
                     Email Blast
                 </x-sidebar-link>
+                <x-sidebar-link :href="route('admin.feedbacks.index')" :active="request()->routeIs('admin.feedbacks*')" icon="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
+                    User Feedback
+                </x-sidebar-link>
             </nav>
         </div>
 

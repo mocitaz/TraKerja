@@ -184,13 +184,13 @@
                         <tr class="hover:bg-slate-50/50 transition-colors">
                             <td class="px-5 py-4 font-bold text-sm text-slate-800">{{ $feature }}</td>
                             <td class="px-5 py-4 text-center border-l border-slate-100">
-                                @if(str_contains($access['free'], '✅') || str_contains($access['free'], 'Full'))
+                                @if($access['free_status'] === 'full')
                                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-100">
-                                        <i class="ph-bold ph-check text-emerald-500"></i> Full Access
+                                        <i class="ph-bold ph-check text-emerald-500"></i> {{ $access['free'] }}
                                     </span>
-                                @elseif(str_contains($access['free'], '⚠️') || str_contains($access['free'], 'Limited') || str_contains($access['free'], '1'))
+                                @elseif($access['free_status'] === 'limited')
                                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-100">
-                                        <i class="ph-bold ph-warning-circle text-amber-500"></i> {{ trim(str_replace(['⚠️', '✅', '❌'], '', $access['free'])) }}
+                                        <i class="ph-bold ph-warning-circle text-amber-500"></i> {{ $access['free'] }}
                                     </span>
                                 @else
                                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-red-50 text-red-700 border border-red-100">
@@ -200,7 +200,7 @@
                             </td>
                             <td class="px-5 py-4 text-center border-l border-slate-100 bg-purple-50/10">
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-100 shadow-sm">
-                                    <i class="ph-bold ph-star text-purple-500"></i> {{ trim(str_replace(['💎'], '', $access['premium'])) }}
+                                    <i class="ph-bold ph-star text-purple-500"></i> {{ $access['premium'] }}
                                 </span>
                             </td>
                         </tr>

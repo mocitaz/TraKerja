@@ -25,7 +25,7 @@ class MonetizationControl extends Component
     public function mount()
     {
         $this->monetizationEnabled = Setting::get('monetization_enabled', false);
-        $this->premiumPrice = Setting::get('premium_price', 199000);
+        $this->premiumPrice = Setting::get('premium_price', 19999);
         $this->loadStats();
     }
     
@@ -124,39 +124,56 @@ class MonetizationControl extends Component
     private function buildFeatureMatrix()
     {
         // Feature matrix shows comparison between FREE USERS vs PREMIUM USERS
-        // This comparison is CONSTANT - shows what users get if they pay
         return [
             'Job Application Tracker' => [
-                'free' => $this->monetizationEnabled ? '⚠️ Max 20 Applications' : '✅ Unlimited (Now)',
-                'premium' => '✅ Unlimited'
+                'free' => $this->monetizationEnabled ? 'Max 50 Applications' : 'Unlimited (Now)',
+                'premium' => 'Unlimited',
+                'free_status' => $this->monetizationEnabled ? 'limited' : 'full',
+            ],
+            'AI Resume Analyzer' => [
+                'free' => $this->monetizationEnabled ? '1x Trial Use' : 'Unlimited (Now)',
+                'premium' => '5 Uses/Month + Top-Up',
+                'free_status' => $this->monetizationEnabled ? 'limited' : 'full',
+            ],
+            'AI Cover Letter Generator' => [
+                'free' => $this->monetizationEnabled ? '3x Trial Uses' : 'Unlimited (Now)',
+                'premium' => '5 Uses/Month + Top-Up',
+                'free_status' => $this->monetizationEnabled ? 'limited' : 'full',
             ],
             'CV Builder Access' => [
-                'free' => '✅ Yes',
-                'premium' => '✅ Yes'
+                'free' => 'Full Access',
+                'premium' => 'Yes',
+                'free_status' => 'full',
             ],
             'CV Templates' => [
-                'free' => $this->monetizationEnabled ? '⚠️ 1 Template Only' : '✅ All 5 Templates (Now)',
-                'premium' => '✅ All 5 Templates'
+                'free' => $this->monetizationEnabled ? '2 Templates Only' : 'All 4 Templates (Now)',
+                'premium' => 'All 4 Templates',
+                'free_status' => $this->monetizationEnabled ? 'limited' : 'full',
             ],
             'CV Exports per Month' => [
-                'free' => $this->monetizationEnabled ? '⚠️ 5 Exports/Month' : '✅ Unlimited (Now)',
-                'premium' => '✅ Unlimited'
+                'free' => $this->monetizationEnabled ? '5 Exports/Month' : 'Unlimited (Now)',
+                'premium' => 'Unlimited',
+                'free_status' => $this->monetizationEnabled ? 'limited' : 'full',
             ],
             'CV Customization' => [
-                'free' => '✅ Full Access',
-                'premium' => '✅ Full Access'
+                'free' => 'Full Access',
+                'premium' => 'Full Access',
+                'free_status' => 'full',
             ],
             'CV Watermark' => [
-                'free' => '✅ No Watermark',
-                'premium' => '✅ No Watermark'
+                'free' => 'Full Access',
+                'premium' => 'No Watermark',
+                'free_status' => 'full',
             ],
             'Job Analytics' => [
-                'free' => $this->monetizationEnabled ? '⚠️ Basic Analytics' : '✅ Advanced (Now)',
-                'premium' => '✅ Advanced Analytics'
+                'free' => $this->monetizationEnabled ? 'Basic Analytics' : 'Advanced (Now)',
+                'premium' => 'Advanced Analytics',
+                'free_status' => $this->monetizationEnabled ? 'limited' : 'full',
             ],
             'Interview Calendar' => [
-                'free' => '✅ Yes',
-                'premium' => '✅ Yes'
+                'free' => 'Full Access',
+                'premium' => 'Yes',
+                'free_status' => 'full',
             ]
         ];
     }

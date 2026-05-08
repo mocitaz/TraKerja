@@ -194,7 +194,7 @@
         </div>
 
         <script>
-            let activeConfirmCallback = null;
+            var activeConfirmCallback = activeConfirmCallback || null;
 
             function openConfirmModal(title, message, btnText, callback) {
                 const modal = document.getElementById('confirmation-modal');

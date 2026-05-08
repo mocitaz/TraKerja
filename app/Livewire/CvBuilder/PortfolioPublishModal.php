@@ -48,6 +48,15 @@ class PortfolioPublishModal extends Component
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
+        
+        if (\App\Models\Setting::isMonetizationEnabled() && !$user->isPremium()) {
+            $this->dispatch('showNotification', [
+                'type' => 'error',
+                'title' => 'Premium Required',
+                'message' => 'Publishing your personal portfolio site is only available for Premium users.',
+            ]);
+            return;
+        }
         $user->update([
             'portfolio_slug' => $this->slug,
             'is_portfolio_published' => true,

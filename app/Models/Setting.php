@@ -170,7 +170,7 @@ class Setting extends Model
         
         // PREMIUM MODE: Free tier users get limits
         $freeTierLimits = [
-            'cv_templates' => 1,         // Only 1 CV template (minimal)
+            'cv_templates' => 2,         // 2 CV templates for free tier
             'cv_generated' => 3,         // Max 3 CV generations per month
             'cv_exports' => 5,           // Max 5 exports per month
             'job_applications' => 50,    // Max 50 job applications
@@ -182,7 +182,7 @@ class Setting extends Model
         // PREMIUM MODE: Premium users get higher limits
         if ($user && $user->is_premium && $user->payment_status === \App\Models\User::PAYMENT_STATUS_PAID) {
             $premiumLimits = [
-                'cv_templates' => 'unlimited',
+                'cv_templates' => 4,
                 'cv_generated' => 'unlimited',
                 'cv_exports' => 'unlimited',
                 'job_applications' => 'unlimited',

@@ -20,23 +20,22 @@
             
             {{-- Header Action Bar: Re-aligned for precision --}}
             <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
-
-                <div class="flex items-center gap-3 w-full lg:w-auto">
-                    <button @click="$dispatch('openPublishModal')" class="flex-1 lg:flex-none px-6 py-4 bg-primary-50 text-primary-600 border border-primary-100 rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-100 transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95">
-                        <i class="ph-bold ph-globe text-base"></i>
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:flex lg:items-center gap-3 w-full lg:w-auto">
+                    <button @click="$dispatch('openPublishModal')" class="px-3 sm:px-6 py-3 sm:py-4 bg-primary-50 text-primary-600 border border-primary-100 rounded-2xl font-black text-[9px] sm:text-[10px] uppercase tracking-[1.5px] sm:tracking-[2px] hover:bg-primary-100 transition-all flex items-center justify-center gap-1.5 sm:gap-2 shadow-sm active:scale-95">
+                        <i class="ph-bold ph-globe text-sm sm:text-base"></i>
                         Publish Site
                     </button>
-                    <button @click="previewOpen = true" class="flex-1 lg:flex-none px-6 py-4 bg-white text-slate-900 border border-slate-200 rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-slate-50 transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95">
-                        <i class="ph-bold ph-eye text-base"></i>
+                    <button @click="previewOpen = true" class="px-3 sm:px-6 py-3 sm:py-4 bg-white text-slate-900 border border-slate-200 rounded-2xl font-black text-[9px] sm:text-[10px] uppercase tracking-[1.5px] sm:tracking-[2px] hover:bg-slate-50 transition-all flex items-center justify-center gap-1.5 sm:gap-2 shadow-sm active:scale-95">
+                        <i class="ph-bold ph-eye text-sm sm:text-base"></i>
                         Quick Preview
                     </button>
-                    <a href="{{ route('cv.generator') }}" class="flex-1 lg:flex-none group relative px-8 py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-600 transition-all shadow-xl shadow-slate-200 flex items-center justify-center gap-3 active:scale-95">
-                        <i class="ph-bold ph-magic-wand text-base"></i>
+                    <a href="{{ route('cv.generator') }}" class="group relative px-3 sm:px-8 py-3 sm:py-4 bg-slate-900 text-white rounded-2xl font-black text-[9px] sm:text-[10px] uppercase tracking-[1.5px] sm:tracking-[2px] hover:bg-primary-600 transition-all shadow-xl shadow-slate-200 flex items-center justify-center gap-2 sm:gap-3 active:scale-95 {{ !auth()->user()->is_premium ? '' : 'col-span-2 lg:col-span-1' }}">
+                        <i class="ph-bold ph-magic-wand text-sm sm:text-base"></i>
                         Generate CV
                     </a>
                     @if(!auth()->user()->is_premium)
-                        <a href="{{ route('payment.premium') }}" class="px-6 py-4 bg-white text-amber-600 border border-amber-200 rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-amber-50 transition-all flex items-center justify-center gap-2 shadow-sm">
-                            <i class="ph-bold ph-crown text-base"></i>
+                        <a href="{{ route('payment.premium') }}" class="px-3 sm:px-6 py-3 sm:py-4 bg-white text-amber-600 border border-amber-200 rounded-2xl font-black text-[9px] sm:text-[10px] uppercase tracking-[1.5px] sm:tracking-[2px] hover:bg-amber-50 transition-all flex items-center justify-center gap-1.5 sm:gap-2 shadow-sm">
+                            <i class="ph-bold ph-crown text-sm sm:text-base"></i>
                             Upgrade
                         </a>
                     @endif
@@ -108,8 +107,8 @@
                     </div>
 
                     {{-- Vertical Section Navigation --}}
-                    <div class="bg-white rounded-[2.5rem] border border-slate-200/60 p-3 shadow-sm h-fit">
-                        <nav class="space-y-1">
+                    <div class="bg-white rounded-[2rem] lg:rounded-[2.5rem] border border-slate-200/60 p-2 sm:p-3 shadow-sm h-fit">
+                        <nav class="flex lg:flex-col overflow-x-auto lg:overflow-x-visible no-scrollbar space-x-1.5 lg:space-x-0 lg:space-y-1">
                             @php
                                 $tabs = [
                                     ['key' => 'experiences', 'label' => 'Experience', 'icon' => 'ph-briefcase', 'count' => $experiences->count()],
@@ -124,17 +123,17 @@
                             @foreach($tabs as $tab)
                             <button @click="activeTab = '{{ $tab['key'] }}'" 
                                     :class="activeTab === '{{ $tab['key'] }}' ? 'bg-primary-600 text-white shadow-lg shadow-primary-100 border-primary-600' : 'text-slate-500 hover:bg-slate-50 border-transparent'"
-                                    class="w-full flex items-center justify-between px-6 py-4 rounded-2xl border transition-all duration-300 group">
-                                <div class="flex items-center gap-4">
-                                    <i class="ph-duotone {{ $tab['icon'] }} text-xl transition-transform duration-300 group-hover:scale-110"></i>
-                                    <span class="text-xs font-black uppercase tracking-widest">{{ $tab['label'] }}</span>
+                                    class="flex-shrink-0 flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl border transition-all duration-300 group">
+                                <div class="flex items-center gap-2 sm:gap-4">
+                                    <i class="ph-duotone {{ $tab['icon'] }} text-lg sm:text-xl transition-transform duration-300 group-hover:scale-110"></i>
+                                    <span class="text-[10px] sm:text-xs font-black uppercase tracking-widest">{{ $tab['label'] }}</span>
                                 </div>
                                 @if($tab['count'] > 0)
-                                    <div :class="activeTab === '{{ $tab['key'] }}' ? 'bg-white/20' : 'bg-emerald-50 text-emerald-600'" class="w-5 h-5 rounded-md flex items-center justify-center">
+                                    <div :class="activeTab === '{{ $tab['key'] }}' ? 'bg-white/20' : 'bg-emerald-50 text-emerald-600'" class="w-5 h-5 rounded-md flex items-center justify-center ml-2 lg:ml-0">
                                         <i class="ph-bold ph-check text-[10px]"></i>
                                     </div>
                                 @else
-                                    <div class="w-5 h-5 border-2 border-slate-100 rounded-md"></div>
+                                    <div class="w-5 h-5 border-2 border-slate-100 rounded-md ml-2 lg:ml-0"></div>
                                 @endif
                             </button>
                             @endforeach
@@ -253,17 +252,17 @@
                     </div>
 
                     {{-- Modal Footer --}}
-                    <div class="px-8 py-5 border-t border-slate-50 bg-slate-50/50 flex items-center justify-between shrink-0">
-                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                    <div class="px-6 sm:px-8 py-4 sm:py-5 border-t border-slate-50 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-between gap-4 shrink-0">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest text-center sm:text-left">
                             <i class="ph-fill ph-info mr-1"></i> Data syncs automatically on save
                         </p>
-                        <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-3 w-full sm:w-auto">
                             <button @click="document.getElementById('cvPreviewFrame').contentWindow.window.print()" 
-                                    class="px-6 py-3 bg-white border border-slate-200 text-slate-900 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm flex items-center gap-2">
+                                    class="flex-1 sm:flex-none px-6 py-3 bg-white border border-slate-200 text-slate-900 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm flex items-center justify-center gap-2">
                                 <i class="ph-bold ph-printer text-base"></i>
                                 Print CV
                             </button>
-                            <a href="{{ route('cv.generator') }}" class="px-6 py-3 bg-primary-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 flex items-center gap-2">
+                            <a href="{{ route('cv.generator') }}" class="flex-1 sm:flex-none px-6 py-3 bg-primary-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 flex items-center justify-center gap-2">
                                 <i class="ph-bold ph-download-simple text-base"></i>
                                 Export Now
                             </a>
@@ -280,6 +279,9 @@
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
         @keyframes fade-in-down {
             0% { opacity: 0; transform: translateY(-10px); }

@@ -275,6 +275,11 @@ class JobApplicationImportExportController extends Controller
      */
     public function importFromCsv(Request $request)
     {
+        $user = Auth::user();
+        if (\App\Models\Setting::isMonetizationEnabled() && !$user->isPremium()) {
+            return redirect()->route('payment.premium')->with('error', 'Bulk CSV import is a Premium feature.');
+        }
+
         $request->validate([
             'csv_file' => 'required|file|mimes:csv,txt|max:10240', // Max 10MB
         ]);

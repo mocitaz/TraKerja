@@ -110,6 +110,11 @@
                 @endphp
 
                 @foreach($templates as $t)
+                @php
+                    $isPremiumTemplate = in_array($t['key'], ['creative', 'elegant']);
+                    $monetizationEnabled = \App\Models\Setting::isMonetizationEnabled();
+                    $userHasAccess = $monetizationEnabled ? (auth()->user()->isPremium() || !$isPremiumTemplate) : true;
+                @endphp
                 <div class="group bg-white rounded-[2.5rem] border border-slate-200/60 {{ $t['border'] }} overflow-hidden hover:shadow-[0_32px_64px_-12px_rgba(0,0,0,0.1)] transition-all duration-500 flex flex-col relative">
                     {{-- Thumbnail Container --}}
                     <div class="relative aspect-[4/5] {{ $t['preview'] }} overflow-hidden flex items-start justify-center pt-8 px-6">
@@ -141,21 +146,40 @@
                         <div class="absolute top-4 right-4">
                             <span class="px-3 py-1.5 bg-white/90 backdrop-blur shadow-sm rounded-xl text-[9px] font-black uppercase tracking-[1px] text-slate-800">{{ $t['badge'] }}</span>
                         </div>
+                        
+                        {{-- Lock Overlay for Free Users --}}
+                        @if(!$userHasAccess)
+                        <div class="absolute inset-0 bg-slate-900/10 backdrop-blur-[2px] flex items-center justify-center z-20 transition-opacity duration-300">
+                            <div class="w-12 h-12 bg-white/90 backdrop-blur rounded-2xl flex items-center justify-center shadow-xl text-slate-400">
+                                <i class="ph-fill ph-lock-key text-2xl"></i>
+                            </div>
+                        </div>
+                        @endif
                     </div>
 
                     {{-- Info & Action --}}
                     <div class="p-6 flex flex-col flex-1 bg-white relative z-10">
                         <div class="mb-6 flex-1">
-                            <h4 class="text-lg font-black text-slate-900 tracking-tight mb-2">{{ $t['name'] }}</h4>
+                            <h4 class="text-lg font-black text-slate-900 tracking-tight mb-2 flex items-center gap-2">
+                                {{ $t['name'] }}
+                                @if(!$userHasAccess)
+                                    <i class="ph-fill ph-crown text-amber-500 text-sm" title="Premium Template"></i>
+                                @endif
+                            </h4>
                             <p class="text-xs font-medium text-slate-500 leading-relaxed">{{ $t['desc'] }}</p>
                         </div>
                         
-                        <form method="POST" action="{{ route('cv-builder.preview') }}" target="_blank">
+                        <form method="POST" action="{{ route('cv-builder.preview') }}" target="_blank" @if(!$userHasAccess) onsubmit="event.preventDefault(); typeof showToast === 'function' ? showToast('error', 'Premium Required', 'This template is only available for premium users. Upgrade to access premium templates!', 5000) : alert('This template is only available for premium users.');" @endif>
                             @csrf
                             <input type="hidden" name="template" value="{{ $t['key'] }}">
-                            <button type="submit" class="w-full py-4 {{ $t['accent'] }} rounded-2xl font-black text-[10px] uppercase tracking-[2px] flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-current/20 active:scale-95 transition-all duration-300">
-                                <i class="ph-bold ph-eye text-base"></i>
-                                LIVE PREVIEW
+                            <button type="submit" class="w-full py-4 {{ !$userHasAccess ? 'bg-slate-100 text-slate-400 hover:bg-slate-200' : $t['accent'] }} rounded-2xl font-black text-[10px] uppercase tracking-[2px] flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-current/20 active:scale-95 transition-all duration-300">
+                                @if(!$userHasAccess)
+                                    <i class="ph-bold ph-lock-key text-base"></i>
+                                    PREMIUM ONLY
+                                @else
+                                    <i class="ph-bold ph-eye text-base"></i>
+                                    LIVE PREVIEW
+                                @endif
                             </button>
                         </form>
                     </div>

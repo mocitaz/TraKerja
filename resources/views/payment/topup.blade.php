@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-primary-600/10 border border-primary-600/20 flex items-center justify-center">
-                <i class="ph-fill ph-shield-check text-xl text-primary-600"></i>
+            <div class="w-10 h-10 rounded-xl bg-indigo-600/10 border border-indigo-600/20 flex items-center justify-center">
+                <i class="ph-fill ph-sparkle text-xl text-indigo-600"></i>
             </div>
             <div>
-                <h1 class="text-xl font-black text-slate-900 tracking-tight">Checkout Secure</h1>
-                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Transaksi Terenkripsi & Terverifikasi</p>
+                <h1 class="text-xl font-black text-slate-900 tracking-tight">{{ $packageName }}</h1>
+                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">{{ $packageSubtitle }}</p>
             </div>
         </div>
     </x-slot>
@@ -40,9 +40,9 @@
         }
 
         input[type="radio"]:checked + .payment-method-card {
-            border-color: #a570f0;
-            background: #fdfaff;
-            box-shadow: 0 0 0 1px #a570f0;
+            border-color: #6366f1;
+            background: #f5f6ff;
+            box-shadow: 0 0 0 1px #6366f1;
         }
 
         .logo-box {
@@ -78,7 +78,7 @@
             right: 0.5rem;
             width: 16px;
             height: 16px;
-            background: #a570f0;
+            background: #6366f1;
             color: white;
             border-radius: 50%;
             display: flex;
@@ -128,7 +128,7 @@
             {{-- ── Stepper ────────────────────────────────── --}}
             <div class="flex items-center justify-center gap-4 mb-10">
                 <div class="flex items-center gap-2">
-                    <div class="w-2 h-2 rounded-full bg-primary-600 shadow-[0_0_0_4px_rgba(165,112,240,0.1)]"></div>
+                    <div class="w-2 h-2 rounded-full bg-indigo-600 shadow-[0_0_0_4px_rgba(99,102,241,0.1)]"></div>
                     <span class="text-[9px] font-black text-slate-900 uppercase tracking-widest">Metode</span>
                 </div>
                 <div class="w-10 h-[1px] bg-slate-200"></div>
@@ -149,6 +149,8 @@
                 <div class="lg:col-span-7 space-y-8">
                     <form action="{{ route('payment.checkout') }}" method="POST" id="paymentForm">
                         @csrf
+                        <input type="hidden" name="package_type" value="{{ $packageType }}">
+                        
                         <div class="space-y-10">
                             @foreach($groupedChannels as $categoryCode => $channels)
                             <div>
@@ -195,16 +197,16 @@
                         <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <p class="text-[11px] font-black text-slate-900">TraKerja Lifetime Pro</p>
-                                    <p class="text-[8px] text-slate-400 font-bold uppercase tracking-widest mt-1">Unlimited Access</p>
+                                    <p class="text-[11px] font-black text-slate-900">{{ $packageName }}</p>
+                                    <p class="text-[8px] text-indigo-600 font-black uppercase tracking-widest mt-1">{{ $packageSubtitle }}</p>
                                 </div>
-                                <p class="text-[11px] font-black text-slate-900 tracking-tight">Rp {{ number_format($premiumPrice, 0, ',', '.') }}</p>
+                                <p class="text-[11px] font-black text-slate-900 tracking-tight">Rp {{ number_format($addonPrice, 0, ',', '.') }}</p>
                             </div>
                             
                             <div class="pt-4 border-t border-slate-200/60 space-y-2">
                                 <div class="flex justify-between text-[9px] font-bold text-slate-400 uppercase tracking-widest">
                                     <span>Subtotal</span>
-                                    <span class="text-slate-900">Rp {{ number_format($premiumPrice, 0, ',', '.') }}</span>
+                                    <span class="text-slate-900">Rp {{ number_format($addonPrice, 0, ',', '.') }}</span>
                                 </div>
                                 <div class="flex justify-between text-[9px] font-bold text-emerald-500 uppercase tracking-widest">
                                     <span>Biaya Layanan</span>
@@ -214,13 +216,13 @@
 
                             <div class="pt-4 border-t border-slate-200 flex justify-between items-center">
                                 <span class="text-[10px] font-black text-slate-900 uppercase tracking-widest">Total</span>
-                                <span class="text-lg font-black text-primary-600 tracking-tight">Rp {{ number_format($premiumPrice, 0, ',', '.') }}</span>
+                                <span class="text-lg font-black text-indigo-600 tracking-tight">Rp {{ number_format($addonPrice, 0, ',', '.') }}</span>
                             </div>
                         </div>
 
                         <button type="submit" form="paymentForm"
                                 :disabled="!selectedMethod"
-                                class="w-full py-4 bg-slate-900 text-white rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl hover:bg-primary-600 disabled:opacity-30 transition-all flex items-center justify-center gap-2 group">
+                                class="w-full py-4 bg-slate-900 text-white rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl hover:bg-indigo-600 disabled:opacity-30 transition-all flex items-center justify-center gap-2 group">
                             <i class="ph-bold ph-lock-key text-base group-hover:rotate-12 transition-transform"></i>
                             Konfirmasi & Bayar
                         </button>

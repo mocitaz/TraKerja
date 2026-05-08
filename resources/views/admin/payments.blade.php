@@ -79,7 +79,13 @@
                 <div class="flex items-start justify-between">
                     <div>
                         <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Revenue</p>
-                        <h3 class="text-xl lg:text-2xl font-black text-slate-900 tracking-tight mt-1">Rp {{ number_format($stats['total_revenue'] / 1000000, 1) }}M</h3>
+                        <h3 class="text-xl lg:text-2xl font-black text-slate-900 tracking-tight mt-1">
+                            @if($stats['total_revenue'] >= 1000000)
+                                Rp {{ number_format($stats['total_revenue'] / 1000000, 1) }} Jt
+                            @else
+                                Rp {{ number_format($stats['total_revenue'], 0, ',', '.') }}
+                            @endif
+                        </h3>
                         <p class="text-[10px] font-bold text-purple-500 mt-1">Hari ini: Rp {{ number_format($stats['today_revenue'], 0, ',', '.') }}</p>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 shadow-inner">

@@ -11,8 +11,11 @@ use App\Http\Controllers\JobApplicationImportExportController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AiAnalyzerController;
 use App\Http\Controllers\CvBuilderController;
+use App\Http\Controllers\CoverLetterController;
 use App\Http\Controllers\LandingPagePhotoController;
+use App\Http\Controllers\SupportTicketController;
 use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
+use App\Http\Controllers\Admin\AdminSupportController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -86,6 +89,12 @@ Route::prefix('ai-analyzer')->middleware(['auth', 'verified'])->name('ai-analyze
     Route::post('/analyze', [AiAnalyzerController::class, 'analyze'])->name('analyze');
     Route::get('/analyze', function() { return redirect()->route('ai-analyzer.index'); });
     Route::get('/result/{result}', [AiAnalyzerController::class, 'show'])->name('show');
+});
+
+// Cover Letter routes (Only for regular users)
+Route::prefix('cover-letters')->middleware(['auth', 'verified'])->name('cover-letters.')->group(function () {
+    Route::get('/', [CoverLetterController::class, 'index'])->name('index');
+    Route::post('/generate', [CoverLetterController::class, 'generate'])->name('generate');
 });
 
 Route::get('/dashboard', function () {
@@ -217,20 +226,25 @@ Route::middleware('auth')->group(function () {
         return app(JobApplicationImportExportController::class)->importFromCsv($request);
     })->name('csv.import.process');
     
+    // Premium Landing Page (Standard URL)
+    Route::get('/premium', function () {
+        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+            abort(403, 'Admin cannot access premium page');
+        }
+        return app(PaymentController::class)->premium();
+    })->name('payment.premium');
+
     // Payment routes (Only for regular users)
     Route::prefix('payment')->name('payment.')->group(function () {
-        Route::get('/premium', function () {
-            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-                abort(403, 'Admin cannot access premium page');
-            }
-            return app(PaymentController::class)->premium();
-        })->name('premium');
-
-        Route::get('/', function () {
+        Route::get('/top-up', function () {
             if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
                 abort(403, 'Admin cannot access payment');
             }
-            return app(PaymentController::class)->index();
+            return app(PaymentController::class)->topup();
+        })->name('topup');
+
+        Route::get('/', function () {
+            return redirect()->route('payment.premium');
         })->name('index');
         
         Route::get('/coming-soon', function () {
@@ -289,6 +303,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/callback', function (Request $request) {
             return app(PaymentController::class)->callback($request);
         })->withoutMiddleware(['auth', 'verified'])->name('callback');
+    });
+
+    // Customer Support Routes
+    Route::prefix('support')->name('support.')->group(function () {
+        Route::get('/', [SupportTicketController::class, 'index'])->name('index');
+        Route::post('/', [SupportTicketController::class, 'store'])->name('store');
+        Route::delete('/{ticket}', [SupportTicketController::class, 'destroy'])->name('destroy');
     });
 });
 
@@ -414,6 +435,14 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         }
         return app(\App\Http\Controllers\Admin\EmailBlastController::class)->send($request);
     })->name('email-blast.send');
+
+    // Admin Support Tickets / User Feedbacks Routes
+    Route::prefix('feedbacks')->name('feedbacks.')->group(function () {
+        Route::get('/', [AdminSupportController::class, 'index'])->name('index');
+        Route::post('/{ticket}/reply', [AdminSupportController::class, 'reply'])->name('reply');
+        Route::patch('/{ticket}/status', [AdminSupportController::class, 'updateStatus'])->name('status');
+        Route::delete('/{ticket}', [AdminSupportController::class, 'destroy'])->name('destroy');
+    });
 });
 
 // Livewire assets fallback route (if static files don't work)

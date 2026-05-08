@@ -17,12 +17,21 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'test@example.com'],
+            ['name' => 'Test User', 'password' => bcrypt('password123')]
+        );
 
         // Seed admin user
         $this->call(AdminSeeder::class);
+
+        // Seed dummy users with job applications
+        $this->call(DummyPremiumUserSeeder::class);
+
+        // Seed payment records
+        $this->call(PaymentSeeder::class);
+
+        // Seed customer support tickets & feedbacks
+        $this->call(SupportTicketSeeder::class);
     }
 }

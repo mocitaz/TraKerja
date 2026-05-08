@@ -81,6 +81,12 @@
                                     Email Blast
                                 </a>
 
+                                <a href="{{ route('admin.feedbacks.index') }}" 
+                                   class="px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 {{ request()->routeIs('admin.feedbacks*') ? 'bg-primary-50 text-primary-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
+                                    <i class="fas fa-comments {{ request()->routeIs('admin.feedbacks*') ? 'text-primary-600' : 'text-gray-400' }}"></i>
+                                    User Feedback
+                                </a>
+
                                 <a href="{{ route('admin.integration-hub') }}" 
                                    class="px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 {{ request()->routeIs('admin.integration-hub') ? 'bg-primary-50 text-primary-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
                                     <i class="ph-duotone ph-plugs {{ request()->routeIs('admin.integration-hub') ? 'text-primary-600' : 'text-gray-400' }}"></i>
@@ -223,6 +229,12 @@
                                class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('admin.email-blast*') ? 'bg-primary-50 text-primary-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                                 <i class="fas fa-envelope mr-3 flex-shrink-0 w-5 text-center {{ request()->routeIs('admin.email-blast*') ? 'text-primary-600' : 'text-gray-400' }}"></i>
                                 Email Blast
+                            </a>
+
+                            <a href="{{ route('admin.feedbacks.index') }}" 
+                               class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('admin.feedbacks*') ? 'bg-primary-50 text-primary-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                                <i class="fas fa-comments mr-3 flex-shrink-0 w-5 text-center {{ request()->routeIs('admin.feedbacks*') ? 'text-primary-600' : 'text-gray-400' }}"></i>
+                                User Feedback
                             </a>
 
                             <div class="mt-8 mb-2 px-3">

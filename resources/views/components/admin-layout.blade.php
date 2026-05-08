@@ -173,6 +173,24 @@
                         </div>
                     </a>
 
+                    <a href="{{ route('admin.feedbacks.index') }}"
+                       class="group relative flex items-center px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 overflow-hidden {{ request()->routeIs('admin.feedbacks*') ? 'bg-primary-50 text-primary-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
+                       :class="sidebarCollapsed ? 'justify-center' : ''">
+                        @if(request()->routeIs('admin.feedbacks*'))
+                            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-primary-600 rounded-r-full"></div>
+                        @endif
+                        <div class="flex items-center justify-center flex-shrink-0 relative z-10" :class="sidebarCollapsed ? '' : 'w-8'">
+                            <i class="text-[1.25rem] transition-transform duration-300 group-hover:scale-110 {{ request()->routeIs('admin.feedbacks*') ? 'ph-fill ph-chat-circle-dots text-primary-600' : 'ph ph-chat-circle-dots' }}"></i>
+                        </div>
+                        <span x-show="!sidebarCollapsed" x-transition.opacity.duration.300ms class="ml-3 truncate">User Feedback</span>
+                        
+                        <!-- Tooltip -->
+                        <div x-show="sidebarCollapsed" class="absolute left-14 px-3 py-1.5 bg-slate-800 text-white text-xs font-bold rounded-md shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300 z-50 whitespace-nowrap">
+                            User Feedback
+                            <div class="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-slate-800"></div>
+                        </div>
+                    </a>
+
                     <!-- System Section -->
                     <div class="py-3">
                         <div class="border-t border-slate-100"></div>
@@ -273,6 +291,7 @@
                     if(request()->routeIs('admin.users')) $pageTitle = 'User Management';
                     elseif(request()->routeIs('admin.analytics')) $pageTitle = 'Analytics';
                     elseif(request()->routeIs('admin.email-blast*')) $pageTitle = 'Email Blast';
+                    elseif(request()->routeIs('admin.feedbacks*')) $pageTitle = 'User Feedback';
                     elseif(request()->routeIs('admin.payments*')) $pageTitle = 'Payments';
                     elseif(request()->routeIs('admin.monetization')) $pageTitle = 'Monetization';
                     elseif(request()->routeIs('admin.integration-hub')) $pageTitle = 'Integration Hub';

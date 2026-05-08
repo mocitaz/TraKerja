@@ -68,7 +68,7 @@
 
                         {{-- ── Step 1: Upload ─── --}}
                         <div class="mesh-gradient-ai border border-slate-200/70 rounded-[2.5rem] shadow-sm overflow-hidden mb-6 bento-step-card">
-                            <div class="px-8 pt-7 pb-5 border-b border-slate-100 flex items-center gap-4">
+                            <div class="px-6 sm:px-8 py-5 sm:pt-7 sm:pb-5 border-b border-slate-100 flex items-center gap-4">
                                 <div class="w-10 h-10 bg-primary-600 rounded-2xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-primary-100">1</div>
                                 <div>
                                     <h3 class="text-base font-black text-slate-900 tracking-tight">Upload Resume</h3>
@@ -76,10 +76,10 @@
                                 </div>
                             </div>
 
-                            <div class="p-8">
+                            <div class="p-5 sm:p-8">
                                 {{-- Drop Zone --}}
                                 <div id="upload-area"
-                                     class="relative group border-2 border-dashed border-slate-200 rounded-[2rem] p-12 text-center cursor-pointer transition-all duration-300 hover:border-primary-400 hover:bg-white hover:shadow-xl hover:shadow-primary-50/50 overflow-hidden"
+                                     class="relative group border-2 border-dashed border-slate-200 rounded-[2rem] p-6 sm:p-12 text-center cursor-pointer transition-all duration-300 hover:border-primary-400 hover:bg-white hover:shadow-xl hover:shadow-primary-50/50 overflow-hidden"
                                      ondragover="handleDragOver(event)"
                                      ondragleave="handleDragLeave(event)"
                                      ondrop="handleDrop(event)">
@@ -90,25 +90,27 @@
                                             <i class="ph-bold ph-file-arrow-up text-slate-400 group-hover:text-primary-500 text-3xl transition-colors"></i>
                                         </div>
                                         <div>
-                                            <p class="text-base font-black text-slate-800">Drop your PDF here or <span class="text-primary-600 underline decoration-2 underline-offset-4">browse</span></p>
-                                            <p class="text-xs text-slate-400 font-bold mt-1.5 uppercase tracking-widest">PDF format · Max 10 MB</p>
+                                            <p class="text-sm sm:text-base font-black text-slate-800">Drop your PDF here or <span class="text-primary-600 underline decoration-2 underline-offset-4">browse</span></p>
+                                            <p class="text-[10px] sm:text-xs text-slate-400 font-bold mt-1.5 uppercase tracking-widest">PDF format · Max 10 MB</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 {{-- File selected state --}}
                                 <div id="file-success" class="hidden mt-4">
-                                    <div class="flex items-center gap-5 bg-white border border-emerald-200 rounded-[1.5rem] px-6 py-5 shadow-lg shadow-emerald-50/50">
-                                        <div class="w-14 h-14 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center justify-center shrink-0">
-                                            <i class="ph-fill ph-file-pdf text-rose-500 text-3xl"></i>
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white border border-emerald-200 rounded-[1.5rem] p-5 sm:px-6 sm:py-5 shadow-lg shadow-emerald-50/50">
+                                        <div class="flex items-center gap-4 w-full sm:w-auto min-w-0">
+                                            <div class="w-12 h-12 sm:w-14 sm:h-14 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center justify-center shrink-0">
+                                                <i class="ph-fill ph-file-pdf text-rose-500 text-2xl sm:text-3xl"></i>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <p id="file-name" class="text-sm sm:text-[15px] font-black text-slate-900 truncate tracking-tight"></p>
+                                                <p id="file-size" class="text-[10px] sm:text-[11px] text-slate-500 font-black mt-1 uppercase tracking-tighter"></p>
+                                            </div>
                                         </div>
-                                        <div class="flex-1 min-w-0">
-                                            <p id="file-name" class="text-[15px] font-black text-slate-900 truncate tracking-tight"></p>
-                                            <p id="file-size" class="text-[11px] text-slate-500 font-black mt-1 uppercase tracking-tighter"></p>
-                                        </div>
-                                        <div class="flex items-center gap-3 shrink-0">
-                                            <span class="text-[10px] font-black text-emerald-600 bg-emerald-50 border border-emerald-100 px-3 py-1.5 rounded-full uppercase tracking-widest">Analysis Ready</span>
-                                            <button type="button" id="remove-file" class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all border border-transparent hover:border-rose-100">
+                                        <div class="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto border-t border-slate-100 sm:border-t-0 pt-3 sm:pt-0">
+                                            <span class="text-[9px] sm:text-[10px] font-black text-emerald-600 bg-emerald-50 border border-emerald-100 px-3 py-1.5 rounded-full uppercase tracking-widest">Analysis Ready</span>
+                                            <button type="button" id="remove-file" class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all border border-transparent hover:border-rose-100 shrink-0">
                                                 <i class="ph-bold ph-trash text-lg"></i>
                                             </button>
                                         </div>
@@ -119,7 +121,7 @@
 
                         {{-- ── Step 2: Job Description ─── --}}
                         <div class="mesh-gradient-ai border border-slate-200/70 rounded-[2.5rem] shadow-sm overflow-hidden mb-8 bento-step-card">
-                            <div class="px-8 pt-7 pb-5 border-b border-slate-100 flex items-center gap-4">
+                            <div class="px-6 sm:px-8 py-5 sm:pt-7 sm:pb-5 border-b border-slate-100 flex items-center gap-4">
                                 <div class="w-10 h-10 bg-primary-600 rounded-2xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-primary-100">2</div>
                                 <div>
                                     <h3 class="text-base font-black text-slate-900 tracking-tight">Job Requirements</h3>
@@ -127,7 +129,7 @@
                                 </div>
                             </div>
 
-                            <div class="p-8">
+                            <div class="p-5 sm:p-8">
                                 <div class="relative group">
                                     <textarea id="job_description" name="job_description" rows="10"
                                               class="w-full px-6 pt-5 pb-12 bg-slate-50/50 border border-slate-200 rounded-[1.5rem] text-[15px] font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/5 focus:border-primary-400 focus:bg-white transition-all outline-none resize-none leading-relaxed shadow-inner"
@@ -153,13 +155,13 @@
                         {{-- ── Actions ─── --}}
                         <div class="flex items-center justify-between px-2">
                             <a href="{{ route('tracker') }}"
-                               class="flex items-center gap-2 text-sm font-black text-slate-400 hover:text-slate-900 transition-colors uppercase tracking-[0.15em]">
+                               class="flex items-center gap-2 text-xs sm:text-sm font-black text-slate-400 hover:text-slate-900 transition-colors uppercase tracking-[0.15em]">
                                 <i class="ph ph-arrow-left text-base"></i> Back
                             </a>
                             <button type="submit" id="submit-btn"
-                                    class="group flex items-center gap-3 px-10 py-4 bg-primary-600 text-white rounded-[1.25rem] font-black text-sm hover:bg-primary-700 transition-all shadow-2xl shadow-primary-200 active:scale-95">
-                                <i id="loading-spinner" class="ph ph-spinner animate-spin hidden text-lg"></i>
-                                <i id="submit-icon" class="ph ph-lightning text-lg group-hover:scale-125 transition-transform"></i>
+                                    class="group flex items-center gap-2.5 sm:gap-3 px-6 sm:px-10 py-3 sm:py-4 bg-primary-600 text-white rounded-[1.25rem] font-black text-xs sm:text-sm hover:bg-primary-700 transition-all shadow-2xl shadow-primary-200 active:scale-95">
+                                <i id="loading-spinner" class="ph ph-spinner animate-spin hidden text-base sm:text-lg"></i>
+                                <i id="submit-icon" class="ph ph-lightning text-base sm:text-lg group-hover:scale-125 transition-transform"></i>
                                 <span id="submit-text" class="uppercase tracking-widest">Start Analysis</span>
                             </button>
                         </div>
@@ -168,6 +170,65 @@
 
                 {{-- ── Sidebar ────────────────────────────────────────── --}}
                 <div class="lg:col-span-4 space-y-6">
+
+                    {{-- ── AI Credits Status Card ── --}}
+                    <div class="relative overflow-hidden rounded-[2.5rem] border {{ $isPremium ? 'border-indigo-100 bg-gradient-to-br from-indigo-900 via-indigo-950 to-slate-950 text-white' : 'border-slate-200 bg-gradient-to-br from-slate-900 via-slate-950 to-indigo-950 text-white' }} p-8 shadow-2xl">
+                        {{-- Ambient backdrop glows --}}
+                        <div class="absolute -right-12 -top-12 w-40 h-40 {{ $isPremium ? 'bg-indigo-500/25' : 'bg-primary-500/10' }} rounded-full blur-3xl pointer-events-none"></div>
+                        <div class="absolute -left-8 -bottom-8 w-32 h-32 {{ $isPremium ? 'bg-indigo-600/20' : 'bg-indigo-500/10' }} rounded-full blur-2xl pointer-events-none"></div>
+
+                        <div class="relative z-10 flex flex-col justify-between h-full min-h-[180px]">
+                            {{-- Card Header --}}
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-xl {{ $isPremium ? 'bg-indigo-500/20 border border-indigo-400/30' : 'bg-white/10 border border-white/10' }} flex items-center justify-center">
+                                        <i class="ph-bold {{ $isPremium ? 'ph-crown text-amber-300' : 'ph-user text-slate-300' }} text-base"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[7.5px] font-black tracking-widest text-slate-400 uppercase">Membership</p>
+                                        <p class="text-[10px] font-black {{ $isPremium ? 'text-indigo-300' : 'text-slate-300' }} uppercase tracking-wider mt-0.5">
+                                            {{ $isPremium ? 'Premium Plan' : 'Free Trial' }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <span class="relative flex h-2 w-2">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full {{ $isPremium ? 'bg-emerald-400' : 'bg-amber-400' }} opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 {{ $isPremium ? 'bg-emerald-500' : 'bg-amber-500' }}"></span>
+                                </span>
+                            </div>
+
+                            {{-- Credit Info --}}
+                            <div class="my-6">
+                                <p class="text-[8px] font-black tracking-widest text-slate-400 uppercase">Sisa Kredit Analisa</p>
+                                <div class="flex items-baseline gap-1 mt-1.5">
+                                    <span class="text-3xl font-black tracking-tight {{ $isPremium ? 'text-white' : 'text-slate-100' }}">
+                                        {{ $remainingUses === 'unlimited' ? '∞' : $remainingUses }}
+                                    </span>
+                                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Kredit</span>
+                                </div>
+                                <p class="text-[10px] text-slate-400 font-bold mt-1.5 italic">
+                                    {{ $isPremium ? 'Kredit aktif untuk analisa resume presisi tinggi.' : 'Trial berlaku untuk 1x analisa awal.' }}
+                                </p>
+                            </div>
+
+                            {{-- CTA Button --}}
+                            <div class="pt-4 border-t border-white/10">
+                                @if($isPremium)
+                                    <a href="{{ route('payment.topup', ['package' => 'analyzer']) }}" class="group flex items-center justify-center gap-2 w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-black text-[9px] uppercase tracking-widest transition-all shadow-lg shadow-indigo-950/40">
+                                        <i class="ph-bold ph-plus-circle text-sm group-hover:scale-125 transition-transform"></i>
+                                        Top Up +10 AI & +15 CL Kredit
+                                    </a>
+                                    <p class="text-[7px] text-center text-indigo-300/80 font-black uppercase tracking-widest mt-2">Super Hemat! Hanya Rp 14.999 saja</p>
+                                @else
+                                    <a href="{{ route('payment.premium') }}" class="group flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-primary-500 to-indigo-600 hover:from-primary-600 hover:to-indigo-700 text-white rounded-xl font-black text-[9px] uppercase tracking-widest transition-all shadow-lg shadow-primary-950/40">
+                                        <i class="ph-bold ph-lightning text-sm group-hover:animate-bounce"></i>
+                                        Upgrade ke Premium
+                                    </a>
+                                    <p class="text-[7px] text-center text-primary-300/80 font-black uppercase tracking-widest mt-2">Dapatkan Bonus 5 Kredit & Unlimited PDF Export!</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
 
                     {{-- How it works --}}
                     <div class="bg-white border border-slate-200/70 rounded-[2.5rem] p-8 shadow-sm bento-step-card">

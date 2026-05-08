@@ -27,16 +27,16 @@
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 relative z-10">
             
             {{-- Floating Pill Navigation (Moved out of topbar) --}}
-            <div class="flex justify-center mb-10">
-                <nav class="flex p-1.5 bg-white border border-slate-200/60 rounded-[2rem] shadow-sm">
+            <div class="flex justify-center mb-8 sm:mb-10 w-full overflow-x-auto custom-scrollbar">
+                <nav class="flex p-1 bg-white border border-slate-200/60 rounded-[1.5rem] sm:rounded-[2rem] shadow-sm shrink-0">
                     @foreach([
                         ['account',  'ph-user',               'Identity'],
                         ['personal', 'ph-identification-card', 'Contact'],
                         ['security', 'ph-shield-check',       'Security'],
                     ] as [$tab, $icon, $label])
                     <button onclick="switchTab('{{ $tab }}')" id="tab-{{ $tab }}"
-                            class="tab-btn {{ $tab === 'account' ? 'active' : '' }} flex items-center gap-2 px-8 py-3 rounded-[1.5rem] text-[10px] font-black uppercase tracking-widest transition-all hover:bg-slate-50">
-                        <i class="ph-bold {{ $icon }} text-base"></i>
+                            class="tab-btn {{ $tab === 'account' ? 'active' : '' }} flex items-center gap-1.5 sm:gap-2 px-4 sm:px-8 py-2.5 sm:py-3 rounded-[1.25rem] sm:rounded-[1.5rem] text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all hover:bg-slate-50">
+                        <i class="ph-bold {{ $icon }} text-sm sm:text-base"></i>
                         <span>{{ $label }}</span>
                     </button>
                     @endforeach
@@ -75,12 +75,12 @@
                 
                 {{-- [BENTO 1] Hero Identity Card (Full Width) --}}
                 <div class="md:col-span-12 group">
-                    <div class="bg-white rounded-[3rem] border border-slate-200/60 p-10 shadow-sm hover:shadow-xl hover:shadow-primary-500/5 transition-all duration-500 relative overflow-hidden">
+                    <div class="bg-white rounded-[2rem] sm:rounded-[3rem] border border-slate-200/60 p-6 sm:p-10 shadow-sm hover:shadow-xl hover:shadow-primary-500/5 transition-all duration-500 relative overflow-hidden">
                         {{-- Decorative Background Elements --}}
                         <div class="absolute -right-20 -top-20 w-80 h-80 bg-gradient-to-br from-primary-100/40 via-[#d983e4]/10 to-transparent rounded-full blur-3xl group-hover:bg-primary-100/60 transition-colors duration-700"></div>
                         <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-slate-50/80 rounded-full blur-3xl"></div>
                         
-                        <div class="relative flex flex-col md:flex-row items-center gap-10">
+                        <div class="relative flex flex-col md:flex-row items-center gap-6 sm:gap-10">
                             {{-- Profile Aura Avatar --}}
                             <div class="relative group/avatar">
                                 <div class="absolute inset-0 bg-primary-100 rounded-full animate-spin-slow opacity-20 scale-110"></div>
@@ -89,44 +89,44 @@
                                     <circle cx="50%" cy="50%" r="48%" stroke="currentColor" stroke-width="3" fill="transparent" class="text-primary-500 transition-all duration-1000" stroke-dasharray="100" stroke-dashoffset="{{ 100 - $percentage }}" stroke-linecap="round" />
                                 </svg>
                                 
-                                <div class="relative w-36 h-36 rounded-full overflow-hidden bg-white shadow-2xl border-4 border-white transition-transform duration-500 group-hover/avatar:scale-105">
+                                <div class="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden bg-white shadow-2xl border-4 border-white transition-transform duration-500 group-hover/avatar:scale-105">
                                     @if(Auth::user()->logo)
                                         <img src="{{ Storage::url(Auth::user()->logo) }}" alt="Avatar" class="w-full h-full object-cover">
                                     @else
                                         <div class="w-full h-full bg-slate-50 flex items-center justify-center text-slate-300">
-                                            <i class="ph-fill ph-user text-6xl"></i>
+                                            <i class="ph-fill ph-user text-5xl sm:text-6xl"></i>
                                         </div>
                                     @endif
                                 </div>
-                                <button onclick="openProfilePhotoModal()" class="absolute bottom-1 right-1 w-10 h-10 bg-slate-900 text-white rounded-2xl flex items-center justify-center shadow-lg hover:bg-primary-600 transition-all border-4 border-white">
-                                    <i class="ph-bold ph-camera text-base"></i>
+                                <button onclick="openProfilePhotoModal()" class="absolute bottom-1 right-1 w-9 h-9 sm:w-10 sm:h-10 bg-slate-900 text-white rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg hover:bg-primary-600 transition-all border-4 border-white">
+                                    <i class="ph-bold ph-camera text-sm sm:text-base"></i>
                                 </button>
                             </div>
 
-                            <div class="flex-1 text-center md:text-left">
-                                <div class="flex flex-col md:flex-row md:items-center gap-3 mb-2">
-                                    <h3 class="text-3xl font-black text-slate-900 tracking-tighter">{{ $user->name }}</h3>
+                            <div class="flex-1 text-center md:text-left w-full">
+                                <div class="flex flex-col md:flex-row md:items-center justify-center md:justify-start gap-2 sm:gap-3 mb-1 sm:mb-2">
+                                    <h3 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tighter">{{ $user->name }}</h3>
                                     @if($user->is_premium)
-                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-600 border border-amber-100 rounded-full text-[9px] font-black uppercase tracking-widest self-center">
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-600 border border-amber-100 rounded-full text-[9px] font-black uppercase tracking-widest self-center md:self-auto">
                                             <i class="ph-fill ph-crown"></i> PRO
                                         </span>
                                     @endif
                                 </div>
-                                <p class="text-sm font-bold text-slate-400 mb-6">{{ $user->email }}</p>
+                                <p class="text-xs sm:text-sm font-bold text-slate-400 mb-5 sm:mb-6">{{ $user->email }}</p>
                                 
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div class="bg-slate-50/50 rounded-2xl p-4 border border-slate-100">
-                                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Completeness</p>
+                                <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                                    <div class="bg-slate-50/50 rounded-2xl p-3.5 sm:p-4 border border-slate-100">
+                                        <p class="text-[8px] sm:text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Completeness</p>
                                         <div class="flex items-center gap-2">
-                                            <span class="text-lg font-black text-slate-800">{{ $percentage }}%</span>
+                                            <span class="text-base sm:text-lg font-black text-slate-800">{{ $percentage }}%</span>
                                             <div class="flex-1 h-1 bg-slate-200 rounded-full overflow-hidden">
                                                 <div class="h-full bg-primary-500" style="width: {{ $percentage }}%"></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="bg-slate-50/50 rounded-2xl p-4 border border-slate-100">
-                                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Member Since</p>
-                                        <p class="text-sm font-black text-slate-800">{{ Auth::user()->created_at->format('M Y') }}</p>
+                                    <div class="bg-slate-50/50 rounded-2xl p-3.5 sm:p-4 border border-slate-100">
+                                        <p class="text-[8px] sm:text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Member Since</p>
+                                        <p class="text-xs sm:text-sm font-black text-slate-800">{{ Auth::user()->created_at->format('M Y') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -136,14 +136,14 @@
 
                 {{-- [BENTO 2] Skill Matrix (Radar Chart) --}}
                 <div class="md:col-span-7">
-                    <div class="bg-white rounded-[3rem] border border-slate-200/60 p-8 shadow-sm h-full relative overflow-hidden group">
-                        <div class="flex items-center justify-between mb-8">
+                    <div class="bg-white rounded-[2rem] sm:rounded-[3rem] border border-slate-200/60 p-5 sm:p-8 shadow-sm h-full relative overflow-hidden group">
+                        <div class="flex items-center justify-between mb-6 sm:mb-8">
                             <div>
                                 <h4 class="text-[10px] font-black text-primary-500 uppercase tracking-[0.3em] mb-1">Professional Matrix</h4>
-                                <p class="text-lg font-black text-slate-800 tracking-tight">Skill Proficiency</p>
+                                <p class="text-base sm:text-lg font-black text-slate-800 tracking-tight">Skill Proficiency</p>
                             </div>
-                            <div class="w-10 h-10 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:text-primary-500 transition-colors">
-                                <i class="ph-bold ph-strategy text-lg"></i>
+                            <div class="w-9 h-9 sm:w-10 sm:h-10 bg-slate-50 rounded-xl sm:rounded-2xl flex items-center justify-center text-slate-400 group-hover:text-primary-500 transition-colors">
+                                <i class="ph-bold ph-strategy text-base sm:text-lg"></i>
                             </div>
                         </div>
 
@@ -152,7 +152,7 @@
                         </div>
 
                         {{-- Legend Placeholder or Small Stats --}}
-                        <div class="mt-8 grid grid-cols-3 gap-4">
+                        <div class="mt-6 sm:mt-8 grid grid-cols-3 gap-3 sm:gap-4">
                             @php
                                 $categories = $user->skills->groupBy('category');
                             @endphp
@@ -168,27 +168,27 @@
 
                 {{-- [BENTO 3] Quick Stats / Premium (Small) --}}
                 <div class="md:col-span-5">
-                    <div class="bg-slate-900 rounded-[3rem] p-8 shadow-xl relative overflow-hidden h-full flex flex-col justify-between group">
+                    <div class="bg-slate-900 rounded-[2rem] sm:rounded-[3rem] p-6 sm:p-8 shadow-xl relative overflow-hidden h-full flex flex-col justify-between group min-h-[220px]">
                         <div class="absolute right-0 top-0 w-48 h-48 bg-primary-500/30 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-1000"></div>
                         <div class="absolute left-0 bottom-0 w-32 h-32 bg-[#d983e4]/20 rounded-full blur-2xl"></div>
                         
                         <div class="relative">
                             <h4 class="text-[10px] font-black text-primary-400 uppercase tracking-[0.3em] mb-2">Member Status</h4>
                             @if($user->is_premium)
-                                <p class="text-2xl font-black text-white tracking-tight leading-tight">Elevated to<br>Premium Access</p>
+                                <p class="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">Elevated to<br>Premium Access</p>
                             @else
-                                <p class="text-2xl font-black text-white tracking-tight leading-tight">Unlock Your<br>Full Potential</p>
+                                <p class="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">Unlock Your<br>Full Potential</p>
                             @endif
                         </div>
 
-                        <div class="mt-8 relative">
+                        <div class="mt-6 sm:mt-8 relative">
                             @if(!$user->is_premium)
-                                <a href="{{ route('payment.index') }}" class="group/btn bg-white text-slate-900 h-14 rounded-2xl flex items-center justify-between px-6 font-black text-[10px] uppercase tracking-widest hover:bg-primary-50 transition-all">
+                                <a href="{{ route('payment.index') }}" class="group/btn bg-white text-slate-900 h-12 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-between px-5 sm:px-6 font-black text-[10px] uppercase tracking-widest hover:bg-primary-50 transition-all">
                                     <span>Upgrade Now</span>
                                     <i class="ph-bold ph-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
                                 </a>
                             @else
-                                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 flex items-center justify-between">
+                                <div class="bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-3.5 sm:p-4 border border-white/10 flex items-center justify-between">
                                     <span class="text-[9px] font-black text-white/60 uppercase tracking-widest">Active Plan</span>
                                     <span class="text-[9px] font-black text-primary-300 uppercase tracking-widest">Enterprise</span>
                                 </div>
@@ -202,15 +202,15 @@
                     <div class="space-y-6">
                     {{-- Account --}}
                     <div id="section-account" class="content-section">
-                        <div class="bg-white rounded-[2.5rem] border border-slate-200/60 p-8 sm:p-10 shadow-sm relative overflow-hidden">
+                        <div class="bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200/60 p-5 sm:p-10 shadow-sm relative overflow-hidden">
                             <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-primary-50/30 rounded-full blur-3xl"></div>
                             <div class="relative">
-                                <div class="flex items-center gap-5 mb-10">
-                                    <div class="w-14 h-14 bg-primary-50 rounded-[1.25rem] flex items-center justify-center text-primary-600 shadow-inner">
-                                        <i class="ph-bold ph-user-focus text-2xl"></i>
+                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 mb-8 sm:mb-10">
+                                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-primary-50 rounded-xl sm:rounded-[1.25rem] flex items-center justify-center text-primary-600 shadow-inner shrink-0">
+                                        <i class="ph-bold ph-user-focus text-xl sm:text-2xl"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-xl font-black text-slate-900 tracking-tight">Account Information</h3>
+                                        <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Account Information</h3>
                                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Basic identification details</p>
                                     </div>
                                 </div>
@@ -223,69 +223,69 @@
 
                     {{-- Personal --}}
                     <div id="section-personal" class="content-section hidden">
-                        <div class="bg-white rounded-[2.5rem] border border-slate-200/60 p-8 sm:p-10 shadow-sm relative overflow-hidden">
+                        <div class="bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200/60 p-5 sm:p-10 shadow-sm relative overflow-hidden">
                             <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-primary-50/30 rounded-full blur-3xl"></div>
                             <div class="relative">
-                                <div class="flex items-center gap-5 mb-10">
-                                    <div class="w-14 h-14 bg-primary-50 rounded-[1.25rem] flex items-center justify-center text-primary-600 shadow-inner">
-                                        <i class="ph-bold ph-fingerprint text-2xl"></i>
+                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 mb-8 sm:mb-10">
+                                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-primary-50 rounded-xl sm:rounded-[1.25rem] flex items-center justify-center text-primary-600 shadow-inner shrink-0">
+                                        <i class="ph-bold ph-fingerprint text-xl sm:text-2xl"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-xl font-black text-slate-900 tracking-tight">Personal Information</h3>
+                                        <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Personal Information</h3>
                                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Data for professional matching & CVs</p>
                                     </div>
                                 </div>
                                 
-                                <form id="personalInfoForm" method="post" action="{{ route('profile.personal.update') }}" class="space-y-8">
+                                <form id="personalInfoForm" method="post" action="{{ route('profile.personal.update') }}" class="space-y-6 sm:space-y-8">
                                     @csrf
                                     @method('patch')
 
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8">
                                         <div class="group/field space-y-2">
                                             <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-primary-600 transition-colors">Phone Number</label>
                                             <div class="relative">
-                                                <div class="absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
+                                                <div class="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
                                                     <i class="ph-bold ph-phone"></i>
                                                 </div>
-                                                <input type="text" name="phone" value="{{ old('phone', $user->profile->phone_number ?? '') }}" class="w-full pl-16 pr-6 py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200">
+                                                <input type="text" name="phone" value="{{ old('phone', $user->profile->phone_number ?? '') }}" class="w-full pl-14 sm:pl-16 pr-6 py-3.5 sm:py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200">
                                             </div>
                                         </div>
                                         <div class="group/field space-y-2">
                                             <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-primary-600 transition-colors">Domicile / Location</label>
                                             <div class="relative">
-                                                <div class="absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
+                                                <div class="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
                                                     <i class="ph-bold ph-map-pin"></i>
                                                 </div>
-                                                <input type="text" name="location" value="{{ old('location', $user->profile->domicile ?? '') }}" class="w-full pl-16 pr-6 py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200">
+                                                <input type="text" name="location" value="{{ old('location', $user->profile->domicile ?? '') }}" class="w-full pl-14 sm:pl-16 pr-6 py-3.5 sm:py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200">
                                             </div>
                                         </div>
                                         <div class="group/field space-y-2">
                                             <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-primary-600 transition-colors">LinkedIn URL</label>
                                             <div class="relative">
-                                                <div class="absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
+                                                <div class="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
                                                     <i class="ph-bold ph-linkedin-logo"></i>
                                                 </div>
-                                                <input type="url" name="linkedin" value="{{ old('linkedin', $user->profile->linkedin_url ?? '') }}" class="w-full pl-16 pr-6 py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200" placeholder="https://linkedin.com/in/...">
+                                                <input type="url" name="linkedin" value="{{ old('linkedin', $user->profile->linkedin_url ?? '') }}" class="w-full pl-14 sm:pl-16 pr-6 py-3.5 sm:py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200" placeholder="https://linkedin.com/in/...">
                                             </div>
                                         </div>
                                         <div class="group/field space-y-2">
                                             <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-primary-600 transition-colors">Personal Website</label>
                                             <div class="relative">
-                                                <div class="absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
+                                                <div class="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
                                                     <i class="ph-bold ph-globe"></i>
                                                 </div>
-                                                <input type="url" name="website" value="{{ old('website', $user->profile->website_url ?? '') }}" class="w-full pl-16 pr-6 py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200" placeholder="https://...">
+                                                <input type="url" name="website" value="{{ old('website', $user->profile->website_url ?? '') }}" class="w-full pl-14 sm:pl-16 pr-6 py-3.5 sm:py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200" placeholder="https://...">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="group/field space-y-2">
                                         <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-primary-600 transition-colors">Professional Biography</label>
-                                        <textarea name="bio" rows="6" class="w-full px-8 py-6 bg-slate-50 border-none ring-1 ring-slate-200 rounded-[2.5rem] text-sm font-medium text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all leading-relaxed" placeholder="Describe your professional background and aspirations...">{{ old('bio', $user->profile->bio ?? '') }}</textarea>
+                                        <textarea name="bio" rows="6" class="w-full px-6 py-5 sm:px-8 sm:py-6 bg-slate-50 border-none ring-1 ring-slate-200 rounded-3xl text-sm font-medium text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all leading-relaxed" placeholder="Describe your professional background and aspirations...">{{ old('bio', $user->profile->bio ?? '') }}</textarea>
                                     </div>
 
-                                    <div class="flex justify-end pt-4">
-                                        <button type="submit" class="group/btn px-10 py-4 bg-primary-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 active:scale-95 flex items-center gap-3">
+                                    <div class="flex justify-end pt-4 w-full">
+                                        <button type="submit" class="w-full sm:w-auto justify-center group/btn px-8 sm:px-10 py-3.5 sm:py-4 bg-primary-600 text-white rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 active:scale-95 flex items-center gap-3">
                                             <i class="ph-bold ph-check-circle text-lg group-hover/btn:scale-110 transition-transform"></i>
                                             Save Profile Details
                                         </button>
@@ -297,15 +297,15 @@
 
                     {{-- Security --}}
                     <div id="section-security" class="content-section hidden">
-                        <div class="bg-white rounded-[2.5rem] border border-slate-200/60 p-8 sm:p-10 shadow-sm relative overflow-hidden">
+                        <div class="bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200/60 p-5 sm:p-10 shadow-sm relative overflow-hidden">
                             <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-emerald-50/30 rounded-full blur-3xl"></div>
                             <div class="relative">
-                                <div class="flex items-center gap-5 mb-10">
-                                    <div class="w-14 h-14 bg-emerald-50 rounded-[1.25rem] flex items-center justify-center text-emerald-600 shadow-inner">
-                                        <i class="ph-bold ph-shield-check text-2xl"></i>
+                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 mb-8 sm:mb-10">
+                                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-emerald-50 rounded-xl sm:rounded-[1.25rem] flex items-center justify-center text-emerald-600 shadow-inner shrink-0">
+                                        <i class="ph-bold ph-shield-check text-xl sm:text-2xl"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-xl font-black text-slate-900 tracking-tight">Security Settings</h3>
+                                        <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Security Settings</h3>
                                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Keep your credentials safe</p>
                                     </div>
                                 </div>
@@ -318,17 +318,17 @@
 
                     {{-- Danger --}}
                     <div id="section-danger" class="content-section hidden">
-                        <div class="bg-rose-50 rounded-[2.5rem] border border-rose-100 p-8 sm:p-10 shadow-sm">
-                            <div class="flex items-center gap-5 mb-10">
-                                <div class="w-14 h-14 bg-rose-100 rounded-[1.25rem] flex items-center justify-center text-rose-600 shadow-inner">
-                                    <i class="ph-bold ph-warning-octagon text-2xl"></i>
+                        <div class="bg-rose-50 rounded-[2rem] sm:rounded-[2.5rem] border border-rose-100 p-5 sm:p-10 shadow-sm">
+                            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 mb-8 sm:mb-10">
+                                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-rose-100 rounded-xl sm:rounded-[1.25rem] flex items-center justify-center text-rose-600 shadow-inner shrink-0">
+                                    <i class="ph-bold ph-warning-octagon text-xl sm:text-2xl"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xl font-black text-slate-900 tracking-tight">Danger Zone</h3>
+                                    <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Danger Zone</h3>
                                     <p class="text-[10px] font-bold text-rose-400 uppercase tracking-widest mt-1">Irreversible and destructive actions</p>
                                 </div>
                             </div>
-                            <div class="premium-form-wrapper bg-white/50 rounded-[2rem] p-6 border border-rose-100/50">
+                            <div class="premium-form-wrapper bg-white/50 rounded-2xl sm:rounded-[2rem] p-5 sm:p-6 border border-rose-100/50">
                                 @include('profile.partials.delete-user-form')
                             </div>
                         </div>
@@ -340,12 +340,12 @@
 
     {{-- Profile Photo Modal --}}
     <div id="profilePhotoModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center z-[1000] p-4" onclick="if(event.target === this) closeProfilePhotoModal()">
-        <div class="bg-white rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.2)] max-w-md w-full p-10 transform transition-all animate-scale-in border border-slate-200/60 overflow-hidden relative">
+        <div class="bg-white rounded-[2rem] sm:rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.2)] max-w-md w-full p-6 sm:p-10 transform transition-all animate-scale-in border border-slate-200/60 overflow-hidden relative">
             <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary-500 via-primary-500 to-primary-500"></div>
             
-            <div class="flex items-center justify-between mb-10">
+            <div class="flex items-center justify-between mb-8 sm:mb-10">
                 <div class="flex flex-col">
-                    <h3 class="text-xl font-black text-slate-900 tracking-tight">Update Identity</h3>
+                    <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Update Identity</h3>
                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Profile Photo Upload</p>
                 </div>
                 <button onclick="closeProfilePhotoModal()" class="w-10 h-10 flex items-center justify-center rounded-2xl hover:bg-slate-100 transition-all text-slate-400 hover:text-slate-900">
@@ -353,15 +353,15 @@
                 </button>
             </div>
 
-            <form id="photoUploadForm" method="POST" action="{{ route('profile-photo.upload') }}" enctype="multipart/form-data" class="space-y-10">
+            <form id="photoUploadForm" method="POST" action="{{ route('profile-photo.upload') }}" enctype="multipart/form-data" class="space-y-8 sm:space-y-10">
                 @csrf
                 <div class="flex flex-col items-center">
-                    <div class="w-40 h-40 rounded-[3rem] overflow-hidden bg-slate-50 shadow-inner mb-8 ring-1 ring-slate-100 group/preview relative">
+                    <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-[2rem] sm:rounded-[3rem] overflow-hidden bg-slate-50 shadow-inner mb-6 sm:mb-8 ring-1 ring-slate-100 group/preview relative">
                         @if(Auth::user()->logo)
                             <img src="{{ Storage::url(Auth::user()->logo) }}" alt="Avatar" id="currentPhotoPreview" class="w-full h-full object-cover">
                         @else
                             <div class="w-full h-full flex items-center justify-center text-slate-200">
-                                <i class="ph-fill ph-user text-7xl"></i>
+                                <i class="ph-fill ph-user text-6xl sm:text-7xl"></i>
                             </div>
                         @endif
                         <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/preview:opacity-100 transition-opacity flex items-center justify-center">
@@ -376,16 +376,16 @@
                         </span>
                         <input type="file" name="logo" accept="image/*" onchange="previewPhoto(event)" class="absolute inset-0 opacity-0 cursor-pointer">
                     </label>
-                    <p class="mt-4 text-[9px] font-bold text-slate-400 uppercase tracking-widest">JPG, PNG or GIF. Max 2MB.</p>
+                    <p class="mt-4 text-[9px] font-bold text-slate-400 uppercase tracking-widest text-center">JPG, PNG or GIF. Max 2MB.</p>
                 </div>
 
-                <div class="flex flex-col gap-3">
-                    <button type="button" onclick="uploadProfilePhoto()" class="w-full py-4 bg-primary-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-700 transition-all flex items-center justify-center gap-3 active:scale-95 shadow-xl shadow-primary-100">
+                <div class="flex flex-col gap-3 w-full">
+                    <button type="button" onclick="uploadProfilePhoto()" class="w-full py-3.5 sm:py-4 bg-primary-600 text-white rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-700 transition-all flex items-center justify-center gap-3 active:scale-95 shadow-xl shadow-primary-100">
                         <i class="ph-bold ph-cloud-arrow-up text-lg"></i>
                         SAVE NEW IDENTITY
                     </button>
                     @if(Auth::user()->logo)
-                        <button type="button" onclick="removeProfilePhoto()" class="w-full py-4 bg-rose-50 text-rose-600 rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-rose-100 transition-all flex items-center justify-center gap-3">
+                        <button type="button" onclick="removeProfilePhoto()" class="w-full py-3.5 sm:py-4 bg-rose-50 text-rose-600 rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-rose-100 transition-all flex items-center justify-center gap-3">
                             <i class="ph-bold ph-trash-simple text-lg"></i>
                             REMOVE CURRENT PHOTO
                         </button>
@@ -410,7 +410,7 @@
         .premium-form-wrapper input:not([type="checkbox"]):not([type="radio"]), 
         .premium-form-wrapper textarea,
         .premium-form-wrapper select {
-            @apply w-full rounded-2xl border-none ring-1 ring-slate-200 bg-slate-50/50 py-4 px-6 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all !important;
+            @apply w-full rounded-[1rem] sm:rounded-2xl border-none ring-1 ring-slate-200 bg-slate-50/50 py-3 px-4 sm:py-4 sm:px-6 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all !important;
         }
         
         .premium-form-wrapper label {
@@ -418,7 +418,7 @@
         }
         
         .premium-form-wrapper button[type="submit"] {
-            @apply px-10 py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-600 transition-all shadow-xl shadow-slate-100 active:scale-95 !important;
+            @apply w-full sm:w-auto justify-center flex items-center gap-2 px-8 sm:px-10 py-3.5 sm:py-4 bg-slate-900 text-white rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-600 transition-all shadow-xl shadow-slate-100 active:scale-95 !important;
         }
 
         @keyframes spin-slow {

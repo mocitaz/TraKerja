@@ -2,7 +2,7 @@
     {{-- Left: Mobile Hamburger + Page Breadcrumb --}}
     <div class="flex items-center">
         {{-- Mobile Menu Toggle (mobile only - desktop uses sidebar's own collapse button) --}}
-        <button @click="$store.sidebar.toggle()" class="lg:hidden p-2.5 mr-3 rounded-xl bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-primary-600 transition-colors shadow-sm">
+        <button @click="mobileSidebarOpen = !mobileSidebarOpen" class="lg:hidden p-2.5 mr-3 rounded-xl bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-primary-600 transition-colors shadow-sm">
             <i class="ph ph-list text-lg"></i>
         </button>
 
@@ -15,6 +15,7 @@
             elseif(request()->routeIs('interviews'))    $pageTitle = 'Interviews';
             elseif(request()->routeIs('cv.*'))          $pageTitle = 'CV Builder';
             elseif(request()->routeIs('ai-analyzer.*'))  $pageTitle = 'AI Analyzer';
+            elseif(request()->routeIs('cover-letters.*')) $pageTitle = 'Cover Letter';
             elseif(request()->routeIs('profile.edit')) $pageTitle = 'My Profile';
             elseif(request()->routeIs('csv.*'))         $pageTitle = 'CSV Tools';
         @endphp
@@ -97,7 +98,7 @@
 
         {{-- Mobile: Avatar Button --}}
         <div class="lg:hidden">
-            <button @click="$store.sidebar.toggle()" class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center border-2 border-slate-200 active:scale-95 transition-all">
+            <button @click="mobileSidebarOpen = !mobileSidebarOpen" class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center border-2 border-slate-200 active:scale-95 transition-all">
                 @if(Auth::user()->logo)
                     <img src="{{ \Illuminate\Support\Facades\Storage::url(Auth::user()->logo) }}" alt="Profile" class="w-full h-full object-cover">
                 @else

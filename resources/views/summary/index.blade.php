@@ -289,9 +289,51 @@
         }
     </style>
 
-    <div class="bg-[#f8fafc] min-h-screen pb-20">
-        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+    @php
+        $user = auth()->user();
+        $hasAccess = \App\Models\Setting::isMonetizationEnabled() ? $user->isPremium() : true;
+    @endphp
 
+    <div class="bg-[#f8fafc] {{ !$hasAccess ? 'h-[calc(100vh-73px)] overflow-hidden flex items-center justify-center' : 'min-h-screen pb-20' }}">
+        <div class="max-w-[1300px] w-full mx-auto px-4 sm:px-6 lg:px-8 {{ !$hasAccess ? '' : 'pt-8' }}">
+
+            @if(!$hasAccess)
+                <div class="max-w-xl mx-auto">
+                    <div class="bg-white rounded-[2rem] border border-slate-200/60 shadow-sm overflow-hidden relative text-center p-8 sm:p-10">
+                        <div class="absolute top-0 right-0 w-48 h-48 bg-indigo-50 rounded-full blur-[60px] -mr-24 -mt-24 opacity-60"></div>
+                        <div class="absolute bottom-0 left-0 w-48 h-48 bg-purple-50 rounded-full blur-[60px] -ml-24 -mb-24 opacity-60"></div>
+                        
+                        <div class="relative z-10 flex flex-col items-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-2xl shadow-lg shadow-indigo-200/50 flex items-center justify-center text-white mb-6 border border-white/20">
+                                <i class="ph-fill ph-chart-line-up text-3xl"></i>
+                            </div>
+                            
+                            <h2 class="text-xl font-black text-slate-900 tracking-tight mb-3">Advanced Analytics</h2>
+                            <p class="text-xs font-medium text-slate-500 leading-relaxed max-w-sm mb-8">Unlock comprehensive insights into your job hunt journey. Funnel rates, velocity trends, and data-driven recommendations are exclusively for Premium members.</p>
+                            
+                            <a href="{{ route('payment.premium') }}" class="px-8 py-3.5 bg-slate-900 text-white rounded-xl font-black text-[10px] uppercase tracking-[0.15em] hover:bg-slate-800 transition-all shadow-md active:scale-95 flex items-center gap-2">
+                                Upgrade to Premium
+                                <i class="ph-bold ph-arrow-right"></i>
+                            </a>
+                            
+                            <div class="mt-8 pt-6 border-t border-slate-100 flex flex-wrap gap-4 sm:gap-6 justify-center w-full">
+                                <div class="text-center">
+                                    <i class="ph-duotone ph-funnel text-lg text-primary-500 mb-1.5"></i>
+                                    <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest">Funnels</p>
+                                </div>
+                                <div class="text-center">
+                                    <i class="ph-duotone ph-trend-up text-emerald-500 mb-1.5"></i>
+                                    <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest">Velocity</p>
+                                </div>
+                                <div class="text-center">
+                                    <i class="ph-duotone ph-globe-hemisphere-west text-blue-500 mb-1.5"></i>
+                                    <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest">Platforms</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @else
             {{-- Top Bar with responsive behavior --}}
             <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6 sm:mb-8">
                 <div class="flex items-center gap-3 sm:gap-4 min-w-0 w-full md:w-auto">
@@ -796,6 +838,7 @@
                 </div>
             </div>
 
+            @endif
         </div>
     </div>
 

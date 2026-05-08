@@ -82,11 +82,11 @@ class CvBuilderController extends Controller
         }
         
         // Check template access based on monetization phase
-        $premiumTemplates = ['professional', 'creative', 'elegant'];
+        $premiumTemplates = ['creative', 'elegant'];
         
         // Phase 2 & 3: Premium templates are locked for non-premium users
-        if (Setting::getMonetizationPhase() >= 2) {
-            if (in_array($template, $premiumTemplates) && !$user->is_premium) {
+        if (Setting::isMonetizationEnabled()) {
+            if (in_array($template, $premiumTemplates) && !$user->isPremium()) {
                 return redirect()->back()->with('error', 'This template is only available for premium users. Upgrade to access premium templates!');
             }
         }
@@ -144,11 +144,11 @@ class CvBuilderController extends Controller
         }
         
         // Check template access based on monetization phase
-        $premiumTemplates = ['professional', 'creative', 'elegant'];
+        $premiumTemplates = ['creative', 'elegant'];
         
         // Phase 2 & 3: Premium templates are locked for non-premium users
-        if (Setting::getMonetizationPhase() >= 2) {
-            if (in_array($template, $premiumTemplates) && !$user->is_premium) {
+        if (Setting::isMonetizationEnabled()) {
+            if (in_array($template, $premiumTemplates) && !$user->isPremium()) {
                 return redirect()->back()->with('error', 'This template is only available for premium users. Upgrade to access premium templates!');
             }
         }
@@ -188,8 +188,10 @@ class CvBuilderController extends Controller
             'is_premium' => $user->is_premium,
         ]);
         
-        // Generate filename
-        $filename = str_replace(' ', '_', $user->name) . '_CV_' . now()->format('Y-m-d') . '.pdf';
+        // Generate clean and professional uppercase filename: CV_NAMA_LENGKAP.pdf
+        $cleanName = strtoupper(preg_replace('/[^a-zA-Z0-9]+/', '_', $user->name));
+        $cleanName = trim($cleanName, '_');
+        $filename = 'CV_' . $cleanName . '.pdf';
         
         // Download PDF
         return $pdf->download($filename);

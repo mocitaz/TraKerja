@@ -38,10 +38,77 @@ class PaymentController extends Controller
      */
     public function premium()
     {
+        return $this->index();
+    }
+
+    /**
+     * Show top up add-on page (for premium users)
+     */
+    public function topup()
+    {
         $user = Auth::user();
-        $premiumPrice = (int) config('pakasir.premium_price', 15000);
+
+        // ONLY allow premium users to top-up!
+        if (!$user->isPremium()) {
+            return redirect()->route('payment.premium')
+                ->with('error', 'Silakan upgrade ke Premium terlebih dahulu untuk membeli Add-On!');
+        }
+
+        $package = request()->query('package', 'analyzer');
         
-        return view('premium.index', compact('user', 'premiumPrice'));
+        if ($package === 'cover_letter') {
+            $packageType = 'cl_addon_15';
+            $packageName = 'TraKerja Add-On Pack';
+            $packageSubtitle = '15 Kredit Cover Letter + 10 Kredit AI Analyzer';
+            $addonPrice = 14999;
+        } else {
+            $packageType = 'addon_10';
+            $packageName = 'TraKerja Add-On Pack';
+            $packageSubtitle = '10 Kredit AI Analyzer + 15 Kredit Cover Letter';
+            $addonPrice = 14999;
+        }
+
+        // Group payment channels by category for the view (Hardcoded for Pakasir common options)
+        $groupedChannels = collect([
+            'E_WALLET' => [
+                [
+                    'code' => 'qris',
+                    'name' => 'QRIS (BCA, OVO, Dana, dll)',
+                    'image_url' => asset('images/qris.png'),
+                    'category' => ['code' => 'E_WALLET', 'name' => 'Digital Wallet']
+                ]
+            ],
+            'BANK_TRANSFER' => [
+                [
+                    'code' => 'bca_va',
+                    'name' => 'BCA Virtual Account',
+                    'image_url' => asset('images/bca.png'),
+                    'category' => ['code' => 'BANK_TRANSFER', 'name' => 'Virtual Account']
+                ],
+                [
+                    'code' => 'bni_va',
+                    'name' => 'BNI Virtual Account',
+                    'image_url' => asset('images/bni.png'),
+                    'category' => ['code' => 'BANK_TRANSFER', 'name' => 'Virtual Account']
+                ],
+                [
+                    'code' => 'bri_va',
+                    'name' => 'BRI Virtual Account',
+                    'image_url' => asset('images/bri.png'),
+                    'category' => ['code' => 'BANK_TRANSFER', 'name' => 'Virtual Account']
+                ],
+                [
+                    'code' => 'permata_va',
+                    'name' => 'Permata Virtual Account',
+                    'image_url' => asset('images/permata.png'),
+                    'category' => ['code' => 'BANK_TRANSFER', 'name' => 'Virtual Account']
+                ]
+            ]
+        ])->map(function ($items) {
+            return collect($items);
+        });
+
+        return view('payment.topup', compact('groupedChannels', 'addonPrice', 'user', 'packageType', 'packageName', 'packageSubtitle'));
     }
 
     /**
@@ -58,7 +125,7 @@ class PaymentController extends Controller
         }
 
         // Pakasir is simpler, we just need a price and duration
-        $premiumPrice = (int) config('pakasir.premium_price', 15000);
+        $premiumPrice = (int) \App\Models\Setting::get('premium_price', 19999);
         $premiumDuration = (int) config('pakasir.premium_duration_days', 365);
 
         // Group payment channels by category for the view (Hardcoded for Pakasir common options)
@@ -112,9 +179,23 @@ class PaymentController extends Controller
     {
         $request->validate([
             'payment_channel_code' => 'required|string',
+            'package_type' => 'nullable|string|in:premium,addon_10,cl_addon_15',
         ]);
 
         $user = Auth::user();
+        $packageType = $request->input('package_type', 'premium');
+
+        // Check if package is premium and user is already premium
+        if ($packageType === 'premium' && $user->is_premium && $user->payment_status === 'paid') {
+            return redirect()->route('profile.edit')
+                ->with('info', 'Anda sudah menjadi member Premium!');
+        }
+
+        // Check if package is an add-on and user is NOT premium
+        if (in_array($packageType, ['addon_10', 'cl_addon_15']) && !$user->isPremium()) {
+            return redirect()->route('payment.premium')
+                ->with('error', 'Silakan upgrade ke Premium terlebih dahulu untuk membeli Add-On!');
+        }
 
         try {
             DB::beginTransaction();
@@ -122,8 +203,12 @@ class PaymentController extends Controller
             // Generate unique order ID
             $orderId = 'TRAKERJA-' . strtoupper(Str::random(10)) . '-' . time();
 
-            // Get premium price
-            $amount = (int) config('pakasir.premium_price', 15000);
+            // Determine amount based on package type
+            if ($packageType === 'addon_10' || $packageType === 'cl_addon_15') {
+                $amount = 14999; // Rp 14.999 for 10/15 credits
+            } else {
+                $amount = (int) \App\Models\Setting::get('premium_price', 19999);
+            }
 
             // Create payment record
             $payment = Payment::create([
@@ -138,6 +223,8 @@ class PaymentController extends Controller
                 'request_at' => now(),
                 'callback_url' => route('payment.callback', ['order_id' => $orderId]),
                 'notification_url' => route('payment.webhook'),
+                'notes' => $packageType,
+                'metadata' => ['package_type' => $packageType],
             ]);
 
             // For Pakasir, we can use Integration Via URL (Redirect)
@@ -164,6 +251,7 @@ class PaymentController extends Controller
             Log::info('Pakasir: Payment created successfully', [
                 'order_id' => $orderId,
                 'user_id' => $user->id,
+                'package_type' => $packageType,
             ]);
 
             // Redirect to Pakasir payment page
@@ -286,14 +374,29 @@ class PaymentController extends Controller
             ]);
 
             $user = $payment->user;
-            $premiumDuration = (int) config('pakasir.premium_duration_days', 365);
             
-            $user->update([
-                'is_premium' => true,
-                'payment_status' => 'paid',
-                'premium_until' => now()->addDays($premiumDuration),
-                'premium_purchased_at' => now(),
-            ]);
+            // Check the package type from notes or metadata
+            $packageType = $payment->notes ?? ($payment->metadata['package_type'] ?? 'premium');
+
+            if ($packageType === 'addon_10' || $packageType === 'cl_addon_15') {
+                // Add BOTH 10 AI credits AND 15 Cover Letter credits!
+                $user->addAiCredits(10);
+                $user->addClCredits(15);
+            } else {
+                // Default: Premium purchase
+                $premiumDuration = (int) config('pakasir.premium_duration_days', 365);
+                
+                $user->update([
+                    'is_premium' => true,
+                    'payment_status' => 'paid',
+                    'premium_until' => now()->addDays($premiumDuration),
+                    'premium_purchased_at' => now(),
+                ]);
+
+                // Add 5 credits AI bonus and 15 credits Cover Letter bonus as requested by user
+                $user->addAiCredits(5);
+                $user->addClCredits(15);
+            }
 
             // Send success email notification
             try {
