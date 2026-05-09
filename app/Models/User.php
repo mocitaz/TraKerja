@@ -517,12 +517,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->canAccessAiAnalyzerWithLimit();
     }
 
-    /**
-     * Use AI Analyzer trial (for free users) - Deprecated
-     */
     public function useAiAnalyzerTrial(): void
     {
-        $this->incrementAiAnalyzerCount();
+        $this->update([
+            'has_used_ai_analyzer_trial' => true,
+            'ai_analyzer_trial_used_at' => now(),
+        ]);
     }
 
     /**
