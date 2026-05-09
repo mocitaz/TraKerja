@@ -691,7 +691,7 @@ class User extends Authenticatable implements MustVerifyEmail
             return 'unlimited';
         }
         
-        return $this->ai_credits;
+        return max(0, $this->ai_credits);
     }
     
     /**
@@ -749,7 +749,7 @@ class User extends Authenticatable implements MustVerifyEmail
             return 'unlimited';
         }
         
-        return $this->cl_credits;
+        return max(0, $this->cl_credits);
     }
     
     /**
