@@ -141,7 +141,24 @@
                     <div class="w-2 h-2 rounded-full bg-slate-200"></div>
                     <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Selesai</span>
                 </div>
+            {{-- ── Error Notification ────────────────────── --}}
+            @if ($errors->any())
+            <div class="mb-8 p-5 bg-red-50 border-l-4 border-red-500 rounded-2xl shadow-sm">
+                <div class="flex gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center flex-shrink-0">
+                        <i class="ph-bold ph-warning-circle text-red-600 text-lg"></i>
+                    </div>
+                    <div>
+                        <h5 class="text-xs font-black text-red-900 uppercase tracking-widest">Transaksi Gagal Diproses</h5>
+                        <ul class="mt-2 list-disc list-inside text-xs text-red-700 space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
             </div>
+            @endif
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 
@@ -246,7 +263,10 @@
         document.getElementById('paymentForm').addEventListener('submit', function(e) {
             const btn = document.querySelector('button[form="paymentForm"]');
             btn.innerHTML = '<i class="ph-bold ph-circle-notch animate-spin text-base"></i> Loading...';
-            btn.disabled = true;
+            // Wrap in setTimeout to ensure form submits before button is disabled
+            setTimeout(() => {
+                btn.disabled = true;
+            }, 50);
         });
     </script>
 </x-app-layout>
