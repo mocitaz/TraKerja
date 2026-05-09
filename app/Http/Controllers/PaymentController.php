@@ -265,7 +265,7 @@ class PaymentController extends Controller
             ]);
 
             return back()->withErrors([
-                'payment_error' => 'Terjadi kesalahan saat memproses pembayaran. Silakan coba lagi.'
+                'payment_error' => 'Terjadi kesalahan saat memproses pembayaran. Detail: ' . $e->getMessage()
             ]);
         }
     }

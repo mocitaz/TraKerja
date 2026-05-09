@@ -141,6 +141,8 @@
                     <div class="w-2 h-2 rounded-full bg-slate-200"></div>
                     <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Selesai</span>
                 </div>
+            </div>
+
             {{-- ── Error Notification ────────────────────── --}}
             @if ($errors->any())
             <div class="mb-8 p-5 bg-red-50 border-l-4 border-red-500 rounded-2xl shadow-sm">
