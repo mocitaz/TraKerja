@@ -364,19 +364,25 @@ class PaymentController extends Controller
      */
     private function handleSuccessfulPayment(Payment $payment, array $data): void
     {
-        if ($payment->status === 'SUCCESS') return;
-
         DB::transaction(function () use ($payment, $data) {
-            $payment->update([
+            // Re-fetch payment with write lock to prevent parallel execution race conditions
+            $lockedPayment = Payment::where('id', $payment->id)->lockForUpdate()->first();
+
+            // If payment has already been processed successfully by another thread, exit early
+            if (!$lockedPayment || $lockedPayment->status === 'SUCCESS') {
+                return;
+            }
+
+            $lockedPayment->update([
                 'webhook_data' => $data,
                 'status' => 'SUCCESS',
                 'paid_at' => now(),
             ]);
 
-            $user = $payment->user;
+            $user = $lockedPayment->user;
             
             // Check the package type from notes or metadata
-            $packageType = $payment->notes ?? ($payment->metadata['package_type'] ?? 'premium');
+            $packageType = $lockedPayment->notes ?? ($lockedPayment->metadata['package_type'] ?? 'premium');
 
             if ($packageType === 'addon_10' || $packageType === 'cl_addon_15') {
                 // Add BOTH 10 AI credits AND 15 Cover Letter credits!
@@ -400,7 +406,7 @@ class PaymentController extends Controller
 
             // Send success email notification
             try {
-                Mail::to($user->email)->send(new PaymentSuccessMail($payment));
+                Mail::to($user->email)->send(new PaymentSuccessMail($lockedPayment));
             } catch (\Exception $e) {
                 Log::error('Pakasir: Failed to send success email', ['error' => $e->getMessage()]);
             }
