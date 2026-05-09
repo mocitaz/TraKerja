@@ -298,12 +298,12 @@
 
     <script>
         // ── Upload area drag & drop ───────────────────────────────
-        const resumeInput   = document.getElementById('resume');
-        const uploadArea    = document.getElementById('upload-area');
-        const fileSuccess   = document.getElementById('file-success');
-        const fileNameEl    = document.getElementById('file-name');
-        const fileSizeEl    = document.getElementById('file-size');
-        const removeFileBtn = document.getElementById('remove-file');
+        var resumeInput   = document.getElementById('resume');
+        var uploadArea    = document.getElementById('upload-area');
+        var fileSuccess   = document.getElementById('file-success');
+        var fileNameEl    = document.getElementById('file-name');
+        var fileSizeEl    = document.getElementById('file-size');
+        var removeFileBtn = document.getElementById('remove-file');
 
         function showFile(file) {
             const mb = (file.size / (1024 * 1024)).toFixed(2);
@@ -344,11 +344,11 @@
         }
 
         // ── Char counter ──────────────────────────────────────────
-        const textarea      = document.getElementById('job_description');
-        const charCountEl   = document.getElementById('char-count');
-        const charIndicator = document.getElementById('char-indicator');
-        const charBar       = document.getElementById('char-bar');
-        const charHint      = document.getElementById('char-hint');
+        var textarea      = document.getElementById('job_description');
+        var charCountEl   = document.getElementById('char-count');
+        var charIndicator = document.getElementById('char-indicator');
+        var charBar       = document.getElementById('char-bar');
+        var charHint      = document.getElementById('char-hint');
 
         textarea.addEventListener('input', function () {
             const len = this.value.length;

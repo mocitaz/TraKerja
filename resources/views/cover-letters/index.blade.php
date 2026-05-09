@@ -619,26 +619,26 @@
     </div>
 
     <script>
-        const companyInput = document.getElementById('company_name');
-        const roleInput = document.getElementById('job_title');
-        const descInput = document.getElementById('job_description');
+        var companyInput = document.getElementById('company_name');
+        var roleInput = document.getElementById('job_title');
+        var descInput = document.getElementById('job_description');
 
         // Preview targets
-        const previewCompany = document.getElementById('preview-company-name');
-        const previewRole = document.getElementById('preview-job-title');
+        var previewCompany = document.getElementById('preview-company-name');
+        var previewRole = document.getElementById('preview-job-title');
 
         // Counter Targets
-        const charCount = document.getElementById('char-count');
-        const charIndicator = document.getElementById('char-indicator');
-        const charBar = document.getElementById('char-bar');
-        const charHint = document.getElementById('char-hint');
-        const submitBtn = document.getElementById('submit-btn');
+        var charCount = document.getElementById('char-count');
+        var charIndicator = document.getElementById('char-indicator');
+        var charBar = document.getElementById('char-bar');
+        var charHint = document.getElementById('char-hint');
+        var submitBtn = document.getElementById('submit-btn');
 
         // Dynamic results targets
-        const skeletonContent = document.getElementById('preview-skeleton-content');
-        const realContent = document.getElementById('preview-real-content');
-        const textContent = document.getElementById('generated-text-content');
-        const generatedActions = document.getElementById('generated-actions');
+        var skeletonContent = document.getElementById('preview-skeleton-content');
+        var realContent = document.getElementById('preview-real-content');
+        var textContent = document.getElementById('generated-text-content');
+        var generatedActions = document.getElementById('generated-actions');
 
         // Text input event synchronization
         companyInput.addEventListener('input', function () {
@@ -671,11 +671,11 @@
         });
 
         // Interactive Options Sync UI
-        const toneRadios = document.querySelectorAll('input[name="tone"]');
-        const langRadios = document.querySelectorAll('input[name="language"]');
+        var toneRadios = document.querySelectorAll('input[name="tone"]');
+        var langRadios = document.querySelectorAll('input[name="language"]');
 
-        const previewActiveTone = document.getElementById('preview-active-tone');
-        const previewActiveLang = document.getElementById('preview-active-lang');
+        var previewActiveTone = document.getElementById('preview-active-tone');
+        var previewActiveLang = document.getElementById('preview-active-lang');
 
         toneRadios.forEach(radio => {
             radio.addEventListener('change', function () {

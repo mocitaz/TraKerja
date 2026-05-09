@@ -16,7 +16,7 @@
 
     <script>
         // Use a flag to prevent multiple initializations if needed
-        let chartsInitialized = false;
+        var chartsInitialized = false;
 
         function initAllCharts() {
             // Wait a tiny bit to ensure DOM elements are fully rendered by Livewire/Alpine
