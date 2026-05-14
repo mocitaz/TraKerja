@@ -1731,7 +1731,7 @@
                         <div class="flex flex-col md:flex-row bg-white rounded-[2rem] shadow-xl border border-gray-100 overflow-hidden h-full">
                             <div class="w-full md:w-[40%] bg-[#5b2a86] relative min-h-[300px] md:min-h-[400px]">
                                 <img src="{{ asset('images/maya.png') }}" 
-                                    alt="Fakhri" 
+                                    alt="Luthfiani" 
                                     class="absolute inset-0 w-full h-full object-cover"
                                     onerror="this.src='https://placehold.co/400x600/5b2a86/ffffff?text=Fakhri'">
                             </div>
