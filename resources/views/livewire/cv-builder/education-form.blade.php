@@ -27,14 +27,14 @@
                             <i class="ph-bold ph-student text-xl"></i>
                         </div>
                         <div class="min-w-0">
-                            <h4 class="text-base font-black text-slate-900 tracking-tight truncate">{{ $education->school }}</h4>
-                            <p class="text-sm font-bold text-slate-500 mb-1">{{ $education->degree }} in {{ $education->field_of_study }}</p>
+                            <h4 class="text-base font-black text-slate-900 tracking-tight truncate">{{ $education->institution_name }}</h4>
+                            <p class="text-sm font-bold text-slate-500 mb-1">{{ $education->degree }} in {{ $education->major }}</p>
                             <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
                                 <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                                     {{ $education->start_date?->format('Y') }} - {{ $education->is_current ? 'PRESENT' : $education->end_date?->format('Y') }}
                                 </span>
-                                @if($education->grade)
-                                    <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-2 py-0.5 rounded-lg">GPA: {{ $education->grade }}</span>
+                                @if($education->gpa)
+                                    <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-2 py-0.5 rounded-lg">GPA: {{ $education->gpa }}</span>
                                 @endif
                             </div>
                         </div>
@@ -95,10 +95,10 @@
                         <div class="md:col-span-2">
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">School / University</label>
                             <div class="relative">
-                                <input type="text" wire:model="school" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all" placeholder="e.g. University of Indonesia">
+                                <input type="text" wire:model="institution_name" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all" placeholder="e.g. University of Indonesia">
                                 <i class="ph ph-student absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
                             </div>
-                            @error('school') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
+                            @error('institution_name') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Degree</label>
@@ -107,8 +107,8 @@
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Field of Study</label>
-                            <input type="text" wire:model="field_of_study" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all" placeholder="e.g. Computer Science">
-                            @error('field_of_study') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
+                            <input type="text" wire:model="major" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all" placeholder="e.g. Computer Science">
+                            @error('major') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Start Date</label>
@@ -121,7 +121,7 @@
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">GPA (Optional)</label>
-                            <input type="text" wire:model="grade" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all" placeholder="e.g. 3.8/4.0">
+                            <input type="text" wire:model="gpa" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all" placeholder="e.g. 3.8/4.0">
                         </div>
                         <div class="md:col-span-2">
                             <label class="flex items-center gap-2.5 p-3 bg-primary-50/60 border border-primary-100 rounded-xl cursor-pointer hover:bg-primary-50 transition-all">
