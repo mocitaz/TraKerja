@@ -1562,6 +1562,10 @@
                         </div>
                         <div class="flex items-start gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            3 kredit Cover Letter Generator
+                        </div>
+                        <div class="flex items-start gap-2 text-sm text-gray-600">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             Dashboard & analitik standar
                         </div>
                     </div>
@@ -1611,16 +1615,16 @@
                         </div>
                         <div class="flex items-start gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            1 kredit Cover Letter Generator
+                            15 kredit Cover Letter Generator
                         </div>
                         <div class="flex items-start gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             Prioritas update fitur terbaru
                         </div>
                     </div>
-                    <a href="mailto:trakerja@teknalogi.id?subject=TraKerja Premium Pro"
+                    <a href="{{ route('payment.index') }}"
                     class="block w-full text-center px-4 py-3 bg-[#d983e4] text-white rounded-xl text-sm font-bold hover:bg-[#c973d4] transition-colors shadow-sm">
-                        Hubungi Kami untuk Promo
+                        Beli Premium Sekarang
                     </a>
                 </div>
 
@@ -1645,16 +1649,16 @@
                         </div>
                         <div class="flex items-start gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            +10 kredit Cover Letter Generator
+                            +15 kredit Cover Letter Generator
                         </div>
                         <div class="flex items-start gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             Bisa digunakan kapan saja
                         </div>
                     </div>
-                    <a href="mailto:trakerja@teknalogi.id?subject=TraKerja AI Add-On"
-                    class="block w-full text-center px-4 py-2.5 border border-[#4e71c5] text-[#4e71c5] rounded-xl text-sm font-semibold hover:bg-[#4e71c5]/5 transition-colors">
-                        Hubungi Kami
+                    <a href="{{ route('payment.topup') }}"
+                    class="block w-full text-center px-4 py-2.5 border border-[#4e71c5] bg-[#4e71c5] text-white rounded-xl text-sm font-semibold hover:bg-[#3d5ca8] transition-colors shadow-sm">
+                        Beli Add-On Sekarang
                     </a>
                 </div>
 
@@ -1695,12 +1699,12 @@
                         <div class="flex flex-col md:flex-row bg-white rounded-[2rem] shadow-xl border border-gray-100 overflow-hidden h-full">
                             <div class="w-full md:w-[40%] bg-[#5b2a86] relative min-h-[300px] md:min-h-[400px]">
                                 <img src="{{ asset('images/sarah.png') }}" 
-                                    alt="Sarah" 
+                                    alt="Hakim" 
                                     class="absolute inset-0 w-full h-full object-cover"
                                     onerror="this.src='https://placehold.co/400x600/5b2a86/ffffff?text=Sarah'">
                             </div>
                             <div class="w-full md:w-[60%] p-8 md:p-10 lg:p-12 flex flex-col justify-center bg-white">
-                                <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-1">Sarah</h3>
+                                <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-1">Hakim</h3>
                                 <p class="text-[#2e1065] font-bold text-lg mb-6">Fresh Graduate</p>
                                 <p class="text-gray-700 text-base md:text-lg leading-relaxed">
                                     "TraKerja sangat membantu saya merapikan lamaran kerja yang berantakan jadi jauh lebih terorganisasi. Kerennya lagi, saya bisa set goals jumlah apply harian makin banyak yang diapply, peluang dipanggil pun makin besar!"
@@ -1736,7 +1740,7 @@
                                     onerror="this.src='https://placehold.co/400x600/5b2a86/ffffff?text=Fakhri'">
                             </div>
                             <div class="w-full md:w-[60%] p-8 md:p-10 lg:p-12 flex flex-col justify-center bg-white">
-                                <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-1">Fakhri</h3>
+                                <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-1">Barasuara</h3>
                                 <p class="text-[#2e1065] font-bold text-lg mb-6">Pencari Kerja</p>
                                 <p class="text-gray-700 text-base md:text-lg leading-relaxed">
                                     "Goal tracking-nya bagus banget! Membantu saya tetap konsisten apply kerja setiap minggu. Pengingat follow-up-nya juga juara. Akhirnya dapat kerja juga! Terima kasih TraKerja!"
