@@ -1116,7 +1116,7 @@
     </nav>
 
     <!-- Hero Section - Split Layout -->
-    <section class="relative py-20 sm:py-24 md:py-32 flex items-center overflow-hidden pt-16">
+    <section class="relative pt-24 pb-16 sm:pt-28 sm:pb-24 md:pt-36 md:pb-32 flex items-center overflow-hidden">
         <!-- Animated Background -->
         <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-transparent to-blue-50"></div>
         <div class="absolute inset-0 cyber-grid opacity-[0.03] hidden md:block"></div>
