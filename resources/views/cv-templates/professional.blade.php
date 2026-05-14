@@ -17,7 +17,7 @@
         
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-            font-size: 9pt;
+            font-size: {{ !empty($fontSize) ? $fontSize : '9pt' }};
             line-height: 1.5;
             color: #1e293b;
             background: white;

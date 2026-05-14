@@ -59,9 +59,6 @@ class CoverLetterController extends Controller
                     'message' => 'Kredit Cover Letter habis! Silakan upgrade ke Premium atau lakukan top up.'
                 ], 403);
             }
-            
-            // Deduct credit
-            $user->incrementCoverLetterCount();
         }
 
         // 1. Gather all profile context from Laravel DB Relations
@@ -157,12 +154,30 @@ class CoverLetterController extends Controller
             if ($response->successful()) {
                 $responseBody = $response->json();
 
-                // Expected response body structure: 
-                // { "success": true, "cover_letter": "..." }
+                // Deduct credit only on successful generation
+                if (\App\Models\Setting::isMonetizationEnabled()) {
+                    $user->incrementCoverLetterCount();
+                }
+
+                $generatedContent = $responseBody['cover_letter'] ?? $responseBody['result'] ?? '';
+
+                // Save to DB
+                $coverLetter = \App\Models\CoverLetter::create([
+                    'user_id' => $user->id,
+                    'company_name' => $aiPayload['company_name'],
+                    'job_title' => $aiPayload['job_title'],
+                    'job_description' => $aiPayload['job_description'],
+                    'language' => $aiPayload['language'],
+                    'tone' => $aiPayload['tone'],
+                    'content' => $generatedContent,
+                ]);
+
                 return response()->json([
                     'success' => true,
-                    'cover_letter' => $responseBody['cover_letter'] ?? $responseBody['result'] ?? '',
-                    'payload_debug' => app()->environment('local') ? $aiPayload : null // Assist debugging in local dev
+                    'cover_letter' => $generatedContent,
+                    'id' => $coverLetter->id,
+                    'payload_debug' => app()->environment('local') ? $aiPayload : null
+
                 ]);
             }
 
@@ -263,5 +278,28 @@ class CoverLetterController extends Controller
         }
 
         return $letter;
+    }
+    /**
+     * Display a specific Cover Letter result
+     */
+    public function show(\App\Models\CoverLetter $coverLetter): View
+    {
+        // Check if user owns this result
+        if ($coverLetter->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized access to cover letter');
+        }
+
+        return view('cover-letters.show', compact('coverLetter'));
+    }
+
+    /**
+     * Display user's Cover Letter history
+     */
+    public function history(): View
+    {
+        $user = Auth::user();
+        $coverLetters = $user->coverLetters()->orderBy('created_at', 'desc')->paginate(10);
+
+        return view('cover-letters.history', compact('coverLetters'));
     }
 }

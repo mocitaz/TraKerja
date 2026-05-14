@@ -114,7 +114,7 @@ class SkillsForm extends Component
             'skill_name' => $this->skill_name,
             'category' => $this->category,
             'proficiency' => $this->proficiency,
-            'years_of_experience' => $this->years_of_experience,
+            'years_of_experience' => $this->years_of_experience === '' ? null : $this->years_of_experience,
             'display_order' => $this->display_order,
         ];
         

@@ -7,7 +7,7 @@
     <style>
         @page {
             size: A4;
-            margin: 15mm;
+            margin: {{ !empty($margin) ? $margin : '15mm' }};
         }
         * {
             margin: 0;
@@ -17,7 +17,7 @@
         
         body {
             font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 9.5pt;
+            font-size: {{ !empty($fontSize) ? $fontSize : '9.5pt' }};
             line-height: 1.45;
             color: #111827;
             background: white;

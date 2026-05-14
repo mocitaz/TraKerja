@@ -93,19 +93,47 @@ class AiAnalyzerController extends Controller
                 ])->withInput();
             }
 
-            // Send request to Vercel API with multipart/form-data
+            // Extract text from PDF locally to save bandwidth
+            $pdfText = '';
+            try {
+                if (class_exists(\Smalot\PdfParser\Parser::class)) {
+                    $parser = new \Smalot\PdfParser\Parser();
+                    $pdf = $parser->parseFile($file->getRealPath());
+                    $pdfText = $pdf->getText();
+                    
+                    // Clean up extra whitespaces to reduce payload size
+                    $pdfText = preg_replace('/\s+/', ' ', trim($pdfText));
+                } else {
+                    \Log::warning('smalot/pdfparser is not installed. Run: composer require smalot/pdfparser');
+                }
+            } catch (\Exception $e) {
+                \Log::warning('Failed to parse PDF locally: ' . $e->getMessage());
+            }
+
             \Log::info('Sending request to AI Analyzer API', [
                 'file_size' => $file->getSize(),
                 'file_name' => $file->getClientOriginalName(),
-                'job_desc_length' => strlen($jobDescription)
+                'job_desc_length' => strlen($jobDescription),
+                'pdf_text_extracted' => strlen($pdfText) > 0
             ]);
 
-            $response = Http::timeout(150) // 2.5 minutes timeout
-                ->asMultipart()
-                ->attach('resume', file_get_contents($file->getRealPath()), $file->getClientOriginalName())
-                ->post(self::VERCEL_API_URL, [
+            $httpClient = Http::timeout(60); // Default timeout
+            
+            if (strlen($pdfText) > 0) {
+                // Send as JSON payload (Much smaller and faster)
+                $response = $httpClient->post(self::VERCEL_API_URL, [
                     'job_description' => $jobDescription,
+                    'resume_text' => mb_substr($pdfText, 0, 20000), // Cap at 20000 chars
                 ]);
+            } else {
+                // Fallback to old multipart if parsing fails or package not installed
+                $response = $httpClient->timeout(150)
+                    ->asMultipart()
+                    ->attach('resume', file_get_contents($file->getRealPath()), $file->getClientOriginalName())
+                    ->post(self::VERCEL_API_URL, [
+                        'job_description' => $jobDescription,
+                    ]);
+            }
 
             \Log::info('AI Analyzer API response', [
                 'status' => $response->status(),

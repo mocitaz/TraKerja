@@ -150,10 +150,10 @@ class EducationForm extends Component
             'institution_name' => $this->institution_name,
             'degree' => $this->degree,
             'major' => $this->major,
-            'gpa' => $this->gpa,
+            'gpa' => $this->gpa === '' ? null : $this->gpa,
             'location' => $this->location,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
+            'start_date' => $this->start_date === '' ? null : $this->start_date,
+            'end_date' => $this->is_current ? null : ($this->end_date === '' ? null : $this->end_date),
             'is_current' => $this->is_current,
             'description' => $this->description,
         ];

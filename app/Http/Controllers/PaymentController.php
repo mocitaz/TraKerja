@@ -322,14 +322,38 @@ class PaymentController extends Controller
         $orderId = $data['order_id'] ?? null;
         $status = $data['status'] ?? null;
         $amount = $data['amount'] ?? null;
+        
+        // Extract Pakasir transaction ID or generate a hash of the payload to prevent duplicates
+        $transactionId = $data['transaction_id'] ?? $data['id'] ?? md5(json_encode($data));
 
         if (!$orderId || !$status) {
             return response()->json(['message' => 'Missing required data'], 400);
         }
 
+        // Check if this webhook was already processed
+        $existingLog = \App\Models\WebhookLog::where('transaction_id', $transactionId)
+            ->where('status', 'processed')
+            ->first();
+            
+        if ($existingLog) {
+            Log::info('Pakasir: Webhook already processed', ['transaction_id' => $transactionId]);
+            return response()->json(['message' => 'Already processed'], 200);
+        }
+        
+        // Create webhook log record
+        $webhookLog = \App\Models\WebhookLog::create([
+            'provider' => 'pakasir',
+            'transaction_id' => $transactionId,
+            'reference_id' => $orderId,
+            'event_type' => $data['event'] ?? 'payment_update',
+            'payload' => $data,
+            'status' => 'received',
+        ]);
+
         $payment = Payment::where('order_id', $orderId)->first();
 
         if (!$payment) {
+            $webhookLog->update(['status' => 'failed', 'notes' => 'Payment not found']);
             return response()->json(['message' => 'Payment not found'], 404);
         }
 
@@ -339,6 +363,7 @@ class PaymentController extends Controller
                 'expected' => $payment->amount,
                 'received' => $amount
             ]);
+            $webhookLog->update(['status' => 'failed', 'notes' => 'Amount mismatch']);
             return response()->json(['message' => 'Amount mismatch'], 400);
         }
 
@@ -349,12 +374,14 @@ class PaymentController extends Controller
                 $payment->markAsFailed();
             }
 
+            $webhookLog->update(['status' => 'processed']);
             return response()->json(['message' => 'Webhook processed successfully'], 200);
         } catch (\Exception $e) {
             Log::error('Pakasir: Webhook processing failed', [
                 'error' => $e->getMessage(),
                 'order_id' => $orderId,
             ]);
+            $webhookLog->update(['status' => 'failed', 'notes' => $e->getMessage()]);
             return response()->json(['message' => 'Processing failed'], 500);
         }
     }

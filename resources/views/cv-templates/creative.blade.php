@@ -7,7 +7,7 @@
     <style>
         @page {
             size: A4;
-            margin: 20mm;
+            margin: {{ !empty($margin) ? $margin : '20mm' }};
         }
         * {
             margin: 0;
@@ -17,7 +17,7 @@
         
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-            font-size: 9pt;
+            font-size: {{ !empty($fontSize) ? $fontSize : '9pt' }};
             line-height: 1.6;
             color: #334155;
             background: white;

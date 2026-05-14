@@ -281,7 +281,7 @@ class JobApplicationImportExportController extends Controller
         }
 
         $request->validate([
-            'csv_file' => 'required|file|mimes:csv,txt|max:10240', // Max 10MB
+            'csv_file' => 'required|file|mimes:csv,txt|max:2048', // Max 2MB
         ]);
 
         $file = $request->file('csv_file');
@@ -323,6 +323,8 @@ class JobApplicationImportExportController extends Controller
             $rowNumber = 1; // Starting from 1 (header is row 0)
             $importedCount = 0;
             $errorRows = [];
+            $insertData = [];
+            $now = \Carbon\Carbon::now();
             
             while (($row = fgetcsv($handle)) !== false) {
                 $rowNumber++;
@@ -341,6 +343,10 @@ class JobApplicationImportExportController extends Controller
                 // Validate and import row
                 $result = $this->importRow($rowData, $rowNumber);
                 if ($result['success']) {
+                    $data = $result['data'];
+                    $data['created_at'] = $now;
+                    $data['updated_at'] = $now;
+                    $insertData[] = $data;
                     $importedCount++;
                 } else {
                     $errorRows[] = [
@@ -348,6 +354,17 @@ class JobApplicationImportExportController extends Controller
                         'errors' => $result['errors']
                     ];
                 }
+
+                // Bulk insert in chunks of 500
+                if (count($insertData) >= 500) {
+                    JobApplication::insert($insertData);
+                    $insertData = [];
+                }
+            }
+            
+            // Insert remaining rows
+            if (!empty($insertData)) {
+                JobApplication::insert($insertData);
             }
             
             fclose($handle);
@@ -537,9 +554,10 @@ class JobApplicationImportExportController extends Controller
             ];
         }
         
-        // Create job application
-        try {
-            JobApplication::create([
+        // Prepare data for bulk insert
+        return [
+            'success' => true,
+            'data' => [
                 'user_id' => Auth::id(),
                 'company_name' => $data['company_name'],
                 'position' => $data['position'],
@@ -556,15 +574,8 @@ class JobApplicationImportExportController extends Controller
                 'interview_location' => $data['interview_location'] ?: null,
                 'interview_notes' => $data['interview_notes'] ?: null,
                 'status' => $data['application_status'], // For backward compatibility
-            ]);
-            
-            return ['success' => true];
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'errors' => ['Database error: ' . $e->getMessage()]
-            ];
-        }
+            ]
+        ];
     }
 
     /**
@@ -644,6 +655,11 @@ class JobApplicationImportExportController extends Controller
         $text = str_replace(["\r\n", "\r", "\n"], ' ', $text);
         $text = preg_replace('/\s+/', ' ', $text); // Replace multiple spaces with single space
         $text = trim($text);
+        
+        // Prevent CSV/Excel Injection (formula injection)
+        if (preg_match('/^[=\-+\@\t\r\n]/', $text)) {
+            $text = "'" . $text;
+        }
         
         // Remove any remaining control characters except tab
         $text = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', '', $text);

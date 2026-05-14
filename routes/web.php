@@ -95,6 +95,8 @@ Route::prefix('ai-analyzer')->middleware(['auth', 'verified'])->name('ai-analyze
 Route::prefix('cover-letters')->middleware(['auth', 'verified'])->name('cover-letters.')->group(function () {
     Route::get('/', [CoverLetterController::class, 'index'])->name('index');
     Route::post('/generate', [CoverLetterController::class, 'generate'])->name('generate');
+    Route::get('/history', [CoverLetterController::class, 'history'])->name('history');
+    Route::get('/{coverLetter}', [CoverLetterController::class, 'show'])->name('show');
 });
 
 Route::get('/dashboard', function () {
@@ -156,6 +158,13 @@ Route::middleware('auth')->group(function () {
             }
             return app(CvBuilderController::class)->export($request);
         })->name('cv-builder.export');
+
+        Route::post('/simulate-ats', function (Illuminate\Http\Request $request) {
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                abort(403, 'Admin cannot access CV builder');
+            }
+            return app(CvBuilderController::class)->simulateAts($request);
+        })->name('cv-builder.simulate-ats')->middleware('throttle:10,1');
     });
     
     // Job detail page (Only for regular users)
