@@ -1209,7 +1209,9 @@
                         <div class="group flex items-center gap-2.5 cursor-default">
                             <div class="flex items-center justify-center w-7 h-7 rounded-full bg-gray-100 text-gray-500 ring-1 ring-gray-200 group-hover:bg-gray-800 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 8h18M5 12h2m4 0h6m-12 8h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
                                 </svg>
                             </div>
                             <span class="text-xs font-bold text-gray-600 group-hover:text-gray-900 transition-colors duration-300">
