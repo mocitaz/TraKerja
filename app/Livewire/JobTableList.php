@@ -23,7 +23,7 @@ class JobTableList extends Component
     public $dateToFilter = '';
     public $sortField = 'application_date';
     public $sortDirection = 'desc';
-    public $perPage = 20;
+    public $perPage = 30;
     public $showAdvancedFilters = false;
     public $showArchived = false;
 
@@ -102,7 +102,7 @@ class JobTableList extends Component
         'dateToFilter' => ['except' => ''],
         'sortField' => ['except' => 'application_date'],
         'sortDirection' => ['except' => 'desc'],
-        'perPage' => ['except' => 20],
+        'perPage' => ['except' => 30],
         'showArchived' => ['except' => false],
     ];
 

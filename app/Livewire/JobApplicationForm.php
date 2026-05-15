@@ -1677,6 +1677,28 @@ class JobApplicationForm extends Component
 
     public function render()
     {
-        return view('livewire.job-application-form');
+        $userId = Auth::id();
+        
+        $topPlatforms = JobApplication::where('user_id', $userId)
+            ->select('platform', \DB::raw('count(*) as total'))
+            ->whereNotNull('platform')
+            ->where('platform', '!=', '')
+            ->groupBy('platform')
+            ->orderByDesc('total')
+            ->limit(3)
+            ->pluck('platform')
+            ->toArray();
+
+        $previousPositions = JobApplication::where('user_id', $userId)
+            ->whereNotNull('position')
+            ->where('position', '!=', '')
+            ->distinct()
+            ->pluck('position')
+            ->toArray();
+
+        return view('livewire.job-application-form', [
+            'topPlatforms' => $topPlatforms,
+            'previousPositions' => $previousPositions,
+        ]);
     }
 }

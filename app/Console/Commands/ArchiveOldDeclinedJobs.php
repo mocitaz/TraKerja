@@ -31,7 +31,7 @@ class ArchiveOldDeclinedJobs extends Command
 
         // Find all jobs that should be archived but aren't yet
         $jobsToArchive = JobApplication::where(function ($query) {
-            $query->where('application_status', 'Declined')
+            $query->whereIn('application_status', ['Declined', 'Rejected'])
                   ->orWhere('recruitment_stage', 'Not Processed');
         })
         ->where('is_archived', false)

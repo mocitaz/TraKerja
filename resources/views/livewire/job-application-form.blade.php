@@ -33,7 +33,14 @@
                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Position *</label>
                 <div class="relative group">
                     <i class="ph-bold ph-identification-card absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm group-focus-within:text-indigo-600 transition-colors"></i>
-                    <input wire:model.live="position" type="text" class="block w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold focus:ring-2 focus:ring-indigo-600/10 focus:bg-white focus:border-indigo-200 transition-all outline-none" placeholder="e.g. Designer">
+                    <input wire:model.live="position" list="position-suggestions" type="text" class="block w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold focus:ring-2 focus:ring-indigo-600/10 focus:bg-white focus:border-indigo-200 transition-all outline-none" placeholder="e.g. Designer">
+                    @if(!empty($previousPositions))
+                    <datalist id="position-suggestions">
+                        @foreach($previousPositions as $pos)
+                            <option value="{{ $pos }}">
+                        @endforeach
+                    </datalist>
+                    @endif
                 </div>
                 @error('position') <p class="text-rose-500 text-[9px] font-bold mt-1.5 ml-1">{{ $message }}</p> @enderror
             </div>
@@ -88,8 +95,19 @@
                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Platform *</label>
                 <select wire:model.live="platform" class="block w-full px-3 py-3 bg-slate-50 border border-slate-100 rounded-xl text-[11px] font-bold text-slate-700 outline-none transition-all hover:bg-white hover:border-slate-200">
                     <option value="">Select Platform</option>
-                    @foreach($platformOptions as $p) <option value="{{ $p }}">{{ $p }}</option> @endforeach
+                    @foreach($platformOptions as $opt)
+                        <option value="{{ $opt }}">{{ $opt }}</option>
+                    @endforeach
                 </select>
+                @if(empty($platform) && !empty($topPlatforms))
+                <div class="mt-2 flex items-center gap-2 overflow-x-auto hide-scrollbar pb-1">
+                    @foreach($topPlatforms as $tp)
+                        <button type="button" wire:click="$set('platform', '{{ $tp }}')" class="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 text-indigo-600 rounded-lg text-[10px] font-bold transition-all whitespace-nowrap">
+                            {{ $tp }}
+                        </button>
+                    @endforeach
+                </div>
+                @endif
                 @error('platform') <p class="text-rose-500 text-[9px] font-bold mt-1.5 ml-1">{{ $message }}</p> @enderror
             </div>
             <div>

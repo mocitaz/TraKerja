@@ -10,6 +10,12 @@
             </div>
 
             <div class="grid grid-cols-2 sm:flex sm:items-center gap-3 w-full lg:w-auto">
+                <select wire:model.live="perPage" class="w-full sm:w-auto bg-slate-50 border-none rounded-xl text-[10px] font-black text-slate-600 focus:ring-4 focus:ring-indigo-600/5 py-2.5 px-3">
+                    <option value="30">30 / page</option>
+                    <option value="50">50 / page</option>
+                    <option value="100">100 / page</option>
+                    <option value="150">150 / page</option>
+                </select>
                 <select wire:model.live="statusFilter" class="w-full bg-slate-50 border-none rounded-xl text-[10px] font-black text-slate-600 focus:ring-4 focus:ring-indigo-600/5 py-2.5">
                     <option value="">STATUS</option>
                     @foreach($statusOptions as $status) <option value="{{ $status }}">{{ strtoupper($status) }}</option> @endforeach

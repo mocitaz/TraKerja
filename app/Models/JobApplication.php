@@ -50,8 +50,8 @@ class JobApplication extends Model
                 throw new \Exception('Location is required');
             }
             
-            // Auto-archive logic: Archive if status is Declined or recruitment_stage is Not Processed
-            $shouldBeArchived = $jobApplication->application_status === 'Declined' 
+            // Auto-archive logic: Archive if status is Declined/Rejected or recruitment_stage is Not Processed
+            $shouldBeArchived = in_array($jobApplication->application_status, ['Declined', 'Rejected']) 
                 || $jobApplication->recruitment_stage === 'Not Processed';
             
             // Get original values before update
@@ -60,7 +60,7 @@ class JobApplication extends Model
             $wasArchived = $jobApplication->getOriginal('is_archived') ?? false;
             
             // Check if original status was also archived
-            $wasOriginallyArchived = ($originalStatus === 'Declined' || $originalStage === 'Not Processed');
+            $wasOriginallyArchived = (in_array($originalStatus, ['Declined', 'Rejected']) || $originalStage === 'Not Processed');
             
             if ($shouldBeArchived && !$wasArchived) {
                 // Archive the job automatically
@@ -75,8 +75,8 @@ class JobApplication extends Model
         });
         
         static::created(function ($jobApplication) {
-            // Auto-archive on creation if status is Declined or Not Processed
-            $shouldBeArchived = $jobApplication->application_status === 'Declined' 
+            // Auto-archive on creation if status is Declined/Rejected or Not Processed
+            $shouldBeArchived = in_array($jobApplication->application_status, ['Declined', 'Rejected']) 
                 || $jobApplication->recruitment_stage === 'Not Processed';
             
             if ($shouldBeArchived) {
