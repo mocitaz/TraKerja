@@ -33,13 +33,13 @@
     <!-- Schema.org / JSON-LD -->
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
+      "@@context": "https://schema.org",
+      "@@type": "SoftwareApplication",
       "name": "TraKerja",
       "operatingSystem": "WebBrowser",
       "applicationCategory": "BusinessApplication",
       "offers": {
-        "@type": "Offer",
+        "@@type": "Offer",
         "price": "0",
         "priceCurrency": "IDR"
       },
