@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\JobApplication;
+use App\Http\Controllers\ContactMessageController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -495,3 +496,15 @@ require __DIR__.'/auth.php';
 
 // Public Portfolios (TraKerja Sites)
 Route::get('/@{slug}', [\App\Http\Controllers\PortfolioController::class, 'show'])->name('portfolio.show');
+ 
+// Public: kirim pesan dari landing page
+Route::post('/contact', [ContactMessageController::class, 'store'])
+    ->name('contact.store');
+ 
+// Admin: kelola pesan masuk (tambahkan middleware 'admin' sesuai kebutuhan)
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/contact-messages', [ContactMessageController::class, 'index'])
+        ->name('contact.index');
+    Route::get('/contact-messages/{contactMessage}', [ContactMessageController::class, 'show'])
+        ->name('contact.show');
+});
