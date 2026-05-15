@@ -4,11 +4,49 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>TraKerja - Professional Job Application Management Platform</title>
-    <meta name="description" content="Transform your job search with TraKerja. The most sophisticated job application tracking platform designed for ambitious professionals in Indonesia.">
+    <title>TraKerja - Platform Manajemen & Pelacakan Lamaran Kerja #1 di Indonesia</title>
+    <meta name="description" content="TraKerja adalah platform ATS & tracker lamaran kerja gratis. Pantau status lamaran, buat CV standar ATS, dan dapatkan insight analitik untuk karir impian Anda.">
+    <meta name="keywords" content="loker, lowongan kerja, tracker lamaran kerja, ats checker, cv ats friendly, karir, hrd, job portal, trakerja, manajemen lamaran">
+    <meta name="author" content="PT. Teknalogi Transformasi Digital">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ url('/') }}">
+    <meta name="theme-color" content="#d983e4">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url('/') }}">
+    <meta property="og:title" content="TraKerja - Platform Manajemen & Pelacakan Lamaran Kerja">
+    <meta property="og:description" content="Tingkatkan peluang lolos kerja dengan tracker cerdas, AI Cover Letter, dan analitik lengkap. Gratis untuk pencari kerja Indonesia.">
+    <meta property="og:image" content="{{ asset('images/fitur-section.jpg') }}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url('/') }}">
+    <meta property="twitter:title" content="TraKerja - Aplikasi Pelacakan Karir & Pekerjaan">
+    <meta property="twitter:description" content="Pantau status lamaran, buat CV standar ATS, dan analisis skor interview Anda.">
+    <meta property="twitter:image" content="{{ asset('images/fitur-section.jpg') }}">
+
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
+
+    <!-- Schema.org / JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "TraKerja",
+      "operatingSystem": "WebBrowser",
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "IDR"
+      },
+      "description": "TraKerja adalah platform ATS & tracker lamaran kerja gratis di Indonesia. Pantau status lamaran, buat CV standar ATS, dan dapatkan insight analitik untuk karir impian Anda.",
+      "url": "{{ url('/') }}"
+    }
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -2652,9 +2690,11 @@
                 const loadingElement = document.getElementById('gallery-loading');
                 const emptyElement = document.getElementById('gallery-empty');
                 
+                if (!galleryContainer) return;
+                
                 if (data.success && data.photos && data.photos.length > 0) {
-                    loadingElement.classList.add('hidden');
-                    emptyElement.classList.add('hidden');
+                    if (loadingElement) loadingElement.classList.add('hidden');
+                    if (emptyElement) emptyElement.classList.add('hidden');
                     
                     // Clear existing photos (except loading/empty)
                     const existingPhotos = galleryContainer.querySelectorAll('.photo-item');
@@ -2666,13 +2706,15 @@
                         galleryContainer.appendChild(photoCard);
                     });
                 } else {
-                    loadingElement.classList.add('hidden');
-                    emptyElement.classList.remove('hidden');
+                    if (loadingElement) loadingElement.classList.add('hidden');
+                    if (emptyElement) emptyElement.classList.remove('hidden');
                 }
             } catch (error) {
                 console.error('Error loading photos:', error);
-                document.getElementById('gallery-loading').classList.add('hidden');
-                document.getElementById('gallery-empty').classList.remove('hidden');
+                const loadingElement = document.getElementById('gallery-loading');
+                const emptyElement = document.getElementById('gallery-empty');
+                if (loadingElement) loadingElement.classList.add('hidden');
+                if (emptyElement) emptyElement.classList.remove('hidden');
             }
         }
 

@@ -10,7 +10,7 @@ Disallow: /interviews/
 Disallow: /cv/
 
 # Sitemap
-Sitemap: https://trakerja.com/sitemap.xml
+Sitemap: https://trakerja.web.id/sitemap.xml
 
 # Crawl-delay
 Crawl-delay: 10
