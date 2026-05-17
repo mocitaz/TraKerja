@@ -332,7 +332,7 @@ class UserManagement extends Component
         try {
             switch ($this->emailType) {
                 case 'welcome':
-                    Mail::to($user->email)->send(new WelcomeMail($user));
+                    Mail::to($user->email)->queue(new WelcomeMail($user));
                     break;
                 case 'verification':
                     if (!$user->hasVerifiedEmail()) {
@@ -347,19 +347,19 @@ class UserManagement extends Component
                     }
                     break;
                 case 'ai_analyzer':
-                    Mail::to($user->email)->send(new AiAnalyzerFreeTrialAnnouncementMail($user));
+                    Mail::to($user->email)->queue(new AiAnalyzerFreeTrialAnnouncementMail($user));
                     break;
                 case 'job_reminder':
-                    Mail::to($user->email)->send(new JobApplicationReminderMail($user));
+                    Mail::to($user->email)->queue(new JobApplicationReminderMail($user));
                     break;
                 case 'monthly_motivation':
-                    Mail::to($user->email)->send(new MonthlyMotivationMail($user));
+                    Mail::to($user->email)->queue(new MonthlyMotivationMail($user));
                     break;
                 case 'premium_granted':
-                    Mail::to($user->email)->send(new PremiumGrantedMail($user));
+                    Mail::to($user->email)->queue(new PremiumGrantedMail($user));
                     break;
                 case 'product_update':
-                    Mail::to($user->email)->send(new \App\Mail\ProductUpdateMail($user));
+                    Mail::to($user->email)->queue(new \App\Mail\ProductUpdateMail($user));
                     break;
             }
             
