@@ -91,7 +91,7 @@
                                 
                                 <div class="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden bg-white shadow-2xl border-4 border-white transition-transform duration-500 group-hover/avatar:scale-105">
                                     @if(Auth::user()->logo)
-                                        <img src="{{ Storage::url(Auth::user()->logo) }}" alt="Avatar" class="w-full h-full object-cover">
+                                        <img src="{{ Auth::user()->avatar_url }}" alt="Avatar" class="w-full h-full object-cover">
                                     @else
                                         <div class="w-full h-full bg-slate-50 flex items-center justify-center text-slate-300">
                                             <i class="ph-fill ph-user text-5xl sm:text-6xl"></i>
@@ -358,7 +358,7 @@
                 <div class="flex flex-col items-center">
                     <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-[2rem] sm:rounded-[3rem] overflow-hidden bg-slate-50 shadow-inner mb-6 sm:mb-8 ring-1 ring-slate-100 group/preview relative">
                         @if(Auth::user()->logo)
-                            <img src="{{ Storage::url(Auth::user()->logo) }}" alt="Avatar" id="currentPhotoPreview" class="w-full h-full object-cover">
+                            <img src="{{ Auth::user()->avatar_url }}" alt="Avatar" id="currentPhotoPreview" class="w-full h-full object-cover">
                         @else
                             <div class="w-full h-full flex items-center justify-center text-slate-200">
                                 <i class="ph-fill ph-user text-6xl sm:text-7xl"></i>
