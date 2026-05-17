@@ -33,7 +33,7 @@
         <div class="hidden lg:block relative" x-data="{ open: false }">
             <button @click="open = !open" class="flex items-center space-x-3 focus:outline-none bg-white border border-slate-200/60 pl-1.5 pr-3 py-1.5 rounded-full hover:shadow-sm hover:border-primary-200 transition-all duration-300 group">
                 @if(Auth::user()->logo)
-                    <img src="{{ \Illuminate\Support\Facades\Storage::url(Auth::user()->logo) }}" 
+                    <img src="{{ Auth::user()->avatar_url }}" 
                          alt="Profile Photo" 
                          class="h-8 w-8 rounded-full object-cover">
                 @else
@@ -100,7 +100,7 @@
         <div class="lg:hidden">
             <button @click="mobileSidebarOpen = !mobileSidebarOpen" class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center border-2 border-slate-200 active:scale-95 transition-all">
                 @if(Auth::user()->logo)
-                    <img src="{{ \Illuminate\Support\Facades\Storage::url(Auth::user()->logo) }}" alt="Profile" class="w-full h-full object-cover">
+                    <img src="{{ Auth::user()->avatar_url }}" alt="Profile" class="w-full h-full object-cover">
                 @else
                     <div class="w-full h-full bg-primary-100 flex items-center justify-center">
                         <span class="text-primary-700 text-xs font-black">{{ substr(Auth::user()->name, 0, 1) }}</span>
