@@ -42,20 +42,41 @@
                                     <td class="value" style="font-family: monospace; font-size: 13px;">{{ $payment->order_id }}</td>
                                 </tr>
                                 <tr class="receipt-row">
-                                    <td class="label">Tanggal Transaksi</td>
+                                    <td class="label">Waktu Transaksi</td>
                                     <td class="value">{{ $payment->paid_at?->format('d M Y, H:i') ?? now()->format('d M Y, H:i') }} WIB</td>
-                                </tr>
-                                <tr class="receipt-row">
-                                    <td class="label">Paket Langganan</td>
-                                    <td class="value" style="color: #6366f1;">Lifetime Premium Access</td>
                                 </tr>
                                 <tr class="receipt-row">
                                     <td class="label">Metode Pembayaran</td>
                                     <td class="value">{{ strtoupper($payment->payment_method ?? 'QRIS') }}</td>
                                 </tr>
+
+                                <!-- Dashed Separator -->
+                                <tr>
+                                    <td colspan="2" style="padding: 20px 0;">
+                                        <div style="border-bottom: 2px dashed #f1f1f1;"></div>
+                                    </td>
+                                </tr>
+
+                                <!-- Item Details -->
+                                <tr>
+                                    <td style="padding: 5px 0; color: #111111; font-size: 12px; font-weight: 600; text-align: left;">TraKerja Premium (Lifetime)</td>
+                                    <td style="padding: 5px 0; color: #111111; font-size: 12px; font-weight: 600; text-align: right;">Rp 35.000</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px 0; color: #888888; font-size: 11px; text-align: left;">Promo Early Bird</td>
+                                    <td style="padding: 5px 0; color: #10b981; font-size: 11px; font-weight: 700; text-align: right;">- Rp 20.001</td>
+                                </tr>
+
+                                <!-- Dashed Separator -->
+                                <tr>
+                                    <td colspan="2" style="padding: 20px 0;">
+                                        <div style="border-bottom: 2px dashed #f1f1f1;"></div>
+                                    </td>
+                                </tr>
+
                                 <tr class="total-row">
-                                    <td class="total-label" style="padding-top: 20px; font-size: 13px;">Total Dibayar</td>
-                                    <td class="total-value" style="padding-top: 20px; font-size: 18px; font-weight: 900; color: #10b981;">Rp {{ number_format($payment->amount, 0, ',', '.') }}</td>
+                                    <td class="total-label" style="padding-top: 10px; font-size: 13px;">Total Dibayar</td>
+                                    <td class="total-value" style="padding-top: 10px; font-size: 18px; font-weight: 900; color: #10b981;">Rp {{ number_format($payment->amount ?? 14999, 0, ',', '.') }}</td>
                                 </tr>
                             </table>
 
