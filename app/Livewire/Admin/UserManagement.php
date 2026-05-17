@@ -324,7 +324,7 @@ class UserManagement extends Component
     public function sendEmail()
     {
         $this->validate([
-            'emailType' => 'required|in:welcome,verification,ai_analyzer,job_reminder,monthly_motivation,premium_granted',
+            'emailType' => 'required|in:welcome,verification,ai_analyzer,job_reminder,monthly_motivation,premium_granted,product_update',
         ]);
         
         $user = User::findOrFail($this->emailTargetUserId);
@@ -358,6 +358,9 @@ class UserManagement extends Component
                 case 'premium_granted':
                     Mail::to($user->email)->send(new PremiumGrantedMail($user));
                     break;
+                case 'product_update':
+                    Mail::to($user->email)->send(new \App\Mail\ProductUpdateMail($user));
+                    break;
             }
             
             Log::info('Admin sent email to user', [
@@ -377,6 +380,7 @@ class UserManagement extends Component
                 'job_reminder' => 'Job Application Reminder',
                 'monthly_motivation' => 'Monthly Motivation',
                 'premium_granted' => 'Premium Granted Notification',
+                'product_update' => 'Major Product Update',
             ];
             
             $this->dispatch('showNotification', [

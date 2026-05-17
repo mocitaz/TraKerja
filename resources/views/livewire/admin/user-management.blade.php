@@ -665,6 +665,7 @@
                                         'job_reminder' => ['label' => 'Job Reminder', 'desc' => 'Ajakan catat lamaran'],
                                         'monthly_motivation' => ['label' => 'Monthly Motivation', 'desc' => 'Bulan baru semangat baru'],
                                         'premium_granted' => ['label' => 'Premium Granted', 'desc' => 'Selamat dapat premium gratis'],
+                                        'product_update' => ['label' => 'Major Product Update', 'desc' => 'Pengumuman resmi fitur terbaru'],
                                     ];
                                 @endphp
                                 
@@ -673,8 +674,9 @@
                                         $isSelected = $emailType === $type;
                                         $borderClass = $isSelected ? 'border-primary-500 bg-primary-50/50 ring-1 ring-primary-500 shadow-sm' : 'border-slate-200 hover:border-primary-300 hover:bg-slate-50';
                                         $dotClass = $isSelected ? 'border-primary-500 bg-primary-500' : 'border-slate-300';
+                                        $colSpanClass = ($loop->last && count($emailTypes) % 2 !== 0) ? 'md:col-span-2' : '';
                                     @endphp
-                                    <label class="relative flex cursor-pointer rounded-2xl border-2 {{ $borderClass }} p-4 transition-all {{ $type === 'monthly_motivation' ? 'md:col-span-2' : '' }}">
+                                    <label class="relative flex cursor-pointer rounded-2xl border-2 {{ $borderClass }} p-4 transition-all {{ $colSpanClass }}">
                                         <input type="radio" wire:model.live="emailType" value="{{ $type }}" class="sr-only">
                                         <div class="flex-1">
                                             <div class="flex items-center gap-3">
