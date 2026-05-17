@@ -163,7 +163,7 @@
              :class="($store.sidebar.open || mobileSidebarOpen) ? '' : 'justify-center'">
             @php $user = Auth::user(); @endphp
             @if($user && $user->logo)
-                <img src="{{ \Illuminate\Support\Facades\Storage::url($user->logo) }}" 
+                <img src="{{ $user->avatar_url }}" 
                      alt="Profile" 
                      class="h-8 w-8 rounded-lg object-cover ring-2 ring-white flex-shrink-0 shadow-sm">
             @else

@@ -157,7 +157,7 @@
                                 <div class="flex items-center min-w-0">
                                     @if($user->logo)
                                         <div class="flex-shrink-0 h-8 w-8 sm:h-10 sm:w-10 rounded-lg overflow-hidden ring-2 ring-gray-100">
-                                            <img src="{{ Storage::url($user->logo) }}" 
+                                            <img src="{{ $user->avatar_url }}" 
                                                  alt="{{ $user->name }}" 
                                                  class="w-full h-full object-cover"
                                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">

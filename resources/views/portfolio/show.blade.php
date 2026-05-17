@@ -581,7 +581,7 @@
                 <div class="reveal reveal-delay-2">
                     <div class="avatar-wrap" style="width: 104px; height: 130px;">
                         @if($user->logo)
-                            <img src="{{ asset('storage/' . $user->logo) }}" alt="{{ $user->name }}"
+                            <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}"
                                 style="width:100%; height:100%; object-fit: cover;">
                         @else
                             <div

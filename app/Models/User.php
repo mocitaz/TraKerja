@@ -153,6 +153,20 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get the user's avatar URL.
+     */
+    public function getAvatarUrlAttribute(): string
+    {
+        if ($this->logo) {
+            if (str_starts_with($this->logo, 'http')) {
+                return $this->logo;
+            }
+            return \Illuminate\Support\Facades\Storage::url($this->logo);
+        }
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=random';
+    }
+
+    /**
      * Get the job applications for the user.
      */
     public function jobApplications(): HasMany

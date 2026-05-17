@@ -261,7 +261,7 @@
                          :class="sidebarCollapsed ? 'justify-center' : ''">
                         @php $user = Auth::user(); @endphp
                         @if($user && $user->logo)
-                            <img src="{{ \Illuminate\Support\Facades\Storage::url($user->logo) }}" 
+                            <img src="{{ $user->avatar_url }}" 
                                  alt="Profile" 
                                  class="h-8 w-8 rounded-lg object-cover ring-2 ring-white flex-shrink-0 shadow-sm">
                         @else
@@ -327,7 +327,7 @@
                         <div class="relative" x-data="{ open: false }">
                             <button @click="open = ! open" class="flex items-center space-x-3 focus:outline-none bg-white border border-slate-200/60 pl-1.5 pr-3 py-1.5 rounded-full hover:shadow-sm hover:border-primary-200 transition-all duration-300 group">
                                 @if($user && $user->logo)
-                                    <img src="{{ \Illuminate\Support\Facades\Storage::url($user->logo) }}" 
+                                    <img src="{{ $user->avatar_url }}" 
                                          alt="Profile Photo" 
                                          class="h-8 w-8 rounded-full object-cover">
                                 @else
