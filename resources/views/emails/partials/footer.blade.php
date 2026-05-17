@@ -1,116 +1,27 @@
-<!-- Compact Professional Footer -->
+<!-- Minimalist Premium Footer -->
 <tr>
-    <td style="padding:24px 28px 20px; background:#fbfaff; border-top:1px solid #f0eaff;">
+    <td style="padding: 40px 24px; background-color: #f9fafb; text-align: center; border-top: 1px solid #f3f4f6; border-radius: 0 0 16px 16px;">
         <table role="presentation" style="width:100%; border-collapse:collapse;">
-            <!-- Main Footer Content -->
             <tr>
-                <td>
-                    <table role="presentation" style="width:100%; border-collapse:collapse;">
-                        <tr>
-                            <td style="font-size:0; text-align:left;">
-                                <!-- Left Column - Branding -->
-                                <div style="display:inline-block; width:100%; max-width:240px; vertical-align:top;">
-                                    <table role="presentation" style="width:100%; border-collapse:collapse;">
-                                        <tr>
-                                            <td style="padding-bottom:20px; padding-right:10px;">
-                                                <div style="display:flex; align-items:center; margin-bottom:12px;">
-                                                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" width="40" height="40" style="display:block; margin-right:12px;">
-                                                    <div>
-                                                        <h3 style="margin:0; font-size:20px; font-weight:800; color:#1f2937;">TraKerja</h3>
-                                                        <p style="margin:0; font-size:12px; color:#6b7280;">Professional Job Application Management</p>
-                                                    </div>
-                                                </div>
-                                                <p style="margin:0; font-size:12px; line-height:18px; color:#6b7280;">Platform tracking job application yang dirancang khusus untuk job seeker Indonesia. Simple, efektif, dan mudah digunakan.</p>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                
-                                <!-- Middle Column - Contact -->
-                                <div style="display:inline-block; width:100%; max-width:180px; vertical-align:top;">
-                                    <table role="presentation" style="width:100%; border-collapse:collapse;">
-                                        <tr>
-                                            <td style="padding-bottom:20px; padding-right:10px;">
-                                                <h4 style="margin:0 0 12px; font-size:13px; font-weight:700; color:#1f2937;">Hubungi Kami</h4>
-                                                <p style="margin:0 0 4px; font-size:11px; color:#6b7280;">
-                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2.5" style="display:inline; vertical-align:middle; margin-right:6px;">
-                                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                                        <polyline points="22,6 12,13 2,6"></polyline>
-                                                    </svg>
-                                                    Email
-                                                </p>
-                                                <p style="margin:0 0 12px; font-size:11px; color:#1f2937; font-weight:600;">infoteknalogi@gmail.com</p>
-                                                
-                                                <p style="margin:0 0 4px; font-size:11px; color:#6b7280;">
-                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2.5" style="display:inline; vertical-align:middle; margin-right:6px;">
-                                                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                                                    </svg>
-                                                    Instagram
-                                                </p>
-                                                <p style="margin:0; font-size:11px; color:#1f2937; font-weight:600;">@teknalogi.id</p>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                
-                                <!-- Right Column - Management -->
-                                <div style="display:inline-block; width:100%; max-width:140px; vertical-align:top;">
-                                    <table role="presentation" style="width:100%; border-collapse:collapse;">
-                                        <tr>
-                                            <td style="padding-bottom:20px;">
-                                                <h4 style="margin:0 0 12px; font-size:13px; font-weight:700; color:#1f2937;">Dikelola oleh</h4>
-                                                <p style="margin:0; font-size:12px; line-height:18px; color:#1f2937; font-weight:600;">PT Teknalogi Transformasi Digital</p>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            
-            <!-- Separator Line -->
-            <tr>
-                <td style="padding:16px 0 12px;">
-                    <div style="height:1px; background:#e5e7eb;"></div>
-                </td>
-            </tr>
-            
-            <!-- Bottom Row -->
-            <tr>
-                <td>
-                    <table role="presentation" style="width:100%; border-collapse:collapse;">
-                        <tr>
-                            <td style="width:50%; vertical-align:top;">
-                                <p style="margin:0; font-size:11px; color:#6b7280;">For job seekers in Indonesia</p>
-                            </td>
-                            <td style="width:50%; text-align:right; vertical-align:top;">
-                                <div style="display:inline-flex; align-items:center; gap:10px;">
-                                    <a href="https://instagram.com/teknalogi.id" style="display:inline-flex; align-items:center; text-decoration:none;">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2.5">
-                                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                                        </svg>
-                                    </a>
-                                    <a href="mailto:infoteknalogi@gmail.com" style="display:inline-flex; align-items:center; text-decoration:none;">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2.5">
-                                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                            <polyline points="22,6 12,13 2,6"></polyline>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="padding-top:8px; text-align:center;">
-                                <p style="margin:0; font-size:11px; color:#9ca3af;">© {{ date('Y') }} TraKerja. All rights reserved.</p>
-                            </td>
-                        </tr>
-                    </table>
+                <td style="text-align: center;">
+                    <!-- Logo (Grayscale/Faded) -->
+                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" width="32" style="display: inline-block; margin-bottom: 16px; opacity: 0.6; filter: grayscale(100%);">
+                    
+                    <!-- Branding & Description -->
+                    <p style="margin: 0 0 8px 0; font-size: 13px; font-weight: 600; color: #4b5563;">
+                        TraKerja &copy; {{ date('Y') }}. All rights reserved.
+                    </p>
+                    <p style="margin: 0 auto 20px auto; max-width: 380px; font-size: 12px; color: #9ca3af; line-height: 1.6;">
+                        Professional Job Application Management.<br>
+                        Dikelola oleh PT Teknalogi Transformasi Digital.
+                    </p>
+                    
+                    <!-- Links -->
+                    <div style="margin-bottom: 8px;">
+                        <a href="mailto:infoteknalogi@gmail.com" style="color: #6b7280; text-decoration: none; font-size: 12px; font-weight: 500; margin: 0 10px;">Hubungi Email</a>
+                        <span style="color: #e5e7eb;">|</span>
+                        <a href="https://instagram.com/teknalogi.id" style="color: #6b7280; text-decoration: none; font-size: 12px; font-weight: 500; margin: 0 10px;">Instagram</a>
+                    </div>
                 </td>
             </tr>
         </table>
