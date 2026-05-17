@@ -7,7 +7,8 @@
             </div>
             <div class="flex flex-col">
                 <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">On Process</span>
-                <span class="text-xl font-black text-slate-900 leading-none">{{ $onProcessCount }}</span>
+                <span wire:loading.remove class="text-xl font-black text-slate-900 leading-none">{{ $onProcessCount }}</span>
+                <div wire:loading class="h-5 w-10 rounded bg-slate-100 skeleton"></div>
             </div>
         </div>
         <div class="px-2 py-1 bg-indigo-50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
@@ -23,7 +24,8 @@
             </div>
             <div class="flex flex-col">
                 <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Accepted</span>
-                <span class="text-xl font-black text-slate-900 leading-none">{{ $offeringAcceptedCount }}</span>
+                <span wire:loading.remove class="text-xl font-black text-slate-900 leading-none">{{ $offeringAcceptedCount }}</span>
+                <div wire:loading class="h-5 w-10 rounded bg-slate-100 skeleton"></div>
             </div>
         </div>
         <div class="px-2 py-1 bg-emerald-50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
@@ -39,7 +41,8 @@
             </div>
             <div class="flex flex-col">
                 <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Declined</span>
-                <span class="text-xl font-black text-slate-900 leading-none">{{ $declinedCount }}</span>
+                <span wire:loading.remove class="text-xl font-black text-slate-900 leading-none">{{ $declinedCount }}</span>
+                <div wire:loading class="h-5 w-10 rounded bg-slate-100 skeleton"></div>
             </div>
         </div>
         <div class="px-2 py-1 bg-rose-50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">

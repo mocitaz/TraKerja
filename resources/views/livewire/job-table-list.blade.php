@@ -32,8 +32,36 @@
 
         <!-- Mobile Card View (Visible only on sm & md screens) -->
         <div class="block lg:hidden space-y-6">
-            @forelse($jobApplications as $index => $job)
-                <div class="bg-white border border-slate-200/60 rounded-[2.5rem] p-6 shadow-[inset_0_1px_2px_rgba(255,255,255,0.8),0_10px_20px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-indigo-300 transition-all duration-500 cursor-pointer relative group" onclick="window.location.href='{{ route('jobs.show', $job) }}'">
+            {{-- Skeleton Loading Cards (Mobile) --}}
+            <div wire:loading.class.remove="hidden" class="hidden space-y-6">
+                @for($i = 0; $i < 3; $i++)
+                    <div class="bg-white border border-slate-200/60 rounded-[2.5rem] p-6 shadow-sm">
+                        <div class="flex justify-between items-start gap-4 mb-5">
+                            <div class="flex items-center gap-4 w-full">
+                                <div class="w-12 h-12 rounded-2xl bg-slate-100 skeleton shrink-0"></div>
+                                <div class="w-full space-y-2">
+                                    <div class="h-4 w-3/4 bg-slate-100 rounded skeleton"></div>
+                                    <div class="h-3 w-1/2 bg-slate-100 rounded skeleton"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-5 p-4 bg-slate-50/50 rounded-3xl border border-slate-100/50">
+                            <div class="h-8 w-full bg-slate-100 rounded-lg skeleton"></div>
+                            <div class="h-8 w-full bg-slate-100 rounded-lg skeleton"></div>
+                            <div class="h-8 w-full bg-slate-100 rounded-lg skeleton"></div>
+                            <div class="h-8 w-full bg-slate-100 rounded-lg skeleton"></div>
+                        </div>
+                        <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                            <div class="h-6 w-24 bg-slate-100 rounded-xl skeleton"></div>
+                            <div class="h-8 w-20 bg-slate-100 rounded-xl skeleton"></div>
+                        </div>
+                    </div>
+                @endfor
+            </div>
+
+            <div wire:loading.remove class="space-y-6">
+                @forelse($jobApplications as $index => $job)
+                    <div class="bg-white border border-slate-200/60 rounded-[2.5rem] p-6 shadow-[inset_0_1px_2px_rgba(255,255,255,0.8),0_10px_20px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-indigo-300 transition-all duration-500 cursor-pointer relative group" onclick="window.location.href='{{ route('jobs.show', $job) }}'">
                     
                     @if($job->is_pinned)
                         <div class="absolute -top-3 -right-3 w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center shadow-lg border-4 border-white z-10">
@@ -108,7 +136,8 @@
                     </div>
                     <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">No Data Found...</span>
                 </div>
-            @endforelse
+                @endforelse
+            </div>
         </div>
 
         <!-- Desktop Full Info Compact Table (Visible only on lg screens) -->

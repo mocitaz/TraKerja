@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .skeleton {
+        background: #f8fafc;
+        background-image: linear-gradient(
+            to right,
+            #f8fafc 0%,
+            #e2e8f0 20%,
+            #f8fafc 40%,
+            #f8fafc 100%
+        );
+        background-repeat: no-repeat;
+        background-size: 800px 100%;
+        animation: shimmer 1.5s infinite linear;
+    }
+
+    @keyframes shimmer {
+        0% {
+            background-position: -400px 0;
+        }
+        100% {
+            background-position: 400px 0;
+        }
+    }
+}
