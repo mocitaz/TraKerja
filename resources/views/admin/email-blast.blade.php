@@ -169,6 +169,23 @@
                                 </div>
                             </label>
 
+                            <!-- Product Update -->
+                            <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                <input type="radio" name="email_type" value="product_update" class="sr-only" required>
+                                <div class="flex items-center gap-4 w-full">
+                                    <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i class="ph-duotone ph-rocket-launch text-2xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-sm font-bold text-slate-900">Major Product Update</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Pengumuman resmi fitur dan pembaruan sistem terbaru.</p>
+                                    </div>
+                                    <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                        <i class="ph-bold ph-check text-xs"></i>
+                                    </div>
+                                </div>
+                            </label>
+
                             <!-- Custom Email -->
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="custom" class="sr-only" required onchange="toggleCustomEmailFields()">
@@ -610,6 +627,7 @@
             'ai_analyzer': 'AI Analyzer Trial',
             'job_reminder': 'Job Reminder',
             'monthly_motivation': 'Monthly Motivation',
+            'product_update': 'Major Product Update',
             'custom': 'Custom Email'
         }[emailType] || 'Email Blast';
         

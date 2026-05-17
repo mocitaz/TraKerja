@@ -50,7 +50,7 @@ class EmailBlastController extends Controller
     public function send(Request $request)
     {
         $validationRules = [
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,custom',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,custom,product_update',
             'target_user' => 'required|in:all,verified,premium,free,new,unverified',
         ];
 
@@ -131,6 +131,9 @@ class EmailBlastController extends Controller
                         if (!$user->hasVerifiedEmail()) {
                             $user->sendEmailVerificationNotification();
                         }
+                        break;
+                    case 'product_update':
+                        Mail::to($user->email)->send(new \App\Mail\ProductUpdateMail($user));
                         break;
                     case 'custom':
                         Mail::to($user->email)->send(new CustomEmailBlastMail(
