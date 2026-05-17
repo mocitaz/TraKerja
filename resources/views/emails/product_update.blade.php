@@ -9,9 +9,11 @@ Berdasarkan analisis mendalam serta masukan berharga dari pengguna, kami telah m
 
 <x-mail::panel>
 **Pembaruan Ekosistem TraKerja:**
-- **AI Resume Analyzer 2.0**: Peningkatan kecerdasan buatan dalam mengevaluasi kurikulum vitae Anda, guna memastikan tingkat kompatibilitas maksimal terhadap sistem *Applicant Tracking System* (ATS) perusahaan.
-- **Auto-Sync Job Board**: Otomatisasi perekaman data lamaran secara seketika melalui tautan portal pekerjaan, mengeliminasi kebutuhan pencatatan manual yang menyita waktu.
-- **Pembaruan Antarmuka (UI/UX)**: Revitalisasi desain visual yang lebih intuitif, responsif, serta penambahan mode gelap (Dark Mode) untuk kenyamanan penggunaan berdurasi panjang.
+- **AI Resume Analyzer 2.0**: Peningkatan kecerdasan buatan untuk mengevaluasi resume Anda secara komprehensif agar lebih sesuai dengan standar industri.
+- **Smart Cover Letters**: Fitur penyusunan surat lamaran kerja yang terstruktur dan mudah disesuaikan untuk berbagai kebutuhan melamar.
+- **TraKerja Sites Portfolio**: Fasilitas pembuatan situs portofolio personal untuk menampilkan karya dan pencapaian Anda secara profesional.
+- **Professional CV Builder**: Perangkat pembuat CV dengan templat standar industri yang telah teruji untuk menarik perhatian rekruter.
+- **Peningkatan UI/UX**: Revitalisasi desain antarmuka yang lebih intuitif untuk memberikan pengalaman navigasi yang jauh lebih baik.
 </x-mail::panel>
 
 Kami mengundang Anda untuk menjadi bagian dari pengalaman baru ini. Silakan masuk ke dasbor Anda untuk menjelajahi fungsionalitas terbaru yang telah kami kembangkan.
