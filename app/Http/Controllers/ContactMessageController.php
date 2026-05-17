@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContactMessage;
+use App\Models\SupportTicket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Auth;
 
 class ContactMessageController extends Controller
 {
@@ -38,12 +39,13 @@ class ContactMessageController extends Controller
         ]);
 
         // Simpan ke database
-        $contact = ContactMessage::create([
-            'name'       => $validated['name'],
-            'email'      => $validated['email'],
-            'subject'    => $validated['subject'] ?? null,
+        $contact = SupportTicket::create([
+            'user_id'    => Auth::check() ? Auth::id() : null,
+            'guest_name' => Auth::check() ? null : $validated['name'],
+            'guest_email'=> Auth::check() ? null : $validated['email'],
+            'category'   => 'general_feedback', // Default category for landing page contacts
+            'subject'    => $validated['subject'] ?? 'Pesan dari Form Landing Page',
             'message'    => $validated['message'],
-            'ip_address' => $request->ip(),
         ]);
 
         // Kirim notifikasi email ke admin (opsional, aktifkan jika SMTP sudah dikonfigurasi)

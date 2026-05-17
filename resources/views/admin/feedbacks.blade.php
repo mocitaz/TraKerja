@@ -224,8 +224,8 @@
                                 <h4 class="text-base font-black text-slate-800 leading-snug tracking-tight mb-1">
                                     {{ $ticket->subject }}</h4>
                                 <div class="flex items-center gap-2 text-xs text-slate-400 flex-wrap">
-                                    <span class="font-extrabold text-slate-600">{{ $ticket->user->name ?? 'Guest' }}</span>
-                                    <span>({{ $ticket->user->email ?? 'no-email' }})</span>
+                                    <span class="font-extrabold text-slate-600">{{ $ticket->user ? $ticket->user->name : ($ticket->guest_name ?? 'Guest') }}</span>
+                                    <span>({{ $ticket->user ? $ticket->user->email : ($ticket->guest_email ?? 'no-email') }})</span>
                                     <span class="w-1.5 h-1.5 bg-slate-200 rounded-full"></span>
                                     <span>{{ $ticket->created_at->format('d M Y H:i') }} WIB</span>
                                 </div>
