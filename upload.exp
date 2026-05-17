@@ -1,0 +1,14 @@
+#!/usr/bin/expect -f
+exp_internal 1
+set timeout 120
+set password "Kertasbasah45."
+set command "scp -o StrictHostKeyChecking=no -P 65002 update.zip u672201335@153.92.10.207:/home/u672201335/domains/trakerja.web.id/public_html/"
+
+spawn {*}$command
+expect {
+    "*assword:*" {
+        send "$password\r"
+        exp_continue
+    }
+    eof
+}

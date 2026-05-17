@@ -2494,7 +2494,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
             </div>
-            <h4 class="text-lg font-bold text-gray-900 mb-2">Pesan Terkirim! 🎉</h4>
+            <h4 class="text-lg font-bold text-gray-900 mb-2">Pesan Terkirim! </h4>
             <p class="text-sm text-gray-500 mb-5">Terima kasih! Kami akan menghubungi Anda di email yang diberikan dalam waktu 1x24 jam.</p>
             <button onclick="backToScreen1()" class="text-sm text-[#d983e4] font-semibold hover:underline">Kembali ke menu utama</button>
         </div>

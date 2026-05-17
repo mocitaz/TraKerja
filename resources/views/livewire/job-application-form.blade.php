@@ -47,14 +47,15 @@
         </div>
 
         {{-- Row 2: Location --}}
-        <div>
+        @if(!$isRemote && !$isInternational)
+        <div class="animate-fadeIn">
             <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Location Context *</label>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <select wire:model.live="selectedProvince" class="block w-full px-3 py-3 bg-slate-50 border border-slate-100 rounded-xl text-[11px] font-bold text-slate-700 outline-none transition-all {{ ($isRemote || $isInternational) ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:bg-white hover:border-slate-200' }}" {{ ($isRemote || $isInternational) ? 'disabled' : '' }}>
+                <select wire:model.live="selectedProvince" class="block w-full px-3 py-3 bg-slate-50 border border-slate-100 rounded-xl text-[11px] font-bold text-slate-700 outline-none transition-all cursor-pointer hover:bg-white hover:border-slate-200">
                     <option value="">Select Province</option>
                     @foreach($provinces as $province => $cities) <option value="{{ $province }}">{{ $province }}</option> @endforeach
                 </select>
-                <select wire:model.live="selectedCity" class="block w-full px-3 py-3 bg-slate-50 border border-slate-100 rounded-xl text-[11px] font-bold text-slate-700 outline-none transition-all {{ ($isRemote || $isInternational || empty($selectedProvince)) ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:bg-white hover:border-slate-200' }}" {{ ($isRemote || $isInternational || empty($selectedProvince)) ? 'disabled' : '' }}>
+                <select wire:model.live="selectedCity" class="block w-full px-3 py-3 bg-slate-50 border border-slate-100 rounded-xl text-[11px] font-bold text-slate-700 outline-none transition-all {{ empty($selectedProvince) ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:bg-white hover:border-slate-200' }}" {{ empty($selectedProvince) ? 'disabled' : '' }}>
                     <option value="">Select City</option>
                     @if(!empty($selectedProvince) && isset($provinces[$selectedProvince]))
                         @foreach($provinces[$selectedProvince] as $city) <option value="{{ $city }}">{{ $city }}</option> @endforeach
@@ -63,9 +64,11 @@
             </div>
             @error('selectedProvince') <p class="text-rose-500 text-[9px] font-bold mt-1.5 ml-1">{{ $message }}</p> @enderror
         </div>
+        @endif
 
         {{-- Row 3: Work Mode (Segmented Style) --}}
-        <div class="flex p-1 bg-slate-100/50 rounded-xl border border-slate-100">
+        @if(empty($selectedProvince))
+        <div class="flex p-1 bg-slate-100/50 rounded-xl border border-slate-100 animate-fadeIn">
             <label class="flex-1 flex items-center justify-center gap-3 py-2.5 px-4 cursor-pointer group transition-all">
                 <input type="checkbox" wire:model.live="isRemote" class="sr-only peer">
                 <div class="w-8 h-8 rounded-lg bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-400 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-600 transition-all">
@@ -88,6 +91,27 @@
                 </div>
             </label>
         </div>
+        @endif
+
+        {{-- International Location (Visible when International is checked) --}}
+        @if($isInternational)
+        <div class="animate-fadeIn pt-1">
+            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">International Location *</label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <select wire:model.live="selectedCountry" class="block w-full px-3 py-3 bg-slate-50 border border-slate-100 rounded-xl text-[11px] font-bold text-slate-700 outline-none transition-all cursor-pointer hover:bg-white hover:border-slate-200">
+                    <option value="">Select Country</option>
+                    @foreach($countries as $country => $cities) <option value="{{ $country }}">{{ $country }}</option> @endforeach
+                </select>
+                <select wire:model.live="selectedInternationalCity" class="block w-full px-3 py-3 bg-slate-50 border border-slate-100 rounded-xl text-[11px] font-bold text-slate-700 outline-none transition-all {{ empty($selectedCountry) ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:bg-white hover:border-slate-200' }}" {{ empty($selectedCountry) ? 'disabled' : '' }}>
+                    <option value="">Select City</option>
+                    @if(!empty($selectedCountry) && isset($countries[$selectedCountry]))
+                        @foreach($countries[$selectedCountry] as $city) <option value="{{ $city }}">{{ $city }}</option> @endforeach
+                    @endif
+                </select>
+            </div>
+            @error('selectedCountry') <p class="text-rose-500 text-[9px] font-bold mt-1.5 ml-1">{{ $message }}</p> @enderror
+        </div>
+        @endif
 
         {{-- Row 4: Platform & Career Level --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

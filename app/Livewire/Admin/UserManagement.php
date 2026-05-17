@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Mail\AiAnalyzerFreeTrialAnnouncementMail;
 use App\Mail\JobApplicationReminderMail;
 use App\Mail\MonthlyMotivationMail;
+use App\Mail\PremiumGrantedMail;
 use App\Mail\WelcomeMail;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -323,7 +324,7 @@ class UserManagement extends Component
     public function sendEmail()
     {
         $this->validate([
-            'emailType' => 'required|in:welcome,verification,ai_analyzer,job_reminder,monthly_motivation',
+            'emailType' => 'required|in:welcome,verification,ai_analyzer,job_reminder,monthly_motivation,premium_granted',
         ]);
         
         $user = User::findOrFail($this->emailTargetUserId);
@@ -354,6 +355,9 @@ class UserManagement extends Component
                 case 'monthly_motivation':
                     Mail::to($user->email)->send(new MonthlyMotivationMail($user));
                     break;
+                case 'premium_granted':
+                    Mail::to($user->email)->send(new PremiumGrantedMail($user));
+                    break;
             }
             
             Log::info('Admin sent email to user', [
@@ -372,6 +376,7 @@ class UserManagement extends Component
                 'ai_analyzer' => 'AI Analyzer Announcement',
                 'job_reminder' => 'Job Application Reminder',
                 'monthly_motivation' => 'Monthly Motivation',
+                'premium_granted' => 'Premium Granted Notification',
             ];
             
             $this->dispatch('showNotification', [

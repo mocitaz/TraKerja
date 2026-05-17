@@ -664,6 +664,7 @@
                                         'ai_analyzer' => ['label' => 'AI Analyzer', 'desc' => 'Pengumuman trial gratis'],
                                         'job_reminder' => ['label' => 'Job Reminder', 'desc' => 'Ajakan catat lamaran'],
                                         'monthly_motivation' => ['label' => 'Monthly Motivation', 'desc' => 'Bulan baru semangat baru'],
+                                        'premium_granted' => ['label' => 'Premium Granted', 'desc' => 'Selamat dapat premium gratis'],
                                     ];
                                 @endphp
                                 
