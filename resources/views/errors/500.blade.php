@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>500 - Internal Server Error | TraKerja</title>
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap" rel="stylesheet" />
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -25,7 +25,7 @@
         <div class="flex justify-center mb-6">
             <div class="w-14 h-14 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-slate-100 flex items-center justify-center p-3 relative overflow-hidden group">
                 <div class="absolute inset-0 bg-primary-50/50 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-2xl"></div>
-                <img src="{{ asset('favicon.png') }}" alt="TraKerja Logo" class="w-full h-full object-contain relative z-10">
+                <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="w-full h-full object-contain relative z-10">
             </div>
         </div>
 
@@ -69,7 +69,7 @@
         <!-- Footer Info -->
         <div class="mt-8 text-center flex flex-col items-center gap-1">
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">TraKerja &copy; {{ date('Y') }}</p>
-            <p class="text-[11px] font-bold text-slate-400">Butuh bantuan? <a href="mailto:support@trakerja.id" class="text-primary-500 hover:text-primary-600 transition-colors">Hubungi Support</a></p>
+            <p class="text-[11px] font-bold text-slate-400">Butuh bantuan? <a href="mailto:trakerja@teknalogi.id" class="text-primary-500 hover:text-primary-600 transition-colors">Hubungi Support</a></p>
         </div>
         
     </div>
