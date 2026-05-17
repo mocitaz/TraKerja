@@ -25,70 +25,73 @@
         <tr>
             <td bgcolor="#fcfcfd" align="center" style="padding: 40px 0;">
                 <table border="0" cellpadding="0" cellspacing="0" width="480" class="content">
-                    <tr>
-                        <td class="header">
-                            <img src="{{ asset('images/icon.png') }}" alt="TraKerja" width="48" style="display: block; margin: 0 auto;"/>
-                        </td>
-                    </tr>
+                    @include('emails.partials.header', ['title' => 'Pembayaran Berhasil', 'subtitle' => 'Tanda Terima Premium'])
+                    
                     <tr>
                         <td class="inner-content">
-                            <div style="display: inline-block; padding: 6px 12px; background-color: #f0fdf4; color: #16a34a; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px;">PEMBAYARAN BERHASIL</div>
-                            <h2 style="margin: 0 0 10px 0; font-size: 20px; font-weight: 900; color: #111111; letter-spacing: -0.02em;">Tanda Terima Premium</h2>
-                            <p style="margin: 0 0 30px 0; font-size: 13px; line-height: 1.6; color: #666666;">Halo <strong>{{ $user->name }}</strong>, terima kasih atas pembayaran Anda. Akun Anda telah resmi ditingkatkan ke Premium.</p>
+                            <div style="display: inline-block; padding: 6px 12px; background-color: #f0fdf4; color: #16a34a; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;">LUNAS</div>
+                            <p style="margin: 0 0 30px 0; font-size: 14px; line-height: 1.6; color: #4b5563;">Halo <strong>{{ $user->name }}</strong>, terima kasih atas pembayaran Anda. Akun Anda telah resmi ditingkatkan ke Premium.</p>
                             
-                            <table border="0" cellpadding="0" cellspacing="0" class="receipt-table">
-                                <tr class="receipt-row">
-                                    <td class="label">Nomor Tagihan</td>
-                                    <td class="value" style="font-family: monospace; font-size: 13px;">{{ $payment->order_id }}</td>
-                                </tr>
-                                <tr class="receipt-row">
-                                    <td class="label">Waktu Transaksi</td>
-                                    <td class="value">{{ $payment->paid_at?->format('d M Y, H:i') ?? now()->format('d M Y, H:i') }} WIB</td>
-                                </tr>
-                                <tr class="receipt-row">
-                                    <td class="label">Metode Pembayaran</td>
-                                    <td class="value">{{ strtoupper($payment->payment_method ?? 'QRIS') }}</td>
-                                </tr>
-
-                                <!-- Dashed Separator -->
+                            <table border="0" cellpadding="0" cellspacing="0" class="receipt-table" style="background-color: #fafafa; border-radius: 12px; padding: 20px; width: 100%;">
                                 <tr>
-                                    <td colspan="2" style="padding: 20px 0;">
-                                        <div style="border-bottom: 2px dashed #f1f1f1;"></div>
+                                    <td colspan="2" style="padding: 15px 20px 0 20px;">
+                                        <table width="100%" cellpadding="0" cellspacing="0">
+                                            <tr class="receipt-row">
+                                                <td class="label">Nomor Tagihan</td>
+                                                <td class="value" style="font-family: monospace; font-size: 13px;">{{ $payment->order_id }}</td>
+                                            </tr>
+                                            <tr class="receipt-row">
+                                                <td class="label">Waktu Transaksi</td>
+                                                <td class="value">{{ $payment->paid_at?->format('d M Y, H:i') ?? now()->format('d M Y, H:i') }} WIB</td>
+                                            </tr>
+                                            <tr class="receipt-row">
+                                                <td class="label">Metode Pembayaran</td>
+                                                <td class="value">{{ strtoupper($payment->payment_method ?? 'QRIS') }}</td>
+                                            </tr>
+            
+                                            <!-- Dashed Separator -->
+                                            <tr>
+                                                <td colspan="2" style="padding: 20px 0;">
+                                                    <div style="border-bottom: 2px dashed #e5e7eb;"></div>
+                                                </td>
+                                            </tr>
+            
+                                            <!-- Item Details -->
+                                            @php
+                                                $basePrice = 35000;
+                                                $paidAmount = $payment->amount ?? 19999;
+                                                $discount = $basePrice - $paidAmount;
+                                            @endphp
+                                            <tr>
+                                                <td style="padding: 5px 0; color: #111111; font-size: 13px; font-weight: 600; text-align: left;">TraKerja Premium (Lifetime)</td>
+                                                <td style="padding: 5px 0; color: #111111; font-size: 13px; font-weight: 600; text-align: right;">Rp {{ number_format($basePrice, 0, ',', '.') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 0; color: #6b7280; font-size: 12px; text-align: left;">Diskon Promo Launching</td>
+                                                <td style="padding: 5px 0; color: #10b981; font-size: 12px; font-weight: 700; text-align: right;">- Rp {{ number_format($discount, 0, ',', '.') }}</td>
+                                            </tr>
+            
+                                            <!-- Dashed Separator -->
+                                            <tr>
+                                                <td colspan="2" style="padding: 20px 0;">
+                                                    <div style="border-bottom: 2px dashed #e5e7eb;"></div>
+                                                </td>
+                                            </tr>
+            
+                                            <tr class="total-row">
+                                                <td class="total-label" style="padding-top: 10px; padding-bottom: 15px; font-size: 14px;">Total Dibayar</td>
+                                                <td class="total-value" style="padding-top: 10px; padding-bottom: 15px; font-size: 20px; font-weight: 900; color: #10b981;">Rp {{ number_format($paidAmount, 0, ',', '.') }}</td>
+                                            </tr>
+                                        </table>
                                     </td>
-                                </tr>
-
-                                <!-- Item Details -->
-                                <tr>
-                                    <td style="padding: 5px 0; color: #111111; font-size: 12px; font-weight: 600; text-align: left;">TraKerja Premium (Lifetime)</td>
-                                    <td style="padding: 5px 0; color: #111111; font-size: 12px; font-weight: 600; text-align: right;">Rp 35.000</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 5px 0; color: #888888; font-size: 11px; text-align: left;">Promo Early Bird</td>
-                                    <td style="padding: 5px 0; color: #10b981; font-size: 11px; font-weight: 700; text-align: right;">- Rp 20.001</td>
-                                </tr>
-
-                                <!-- Dashed Separator -->
-                                <tr>
-                                    <td colspan="2" style="padding: 20px 0;">
-                                        <div style="border-bottom: 2px dashed #f1f1f1;"></div>
-                                    </td>
-                                </tr>
-
-                                <tr class="total-row">
-                                    <td class="total-label" style="padding-top: 10px; font-size: 13px;">Total Dibayar</td>
-                                    <td class="total-value" style="padding-top: 10px; font-size: 18px; font-weight: 900; color: #10b981;">Rp {{ number_format($payment->amount ?? 14999, 0, ',', '.') }}</td>
                                 </tr>
                             </table>
 
                             <a href="{{ route('dashboard') }}" class="button">Masuk ke Dashboard</a>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="footer">
-                            <p style="margin: 0 0 5px 0;">&copy; 2026 TraKerja. All rights reserved.</p>
-                            <p style="margin: 0;">Support: <a href="mailto:support@trakerja.com" style="color: #888888; text-decoration: none;">support@trakerja.com</a></p>
-                        </td>
-                    </tr>
+                    
+                    @include('emails.partials.footer')
                 </table>
             </td>
         </tr>
