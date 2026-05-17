@@ -17,14 +17,14 @@
     <meta property="og:url" content="{{ url('/') }}">
     <meta property="og:title" content="TraKerja - Platform Manajemen & Pelacakan Lamaran Kerja">
     <meta property="og:description" content="Tingkatkan peluang lolos kerja dengan tracker cerdas, AI Cover Letter, dan analitik lengkap. Gratis untuk pencari kerja Indonesia.">
-    <meta property="og:image" content="{{ asset('images/fitur-section.jpg') }}">
+    <meta property="og:image" content="{{ asset('images/og-image.png') }}">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ url('/') }}">
     <meta property="twitter:title" content="TraKerja - Aplikasi Pelacakan Karir & Pekerjaan">
     <meta property="twitter:description" content="Pantau status lamaran, buat CV standar ATS, dan analisis skor interview Anda.">
-    <meta property="twitter:image" content="{{ asset('images/fitur-section.jpg') }}">
+    <meta property="twitter:image" content="{{ asset('images/og-image.png') }}">
 
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
