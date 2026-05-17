@@ -159,9 +159,8 @@
             </div>
         </div>
 
-        {{-- Premium Toast Container --}}
-        <div id="toast-container" class="fixed bottom-8 right-8 z-[10000] flex flex-col gap-3 pointer-events-none"></div>
 
+        @include('components.toast-notification')
         @livewireScripts
         
         {{-- Premium Confirmation Modal (Aligned with Job Modal) --}}
@@ -257,66 +256,6 @@
                     });
                 });
             });
-
-            // Toast Notification System
-            function showToast(type, title, message, duration = 4000) {
-                const container = document.getElementById('toast-container');
-                const toast = document.createElement('div');
-                
-                const icons = {
-                    success: 'ph-fill ph-check-circle text-emerald-500',
-                    error: 'ph-fill ph-warning-circle text-rose-500',
-                    info: 'ph-fill ph-info text-indigo-500',
-                    warning: 'ph-fill ph-warning text-amber-500'
-                };
-
-                const bgColors = {
-                    success: 'bg-emerald-50 border-emerald-100',
-                    error: 'bg-rose-50 border-rose-100',
-                    info: 'bg-indigo-50 border-indigo-100',
-                    warning: 'bg-amber-50 border-amber-100'
-                };
-
-                toast.className = `flex items-start gap-4 p-4 rounded-[1.25rem] border shadow-[0_20px_40px_-12px_rgba(0,0,0,0.1)] backdrop-blur-md pointer-events-auto transition-all duration-500 transform translate-x-12 opacity-0 ${bgColors[type] || bgColors.info}`;
-                toast.style.minWidth = '320px';
-                toast.style.maxWidth = '420px';
-
-                toast.innerHTML = `
-                    <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0">
-                        <i class="ph-bold ${icons[type] || icons.info} text-xl"></i>
-                    </div>
-                    <div class="flex-1 pt-0.5">
-                        <h4 class="text-[11px] font-black text-slate-900 uppercase tracking-widest">${title}</h4>
-                        <p class="text-[10px] font-bold text-slate-500 mt-1 leading-relaxed">${message}</p>
-                    </div>
-                    <button class="text-slate-300 hover:text-slate-600 transition-colors pt-1">
-                        <i class="ph-bold ph-x text-xs"></i>
-                    </button>
-                `;
-
-                container.appendChild(toast);
-
-                // Animate In
-                setTimeout(() => {
-                    toast.classList.remove('translate-x-12', 'opacity-0');
-                }, 10);
-
-                const removeToast = () => {
-                    toast.classList.add('translate-x-12', 'opacity-0');
-                    setTimeout(() => toast.remove(), 500);
-                };
-
-                toast.querySelector('button').onclick = removeToast;
-                if (duration > 0) setTimeout(removeToast, duration);
-            }
-
-            // Listen for Livewire showNotification
-            document.addEventListener('livewire:init', () => {
-                Livewire.on('showNotification', (event) => {
-                    // Support both object and spread arguments
-                    const data = Array.isArray(event) ? event[0] : event;
-                    showToast(data.type, data.title, data.message, data.duration);
-                });
 
                 // Listen for Confetti Event
                 Livewire.on('confetti', () => {

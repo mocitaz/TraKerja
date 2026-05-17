@@ -475,6 +475,7 @@
             }
         </script>
         
+        @include('components.toast-notification')
         @livewireScripts
     </body>
 </html>
