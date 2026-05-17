@@ -110,21 +110,21 @@ class EmailBlastController extends Controller
         $failCount = 0;
         $errors = [];
 
-        // Send emails asynchronously using queue to prevent timeout
+        // Send emails synchronously
         foreach ($users as $user) {
             try {
                 switch ($emailType) {
                     case 'ai_analyzer':
-                        Mail::to($user->email)->queue(new AiAnalyzerFreeTrialAnnouncementMail($user));
+                        Mail::to($user->email)->send(new AiAnalyzerFreeTrialAnnouncementMail($user));
                         break;
                     case 'job_reminder':
-                        Mail::to($user->email)->queue(new JobApplicationReminderMail($user));
+                        Mail::to($user->email)->send(new JobApplicationReminderMail($user));
                         break;
                     case 'monthly_motivation':
-                        Mail::to($user->email)->queue(new MonthlyMotivationMail($user));
+                        Mail::to($user->email)->send(new MonthlyMotivationMail($user));
                         break;
                     case 'welcome':
-                        Mail::to($user->email)->queue(new WelcomeMail($user));
+                        Mail::to($user->email)->send(new WelcomeMail($user));
                         break;
                     case 'verification':
                         // Kirim verification email untuk user yang belum terverifikasi
@@ -133,10 +133,10 @@ class EmailBlastController extends Controller
                         }
                         break;
                     case 'product_update':
-                        Mail::to($user->email)->queue(new \App\Mail\ProductUpdateMail($user));
+                        Mail::to($user->email)->send(new \App\Mail\ProductUpdateMail($user));
                         break;
                     case 'custom':
-                        Mail::to($user->email)->queue(new CustomEmailBlastMail(
+                        Mail::to($user->email)->send(new CustomEmailBlastMail(
                             $user,
                             $request->custom_subject,
                             $request->custom_content,
