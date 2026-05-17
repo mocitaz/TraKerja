@@ -247,7 +247,7 @@
                 }
             }
 
-            // Listen for Livewire confirm-action
+            // Listen for Livewire confirm-action and confetti
             document.addEventListener('livewire:init', () => {
                 Livewire.on('confirm-action', (event) => {
                     const data = Array.isArray(event) ? event[0] : event;
@@ -255,9 +255,7 @@
                         Livewire.dispatch(data.onConfirm, data.params || {});
                     });
                 });
-            });
 
-                // Listen for Confetti Event
                 Livewire.on('confetti', () => {
                     const duration = 3 * 1000;
                     const animationEnd = Date.now() + duration;
@@ -273,7 +271,6 @@
                         }
 
                         const particleCount = 50 * (timeLeft / duration);
-                        // since particles fall down, start a bit higher than random
                         confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
                         confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
                     }, 250);
