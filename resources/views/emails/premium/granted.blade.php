@@ -36,14 +36,6 @@
                             
                             <table border="0" cellpadding="0" cellspacing="0" class="receipt-table">
                                 <tr class="receipt-row">
-                                    <td class="label">Order ID</td>
-                                    <td class="value">TRK-{{ strtoupper(Str::random(8)) }}</td>
-                                </tr>
-                                <tr class="receipt-row">
-                                    <td class="label">Tanggal Transaksi</td>
-                                    <td class="value">{{ now()->format('d M Y, H:i') }} WIB</td>
-                                </tr>
-                                <tr class="receipt-row">
                                     <td class="label">Status Akun</td>
                                     <td class="value" style="color: #6366f1;">Lifetime Premium</td>
                                 </tr>
@@ -52,12 +44,20 @@
                                     <td class="value">Seumur Hidup</td>
                                 </tr>
                                 <tr class="receipt-row">
-                                    <td class="label">Metode Aktivasi</td>
-                                    <td class="value">Sistem (Direct)</td>
+                                    <td class="label">CV Builder</td>
+                                    <td class="value">Unlimited</td>
                                 </tr>
                                 <tr class="receipt-row">
-                                    <td class="label" style="padding-top: 20px; font-size: 13px;">Total Pembayaran</td>
-                                    <td class="value" style="padding-top: 20px; font-size: 16px; font-weight: 900; color: #10b981;">LUNAS</td>
+                                    <td class="label">Job Tracking</td>
+                                    <td class="value">Unlimited</td>
+                                </tr>
+                                <tr class="receipt-row">
+                                    <td class="label">Pro Templates</td>
+                                    <td class="value">Unlocked</td>
+                                </tr>
+                                <tr class="receipt-row">
+                                    <td class="label">Priority Support</td>
+                                    <td class="value">Active</td>
                                 </tr>
                             </table>
 

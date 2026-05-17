@@ -32,29 +32,34 @@
                     </tr>
                     <tr>
                         <td class="inner-content">
-                            <h2 style="margin: 20px 0 10px 0; font-size: 20px; font-weight: 900; color: #111111; letter-spacing: -0.02em;">Payment Successful</h2>
-                            <p style="margin: 0 0 30px 0; font-size: 13px; line-height: 1.6; color: #666666;">Hello {{ $user->name }}, your premium upgrade is complete. You now have full access to all TraKerja features.</p>
+                            <div style="display: inline-block; padding: 6px 12px; background-color: #f0fdf4; color: #16a34a; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px;">PEMBAYARAN BERHASIL</div>
+                            <h2 style="margin: 0 0 10px 0; font-size: 20px; font-weight: 900; color: #111111; letter-spacing: -0.02em;">Tanda Terima Premium</h2>
+                            <p style="margin: 0 0 30px 0; font-size: 13px; line-height: 1.6; color: #666666;">Halo <strong>{{ $user->name }}</strong>, terima kasih atas pembayaran Anda. Akun Anda telah resmi ditingkatkan ke Premium.</p>
                             
                             <table border="0" cellpadding="0" cellspacing="0" class="receipt-table">
                                 <tr class="receipt-row">
-                                    <td class="label">Receipt Number</td>
-                                    <td class="value">{{ $payment->order_id }}</td>
+                                    <td class="label">Nomor Tagihan</td>
+                                    <td class="value" style="font-family: monospace; font-size: 13px;">{{ $payment->order_id }}</td>
                                 </tr>
                                 <tr class="receipt-row">
-                                    <td class="label">Transaction Date</td>
-                                    <td class="value">{{ $payment->paid_at?->format('d M Y') ?? now()->format('d M Y') }}</td>
+                                    <td class="label">Tanggal Transaksi</td>
+                                    <td class="value">{{ $payment->paid_at?->format('d M Y, H:i') ?? now()->format('d M Y, H:i') }} WIB</td>
                                 </tr>
                                 <tr class="receipt-row">
-                                    <td class="label">Payment Method</td>
+                                    <td class="label">Paket Langganan</td>
+                                    <td class="value" style="color: #6366f1;">Lifetime Premium Access</td>
+                                </tr>
+                                <tr class="receipt-row">
+                                    <td class="label">Metode Pembayaran</td>
                                     <td class="value">{{ strtoupper($payment->payment_method ?? 'QRIS') }}</td>
                                 </tr>
                                 <tr class="total-row">
-                                    <td class="total-label">Amount Paid</td>
-                                    <td class="total-value">Rp {{ number_format($payment->amount, 0, ',', '.') }}</td>
+                                    <td class="total-label" style="padding-top: 20px; font-size: 13px;">Total Dibayar</td>
+                                    <td class="total-value" style="padding-top: 20px; font-size: 18px; font-weight: 900; color: #10b981;">Rp {{ number_format($payment->amount, 0, ',', '.') }}</td>
                                 </tr>
                             </table>
 
-                            <a href="{{ route('dashboard') }}" class="button">Access Premium Dashboard</a>
+                            <a href="{{ route('dashboard') }}" class="button">Masuk ke Dashboard</a>
                         </td>
                     </tr>
                     <tr>
