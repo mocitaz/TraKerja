@@ -21,6 +21,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\JobApplication;
 use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\Auth\GoogleAuthController;
+ 
+Route::get('auth/google',          [GoogleAuthController::class, 'redirect'])->name('auth.google');
+Route::get('auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
 
 Route::get('/', function () {
     return view('welcome');

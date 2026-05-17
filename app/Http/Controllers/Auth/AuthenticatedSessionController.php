@@ -25,30 +25,36 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         try {
-        $request->authenticate();
+            // Cek apakah user dengan email ini terdaftar via Google (password null)
+            $user = \App\Models\User::where('email', $request->email)->first();
+            if ($user && is_null($user->password)) {
+                return redirect()->route('login')
+                    ->withErrors(['email' => 'Akun ini terdaftar via Google. Silakan login dengan tombol "Continue with Google".']);
+            }
 
-        $request->session()->regenerate();
+            $request->authenticate();
 
-        // Admin users skip email verification
-        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-            return redirect()->intended(route('admin.index', absolute: false));
-        }
+            $request->session()->regenerate();
 
-        // For non-admin users, check email verification
-        if (! Auth::user()->hasVerifiedEmail()) {
-            Auth::logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            return redirect()->route('login')->with('status', 'email-not-verified');
-        }
+            // Admin users skip email verification
+            if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+                return redirect()->intended(route('admin.index', absolute: false));
+            }
 
-        // Regular users go to tracker
-        return redirect()->intended(route('tracker', absolute: false));
+            // For non-admin users, check email verification
+            if (! Auth::user()->hasVerifiedEmail()) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return redirect()->route('login')->with('status', 'email-not-verified');
+            }
+
+            // Regular users go to tracker
+            return redirect()->intended(route('tracker', absolute: false));
+
         } catch (\Illuminate\Validation\ValidationException $e) {
-            // Re-throw validation exceptions (like rate limiting, wrong credentials)
             throw $e;
         } catch (\Exception $e) {
-            // Log unexpected errors
             \Log::error('Login error', [
                 'email' => $request->email,
                 'error' => $e->getMessage(),
