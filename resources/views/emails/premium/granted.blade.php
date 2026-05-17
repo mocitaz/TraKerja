@@ -1,39 +1,74 @@
-<x-mail::message>
-# 🎉 Selamat Datang di Ekosistem Premium TraKerja!
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Premium Upgrade Confirmed</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style type="text/css">
+        body { margin: 0; padding: 0; min-width: 100%; background-color: #fcfcfd; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        .content { width: 100%; max-width: 480px; margin: 40px auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; border: 1px solid #f1f1f1; }
+        .header { padding: 40px 0 20px 0; text-align: center; }
+        .inner-content { padding: 0 40px 40px 40px; text-align: center; }
+        .receipt-table { width: 100%; border-collapse: collapse; margin-top: 30px; }
+        .receipt-row td { padding: 12px 0; border-bottom: 1px solid #f8f8f8; }
+        .label { color: #888888; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; text-align: left; }
+        .value { color: #111111; font-size: 12px; font-weight: 700; text-align: right; }
+        .button { display: inline-block; padding: 14px 30px; background-color: #10b981; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 13px; margin-top: 35px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
+        .footer { padding: 30px; text-align: center; color: #aaaaaa; font-size: 11px; border-top: 1px solid #f8f8f8; }
+        .badge { display: inline-block; padding: 6px 12px; background-color: #f0fdf4; color: #16a34a; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
+    </style>
+</head>
+<body style="margin: 0; padding: 0;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td bgcolor="#fcfcfd" align="center" style="padding: 40px 0;">
+                <table border="0" cellpadding="0" cellspacing="0" width="480" class="content">
+                    <tr>
+                        <td class="header">
+                            <img src="{{ asset('images/icon.png') }}" alt="TraKerja" width="48" style="display: block; margin: 0 auto;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="inner-content">
+                            <div class="badge">PRO UPGRADE</div>
+                            <h2 style="margin: 0 0 10px 0; font-size: 20px; font-weight: 900; color: #111111; letter-spacing: -0.02em;">Welcome to Premium</h2>
+                            <p style="margin: 0 0 30px 0; font-size: 13px; line-height: 1.6; color: #666666;">Halo <strong>{{ $user->name }}</strong>, status akun Anda telah berhasil ditingkatkan ke tingkat tertinggi. Nikmati kebebasan mengejar karier impian tanpa batas.</p>
+                            
+                            <table border="0" cellpadding="0" cellspacing="0" class="receipt-table">
+                                <tr class="receipt-row">
+                                    <td class="label">Status Akun</td>
+                                    <td class="value" style="color: #6366f1;">Lifetime Premium</td>
+                                </tr>
+                                <tr class="receipt-row">
+                                    <td class="label">Masa Berlaku</td>
+                                    <td class="value">Seumur Hidup</td>
+                                </tr>
+                                <tr class="receipt-row">
+                                    <td class="label">CV Builder</td>
+                                    <td class="value">Unlimited</td>
+                                </tr>
+                                <tr class="receipt-row">
+                                    <td class="label">Job Tracking</td>
+                                    <td class="value">Unlimited</td>
+                                </tr>
+                                <tr class="receipt-row">
+                                    <td class="label">Pro Templates</td>
+                                    <td class="value">Unlocked</td>
+                                </tr>
+                            </table>
 
-Halo **{{ $user->name }}**,
-
-Hari ini adalah langkah besar untuk percepatan karier Anda. Sistem kami telah berhasil memverifikasi transaksi Anda dan secara resmi mengaktifkan status **Lifetime Premium Access** di akun Anda. 
-
-Mulai detik ini, seluruh batasan telah diangkat. Anda memiliki kekuatan penuh untuk melacak lamaran, membangun CV kelas dunia, dan menganalisis peluang kerja layaknya seorang profesional tingkat atas.
-
-<x-mail::panel>
-**Status Akun:** 👑 Premium Access Terverifikasi  
-**Masa Berlaku:** ♾️ Seumur Hidup (Lifetime)
-</x-mail::panel>
-
-### 🚀 Apa Saja Superpower Baru Anda?
-
-Dengan status Premium, bersiaplah untuk mendominasi pasar kerja dengan fasilitas eksklusif berikut:
-
-<x-mail::table>
-| Fitur Eksklusif | Keuntungan Untuk Anda |
-| :--- | :--- |
-| **⚡ Unlimited Job Tracking** | Bebas melacak ratusan lamaran kerja tanpa batas kuota. |
-| **📄 Unlimited CV Builder** | Buat, ubah, dan unduh CV resolusi tinggi (PDF) sebanyak yang Anda mau. |
-| **🎨 Pro CV Templates** | Akses penuh ke seluruh desain CV premium yang teruji lolos filter HRD (ATS-Friendly). |
-| **🤖 Advanced AI Copilot** | Biarkan AI membedah dan merevisi CV Anda agar 10x lipat lebih memikat Recruiter. |
-| **💎 Priority Support** | Kendala teknis? Tiket bantuan Anda otomatis melompat ke urutan antrean paling depan. |
-</x-mail::table>
-
-Misi utama TraKerja hanya satu: **Membantu Anda menembus pekerjaan impian dengan cara yang paling cerdas dan sistematis.** 
-
-Jangan tunda lagi, mari kita mulai perjalanannya sekarang.
-
-<x-mail::button :url="config('app.url') . '/dashboard'" color="success">
-MASUK KE DASHBOARD PREMIUM SEKARANG
-</x-mail::button>
-
-Sampai jumpa di puncak karier,<br>
-**Tim Eksekutif {{ config('app.name') }}**
-</x-mail::message>
+                            <a href="{{ route('dashboard') }}" class="button">Masuk ke Dashboard</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="footer">
+                            <p style="margin: 0 0 5px 0;">&copy; {{ date('Y') }} TraKerja. All rights reserved.</p>
+                            <p style="margin: 0;">Butuh bantuan? Hubungi <a href="mailto:support@trakerja.com" style="color: #888888; text-decoration: none;">support@trakerja.com</a></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

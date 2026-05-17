@@ -37,7 +37,7 @@ class PremiumGrantedMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.premium.granted',
+            view: 'emails.premium.granted',
         );
     }
 
