@@ -27,7 +27,7 @@ class PremiumGrantedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Selamat! Anda Terpilih Mendapatkan Akses TraKerja Premium Gratis',
+            subject: 'Bukti Konfirmasi - Upgrade TraKerja Premium Berhasil',
         );
     }
 
