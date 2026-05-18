@@ -1,85 +1,130 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Email Verified - TraKerja</title>
+    <title>Email Pengguna Terverifikasi — TraKerja Admin</title>
 </head>
-<body style="margin:0; padding:0; background:#f6f2ff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color:#111827;">
+<body style="margin:0; padding:0; background-color:#f4f4f5; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color:#18181b;">
+
     <table role="presentation" style="width:100%; border-collapse:collapse;">
         <tr>
-            <td align="center" style="padding:36px 16px;">
-                <table role="presentation" style="width:100%; max-width:640px; border-collapse:collapse; background:#ffffff; border-radius:14px; box-shadow:0 8px 24px rgba(107,70,193,0.08), 0 2px 8px rgba(0,0,0,0.03); overflow:hidden;">
-                    <!-- Compact Professional Header -->
+            <td align="center" style="padding:40px 16px;">
+                <table role="presentation" style="width:100%; max-width:600px; border-collapse:collapse;">
+
                     @include('emails.partials.header', [
-                        'title' => 'User Email Verified',
-                        'subtitle' => 'A user has verified their email address'
+                        'title'    => 'Email Pengguna Terverifikasi',
+                        'subtitle' => 'Notifikasi sistem — pengguna telah menyelesaikan verifikasi alamat email'
                     ])
 
-                    <!-- Body -->
                     <tr>
-                        <td style="padding:24px 28px 8px;">
-                            <p style="margin:0 0 10px; font-size:14px; line-height:22px; color:#111827;">Hello Admin,</p>
-                            <p style="margin:0 0 16px; font-size:14px; line-height:22px; color:#374151;">A user has successfully verified their email address on TraKerja platform. Here are the details:</p>
+                        <td style="background-color:#ffffff; padding:40px 40px 32px 40px; border-left:1px solid #e4e4e7; border-right:1px solid #e4e4e7;">
 
-                            <!-- User Details Card -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; background:#fbfaff; border:1px solid #f0eaff; border-radius:10px; overflow:hidden; margin:12px 0 18px;">
+                            <p style="margin:0 0 20px 0; font-size:15px; line-height:24px; color:#18181b;">Kepada Tim Administrator,</p>
+
+                            <p style="margin:0 0 32px 0; font-size:15px; line-height:26px; color:#3f3f46;">
+                                Sistem mendeteksi penyelesaian proses verifikasi email oleh seorang pengguna pada platform TraKerja. Berikut adalah informasi lengkap mengenai akun yang bersangkutan.
+                            </p>
+
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:28px;">
                                 <tr>
-                                    <td style="padding:18px 20px;">
-                                        <div style="display:flex; align-items:center; margin-bottom:12px;">
-                                            <div style="width:8px; height:8px; background:#3b82f6; border-radius:50%; margin-right:8px;"></div>
-                                            <span style="font-size:12px; color:#6b7280; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Email Verified</span>
-                                        </div>
-                                        <h2 style="margin:0 0 12px; font-size:18px; line-height:24px; font-weight:700; color:#1f2937;">{{ $user->name }}</h2>
-                                        <div style="margin-bottom:12px;">
-                                            <span style="font-size:13px; color:#1f2937; font-weight:600;">{{ $user->email }}</span>
-                                        </div>
-                                        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-                                            <span style="display:inline-block; padding:4px 10px; background:#dbeafe; color:#1e40af; border-radius:6px; font-size:12px; font-weight:600;">Verified</span>
-                                            <span style="font-size:12px; color:#6b7280;">Verified at: {{ $user->email_verified_at->format('d M Y, H:i') }}</span>
-                                        </div>
-                                        <div style="margin-top:12px; padding-top:12px; border-top:1px solid #e5e7eb;">
-                                            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                                                <span style="font-size:12px; color:#6b7280;">Registered: {{ $user->created_at->format('d M Y, H:i') }}</span>
-                                            </div>
-                                        </div>
+                                    <td style="border-top:1px solid #e4e4e7; padding-top:24px;">
+                                        <p style="margin:0 0 20px 0; font-size:11px; font-weight:700; color:#7c3aed; letter-spacing:0.1em; text-transform:uppercase;">Informasi Akun</p>
+
+                                        <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:28px;">
+                                            <tr>
+                                                <td style="background-color:#faf5ff; border:1px solid #ede9fe; border-left:3px solid #6d28d9; border-radius:4px; padding:20px;">
+                                                    <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                                        <tr>
+                                                            <td style="padding-bottom:10px; border-bottom:1px solid #ede9fe;">
+                                                                <p style="margin:0 0 3px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">Nama Lengkap</p>
+                                                                <p style="margin:0; font-size:15px; font-weight:600; color:#18181b;">{{ $user->name }}</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding:10px 0; border-bottom:1px solid #ede9fe;">
+                                                                <p style="margin:0 0 3px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">Alamat Email</p>
+                                                                <p style="margin:0; font-size:14px; color:#18181b;">{{ $user->email }}</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding:10px 0; border-bottom:1px solid #ede9fe;">
+                                                                <p style="margin:0 0 3px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">Waktu Verifikasi</p>
+                                                                <p style="margin:0; font-size:14px; color:#18181b;">{{ $user->email_verified_at->format('d M Y, H:i') }} WIB</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding:10px 0; border-bottom:1px solid #ede9fe;">
+                                                                <p style="margin:0 0 3px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">Tanggal Registrasi</p>
+                                                                <p style="margin:0; font-size:14px; color:#18181b;">{{ $user->created_at->format('d M Y, H:i') }} WIB</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top:10px;">
+                                                                <p style="margin:0 0 6px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">Status Akun</p>
+                                                                <span style="display:inline-block; padding:3px 10px; background-color:#dcfce7; color:#15803d; border-radius:4px; font-size:11px; font-weight:700; text-transform:uppercase;">Aktif — Email Terverifikasi</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <p style="margin:0 0 20px 0; font-size:11px; font-weight:700; color:#7c3aed; letter-spacing:0.1em; text-transform:uppercase;">Tindakan yang Tersedia</p>
+
+                                        <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                            <tr>
+                                                <td style="padding:14px 0; border-bottom:1px solid #f4f4f5;">
+                                                    <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">Pantau Aktivitas Onboarding</p>
+                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">Tinjau apakah pengguna telah memulai penggunaan fitur utama seperti Job Tracker dan CV Builder dalam 48 jam pertama sejak verifikasi.</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:14px 0;">
+                                                    <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">Kelola Hak Akses jika Diperlukan</p>
+                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">Jika pengguna memerlukan konfigurasi khusus, lakukan perubahan melalui panel manajemen pengguna.</p>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
                                 </tr>
                             </table>
 
-                            <!-- Quick Actions -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; background:#f5f1ff; border:1px solid #ece7ff; border-radius:10px; margin:12px 0 18px;">
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:24px;">
                                 <tr>
-                                    <td style="padding:16px; text-align:center;">
-                                        <p style="margin:0 0 8px; font-size:13px; line-height:20px; color:#4b5563; font-weight:700;">Quick Actions</p>
-                                        <p style="margin:0; font-size:13px; line-height:20px; color:#6b7280;">You can view and manage this user from the admin panel.</p>
+                                    <td>
+                                        <a href="{{ config('app.url') }}/admin/users" style="display:inline-block; padding:12px 22px; background-color:#6d28d9; color:#ffffff; text-decoration:none; border-radius:6px; font-size:14px; font-weight:600; margin-right:10px; margin-bottom:8px;">Buka Panel Admin</a>
+                                        <a href="{{ config('app.url') }}/admin/users/{{ $user->id }}" style="display:inline-block; padding:12px 22px; background-color:#ffffff; color:#18181b; text-decoration:none; border-radius:6px; font-size:14px; font-weight:600; border:1px solid #d4d4d8; margin-bottom:8px;">Lihat Detail Pengguna</a>
                                     </td>
                                 </tr>
                             </table>
 
-                            <!-- CTA Button -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin:18px 0 12px;">
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:32px;">
                                 <tr>
-                                    <td align="center">
-                                        <a href="{{ config('app.url') }}/admin/users" style="display:inline-block; padding:12px 22px; background:linear-gradient(135deg, #7c5ce0 0%, #6b46c1 100%); color:#ffffff; text-decoration:none; border-radius:8px; font-weight:700; font-size:14px; letter-spacing:0.2px; box-shadow:0 6px 14px rgba(107,70,193,0.20);">View Admin Panel</a>
+                                    <td style="background-color:#f4f4f5; border:1px solid #e4e4e7; border-radius:4px; padding:14px 18px;">
+                                        <p style="margin:0; font-size:12px; line-height:20px; color:#71717a;">Notifikasi ini dikirimkan secara otomatis oleh sistem TraKerja setiap kali pengguna berhasil memverifikasi alamat email mereka.</p>
                                     </td>
                                 </tr>
                             </table>
 
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-top:8px;">
+                            <table role="presentation" style="width:100%; border-collapse:collapse; border-top:1px solid #e4e4e7;">
                                 <tr>
-                                    <td style="font-size:12px; line-height:18px; color:#6b7280;">This notification was sent automatically when a user verified their email address on TraKerja.</td>
+                                    <td style="padding-top:24px;">
+                                        <p style="margin:0 0 4px 0; font-size:14px; line-height:22px; color:#3f3f46;">Hormat kami,</p>
+                                        <p style="margin:0 0 2px 0; font-size:14px; font-weight:700; color:#6d28d9;">Sistem TraKerja</p>
+                                        <p style="margin:0; font-size:13px; color:#a1a1aa;">PT Teknalogi Transformasi Digital</p>
+                                    </td>
                                 </tr>
                             </table>
+
                         </td>
                     </tr>
 
-                    <!-- Compact Professional Footer -->
                     @include('emails.partials.footer')
                 </table>
             </td>
         </tr>
     </table>
+
 </body>
 </html>
-

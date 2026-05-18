@@ -4,9 +4,12 @@ namespace App\Livewire\Admin;
 
 use App\Models\User;
 use App\Mail\AiAnalyzerFreeTrialAnnouncementMail;
+use App\Mail\EmailVerificationReminderMail;
+use App\Mail\HiringSeasonAlertMail;
 use App\Mail\JobApplicationReminderMail;
 use App\Mail\MonthlyMotivationMail;
 use App\Mail\PremiumGrantedMail;
+use App\Mail\ReEngagementMail;
 use App\Mail\WelcomeMail;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -324,7 +327,7 @@ class UserManagement extends Component
     public function sendEmail()
     {
         $this->validate([
-            'emailType' => 'required|in:welcome,verification,ai_analyzer,job_reminder,monthly_motivation,premium_granted,product_update',
+            'emailType' => 'required|in:welcome,verification,verification_reminder,ai_analyzer,job_reminder,monthly_motivation,premium_granted,product_update,hiring_season,re_engagement',
         ]);
         
         $user = User::findOrFail($this->emailTargetUserId);
@@ -346,6 +349,9 @@ class UserManagement extends Component
                         return;
                     }
                     break;
+                case 'verification_reminder':
+                    Mail::to($user->email)->send(new EmailVerificationReminderMail($user));
+                    break;
                 case 'ai_analyzer':
                     Mail::to($user->email)->send(new AiAnalyzerFreeTrialAnnouncementMail($user));
                     break;
@@ -361,6 +367,12 @@ class UserManagement extends Component
                 case 'product_update':
                     Mail::to($user->email)->send(new \App\Mail\ProductUpdateMail($user));
                     break;
+                case 'hiring_season':
+                    Mail::to($user->email)->send(new HiringSeasonAlertMail($user));
+                    break;
+                case 're_engagement':
+                    Mail::to($user->email)->send(new ReEngagementMail($user));
+                    break;
             }
             
             Log::info('Admin sent email to user', [
@@ -374,13 +386,16 @@ class UserManagement extends Component
             $this->closeSendEmailModal();
             
             $emailTypeNames = [
-                'welcome' => 'Welcome Email',
-                'verification' => 'Verification Email',
-                'ai_analyzer' => 'AI Analyzer Announcement',
-                'job_reminder' => 'Job Application Reminder',
-                'monthly_motivation' => 'Monthly Motivation',
-                'premium_granted' => 'Premium Granted Notification',
-                'product_update' => 'Major Product Update',
+                'welcome'                 => 'Welcome Email',
+                'verification'            => 'Verification Email',
+                'verification_reminder'   => 'Verification Reminder',
+                'ai_analyzer'             => 'AI Analyzer Announcement',
+                'job_reminder'            => 'Job Application Reminder',
+                'monthly_motivation'      => 'Monthly Motivation',
+                'premium_granted'         => 'Premium Granted Notification',
+                'product_update'          => 'Major Product Update',
+                'hiring_season'           => 'Hiring Season Alert',
+                're_engagement'           => 'Re-engagement Email',
             ];
             
             $this->dispatch('showNotification', [

@@ -1,83 +1,152 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Support Ticket - TraKerja</title>
+    <title>Tiket Bantuan Baru — TraKerja Admin</title>
 </head>
-<body style="margin:0; padding:0; background:#f6f2ff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color:#111827;">
+<body style="margin:0; padding:0; background-color:#f4f4f5; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color:#18181b;">
+
     <table role="presentation" style="width:100%; border-collapse:collapse;">
         <tr>
-            <td align="center" style="padding:36px 16px;">
-                <table role="presentation" style="width:100%; max-width:640px; border-collapse:collapse; background:#ffffff; border-radius:14px; box-shadow:0 8px 24px rgba(107,70,193,0.08), 0 2px 8px rgba(0,0,0,0.03); overflow:hidden;">
-                    
-                    <!-- Compact Professional Header -->
+            <td align="center" style="padding:40px 16px;">
+                <table role="presentation" style="width:100%; max-width:600px; border-collapse:collapse;">
+
                     @include('emails.partials.header', [
-                        'title' => 'New Support Ticket',
-                        'subtitle' => 'Tiket bantuan baru telah diajukan oleh pengguna'
+                        'title'    => 'Tiket Bantuan Baru',
+                        'subtitle' => 'Notifikasi sistem — seorang pengguna mengajukan permintaan dukungan'
                     ])
 
-                    <!-- Body -->
                     <tr>
-                        <td style="padding:24px 28px 8px;">
-                            <p style="margin:0 0 10px; font-size:14px; line-height:22px; color:#111827;">Halo Tim Admin,</p>
-                            <p style="margin:0 0 16px; font-size:14px; line-height:22px; color:#374151;">Seorang pengguna baru saja mengirimkan tiket bantuan baru melalui Customer Support Desk. Berikut rinciannya:</p>
+                        <td style="background-color:#ffffff; padding:40px 40px 32px 40px; border-left:1px solid #e4e4e7; border-right:1px solid #e4e4e7;">
 
-                            <!-- Ticket Details Card -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; background:#fbfaff; border:1px solid #f0eaff; border-radius:10px; overflow:hidden; margin:12px 0 18px;">
+                            <p style="margin:0 0 20px 0; font-size:15px; line-height:24px; color:#18181b;">
+                                Kepada Tim Administrator,
+                            </p>
+
+                            <p style="margin:0 0 32px 0; font-size:15px; line-height:26px; color:#3f3f46;">
+                                Sistem mendeteksi tiket bantuan baru yang diajukan melalui Customer Support Desk TraKerja. Segera tinjau dan berikan respons dalam waktu yang wajar untuk menjaga kepuasan pengguna.
+                            </p>
+
+                            <!-- Section Label -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:28px;">
                                 <tr>
-                                    <td style="padding:18px 20px;">
-                                        <div style="display:flex; align-items:center; margin-bottom:12px;">
-                                            <div style="width:8px; height:8px; background:#f59e0b; border-radius:50%; margin-right:8px;"></div>
-                                            <span style="font-size:11px; color:#6b7280; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">{{ $ticket->category_label }}</span>
-                                        </div>
-                                        
-                                        <h2 style="margin:0 0 12px; font-size:16px; line-height:22px; font-weight:700; color:#1f2937;">{{ $ticket->subject }}</h2>
-                                        
-                                        <div style="margin-bottom:16px; padding:12px; background:#ffffff; border:1px solid #f3f4f6; border-radius:8px; font-size:13px; line-height:20px; color:#4b5563; white-space:pre-line;">
-                                            {{ $ticket->message }}
-                                        </div>
+                                    <td style="border-top:1px solid #e4e4e7; padding-top:24px;">
+                                        <p style="margin:0 0 20px 0; font-size:11px; font-weight:700; color:#7c3aed; letter-spacing:0.1em; text-transform:uppercase;">
+                                            Detail Tiket
+                                        </p>
 
-                                        <table role="presentation" style="width:100%; border-collapse:collapse; font-size:12px; color:#6b7280;">
+                                        <!-- Ticket Card -->
+                                        <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:28px;">
                                             <tr>
-                                                <td style="padding:4px 0; width:120px; font-weight:600; color:#4b5563;">Pengirim:</td>
-                                                <td style="padding:4px 0; font-weight:700; color:#1f2937;">{{ $ticket->user->name ?? 'Guest' }}</td>
+                                                <td style="background-color:#faf5ff; border:1px solid #ede9fe; border-left:3px solid #6d28d9; border-radius:4px; padding:20px;">
+                                                    <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                                        <tr>
+                                                            <td style="padding-bottom:10px; border-bottom:1px solid #ede9fe;">
+                                                                <p style="margin:0 0 3px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">Kategori</p>
+                                                                <p style="margin:0; font-size:14px; font-weight:600; color:#18181b;">{{ $ticket->category_label }}</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding:10px 0; border-bottom:1px solid #ede9fe;">
+                                                                <p style="margin:0 0 3px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">Subjek</p>
+                                                                <p style="margin:0; font-size:15px; font-weight:600; color:#18181b;">{{ $ticket->subject }}</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding:10px 0; border-bottom:1px solid #ede9fe;">
+                                                                <p style="margin:0 0 3px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">Pengirim</p>
+                                                                <p style="margin:0; font-size:14px; color:#18181b;">{{ $ticket->user->name ?? 'Guest' }} &mdash; <span style="color:#71717a;">{{ $ticket->user->email ?? 'Tidak tersedia' }}</span></p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding:10px 0; border-bottom:1px solid #ede9fe;">
+                                                                <p style="margin:0 0 3px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">Waktu Pengajuan</p>
+                                                                <p style="margin:0; font-size:14px; color:#18181b;">{{ $ticket->created_at->format('d M Y, H:i') }} WIB</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top:10px;">
+                                                                <p style="margin:0 0 8px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">Isi Pesan</p>
+                                                                <p style="margin:0; font-size:13px; line-height:21px; color:#52525b; white-space:pre-line;">{{ $ticket->message }}</p>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <!-- Admin Actions -->
+                                        <p style="margin:0 0 20px 0; font-size:11px; font-weight:700; color:#7c3aed; letter-spacing:0.1em; text-transform:uppercase;">
+                                            Panduan Penanganan
+                                        </p>
+
+                                        <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                            <tr>
+                                                <td style="padding:14px 0; border-bottom:1px solid #f4f4f5;">
+                                                    <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">Tinjau Konteks Pengguna</p>
+                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">Sebelum merespons, periksa riwayat akun dan aktivitas pengguna melalui panel admin untuk memahami konteks permasalahan secara menyeluruh.</p>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding:4px 0; font-weight:600; color:#4b5563;">Email:</td>
-                                                <td style="padding:4px 0; font-weight:700; color:#1f2937;">{{ $ticket->user->email ?? 'no-email' }}</td>
+                                                <td style="padding:14px 0; border-bottom:1px solid #f4f4f5;">
+                                                    <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">Berikan Respons dalam 24 Jam</p>
+                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">Standar layanan kami menargetkan respons awal dalam satu hari kerja. Gunakan fitur balasan cepat di panel admin untuk efisiensi penanganan.</p>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding:4px 0; font-weight:600; color:#4b5563;">Tanggal Kirim:</td>
-                                                <td style="padding:4px 0;">{{ $ticket->created_at->format('d M Y, H:i') }} WIB</td>
+                                                <td style="padding:14px 0;">
+                                                    <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">Perbarui Status Tiket</p>
+                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">Pastikan status tiket diperbarui setiap kali ada progres penanganan agar pengguna mendapatkan notifikasi perkembangan yang tepat waktu.</p>
+                                                </td>
                                             </tr>
                                         </table>
                                     </td>
                                 </tr>
                             </table>
 
-                            <!-- CTA Button -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin:24px 0 12px;">
+                            <!-- CTA -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:24px;">
                                 <tr>
-                                    <td align="center">
-                                        <a href="{{ config('app.url') }}/admin/feedbacks" style="display:inline-block; padding:12px 24px; background:linear-gradient(135deg, #7c5ce0 0%, #6b46c1 100%); color:#ffffff; text-decoration:none; border-radius:8px; font-weight:700; font-size:13px; letter-spacing:0.2px; box-shadow:0 6px 14px rgba(107,70,193,0.20);">Balas Tiket di Admin Panel</a>
+                                    <td>
+                                        <a href="{{ config('app.url') }}/admin/feedbacks"
+                                           style="display:inline-block; padding:12px 22px; background-color:#6d28d9; color:#ffffff; text-decoration:none; border-radius:6px; font-size:14px; font-weight:600; margin-right:10px; margin-bottom:8px;">
+                                            Balas Tiket di Admin Panel
+                                        </a>
                                     </td>
                                 </tr>
                             </table>
 
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-top:16px;">
+                            <!-- System Note -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:32px;">
                                 <tr>
-                                    <td style="font-size:11px; line-height:16px; color:#9ca3af; text-align:center;">This is an automated system notification from TraKerja support gateway.</td>
+                                    <td style="background-color:#f4f4f5; border:1px solid #e4e4e7; border-radius:4px; padding:14px 18px;">
+                                        <p style="margin:0; font-size:12px; line-height:20px; color:#71717a;">
+                                            Notifikasi ini dikirimkan secara otomatis oleh sistem TraKerja setiap kali pengguna mengajukan tiket bantuan baru. Apabila Anda menerima email ini secara tidak sengaja, harap hubungi tim teknis.
+                                        </p>
+                                    </td>
                                 </tr>
                             </table>
+
+                            <!-- Sign-off -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; border-top:1px solid #e4e4e7;">
+                                <tr>
+                                    <td style="padding-top:24px;">
+                                        <p style="margin:0 0 4px 0; font-size:14px; line-height:22px; color:#3f3f46;">Hormat kami,</p>
+                                        <p style="margin:0 0 2px 0; font-size:14px; font-weight:700; color:#6d28d9;">Sistem TraKerja</p>
+                                        <p style="margin:0; font-size:13px; color:#a1a1aa;">PT Teknalogi Transformasi Digital</p>
+                                    </td>
+                                </tr>
+                            </table>
+
                         </td>
                     </tr>
 
-                    <!-- Compact Professional Footer -->
                     @include('emails.partials.footer')
                 </table>
             </td>
         </tr>
     </table>
+
 </body>
 </html>

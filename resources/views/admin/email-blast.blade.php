@@ -192,6 +192,41 @@
                                 </div>
                             </label>
 
+                            <!-- Hiring Season Alert -->
+                            <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                <input type="radio" name="email_type" value="hiring_season" class="sr-only" required>
+                                <div class="flex items-center gap-4 w-full">
+                                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i class="ph-duotone ph-briefcase text-2xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-sm font-bold text-slate-900">Hiring Season Alert</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Informasi musim rekrutmen aktif dan tips strategis mencari kerja.</p>
+                                    </div>
+                                    <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                        <i class="ph-bold ph-check text-xs"></i>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <!-- Re-engagement -->
+                            <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                <input type="radio" name="email_type" value="re_engagement" class="sr-only" required>
+                                <div class="flex items-center gap-4 w-full">
+                                    <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i class="ph-duotone ph-hand-heart text-2xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-sm font-bold text-slate-900">Re-engagement</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Ajak kembali pengguna yang sudah lama tidak aktif di platform.</p>
+                                    </div>
+                                    <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                        <i class="ph-bold ph-check text-xs"></i>
+                                    </div>
+                                </div>
+                            </label>
+
+
                             <!-- Custom Email -->
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="custom" class="sr-only" required onchange="toggleCustomEmailFields()">
@@ -714,6 +749,8 @@
             'job_reminder': 'Job Reminder',
             'monthly_motivation': 'Monthly Motivation',
             'product_update': 'Major Product Update',
+            'hiring_season': 'Hiring Season Alert',
+            're_engagement': 'Re-engagement',
             'custom': 'Custom Email'
         }[emailType] || 'Email Blast';
         

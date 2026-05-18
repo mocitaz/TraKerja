@@ -1,81 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Resume Analyzer - Gratis!</title>
+    <title>Akses Gratis AI Resume Analyzer — TraKerja</title>
 </head>
-<body style="margin:0; padding:0; background:#f6f2ff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color:#111827;">
+<body style="margin:0; padding:0; background-color:#f4f4f5; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color:#18181b;">
+
     <table role="presentation" style="width:100%; border-collapse:collapse;">
         <tr>
-            <td align="center" style="padding:36px 16px;">
-                <table role="presentation" style="width:100%; max-width:640px; border-collapse:collapse; background:#ffffff; border-radius:14px; box-shadow:0 8px 24px rgba(107,70,193,0.08), 0 2px 8px rgba(0,0,0,0.03); overflow:hidden;">
-                    <!-- Compact Professional Header -->
+            <td align="center" style="padding:40px 16px;">
+                <table role="presentation" style="width:100%; max-width:600px; border-collapse:collapse;">
+
                     @include('emails.partials.header', [
-                        'title' => 'AI Resume Analyzer - Gratis!',
-                        'subtitle' => 'Tingkatkan CV Anda dengan teknologi AI'
+                        'title'    => 'AI Resume Analyzer',
+                        'subtitle' => 'Akses gratis untuk analisis CV berbasis kecerdasan buatan'
                     ])
 
-                    <!-- Body -->
                     <tr>
-                        <td style="padding:24px 28px 8px;">
-                            <p style="margin:0 0 10px; font-size:14px; line-height:22px; color:#111827;">Halo <strong>{{ $user->name }}</strong>,</p>
-                            <p style="margin:0 0 16px; font-size:14px; line-height:22px; color:#374151;">Kami punya kabar gembira! Sekarang Anda bisa mencoba <strong>AI Resume Analyzer</strong> secara gratis untuk meningkatkan kualitas CV Anda.</p>
+                        <td style="background-color:#ffffff; padding:40px 40px 32px 40px; border-left:1px solid #e4e4e7; border-right:1px solid #e4e4e7;">
 
-                            <!-- Highlight Box -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; background:linear-gradient(135deg, #7c5ce0 0%, #6b46c1 100%); border-radius:10px; margin:16px 0 20px; overflow:hidden;">
-                                <tr>
-                                    <td style="padding:20px; text-align:center;">
-                                        <h2 style="margin:0 0 8px; font-size:22px; line-height:28px; font-weight:700; color:#ffffff;">GRATIS 1x AI Resume Analyzer</h2>
-                                        <p style="margin:0; font-size:14px; line-height:20px; color:#ffffff; opacity:0.95;">Analisis mendalam CV Anda dengan teknologi AI canggih</p>
-                                    </td>
-                                </tr>
-                            </table>
+                            <p style="margin:0 0 20px 0; font-size:15px; line-height:24px; color:#18181b;">
+                                Yth. <strong>{{ $user->name }}</strong>,
+                            </p>
 
-                            <!-- Features -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin:12px 0 18px;">
+                            <p style="margin:0 0 20px 0; font-size:15px; line-height:26px; color:#3f3f46;">
+                                Sebagai bagian dari komitmen kami dalam mendukung perjalanan karier setiap pengguna TraKerja, kami memberikan akses <strong>gratis satu kali</strong> untuk fitur AI Resume Analyzer — alat analisis CV berbasis kecerdasan buatan yang dirancang untuk meningkatkan daya saing Anda di pasar kerja.
+                            </p>
+
+                            <p style="margin:0 0 32px 0; font-size:15px; line-height:26px; color:#3f3f46;">
+                                Fitur ini sebelumnya hanya tersedia untuk pengguna Premium. Manfaatkan kesempatan ini sebaik mungkin.
+                            </p>
+
+                            <!-- Section Label -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:28px;">
                                 <tr>
-                                    <td style="padding-bottom:12px;">
-                                        <p style="margin:0 0 12px; font-size:13px; line-height:20px; color:#4b5563; font-weight:700;">Apa yang Anda dapatkan:</p>
-                                        <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                    <td style="border-top:1px solid #e4e4e7; padding-top:24px;">
+                                        <p style="margin:0 0 24px 0; font-size:11px; font-weight:700; color:#7c3aed; letter-spacing:0.1em; text-transform:uppercase;">
+                                            Yang Akan Anda Dapatkan
+                                        </p>
+
+                                        <!-- Feature 1 -->
+                                        <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:0;">
                                             <tr>
-                                                <td style="padding:12px 0; border-bottom:1px solid #f0eaff;">
-                                                    <table role="presentation" style="border-collapse:collapse;">
-                                                        <tr>
-                                                            <td width="20" style="vertical-align:top; padding-top:2px;"><span style="display:inline-block; width:6px; height:6px; background:#7c5ce0; border-radius:50%;"></span></td>
-                                                            <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;"><strong>Analisis Komprehensif</strong> - Setiap bagian CV dianalisis: pengalaman, pendidikan, skills, dan struktur</td>
-                                                        </tr>
-                                                    </table>
+                                                <td style="padding:16px 0; border-bottom:1px solid #f4f4f5;">
+                                                    <p style="margin:0 0 5px 0; font-size:14px; font-weight:600; color:#18181b;">Analisis CV Komprehensif</p>
+                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">Setiap bagian CV Anda — mulai dari pengalaman kerja, pendidikan, keahlian, hingga struktur dokumen — dianalisis secara menyeluruh oleh sistem AI kami.</p>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding:12px 0; border-bottom:1px solid #f0eaff;">
-                                                    <table role="presentation" style="border-collapse:collapse;">
-                                                        <tr>
-                                                            <td width="20" style="vertical-align:top; padding-top:2px;"><span style="display:inline-block; width:6px; height:6px; background:#7c5ce0; border-radius:50%;"></span></td>
-                                                            <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;"><strong>Rekomendasi Perbaikan</strong> - Saran konkret untuk memperbaiki CV agar lebih menarik bagi recruiter</td>
-                                                        </tr>
-                                                    </table>
+                                                <td style="padding:16px 0; border-bottom:1px solid #f4f4f5;">
+                                                    <p style="margin:0 0 5px 0; font-size:14px; font-weight:600; color:#18181b;">Rekomendasi Perbaikan yang Konkret</p>
+                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">Dapatkan saran perbaikan yang spesifik dan dapat langsung diterapkan untuk membuat CV Anda lebih menarik di mata rekruter.</p>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding:12px 0; border-bottom:1px solid #f0eaff;">
-                                                    <table role="presentation" style="border-collapse:collapse;">
-                                                        <tr>
-                                                            <td width="20" style="vertical-align:top; padding-top:2px;"><span style="display:inline-block; width:6px; height:6px; background:#7c5ce0; border-radius:50%;"></span></td>
-                                                            <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;"><strong>ATS Optimization</strong> - Pastikan CV Anda lolos sistem Applicant Tracking System</td>
-                                                        </tr>
-                                                    </table>
+                                                <td style="padding:16px 0; border-bottom:1px solid #f4f4f5;">
+                                                    <p style="margin:0 0 5px 0; font-size:14px; font-weight:600; color:#18181b;">Optimasi ATS (Applicant Tracking System)</p>
+                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">Sistem AI akan mengevaluasi apakah CV Anda kompatibel dengan perangkat lunak ATS yang digunakan oleh mayoritas perusahaan besar saat ini.</p>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding:12px 0;">
-                                                    <table role="presentation" style="border-collapse:collapse;">
-                                                        <tr>
-                                                            <td width="20" style="vertical-align:top; padding-top:2px;"><span style="display:inline-block; width:6px; height:6px; background:#7c5ce0; border-radius:50%;"></span></td>
-                                                            <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;"><strong>Scoring & Rating</strong> - Lihat score CV Anda dan area yang perlu ditingkatkan</td>
-                                                        </tr>
-                                                    </table>
+                                                <td style="padding:16px 0;">
+                                                    <p style="margin:0 0 5px 0; font-size:14px; font-weight:600; color:#18181b;">Skor dan Rating CV</p>
+                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">Lihat skor keseluruhan CV Anda beserta rincian per-kategori sehingga Anda tahu persis area mana yang perlu ditingkatkan terlebih dahulu.</p>
                                                 </td>
                                             </tr>
                                         </table>
@@ -83,87 +71,53 @@
                                 </tr>
                             </table>
 
-                            <!-- Steps -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; background:#fbfaff; border:1px solid #f0eaff; border-radius:10px; margin:12px 0 18px;">
+                            <!-- Callout Box -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:36px;">
                                 <tr>
-                                    <td style="padding:16px 18px;">
-                                        <p style="margin:0 0 12px; font-size:13px; line-height:20px; color:#4b5563; font-weight:700;">Cara menggunakan (sangat mudah!):</p>
-                                        <table role="presentation" style="width:100%; border-collapse:collapse;">
-                                            <tr>
-                                                <td width="24" style="vertical-align:top; padding-top:2px;"><span style="display:inline-block; width:20px; height:20px; border-radius:4px; background:#6b7280; text-align:center; color:#fff; font-size:12px; line-height:20px; font-weight:700;">1</span></td>
-                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Login ke akun TraKerja Anda</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="24" style="vertical-align:top; padding-top:6px;"><span style="display:inline-block; width:20px; height:20px; border-radius:4px; background:#6b7280; text-align:center; color:#fff; font-size:12px; line-height:20px; font-weight:700;">2</span></td>
-                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Klik menu "AI Analyzer" di navigasi atas</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="24" style="vertical-align:top; padding-top:6px;"><span style="display:inline-block; width:20px; height:20px; border-radius:4px; background:#6b7280; text-align:center; color:#fff; font-size:12px; line-height:20px; font-weight:700;">3</span></td>
-                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Upload CV Anda (PDF atau DOCX)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="24" style="vertical-align:top; padding-top:6px;"><span style="display:inline-block; width:20px; height:20px; border-radius:4px; background:#6b7280; text-align:center; color:#fff; font-size:12px; line-height:20px; font-weight:700;">4</span></td>
-                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Klik "Analyze" dan tunggu AI bekerja</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="24" style="vertical-align:top; padding-top:6px;"><span style="display:inline-block; width:20px; height:20px; border-radius:4px; background:#6b7280; text-align:center; color:#fff; font-size:12px; line-height:20px; font-weight:700;">5</span></td>
-                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Dapatkan hasil analisis lengkap + rekomendasi!</td>
-                                            </tr>
-                                        </table>
+                                    <td style="background-color:#faf5ff; border:1px solid #ede9fe; border-left:3px solid #6d28d9; border-radius:4px; padding:16px 20px;">
+                                        <p style="margin:0 0 6px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">Catatan Penting</p>
+                                        <p style="margin:0; font-size:13px; line-height:21px; color:#52525b;">
+                                            Akses gratis ini berlaku untuk satu kali analisis dan tersedia khusus bagi pengguna pada paket Free. Upload CV Anda dalam format PDF atau DOCX untuk hasil analisis yang optimal.
+                                        </p>
                                     </td>
                                 </tr>
                             </table>
 
-                            <!-- Warning Box -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; background:#fff3cd; border-left:4px solid #ffc107; border-radius:4px; margin:12px 0 18px;">
+                            <!-- CTA -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:36px;">
                                 <tr>
-                                    <td style="padding:16px 18px;">
-                                        <p style="margin:0 0 6px; font-size:13px; line-height:20px; color:#856404; font-weight:700;">Penawaran Terbatas!</p>
-                                        <p style="margin:0; font-size:13px; line-height:20px; color:#856404;">Ini adalah kesempatan <strong>GRATIS 1x</strong> untuk user free tier. Jangan sia-siakan kesempatan ini untuk meningkatkan kualitas CV Anda!</p>
+                                    <td>
+                                        <a href="{{ config('app.url') }}/ai-analyzer"
+                                           style="display:inline-block; padding:12px 22px; background-color:#6d28d9; color:#ffffff; text-decoration:none; border-radius:6px; font-size:14px; font-weight:600; margin-right:10px; margin-bottom:8px;">
+                                            Analisis CV Saya Sekarang
+                                        </a>
+                                        <a href="{{ config('app.url') }}/dashboard"
+                                           style="display:inline-block; padding:12px 22px; background-color:#ffffff; color:#18181b; text-decoration:none; border-radius:6px; font-size:14px; font-weight:600; border:1px solid #d4d4d8; margin-bottom:8px;">
+                                            Kembali ke Dashboard
+                                        </a>
                                     </td>
                                 </tr>
                             </table>
 
-                            <!-- CTA Button -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin:18px 0 12px;">
+                            <!-- Sign-off -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; border-top:1px solid #e4e4e7;">
                                 <tr>
-                                    <td align="center">
-                                        <a href="{{ config('app.url') }}/ai-analyzer" style="display:inline-block; padding:12px 22px; background:linear-gradient(135deg, #7c5ce0 0%, #6b46c1 100%); color:#ffffff; text-decoration:none; border-radius:8px; font-weight:700; font-size:14px; letter-spacing:0.2px; box-shadow:0 6px 14px rgba(107,70,193,0.20);">Coba AI Analyzer Sekarang</a>
+                                    <td style="padding-top:24px;">
+                                        <p style="margin:0 0 4px 0; font-size:14px; line-height:22px; color:#3f3f46;">Hormat kami,</p>
+                                        <p style="margin:0 0 2px 0; font-size:14px; font-weight:700; color:#6d28d9;">Tim TraKerja</p>
+                                        <p style="margin:0; font-size:13px; color:#a1a1aa;">PT Teknalogi Transformasi Digital</p>
                                     </td>
                                 </tr>
                             </table>
 
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-top:8px;">
-                                <tr>
-                                    <td style="font-size:12px; line-height:18px; color:#6b7280; text-align:center;">
-                                        <p style="margin:0 0 8px;"><strong>Kenapa gratis?</strong></p>
-                                        <p style="margin:0;">Kami ingin membantu Anda mendapatkan pekerjaan impian! Ini adalah cara kami mendukung pencarian kerja Anda dengan teknologi terbaik.</p>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-top:16px; padding-top:16px; border-top:1px solid #f0eaff;">
-                                <tr>
-                                    <td style="font-size:12px; line-height:18px; color:#6b7280;">Punya pertanyaan atau butuh bantuan? Balas email ini atau hubungi tim support kami.</td>
-                                </tr>
-                            </table>
-
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-top:12px;">
-                                <tr>
-                                    <td style="font-size:12px; line-height:18px; color:#6b7280;">
-                                        Salam sukses,<br>
-                                        <strong style="color:#7c5ce0;">Tim TraKerja</strong>
-                                    </td>
-                                </tr>
-                            </table>
                         </td>
                     </tr>
 
-                    <!-- Compact Professional Footer -->
                     @include('emails.partials.footer')
                 </table>
             </td>
         </tr>
     </table>
+
 </body>
 </html>

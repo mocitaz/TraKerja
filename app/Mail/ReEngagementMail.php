@@ -2,23 +2,25 @@
 
 namespace App\Mail;
 
-use App\Models\UserGoal;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class GoalAchievedMail extends Mailable
+class ReEngagementMail extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public User $user;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(
-        public UserGoal $goal
-    ) {
+    public function __construct(User $user)
+    {
+        $this->user = $user;
     }
 
     /**
@@ -27,7 +29,7 @@ class GoalAchievedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Selamat! Goal Tercapai: ' . $this->goal->title,
+            subject: 'Kami Merindukanmu, ' . $this->user->name . ' — Yuk Kembali ke TraKerja!',
         );
     }
 
@@ -37,17 +39,10 @@ class GoalAchievedMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.goal-achieved',
+            view: 'emails.re_engagement',
+            with: [
+                'user' => $this->user,
+            ],
         );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
     }
 }

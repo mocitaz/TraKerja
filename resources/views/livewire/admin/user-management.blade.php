@@ -656,40 +656,52 @@
                             <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-3">
                                 Pilih Tipe Email
                             </label>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                @php
-                                    $emailTypes = [
-                                        'welcome' => ['label' => 'Welcome Email', 'desc' => 'Email selamat datang'],
-                                        'verification' => ['label' => 'Verification Email', 'desc' => 'Email verifikasi akun'],
-                                        'ai_analyzer' => ['label' => 'AI Analyzer', 'desc' => 'Pengumuman trial gratis'],
-                                        'job_reminder' => ['label' => 'Job Reminder', 'desc' => 'Ajakan catat lamaran'],
-                                        'monthly_motivation' => ['label' => 'Monthly Motivation', 'desc' => 'Bulan baru semangat baru'],
-                                        'premium_granted' => ['label' => 'Premium Granted', 'desc' => 'Selamat dapat premium gratis'],
-                                        'product_update' => ['label' => 'Major Product Update', 'desc' => 'Pengumuman resmi fitur terbaru'],
-                                    ];
-                                @endphp
-                                
+                            @php
+                                $emailTypes = [
+                                    // Baris 1 — Onboarding
+                                    'welcome'            => ['label' => 'Welcome',           'desc' => 'Email selamat datang',        'icon' => 'ph-hand-waving'],
+                                    'verification'       => ['label' => 'Verification',      'desc' => 'Verifikasi alamat email',     'icon' => 'ph-envelope-simple'],
+                                    'verification_reminder' => ['label' => 'Verif. Reminder', 'desc' => 'Pengingat belum verifikasi', 'icon' => 'ph-clock-countdown'],
+                                    // Baris 2 — Engagement
+                                    'job_reminder'       => ['label' => 'Job Reminder',      'desc' => 'Ajakan catat lamaran',        'icon' => 'ph-briefcase'],
+                                    'monthly_motivation' => ['label' => 'Motivasi Bulanan',  'desc' => 'Semangat bulan baru',         'icon' => 'ph-calendar-check'],
+                                    're_engagement'      => ['label' => 'Re-engagement',     'desc' => 'Ajakan kembali aktif',        'icon' => 'ph-arrow-counter-clockwise'],
+                                    // Baris 3 — Produk & Akun
+                                    'premium_granted'    => ['label' => 'Premium Granted',   'desc' => 'Notifikasi akses premium',    'icon' => 'ph-crown'],
+                                    'product_update'     => ['label' => 'Product Update',    'desc' => 'Pengumuman fitur terbaru',    'icon' => 'ph-megaphone'],
+                                    'hiring_season'      => ['label' => 'Hiring Season',     'desc' => 'Alert musim rekrutmen',       'icon' => 'ph-buildings'],
+                                    // Baris 4 — Notifikasi
+                                    'ai_analyzer'        => ['label' => 'AI Analyzer Trial', 'desc' => 'Pengumuman trial gratis',     'icon' => 'ph-robot'],
+                                ];
+                            @endphp
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                                 @foreach($emailTypes as $type => $info)
                                     @php
                                         $isSelected = $emailType === $type;
-                                        $borderClass = $isSelected ? 'border-primary-500 bg-primary-50/50 ring-1 ring-primary-500 shadow-sm' : 'border-slate-200 hover:border-primary-300 hover:bg-slate-50';
-                                        $dotClass = $isSelected ? 'border-primary-500 bg-primary-500' : 'border-slate-300';
-                                        $colSpanClass = ($loop->last && count($emailTypes) % 2 !== 0) ? 'md:col-span-2' : '';
+                                        $cardClass   = $isSelected
+                                            ? 'border-primary-500 bg-primary-50/60 ring-1 ring-primary-500 shadow-sm'
+                                            : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/80';
+                                        $iconBg      = $isSelected ? 'bg-primary-100 text-primary-600' : 'bg-slate-100 text-slate-500';
+                                        $dotBorder   = $isSelected ? 'border-primary-500' : 'border-slate-300';
                                     @endphp
-                                    <label class="relative flex cursor-pointer rounded-2xl border-2 {{ $borderClass }} p-4 transition-all {{ $colSpanClass }}">
+                                    <label class="relative flex cursor-pointer rounded-xl border-2 {{ $cardClass }} p-3.5 transition-all group">
                                         <input type="radio" wire:model.live="emailType" value="{{ $type }}" class="sr-only">
-                                        <div class="flex-1">
-                                            <div class="flex items-center gap-3">
-                                                <div class="flex-shrink-0">
-                                                    <div class="h-5 w-5 rounded-full border-2 {{ $isSelected ? 'border-primary-500' : 'border-slate-300' }} flex items-center justify-center transition-colors">
-                                                        @if($isSelected)
-                                                            <div class="h-2 w-2 rounded-full bg-primary-500"></div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="flex-1">
-                                                    <p class="text-sm font-bold text-slate-900">{{ $info['label'] }}</p>
-                                                    <p class="text-[11px] font-medium text-slate-500 mt-0.5">{{ $info['desc'] }}</p>
+                                        <div class="flex items-start gap-3 w-full">
+                                            {{-- Icon --}}
+                                            <div class="flex-shrink-0 w-8 h-8 rounded-lg {{ $iconBg }} flex items-center justify-center transition-colors mt-0.5">
+                                                <i class="ph-fill {{ $info['icon'] }} text-base"></i>
+                                            </div>
+                                            {{-- Text --}}
+                                            <div class="flex-1 min-w-0">
+                                                <p class="text-sm font-bold text-slate-900 leading-tight">{{ $info['label'] }}</p>
+                                                <p class="text-[11px] font-medium text-slate-500 mt-0.5 leading-tight">{{ $info['desc'] }}</p>
+                                            </div>
+                                            {{-- Radio dot --}}
+                                            <div class="flex-shrink-0 mt-0.5">
+                                                <div class="h-4 w-4 rounded-full border-2 {{ $dotBorder }} flex items-center justify-center transition-colors">
+                                                    @if($isSelected)
+                                                        <div class="h-1.5 w-1.5 rounded-full bg-primary-500"></div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

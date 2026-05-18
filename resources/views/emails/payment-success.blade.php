@@ -1,100 +1,185 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="id">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Payment Receipt</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <style type="text/css">
-        body { margin: 0; padding: 0; min-width: 100%; background-color: #fcfcfd; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        .content { width: 100%; max-width: 480px; margin: 40px auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; border: 1px solid #f1f1f1; }
-        .header { padding: 40px 0 20px 0; text-align: center; }
-        .inner-content { padding: 0 40px 40px 40px; text-align: center; }
-        .receipt-table { width: 100%; border-collapse: collapse; margin-top: 30px; }
-        .receipt-row td { padding: 12px 0; border-bottom: 1px solid #f8f8f8; }
-        .label { color: #888888; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; text-align: left; }
-        .value { color: #111111; font-size: 12px; font-weight: 700; text-align: right; }
-        .total-row td { padding-top: 20px; border-bottom: none; }
-        .total-label { color: #111111; font-size: 13px; font-weight: 800; text-align: left; }
-        .total-value { color: #6366f1; font-size: 16px; font-weight: 900; text-align: right; }
-        .button { display: inline-block; padding: 14px 30px; background-color: #6366f1; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 13px; margin-top: 35px; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2); }
-        .footer { padding: 30px; text-align: center; color: #aaaaaa; font-size: 11px; border-top: 1px solid #f8f8f8; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfirmasi Pembayaran — TraKerja Premium</title>
 </head>
-<body style="margin: 0; padding: 0;">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+<body style="margin:0; padding:0; background-color:#f4f4f5; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color:#18181b;">
+
+    <table role="presentation" style="width:100%; border-collapse:collapse;">
         <tr>
-            <td bgcolor="#fcfcfd" align="center" style="padding: 40px 0;">
-                <table border="0" cellpadding="0" cellspacing="0" width="480" class="content">
-                    @include('emails.partials.header', ['title' => 'Pembayaran Berhasil', 'subtitle' => 'Tanda Terima Premium'])
-                    
+            <td align="center" style="padding:40px 16px;">
+                <table role="presentation" style="width:100%; max-width:600px; border-collapse:collapse;">
+
+                    @include('emails.partials.header', [
+                        'title'    => 'Pembayaran Berhasil',
+                        'subtitle' => 'Akun Anda telah resmi ditingkatkan ke paket Premium'
+                    ])
+
                     <tr>
-                        <td class="inner-content">
-                            <div style="display: inline-block; padding: 6px 12px; background-color: #f0fdf4; color: #16a34a; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;">LUNAS</div>
-                            <p style="margin: 0 0 30px 0; font-size: 14px; line-height: 1.6; color: #4b5563;">Halo <strong>{{ $user->name }}</strong>, terima kasih atas pembayaran Anda. Akun Anda telah resmi ditingkatkan ke Premium.</p>
-                            
-                            <table border="0" cellpadding="0" cellspacing="0" class="receipt-table" style="background-color: #fafafa; border-radius: 12px; padding: 20px; width: 100%;">
+                        <td style="background-color:#ffffff; padding:40px 40px 32px 40px; border-left:1px solid #e4e4e7; border-right:1px solid #e4e4e7;">
+
+                            <p style="margin:0 0 20px 0; font-size:15px; line-height:24px; color:#18181b;">
+                                Yth. <strong>{{ $user->name }}</strong>,
+                            </p>
+
+                            <p style="margin:0 0 20px 0; font-size:15px; line-height:26px; color:#3f3f46;">
+                                Terima kasih atas kepercayaan Anda. Transaksi telah berhasil diproses dan akun TraKerja Anda kini telah aktif dengan status Premium. Berikut adalah tanda terima resmi pembayaran Anda.
+                            </p>
+
+                            <!-- Status Badge -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:32px;">
                                 <tr>
-                                    <td colspan="2" style="padding: 15px 20px 0 20px;">
-                                        <table width="100%" cellpadding="0" cellspacing="0">
-                                            <tr class="receipt-row">
-                                                <td class="label">Nomor Tagihan</td>
-                                                <td class="value" style="font-family: monospace; font-size: 13px;">{{ $payment->order_id }}</td>
-                                            </tr>
-                                            <tr class="receipt-row">
-                                                <td class="label">Waktu Transaksi</td>
-                                                <td class="value">{{ $payment->paid_at?->format('d M Y, H:i') ?? now()->format('d M Y, H:i') }} WIB</td>
-                                            </tr>
-                                            <tr class="receipt-row">
-                                                <td class="label">Metode Pembayaran</td>
-                                                <td class="value">{{ strtoupper($payment->payment_method ?? 'QRIS') }}</td>
-                                            </tr>
-            
-                                            <!-- Dashed Separator -->
+                                    <td>
+                                        <span style="display:inline-block; padding:4px 12px; background-color:#dcfce7; color:#15803d; border-radius:4px; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">Pembayaran Lunas</span>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Section Label -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:28px;">
+                                <tr>
+                                    <td style="border-top:1px solid #e4e4e7; padding-top:24px;">
+                                        <p style="margin:0 0 20px 0; font-size:11px; font-weight:700; color:#7c3aed; letter-spacing:0.1em; text-transform:uppercase;">
+                                            Rincian Transaksi
+                                        </p>
+
+                                        <!-- Receipt Card -->
+                                        <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:28px;">
                                             <tr>
-                                                <td colspan="2" style="padding: 20px 0;">
-                                                    <div style="border-bottom: 2px dashed #e5e7eb;"></div>
+                                                <td style="background-color:#faf5ff; border:1px solid #ede9fe; border-left:3px solid #6d28d9; border-radius:4px; padding:20px;">
+                                                    <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                                        <tr>
+                                                            <td style="padding-bottom:10px; border-bottom:1px solid #ede9fe;">
+                                                                <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                                                    <tr>
+                                                                        <td style="font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">Nomor Tagihan</td>
+                                                                        <td align="right" style="font-size:13px; font-weight:600; color:#18181b; font-family:'Courier New', Courier, monospace;">{{ $payment->order_id }}</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding:10px 0; border-bottom:1px solid #ede9fe;">
+                                                                <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                                                    <tr>
+                                                                        <td style="font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">Waktu Transaksi</td>
+                                                                        <td align="right" style="font-size:13px; font-weight:600; color:#18181b;">{{ $payment->paid_at?->format('d M Y, H:i') ?? now()->format('d M Y, H:i') }} WIB</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding:10px 0; border-bottom:1px solid #ede9fe;">
+                                                                <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                                                    <tr>
+                                                                        <td style="font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">Metode Pembayaran</td>
+                                                                        <td align="right" style="font-size:13px; font-weight:600; color:#18181b;">{{ strtoupper($payment->payment_method ?? 'QRIS') }}</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        @php
+                                                            $basePrice  = 35000;
+                                                            $paidAmount = $payment->amount ?? 19999;
+                                                            $discount   = $basePrice - $paidAmount;
+                                                        @endphp
+                                                        <tr>
+                                                            <td style="padding:10px 0; border-bottom:1px solid #ede9fe;">
+                                                                <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                                                    <tr>
+                                                                        <td style="font-size:13px; color:#3f3f46;">TraKerja Premium (Lifetime)</td>
+                                                                        <td align="right" style="font-size:13px; color:#71717a; text-decoration:line-through;">Rp {{ number_format($basePrice, 0, ',', '.') }}</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding:10px 0; border-bottom:1px solid #ede9fe;">
+                                                                <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                                                    <tr>
+                                                                        <td style="font-size:13px; color:#71717a;">Diskon Promo Launching</td>
+                                                                        <td align="right" style="font-size:13px; font-weight:600; color:#15803d;">- Rp {{ number_format($discount, 0, ',', '.') }}</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top:12px;">
+                                                                <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                                                    <tr>
+                                                                        <td style="font-size:14px; font-weight:700; color:#18181b;">Total Dibayar</td>
+                                                                        <td align="right" style="font-size:18px; font-weight:700; color:#6d28d9;">Rp {{ number_format($paidAmount, 0, ',', '.') }}</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
                                             </tr>
-            
-                                            <!-- Item Details -->
-                                            @php
-                                                $basePrice = 35000;
-                                                $paidAmount = $payment->amount ?? 19999;
-                                                $discount = $basePrice - $paidAmount;
-                                            @endphp
+                                        </table>
+
+                                        <!-- Premium Benefits -->
+                                        <p style="margin:0 0 20px 0; font-size:11px; font-weight:700; color:#7c3aed; letter-spacing:0.1em; text-transform:uppercase;">
+                                            Yang Kini Anda Miliki
+                                        </p>
+
+                                        <table role="presentation" style="width:100%; border-collapse:collapse;">
                                             <tr>
-                                                <td style="padding: 5px 0; color: #111111; font-size: 13px; font-weight: 600; text-align: left;">TraKerja Premium (Lifetime)</td>
-                                                <td style="padding: 5px 0; color: #111111; font-size: 13px; font-weight: 600; text-align: right;">Rp {{ number_format($basePrice, 0, ',', '.') }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding: 5px 0; color: #6b7280; font-size: 12px; text-align: left;">Diskon Promo Launching</td>
-                                                <td style="padding: 5px 0; color: #10b981; font-size: 12px; font-weight: 700; text-align: right;">- Rp {{ number_format($discount, 0, ',', '.') }}</td>
-                                            </tr>
-            
-                                            <!-- Dashed Separator -->
-                                            <tr>
-                                                <td colspan="2" style="padding: 20px 0;">
-                                                    <div style="border-bottom: 2px dashed #e5e7eb;"></div>
+                                                <td style="padding:14px 0; border-bottom:1px solid #f4f4f5;">
+                                                    <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">Akses Premium Seumur Hidup</p>
+                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">Nikmati seluruh fitur TraKerja tanpa batasan dan tanpa biaya berlangganan bulanan, selamanya.</p>
                                                 </td>
                                             </tr>
-            
-                                            <tr class="total-row">
-                                                <td class="total-label" style="padding-top: 10px; padding-bottom: 15px; font-size: 14px;">Total Dibayar</td>
-                                                <td class="total-value" style="padding-top: 10px; padding-bottom: 15px; font-size: 20px; font-weight: 900; color: #10b981;">Rp {{ number_format($paidAmount, 0, ',', '.') }}</td>
+                                            <tr>
+                                                <td style="padding:14px 0; border-bottom:1px solid #f4f4f5;">
+                                                    <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">AI Resume Analyzer Tanpa Batas</p>
+                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">Analisis dan optimalkan CV Anda sebanyak yang diperlukan menggunakan teknologi kecerdasan buatan kami.</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:14px 0;">
+                                                    <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">Semua Fitur Eksklusif Premium</p>
+                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">CV Builder profesional, Smart Cover Letter, portofolio personal, dan seluruh pembaruan fitur di masa mendatang.</p>
+                                                </td>
                                             </tr>
                                         </table>
                                     </td>
                                 </tr>
                             </table>
 
-                            <a href="{{ route('dashboard') }}" class="button">Masuk ke Dashboard</a>
+                            <!-- CTA -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:36px;">
+                                <tr>
+                                    <td>
+                                        <a href="{{ route('dashboard') }}"
+                                           style="display:inline-block; padding:12px 22px; background-color:#6d28d9; color:#ffffff; text-decoration:none; border-radius:6px; font-size:14px; font-weight:600; margin-right:10px; margin-bottom:8px;">
+                                            Masuk ke Dashboard
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Sign-off -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; border-top:1px solid #e4e4e7;">
+                                <tr>
+                                    <td style="padding-top:24px;">
+                                        <p style="margin:0 0 4px 0; font-size:14px; line-height:22px; color:#3f3f46;">Hormat kami,</p>
+                                        <p style="margin:0 0 2px 0; font-size:14px; font-weight:700; color:#6d28d9;">Tim TraKerja</p>
+                                        <p style="margin:0; font-size:13px; color:#a1a1aa;">PT Teknalogi Transformasi Digital</p>
+                                    </td>
+                                </tr>
+                            </table>
+
                         </td>
                     </tr>
-                    
+
                     @include('emails.partials.footer')
                 </table>
             </td>
         </tr>
     </table>
+
 </body>
 </html>

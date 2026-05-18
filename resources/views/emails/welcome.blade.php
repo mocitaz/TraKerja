@@ -1,96 +1,165 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to TraKerja</title>
+    <title>Selamat Datang di TraKerja</title>
 </head>
-<body style="margin:0; padding:0; background:#f6f2ff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color:#111827;">
+<body style="margin:0; padding:0; background-color:#f4f4f5; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color:#18181b;">
+
     <table role="presentation" style="width:100%; border-collapse:collapse;">
         <tr>
-            <td align="center" style="padding:36px 16px;">
-                <!-- Card -->
-                <table role="presentation" style="width:100%; max-width:640px; border-collapse:collapse; background:#ffffff; border-radius:14px; box-shadow:0 8px 24px rgba(107,70,193,0.08), 0 2px 8px rgba(0,0,0,0.03); overflow:hidden;">
-                    <!-- Compact Professional Header -->
+            <td align="center" style="padding:40px 16px;">
+                <table role="presentation" style="width:100%; max-width:600px; border-collapse:collapse;">
+
                     @include('emails.partials.header', [
-                        'title' => 'Welcome to TraKerja',
-                        'subtitle' => 'Your modern job application tracker'
+                        'title'    => 'Selamat Datang di TraKerja',
+                        'subtitle' => 'Platform manajemen lamaran kerja yang terstruktur dan profesional'
                     ])
 
-                    <!-- Body -->
                     <tr>
-                        <td style="padding:24px 28px 8px;">
-                            <p style="margin:0 0 10px; font-size:14px; line-height:22px; color:#111827;">Hi <strong>{{ $user->name }}</strong>,</p>
-                            <p style="margin:0 0 14px; font-size:14px; line-height:22px; color:#374151;">Welcome to TraKerja — the modern way to manage your job search. Keep every application, follow‑up, and interview organized in one place so you can focus on what matters: getting hired.</p>
+                        <td style="background-color:#ffffff; padding:40px 40px 32px 40px; border-left:1px solid #e4e4e7; border-right:1px solid #e4e4e7;">
 
-                            <!-- Quick start -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; background:#fbfaff; border:1px solid #f0eaff; border-radius:10px; overflow:hidden; margin:12px 0 18px;">
+                            <p style="margin:0 0 20px 0; font-size:15px; line-height:24px; color:#18181b;">
+                                Yth. <strong>{{ $user->name }}</strong>,
+                            </p>
+
+                            <p style="margin:0 0 20px 0; font-size:15px; line-height:26px; color:#3f3f46;">
+                                Akun TraKerja Anda telah berhasil dibuat. Kami menyambut kehadiran Anda di platform yang dirancang untuk membantu para profesional mengelola proses pencarian kerja secara sistematis dan efisien.
+                            </p>
+
+                            <p style="margin:0 0 32px 0; font-size:15px; line-height:26px; color:#3f3f46;">
+                                Dengan TraKerja, Anda dapat mendokumentasikan seluruh lamaran, memantau statusnya secara real-time, dan mempersiapkan diri menghadapi setiap tahapan rekrutmen dengan lebih terstruktur.
+                            </p>
+
+                            <!-- Getting Started Steps -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:28px;">
                                 <tr>
-                                    <td style="padding:14px 16px;">
-                                        <p style="margin:0 0 8px; font-size:13px; line-height:20px; color:#4b5563; font-weight:700;">Get started in 3 simple steps</p>
-                                        <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                    <td style="border-top:1px solid #e4e4e7; padding-top:24px;">
+                                        <p style="margin:0 0 24px 0; font-size:11px; font-weight:700; color:#7c3aed; letter-spacing:0.1em; text-transform:uppercase;">
+                                            Langkah Awal Penggunaan
+                                        </p>
+
+                                        <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:32px;">
                                             <tr>
-                                                <td width="20" style="vertical-align:top; padding-top:2px;"><span style="display:inline-block; width:16px; height:16px; border-radius:4px; background:#6b7280;
-                                                text-align:center; color:#fff; font-size:12px; line-height:16px; font-weight:700;">1</span></td>
-                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Complete your <a href="{{ config('app.url') }}/profile" style="color:#6b46c1; text-decoration:none; font-weight:600;">profile</a> and create your CV.</td>
+                                                <td style="padding:14px 0; border-bottom:1px solid #f4f4f5;">
+                                                    <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                                        <tr>
+                                                            <td width="36" style="vertical-align:top; padding-top:1px;">
+                                                                <div style="width:26px; height:26px; border-radius:6px; background-color:#6d28d9; text-align:center; line-height:26px; font-size:11px; font-weight:700; color:#ffffff;">1</div>
+                                                            </td>
+                                                            <td style="padding-left:14px; vertical-align:top;">
+                                                                <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">Lengkapi Profil dan Buat CV</p>
+                                                                <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">Isi informasi profil Anda dan manfaatkan CV Builder untuk membuat dokumen yang siap digunakan melamar.</p>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td width="20" style="vertical-align:top; padding-top:6px;"><span style="display:inline-block; width:16px; height:16px; border-radius:4px; background:#6b7280; text-align:center; color:#fff; font-size:12px; line-height:16px; font-weight:700;">2</span></td>
-                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Add your first application on the <a href="{{ config('app.url') }}/tracker" style="color:#6b46c1; text-decoration:none; font-weight:600;">Job Tracker</a>.</td>
+                                                <td style="padding:14px 0; border-bottom:1px solid #f4f4f5;">
+                                                    <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                                        <tr>
+                                                            <td width="36" style="vertical-align:top; padding-top:1px;">
+                                                                <div style="width:26px; height:26px; border-radius:6px; background-color:#6d28d9; text-align:center; line-height:26px; font-size:11px; font-weight:700; color:#ffffff;">2</div>
+                                                            </td>
+                                                            <td style="padding-left:14px; vertical-align:top;">
+                                                                <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">Catat Lamaran Pertama Anda</p>
+                                                                <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">Buka fitur Job Tracker dan tambahkan lamaran beserta informasi perusahaan, posisi, dan tanggal pengiriman.</p>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td width="20" style="vertical-align:top; padding-top:6px;"><span style="display:inline-block; width:16px; height:16px; border-radius:4px; background:#6b7280; text-align:center; color:#fff; font-size:12px; line-height:16px; font-weight:700;">3</span></td>
-                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Set reminders for follow‑ups and interview dates in your <a href="{{ config('app.url') }}/dashboard" style="color:#6b46c1; text-decoration:none; font-weight:600;">dashboard</a>.</td>
+                                                <td style="padding:14px 0;">
+                                                    <table role="presentation" style="width:100%; border-collapse:collapse;">
+                                                        <tr>
+                                                            <td width="36" style="vertical-align:top; padding-top:1px;">
+                                                                <div style="width:26px; height:26px; border-radius:6px; background-color:#6d28d9; text-align:center; line-height:26px; font-size:11px; font-weight:700; color:#ffffff;">3</div>
+                                                            </td>
+                                                            <td style="padding-left:14px; vertical-align:top;">
+                                                                <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">Aktifkan Pengingat Tindak Lanjut</p>
+                                                                <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">Tetapkan pengingat untuk jadwal wawancara dan tindak lanjut agar tidak ada satu pun peluang yang terlewat.</p>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <!-- Platform Capabilities -->
+                                        <p style="margin:0 0 20px 0; font-size:11px; font-weight:700; color:#7c3aed; letter-spacing:0.1em; text-transform:uppercase;">
+                                            Kemampuan Platform
+                                        </p>
+
+                                        <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:32px;">
+                                            <tr>
+                                                <td style="padding:12px 0; border-bottom:1px solid #f4f4f5;">
+                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#3f3f46;">Pantau seluruh lamaran dalam satu papan kerja yang terorganisir dan mudah dipindai</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:12px 0; border-bottom:1px solid #f4f4f5;">
+                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#3f3f46;">Bangun CV profesional dengan templat yang telah dioptimalkan untuk sistem ATS</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:12px 0;">
+                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#3f3f46;">Terima notifikasi otomatis untuk jadwal wawancara dan batas waktu tindak lanjut</p>
+                                                </td>
                                             </tr>
                                         </table>
                                     </td>
                                 </tr>
                             </table>
 
-                            <!-- Feature bullets (no emojis) -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin:12px 0 6px;">
+                            <!-- CTA -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:28px;">
                                 <tr>
-                                    <td style="padding:8px 0;">
-                                        <table role="presentation" style="border-collapse:collapse; width:100%;">
-                                            <tr>
-                                                <td width="12" style="vertical-align:top; padding-top:4px;"><span style="display:inline-block; width:6px; height:6px; background:#6b7280; border-radius:50%;"></span></td>
-                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Track every application in a single, elegant board</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="12" style="vertical-align:top; padding-top:4px;"><span style="display:inline-block; width:6px; height:6px; background:#6b7280; border-radius:50%;"></span></td>
-                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Build polished CVs with professional templates</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="12" style="vertical-align:top; padding-top:4px;"><span style="display:inline-block; width:6px; height:6px; background:#6b7280; border-radius:50%;"></span></td>
-                                                <td style="padding-left:10px; font-size:13px; line-height:20px; color:#4b5563;">Stay on schedule with interview reminders</td>
-                                            </tr>
-                                        </table>
+                                    <td>
+                                        <a href="{{ config('app.url') }}/dashboard"
+                                           style="display:inline-block; padding:12px 22px; background-color:#6d28d9; color:#ffffff; text-decoration:none; border-radius:6px; font-size:14px; font-weight:600; margin-right:10px; margin-bottom:8px;">
+                                            Buka Dashboard
+                                        </a>
+                                        <a href="{{ config('app.url') }}/tracker"
+                                           style="display:inline-block; padding:12px 22px; background-color:#ffffff; color:#18181b; text-decoration:none; border-radius:6px; font-size:14px; font-weight:600; border:1px solid #d4d4d8; margin-bottom:8px;">
+                                            Mulai Catat Lamaran
+                                        </a>
                                     </td>
                                 </tr>
                             </table>
 
-                            <!-- CTA Button -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin:18px 0 12px;">
+                            <!-- Support Note -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:32px;">
                                 <tr>
-                                    <td align="center">
-                                        <a href="{{ config('app.url') }}/dashboard" style="display:inline-block; padding:12px 22px; background:linear-gradient(135deg, #7c5ce0 0%, #6b46c1 100%); color:#ffffff; text-decoration:none; border-radius:8px; font-weight:700; font-size:14px; letter-spacing:0.2px; box-shadow:0 6px 14px rgba(107,70,193,0.20);">Go to Dashboard</a>
+                                    <td style="background-color:#f4f4f5; border:1px solid #e4e4e7; border-radius:4px; padding:14px 18px;">
+                                        <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">
+                                            Jika Anda memerlukan bantuan atau memiliki pertanyaan, balas email ini atau kunjungi fitur dukungan yang tersedia di dalam platform.
+                                        </p>
                                     </td>
                                 </tr>
                             </table>
 
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-top:8px;">
+                            <!-- Sign-off -->
+                            <table role="presentation" style="width:100%; border-collapse:collapse; border-top:1px solid #e4e4e7;">
                                 <tr>
-                                    <td style="font-size:12px; line-height:18px; color:#6b7280;">Need help? Reply to this email or visit <a href="{{ config('app.url') }}" style="color:#6b46c1; text-decoration:none; font-weight:600;">TraKerja</a>. We’re here to help.</td>
+                                    <td style="padding-top:24px;">
+                                        <p style="margin:0 0 4px 0; font-size:14px; line-height:22px; color:#3f3f46;">Hormat kami,</p>
+                                        <p style="margin:0 0 2px 0; font-size:14px; font-weight:700; color:#6d28d9;">Tim TraKerja</p>
+                                        <p style="margin:0; font-size:13px; color:#a1a1aa;">PT Teknalogi Transformasi Digital</p>
+                                    </td>
                                 </tr>
                             </table>
+
                         </td>
                     </tr>
 
-                    <!-- Compact Professional Footer -->
                     @include('emails.partials.footer')
                 </table>
             </td>
         </tr>
     </table>
+
 </body>
 </html>

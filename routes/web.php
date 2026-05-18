@@ -26,6 +26,10 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 Route::get('auth/google',          [GoogleAuthController::class, 'redirect'])->name('auth.google');
 Route::get('auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
 
+Route::get('auth/linkedin',          [\App\Http\Controllers\Auth\LinkedInAuthController::class, 'redirect'])->name('auth.linkedin');
+Route::get('auth/linkedin/callback', [\App\Http\Controllers\Auth\LinkedInAuthController::class, 'callback'])->name('auth.linkedin.callback');
+
+
 Route::get('/', function () {
     return view('welcome');
 });

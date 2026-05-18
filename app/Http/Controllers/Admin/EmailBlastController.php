@@ -10,6 +10,8 @@ use App\Mail\JobApplicationReminderMail;
 use App\Mail\MonthlyMotivationMail;
 use App\Mail\WelcomeMail;
 use App\Mail\CustomEmailBlastMail;
+use App\Mail\HiringSeasonAlertMail;
+use App\Mail\ReEngagementMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
@@ -51,7 +53,7 @@ class EmailBlastController extends Controller
     public function send(Request $request)
     {
         $validationRules = [
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,custom,product_update',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,custom,product_update,hiring_season,re_engagement',
             'target_user' => 'required|in:all,verified,premium,free,new,unverified',
         ];
 
@@ -136,6 +138,12 @@ class EmailBlastController extends Controller
                     case 'product_update':
                         Mail::to($user->email)->send(new \App\Mail\ProductUpdateMail($user));
                         break;
+                    case 'hiring_season':
+                        Mail::to($user->email)->send(new HiringSeasonAlertMail($user));
+                        break;
+                    case 're_engagement':
+                        Mail::to($user->email)->send(new ReEngagementMail($user));
+                        break;
                     case 'custom':
                         Mail::to($user->email)->send(new CustomEmailBlastMail(
                             $user,
@@ -174,7 +182,7 @@ class EmailBlastController extends Controller
     public function initProgress(Request $request)
     {
         $validationRules = [
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,custom,product_update',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,custom,product_update,hiring_season,re_engagement',
             'target_user' => 'required|in:all,verified,premium,free,new,unverified',
         ];
 
@@ -242,7 +250,7 @@ class EmailBlastController extends Controller
     {
         $validationRules = [
             'user_id' => 'required|exists:users,id',
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,custom,product_update',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,custom,product_update,hiring_season,re_engagement',
         ];
 
         if ($request->email_type === 'custom') {
@@ -278,6 +286,12 @@ class EmailBlastController extends Controller
                     break;
                 case 'product_update':
                     Mail::to($user->email)->send(new \App\Mail\ProductUpdateMail($user));
+                    break;
+                case 'hiring_season':
+                    Mail::to($user->email)->send(new HiringSeasonAlertMail($user));
+                    break;
+                case 're_engagement':
+                    Mail::to($user->email)->send(new ReEngagementMail($user));
                     break;
                 case 'custom':
                     Mail::to($user->email)->send(new CustomEmailBlastMail(
