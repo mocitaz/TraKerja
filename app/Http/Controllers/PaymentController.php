@@ -445,7 +445,10 @@ class PaymentController extends Controller
      */
     public function success(string $orderId)
     {
-        $payment = Payment::where('order_id', $orderId)->first();
+        // SECURITY: Scope to authenticated user to prevent IDOR
+        $payment = Payment::where('order_id', $orderId)
+            ->where('user_id', Auth::id())
+            ->first();
 
         if (!$payment) {
             return redirect()->route('tracker')
@@ -460,7 +463,10 @@ class PaymentController extends Controller
      */
     public function failed(string $orderId)
     {
-        $payment = Payment::where('order_id', $orderId)->first();
+        // SECURITY: Scope to authenticated user to prevent IDOR
+        $payment = Payment::where('order_id', $orderId)
+            ->where('user_id', Auth::id())
+            ->first();
 
         if (!$payment) {
             return redirect()->route('tracker')
@@ -475,7 +481,10 @@ class PaymentController extends Controller
      */
     public function waiting(string $orderId)
     {
-        $payment = Payment::where('order_id', $orderId)->first();
+        // SECURITY: Scope to authenticated user to prevent IDOR
+        $payment = Payment::where('order_id', $orderId)
+            ->where('user_id', Auth::id())
+            ->first();
 
         if (!$payment) {
             return redirect()->route('tracker')
@@ -512,7 +521,10 @@ class PaymentController extends Controller
      */
     public function checkStatus(string $orderId)
     {
-        $payment = Payment::where('order_id', $orderId)->first();
+        // SECURITY: Scope to authenticated user to prevent IDOR
+        $payment = Payment::where('order_id', $orderId)
+            ->where('user_id', Auth::id())
+            ->first();
 
         if (!$payment) {
             return response()->json(['success' => false, 'message' => 'Payment not found'], 404);

@@ -450,6 +450,34 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         return app(\App\Http\Controllers\Admin\EmailBlastController::class)->send($request);
     })->name('email-blast.send');
 
+    Route::post('/email-blast/init', function (Request $request) {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return app(\App\Http\Controllers\Admin\EmailBlastController::class)->initProgress($request);
+    })->name('email-blast.init');
+
+    Route::post('/email-blast/send-single', function (Request $request) {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return app(\App\Http\Controllers\Admin\EmailBlastController::class)->sendSingleProgress($request);
+    })->name('email-blast.send-single');
+
+    Route::get('/email-blast/history', function () {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return app(\App\Http\Controllers\Admin\EmailBlastController::class)->history();
+    })->name('email-blast.history');
+
+    Route::post('/email-blast/store-log', function (Request $request) {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return app(\App\Http\Controllers\Admin\EmailBlastController::class)->storeLog($request);
+    })->name('email-blast.store-log');
+
     // Admin Support Tickets / User Feedbacks Routes
     Route::prefix('feedbacks')->name('feedbacks.')->group(function () {
         Route::get('/', [AdminSupportController::class, 'index'])->name('index');

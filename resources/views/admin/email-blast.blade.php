@@ -32,6 +32,12 @@
                         <p class="text-sm font-medium text-slate-500 mt-1">Kelola dan kirim kampanye email massal kepada pengguna.</p>
                     </div>
                 </div>
+                <div>
+                    <a href="{{ route('admin.email-blast.history') }}" class="flex items-center gap-2 px-5 py-3 bg-white border border-slate-200 text-slate-700 hover:text-primary-600 hover:border-primary-200 rounded-xl font-bold text-sm shadow-sm transition-all">
+                        <i class="ph-bold ph-clock-counter-clockwise text-lg text-primary-500"></i>
+                        <span>Lihat Riwayat Blasting</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -511,6 +517,86 @@
     </div>
 </div>
 
+<!-- Blasting Progress Modal -->
+<div id="progressModal" class="hidden fixed inset-0 z-[100] overflow-y-auto" aria-labelledby="progress-modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"></div>
+    <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+        <div class="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-slate-100 transition-all sm:my-8 sm:w-full sm:max-w-lg w-full" onclick="event.stopPropagation()">
+            <div class="px-6 pt-8 pb-6 text-center">
+                <!-- Glowing Plane Icon -->
+                <div class="mx-auto w-20 h-20 bg-primary-50 rounded-2xl flex items-center justify-center mb-6 relative">
+                    <i class="ph-duotone ph-paper-plane-tilt text-5xl text-primary-500"></i>
+                    <div class="absolute -inset-1 rounded-3xl bg-primary-400/20 blur opacity-30 animate-pulse"></div>
+                </div>
+                
+                <h3 class="text-2xl font-extrabold text-slate-900 mb-1">Blasting Kampanye Email...</h3>
+                <p id="progressStatusText" class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Mempersiapkan Audience</p>
+                
+                <!-- Main circular/bar progress -->
+                <div class="space-y-4">
+                    <!-- Progress Stats -->
+                    <div class="flex justify-between items-end mb-1">
+                        <span class="text-xs font-bold text-slate-500">Progress Pengiriman</span>
+                        <span id="progressPercent" class="text-lg font-black text-primary-600">0%</span>
+                    </div>
+                    
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200/50">
+                        <div id="progressBar" class="bg-gradient-to-r from-primary-500 to-indigo-600 h-full rounded-full transition-all duration-300 w-0"></div>
+                    </div>
+                    
+                    <!-- Numeric Counter Card -->
+                    <div class="grid grid-cols-3 gap-3 bg-slate-50 border border-slate-200/60 rounded-2xl p-4 text-center mt-6">
+                        <div class="border-r border-slate-200/60">
+                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Target</span>
+                            <span id="progressTotalCount" class="text-lg font-black text-slate-800">0</span>
+                        </div>
+                        <div class="border-r border-slate-200/60">
+                            <span class="block text-[10px] font-bold text-emerald-500 uppercase tracking-wider">Sukses</span>
+                            <span id="progressSuccessCount" class="text-lg font-black text-emerald-600">0</span>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] font-bold text-rose-500 uppercase tracking-wider">Gagal</span>
+                            <span id="progressFailedCount" class="text-lg font-black text-rose-600">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current Sending Card -->
+                <div id="currentSendingContainer" class="mt-6 p-3 bg-indigo-50/50 border border-indigo-100 rounded-xl flex items-center gap-3 text-left">
+                    <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center flex-shrink-0">
+                        <i class="ph-bold ph-envelope"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <span class="block text-[10px] font-bold text-indigo-500 uppercase tracking-wider">Mengirim ke</span>
+                        <span id="currentSendingEmail" class="block text-xs font-bold text-indigo-900 truncate">Menunggu antrean...</span>
+                    </div>
+                </div>
+
+                <!-- Live Log Container -->
+                <div class="mt-6 border border-slate-100 rounded-2xl overflow-hidden bg-slate-900 text-slate-100 text-left">
+                    <div class="px-4 py-2.5 bg-slate-800 border-b border-slate-700 flex justify-between items-center">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Live Log Aktivitas
+                        </span>
+                        <span class="text-[9px] font-bold text-slate-500 bg-slate-800 px-1.5 py-0.5 rounded">Console</span>
+                    </div>
+                    <div id="progressLog" class="p-4 h-36 overflow-y-auto font-mono text-[10px] space-y-1.5 scroll-smooth">
+                        <div class="text-slate-400">[SYSTEM] Sistem siap melakukan blasting...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Finish Actions -->
+            <div id="progressFinishActions" class="hidden bg-slate-50 px-6 py-5 border-t border-slate-100 flex gap-3">
+                <button type="button" onclick="window.location.reload()" class="w-full inline-flex justify-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white shadow-md hover:bg-slate-850 transition-all">
+                    Selesai & Muat Ulang Halaman
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     // Radio selection styling logic
     function setupRadioStyles(groupName, activeBorderClass, activeBgClass, indicatorClass) {
@@ -652,13 +738,219 @@
         document.body.style.overflow = '';
     }
 
+    let blastingUsers = [];
+    let blastingCurrentIndex = 0;
+    let blastingSuccessCount = 0;
+    let blastingFailedCount = 0;
+    let blastingFailedDetails = [];
+    let blastingEmailType = '';
+    let blastingCustomData = {};
+
     function submitEmailBlast() {
-        // Change button state
-        const btn = document.querySelector('#confirmModal button[onclick="submitEmailBlast()"]');
-        btn.innerHTML = '<i class="ph-bold ph-spinner animate-spin mr-2 text-lg"></i> Memproses...';
-        btn.classList.add('opacity-75', 'cursor-not-allowed');
+        // Hide confirmation modal
+        hideConfirmModal();
         
-        document.getElementById('emailBlastForm').submit();
+        // Show progress modal
+        const progressModal = document.getElementById('progressModal');
+        progressModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        
+        // Reset progress stats
+        blastingCurrentIndex = 0;
+        blastingSuccessCount = 0;
+        blastingFailedCount = 0;
+        blastingFailedDetails = [];
+        document.getElementById('progressBar').style.width = '0%';
+        document.getElementById('progressPercent').textContent = '0%';
+        document.getElementById('progressSuccessCount').textContent = '0';
+        document.getElementById('progressFailedCount').textContent = '0';
+        document.getElementById('progressTotalCount').textContent = '0';
+        document.getElementById('progressStatusText').textContent = 'Mempersiapkan Audience...';
+        document.getElementById('currentSendingEmail').textContent = 'Menghubungkan ke server...';
+        
+        const logContainer = document.getElementById('progressLog');
+        logContainer.innerHTML = '<div class="text-slate-400">[SYSTEM] Memulai proses blasting email...</div>';
+        
+        // Gather form data
+        const form = document.getElementById('emailBlastForm');
+        const formData = new FormData(form);
+        
+        // Call init endpoint
+        fetch("{{ route('admin.email-blast.init') }}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw err; });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                blastingUsers = data.users;
+                document.getElementById('progressTotalCount').textContent = data.total;
+                appendLog(`[SYSTEM] Ditemukan ${data.total} user penerima.`, 'emerald');
+                
+                // Save custom parameters if any
+                blastingEmailType = formData.get('email_type');
+                blastingCustomData = {
+                    email_type: blastingEmailType,
+                    custom_subject: formData.get('custom_subject'),
+                    custom_content: formData.get('custom_content'),
+                    custom_button_text: formData.get('custom_button_text'),
+                    custom_button_url: formData.get('custom_button_url')
+                };
+                
+                // Start sending the first email
+                sendNextEmail();
+            } else {
+                throw new Error(data.message || 'Gagal menginisialisasi audience.');
+            }
+        })
+        .catch(err => {
+            appendLog(`[ERROR] Inisialisasi Gagal: ${err.message || 'Koneksi terputus.'}`, 'rose');
+            document.getElementById('progressStatusText').textContent = 'BLASTING GAGAL';
+            document.getElementById('currentSendingEmail').textContent = 'Gagal memproses audience.';
+            document.getElementById('progressFinishActions').classList.remove('hidden');
+        });
+    }
+
+    function appendLog(text, colorClass = 'slate') {
+        const logContainer = document.getElementById('progressLog');
+        const logDiv = document.createElement('div');
+        
+        const colors = {
+            'slate': 'text-slate-400',
+            'emerald': 'text-emerald-400 font-bold',
+            'rose': 'text-rose-400 font-bold',
+            'indigo': 'text-indigo-400'
+        };
+        
+        logDiv.className = colors[colorClass] || colors['slate'];
+        
+        const timestamp = new Date().toLocaleTimeString();
+        logDiv.textContent = `[${timestamp}] ${text}`;
+        
+        logContainer.appendChild(logDiv);
+        logContainer.scrollTop = logContainer.scrollHeight;
+    }
+
+    function sendNextEmail() {
+        if (blastingCurrentIndex >= blastingUsers.length) {
+            // Blasting is finished!
+            document.getElementById('progressStatusText').textContent = 'BLASTING SELESAI';
+            document.getElementById('currentSendingContainer').className = 'mt-6 p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-3 text-left';
+            document.getElementById('currentSendingContainer').querySelector('div').className = 'w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0';
+            document.getElementById('currentSendingContainer').querySelector('div').innerHTML = '<i class="ph-bold ph-check"></i>';
+            document.getElementById('currentSendingEmail').innerHTML = '<span class="text-emerald-800 font-bold">Semua email kampanye berhasil dikirim!</span>';
+            
+            appendLog(`[SUCCESS] Kampanye berhasil diselesaikan.`, 'emerald');
+            appendLog(`[STATS] Total: ${blastingUsers.length} | Sukses: ${blastingSuccessCount} | Gagal: ${blastingFailedCount}`, 'indigo');
+            
+            // Post log report to database via AJAX
+            appendLog(`[SYSTEM] Menyimpan laporan riwayat blasting ke database...`, 'slate');
+            
+            const logPayload = {
+                _token: document.querySelector('input[name="_token"]').value,
+                email_type: blastingEmailType,
+                target_audience: document.querySelector('input[name="target_user"]:checked')?.value || 'all',
+                total_target: blastingUsers.length,
+                success_count: blastingSuccessCount,
+                failed_count: blastingFailedCount,
+                failed_details: blastingFailedDetails
+            };
+
+            fetch("{{ route('admin.email-blast.store-log') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(logPayload)
+            })
+            .then(res => res.json())
+            .then(resData => {
+                if (resData.success) {
+                    appendLog(`[SYSTEM] Riwayat blasting berhasil disimpan! Log ID: #${resData.log_id}`, 'emerald');
+                } else {
+                    appendLog(`[SYSTEM] Gagal menyimpan riwayat blasting ke database.`, 'rose');
+                }
+            })
+            .catch(err => {
+                appendLog(`[SYSTEM] Gagal menghubungi server untuk menyimpan riwayat.`, 'rose');
+            })
+            .finally(() => {
+                document.getElementById('progressFinishActions').classList.remove('hidden');
+            });
+            
+            return;
+        }
+        
+        const user = blastingUsers[blastingCurrentIndex];
+        document.getElementById('progressStatusText').textContent = `MENGIRIM (${blastingCurrentIndex + 1}/${blastingUsers.length})`;
+        document.getElementById('currentSendingEmail').textContent = `${user.name} (${user.email})`;
+        
+        appendLog(`Mengirim email ke: ${user.name} <${user.email}>...`, 'slate');
+        
+        // Prepare request body
+        const payload = {
+            _token: document.querySelector('input[name="_token"]').value,
+            user_id: user.id,
+            ...blastingCustomData
+        };
+        
+        // Make AJAX request
+        fetch("{{ route('admin.email-blast.send-single') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                blastingSuccessCount++;
+                document.getElementById('progressSuccessCount').textContent = blastingSuccessCount;
+                appendLog(`[BERHASIL] Terkirim ke ${data.email}`, 'emerald');
+            } else {
+                blastingFailedCount++;
+                document.getElementById('progressFailedCount').textContent = blastingFailedCount;
+                appendLog(`[GAGAL] Pengiriman ke ${data.email} error: ${data.error || 'Server error'}`, 'rose');
+                blastingFailedDetails.push({
+                    email: data.email,
+                    name: data.name || '',
+                    error: data.error || 'Server error'
+                });
+            }
+        })
+        .catch(err => {
+            blastingFailedCount++;
+            document.getElementById('progressFailedCount').textContent = blastingFailedCount;
+            appendLog(`[ERROR] Koneksi terputus saat mengirim ke ${user.email}`, 'rose');
+            blastingFailedDetails.push({
+                email: user.email,
+                name: user.name || '',
+                error: err.message || 'Koneksi terputus'
+            });
+        })
+        .finally(() => {
+            // Update progress percent and bar
+            blastingCurrentIndex++;
+            const percent = Math.round((blastingCurrentIndex / blastingUsers.length) * 100);
+            document.getElementById('progressBar').style.width = `${percent}%`;
+            document.getElementById('progressPercent').textContent = `${percent}%`;
+            
+            // Send to next user
+            sendNextEmail();
+        });
     }
 </script>
 </x-admin-layout>

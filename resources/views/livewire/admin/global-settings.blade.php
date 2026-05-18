@@ -80,6 +80,63 @@
             </div>
         </div>
 
+        {{-- Platform Limits Card --}}
+        <div class="lg:col-span-12 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden mt-6">
+            <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                    <i class="ph-duotone ph-sliders text-lg text-amber-500"></i>
+                    Batas Kuota &amp; Penggunaan (API Limits)
+                </h4>
+            </div>
+
+            <div class="p-6">
+                @if (session()->has('success_limits'))
+                    <div class="mb-6 p-4 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-xl text-sm font-bold flex items-center gap-2">
+                        <i class="ph-bold ph-check-circle"></i> {{ session('success_limits') }}
+                    </div>
+                @endif
+
+                <form wire:submit.prevent="updateLimits">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-slate-500 ml-1">AI Analyzer Limit (Free User)</label>
+                            <div class="relative flex items-center">
+                                <input type="number" min="0" wire:model="aiLimitFree" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all">
+                                <span class="absolute right-4 text-xs font-bold text-slate-400">Analisis</span>
+                            </div>
+                            @error('aiLimitFree') <span class="text-[10px] text-red-500 ml-1 font-medium">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-slate-500 ml-1">AI Analyzer Limit (Premium User)</label>
+                            <div class="relative flex items-center">
+                                <input type="number" min="0" wire:model="aiLimitPremium" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all">
+                                <span class="absolute right-4 text-xs font-bold text-slate-400">Analisis</span>
+                            </div>
+                            @error('aiLimitPremium') <span class="text-[10px] text-red-500 ml-1 font-medium">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-slate-500 ml-1">Max Job Applications (Free User)</label>
+                            <div class="relative flex items-center">
+                                <input type="number" min="1" wire:model="jobLimitFree" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all">
+                                <span class="absolute right-4 text-xs font-bold text-slate-400">Lamaran</span>
+                            </div>
+                            @error('jobLimitFree') <span class="text-[10px] text-red-500 ml-1 font-medium">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+
+                    <div class="pt-6 border-t border-slate-50 flex justify-end">
+                        <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-slate-900 text-white rounded-xl text-sm font-bold hover:bg-slate-800 transition-all shadow-lg shadow-slate-200 flex items-center justify-center gap-2">
+                            <i class="ph-bold ph-floppy-disk" wire:loading.remove wire:target="updateLimits"></i>
+                            <i class="ph-bold ph-spinner animate-spin" wire:loading wire:target="updateLimits"></i>
+                            Simpan Kuota API
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         {{-- Bottom: Quick Links to other System Pages --}}
         <div class="lg:col-span-12 grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
             <a href="{{ route('admin.integration-hub') }}" class="flex items-center justify-between p-6 bg-white rounded-2xl shadow-sm border border-slate-100 group hover:border-primary-100 hover:shadow-md transition-all">

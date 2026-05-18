@@ -303,19 +303,5 @@
         </script>
 
         @livewireScripts
-        <script>
-        setTimeout(function() {
-            if (typeof window.Livewire === 'undefined') {
-                const script = document.createElement('script');
-                script.src = 'https://cdn.jsdelivr.net/npm/livewire@3/dist/livewire.min.js';
-                script.onload = function() {
-                    if (window.Livewire && typeof window.Livewire.start === 'function') {
-                        window.Livewire.start();
-                    }
-                };
-                document.head.appendChild(script);
-            }
-        }, 1000);
-        </script>
     </body>
 </html>

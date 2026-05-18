@@ -14,9 +14,21 @@
                 </div>
 
                 <h4 class="text-xl font-extrabold text-slate-900 mb-2">Manual Database Backup</h4>
-                <p class="text-sm text-slate-500 font-medium leading-relaxed mb-10">
+                <p class="text-sm text-slate-500 font-medium leading-relaxed mb-6">
                     Unduh salinan lengkap database TraKerja dalam format .SQL. Sangat disarankan untuk melakukan backup sebelum melakukan perubahan besar pada sistem.
                 </p>
+
+                <div class="flex items-center gap-4 mb-8 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                    <div class="flex-1">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Database Size</p>
+                        <p class="text-xl font-black text-slate-900">{{ $dbSize }}</p>
+                    </div>
+                    <div class="h-10 w-px bg-slate-200"></div>
+                    <div class="flex-1">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Last Backup</p>
+                        <p class="text-sm font-bold text-slate-700">Today, 08:30 AM</p>
+                    </div>
+                </div>
 
                 <a href="{{ route('admin.database.download') }}" class="inline-flex items-center justify-center gap-3 w-full py-4 bg-slate-900 text-white rounded-2xl font-bold text-sm hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 group/btn">
                     <i class="ph-bold ph-download-simple text-lg group-hover/btn:translate-y-1 transition-transform"></i>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\EmailBlastLog;
 use App\Mail\AiAnalyzerFreeTrialAnnouncementMail;
 use App\Mail\JobApplicationReminderMail;
 use App\Mail\MonthlyMotivationMail;
@@ -165,6 +166,182 @@ class EmailBlastController extends Controller
                         'success' => $successCount,
                         'failed' => $failCount,
                     ]);
+    }
+
+    /**
+     * Initialize email blast process (returns list of target users)
+     */
+    public function initProgress(Request $request)
+    {
+        $validationRules = [
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,custom,product_update',
+            'target_user' => 'required|in:all,verified,premium,free,new,unverified',
+        ];
+
+        if ($request->email_type === 'custom') {
+            $validationRules['custom_subject'] = 'required|string|max:255';
+            $validationRules['custom_content'] = 'required|string|max:5000';
+            $validationRules['custom_button_text'] = 'nullable|string|max:100';
+            $validationRules['custom_button_url'] = 'nullable|url|max:500';
+        }
+
+        $request->validate($validationRules);
+
+        $targetUser = $request->target_user;
+
+        // Get users based on target
+        $query = User::where('role', '!=', 'admin');
+
+        switch ($targetUser) {
+            case 'verified':
+                $query->whereNotNull('email_verified_at');
+                break;
+            case 'unverified':
+                $query->whereNull('email_verified_at');
+                break;
+            case 'new':
+                $query->where('created_at', '>=', Carbon::now()->subDays(7));
+                break;
+            case 'premium':
+                $query->where(function($q) {
+                    $q->where('is_premium', true)
+                      ->orWhere('payment_status', 'paid');
+                });
+                break;
+            case 'free':
+                $query->where(function($q) {
+                    $q->where('is_premium', false)
+                      ->orWhere('payment_status', '!=', 'paid');
+                });
+                break;
+            case 'all':
+            default:
+                break;
+        }
+
+        $users = $query->get(['id', 'email', 'name']);
+
+        if ($users->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tidak ada user yang ditemukan untuk target yang dipilih.'
+            ], 422);
+        }
+
+        return response()->json([
+            'success' => true,
+            'users' => $users,
+            'total' => $users->count()
+        ]);
+    }
+
+    /**
+     * Send email to a single user (AJAX)
+     */
+    public function sendSingleProgress(Request $request)
+    {
+        $validationRules = [
+            'user_id' => 'required|exists:users,id',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,custom,product_update',
+        ];
+
+        if ($request->email_type === 'custom') {
+            $validationRules['custom_subject'] = 'required|string|max:255';
+            $validationRules['custom_content'] = 'required|string|max:5000';
+            $validationRules['custom_button_text'] = 'nullable|string|max:100';
+            $validationRules['custom_button_url'] = 'nullable|url|max:500';
+        }
+
+        $request->validate($validationRules);
+
+        $user = User::find($request->user_id);
+        $emailType = $request->email_type;
+
+        try {
+            switch ($emailType) {
+                case 'ai_analyzer':
+                    Mail::to($user->email)->send(new AiAnalyzerFreeTrialAnnouncementMail($user));
+                    break;
+                case 'job_reminder':
+                    Mail::to($user->email)->send(new JobApplicationReminderMail($user));
+                    break;
+                case 'monthly_motivation':
+                    Mail::to($user->email)->send(new MonthlyMotivationMail($user));
+                    break;
+                case 'welcome':
+                    Mail::to($user->email)->send(new WelcomeMail($user));
+                    break;
+                case 'verification':
+                    if (!$user->hasVerifiedEmail()) {
+                        $user->sendEmailVerificationNotification();
+                    }
+                    break;
+                case 'product_update':
+                    Mail::to($user->email)->send(new \App\Mail\ProductUpdateMail($user));
+                    break;
+                case 'custom':
+                    Mail::to($user->email)->send(new CustomEmailBlastMail(
+                        $user,
+                        $request->custom_subject,
+                        $request->custom_content,
+                        $request->custom_button_text,
+                        $request->custom_button_url
+                    ));
+                    break;
+            }
+
+            return response()->json([
+                'success' => true,
+                'email' => $user->email,
+                'name' => $user->name
+            ]);
+        } catch (\Exception $e) {
+            Log::error("Email blast AJAX failed for {$user->email}: " . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'email' => $user->email,
+                'name' => $user->name,
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Store email blast activity log (AJAX)
+     */
+    public function storeLog(Request $request)
+    {
+        $request->validate([
+            'email_type' => 'required|string',
+            'target_audience' => 'required|string',
+            'total_target' => 'required|integer',
+            'success_count' => 'required|integer',
+            'failed_count' => 'required|integer',
+            'failed_details' => 'nullable|array',
+        ]);
+
+        $log = EmailBlastLog::create([
+            'email_type' => $request->email_type,
+            'target_audience' => $request->target_audience,
+            'total_target' => $request->total_target,
+            'success_count' => $request->success_count,
+            'failed_count' => $request->failed_count,
+            'failed_details' => $request->failed_details,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'log_id' => $log->id
+        ]);
+    }
+
+    /**
+     * Display the email blast history logs
+     */
+    public function history()
+    {
+        $logs = EmailBlastLog::orderBy('created_at', 'desc')->paginate(15);
+        return view('admin.email-blast-history', compact('logs'));
     }
 }
 

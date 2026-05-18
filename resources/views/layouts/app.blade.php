@@ -356,24 +356,6 @@
 
             document.addEventListener('DOMContentLoaded', initMagneticButtons);
 
-            // Fallback: Load Livewire from CDN if local file fails
-            setTimeout(function() {
-                if (typeof window.Livewire === 'undefined') {
-                    console.warn('Livewire not loaded from local assets, loading from CDN...');
-                    const script = document.createElement('script');
-                    script.src = 'https://cdn.jsdelivr.net/npm/livewire@3/dist/livewire.min.js';
-                    script.onerror = function() {
-                        console.error('Failed to load Livewire from CDN');
-                    };
-                    script.onload = function() {
-                        console.log('Livewire loaded from CDN successfully');
-                        if (window.Livewire && typeof window.Livewire.start === 'function') {
-                            window.Livewire.start();
-                        }
-                    };
-                    document.head.appendChild(script);
-                }
-            }, 1000);
         </script>
 
         <style>

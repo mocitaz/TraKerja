@@ -13,6 +13,22 @@ class JobTableList extends Component
 {
     use WithPagination;
 
+    /**
+     * Whitelist of columns allowed for sorting.
+     * Prevents SQL injection via URL-manipulated sortField.
+     */
+    private const ALLOWED_SORT_FIELDS = [
+        'application_date',
+        'company_name',
+        'position',
+        'application_status',
+        'recruitment_stage',
+        'platform',
+        'created_at',
+    ];
+
+    private const ALLOWED_SORT_DIRECTIONS = ['asc', 'desc'];
+
     public $search = '';
     public $statusFilter = '';
     public $platformFilter = '';
@@ -186,11 +202,36 @@ class JobTableList extends Component
 
     public function sortBy($field)
     {
+        // SECURITY: Reject any field not in the whitelist
+        if (!in_array($field, self::ALLOWED_SORT_FIELDS, true)) {
+            return;
+        }
+
         if ($this->sortField === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortField = $field;
             $this->sortDirection = 'asc';
+        }
+    }
+
+    /**
+     * Livewire hook: sanitize sortField if tampered via URL query string.
+     */
+    public function updatedSortField($value)
+    {
+        if (!in_array($value, self::ALLOWED_SORT_FIELDS, true)) {
+            $this->sortField = 'application_date';
+        }
+    }
+
+    /**
+     * Livewire hook: sanitize sortDirection if tampered via URL query string.
+     */
+    public function updatedSortDirection($value)
+    {
+        if (!in_array($value, self::ALLOWED_SORT_DIRECTIONS, true)) {
+            $this->sortDirection = 'desc';
         }
     }
 
@@ -361,8 +402,16 @@ class JobTableList extends Component
             $query->where('recruitment_stage', $this->recruitmentStageFilter);
         }
 
+        // SECURITY: Final guard — ensure sortField and sortDirection are safe before query
+        $safeSortField = in_array($this->sortField, self::ALLOWED_SORT_FIELDS, true)
+            ? $this->sortField
+            : 'application_date';
+        $safeSortDirection = in_array($this->sortDirection, self::ALLOWED_SORT_DIRECTIONS, true)
+            ? $this->sortDirection
+            : 'desc';
+
         $jobApplications = $query->orderBy('is_pinned', 'desc') // Pinned items first
-            ->orderBy($this->sortField, $this->sortDirection)
+            ->orderBy($safeSortField, $safeSortDirection)
             ->orderBy('created_at', 'desc') // Tertiary sort by creation time
             ->paginate($this->perPage);
 
