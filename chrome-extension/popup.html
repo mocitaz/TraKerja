@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>TraKerja Extension</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- HEADER -->
+        <header>
+            <div class="logo-area">
+                <div class="logo-icon-container">
+                    <img src="icons/icon.png" alt="TraKerja">
+                </div>
+                <div class="header-text">
+                    <h1>TraKerja</h1>
+                    <p>Extension</p>
+                </div>
+            </div>
+            <button id="logout-btn" class="hidden" title="Logout"><i class="ph-bold ph-sign-out"></i></button>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main>
+            <!-- LOGIN VIEW -->
+            <div id="login-view" class="view">
+                <div class="login-header">
+                    <h2>Welcome back</h2>
+                    <p>Masuk untuk menyinkronkan lamaran</p>
+                </div>
+                <form id="login-form">
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-envelope-simple"></i>
+                            <input type="email" id="email" required placeholder="email@trakerja.web.id">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-lock-key"></i>
+                            <input type="password" id="password" required placeholder="••••••••">
+                        </div>
+                    </div>
+                    <button type="submit" id="btn-login" class="btn-primary">
+                        <span>Masuk ke Akun</span>
+                        <i class="ph-bold ph-arrow-right"></i>
+                    </button>
+                    <div id="login-error" class="error-msg hidden"></div>
+                </form>
+            </div>
+
+            <!-- SAVE JOB VIEW -->
+            <div id="save-view" class="view hidden">
+                <div class="welcome-banner">
+                    <div class="welcome-text">
+                        <span class="greeting" id="user-greeting">Halo, Luthfi!</span>
+                    </div>
+                </div>
+                
+                <div id="job-details-container" class="hidden">
+                    <div class="job-card">
+                        <div class="card-header">
+                            <i class="ph-fill ph-briefcase"></i>
+                            <span>Detail Lamaran</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group">
+                                <label>Posisi Pekerjaan</label>
+                                <input type="text" id="job-position" required placeholder="Contoh: Software Engineer">
+                            </div>
+                            <div class="input-group">
+                                <label>Perusahaan</label>
+                                <input type="text" id="job-company" required placeholder="Nama Perusahaan">
+                            </div>
+                            <div class="input-group">
+                                <label>Tipe Pekerjaan</label>
+                                <div class="select-wrapper">
+                                    <select id="job-level">
+                                        <option value="Full Time">Full Time</option>
+                                        <option value="Intern">Intern</option>
+                                        <option value="Contract">Contract</option>
+                                        <option value="MT">MT</option>
+                                        <option value="Freelance">Freelance</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down select-icon"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="row-group">
+                                <div class="input-group w-50">
+                                    <label>Provinsi</label>
+                                    <div class="select-wrapper">
+                                        <select id="job-province" required>
+                                            <option value="">Pilih Provinsi</option>
+                                        </select>
+                                        <i class="ph-bold ph-caret-down select-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="input-group w-50">
+                                    <label>Kota</label>
+                                    <div class="select-wrapper">
+                                        <select id="job-city" required>
+                                            <option value="">Pilih Kota</option>
+                                        </select>
+                                        <i class="ph-bold ph-caret-down select-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="location-detector" id="detected-location-container" style="margin-top:-8px; margin-bottom:16px;">
+                                <i class="ph-fill ph-map-pin"></i>
+                                <small id="detected-location"></small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="btn-save" class="btn-primary btn-save">
+                        <i class="ph-bold ph-paper-plane-tilt"></i>
+                        <span>Simpan ke Kanban</span>
+                    </button>
+                </div>
+
+                <div id="no-job-detected" class="empty-state">
+                    <div class="illustration">
+                        <div class="scanner-line"></div>
+                        <i class="ph-duotone ph-radar"></i>
+                    </div>
+                    <h3>Menunggu Loker...</h3>
+                    <p>Buka halaman lowongan kerja di platform yang didukung untuk menyimpan data otomatis.</p>
+                    <div class="supported-platforms">
+                        <span>LinkedIn</span> • <span>JobStreet</span> • <span>Glints</span><br>
+                        <span>Kalibrr</span> • <span>Dealls</span> • <span>Talentics</span>
+                    </div>
+                </div>
+                
+                <div id="save-message" class="hidden"></div>
+            </div>
+            
+            <!-- BETA WARNING -->
+            <div class="beta-warning">
+                <i class="ph-duotone ph-warning-circle"></i>
+                <div class="warning-text">
+                    <strong>Versi Beta (Tahap Pengembangan)</strong>
+                    <p>Mohon maaf jika terjadi ketidaksesuaian pembacaan data lamaran. Silakan sesuaikan secara manual jika diperlukan.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="locations.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>

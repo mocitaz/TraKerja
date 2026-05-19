@@ -114,8 +114,9 @@
 
         @php
         $sysLinks = [
-            ['route' => 'profile.edit', 'routeIs' => 'profile.edit', 'icon' => 'ph-user-circle', 'label' => 'My Profile'],
-            ['route' => 'csv.import',   'routeIs' => 'csv.*',        'icon' => 'ph-file-csv',    'label' => 'CSV Tools'],
+            ['route' => 'extension',    'routeIs' => 'extension',    'icon' => 'ph-puzzle-piece', 'label' => 'Chrome Extension'],
+            ['route' => 'profile.edit', 'routeIs' => 'profile.edit', 'icon' => 'ph-user-circle',  'label' => 'My Profile'],
+            ['route' => 'csv.import',   'routeIs' => 'csv.*',        'icon' => 'ph-file-csv',     'label' => 'CSV Tools'],
             ['route' => 'support.index', 'routeIs' => 'support.*',    'icon' => 'ph-headset',     'label' => 'Customer Support'],
         ];
         @endphp

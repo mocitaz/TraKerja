@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "TraKerja Extension",
+  "version": "1.0",
+  "description": "Simpan lamaran kerja dari LinkedIn, Glints, dan JobStreet langsung ke Kanban Board TraKerja.",
+  "icons": {
+    "16": "icons/icon.png",
+    "48": "icons/icon.png",
+    "128": "icons/icon.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://localhost:8000/*",
+    "https://trakerja.web.id/*",
+    "*://*.linkedin.com/*",
+    "*://*.glints.com/*/opportunities/jobs/*",
+    "*://*.jobstreet.co.id/*/job/*",
+    "*://*.kalibrr.com/*",
+    "*://*.kalibrr.id/*",
+    "*://*.usedeall.com/*",
+    "*://*.dealljobs.com/*",
+    "*://*.talentics.id/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Save to TraKerja",
+    "default_icon": {
+      "16": "icons/icon.png",
+      "48": "icons/icon.png",
+      "128": "icons/icon.png"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com https://unpkg.com;"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.linkedin.com/*",
+        "*://*.glints.com/*/opportunities/jobs/*",
+        "*://*.jobstreet.co.id/*/job/*",
+        "*://*.kalibrr.com/*",
+        "*://*.kalibrr.id/*",
+        "*://*.usedeall.com/*",
+        "*://*.dealljobs.com/*",
+        "*://*.talentics.id/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/icon.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

@@ -115,6 +115,14 @@ Route::get('/dashboard', function () {
     return redirect()->route('tracker');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Extension Download & Tutorial Page
+Route::get('/extension', function () {
+    if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+        return redirect()->route('admin.index');
+    }
+    return view('extension.index');
+})->middleware(['auth', 'verified'])->name('extension');
+
 // User Routes (Not accessible by admin)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
