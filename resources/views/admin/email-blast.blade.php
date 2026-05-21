@@ -89,7 +89,7 @@
                     </div>
                     
                     <div class="p-6">
-                        <div class="grid grid-cols-1 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <!-- Welcome -->
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="welcome" class="sr-only" required>
@@ -117,6 +117,23 @@
                                     <div class="flex-1">
                                         <h3 class="text-sm font-bold text-slate-900">Verification Email</h3>
                                         <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Kirim ulang link verifikasi akun.</p>
+                                    </div>
+                                    <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                        <i class="ph-bold ph-check text-xs"></i>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <!-- Verification Reminder -->
+                            <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                <input type="radio" name="email_type" value="verification_reminder" class="sr-only" required>
+                                <div class="flex items-center gap-4 w-full">
+                                    <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i class="ph-duotone ph-warning-circle text-2xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-sm font-bold text-slate-900">Verif. Reminder</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Pengingat belum verifikasi (Mendesak).</p>
                                     </div>
                                     <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
                                         <i class="ph-bold ph-check text-xs"></i>
@@ -219,6 +236,23 @@
                                     <div class="flex-1">
                                         <h3 class="text-sm font-bold text-slate-900">Chrome Extension Announcement</h3>
                                         <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Promosikan fitur ekstensi TraKerja untuk LinkedIn, JobStreet, dsb.</p>
+                                    </div>
+                                    <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                        <i class="ph-bold ph-check text-xs"></i>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <!-- AI Photo Announcement -->
+                            <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                <input type="radio" name="email_type" value="ai_photo" class="sr-only" required>
+                                <div class="flex items-center gap-4 w-full">
+                                    <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i class="ph-duotone ph-camera-plus text-2xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-sm font-bold text-slate-900">AI Photo Announcement</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Promosikan fitur AI Photo Studio untuk pas foto profesional.</p>
                                     </div>
                                     <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
                                         <i class="ph-bold ph-check text-xs"></i>
@@ -361,7 +395,7 @@
                         <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">Grup Penerima Kampanye</p>
                     </div>
 
-                    <div class="p-4 space-y-3">
+                    <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-3">
                         <!-- All Users -->
                         <label class="group relative flex items-center justify-between cursor-pointer rounded-xl border border-slate-100 p-4 focus:outline-none hover:border-emerald-200 hover:bg-emerald-50/30 transition-all">
                             <input type="radio" name="target_user" value="all" class="sr-only" checked required>
@@ -498,9 +532,9 @@
                 </div>
 
                 <!-- Action Button -->
-                <button type="button" onclick="showConfirmModal()" class="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-6 py-4 rounded-xl text-sm font-bold shadow-lg shadow-slate-900/20 transition-all hover:scale-[1.02] active:scale-95">
-                    <i class="ph-bold ph-paper-plane-right text-lg"></i>
-                    Kirim Email Blast Sekarang
+                <button type="button" onclick="showPreviewModal()" class="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-6 py-4 rounded-xl text-sm font-bold shadow-lg shadow-slate-900/20 transition-all hover:scale-[1.02] active:scale-95">
+                    <i class="ph-bold ph-eye text-lg"></i>
+                    Preview & Kirim Email Blast
                 </button>
 
             </div>
@@ -525,6 +559,47 @@
             <div class="bg-slate-50 px-6 py-4 flex justify-center border-t border-slate-100">
                 <button type="button" onclick="hideErrorModal()" class="w-full inline-flex justify-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white shadow-md hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-200 transition-all">
                     Mengerti, Perbaiki
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div id="previewModal" class="hidden fixed inset-0 z-[100] overflow-y-auto" aria-labelledby="preview-modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="hidePreviewModal()"></div>
+    <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+        <div class="relative transform overflow-hidden rounded-2xl bg-slate-50 text-left shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-slate-200 transition-all sm:my-8 sm:w-full sm:max-w-3xl w-full flex flex-col max-h-[85vh]" onclick="event.stopPropagation()">
+            <div class="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center shrink-0">
+                <h3 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+                    <i class="ph-duotone ph-eye text-primary-500 text-xl"></i>
+                    Preview Email
+                </h3>
+                <button type="button" onclick="hidePreviewModal()" class="text-slate-400 hover:text-slate-600 transition-colors">
+                    <i class="ph-bold ph-x text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="p-4 md:p-6 bg-slate-100/80 flex-1 overflow-hidden flex flex-col items-center justify-center relative min-h-[50vh]">
+                <!-- Loader -->
+                <div id="previewLoader" class="absolute inset-0 bg-slate-100/80 backdrop-blur-sm flex flex-col items-center justify-center z-10 rounded-b-2xl">
+                    <i class="ph-duotone ph-spinner-gap animate-spin text-4xl text-primary-500 mb-2"></i>
+                    <p class="text-sm font-bold text-slate-500">Memuat Preview...</p>
+                </div>
+                
+                <!-- Iframe for Preview -->
+                <div class="w-full max-w-2xl h-full bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200 overflow-hidden relative flex-1">
+                    <iframe id="previewFrame" class="w-full h-full absolute inset-0 border-0" sandbox="allow-same-origin"></iframe>
+                </div>
+            </div>
+            
+            <div class="bg-white px-6 py-4 flex flex-row-reverse gap-3 border-t border-slate-200 shrink-0">
+                <button type="button" onclick="proceedToConfirm()" class="flex-1 inline-flex items-center justify-center rounded-xl bg-primary-600 px-4 py-3 text-sm font-bold text-white shadow-md hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-100 transition-all">
+                    <i class="ph-bold ph-check mr-2 text-lg"></i>
+                    Lanjut Konfirmasi
+                </button>
+                <button type="button" onclick="hidePreviewModal()" class="flex-1 inline-flex items-center justify-center rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-700 border border-slate-200 hover:bg-slate-50 focus:outline-none transition-all">
+                    Batal
                 </button>
             </div>
         </div>
@@ -728,7 +803,7 @@
         document.body.style.overflow = '';
     }
 
-    function showConfirmModal() {
+    function showPreviewModal() {
         const emailType = document.querySelector('input[name="email_type"]:checked')?.value;
         const targetUser = document.querySelector('input[name="target_user"]:checked')?.value;
         
@@ -762,12 +837,14 @@
         const emailTypeText = {
             'welcome': 'Welcome Email',
             'verification': 'Verification Email',
+            'verification_reminder': 'Verif. Reminder',
             'ai_analyzer': 'AI Analyzer Trial',
             'job_reminder': 'Job Reminder',
             'monthly_motivation': 'Monthly Motivation',
             'product_update': 'Major Product Update',
             'hiring_season': 'Hiring Season Alert',
             'chrome_extension': 'Chrome Extension Promo',
+            'ai_photo': 'AI Photo Announcement',
             're_engagement': 'Re-engagement',
             'custom': 'Custom Email'
         }[emailType] || 'Email Blast';
@@ -784,6 +861,53 @@
         document.getElementById('confirmEmailType').textContent = emailTypeText;
         document.getElementById('confirmTargetUser').textContent = targetText;
         
+        // Show Preview Modal
+        document.getElementById('previewModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        
+        // Reset and show loader
+        const iframe = document.getElementById('previewFrame');
+        const loader = document.getElementById('previewLoader');
+        iframe.srcdoc = '';
+        loader.classList.remove('hidden');
+        
+        // Fetch Preview
+        const form = document.getElementById('emailBlastForm');
+        const formData = new FormData(form);
+        
+        fetch("{{ route('admin.email-blast.preview') }}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 422) {
+                    throw new Error('Validasi form gagal.');
+                }
+                throw new Error('Gagal memuat preview dari server.');
+            }
+            return response.text(); // Return HTML text
+        })
+        .then(html => {
+            iframe.srcdoc = html;
+            loader.classList.add('hidden');
+        })
+        .catch(err => {
+            hidePreviewModal();
+            showErrorModal(err.message || 'Terjadi kesalahan saat memuat preview.');
+        });
+    }
+
+    function hidePreviewModal() {
+        document.getElementById('previewModal').classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
+    function proceedToConfirm() {
+        hidePreviewModal();
         document.getElementById('confirmModal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
     }

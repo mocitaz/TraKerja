@@ -54,7 +54,7 @@ class EmailBlastController extends Controller
     public function send(Request $request)
     {
         $validationRules = [
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,custom,product_update,hiring_season,re_engagement,chrome_extension',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension',
             'target_user' => 'required|in:all,verified,premium,free,new,unverified',
         ];
 
@@ -136,6 +136,9 @@ class EmailBlastController extends Controller
                             $user->sendEmailVerificationNotification();
                         }
                         break;
+                    case 'verification_reminder':
+                        Mail::to($user->email)->send(new \App\Mail\EmailVerificationReminderMail($user));
+                        break;
                     case 'product_update':
                         Mail::to($user->email)->send(new \App\Mail\ProductUpdateMail($user));
                         break;
@@ -186,7 +189,7 @@ class EmailBlastController extends Controller
     public function initProgress(Request $request)
     {
         $validationRules = [
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,custom,product_update,hiring_season,re_engagement,chrome_extension',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension',
             'target_user' => 'required|in:all,verified,premium,free,new,unverified',
         ];
 
@@ -254,7 +257,7 @@ class EmailBlastController extends Controller
     {
         $validationRules = [
             'user_id' => 'required|exists:users,id',
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,custom,product_update,hiring_season,re_engagement,chrome_extension',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo',
         ];
 
         if ($request->email_type === 'custom') {
@@ -288,6 +291,9 @@ class EmailBlastController extends Controller
                         $user->sendEmailVerificationNotification();
                     }
                     break;
+                case 'verification_reminder':
+                    Mail::to($user->email)->send(new \App\Mail\EmailVerificationReminderMail($user));
+                    break;
                 case 'product_update':
                     Mail::to($user->email)->send(new \App\Mail\ProductUpdateMail($user));
                     break;
@@ -299,6 +305,9 @@ class EmailBlastController extends Controller
                     break;
                 case 'chrome_extension':
                     Mail::to($user->email)->send(new ChromeExtensionPromoMail($user));
+                    break;
+                case 'ai_photo':
+                    Mail::to($user->email)->send(new \App\Mail\AiPhotoAnnouncementMail($user));
                     break;
                 case 'custom':
                     Mail::to($user->email)->send(new CustomEmailBlastMail(
@@ -363,6 +372,86 @@ class EmailBlastController extends Controller
     {
         $logs = EmailBlastLog::orderBy('created_at', 'desc')->paginate(15);
         return view('admin.email-blast-history', compact('logs'));
+    }
+
+    /**
+     * Preview the email template (HTML rendering)
+     */
+    public function preview(Request $request)
+    {
+        $validationRules = [
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo',
+        ];
+
+        if ($request->email_type === 'custom') {
+            $validationRules['custom_subject'] = 'required|string|max:255';
+            $validationRules['custom_content'] = 'required|string|max:5000';
+            $validationRules['custom_button_text'] = 'nullable|string|max:100';
+            $validationRules['custom_button_url'] = 'nullable|url|max:500';
+        }
+
+        $request->validate($validationRules);
+
+        $user = \Illuminate\Support\Facades\Auth::user(); // Use current admin as dummy recipient
+        $emailType = $request->email_type;
+        $mailable = null;
+
+        try {
+            switch ($emailType) {
+                case 'ai_analyzer':
+                    $mailable = new AiAnalyzerFreeTrialAnnouncementMail($user);
+                    break;
+                case 'job_reminder':
+                    $mailable = new JobApplicationReminderMail($user);
+                    break;
+                case 'monthly_motivation':
+                    $mailable = new MonthlyMotivationMail($user);
+                    break;
+                case 'welcome':
+                    $mailable = new WelcomeMail($user);
+                    break;
+                case 'verification':
+                    // Laravel default notification verification, can't easily preview as Mailable
+                    return response('<div style="font-family: sans-serif; padding: 20px;"><h3>Default Laravel Verification Email</h3><p>Email ini adalah email bawaan sistem (Notification). Formatnya bergantung pada template Laravel mail. </p></div>', 200)->header('Content-Type', 'text/html');
+                case 'verification_reminder':
+                    $mailable = new \App\Mail\EmailVerificationReminderMail($user);
+                    break;
+                case 'product_update':
+                    $mailable = new \App\Mail\ProductUpdateMail($user);
+                    break;
+                case 'hiring_season':
+                    $mailable = new HiringSeasonAlertMail($user);
+                    break;
+                case 're_engagement':
+                    $mailable = new ReEngagementMail($user);
+                    break;
+                case 'chrome_extension':
+                    $mailable = new ChromeExtensionPromoMail($user);
+                    break;
+                case 'ai_photo':
+                    $mailable = new \App\Mail\AiPhotoAnnouncementMail($user);
+                    break;
+                case 'custom':
+                    $mailable = new CustomEmailBlastMail(
+                        $user,
+                        $request->custom_subject,
+                        $request->custom_content,
+                        $request->custom_button_text,
+                        $request->custom_button_url
+                    );
+                    break;
+            }
+
+            if ($mailable) {
+                return response($mailable->render(), 200)->header('Content-Type', 'text/html');
+            }
+
+            return response('Preview not available', 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to render preview: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }
 

@@ -84,6 +84,7 @@
             ['route' => 'cv.builder',        'routeIs' => 'cv.*',          'icon' => 'ph-file-text',       'label' => 'CV Builder'],
             ['route' => 'ai-analyzer.index', 'routeIs' => 'ai-analyzer.*', 'icon' => 'ph-sparkle',         'label' => 'AI Analyzer'],
             ['route' => 'cover-letters.index', 'routeIs' => 'cover-letters.*', 'icon' => 'ph-envelope-simple', 'label' => 'Cover Letter'],
+            ['route' => 'ai-photo.index',    'routeIs' => 'ai-photo.*',    'icon' => 'ph-camera',          'label' => 'AI Photo Studio'],
         ];
         @endphp
 

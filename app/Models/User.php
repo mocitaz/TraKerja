@@ -91,6 +91,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'ai_analyzer_trial_used_at',
         'portfolio_slug',
         'is_portfolio_published',
+        'photo_credits',
     ];
 
     /**
@@ -128,6 +129,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'verification_reminder_count' => 'integer',
             'has_used_ai_analyzer_trial' => 'boolean',
             'ai_analyzer_trial_used_at' => 'datetime',
+            'photo_credits' => 'integer',
         ];
     }
 
@@ -243,6 +245,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function coverLetters()
     {
         return $this->hasMany(CoverLetter::class);
+    }
+
+    public function aiPhotos(): HasMany
+    {
+        return $this->hasMany(AiPhoto::class);
     }
 
     /**
@@ -794,6 +801,55 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         if ($amount > 0) {
             $this->increment('cl_credits', $amount);
+        }
+    }
+
+    /**
+     * Check if user can access AI Photo
+     */
+    public function canAccessPhotoWithLimit(): bool
+    {
+        if (!Setting::isMonetizationEnabled()) {
+            return true;
+        }
+        return $this->photo_credits > 0;
+    }
+
+    /**
+     * Increment AI Photo counter (Deduct credit)
+     */
+    public function incrementPhotoCount(): bool
+    {
+        if (!Setting::isMonetizationEnabled()) {
+            return true;
+        }
+        
+        if ($this->photo_credits <= 0) {
+            return false;
+        }
+        
+        $this->decrement('photo_credits');
+        return true;
+    }
+
+    /**
+     * Get remaining Photo uses (credit balance)
+     */
+    public function getRemainingPhoto()
+    {
+        if (!Setting::isMonetizationEnabled()) {
+            return 'unlimited';
+        }
+        return max(0, $this->photo_credits);
+    }
+    
+    /**
+     * Add Photo credits to user balance
+     */
+    public function addPhotoCredits(int $amount): void
+    {
+        if ($amount > 0) {
+            $this->increment('photo_credits', $amount);
         }
     }
 }

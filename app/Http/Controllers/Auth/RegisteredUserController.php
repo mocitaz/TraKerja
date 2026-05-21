@@ -68,6 +68,7 @@ class RegisteredUserController extends Controller
             'role' => 'user', // Default role
             'is_premium' => false,
             'payment_status' => 'free', // Default to 'free' (valid values: free, paid, expired)
+            'photo_credits' => 2, // 2 free credits as requested
         ]);
 
         event(new Registered($user));

@@ -100,6 +100,14 @@ Route::prefix('ai-analyzer')->middleware(['auth', 'verified'])->name('ai-analyze
     Route::get('/result/{result}', [AiAnalyzerController::class, 'show'])->name('show');
 });
 
+// AI Photo Studio routes (Only for regular users)
+Route::prefix('ai-photo')->middleware(['auth', 'verified'])->name('ai-photo.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\AiPhotoController::class, 'index'])->name('index');
+    Route::post('/process', [\App\Http\Controllers\AiPhotoController::class, 'process'])->name('process');
+    Route::get('/history', [\App\Http\Controllers\AiPhotoController::class, 'history'])->name('history');
+    Route::get('/{aiPhoto}', [\App\Http\Controllers\AiPhotoController::class, 'show'])->name('show');
+});
+
 // Cover Letter routes (Only for regular users)
 Route::prefix('cover-letters')->middleware(['auth', 'verified'])->name('cover-letters.')->group(function () {
     Route::get('/', [CoverLetterController::class, 'index'])->name('index');
@@ -461,6 +469,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         }
         return app(\App\Http\Controllers\Admin\EmailBlastController::class)->send($request);
     })->name('email-blast.send');
+
+    Route::post('/email-blast/preview', function (Request $request) {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return app(\App\Http\Controllers\Admin\EmailBlastController::class)->preview($request);
+    })->name('email-blast.preview');
 
     Route::post('/email-blast/init', function (Request $request) {
         if (!Auth::user()->isAdmin()) {

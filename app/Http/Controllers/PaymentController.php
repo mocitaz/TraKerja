@@ -426,9 +426,10 @@ class PaymentController extends Controller
                     'premium_purchased_at' => now(),
                 ]);
 
-                // Add 5 credits AI bonus and 15 credits Cover Letter bonus as requested by user
+                // Add credits as requested by user
                 $user->addAiCredits(5);
                 $user->addClCredits(15);
+                $user->addPhotoCredits(5);
             }
 
             // Send success email notification

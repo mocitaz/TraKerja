@@ -654,25 +654,39 @@
                         {{-- Email Type Selection --}}
                         <div>
                             @php
+                                $colorSchemes = [
+                                    'blue'    => ['icon' => 'bg-blue-50 text-blue-600', 'hover' => 'hover:border-blue-200 hover:shadow-md hover:-translate-y-0.5', 'selected' => 'border-blue-500 bg-blue-50/40 ring-1 ring-blue-500', 'dot' => 'bg-blue-500', 'dotBorder' => 'border-blue-500'],
+                                    'emerald' => ['icon' => 'bg-emerald-50 text-emerald-600', 'hover' => 'hover:border-emerald-200 hover:shadow-md hover:-translate-y-0.5', 'selected' => 'border-emerald-500 bg-emerald-50/40 ring-1 ring-emerald-500', 'dot' => 'bg-emerald-500', 'dotBorder' => 'border-emerald-500'],
+                                    'amber'   => ['icon' => 'bg-amber-50 text-amber-600', 'hover' => 'hover:border-amber-200 hover:shadow-md hover:-translate-y-0.5', 'selected' => 'border-amber-500 bg-amber-50/40 ring-1 ring-amber-500', 'dot' => 'bg-amber-500', 'dotBorder' => 'border-amber-500'],
+                                    'indigo'  => ['icon' => 'bg-indigo-50 text-indigo-600', 'hover' => 'hover:border-indigo-200 hover:shadow-md hover:-translate-y-0.5', 'selected' => 'border-indigo-500 bg-indigo-50/40 ring-1 ring-indigo-500', 'dot' => 'bg-indigo-500', 'dotBorder' => 'border-indigo-500'],
+                                    'rose'    => ['icon' => 'bg-rose-50 text-rose-600', 'hover' => 'hover:border-rose-200 hover:shadow-md hover:-translate-y-0.5', 'selected' => 'border-rose-500 bg-rose-50/40 ring-1 ring-rose-500', 'dot' => 'bg-rose-500', 'dotBorder' => 'border-rose-500'],
+                                    'violet'  => ['icon' => 'bg-violet-50 text-violet-600', 'hover' => 'hover:border-violet-200 hover:shadow-md hover:-translate-y-0.5', 'selected' => 'border-violet-500 bg-violet-50/40 ring-1 ring-violet-500', 'dot' => 'bg-violet-500', 'dotBorder' => 'border-violet-500'],
+                                    'purple'  => ['icon' => 'bg-purple-50 text-purple-600', 'hover' => 'hover:border-purple-200 hover:shadow-md hover:-translate-y-0.5', 'selected' => 'border-purple-500 bg-purple-50/40 ring-1 ring-purple-500', 'dot' => 'bg-purple-500', 'dotBorder' => 'border-purple-500'],
+                                    'sky'     => ['icon' => 'bg-sky-50 text-sky-600', 'hover' => 'hover:border-sky-200 hover:shadow-md hover:-translate-y-0.5', 'selected' => 'border-sky-500 bg-sky-50/40 ring-1 ring-sky-500', 'dot' => 'bg-sky-500', 'dotBorder' => 'border-sky-500'],
+                                    'orange'  => ['icon' => 'bg-orange-50 text-orange-600', 'hover' => 'hover:border-orange-200 hover:shadow-md hover:-translate-y-0.5', 'selected' => 'border-orange-500 bg-orange-50/40 ring-1 ring-orange-500', 'dot' => 'bg-orange-500', 'dotBorder' => 'border-orange-500'],
+                                    'teal'    => ['icon' => 'bg-teal-50 text-teal-600', 'hover' => 'hover:border-teal-200 hover:shadow-md hover:-translate-y-0.5', 'selected' => 'border-teal-500 bg-teal-50/40 ring-1 ring-teal-500', 'dot' => 'bg-teal-500', 'dotBorder' => 'border-teal-500'],
+                                ];
+
                                 $emailGroups = [
                                     'Onboarding & Verifikasi' => [
-                                        'welcome'               => ['label' => 'Welcome',           'desc' => 'Email selamat datang',        'icon' => 'ph-hand-waving'],
-                                        'verification'          => ['label' => 'Verification',      'desc' => 'Verifikasi alamat email',     'icon' => 'ph-envelope-simple'],
-                                        'verification_reminder' => ['label' => 'Verif. Reminder',   'desc' => 'Pengingat belum verifikasi',  'icon' => 'ph-clock-countdown'],
+                                        'welcome'               => ['label' => 'Welcome',           'desc' => 'Email selamat datang',        'icon' => 'ph-hand-waving',           'color' => 'blue'],
+                                        'verification'          => ['label' => 'Verification',      'desc' => 'Verifikasi alamat email',     'icon' => 'ph-envelope-simple',       'color' => 'emerald'],
+                                        'verification_reminder' => ['label' => 'Verif. Reminder',   'desc' => 'Pengingat belum verifikasi',  'icon' => 'ph-clock-countdown',       'color' => 'amber'],
                                     ],
                                     'Engagement & Motivasi' => [
-                                        'job_reminder'          => ['label' => 'Job Reminder',      'desc' => 'Ajakan catat lamaran',        'icon' => 'ph-briefcase'],
-                                        'monthly_motivation'    => ['label' => 'Motivasi Bulanan',  'desc' => 'Semangat bulan baru',         'icon' => 'ph-calendar-check'],
-                                        're_engagement'         => ['label' => 'Re-engagement',     'desc' => 'Ajakan kembali aktif',        'icon' => 'ph-arrow-counter-clockwise'],
+                                        'job_reminder'          => ['label' => 'Job Reminder',      'desc' => 'Ajakan catat lamaran',        'icon' => 'ph-briefcase',             'color' => 'indigo'],
+                                        'monthly_motivation'    => ['label' => 'Motivasi Bulanan',  'desc' => 'Semangat bulan baru',         'icon' => 'ph-calendar-check',        'color' => 'rose'],
+                                        're_engagement'         => ['label' => 'Re-engagement',     'desc' => 'Ajakan kembali aktif',        'icon' => 'ph-arrow-counter-clockwise', 'color' => 'violet'],
                                     ],
                                     'Pembaruan & Fitur' => [
-                                        'product_update'        => ['label' => 'Product Update',    'desc' => 'Pengumuman fitur terbaru',    'icon' => 'ph-megaphone'],
-                                        'ai_analyzer'           => ['label' => 'AI Analyzer Trial', 'desc' => 'Pengumuman trial gratis',     'icon' => 'ph-robot'],
-                                        'chrome_extension'      => ['label' => 'Chrome Extension',  'desc' => 'Pengumuman rilis ekstensi',   'icon' => 'ph-puzzle-piece'],
+                                        'product_update'        => ['label' => 'Product Update',    'desc' => 'Pengumuman fitur terbaru',    'icon' => 'ph-megaphone',             'color' => 'blue'],
+                                        'ai_analyzer'           => ['label' => 'AI Analyzer Trial', 'desc' => 'Pengumuman trial gratis',     'icon' => 'ph-robot',                 'color' => 'sky'],
+                                        'chrome_extension'      => ['label' => 'Chrome Extension',  'desc' => 'Pengumuman rilis ekstensi',   'icon' => 'ph-puzzle-piece',          'color' => 'orange'],
+                                        'ai_photo'              => ['label' => 'AI Photo Studio',   'desc' => 'Pengumuman rilis AI Photo',   'icon' => 'ph-camera-plus',           'color' => 'purple'],
                                     ],
                                     'Status & Info Lainnya' => [
-                                        'premium_granted'       => ['label' => 'Premium Granted',   'desc' => 'Notifikasi akses premium',    'icon' => 'ph-crown'],
-                                        'hiring_season'         => ['label' => 'Hiring Season',     'desc' => 'Alert musim rekrutmen',       'icon' => 'ph-buildings'],
+                                        'premium_granted'       => ['label' => 'Premium Granted',   'desc' => 'Notifikasi akses premium',    'icon' => 'ph-crown',                 'color' => 'amber'],
+                                        'hiring_season'         => ['label' => 'Hiring Season',     'desc' => 'Alert musim rekrutmen',       'icon' => 'ph-buildings',             'color' => 'teal'],
                                     ]
                                 ];
                             @endphp
@@ -687,29 +701,31 @@
                                             @foreach($types as $type => $info)
                                                 @php
                                                     $isSelected = $emailType === $type;
-                                                    $cardClass   = $isSelected
-                                                        ? 'border-primary-500 bg-primary-50/60 ring-1 ring-primary-500 shadow-sm'
-                                                        : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/80';
-                                                    $iconBg      = $isSelected ? 'bg-primary-100 text-primary-600' : 'bg-slate-100 text-slate-500';
-                                                    $dotBorder   = $isSelected ? 'border-primary-500' : 'border-slate-300';
+                                                    $c = $colorSchemes[$info['color']];
+                                                    $cardClass = $isSelected
+                                                        ? $c['selected']
+                                                        : 'border-slate-100 hover:bg-slate-50 ' . $c['hover'];
+                                                    $iconBg = $c['icon'];
+                                                    $dotBorder = $isSelected ? $c['dotBorder'] : 'border-slate-200';
+                                                    $dotBg = $isSelected ? $c['dot'] : '';
                                                 @endphp
-                                                <label class="relative flex cursor-pointer rounded-xl border-2 {{ $cardClass }} p-3.5 transition-all group">
+                                                <label class="relative flex cursor-pointer rounded-2xl border-2 {{ $cardClass }} p-4 transition-all duration-300 ease-out group overflow-hidden">
                                                     <input type="radio" wire:model.live="emailType" value="{{ $type }}" class="sr-only">
-                                                    <div class="flex items-start gap-3 w-full">
+                                                    <div class="flex items-center gap-4 w-full relative z-10">
                                                         {{-- Icon --}}
-                                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg {{ $iconBg }} flex items-center justify-center transition-colors mt-0.5">
-                                                            <i class="ph-fill {{ $info['icon'] }} text-base"></i>
+                                                        <div class="flex-shrink-0 w-10 h-10 rounded-xl {{ $iconBg }} flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-sm">
+                                                            <i class="ph-duotone {{ $info['icon'] }} text-2xl"></i>
                                                         </div>
                                                         {{-- Text --}}
                                                         <div class="flex-1 min-w-0">
-                                                            <p class="text-sm font-bold text-slate-900 leading-tight">{{ $info['label'] }}</p>
-                                                            <p class="text-[11px] font-medium text-slate-500 mt-0.5 leading-tight">{{ $info['desc'] }}</p>
+                                                            <p class="text-sm font-bold text-slate-900 leading-tight transition-colors">{{ $info['label'] }}</p>
+                                                            <p class="text-[11px] font-medium text-slate-500 mt-0.5 leading-relaxed truncate">{{ $info['desc'] }}</p>
                                                         </div>
-                                                        {{-- Radio dot --}}
-                                                        <div class="flex-shrink-0 mt-0.5">
-                                                            <div class="h-4 w-4 rounded-full border-2 {{ $dotBorder }} flex items-center justify-center transition-colors">
+                                                        {{-- Indicator --}}
+                                                        <div class="flex-shrink-0">
+                                                            <div class="h-6 w-6 rounded-full border-2 {{ $dotBorder }} flex items-center justify-center transition-all duration-300 {{ $isSelected ? $dotBg : 'bg-transparent' }}">
                                                                 @if($isSelected)
-                                                                    <div class="h-1.5 w-1.5 rounded-full bg-primary-500"></div>
+                                                                    <i class="ph-bold ph-check text-white text-[10px]"></i>
                                                                 @endif
                                                             </div>
                                                         </div>

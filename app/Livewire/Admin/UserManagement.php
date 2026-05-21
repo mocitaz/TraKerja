@@ -327,7 +327,7 @@ class UserManagement extends Component
     public function sendEmail()
     {
         $this->validate([
-            'emailType' => 'required|in:welcome,verification,verification_reminder,ai_analyzer,job_reminder,monthly_motivation,premium_granted,product_update,hiring_season,re_engagement',
+            'emailType' => 'required|in:welcome,verification,verification_reminder,ai_analyzer,job_reminder,monthly_motivation,premium_granted,product_update,hiring_season,re_engagement,ai_photo',
         ]);
         
         $user = User::findOrFail($this->emailTargetUserId);
@@ -373,6 +373,9 @@ class UserManagement extends Component
                 case 're_engagement':
                     Mail::to($user->email)->send(new ReEngagementMail($user));
                     break;
+                case 'ai_photo':
+                    Mail::to($user->email)->send(new \App\Mail\AiPhotoAnnouncementMail($user));
+                    break;
             }
             
             Log::info('Admin sent email to user', [
@@ -396,6 +399,7 @@ class UserManagement extends Component
                 'product_update'          => 'Major Product Update',
                 'hiring_season'           => 'Hiring Season Alert',
                 're_engagement'           => 'Re-engagement Email',
+                'ai_photo'                => 'AI Photo Announcement',
             ];
             
             $this->dispatch('showNotification', [
