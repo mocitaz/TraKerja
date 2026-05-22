@@ -48,7 +48,7 @@ class AiPhotoController extends Controller
         }
 
         $type = $request->input('type');
-        $baseUrl = env('PHOTO_API_URL', 'http://127.0.0.1:5001');
+        $baseUrl = env('PHOTO_API_URL', 'http://aiphoto.apitrakerja.online');
 
         try {
             $endpoint = $type === 'remove_bg' ? '/remove-bg' : '/enhance-photo-ai';
