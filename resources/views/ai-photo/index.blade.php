@@ -493,6 +493,11 @@
             "Sedikit lagi selesai..."
         ];
 
+        const overlay = document.getElementById('ai-loading-overlay');
+        if (overlay) {
+            document.body.appendChild(overlay);
+        }
+
         document.getElementById('photoForm').addEventListener('submit', function () {
             const btn = document.getElementById('submit-btn');
             btn.disabled = true;
@@ -501,13 +506,9 @@
             document.getElementById('submit-icon').classList.add('hidden');
             document.getElementById('loading-spinner').classList.remove('hidden');
 
-            const overlay = document.getElementById('ai-loading-overlay');
             const card = document.getElementById('ai-loading-card');
             const msgEl = document.getElementById('loading-message');
             
-            // Move to body to prevent layout cropping
-            document.body.appendChild(overlay);
-
             overlay.classList.remove('hidden');
             overlay.classList.add('flex');
             // Trigger reflow
@@ -528,7 +529,7 @@
     </script>
 
     <!-- Full Screen Premium AI Loading Overlay -->
-    <div id="ai-loading-overlay" class="fixed top-0 left-0 w-screen h-screen z-[9999] hidden items-center justify-center bg-[#F8FAFC]/95 backdrop-blur-xl transition-opacity duration-500 opacity-0">
+    <div id="ai-loading-overlay" class="fixed top-0 left-0 w-[100vw] h-[100vh] z-[99999] hidden items-center justify-center bg-[#F8FAFC]/95 backdrop-blur-xl transition-opacity duration-500 opacity-0 m-0 p-0 overflow-hidden" style="position: fixed !important; max-width: none !important; width: 100vw !important; height: 100vh !important;">
         <div class="flex flex-col items-center justify-center text-center transform scale-95 transition-transform duration-500 w-full max-w-md px-4" id="ai-loading-card">
             
             <!-- TraKerja Circular Progress -->
