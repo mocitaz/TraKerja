@@ -484,13 +484,72 @@
         }
 
         // ── Submit ────────────────────────────────────────────────
+        const loadingMessages = [
+            "Menganalisis struktur wajah Anda...",
+            "Menyesuaikan pencahayaan studio...",
+            "Menerapkan gaya busana profesional...",
+            "Meningkatkan resolusi dan ketajaman...",
+            "Menambahkan sentuhan akhir AI...",
+            "Sedikit lagi selesai..."
+        ];
+
         document.getElementById('photoForm').addEventListener('submit', function () {
             const btn = document.getElementById('submit-btn');
             btn.disabled = true;
             btn.classList.add('opacity-70', 'cursor-not-allowed');
-            document.getElementById('submit-text').textContent = 'Processing...';
+            document.getElementById('submit-text').textContent = 'Memproses...';
             document.getElementById('submit-icon').classList.add('hidden');
             document.getElementById('loading-spinner').classList.remove('hidden');
+
+            const overlay = document.getElementById('ai-loading-overlay');
+            const card = document.getElementById('ai-loading-card');
+            const msgEl = document.getElementById('loading-message');
+            
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            // Trigger reflow
+            void overlay.offsetWidth;
+            overlay.classList.remove('opacity-0');
+            card.classList.remove('scale-95');
+
+            let msgIndex = 0;
+            setInterval(() => {
+                msgEl.style.opacity = '0';
+                setTimeout(() => {
+                    msgIndex = (msgIndex + 1) % loadingMessages.length;
+                    msgEl.textContent = loadingMessages[msgIndex];
+                    msgEl.style.opacity = '1';
+                }, 300);
+            }, 6000);
         });
     </script>
+
+    <!-- Full Screen Loading Overlay -->
+    <div id="ai-loading-overlay" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 opacity-0">
+        <div class="bg-white p-8 rounded-[2rem] shadow-2xl max-w-sm w-full mx-4 flex flex-col items-center text-center transform scale-95 transition-transform duration-300" id="ai-loading-card">
+            
+            <div class="relative w-24 h-24 mb-6">
+                <div class="absolute inset-0 bg-primary-100 rounded-full animate-ping opacity-75 duration-1000"></div>
+                <div class="relative bg-gradient-to-tr from-primary-600 to-indigo-500 w-full h-full rounded-full flex items-center justify-center shadow-lg shadow-primary-500/30">
+                    <i class="ph-fill ph-magic-wand text-4xl text-white animate-bounce"></i>
+                </div>
+                <i class="ph-fill ph-sparkle absolute top-0 right-0 text-amber-400 text-xl animate-pulse"></i>
+                <i class="ph-fill ph-sparkle absolute bottom-2 left-0 text-indigo-400 text-lg animate-pulse" style="animation-delay: 500ms"></i>
+            </div>
+
+            <h3 class="text-lg font-black text-slate-900 tracking-tight mb-2">AI sedang bekerja</h3>
+            <p id="loading-message" class="text-sm font-bold text-slate-500 transition-opacity duration-300">Menghubungkan ke server AI...</p>
+            
+            <div class="w-full bg-slate-100 h-1.5 rounded-full mt-6 overflow-hidden relative">
+                <div class="absolute top-0 left-0 bg-primary-500 h-full rounded-full animate-[progress_1.5s_ease-in-out_infinite] w-1/2"></div>
+            </div>
+            
+            <style>
+                @keyframes progress {
+                    0% { transform: translateX(-100%); }
+                    100% { transform: translateX(200%); }
+                }
+            </style>
+        </div>
+    </div>
 </x-app-layout>
