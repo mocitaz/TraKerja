@@ -528,43 +528,51 @@
     </script>
 
     <!-- Full Screen Premium AI Loading Overlay -->
-    <div id="ai-loading-overlay" class="fixed top-0 left-0 w-screen h-screen z-[9999] hidden items-center justify-center bg-slate-950/80 backdrop-blur-xl transition-opacity duration-500 opacity-0">
+    <div id="ai-loading-overlay" class="fixed top-0 left-0 w-screen h-screen z-[9999] hidden items-center justify-center bg-[#F8FAFC]/95 backdrop-blur-xl transition-opacity duration-500 opacity-0">
         <div class="flex flex-col items-center justify-center text-center transform scale-95 transition-transform duration-500 w-full max-w-md px-4" id="ai-loading-card">
             
-            <!-- Glowing Orb -->
-            <div class="relative w-32 h-32 mb-10">
-                <!-- Pulsing outer rings -->
-                <div class="absolute inset-0 bg-primary-500/20 rounded-full animate-ping" style="animation-duration: 3s;"></div>
-                <div class="absolute inset-2 bg-indigo-500/30 rounded-full animate-ping" style="animation-duration: 2s; animation-delay: 0.5s;"></div>
+            <!-- TraKerja Circular Progress -->
+            <div class="relative flex items-center justify-center mb-8">
+                <svg class="w-32 h-32 transform -rotate-90">
+                    <circle cx="64" cy="64" r="60" stroke="currentColor" stroke-width="1.5" fill="transparent" class="text-slate-200" />
+                    <circle cx="64" cy="64" r="60" stroke="currentColor" stroke-width="1.5" fill="transparent" class="text-primary-500 animate-[progress-ring_0.8s_cubic-bezier(0.65,0,0.35,1)_infinite]" stroke-dasharray="377" stroke-dashoffset="377" stroke-linecap="round" />
+                </svg>
                 
-                <!-- Inner Glowing Sphere -->
-                <div class="absolute inset-4 bg-gradient-to-tr from-primary-500 via-fuchsia-500 to-indigo-500 rounded-full shadow-[0_0_50px_rgba(165,112,240,0.6)] flex items-center justify-center animate-[pulse_2s_ease-in-out_infinite]">
-                    <i class="ph-fill ph-magic-wand text-white text-5xl animate-bounce"></i>
+                <div class="absolute w-20 h-20 bg-white rounded-full shadow-[0_15px_35px_rgba(0,0,0,0.05)] flex items-center justify-center border border-slate-100 transition-transform duration-500 hover:scale-105">
+                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-10 h-10 object-contain animate-[pulse-subtle_3s_ease-in-out_infinite]">
                 </div>
-                
-                <!-- Floating Sparkles -->
-                <i class="ph-fill ph-sparkle absolute top-0 right-2 text-amber-300 text-2xl animate-pulse"></i>
-                <i class="ph-fill ph-sparkle absolute bottom-4 left-0 text-fuchsia-300 text-xl animate-pulse delay-150"></i>
-                <i class="ph-fill ph-star absolute top-6 left-2 text-indigo-300 text-base animate-ping delay-300"></i>
             </div>
 
-            <!-- Typography -->
-            <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-4">AI is Crafting Your Photo</h2>
-            
-            <div class="flex items-center gap-3 bg-white/10 px-6 py-3 rounded-full border border-white/10 shadow-inner">
-                <i class="ph-bold ph-spinner animate-spin text-primary-400 text-xl"></i>
-                <p id="loading-message" class="text-sm font-bold text-slate-200 tracking-wide transition-opacity duration-300">Inisialisasi engine AI...</p>
+            <!-- Professional Branding -->
+            <div class="flex flex-col items-center mb-8">
+                <h2 class="text-[14px] font-black text-slate-800 uppercase tracking-[0.6em] leading-none">TraKerja AI</h2>
+                <div class="mt-4 flex items-center gap-2">
+                    <span class="h-[1px] w-4 bg-slate-200"></span>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em]">Elevating Identity</p>
+                    <span class="h-[1px] w-4 bg-slate-200"></span>
+                </div>
             </div>
 
-            <!-- Sleek Progress Bar -->
-            <div class="w-64 bg-slate-800/50 h-1.5 rounded-full mt-10 overflow-hidden relative shadow-inner border border-white/5">
-                <div class="absolute top-0 left-0 bg-gradient-to-r from-primary-500 via-fuchsia-500 to-indigo-500 h-full rounded-full animate-[progress_2s_ease-in-out_infinite] w-1/2 shadow-[0_0_10px_rgba(165,112,240,0.5)]"></div>
+            <!-- AI Status Text -->
+            <div class="bg-white/50 border border-slate-200/60 shadow-sm px-6 py-3 rounded-full mb-8">
+                <p id="loading-message" class="text-xs font-bold text-primary-600 tracking-wide transition-opacity duration-300">Menghubungkan ke server AI...</p>
+            </div>
+
+            <!-- Warning Not to Refresh -->
+            <div class="flex items-center justify-center gap-2 text-rose-500 bg-rose-50 px-5 py-2.5 rounded-xl border border-rose-100/50 shadow-sm">
+                <i class="ph-fill ph-warning-circle text-lg animate-pulse"></i>
+                <p class="text-[9px] font-black uppercase tracking-widest">Tolong Jangan Refresh Halaman Ini</p>
             </div>
             
             <style>
-                @keyframes progress {
-                    0% { transform: translateX(-100%); }
-                    100% { transform: translateX(200%); }
+                @keyframes progress-ring {
+                    0% { stroke-dashoffset: 377; }
+                    50% { stroke-dashoffset: 180; }
+                    100% { stroke-dashoffset: 0; }
+                }
+                @keyframes pulse-subtle {
+                    0%, 100% { transform: scale(1); opacity: 1; }
+                    50% { transform: scale(0.95); opacity: 0.9; }
                 }
             </style>
         </div>
