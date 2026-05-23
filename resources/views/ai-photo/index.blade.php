@@ -527,51 +527,38 @@
     </script>
 
     <!-- Full Screen Premium AI Loading Overlay -->
-    <div id="ai-loading-overlay" class="fixed top-0 left-0 w-[100vw] h-[100vh] z-[99999] hidden items-center justify-center bg-[#F8FAFC]/95 backdrop-blur-xl transition-opacity duration-500 opacity-0 m-0 p-0 overflow-hidden" style="position: fixed !important; max-width: none !important; width: 100vw !important; height: 100vh !important;">
+    <div id="ai-loading-overlay" class="fixed inset-0 z-[99999] hidden items-center justify-center bg-slate-900/80 backdrop-blur-md transition-opacity duration-500 opacity-0" style="position: fixed !important;">
         <div class="flex flex-col items-center justify-center text-center transform scale-95 transition-transform duration-500 w-full max-w-md px-4" id="ai-loading-card">
             
             <!-- TraKerja Circular Progress -->
             <div class="relative flex items-center justify-center mb-8">
                 <svg class="w-32 h-32 transform -rotate-90">
-                    <circle cx="64" cy="64" r="60" stroke="currentColor" stroke-width="1.5" fill="transparent" class="text-slate-200" />
-                    <circle cx="64" cy="64" r="60" stroke="currentColor" stroke-width="1.5" fill="transparent" class="text-primary-500 animate-[progress-ring_0.8s_cubic-bezier(0.65,0,0.35,1)_infinite]" stroke-dasharray="377" stroke-dashoffset="377" stroke-linecap="round" />
+                    <circle cx="64" cy="64" r="60" stroke="currentColor" stroke-width="2" fill="transparent" class="text-white/20" />
+                    <circle cx="64" cy="64" r="60" stroke="currentColor" stroke-width="2" fill="transparent" class="text-primary-400 animate-[progress-ring_1.5s_ease-in-out_infinite]" stroke-dasharray="377" stroke-dashoffset="377" stroke-linecap="round" />
                 </svg>
                 
-                <div class="absolute w-20 h-20 bg-white rounded-full shadow-[0_15px_35px_rgba(0,0,0,0.05)] flex items-center justify-center border border-slate-100 transition-transform duration-500 hover:scale-105">
-                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-10 h-10 object-contain animate-[pulse-subtle_3s_ease-in-out_infinite]">
-                </div>
-            </div>
-
-            <!-- Professional Branding -->
-            <div class="flex flex-col items-center mb-8">
-                <h2 class="text-[14px] font-black text-slate-800 uppercase tracking-[0.6em] leading-none">TraKerja AI</h2>
-                <div class="mt-4 flex items-center gap-2">
-                    <span class="h-[1px] w-4 bg-slate-200"></span>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em]">Elevating Identity</p>
-                    <span class="h-[1px] w-4 bg-slate-200"></span>
+                <div class="absolute w-20 h-20 bg-white rounded-full shadow-[0_0_40px_rgba(255,255,255,0.2)] flex items-center justify-center transition-transform duration-500 hover:scale-105">
+                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-10 h-10 object-contain animate-pulse">
                 </div>
             </div>
 
             <!-- AI Status Text -->
-            <div class="bg-white/50 border border-slate-200/60 shadow-sm px-6 py-3 rounded-full mb-8">
-                <p id="loading-message" class="text-xs font-bold text-primary-600 tracking-wide transition-opacity duration-300">Menghubungkan ke server AI...</p>
+            <div class="mb-6">
+                <h2 class="text-2xl font-black text-white tracking-tight animate-pulse mb-2">Memproses...</h2>
+                <p id="loading-message" class="text-sm font-medium text-white/80 transition-opacity duration-300">Menghubungkan ke server AI...</p>
             </div>
 
             <!-- Warning Not to Refresh -->
-            <div class="flex items-center justify-center gap-2 text-rose-500 bg-rose-50 px-5 py-2.5 rounded-xl border border-rose-100/50 shadow-sm">
-                <i class="ph-fill ph-warning-circle text-lg animate-pulse"></i>
-                <p class="text-[9px] font-black uppercase tracking-widest">Tolong Jangan Refresh Halaman Ini</p>
+            <div class="flex items-center justify-center gap-2 text-white bg-rose-500/20 px-6 py-3 rounded-2xl border border-rose-500/30 backdrop-blur-sm shadow-lg">
+                <i class="ph-fill ph-warning-circle text-xl text-rose-400 animate-pulse"></i>
+                <p class="text-[11px] font-black uppercase tracking-widest text-rose-100">Jangan Tutup Browser</p>
             </div>
             
             <style>
                 @keyframes progress-ring {
-                    0% { stroke-dashoffset: 377; }
-                    50% { stroke-dashoffset: 180; }
-                    100% { stroke-dashoffset: 0; }
-                }
-                @keyframes pulse-subtle {
-                    0%, 100% { transform: scale(1); opacity: 1; }
-                    50% { transform: scale(0.95); opacity: 0.9; }
+                    0% { stroke-dashoffset: 377; transform: rotate(0deg); transform-origin: 50% 50%; }
+                    50% { stroke-dashoffset: 100; transform: rotate(180deg); transform-origin: 50% 50%; }
+                    100% { stroke-dashoffset: 377; transform: rotate(360deg); transform-origin: 50% 50%; }
                 }
             </style>
         </div>
