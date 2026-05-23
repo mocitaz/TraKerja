@@ -505,6 +505,9 @@
             const card = document.getElementById('ai-loading-card');
             const msgEl = document.getElementById('loading-message');
             
+            // Move to body to prevent layout cropping
+            document.body.appendChild(overlay);
+
             overlay.classList.remove('hidden');
             overlay.classList.add('flex');
             // Trigger reflow
@@ -524,24 +527,38 @@
         });
     </script>
 
-    <!-- Full Screen Loading Overlay -->
-    <div id="ai-loading-overlay" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 opacity-0">
-        <div class="bg-white p-8 rounded-[2rem] shadow-2xl max-w-sm w-full mx-4 flex flex-col items-center text-center transform scale-95 transition-transform duration-300" id="ai-loading-card">
+    <!-- Full Screen Premium AI Loading Overlay -->
+    <div id="ai-loading-overlay" class="fixed top-0 left-0 w-screen h-screen z-[9999] hidden items-center justify-center bg-slate-950/80 backdrop-blur-xl transition-opacity duration-500 opacity-0">
+        <div class="flex flex-col items-center justify-center text-center transform scale-95 transition-transform duration-500 w-full max-w-md px-4" id="ai-loading-card">
             
-            <div class="relative w-24 h-24 mb-6">
-                <div class="absolute inset-0 bg-primary-100 rounded-full animate-ping opacity-75 duration-1000"></div>
-                <div class="relative bg-gradient-to-tr from-primary-600 to-indigo-500 w-full h-full rounded-full flex items-center justify-center shadow-lg shadow-primary-500/30">
-                    <i class="ph-fill ph-magic-wand text-4xl text-white animate-bounce"></i>
+            <!-- Glowing Orb -->
+            <div class="relative w-32 h-32 mb-10">
+                <!-- Pulsing outer rings -->
+                <div class="absolute inset-0 bg-primary-500/20 rounded-full animate-ping" style="animation-duration: 3s;"></div>
+                <div class="absolute inset-2 bg-indigo-500/30 rounded-full animate-ping" style="animation-duration: 2s; animation-delay: 0.5s;"></div>
+                
+                <!-- Inner Glowing Sphere -->
+                <div class="absolute inset-4 bg-gradient-to-tr from-primary-500 via-fuchsia-500 to-indigo-500 rounded-full shadow-[0_0_50px_rgba(165,112,240,0.6)] flex items-center justify-center animate-[pulse_2s_ease-in-out_infinite]">
+                    <i class="ph-fill ph-magic-wand text-white text-5xl animate-bounce"></i>
                 </div>
-                <i class="ph-fill ph-sparkle absolute top-0 right-0 text-amber-400 text-xl animate-pulse"></i>
-                <i class="ph-fill ph-sparkle absolute bottom-2 left-0 text-indigo-400 text-lg animate-pulse" style="animation-delay: 500ms"></i>
+                
+                <!-- Floating Sparkles -->
+                <i class="ph-fill ph-sparkle absolute top-0 right-2 text-amber-300 text-2xl animate-pulse"></i>
+                <i class="ph-fill ph-sparkle absolute bottom-4 left-0 text-fuchsia-300 text-xl animate-pulse delay-150"></i>
+                <i class="ph-fill ph-star absolute top-6 left-2 text-indigo-300 text-base animate-ping delay-300"></i>
             </div>
 
-            <h3 class="text-lg font-black text-slate-900 tracking-tight mb-2">AI sedang bekerja</h3>
-            <p id="loading-message" class="text-sm font-bold text-slate-500 transition-opacity duration-300">Menghubungkan ke server AI...</p>
+            <!-- Typography -->
+            <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-4">AI is Crafting Your Photo</h2>
             
-            <div class="w-full bg-slate-100 h-1.5 rounded-full mt-6 overflow-hidden relative">
-                <div class="absolute top-0 left-0 bg-primary-500 h-full rounded-full animate-[progress_1.5s_ease-in-out_infinite] w-1/2"></div>
+            <div class="flex items-center gap-3 bg-white/10 px-6 py-3 rounded-full border border-white/10 shadow-inner">
+                <i class="ph-bold ph-spinner animate-spin text-primary-400 text-xl"></i>
+                <p id="loading-message" class="text-sm font-bold text-slate-200 tracking-wide transition-opacity duration-300">Inisialisasi engine AI...</p>
+            </div>
+
+            <!-- Sleek Progress Bar -->
+            <div class="w-64 bg-slate-800/50 h-1.5 rounded-full mt-10 overflow-hidden relative shadow-inner border border-white/5">
+                <div class="absolute top-0 left-0 bg-gradient-to-r from-primary-500 via-fuchsia-500 to-indigo-500 h-full rounded-full animate-[progress_2s_ease-in-out_infinite] w-1/2 shadow-[0_0_10px_rgba(165,112,240,0.5)]"></div>
             </div>
             
             <style>
