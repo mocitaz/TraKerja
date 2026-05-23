@@ -177,24 +177,6 @@
                             <div class="p-6 sm:p-8 space-y-5">
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                                     <div class="group/field space-y-2">
-                                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Background Color</label>
-                                        <div class="relative">
-                                            <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 transition-all pointer-events-none">
-                                                <i class="ph-bold ph-palette text-sm"></i>
-                                            </div>
-                                            <select name="background" class="w-full pl-14 pr-10 py-4 bg-slate-50/50 border border-slate-200 rounded-[1.25rem] text-[13px] font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/5 focus:border-primary-400 focus:bg-white transition-all outline-none appearance-none cursor-pointer">
-                                                <option value="transparan">Transparent (PNG)</option>
-                                                <option value="merah">Merah (Red)</option>
-                                                <option value="biru">Biru (Blue)</option>
-                                                <option value="biru_muda">Biru Muda (Light Blue)</option>
-                                                <option value="putih">Putih (White)</option>
-                                            </select>
-                                            <div class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
-                                                <i class="ph-bold ph-caret-down text-xs"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="group/field space-y-2">
                                         <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Photo Size</label>
                                         <div class="relative">
                                             <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 transition-all pointer-events-none">
