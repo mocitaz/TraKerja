@@ -725,16 +725,6 @@
                 transform: translateY(0);
             }
             
-            .reveal {
-                opacity: 0;
-                transform: translateY(30px);
-                transition: opacity 0.6s ease, transform 0.6s ease;
-            }
-
-            .reveal.visible {
-                opacity: 1;
-                transform: translateY(0);
-            }
             /* Spotlight Effect */
             .spotlight-effect {
                 position: relative;
