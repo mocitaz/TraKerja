@@ -182,7 +182,7 @@
                                             <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 transition-all pointer-events-none">
                                                 <i class="ph-bold ph-palette text-sm"></i>
                                             </div>
-                                            <select name="background" class="w-full pl-14 pr-10 py-4 bg-slate-50/50 border border-slate-200 rounded-[1.25rem] text-[13px] font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/5 focus:border-primary-400 focus:bg-white transition-all outline-none appearance-none cursor-pointer !bg-none" style="background-image: none !important;">
+                                            <select name="background" class="w-full pl-14 pr-10 py-4 bg-slate-50/50 border border-slate-200 rounded-[1.25rem] text-[13px] font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/5 focus:border-primary-400 focus:bg-white transition-all outline-none cursor-pointer" style="appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: none !important;">
                                                 <option value="transparan">Transparent (PNG)</option>
                                                 <option value="merah">Merah (Red)</option>
                                                 <option value="biru">Biru (Blue)</option>
@@ -200,7 +200,7 @@
                                             <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 transition-all pointer-events-none">
                                                 <i class="ph-bold ph-frame-corners text-sm"></i>
                                             </div>
-                                            <select name="size" class="w-full pl-14 pr-10 py-4 bg-slate-50/50 border border-slate-200 rounded-[1.25rem] text-[13px] font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/5 focus:border-primary-400 focus:bg-white transition-all outline-none appearance-none cursor-pointer !bg-none" style="background-image: none !important;">
+                                            <select name="size" class="w-full pl-14 pr-10 py-4 bg-slate-50/50 border border-slate-200 rounded-[1.25rem] text-[13px] font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/5 focus:border-primary-400 focus:bg-white transition-all outline-none cursor-pointer" style="appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: none !important;">
                                                 <option value="original">Original Aspect Ratio</option>
                                                 <option value="3x4">3x4 (Standard)</option>
                                                 <option value="4x6">4x6 (Standard)</option>
@@ -233,7 +233,7 @@
                                             <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 transition-all pointer-events-none">
                                                 <i class="ph-bold ph-t-shirt text-sm"></i>
                                             </div>
-                                            <select name="style" class="w-full pl-14 pr-10 py-4 bg-slate-50/50 border border-slate-200 rounded-[1.25rem] text-[13px] font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/5 focus:border-primary-400 focus:bg-white transition-all outline-none appearance-none cursor-pointer !bg-none" style="background-image: none !important;">
+                                            <select name="style" class="w-full pl-14 pr-10 py-4 bg-slate-50/50 border border-slate-200 rounded-[1.25rem] text-[13px] font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/5 focus:border-primary-400 focus:bg-white transition-all outline-none cursor-pointer" style="appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: none !important;">
                                                 <option value="auto">Auto Detect Gender</option>
                                                 <option value="linkedin_pria">LinkedIn (Male Suit)</option>
                                                 <option value="linkedin_wanita">LinkedIn (Female Blazer)</option>
@@ -252,7 +252,7 @@
                                             <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 transition-all pointer-events-none">
                                                 <i class="ph-bold ph-image-square text-sm"></i>
                                             </div>
-                                            <select name="background" class="w-full pl-14 pr-10 py-4 bg-slate-50/50 border border-slate-200 rounded-[1.25rem] text-[13px] font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/5 focus:border-primary-400 focus:bg-white transition-all outline-none appearance-none cursor-pointer !bg-none" style="background-image: none !important;">
+                                            <select name="background" class="w-full pl-14 pr-10 py-4 bg-slate-50/50 border border-slate-200 rounded-[1.25rem] text-[13px] font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/5 focus:border-primary-400 focus:bg-white transition-all outline-none cursor-pointer" style="appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: none !important;">
                                                 <option value="studio_plain">Studio Plain</option>
                                                 <option value="studio_gradient">Studio Gradient</option>
                                                 <option value="modern_office">Modern Office</option>
