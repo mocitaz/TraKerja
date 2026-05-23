@@ -77,7 +77,7 @@
                                      ondragover="handleDragOver(event)"
                                      ondragleave="handleDragLeave(event)"
                                      ondrop="handleDrop(event)">
-                                    <input id="photo" name="photo" type="file" accept=".jpg,.jpeg,.png,.webp"
+                                    <input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp"
                                            class="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full" required>
                                     <div class="relative z-10 flex flex-col items-center gap-4">
                                         <div class="w-16 h-16 bg-slate-50 border border-slate-200 rounded-3xl flex items-center justify-center group-hover:bg-primary-50 group-hover:border-primary-200 transition-all shadow-sm">
