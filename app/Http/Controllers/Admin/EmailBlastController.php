@@ -54,7 +54,7 @@ class EmailBlastController extends Controller
     public function send(Request $request)
     {
         $validationRules = [
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo',
             'target_user' => 'required|in:all,verified,premium,free,new,unverified',
         ];
 
@@ -151,6 +151,9 @@ class EmailBlastController extends Controller
                     case 'chrome_extension':
                         Mail::to($user->email)->send(new ChromeExtensionPromoMail($user));
                         break;
+                    case 'ai_photo':
+                        Mail::to($user->email)->send(new \App\Mail\AiPhotoAnnouncementMail($user));
+                        break;
                     case 'custom':
                         Mail::to($user->email)->send(new CustomEmailBlastMail(
                             $user,
@@ -189,7 +192,7 @@ class EmailBlastController extends Controller
     public function initProgress(Request $request)
     {
         $validationRules = [
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo',
             'target_user' => 'required|in:all,verified,premium,free,new,unverified',
         ];
 
