@@ -112,10 +112,11 @@
                                         </span>
 
                                         @if($job->isGhosted())
-                                            <button x-data="{ loading: false }" 
-                                                    x-on:click.stop="loading = true; $wire.generateFollowUp({{ $job->id }}).then(() => loading = false)"
+                                            <button wire:click.stop="generateFollowUp({{ $job->id }})"
+                                                    x-data="{ loading: false }" 
+                                                    x-on:click="loading = true"
                                                     x-bind:disabled="loading"
-                                                    class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-md shadow-rose-500/20 disabled:opacity-50 disabled:cursor-not-allowed">
+                                                    class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-md shadow-rose-500/20 disabled:opacity-50 disabled:cursor-wait">
                                                 <div x-show="!loading" class="flex items-center gap-1.5">
                                                     <i class="ph-bold ph-paper-plane-tilt"></i>
                                                     Tanya Kabar
@@ -129,10 +130,11 @@
                                     </div>
                                     @elseif($job->isGhosted())
                                         <div class="mt-4 flex justify-end">
-                                            <button x-data="{ loading: false }" 
-                                                    x-on:click.stop="loading = true; $wire.generateFollowUp({{ $job->id }}).then(() => loading = false)"
+                                            <button wire:click.stop="generateFollowUp({{ $job->id }})"
+                                                    x-data="{ loading: false }" 
+                                                    x-on:click="loading = true"
                                                     x-bind:disabled="loading"
-                                                    class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-md shadow-rose-500/20 disabled:opacity-50 disabled:cursor-not-allowed">
+                                                    class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-md shadow-rose-500/20 disabled:opacity-50 disabled:cursor-wait">
                                                 <div x-show="!loading" class="flex items-center gap-1.5">
                                                     <i class="ph-bold ph-paper-plane-tilt"></i>
                                                     Tanya Kabar
