@@ -154,6 +154,6 @@ class JobApplication extends Model
     public function isGhosted(): bool
     {
         return in_array($this->application_status, ['Applied', 'On Process', 'Interview']) 
-            && $this->updated_at->diffInDays(now()) >= 14;
+            && $this->application_date && $this->application_date->diffInDays(now()) >= 14;
     }
 }

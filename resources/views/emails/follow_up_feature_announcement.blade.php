@@ -47,7 +47,7 @@
                                 <tr>
                                     <td style="background-color:#f8fafc; border:1px solid #f1f5f9; border-left:3px solid #64748b; border-radius:4px; padding:16px 20px;">
                                         <p style="margin:0 0 6px 0; font-size:11px; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:0.08em;">Deteksi "Ghosting" Cerdas</p>
-                                        <p style="margin:0; font-size:13px; line-height:21px; color:#334155;">Sistem kami akan secara otomatis memunculkan opsi "Tanya Kabar" apabila status lamaran Anda tidak mengalami perubahan dalam kurun waktu 14 hari, memastikan Anda *follow up* di waktu yang tepat.</p>
+                                        <p style="margin:0; font-size:13px; line-height:21px; color:#334155;">Sistem kami akan secara otomatis memunculkan opsi "Tanya Kabar" apabila sudah berlalu 14 hari sejak tanggal lamaran Anda dikirimkan, memastikan Anda *follow up* di waktu yang tepat.</p>
                                     </td>
                                 </tr>
                             </table>
@@ -69,7 +69,7 @@
                                 <tr>
                                     <td style="background-color:#f4f4f5; border:1px solid #e4e4e7; border-radius:4px; padding:14px 18px;">
                                         <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">
-                                            <strong>Cara Penggunaan:</strong> Kunjungi menu <em>Job Tracker</em> Anda. Jika ada lamaran yang sudah berumur lebih dari 14 hari tanpa *update*, tombol "Tanya Kabar" akan muncul secara otomatis.
+                                            <strong>Cara Penggunaan:</strong> Kunjungi menu <em>Job Tracker</em> Anda. Jika ada lamaran yang sudah berumur lebih dari 14 hari sejak tanggal lamaran, tombol "Tanya Kabar" akan muncul secara otomatis.
                                         </p>
                                     </td>
                                 </tr>
