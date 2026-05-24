@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use App\Models\JobApplication;
 use Livewire\Component;
 
@@ -38,6 +39,12 @@ class JobKanbanBoard extends Component
     public $recruitmentStageFilter = '';
     public $showAdvancedFilters = false;
     public $showArchived = false;
+    
+    // Ghosting Follow Up Properties
+    public $showFollowUpModal = false;
+    public $followUpDraft = '';
+    public $followUpJobId = null;
+    public $isGeneratingFollowUp = false;
     
     private $lastUpdateTime = [];
 
@@ -186,5 +193,65 @@ class JobKanbanBoard extends Component
             'LGD' => '#F59E0B', 'Presentation Round' => '#F97316', 'Offering' => '#14B8A6', 'Not Processed' => '#EF4444',
         ];
         return $colors[$stage] ?? '#6B7280';
+    }
+
+    public function openFollowUpModal($jobId)
+    {
+        $this->followUpJobId = $jobId;
+        $this->showFollowUpModal = true;
+        $this->followUpDraft = '';
+        
+        // Auto generate
+        $this->generateFollowUp();
+    }
+
+    public function closeFollowUpModal()
+    {
+        $this->showFollowUpModal = false;
+        $this->followUpJobId = null;
+        $this->followUpDraft = '';
+    }
+
+    public function generateFollowUp()
+    {
+        $job = JobApplication::where('id', $this->followUpJobId)->where('user_id', auth()->id())->first();
+        if (!$job) {
+            $this->closeFollowUpModal();
+            return;
+        }
+
+        $this->isGeneratingFollowUp = true;
+
+        $prompt = "CRITICAL INSTRUCTION: DO NOT WRITE A COVER LETTER. Write a highly professional follow-up email to HR. Context: The applicant applied for this position 14 days ago and hasn't heard back. The email should politely ask for a status update. Use formal Indonesian language. Keep it concise, empathetic, and professional.";
+        
+        $context = "Applied on " . $job->application_date->format('d M Y') . ". Application stage: " . ($job->recruitment_stage ?: $job->application_status);
+
+        $aiPayload = [
+            'company_name' => $job->company_name,
+            'job_title' => $job->position,
+            'job_description' => $prompt,
+            'language' => 'Indonesian',
+            'tone' => 'Professional',
+            'length' => 'Short',
+            'highlight_focus' => 'Requesting status update on application',
+            'candidate_context' => $context,
+        ];
+
+        try {
+            // Using the existing Vercel AI API
+            $response = Http::timeout(60)->post('https://ai-analyzer-seven.vercel.app/generate-cl', $aiPayload);
+
+            if ($response->successful()) {
+                $responseBody = $response->json();
+                $this->followUpDraft = $responseBody['cover_letter'] ?? $responseBody['result'] ?? '';
+            } else {
+                $this->followUpDraft = "Maaf, gagal membuat draft email. Silakan coba lagi nanti.";
+            }
+        } catch (\Exception $e) {
+            Log::error('AI Follow Up Error: ' . $e->getMessage());
+            $this->followUpDraft = "Terjadi kesalahan saat menghubungi server AI.";
+        }
+
+        $this->isGeneratingFollowUp = false;
     }
 }

@@ -148,4 +148,12 @@ class JobApplication extends Model
         }
         return false;
     }
+    /**
+     * Check if application is considered "ghosted" (no update for > 14 days in Applied or Interviewing status)
+     */
+    public function isGhosted(): bool
+    {
+        return in_array($this->application_status, ['Applied', 'Interviewing']) 
+            && $this->updated_at->diffInDays(now()) >= 14;
+    }
 }
