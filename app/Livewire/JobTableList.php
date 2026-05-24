@@ -479,10 +479,12 @@ class JobTableList extends Component
                 $this->showFollowUpModal = true;
             } else {
                 $this->followUpDraft = "Maaf, gagal membuat draft email. Silakan coba lagi nanti.";
+                $this->showFollowUpModal = true;
             }
         } catch (\Exception $e) {
             Log::error('AI Follow Up Error: ' . $e->getMessage());
             $this->followUpDraft = "Terjadi kesalahan saat menghubungi server AI.";
+            $this->showFollowUpModal = true;
         }
 
         $this->isGeneratingFollowUp = false;
