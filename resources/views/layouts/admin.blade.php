@@ -58,9 +58,14 @@
                                 </a>
 
                                 <a href="{{ route('admin.users') }}" 
-                                   class="px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 {{ request()->routeIs('admin.users*') ? 'bg-primary-50 text-primary-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
-                                    <i class="fas fa-users {{ request()->routeIs('admin.users*') ? 'text-primary-600' : 'text-gray-400' }}"></i>
-                                    Users
+                                   class="px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 {{ request()->routeIs('admin.users') ? 'bg-primary-50 text-primary-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
+                                    <i class="fas fa-users {{ request()->routeIs('admin.users') ? 'text-primary-600' : 'text-gray-400' }}"></i>
+                                    Pengguna
+                                </a>
+                                <a href="{{ route('admin.user-activities') }}" 
+                                   class="px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 {{ request()->routeIs('admin.user-activities') ? 'bg-primary-50 text-primary-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
+                                    <i class="fas fa-history {{ request()->routeIs('admin.user-activities') ? 'text-primary-600' : 'text-gray-400' }}"></i>
+                                    Aktivitas
                                 </a>
 
                                 <a href="{{ route('admin.monetization') }}" 
@@ -208,9 +213,14 @@
                             </a>
 
                             <a href="{{ route('admin.users') }}" 
-                               class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('admin.users*') ? 'bg-primary-50 text-primary-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
-                                <i class="fas fa-users mr-3 flex-shrink-0 w-5 text-center {{ request()->routeIs('admin.users*') ? 'text-primary-600' : 'text-gray-400' }}"></i>
-                                Users
+                               class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('admin.users') ? 'bg-primary-50 text-primary-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                                <i class="fas fa-users mr-3 flex-shrink-0 w-5 text-center {{ request()->routeIs('admin.users') ? 'text-primary-600' : 'text-gray-400' }}"></i>
+                                Pengguna
+                            </a>
+                            <a href="{{ route('admin.user-activities') }}" 
+                               class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('admin.user-activities') ? 'bg-primary-50 text-primary-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                                <i class="fas fa-history mr-3 flex-shrink-0 w-5 text-center {{ request()->routeIs('admin.user-activities') ? 'text-primary-600' : 'text-gray-400' }}"></i>
+                                Aktivitas
                             </a>
 
                             <a href="{{ route('admin.monetization') }}" 

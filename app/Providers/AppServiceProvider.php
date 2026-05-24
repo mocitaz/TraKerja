@@ -6,6 +6,14 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Config;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
+use App\Models\JobApplication;
+use App\Models\UserGoal;
+use App\Observers\JobApplicationObserver;
+use App\Observers\UserGoalObserver;
+use App\Services\ActivityLogger;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,9 +30,23 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Set default timezone to Asia/Jakarta for all Carbon instances
         Carbon::setLocale(config('app.locale', 'id'));
         date_default_timezone_set(config('app.timezone', 'Asia/Jakarta'));
+        
+        // Register Observers
+        JobApplication::observe(JobApplicationObserver::class);
+        UserGoal::observe(UserGoalObserver::class);
+
+        // Register Auth Event Listeners
+        Event::listen(function (Login $event) {
+            ActivityLogger::log('login', 'User berhasil login ke sistem', 'success', [], $event->user->id);
+        });
+
+        Event::listen(function (Logout $event) {
+            if ($event->user) {
+                ActivityLogger::log('logout', 'User keluar dari sistem', 'success', [], $event->user->id);
+            }
+        });
         
         // Force app URL and HTTPS only in production to avoid cross-domain issues during local dev
         if (app()->environment('production')) {
