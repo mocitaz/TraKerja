@@ -113,15 +113,13 @@
 
                                         @if($job->isGhosted())
                                             <button wire:click.stop="generateFollowUp({{ $job->id }})"
-                                                    x-data="{ loading: false }" 
-                                                    x-on:click="loading = true"
-                                                    x-bind:disabled="loading"
-                                                    class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-md shadow-rose-500/20 disabled:opacity-50 disabled:cursor-wait">
-                                                <div x-show="!loading" class="flex items-center gap-1.5">
+                                                    onclick="this.querySelector('.btn-idle').style.display='none'; this.querySelector('.btn-loading').style.display='flex'; this.classList.add('opacity-50', 'cursor-wait', 'pointer-events-none');"
+                                                    class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-md shadow-rose-500/20">
+                                                <div class="btn-idle flex items-center gap-1.5">
                                                     <i class="ph-bold ph-paper-plane-tilt"></i>
                                                     Tanya Kabar
                                                 </div>
-                                                <div x-show="loading" class="flex items-center gap-1.5" style="display: none;">
+                                                <div class="btn-loading items-center gap-1.5" style="display: none;">
                                                     <i class="ph-bold ph-spinner animate-spin"></i>
                                                     Memproses...
                                                 </div>
@@ -131,15 +129,13 @@
                                     @elseif($job->isGhosted())
                                         <div class="mt-4 flex justify-end">
                                             <button wire:click.stop="generateFollowUp({{ $job->id }})"
-                                                    x-data="{ loading: false }" 
-                                                    x-on:click="loading = true"
-                                                    x-bind:disabled="loading"
-                                                    class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-md shadow-rose-500/20 disabled:opacity-50 disabled:cursor-wait">
-                                                <div x-show="!loading" class="flex items-center gap-1.5">
+                                                    onclick="this.querySelector('.btn-idle').style.display='none'; this.querySelector('.btn-loading').style.display='flex'; this.classList.add('opacity-50', 'cursor-wait', 'pointer-events-none');"
+                                                    class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-md shadow-rose-500/20">
+                                                <div class="btn-idle flex items-center gap-1.5">
                                                     <i class="ph-bold ph-paper-plane-tilt"></i>
                                                     Tanya Kabar
                                                 </div>
-                                                <div x-show="loading" class="flex items-center gap-1.5" style="display: none;">
+                                                <div class="btn-loading items-center gap-1.5" style="display: none;">
                                                     <i class="ph-bold ph-spinner animate-spin"></i>
                                                     Memproses...
                                                 </div>

@@ -232,15 +232,13 @@
                                     <div class="flex items-center justify-end gap-1.5">
                                         @if($job->isGhosted())
                                             <button wire:click.stop="generateFollowUp({{ $job->id }})"
-                                                    x-data="{ loading: false }" 
-                                                    x-on:click="loading = true"
-                                                    x-bind:disabled="loading"
-                                                    class="mr-2 px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-sm disabled:opacity-50 disabled:cursor-wait flex items-center gap-1.5">
-                                                <div x-show="!loading" class="flex items-center gap-1.5">
+                                                    onclick="this.querySelector('.btn-idle').style.display='none'; this.querySelector('.btn-loading').style.display='flex'; this.classList.add('opacity-50', 'cursor-wait', 'pointer-events-none');"
+                                                    class="mr-2 px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-sm flex items-center gap-1.5">
+                                                <div class="btn-idle flex items-center gap-1.5">
                                                     <i class="ph-bold ph-paper-plane-tilt"></i>
                                                     Tanya Kabar
                                                 </div>
-                                                <div x-show="loading" class="flex items-center gap-1.5" style="display: none;">
+                                                <div class="btn-loading items-center gap-1.5" style="display: none;">
                                                     <i class="ph-bold ph-spinner animate-spin"></i>
                                                     Memproses...
                                                 </div>
