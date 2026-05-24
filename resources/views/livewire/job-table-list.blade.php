@@ -125,9 +125,17 @@
                         </div>
                         <div class="flex gap-2">
                             @if($job->isGhosted())
-                                <button wire:click.stop="openFollowUpModal('{{ $job->id }}')" class="px-3 py-1 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-colors flex items-center gap-1.5 shadow-sm">
-                                    <i class="ph-bold ph-paper-plane-tilt"></i>
-                                    Tanya Kabar
+                                <button wire:click.stop="generateFollowUp({{ $job->id }})"
+                                        onclick="this.querySelector('.btn-idle').style.display='none'; this.querySelector('.btn-loading').style.display='flex'; this.classList.add('opacity-50', 'cursor-wait', 'pointer-events-none');"
+                                        class="px-3 py-1 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-colors flex items-center gap-1.5 shadow-sm">
+                                    <div class="btn-idle flex items-center gap-1.5">
+                                        <i class="ph-bold ph-paper-plane-tilt"></i>
+                                        Tanya Kabar
+                                    </div>
+                                    <div class="btn-loading items-center gap-1.5" style="display: none;">
+                                        <i class="ph-bold ph-spinner animate-spin"></i>
+                                        Memproses...
+                                    </div>
                                 </button>
                             @endif
                             <button wire:click.stop="edit({{ $job->id }})" class="w-8 h-8 flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all duration-300">
