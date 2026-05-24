@@ -194,7 +194,7 @@
                 <!-- Header -->
                 <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-white sticky top-0 z-10">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center p-2">
+                        <div class="w-10 h-10 rounded-xl bg-white border border-slate-100 shadow-sm flex items-center justify-center p-2">
                             <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-full h-full object-contain">
                         </div>
                         <div>
@@ -209,14 +209,15 @@
 
                 <!-- Content -->
                 <div class="p-6 overflow-y-auto bg-slate-50/50 flex-1">
-                    <div wire:loading wire:target="generateFollowUp" class="w-full flex flex-col items-center justify-center py-12">
-                        <div class="relative mb-4">
-                            <div class="absolute inset-0 bg-indigo-500/20 blur-xl rounded-full"></div>
-                            <i class="ph-bold ph-spinner animate-spin text-4xl text-indigo-500 relative z-10 block"></i>
+                    <div wire:loading wire:target="generateFollowUp" class="w-full py-16 flex flex-col items-center justify-center">
+                        <div class="relative w-16 h-16 flex items-center justify-center mb-6">
+                            <div class="absolute inset-0 border-4 border-indigo-100 rounded-full"></div>
+                            <div class="absolute inset-0 border-4 border-indigo-500 rounded-full border-t-transparent animate-spin"></div>
+                            <img src="{{ asset('images/icon.png') }}" alt="AI" class="w-6 h-6 object-contain animate-pulse">
                         </div>
-                        <p class="text-sm font-black text-slate-700 mb-2">AI sedang memikirkan kata-kata terbaik...</p>
-                        <p class="text-[10px] font-bold text-amber-500 uppercase tracking-widest flex items-center gap-1.5 bg-amber-50 px-3 py-1.5 rounded-lg">
-                            <i class="ph-bold ph-warning text-sm"></i> Tolong jangan tutup jendela ini
+                        <h3 class="text-sm font-black text-slate-800 mb-2">Menyusun Draft Email...</h3>
+                        <p class="text-xs font-medium text-slate-500 text-center max-w-xs leading-relaxed">
+                            AI sedang merangkai kalimat paling profesional untuk Anda. Proses ini memakan waktu beberapa detik.
                         </p>
                     </div>
 
