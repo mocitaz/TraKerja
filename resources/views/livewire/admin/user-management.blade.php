@@ -665,6 +665,7 @@
                                     'sky'     => ['icon' => 'bg-sky-50 text-sky-600', 'hover' => 'hover:border-sky-200 hover:shadow-md hover:-translate-y-0.5', 'selected' => 'border-sky-500 bg-sky-50/40 ring-1 ring-sky-500', 'dot' => 'bg-sky-500', 'dotBorder' => 'border-sky-500'],
                                     'orange'  => ['icon' => 'bg-orange-50 text-orange-600', 'hover' => 'hover:border-orange-200 hover:shadow-md hover:-translate-y-0.5', 'selected' => 'border-orange-500 bg-orange-50/40 ring-1 ring-orange-500', 'dot' => 'bg-orange-500', 'dotBorder' => 'border-orange-500'],
                                     'teal'    => ['icon' => 'bg-teal-50 text-teal-600', 'hover' => 'hover:border-teal-200 hover:shadow-md hover:-translate-y-0.5', 'selected' => 'border-teal-500 bg-teal-50/40 ring-1 ring-teal-500', 'dot' => 'bg-teal-500', 'dotBorder' => 'border-teal-500'],
+                                    'pink'    => ['icon' => 'bg-pink-50 text-pink-600', 'hover' => 'hover:border-pink-200 hover:shadow-md hover:-translate-y-0.5', 'selected' => 'border-pink-500 bg-pink-50/40 ring-1 ring-pink-500', 'dot' => 'bg-pink-500', 'dotBorder' => 'border-pink-500'],
                                 ];
 
                                 $emailGroups = [
