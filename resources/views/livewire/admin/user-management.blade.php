@@ -683,6 +683,7 @@
                                         'ai_analyzer'           => ['label' => 'AI Analyzer Trial', 'desc' => 'Pengumuman trial gratis',     'icon' => 'ph-robot',                 'color' => 'sky'],
                                         'chrome_extension'      => ['label' => 'Chrome Extension',  'desc' => 'Pengumuman rilis ekstensi',   'icon' => 'ph-puzzle-piece',          'color' => 'orange'],
                                         'ai_photo'              => ['label' => 'AI Photo Studio',   'desc' => 'Pengumuman rilis AI Photo',   'icon' => 'ph-camera-plus',           'color' => 'purple'],
+                                        'follow_up_feature'     => ['label' => 'AI Follow Up',      'desc' => 'Pengumuman fitur Follow Up',  'icon' => 'ph-paper-plane-tilt',      'color' => 'pink'],
                                     ],
                                     'Status & Info Lainnya' => [
                                         'premium_granted'       => ['label' => 'Premium Granted',   'desc' => 'Notifikasi akses premium',    'icon' => 'ph-crown',                 'color' => 'amber'],

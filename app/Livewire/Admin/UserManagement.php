@@ -11,6 +11,7 @@ use App\Mail\MonthlyMotivationMail;
 use App\Mail\PremiumGrantedMail;
 use App\Mail\ReEngagementMail;
 use App\Mail\WelcomeMail;
+use App\Mail\FollowUpFeatureAnnouncementMail;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
@@ -327,7 +328,7 @@ class UserManagement extends Component
     public function sendEmail()
     {
         $this->validate([
-            'emailType' => 'required|in:welcome,verification,verification_reminder,ai_analyzer,job_reminder,monthly_motivation,premium_granted,product_update,hiring_season,re_engagement,ai_photo',
+            'emailType' => 'required|in:welcome,verification,verification_reminder,ai_analyzer,job_reminder,monthly_motivation,premium_granted,product_update,hiring_season,re_engagement,ai_photo,follow_up_feature',
         ]);
         
         $user = User::findOrFail($this->emailTargetUserId);
@@ -376,6 +377,9 @@ class UserManagement extends Component
                 case 'ai_photo':
                     Mail::to($user->email)->send(new \App\Mail\AiPhotoAnnouncementMail($user));
                     break;
+                case 'follow_up_feature':
+                    Mail::to($user->email)->send(new FollowUpFeatureAnnouncementMail($user));
+                    break;
             }
             
             Log::info('Admin sent email to user', [
@@ -400,6 +404,7 @@ class UserManagement extends Component
                 'hiring_season'           => 'Hiring Season Alert',
                 're_engagement'           => 'Re-engagement Email',
                 'ai_photo'                => 'AI Photo Announcement',
+                'follow_up_feature'       => 'Follow Up Feature Announcement',
             ];
             
             $this->dispatch('showNotification', [
