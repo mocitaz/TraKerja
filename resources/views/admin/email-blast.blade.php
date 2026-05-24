@@ -226,6 +226,23 @@
                                 </div>
                             </label>
 
+                            <!-- Follow Up Feature Announcement -->
+                            <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                <input type="radio" name="email_type" value="follow_up_feature" class="sr-only" required>
+                                <div class="flex items-center gap-4 w-full">
+                                    <div class="w-10 h-10 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i class="ph-duotone ph-paper-plane-tilt text-2xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-sm font-bold text-slate-900">Follow Up Feature</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Pengumuman fitur baru AI Follow Up Email (Tanya Kabar).</p>
+                                    </div>
+                                    <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                        <i class="ph-bold ph-check text-xs"></i>
+                                    </div>
+                                </div>
+                            </label>
+
                             <!-- Chrome Extension Promo -->
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="chrome_extension" class="sr-only" required>
@@ -845,6 +862,7 @@
             'hiring_season': 'Hiring Season Alert',
             'chrome_extension': 'Chrome Extension Promo',
             'ai_photo': 'AI Photo Announcement',
+            'follow_up_feature': 'Follow Up Feature',
             're_engagement': 'Re-engagement',
             'custom': 'Custom Email'
         }[emailType] || 'Email Blast';
