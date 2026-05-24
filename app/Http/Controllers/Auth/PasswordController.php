@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use App\Services\ActivityLogger;
 
 class PasswordController extends Controller
 {
@@ -46,6 +47,14 @@ class PasswordController extends Controller
         $request->user()->update([
             'password' => Hash::make($validated['password']),
         ]);
+
+        ActivityLogger::log(
+            'password_change',
+            "User mengubah password akun",
+            'success',
+            [],
+            $request->user()->id
+        );
 
         if ($request->expectsJson()) {
             return response()->json(['success' => true, 'status' => 'password-updated']);

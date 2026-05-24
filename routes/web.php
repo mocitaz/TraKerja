@@ -265,6 +265,10 @@ Route::middleware('auth')->group(function () {
         if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
             abort(403, 'Admin cannot access premium page');
         }
+        // Redirect premium users — no need to see the upgrade page
+        if (Auth::user()->isPremium()) {
+            return redirect()->route('dashboard')->with('info', 'Anda sudah menjadi anggota Premium! Nikmati semua fitur tanpa batas.');
+        }
         return app(PaymentController::class)->premium();
     })->name('payment.premium');
 

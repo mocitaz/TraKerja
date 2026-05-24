@@ -3,7 +3,7 @@
 
 <script>
     // Premium Toast Notification System (Sonner/Vercel Style)
-    function showToast(type, title, message, duration = 4000) {
+    function showToast(type, title, message, duration = 4000, customIcon = null) {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
         
@@ -30,7 +30,7 @@
             <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>
             
             <div class="mt-0.5 shrink-0 relative z-10">
-                <i class="ph-bold ${icons[type] || icons.info} text-[22px]"></i>
+                <i class="${customIcon ? customIcon : ('ph-bold ' + (icons[type] || icons.info))} text-[22px]"></i>
             </div>
             <div class="flex-1 min-w-0 relative z-10">
                 <h4 class="text-sm font-bold text-white tracking-tight leading-none">${title}</h4>
@@ -78,7 +78,7 @@
     document.addEventListener('livewire:init', () => {
         Livewire.on('showNotification', (event) => {
             const data = Array.isArray(event) ? event[0] : event;
-            showToast(data.type, data.title, data.message, data.duration || 4000);
+            showToast(data.type, data.title, data.message, data.duration || 4000, data.icon || null);
         });
     });
 </script>

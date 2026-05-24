@@ -92,6 +92,30 @@ class User extends Authenticatable implements MustVerifyEmail
         'portfolio_slug',
         'is_portfolio_published',
         'photo_credits',
+        'xp',
+        'level',
+    ];
+
+    /**
+     * Level thresholds for gamification
+     */
+    public const LEVEL_THRESHOLDS = [
+        1 => 0,
+        2 => 100,
+        3 => 300,
+        4 => 600,
+        5 => 1000,
+    ];
+
+    /**
+     * Level Titles
+     */
+    public const LEVEL_TITLES = [
+        1 => 'Rookie Applicant',
+        2 => 'Proactive Seeker',
+        3 => 'Interview Challenger',
+        4 => 'Top Candidate',
+        5 => 'Offer Magnet',
     ];
 
     /**
@@ -802,6 +826,34 @@ class User extends Authenticatable implements MustVerifyEmail
         if ($amount > 0) {
             $this->increment('cl_credits', $amount);
         }
+    }
+
+    /**
+     * Add XP for gamification and handle level ups
+     */
+    public function addXP(int $amount): void
+    {
+        $newXp = $this->xp + $amount;
+        $newLevel = 1;
+
+        foreach (self::LEVEL_THRESHOLDS as $lvl => $threshold) {
+            if ($newXp >= $threshold) {
+                $newLevel = $lvl;
+            }
+        }
+
+        $this->update([
+            'xp' => $newXp,
+            'level' => $newLevel
+        ]);
+    }
+
+    /**
+     * Get User's Level Title
+     */
+    public function getLevelTitleAttribute(): string
+    {
+        return self::LEVEL_TITLES[$this->level] ?? 'Job Seeker';
     }
 
     /**

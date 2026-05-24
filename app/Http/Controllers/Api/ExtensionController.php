@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\JobApplication;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use App\Services\ActivityLogger;
 
 class ExtensionController extends Controller
 {
@@ -27,6 +28,14 @@ class ExtensionController extends Controller
         }
 
         $token = $user->createToken('extension_token')->plainTextToken;
+
+        ActivityLogger::log(
+            'extension_login',
+            "User login melalui Chrome Extension",
+            'success',
+            [],
+            $user->id
+        );
 
         return response()->json([
             'token' => $token,
@@ -68,6 +77,14 @@ class ExtensionController extends Controller
                 'application_date' => now(),
                 'notes' => $request->notes ?? 'Disimpan via Chrome Extension',
             ]);
+
+            ActivityLogger::log(
+                'extension_job_save',
+                "User menyimpan lowongan ({$request->company_name}) dari Chrome Extension",
+                'success',
+                ['company' => $request->company_name, 'platform' => $request->platform],
+                $request->user()->id
+            );
 
             return response()->json([
                 'message' => 'Lamaran berhasil disimpan!',

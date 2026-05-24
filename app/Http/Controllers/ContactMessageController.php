@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Auth;
+use App\Services\ActivityLogger;
 
 class ContactMessageController extends Controller
 {
@@ -47,6 +48,16 @@ class ContactMessageController extends Controller
             'subject'    => $validated['subject'] ?? 'Pesan dari Form Landing Page',
             'message'    => $validated['message'],
         ]);
+
+        if (Auth::check()) {
+            ActivityLogger::log(
+                'feedback_submit',
+                "User mengirim pesan kontak/feedback dari Landing Page",
+                'success',
+                [],
+                Auth::id()
+            );
+        }
 
         // Kirim notifikasi email ke admin (opsional, aktifkan jika SMTP sudah dikonfigurasi)
         // $this->sendAdminNotification($contact);

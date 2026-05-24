@@ -82,7 +82,21 @@ class UserActivities extends Component
         $this->dispatch('showNotification', [
             'type' => 'success',
             'title' => 'Pembersihan Berhasil',
-            'message' => number_format($deletedCount) . ' log aktivitas usang telah dihapus.',
+            'message' => number_format($deletedCount) . ' log aktivitas usang (>' . $this->pruneDays . ' hari) telah dihapus.',
+        ]);
+    }
+
+    public function cleanAll()
+    {
+        $deletedCount = UserActivity::count();
+        UserActivity::truncate();
+        
+        $this->showSettingsModal = false;
+        
+        $this->dispatch('showNotification', [
+            'type' => 'success',
+            'title' => 'Semua Log Dihapus',
+            'message' => number_format($deletedCount) . ' log aktivitas telah dihapus permanen.',
         ]);
     }
 
@@ -109,14 +123,47 @@ class UserActivities extends Component
 
         $activities = $query->latest()->paginate($this->perPage);
         
-        $activityTypes = UserActivity::select('activity_type')
+        $rawTypes = UserActivity::select('activity_type')
             ->distinct()
             ->orderBy('activity_type')
-            ->pluck('activity_type');
+            ->pluck('activity_type')
+            ->toArray();
+
+        $categories = [
+            'Autentikasi & Akun' => ['login', 'logout', 'register', 'profile_update', 'password_change', 'account_delete'],
+            'Manajemen Lamaran' => ['job_add', 'job_edit', 'job_delete', 'interview_schedule', 'csv_export'],
+            'CV Builder' => ['cv_data_update', 'cv_export'],
+            'Fitur AI' => ['ai_analyzer', 'ai_analyzer_usage', 'cover_letter', 'ai_photo'],
+            'Target & Goals' => ['goal_set', 'goal_update'],
+            'Chrome Extension' => ['extension_login', 'extension_job_save'],
+            'Pembayaran & Langganan' => ['top_up', 'premium_upgrade'],
+            'Bantuan & Feedback' => ['support_ticket', 'feedback_submit'],
+        ];
+
+        $groupedTypes = [];
+        $uncategorized = [];
+        
+        foreach ($rawTypes as $type) {
+            $found = false;
+            foreach ($categories as $cat => $types) {
+                if (in_array($type, $types)) {
+                    $groupedTypes[$cat][] = $type;
+                    $found = true;
+                    break;
+                }
+            }
+            if (!$found) {
+                $uncategorized[] = $type;
+            }
+        }
+        
+        if (!empty($uncategorized)) {
+            $groupedTypes['Lainnya'] = $uncategorized;
+        }
 
         return view('livewire.admin.user-activities', [
             'activities' => $activities,
-            'activityTypes' => $activityTypes,
+            'groupedTypes' => $groupedTypes,
         ]);
     }
 }

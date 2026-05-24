@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use App\Services\ActivityLogger;
 
 class SupportTicketController extends Controller
 {
@@ -53,6 +54,14 @@ class SupportTicketController extends Controller
             'message' => $request->input('message'),
             'status' => 'pending',
         ]);
+
+        ActivityLogger::log(
+            'support_ticket',
+            "User mengirim tiket bantuan/feedback: {$request->input('subject')}",
+            'success',
+            ['category' => $request->input('category')],
+            Auth::id()
+        );
 
         try {
             Mail::to('info@teknalogi.id')->send(new SupportTicketNotificationMail($ticket));

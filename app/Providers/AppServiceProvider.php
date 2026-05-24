@@ -13,7 +13,14 @@ use App\Models\JobApplication;
 use App\Models\UserGoal;
 use App\Observers\JobApplicationObserver;
 use App\Observers\UserGoalObserver;
+use App\Observers\CvDataObserver;
 use App\Services\ActivityLogger;
+use App\Models\UserExperience;
+use App\Models\UserEducation;
+use App\Models\UserSkill;
+use App\Models\UserProject;
+use App\Models\UserOrganization;
+use App\Models\UserAchievement;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,6 +43,14 @@ class AppServiceProvider extends ServiceProvider
         // Register Observers
         JobApplication::observe(JobApplicationObserver::class);
         UserGoal::observe(UserGoalObserver::class);
+        
+        // CV Builder Observers
+        UserExperience::observe(CvDataObserver::class);
+        UserEducation::observe(CvDataObserver::class);
+        UserSkill::observe(CvDataObserver::class);
+        UserProject::observe(CvDataObserver::class);
+        UserOrganization::observe(CvDataObserver::class);
+        UserAchievement::observe(CvDataObserver::class);
 
         // Register Auth Event Listeners
         Event::listen(function (Login $event) {

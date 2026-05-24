@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Setting;
+use App\Services\ActivityLogger;
 
 class CvBuilderController extends Controller
 {
@@ -193,6 +194,14 @@ class CvBuilderController extends Controller
             'is_premium' => $user->is_premium,
         ]);
         
+        ActivityLogger::log(
+            'cv_export',
+            "User mengekspor CV dengan template '{$template}'",
+            'success',
+            ['template' => $template],
+            $user->id
+        );
+        
         // Generate clean and professional uppercase filename: CV_NAMA_LENGKAP.pdf
         $cleanName = strtoupper(preg_replace('/[^a-zA-Z0-9]+/', '_', $user->name));
         $cleanName = trim($cleanName, '_');
@@ -212,6 +221,14 @@ class CvBuilderController extends Controller
         $experiences = $user->experiences;
         $educations = $user->educations;
         $skills = $user->skills;
+
+        ActivityLogger::log(
+            'ai_analyzer',
+            "User melakukan simulasi ATS Pre-Check pada CV",
+            'success',
+            [],
+            $user->id
+        );
 
         $checks = [];
         $totalScore = 0;

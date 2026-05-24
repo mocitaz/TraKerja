@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Services\ActivityLogger;
 
 class ProfileController extends Controller
 {
@@ -35,6 +36,14 @@ class ProfileController extends Controller
         }
 
         $request->user()->save();
+
+        ActivityLogger::log(
+            'profile_update',
+            "User memperbarui informasi akun dasar (Nama/Email)",
+            'success',
+            [],
+            $request->user()->id
+        );
         
         if ($request->expectsJson()) {
             return response()->json(['success' => true, 'status' => 'profile-updated']);
@@ -68,6 +77,14 @@ class ProfileController extends Controller
                 'website_url' => $validated['website'] ?? null,
                 'bio' => $validated['bio'] ?? null,
             ]
+        );
+
+        ActivityLogger::log(
+            'profile_update',
+            "User memperbarui detail profil personal (Telepon/Bio/Lokasi)",
+            'success',
+            [],
+            $user->id
         );
 
         if ($request->expectsJson()) {
@@ -115,6 +132,14 @@ class ProfileController extends Controller
         $logoPath = $request->file('logo')->store('logos', 'public');
         $user->update(['logo' => $logoPath]);
 
+        ActivityLogger::log(
+            'profile_update',
+            "User mengubah foto profil",
+            'success',
+            [],
+            $user->id
+        );
+
         if ($request->expectsJson()) {
             return response()->json(['success' => true, 'status' => 'photo-updated', 'message' => 'Profile photo updated successfully']);
         }
@@ -151,6 +176,14 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+
+        ActivityLogger::log(
+            'account_delete',
+            "User menghapus akun secara permanen",
+            'success',
+            [],
+            $user->id
+        );
 
         Auth::logout();
 

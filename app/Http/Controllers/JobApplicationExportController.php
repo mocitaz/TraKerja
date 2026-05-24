@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\JobApplication;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Services\ActivityLogger;
 
 class JobApplicationExportController extends Controller
 {
@@ -17,6 +18,14 @@ class JobApplicationExportController extends Controller
         $jobApplications = JobApplication::where('user_id', auth()->id())
             ->orderBy('application_date', 'desc')
             ->get();
+
+        ActivityLogger::log(
+            'csv_export',
+            "User mengekspor data lamaran ke format CSV ({$jobApplications->count()} baris)",
+            'success',
+            ['total_rows' => $jobApplications->count()],
+            auth()->id()
+        );
 
         // Create CSV content
         $csvContent = $this->generateCsvContent($jobApplications);

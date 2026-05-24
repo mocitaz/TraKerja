@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
+use App\Services\ActivityLogger;
 
 class CoverLetterController extends Controller
 {
@@ -171,6 +172,14 @@ class CoverLetterController extends Controller
                     'tone' => $aiPayload['tone'],
                     'content' => $generatedContent,
                 ]);
+
+                ActivityLogger::log(
+                    'cover_letter',
+                    "User menggunakan AI untuk membuat Cover Letter untuk {$aiPayload['company_name']} ({$aiPayload['job_title']})",
+                    'success',
+                    ['company' => $aiPayload['company_name'], 'role' => $aiPayload['job_title']],
+                    $user->id
+                );
 
                 return response()->json([
                     'success' => true,

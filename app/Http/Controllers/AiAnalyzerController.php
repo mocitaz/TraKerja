@@ -6,6 +6,7 @@ use App\Models\AiAnalyzerResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
+use App\Services\ActivityLogger;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -213,6 +214,14 @@ class AiAnalyzerController extends Controller
             if (!$user->isPremium() && !$user->has_used_ai_analyzer_trial) {
                 $user->useAiAnalyzerTrial();
             }
+
+            ActivityLogger::log(
+                'ai_analyzer_usage',
+                "User menggunakan fitur AI Analyzer untuk mengevaluasi resume",
+                'success',
+                ['file_name' => $file->getClientOriginalName()],
+                $user->id
+            );
 
             // Save analysis result to database
             try {

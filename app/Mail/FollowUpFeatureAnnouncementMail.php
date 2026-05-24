@@ -11,7 +11,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class FollowUpFeatureAnnouncementMail extends Mailable implements ShouldQueue
+class FollowUpFeatureAnnouncementMail extends Mailable
 {
     use Queueable, SerializesModels;
 

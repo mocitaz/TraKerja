@@ -27,8 +27,11 @@
         <h2 class="text-lg font-extrabold text-slate-800 sm:hidden tracking-tight">{{ $pageTitle }}</h2>
     </div>
 
-    {{-- Right: User Profile Dropdown --}}
-    <div class="flex items-center space-x-4">
+    {{-- Right: User Profile Dropdown & Gamification --}}
+    <div class="flex items-center space-x-2 sm:space-x-4">
+        {{-- Gamification: Level & XP Bar --}}
+        <livewire:layout.gamification-widget />
+
         {{-- Desktop User Dropdown --}}
         <div class="hidden lg:block relative" x-data="{ open: false }">
             <button @click="open = !open" class="flex items-center space-x-3 focus:outline-none bg-white border border-slate-200/60 pl-1.5 pr-3 py-1.5 rounded-full hover:shadow-sm hover:border-primary-200 transition-all duration-300 group">
@@ -68,16 +71,16 @@
                     My Profile
                 </a>
 
-                @if(!Auth::user()->is_premium)
+                @if(!Auth::user()->isPremium())
                 <a href="{{ route('payment.premium') }}" wire:navigate class="flex items-center px-5 py-2.5 text-sm font-black text-primary-600 hover:bg-primary-50 transition-colors group">
                     <i class="ph-fill ph-crown w-6 text-lg text-primary-500 group-hover:scale-110 transition-transform"></i>
                     Get Premium
                 </a>
                 @else
-                <a href="{{ route('payment.premium') }}" wire:navigate class="flex items-center px-5 py-2.5 text-sm font-semibold text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-colors">
+                <div class="flex items-center px-5 py-2.5 text-sm font-semibold text-amber-600">
                     <i class="ph-fill ph-crown w-6 text-lg text-amber-500"></i>
-                    Premium Features
-                </a>
+                    <span>Pro Member ✨</span>
+                </div>
                 @endif
                 <a href="{{ route('csv.import') }}" wire:navigate class="flex items-center px-5 py-2.5 text-sm font-semibold text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-colors">
                     <i class="ph ph-file-csv w-6 text-lg text-slate-400"></i>

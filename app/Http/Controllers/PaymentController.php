@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use App\Services\ActivityLogger;
 
 class PaymentController extends Controller
 {
@@ -431,6 +432,16 @@ class PaymentController extends Controller
                 $user->addClCredits(15);
                 $user->addPhotoCredits(5);
             }
+
+            $activityType = ($packageType === 'addon_10' || $packageType === 'cl_addon_15') ? 'top_up' : 'premium_upgrade';
+            $activityDesc = ($activityType === 'top_up') ? "User melakukan Top Up Add-On" : "User upgrade ke akun Premium";
+            ActivityLogger::log(
+                $activityType,
+                $activityDesc,
+                'success',
+                ['order_id' => $lockedPayment->order_id, 'amount' => $lockedPayment->amount],
+                $user->id
+            );
 
             // Send success email notification
             try {

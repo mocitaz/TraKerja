@@ -56,7 +56,7 @@
             <!-- Day Headers -->
             <div class="grid grid-cols-7 bg-slate-50/50 border-b border-slate-100">
                 @foreach(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as $day)
-                    <div class="px-2 py-4 text-center text-[10px] font-black text-slate-400 uppercase tracking-[2px]">
+                    <div class="px-2 py-2.5 text-center text-[9px] font-black text-slate-400 uppercase tracking-[2px]">
                         {{ $day }}
                     </div>
                 @endforeach
@@ -65,25 +65,25 @@
             <!-- Calendar Grid -->
             <div class="grid grid-cols-7 divide-x divide-slate-100">
                 @foreach($calendarDays as $day)
-                    <div class="min-h-[140px] p-3 border-b border-slate-100 transition-colors {{ $day['isCurrentMonth'] ? 'bg-white' : 'bg-slate-50/30 opacity-40' }} {{ $day['isToday'] ? 'bg-primary-50/30' : '' }} group">
+                    <div class="min-h-[90px] p-2 border-b border-slate-100 transition-colors {{ $day['isCurrentMonth'] ? 'bg-white' : 'bg-slate-50/30 opacity-40' }} {{ $day['isToday'] ? 'bg-primary-50/30' : '' }} group">
                         <!-- Date Number -->
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="inline-flex items-center justify-center w-8 h-8 text-sm font-black transition-all rounded-xl 
+                        <div class="flex justify-between items-start mb-1.5">
+                            <span class="inline-flex items-center justify-center w-6 h-6 text-[11px] font-black transition-all rounded-lg 
                                 {{ $day['isToday'] ? 'bg-primary-600 text-white shadow-lg shadow-primary-100' : ($day['isCurrentMonth'] ? 'text-slate-900 group-hover:text-primary-600' : 'text-slate-300') }}">
                                 {{ $day['date']->format('j') }}
                             </span>
                         </div>
 
                         <!-- Interviews on this day -->
-                        <div class="space-y-1.5">
+                        <div class="space-y-1">
                             @foreach($day['interviews'] as $interview)
                                     <button wire:click="viewInterviewDetails({{ $interview['id'] }})" 
-                                         class="w-full text-left p-2 rounded-xl text-[10px] font-black transition-all hover:scale-[1.02] active:scale-95 shadow-sm border
+                                         class="w-full text-left px-1.5 py-1 rounded-lg text-[9px] font-black transition-all hover:scale-[1.02] active:scale-95 shadow-sm border
                                                 {{ in_array($interview['recruitment_stage'], ['HR - Interview', 'Psychotest']) ? 'bg-blue-50 text-blue-700 border-blue-100 hover:bg-blue-100' : '' }}
                                                 {{ in_array($interview['recruitment_stage'], ['User - Interview', 'Presentation Round']) ? 'bg-emerald-50 text-emerald-700 border-emerald-100 hover:bg-emerald-100' : '' }}
                                                 {{ in_array($interview['recruitment_stage'], ['Assessment Test', 'LGD']) ? 'bg-purple-50 text-purple-700 border-purple-100 hover:bg-purple-100' : '' }}">
                                     <div class="truncate uppercase tracking-tight">{{ $interview['company_name'] }}</div>
-                                    <div class="mt-0.5 opacity-60 flex items-center gap-1">
+                                    <div class="mt-0.5 opacity-60 flex items-center gap-0.5">
                                         <i class="ph-bold ph-clock"></i>
                                         {{ \Carbon\Carbon::parse($interview['interview_date'])->timezone('Asia/Jakarta')->format('H:i') }}
                                     </div>

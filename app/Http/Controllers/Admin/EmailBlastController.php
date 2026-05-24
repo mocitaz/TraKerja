@@ -114,7 +114,10 @@ class EmailBlastController extends Controller
         $failCount = 0;
         $errors = [];
 
-        // Send emails synchronously
+        // Prevent timeout during bulk email sending
+        set_time_limit(0);
+
+        // Send emails synchronously with a small delay to prevent SMTP rate-limiting
         foreach ($users as $user) {
             try {
                 switch ($emailType) {
@@ -168,6 +171,9 @@ class EmailBlastController extends Controller
                         break;
                 }
                 $successCount++;
+                
+                // Add 1 second delay between emails to prevent Hostinger SMTP rate-limiting
+                sleep(1);
             } catch (\Exception $e) {
                 $failCount++;
                 $errors[] = "Failed to send to {$user->email}: " . $e->getMessage();

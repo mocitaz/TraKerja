@@ -19,6 +19,11 @@ class JobApplicationObserver
             ['job_id' => $jobApplication->id, 'company' => $jobApplication->company_name, 'position' => $jobApplication->position],
             $jobApplication->user_id
         );
+
+        // Gamification: +10 XP for applying
+        if ($jobApplication->user) {
+            $jobApplication->user->addXP(10);
+        }
     }
 
     /**
@@ -47,6 +52,60 @@ class JobApplicationObserver
                 "User memperbarui status/tahap lamaran di {$jobApplication->company_name}",
                 'success',
                 ['job_id' => $jobApplication->id, 'changes' => $changes],
+                $jobApplication->user_id
+            );
+
+            // Gamification logic
+            if ($jobApplication->user) {
+                $xpToAdd = 0;
+
+                // Stage changes
+                if ($jobApplication->isDirty('recruitment_stage')) {
+                    $newStage = $jobApplication->recruitment_stage;
+                    $oldStage = $jobApplication->getOriginal('recruitment_stage');
+                    
+                    $interviewStages = ['HR - Interview', 'User - Interview', 'Psychotest', 'Assessment Test', 'Presentation Round', 'LGD'];
+                    
+                    // If moved TO an interview stage from a non-interview stage
+                    if (in_array($newStage, $interviewStages) && !in_array($oldStage, $interviewStages)) {
+                        $xpToAdd += 50;
+                    }
+                    
+                    // If moved TO Offered stage
+                    if ($newStage === 'Offering' && $oldStage !== 'Offering') {
+                        $xpToAdd += 100;
+                    }
+                }
+
+                // Status changes
+                if ($jobApplication->isDirty('application_status')) {
+                    $newStatus = $jobApplication->application_status;
+                    $oldStatus = $jobApplication->getOriginal('application_status');
+                    
+                    // If moved TO Accepted
+                    if ($newStatus === 'Accepted' && $oldStatus !== 'Accepted') {
+                        // Max 100 XP if they didn't already get it from Offering
+                        $xpToAdd = max($xpToAdd, 100);
+                    }
+                }
+
+                if ($xpToAdd > 0) {
+                    $jobApplication->user->addXP($xpToAdd);
+                }
+            }
+        }
+
+        if ($jobApplication->isDirty('interview_date') && $jobApplication->interview_date) {
+            $formattedDate = $jobApplication->interview_date->format('d M Y H:i');
+            ActivityLogger::log(
+                'interview_schedule',
+                "User mengatur jadwal interview dengan {$jobApplication->company_name} pada {$formattedDate}",
+                'success',
+                [
+                    'job_id' => $jobApplication->id, 
+                    'company' => $jobApplication->company_name,
+                    'date' => $jobApplication->interview_date->toDateTimeString()
+                ],
                 $jobApplication->user_id
             );
         }

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use App\Services\ActivityLogger;
 
 class AiPhotoController extends Controller
 {
@@ -96,6 +97,15 @@ class AiPhotoController extends Controller
                 'result_url' => $data['result_url'],
                 'photo_analysis' => $data['photo_analysis'] ?? null,
             ]);
+
+            $typeLabel = $type === 'remove_bg' ? 'Hapus Latar Belakang' : 'Enhance & Ubah Latar';
+            ActivityLogger::log(
+                'ai_photo',
+                "User menggunakan AI Photo Studio untuk {$typeLabel}",
+                'success',
+                ['type' => $type, 'style' => $payload['style'] ?? 'auto'],
+                $user->id
+            );
 
             return redirect()->route('ai-photo.show', $aiPhoto->id)
                 ->with('success', 'Foto berhasil diproses!');

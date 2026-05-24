@@ -1762,7 +1762,7 @@
                                 onerror="this.src='https://placehold.co/400x600/5b2a86/ffffff?text=Sarah'">
                         </div>
                         <div class="w-full md:w-[60%] p-8 md:p-10 lg:p-12 flex flex-col justify-center bg-white">
-                            <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-1">Sarah</h3>
+                            <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-1">Rendika</h3>
                             <p class="text-[#2e1065] font-bold text-lg mb-6">Fresh Graduate</p>
                             <p class="text-gray-700 text-base md:text-lg leading-relaxed">
                                 "TraKerja sangat membantu saya merapikan lamaran kerja yang berantakan jadi jauh lebih terorganisasi. Kerennya lagi, saya bisa set goals jumlah apply harian makin banyak yang diapply, peluang dipanggil pun makin besar!"
@@ -1775,12 +1775,12 @@
                     <div class="flex flex-col md:flex-row bg-white rounded-[2rem] shadow-xl border border-gray-100 overflow-hidden h-full">
                         <div class="w-full md:w-[40%] bg-[#5b2a86] relative min-h-[300px] md:min-h-[400px]">
                             <img src="{{ asset('images/ahmad.png') }}" 
-                                alt="Ahmad" 
+                                alt="Andi" 
                                 class="absolute inset-0 w-full h-full object-cover"
-                                onerror="this.src='https://placehold.co/400x600/5b2a86/ffffff?text=Ahmad'">
+                                onerror="this.src='https://placehold.co/400x600/5b2a86/ffffff?text=Andi'">
                         </div>
                         <div class="w-full md:w-[60%] p-8 md:p-10 lg:p-12 flex flex-col justify-center bg-white">
-                            <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-1">Ahmad</h3>
+                            <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-1">Andi</h3>
                             <p class="text-[#2e1065] font-bold text-lg mb-6">Career Switcher</p>
                             <p class="text-gray-700 text-base md:text-lg leading-relaxed">
                                 "Platform yang sederhana tapi efektif. Analytics-nya membantu saya tahu platform mana yang paling sering memanggil interview. Sempurna untuk yang ingin pindah karier! Semua data tersimpan aman."

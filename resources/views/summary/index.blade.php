@@ -297,6 +297,51 @@
     <div class="bg-[#f8fafc] {{ !$hasAccess ? 'h-[calc(100vh-73px)] overflow-hidden flex items-center justify-center' : 'min-h-screen pb-20' }}">
         <div class="max-w-[1300px] w-full mx-auto px-4 sm:px-6 lg:px-8 {{ !$hasAccess ? '' : 'pt-8' }}">
 
+            {{-- Gamification: Career Profile Card --}}
+            <div class="mb-6">
+                <div class="bg-white border border-slate-200/60 rounded-[1.5rem] p-5 sm:p-6 shadow-sm hover:border-primary-500/30 hover:shadow-md transition-all duration-300 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 bg-primary-50 rounded-xl flex items-center justify-center border border-primary-100 shrink-0 relative group">
+                            <i class="ph-fill ph-trophy text-3xl text-primary-500 group-hover:scale-110 transition-transform"></i>
+                            <div class="absolute -top-1.5 -right-1.5 bg-primary-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-md border border-white shadow-sm">
+                                L{{ $user->level ?? 1 }}
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-black text-slate-900 tracking-tight">{{ $user->level_title ?? 'Job Seeker' }}</h2>
+                            <p class="text-[10px] font-bold text-slate-500 mt-0.5 uppercase tracking-widest">Keep moving stages to earn XP</p>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/3 flex flex-col">
+                        @php
+                            $currentLvl = $user->level ?? 1;
+                            $currentXp = $user->xp ?? 0;
+                            $thresholds = \App\Models\User::LEVEL_THRESHOLDS ?? [1=>0,2=>100,3=>300,4=>600,5=>1000];
+                            $nextThreshold = $thresholds[$currentLvl + 1] ?? $currentXp;
+                            $prevThreshold = $thresholds[$currentLvl] ?? 0;
+                            
+                            $range = max(1, $nextThreshold - $prevThreshold);
+                            $progress = max(0, $currentXp - $prevThreshold);
+                            $percentage = ($currentLvl >= 5) ? 100 : min(100, ($progress / $range) * 100);
+                            $xpNeeded = max(0, $nextThreshold - $currentXp);
+                        @endphp
+                        <div class="flex justify-between items-end mb-2">
+                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Progress</span>
+                            <span class="text-xs font-black text-slate-900">{{ $currentXp }} <span class="text-[10px] text-slate-400 font-bold">/ {{ $nextThreshold }} XP</span></span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                            <div class="h-full bg-primary-500 rounded-full transition-all duration-1000 relative" style="width: {{ $percentage }}%"></div>
+                        </div>
+                        @if($currentLvl < 5)
+                        <p class="text-[9px] text-right font-bold text-primary-500 mt-1.5">{{ $xpNeeded }} XP to next level <i class="ph-bold ph-arrow-right"></i></p>
+                        @else
+                        <p class="text-[9px] text-right font-bold text-primary-500 mt-1.5 flex justify-end items-center gap-1">Maximum Level Reached! <i class="ph-fill ph-crown text-primary-400 text-[10px]"></i></p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
             @if(!$hasAccess)
                 <div class="max-w-xl mx-auto">
                     <div class="bg-white rounded-[2rem] border border-slate-200/60 shadow-sm overflow-hidden relative text-center p-8 sm:p-10">

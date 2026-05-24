@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use App\Rules\StrongPassword;
+use App\Services\ActivityLogger;
 
 class RegisteredUserController extends Controller
 {
@@ -70,6 +70,14 @@ class RegisteredUserController extends Controller
             'payment_status' => 'free', // Default to 'free' (valid values: free, paid, expired)
             'photo_credits' => 2, // 2 free credits as requested
         ]);
+
+        ActivityLogger::log(
+            'register',
+            "Pengguna baru mendaftar: {$user->name} ({$user->email})",
+            'success',
+            ['email' => $user->email],
+            $user->id
+        );
 
         event(new Registered($user));
 

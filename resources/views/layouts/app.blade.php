@@ -139,23 +139,7 @@
                     {{ $slot }}
                 </main>
 
-                <!-- Footer -->
-                @php($noFooterRoutes = ['login', 'register', 'password.request', 'password.reset', 'verification.notice', 'legal.terms', 'legal.privacy'])
-                @unless(in_array(Route::currentRouteName(), $noFooterRoutes))
-                    <div class="mt-auto px-4 sm:px-6 lg:px-8 pb-6">
-                        <footer class="bg-white/50 backdrop-blur-md border border-slate-200/60 rounded-[2rem] p-6 flex flex-col md:flex-row items-center justify-between gap-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 bg-white rounded-lg shadow-sm border border-slate-100 flex items-center justify-center">
-                                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-5 h-5 object-contain">
-                                </div>
-                                <span class="text-sm font-black text-slate-900 tracking-tight">TraKerja</span>
-                            </div>
-                            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center md:text-right">
-                                © {{ date('Y') }} TraKerja. PT Teknalogi Transformasi Digital . All rights reserved.
-                            </p>
-                        </footer>
-                    </div>
-                @endunless
+
             </div>
         </div>
 
