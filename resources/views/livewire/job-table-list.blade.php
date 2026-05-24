@@ -231,14 +231,15 @@
                                 <td class="px-3 py-3 text-right whitespace-nowrap" onclick="event.stopPropagation();">
                                     <div class="flex items-center justify-end gap-1.5">
                                         @if($job->isGhosted())
-                                            <button wire:click.stop="generateFollowUp({{ $job->id }})" 
-                                                    wire:loading.attr="disabled"
+                                            <button x-data="{ loading: false }" 
+                                                    x-on:click.stop="loading = true; $wire.generateFollowUp({{ $job->id }}).then(() => loading = false)"
+                                                    x-bind:disabled="loading"
                                                     class="mr-2 px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5">
-                                                <div wire:loading.remove wire:target="generateFollowUp({{ $job->id }})" class="flex items-center gap-1.5">
+                                                <div x-show="!loading" class="flex items-center gap-1.5">
                                                     <i class="ph-bold ph-paper-plane-tilt"></i>
                                                     Tanya Kabar
                                                 </div>
-                                                <div wire:loading.flex wire:target="generateFollowUp({{ $job->id }})" class="items-center gap-1.5">
+                                                <div x-show="loading" class="flex items-center gap-1.5" style="display: none;">
                                                     <i class="ph-bold ph-spinner animate-spin"></i>
                                                     Memproses...
                                                 </div>

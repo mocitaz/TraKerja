@@ -112,14 +112,15 @@
                                         </span>
 
                                         @if($job->isGhosted())
-                                            <button wire:click.stop="generateFollowUp({{ $job->id }})" 
-                                                    wire:loading.attr="disabled"
+                                            <button x-data="{ loading: false }" 
+                                                    x-on:click.stop="loading = true; $wire.generateFollowUp({{ $job->id }}).then(() => loading = false)"
+                                                    x-bind:disabled="loading"
                                                     class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-md shadow-rose-500/20 disabled:opacity-50 disabled:cursor-not-allowed">
-                                                <div wire:loading.remove wire:target="generateFollowUp({{ $job->id }})" class="flex items-center gap-1.5">
+                                                <div x-show="!loading" class="flex items-center gap-1.5">
                                                     <i class="ph-bold ph-paper-plane-tilt"></i>
                                                     Tanya Kabar
                                                 </div>
-                                                <div wire:loading.flex wire:target="generateFollowUp({{ $job->id }})" class="items-center gap-1.5">
+                                                <div x-show="loading" class="flex items-center gap-1.5" style="display: none;">
                                                     <i class="ph-bold ph-spinner animate-spin"></i>
                                                     Memproses...
                                                 </div>
@@ -128,14 +129,15 @@
                                     </div>
                                     @elseif($job->isGhosted())
                                         <div class="mt-4 flex justify-end">
-                                            <button wire:click.stop="generateFollowUp({{ $job->id }})" 
-                                                    wire:loading.attr="disabled"
+                                            <button x-data="{ loading: false }" 
+                                                    x-on:click.stop="loading = true; $wire.generateFollowUp({{ $job->id }}).then(() => loading = false)"
+                                                    x-bind:disabled="loading"
                                                     class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-md shadow-rose-500/20 disabled:opacity-50 disabled:cursor-not-allowed">
-                                                <div wire:loading.remove wire:target="generateFollowUp({{ $job->id }})" class="flex items-center gap-1.5">
+                                                <div x-show="!loading" class="flex items-center gap-1.5">
                                                     <i class="ph-bold ph-paper-plane-tilt"></i>
                                                     Tanya Kabar
                                                 </div>
-                                                <div wire:loading.flex wire:target="generateFollowUp({{ $job->id }})" class="items-center gap-1.5">
+                                                <div x-show="loading" class="flex items-center gap-1.5" style="display: none;">
                                                     <i class="ph-bold ph-spinner animate-spin"></i>
                                                     Memproses...
                                                 </div>
