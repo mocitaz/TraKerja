@@ -470,6 +470,9 @@ class JobTableList extends Component
         ];
 
         try {
+            // Force a minimum 1 second delay so the UI loading state is visible to the user
+            sleep(1);
+
             $response = Http::timeout(60)->post('https://ai-analyzer-seven.vercel.app/generate-cl', $aiPayload);
 
             if ($response->successful()) {

@@ -234,6 +234,9 @@ class JobKanbanBoard extends Component
         ];
 
         try {
+            // Force a minimum 1 second delay so the UI loading state is visible to the user
+            sleep(1);
+
             // Using the existing Vercel AI API
             $response = Http::timeout(60)->post('https://ai-analyzer-seven.vercel.app/generate-cl', $aiPayload);
 
