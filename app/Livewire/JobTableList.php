@@ -463,9 +463,9 @@ class JobTableList extends Component
             'company_name' => $job->company_name,
             'job_title' => $job->position,
             'job_description' => $prompt,
-            'language' => 'Indonesian',
-            'tone' => 'Professional',
-            'length' => 'Short',
+            'language' => 'id',
+            'tone' => 'professional',
+            'length' => 'short',
             'highlight_focus' => 'Requesting status update on application',
             'candidate_context' => $context,
         ];
