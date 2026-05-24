@@ -259,6 +259,8 @@
                                                 <option value="meeting_room">Meeting Room</option>
                                                 <option value="city_rooftop">City Rooftop</option>
                                                 <option value="outdoor_park">Outdoor Park</option>
+                                                <option value="merah">Pas Foto (Merah)</option>
+                                                <option value="biru">Pas Foto (Biru)</option>
                                             </select>
                                             <div class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
                                                 <i class="ph-bold ph-caret-down text-xs"></i>
