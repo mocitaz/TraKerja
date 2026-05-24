@@ -61,9 +61,13 @@
 
             <div wire:loading.remove class="space-y-6">
                 @forelse($jobApplications as $index => $job)
-                    <div class="bg-white border border-slate-200/60 rounded-[2.5rem] p-6 shadow-[inset_0_1px_2px_rgba(255,255,255,0.8),0_10px_20px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-indigo-300 transition-all duration-500 cursor-pointer relative group" onclick="window.location.href='{{ route('jobs.show', $job) }}'">
+                    <div class="bg-white border rounded-[2.5rem] p-6 shadow-[inset_0_1px_2px_rgba(255,255,255,0.8),0_10px_20px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500 cursor-pointer relative group {{ $job->isGhosted() ? 'border-amber-400 bg-amber-50/30' : 'border-slate-200/60 hover:border-indigo-300' }}" onclick="window.location.href='{{ route('jobs.show', $job) }}'">
                     
-                    @if($job->is_pinned)
+                    @if($job->isGhosted())
+                        <div class="absolute -top-3 -right-3 w-8 h-8 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white z-10" title="Lebih dari 14 hari tanpa kabar!">
+                            <i class="ph-bold ph-warning-circle text-xs animate-pulse"></i>
+                        </div>
+                    @elseif($job->is_pinned)
                         <div class="absolute -top-3 -right-3 w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center shadow-lg border-4 border-white z-10">
                             <i class="ph-fill ph-push-pin text-white text-xs"></i>
                         </div>
@@ -120,7 +124,13 @@
                             <span class="text-[9px] font-black text-slate-500 uppercase tracking-tight truncate max-w-[120px]">{{ $job->location }}</span>
                         </div>
                         <div class="flex gap-2">
-                            <button wire:click="edit({{ $job->id }})" class="w-8 h-8 flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all duration-300">
+                            @if($job->isGhosted())
+                                <button wire:click.stop="openFollowUpModal('{{ $job->id }}')" class="px-3 py-1 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-colors flex items-center gap-1.5 shadow-sm">
+                                    <i class="ph-bold ph-paper-plane-tilt"></i>
+                                    Tanya Kabar
+                                </button>
+                            @endif
+                            <button wire:click.stop="edit({{ $job->id }})" class="w-8 h-8 flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all duration-300">
                                 <i class="ph ph-pencil-simple text-sm"></i>
                             </button>
                             <button wire:click="confirmDelete({{ $job->id }})" class="w-8 h-8 flex items-center justify-center bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-600 hover:text-white transition-all duration-300">
@@ -179,7 +189,7 @@
 
                         <tbody wire:loading.remove>
                             @forelse($jobApplications as $index => $job)
-                            <tr class="hover:bg-slate-50 transition-all cursor-pointer group" onclick="window.location.href='{{ route('jobs.show', $job) }}'">
+                            <tr class="transition-all cursor-pointer group {{ $job->isGhosted() ? 'bg-amber-50/30 hover:bg-amber-50/50 border-l-4 border-amber-400' : 'hover:bg-slate-50' }}" onclick="window.location.href='{{ route('jobs.show', $job) }}'">
                                 <td class="px-3 py-3 text-center text-xs font-bold text-slate-400 whitespace-nowrap">{{ ($jobApplications->firstItem() + $index) }}</td>
                                 <td class="px-3 py-3 whitespace-nowrap">
                                     <span class="text-sm font-black text-slate-900 group-hover:text-indigo-600 transition-colors">{{ $job->company_name }}</span>
@@ -220,7 +230,13 @@
                                 </td>
                                 <td class="px-3 py-3 text-right whitespace-nowrap" onclick="event.stopPropagation();">
                                     <div class="flex items-center justify-end gap-1.5">
-                                        <button wire:click="togglePin({{ $job->id }})" class="p-1.5 text-slate-400 hover:text-amber-500 transition-colors">
+                                        @if($job->isGhosted())
+                                            <button wire:click.stop="openFollowUpModal('{{ $job->id }}')" class="mr-2 px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-sm flex items-center gap-1.5">
+                                                <i class="ph-bold ph-paper-plane-tilt"></i>
+                                                Tanya Kabar
+                                            </button>
+                                        @endif
+                                        <button wire:click.stop="togglePin({{ $job->id }})" class="p-1.5 text-slate-400 hover:text-amber-500 transition-colors">
                                             <svg class="w-3.5 h-3.5" fill="{{ $job->is_pinned ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
                                         </button>
                                         <button wire:click="edit({{ $job->id }})" class="p-1.5 text-slate-400 hover:text-indigo-600 transition-colors">
@@ -242,6 +258,75 @@
 
         <div class="mt-4">
             {{ $jobApplications->links() }}
+        </div>
+    </div>
+
+    <!-- AI Follow Up Modal -->
+    <div wire:ignore.self x-data="{ show: @entangle('showFollowUpModal') }" 
+         x-show="show" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 backdrop-blur-none"
+         x-transition:enter-end="opacity-100 backdrop-blur-sm"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 backdrop-blur-sm"
+         x-transition:leave-end="opacity-0 backdrop-blur-none"
+         class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 p-4 sm:p-6" style="display: none;">
+         
+        <div x-show="show"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+             x-transition:leave-end="opacity-0 scale-95 translate-y-4"
+             class="bg-white rounded-[2rem] shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col relative border border-slate-100" @click.stop>
+             
+            <!-- Header -->
+            <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-white sticky top-0 z-10">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center">
+                        <i class="ph-fill ph-paper-plane-tilt text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-base font-black text-slate-800">Draft Follow-Up Email</h2>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Generated by TraKerja AI</p>
+                    </div>
+                </div>
+                <button wire:click="closeFollowUpModal" class="w-8 h-8 flex items-center justify-center bg-slate-50 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-full transition-colors">
+                    <i class="ph-bold ph-x text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 overflow-y-auto bg-slate-50/50 flex-1">
+                <div wire:loading wire:target="generateFollowUp" class="w-full flex flex-col items-center justify-center py-12">
+                    <i class="ph-bold ph-spinner animate-spin text-4xl text-indigo-500 mb-4"></i>
+                    <p class="text-xs font-bold text-slate-600">AI sedang memikirkan kata-kata terbaik...</p>
+                </div>
+
+                <div wire:loading.remove wire:target="generateFollowUp">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Draft Email</label>
+                    <textarea wire:model="followUpDraft" rows="12" class="block w-full px-5 py-4 bg-white border border-slate-200 rounded-2xl text-xs font-medium leading-relaxed outline-none resize-none transition-all focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 shadow-sm"></textarea>
+                    
+                    <div class="mt-4 flex items-start gap-2 text-indigo-600 bg-indigo-50/50 p-3 rounded-xl border border-indigo-100">
+                        <i class="ph-fill ph-info text-base mt-0.5"></i>
+                        <p class="text-[10px] font-medium leading-relaxed">Anda bisa mengedit teks di atas sebelum menyalinnya. Pastikan Anda mengganti placeholder (seperti nama HRD atau perusahaan) jika AI tidak mengetahuinya secara pasti.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="px-6 py-4 border-t border-slate-100 bg-white flex items-center justify-end gap-3 sticky bottom-0 z-10">
+                <button wire:click="closeFollowUpModal" class="px-6 py-2.5 rounded-xl text-[10px] font-black text-slate-400 hover:text-slate-600 uppercase tracking-widest transition-colors">Batal</button>
+                <button type="button" @click="navigator.clipboard.writeText($wire.followUpDraft); $dispatch('showNotification', {type: 'success', title: 'Disalin!', message: 'Draft email berhasil disalin ke clipboard'})" class="px-6 py-2.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2">
+                    <i class="ph-bold ph-copy"></i>
+                    Salin Teks
+                </button>
+                <a :href="'mailto:hrd@company.com?subject=Application Status Update&body=' + encodeURIComponent($wire.followUpDraft)" target="_blank" class="px-6 py-2.5 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 text-[10px] font-black uppercase tracking-widest transition-all shadow-lg shadow-indigo-600/20 flex items-center gap-2">
+                    <i class="ph-bold ph-envelope-simple"></i>
+                    Kirim Email
+                </a>
+            </div>
         </div>
     </div>
 </div>
