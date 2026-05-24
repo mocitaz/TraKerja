@@ -196,16 +196,6 @@ class JobKanbanBoard extends Component
         return $colors[$stage] ?? '#6B7280';
     }
 
-    public function openFollowUpModal($jobId)
-    {
-        $this->followUpJobId = $jobId;
-        $this->showFollowUpModal = true;
-        $this->followUpDraft = '';
-        
-        // Dispatch event to trigger generation AFTER the modal renders
-        $this->dispatch('trigger-ai-generation');
-    }
-
     public function closeFollowUpModal()
     {
         $this->showFollowUpModal = false;
@@ -213,10 +203,10 @@ class JobKanbanBoard extends Component
         $this->followUpDraft = '';
     }
 
-    public function generateFollowUp()
+    public function generateFollowUp($jobId)
     {
-        if (!$this->followUpJobId) return;
-        $job = JobApplication::where('user_id', Auth::id())->findOrFail($this->followUpJobId);
+        $this->followUpJobId = $jobId;
+        $job = JobApplication::where('user_id', Auth::id())->findOrFail($jobId);
 
         $this->isGeneratingFollowUp = true;
 
@@ -250,6 +240,8 @@ class JobKanbanBoard extends Component
             if ($response->successful()) {
                 $responseBody = $response->json();
                 $this->followUpDraft = $responseBody['cover_letter'] ?? $responseBody['result'] ?? '';
+                // Open modal AFTER draft is ready
+                $this->showFollowUpModal = true;
             } else {
                 $this->followUpDraft = "Maaf, gagal membuat draft email. Silakan coba lagi nanti.";
             }

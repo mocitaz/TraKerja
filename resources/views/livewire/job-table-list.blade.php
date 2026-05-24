@@ -231,9 +231,17 @@
                                 <td class="px-3 py-3 text-right whitespace-nowrap" onclick="event.stopPropagation();">
                                     <div class="flex items-center justify-end gap-1.5">
                                         @if($job->isGhosted())
-                                            <button wire:click.stop="openFollowUpModal('{{ $job->id }}')" class="mr-2 px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-sm flex items-center gap-1.5">
-                                                <i class="ph-bold ph-paper-plane-tilt"></i>
-                                                Tanya Kabar
+                                            <button wire:click.stop="generateFollowUp('{{ $job->id }}')" 
+                                                    wire:loading.attr="disabled"
+                                                    class="mr-2 px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5">
+                                                <div wire:loading.remove wire:target="generateFollowUp('{{ $job->id }}')" class="flex items-center gap-1.5">
+                                                    <i class="ph-bold ph-paper-plane-tilt"></i>
+                                                    Tanya Kabar
+                                                </div>
+                                                <div wire:loading wire:target="generateFollowUp('{{ $job->id }}')" class="flex items-center gap-1.5">
+                                                    <i class="ph-bold ph-spinner animate-spin"></i>
+                                                    Memproses...
+                                                </div>
                                             </button>
                                         @endif
                                         <button wire:click.stop="togglePin({{ $job->id }})" class="p-1.5 text-slate-400 hover:text-amber-500 transition-colors">
@@ -271,7 +279,6 @@
              x-transition:leave="transition ease-in duration-200"
              x-transition:leave-start="opacity-100 backdrop-blur-sm"
              x-transition:leave-end="opacity-0 backdrop-blur-none"
-             x-on:trigger-ai-generation.window="$wire.generateFollowUp()"
              class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 p-4 sm:p-6" style="display: none;">
              
             <div x-show="show"
@@ -301,19 +308,7 @@
 
                 <!-- Content -->
                 <div class="p-6 overflow-y-auto bg-slate-50/50 flex-1">
-                    <div wire:loading wire:target="generateFollowUp" class="w-full py-16 flex flex-col items-center justify-center">
-                        <div class="relative w-16 h-16 flex items-center justify-center mb-6">
-                            <div class="absolute inset-0 border-4 border-indigo-100 rounded-full"></div>
-                            <div class="absolute inset-0 border-4 border-indigo-500 rounded-full border-t-transparent animate-spin"></div>
-                            <img src="{{ asset('images/icon.png') }}" alt="AI" class="w-6 h-6 object-contain animate-pulse">
-                        </div>
-                        <h3 class="text-sm font-black text-slate-800 mb-2">Menyusun Draft Email...</h3>
-                        <p class="text-xs font-medium text-slate-500 text-center max-w-xs leading-relaxed">
-                            AI sedang merangkai kalimat paling profesional untuk Anda. Proses ini memakan waktu beberapa detik.
-                        </p>
-                    </div>
-
-                    <div wire:loading.remove wire:target="generateFollowUp">
+                    <div>
                         <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Draft Email</label>
                         <textarea wire:model="followUpDraft" rows="12" class="block w-full px-5 py-4 bg-white border border-slate-200 rounded-2xl text-xs font-medium leading-relaxed outline-none resize-none transition-all focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 shadow-sm"></textarea>
                         

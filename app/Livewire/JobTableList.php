@@ -428,16 +428,6 @@ class JobTableList extends Component
         ]);
     }
 
-    public function openFollowUpModal($jobId)
-    {
-        $this->followUpJobId = $jobId;
-        $this->showFollowUpModal = true;
-        $this->followUpDraft = '';
-        
-        // Dispatch event to trigger generation AFTER the modal renders
-        $this->dispatch('trigger-ai-generation');
-    }
-
     public function closeFollowUpModal()
     {
         $this->showFollowUpModal = false;
@@ -445,9 +435,10 @@ class JobTableList extends Component
         $this->followUpDraft = '';
     }
 
-    public function generateFollowUp()
+    public function generateFollowUp($jobId)
     {
-        $job = JobApplication::where('id', $this->followUpJobId)->where('user_id', auth()->id())->first();
+        $this->followUpJobId = $jobId;
+        $job = JobApplication::where('id', $jobId)->where('user_id', auth()->id())->first();
         if (!$job) {
             $this->closeFollowUpModal();
             return;
@@ -484,6 +475,8 @@ class JobTableList extends Component
             if ($response->successful()) {
                 $responseBody = $response->json();
                 $this->followUpDraft = $responseBody['cover_letter'] ?? $responseBody['result'] ?? '';
+                // Open modal AFTER draft is ready
+                $this->showFollowUpModal = true;
             } else {
                 $this->followUpDraft = "Maaf, gagal membuat draft email. Silakan coba lagi nanti.";
             }
