@@ -224,7 +224,15 @@ class JobKanbanBoard extends Component
 
         $prompt = "CRITICAL INSTRUCTION: DO NOT WRITE A COVER LETTER. Write a highly professional follow-up email to HR. Context: The applicant applied for this position 14 days ago and hasn't heard back. The email should politely ask for a status update. Use formal Indonesian language. Keep it concise, empathetic, and professional.";
         
-        $context = "Applied on " . $job->application_date->format('d M Y') . ". Application stage: " . ($job->recruitment_stage ?: $job->application_status);
+        $context = [
+            'experiences' => [
+                [
+                    'company_name' => $job->company_name,
+                    'position' => $job->position,
+                    'description' => "Applied on " . $job->application_date->format('d M Y') . ". Application stage: " . ($job->recruitment_stage ?: $job->application_status),
+                ]
+            ]
+        ];
 
         $aiPayload = [
             'company_name' => $job->company_name,
