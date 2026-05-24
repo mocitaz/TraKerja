@@ -43,6 +43,7 @@ class JobKanbanBoard extends Component
     // Ghosting Follow Up Properties
     public $showFollowUpModal = false;
     public $followUpDraft = '';
+    public $currentFollowUpJobId = null;
     public $followUpJobId = null;
     public $isGeneratingFollowUp = false;
     
@@ -201,8 +202,8 @@ class JobKanbanBoard extends Component
         $this->showFollowUpModal = true;
         $this->followUpDraft = '';
         
-        // Auto generate
-        $this->generateFollowUp();
+        // Dispatch event to trigger generation AFTER the modal renders
+        $this->dispatch('trigger-ai-generation');
     }
 
     public function closeFollowUpModal()
@@ -214,11 +215,8 @@ class JobKanbanBoard extends Component
 
     public function generateFollowUp()
     {
-        $job = JobApplication::where('id', $this->followUpJobId)->where('user_id', auth()->id())->first();
-        if (!$job) {
-            $this->closeFollowUpModal();
-            return;
-        }
+        if (!$this->followUpJobId) return;
+        $job = JobApplication::where('user_id', Auth::id())->findOrFail($this->followUpJobId);
 
         $this->isGeneratingFollowUp = true;
 

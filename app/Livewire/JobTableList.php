@@ -434,8 +434,8 @@ class JobTableList extends Component
         $this->showFollowUpModal = true;
         $this->followUpDraft = '';
         
-        // Auto generate
-        $this->generateFollowUp();
+        // Dispatch event to trigger generation AFTER the modal renders
+        $this->dispatch('trigger-ai-generation');
     }
 
     public function closeFollowUpModal()

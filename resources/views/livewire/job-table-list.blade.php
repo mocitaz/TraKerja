@@ -271,6 +271,7 @@
              x-transition:leave="transition ease-in duration-200"
              x-transition:leave-start="opacity-100 backdrop-blur-sm"
              x-transition:leave-end="opacity-0 backdrop-blur-none"
+             x-on:trigger-ai-generation.window="$wire.generateFollowUp()"
              class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 p-4 sm:p-6" style="display: none;">
              
             <div x-show="show"
@@ -285,8 +286,8 @@
                 <!-- Header -->
                 <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-white sticky top-0 z-10">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center p-2">
-                            <x-application-logo class="w-full h-full fill-current" />
+                        <div class="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center p-2">
+                            <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-full h-full object-contain">
                         </div>
                         <div>
                             <h2 class="text-base font-black text-slate-800">Draft Follow-Up Email</h2>
