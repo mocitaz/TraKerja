@@ -170,7 +170,21 @@ class UserManagement extends Component
         $user = User::findOrFail($userId);
         $user->is_premium = !$user->is_premium;
         $user->payment_status = $user->is_premium ? 'paid' : 'free';
+        if ($user->is_premium) {
+            $user->premium_purchased_at = now();
+        }
         $user->save();
+        
+        // Refresh quotas based on new status
+        $analyzerLimit = \App\Models\Setting::getLimit('ai_analyzer', $user);
+        $clLimit = \App\Models\Setting::getLimit('cover_letters', $user);
+        $photoLimit = \App\Models\Setting::getLimit('ai_photo', $user);
+        
+        $user->update([
+            'ai_credits' => $analyzerLimit === 'unlimited' ? 9999 : (int) $analyzerLimit,
+            'cl_credits' => $clLimit === 'unlimited' ? 9999 : (int) $clLimit,
+            'photo_credits' => $photoLimit === 'unlimited' ? 9999 : (int) $photoLimit,
+        ]);
         
         $this->dispatch('showNotification', [
             'type' => 'success',
@@ -210,6 +224,17 @@ class UserManagement extends Component
         }
         
         $user->save();
+
+        // Refresh quotas based on new status
+        $analyzerLimit = \App\Models\Setting::getLimit('ai_analyzer', $user);
+        $clLimit = \App\Models\Setting::getLimit('cover_letters', $user);
+        $photoLimit = \App\Models\Setting::getLimit('ai_photo', $user);
+        
+        $user->update([
+            'ai_credits' => $analyzerLimit === 'unlimited' ? 9999 : (int) $analyzerLimit,
+            'cl_credits' => $clLimit === 'unlimited' ? 9999 : (int) $clLimit,
+            'photo_credits' => $photoLimit === 'unlimited' ? 9999 : (int) $photoLimit,
+        ]);
 
         Log::info('Admin toggled manual premium status', [
             'admin_id' => Auth::id(),
@@ -265,9 +290,8 @@ class UserManagement extends Component
         $user = User::findOrFail($this->editingUserId);
         
         $analyzerLimit = \App\Models\Setting::getLimit('ai_analyzer', $user);
-        // Fallback to 1 if not defined in settings for free, 5 for premium
-        $clLimit = \App\Models\Setting::getLimit('cover_letters', $user) ?: ($user->is_premium ? 5 : 1);
-        $photoLimit = \App\Models\Setting::getLimit('ai_photo', $user) ?: ($user->is_premium ? 5 : 1);
+        $clLimit = \App\Models\Setting::getLimit('cover_letters', $user);
+        $photoLimit = \App\Models\Setting::getLimit('ai_photo', $user);
         
         $user->update([
             'ai_credits' => $analyzerLimit === 'unlimited' ? 9999 : (int) $analyzerLimit,

@@ -60,12 +60,12 @@ class PaymentController extends Controller
         if ($package === 'cover_letter') {
             $packageType = 'cl_addon_15';
             $packageName = 'TraKerja Add-On Pack';
-            $packageSubtitle = '15 Kredit Cover Letter + 10 Kredit AI Analyzer';
+            $packageSubtitle = '15 Kredit Cover Letter + 10 Kredit AI Analyzer + 5 Kredit AI Photo';
             $addonPrice = 14999;
         } else {
             $packageType = 'addon_10';
             $packageName = 'TraKerja Add-On Pack';
-            $packageSubtitle = '10 Kredit AI Analyzer + 15 Kredit Cover Letter';
+            $packageSubtitle = '10 Kredit AI Analyzer + 15 Kredit Cover Letter + 5 Kredit AI Photo';
             $addonPrice = 14999;
         }
 
@@ -413,9 +413,10 @@ class PaymentController extends Controller
             $packageType = $lockedPayment->notes ?? ($lockedPayment->metadata['package_type'] ?? 'premium');
 
             if ($packageType === 'addon_10' || $packageType === 'cl_addon_15') {
-                // Add BOTH 10 AI credits AND 15 Cover Letter credits!
+                // Add BOTH 10 AI credits, 15 Cover Letter credits, and 5 AI Photo credits!
                 $user->addAiCredits(10);
                 $user->addClCredits(15);
+                $user->addPhotoCredits(5);
             } else {
                 // Default: Premium purchase
                 $premiumDuration = (int) config('pakasir.premium_duration_days', 365);
@@ -427,10 +428,15 @@ class PaymentController extends Controller
                     'premium_purchased_at' => now(),
                 ]);
 
-                // Add credits as requested by user
-                $user->addAiCredits(5);
-                $user->addClCredits(15);
-                $user->addPhotoCredits(5);
+                $analyzerLimit = \App\Models\Setting::getLimit('ai_analyzer', $user);
+                $clLimit = \App\Models\Setting::getLimit('cover_letters', $user);
+                $photoLimit = \App\Models\Setting::getLimit('ai_photo', $user);
+                
+                $user->update([
+                    'ai_credits' => $analyzerLimit === 'unlimited' ? 9999 : (int) $analyzerLimit,
+                    'cl_credits' => $clLimit === 'unlimited' ? 9999 : (int) $clLimit,
+                    'photo_credits' => $photoLimit === 'unlimited' ? 9999 : (int) $photoLimit,
+                ]);
             }
 
             $activityType = ($packageType === 'addon_10' || $packageType === 'cl_addon_15') ? 'top_up' : 'premium_upgrade';

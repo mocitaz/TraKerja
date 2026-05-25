@@ -163,10 +163,6 @@ class Setting extends Model
             return 'unlimited';
         }
         
-        // PREMIUM MODE: Premium users get unlimited
-        if ($user && $user->is_premium && $user->payment_status === \App\Models\User::PAYMENT_STATUS_PAID) {
-            return 'unlimited';
-        }
         
         // PREMIUM MODE: Free tier users get limits
         $freeTierLimits = [
@@ -175,6 +171,8 @@ class Setting extends Model
             'cv_exports' => 5,           // Max 5 exports per month
             'job_applications' => 50,    // Max 50 job applications
             'ai_analyzer' => 1,          // 1x AI Analyzer usage
+            'cover_letters' => 3,        // 3x Cover Letter Generator
+            'ai_photo' => 2,             // 2x AI Photo
             'goals' => 0,                // No goals for free tier
             'analytics' => 'timeline'    // Only timeline activity
         ];
@@ -187,6 +185,8 @@ class Setting extends Model
                 'cv_exports' => 'unlimited',
                 'job_applications' => 'unlimited',
                 'ai_analyzer' => 5,          // Premium: 5x per month
+                'cover_letters' => 15,       // Premium: 15x Cover Letter
+                'ai_photo' => 5,             // Premium: 5x AI Photo
                 'goals' => 'unlimited',
                 'analytics' => 'full'
             ];
