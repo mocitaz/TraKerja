@@ -98,6 +98,7 @@ class GoogleAuthController extends Controller
             'payment_status'        => 'free',
             'registered_phase'      => $currentPhase,
             'grandfathered_benefits'=> $grandfatheredBenefits,
+            'photo_credits'         => 2, // Default 2 credits
         ]);
 
         // Kirim welcome email
