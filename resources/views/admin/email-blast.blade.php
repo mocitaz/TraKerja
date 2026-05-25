@@ -17,28 +17,23 @@
     ];
 @endphp
 
-<div class="space-y-6">
+<div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6 sm:space-y-8 pb-10">
     <!-- Header -->
-    <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
-        <div class="px-5 py-6 sm:px-8 sm:py-8 border-b border-slate-100 bg-slate-50/50 relative overflow-hidden">
-            <div class="absolute -right-10 -top-10 w-40 h-40 bg-primary-100 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 relative z-10">
-                <div class="flex items-center gap-4">
-                    <div class="w-14 h-14 bg-gradient-to-br from-primary-500 to-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary-500/30">
-                        <i class="ph-duotone ph-paper-plane-tilt text-3xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Email Blast Center</h1>
-                        <p class="text-sm font-medium text-slate-500 mt-1">Kelola dan kirim kampanye email massal kepada pengguna.</p>
-                    </div>
-                </div>
-                <div>
-                    <a href="{{ route('admin.email-blast.history') }}" class="flex items-center gap-2 px-5 py-3 bg-white border border-slate-200 text-slate-700 hover:text-primary-600 hover:border-primary-200 rounded-xl font-bold text-sm shadow-sm transition-all">
-                        <i class="ph-bold ph-clock-counter-clockwise text-lg text-primary-500"></i>
-                        <span>Lihat Riwayat Blasting</span>
-                    </a>
-                </div>
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6 sm:mb-8">
+        <div class="flex items-center gap-3 sm:gap-4 min-w-0 w-full md:w-auto">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white border border-slate-200/60 rounded-[1.25rem] sm:rounded-[1.5rem] flex items-center justify-center text-primary-600 shadow-sm shrink-0">
+                <i class="ph-duotone ph-paper-plane-tilt text-xl sm:text-2xl"></i>
             </div>
+            <div class="flex flex-col min-w-0">
+                <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight truncate">Email Blast</h3>
+                <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mt-1 sm:mt-1.5 truncate">Marketing & Communication</p>
+            </div>
+        </div>
+        <div>
+            <a href="{{ route('admin.email-blast.history') }}" class="flex items-center justify-center gap-2 px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-colors w-full sm:w-auto shadow-md">
+                <i class="ph-bold ph-clock-counter-clockwise text-sm"></i>
+                Riwayat Blasting
+            </a>
         </div>
     </div>
 
@@ -79,9 +74,9 @@
             <div class="space-y-6">
                 
                 <!-- Email Type Selection -->
-                <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
+                <div class="bento-card bg-white rounded-[2rem] border border-slate-200/60 overflow-hidden">
                     <div class="px-6 py-5 border-b border-slate-100">
-                        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <h2 class="text-sm font-black text-slate-900 tracking-tight uppercase flex items-center gap-2">
                             <i class="ph-duotone ph-envelope-open text-primary-500 text-xl"></i>
                             Pilih Tipe Kampanye
                         </h2>
@@ -94,7 +89,7 @@
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="welcome" class="sr-only" required>
                                 <div class="flex items-center gap-4 w-full">
-                                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center  transition-transform">
                                         <i class="ph-duotone ph-hand-waving text-2xl"></i>
                                     </div>
                                     <div class="flex-1">
@@ -111,7 +106,7 @@
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="verification" class="sr-only" required>
                                 <div class="flex items-center gap-4 w-full">
-                                    <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-500 flex items-center justify-center  transition-transform">
                                         <i class="ph-duotone ph-shield-check text-2xl"></i>
                                     </div>
                                     <div class="flex-1">
@@ -128,7 +123,7 @@
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="verification_reminder" class="sr-only" required>
                                 <div class="flex items-center gap-4 w-full">
-                                    <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center  transition-transform">
                                         <i class="ph-duotone ph-warning-circle text-2xl"></i>
                                     </div>
                                     <div class="flex-1">
@@ -145,7 +140,7 @@
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="ai_analyzer" class="sr-only" required>
                                 <div class="flex items-center gap-4 w-full">
-                                    <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center  transition-transform">
                                         <i class="ph-duotone ph-sparkle text-2xl"></i>
                                     </div>
                                     <div class="flex-1">
@@ -162,7 +157,7 @@
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="job_reminder" class="sr-only" required>
                                 <div class="flex items-center gap-4 w-full">
-                                    <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center  transition-transform">
                                         <i class="ph-duotone ph-bell-ringing text-2xl"></i>
                                     </div>
                                     <div class="flex-1">
@@ -179,7 +174,7 @@
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="monthly_motivation" class="sr-only" required>
                                 <div class="flex items-center gap-4 w-full">
-                                    <div class="w-10 h-10 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center  transition-transform">
                                         <i class="ph-duotone ph-fire text-2xl"></i>
                                     </div>
                                     <div class="flex-1">
@@ -196,7 +191,7 @@
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="product_update" class="sr-only" required>
                                 <div class="flex items-center gap-4 w-full">
-                                    <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center  transition-transform">
                                         <i class="ph-duotone ph-rocket-launch text-2xl"></i>
                                     </div>
                                     <div class="flex-1">
@@ -213,7 +208,7 @@
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="hiring_season" class="sr-only" required>
                                 <div class="flex items-center gap-4 w-full">
-                                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center  transition-transform">
                                         <i class="ph-duotone ph-briefcase text-2xl"></i>
                                     </div>
                                     <div class="flex-1">
@@ -230,7 +225,7 @@
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="follow_up_feature" class="sr-only" required>
                                 <div class="flex items-center gap-4 w-full">
-                                    <div class="w-10 h-10 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center  transition-transform">
                                         <i class="ph-duotone ph-paper-plane-tilt text-2xl"></i>
                                     </div>
                                     <div class="flex-1">
@@ -247,7 +242,7 @@
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="chrome_extension" class="sr-only" required>
                                 <div class="flex items-center gap-4 w-full">
-                                    <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center  transition-transform">
                                         <i class="ph-duotone ph-puzzle-piece text-2xl"></i>
                                     </div>
                                     <div class="flex-1">
@@ -264,7 +259,7 @@
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="ai_photo" class="sr-only" required>
                                 <div class="flex items-center gap-4 w-full">
-                                    <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center  transition-transform">
                                         <i class="ph-duotone ph-camera-plus text-2xl"></i>
                                     </div>
                                     <div class="flex-1">
@@ -281,7 +276,7 @@
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="re_engagement" class="sr-only" required>
                                 <div class="flex items-center gap-4 w-full">
-                                    <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center  transition-transform">
                                         <i class="ph-duotone ph-hand-heart text-2xl"></i>
                                     </div>
                                     <div class="flex-1">
@@ -299,7 +294,7 @@
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="custom" class="sr-only" required onchange="toggleCustomEmailFields()">
                                 <div class="flex items-center gap-4 w-full">
-                                    <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-lg  transition-transform">
                                         <i class="ph-duotone ph-pencil-simple text-2xl"></i>
                                     </div>
                                     <div class="flex-1">
@@ -317,12 +312,12 @@
 
                 <!-- Custom Email Fields Container -->
                 <div id="customEmailFields" class="hidden transform transition-all duration-300">
-                    <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden relative">
+                    <div class="bento-card bg-white rounded-[2rem] border border-slate-200/60 overflow-hidden relative">
                         <!-- Decorative glow -->
                         <div class="absolute -left-20 -top-20 w-40 h-40 bg-indigo-100 rounded-full blur-3xl opacity-50"></div>
                         
                         <div class="px-6 py-5 border-b border-slate-100 relative z-10 bg-white/50 backdrop-blur-sm">
-                            <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <h2 class="text-sm font-black text-slate-900 tracking-tight uppercase flex items-center gap-2">
                                 <i class="ph-duotone ph-pencil-line text-indigo-500 text-xl"></i>
                                 Tulis Pesan Custom
                             </h2>
@@ -403,9 +398,9 @@
             <!-- Bottom Section: Target Audience & Actions -->
             <div class="space-y-6">
                 
-                <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
+                <div class="bento-card bg-white rounded-[2rem] border border-slate-200/60 overflow-hidden">
                     <div class="px-6 py-5 border-b border-slate-100">
-                        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <h2 class="text-sm font-black text-slate-900 tracking-tight uppercase flex items-center gap-2">
                             <i class="ph-duotone ph-users-three text-emerald-500 text-xl"></i>
                             Pilih Target Audience
                         </h2>
@@ -562,181 +557,204 @@
 <!-- Dark Backdrop Modals (z-[100]) -->
 
 <!-- Error Modal -->
-<div id="errorModal" class="hidden fixed inset-0 z-[100] overflow-y-auto" aria-labelledby="error-modal-title" role="dialog" aria-modal="true">
-    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="hideErrorModal()"></div>
-    <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-        <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-slate-100 transition-all sm:my-8 sm:w-full sm:max-w-md w-full" onclick="event.stopPropagation()">
-            <div class="px-6 py-6 text-center">
-                <div class="mx-auto w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mb-4">
-                    <i class="ph-duotone ph-warning-circle text-4xl text-red-500"></i>
+<div id="errorModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xl hidden z-[9999] flex items-center justify-center p-4 transition-all duration-300">
+    <div class="bg-white rounded-[2rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.2)] max-w-sm w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-100 transform transition-all animate-in fade-in zoom-in-95 duration-200">
+        <!-- Modal Header -->
+        <div class="bg-white px-6 py-5 text-slate-900 flex justify-between items-center border-b border-slate-100 shrink-0">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-red-50 border border-red-100 flex items-center justify-center shadow-sm text-red-500">
+                    <i class="ph-bold ph-warning-circle text-xl"></i>
                 </div>
-                <h3 class="text-xl font-extrabold text-slate-900 mb-2">Validasi Gagal</h3>
-                <p id="errorMessage" class="text-sm font-medium text-slate-500 leading-relaxed"></p>
+                <div>
+                    <h3 class="text-sm font-black tracking-tight">Validasi Gagal</h3>
+                    <p class="text-slate-400 text-[8px] font-bold uppercase tracking-widest mt-0.5">Periksa Formulir</p>
+                </div>
             </div>
-            <div class="bg-slate-50 px-6 py-4 flex justify-center border-t border-slate-100">
-                <button type="button" onclick="hideErrorModal()" class="w-full inline-flex justify-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white shadow-md hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-200 transition-all">
-                    Mengerti, Perbaiki
-                </button>
-            </div>
+            <button type="button" onclick="hideErrorModal()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-50 transition-all text-slate-400 hover:text-slate-900">
+                <i class="ph-bold ph-x text-base"></i>
+            </button>
+        </div>
+
+        <div class="p-6 bg-white overflow-y-auto custom-scrollbar flex-1 text-center">
+            <p id="errorMessage" class="text-sm font-medium text-slate-600 leading-relaxed"></p>
+        </div>
+
+        <div class="bg-slate-50 px-6 py-4 flex justify-end border-t border-slate-100 shrink-0">
+            <button type="button" onclick="hideErrorModal()" class="w-full px-5 py-2.5 bg-slate-900 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-sm hover:bg-slate-800 transition-colors">
+                Mengerti, Perbaiki
+            </button>
         </div>
     </div>
 </div>
 
 <!-- Preview Modal -->
-<div id="previewModal" class="hidden fixed inset-0 z-[100] overflow-y-auto" aria-labelledby="preview-modal-title" role="dialog" aria-modal="true">
-    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="hidePreviewModal()"></div>
-    <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-        <div class="relative transform overflow-hidden rounded-2xl bg-slate-50 text-left shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-slate-200 transition-all sm:my-8 sm:w-full sm:max-w-3xl w-full flex flex-col max-h-[85vh]" onclick="event.stopPropagation()">
-            <div class="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center shrink-0">
-                <h3 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-                    <i class="ph-duotone ph-eye text-primary-500 text-xl"></i>
-                    Preview Email
-                </h3>
-                <button type="button" onclick="hidePreviewModal()" class="text-slate-400 hover:text-slate-600 transition-colors">
-                    <i class="ph-bold ph-x text-xl"></i>
-                </button>
-            </div>
-            
-            <div class="p-4 md:p-6 bg-slate-100/80 flex-1 overflow-hidden flex flex-col items-center justify-center relative min-h-[50vh]">
-                <!-- Loader -->
-                <div id="previewLoader" class="absolute inset-0 bg-slate-100/80 backdrop-blur-sm flex flex-col items-center justify-center z-10 rounded-b-2xl">
-                    <i class="ph-duotone ph-spinner-gap animate-spin text-4xl text-primary-500 mb-2"></i>
-                    <p class="text-sm font-bold text-slate-500">Memuat Preview...</p>
+<div id="previewModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xl hidden z-[9999] flex items-center justify-center p-4 transition-all duration-300">
+    <div class="bg-white rounded-[2rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.2)] max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-100 transform transition-all animate-in fade-in zoom-in-95 duration-200">
+        <!-- Modal Header -->
+        <div class="bg-white px-6 py-5 text-slate-900 flex justify-between items-center border-b border-slate-100 shrink-0">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-primary-50 border border-primary-100 flex items-center justify-center shadow-sm text-primary-600">
+                    <i class="ph-bold ph-eye text-xl"></i>
                 </div>
-                
-                <!-- Iframe for Preview -->
-                <div class="w-full max-w-2xl h-full bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200 overflow-hidden relative flex-1">
-                    <iframe id="previewFrame" class="w-full h-full absolute inset-0 border-0" sandbox="allow-same-origin"></iframe>
+                <div>
+                    <h3 class="text-sm font-black tracking-tight">Preview Email</h3>
+                    <p class="text-slate-400 text-[8px] font-bold uppercase tracking-widest mt-0.5">Tampilan Email Asli</p>
                 </div>
             </div>
-            
-            <div class="bg-white px-6 py-4 flex flex-row-reverse gap-3 border-t border-slate-200 shrink-0">
-                <button type="button" onclick="proceedToConfirm()" class="flex-1 inline-flex items-center justify-center rounded-xl bg-primary-600 px-4 py-3 text-sm font-bold text-white shadow-md hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-100 transition-all">
-                    <i class="ph-bold ph-check mr-2 text-lg"></i>
-                    Lanjut Konfirmasi
-                </button>
-                <button type="button" onclick="hidePreviewModal()" class="flex-1 inline-flex items-center justify-center rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-700 border border-slate-200 hover:bg-slate-50 focus:outline-none transition-all">
-                    Batal
-                </button>
+            <button type="button" onclick="hidePreviewModal()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-50 transition-all text-slate-400 hover:text-slate-900">
+                <i class="ph-bold ph-x text-base"></i>
+            </button>
+        </div>
+        
+        <div class="p-0 bg-slate-100/50 flex-1 overflow-hidden flex flex-col items-center justify-center relative min-h-[50vh]">
+            <!-- Loader -->
+            <div id="previewLoader" class="absolute inset-0 bg-slate-100/80 backdrop-blur-sm flex flex-col items-center justify-center z-10">
+                <i class="ph-duotone ph-spinner-gap animate-spin text-4xl text-primary-500 mb-2"></i>
+                <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Memuat Preview...</p>
             </div>
+            
+            <!-- Iframe for Preview -->
+            <div class="w-full h-full bg-white relative flex-1">
+                <iframe id="previewFrame" class="w-full h-full absolute inset-0 border-0" sandbox="allow-same-origin"></iframe>
+            </div>
+        </div>
+        
+        <div class="bg-slate-50 px-6 py-4 flex flex-row-reverse gap-3 border-t border-slate-100 shrink-0">
+            <button type="button" onclick="proceedToConfirm()" class="flex-1 px-5 py-2.5 bg-primary-600 border border-primary-600 text-white hover:bg-primary-700 rounded-xl text-xs font-black uppercase tracking-widest shadow-sm transition-colors flex items-center justify-center gap-2">
+                <i class="ph-bold ph-check text-sm"></i>
+                Lanjut Konfirmasi
+            </button>
+            <button type="button" onclick="hidePreviewModal()" class="flex-1 px-5 py-2.5 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-xl text-xs font-black uppercase tracking-widest shadow-sm transition-colors">
+                Batal
+            </button>
         </div>
     </div>
 </div>
 
 <!-- Confirmation Modal -->
-<div id="confirmModal" class="hidden fixed inset-0 z-[100] overflow-y-auto" aria-labelledby="confirm-modal-title" role="dialog" aria-modal="true">
-    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="hideConfirmModal()"></div>
-    <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-        <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-slate-100 transition-all sm:my-8 sm:w-full sm:max-w-md w-full" onclick="event.stopPropagation()">
-            <div class="px-6 py-6 text-center">
-                <div class="mx-auto w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mb-4 relative">
-                    <i class="ph-duotone ph-paper-plane-right text-4xl text-primary-500"></i>
-                    <div class="absolute -right-1 -top-1 w-4 h-4 bg-primary-500 rounded-full animate-ping"></div>
+<div id="confirmModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xl hidden z-[9999] flex items-center justify-center p-4 transition-all duration-300">
+    <div class="bg-white rounded-[2rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.2)] max-w-sm w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-100 transform transition-all animate-in fade-in zoom-in-95 duration-200">
+        <!-- Modal Header -->
+        <div class="bg-white px-6 py-5 text-slate-900 flex justify-between items-center border-b border-slate-100 shrink-0">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-primary-50 border border-primary-100 flex items-center justify-center shadow-sm text-primary-600 relative">
+                    <i class="ph-bold ph-paper-plane-right text-xl"></i>
+                    <div class="absolute -right-1 -top-1 w-2.5 h-2.5 bg-primary-500 rounded-full animate-ping"></div>
                 </div>
-                <h3 class="text-xl font-extrabold text-slate-900 mb-2">Konfirmasi Pengiriman</h3>
-                <p class="text-sm font-medium text-slate-500 leading-relaxed mb-6">Email akan segera diproses dan dikirimkan secara serentak ke kotak masuk target audience Anda.</p>
-                
-                <div class="bg-slate-50 rounded-xl p-4 text-left border border-slate-200 space-y-3">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Tipe Kampanye</span>
-                        <span id="confirmEmailType" class="text-sm font-extrabold text-slate-900 bg-white px-2 py-1 rounded shadow-sm"></span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Target Audience</span>
-                        <span id="confirmTargetUser" class="text-sm font-extrabold text-emerald-600 bg-emerald-50 px-2 py-1 rounded shadow-sm border border-emerald-100"></span>
-                    </div>
+                <div>
+                    <h3 class="text-sm font-black tracking-tight">Konfirmasi</h3>
+                    <p class="text-slate-400 text-[8px] font-bold uppercase tracking-widest mt-0.5">Pengiriman Serentak</p>
                 </div>
             </div>
+            <button type="button" onclick="hideConfirmModal()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-50 transition-all text-slate-400 hover:text-slate-900">
+                <i class="ph-bold ph-x text-base"></i>
+            </button>
+        </div>
+
+        <div class="p-6 bg-white overflow-y-auto custom-scrollbar flex-1">
+            <p class="text-xs font-medium text-slate-500 leading-relaxed mb-6">Email akan segera diproses dan dikirimkan secara serentak ke kotak masuk target audience Anda.</p>
             
-            <div class="bg-slate-50 px-6 py-4 flex flex-row-reverse gap-3 border-t border-slate-100">
-                <button type="button" onclick="submitEmailBlast()" class="flex-1 inline-flex justify-center rounded-xl bg-primary-600 px-4 py-3 text-sm font-bold text-white shadow-md hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-100 transition-all">
-                    <i class="ph-bold ph-rocket-launch mr-2 text-lg"></i>
-                    Kirim Sekarang
-                </button>
-                <button type="button" onclick="hideConfirmModal()" class="flex-1 inline-flex justify-center rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-700 border border-slate-200 hover:bg-slate-50 focus:outline-none transition-all">
-                    Batal
-                </button>
+            <div class="bg-slate-50 rounded-xl p-4 text-left border border-slate-100 space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tipe Kampanye</span>
+                    <span id="confirmEmailType" class="text-xs font-black text-slate-900"></span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Target Audience</span>
+                    <span id="confirmTargetUser" class="text-xs font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100"></span>
+                </div>
             </div>
+        </div>
+        
+        <div class="bg-slate-50 px-6 py-4 flex flex-row-reverse gap-3 border-t border-slate-100 shrink-0">
+            <button type="button" onclick="submitEmailBlast()" class="flex-1 px-5 py-2.5 bg-primary-600 border border-primary-600 text-white hover:bg-primary-700 rounded-xl text-xs font-black uppercase tracking-widest shadow-sm transition-colors flex items-center justify-center gap-2">
+                <i class="ph-bold ph-rocket-launch text-sm"></i>
+                Kirim
+            </button>
+            <button type="button" onclick="hideConfirmModal()" class="flex-1 px-5 py-2.5 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-xl text-xs font-black uppercase tracking-widest shadow-sm transition-colors flex items-center justify-center">
+                Batal
+            </button>
         </div>
     </div>
 </div>
 
 <!-- Blasting Progress Modal -->
-<div id="progressModal" class="hidden fixed inset-0 z-[100] overflow-y-auto" aria-labelledby="progress-modal-title" role="dialog" aria-modal="true">
-    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"></div>
-    <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-        <div class="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-slate-100 transition-all sm:my-8 sm:w-full sm:max-w-lg w-full" onclick="event.stopPropagation()">
-            <div class="px-6 pt-8 pb-6 text-center">
-                <!-- Glowing Plane Icon -->
-                <div class="mx-auto w-20 h-20 bg-primary-50 rounded-2xl flex items-center justify-center mb-6 relative">
-                    <i class="ph-duotone ph-paper-plane-tilt text-5xl text-primary-500"></i>
-                    <div class="absolute -inset-1 rounded-3xl bg-primary-400/20 blur opacity-30 animate-pulse"></div>
+<div id="progressModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xl hidden z-[9999] flex items-center justify-center p-4 transition-all duration-300">
+    <div class="bg-white rounded-[2rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.2)] max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-100 transform transition-all animate-in fade-in zoom-in-95 duration-200">
+        <!-- Modal Header -->
+        <div class="bg-white px-6 py-5 text-slate-900 flex justify-between items-center border-b border-slate-100 shrink-0">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-primary-50 border border-primary-100 flex items-center justify-center shadow-sm text-primary-600">
+                    <i class="ph-bold ph-paper-plane-tilt text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-black tracking-tight">Blasting Email</h3>
+                    <p id="progressStatusText" class="text-slate-400 text-[8px] font-bold uppercase tracking-widest mt-0.5">Mempersiapkan Audience</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 bg-white overflow-y-auto custom-scrollbar flex-1">
+            <!-- Main circular/bar progress -->
+            <div class="space-y-4">
+                <!-- Progress Stats -->
+                <div class="flex justify-between items-end mb-1">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Progress Pengiriman</span>
+                    <span id="progressPercent" class="text-lg font-black text-primary-600">0%</span>
                 </div>
                 
-                <h3 class="text-2xl font-extrabold text-slate-900 mb-1">Blasting Kampanye Email...</h3>
-                <p id="progressStatusText" class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Mempersiapkan Audience</p>
+                <!-- Progress Bar -->
+                <div class="w-full bg-slate-50 rounded-full h-3 overflow-hidden border border-slate-100">
+                    <div id="progressBar" class="bg-primary-500 h-full rounded-full transition-all duration-300 w-0"></div>
+                </div>
                 
-                <!-- Main circular/bar progress -->
-                <div class="space-y-4">
-                    <!-- Progress Stats -->
-                    <div class="flex justify-between items-end mb-1">
-                        <span class="text-xs font-bold text-slate-500">Progress Pengiriman</span>
-                        <span id="progressPercent" class="text-lg font-black text-primary-600">0%</span>
+                <!-- Numeric Counter Card -->
+                <div class="grid grid-cols-3 gap-3 bg-slate-50 border border-slate-100 rounded-2xl p-4 text-center mt-6">
+                    <div class="border-r border-slate-200/60">
+                        <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-widest">Target</span>
+                        <span id="progressTotalCount" class="text-lg font-black text-slate-800">0</span>
                     </div>
-                    
-                    <!-- Progress Bar -->
-                    <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200/50">
-                        <div id="progressBar" class="bg-gradient-to-r from-primary-500 to-indigo-600 h-full rounded-full transition-all duration-300 w-0"></div>
+                    <div class="border-r border-slate-200/60">
+                        <span class="block text-[9px] font-bold text-emerald-500 uppercase tracking-widest">Sukses</span>
+                        <span id="progressSuccessCount" class="text-lg font-black text-emerald-600">0</span>
                     </div>
-                    
-                    <!-- Numeric Counter Card -->
-                    <div class="grid grid-cols-3 gap-3 bg-slate-50 border border-slate-200/60 rounded-2xl p-4 text-center mt-6">
-                        <div class="border-r border-slate-200/60">
-                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Target</span>
-                            <span id="progressTotalCount" class="text-lg font-black text-slate-800">0</span>
-                        </div>
-                        <div class="border-r border-slate-200/60">
-                            <span class="block text-[10px] font-bold text-emerald-500 uppercase tracking-wider">Sukses</span>
-                            <span id="progressSuccessCount" class="text-lg font-black text-emerald-600">0</span>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-bold text-rose-500 uppercase tracking-wider">Gagal</span>
-                            <span id="progressFailedCount" class="text-lg font-black text-rose-600">0</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Current Sending Card -->
-                <div id="currentSendingContainer" class="mt-6 p-3 bg-indigo-50/50 border border-indigo-100 rounded-xl flex items-center gap-3 text-left">
-                    <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center flex-shrink-0">
-                        <i class="ph-bold ph-envelope"></i>
-                    </div>
-                    <div class="overflow-hidden">
-                        <span class="block text-[10px] font-bold text-indigo-500 uppercase tracking-wider">Mengirim ke</span>
-                        <span id="currentSendingEmail" class="block text-xs font-bold text-indigo-900 truncate">Menunggu antrean...</span>
-                    </div>
-                </div>
-
-                <!-- Live Log Container -->
-                <div class="mt-6 border border-slate-100 rounded-2xl overflow-hidden bg-slate-900 text-slate-100 text-left">
-                    <div class="px-4 py-2.5 bg-slate-800 border-b border-slate-700 flex justify-between items-center">
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Live Log Aktivitas
-                        </span>
-                        <span class="text-[9px] font-bold text-slate-500 bg-slate-800 px-1.5 py-0.5 rounded">Console</span>
-                    </div>
-                    <div id="progressLog" class="p-4 h-36 overflow-y-auto font-mono text-[10px] space-y-1.5 scroll-smooth">
-                        <div class="text-slate-400">[SYSTEM] Sistem siap melakukan blasting...</div>
+                    <div>
+                        <span class="block text-[9px] font-bold text-rose-500 uppercase tracking-widest">Gagal</span>
+                        <span id="progressFailedCount" class="text-lg font-black text-rose-600">0</span>
                     </div>
                 </div>
             </div>
-            
-            <!-- Finish Actions -->
-            <div id="progressFinishActions" class="hidden bg-slate-50 px-6 py-5 border-t border-slate-100 flex gap-3">
-                <button type="button" onclick="window.location.reload()" class="w-full inline-flex justify-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white shadow-md hover:bg-slate-850 transition-all">
-                    Selesai & Muat Ulang Halaman
-                </button>
+
+            <!-- Current Sending Card -->
+            <div id="currentSendingContainer" class="mt-6 p-4 bg-indigo-50/50 border border-indigo-100 rounded-2xl flex items-center gap-3 text-left">
+                <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center flex-shrink-0">
+                    <i class="ph-bold ph-envelope text-lg"></i>
+                </div>
+                <div class="overflow-hidden">
+                    <span class="block text-[9px] font-bold text-indigo-500 uppercase tracking-widest">Mengirim ke</span>
+                    <span id="currentSendingEmail" class="block text-xs font-bold text-indigo-900 truncate">Menunggu antrean...</span>
+                </div>
             </div>
+
+            <!-- Live Log Container -->
+            <div class="mt-6 border border-slate-100 rounded-2xl overflow-hidden bg-slate-900 text-slate-100 text-left">
+                <div class="px-4 py-3 bg-slate-800 border-b border-slate-700 flex justify-between items-center">
+                    <span class="text-[9px] font-bold uppercase tracking-widest text-slate-400 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Live Log Aktivitas
+                    </span>
+                    <span class="text-[8px] font-bold text-slate-500 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-700">Console</span>
+                </div>
+                <div id="progressLog" class="p-4 h-36 overflow-y-auto custom-scrollbar font-mono text-[10px] space-y-1.5 scroll-smooth">
+                    <div class="text-slate-400">[SYSTEM] Sistem siap melakukan blasting...</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Finish Actions -->
+        <div id="progressFinishActions" class="hidden bg-slate-50 px-6 py-4 border-t border-slate-100 shrink-0">
+            <button type="button" onclick="window.location.reload()" class="w-full px-5 py-2.5 bg-slate-900 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-sm hover:bg-slate-800 transition-colors">
+                Selesai & Muat Ulang Halaman
+            </button>
         </div>
     </div>
 </div>

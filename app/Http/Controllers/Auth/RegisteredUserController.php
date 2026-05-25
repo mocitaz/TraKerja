@@ -38,6 +38,9 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', new StrongPassword()],
+            'cf-turnstile-response' => ['required', new \App\Rules\TurnstileRule()],
+        ], [
+            'cf-turnstile-response.required' => 'Silakan centang kotak verifikasi keamanan.',
         ]);
 
         // Get current monetization phase (default to 1 if settings table doesn't exist)

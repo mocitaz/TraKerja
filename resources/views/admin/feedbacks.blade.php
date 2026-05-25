@@ -1,20 +1,15 @@
 <x-admin-layout>
-    <div class="space-y-6" x-data="{ replyingTicketId: null }">
+    <div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6 sm:space-y-8 pb-10" x-data="{ replyingTicketId: null }">
 
         {{-- Header --}}
-        <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
-            <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/50">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <div class="flex items-center gap-3">
-                        <div
-                            class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center flex-shrink-0 text-primary-600 shadow-inner">
-                            <i class="ph-duotone ph-chat-circle text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-extrabold text-slate-900 truncate">User Feedback & Support</h3>
-                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Kelola feedback, keluhan, dan status tiket bantuan pengguna</p>
-                        </div>
-                    </div>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 sm:mb-8">
+            <div class="flex items-center gap-3 sm:gap-4 min-w-0">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white border border-slate-200/60 rounded-[1.25rem] sm:rounded-[1.5rem] flex items-center justify-center text-primary-600 shadow-sm shrink-0">
+                    <i class="ph-duotone ph-chat-circle text-xl sm:text-2xl"></i>
+                </div>
+                <div class="flex flex-col min-w-0">
+                    <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight truncate">User Feedback & Support</h3>
+                    <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mt-1 sm:mt-1.5 truncate">Kelola feedback & tiket bantuan</p>
                 </div>
             </div>
         </div>
@@ -33,11 +28,8 @@
         {{-- Statistics Grid --}}
         <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
             {{-- Total Tickets --}}
-            <div
-                class="bg-white rounded-2xl p-4 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] relative overflow-hidden group hover:border-slate-300 transition-all duration-300 col-span-2 lg:col-span-1">
-                <div
-                    class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700">
-                </div>
+            <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 bento-card-stat relative overflow-hidden col-span-2 lg:col-span-1">
+                <div class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-full blur-2xl -z-10"></div>
                 <div class="flex items-start justify-between">
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Feedback</p>
@@ -45,48 +37,38 @@
                             {{ number_format($totalFeedbacks) }}</h3>
                         <p class="text-[9px] font-bold text-slate-400 mt-1">Semua tiket masuk</p>
                     </div>
-                    <div
-                        class="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 shadow-inner">
-                        <i class="ph-bold ph-folder text-base"></i>
+                    <div class="w-10 h-10 rounded-[1.25rem] bg-indigo-50 flex items-center justify-center text-indigo-600 shadow-sm border border-indigo-100">
+                        <i class="ph-bold ph-folder text-lg"></i>
                     </div>
                 </div>
             </div>
 
             {{-- Pending Tickets --}}
-            <div
-                class="bg-white rounded-2xl p-4 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] relative overflow-hidden group hover:border-slate-300 transition-all duration-300">
-                <div
-                    class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-amber-50 to-amber-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700">
-                </div>
+            <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 bento-card-stat relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-amber-50 to-amber-100 rounded-full blur-2xl -z-10"></div>
                 <div class="flex items-start justify-between">
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Pending</p>
-                        <h3
-                            class="text-xl lg:text-2xl font-black text-amber-600 tracking-tight flex items-center gap-1.5">
+                        <h3 class="text-xl lg:text-2xl font-black text-amber-600 tracking-tight flex items-center gap-1.5">
                             {{ number_format($pendingFeedbacks) }}
                             @if($pendingFeedbacks > 0)
                                 <span class="flex h-2 w-2 relative">
-                                    <span
-                                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                                     <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
                                 </span>
                             @endif
                         </h3>
                         <p class="text-[9px] font-bold text-slate-400 mt-1">Butuh balasan</p>
                     </div>
-                    <div
-                        class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600 shadow-inner">
-                        <i class="ph-bold ph-clock text-base"></i>
+                    <div class="w-10 h-10 rounded-[1.25rem] bg-amber-50 flex items-center justify-center text-amber-600 shadow-sm border border-amber-100">
+                        <i class="ph-bold ph-clock text-lg"></i>
                     </div>
                 </div>
             </div>
 
             {{-- Replied Tickets --}}
-            <div
-                class="bg-white rounded-2xl p-4 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] relative overflow-hidden group hover:border-slate-300 transition-all duration-300">
-                <div
-                    class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-sky-50 to-sky-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700">
-                </div>
+            <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 bento-card-stat relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-sky-50 to-sky-100 rounded-full blur-2xl -z-10"></div>
                 <div class="flex items-start justify-between">
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Replied</p>
@@ -94,19 +76,15 @@
                             {{ number_format($repliedFeedbacks) }}</h3>
                         <p class="text-[9px] font-bold text-slate-400 mt-1">Telah direspon</p>
                     </div>
-                    <div
-                        class="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600 shadow-inner">
-                        <i class="ph-bold ph-chat-circle-dots text-base"></i>
+                    <div class="w-10 h-10 rounded-[1.25rem] bg-sky-50 flex items-center justify-center text-sky-600 shadow-sm border border-sky-100">
+                        <i class="ph-bold ph-chat-circle-dots text-lg"></i>
                     </div>
                 </div>
             </div>
 
             {{-- Completed Tickets --}}
-            <div
-                class="bg-white rounded-2xl p-4 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] relative overflow-hidden group hover:border-slate-300 transition-all duration-300">
-                <div
-                    class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700">
-                </div>
+            <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 bento-card-stat relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-full blur-2xl -z-10"></div>
                 <div class="flex items-start justify-between">
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Completed</p>
@@ -114,19 +92,15 @@
                             {{ number_format($completedFeedbacks) }}</h3>
                         <p class="text-[9px] font-bold text-slate-400 mt-1">Selesai / ditutup</p>
                     </div>
-                    <div
-                        class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 shadow-inner">
-                        <i class="ph-bold ph-check-circle text-base"></i>
+                    <div class="w-10 h-10 rounded-[1.25rem] bg-emerald-50 flex items-center justify-center text-emerald-600 shadow-sm border border-emerald-100">
+                        <i class="ph-bold ph-check-circle text-lg"></i>
                     </div>
                 </div>
             </div>
 
             {{-- On Hold Tickets --}}
-            <div
-                class="bg-white rounded-2xl p-4 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] relative overflow-hidden group hover:border-slate-300 transition-all duration-300">
-                <div
-                    class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-rose-50 to-rose-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700">
-                </div>
+            <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 bento-card-stat relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-rose-50 to-rose-100 rounded-full blur-2xl -z-10"></div>
                 <div class="flex items-start justify-between">
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">On Hold</p>
@@ -134,16 +108,15 @@
                             {{ number_format($onHoldFeedbacks) }}</h3>
                         <p class="text-[9px] font-bold text-slate-400 mt-1">Tertunda / review</p>
                     </div>
-                    <div
-                        class="w-8 h-8 rounded-lg bg-rose-50 flex items-center justify-center text-rose-600 shadow-inner">
-                        <i class="ph-bold ph-warning-circle text-base"></i>
+                    <div class="w-10 h-10 rounded-[1.25rem] bg-rose-50 flex items-center justify-center text-rose-600 shadow-sm border border-rose-100">
+                        <i class="ph-bold ph-warning-circle text-lg"></i>
                     </div>
                 </div>
             </div>
         </div>
 
         {{-- Filter panel --}}
-        <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
+        <div class="bg-white p-6 rounded-[2rem] border border-slate-200/60 bento-card">
             <form action="{{ route('admin.feedbacks.index') }}" method="GET" class="flex flex-wrap items-end gap-4">
                 <div class="w-full sm:w-48">
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Filter Status</label>
@@ -202,7 +175,7 @@
                     ][$ticket->status] ?? 'bg-slate-50 text-slate-600';
                 @endphp
 
-                <div class="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+                <div class="bg-white border border-slate-200/60 rounded-[2rem] overflow-hidden bento-card transition-all duration-300"
                     x-data="{ expanded: false }">
 
                     {{-- Summary Card Row --}}
@@ -244,7 +217,7 @@
                                 </button>
                             </form>
                             <button
-                                class="px-4 py-2 bg-slate-100 text-slate-700 hover:bg-primary-50 hover:text-primary-700 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-1.5">
+                                class="px-4 py-2 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-1.5">
                                 <span x-text="expanded ? 'Tutup' : 'Lihat & Kelola'"></span>
                                 <i class="ph-bold ph-caret-down text-xs transition-transform duration-300"
                                     :class="expanded ? 'rotate-180' : ''"></i>
@@ -351,9 +324,9 @@
 
                 </div>
             @empty
-                <div class="bg-white rounded-2xl border border-slate-100 p-12 text-center shadow-sm">
+                <div class="bg-white rounded-[2rem] border border-slate-200/60 p-12 text-center bento-card">
                     <div
-                        class="w-16 h-16 mx-auto bg-slate-50 text-slate-400 rounded-2xl flex items-center justify-center mb-4 border border-slate-100 shadow-inner">
+                        class="w-16 h-16 mx-auto bg-slate-50 text-slate-400 rounded-[1.25rem] flex items-center justify-center mb-4 border border-slate-200/60 shadow-sm">
                         <i class="ph-duotone ph-chat-circle-slash text-3xl"></i>
                     </div>
                     <h4 class="text-base font-black text-slate-800 mb-1">Tidak ada feedback ditemukan</h4>

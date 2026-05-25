@@ -294,7 +294,7 @@ class JobTableList extends Component
         if ($job) {
             $this->dispatch('confirm-action', [
                 'title' => 'Delete Application?',
-                'message' => "Are you sure you want to remove your application for {$job->company_name}? This action cannot be undone.",
+                'message' => "Data lamaran untuk {$job->company_name} ini akan dihapus permanen (10 XP akan ditarik kembali). Anda juga bisa mengedit lamaran jika hanya salah isi data.",
                 'btnText' => 'Delete Now',
                 'onConfirm' => 'delete-confirmed',
                 'params' => ['jobId' => $jobId]
@@ -314,13 +314,17 @@ class JobTableList extends Component
             \Log::info('Job found, deleting...', ['jobId' => $jobId, 'company' => $job->company_name]);
             $companyName = $job->company_name;
             $job->delete();
-            session()->flash('message', 'Job application deleted successfully!');
             
-            // Send notification for job deletion
+            // Deduct XP on delete
+            $user = auth()->user();
+            if (method_exists($user, 'deductXP')) {
+                $user->deductXP(10);
+            }
+
             $this->dispatch('showNotification', [
                 'type' => 'warning',
                 'title' => 'Job Application Deleted',
-                'message' => "Successfully deleted application for {$companyName}",
+                'message' => "Successfully deleted application for {$companyName}. 10 XP deducted.",
                 'duration' => 3000
             ]);
             

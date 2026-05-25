@@ -1,156 +1,156 @@
-<div class="space-y-6">
+<div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6 sm:space-y-8 pb-10">
 
-    {{-- Filters & Search --}}
-    <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
-        <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/50">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center flex-shrink-0 text-indigo-600 shadow-inner">
-                    <i class="ph-fill ph-funnel text-xl"></i>
-                </div>
-                <div class="min-w-0 flex-1">
-                    <h3 class="text-lg font-extrabold text-slate-900 truncate">Filter & Search</h3>
-                    <p class="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Cari dan filter aktivitas</p>
-                </div>
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6 sm:mb-8">
+        <div class="flex items-center gap-3 sm:gap-4 min-w-0 w-full md:w-auto">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white border border-slate-200/60 rounded-[1.25rem] sm:rounded-[1.5rem] flex items-center justify-center text-primary-600 shadow-sm shrink-0">
+                <i class="ph-duotone ph-clock-counter-clockwise text-xl sm:text-2xl"></i>
             </div>
-        </div>
-        <div class="p-5">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Search</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="ph ph-magnifying-glass text-slate-400"></i>
-                        </div>
-                        <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari nama atau deskripsi..." class="w-full pl-9 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all placeholder:text-slate-400">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Tipe Aktivitas</label>
-                    @php
-                        $typeLabels = [
-                            // Autentikasi & Akun
-                            'login'           => 'Login',
-                            'logout'          => 'Logout',
-                            'register'        => 'Registrasi Akun',
-                            'profile_update'  => 'Update Profil',
-                            'password_change' => 'Ganti Password',
-                            'account_delete'  => 'Hapus Akun',
-                            // Manajemen Lamaran
-                            'job_add'            => 'Tambah Lamaran',
-                            'job_edit'           => 'Edit Lamaran',
-                            'job_delete'         => 'Hapus Lamaran',
-                            'interview_schedule' => 'Jadwal Interview',
-                            'csv_export'         => 'Export CSV Lamaran',
-                            // CV Builder
-                            'cv_data_update' => 'Update Data CV',
-                            'cv_export'      => 'Export / Download CV',
-                            // Fitur AI
-                            'ai_analyzer'       => 'AI Analyzer CV',
-                            'ai_analyzer_usage' => 'Penggunaan AI Analyzer',
-                            'cover_letter'      => 'AI Cover Letter / Follow-up',
-                            'ai_photo'          => 'AI Photo',
-                            // Target & Goals
-                            'goal_set'    => 'Set Target Lamaran',
-                            'goal_update' => 'Update Target Lamaran',
-                            // Chrome Extension
-                            'extension_login'    => 'Extension — Login',
-                            'extension_job_save' => 'Extension — Simpan Loker',
-                            // Pembayaran & Langganan
-                            'top_up'          => 'Top-up Saldo',
-                            'premium_upgrade' => 'Beli Premium',
-                            // Bantuan & Feedback
-                            'support_ticket'  => 'Kirim Support Ticket',
-                            'feedback_submit' => 'Kirim Feedback / Pesan',
-                        ];
-                    @endphp
-                    <select wire:model.live="filterType" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
-                        <option value="all">— Semua Tipe —</option>
-                        @foreach($groupedTypes as $category => $types)
-                            <optgroup label="{{ $category }}">
-                                @foreach($types as $type)
-                                    <option value="{{ $type }}">{{ $typeLabels[$type] ?? ucwords(str_replace('_', ' ', $type)) }}</option>
-                                @endforeach
-                            </optgroup>
-                        @endforeach
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Status</label>
-                    <select wire:model.live="filterStatus" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
-                        <option value="all">Semua Status</option>
-                        <option value="success">Success</option>
-                        <option value="failed">Failed</option>
-                        <option value="pending">Pending</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Rows per page</label>
-                    <select wire:model.live="perPage" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
-                        <option value="15">15</option>
-                        <option value="30">30</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                </div>
+            <div class="flex flex-col min-w-0">
+                <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight truncate">User Activities</h3>
+                <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mt-1 sm:mt-1.5 truncate">Log & Monitoring</p>
             </div>
         </div>
     </div>
 
-    {{-- Activities Table --}}
-    <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden relative">
-        {{-- Table Header --}}
-        <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-indigo-50 rounded-xl flex items-center justify-center flex-shrink-0 text-indigo-600">
-                    <i class="ph-fill ph-list-bullets text-lg"></i>
-                </div>
-                <div>
-                    <h3 class="text-sm font-extrabold text-slate-900">Log Aktivitas</h3>
-                    <p class="text-[11px] font-medium text-slate-400">Riwayat interaksi pengguna</p>
+    @php
+        $typeLabels = [
+            // Autentikasi & Akun
+            'login'           => 'Login',
+            'logout'          => 'Logout',
+            'register'        => 'Registrasi Akun',
+            'profile_update'  => 'Update Profil',
+            'password_change' => 'Ganti Password',
+            'account_delete'  => 'Hapus Akun',
+            // Manajemen Lamaran
+            'job_add'            => 'Tambah Lamaran',
+            'job_edit'           => 'Edit Lamaran',
+            'job_delete'         => 'Hapus Lamaran',
+            'interview_schedule' => 'Jadwal Interview',
+            'csv_export'         => 'Export CSV Lamaran',
+            // CV Builder
+            'cv_data_update' => 'Update Data CV',
+            'cv_export'      => 'Export / Download CV',
+            // Fitur AI
+            'ai_analyzer'       => 'AI Analyzer CV',
+            'ai_analyzer_usage' => 'Penggunaan AI Analyzer',
+            'cover_letter'      => 'AI Cover Letter',
+            'ai_photo'          => 'AI Photo',
+            // Target & Goals
+            'goal_set'    => 'Set Target Lamaran',
+            'goal_update' => 'Update Target Lamaran',
+            // Chrome Extension
+            'extension_login'    => 'Extension — Login',
+            'extension_job_save' => 'Extension — Simpan Loker',
+            // Pembayaran & Langganan
+            'top_up'          => 'Top-up Saldo',
+            'premium_upgrade' => 'Beli Premium',
+            // Bantuan & Feedback
+            'support_ticket'  => 'Kirim Support Ticket',
+            'feedback_submit' => 'Kirim Feedback / Pesan',
+        ];
+    @endphp
+
+    {{-- Filters & Search --}}
+    <div class="bento-card bg-white rounded-[2rem] border border-slate-100 p-3 sm:p-4 flex flex-col lg:flex-row gap-3 items-center justify-between mb-4 mt-6">
+        <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto flex-1">
+            <!-- Search -->
+            <div class="relative w-full sm:max-w-xs">
+                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari nama atau deskripsi..." class="w-full px-4 py-2.5 bg-slate-50 hover:bg-slate-100 border-none rounded-xl text-sm font-bold text-slate-700 focus:bg-white focus:ring-2 focus:ring-primary-500/20 transition-all placeholder:text-slate-400 placeholder:font-medium">
+            </div>
+
+            <!-- Tipe Aktivitas Filter -->
+            <div class="relative w-full sm:w-56">
+                <select wire:model.live="filterType" class="w-full pl-4 pr-8 py-2.5 bg-slate-50 hover:bg-slate-100 border-none rounded-xl text-sm font-bold text-slate-700 focus:bg-white focus:ring-2 focus:ring-primary-500/20 transition-all appearance-none cursor-pointer">
+                    <option value="all">— Semua Tipe —</option>
+                    @foreach($groupedTypes as $category => $types)
+                        <optgroup label="{{ $category }}">
+                            @foreach($types as $type)
+                                <option value="{{ $type }}">{{ $typeLabels[$type] ?? ucwords(str_replace('_', ' ', $type)) }}</option>
+                            @endforeach
+                        </optgroup>
+                    @endforeach
+                </select>
+                <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
+                    <i class="ph-bold ph-caret-down text-slate-400 text-xs"></i>
                 </div>
             </div>
-            <button wire:click="$set('showSettingsModal', true)" class="px-3.5 py-2 bg-white border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 hover:text-primary-600 transition-colors flex items-center gap-2 text-xs font-bold shadow-sm">
-                <i class="ph-bold ph-gear text-sm"></i>
+
+            <!-- Status Filter -->
+            <div class="relative w-full sm:w-40">
+                <select wire:model.live="filterStatus" class="w-full pl-4 pr-8 py-2.5 bg-slate-50 hover:bg-slate-100 border-none rounded-xl text-sm font-bold text-slate-700 focus:bg-white focus:ring-2 focus:ring-primary-500/20 transition-all appearance-none cursor-pointer">
+                    <option value="all">Semua Status</option>
+                    <option value="success">Success</option>
+                    <option value="failed">Failed</option>
+                    <option value="pending">Pending</option>
+                </select>
+                <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
+                    <i class="ph-bold ph-caret-down text-slate-400 text-xs"></i>
+                </div>
+            </div>
+            
+            <!-- Rows per page -->
+            <div class="relative w-full sm:w-28 hidden md:block">
+                <select wire:model.live="perPage" class="w-full pl-4 pr-8 py-2.5 bg-slate-50 hover:bg-slate-100 border-none rounded-xl text-sm font-bold text-slate-700 focus:bg-white focus:ring-2 focus:ring-primary-500/20 transition-all appearance-none cursor-pointer">
+                    <option value="15">15 Rows</option>
+                    <option value="30">30 Rows</option>
+                    <option value="50">50 Rows</option>
+                    <option value="100">100 Rows</option>
+                </select>
+                <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
+                    <i class="ph-bold ph-caret-down text-slate-400 text-xs"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-3 w-full lg:w-auto shrink-0">
+            <button wire:click="$set('showSettingsModal', true)" class="w-full sm:w-auto px-5 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 hover:text-primary-600 transition-colors flex items-center justify-center gap-2 text-sm font-bold shadow-sm group">
+                <i class="ph-bold ph-gear text-lg group-hover:rotate-90 transition-transform"></i>
                 Pengaturan Log
             </button>
         </div>
-        <div class="overflow-x-auto" wire:loading.class="opacity-50">
+    </div>
+
+    {{-- Activities Table --}}
+    <div class="bento-card bg-white rounded-[2rem] border border-slate-100 overflow-hidden flex flex-col relative min-h-[500px]">
+        <div class="overflow-x-auto custom-scrollbar flex-1" wire:loading.class="opacity-50">
             <table class="min-w-full divide-y divide-slate-100/80">
-                <thead class="bg-slate-50/50">
+                <thead>
                     <tr>
-                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider w-px">Waktu</th>
-                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider">Pengguna</th>
-                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider">Tipe</th>
-                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider">Deskripsi</th>
-                        <th class="px-4 lg:px-6 py-4 text-center text-[11px] font-bold text-slate-400 uppercase tracking-wider">Status</th>
-                        <th class="px-4 lg:px-6 py-4 text-right text-[11px] font-bold text-slate-400 uppercase tracking-wider">IP Address</th>
+                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap bg-slate-50/50">Waktu</th>
+                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap bg-slate-50/50">Pengguna</th>
+                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap bg-slate-50/50">Tipe</th>
+                        <th class="px-4 lg:px-6 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap bg-slate-50/50">Deskripsi</th>
+                        <th class="px-4 lg:px-6 py-4 text-center text-[11px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap bg-slate-50/50">Status</th>
+                        <th class="px-4 lg:px-6 py-4 text-right text-[11px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap bg-slate-50/50">IP Address</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-100">
+                <tbody class="bg-white divide-y divide-slate-100/80">
                     @forelse($activities as $activity)
-                    <tr class="hover:bg-gray-50 transition-colors duration-200">
+                    <tr class="hover:bg-slate-50/50 transition-colors duration-200">
                         <td class="px-4 lg:px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-bold text-slate-900">{{ $activity->created_at->format('d M Y') }}</div>
-                            <div class="text-[10px] font-medium text-slate-500">{{ $activity->created_at->format('H:i') }}</div>
+                            <div class="text-sm font-black tracking-tight text-slate-900">{{ $activity->created_at->format('d M Y') }}</div>
+                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{{ $activity->created_at->format('H:i') }}</div>
                         </td>
                         <td class="px-4 lg:px-6 py-4 whitespace-nowrap">
                             @if($activity->user)
-                                <div class="flex items-center min-w-0">
-                                    <div class="flex-shrink-0 h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
+                                <div class="flex items-center gap-4 min-w-0">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-[14px] bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center text-white font-black shadow-sm">
                                         <span class="text-white font-semibold text-xs sm:text-sm">{{ strtoupper(substr($activity->user->name, 0, 1)) }}</span>
                                     </div>
-                                    <div class="ml-4 min-w-0 flex-1">
-                                        <div class="text-sm font-extrabold text-slate-900 truncate">{{ $activity->user->name }}</div>
-                                        <div class="text-[10px] font-medium text-slate-500 truncate">{{ $activity->user->email }}</div>
+                                    <div class="min-w-0 flex-1">
+                                        <div class="text-sm font-black tracking-tight text-slate-900 truncate">{{ $activity->user->name }}</div>
+                                        <div class="text-[11px] font-medium text-slate-500 truncate">{{ $activity->user->email }}</div>
                                     </div>
                                 </div>
                             @else
-                                <div class="flex items-center min-w-0">
-                                    <div class="flex-shrink-0 h-8 w-8 sm:h-10 sm:w-10 bg-slate-200 rounded-lg flex items-center justify-center text-slate-400">
-                                        <i class="ph-fill ph-robot"></i>
+                                <div class="flex items-center gap-4 min-w-0">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-[14px] bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 shadow-sm">
+                                        <i class="ph-fill ph-robot text-lg"></i>
                                     </div>
-                                    <div class="ml-4 min-w-0 flex-1">
-                                        <div class="text-sm font-extrabold text-slate-500 truncate italic">System / Guest</div>
+                                    <div class="min-w-0 flex-1">
+                                        <div class="text-sm font-black tracking-tight text-slate-500 truncate italic">System / Guest</div>
                                     </div>
                                 </div>
                             @endif
@@ -209,28 +209,28 @@
                                 $color = $typeColors[$activity->activity_type] ?? 'bg-slate-100 text-slate-600 border-slate-200';
                                 $label = $typeLabels[$activity->activity_type] ?? ucwords(str_replace('_', ' ', $activity->activity_type));
                             @endphp
-                            <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md border {{ $color }}">
+                            <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-lg border shadow-sm {{ $color }}">
                                 {{ $label }}
                             </span>
                         </td>
                         <td class="px-4 lg:px-6 py-4">
-                            <div class="text-sm font-medium text-slate-700 max-w-xs md:max-w-md line-clamp-2" title="{{ $activity->description }}">
+                            <div class="text-sm font-medium text-slate-700 max-w-xs md:max-w-md line-clamp-2 leading-relaxed" title="{{ $activity->description }}">
                                 {{ $activity->description }}
                             </div>
                         </td>
                         <td class="px-4 lg:px-6 py-4 whitespace-nowrap text-center">
                             @if($activity->status === 'success')
-                                <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md bg-emerald-50 text-emerald-600 border border-emerald-100 inline-flex items-center gap-1.5">
+                                <span class="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100 inline-flex items-center gap-1.5 shadow-sm">
                                     <i class="ph-fill ph-check-circle text-xs"></i>
                                     Success
                                 </span>
                             @elseif($activity->status === 'failed')
-                                <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md bg-rose-50 text-rose-600 border border-rose-100 inline-flex items-center gap-1.5">
+                                <span class="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg bg-rose-50 text-rose-600 border border-rose-100 inline-flex items-center gap-1.5 shadow-sm">
                                     <i class="ph-fill ph-x-circle text-xs"></i>
                                     Failed
                                 </span>
                             @else
-                                <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md bg-amber-50 text-amber-600 border border-amber-100 inline-flex items-center gap-1.5">
+                                <span class="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg bg-amber-50 text-amber-600 border border-amber-100 inline-flex items-center gap-1.5 shadow-sm">
                                     <i class="ph-fill ph-clock text-xs"></i>
                                     {{ $activity->status }}
                                 </span>
@@ -277,72 +277,77 @@
 
     {{-- Settings Modal --}}
     @if($showSettingsModal)
-        <div class="fixed inset-0 z-[100] overflow-y-auto">
-            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" wire:click="$set('showSettingsModal', false)"></div>
-            <div class="relative min-h-screen flex items-center justify-center p-4">
-                <div class="relative w-full max-w-lg bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-slate-100 transform transition-all z-10" @click.stop>
-                    {{-- Modal Header --}}
-                    <div class="px-6 py-5 border-b border-slate-100 bg-slate-50/50 rounded-t-2xl">
-                        <div class="flex items-center justify-between gap-3">
-                            <div class="flex items-center gap-3 min-w-0 flex-1">
-                                <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center flex-shrink-0 text-slate-600 shadow-inner">
-                                    <i class="ph-fill ph-gear text-xl"></i>
-                                </div>
-                                <div class="min-w-0 flex-1">
-                                    <h3 class="text-lg font-extrabold text-slate-900 truncate">Pengaturan Activity Log</h3>
-                                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Atur lama penyimpanan log</p>
-                                </div>
+        <template x-teleport="body">
+            <div class="fixed inset-0 z-[100] overflow-y-auto" x-data x-init="document.body.classList.add('overflow-hidden')" @destroyed="document.body.classList.remove('overflow-hidden')">
+                <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-xl transition-opacity" wire:click="$set('showSettingsModal', false)"></div>
+                <div class="relative min-h-screen flex items-center justify-center p-4">
+                    <div class="relative w-full max-w-lg bg-white rounded-[2rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.2)] border border-slate-100 flex flex-col overflow-hidden z-10 transform transition-all" @click.stop
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+                         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-200"
+                         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                         x-transition:leave-end="opacity-0 scale-95 translate-y-4">
+                    {{-- Modal Header: Clean White --}}
+                    <div class="bg-white px-6 py-5 text-slate-900 flex justify-between items-center border-b border-slate-100 shrink-0">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shadow-sm text-slate-600">
+                                <i class="ph-fill ph-gear text-xl"></i>
                             </div>
-                            <button wire:click="$set('showSettingsModal', false)" class="text-slate-400 hover:text-slate-600 bg-white hover:bg-slate-100 rounded-xl p-2 transition-all flex-shrink-0 border border-slate-100 shadow-sm">
-                                <i class="ph-bold ph-x text-lg"></i>
-                            </button>
+                            <div>
+                                <h3 class="text-sm font-black tracking-tight">Pengaturan Log</h3>
+                                <p class="text-slate-400 text-[8px] font-bold uppercase tracking-widest mt-0.5">Atur Lama Penyimpanan</p>
+                            </div>
                         </div>
+                        <button wire:click="$set('showSettingsModal', false)" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-50 transition-all text-slate-400 hover:text-slate-900">
+                            <i class="ph-bold ph-x text-base"></i>
+                        </button>
                     </div>
 
                     {{-- Modal Body --}}
-                    <div class="p-6">
+                    <div class="p-6 bg-white overflow-y-auto custom-scrollbar">
                         <div class="mb-6">
                             <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Auto-Prune (Hapus Otomatis)</label>
-                            <p class="text-sm font-medium text-slate-500 mb-4">Pilih durasi penyimpanan log aktivitas sebelum dihapus otomatis secara permanen (untuk menghemat memori database).</p>
+                            <p class="text-xs font-medium text-slate-500 mb-4">Pilih durasi penyimpanan log aktivitas sebelum dihapus otomatis secara permanen (untuk menghemat memori database).</p>
                             
                             <div class="grid grid-cols-3 gap-3">
                                 <label class="cursor-pointer">
                                     <input type="radio" wire:model="pruneDays" value="90" class="peer sr-only">
-                                    <div class="rounded-xl border border-slate-200 bg-white p-4 text-center hover:bg-slate-50 peer-checked:border-primary-500 peer-checked:bg-primary-50 peer-checked:ring-2 peer-checked:ring-primary-500/20 transition-all">
-                                        <span class="block text-base font-extrabold text-slate-800">90 Hari</span>
+                                    <div class="rounded-[1rem] border border-slate-200 bg-white p-3 text-center hover:bg-slate-50 peer-checked:border-primary-500 peer-checked:bg-primary-50 peer-checked:ring-2 peer-checked:ring-primary-500/20 transition-all">
+                                        <span class="block text-sm font-black text-slate-800">90 Hari</span>
                                     </div>
                                 </label>
                                 <label class="cursor-pointer">
                                     <input type="radio" wire:model="pruneDays" value="120" class="peer sr-only">
-                                    <div class="rounded-xl border border-slate-200 bg-white p-4 text-center hover:bg-slate-50 peer-checked:border-primary-500 peer-checked:bg-primary-50 peer-checked:ring-2 peer-checked:ring-primary-500/20 transition-all">
-                                        <span class="block text-base font-extrabold text-slate-800">120 Hari</span>
+                                    <div class="rounded-[1rem] border border-slate-200 bg-white p-3 text-center hover:bg-slate-50 peer-checked:border-primary-500 peer-checked:bg-primary-50 peer-checked:ring-2 peer-checked:ring-primary-500/20 transition-all">
+                                        <span class="block text-sm font-black text-slate-800">120 Hari</span>
                                     </div>
                                 </label>
                                 <label class="cursor-pointer">
                                     <input type="radio" wire:model="pruneDays" value="360" class="peer sr-only">
-                                    <div class="rounded-xl border border-slate-200 bg-white p-4 text-center hover:bg-slate-50 peer-checked:border-primary-500 peer-checked:bg-primary-50 peer-checked:ring-2 peer-checked:ring-primary-500/20 transition-all">
-                                        <span class="block text-base font-extrabold text-slate-800">360 Hari</span>
+                                    <div class="rounded-[1rem] border border-slate-200 bg-white p-3 text-center hover:bg-slate-50 peer-checked:border-primary-500 peer-checked:bg-primary-50 peer-checked:ring-2 peer-checked:ring-primary-500/20 transition-all">
+                                        <span class="block text-sm font-black text-slate-800">360 Hari</span>
                                     </div>
                                 </label>
                             </div>
                         </div>
 
-                        <div class="bg-rose-50 border border-rose-100 rounded-xl p-5 mt-6">
-                            <div class="flex items-start gap-4">
-                                <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center flex-shrink-0 text-rose-500 shadow-sm">
+                        <div class="bg-rose-50 border border-rose-100 rounded-[1rem] p-4 mt-6">
+                            <div class="flex flex-col sm:flex-row items-start gap-4">
+                                <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center flex-shrink-0 text-rose-500 shadow-sm border border-rose-100">
                                     <i class="ph-fill ph-trash text-xl"></i>
                                 </div>
-                                <div class="flex-1">
-                                    <h4 class="text-sm font-extrabold text-rose-900 mb-1">Pembersihan Manual</h4>
-                                    <p class="text-xs font-medium text-rose-700 mb-3">Hapus log usang berdasarkan durasi ({{ $pruneDays }} hari), atau hapus <strong>semua log</strong> sekaligus.</p>
-                                    <div class="flex flex-wrap gap-2">
-                                        <button wire:click="cleanNow" wire:confirm="Hapus log lebih dari {{ $pruneDays }} hari? Aksi ini tidak dapat dibatalkan." class="px-4 py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-lg transition-colors text-xs font-bold shadow-sm flex items-center gap-2">
+                                <div class="flex-1 w-full">
+                                    <h4 class="text-sm font-black text-rose-900 tracking-tight">Pembersihan Manual</h4>
+                                    <p class="text-xs font-medium text-rose-700 mt-0.5 mb-3">Hapus log usang secara instan.</p>
+                                    <div class="flex flex-col sm:flex-row flex-wrap gap-2">
+                                        <button wire:click="cleanNow" wire:confirm="Hapus log lebih dari {{ $pruneDays }} hari? Aksi ini tidak dapat dibatalkan." class="w-full sm:w-auto px-4 py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-lg transition-colors text-[11px] font-bold shadow-sm flex items-center justify-center gap-1.5">
                                             <i class="ph-bold ph-trash"></i>
-                                            Hapus Log Usang ({{ $pruneDays }} hari)
+                                            Hapus {{ $pruneDays }} Hr
                                         </button>
-                                        <button wire:click="cleanAll" wire:confirm="PERINGATAN: Ini akan menghapus SEMUA log aktivitas secara permanen. Lanjutkan?" class="px-4 py-2 bg-rose-800 hover:bg-rose-900 text-white rounded-lg transition-colors text-xs font-bold shadow-sm flex items-center gap-2">
+                                        <button wire:click="cleanAll" wire:confirm="PERINGATAN: Ini akan menghapus SEMUA log aktivitas secara permanen. Lanjutkan?" class="w-full sm:w-auto px-4 py-2 bg-rose-800 hover:bg-rose-900 text-white rounded-lg transition-colors text-[11px] font-bold shadow-sm flex items-center justify-center gap-1.5">
                                             <i class="ph-bold ph-warning"></i>
-                                            Hapus Semua Log
+                                            Hapus Semua
                                         </button>
                                     </div>
                                 </div>
@@ -351,11 +356,11 @@
                     </div>
 
                     {{-- Modal Footer --}}
-                    <div class="px-6 py-4 bg-slate-50/50 border-t border-slate-100 rounded-b-2xl flex justify-end gap-3">
-                        <button type="button" wire:click="$set('showSettingsModal', false)" class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 hover:text-slate-900 transition-all text-sm font-bold shadow-sm">
+                    <div class="px-6 py-4 bg-slate-50/50 border-t border-slate-100 flex flex-col-reverse sm:flex-row justify-end gap-2 shrink-0">
+                        <button type="button" wire:click="$set('showSettingsModal', false)" class="w-full sm:w-auto px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 hover:text-slate-900 transition-all text-xs font-bold shadow-sm">
                             Batal
                         </button>
-                        <button wire:click="saveSettings" class="px-5 py-2.5 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-all text-sm font-bold shadow-sm shadow-primary-500/20 flex items-center gap-2">
+                        <button wire:click="saveSettings" class="w-full sm:w-auto px-4 py-2 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-all text-xs font-bold shadow-sm shadow-primary-500/20 flex items-center justify-center gap-2">
                             <i class="ph-bold ph-floppy-disk"></i>
                             Simpan Pengaturan
                         </button>
@@ -363,5 +368,6 @@
                 </div>
             </div>
         </div>
+        </template>
     @endif
 </div>

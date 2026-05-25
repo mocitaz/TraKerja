@@ -1,13 +1,28 @@
-<div class="pb-10">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-2">
+<div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6 sm:space-y-8 pb-10">
+    {{-- Header --}}
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 sm:mb-8">
+        <div class="flex items-center gap-3 sm:gap-4 min-w-0">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white border border-slate-200/60 rounded-[1.25rem] sm:rounded-[1.5rem] flex items-center justify-center text-primary-600 shadow-sm shrink-0">
+                <i class="ph-duotone ph-plugs-connected text-xl sm:text-2xl"></i>
+            </div>
+            <div class="flex flex-col min-w-0">
+                <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight truncate">Integration Hub</h3>
+                <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mt-1 sm:mt-1.5 truncate">API & Webhook Settings</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 pt-2">
         {{-- API Key Management --}}
-        <div class="lg:col-span-7 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden group hover:border-primary-100 transition-all">
-            <div class="px-6 py-5 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
-                <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                    <i class="ph-duotone ph-key text-lg text-primary-500"></i>
-                    Main API Access
-                </h4>
-                <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-[9px] font-black rounded uppercase">Secure</span>
+        <div class="lg:col-span-7 bg-white rounded-[2rem] border border-slate-200/60 bento-card overflow-hidden flex flex-col">
+            <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-primary-50 rounded-xl border border-primary-100 flex items-center justify-center text-primary-600 shadow-sm shrink-0">
+                        <i class="ph-duotone ph-key text-xl"></i>
+                    </div>
+                    <h4 class="text-sm font-black text-slate-900 tracking-tight truncate">Main API Access</h4>
+                </div>
+                <span class="px-3 py-1.5 bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-black tracking-widest rounded-lg uppercase shadow-sm">Secure</span>
             </div>
             
             <div class="p-8">
@@ -38,12 +53,14 @@
         </div>
 
         {{-- Webhook Configuration --}}
-        <div class="lg:col-span-5 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden flex flex-col">
-            <div class="px-6 py-5 border-b border-slate-100 bg-slate-50/50">
-                <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                    <i class="ph-duotone ph-broadcast text-lg text-secondary-500"></i>
-                    Webhook Outbound
-                </h4>
+        <div class="lg:col-span-5 bg-white rounded-[2rem] border border-slate-200/60 bento-card overflow-hidden flex flex-col">
+            <div class="px-6 py-5 border-b border-slate-100 shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-secondary-50 rounded-xl border border-secondary-100 flex items-center justify-center text-secondary-600 shadow-sm shrink-0">
+                        <i class="ph-duotone ph-broadcast text-xl"></i>
+                    </div>
+                    <h4 class="text-sm font-black text-slate-900 tracking-tight truncate">Webhook Outbound</h4>
+                </div>
             </div>
 
             <div class="p-8 flex-1 flex flex-col justify-between">

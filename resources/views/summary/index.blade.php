@@ -597,6 +597,11 @@
                         @if(isset($funnelData) && count($funnelData) > 0)
                             @php
                                 $totalApps = $funnelData['Applied'] ?? 0;
+                                $interviewCount = $funnelData['Interview'] ?? 0;
+                                $acceptedCount = $funnelData['Accepted'] ?? 0;
+                                $rejectedCount = $funnelData['Rejected'] ?? 0;
+                                $pendingCount = $funnelData['Pending'] ?? 0;
+                                
                                 $statusColors = [
                                     'Applied' => 'bg-blue-500',
                                     'Interview' => 'bg-amber-500',
@@ -605,16 +610,26 @@
                                     'Pending' => 'bg-slate-400'
                                 ];
                                 $flow = ['Applied', 'Interview', 'Accepted', 'Rejected', 'Pending'];
-                                $prevCount = $totalApps;
                             @endphp
                             <div class="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
                                 @foreach($flow as $index => $label)
                                     @php
-                                        $count = $funnelData[$label] ?? 0;
-                                        // Use total apps as base for Applied, otherwise use previous stage for conversion
-                                        $conversionRate = ($index === 0)
-                                            ? ($totalApps > 0 ? 100 : 0)
-                                            : ($prevCount > 0 ? round(($count / $prevCount) * 100) : 0);
+                                        if ($label === 'Applied') {
+                                            $count = $totalApps;
+                                            $conversionRate = $totalApps > 0 ? 100 : 0;
+                                        } elseif ($label === 'Interview') {
+                                            $count = $interviewCount;
+                                            $conversionRate = $totalApps > 0 ? round(($interviewCount / $totalApps) * 100) : 0;
+                                        } elseif ($label === 'Accepted') {
+                                            $count = $acceptedCount;
+                                            $conversionRate = $interviewCount > 0 ? round(($acceptedCount / $interviewCount) * 100) : 0;
+                                        } elseif ($label === 'Rejected') {
+                                            $count = $rejectedCount;
+                                            $conversionRate = $totalApps > 0 ? round(($rejectedCount / $totalApps) * 100) : 0;
+                                        } else {
+                                            $count = $pendingCount;
+                                            $conversionRate = $totalApps > 0 ? round(($pendingCount / $totalApps) * 100) : 0;
+                                        }
                                     @endphp
                                     <div class="bg-slate-50/50 p-3 sm:p-4 rounded-xl sm:rounded-3xl border border-slate-100">
                                         <div class="flex items-center justify-between mb-3 sm:mb-4">
@@ -633,8 +648,6 @@
                                                 style="width: {{ min(100, $conversionRate) }}%"></div>
                                         </div>
                                     </div>
-                                    @php if ($count > 0)
-                                    $prevCount = $count; @endphp
                                 @endforeach
                             </div>
                         @else

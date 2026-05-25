@@ -18,6 +18,7 @@ class GamificationWidget extends Component
     #[On('job-saved')]
     #[On('status-updated')]
     #[On('xp-updated')]
+    #[On('job-deleted')]
     public function updateXp()
     {
         $newXp = Auth::user()->refresh()->xp ?? 0;
@@ -31,8 +32,9 @@ class GamificationWidget extends Component
                 'icon' => 'ph-fill ph-lightning text-amber-400',
                 'duration' => 5000
             ]);
-            $this->currentXp = $newXp;
         }
+        
+        $this->currentXp = $newXp;
     }
 
     public function render()

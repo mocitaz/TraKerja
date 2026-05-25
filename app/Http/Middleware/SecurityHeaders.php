@@ -27,13 +27,16 @@ class SecurityHeaders
             // XSS Protection
             $response->headers->set('X-XSS-Protection', '1; mode=block');
             
-            // Content Security Policy (relaxed for Livewire and Vite)
+            // Content Security Policy (relaxed for Livewire, Vite, and Cloudflare)
             $csp = "default-src 'self'; " .
-                   "script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.jsdelivr.net unpkg.com; " .
-                   "style-src 'self' 'unsafe-inline' cdn.jsdelivr.net fonts.googleapis.com; " .
-                   "font-src 'self' fonts.gstatic.com data:; " .
-                   "img-src 'self' data: https:; " .
-                   "connect-src 'self' ws: wss:";  // Added WebSocket support for Livewire
+                   "script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.jsdelivr.net unpkg.com challenges.cloudflare.com static.cloudflareinsights.com; " .
+                   "style-src 'self' 'unsafe-inline' cdn.jsdelivr.net fonts.googleapis.com unpkg.com fonts.bunny.net; " .
+                   "font-src 'self' fonts.gstatic.com cdn.jsdelivr.net fonts.bunny.net data:; " .
+                   "img-src 'self' data: https: blob:; " .
+                   "frame-src 'self' challenges.cloudflare.com; " .
+                   "connect-src 'self' ws: wss: cdn.jsdelivr.net; " .
+                   "object-src 'none'; " .
+                   "base-uri 'self';";
             $response->headers->set('Content-Security-Policy', $csp);
             
             // HSTS (only if using HTTPS)

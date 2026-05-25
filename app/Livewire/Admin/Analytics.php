@@ -7,6 +7,13 @@ use App\Models\User;
 use App\Models\JobApplication;
 use App\Models\Payment;
 use App\Models\UserGoal;
+use App\Models\AiAnalyzerResult;
+use App\Models\CvTemplate;
+use App\Models\SupportTicket;
+use App\Models\CoverLetter;
+use App\Models\EmailBlastLog;
+use App\Models\UserActivity;
+use App\Models\AiPhoto;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
@@ -29,6 +36,15 @@ class Analytics extends Component
     public $verifiedVsUnverified = [];
     public $topCompanies = [];
     public $topPositions = [];
+
+    // New analytics data
+    public $aiUsageStats = [];
+    public $cvTemplatePopularity = [];
+    public $supportTicketStats = [];
+    public $coverLetterStats = [];
+    public $peakActivityHours = [];
+    public $retentionCohort = [];
+    public $gamificationLeaderboard = [];
 
     public function mount()
     {
@@ -56,6 +72,13 @@ class Analytics extends Component
         $this->getVerifiedVsUnverified();
         $this->getTopCompanies();
         $this->getTopPositions();
+        $this->getAiUsageStats();
+        $this->getCvTemplatePopularity();
+        $this->getSupportTicketStats();
+        $this->getCoverLetterStats();
+        $this->getPeakActivityHours();
+        $this->getRetentionCohort();
+        $this->getGamificationLeaderboard();
     }
 
     private function getUserGrowth()
@@ -138,14 +161,24 @@ class Analytics extends Component
         $stats['goalsAchievementRate'] = $stats['totalGoals'] > 0 ? round(($stats['achievedGoals'] / $stats['totalGoals']) * 100, 1) : 0;
 
         return view('livewire.admin.analytics', [
-            'stats' => $stats,
-            'userGrowth' => $this->userGrowth,
-            'jobApplicationsOverTime' => $this->jobApplicationsOverTime,
-            'jobApplicationsByStatus' => $this->jobApplicationsByStatus,
-            'jobApplicationsByPlatform' => $this->jobApplicationsByPlatform,
-            'userRegistrationByDay' => $this->userRegistrationByDay,
-            'premiumVsFree' => $this->premiumVsFree,
-            'goalsAchievement' => $this->goalsAchievement,
+            'stats'                    => $stats,
+            'userGrowth'               => $this->userGrowth,
+            'jobApplicationsOverTime'  => $this->jobApplicationsOverTime,
+            'jobApplicationsByStatus'  => $this->jobApplicationsByStatus,
+            'jobApplicationsByPlatform'=> $this->jobApplicationsByPlatform,
+            'userRegistrationByDay'    => $this->userRegistrationByDay,
+            'premiumVsFree'            => $this->premiumVsFree,
+            'goalsAchievement'         => $this->goalsAchievement,
+            'verifiedVsUnverified'     => $this->verifiedVsUnverified,
+            'topCompanies'             => $this->topCompanies,
+            'topPositions'             => $this->topPositions,
+            'aiUsageStats'             => $this->aiUsageStats,
+            'cvTemplatePopularity'     => $this->cvTemplatePopularity,
+            'supportTicketStats'       => $this->supportTicketStats,
+            'coverLetterStats'         => $this->coverLetterStats,
+            'peakActivityHours'        => $this->peakActivityHours,
+            'retentionCohort'          => $this->retentionCohort,
+            'gamificationLeaderboard'  => $this->gamificationLeaderboard,
         ]);
     }
     
@@ -173,17 +206,34 @@ class Analytics extends Component
     {
         $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
         
-        $statusData = JobApplication::where('created_at', '>=', $startDate)
-            ->selectRaw('status, COUNT(*) as count')
-            ->groupBy('status')
-            ->get();
+        $allJobs = JobApplication::where('created_at', '>=', $startDate)->get();
         
-        $labels = $statusData->pluck('status')->toArray();
-        $data = $statusData->pluck('count')->toArray();
+        $applied = $allJobs->count();
+        
+        $interview = $allJobs->filter(function($job) {
+            return !is_null($job->interview_date) || in_array($job->recruitment_stage, [
+                'Assessment Test', 'Psychotest', 'HR - Interview', 
+                'User - Interview', 'LGD', 'Presentation Round'
+            ]);
+        })->count();
+        
+        $accepted = $allJobs->filter(function($job) {
+            return $job->application_status === 'Accepted' || $job->recruitment_stage === 'Offering';
+        })->count();
+        
+        $rejected = $allJobs->filter(function($job) {
+            return $job->application_status === 'Declined' || $job->application_status === 'Rejected' || $job->recruitment_stage === 'Not Processed';
+        })->count();
+        
+        $pending = $allJobs->filter(function($job) {
+            $isAccepted = $job->application_status === 'Accepted' || $job->recruitment_stage === 'Offering';
+            $isRejected = $job->application_status === 'Declined' || $job->application_status === 'Rejected' || $job->recruitment_stage === 'Not Processed';
+            return !$isAccepted && !$isRejected;
+        })->count();
         
         $this->jobApplicationsByStatus = [
-            'labels' => $labels,
-            'data' => $data,
+            'labels' => ['Applied', 'Interview', 'Accepted', 'Rejected', 'Pending'],
+            'data' => [$applied, $interview, $accepted, $rejected, $pending],
         ];
     }
     
@@ -291,5 +341,204 @@ class Analytics extends Component
             ->limit(5)
             ->get()
             ->toArray();
+    }
+
+    private function getAiUsageStats()
+    {
+        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
+
+        $aiAnalyzer = AiAnalyzerResult::where('created_at', '>=', $startDate)->count();
+        $aiPhotos   = AiPhoto::where('created_at', '>=', $startDate)->count();
+        $aiCvGen    = User::where('role', '!=', 'admin')->sum('cv_generated_this_month');
+
+        // Weekly trend for AI Analyzer (last 7 days)
+        $trend = [];
+        $trendLabels = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $d = Carbon::now('Asia/Jakarta')->subDays($i);
+            $trendLabels[] = $d->format('D');
+            $trend[] = AiAnalyzerResult::whereDate('created_at', $d->format('Y-m-d'))->count();
+        }
+
+        $this->aiUsageStats = [
+            'ai_analyzer'  => $aiAnalyzer,
+            'ai_photos'    => $aiPhotos,
+            'ai_cv_gen'    => $aiCvGen,
+            'trend'        => $trend,
+            'trend_labels' => $trendLabels,
+        ];
+    }
+
+    private function getCvTemplatePopularity()
+    {
+        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
+
+        $templates = CvTemplate::where('created_at', '>=', $startDate)
+            ->select('template_key', DB::raw('COUNT(*) as usage_count'), DB::raw('SUM(is_premium_template) as premium_count'))
+            ->groupBy('template_key')
+            ->orderByDesc('usage_count')
+            ->limit(6)
+            ->get()
+            ->toArray();
+
+        $totalCv = CvTemplate::where('created_at', '>=', $startDate)->count();
+
+        $this->cvTemplatePopularity = [
+            'templates' => $templates,
+            'total'     => $totalCv,
+        ];
+    }
+
+    private function getSupportTicketStats()
+    {
+        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
+
+        $total    = SupportTicket::where('created_at', '>=', $startDate)->count();
+        $pending  = SupportTicket::where('created_at', '>=', $startDate)->where('status', 'pending')->count();
+        $replied  = SupportTicket::where('created_at', '>=', $startDate)->where('status', 'replied')->count();
+        $resolved = SupportTicket::where('created_at', '>=', $startDate)->where('status', 'completed')->count();
+
+        // Avg resolution time (from created_at to replied_at)
+        $avgResolutionHours = SupportTicket::where('created_at', '>=', $startDate)
+            ->whereNotNull('replied_at')
+            ->selectRaw('AVG(TIMESTAMPDIFF(HOUR, created_at, replied_at)) as avg_hours')
+            ->value('avg_hours');
+
+        // By category
+        $byCategory = SupportTicket::where('created_at', '>=', $startDate)
+            ->select('category', DB::raw('COUNT(*) as count'))
+            ->groupBy('category')
+            ->orderByDesc('count')
+            ->get()
+            ->toArray();
+
+        $this->supportTicketStats = [
+            'total'              => $total,
+            'pending'            => $pending,
+            'replied'            => $replied,
+            'resolved'           => $resolved,
+            'avg_resolution_hrs' => round($avgResolutionHours ?? 0, 1),
+            'by_category'        => $byCategory,
+        ];
+    }
+
+    private function getCoverLetterStats()
+    {
+        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
+
+        $total       = CoverLetter::where('created_at', '>=', $startDate)->count();
+        $uniqueUsers = CoverLetter::where('created_at', '>=', $startDate)->distinct('user_id')->count('user_id');
+        $totalUsers  = User::where('role', '!=', 'admin')->count();
+        $adoptionRate = $totalUsers > 0 ? round(($uniqueUsers / $totalUsers) * 100, 1) : 0;
+
+        // Daily trend (last 14 days)
+        $trend = [];
+        $labels = [];
+        for ($i = 13; $i >= 0; $i--) {
+            $d = Carbon::now('Asia/Jakarta')->subDays($i);
+            $labels[] = $d->format('M d');
+            $trend[]  = CoverLetter::whereDate('created_at', $d->format('Y-m-d'))->count();
+        }
+
+        $this->coverLetterStats = [
+            'total'         => $total,
+            'unique_users'  => $uniqueUsers,
+            'adoption_rate' => $adoptionRate,
+            'trend'         => $trend,
+            'trend_labels'  => $labels,
+        ];
+    }
+
+
+    private function getPeakActivityHours()
+    {
+        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
+
+        $hourly = UserActivity::where('created_at', '>=', $startDate)
+            ->selectRaw('HOUR(created_at) as hour, COUNT(*) as count')
+            ->groupBy('hour')
+            ->orderBy('hour')
+            ->get();
+
+        $hours  = array_fill(0, 24, 0);
+        $labels = [];
+        foreach ($hourly as $row) {
+            $hours[(int) $row->hour] = (int) $row->count;
+        }
+        for ($h = 0; $h < 24; $h++) {
+            $labels[] = str_pad($h, 2, '0', STR_PAD_LEFT) . ':00';
+        }
+
+        $maxHour = array_search(max($hours), $hours);
+        $this->peakActivityHours = [
+            'labels'   => $labels,
+            'data'     => array_values($hours),
+            'peak_hour'=> $labels[$maxHour] ?? '00:00',
+            'peak_count'=> max($hours),
+        ];
+    }
+
+    private function getRetentionCohort()
+    {
+        // Simple monthly retention: users who registered in month X and were still active (activity) in month X+1
+        $cohorts = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $monthStart = Carbon::now('Asia/Jakarta')->subMonths($i)->startOfMonth();
+            $monthEnd   = Carbon::now('Asia/Jakarta')->subMonths($i)->endOfMonth();
+
+            $registered = User::where('role', '!=', 'admin')
+                ->whereBetween('created_at', [$monthStart, $monthEnd])
+                ->pluck('id');
+
+            $total = $registered->count();
+
+            if ($total === 0) {
+                $cohorts[] = ['month' => $monthStart->format('M Y'), 'total' => 0, 'retained' => 0, 'rate' => 0];
+                continue;
+            }
+
+            // Count how many of those users had any activity in the next month
+            $nextMonthStart = $monthEnd->copy()->addDay()->startOfMonth();
+            $nextMonthEnd   = $nextMonthStart->copy()->endOfMonth();
+
+            $retained = UserActivity::whereIn('user_id', $registered)
+                ->whereBetween('created_at', [$nextMonthStart, $nextMonthEnd])
+                ->distinct('user_id')
+                ->count('user_id');
+
+            $cohorts[] = [
+                'month'    => $monthStart->format('M Y'),
+                'total'    => $total,
+                'retained' => $retained,
+                'rate'     => $total > 0 ? round(($retained / $total) * 100, 1) : 0,
+            ];
+        }
+
+        $this->retentionCohort = $cohorts;
+    }
+
+    private function getGamificationLeaderboard()
+    {
+        $top = User::where('role', '!=', 'admin')
+            ->orderByDesc('xp')
+            ->take(5)
+            ->get(['id', 'name', 'email', 'logo', 'xp', 'level', 'is_premium'])
+            ->map(function ($u, $index) {
+                $levelTitles = User::LEVEL_TITLES;
+                return [
+                    'rank'       => $index + 1,
+                    'name'       => $u->name,
+                    'email'      => $u->email,
+                    'avatar_url' => $u->avatar_url,
+                    'logo'       => $u->logo,
+                    'xp'         => $u->xp,
+                    'level'      => $u->level,
+                    'title'      => $levelTitles[$u->level] ?? 'Rookie Applicant',
+                    'is_premium' => $u->is_premium,
+                ];
+            })
+            ->toArray();
+
+        $this->gamificationLeaderboard = $top;
     }
 }

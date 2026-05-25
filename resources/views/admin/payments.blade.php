@@ -1,84 +1,80 @@
 <x-admin-layout>
-    <div class="space-y-6">
+    <div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6 sm:space-y-8 pb-10">
         
         {{-- Header & Export --}}
-        <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
-            <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/50">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center flex-shrink-0 text-primary-600 shadow-inner">
-                            <i class="ph-duotone ph-receipt text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-extrabold text-slate-900 truncate">Payments Center</h3>
-                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Pantau seluruh transaksi</p>
-                        </div>
-                    </div>
-                    <div class="relative w-full sm:w-auto">
-                        <a href="{{ route('admin.payments.export', request()->all()) }}" 
-                           class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-slate-800 text-white rounded-xl text-sm font-bold hover:bg-slate-900 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-2 focus:ring-slate-400 focus:outline-none">
-                            <i class="ph-bold ph-download-simple mr-2"></i>
-                            <span class="hidden sm:inline">Export CSV</span>
-                            <span class="sm:hidden">Export</span>
-                        </a>
-                    </div>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 sm:mb-8">
+            <div class="flex items-center gap-3 sm:gap-4 min-w-0">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white border border-slate-200/60 rounded-[1.25rem] sm:rounded-[1.5rem] flex items-center justify-center text-primary-600 shadow-sm shrink-0">
+                    <i class="ph-duotone ph-receipt text-xl sm:text-2xl"></i>
                 </div>
+                <div class="flex flex-col min-w-0">
+                    <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight truncate">Payments Center</h3>
+                    <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mt-1 sm:mt-1.5 truncate">Pantau seluruh transaksi</p>
+                </div>
+            </div>
+            <div class="relative w-full sm:w-auto">
+                <a href="{{ route('admin.payments.export', request()->all()) }}" 
+                   class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-slate-800 text-white rounded-xl text-sm font-bold hover:bg-slate-900 transition-all shadow-sm active:scale-95 focus:ring-2 focus:ring-slate-400 focus:outline-none">
+                    <i class="ph-bold ph-download-simple mr-2"></i>
+                    <span class="hidden sm:inline">Export CSV</span>
+                    <span class="sm:hidden">Export</span>
+                </a>
             </div>
         </div>
 
         {{-- Statistics Grid (Bento Grid) --}}
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {{-- Total Payments --}}
-            <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-slate-300 transition-colors">
-                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-blue-50 to-blue-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+            <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 bento-card-stat relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-blue-50 to-blue-100 rounded-full blur-2xl -z-10"></div>
                 <div class="flex items-start justify-between">
                     <div>
-                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Transaksi</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Transaksi</p>
                         <h3 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{{ number_format($stats['total']) }}</h3>
-                        <p class="text-[10px] font-bold text-slate-400 mt-1">Keseluruhan order</p>
+                        <p class="text-[9px] font-bold text-slate-400 mt-1">Keseluruhan order</p>
                     </div>
-                    <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 shadow-inner">
-                        <i class="ph-duotone ph-shopping-cart text-2xl"></i>
+                    <div class="w-10 h-10 rounded-[1.25rem] bg-blue-50 flex items-center justify-center text-blue-600 shadow-sm border border-blue-100">
+                        <i class="ph-duotone ph-shopping-cart text-xl"></i>
                     </div>
                 </div>
             </div>
 
             {{-- Successful --}}
-            <div class="bg-white rounded-2xl p-5 border border-emerald-100/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-emerald-200 transition-colors">
-                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+            <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 bento-card-stat relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-full blur-2xl -z-10"></div>
                 <div class="flex items-start justify-between">
                     <div>
-                        <p class="text-[11px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Berhasil</p>
+                        <p class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Berhasil</p>
                         <h3 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{{ number_format($stats['success']) }}</h3>
-                        <p class="text-[10px] font-bold text-emerald-500 mt-1">Pembayaran diterima</p>
+                        <p class="text-[9px] font-bold text-emerald-500 mt-1">Pembayaran diterima</p>
                     </div>
-                    <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shadow-inner">
-                        <i class="ph-duotone ph-check-circle text-2xl"></i>
+                    <div class="w-10 h-10 rounded-[1.25rem] bg-emerald-50 flex items-center justify-center text-emerald-600 shadow-sm border border-emerald-100">
+                        <i class="ph-duotone ph-check-circle text-xl"></i>
                     </div>
                 </div>
             </div>
 
             {{-- Pending --}}
-            <div class="bg-white rounded-2xl p-5 border border-amber-100/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-amber-200 transition-colors">
-                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-amber-50 to-amber-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+            <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 bento-card-stat relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-amber-50 to-amber-100 rounded-full blur-2xl -z-10"></div>
                 <div class="flex items-start justify-between">
                     <div>
-                        <p class="text-[11px] font-bold text-amber-400 uppercase tracking-widest mb-1">Pending</p>
+                        <p class="text-[10px] font-bold text-amber-400 uppercase tracking-widest mb-1">Pending</p>
                         <h3 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{{ number_format($stats['pending']) }}</h3>
-                        <p class="text-[10px] font-bold text-amber-500 mt-1">Menunggu pembayaran</p>
+                        <p class="text-[9px] font-bold text-amber-500 mt-1">Menunggu pembayaran</p>
                     </div>
-                    <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shadow-inner">
-                        <i class="ph-duotone ph-clock-counter-clockwise text-2xl"></i>
+                    <div class="w-10 h-10 rounded-[1.25rem] bg-amber-50 flex items-center justify-center text-amber-600 shadow-sm border border-amber-100">
+                        <i class="ph-duotone ph-clock-counter-clockwise text-xl"></i>
                     </div>
                 </div>
             </div>
 
             {{-- Total Revenue --}}
-            <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:border-slate-300 transition-colors">
-                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-purple-50 to-purple-100 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+            <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 bento-card-stat relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-purple-50 to-purple-100 rounded-full blur-2xl -z-10"></div>
                 <div class="flex items-start justify-between">
                     <div>
-                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Revenue</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Revenue</p>
                         <h3 class="text-xl lg:text-2xl font-black text-slate-900 tracking-tight mt-1">
                             @if($stats['total_revenue'] >= 1000000)
                                 Rp {{ number_format($stats['total_revenue'] / 1000000, 1) }} Jt
@@ -86,25 +82,25 @@
                                 Rp {{ number_format($stats['total_revenue'], 0, ',', '.') }}
                             @endif
                         </h3>
-                        <p class="text-[10px] font-bold text-purple-500 mt-1">Hari ini: Rp {{ number_format($stats['today_revenue'], 0, ',', '.') }}</p>
+                        <p class="text-[9px] font-bold text-purple-500 mt-1">Hari ini: Rp {{ number_format($stats['today_revenue'], 0, ',', '.') }}</p>
                     </div>
-                    <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 shadow-inner">
-                        <i class="ph-duotone ph-money text-2xl"></i>
+                    <div class="w-10 h-10 rounded-[1.25rem] bg-purple-50 flex items-center justify-center text-purple-600 shadow-sm border border-purple-100">
+                        <i class="ph-duotone ph-money text-xl"></i>
                     </div>
                 </div>
             </div>
         </div>
 
         {{-- Bento Grid: Filter & Methods --}}
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
             
             {{-- Filter Section (2/3 width) --}}
-            <div class="lg:col-span-2 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-6">
+            <div class="lg:col-span-2 bg-white rounded-[2rem] border border-slate-200/60 p-6 bento-card">
                 <div class="flex items-center justify-between mb-5">
-                    <h3 class="text-sm font-bold text-slate-900">Filter Transaksi</h3>
+                    <h3 class="text-sm font-black text-slate-900 tracking-tight">Filter Transaksi</h3>
                     @if(request()->hasAny(['search', 'status', 'date_from', 'date_to']))
-                        <a href="{{ route('admin.payments') }}" class="text-[11px] font-bold text-slate-400 hover:text-slate-800 transition-colors flex items-center gap-1">
-                            <i class="ph-bold ph-x-circle"></i> Clear Filters
+                        <a href="{{ route('admin.payments') }}" class="text-[10px] font-bold text-slate-400 hover:text-slate-800 transition-colors flex items-center gap-1 uppercase tracking-widest">
+                            <i class="ph-bold ph-x-circle text-sm"></i> Clear Filters
                         </a>
                     @endif
                 </div>
@@ -113,20 +109,20 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                         {{-- Search --}}
                         <div class="col-span-1 sm:col-span-2 md:col-span-1">
-                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Search</label>
+                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Search</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                                    <i class="ph-regular ph-magnifying-glass"></i>
+                                    <i class="ph-bold ph-magnifying-glass"></i>
                                 </div>
-                                <input type="text" name="search" value="{{ request('search') }}" placeholder="Order ID / User..." class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white transition-colors font-medium text-slate-700">
+                                <input type="text" name="search" value="{{ request('search') }}" placeholder="Order ID / User..." class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white transition-colors font-bold text-slate-700 shadow-sm">
                             </div>
                         </div>
 
                         {{-- Status Filter --}}
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Status</label>
+                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Status</label>
                             <div class="relative group">
-                                <select name="status" class="w-full appearance-none pl-4 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white transition-colors font-bold text-slate-700 cursor-pointer">
+                                <select name="status" class="w-full appearance-none pl-4 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white transition-colors font-bold text-slate-700 shadow-sm cursor-pointer">
                                     <option value="">Semua Status</option>
                                     <option value="SUCCESS" {{ request('status') === 'SUCCESS' ? 'selected' : '' }}>Success</option>
                                     <option value="PENDING" {{ request('status') === 'PENDING' ? 'selected' : '' }}>Pending</option>
@@ -134,27 +130,27 @@
                                     <option value="FAILED" {{ request('status') === 'FAILED' ? 'selected' : '' }}>Failed</option>
                                     <option value="CANCELED" {{ request('status') === 'CANCELED' ? 'selected' : '' }}>Canceled</option>
                                 </select>
-                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400 group-hover:text-primary-500 transition-colors">
-                                    <i class="ph-bold ph-caret-down"></i>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400 transition-colors">
+                                    <i class="ph-bold ph-caret-down text-xs"></i>
                                 </div>
                             </div>
                         </div>
 
                         {{-- Date From --}}
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Tanggal Awal</label>
-                            <input type="date" name="date_from" value="{{ request('date_from') }}" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white transition-colors font-medium text-slate-700">
+                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Tanggal Awal</label>
+                            <input type="date" name="date_from" value="{{ request('date_from') }}" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white transition-colors font-bold text-slate-700 shadow-sm">
                         </div>
 
                         {{-- Date To --}}
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Tanggal Akhir</label>
-                            <input type="date" name="date_to" value="{{ request('date_to') }}" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white transition-colors font-medium text-slate-700">
+                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Tanggal Akhir</label>
+                            <input type="date" name="date_to" value="{{ request('date_to') }}" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white transition-colors font-bold text-slate-700 shadow-sm">
                         </div>
                     </div>
 
                     <div class="flex justify-end pt-2">
-                        <button type="submit" class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-500 text-white font-bold text-sm rounded-xl hover:from-primary-700 hover:to-primary-600 shadow-md hover:shadow-lg transition-all focus:ring-2 focus:ring-primary-300 focus:outline-none flex items-center justify-center gap-2">
+                        <button type="submit" class="w-full sm:w-auto px-6 py-2 bg-slate-900 text-white font-black text-xs rounded-xl hover:bg-slate-800 shadow-sm active:scale-95 transition-all flex items-center justify-center gap-2 uppercase tracking-widest">
                             <i class="ph-bold ph-funnel"></i> Terapkan Filter
                         </button>
                     </div>
@@ -162,13 +158,13 @@
             </div>
 
             {{-- Payment Methods (1/3 width) --}}
-            <div class="lg:col-span-1 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-6 flex flex-col">
-                <h3 class="text-sm font-bold text-slate-900 mb-5">Distribusi Metode</h3>
+            <div class="lg:col-span-1 bg-white rounded-[2rem] border border-slate-200/60 p-6 flex flex-col bento-card">
+                <h3 class="text-sm font-black text-slate-900 mb-5 tracking-tight">Distribusi Metode</h3>
                 
                 @if($paymentMethods->count() > 0)
                     <div class="grid grid-cols-2 gap-3 flex-1">
                         @foreach($paymentMethods->take(4) as $method)
-                            <div class="p-3 bg-slate-50 border border-slate-100 rounded-xl relative overflow-hidden group hover:bg-slate-100 transition-colors">
+                            <div class="p-3 bg-slate-50 border border-slate-200/60 rounded-[1rem] relative overflow-hidden group hover:bg-slate-100 transition-colors shadow-sm">
                                 <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 truncate">{{ $method->payment_channel_code }}</p>
                                 <p class="text-lg font-black text-slate-900">{{ $method->count }}</p>
                                 <p class="text-[10px] font-medium text-slate-400 mt-1 truncate">Rp {{ number_format($method->revenue, 0, ',', '.') }}</p>
@@ -176,12 +172,12 @@
                         @endforeach
                     </div>
                 @else
-                    <div class="flex-1 flex flex-col items-center justify-center text-center p-6 border-2 border-dashed border-slate-100 rounded-xl">
-                        <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mb-3">
-                            <i class="ph-duotone ph-wallet text-2xl text-slate-400"></i>
+                    <div class="flex-1 flex flex-col items-center justify-center text-center p-6 border-2 border-dashed border-slate-200/60 rounded-[1rem]">
+                        <div class="w-12 h-12 bg-slate-50 rounded-[1.25rem] flex items-center justify-center mb-3 border border-slate-100">
+                            <i class="ph-duotone ph-wallet text-xl text-slate-400"></i>
                         </div>
-                        <p class="text-sm font-bold text-slate-600 mb-1">Belum Ada Data</p>
-                        <p class="text-xs text-slate-400">Metode pembayaran kosong</p>
+                        <p class="text-sm font-black text-slate-600 mb-1">Belum Ada Data</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Metode pembayaran kosong</p>
                     </div>
                 @endif
             </div>
@@ -189,7 +185,7 @@
         </div>
 
         {{-- Payments Data Table --}}
-        <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
+        <div class="bg-white rounded-[2rem] border border-slate-200/60 overflow-hidden bento-card">
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
@@ -301,11 +297,11 @@
     <div id="paymentDetailModal" class="fixed inset-0 z-[100] overflow-y-auto hidden">
         <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closePaymentDetail()"></div>
         <div class="relative min-h-screen flex items-center justify-center p-4">
-            <div class="relative w-full max-w-2xl bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-slate-100 transform transition-all" onclick="event.stopPropagation()">
+            <div class="relative w-full max-w-2xl bg-white rounded-[2rem] shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-slate-200/60 transform transition-all" onclick="event.stopPropagation()">
                 {{-- Modal Header --}}
-                <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 rounded-t-2xl">
+                <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 rounded-t-[2rem]">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center text-primary-600 shadow-inner">
+                        <div class="w-10 h-10 bg-primary-50 rounded-[1.25rem] border border-primary-100 flex items-center justify-center text-primary-600 shadow-sm">
                             <i class="ph-bold ph-receipt text-lg"></i>
                         </div>
                         <div>

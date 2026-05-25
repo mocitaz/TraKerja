@@ -189,7 +189,9 @@ class User extends Authenticatable implements MustVerifyEmail
             if (str_starts_with($this->logo, 'http')) {
                 return $this->logo;
             }
-            return \Illuminate\Support\Facades\Storage::url($this->logo);
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($this->logo)) {
+                return \Illuminate\Support\Facades\Storage::url($this->logo);
+            }
         }
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=random';
     }
@@ -834,6 +836,26 @@ class User extends Authenticatable implements MustVerifyEmail
     public function addXP(int $amount): void
     {
         $newXp = $this->xp + $amount;
+        $newLevel = 1;
+
+        foreach (self::LEVEL_THRESHOLDS as $lvl => $threshold) {
+            if ($newXp >= $threshold) {
+                $newLevel = $lvl;
+            }
+        }
+
+        $this->update([
+            'xp' => $newXp,
+            'level' => $newLevel
+        ]);
+    }
+
+    /**
+     * Deduct XP for gamification and handle level downs
+     */
+    public function deductXP(int $amount): void
+    {
+        $newXp = max(0, $this->xp - $amount);
         $newLevel = 1;
 
         foreach (self::LEVEL_THRESHOLDS as $lvl => $threshold) {

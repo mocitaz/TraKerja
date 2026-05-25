@@ -36,6 +36,9 @@ class UserManagement extends Component
     public $editEmail;
     public $editIsPremium;
     public $editIsAdmin;
+    public $editAiCredits = 0;
+    public $editClCredits = 0;
+    public $editPhotoCredits = 0;
     
     // Create Admin properties
     public $newAdminName;
@@ -54,6 +57,11 @@ class UserManagement extends Component
     public $confirmTargetUserId;
     public $confirmTargetUserName;
     public $confirmTargetUserIsPremium;
+
+    // Delete Confirmation properties
+    public $showDeleteConfirmModal = false;
+    public $deleteTargetUserId;
+    public $deleteTargetUserName;
     
     protected $listeners = ['refreshUsers' => '$refresh'];
     
@@ -124,6 +132,10 @@ class UserManagement extends Component
         $this->editEmail = $user->email;
         $this->editIsPremium = $user->is_premium;
         $this->editIsAdmin = $user->is_admin;
+        
+        $this->editAiCredits = $user->ai_credits ?? 0;
+        $this->editClCredits = $user->cl_credits ?? 0;
+        $this->editPhotoCredits = $user->photo_credits ?? 0;
         
         $this->showEditModal = true;
     }
@@ -214,6 +226,75 @@ class UserManagement extends Component
         ]);
     }
     
+    public function saveAiQuotas()
+    {
+        if (!$this->editingUserId) return;
+        
+        $this->validate([
+            'editAiCredits' => 'required|numeric|min:0',
+            'editClCredits' => 'required|numeric|min:0',
+            'editPhotoCredits' => 'required|numeric|min:0',
+        ]);
+        
+        $user = User::findOrFail($this->editingUserId);
+        $user->update([
+            'ai_credits' => (int) $this->editAiCredits,
+            'cl_credits' => (int) $this->editClCredits,
+            'photo_credits' => (int) $this->editPhotoCredits,
+        ]);
+        
+        Log::info('Admin manually updated AI quotas', [
+            'admin_id' => Auth::id(),
+            'user_id' => $user->id,
+            'ai_credits' => $this->editAiCredits,
+            'cl_credits' => $this->editClCredits,
+            'photo_credits' => $this->editPhotoCredits,
+        ]);
+        
+        $this->dispatch('showNotification', [
+            'type' => 'success',
+            'title' => 'Kuota Diperbarui',
+            'message' => 'Kuota AI berhasil diubah secara manual.',
+        ]);
+    }
+    
+    public function resetAllAiQuotas()
+    {
+        if (!$this->editingUserId) return;
+        
+        $user = User::findOrFail($this->editingUserId);
+        
+        $analyzerLimit = \App\Models\Setting::getLimit('ai_analyzer', $user);
+        // Fallback to 1 if not defined in settings for free, 5 for premium
+        $clLimit = \App\Models\Setting::getLimit('cover_letters', $user) ?: ($user->is_premium ? 5 : 1);
+        $photoLimit = \App\Models\Setting::getLimit('ai_photo', $user) ?: ($user->is_premium ? 5 : 1);
+        
+        $user->update([
+            'ai_credits' => $analyzerLimit === 'unlimited' ? 9999 : (int) $analyzerLimit,
+            'ai_analyzer_count_this_month' => 0,
+            'has_used_ai_analyzer_trial' => false,
+            'last_ai_analyzer_reset' => now(),
+            
+            'cl_credits' => $clLimit === 'unlimited' ? 9999 : (int) $clLimit,
+            'photo_credits' => $photoLimit === 'unlimited' ? 9999 : (int) $photoLimit,
+        ]);
+        
+        $this->editAiCredits = $user->ai_credits;
+        $this->editClCredits = $user->cl_credits;
+        $this->editPhotoCredits = $user->photo_credits;
+        
+        Log::info('Admin reset all AI quotas for user', [
+            'admin_id' => Auth::id(),
+            'user_id' => $user->id,
+        ]);
+        
+        $this->dispatch('showNotification', [
+            'type' => 'success',
+            'title' => 'Quota Di-reset',
+            'message' => 'Semua Kuota AI untuk ' . $user->name . ' telah dikembalikan ke standar.',
+        ]);
+    }
+    
     public function toggleAdmin($userId)
     {
         $user = User::findOrFail($userId);
@@ -252,6 +333,26 @@ class UserManagement extends Component
             'title' => 'Deleted',
             'message' => 'User deleted successfully!',
         ]);
+    }
+    
+    public function confirmDeleteUserModal($userId)
+    {
+        $user = User::findOrFail($userId);
+        $this->deleteTargetUserId = $user->id;
+        $this->deleteTargetUserName = $user->name;
+        $this->showDeleteConfirmModal = true;
+    }
+    
+    public function closeDeleteConfirmModal()
+    {
+        $this->showDeleteConfirmModal = false;
+        $this->reset(['deleteTargetUserId', 'deleteTargetUserName']);
+    }
+    
+    public function performDelete()
+    {
+        $this->deleteUser($this->deleteTargetUserId);
+        $this->closeDeleteConfirmModal();
     }
     
     public function closeModal()

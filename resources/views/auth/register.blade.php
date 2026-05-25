@@ -406,6 +406,19 @@
                         </div>
                     </div>
 
+                    <!-- Cloudflare Turnstile -->
+                    <div class="flex flex-col items-center justify-center mb-4">
+                        <div class="cf-turnstile" data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}" data-theme="light"></div>
+                        @error('cf-turnstile-response')
+                            <p class="mt-2 text-sm text-red-600 flex items-center">
+                                <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>{{ $message }}</span>
+                            </p>
+                        @enderror
+                    </div>
+
                     <!-- Submit Button -->
                     <button type="submit" 
                             onclick="return validateRegistration()"
@@ -971,4 +984,5 @@
             @endif
         });
     </script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </x-guest-layout>

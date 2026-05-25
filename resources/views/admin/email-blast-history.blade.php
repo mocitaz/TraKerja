@@ -8,84 +8,86 @@
     $successRate = $totalTarget > 0 ? round(($totalSuccess / $totalTarget) * 100, 1) : 0;
 @endphp
 
-<div class="space-y-6">
+<div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6 sm:space-y-8 pb-10">
     <!-- Header -->
-    <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
-        <div class="px-5 py-6 sm:px-8 sm:py-8 border-b border-slate-100 bg-slate-50/50 relative overflow-hidden">
-            <div class="absolute -right-10 -top-10 w-40 h-40 bg-indigo-100 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 relative z-10">
-                <div class="flex items-center gap-4">
-                    <div class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
-                        <i class="ph-duotone ph-clock-counter-clockwise text-3xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Riwayat Blasting Email</h1>
-                        <p class="text-sm font-medium text-slate-500 mt-1 font-bold">Arsip aktivitas pengiriman kampanye email massal.</p>
-                    </div>
-                </div>
-                <div>
-                    <a href="{{ route('admin.email-blast') }}" class="flex items-center gap-2 px-5 py-3 bg-white border border-slate-200 text-slate-700 hover:text-primary-600 hover:border-primary-200 rounded-xl font-bold text-sm shadow-sm transition-all">
-                        <i class="ph-bold ph-arrow-left text-lg text-primary-500"></i>
-                        <span>Kembali ke Blasting</span>
-                    </a>
-                </div>
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6 sm:mb-8">
+        <div class="flex items-center gap-3 sm:gap-4 min-w-0 w-full md:w-auto">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white border border-slate-200/60 rounded-[1.25rem] sm:rounded-[1.5rem] flex items-center justify-center text-primary-600 shadow-sm shrink-0">
+                <i class="ph-duotone ph-clock-counter-clockwise text-xl sm:text-2xl"></i>
             </div>
+            <div class="flex flex-col min-w-0">
+                <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight truncate">Riwayat Blasting</h3>
+                <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mt-1 sm:mt-1.5 truncate">Log Kampanye Email</p>
+            </div>
+        </div>
+        <div>
+            <a href="{{ route('admin.email-blast') }}" class="flex items-center justify-center gap-2 px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-colors w-full sm:w-auto shadow-md">
+                <i class="ph-bold ph-arrow-left text-sm"></i>
+                Kembali ke Blasting
+            </a>
         </div>
     </div>
 
     <!-- Quick Lifetime Stats widgets -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <!-- Card 1: Total Campaigns -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] flex items-center gap-4">
-            <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0 text-2xl">
-                <i class="ph-duotone ph-megaphone"></i>
+        <div class="bento-card-stat mesh-gradient-primary rounded-[2rem] border border-slate-100 p-5 flex flex-col group relative overflow-hidden">
+            <div class="h-10 flex items-center justify-between mb-4">
+                <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 transition-transform">
+                    <i class="ph-fill ph-megaphone text-xl"></i>
+                </div>
             </div>
-            <div>
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Kampanye</p>
-                <h3 class="text-2xl font-extrabold text-slate-800 mt-0.5">{{ $totalCampaigns }}</h3>
+            <div class="flex flex-col">
+                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1 leading-none">Total Kampanye</p>
+                <p class="text-2xl font-black text-slate-900 tracking-tighter leading-none">{{ $totalCampaigns }}</p>
             </div>
         </div>
 
         <!-- Card 2: Total Emails Sent -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] flex items-center gap-4">
-            <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 text-2xl">
-                <i class="ph-duotone ph-paper-plane-tilt"></i>
+        <div class="bento-card-stat mesh-gradient-emerald rounded-[2rem] border border-slate-100 p-5 flex flex-col group relative overflow-hidden">
+            <div class="h-10 flex items-center justify-between mb-4">
+                <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 transition-transform">
+                    <i class="ph-fill ph-paper-plane-tilt text-xl"></i>
+                </div>
             </div>
-            <div>
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Terkirim</p>
-                <h3 class="text-2xl font-extrabold text-slate-800 mt-0.5">{{ number_format($totalTarget) }}</h3>
+            <div class="flex flex-col">
+                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1 leading-none">Total Terkirim</p>
+                <p class="text-2xl font-black text-slate-900 tracking-tighter leading-none">{{ number_format($totalTarget) }}</p>
             </div>
         </div>
 
         <!-- Card 3: Total Failed -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] flex items-center gap-4">
-            <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0 text-2xl">
-                <i class="ph-duotone ph-x-circle"></i>
+        <div class="bento-card-stat mesh-gradient-rose rounded-[2rem] border border-slate-100 p-5 flex flex-col group relative overflow-hidden">
+            <div class="h-10 flex items-center justify-between mb-4">
+                <div class="w-10 h-10 bg-rose-50 rounded-xl flex items-center justify-center text-rose-600 transition-transform">
+                    <i class="ph-fill ph-x-circle text-xl"></i>
+                </div>
             </div>
-            <div>
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Gagal</p>
-                <h3 class="text-2xl font-extrabold text-slate-800 mt-0.5">{{ number_format($totalFailed) }}</h3>
+            <div class="flex flex-col">
+                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1 leading-none">Total Gagal</p>
+                <p class="text-2xl font-black text-slate-900 tracking-tighter leading-none">{{ number_format($totalFailed) }}</p>
             </div>
         </div>
 
         <!-- Card 4: Success Rate -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] flex items-center gap-4">
-            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0 text-2xl">
-                <i class="ph-duotone ph-trend-up"></i>
+        <div class="bento-card-stat mesh-gradient-amber rounded-[2rem] border border-slate-100 p-5 flex flex-col group relative overflow-hidden">
+            <div class="h-10 flex items-center justify-between mb-4">
+                <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center text-amber-600 transition-transform">
+                    <i class="ph-fill ph-trend-up text-xl"></i>
+                </div>
             </div>
-            <div>
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Rasio Keberhasilan</p>
-                <h3 class="text-2xl font-extrabold text-slate-800 mt-0.5">{{ $successRate }}%</h3>
+            <div class="flex flex-col">
+                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1 leading-none">Rasio Keberhasilan</p>
+                <p class="text-2xl font-black text-slate-900 tracking-tighter leading-none">{{ $successRate }}%</p>
             </div>
         </div>
     </div>
 
     <!-- History Logs Table Card -->
-    <div class="bg-white rounded-2xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden">
+    <div class="bento-card bg-white rounded-[2rem] border border-slate-200/60 overflow-hidden">
         <div class="px-6 py-5 border-b border-slate-100 bg-slate-50/20 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h2 class="text-lg font-bold text-slate-900">Arsip Kampanye Blasting</h2>
-                <p class="text-xs text-slate-500 mt-0.5">Daftar lengkap log pengiriman email massal.</p>
+                <h2 class="text-sm font-black text-slate-900 tracking-tight uppercase flex items-center gap-2">Arsip Kampanye Blasting</h2>
             </div>
         </div>
 
@@ -215,42 +217,39 @@
 </div>
 
 <!-- Modal Failure Details -->
-<div id="failureModal" class="fixed inset-0 z-50 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <!-- Backdrop -->
-    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"></div>
-
-    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-        <div class="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl border border-slate-100 animate-in fade-in zoom-in-95 duration-200">
-            <!-- Modal Header -->
-            <div class="px-6 py-5 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl">
-                        <i class="ph-bold ph-warning"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-md font-extrabold text-slate-900" id="modal-title">Detail Kegagalan Pengiriman</h3>
-                        <p class="text-xs text-slate-500 font-medium mt-0.5">Daftar user gagal dan alasan eror dari server SMTP.</p>
-                    </div>
+<div id="failureModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xl hidden z-[9999] flex items-center justify-center p-4 transition-all duration-300">
+    <div class="bg-white rounded-[2rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.2)] max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-100 transform transition-all animate-in fade-in zoom-in-95 duration-200">
+        <!-- Modal Header: Clean White -->
+        <div class="bg-white px-6 py-5 text-slate-900 flex justify-between items-center border-b border-slate-100 shrink-0">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shadow-sm">
+                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-6 h-6 object-contain">
                 </div>
-                <button onclick="closeFailureModal()" class="w-8 h-8 rounded-lg hover:bg-slate-200 text-slate-400 hover:text-slate-600 flex items-center justify-center transition-colors">
-                    <i class="ph-bold ph-x text-lg"></i>
-                </button>
+                <div>
+                    <h3 class="text-sm font-black tracking-tight" id="modal-title">Detail Kegagalan Pengiriman</h3>
+                    <p class="text-slate-400 text-[8px] font-bold uppercase tracking-widest mt-0.5">Log & Error Server SMTP</p>
+                </div>
             </div>
+            <button onclick="closeFailureModal()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-50 transition-all text-slate-400 hover:text-slate-900">
+                <i class="ph-bold ph-x text-base"></i>
+            </button>
+        </div>
 
-            <!-- Modal Content -->
-            <div class="px-6 py-6 max-h-[400px] overflow-y-auto space-y-4">
-                <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Daftar User &amp; Logs Eror:</div>
+        <!-- Modal Content -->
+        <div class="p-6 bg-white overflow-y-auto custom-scrollbar flex-1">
+            <div class="space-y-4">
+                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Daftar User &amp; Logs Eror</div>
                 <div class="divide-y divide-slate-100" id="failureList">
                     <!-- Dynamic failure list rows go here -->
                 </div>
             </div>
+        </div>
 
-            <!-- Modal Footer -->
-            <div class="bg-slate-50 px-6 py-4 flex justify-end border-t border-slate-100">
-                <button onclick="closeFailureModal()" class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-xl text-sm font-bold shadow-sm transition-colors">
-                    Tutup
-                </button>
-            </div>
+        <!-- Modal Footer -->
+        <div class="bg-slate-50 px-6 py-4 flex justify-end border-t border-slate-100 shrink-0">
+            <button onclick="closeFailureModal()" class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-xl text-xs font-black uppercase tracking-widest shadow-sm transition-colors">
+                Tutup
+            </button>
         </div>
     </div>
 </div>
