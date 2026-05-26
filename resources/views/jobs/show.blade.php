@@ -101,9 +101,53 @@
                         <div class="absolute top-0 right-0 w-64 h-64 bg-primary-500/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
                         
                         <div class="relative flex flex-col md:flex-row gap-8 items-start">
-                            <div class="w-20 h-20 rounded-[2rem] bg-slate-900 flex items-center justify-center shadow-2xl shadow-slate-200 shrink-0">
-                                <span class="text-white text-3xl font-black">{{ substr($job->company_name, 0, 1) }}</span>
-                            </div>
+                            @php
+                                // 1. Hapus entitas legal (PT, CV, Tbk, Persero, dll) dan wilayah
+                                $cleanName = preg_replace('/\b(pt\.?|cv\.?|tbk\.?|persero|ltd\.?|inc\.?|corp\.?|llc\.?|indonesia)\b/i', '', $job->company_name);
+                                // 2. Hapus teks di dalam kurung dan trim spasi berlebih
+                                $cleanName = trim(preg_replace('/\(.*?\)/', '', $cleanName));
+                                
+                                // 3. Full Brand Name (semua kata digabung)
+                                $brandName = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $cleanName));
+                                
+                                // 4. Hanya Kata Pertama (First Word)
+                                $firstWord = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', explode(' ', $cleanName)[0]));
+                                
+                                // 5. UI Avatars (Sebagai cadangan terakhir)
+                                $fallbackAvatar = 'https://ui-avatars.com/api/?name='.urlencode($job->company_name).'&background=random&color=fff&size=128&bold=true&font-size=0.4';
+                            @endphp
+                            
+                            <script>
+                                function handleLogoFallback(img) {
+                                    // Cegah infinite loop jika atribut data-fallback-index belum ada
+                                    if (!img.dataset.fallbackIndex) {
+                                        img.dataset.fallbackIndex = 0;
+                                    }
+                                    
+                                    const fallbacks = [
+                                        'https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://{{ $brandName }}.co.id&size=128',
+                                        'https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://{{ $brandName }}.id&size=128',
+                                        'https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://{{ $firstWord }}.com&size=128',
+                                        'https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://{{ $firstWord }}.co.id&size=128',
+                                        '{!! $fallbackAvatar !!}'
+                                    ];
+                                    
+                                    let idx = parseInt(img.dataset.fallbackIndex);
+                                    
+                                    if (idx < fallbacks.length) {
+                                        img.src = fallbacks[idx];
+                                        img.dataset.fallbackIndex = idx + 1;
+                                    } else {
+                                        img.onerror = null; // Hentikan loop jika semua gagal
+                                    }
+                                }
+                            </script>
+
+                            <img src="https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://{{ $brandName }}.com&size=128" 
+                                 id="companyLogo-{{ $job->id }}"
+                                 alt="{{ $job->company_name }}" 
+                                 class="w-20 h-20 rounded-[2rem] object-cover shadow-2xl shadow-slate-200 shrink-0 border border-slate-100 bg-white p-2"
+                                 onerror="handleLogoFallback(this)">
                             
                             <div class="flex-1 space-y-4">
                                 <div>
@@ -132,6 +176,21 @@
                             </a>
                         </div>
                     </div>
+
+                    @if($job->isGhosted())
+                        {{-- Ghosting Alert --}}
+                        <div class="glass-card p-6 rounded-3xl border-l-4 border-l-rose-500 bg-rose-50/50 flex items-start gap-4 shadow-sm animate-pulse">
+                            <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center shrink-0">
+                                <i class="ph-fill ph-ghost text-rose-500 text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-black text-rose-900 mb-1">Kemungkinan Di-ghosting</h3>
+                                <p class="text-xs font-medium text-rose-700/80 leading-relaxed">
+                                    Sudah lebih dari 14 hari sejak Anda melamar tanpa ada pembaruan status. Pertimbangkan untuk mengirimkan <span class="font-bold">Email Follow-up</span> ke pihak HRD perusahaan ini.
+                                </p>
+                            </div>
+                        </div>
+                    @endif
 
                     {{-- Pipeline Visualization --}}
                     <div class="glass-card p-10 rounded-[2.5rem] shadow-sm">
@@ -242,6 +301,18 @@
                                         <p class="text-xs font-medium text-slate-300 break-all leading-relaxed">{{ $job->interview_location }}</p>
                                     </div>
                                 @endif
+
+                                @if(!$isPast && Auth::user()->canAccessEmailNotifications())
+                                    <div class="pt-6 border-t border-white/5">
+                                        <form method="POST" action="/jobs/{{ $job->id }}/send-interview-reminder">
+                                            @csrf
+                                            <button type="submit" class="w-full py-3 px-4 bg-primary-600 hover:bg-primary-500 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 group">
+                                                <i class="ph-bold ph-envelope-simple group-hover:-translate-y-0.5 transition-transform"></i>
+                                                Send Reminder to My Email
+                                            </button>
+                                        </form>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     @endif
@@ -258,6 +329,16 @@
                                     <span class="text-xs font-bold text-slate-700">LinkedIn Search</span>
                                 </div>
                                 <i class="ph-bold ph-arrow-up-right text-slate-300 group-hover:text-primary-600 transition-colors"></i>
+                            </a>
+
+                            <a href="https://www.glassdoor.com/Search/results.htm?keyword={{ urlencode($job->company_name) }}" target="_blank" class="flex items-center justify-between p-4 rounded-2xl border border-slate-100 hover:border-emerald-200 hover:bg-emerald-50/30 transition-all group">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-[#0CAA41]/10 flex items-center justify-center text-[#0CAA41]">
+                                        <i class="ph-bold ph-star text-lg"></i>
+                                    </div>
+                                    <span class="text-xs font-bold text-slate-700">Glassdoor Reviews</span>
+                                </div>
+                                <i class="ph-bold ph-arrow-up-right text-slate-300 group-hover:text-[#0CAA41] transition-colors"></i>
                             </a>
                             
                             @if($job->platform_link)
