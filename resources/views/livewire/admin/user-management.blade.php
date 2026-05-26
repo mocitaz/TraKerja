@@ -646,6 +646,7 @@
                                         'job_reminder'          => ['label' => 'Job Reminder',      'desc' => 'Ajakan catat lamaran',        'icon' => 'ph-briefcase',             'color' => 'indigo'],
                                         'monthly_motivation'    => ['label' => 'Motivasi Bulanan',  'desc' => 'Semangat bulan baru',         'icon' => 'ph-calendar-check',        'color' => 'rose'],
                                         're_engagement'         => ['label' => 'Re-engagement',     'desc' => 'Ajakan kembali aktif',        'icon' => 'ph-arrow-counter-clockwise', 'color' => 'violet'],
+                                        'idul_adha'             => ['label' => 'Idul Adha',         'desc' => 'Ucapan Idul Adha 1447 H',     'icon' => 'ph-moon-stars',            'color' => 'emerald'],
                                     ],
                                     'Pembaruan & Fitur' => [
                                         'product_update'        => ['label' => 'Product Update',    'desc' => 'Pengumuman fitur terbaru',    'icon' => 'ph-megaphone',             'color' => 'blue'],
@@ -815,6 +816,7 @@
         const content = document.getElementById('deleteUserModalContent');
         
         modal.classList.remove('hidden');
+        modal.classList.add('flex');
         document.body.classList.add('overflow-hidden');
         
         // Animate modal in
@@ -834,6 +836,7 @@
         
         setTimeout(() => {
             modal.classList.add('hidden');
+            modal.classList.remove('flex');
             document.body.classList.remove('overflow-hidden');
             deleteUserId = null;
         }, 200);

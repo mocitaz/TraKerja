@@ -453,7 +453,7 @@ class UserManagement extends Component
     public function sendEmail()
     {
         $this->validate([
-            'emailType' => 'required|in:welcome,verification,verification_reminder,ai_analyzer,job_reminder,monthly_motivation,premium_granted,product_update,hiring_season,re_engagement,ai_photo,follow_up_feature',
+            'emailType' => 'required|in:welcome,verification,verification_reminder,ai_analyzer,job_reminder,monthly_motivation,premium_granted,product_update,hiring_season,re_engagement,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam',
         ]);
         
         $user = User::findOrFail($this->emailTargetUserId);
@@ -505,6 +505,39 @@ class UserManagement extends Component
                 case 'follow_up_feature':
                     Mail::to($user->email)->send(new FollowUpFeatureAnnouncementMail($user));
                     break;
+                case 'idul_adha':
+                    Mail::to($user->email)->send(new \App\Mail\IdulAdhaMail($user));
+                    break;
+                case 'waisak':
+                    Mail::to($user->email)->send(new \App\Mail\WaisakMail($user));
+                    break;
+                case 'pancasila':
+                    Mail::to($user->email)->send(new \App\Mail\PancasilaMail($user));
+                    break;
+                case 'sumpah_pemuda':
+                    Mail::to($user->email)->send(new \App\Mail\SumpahPemudaMail($user));
+                    break;
+                case 'pahlawan':
+                    Mail::to($user->email)->send(new \App\Mail\PahlawanMail($user));
+                    break;
+                case 'guru_nasional':
+                    Mail::to($user->email)->send(new \App\Mail\GuruNasionalMail($user));
+                    break;
+                case 'hari_ibu':
+                    Mail::to($user->email)->send(new \App\Mail\HariIbuMail($user));
+                    break;
+                case 'natal':
+                    Mail::to($user->email)->send(new \App\Mail\NatalMail($user));
+                    break;
+                case 'kemerdekaan_ri':
+                    Mail::to($user->email)->send(new \App\Mail\KemerdekaanRiMail($user));
+                    break;
+                case 'maulid_nabi':
+                    Mail::to($user->email)->send(new \App\Mail\MaulidNabiMail($user));
+                    break;
+                case 'tahun_baru_islam':
+                    Mail::to($user->email)->send(new \App\Mail\TahunBaruIslamMail($user));
+                    break;
             }
             
             Log::info('Admin sent email to user', [
@@ -527,9 +560,20 @@ class UserManagement extends Component
                 'premium_granted'         => 'Premium Granted Notification',
                 'product_update'          => 'Major Product Update',
                 'hiring_season'           => 'Hiring Season Alert',
-                're_engagement'           => 'Re-engagement Email',
-                'ai_photo'                => 'AI Photo Announcement',
-                'follow_up_feature'       => 'Follow Up Feature Announcement',
+                're_engagement' => 'Re-engagement',
+                'ai_photo' => 'AI Photo Announcement',
+                'follow_up_feature' => 'Follow Up Feature',
+                'idul_adha' => 'Idul Adha',
+                'waisak' => 'Hari Raya Waisak',
+                'pancasila' => 'Hari Lahir Pancasila',
+                'sumpah_pemuda' => 'Hari Sumpah Pemuda',
+                'pahlawan' => 'Hari Pahlawan',
+                'guru_nasional' => 'Hari Guru Nasional',
+                'hari_ibu' => 'Hari Ibu',
+                'natal' => 'Hari Raya Natal',
+                'kemerdekaan_ri' => 'Hari Kemerdekaan RI',
+                'maulid_nabi' => 'Maulid Nabi Muhammad SAW',
+                'tahun_baru_islam' => 'Tahun Baru Islam',
             ];
             
             $this->dispatch('showNotification', [

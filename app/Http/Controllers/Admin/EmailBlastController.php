@@ -54,7 +54,7 @@ class EmailBlastController extends Controller
     public function send(Request $request)
     {
         $validationRules = [
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam',
             'target_user' => 'required|in:all,verified,premium,free,new,unverified',
         ];
 
@@ -160,6 +160,39 @@ class EmailBlastController extends Controller
                     case 'follow_up_feature':
                         Mail::to($user->email)->send(new \App\Mail\FollowUpFeatureAnnouncementMail($user));
                         break;
+                    case 'idul_adha':
+                        Mail::to($user->email)->send(new \App\Mail\IdulAdhaMail($user));
+                        break;
+                    case 'waisak':
+                        Mail::to($user->email)->send(new \App\Mail\WaisakMail($user));
+                        break;
+                    case 'pancasila':
+                        Mail::to($user->email)->send(new \App\Mail\PancasilaMail($user));
+                        break;
+                    case 'sumpah_pemuda':
+                        Mail::to($user->email)->send(new \App\Mail\SumpahPemudaMail($user));
+                        break;
+                    case 'pahlawan':
+                        Mail::to($user->email)->send(new \App\Mail\PahlawanMail($user));
+                        break;
+                    case 'guru_nasional':
+                        Mail::to($user->email)->send(new \App\Mail\GuruNasionalMail($user));
+                        break;
+                    case 'hari_ibu':
+                        Mail::to($user->email)->send(new \App\Mail\HariIbuMail($user));
+                        break;
+                    case 'natal':
+                        Mail::to($user->email)->send(new \App\Mail\NatalMail($user));
+                        break;
+                    case 'kemerdekaan_ri':
+                        Mail::to($user->email)->send(new \App\Mail\KemerdekaanRiMail($user));
+                        break;
+                    case 'maulid_nabi':
+                        Mail::to($user->email)->send(new \App\Mail\MaulidNabiMail($user));
+                        break;
+                    case 'tahun_baru_islam':
+                        Mail::to($user->email)->send(new \App\Mail\TahunBaruIslamMail($user));
+                        break;
                     case 'custom':
                         Mail::to($user->email)->send(new CustomEmailBlastMail(
                             $user,
@@ -201,7 +234,7 @@ class EmailBlastController extends Controller
     public function initProgress(Request $request)
     {
         $validationRules = [
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam',
             'target_user' => 'required|in:all,verified,premium,free,new,unverified',
         ];
 
@@ -269,7 +302,7 @@ class EmailBlastController extends Controller
     {
         $validationRules = [
             'user_id' => 'required|exists:users,id',
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam',
         ];
 
         if ($request->email_type === 'custom') {
@@ -323,6 +356,39 @@ class EmailBlastController extends Controller
                     break;
                 case 'follow_up_feature':
                     Mail::to($user->email)->send(new \App\Mail\FollowUpFeatureAnnouncementMail($user));
+                    break;
+                case 'idul_adha':
+                    Mail::to($user->email)->send(new \App\Mail\IdulAdhaMail($user));
+                    break;
+                case 'waisak':
+                    Mail::to($user->email)->send(new \App\Mail\WaisakMail($user));
+                    break;
+                case 'pancasila':
+                    Mail::to($user->email)->send(new \App\Mail\PancasilaMail($user));
+                    break;
+                case 'sumpah_pemuda':
+                    Mail::to($user->email)->send(new \App\Mail\SumpahPemudaMail($user));
+                    break;
+                case 'pahlawan':
+                    Mail::to($user->email)->send(new \App\Mail\PahlawanMail($user));
+                    break;
+                case 'guru_nasional':
+                    Mail::to($user->email)->send(new \App\Mail\GuruNasionalMail($user));
+                    break;
+                case 'hari_ibu':
+                    Mail::to($user->email)->send(new \App\Mail\HariIbuMail($user));
+                    break;
+                case 'natal':
+                    Mail::to($user->email)->send(new \App\Mail\NatalMail($user));
+                    break;
+                case 'kemerdekaan_ri':
+                    Mail::to($user->email)->send(new \App\Mail\KemerdekaanRiMail($user));
+                    break;
+                case 'maulid_nabi':
+                    Mail::to($user->email)->send(new \App\Mail\MaulidNabiMail($user));
+                    break;
+                case 'tahun_baru_islam':
+                    Mail::to($user->email)->send(new \App\Mail\TahunBaruIslamMail($user));
                     break;
                 case 'custom':
                     Mail::to($user->email)->send(new CustomEmailBlastMail(
@@ -395,7 +461,7 @@ class EmailBlastController extends Controller
     public function preview(Request $request)
     {
         $validationRules = [
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam',
         ];
 
         if ($request->email_type === 'custom') {
@@ -448,6 +514,39 @@ class EmailBlastController extends Controller
                     break;
                 case 'follow_up_feature':
                     $mailable = new \App\Mail\FollowUpFeatureAnnouncementMail($user);
+                    break;
+                case 'idul_adha':
+                    $mailable = new \App\Mail\IdulAdhaMail($user);
+                    break;
+                case 'waisak':
+                    $mailable = new \App\Mail\WaisakMail($user);
+                    break;
+                case 'pancasila':
+                    $mailable = new \App\Mail\PancasilaMail($user);
+                    break;
+                case 'sumpah_pemuda':
+                    $mailable = new \App\Mail\SumpahPemudaMail($user);
+                    break;
+                case 'pahlawan':
+                    $mailable = new \App\Mail\PahlawanMail($user);
+                    break;
+                case 'guru_nasional':
+                    $mailable = new \App\Mail\GuruNasionalMail($user);
+                    break;
+                case 'hari_ibu':
+                    $mailable = new \App\Mail\HariIbuMail($user);
+                    break;
+                case 'natal':
+                    $mailable = new \App\Mail\NatalMail($user);
+                    break;
+                case 'kemerdekaan_ri':
+                    $mailable = new \App\Mail\KemerdekaanRiMail($user);
+                    break;
+                case 'maulid_nabi':
+                    $mailable = new \App\Mail\MaulidNabiMail($user);
+                    break;
+                case 'tahun_baru_islam':
+                    $mailable = new \App\Mail\TahunBaruIslamMail($user);
                     break;
                 case 'custom':
                     $mailable = new CustomEmailBlastMail(

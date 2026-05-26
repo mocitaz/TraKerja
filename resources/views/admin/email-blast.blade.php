@@ -289,6 +289,300 @@
                                 </div>
                             </label>
 
+                            <!-- Hari Peringatan Nasional/Internasional -->
+                            <div class="col-span-1 md:col-span-2 pt-2 border-t border-slate-100 mt-2">
+                                <button type="button" onclick="toggleHariPeringatan()" class="w-full flex items-center justify-between p-4 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center">
+                                            <i class="ph-duotone ph-calendar-star text-lg"></i>
+                                        </div>
+                                        <div class="text-left flex-1">
+                                            <div class="flex items-center gap-2">
+                                                <h3 class="text-sm font-bold text-slate-900">Hari Peringatan Nasional/Internasional</h3>
+                                                <span class="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-700 rounded-md">Efektif: Mei-Desember 2026</span>
+                                            </div>
+                                            <p class="text-xs text-slate-500 mt-0.5">Template email untuk perayaan dan hari besar.</p>
+                                        </div>
+                                    </div>
+                                    <i id="hariPeringatanIcon" class="ph-bold ph-caret-down text-slate-400 transition-transform"></i>
+                                </button>
+                                
+                                @php
+                                    $now = \Carbon\Carbon::now()->startOfDay();
+                                    
+                                    $events = [
+                                        'idul_adha' => ['date' => \Carbon\Carbon::parse('2026-05-27'), 'label' => '27 Mei 2026'],
+                                        'waisak' => ['date' => \Carbon\Carbon::parse('2026-05-31'), 'label' => '31 Mei 2026'],
+                                        'pancasila' => ['date' => \Carbon\Carbon::parse('2026-06-01'), 'label' => '1 Jun 2026'],
+                                        'tahun_baru_islam' => ['date' => \Carbon\Carbon::parse('2026-06-16'), 'label' => '16 Jun 2026'],
+                                        'kemerdekaan_ri' => ['date' => \Carbon\Carbon::parse('2026-08-17'), 'label' => '17 Agu 2026'],
+                                        'maulid_nabi' => ['date' => \Carbon\Carbon::parse('2026-08-25'), 'label' => '25 Agu 2026'],
+                                        'sumpah_pemuda' => ['date' => \Carbon\Carbon::parse('2026-10-28'), 'label' => '28 Okt 2026'],
+                                        'pahlawan' => ['date' => \Carbon\Carbon::parse('2026-11-10'), 'label' => '10 Nov 2026'],
+                                        'guru_nasional' => ['date' => \Carbon\Carbon::parse('2026-11-25'), 'label' => '25 Nov 2026'],
+                                        'hari_ibu' => ['date' => \Carbon\Carbon::parse('2026-12-22'), 'label' => '22 Des 2026'],
+                                        'natal' => ['date' => \Carbon\Carbon::parse('2026-12-25'), 'label' => '25 Des 2026'],
+                                    ];
+
+                                    foreach($events as $key => &$event) {
+                                        if ($now->isSameDay($event['date'])) {
+                                            $event['status'] = 'Hari Ini';
+                                            $event['badge_class'] = 'bg-blue-100 text-blue-700 border border-blue-200';
+                                        } elseif ($now->gt($event['date'])) {
+                                            $event['status'] = 'Lewat';
+                                            $event['badge_class'] = 'bg-slate-100 text-slate-500 border border-slate-200';
+                                        } else {
+                                            $event['status'] = 'Akan Datang';
+                                            $event['badge_class'] = 'bg-emerald-100 text-emerald-700 border border-emerald-200';
+                                        }
+                                    }
+                                @endphp
+                                
+                                <div id="hariPeringatanContainer" class="hidden mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- Idul Adha -->
+                                    <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                        <input type="radio" name="email_type" value="idul_adha" class="sr-only" required>
+                                        <div class="flex items-center gap-4 w-full">
+                                            <div class="w-10 h-10 rounded-xl bg-green-50 text-green-600 flex items-center justify-center  transition-transform">
+                                                <i class="ph-duotone ph-mosque text-2xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="flex items-center gap-2">
+                                                    <h3 class="text-sm font-bold text-slate-900">Idul Adha</h3>
+                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md {{ $events['idul_adha']['badge_class'] }}">
+                                                        {{ $events['idul_adha']['label'] }} &bull; {{ $events['idul_adha']['status'] }}
+                                                    </span>
+                                                </div>
+                                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Ucapan Selamat Hari Raya Idul Adha.</p>
+                                            </div>
+                                            <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                                <i class="ph-bold ph-check text-xs"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Waisak -->
+                                    <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                        <input type="radio" name="email_type" value="waisak" class="sr-only" required>
+                                        <div class="flex items-center gap-4 w-full">
+                                            <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center  transition-transform">
+                                                <i class="ph-duotone ph-flower-lotus text-2xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="flex items-center gap-2">
+                                                    <h3 class="text-sm font-bold text-slate-900">Hari Raya Waisak</h3>
+                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md {{ $events['waisak']['badge_class'] }}">
+                                                        {{ $events['waisak']['label'] }} &bull; {{ $events['waisak']['status'] }}
+                                                    </span>
+                                                </div>
+                                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Ucapan Hari Raya Tri Suci Waisak 2570 BE.</p>
+                                            </div>
+                                            <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                                <i class="ph-bold ph-check text-xs"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Pancasila -->
+                                    <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                        <input type="radio" name="email_type" value="pancasila" class="sr-only" required>
+                                        <div class="flex items-center gap-4 w-full">
+                                            <div class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center  transition-transform">
+                                                <i class="ph-duotone ph-flag-banner text-2xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="flex items-center gap-2">
+                                                    <h3 class="text-sm font-bold text-slate-900">Hari Lahir Pancasila</h3>
+                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md {{ $events['pancasila']['badge_class'] }}">
+                                                        {{ $events['pancasila']['label'] }} &bull; {{ $events['pancasila']['status'] }}
+                                                    </span>
+                                                </div>
+                                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Ucapan peringatan Hari Lahir Pancasila.</p>
+                                            </div>
+                                            <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                                <i class="ph-bold ph-check text-xs"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Tahun Baru Islam -->
+                                    <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                        <input type="radio" name="email_type" value="tahun_baru_islam" class="sr-only" required>
+                                        <div class="flex items-center gap-4 w-full">
+                                            <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center transition-transform">
+                                                <i class="ph-duotone ph-moon-stars text-2xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="flex items-center gap-2">
+                                                    <h3 class="text-sm font-bold text-slate-900">Tahun Baru Islam</h3>
+                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md {{ $events['tahun_baru_islam']['badge_class'] }}">
+                                                        {{ $events['tahun_baru_islam']['label'] }} &bull; {{ $events['tahun_baru_islam']['status'] }}
+                                                    </span>
+                                                </div>
+                                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Ucapan peringatan 1 Muharram.</p>
+                                            </div>
+                                            <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                                <i class="ph-bold ph-check text-xs"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Kemerdekaan RI -->
+                                    <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                        <input type="radio" name="email_type" value="kemerdekaan_ri" class="sr-only" required>
+                                        <div class="flex items-center gap-4 w-full">
+                                            <div class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center transition-transform">
+                                                <i class="ph-duotone ph-flag text-2xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="flex items-center gap-2">
+                                                    <h3 class="text-sm font-bold text-slate-900">HUT RI</h3>
+                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md {{ $events['kemerdekaan_ri']['badge_class'] }}">
+                                                        {{ $events['kemerdekaan_ri']['label'] }} &bull; {{ $events['kemerdekaan_ri']['status'] }}
+                                                    </span>
+                                                </div>
+                                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Ucapan peringatan Kemerdekaan RI.</p>
+                                            </div>
+                                            <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                                <i class="ph-bold ph-check text-xs"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Maulid Nabi -->
+                                    <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                        <input type="radio" name="email_type" value="maulid_nabi" class="sr-only" required>
+                                        <div class="flex items-center gap-4 w-full">
+                                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center transition-transform">
+                                                <i class="ph-duotone ph-mosque text-2xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="flex items-center gap-2">
+                                                    <h3 class="text-sm font-bold text-slate-900">Maulid Nabi</h3>
+                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md {{ $events['maulid_nabi']['badge_class'] }}">
+                                                        {{ $events['maulid_nabi']['label'] }} &bull; {{ $events['maulid_nabi']['status'] }}
+                                                    </span>
+                                                </div>
+                                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Ucapan peringatan Maulid Nabi.</p>
+                                            </div>
+                                            <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                                <i class="ph-bold ph-check text-xs"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Sumpah Pemuda -->
+                                    <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                        <input type="radio" name="email_type" value="sumpah_pemuda" class="sr-only" required>
+                                        <div class="flex items-center gap-4 w-full">
+                                            <div class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center transition-transform">
+                                                <i class="ph-duotone ph-users-three text-2xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="flex items-center gap-2">
+                                                    <h3 class="text-sm font-bold text-slate-900">Hari Sumpah Pemuda</h3>
+                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md {{ $events['sumpah_pemuda']['badge_class'] }}">
+                                                        {{ $events['sumpah_pemuda']['label'] }} &bull; {{ $events['sumpah_pemuda']['status'] }}
+                                                    </span>
+                                                </div>
+                                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Ucapan peringatan Sumpah Pemuda.</p>
+                                            </div>
+                                            <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                                <i class="ph-bold ph-check text-xs"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Hari Pahlawan -->
+                                    <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                        <input type="radio" name="email_type" value="pahlawan" class="sr-only" required>
+                                        <div class="flex items-center gap-4 w-full">
+                                            <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center transition-transform">
+                                                <i class="ph-duotone ph-medal text-2xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="flex items-center gap-2">
+                                                    <h3 class="text-sm font-bold text-slate-900">Hari Pahlawan</h3>
+                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md {{ $events['pahlawan']['badge_class'] }}">
+                                                        {{ $events['pahlawan']['label'] }} &bull; {{ $events['pahlawan']['status'] }}
+                                                    </span>
+                                                </div>
+                                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Ucapan peringatan Hari Pahlawan.</p>
+                                            </div>
+                                            <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                                <i class="ph-bold ph-check text-xs"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Hari Guru Nasional -->
+                                    <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                        <input type="radio" name="email_type" value="guru_nasional" class="sr-only" required>
+                                        <div class="flex items-center gap-4 w-full">
+                                            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center transition-transform">
+                                                <i class="ph-duotone ph-student text-2xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="flex items-center gap-2">
+                                                    <h3 class="text-sm font-bold text-slate-900">Hari Guru Nasional</h3>
+                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md {{ $events['guru_nasional']['badge_class'] }}">
+                                                        {{ $events['guru_nasional']['label'] }} &bull; {{ $events['guru_nasional']['status'] }}
+                                                    </span>
+                                                </div>
+                                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Ucapan peringatan Hari Guru Nasional.</p>
+                                            </div>
+                                            <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                                <i class="ph-bold ph-check text-xs"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Hari Ibu -->
+                                    <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                        <input type="radio" name="email_type" value="hari_ibu" class="sr-only" required>
+                                        <div class="flex items-center gap-4 w-full">
+                                            <div class="w-10 h-10 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center transition-transform">
+                                                <i class="ph-duotone ph-heart text-2xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="flex items-center gap-2">
+                                                    <h3 class="text-sm font-bold text-slate-900">Hari Ibu</h3>
+                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md {{ $events['hari_ibu']['badge_class'] }}">
+                                                        {{ $events['hari_ibu']['label'] }} &bull; {{ $events['hari_ibu']['status'] }}
+                                                    </span>
+                                                </div>
+                                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Ucapan peringatan Hari Ibu.</p>
+                                            </div>
+                                            <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                                <i class="ph-bold ph-check text-xs"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Natal -->
+                                    <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                        <input type="radio" name="email_type" value="natal" class="sr-only" required>
+                                        <div class="flex items-center gap-4 w-full">
+                                            <div class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center transition-transform">
+                                                <i class="ph-duotone ph-tree text-2xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="flex items-center gap-2">
+                                                    <h3 class="text-sm font-bold text-slate-900">Hari Raya Natal</h3>
+                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md {{ $events['natal']['badge_class'] }}">
+                                                        {{ $events['natal']['label'] }} &bull; {{ $events['natal']['status'] }}
+                                                    </span>
+                                                </div>
+                                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Ucapan Hari Raya Natal.</p>
+                                            </div>
+                                            <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                                <i class="ph-bold ph-check text-xs"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
 
                             <!-- Custom Email -->
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
@@ -882,6 +1176,17 @@
             'ai_photo': 'AI Photo Announcement',
             'follow_up_feature': 'Follow Up Feature',
             're_engagement': 'Re-engagement',
+            'idul_adha': 'Idul Adha',
+            'waisak': 'Hari Raya Waisak',
+            'pancasila': 'Hari Lahir Pancasila',
+            'tahun_baru_islam': 'Tahun Baru Islam',
+            'kemerdekaan_ri': 'Hari Kemerdekaan RI',
+            'maulid_nabi': 'Maulid Nabi Muhammad SAW',
+            'sumpah_pemuda': 'Hari Sumpah Pemuda',
+            'pahlawan': 'Hari Pahlawan',
+            'guru_nasional': 'Hari Guru Nasional',
+            'hari_ibu': 'Hari Ibu',
+            'natal': 'Hari Raya Natal',
             'custom': 'Custom Email'
         }[emailType] || 'Email Blast';
         
@@ -1166,6 +1471,19 @@
             // Send to next user
             sendNextEmail();
         });
+    }
+
+    function toggleHariPeringatan() {
+        const container = document.getElementById('hariPeringatanContainer');
+        const icon = document.getElementById('hariPeringatanIcon');
+        
+        if (container.classList.contains('hidden')) {
+            container.classList.remove('hidden');
+            icon.classList.add('rotate-180');
+        } else {
+            container.classList.add('hidden');
+            icon.classList.remove('rotate-180');
+        }
     }
 </script>
 </x-admin-layout>
