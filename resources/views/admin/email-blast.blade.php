@@ -289,6 +289,23 @@
                                 </div>
                             </label>
 
+                            <!-- Maintenance Completed -->
+                            <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                <input type="radio" name="email_type" value="maintenance_completed" class="sr-only" required>
+                                <div class="flex items-center gap-4 w-full">
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center transition-transform">
+                                        <i class="ph-duotone ph-check-circle text-2xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-sm font-bold text-slate-900">Maintenance Selesai</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Pemberitahuan bahwa TraKerja sudah bisa digunakan kembali.</p>
+                                    </div>
+                                    <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                        <i class="ph-bold ph-check text-xs"></i>
+                                    </div>
+                                </div>
+                            </label>
+
                             <!-- Hari Peringatan Nasional/Internasional -->
                             <div class="col-span-1 md:col-span-2 pt-2 border-t border-slate-100 mt-2">
                                 <button type="button" onclick="toggleHariPeringatan()" class="w-full flex items-center justify-between p-4 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 transition-colors">
