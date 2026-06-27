@@ -12,8 +12,16 @@ class ResumeParserController extends Controller
     public function importPdf(Request $request)
     {
         $request->validate([
-            'resume' => 'required|file|mimes:pdf|max:10240',
+            'resume' => 'required|file|max:10240',
         ]);
+
+        $file = $request->file('resume');
+        if (strtolower($file->getClientOriginalExtension()) !== 'pdf') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Format file harus berupa PDF.',
+            ], 422);
+        }
 
         $user = Auth::user();
 

@@ -306,7 +306,17 @@
             },
             body: formData
         })
-        .then(res => res.json())
+        .then(async res => {
+            if (!res.ok) {
+                if (res.status === 422) {
+                    const errData = await res.json();
+                    throw new Error(errData.message || 'Validation error');
+                }
+                const errText = await res.text();
+                throw new Error('Server error (' + res.status + '): ' + errText.substring(0, 100));
+            }
+            return res.json();
+        })
         .then(data => {
             if (btn) btn.disabled = false;
             if (text) text.textContent = 'Import PDF';
@@ -320,7 +330,8 @@
         .catch(err => {
             if (btn) btn.disabled = false;
             if (text) text.textContent = 'Import PDF';
-            alert('Terjadi kesalahan saat mengunggah file.');
+            console.error('Import PDF Error:', err);
+            alert('Gagal mengimpor CV: ' + err.message);
         });
     };
     </script>
