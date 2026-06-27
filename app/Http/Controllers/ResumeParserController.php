@@ -41,7 +41,7 @@ class ResumeParserController extends Controller
             $text = str_replace("\r", "", $text);
             $lines = explode("\n", $text);
             $lines = array_map('trim', $lines);
-            $lines = array_filter($lines);
+            $lines = array_values(array_filter($lines));
  
             $experiences = [];
             $projects = [];
