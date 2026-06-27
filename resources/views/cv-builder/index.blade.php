@@ -414,17 +414,31 @@
         })
         .then(data => {
             if (data.success) {
-                alert(data.message);
-                window.location.reload();
+                if (window.showToast) {
+                    window.showToast('success', 'CV Builder', data.message || 'CV PDF berhasil diproses dan di-impor!');
+                } else {
+                    alert(data.message);
+                }
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1800);
             } else {
-                alert(data.message || 'Gagal mengimpor file PDF.');
+                if (window.showToast) {
+                    window.showToast('error', 'CV Builder', data.message || 'Gagal mengimpor file PDF.');
+                } else {
+                    alert(data.message || 'Gagal mengimpor file PDF.');
+                }
                 if (dropzone) dropzone.classList.remove('hidden');
                 if (progressState) progressState.classList.add('hidden');
             }
         })
         .catch(err => {
             console.error('Import PDF Error:', err);
-            alert('Gagal mengimpor CV: ' + err.message);
+            if (window.showToast) {
+                window.showToast('error', 'CV Builder', 'Gagal mengimpor CV: ' + err.message);
+            } else {
+                alert('Gagal mengimpor CV: ' + err.message);
+            }
             if (dropzone) dropzone.classList.remove('hidden');
             if (progressState) progressState.classList.add('hidden');
         });
