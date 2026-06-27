@@ -117,20 +117,22 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-wrap items-center gap-5">
+                    <div class="flex flex-wrap items-center gap-3">
                         <div class="flex flex-col md:items-end">
                             <span class="text-[8px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Schedule</span>
                             <span class="text-[11px] font-semibold text-zinc-700 leading-none">{{ $interview->interview_date->format('D, d M • H:i') }}</span>
                         </div>
-                        <div class="flex flex-col md:items-end min-w-[100px]">
-                            <span class="text-[8px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Countdown</span>
-                            @if($interview->interview_date->isFuture())
-                                <span class="text-[11px] font-bold text-primary-650 /* [BRAND_PRIMARY] */ leading-none">{{ $interview->interview_date->diffForHumans() }}</span>
-                            @else
-                                <span class="text-[11px] text-zinc-450 italic leading-none">Past Event</span>
-                            @endif
+                        <div class="flex items-center gap-1">
+                            <a href="{{ \App\Services\CalendarEventService::googleCalendarUrl($interview->position . ' Interview at ' . $interview->company_name, $interview->interview_date) }}" target="_blank" onclick="event.stopPropagation();" class="px-2 py-1 bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-700 rounded text-[9.5px] font-bold flex items-center gap-1 shadow-3xs" title="Add to Google Calendar">
+                                <i class="ph-bold ph-calendar text-xs text-emerald-600"></i>
+                                <span>Google Cal</span>
+                            </a>
+                            <a href="{{ \App\Services\CalendarEventService::outlookCalendarUrl($interview->position . ' Interview at ' . $interview->company_name, $interview->interview_date) }}" target="_blank" onclick="event.stopPropagation();" class="px-2 py-1 bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-700 rounded text-[9.5px] font-bold flex items-center gap-1 shadow-3xs" title="Add to Outlook Calendar">
+                                <i class="ph-bold ph-envelope-simple text-xs text-blue-600"></i>
+                                <span>Outlook</span>
+                            </a>
                         </div>
-                        <i class="ph ph-arrow-right text-zinc-350 group-hover:text-zinc-700 group-hover:translate-x-0.5 transition-transform"></i>
+                        <i class="ph ph-arrow-right text-zinc-350 group-hover:text-zinc-700 group-hover:translate-x-0.5 transition-transform ml-1"></i>
                     </div>
                 </div>
             @empty

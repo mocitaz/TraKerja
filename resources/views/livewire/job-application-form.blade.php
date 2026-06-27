@@ -162,10 +162,16 @@
         {{-- Row 6: App Link & Date --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-                <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Job Link (URL)</label>
+                <div class="flex items-center justify-between mb-1">
+                    <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Job Link (URL)</label>
+                    <button type="button" onclick="fetchJobDetailsFromUrl()" id="scrape-btn" class="px-2 py-0.5 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded text-[9px] font-bold transition-all flex items-center gap-1 active:scale-97">
+                        <i class="ph-bold ph-sparkle text-[10px]"></i>
+                        <span>Auto-Fill Info</span>
+                    </button>
+                </div>
                 <div class="relative group">
                     <i class="ph-bold ph-link absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-400 text-sm group-focus-within:text-zinc-700 transition-colors"></i>
-                    <input wire:model.live="platform_link" type="url" class="block w-full pl-8 pr-3 h-[32px] bg-zinc-50/40 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 focus:ring-1 focus:ring-primary-500/20 focus:bg-white focus:border-primary-500 transition-all outline-none" placeholder="https://...">
+                    <input id="job-url-input" wire:model.live="platform_link" type="url" class="block w-full pl-8 pr-3 h-[32px] bg-zinc-50/40 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 focus:ring-1 focus:ring-primary-500/20 focus:bg-white focus:border-primary-500 transition-all outline-none" placeholder="https://...">
                 </div>
                 @error('platform_link') <p class="text-rose-500 text-[9px] font-semibold mt-1 ml-0.5">{{ $message }}</p> @enderror
             </div>
@@ -250,3 +256,55 @@
         </div>
     </form>
 </div>
+
+<script>
+window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
+    const urlInput = document.getElementById('job-url-input');
+    const url = urlInput ? urlInput.value.trim() : '';
+    if (!url) {
+        alert('Mohon masukkan URL lowongan kerja terlebih dahulu!');
+        return;
+    }
+    const btn = document.getElementById('scrape-btn');
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="ph ph-spinner animate-spin text-[10px]"></i> <span>Fetching...</span>';
+    }
+
+    fetch('/jobs/scrape-url', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ url: url })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="ph-bold ph-sparkle text-[10px]"></i> <span>Auto-Fill Info</span>';
+        }
+        if (data.success) {
+            if (data.company_name && window.Livewire) {
+                @this.set('company_name', data.company_name);
+            }
+            if (data.job_title && window.Livewire) {
+                @this.set('position', data.job_title);
+            }
+            if (data.description && window.Livewire) {
+                @this.set('notes', data.description);
+            }
+        } else {
+            alert(data.message || 'Gagal mengambil informasi dari URL.');
+        }
+    })
+    .catch(err => {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="ph-bold ph-sparkle text-[10px]"></i> <span>Auto-Fill Info</span>';
+        }
+        alert('Gagal mengambil data dari URL.');
+    });
+};
+</script>

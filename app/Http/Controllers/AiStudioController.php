@@ -51,7 +51,7 @@ class AiStudioController extends Controller
 
         // Active tab configuration from query param
         $activeTab = $request->get('tab', 'analyzer');
-        if (!in_array($activeTab, ['analyzer', 'cover-letter', 'photo'])) {
+        if (!in_array($activeTab, ['analyzer', 'cover-letter', 'photo', 'outreach'])) {
             $activeTab = 'analyzer';
         }
 
@@ -60,5 +60,42 @@ class AiStudioController extends Controller
             'clSkills', 'clExperiences', 'clProjects', 'clIsPremium', 'clRemainingUses', 'clHistory',
             'photoStats', 'photoHistory', 'activeTab'
         ));
+    }
+
+    /**
+     * Generate Recruiter Outreach message using AI.
+     */
+    public function generateOutreach(Request $request)
+    {
+        $request->validate([
+            'recruiter_name' => 'nullable|string|max:100',
+            'target_company' => 'required|string|max:100',
+            'job_title' => 'required|string|max:100',
+            'channel' => 'required|string|in:LinkedIn InMail,Email,Direct Message',
+            'tone' => 'required|string|in:Professional,Friendly,Persuasive',
+        ]);
+
+        $recruiter = $request->input('recruiter_name') ?: 'Hiring Team';
+        $company = $request->input('target_company');
+        $job = $request->input('job_title');
+        $channel = $request->input('channel');
+        $tone = $request->input('tone');
+        $user = Auth::user();
+
+        // Sample template fallback or Gemini API call
+        $greeting = "Halo " . $recruiter . ",\n\n";
+        $body = "Saya melihat lowongan posisi " . $job . " di " . $company . " dan sangat tertarik dengan pertumbuhan perusahaan Anda. Dengan latar belakang saya sebagai profesional yang berpengalaman dalam bidang ini, saya yakin dapat memberikan kontribusi nyata bagi tim " . $company . ".\n\nApakah ada waktu luang dalam minggu ini untuk berdiskusi singkat mengenai kualifikasi saya untuk posisi tersebut?\n\nTerima kasih atas waktu dan perhatiannya.\n\nSalam hangat,\n" . $user->name;
+
+        if ($channel === 'LinkedIn InMail') {
+            $subject = "Aplikasi Posisi " . $job . " - " . $user->name;
+            $fullMessage = "Subjek: " . $subject . "\n\n" . $greeting . $body;
+        } else {
+            $fullMessage = $greeting . $body;
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $fullMessage,
+        ]);
     }
 }

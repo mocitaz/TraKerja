@@ -27,7 +27,7 @@
             </div>
 
             <!-- Standardized Tab Switcher (Lavender Outline Theme) -->
-            <div class="flex p-0.5 bg-white border border-zinc-200/70 rounded-md shadow-3xs mb-6 max-w-md">
+            <div class="flex p-0.5 bg-white border border-zinc-200/70 rounded-md shadow-3xs mb-6 max-w-xl">
                 <button @click="activeTab = 'analyzer'; updateUrl('analyzer')" 
                         :class="activeTab === 'analyzer' ? 'bg-primary-50 text-zinc-800 border border-primary-200/60 font-bold shadow-3xs' : 'text-zinc-500 hover:bg-zinc-50 font-semibold'"
                         class="flex-1 justify-center flex items-center gap-1.5 py-1.5 text-[11px] rounded transition-all focus:outline-none">
@@ -45,6 +45,12 @@
                         class="flex-1 justify-center flex items-center gap-1.5 py-1.5 text-[11px] rounded transition-all focus:outline-none">
                     <i class="ph ph-camera text-xs"></i>
                     <span>Photo Studio</span>
+                </button>
+                <button @click="activeTab = 'outreach'; updateUrl('outreach')" 
+                        :class="activeTab === 'outreach' ? 'bg-primary-50 text-zinc-800 border border-primary-200/60 font-bold shadow-3xs' : 'text-zinc-500 hover:bg-zinc-50 font-semibold'"
+                        class="flex-1 justify-center flex items-center gap-1.5 py-1.5 text-[11px] rounded transition-all focus:outline-none">
+                    <i class="ph ph-paper-plane-tilt text-xs"></i>
+                    <span>Outreach</span>
                 </button>
             </div>
 
@@ -696,6 +702,96 @@
                         </div>
                     </div>
                 </div>
+            <!-- ========================================== -->
+            <!-- TAB 4: RECRUITER OUTREACH GENERATOR -->
+            <!-- ========================================== -->
+            <div x-show="activeTab === 'outreach'" class="space-y-6" style="display:none;" x-cloak>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                    <!-- Left Workspace: Input Studio Card -->
+                    <div class="lg:col-span-6 flex flex-col">
+                        <form id="outreachForm" onsubmit="generateOutreach(event)" class="bg-white border border-zinc-200/60 rounded-xl shadow-3xs overflow-hidden flex flex-col justify-between flex-1">
+                            <div class="p-5 space-y-4">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <div class="w-5 h-5 bg-zinc-100 border border-zinc-200 rounded flex items-center justify-center text-zinc-700 font-bold text-[10px]">1</div>
+                                    <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Outreach Target Details</h3>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Recruiter / Hiring Manager Name</label>
+                                        <input type="text" id="outreach_recruiter" placeholder="e.g. Sarah Jenkins (Optional)" class="block w-full px-3 h-[32px] bg-zinc-50/40 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 focus:ring-1 focus:ring-primary-500/20 focus:bg-white focus:border-primary-500 transition-all outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Target Company *</label>
+                                        <input type="text" id="outreach_company" required placeholder="e.g. Tokopedia" class="block w-full px-3 h-[32px] bg-zinc-50/40 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 focus:ring-1 focus:ring-primary-500/20 focus:bg-white focus:border-primary-500 transition-all outline-none">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Applied / Target Job Title *</label>
+                                    <input type="text" id="outreach_job" required placeholder="e.g. Senior Product Designer" class="block w-full px-3 h-[32px] bg-zinc-50/40 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 focus:ring-1 focus:ring-primary-500/20 focus:bg-white focus:border-primary-500 transition-all outline-none">
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Outreach Channel</label>
+                                        <select id="outreach_channel" class="block w-full px-2.5 py-0 h-[32px] bg-zinc-50/40 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 outline-none focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-all cursor-pointer">
+                                            <option value="LinkedIn InMail">LinkedIn InMail</option>
+                                            <option value="Email">Direct Email</option>
+                                            <option value="Direct Message">Direct Message (DM)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Communication Tone</label>
+                                        <select id="outreach_tone" class="block w-full px-2.5 py-0 h-[32px] bg-zinc-50/40 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 outline-none focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-all cursor-pointer">
+                                            <option value="Professional">Professional & Polished</option>
+                                            <option value="Friendly">Friendly & Enthusiastic</option>
+                                            <option value="Persuasive">Persuasive & Direct</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-zinc-50/50 border-t border-zinc-150/60 flex items-center justify-between">
+                                <span class="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider">Instant AI Outreach</span>
+                                <button type="submit" id="submit-btn-outreach" class="px-4 h-[32px] bg-primary-50 text-zinc-800 hover:bg-primary-100 border border-primary-200/60 text-xs font-bold rounded-md shadow-3xs transition-all active:scale-97 flex items-center gap-1.5 focus:outline-none">
+                                    <span id="submit-text-outreach">Generate Outreach Message</span>
+                                    <span id="loading-spinner-outreach" class="hidden"><i class="ph ph-spinner animate-spin text-xs"></i></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Right Output Preview Card -->
+                    <div class="lg:col-span-6 flex flex-col">
+                        <div class="bg-white border border-zinc-200/60 rounded-xl shadow-3xs p-5 flex flex-col justify-between flex-1 relative min-h-[350px]">
+                            <div class="flex items-center justify-between pb-3 border-b border-zinc-150/60 mb-4">
+                                <div class="flex items-center gap-2">
+                                    <i class="ph-bold ph-paper-plane-tilt text-zinc-700 text-sm"></i>
+                                    <h3 class="text-xs font-bold text-zinc-800">Generated Message Preview</h3>
+                                </div>
+                                <button type="button" onclick="copyOutreachMessage()" id="copy-outreach-btn" class="hidden px-2.5 py-1 bg-primary-50 hover:bg-primary-100 border border-primary-200/60 text-zinc-800 text-[10px] font-bold rounded transition-all items-center gap-1">
+                                    <i id="copy-outreach-icon" class="ph-bold ph-copy text-xs"></i>
+                                    <span id="copy-outreach-text">Copy Message</span>
+                                </button>
+                            </div>
+
+                            <!-- Empty / Placeholder State -->
+                            <div id="outreach-empty" class="flex-1 flex flex-col items-center justify-center text-center p-8">
+                                <div class="w-10 h-10 bg-zinc-50 border border-zinc-200/60 rounded-lg flex items-center justify-center text-zinc-400 mb-2 shadow-3xs">
+                                    <i class="ph ph-paper-plane-tilt text-lg"></i>
+                                </div>
+                                <p class="text-xs font-bold text-zinc-700">No Outreach Drafted Yet</p>
+                                <p class="text-[10px] text-zinc-400 max-w-xs mt-1">Fill out the target details on the left and click generate to build a personalized cold message.</p>
+                            </div>
+
+                            <!-- Output Box -->
+                            <div id="outreach-result" class="hidden flex-1 flex flex-col justify-between">
+                                <textarea id="outreach-text-content" readonly rows="10" class="w-full bg-zinc-50 p-3.5 border border-zinc-200/80 rounded-lg text-xs font-medium text-zinc-800 leading-relaxed outline-none resize-none select-all"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -1023,5 +1119,76 @@
                 }, 4000);
             });
         }
+
+        window.generateOutreach = window.generateOutreach || function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn-outreach');
+            const spinner = document.getElementById('loading-spinner-outreach');
+            const text = document.getElementById('submit-text-outreach');
+            const emptyState = document.getElementById('outreach-empty');
+            const resultBox = document.getElementById('outreach-result');
+            const textContent = document.getElementById('outreach-text-content');
+            const copyBtn = document.getElementById('copy-outreach-btn');
+
+            if (btn) btn.disabled = true;
+            if (spinner) spinner.classList.remove('hidden');
+            if (text) text.textContent = 'Generating...';
+
+            const payload = {
+                recruiter_name: document.getElementById('outreach_recruiter')?.value || '',
+                target_company: document.getElementById('outreach_company')?.value || '',
+                job_title: document.getElementById('outreach_job')?.value || '',
+                channel: document.getElementById('outreach_channel')?.value || 'LinkedIn InMail',
+                tone: document.getElementById('outreach_tone')?.value || 'Professional'
+            };
+
+            fetch('/ai-studio/outreach', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (btn) btn.disabled = false;
+                if (spinner) spinner.classList.add('hidden');
+                if (text) text.textContent = 'Generate Outreach Message';
+
+                if (data.success && data.message) {
+                    if (emptyState) emptyState.classList.add('hidden');
+                    if (resultBox) resultBox.classList.remove('hidden');
+                    if (textContent) textContent.value = data.message;
+                    if (copyBtn) {
+                        copyBtn.classList.remove('hidden');
+                        copyBtn.classList.add('flex');
+                    }
+                } else {
+                    alert(data.message || 'Gagal menggenerasi pesan outreach.');
+                }
+            })
+            .catch(err => {
+                if (btn) btn.disabled = false;
+                if (spinner) spinner.classList.add('hidden');
+                if (text) text.textContent = 'Generate Outreach Message';
+                alert('Gagal menghubungi server.');
+            });
+        };
+
+        window.copyOutreachMessage = window.copyOutreachMessage || function() {
+            const textContent = document.getElementById('outreach-text-content');
+            if (!textContent) return;
+            navigator.clipboard.writeText(textContent.value).then(() => {
+                const btnText = document.getElementById('copy-outreach-text');
+                const btnIcon = document.getElementById('copy-outreach-icon');
+                if (btnText) btnText.textContent = 'Copied!';
+                if (btnIcon) btnIcon.className = 'ph-bold ph-check text-xs';
+                setTimeout(() => {
+                    if (btnText) btnText.textContent = 'Copy Message';
+                    if (btnIcon) btnIcon.className = 'ph-bold ph-copy text-xs';
+                }, 2000);
+            });
+        };
     </script>
 </x-app-layout>

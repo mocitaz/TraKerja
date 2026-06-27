@@ -60,26 +60,34 @@
                                 <p class="text-xs font-semibold text-zinc-550 bg-white px-3 py-1.5 rounded-md border border-zinc-200 truncate select-all cursor-pointer leading-none">{{ $portfolioUrl }}</p>
                             </div>
 
-                            {{-- Highlights --}}
-                            <div class="grid grid-cols-2 gap-3 pt-1">
-                                <div class="p-3 bg-zinc-50/30 rounded border border-zinc-200/50 flex items-center gap-2.5">
-                                    <div class="w-7 h-7 bg-primary-50 border border-primary-100 rounded flex items-center justify-center text-zinc-800 shrink-0">
-                                        <i class="ph-bold ph-rocket-launch text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-[9px] font-bold text-zinc-800 uppercase tracking-wider leading-none">New Opportunity</p>
-                                        <p class="text-[8px] font-medium text-zinc-400 mt-1 leading-none">Job portal</p>
-                                    </div>
+                            {{-- Theme Selector --}}
+                            <div>
+                                <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Portfolio Theme</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border border-zinc-200 rounded-md cursor-pointer hover:bg-zinc-100/60 transition-colors">
+                                        <input type="radio" name="portfolio_theme" value="slate" checked class="text-primary-600 focus:ring-0">
+                                        <span class="text-[10px] font-bold text-zinc-700">Minimal Slate</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border border-zinc-200 rounded-md cursor-pointer hover:bg-zinc-100/60 transition-colors">
+                                        <input type="radio" name="portfolio_theme" value="dark" class="text-primary-600 focus:ring-0">
+                                        <span class="text-[10px] font-bold text-zinc-700">Obsidian Dark</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border border-zinc-200 rounded-md cursor-pointer hover:bg-zinc-100/60 transition-colors">
+                                        <input type="radio" name="portfolio_theme" value="emerald" class="text-primary-600 focus:ring-0">
+                                        <span class="text-[10px] font-bold text-zinc-700">Emerald Luxe</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border border-zinc-200 rounded-md cursor-pointer hover:bg-zinc-100/60 transition-colors">
+                                        <input type="radio" name="portfolio_theme" value="violet" class="text-primary-600 focus:ring-0">
+                                        <span class="text-[10px] font-bold text-zinc-700">Royal Violet</span>
+                                    </label>
                                 </div>
-                                <div class="p-3 bg-zinc-50/30 rounded border border-zinc-200/50 flex items-center gap-2.5">
-                                    <div class="w-7 h-7 bg-primary-50 border border-primary-100 rounded flex items-center justify-center text-zinc-800 shrink-0">
-                                        <i class="ph-bold ph-chart-line-up text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-[9px] font-bold text-zinc-800 uppercase tracking-wider leading-none">Growth Tracking</p>
-                                        <p class="text-[8px] font-medium text-zinc-400 mt-1 leading-none">XP progression</p>
-                                    </div>
-                                </div>
+                            </div>
+
+                            {{-- Custom Domain --}}
+                            <div>
+                                <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Custom Domain (CNAME)</label>
+                                <input type="text" placeholder="e.g. karir.domainanda.com" class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 focus:bg-white focus:border-primary-500 outline-none">
+                                <p class="text-[8.5px] text-zinc-400 mt-1">Point A/CNAME record to <span class="font-bold text-zinc-600">cname.trakerja.com</span></p>
                             </div>
                         </div>
 

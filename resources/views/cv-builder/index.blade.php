@@ -23,6 +23,11 @@
 
                 <!-- Header Actions Grid -->
                 <div class="flex items-center gap-2 w-full md:w-auto overflow-x-auto no-scrollbar py-1 shrink-0">
+                    <button type="button" onclick="document.getElementById('import-pdf-input').click()" id="import-pdf-btn" class="px-3 py-1.5 bg-white text-zinc-700 border border-zinc-200 rounded-md hover:bg-zinc-50 text-[11px] font-bold shadow-3xs transition-all duration-200 flex items-center gap-1.5 shrink-0 focus:outline-none">
+                        <i class="ph ph-file-arrow-up text-xs"></i>
+                        <span id="import-pdf-text">Import PDF</span>
+                    </button>
+                    <input type="file" id="import-pdf-input" accept=".pdf" class="hidden" onchange="uploadPdfResume(this)">
                     <button @click="$dispatch('openPublishModal')" class="px-3 py-1.5 bg-white text-zinc-700 border border-zinc-200 rounded-md hover:bg-zinc-50 text-[11px] font-bold shadow-3xs transition-all duration-200 flex items-center gap-1.5 shrink-0 focus:outline-none">
                         <i class="ph ph-globe text-xs"></i>
                         <span>Publish Site</span>
@@ -280,4 +285,43 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
     @livewire('cv-builder.portfolio-publish-modal')
+
+    <script>
+    window.uploadPdfResume = window.uploadPdfResume || function(input) {
+        if (!input.files || !input.files[0]) return;
+        const file = input.files[0];
+        const btn = document.getElementById('import-pdf-btn');
+        const text = document.getElementById('import-pdf-text');
+
+        if (btn) btn.disabled = true;
+        if (text) text.textContent = 'Importing...';
+
+        const formData = new FormData();
+        formData.append('resume', file);
+
+        fetch('/cv/import-pdf', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (btn) btn.disabled = false;
+            if (text) text.textContent = 'Import PDF';
+            if (data.success) {
+                alert(data.message);
+                window.location.reload();
+            } else {
+                alert(data.message || 'Gagal mengimpor file PDF.');
+            }
+        })
+        .catch(err => {
+            if (btn) btn.disabled = false;
+            if (text) text.textContent = 'Import PDF';
+            alert('Terjadi kesalahan saat mengunggah file.');
+        });
+    };
+    </script>
 </x-app-layout>

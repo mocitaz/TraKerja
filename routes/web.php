@@ -90,6 +90,7 @@ Route::get('/interviews', function () {
 
 // AI Studio routes (Only for regular users)
 Route::get('/ai-studio', [AiStudioController::class, 'index'])->middleware(['auth', 'verified'])->name('ai-studio.index');
+Route::post('/ai-studio/outreach', [AiStudioController::class, 'generateOutreach'])->middleware(['auth', 'verified'])->name('ai-studio.outreach');
 
 // AI Analyzer routes (Only for regular users)
 Route::prefix('ai-analyzer')->middleware(['auth', 'verified'])->name('ai-analyzer.')->group(function () {
@@ -148,6 +149,8 @@ Route::middleware('auth')->group(function () {
             }
             return app(CvBuilderController::class)->index();
         })->name('cv.builder');
+
+        Route::post('/import-pdf', [\App\Http\Controllers\ResumeParserController::class, 'importPdf'])->name('cv.import-pdf');
         
         Route::get('/generator', function () {
             if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
@@ -250,7 +253,9 @@ Route::middleware('auth')->group(function () {
         }
         return app(JobApplicationImportExportController::class)->importFromCsv($request);
     })->name('csv.import.process');
-    
+
+    Route::post('/jobs/scrape-url', [\App\Http\Controllers\JobScraperController::class, 'scrapeUrl'])->name('jobs.scrape-url');
+
     // Premium Landing Page (Standard URL)
     Route::get('/premium', function () {
         if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
