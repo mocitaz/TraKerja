@@ -168,7 +168,8 @@ class ResumeParserController extends Controller
                             $tempCurrent = false;
                         }
                     } elseif (preg_match('/^[●○•\-]/u', $line)) {
-                        $tempBullets[] = $line;
+                        $cleanBullet = preg_replace('/^[●○•\-]\s*/u', '', $line);
+                        $tempBullets[] = '- ' . $cleanBullet;
                     } else {
                         if (isset($companyIndices[$i])) {
                             continue;
@@ -182,7 +183,8 @@ class ResumeParserController extends Controller
                     if (preg_match('/^[●○•\-]/u', $line)) {
                         if (!empty($projects)) {
                             $lastProjectIndex = count($projects) - 1;
-                            $projects[$lastProjectIndex]['description'][] = $line;
+                            $cleanBullet = preg_replace('/^[●○•\-]\s*/u', '', $line);
+                            $projects[$lastProjectIndex]['description'][] = '- ' . $cleanBullet;
                         }
                     } else {
                         $isNewProject = false;
