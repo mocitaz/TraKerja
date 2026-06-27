@@ -28,6 +28,37 @@
         }
         
         $editUrl = route('tracker') . '?edit=' . $job->id;
+
+        // UMK 2026 Salary Benchmark Data Lookup
+        $matchedUmk = null;
+        $jsonPath = base_path('data_umk_lengkap_2026.json');
+        if (file_exists($jsonPath)) {
+            $provincesData = json_decode(file_get_contents($jsonPath), true) ?: [];
+            $searchLoc = strtoupper(trim($job->location ?? ''));
+            $cleanSearch = preg_replace('/^(KOTA|KABUPATEN|KAB\.)\s+/i', '', $searchLoc);
+            
+            foreach ($provincesData as $prov) {
+                foreach ($prov['daftar_wilayah'] as $wilayah) {
+                    $cleanWilayah = preg_replace('/^(KOTA|KABUPATEN|KAB\.)\s+/i', '', strtoupper($wilayah['nama_wilayah']));
+                    if ($cleanSearch && (str_contains($cleanWilayah, $cleanSearch) || str_contains($cleanSearch, $cleanWilayah))) {
+                        $matchedUmk = $wilayah;
+                        $matchedUmk['provinsi'] = $prov['nama_provinsi'];
+                        break 2;
+                    }
+                }
+            }
+            
+            // Default fallback to Jakarta if not matched or remote
+            if (!$matchedUmk && !empty($provincesData)) {
+                foreach ($provincesData as $prov) {
+                    if (str_contains(strtoupper($prov['nama_provinsi']), 'JAKARTA')) {
+                        $matchedUmk = $prov['daftar_wilayah'][0] ?? null;
+                        if ($matchedUmk) $matchedUmk['provinsi'] = $prov['nama_provinsi'];
+                        break;
+                    }
+                }
+            }
+        }
     @endphp
 
     <div class="bg-[#fafafa] min-h-screen pb-16">
@@ -208,6 +239,30 @@
                             </div>
                         </div>
                     </div>
+
+                    {{-- Salary & UMK 2026 Benchmark Card --}}
+                    @if($matchedUmk)
+                        <div class="bg-white border border-zinc-200/60 p-5 rounded-lg shadow-3xs space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Standar UMK & Gaji 2026</span>
+                                <span class="px-1.5 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200/60 rounded text-[8.5px] font-bold uppercase tracking-wider leading-none">Resmi SK 2026</span>
+                            </div>
+                            
+                            <div>
+                                <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-wider leading-none">UMK Wilayah</p>
+                                <p class="text-base font-extrabold text-zinc-900 tracking-tight mt-1">Rp {{ number_format($matchedUmk['minimum_salary'], 0, ',', '.') }} <span class="text-[10px] text-zinc-450 font-medium">/ bln</span></p>
+                                <p class="text-[9.5px] font-semibold text-zinc-500 mt-0.5">{{ $matchedUmk['nama_wilayah'] }} ({{ $matchedUmk['provinsi'] }})</p>
+                            </div>
+
+                            <div class="pt-2.5 border-t border-zinc-100 space-y-1">
+                                <div class="flex items-center justify-between text-xs font-semibold">
+                                    <span class="text-zinc-400 font-medium">Est. Gaji Kompetitif</span>
+                                    <span class="text-primary-650 font-bold">Rp {{ number_format($matchedUmk['minimum_salary'] * 1.5, 0, ',', '.') }} - Rp {{ number_format($matchedUmk['minimum_salary'] * 3.5, 0, ',', '.') }}</span>
+                                </div>
+                                <p class="text-[8.5px] text-zinc-400 italic leading-snug mt-1">{{ $matchedUmk['sumber_sk'] }}</p>
+                            </div>
+                        </div>
+                    @endif
 
                     {{-- Interview Spotlight --}}
                     @if($job->interview_date)

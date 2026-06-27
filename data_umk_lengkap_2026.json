@@ -1,0 +1,4342 @@
+[
+  {
+    "kode_provinsi": "11",
+    "nama_provinsi": "ACEH",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "1101",
+        "nama_wilayah": "KABUPATEN SIMEULUE",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1102",
+        "nama_wilayah": "KABUPATEN ACEH SINGKIL",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1103",
+        "nama_wilayah": "KABUPATEN ACEH SELATAN",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1104",
+        "nama_wilayah": "KABUPATEN ACEH TENGGARA",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1105",
+        "nama_wilayah": "KABUPATEN ACEH TIMUR",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1106",
+        "nama_wilayah": "KABUPATEN ACEH TENGAH",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1107",
+        "nama_wilayah": "KABUPATEN ACEH BARAT",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1108",
+        "nama_wilayah": "KABUPATEN ACEH BESAR",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1109",
+        "nama_wilayah": "KABUPATEN PIDIE",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1110",
+        "nama_wilayah": "KABUPATEN BIREUEN",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1111",
+        "nama_wilayah": "KABUPATEN ACEH UTARA",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1112",
+        "nama_wilayah": "KABUPATEN ACEH BARAT DAYA",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1113",
+        "nama_wilayah": "KABUPATEN GAYO LUES",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1114",
+        "nama_wilayah": "KABUPATEN ACEH TAMIANG",
+        "tipe": "UMK",
+        "minimum_salary": 3978204,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1115",
+        "nama_wilayah": "KABUPATEN NAGAN RAYA",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1116",
+        "nama_wilayah": "KABUPATEN ACEH JAYA",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1117",
+        "nama_wilayah": "KABUPATEN BENER MERIAH",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1118",
+        "nama_wilayah": "KABUPATEN PIDIE JAYA",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1171",
+        "nama_wilayah": "KOTA BANDA ACEH",
+        "tipe": "UMK",
+        "minimum_salary": 4162965,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1172",
+        "nama_wilayah": "KOTA SABANG",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1173",
+        "nama_wilayah": "KOTA LANGSA",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1174",
+        "nama_wilayah": "KOTA LHOKSEUMAWE",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1175",
+        "nama_wilayah": "KOTA SUBULUSSALAM",
+        "tipe": "UMK",
+        "minimum_salary": 3932552,
+        "is_verified": true,
+        "sumber_sk": "Pergub Aceh Penetapan UMK/UMP 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "12",
+    "nama_provinsi": "SUMATERA UTARA",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "1201",
+        "nama_wilayah": "KABUPATEN NIAS",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1202",
+        "nama_wilayah": "KABUPATEN MANDAILING NATAL",
+        "tipe": "UMK",
+        "minimum_salary": 3355900,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1203",
+        "nama_wilayah": "KABUPATEN TAPANULI SELATAN",
+        "tipe": "UMK",
+        "minimum_salary": 3567941,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1204",
+        "nama_wilayah": "KABUPATEN TAPANULI TENGAH",
+        "tipe": "UMK",
+        "minimum_salary": 3509004,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1205",
+        "nama_wilayah": "KABUPATEN TAPANULI UTARA",
+        "tipe": "UMK",
+        "minimum_salary": 3307618,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1206",
+        "nama_wilayah": "KABUPATEN TOBA SAMOSIR",
+        "tipe": "UMK",
+        "minimum_salary": 3404422,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1207",
+        "nama_wilayah": "KABUPATEN LABUHAN BATU",
+        "tipe": "UMK",
+        "minimum_salary": 3748181,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1208",
+        "nama_wilayah": "KABUPATEN ASAHAN",
+        "tipe": "UMK",
+        "minimum_salary": 3531361,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1209",
+        "nama_wilayah": "KABUPATEN SIMALUNGUN",
+        "tipe": "UMK",
+        "minimum_salary": 3351403,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1210",
+        "nama_wilayah": "KABUPATEN DAIRI",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1211",
+        "nama_wilayah": "KABUPATEN KARO",
+        "tipe": "UMK",
+        "minimum_salary": 3843153,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1212",
+        "nama_wilayah": "KABUPATEN DELI SERDANG",
+        "tipe": "UMK",
+        "minimum_salary": 4041543,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1213",
+        "nama_wilayah": "KABUPATEN LANGKAT",
+        "tipe": "UMK",
+        "minimum_salary": 3402892,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1214",
+        "nama_wilayah": "KABUPATEN NIAS SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1215",
+        "nama_wilayah": "KABUPATEN HUMBANG HASUNDUTAN",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1216",
+        "nama_wilayah": "KABUPATEN PAKPAK BHARAT",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1217",
+        "nama_wilayah": "KABUPATEN SAMOSIR",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1218",
+        "nama_wilayah": "KABUPATEN SERDANG BEDAGAI",
+        "tipe": "UMK",
+        "minimum_salary": 3605983,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1219",
+        "nama_wilayah": "KABUPATEN BATU BARA",
+        "tipe": "UMK",
+        "minimum_salary": 3970000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1220",
+        "nama_wilayah": "KABUPATEN PADANG LAWAS UTARA",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1221",
+        "nama_wilayah": "KABUPATEN PADANG LAWAS",
+        "tipe": "UMK",
+        "minimum_salary": 3478237,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1222",
+        "nama_wilayah": "KABUPATEN LABUHAN BATU SELATAN",
+        "tipe": "UMK",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1223",
+        "nama_wilayah": "KABUPATEN LABUHAN BATU UTARA",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1224",
+        "nama_wilayah": "KABUPATEN NIAS UTARA",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1225",
+        "nama_wilayah": "KABUPATEN NIAS BARAT",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1271",
+        "nama_wilayah": "KOTA SIBOLGA",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1272",
+        "nama_wilayah": "KOTA TANJUNG BALAI",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1273",
+        "nama_wilayah": "KOTA PEMATANG SIANTAR",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1274",
+        "nama_wilayah": "KOTA TEBING TINGGI",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1275",
+        "nama_wilayah": "KOTA MEDAN",
+        "tipe": "UMK",
+        "minimum_salary": 4335198,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1276",
+        "nama_wilayah": "KOTA BINJAI",
+        "tipe": "UMK",
+        "minimum_salary": 3367913,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1277",
+        "nama_wilayah": "KOTA PADANG SIDEMPUAN",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      },
+      {
+        "kode_kabupaten": "1278",
+        "nama_wilayah": "KOTA GUNUNGSITOLI",
+        "tipe": "UMP",
+        "minimum_salary": 3228971,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumut No. 188.44/896/KPTS/2025"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "13",
+    "nama_provinsi": "SUMATERA BARAT",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "1301",
+        "nama_wilayah": "KABUPATEN KEPULAUAN MENTAWAI",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1302",
+        "nama_wilayah": "KABUPATEN PESISIR SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1303",
+        "nama_wilayah": "KABUPATEN SOLOK",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1304",
+        "nama_wilayah": "KABUPATEN SIJUNJUNG",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1305",
+        "nama_wilayah": "KABUPATEN TANAH DATAR",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1306",
+        "nama_wilayah": "KABUPATEN PADANG PARIAMAN",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1307",
+        "nama_wilayah": "KABUPATEN AGAM",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1308",
+        "nama_wilayah": "KABUPATEN LIMA PULUH KOTA",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1309",
+        "nama_wilayah": "KABUPATEN PASAMAN",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1310",
+        "nama_wilayah": "KABUPATEN SOLOK SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1311",
+        "nama_wilayah": "KABUPATEN DHARMASRAYA",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1312",
+        "nama_wilayah": "KABUPATEN PASAMAN BARAT",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1371",
+        "nama_wilayah": "KOTA PADANG",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1372",
+        "nama_wilayah": "KOTA SOLOK",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1373",
+        "nama_wilayah": "KOTA SAWAHLUNTO",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1374",
+        "nama_wilayah": "KOTA PADANG PANJANG",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1375",
+        "nama_wilayah": "KOTA BUKITTINGGI",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1376",
+        "nama_wilayah": "KOTA PAYAKUMBUH",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1377",
+        "nama_wilayah": "KOTA PARIAMAN",
+        "tipe": "UMP",
+        "minimum_salary": 3182955,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumbar Batas Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "14",
+    "nama_provinsi": "RIAU",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "1401",
+        "nama_wilayah": "KABUPATEN KUANTAN SINGINGI",
+        "tipe": "UMK",
+        "minimum_salary": 3949467,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Riau tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "1402",
+        "nama_wilayah": "KABUPATEN INDRAGIRI HULU",
+        "tipe": "UMK",
+        "minimum_salary": 3988406,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Riau tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "1403",
+        "nama_wilayah": "KABUPATEN INDRAGIRI HILIR",
+        "tipe": "UMK",
+        "minimum_salary": 3780496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Riau tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "1404",
+        "nama_wilayah": "KABUPATEN PELALAWAN",
+        "tipe": "UMK",
+        "minimum_salary": 3894261,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Riau tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "1405",
+        "nama_wilayah": "KABUPATEN SIAK",
+        "tipe": "UMK",
+        "minimum_salary": 4001327,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Riau tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "1406",
+        "nama_wilayah": "KABUPATEN KAMPAR",
+        "tipe": "UMK",
+        "minimum_salary": 3898261,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Riau tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "1407",
+        "nama_wilayah": "KABUPATEN ROKAN HULU",
+        "tipe": "UMK",
+        "minimum_salary": 3819353,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Riau tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "1408",
+        "nama_wilayah": "KABUPATEN BENGKALIS",
+        "tipe": "UMK",
+        "minimum_salary": 4155318,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Riau tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "1409",
+        "nama_wilayah": "KABUPATEN ROKAN HILIR",
+        "tipe": "UMK",
+        "minimum_salary": 3783053,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Riau tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "1410",
+        "nama_wilayah": "KABUPATEN KEPULAUAN MERANTI",
+        "tipe": "UMK",
+        "minimum_salary": 3780496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Riau tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "1471",
+        "nama_wilayah": "KOTA PEKANBARU",
+        "tipe": "UMK",
+        "minimum_salary": 3998179,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Riau tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "1473",
+        "nama_wilayah": "KOTA DUMAI",
+        "tipe": "UMK",
+        "minimum_salary": 4431175,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Riau tentang Penetapan UMK 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "15",
+    "nama_provinsi": "JAMBI",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "1501",
+        "nama_wilayah": "KABUPATEN KERINCI",
+        "tipe": "UMP",
+        "minimum_salary": 3471497,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Jambi tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1502",
+        "nama_wilayah": "KABUPATEN MERANGIN",
+        "tipe": "UMP",
+        "minimum_salary": 3471497,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Jambi tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1503",
+        "nama_wilayah": "KABUPATEN SAROLANGUN",
+        "tipe": "UMK",
+        "minimum_salary": 3533562,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Jambi tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1504",
+        "nama_wilayah": "KABUPATEN BATANG HARI",
+        "tipe": "UMP",
+        "minimum_salary": 3471497,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Jambi tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1505",
+        "nama_wilayah": "KABUPATEN MUARO JAMBI",
+        "tipe": "UMK",
+        "minimum_salary": 3651917,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Jambi tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1506",
+        "nama_wilayah": "KABUPATEN TANJUNG JABUNG TIMUR",
+        "tipe": "UMK",
+        "minimum_salary": 3486521,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Jambi tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1507",
+        "nama_wilayah": "KABUPATEN TANJUNG JABUNG BARAT",
+        "tipe": "UMK",
+        "minimum_salary": 3551430,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Jambi tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1508",
+        "nama_wilayah": "KABUPATEN TEBO",
+        "tipe": "UMP",
+        "minimum_salary": 3471497,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Jambi tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1509",
+        "nama_wilayah": "KABUPATEN BUNGO",
+        "tipe": "UMP",
+        "minimum_salary": 3471497,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Jambi tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1571",
+        "nama_wilayah": "KOTA JAMBI",
+        "tipe": "UMK",
+        "minimum_salary": 3868963,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Jambi tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "1572",
+        "nama_wilayah": "KOTA SUNGAI PENUH",
+        "tipe": "UMP",
+        "minimum_salary": 3471497,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Jambi tentang Penetapan UMK/UMP 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "16",
+    "nama_provinsi": "SUMATERA SELATAN",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "1601",
+        "nama_wilayah": "KABUPATEN OGAN KOMERING ULU",
+        "tipe": "UMP",
+        "minimum_salary": 3942963,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1602",
+        "nama_wilayah": "KABUPATEN OGAN KOMERING ILIR",
+        "tipe": "UMP",
+        "minimum_salary": 3942963,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1603",
+        "nama_wilayah": "KABUPATEN MUARA ENIM",
+        "tipe": "UMK",
+        "minimum_salary": 4178363,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1604",
+        "nama_wilayah": "KABUPATEN LAHAT",
+        "tipe": "UMK",
+        "minimum_salary": 4041420,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1605",
+        "nama_wilayah": "KABUPATEN MUSI RAWAS",
+        "tipe": "UMK",
+        "minimum_salary": 4058812,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1606",
+        "nama_wilayah": "KABUPATEN MUSI BANYU ASIN",
+        "tipe": "UMK",
+        "minimum_salary": 4039054,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1607",
+        "nama_wilayah": "KABUPATEN BANYU ASIN",
+        "tipe": "UMK",
+        "minimum_salary": 3976492,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1608",
+        "nama_wilayah": "KABUPATEN OGAN KOMERING ULU SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 3942963,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1609",
+        "nama_wilayah": "KABUPATEN OGAN KOMERING ULU TIMUR",
+        "tipe": "UMK",
+        "minimum_salary": 3993676,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1610",
+        "nama_wilayah": "KABUPATEN OGAN ILIR",
+        "tipe": "UMP",
+        "minimum_salary": 3942963,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1611",
+        "nama_wilayah": "KABUPATEN EMPAT LAWANG",
+        "tipe": "UMP",
+        "minimum_salary": 3942963,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1612",
+        "nama_wilayah": "KABUPATEN PENUKAL ABAB LEMATANG ILIR",
+        "tipe": "UMP",
+        "minimum_salary": 3942963,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1613",
+        "nama_wilayah": "KABUPATEN MUSI RAWAS UTARA",
+        "tipe": "UMK",
+        "minimum_salary": 4047385,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1671",
+        "nama_wilayah": "KOTA PALEMBANG",
+        "tipe": "UMK",
+        "minimum_salary": 4192837,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1672",
+        "nama_wilayah": "KOTA PRABUMULIH",
+        "tipe": "UMP",
+        "minimum_salary": 3942963,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1673",
+        "nama_wilayah": "KOTA PAGAR ALAM",
+        "tipe": "UMP",
+        "minimum_salary": 3942963,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1674",
+        "nama_wilayah": "KOTA LUBUK LINGGAU",
+        "tipe": "UMP",
+        "minimum_salary": 3942963,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sumatera Selatan tentang Penetapan Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "17",
+    "nama_provinsi": "BENGKULU",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "1701",
+        "nama_wilayah": "KABUPATEN BENGKULU SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 2827251,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bengkulu tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1702",
+        "nama_wilayah": "KABUPATEN REJANG LEBONG",
+        "tipe": "UMK",
+        "minimum_salary": 2841749,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bengkulu tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1703",
+        "nama_wilayah": "KABUPATEN BENGKULU UTARA",
+        "tipe": "UMK",
+        "minimum_salary": 2906159,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bengkulu tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1704",
+        "nama_wilayah": "KABUPATEN KAUR",
+        "tipe": "UMP",
+        "minimum_salary": 2827251,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bengkulu tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1705",
+        "nama_wilayah": "KABUPATEN SELUMA",
+        "tipe": "UMP",
+        "minimum_salary": 2827251,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bengkulu tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1706",
+        "nama_wilayah": "KABUPATEN MUKOMUKO",
+        "tipe": "UMK",
+        "minimum_salary": 3217086,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bengkulu tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1707",
+        "nama_wilayah": "KABUPATEN LEBONG",
+        "tipe": "UMP",
+        "minimum_salary": 2827251,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bengkulu tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1708",
+        "nama_wilayah": "KABUPATEN KEPAHIANG",
+        "tipe": "UMP",
+        "minimum_salary": 2827251,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bengkulu tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1709",
+        "nama_wilayah": "KABUPATEN BENGKULU TENGAH",
+        "tipe": "UMK",
+        "minimum_salary": 2945142,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bengkulu tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1771",
+        "nama_wilayah": "KOTA BENGKULU",
+        "tipe": "UMK",
+        "minimum_salary": 3089219,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bengkulu tentang Penetapan Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "18",
+    "nama_provinsi": "LAMPUNG",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "1801",
+        "nama_wilayah": "KABUPATEN LAMPUNG BARAT",
+        "tipe": "UMP",
+        "minimum_salary": 3047734,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Lampung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1802",
+        "nama_wilayah": "KABUPATEN TANGGAMUS",
+        "tipe": "UMP",
+        "minimum_salary": 3047734,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Lampung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1803",
+        "nama_wilayah": "KABUPATEN LAMPUNG SELATAN",
+        "tipe": "UMK",
+        "minimum_salary": 3219609,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Lampung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1804",
+        "nama_wilayah": "KABUPATEN LAMPUNG TIMUR",
+        "tipe": "UMP",
+        "minimum_salary": 3047734,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Lampung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1805",
+        "nama_wilayah": "KABUPATEN LAMPUNG TENGAH",
+        "tipe": "UMP",
+        "minimum_salary": 3047734,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Lampung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1806",
+        "nama_wilayah": "KABUPATEN LAMPUNG UTARA",
+        "tipe": "UMP",
+        "minimum_salary": 3047734,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Lampung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1807",
+        "nama_wilayah": "KABUPATEN WAY KANAN",
+        "tipe": "UMK",
+        "minimum_salary": 3215764,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Lampung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1808",
+        "nama_wilayah": "KABUPATEN TULANGBAWANG",
+        "tipe": "UMP",
+        "minimum_salary": 3047734,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Lampung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1809",
+        "nama_wilayah": "KABUPATEN PESAWARAN",
+        "tipe": "UMP",
+        "minimum_salary": 3047734,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Lampung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1810",
+        "nama_wilayah": "KABUPATEN PRINGSEWU",
+        "tipe": "UMP",
+        "minimum_salary": 3047734,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Lampung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1811",
+        "nama_wilayah": "KABUPATEN MESUJI",
+        "tipe": "UMK",
+        "minimum_salary": 3227333,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Lampung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1812",
+        "nama_wilayah": "KABUPATEN TULANG BAWANG BARAT",
+        "tipe": "UMP",
+        "minimum_salary": 3047734,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Lampung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1813",
+        "nama_wilayah": "KABUPATEN PESISIR BARAT",
+        "tipe": "UMP",
+        "minimum_salary": 3047734,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Lampung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1871",
+        "nama_wilayah": "KOTA BANDAR LAMPUNG",
+        "tipe": "UMK",
+        "minimum_salary": 3491889,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Lampung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1872",
+        "nama_wilayah": "KOTA METRO",
+        "tipe": "UMK",
+        "minimum_salary": 3050498,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Lampung tentang Penetapan Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "19",
+    "nama_provinsi": "KEPULAUAN BANGKA BELITUNG",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "1901",
+        "nama_wilayah": "KABUPATEN BANGKA",
+        "tipe": "UMP",
+        "minimum_salary": 4035000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kepulauan Bangka Belitung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1902",
+        "nama_wilayah": "KABUPATEN BELITUNG",
+        "tipe": "UMP",
+        "minimum_salary": 4035000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kepulauan Bangka Belitung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1903",
+        "nama_wilayah": "KABUPATEN BANGKA BARAT",
+        "tipe": "UMP",
+        "minimum_salary": 4035000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kepulauan Bangka Belitung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1904",
+        "nama_wilayah": "KABUPATEN BANGKA TENGAH",
+        "tipe": "UMP",
+        "minimum_salary": 4035000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kepulauan Bangka Belitung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1905",
+        "nama_wilayah": "KABUPATEN BANGKA SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 4035000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kepulauan Bangka Belitung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1906",
+        "nama_wilayah": "KABUPATEN BELITUNG TIMUR",
+        "tipe": "UMP",
+        "minimum_salary": 4035000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kepulauan Bangka Belitung tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "1971",
+        "nama_wilayah": "KOTA PANGKAL PINANG",
+        "tipe": "UMP",
+        "minimum_salary": 4035000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kepulauan Bangka Belitung tentang Penetapan Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "21",
+    "nama_provinsi": "KEPULAUAN RIAU",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "2101",
+        "nama_wilayah": "KABUPATEN KARIMUN",
+        "tipe": "UMK",
+        "minimum_salary": 4241935,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kepulauan Riau tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "2102",
+        "nama_wilayah": "KABUPATEN BINTAN",
+        "tipe": "UMK",
+        "minimum_salary": 4583221,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kepulauan Riau tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "2103",
+        "nama_wilayah": "KABUPATEN NATUNA",
+        "tipe": "UMP",
+        "minimum_salary": 3879520,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kepulauan Riau tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "2104",
+        "nama_wilayah": "KABUPATEN LINGGA",
+        "tipe": "UMP",
+        "minimum_salary": 3879520,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kepulauan Riau tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "2105",
+        "nama_wilayah": "KABUPATEN KEPULAUAN ANAMBAS",
+        "tipe": "UMK",
+        "minimum_salary": 4279851,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kepulauan Riau tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "2171",
+        "nama_wilayah": "KOTA BATAM",
+        "tipe": "UMK",
+        "minimum_salary": 5357982,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kepulauan Riau tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "2172",
+        "nama_wilayah": "KOTA TANJUNG PINANG",
+        "tipe": "UMP",
+        "minimum_salary": 3879520,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kepulauan Riau tentang Penetapan UMK/UMP 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "31",
+    "nama_provinsi": "DKI JAKARTA",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "3101",
+        "nama_wilayah": "KABUPATEN KEPULAUAN SERIBU",
+        "tipe": "UMP",
+        "minimum_salary": 5729876,
+        "is_verified": true,
+        "sumber_sk": "Kepgub DKI Jakarta No. 1142 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3171",
+        "nama_wilayah": "KOTA JAKARTA SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 5729876,
+        "is_verified": true,
+        "sumber_sk": "Kepgub DKI Jakarta No. 1142 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3172",
+        "nama_wilayah": "KOTA JAKARTA TIMUR",
+        "tipe": "UMP",
+        "minimum_salary": 5729876,
+        "is_verified": true,
+        "sumber_sk": "Kepgub DKI Jakarta No. 1142 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3173",
+        "nama_wilayah": "KOTA JAKARTA PUSAT",
+        "tipe": "UMP",
+        "minimum_salary": 5729876,
+        "is_verified": true,
+        "sumber_sk": "Kepgub DKI Jakarta No. 1142 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3174",
+        "nama_wilayah": "KOTA JAKARTA BARAT",
+        "tipe": "UMP",
+        "minimum_salary": 5729876,
+        "is_verified": true,
+        "sumber_sk": "Kepgub DKI Jakarta No. 1142 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3175",
+        "nama_wilayah": "KOTA JAKARTA UTARA",
+        "tipe": "UMP",
+        "minimum_salary": 5729876,
+        "is_verified": true,
+        "sumber_sk": "Kepgub DKI Jakarta No. 1142 Tahun 2025"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "32",
+    "nama_provinsi": "JAWA BARAT",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "3201",
+        "nama_wilayah": "KABUPATEN BOGOR",
+        "tipe": "UMK",
+        "minimum_salary": 5161769,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3202",
+        "nama_wilayah": "KABUPATEN SUKABUMI",
+        "tipe": "UMK",
+        "minimum_salary": 3831926,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3203",
+        "nama_wilayah": "KABUPATEN CIANJUR",
+        "tipe": "UMK",
+        "minimum_salary": 3316191,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3204",
+        "nama_wilayah": "KABUPATEN BANDUNG",
+        "tipe": "UMK",
+        "minimum_salary": 3972202,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3205",
+        "nama_wilayah": "KABUPATEN GARUT",
+        "tipe": "UMK",
+        "minimum_salary": 2472227,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3206",
+        "nama_wilayah": "KABUPATEN TASIKMALAYA",
+        "tipe": "UMK",
+        "minimum_salary": 2871874,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3207",
+        "nama_wilayah": "KABUPATEN CIAMIS",
+        "tipe": "UMK",
+        "minimum_salary": 2373644,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3208",
+        "nama_wilayah": "KABUPATEN KUNINGAN",
+        "tipe": "UMK",
+        "minimum_salary": 2369380,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3209",
+        "nama_wilayah": "KABUPATEN CIREBON",
+        "tipe": "UMK",
+        "minimum_salary": 2880798,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3210",
+        "nama_wilayah": "KABUPATEN MAJALENGKA",
+        "tipe": "UMK",
+        "minimum_salary": 2595368,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3211",
+        "nama_wilayah": "KABUPATEN SUMEDANG",
+        "tipe": "UMK",
+        "minimum_salary": 3949856,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3212",
+        "nama_wilayah": "KABUPATEN INDRAMAYU",
+        "tipe": "UMK",
+        "minimum_salary": 2910254,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3213",
+        "nama_wilayah": "KABUPATEN SUBANG",
+        "tipe": "UMK",
+        "minimum_salary": 3737482,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3214",
+        "nama_wilayah": "KABUPATEN PURWAKARTA",
+        "tipe": "UMK",
+        "minimum_salary": 5052856,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3215",
+        "nama_wilayah": "KABUPATEN KARAWANG",
+        "tipe": "UMK",
+        "minimum_salary": 5886853,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3216",
+        "nama_wilayah": "KABUPATEN BEKASI",
+        "tipe": "UMK",
+        "minimum_salary": 5938885,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3217",
+        "nama_wilayah": "KABUPATEN BANDUNG BARAT",
+        "tipe": "UMK",
+        "minimum_salary": 3984711,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3218",
+        "nama_wilayah": "KABUPATEN PANGANDARAN",
+        "tipe": "UMK",
+        "minimum_salary": 2351250,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3271",
+        "nama_wilayah": "KOTA BOGOR",
+        "tipe": "UMK",
+        "minimum_salary": 5437203,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3272",
+        "nama_wilayah": "KOTA SUKABUMI",
+        "tipe": "UMK",
+        "minimum_salary": 3192807,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3273",
+        "nama_wilayah": "KOTA BANDUNG",
+        "tipe": "UMK",
+        "minimum_salary": 4737678,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3274",
+        "nama_wilayah": "KOTA CIREBON",
+        "tipe": "UMK",
+        "minimum_salary": 2878646,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3275",
+        "nama_wilayah": "KOTA BEKASI",
+        "tipe": "UMK",
+        "minimum_salary": 5999443,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3276",
+        "nama_wilayah": "KOTA DEPOK",
+        "tipe": "UMK",
+        "minimum_salary": 5522662,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3277",
+        "nama_wilayah": "KOTA CIMAHI",
+        "tipe": "UMK",
+        "minimum_salary": 4090568,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3278",
+        "nama_wilayah": "KOTA TASIKMALAYA",
+        "tipe": "UMK",
+        "minimum_salary": 2980336,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      },
+      {
+        "kode_kabupaten": "3279",
+        "nama_wilayah": "KOTA BANJAR",
+        "tipe": "UMK",
+        "minimum_salary": 2361241,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jabar No. 561.7/Kep.862-Kesra/2025"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "33",
+    "nama_provinsi": "JAWA TENGAH",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "3301",
+        "nama_wilayah": "KABUPATEN CILACAP",
+        "tipe": "UMK",
+        "minimum_salary": 2773184,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3302",
+        "nama_wilayah": "KABUPATEN BANYUMAS",
+        "tipe": "UMK",
+        "minimum_salary": 2474599,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3303",
+        "nama_wilayah": "KABUPATEN PURBALINGGA",
+        "tipe": "UMK",
+        "minimum_salary": 2474722,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3304",
+        "nama_wilayah": "KABUPATEN BANJARNEGARA",
+        "tipe": "UMK",
+        "minimum_salary": 2327813,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3305",
+        "nama_wilayah": "KABUPATEN KEBUMEN",
+        "tipe": "UMK",
+        "minimum_salary": 2400000,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3306",
+        "nama_wilayah": "KABUPATEN PURWOREJO",
+        "tipe": "UMK",
+        "minimum_salary": 2401962,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3307",
+        "nama_wilayah": "KABUPATEN WONOSOBO",
+        "tipe": "UMK",
+        "minimum_salary": 2455038,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3308",
+        "nama_wilayah": "KABUPATEN MAGELANG",
+        "tipe": "UMK",
+        "minimum_salary": 2607790,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3309",
+        "nama_wilayah": "KABUPATEN BOYOLALI",
+        "tipe": "UMK",
+        "minimum_salary": 2537949,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3310",
+        "nama_wilayah": "KABUPATEN KLATEN",
+        "tipe": "UMK",
+        "minimum_salary": 2538691,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3311",
+        "nama_wilayah": "KABUPATEN SUKOHARJO",
+        "tipe": "UMK",
+        "minimum_salary": 2500000,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3312",
+        "nama_wilayah": "KABUPATEN WONOGIRI",
+        "tipe": "UMK",
+        "minimum_salary": 2335126,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3313",
+        "nama_wilayah": "KABUPATEN KARANGANYAR",
+        "tipe": "UMK",
+        "minimum_salary": 2592154,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3314",
+        "nama_wilayah": "KABUPATEN SRAGEN",
+        "tipe": "UMK",
+        "minimum_salary": 2337700,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3315",
+        "nama_wilayah": "KABUPATEN GROBOGAN",
+        "tipe": "UMK",
+        "minimum_salary": 2399186,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3316",
+        "nama_wilayah": "KABUPATEN BLORA",
+        "tipe": "UMK",
+        "minimum_salary": 2345695,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3317",
+        "nama_wilayah": "KABUPATEN REMBANG",
+        "tipe": "UMK",
+        "minimum_salary": 2386305,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3318",
+        "nama_wilayah": "KABUPATEN PATI",
+        "tipe": "UMK",
+        "minimum_salary": 2485000,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3319",
+        "nama_wilayah": "KABUPATEN KUDUS",
+        "tipe": "UMK",
+        "minimum_salary": 2818585,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3320",
+        "nama_wilayah": "KABUPATEN JEPARA",
+        "tipe": "UMK",
+        "minimum_salary": 2756501,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3321",
+        "nama_wilayah": "KABUPATEN DEMAK",
+        "tipe": "UMK",
+        "minimum_salary": 3122805,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3322",
+        "nama_wilayah": "KABUPATEN SEMARANG",
+        "tipe": "UMK",
+        "minimum_salary": 2940088,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3323",
+        "nama_wilayah": "KABUPATEN TEMANGGUNG",
+        "tipe": "UMK",
+        "minimum_salary": 2397000,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3324",
+        "nama_wilayah": "KABUPATEN KENDAL",
+        "tipe": "UMK",
+        "minimum_salary": 2992994,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3325",
+        "nama_wilayah": "KABUPATEN BATANG",
+        "tipe": "UMK",
+        "minimum_salary": 2708520,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3326",
+        "nama_wilayah": "KABUPATEN PEKALONGAN",
+        "tipe": "UMK",
+        "minimum_salary": 2633700,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3327",
+        "nama_wilayah": "KABUPATEN PEMALANG",
+        "tipe": "UMK",
+        "minimum_salary": 2433254,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3328",
+        "nama_wilayah": "KABUPATEN TEGAL",
+        "tipe": "UMK",
+        "minimum_salary": 2484162,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3329",
+        "nama_wilayah": "KABUPATEN BREBES",
+        "tipe": "UMK",
+        "minimum_salary": 2400350,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3371",
+        "nama_wilayah": "KOTA MAGELANG",
+        "tipe": "UMK",
+        "minimum_salary": 2429285,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3372",
+        "nama_wilayah": "KOTA SURAKARTA",
+        "tipe": "UMK",
+        "minimum_salary": 2570000,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3373",
+        "nama_wilayah": "KOTA SALATIGA",
+        "tipe": "UMK",
+        "minimum_salary": 2698273,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3374",
+        "nama_wilayah": "KOTA SEMARANG",
+        "tipe": "UMK",
+        "minimum_salary": 3701709,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3375",
+        "nama_wilayah": "KOTA PEKALONGAN",
+        "tipe": "UMK",
+        "minimum_salary": 2700926,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3376",
+        "nama_wilayah": "KOTA TEGAL",
+        "tipe": "UMK",
+        "minimum_salary": 2526510,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jateng No. 100.3.3.1/505 Tahun 2025"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "34",
+    "nama_provinsi": "DAERAH ISTIMEWA YOGYAKARTA",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "3401",
+        "nama_wilayah": "KABUPATEN KULON PROGO",
+        "tipe": "UMK",
+        "minimum_salary": 2504520,
+        "is_verified": true,
+        "sumber_sk": "Kepgub DIY No. 443 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3402",
+        "nama_wilayah": "KABUPATEN BANTUL",
+        "tipe": "UMK",
+        "minimum_salary": 2509001,
+        "is_verified": true,
+        "sumber_sk": "Kepgub DIY No. 443 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3403",
+        "nama_wilayah": "KABUPATEN GUNUNG KIDUL",
+        "tipe": "UMK",
+        "minimum_salary": 2468378,
+        "is_verified": true,
+        "sumber_sk": "Kepgub DIY No. 443 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3404",
+        "nama_wilayah": "KABUPATEN SLEMAN",
+        "tipe": "UMK",
+        "minimum_salary": 2624387,
+        "is_verified": true,
+        "sumber_sk": "Kepgub DIY No. 443 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3471",
+        "nama_wilayah": "KOTA YOGYAKARTA",
+        "tipe": "UMK",
+        "minimum_salary": 2827593,
+        "is_verified": true,
+        "sumber_sk": "Kepgub DIY No. 443 Tahun 2025"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "35",
+    "nama_provinsi": "JAWA TIMUR",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "3501",
+        "nama_wilayah": "KABUPATEN PACITAN",
+        "tipe": "UMK",
+        "minimum_salary": 2514892,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3502",
+        "nama_wilayah": "KABUPATEN PONOROGO",
+        "tipe": "UMK",
+        "minimum_salary": 2549876,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3503",
+        "nama_wilayah": "KABUPATEN TRENGGALEK",
+        "tipe": "UMK",
+        "minimum_salary": 2530313,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3504",
+        "nama_wilayah": "KABUPATEN TULUNGAGUNG",
+        "tipe": "UMK",
+        "minimum_salary": 2628190,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3505",
+        "nama_wilayah": "KABUPATEN BLITAR",
+        "tipe": "UMK",
+        "minimum_salary": 2567744,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3506",
+        "nama_wilayah": "KABUPATEN KEDIRI",
+        "tipe": "UMK",
+        "minimum_salary": 2651603,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3507",
+        "nama_wilayah": "KABUPATEN MALANG",
+        "tipe": "UMK",
+        "minimum_salary": 3802862,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3508",
+        "nama_wilayah": "KABUPATEN LUMAJANG",
+        "tipe": "UMK",
+        "minimum_salary": 2578320,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3509",
+        "nama_wilayah": "KABUPATEN JEMBER",
+        "tipe": "UMK",
+        "minimum_salary": 3012197,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3510",
+        "nama_wilayah": "KABUPATEN BANYUWANGI",
+        "tipe": "UMK",
+        "minimum_salary": 2989145,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3511",
+        "nama_wilayah": "KABUPATEN BONDOWOSO",
+        "tipe": "UMK",
+        "minimum_salary": 2496886,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3512",
+        "nama_wilayah": "KABUPATEN SITUBONDO",
+        "tipe": "UMK",
+        "minimum_salary": 2483962,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3513",
+        "nama_wilayah": "KABUPATEN PROBOLINGGO",
+        "tipe": "UMK",
+        "minimum_salary": 3164526,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3514",
+        "nama_wilayah": "KABUPATEN PASURUAN",
+        "tipe": "UMK",
+        "minimum_salary": 5187681,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3515",
+        "nama_wilayah": "KABUPATEN SIDOARJO",
+        "tipe": "UMK",
+        "minimum_salary": 5191541,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3516",
+        "nama_wilayah": "KABUPATEN MOJOKERTO",
+        "tipe": "UMK",
+        "minimum_salary": 5176101,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3517",
+        "nama_wilayah": "KABUPATEN JOMBANG",
+        "tipe": "UMK",
+        "minimum_salary": 3320770,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3518",
+        "nama_wilayah": "KABUPATEN NGANJUK",
+        "tipe": "UMK",
+        "minimum_salary": 2564627,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3519",
+        "nama_wilayah": "KABUPATEN MADIUN",
+        "tipe": "UMK",
+        "minimum_salary": 2553221,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3520",
+        "nama_wilayah": "KABUPATEN MAGETAN",
+        "tipe": "UMK",
+        "minimum_salary": 2553866,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3521",
+        "nama_wilayah": "KABUPATEN NGAWI",
+        "tipe": "UMK",
+        "minimum_salary": 2556815,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3522",
+        "nama_wilayah": "KABUPATEN BOJONEGORO",
+        "tipe": "UMK",
+        "minimum_salary": 2685983,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3523",
+        "nama_wilayah": "KABUPATEN TUBAN",
+        "tipe": "UMK",
+        "minimum_salary": 3229092,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3524",
+        "nama_wilayah": "KABUPATEN LAMONGAN",
+        "tipe": "UMK",
+        "minimum_salary": 3196328,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3525",
+        "nama_wilayah": "KABUPATEN GRESIK",
+        "tipe": "UMK",
+        "minimum_salary": 5195401,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3526",
+        "nama_wilayah": "KABUPATEN BANGKALAN",
+        "tipe": "UMK",
+        "minimum_salary": 2550274,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3527",
+        "nama_wilayah": "KABUPATEN SAMPANG",
+        "tipe": "UMK",
+        "minimum_salary": 2484443,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3528",
+        "nama_wilayah": "KABUPATEN PAMEKASAN",
+        "tipe": "UMK",
+        "minimum_salary": 2528004,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3529",
+        "nama_wilayah": "KABUPATEN SUMENEP",
+        "tipe": "UMK",
+        "minimum_salary": 2553688,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3571",
+        "nama_wilayah": "KOTA KEDIRI",
+        "tipe": "UMK",
+        "minimum_salary": 2742806,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3572",
+        "nama_wilayah": "KOTA BLITAR",
+        "tipe": "UMK",
+        "minimum_salary": 2639518,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3573",
+        "nama_wilayah": "KOTA MALANG",
+        "tipe": "UMK",
+        "minimum_salary": 3736101,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3574",
+        "nama_wilayah": "KOTA PROBOLINGGO",
+        "tipe": "UMK",
+        "minimum_salary": 3045172,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3575",
+        "nama_wilayah": "KOTA PASURUAN",
+        "tipe": "UMK",
+        "minimum_salary": 3555301,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3576",
+        "nama_wilayah": "KOTA MOJOKERTO",
+        "tipe": "UMK",
+        "minimum_salary": 3208556,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3577",
+        "nama_wilayah": "KOTA MADIUN",
+        "tipe": "UMK",
+        "minimum_salary": 2588794,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3578",
+        "nama_wilayah": "KOTA SURABAYA",
+        "tipe": "UMK",
+        "minimum_salary": 5288796,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      },
+      {
+        "kode_kabupaten": "3579",
+        "nama_wilayah": "KOTA BATU",
+        "tipe": "UMK",
+        "minimum_salary": 3562484,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Jatim No. 100.3.3.1/937/013/2025"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "36",
+    "nama_provinsi": "BANTEN",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "3601",
+        "nama_wilayah": "KABUPATEN PANDEGLANG",
+        "tipe": "UMK",
+        "minimum_salary": 3360078,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Banten No. 703 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3602",
+        "nama_wilayah": "KABUPATEN LEBAK",
+        "tipe": "UMK",
+        "minimum_salary": 3330011,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Banten No. 703 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3603",
+        "nama_wilayah": "KABUPATEN TANGERANG",
+        "tipe": "UMK",
+        "minimum_salary": 5210377,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Banten No. 703 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3604",
+        "nama_wilayah": "KABUPATEN SERANG",
+        "tipe": "UMK",
+        "minimum_salary": 5178521,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Banten No. 703 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3671",
+        "nama_wilayah": "KOTA TANGERANG",
+        "tipe": "UMK",
+        "minimum_salary": 5399406,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Banten No. 703 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3672",
+        "nama_wilayah": "KOTA CILEGON",
+        "tipe": "UMK",
+        "minimum_salary": 5469923,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Banten No. 703 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3673",
+        "nama_wilayah": "KOTA SERANG",
+        "tipe": "UMK",
+        "minimum_salary": 4665928,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Banten No. 703 Tahun 2025"
+      },
+      {
+        "kode_kabupaten": "3674",
+        "nama_wilayah": "KOTA TANGERANG SELATAN",
+        "tipe": "UMK",
+        "minimum_salary": 5247870,
+        "is_verified": true,
+        "sumber_sk": "Kepgub Banten No. 703 Tahun 2025"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "51",
+    "nama_provinsi": "BALI",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "5101",
+        "nama_wilayah": "KABUPATEN JEMBRANA",
+        "tipe": "UMP",
+        "minimum_salary": 3207459,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bali tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "5102",
+        "nama_wilayah": "KABUPATEN TABANAN",
+        "tipe": "UMK",
+        "minimum_salary": 3287679,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bali tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "5103",
+        "nama_wilayah": "KABUPATEN BADUNG",
+        "tipe": "UMK",
+        "minimum_salary": 3791002,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bali tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "5104",
+        "nama_wilayah": "KABUPATEN GIANYAR",
+        "tipe": "UMK",
+        "minimum_salary": 3316798,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bali tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "5105",
+        "nama_wilayah": "KABUPATEN KLUNGKUNG",
+        "tipe": "UMP",
+        "minimum_salary": 3207459,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bali tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "5106",
+        "nama_wilayah": "KABUPATEN BANGLI",
+        "tipe": "UMP",
+        "minimum_salary": 3207459,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bali tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "5107",
+        "nama_wilayah": "KABUPATEN KARANG ASEM",
+        "tipe": "UMP",
+        "minimum_salary": 3207459,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bali tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "5108",
+        "nama_wilayah": "KABUPATEN BULELENG",
+        "tipe": "UMP",
+        "minimum_salary": 3207459,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bali tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "5171",
+        "nama_wilayah": "KOTA DENPASAR",
+        "tipe": "UMK",
+        "minimum_salary": 3499879,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Bali tentang Penetapan UMK/UMP 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "52",
+    "nama_provinsi": "NUSA TENGGARA BARAT",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "5201",
+        "nama_wilayah": "KABUPATEN LOMBOK BARAT",
+        "tipe": "UMK",
+        "minimum_salary": 2712254,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur NTB tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "5202",
+        "nama_wilayah": "KABUPATEN LOMBOK TENGAH",
+        "tipe": "UMK",
+        "minimum_salary": 2741526,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur NTB tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "5203",
+        "nama_wilayah": "KABUPATEN LOMBOK TIMUR",
+        "tipe": "UMK",
+        "minimum_salary": 2744628,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur NTB tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "5204",
+        "nama_wilayah": "KABUPATEN SUMBAWA",
+        "tipe": "UMK",
+        "minimum_salary": 2747478,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur NTB tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "5205",
+        "nama_wilayah": "KABUPATEN DOMPU",
+        "tipe": "UMK",
+        "minimum_salary": 2767580,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur NTB tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "5206",
+        "nama_wilayah": "KABUPATEN BIMA",
+        "tipe": "UMK",
+        "minimum_salary": 2751290,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur NTB tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "5207",
+        "nama_wilayah": "KABUPATEN SUMBAWA BARAT",
+        "tipe": "UMK",
+        "minimum_salary": 3136468,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur NTB tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "5208",
+        "nama_wilayah": "KABUPATEN LOMBOK UTARA",
+        "tipe": "UMK",
+        "minimum_salary": 2758221,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur NTB tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "5271",
+        "nama_wilayah": "KOTA MATARAM",
+        "tipe": "UMK",
+        "minimum_salary": 3019015,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur NTB tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "5272",
+        "nama_wilayah": "KOTA BIMA",
+        "tipe": "UMK",
+        "minimum_salary": 2831163,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur NTB tentang Penetapan UMK 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "53",
+    "nama_provinsi": "NUSA TENGGARA TIMUR",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "5301",
+        "nama_wilayah": "KABUPATEN SUMBA BARAT",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5302",
+        "nama_wilayah": "KABUPATEN SUMBA TIMUR",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5303",
+        "nama_wilayah": "KABUPATEN KUPANG",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5304",
+        "nama_wilayah": "KABUPATEN TIMOR TENGAH SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5305",
+        "nama_wilayah": "KABUPATEN TIMOR TENGAH UTARA",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5306",
+        "nama_wilayah": "KABUPATEN BELU",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5307",
+        "nama_wilayah": "KABUPATEN ALOR",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5308",
+        "nama_wilayah": "KABUPATEN LEMBATA",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5309",
+        "nama_wilayah": "KABUPATEN FLORES TIMUR",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5310",
+        "nama_wilayah": "KABUPATEN SIKKA",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5311",
+        "nama_wilayah": "KABUPATEN ENDE",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5312",
+        "nama_wilayah": "KABUPATEN NGADA",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5313",
+        "nama_wilayah": "KABUPATEN MANGGARAI",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5314",
+        "nama_wilayah": "KABUPATEN ROTE NDAO",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5315",
+        "nama_wilayah": "KABUPATEN MANGGARAI BARAT",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5316",
+        "nama_wilayah": "KABUPATEN SUMBA TENGAH",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5317",
+        "nama_wilayah": "KABUPATEN SUMBA BARAT DAYA",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5318",
+        "nama_wilayah": "KABUPATEN NAGEKEO",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5319",
+        "nama_wilayah": "KABUPATEN MANGGARAI TIMUR",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5320",
+        "nama_wilayah": "KABUPATEN SABU RAIJUA",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5321",
+        "nama_wilayah": "KABUPATEN MALAKA",
+        "tipe": "UMP",
+        "minimum_salary": 2455898,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "5371",
+        "nama_wilayah": "KOTA KUPANG",
+        "tipe": "UMK",
+        "minimum_salary": 2532853,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Nusa Tenggara Timur tentang Penetapan Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "61",
+    "nama_provinsi": "KALIMANTAN BARAT",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "6101",
+        "nama_wilayah": "KABUPATEN SAMBAS",
+        "tipe": "UMK",
+        "minimum_salary": 3202663,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Barat tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6102",
+        "nama_wilayah": "KABUPATEN BENGKAYANG",
+        "tipe": "UMK",
+        "minimum_salary": 3252580,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Barat tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6103",
+        "nama_wilayah": "KABUPATEN LANDAK",
+        "tipe": "UMK",
+        "minimum_salary": 3211256,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Barat tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6104",
+        "nama_wilayah": "KABUPATEN MEMPAWAH",
+        "tipe": "UMK",
+        "minimum_salary": 3220801,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Barat tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6105",
+        "nama_wilayah": "KABUPATEN SANGGAU",
+        "tipe": "UMK",
+        "minimum_salary": 3121747,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Barat tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6106",
+        "nama_wilayah": "KABUPATEN KETAPANG",
+        "tipe": "UMK",
+        "minimum_salary": 3561801,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Barat tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6107",
+        "nama_wilayah": "KABUPATEN SINTANG",
+        "tipe": "UMK",
+        "minimum_salary": 3187965,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Barat tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6108",
+        "nama_wilayah": "KABUPATEN KAPUAS HULU",
+        "tipe": "UMK",
+        "minimum_salary": 3106259,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Barat tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6109",
+        "nama_wilayah": "KABUPATEN SEKADAU",
+        "tipe": "UMP",
+        "minimum_salary": 2905220,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Barat tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6110",
+        "nama_wilayah": "KABUPATEN MELAWI",
+        "tipe": "UMK",
+        "minimum_salary": 3109431,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Barat tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6111",
+        "nama_wilayah": "KABUPATEN KAYONG UTARA",
+        "tipe": "UMK",
+        "minimum_salary": 3370586,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Barat tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6112",
+        "nama_wilayah": "KABUPATEN KUBU RAYA",
+        "tipe": "UMK",
+        "minimum_salary": 3100000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Barat tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6171",
+        "nama_wilayah": "KOTA PONTIANAK",
+        "tipe": "UMK",
+        "minimum_salary": 3205220,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Barat tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6172",
+        "nama_wilayah": "KOTA SINGKAWANG",
+        "tipe": "UMK",
+        "minimum_salary": 3247387,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Barat tentang Penetapan Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "62",
+    "nama_provinsi": "KALIMANTAN TENGAH",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "6201",
+        "nama_wilayah": "KABUPATEN KOTAWARINGIN BARAT",
+        "tipe": "UMK",
+        "minimum_salary": 3909005,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kalimantan Tengah tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6202",
+        "nama_wilayah": "KABUPATEN KOTAWARINGIN TIMUR",
+        "tipe": "UMK",
+        "minimum_salary": 3756643,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kalimantan Tengah tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6203",
+        "nama_wilayah": "KABUPATEN KAPUAS",
+        "tipe": "UMK",
+        "minimum_salary": 3710096,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kalimantan Tengah tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6204",
+        "nama_wilayah": "KABUPATEN BARITO SELATAN",
+        "tipe": "UMK",
+        "minimum_salary": 4045059,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kalimantan Tengah tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6205",
+        "nama_wilayah": "KABUPATEN BARITO UTARA",
+        "tipe": "UMK",
+        "minimum_salary": 4093071,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kalimantan Tengah tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6206",
+        "nama_wilayah": "KABUPATEN SUKAMARA",
+        "tipe": "UMK",
+        "minimum_salary": 3912098,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kalimantan Tengah tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6207",
+        "nama_wilayah": "KABUPATEN LAMANDAU",
+        "tipe": "UMK",
+        "minimum_salary": 3938998,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kalimantan Tengah tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6208",
+        "nama_wilayah": "KABUPATEN SERUYAN",
+        "tipe": "UMK",
+        "minimum_salary": 4051079,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kalimantan Tengah tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6209",
+        "nama_wilayah": "KABUPATEN KATINGAN",
+        "tipe": "UMK",
+        "minimum_salary": 3729766,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kalimantan Tengah tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6210",
+        "nama_wilayah": "KABUPATEN PULANG PISAU",
+        "tipe": "UMK",
+        "minimum_salary": 3701205,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kalimantan Tengah tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6211",
+        "nama_wilayah": "KABUPATEN GUNUNG MAS",
+        "tipe": "UMK",
+        "minimum_salary": 3770716,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kalimantan Tengah tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6212",
+        "nama_wilayah": "KABUPATEN BARITO TIMUR",
+        "tipe": "UMK",
+        "minimum_salary": 3716006,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kalimantan Tengah tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6213",
+        "nama_wilayah": "KABUPATEN MURUNG RAYA",
+        "tipe": "UMK",
+        "minimum_salary": 3998046,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kalimantan Tengah tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6271",
+        "nama_wilayah": "KOTA PALANGKA RAYA",
+        "tipe": "UMK",
+        "minimum_salary": 3724677,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Kalimantan Tengah tentang Penetapan UMK 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "63",
+    "nama_provinsi": "KALIMANTAN SELATAN",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "6301",
+        "nama_wilayah": "KABUPATEN TANAH LAUT",
+        "tipe": "UMP",
+        "minimum_salary": 3725000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6302",
+        "nama_wilayah": "KABUPATEN KOTA BARU",
+        "tipe": "UMK",
+        "minimum_salary": 3904645,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6303",
+        "nama_wilayah": "KABUPATEN BANJAR",
+        "tipe": "UMP",
+        "minimum_salary": 3725000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6304",
+        "nama_wilayah": "KABUPATEN BARITO KUALA",
+        "tipe": "UMP",
+        "minimum_salary": 3725000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6305",
+        "nama_wilayah": "KABUPATEN TAPIN",
+        "tipe": "UMP",
+        "minimum_salary": 3725000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6306",
+        "nama_wilayah": "KABUPATEN HULU SUNGAI SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 3725000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6307",
+        "nama_wilayah": "KABUPATEN HULU SUNGAI TENGAH",
+        "tipe": "UMP",
+        "minimum_salary": 3725000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6308",
+        "nama_wilayah": "KABUPATEN HULU SUNGAI UTARA",
+        "tipe": "UMP",
+        "minimum_salary": 3725000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6309",
+        "nama_wilayah": "KABUPATEN TABALONG",
+        "tipe": "UMK",
+        "minimum_salary": 3827935,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6310",
+        "nama_wilayah": "KABUPATEN TANAH BUMBU",
+        "tipe": "UMK",
+        "minimum_salary": 3736000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6311",
+        "nama_wilayah": "KABUPATEN BALANGAN",
+        "tipe": "UMP",
+        "minimum_salary": 3725000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6371",
+        "nama_wilayah": "KOTA BANJARMASIN",
+        "tipe": "UMK",
+        "minimum_salary": 3855894,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "6372",
+        "nama_wilayah": "KOTA BANJAR BARU",
+        "tipe": "UMK",
+        "minimum_salary": 3843037,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Selatan tentang Penetapan Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "64",
+    "nama_provinsi": "KALIMANTAN TIMUR",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "6401",
+        "nama_wilayah": "KABUPATEN PASER",
+        "tipe": "UMK",
+        "minimum_salary": 3776998,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Timur tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6402",
+        "nama_wilayah": "KABUPATEN KUTAI BARAT",
+        "tipe": "UMK",
+        "minimum_salary": 4231617,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Timur tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6403",
+        "nama_wilayah": "KABUPATEN KUTAI KARTANEGARA",
+        "tipe": "UMK",
+        "minimum_salary": 3991797,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Timur tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6404",
+        "nama_wilayah": "KABUPATEN KUTAI TIMUR",
+        "tipe": "UMK",
+        "minimum_salary": 4067436,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Timur tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6405",
+        "nama_wilayah": "KABUPATEN BERAU",
+        "tipe": "UMK",
+        "minimum_salary": 4391337,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Timur tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6409",
+        "nama_wilayah": "KABUPATEN PENAJAM PASER UTARA",
+        "tipe": "UMK",
+        "minimum_salary": 4181134,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Timur tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6411",
+        "nama_wilayah": "KABUPATEN MAHAKAM HULU",
+        "tipe": "UMP",
+        "minimum_salary": 3761428,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Timur tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "6471",
+        "nama_wilayah": "KOTA BALIKPAPAN",
+        "tipe": "UMK",
+        "minimum_salary": 3856694,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Timur tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6472",
+        "nama_wilayah": "KOTA SAMARINDA",
+        "tipe": "UMK",
+        "minimum_salary": 3983882,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Timur tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6474",
+        "nama_wilayah": "KOTA BONTANG",
+        "tipe": "UMK",
+        "minimum_salary": 3799480,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Timur tentang Penetapan UMK 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "65",
+    "nama_provinsi": "KALIMANTAN UTARA",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "6501",
+        "nama_wilayah": "KABUPATEN MALINAU",
+        "tipe": "UMK",
+        "minimum_salary": 4040073,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Utara tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6502",
+        "nama_wilayah": "KABUPATEN BULUNGAN",
+        "tipe": "UMK",
+        "minimum_salary": 3900396,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Utara tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6503",
+        "nama_wilayah": "KABUPATEN TANA TIDUNG",
+        "tipe": "UMK",
+        "minimum_salary": 3870800,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Utara tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6504",
+        "nama_wilayah": "KABUPATEN NUNUKAN",
+        "tipe": "UMK",
+        "minimum_salary": 3845251,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Utara tentang Penetapan UMK 2026"
+      },
+      {
+        "kode_kabupaten": "6571",
+        "nama_wilayah": "KOTA TARAKAN",
+        "tipe": "UMK",
+        "minimum_salary": 4742169,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Kalimantan Utara tentang Penetapan UMK 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "71",
+    "nama_provinsi": "SULAWESI UTARA",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "7101",
+        "nama_wilayah": "KABUPATEN BOLAANG MONGONDOW",
+        "tipe": "UMP",
+        "minimum_salary": 4002630,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7102",
+        "nama_wilayah": "KABUPATEN MINAHASA",
+        "tipe": "UMP",
+        "minimum_salary": 4002630,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7103",
+        "nama_wilayah": "KABUPATEN KEPULAUAN SANGIHE",
+        "tipe": "UMP",
+        "minimum_salary": 4002630,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7104",
+        "nama_wilayah": "KABUPATEN KEPULAUAN TALAUD",
+        "tipe": "UMP",
+        "minimum_salary": 4002630,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7105",
+        "nama_wilayah": "KABUPATEN MINAHASA SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 4002630,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7106",
+        "nama_wilayah": "KABUPATEN MINAHASA UTARA",
+        "tipe": "UMP",
+        "minimum_salary": 4002630,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7107",
+        "nama_wilayah": "KABUPATEN BOLAANG MONGONDOW UTARA",
+        "tipe": "UMP",
+        "minimum_salary": 4002630,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7108",
+        "nama_wilayah": "KABUPATEN SIAU TAGULANDANG BIARO",
+        "tipe": "UMP",
+        "minimum_salary": 4002630,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7109",
+        "nama_wilayah": "KABUPATEN MINAHASA TENGGARA",
+        "tipe": "UMP",
+        "minimum_salary": 4002630,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7110",
+        "nama_wilayah": "KABUPATEN BOLAANG MONGONDOW SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 4002630,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7111",
+        "nama_wilayah": "KABUPATEN BOLAANG MONGONDOW TIMUR",
+        "tipe": "UMP",
+        "minimum_salary": 4002630,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7171",
+        "nama_wilayah": "KOTA MANADO",
+        "tipe": "UMK",
+        "minimum_salary": 4022017,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7172",
+        "nama_wilayah": "KOTA BITUNG",
+        "tipe": "UMP",
+        "minimum_salary": 4002630,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7173",
+        "nama_wilayah": "KOTA TOMOHON",
+        "tipe": "UMP",
+        "minimum_salary": 4002630,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7174",
+        "nama_wilayah": "KOTA KOTAMOBAGU",
+        "tipe": "UMP",
+        "minimum_salary": 4002630,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Utara tentang Penetapan Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "72",
+    "nama_provinsi": "SULAWESI TENGAH",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "7201",
+        "nama_wilayah": "KABUPATEN BANGGAI KEPULAUAN",
+        "tipe": "UMP",
+        "minimum_salary": 3179565,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tengah tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "7202",
+        "nama_wilayah": "KABUPATEN BANGGAI",
+        "tipe": "UMP",
+        "minimum_salary": 3179565,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tengah tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "7203",
+        "nama_wilayah": "KABUPATEN MOROWALI",
+        "tipe": "UMK",
+        "minimum_salary": 4223000,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tengah tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "7204",
+        "nama_wilayah": "KABUPATEN POSO",
+        "tipe": "UMK",
+        "minimum_salary": 3268227,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tengah tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "7205",
+        "nama_wilayah": "KABUPATEN DONGGALA",
+        "tipe": "UMP",
+        "minimum_salary": 3179565,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tengah tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "7206",
+        "nama_wilayah": "KABUPATEN TOLI-TOLI",
+        "tipe": "UMP",
+        "minimum_salary": 3179565,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tengah tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "7207",
+        "nama_wilayah": "KABUPATEN BUOL",
+        "tipe": "UMK",
+        "minimum_salary": 3198109,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tengah tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "7208",
+        "nama_wilayah": "KABUPATEN PARIGI MOUTONG",
+        "tipe": "UMP",
+        "minimum_salary": 3179565,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tengah tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "7209",
+        "nama_wilayah": "KABUPATEN TOJO UNA-UNA",
+        "tipe": "UMP",
+        "minimum_salary": 3179565,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tengah tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "7210",
+        "nama_wilayah": "KABUPATEN SIGI",
+        "tipe": "UMP",
+        "minimum_salary": 3179565,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tengah tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "7211",
+        "nama_wilayah": "KABUPATEN BANGGAI LAUT",
+        "tipe": "UMP",
+        "minimum_salary": 3179565,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tengah tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "7212",
+        "nama_wilayah": "KABUPATEN MOROWALI UTARA",
+        "tipe": "UMK",
+        "minimum_salary": 4408209,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tengah tentang Penetapan UMK/UMP 2026"
+      },
+      {
+        "kode_kabupaten": "7271",
+        "nama_wilayah": "KOTA PALU",
+        "tipe": "UMK",
+        "minimum_salary": 3619466,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tengah tentang Penetapan UMK/UMP 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "73",
+    "nama_provinsi": "SULAWESI SELATAN",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "7301",
+        "nama_wilayah": "KABUPATEN KEPULAUAN SELAYAR",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7302",
+        "nama_wilayah": "KABUPATEN BULUKUMBA",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7303",
+        "nama_wilayah": "KABUPATEN BANTAENG",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7304",
+        "nama_wilayah": "KABUPATEN JENEPONTO",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7305",
+        "nama_wilayah": "KABUPATEN TAKALAR",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7306",
+        "nama_wilayah": "KABUPATEN GOWA",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7307",
+        "nama_wilayah": "KABUPATEN SINJAI",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7308",
+        "nama_wilayah": "KABUPATEN MAROS",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7309",
+        "nama_wilayah": "KABUPATEN PANGKAJENE DAN KEPULAUAN",
+        "tipe": "UMK",
+        "minimum_salary": 4032248,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7310",
+        "nama_wilayah": "KABUPATEN BARRU",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7311",
+        "nama_wilayah": "KABUPATEN BONE",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7312",
+        "nama_wilayah": "KABUPATEN SOPPENG",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7313",
+        "nama_wilayah": "KABUPATEN WAJO",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7314",
+        "nama_wilayah": "KABUPATEN SIDENRENG RAPPANG",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7315",
+        "nama_wilayah": "KABUPATEN PINRANG",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7316",
+        "nama_wilayah": "KABUPATEN ENREKANG",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7317",
+        "nama_wilayah": "KABUPATEN LUWU",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7318",
+        "nama_wilayah": "KABUPATEN TANA TORAJA",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7322",
+        "nama_wilayah": "KABUPATEN LUWU UTARA",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7325",
+        "nama_wilayah": "KABUPATEN LUWU TIMUR",
+        "tipe": "UMK",
+        "minimum_salary": 3961166,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7326",
+        "nama_wilayah": "KABUPATEN TORAJA UTARA",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7371",
+        "nama_wilayah": "KOTA MAKASSAR",
+        "tipe": "UMK",
+        "minimum_salary": 4148179,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7372",
+        "nama_wilayah": "KOTA PARE-PARE",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7373",
+        "nama_wilayah": "KOTA PALOPO",
+        "tipe": "UMP",
+        "minimum_salary": 3921088,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Selatan tentang Penetapan Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "74",
+    "nama_provinsi": "SULAWESI TENGGARA",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "7401",
+        "nama_wilayah": "KABUPATEN BUTON",
+        "tipe": "UMP",
+        "minimum_salary": 3306496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7402",
+        "nama_wilayah": "KABUPATEN MUNA",
+        "tipe": "UMP",
+        "minimum_salary": 3306496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7403",
+        "nama_wilayah": "KABUPATEN KONAWE",
+        "tipe": "UMP",
+        "minimum_salary": 3306496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7404",
+        "nama_wilayah": "KABUPATEN KOLAKA",
+        "tipe": "UMK",
+        "minimum_salary": 3688130,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7405",
+        "nama_wilayah": "KABUPATEN KONAWE SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 3306496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7406",
+        "nama_wilayah": "KABUPATEN BOMBANA",
+        "tipe": "UMP",
+        "minimum_salary": 3306496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7407",
+        "nama_wilayah": "KABUPATEN WAKATOBI",
+        "tipe": "UMP",
+        "minimum_salary": 3306496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7408",
+        "nama_wilayah": "KABUPATEN KOLAKA UTARA",
+        "tipe": "UMP",
+        "minimum_salary": 3306496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7409",
+        "nama_wilayah": "KABUPATEN BUTON UTARA",
+        "tipe": "UMP",
+        "minimum_salary": 3306496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7410",
+        "nama_wilayah": "KABUPATEN KONAWE UTARA",
+        "tipe": "UMK",
+        "minimum_salary": 3510506,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7411",
+        "nama_wilayah": "KABUPATEN KOLAKA TIMUR",
+        "tipe": "UMP",
+        "minimum_salary": 3306496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7412",
+        "nama_wilayah": "KABUPATEN KONAWE KEPULAUAN",
+        "tipe": "UMP",
+        "minimum_salary": 3306496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7413",
+        "nama_wilayah": "KABUPATEN MUNA BARAT",
+        "tipe": "UMP",
+        "minimum_salary": 3306496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7414",
+        "nama_wilayah": "KABUPATEN BUTON TENGAH",
+        "tipe": "UMP",
+        "minimum_salary": 3306496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7415",
+        "nama_wilayah": "KABUPATEN BUTON SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 3306496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7471",
+        "nama_wilayah": "KOTA KENDARI",
+        "tipe": "UMK",
+        "minimum_salary": 3516070,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      },
+      {
+        "kode_kabupaten": "7472",
+        "nama_wilayah": "KOTA BAUBAU",
+        "tipe": "UMP",
+        "minimum_salary": 3306496,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulawesi Tenggara No. 110.3.3.1/581"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "75",
+    "nama_provinsi": "GORONTALO",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "7501",
+        "nama_wilayah": "KABUPATEN BOALEMO",
+        "tipe": "UMP",
+        "minimum_salary": 3405144,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Gorontalo tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7502",
+        "nama_wilayah": "KABUPATEN GORONTALO",
+        "tipe": "UMP",
+        "minimum_salary": 3405144,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Gorontalo tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7503",
+        "nama_wilayah": "KABUPATEN POHUWATO",
+        "tipe": "UMP",
+        "minimum_salary": 3405144,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Gorontalo tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7504",
+        "nama_wilayah": "KABUPATEN BONE BOLANGO",
+        "tipe": "UMP",
+        "minimum_salary": 3405144,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Gorontalo tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7505",
+        "nama_wilayah": "KABUPATEN GORONTALO UTARA",
+        "tipe": "UMP",
+        "minimum_salary": 3405144,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Gorontalo tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "7571",
+        "nama_wilayah": "KOTA GORONTALO",
+        "tipe": "UMP",
+        "minimum_salary": 3405144,
+        "is_verified": true,
+        "sumber_sk": "Keputusan Gubernur Gorontalo tentang Penetapan Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "76",
+    "nama_provinsi": "SULAWESI BARAT",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "7601",
+        "nama_wilayah": "KABUPATEN MAJENE",
+        "tipe": "UMP",
+        "minimum_salary": 3315934,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulbar No. 855/2025"
+      },
+      {
+        "kode_kabupaten": "7602",
+        "nama_wilayah": "KABUPATEN POLEWALI MANDAR",
+        "tipe": "UMK",
+        "minimum_salary": 3327886,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulbar No. 855/2025"
+      },
+      {
+        "kode_kabupaten": "7603",
+        "nama_wilayah": "KABUPATEN MAMASA",
+        "tipe": "UMP",
+        "minimum_salary": 3315934,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulbar No. 855/2025"
+      },
+      {
+        "kode_kabupaten": "7604",
+        "nama_wilayah": "KABUPATEN MAMUJU",
+        "tipe": "UMK",
+        "minimum_salary": 3363847,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulbar No. 855/2025"
+      },
+      {
+        "kode_kabupaten": "7605",
+        "nama_wilayah": "KABUPATEN PASANGKAYU",
+        "tipe": "UMK",
+        "minimum_salary": 3564798,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulbar No. 855/2025"
+      },
+      {
+        "kode_kabupaten": "7606",
+        "nama_wilayah": "KABUPATEN MAMUJU TENGAH",
+        "tipe": "UMP",
+        "minimum_salary": 3315934,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Sulbar No. 855/2025"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "81",
+    "nama_provinsi": "MALUKU",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "8101",
+        "nama_wilayah": "KABUPATEN MALUKU TENGGARA BARAT",
+        "tipe": "UMP",
+        "minimum_salary": 3334490,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8102",
+        "nama_wilayah": "KABUPATEN MALUKU TENGGARA",
+        "tipe": "UMP",
+        "minimum_salary": 3334490,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8103",
+        "nama_wilayah": "KABUPATEN MALUKU TENGAH",
+        "tipe": "UMP",
+        "minimum_salary": 3334490,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8104",
+        "nama_wilayah": "KABUPATEN BURU",
+        "tipe": "UMP",
+        "minimum_salary": 3334490,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8105",
+        "nama_wilayah": "KABUPATEN KEPULAUAN ARU",
+        "tipe": "UMP",
+        "minimum_salary": 3334490,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8106",
+        "nama_wilayah": "KABUPATEN SERAM BAGIAN BARAT",
+        "tipe": "UMP",
+        "minimum_salary": 3334490,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8107",
+        "nama_wilayah": "KABUPATEN SERAM BAGIAN TIMUR",
+        "tipe": "UMP",
+        "minimum_salary": 3334490,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8108",
+        "nama_wilayah": "KABUPATEN MALUKU BARAT DAYA",
+        "tipe": "UMP",
+        "minimum_salary": 3334490,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8109",
+        "nama_wilayah": "KABUPATEN BURU SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 3334490,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8171",
+        "nama_wilayah": "KOTA AMBON",
+        "tipe": "UMK",
+        "minimum_salary": 3381225,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8172",
+        "nama_wilayah": "KOTA TUAL",
+        "tipe": "UMP",
+        "minimum_salary": 3334490,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku tentang Penetapan Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "82",
+    "nama_provinsi": "MALUKU UTARA",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "8201",
+        "nama_wilayah": "KABUPATEN HALMAHERA BARAT",
+        "tipe": "UMP",
+        "minimum_salary": 3510240,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8202",
+        "nama_wilayah": "KABUPATEN HALMAHERA TENGAH",
+        "tipe": "UMP",
+        "minimum_salary": 3510240,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8203",
+        "nama_wilayah": "KABUPATEN KEPULAUAN SULA",
+        "tipe": "UMP",
+        "minimum_salary": 3510240,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8204",
+        "nama_wilayah": "KABUPATEN HALMAHERA SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 3510240,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8205",
+        "nama_wilayah": "KABUPATEN HALMAHERA UTARA",
+        "tipe": "UMP",
+        "minimum_salary": 3510240,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8206",
+        "nama_wilayah": "KABUPATEN HALMAHERA TIMUR",
+        "tipe": "UMP",
+        "minimum_salary": 3510240,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8207",
+        "nama_wilayah": "KABUPATEN PULAU MOROTAI",
+        "tipe": "UMP",
+        "minimum_salary": 3510240,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8208",
+        "nama_wilayah": "KABUPATEN PULAU TALIABU",
+        "tipe": "UMP",
+        "minimum_salary": 3510240,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8271",
+        "nama_wilayah": "KOTA TERNATE",
+        "tipe": "UMK",
+        "minimum_salary": 3599562,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku Utara tentang Penetapan Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "8272",
+        "nama_wilayah": "KOTA TIDORE KEPULAUAN",
+        "tipe": "UMP",
+        "minimum_salary": 3510240,
+        "is_verified": true,
+        "sumber_sk": "SK Gubernur Maluku Utara tentang Penetapan Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "91",
+    "nama_provinsi": "PAPUA",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "9101",
+        "nama_wilayah": "KABUPATEN JAYAPURA",
+        "tipe": "UMP",
+        "minimum_salary": 4436283,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9102",
+        "nama_wilayah": "KABUPATEN BIAK NUMFOR",
+        "tipe": "UMP",
+        "minimum_salary": 4436283,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9103",
+        "nama_wilayah": "KABUPATEN KEPULAUAN YAPEN",
+        "tipe": "UMP",
+        "minimum_salary": 4436283,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9104",
+        "nama_wilayah": "KABUPATEN KEEROM",
+        "tipe": "UMP",
+        "minimum_salary": 4436283,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9105",
+        "nama_wilayah": "KABUPATEN SARMI",
+        "tipe": "UMP",
+        "minimum_salary": 4436283,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9106",
+        "nama_wilayah": "KABUPATEN WAROPEN",
+        "tipe": "UMP",
+        "minimum_salary": 4436283,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9107",
+        "nama_wilayah": "KABUPATEN SUPIORI",
+        "tipe": "UMP",
+        "minimum_salary": 4436283,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9108",
+        "nama_wilayah": "KABUPATEN MAMBERAMO RAYA",
+        "tipe": "UMP",
+        "minimum_salary": 4436283,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9171",
+        "nama_wilayah": "KOTA JAYAPURA",
+        "tipe": "UMP",
+        "minimum_salary": 4436283,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua tentang Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "92",
+    "nama_provinsi": "PAPUA BARAT",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "9201",
+        "nama_wilayah": "KABUPATEN FAK-FAK",
+        "tipe": "UMP",
+        "minimum_salary": 3841000,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Barat tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9202",
+        "nama_wilayah": "KABUPATEN KAIMANA",
+        "tipe": "UMP",
+        "minimum_salary": 3841000,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Barat tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9203",
+        "nama_wilayah": "KABUPATEN TELUK WONDAMA",
+        "tipe": "UMP",
+        "minimum_salary": 3841000,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Barat tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9204",
+        "nama_wilayah": "KABUPATEN TELUK BINTUNI",
+        "tipe": "UMP",
+        "minimum_salary": 3841000,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Barat tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9205",
+        "nama_wilayah": "KABUPATEN MANOKWARI",
+        "tipe": "UMP",
+        "minimum_salary": 3841000,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Barat tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9206",
+        "nama_wilayah": "KABUPATEN MANOKWARI SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 3841000,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Barat tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9207",
+        "nama_wilayah": "KABUPATEN PEGUNUNGAN ARFAK",
+        "tipe": "UMP",
+        "minimum_salary": 3841000,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Barat tentang Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "93",
+    "nama_provinsi": "PAPUA SELATAN",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "9301",
+        "nama_wilayah": "KABUPATEN MERAUKE",
+        "tipe": "UMP",
+        "minimum_salary": 4508100,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Selatan tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9302",
+        "nama_wilayah": "KABUPATEN BOVEN DIGOEL",
+        "tipe": "UMP",
+        "minimum_salary": 4508100,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Selatan tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9303",
+        "nama_wilayah": "KABUPATEN MAPPI",
+        "tipe": "UMP",
+        "minimum_salary": 4508100,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Selatan tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9304",
+        "nama_wilayah": "KABUPATEN ASMAT",
+        "tipe": "UMP",
+        "minimum_salary": 4508100,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Selatan tentang Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "94",
+    "nama_provinsi": "PAPUA TENGAH",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "9401",
+        "nama_wilayah": "KABUPATEN NABIRE",
+        "tipe": "UMP",
+        "minimum_salary": 4285848,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Tengah tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9402",
+        "nama_wilayah": "KABUPATEN PANIAI",
+        "tipe": "UMP",
+        "minimum_salary": 4285848,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Tengah tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9403",
+        "nama_wilayah": "KABUPATEN MIMIKA",
+        "tipe": "UMK",
+        "minimum_salary": 5005678,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Tengah tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9404",
+        "nama_wilayah": "KABUPATEN PUNCAK JAYA",
+        "tipe": "UMP",
+        "minimum_salary": 4285848,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Tengah tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9405",
+        "nama_wilayah": "KABUPATEN PUNCAK",
+        "tipe": "UMP",
+        "minimum_salary": 4285848,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Tengah tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9406",
+        "nama_wilayah": "KABUPATEN DOGIYAI",
+        "tipe": "UMP",
+        "minimum_salary": 4285848,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Tengah tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9407",
+        "nama_wilayah": "KABUPATEN INTAN JAYA",
+        "tipe": "UMP",
+        "minimum_salary": 4285848,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Tengah tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9408",
+        "nama_wilayah": "KABUPATEN DEIYAI",
+        "tipe": "UMP",
+        "minimum_salary": 4285848,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Tengah tentang Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "95",
+    "nama_provinsi": "PAPUA PEGUNUNGAN",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "9501",
+        "nama_wilayah": "KABUPATEN JAYAWIJAYA",
+        "tipe": "UMP",
+        "minimum_salary": 4508714,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Pegunungan tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9502",
+        "nama_wilayah": "KABUPATEN PEGUNUNGAN BINTANG",
+        "tipe": "UMP",
+        "minimum_salary": 4508714,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Pegunungan tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9503",
+        "nama_wilayah": "KABUPATEN YAHUKIMO",
+        "tipe": "UMP",
+        "minimum_salary": 4508714,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Pegunungan tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9504",
+        "nama_wilayah": "KABUPATEN TOLIKARA",
+        "tipe": "UMP",
+        "minimum_salary": 4508714,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Pegunungan tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9505",
+        "nama_wilayah": "KABUPATEN MAMBERAMO TENGAH",
+        "tipe": "UMP",
+        "minimum_salary": 4508714,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Pegunungan tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9506",
+        "nama_wilayah": "KABUPATEN YALIMO",
+        "tipe": "UMP",
+        "minimum_salary": 4508714,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Pegunungan tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9507",
+        "nama_wilayah": "KABUPATEN LANNY JAYA",
+        "tipe": "UMP",
+        "minimum_salary": 4508714,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Pegunungan tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9508",
+        "nama_wilayah": "KABUPATEN NDUGA",
+        "tipe": "UMP",
+        "minimum_salary": 4508714,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Pegunungan tentang Upah Minimum 2026"
+      }
+    ]
+  },
+  {
+    "kode_provinsi": "96",
+    "nama_provinsi": "PAPUA BARAT DAYA",
+    "daftar_wilayah": [
+      {
+        "kode_kabupaten": "9601",
+        "nama_wilayah": "KABUPATEN SORONG",
+        "tipe": "UMP",
+        "minimum_salary": 3766000,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Barat Daya tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9602",
+        "nama_wilayah": "KABUPATEN SORONG SELATAN",
+        "tipe": "UMP",
+        "minimum_salary": 3766000,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Barat Daya tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9603",
+        "nama_wilayah": "KABUPATEN RAJA AMPAT",
+        "tipe": "UMP",
+        "minimum_salary": 3766000,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Barat Daya tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9604",
+        "nama_wilayah": "KABUPATEN TAMBRAUW",
+        "tipe": "UMP",
+        "minimum_salary": 3766000,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Barat Daya tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9605",
+        "nama_wilayah": "KABUPATEN MAYBRAT",
+        "tipe": "UMP",
+        "minimum_salary": 3766000,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Barat Daya tentang Upah Minimum 2026"
+      },
+      {
+        "kode_kabupaten": "9671",
+        "nama_wilayah": "KOTA SORONG",
+        "tipe": "UMP",
+        "minimum_salary": 3766000,
+        "is_verified": true,
+        "sumber_sk": "SK Pemerintah Provinsi Papua Barat Daya tentang Upah Minimum 2026"
+      }
+    ]
+  }
+]
