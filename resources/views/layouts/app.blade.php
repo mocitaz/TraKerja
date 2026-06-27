@@ -255,12 +255,12 @@
                 });
             }
 
-            let loaderTimer = null;
+            window.topLoaderTimer = window.topLoaderTimer || null;
 
             function startTopLoader() {
                 const loader = document.getElementById('page-loader-bar');
                 if (!loader) return;
-                if (loaderTimer) clearTimeout(loaderTimer);
+                if (window.topLoaderTimer) clearTimeout(window.topLoaderTimer);
 
                 loader.style.transition = 'none';
                 loader.style.width = '0%';
@@ -274,12 +274,12 @@
             function finishTopLoader() {
                 const loader = document.getElementById('page-loader-bar');
                 if (!loader) return;
-                if (loaderTimer) clearTimeout(loaderTimer);
+                if (window.topLoaderTimer) clearTimeout(window.topLoaderTimer);
 
                 loader.style.transition = 'width 150ms ease-out, opacity 200ms ease';
                 loader.style.width = '100%';
 
-                loaderTimer = setTimeout(() => {
+                window.topLoaderTimer = setTimeout(() => {
                     loader.style.opacity = '0';
                     setTimeout(() => {
                         loader.style.width = '0%';

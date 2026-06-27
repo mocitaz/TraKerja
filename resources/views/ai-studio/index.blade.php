@@ -838,29 +838,26 @@
             });
         }
 
-        const realContent = document.getElementById('real-content');
-        const skeletonContent = document.getElementById('skeleton-content');
-        const textContent = document.getElementById('text-content');
-        const generatedActions = document.getElementById('generated-actions');
-
-        function copyGeneratedLetter() {
-            const textToCopy = textContent.textContent;
+        window.copyGeneratedLetter = function() {
+            const textEl = document.getElementById('text-content');
+            if (!textEl) return;
+            const textToCopy = textEl.textContent;
             navigator.clipboard.writeText(textToCopy).then(() => {
                 const btn = document.getElementById('copy-btn');
                 const btnText = document.getElementById('copy-text');
                 const btnIcon = document.getElementById('copy-icon');
 
-                btnText.textContent = "Copied!";
-                btnIcon.className = "ph-bold ph-check text-[10px]";
+                if (btnText) btnText.textContent = "Copied!";
+                if (btnIcon) btnIcon.className = "ph-bold ph-check text-[10px]";
 
                 setTimeout(() => {
-                    btnText.textContent = "Copy Letter";
-                    btnIcon.className = "ph-bold ph-copy text-xs";
+                    if (btnText) btnText.textContent = "Copy Letter";
+                    if (btnIcon) btnIcon.className = "ph-bold ph-copy text-xs";
                 }, 2000);
             }).catch(err => {
                 console.error('Failed to copy: ', err);
             });
-        }
+        };
 
         var coverLetterForm = document.getElementById('coverLetterForm');
         if (coverLetterForm) {
@@ -871,12 +868,17 @@
                 btn.disabled = true;
                 btn.classList.add('opacity-70', 'cursor-not-allowed');
                 document.getElementById('submit-text-cl').textContent = 'Generating…';
-                document.getElementById('submit-icon-cl').classList.add('hidden');
+                document.getElementById('submit-icon-cl')?.classList.add('hidden');
                 document.getElementById('loading-spinner-cl').classList.remove('hidden');
 
-                realContent.classList.add('hidden');
-                generatedActions.classList.add('hidden');
-                skeletonContent.classList.remove('hidden');
+                const realContent = document.getElementById('real-content');
+                const skeletonContent = document.getElementById('skeleton-content');
+                const textContent = document.getElementById('text-content');
+                const generatedActions = document.getElementById('generated-actions');
+
+                realContent?.classList.add('hidden');
+                generatedActions?.classList.add('hidden');
+                skeletonContent?.classList.remove('hidden');
 
                 const formData = new FormData(this);
 
@@ -902,10 +904,10 @@
                     document.getElementById('submit-icon-cl')?.classList.remove('hidden');
                     document.getElementById('loading-spinner-cl').classList.add('hidden');
                     if (data.success && data.cover_letter) {
-                        textContent.textContent = data.cover_letter;
-                        skeletonContent.classList.add('hidden');
-                        realContent.classList.remove('hidden');
-                        generatedActions.classList.remove('hidden');
+                        if (textContent) textContent.textContent = data.cover_letter;
+                        skeletonContent?.classList.add('hidden');
+                        realContent?.classList.remove('hidden');
+                        generatedActions?.classList.remove('hidden');
                     } else {
                         alert(data.message || 'Error: Gagal memproses data AI.');
                     }
