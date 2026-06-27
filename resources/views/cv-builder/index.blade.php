@@ -3,7 +3,7 @@
         <!-- Ignored layout slot, header is handled inline inside template container for premium consistency -->
     </x-slot>
 
-    <div class="bg-[#fafafa] min-h-screen pb-16" x-data="{ activeTab: 'experiences', previewOpen: false }">
+    <div class="bg-[#fafafa] min-h-screen pb-16" x-data="{ activeTab: 'experiences', previewOpen: false, importModalOpen: false }">
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
             
             <!-- Premium Notion-Inspired Page Header -->
@@ -23,11 +23,10 @@
 
                 <!-- Header Actions Grid -->
                 <div class="flex items-center gap-2 w-full md:w-auto overflow-x-auto no-scrollbar py-1 shrink-0">
-                    <button type="button" onclick="document.getElementById('import-pdf-input').click()" id="import-pdf-btn" class="px-3 py-1.5 bg-white text-zinc-700 border border-zinc-200 rounded-md hover:bg-zinc-50 text-[11px] font-bold shadow-3xs transition-all duration-200 flex items-center gap-1.5 shrink-0 focus:outline-none">
+                    <button type="button" @click="importModalOpen = true" id="import-pdf-btn" class="px-3 py-1.5 bg-white text-zinc-700 border border-zinc-200 rounded-md hover:bg-zinc-50 text-[11px] font-bold shadow-3xs transition-all duration-200 flex items-center gap-1.5 shrink-0 focus:outline-none">
                         <i class="ph ph-file-arrow-up text-xs"></i>
                         <span id="import-pdf-text">Import PDF</span>
                     </button>
-                    <input type="file" id="import-pdf-input" accept=".pdf" class="hidden" onchange="uploadPdfResume(this)">
                     <button @click="$dispatch('openPublishModal')" class="px-3 py-1.5 bg-white text-zinc-700 border border-zinc-200 rounded-md hover:bg-zinc-50 text-[11px] font-bold shadow-3xs transition-all duration-200 flex items-center gap-1.5 shrink-0 focus:outline-none">
                         <i class="ph ph-globe text-xs"></i>
                         <span>Publish Site</span>
@@ -273,6 +272,91 @@
                 </div>
             </div>
         </template>
+
+
+    <!-- Import CV Modal -->
+    <div x-show="importModalOpen"
+         class="fixed inset-0 z-[150] flex items-center justify-center overflow-y-auto"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         x-cloak>
+         
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-zinc-950/40 backdrop-blur-xs" @click="importModalOpen = false"></div>
+
+        <!-- Modal Content Card -->
+        <div class="bg-white border border-zinc-200/80 rounded-xl shadow-xl w-full max-w-md mx-4 overflow-hidden transform transition-all relative z-10 flex flex-col"
+             x-show="importModalOpen"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+             x-transition:leave-end="opacity-0 scale-95 translate-y-2">
+
+            <!-- Modal Header -->
+            <div class="px-5 py-4 border-b border-zinc-150/60 bg-[#ffffff] flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-primary-50 border border-primary-200/60 flex items-center justify-center text-zinc-800">
+                        <i class="ph ph-file-arrow-up text-sm"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold text-zinc-800 tracking-tight leading-none mb-0.5">Import CV PDF</h3>
+                        <p class="text-[9px] text-zinc-400 font-bold uppercase tracking-wider leading-none">AI Resume ingestion</p>
+                    </div>
+                </div>
+                <button type="button" @click="importModalOpen = false" class="w-7 h-7 rounded-md hover:bg-zinc-100 text-zinc-400 hover:text-zinc-700 flex items-center justify-center transition-colors">
+                    <i class="ph ph-x text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6">
+                <!-- Dropzone Area -->
+                <div id="dropzone"
+                     onclick="document.getElementById('import-pdf-input').click()"
+                     class="border-2 border-dashed border-zinc-200 hover:border-primary-400/80 hover:bg-zinc-50/50 rounded-xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group">
+                    
+                    <div class="w-12 h-12 bg-zinc-50 group-hover:bg-primary-50 border border-zinc-150 group-hover:border-primary-200 rounded-xl flex items-center justify-center text-zinc-450 group-hover:text-primary-650 shadow-3xs mb-3 transition-colors">
+                        <i class="ph ph-file-pdf text-xl"></i>
+                    </div>
+                    
+                    <h4 class="text-xs font-bold text-zinc-700 leading-tight">Drag & Drop CV PDF Anda di sini</h4>
+                    <p class="text-[10px] text-zinc-400 font-medium mt-1">atau <span class="text-primary-650 font-bold group-hover:underline">Pilih berkas dari komputer</span></p>
+                    
+                    <div class="mt-4 pt-3.5 border-t border-zinc-100/80 w-full flex items-center justify-center gap-4 text-[9px] font-semibold text-zinc-400 uppercase tracking-wider">
+                        <span>PDF Format Only</span>
+                        <span class="text-zinc-300">•</span>
+                        <span>Max 10 MB</span>
+                    </div>
+                </div>
+
+                <!-- Hidden Input -->
+                <input type="file" id="import-pdf-input" accept=".pdf" class="hidden" onchange="uploadPdfResume(this)">
+
+                <!-- Progress State (Hidden by default) -->
+                <div id="upload-progress-state" class="hidden mt-4 space-y-3.5">
+                    <div class="bg-zinc-50 border border-zinc-200/60 rounded-lg p-3.5 flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-primary-50 text-primary-650 flex items-center justify-center shrink-0 border border-primary-100">
+                            <i class="ph ph-spinner animate-spin text-sm"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-xs font-bold text-zinc-800 truncate leading-none mb-0.5" id="uploading-filename">resume.pdf</h4>
+                            <p class="text-[10px] font-medium text-zinc-450 leading-none">Mengekstrak data menggunakan AI Parser...</p>
+                        </div>
+                    </div>
+                    <!-- Animated Bar -->
+                    <div class="w-full h-1 bg-zinc-150 rounded-full overflow-hidden">
+                        <div class="h-full bg-primary-650 rounded-full animate-shimmer" style="width: 100%; background-image: linear-gradient(to right, #4f46e5, #8b5cf6, #4f46e5); background-size: 200% 100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 
     <style>
@@ -283,6 +367,14 @@
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .animate-shimmer {
+            animation: shimmer 1.5s infinite linear;
+        }
     </style>
     @livewire('cv-builder.portfolio-publish-modal')
 
@@ -290,11 +382,14 @@
     window.uploadPdfResume = window.uploadPdfResume || function(input) {
         if (!input.files || !input.files[0]) return;
         const file = input.files[0];
-        const btn = document.getElementById('import-pdf-btn');
-        const text = document.getElementById('import-pdf-text');
+        
+        const dropzone = document.getElementById('dropzone');
+        const progressState = document.getElementById('upload-progress-state');
+        const filenameLabel = document.getElementById('uploading-filename');
 
-        if (btn) btn.disabled = true;
-        if (text) text.textContent = 'Importing...';
+        if (filenameLabel) filenameLabel.textContent = file.name;
+        if (dropzone) dropzone.classList.add('hidden');
+        if (progressState) progressState.classList.remove('hidden');
 
         const formData = new FormData();
         formData.append('resume', file);
@@ -318,21 +413,50 @@
             return res.json();
         })
         .then(data => {
-            if (btn) btn.disabled = false;
-            if (text) text.textContent = 'Import PDF';
             if (data.success) {
                 alert(data.message);
                 window.location.reload();
             } else {
                 alert(data.message || 'Gagal mengimpor file PDF.');
+                if (dropzone) dropzone.classList.remove('hidden');
+                if (progressState) progressState.classList.add('hidden');
             }
         })
         .catch(err => {
-            if (btn) btn.disabled = false;
-            if (text) text.textContent = 'Import PDF';
             console.error('Import PDF Error:', err);
             alert('Gagal mengimpor CV: ' + err.message);
+            if (dropzone) dropzone.classList.remove('hidden');
+            if (progressState) progressState.classList.add('hidden');
         });
     };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const dropzone = document.getElementById('dropzone');
+        if (dropzone) {
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    dropzone.classList.add('border-primary-400', 'bg-zinc-50/50');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    dropzone.classList.remove('border-primary-400', 'bg-zinc-50/50');
+                }, false);
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files && files[0]) {
+                    const input = document.getElementById('import-pdf-input');
+                    input.files = files;
+                    uploadPdfResume(input);
+                }
+            }, false);
+        }
+    });
     </script>
 </x-app-layout>
