@@ -1,133 +1,141 @@
-<div class="space-y-8">
+<div class="space-y-5">
     <!-- Header -->
-    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="flex items-center gap-4">
-            <div class="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center text-primary-600 shadow-inner">
-                <i class="ph-duotone ph-users-three text-2xl"></i>
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 bg-zinc-50 border border-zinc-200/50 rounded flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
+                <i class="ph ph-users-three text-base"></i>
             </div>
             <div>
-                <h3 class="text-xl font-black text-slate-900 tracking-tight">Organizations</h3>
-                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mt-1.5">Clubs, communities, or volunteer work</p>
+                <h3 class="text-xs font-bold text-zinc-800 tracking-tight uppercase tracking-wider">Organizations</h3>
+                <p class="text-[10px] text-zinc-400 font-medium leading-none mt-0.5">Clubs, communities, or volunteer work</p>
             </div>
         </div>
         <button wire:click="openModal" 
-                class="w-full md:w-auto px-6 py-3 bg-primary-600 text-white rounded-2xl font-black text-xs uppercase tracking-[2px] hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 flex items-center justify-center gap-2 active:scale-95">
-            <i class="ph-bold ph-plus text-base"></i>
-            ADD ORGANIZATION
+                class="w-full md:w-auto px-4 py-1.5 bg-primary-50 text-zinc-800 border border-primary-200/60 rounded-md font-bold text-[10px] uppercase tracking-wider hover:bg-primary-100 transition-colors shadow-3xs flex items-center justify-center gap-1.5 focus:outline-none shrink-0">
+            <i class="ph ph-plus text-xs"></i>
+            Add Organization
         </button>
     </div>
 
     <!-- Organization List -->
     @if($organizations->count() > 0)
-        <div class="grid grid-cols-1 gap-4">
+        <div class="grid grid-cols-1 gap-3">
             @foreach($organizations as $org)
-                <div class="bg-white border border-slate-200/60 rounded-3xl p-5 hover:border-primary-600/30 transition-all group flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <div class="flex items-start gap-5 min-w-0">
-                        <div class="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:bg-primary-50 group-hover:text-primary-600 transition-all shrink-0">
-                            <i class="ph-bold ph-hand-heart text-xl"></i>
+                <div class="bg-white border border-zinc-200/60 rounded-lg p-4 hover:border-zinc-350 transition-colors group flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-3xs">
+                    <div class="flex items-start gap-3 min-w-0">
+                        <div class="w-9 h-9 bg-zinc-50 border border-zinc-200/50 rounded flex items-center justify-center text-zinc-400 group-hover:bg-zinc-100 group-hover:text-zinc-700 transition-all shrink-0">
+                            <i class="ph ph-hand-heart text-base"></i>
                         </div>
                         <div class="min-w-0">
-                            <h4 class="text-base font-black text-slate-900 tracking-tight truncate">{{ $org->organization_name }}</h4>
-                            <p class="text-sm font-bold text-slate-500 mb-1">{{ $org->position }}</p>
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                            <h4 class="text-xs font-bold text-zinc-800 tracking-tight truncate leading-none mb-1">{{ $org->organization_name }}</h4>
+                            <p class="text-[11px] font-semibold text-zinc-500 mb-1 leading-none">{{ $org->position }}</p>
+                            <span class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mt-1.5 block leading-none">
                                 {{ $org->start_date?->format('M Y') }} - {{ $org->is_current ? 'PRESENT' : $org->end_date?->format('M Y') }}
                             </span>
                         </div>
                     </div>
 
                     <!-- Actions -->
-                    <div class="flex items-center gap-2 md:opacity-0 group-hover:opacity-100 transition-all">
-                        <div class="flex bg-slate-50 p-1 rounded-xl border border-slate-100">
-                            <button wire:click="moveUp({{ $org->id }})" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-primary-600 rounded-lg transition-all">
-                                <i class="ph-bold ph-caret-up"></i>
+                    <div class="flex items-center gap-2 md:opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex bg-zinc-50 p-0.5 rounded border border-zinc-200/60 shadow-3xs">
+                            <button wire:click="moveUp({{ $org->id }})" class="w-6 h-6 flex items-center justify-center text-zinc-400 hover:text-zinc-700 rounded transition-colors focus:outline-none">
+                                <i class="ph ph-caret-up"></i>
                             </button>
-                            <button wire:click="moveDown({{ $org->id }})" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-primary-600 rounded-lg transition-all">
-                                <i class="ph-bold ph-caret-down"></i>
+                            <button wire:click="moveDown({{ $org->id }})" class="w-6 h-6 flex items-center justify-center text-zinc-400 hover:text-zinc-700 rounded transition-colors focus:outline-none">
+                                <i class="ph ph-caret-down"></i>
                             </button>
                         </div>
-                        <button wire:click="edit({{ $org->id }})" class="w-10 h-10 flex items-center justify-center bg-primary-50 text-primary-600 rounded-xl hover:bg-primary-600 hover:text-white transition-all">
-                            <i class="ph-bold ph-pencil-simple"></i>
+                        <button wire:click="edit({{ $org->id }})" class="w-7 h-7 flex items-center justify-center bg-zinc-50 border border-zinc-200 text-zinc-600 rounded-md hover:bg-zinc-155 transition-colors focus:outline-none">
+                            <i class="ph ph-pencil-simple"></i>
                         </button>
-                        <button wire:click="confirmDelete({{ $org->id }})" class="w-10 h-10 flex items-center justify-center bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-600 hover:text-white transition-all">
-                            <i class="ph-bold ph-trash"></i>
+                        <button wire:click="confirmDelete({{ $org->id }})" class="w-7 h-7 flex items-center justify-center bg-rose-50 border border-rose-100/50 text-rose-600 rounded-md hover:bg-rose-600 hover:text-white hover:border-rose-600 transition-colors focus:outline-none">
+                            <i class="ph ph-trash"></i>
                         </button>
                     </div>
                 </div>
             @endforeach
         </div>
     @else
-        <div class="bg-slate-50/50 border-2 border-dashed border-slate-200 rounded-[2rem] p-12 text-center transition-all hover:bg-slate-50 group">
-            <div class="w-16 h-16 bg-white rounded-3xl flex items-center justify-center text-slate-300 mx-auto mb-6 shadow-sm group-hover:scale-110 transition-transform">
-                <i class="ph-duotone ph-users-three text-4xl"></i>
+        <div class="bg-zinc-50/15 border border-dashed border-zinc-200 rounded-lg p-10 text-center transition-colors hover:bg-zinc-50/30 group">
+            <div class="w-10 h-10 bg-white border border-zinc-200 rounded-md flex items-center justify-center text-zinc-400 mx-auto mb-3 shadow-3xs group-hover:scale-105 transition-transform">
+                <i class="ph ph-users-three text-xl"></i>
             </div>
-            <p class="text-sm font-bold text-slate-500 mb-4">No organizations added yet</p>
-            <button wire:click="openModal" class="text-xs font-black text-primary-600 uppercase tracking-widest hover:text-primary-700">
+            <p class="text-[11px] font-bold text-zinc-500 mb-3">No organizations added yet</p>
+            <button wire:click="openModal" class="text-[9px] font-black text-primary-600 /* [BRAND_PRIMARY] */ uppercase tracking-widest hover:text-primary-700">
                 ADD YOUR FIRST ORGANIZATION
             </button>
         </div>
     @endif
 
     @teleport('body')
-    <div class="fixed inset-0 z-[9999] bg-slate-900/60 backdrop-blur-xl overflow-y-auto {{ !$showModal ? 'hidden' : '' }}">
-            <div class="flex min-h-full items-center justify-center p-4" wire:click.self="closeModal">
-                <div class="relative bg-white rounded-[2rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.25)] max-w-lg w-full border border-slate-100 overflow-hidden">
-                <div class="bg-white px-6 py-5 flex justify-between items-center border-b border-slate-100 shrink-0">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-primary-50 border border-primary-100 flex items-center justify-center">
-                            <i class="ph-fill ph-users-three text-primary-600 text-base"></i>
+    <div class="fixed inset-0 z-[9999] bg-zinc-950/40 backdrop-blur-xs overflow-y-auto {{ !$showModal ? 'hidden' : '' }}">
+        <div class="flex min-h-full items-center justify-center p-4" wire:click.self="closeModal">
+            <div class="relative bg-white rounded-lg shadow-xl max-w-lg w-full border border-zinc-200 overflow-hidden text-left" @click.stop>
+                <!-- Modal Header: Clean White -->
+                <div class="bg-white px-4 py-3 text-zinc-900 flex justify-between items-center border-b border-zinc-150/60 shrink-0">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/60 flex items-center justify-center shadow-3xs">
+                            <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-4 h-4 object-contain" onerror="this.src='{{ asset('favicon.png') }}'">
                         </div>
                         <div>
-                            <h3 class="text-sm font-black text-slate-900 tracking-tight">{{ $editMode ? 'Edit Organization' : 'Add Organization' }}</h3>
-                            <p class="text-slate-400 text-[9px] font-bold uppercase tracking-widest mt-0.5">Clubs & Communities</p>
+                            <div class="flex items-center gap-1.5">
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">{{ $editMode ? 'Edit Organization' : 'Add Organization' }}</h3>
+                                <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[8.5px] font-bold uppercase tracking-wider rounded border border-primary-100/60 leading-none">Organizations</span>
+                            </div>
+                            <p class="text-zinc-400 text-[9px] font-medium mt-0.5">Career Growth Tracking</p>
                         </div>
                     </div>
-                    <button wire:click="closeModal" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-50 transition-all text-slate-400 hover:text-slate-900">
-                        <i class="ph-bold ph-x text-base"></i>
+                    <button type="button" wire:click="closeModal" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 transition-all text-zinc-400 hover:text-zinc-800 focus:outline-none">
+                        <i class="ph ph-x text-sm"></i>
                     </button>
                 </div>
-                <form wire:submit.prevent="save" class="p-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <!-- Body -->
+                <form wire:submit.prevent="save" class="p-4 sm:p-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
                         <div class="md:col-span-2">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Organization Name</label>
+                            <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Organization Name</label>
                             <div class="relative">
-                                <input type="text" wire:model="organization_name" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all" placeholder="e.g. Student Council, Red Cross">
-                                <i class="ph ph-users absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                                <input type="text" wire:model="organization_name" class="w-full pl-9 pr-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-xs text-zinc-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-colors" placeholder="e.g. Student Council, Red Cross">
+                                <i class="ph ph-users absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-sm"></i>
                             </div>
-                            @error('organization_name') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
+                            @error('organization_name') <p class="text-rose-500 text-[9px] mt-1">{{ $message }}</p> @enderror
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Role</label>
+                            <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Role</label>
                             <div class="relative">
-                                <input type="text" wire:model="position" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all" placeholder="e.g. President, Volunteer">
-                                <i class="ph ph-user-focus absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                                <input type="text" wire:model="position" class="w-full pl-9 pr-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-xs text-zinc-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-colors" placeholder="e.g. President, Volunteer">
+                                <i class="ph ph-user-focus absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-sm"></i>
                             </div>
-                            @error('position') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
+                            @error('position') <p class="text-rose-500 text-[9px] mt-1">{{ $message }}</p> @enderror
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Start Date</label>
-                            <input type="date" wire:model="start_date" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all">
-                            @error('start_date') <p class="text-rose-500 text-[10px] mt-1">{{ $message }}</p> @enderror
+                            <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Start Date</label>
+                            <input type="date" wire:model="start_date" class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-xs text-zinc-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-colors">
+                            @error('start_date') <p class="text-rose-500 text-[9px] mt-1">{{ $message }}</p> @enderror
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">End Date</label>
-                            <input type="date" wire:model="end_date" :disabled="$wire.is_current" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all disabled:opacity-40">
+                            <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">End Date</label>
+                            <input type="date" wire:model="end_date" :disabled="$wire.is_current" class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-xs text-zinc-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-colors disabled:opacity-40">
                         </div>
                         <div class="md:col-span-2">
-                            <label class="flex items-center gap-2.5 p-3 bg-primary-50/60 border border-primary-100 rounded-xl cursor-pointer hover:bg-primary-50 transition-all">
-                                <input type="checkbox" wire:model="is_current" class="w-4 h-4 rounded text-primary-600 focus:ring-primary-500 border-slate-300">
-                                <span class="text-sm font-semibold text-slate-700">I am currently active here</span>
+                            <label class="flex items-center gap-2 p-2 bg-primary-50/20 border border-primary-100 rounded-md cursor-pointer hover:bg-primary-50/40 transition-colors">
+                                <input type="checkbox" wire:model="is_current" class="w-4 h-4 rounded text-primary-600 focus:ring-primary-500 border-zinc-300">
+                                <span class="text-xs font-semibold text-zinc-755">I am currently active here</span>
                             </label>
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Description (Optional)</label>
-                            <textarea wire:model="description" rows="3" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all leading-relaxed" placeholder="Describe your responsibilities and impact..."></textarea>
+                            <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Description (Optional)</label>
+                            <textarea wire:model="description" rows="3" class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-xs text-zinc-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-colors leading-relaxed" placeholder="Describe your responsibilities and impact..."></textarea>
                         </div>
                     </div>
-                    <div class="flex justify-end gap-2 mt-5 pt-5 border-t border-slate-100">
-                        <button type="button" wire:click="closeModal" class="px-4 py-2 text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition-all">Cancel</button>
-                        <button type="submit" class="px-5 py-2 text-sm font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-xl transition-all shadow-sm active:scale-95">
+
+                    <!-- Footer -->
+                    <div class="flex justify-end gap-2 mt-4 pt-4 border-t border-zinc-150/60">
+                        <button type="button" wire:click="closeModal" class="px-3.5 py-1.5 text-xs font-bold text-zinc-600 bg-zinc-100 hover:bg-zinc-200 rounded-md transition-colors focus:outline-none">Cancel</button>
+                        <button type="submit" class="px-3.5 py-1.5 text-xs font-bold bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 rounded-md transition-colors shadow-3xs focus:outline-none flex items-center justify-center gap-1.5 active:scale-97">
                             <span wire:loading.remove wire:target="save">{{ $editMode ? 'Update' : 'Save Organization' }}</span>
-                            <span wire:loading wire:target="save" class="flex items-center gap-1.5"><i class="ph-bold ph-spinner animate-spin text-sm"></i> Saving...</span>
+                            <span wire:loading wire:target="save" class="flex items-center gap-1"><i class="ph ph-spinner animate-spin text-xs"></i> Saving...</span>
                         </button>
                     </div>
                 </form>

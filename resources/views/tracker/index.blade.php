@@ -1,50 +1,55 @@
 <x-app-layout>
-
     <x-slot name="header">
-        <div class="flex flex-col">
-            <h1 class="text-2xl font-black text-slate-900 leading-tight tracking-tight">
-                Job <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-purple-600 to-[#4e71c5]">Tracker</span>
-            </h1>
-            <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mt-1">Manage your career evolution</p>
-        </div>
+        <!-- Ignored layout slot, header is handled inline inside template container for premium consistency -->
     </x-slot>
 
-    <div class="bg-[#f8fafc] min-h-screen pb-20">
-        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+    <div class="bg-[#fafafa] min-h-screen pb-16">
+        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
             
-            <!-- Analytics Section -->
-            <div class="mb-6">
-                @livewire('analytics-cards')
+            <!-- Premium Notion-Inspired Page Header -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-zinc-200/50 pb-4 mb-5">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 bg-zinc-100 border border-zinc-200/60 rounded-lg flex items-center justify-center text-zinc-500 shrink-0 shadow-2xs">
+                        <i class="ph ph-layout text-base"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-sm font-bold text-zinc-800 tracking-tight">Track Progress</h1>
+                            <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 /* [BRAND_PRIMARY] */ text-[9px] font-black uppercase tracking-wider rounded border border-primary-100/60 animate-none">Tracker</span>
+                        </div>
+                        <p class="text-[11px] text-zinc-400 mt-0.5">Manage and update your active job applications across all recruitment stages.</p>
+                    </div>
+                </div>
             </div>
 
-            <!-- Action Bar: Switcher & Add Button (Back to Original Place) -->
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6 mb-6">
-                <div class="flex w-full md:w-auto p-1.5 bg-white border border-slate-200/60 rounded-2xl shadow-sm backdrop-blur-md">
-                    <button onclick="switchView('table')" id="table-view-btn" class="flex-1 md:flex-none justify-center flex items-center gap-2 px-8 py-2.5 text-sm font-black rounded-xl transition-all duration-300 bg-primary-600 text-white shadow-lg shadow-primary-100">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+            <!-- Action Bar: Switcher & Add Button -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mb-5">
+                <!-- View Switcher (Simple, no effects) -->
+                <div class="flex w-full sm:w-auto p-1 bg-white border border-zinc-200/60 rounded-lg shrink-0 shadow-3xs">
+                    <button onclick="switchView('table')" id="table-view-btn" class="flex-1 sm:flex-none justify-center flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md bg-zinc-900 text-white transition-colors focus:outline-none">
+                        <i class="ph ph-list text-sm"></i>
                         <span>List</span>
                     </button>
-                    <button onclick="switchView('kanban')" id="kanban-view-btn" class="flex-1 md:flex-none justify-center flex items-center gap-2 px-8 py-2.5 text-sm font-bold text-slate-400 rounded-xl hover:text-primary-600 hover:bg-slate-50 transition-all duration-300">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2z"></path></svg>
+                    <button onclick="switchView('kanban')" id="kanban-view-btn" class="flex-1 sm:flex-none justify-center flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-550 rounded-md hover:bg-zinc-50 transition-colors focus:outline-none">
+                        <i class="ph ph-kanban text-sm"></i>
                         <span>Kanban</span>
                     </button>
                 </div>
 
-                <button onclick="openJobModal()" class="w-full md:w-auto magnetic-btn group relative flex items-center justify-center gap-2 px-8 py-3 bg-slate-900 text-white text-sm font-black rounded-2xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 active:scale-95 overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-r from-indigo-600/20 to-violet-600/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <svg class="w-5 h-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                    <span class="relative z-10">Add New Application</span>
+                <!-- Add Opportunity Button -->
+                 <button onclick="openJobModal()" class="w-full sm:w-auto flex items-center justify-center gap-1 px-3 h-[30px] bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 text-[11px] font-bold rounded-md shadow-3xs transition-all duration-150 active:scale-97 hover:shadow-2xs shrink-0 focus:outline-none">
+                    <i class="ph ph-plus text-xs"></i>
+                    <span>Add New Application</span>
                 </button>
             </div>
 
-
             <!-- Content Area -->
             <div class="relative">
-                <div id="list-view-container" class="transition-all duration-500 transform">
+                <div id="list-view-container">
                     @livewire('job-table-list')
                 </div>
 
-                <div id="kanban-view-container" class="hidden transition-all duration-500 transform">
+                <div id="kanban-view-container" class="hidden">
                     @livewire('job-kanban-board')
                 </div>
             </div>
@@ -53,37 +58,49 @@
 
     @push('modals')
     <!-- Ultra Compact Floating Modal -->
-    <div id="jobModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xl hidden z-[9999] flex items-center justify-center p-4 transition-all duration-300">
-        <div class="bg-white rounded-[2rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.2)] max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-100 transform transition-all animate-modal-in">
+    <div id="jobModal" class="fixed inset-0 bg-zinc-950/40 backdrop-blur-xs hidden z-[99999] flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden border border-zinc-200 transform transition-all">
             <!-- Modal Header: Clean White -->
-            <div class="bg-white px-6 py-5 text-slate-900 flex justify-between items-center border-b border-slate-100 shrink-0">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shadow-sm">
-                        <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-6 h-6 object-contain">
+            <div class="bg-white px-4 py-3 text-zinc-900 flex justify-between items-center border-b border-zinc-150/60 shrink-0">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/60 flex items-center justify-center shadow-3xs">
+                        <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-4 h-4 object-contain" onerror="this.src='{{ asset('favicon.png') }}'">
                     </div>
                     <div>
-                        <h3 class="text-sm font-black tracking-tight" id="modalTitle">New Opportunity</h3>
-                        <p class="text-slate-400 text-[8px] font-bold uppercase tracking-widest mt-0.5">Career Growth Tracking</p>
+                        <div class="flex items-center gap-1.5">
+                            <h3 class="text-xs font-bold text-zinc-800 tracking-tight" id="modalTitle">New Opportunity</h3>
+                            <span id="modalBadge" class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[8.5px] font-bold uppercase tracking-wider rounded border border-primary-100/60 leading-none">Tracking</span>
+                        </div>
+                        <p class="text-zinc-400 text-[9px] font-medium mt-0.5">Career Growth Tracking</p>
                     </div>
                 </div>
-                <button onclick="closeJobModal()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-50 transition-all text-slate-400 hover:text-slate-900">
-                    <i class="ph-bold ph-x text-base"></i>
+                <button onclick="closeJobModal()" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 transition-all text-zinc-400 hover:text-zinc-800">
+                    <i class="ph ph-x text-sm"></i>
                 </button>
             </div>
             
-            <div class="p-6 bg-white overflow-y-auto custom-scrollbar">
+            <div class="p-4 bg-white overflow-y-auto custom-scrollbar">
                 @livewire('job-application-form')
             </div>
         </div>
     </div>
+    @endpush
 
+    @push('styles')
     <style>
-        @keyframes modalIn {
-            from { opacity: 0; transform: scale(0.95) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
         }
-        .animate-modal-in {
-            animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e4e4e7;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #d4d4d8;
         }
     </style>
     @endpush
@@ -91,20 +108,27 @@
     <script>
         window.addEventListener('edit-job', event => {
             document.getElementById('modalTitle').innerText = 'Edit Opportunity';
-            window.openJobModal();
+            document.getElementById('modalBadge').innerText = 'Edit';
+            window.openJobModal(true);
         });
 
-        window.openJobModal = function() {
+        window.openJobModal = function(isEdit = false) {
             const modal = document.getElementById('jobModal');
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
+            if (!isEdit) {
+                Livewire.dispatch('resetFormForNewJob');
+            }
         }
 
         window.closeJobModal = function() {
             const modal = document.getElementById('jobModal');
             modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-            // Optional: reset form when closing if you want fresh state for next "Add"
+            document.body.style.overflow = '';
+            // Reset modal title and badge
+            document.getElementById('modalTitle').innerText = 'New Opportunity';
+            document.getElementById('modalBadge').innerText = 'Tracking';
+            // Reset form when closing for fresh state on "Add"
             Livewire.dispatch('resetFormForNewJob');
         }
 
@@ -117,21 +141,16 @@
             if (type === 'table') {
                 listCont.classList.remove('hidden');
                 kanbanCont.classList.add('hidden');
-                listBtn.classList.add('bg-primary-600', 'text-white', 'shadow-lg');
-                listBtn.classList.remove('text-slate-400');
-                kanbanBtn.classList.remove('bg-primary-600', 'text-white', 'shadow-lg');
-                kanbanBtn.classList.add('text-slate-400');
+                
+                listBtn.className = "flex-1 sm:flex-none justify-center flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md bg-zinc-900 text-white transition-colors focus:outline-none";
+                kanbanBtn.className = "flex-1 sm:flex-none justify-center flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-550 rounded-md hover:bg-zinc-50 transition-colors focus:outline-none";
             } else {
                 kanbanCont.classList.remove('hidden');
                 listCont.classList.add('hidden');
-                kanbanBtn.classList.add('bg-primary-600', 'text-white', 'shadow-lg');
-                kanbanBtn.classList.remove('text-slate-400');
-                listBtn.classList.remove('bg-primary-600', 'text-white', 'shadow-lg');
-                listBtn.classList.add('text-slate-400');
+                
+                kanbanBtn.className = "flex-1 sm:flex-none justify-center flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md bg-zinc-900 text-white transition-colors focus:outline-none";
+                listBtn.className = "flex-1 sm:flex-none justify-center flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-550 rounded-md hover:bg-zinc-50 transition-colors focus:outline-none";
             }
-
-            // Trigger Transition Animation
-            window.dispatchEvent(new CustomEvent('view-switched', { detail: { type: type } }));
         }
 
         // Livewire Event Listeners
@@ -146,12 +165,10 @@
             const urlParams = new URLSearchParams(window.location.search);
             const editId = urlParams.get('edit');
             if (editId) {
-                // Wait a bit for Livewire to be ready
                 setTimeout(() => {
                     Livewire.dispatch('edit-job', { jobId: editId });
                 }, 500);
             }
         });
     </script>
-
 </x-app-layout>

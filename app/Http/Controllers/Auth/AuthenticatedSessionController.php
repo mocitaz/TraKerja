@@ -43,14 +43,11 @@ class AuthenticatedSessionController extends Controller
 
             // For non-admin users, check email verification
             if (! Auth::user()->hasVerifiedEmail()) {
-                Auth::logout();
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
-                return redirect()->route('login')->with('status', 'email-not-verified');
+                return redirect()->route('verification.notice');
             }
 
-            // Regular users go to tracker
-            return redirect()->intended(route('tracker', absolute: false));
+            // Regular users go to dashboard
+            return redirect()->intended(route('dashboard', absolute: false));
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             throw $e;

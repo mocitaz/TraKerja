@@ -1,48 +1,57 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <a href="{{ route('cover-letters.history') }}" class="text-slate-400 hover:text-slate-600 transition-colors">
-                    <i class="ph-bold ph-arrow-left text-xl"></i>
-                </a>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Detail Cover Letter') }}
-                </h2>
-            </div>
-            <button onclick="copyToClipboard()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg text-sm transition-colors flex items-center gap-2">
-                <i class="ph-bold ph-copy"></i>
-                Salin Teks
-            </button>
-        </div>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-2xl border border-slate-100">
-                <div class="p-8">
-                    <div class="border-b border-slate-100 pb-6 mb-6">
-                        <h1 class="text-2xl font-black text-slate-900 mb-2">{{ $coverLetter->job_title }}</h1>
-                        <p class="text-lg font-medium text-slate-600 flex items-center gap-2">
-                            <i class="ph-fill ph-buildings text-blue-500"></i> {{ $coverLetter->company_name }}
-                        </p>
-                        
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            <span class="bg-blue-50 text-blue-700 border border-blue-100 px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider">
-                                {{ $coverLetter->tone }} Tone
-                            </span>
-                            <span class="bg-slate-50 text-slate-600 border border-slate-200 px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider">
-                                {{ strtoupper($coverLetter->language) }}
-                            </span>
-                            <span class="text-slate-400 text-sm ml-auto flex items-center gap-1">
-                                <i class="ph-regular ph-calendar"></i>
-                                {{ $coverLetter->created_at->format('d M Y') }}
-                            </span>
+    <div class="bg-[#fafafa] min-h-screen pb-16 font-sans">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+            
+            <!-- Premium Notion-Inspired Page Header -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200/60 pb-5 mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-tr from-primary-50 to-primary-100/50 rounded-xl flex items-center justify-center text-primary-600 shrink-0 border border-primary-100/50 shadow-inner">
+                        <i class="ph ph-envelope text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-base font-bold text-slate-800 tracking-tight">Cover Letter Detail</h1>
+                            <span class="px-2 py-0.5 bg-primary-50 text-primary-600 text-[9px] font-black uppercase tracking-wider rounded-md border border-primary-100/60">AI Studio</span>
                         </div>
+                        <p class="text-xs text-slate-455 mt-0.5">Read, copy, or print your generated cover letter.</p>
                     </div>
+                </div>
 
-                    <div class="prose prose-slate max-w-none">
-                        <div class="bg-slate-50 border border-slate-100 rounded-xl p-6 text-slate-800 whitespace-pre-wrap font-serif text-[15px] leading-relaxed shadow-inner" id="letter-content">{{ $coverLetter->content }}</div>
+                <div class="flex items-center gap-2">
+                    <button onclick="copyToClipboard()" class="px-3.5 py-1.5 bg-slate-900 text-white hover:bg-slate-800 text-xs font-semibold rounded-lg shadow-sm transition-colors flex items-center gap-1.5">
+                        <i class="ph ph-copy text-sm"></i>
+                        <span>Copy Text</span>
+                    </button>
+                    <a href="{{ route('ai-studio.index', ['tab' => 'cover-letter']) }}" class="px-3.5 py-1.5 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 text-xs font-semibold rounded-lg shadow-sm transition-colors flex items-center gap-1.5">
+                        <i class="ph ph-arrow-left text-sm"></i>
+                        <span>Back to Studio</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200/70 rounded-xl p-5 shadow-sm">
+                <div class="border-b border-slate-150/60 pb-4 mb-4">
+                    <h1 class="text-base font-bold text-slate-850 mb-1">{{ $coverLetter->job_title }}</h1>
+                    <p class="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
+                        <i class="ph ph-buildings text-sm text-slate-400"></i> {{ $coverLetter->company_name }}
+                    </p>
+                    
+                    <div class="flex flex-wrap items-center gap-2 mt-3">
+                        <span class="bg-slate-50 text-slate-650 border border-slate-200 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">
+                            {{ $coverLetter->tone }} Tone
+                        </span>
+                        <span class="bg-slate-50 text-slate-650 border border-slate-200 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">
+                            {{ strtoupper($coverLetter->language) }}
+                        </span>
+                        <span class="text-slate-400 text-xs ml-auto flex items-center gap-1">
+                            <i class="ph ph-calendar"></i>
+                            {{ $coverLetter->created_at->format('d M Y') }}
+                        </span>
                     </div>
+                </div>
+
+                <div class="prose prose-slate max-w-none">
+                    <div class="bg-slate-50/50 border border-slate-200 rounded-lg p-4 text-slate-800 whitespace-pre-wrap font-serif text-sm leading-relaxed" id="letter-content">{{ $coverLetter->content }}</div>
                 </div>
             </div>
         </div>

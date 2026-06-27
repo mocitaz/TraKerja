@@ -433,6 +433,18 @@ class GoalsCadenceManager extends Component
         return UserGoal::getCurrentWeekGoal($userId) !== null;
     }
 
+    /**
+     * Get the current active goal model
+     */
+    public function getCurrentGoalProperty()
+    {
+        $userId = Auth::id();
+        if (!$userId)
+            return null;
+
+        return UserGoal::getCurrentWeekGoal($userId);
+    }
+
     public function render()
     {
         return view('livewire.goals-cadence-manager');

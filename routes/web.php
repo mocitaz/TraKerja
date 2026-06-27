@@ -3,7 +3,8 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TrackerController;
 use App\Http\Controllers\SummaryController;
-use App\Http\Controllers\GoalsController;
+use App\Http\Controllers\AiStudioController;
+use App\Http\Controllers\AutomationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\JobApplicationExportController;
@@ -78,12 +79,7 @@ Route::get('/summary', function (Request $request) {
     return app(SummaryController::class)->index($request);
 })->middleware(['auth', 'verified'])->name('summary');
 
-Route::get('/goals', function () {
-    if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-        return redirect()->route('admin.index');
-    }
-    return app(GoalsController::class)->index();
-})->middleware(['auth', 'verified'])->name('goals');
+
 
 Route::get('/interviews', function () {
     if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
@@ -92,43 +88,41 @@ Route::get('/interviews', function () {
     return view('interviews.calendar');
 })->middleware(['auth', 'verified'])->name('interviews');
 
+// AI Studio routes (Only for regular users)
+Route::get('/ai-studio', [AiStudioController::class, 'index'])->middleware(['auth', 'verified'])->name('ai-studio.index');
+
 // AI Analyzer routes (Only for regular users)
 Route::prefix('ai-analyzer')->middleware(['auth', 'verified'])->name('ai-analyzer.')->group(function () {
-    Route::get('/', [AiAnalyzerController::class, 'index'])->name('index');
+    Route::get('/', function() { return redirect()->route('ai-studio.index', ['tab' => 'analyzer']); })->name('index');
     Route::post('/analyze', [AiAnalyzerController::class, 'analyze'])->name('analyze');
-    Route::get('/analyze', function() { return redirect()->route('ai-analyzer.index'); });
+    Route::get('/analyze', function() { return redirect()->route('ai-studio.index', ['tab' => 'analyzer']); });
     Route::get('/result/{result}', [AiAnalyzerController::class, 'show'])->name('show');
 });
 
 // AI Photo Studio routes (Only for regular users)
 Route::prefix('ai-photo')->middleware(['auth', 'verified'])->name('ai-photo.')->group(function () {
-    Route::get('/', [\App\Http\Controllers\AiPhotoController::class, 'index'])->name('index');
+    Route::get('/', function() { return redirect()->route('ai-studio.index', ['tab' => 'photo']); })->name('index');
     Route::post('/process', [\App\Http\Controllers\AiPhotoController::class, 'process'])->name('process');
-    Route::get('/history', [\App\Http\Controllers\AiPhotoController::class, 'history'])->name('history');
+    Route::get('/history', function() { return redirect()->route('ai-studio.index', ['tab' => 'photo']); })->name('history');
     Route::get('/{aiPhoto}', [\App\Http\Controllers\AiPhotoController::class, 'show'])->name('show');
 });
 
 // Cover Letter routes (Only for regular users)
 Route::prefix('cover-letters')->middleware(['auth', 'verified'])->name('cover-letters.')->group(function () {
-    Route::get('/', [CoverLetterController::class, 'index'])->name('index');
+    Route::get('/', function() { return redirect()->route('ai-studio.index', ['tab' => 'cover-letter']); })->name('index');
     Route::post('/generate', [CoverLetterController::class, 'generate'])->name('generate');
-    Route::get('/history', [CoverLetterController::class, 'history'])->name('history');
+    Route::get('/history', function() { return redirect()->route('ai-studio.index', ['tab' => 'cover-letter']); })->name('history');
     Route::get('/{coverLetter}', [CoverLetterController::class, 'show'])->name('show');
 });
 
-Route::get('/dashboard', function () {
-    if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-        return redirect()->route('admin.index');
-    }
-    return redirect()->route('tracker');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-// Extension Download & Tutorial Page
+// Automation Tools routes
+Route::get('/automation', [AutomationController::class, 'index'])->middleware(['auth', 'verified'])->name('automation.index');
+
+// Extension Download & Tutorial Page (Redirect to unified automation page)
 Route::get('/extension', function () {
-    if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-        return redirect()->route('admin.index');
-    }
-    return view('extension.index');
+    return redirect()->route('automation.index', ['tab' => 'extension']);
 })->middleware(['auth', 'verified'])->name('extension');
 
 // User Routes (Not accessible by admin)
@@ -247,10 +241,7 @@ Route::middleware('auth')->group(function () {
     })->name('csv.export');
     
     Route::get('/csv/import', function () {
-        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-            abort(403, 'Admin cannot access CSV import');
-        }
-        return app(JobApplicationImportExportController::class)->showImportForm();
+        return redirect()->route('automation.index', ['tab' => 'csv']);
     })->name('csv.import');
     
     Route::post('/csv/import', function (Request $request) {

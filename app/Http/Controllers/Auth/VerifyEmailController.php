@@ -28,9 +28,9 @@ class VerifyEmailController extends Controller
 
         // Check if already verified
         if ($user->hasVerifiedEmail()) {
-            // If already verified, login and redirect to tracker
+            // If already verified, login and redirect to dashboard
             Auth::login($user);
-            return redirect()->intended(route('tracker', absolute: false).'?verified=1');
+            return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
         }
 
         // Mark email as verified
@@ -55,8 +55,8 @@ class VerifyEmailController extends Controller
             // Auto-login user after verification
             Auth::login($user);
             
-            // Redirect to tracker with success message
-            return redirect()->intended(route('tracker', absolute: false).'?verified=1');
+            // Redirect to dashboard with success message
+            return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
         }
 
         // Fallback: redirect to login

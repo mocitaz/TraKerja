@@ -2,104 +2,103 @@
     <template x-teleport="body">
         <div x-show="show"
              x-cloak
-             class="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-            
-            {{-- Uniform Full-Screen Backdrop --}}
-            <div x-show="show"
-                 x-transition:enter="ease-out duration-300"
-                 x-transition:enter-start="opacity-0"
-                 x-transition:enter-end="opacity-100"
-                 x-transition:leave="ease-in duration-200"
-                 x-transition:leave-start="opacity-100"
-                 x-transition:leave-end="opacity-0"
-                 @click="show = false"
-                 class="fixed inset-0 bg-slate-900/60 backdrop-blur-2xl transition-all"></div>
-
-            {{-- Compact & Tidy Modal --}}
-            <div x-show="show"
-                 x-transition:enter="ease-out duration-300"
-                 x-transition:enter-start="opacity-0 scale-95 translate-y-4"
-                 x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-                 x-transition:leave="ease-in duration-200"
-                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 scale-95 translate-y-4"
-                 class="relative w-full max-w-lg bg-white rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden">
-                
-                <div class="p-8">
-                    {{-- Header: Compact --}}
-                    <div class="flex items-center justify-between mb-8">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm border border-slate-100 p-2">
-                                <img src="{{ asset('images/icon.png') }}" class="w-full h-full object-contain" alt="TraKerja">
+             class="fixed inset-0 z-[9999] bg-zinc-950/40 backdrop-blur-xs overflow-y-auto hidden"
+             :class="{ 'hidden': !show, 'flex': show }">
+            <div class="flex min-h-full items-center justify-center p-4 w-full" @click.self="show = false">
+                <div class="relative bg-white rounded-lg shadow-xl max-w-md w-full border border-zinc-200 overflow-hidden text-left" @click.stop>
+                    
+                    <!-- Modal Header: Clean White -->
+                    <div class="bg-white px-4 py-3 text-zinc-900 flex justify-between items-center border-b border-zinc-150/60 shrink-0">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/60 flex items-center justify-center shadow-3xs">
+                                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-4 h-4 object-contain" onerror="this.src='{{ asset('favicon.png') }}'">
                             </div>
                             <div>
-                                <h3 class="text-lg font-black text-slate-900 leading-none mb-1">TraKerja Sites</h3>
-                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Publish Portfolio</p>
+                                <div class="flex items-center gap-1.5">
+                                    <h3 class="text-xs font-bold text-zinc-800 tracking-tight">TraKerja Sites</h3>
+                                    <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[8.5px] font-bold uppercase tracking-wider rounded border border-primary-100/60 leading-none">Portfolio</span>
+                                </div>
+                                <p class="text-zinc-400 text-[9px] font-medium mt-0.5">Career Growth Tracking</p>
                             </div>
                         </div>
-                        <button @click="show = false" class="text-slate-300 hover:text-slate-900 transition-colors">
-                            <i class="ph-bold ph-x text-xl"></i>
+                        <button type="button" @click="show = false" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 transition-all text-zinc-400 hover:text-zinc-800 focus:outline-none">
+                            <i class="ph ph-x text-sm"></i>
                         </button>
                     </div>
 
-                    <div class="space-y-6">
-                        {{-- Input: Compact --}}
-                        <div class="space-y-2">
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">URL Slug</label>
-                            <div class="flex items-center px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus-within:bg-white focus-within:border-primary-500/20 focus-within:ring-4 focus-within:ring-primary-500/5 transition-all">
-                                <span class="text-slate-400 font-bold text-xs select-none">trakerja.com/@</span>
-                                <input type="text" 
-                                       wire:model.live="slug"
-                                       class="flex-1 bg-transparent border-none p-0 ml-1 focus:ring-0 font-bold text-slate-700 text-sm"
-                                       placeholder="username">
-                            </div>
-                            @error('slug') <span class="text-xs text-rose-500 font-bold ml-1">{{ $message }}</span> @enderror
-                        </div>
-
-                        {{-- Status Card: Tidy --}}
-                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
-                            <div class="flex items-center justify-between mb-3">
-                                <div class="flex items-center gap-2">
-                                    <span class="w-2 h-2 rounded-full {{ $isPublished ? 'bg-emerald-500 animate-pulse' : 'bg-slate-300' }}"></span>
-                                    <span class="text-[9px] font-black {{ $isPublished ? 'text-emerald-600' : 'text-slate-400' }} uppercase tracking-widest">
-                                        {{ $isPublished ? 'Site is Live' : 'Not Published' }}
-                                    </span>
+                    <div class="p-4 sm:p-5">
+                        <div class="space-y-4">
+                            {{-- Input: URL Slug --}}
+                            <div>
+                                <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">URL Slug</label>
+                                <div class="flex items-center bg-zinc-50/50 border border-zinc-200 rounded-md overflow-hidden transition-colors focus-within:bg-white focus-within:ring-1 focus-within:ring-primary-500/20 focus-within:border-primary-500">
+                                    <span class="bg-zinc-100 border-r border-zinc-200 text-zinc-400 font-semibold text-xs px-2.5 py-1.5 select-none shrink-0">trakerja.com/@</span>
+                                    <input type="text" 
+                                           wire:model.live="slug"
+                                           class="w-full px-3 py-1.5 bg-transparent border-none text-xs font-semibold text-zinc-700 focus:ring-0 focus:outline-none placeholder-zinc-300"
+                                           placeholder="username">
                                 </div>
-                                @if($isPublished)
-                                    <a href="{{ $portfolioUrl }}" target="_blank" class="text-[9px] font-black text-primary-600 uppercase tracking-widest hover:underline">Preview Site</a>
-                                @endif
+                                @error('slug') <p class="text-rose-500 text-[9px] mt-1">{{ $message }}</p> @enderror
                             </div>
-                            <p class="text-[11px] font-bold text-slate-500 truncate bg-white p-2.5 rounded-lg border border-slate-100">{{ $portfolioUrl }}</p>
+
+                            {{-- Status Card: Tidy --}}
+                            <div class="p-4 bg-zinc-50/50 border border-zinc-200 rounded-lg">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="w-1.5 h-1.5 rounded-full {{ $isPublished ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-300' }}"></span>
+                                        <span class="text-[9px] font-bold {{ $isPublished ? 'text-emerald-600' : 'text-zinc-400' }} uppercase tracking-wider leading-none">
+                                            {{ $isPublished ? 'Site is Live' : 'Not Published' }}
+                                        </span>
+                                    </div>
+                                    @if($isPublished)
+                                        <a href="{{ $portfolioUrl }}" target="_blank" class="text-[9px] font-bold text-primary-650 uppercase tracking-wider hover:underline flex items-center gap-1 leading-none">
+                                            <span>Preview Site</span>
+                                            <i class="ph ph-arrow-square-out text-xs"></i>
+                                        </a>
+                                    @endif
+                                </div>
+                                <p class="text-xs font-semibold text-zinc-550 bg-white px-3 py-1.5 rounded-md border border-zinc-200 truncate select-all cursor-pointer leading-none">{{ $portfolioUrl }}</p>
+                            </div>
+
+                            {{-- Highlights --}}
+                            <div class="grid grid-cols-2 gap-3 pt-1">
+                                <div class="p-3 bg-zinc-50/30 rounded border border-zinc-200/50 flex items-center gap-2.5">
+                                    <div class="w-7 h-7 bg-primary-50 border border-primary-100 rounded flex items-center justify-center text-zinc-800 shrink-0">
+                                        <i class="ph-bold ph-rocket-launch text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[9px] font-bold text-zinc-800 uppercase tracking-wider leading-none">New Opportunity</p>
+                                        <p class="text-[8px] font-medium text-zinc-400 mt-1 leading-none">Job portal</p>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-zinc-50/30 rounded border border-zinc-200/50 flex items-center gap-2.5">
+                                    <div class="w-7 h-7 bg-primary-50 border border-primary-100 rounded flex items-center justify-center text-zinc-800 shrink-0">
+                                        <i class="ph-bold ph-chart-line-up text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[9px] font-bold text-zinc-800 uppercase tracking-wider leading-none">Growth Tracking</p>
+                                        <p class="text-[8px] font-medium text-zinc-400 mt-1 leading-none">XP progression</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        {{-- Highlights: Extra Compact --}}
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="flex items-center gap-2.5">
-                                <i class="ph-bold ph-rocket-launch text-primary-500"></i>
-                                <span class="text-[9px] font-black text-slate-500 uppercase tracking-wide">New Opportunity</span>
-                            </div>
-                            <div class="flex items-center gap-2.5">
-                                <i class="ph-bold ph-chart-line-up text-primary-500"></i>
-                                <span class="text-[9px] font-black text-slate-500 uppercase tracking-wide">Growth Tracking</span>
-                            </div>
+                        {{-- Actions: Integrated --}}
+                        <div class="mt-5 flex gap-2.5 pt-4 border-t border-zinc-150/60">
+                            @if($isPublished)
+                                <button type="button" wire:click="unpublish" class="px-3.5 h-8 bg-white text-rose-600 border border-rose-250 rounded-md text-xs font-bold hover:bg-rose-50 transition-all active:scale-97 focus:outline-none">
+                                    Unpublish
+                                </button>
+                                <button type="button" wire:click="publish" class="flex-1 h-8 bg-primary-50 text-zinc-800 border border-primary-200/60 rounded-md text-xs font-bold hover:bg-primary-100 transition-all shadow-3xs flex items-center justify-center gap-1.5 active:scale-97 focus:outline-none">
+                                    Update URL
+                                </button>
+                            @else
+                                <button type="button" wire:click="publish" class="w-full h-8 bg-primary-50 text-zinc-800 border border-primary-200/60 rounded-md text-xs font-bold hover:bg-primary-100 transition-all shadow-3xs flex items-center justify-center gap-2 active:scale-97 focus:outline-none">
+                                    <i class="ph-bold ph-rocket-launch text-sm"></i>
+                                    <span>Publish Portfolio</span>
+                                </button>
+                            @endif
                         </div>
-                    </div>
-
-                    {{-- Actions: Integrated --}}
-                    <div class="mt-8 flex gap-3">
-                        @if($isPublished)
-                            <button wire:click="unpublish" class="px-5 py-3.5 bg-white text-rose-500 border border-rose-100 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-rose-50 transition-all active:scale-95">
-                                Unpublish
-                            </button>
-                            <button wire:click="publish" class="flex-1 px-5 py-3.5 bg-slate-900 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg active:scale-95">
-                                Update URL
-                            </button>
-                        @else
-                            <button wire:click="publish" class="w-full px-5 py-4 bg-primary-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 flex items-center justify-center gap-2 active:scale-95">
-                                <i class="ph-bold ph-rocket-launch"></i>
-                                Publish Portfolio
-                            </button>
-                        @endif
                     </div>
                 </div>
             </div>

@@ -8,42 +8,52 @@
 
     <!-- Name -->
     <div>
-        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-        <input id="name" name="name" type="text" 
-               value="{{ old('name', $user->name) }}" 
-               required autocomplete="name"
-               class="w-full rounded-lg border-gray-300 focus:border-primary-500 focus:ring-primary-500 text-sm @error('name') border-red-300 @enderror">
+        <label for="name" class="block text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider pl-0.5 mb-1.5">Full Name</label>
+        <div class="relative">
+            <div class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none flex items-center">
+                <i class="ph ph-user text-[13px]"></i>
+            </div>
+            <input id="name" name="name" type="text" 
+                   value="{{ old('name', $user->name) }}" 
+                   required autocomplete="name"
+                   style="padding-left: 32px !important;"
+                   class="w-full pr-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-[11px] font-semibold text-zinc-700 focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 focus:bg-white transition-colors outline-none @error('name') border-rose-300 @enderror">
+        </div>
         @error('name')
-            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            <p class="mt-1 text-[9px] text-rose-500 font-bold uppercase tracking-wider">{{ $message }}</p>
         @enderror
     </div>
 
     <!-- Email -->
     <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-        <input id="email" name="email" type="email" 
-               value="{{ old('email', $user->email) }}" 
-               required autocomplete="username"
-               class="w-full rounded-lg border-gray-300 focus:border-primary-500 focus:ring-primary-500 text-sm @error('email') border-red-300 @enderror">
+        <label for="email" class="block text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider pl-0.5 mb-1.5">Email Address</label>
+        <div class="relative">
+            <div class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none flex items-center">
+                <i class="ph ph-envelope text-[13px]"></i>
+            </div>
+            <input id="email" name="email" type="email" 
+                   value="{{ old('email', $user->email) }}" 
+                   required autocomplete="username"
+                   style="padding-left: 32px !important;"
+                   class="w-full pr-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-[11px] font-semibold text-zinc-700 focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 focus:bg-white transition-colors outline-none @error('email') border-rose-300 @enderror">
+        </div>
         @error('email')
-            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            <p class="mt-1 text-[9px] text-rose-500 font-bold uppercase tracking-wider">{{ $message }}</p>
         @enderror
 
         @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-            <div class="mt-3 bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                <div class="flex items-start">
-                    <svg class="w-5 h-5 text-yellow-500 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                    </svg>
+            <div class="mt-3.5 bg-amber-50/40 border border-amber-200 rounded-md p-3">
+                <div class="flex items-start gap-2">
+                    <i class="ph ph-warning-circle text-amber-600 text-sm shrink-0 mt-0.5"></i>
                     <div class="flex-1">
-                        <p class="text-sm text-yellow-800">
+                        <p class="text-[11px] text-amber-800 leading-normal font-semibold">
                             Your email address is unverified.
-                            <button form="send-verification" class="font-medium underline hover:no-underline">
-                                Click here to re-send verification email
+                            <button form="send-verification" class="font-bold underline hover:no-underline focus:outline-none">
+                                Re-send verification email
                             </button>
                         </p>
                         @if (session('status') === 'verification-link-sent')
-                            <p class="mt-2 text-sm font-medium text-green-600">
+                            <p class="mt-1 text-[9px] font-bold text-emerald-600 uppercase tracking-wider">
                                 ✓ A new verification link has been sent!
                             </p>
                         @endif
@@ -54,12 +64,10 @@
     </div>
 
     <!-- Submit -->
-    <div class="flex items-center justify-end pt-4 border-t border-gray-100">
-        <button type="submit" class="px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors duration-200 flex items-center space-x-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span>Save Changes</span>
+    <div class="flex items-center justify-end pt-3 border-t border-zinc-100">
+        <button type="submit" class="px-3.5 py-1.5 bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1 shadow-3xs focus:outline-none active:scale-97">
+            <i class="ph ph-check text-xs"></i>
+            <span>Save Identity</span>
         </button>
     </div>
 </form>

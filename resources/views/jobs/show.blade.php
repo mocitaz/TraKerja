@@ -1,24 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-primary-600/10 border border-primary-600/20 flex items-center justify-center">
-                <i class="ph-fill ph-briefcase text-xl text-primary-600"></i>
-            </div>
-            <div>
-                <h1 class="text-xl font-black text-slate-900 tracking-tight">Job Detail</h1>
-                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Opportunity Insights & Tracking</p>
-            </div>
-        </div>
+        <!-- Ignored for consistency -->
     </x-slot>
 
     @php
         // Pipeline Stepper Logic - Refined to include status checks
         $pipelineStages = [
-            ['label' => 'Applied', 'icon' => 'ph-paper-plane-tilt', 'stages' => ['Applied', 'Follow Up']],
-            ['label' => 'Assessment', 'icon' => 'ph-exam', 'stages' => ['Assessment', 'Assessment Test', 'Psychotest']],
-            ['label' => 'Interview', 'icon' => 'ph-chats-circle', 'stages' => ['Interview', 'HR - Interview', 'User - Interview', 'LGD', 'Presentation Round']],
-            ['label' => 'Offering', 'icon' => 'ph-handshake', 'stages' => ['Offering']],
-            ['label' => 'Result', 'icon' => 'ph-flag-checkered', 'stages' => ['Accepted', 'Declined', 'Not Processed']]
+            ['label' => 'Applied', 'icon' => 'ph-bold ph-paper-plane-tilt', 'stages' => ['Applied', 'Follow Up']],
+            ['label' => 'Assessment', 'icon' => 'ph-bold ph-exam', 'stages' => ['Assessment', 'Assessment Test', 'Psychotest']],
+            ['label' => 'Interview', 'icon' => 'ph-bold ph-chats-circle', 'stages' => ['Interview', 'HR - Interview', 'User - Interview', 'LGD', 'Presentation Round']],
+            ['label' => 'Offering', 'icon' => 'ph-bold ph-handshake', 'stages' => ['Offering']],
+            ['label' => 'Result', 'icon' => 'ph-bold ph-flag-checkered', 'stages' => ['Accepted', 'Declined', 'Not Processed']]
         ];
 
         $currentStageGroupIndex = 0;
@@ -38,174 +30,94 @@
         $editUrl = route('tracker') . '?edit=' . $job->id;
     @endphp
 
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-    <style>
-        .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(241, 245, 249, 0.5);
-        }
-        
-        .pipeline-line {
-            background: #f1f5f9;
-            height: 2px;
-            position: absolute;
-            top: 20px;
-            left: 0;
-            right: 0;
-            z-index: 0;
-        }
-
-        .pipeline-progress {
-            height: 2px;
-            position: absolute;
-            top: 20px;
-            left: 0;
-            z-index: 0;
-            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .bento-inner {
-            background: white;
-            border-radius: 1.5rem;
-            border: 1px solid #f1f5f9;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .bento-inner:hover {
-            border-color: #e2e8f0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-        }
-    </style>
-
-    <div class="min-h-screen bg-[#fcfcfd] pb-24">
-        <div class="max-w-[1100px] mx-auto px-4 pt-10">
+    <div class="bg-[#fafafa] min-h-screen pb-16">
+        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
             
-            {{-- ── Breadcrumb ── --}}
-            <div class="mb-8">
-                <a href="{{ route('tracker') }}" class="inline-flex items-center gap-2 text-[10px] font-black text-slate-400 hover:text-primary-600 uppercase tracking-widest transition-all group">
-                    <i class="ph-bold ph-arrow-left group-hover:-translate-x-1 transition-transform"></i>
-                    Back to Tracker
+            <!-- Breadcrumbs -->
+            <div class="mb-4">
+                <a href="{{ route('tracker') }}" class="inline-flex items-center gap-1.5 text-[11px] font-bold text-zinc-500 hover:text-zinc-800 uppercase tracking-wider transition-colors">
+                    <i class="ph-bold ph-arrow-left text-xs"></i>
+                    <span>Back to Tracker</span>
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                
-                {{-- ── Left Side: Identity & Pipeline ── --}}
-                <div class="lg:col-span-8 space-y-8">
-                    
-                    {{-- Job Identity Card --}}
-                    <div class="glass-card p-8 rounded-[2.5rem] relative overflow-hidden shadow-sm">
-                        <div class="absolute top-0 right-0 w-64 h-64 bg-primary-500/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
-                        
-                        <div class="relative flex flex-col md:flex-row gap-8 items-start">
-                            @php
-                                // 1. Hapus entitas legal (PT, CV, Tbk, Persero, dll) dan wilayah
-                                $cleanName = preg_replace('/\b(pt\.?|cv\.?|tbk\.?|persero|ltd\.?|inc\.?|corp\.?|llc\.?|indonesia)\b/i', '', $job->company_name);
-                                // 2. Hapus teks di dalam kurung dan trim spasi berlebih
-                                $cleanName = trim(preg_replace('/\(.*?\)/', '', $cleanName));
-                                
-                                // 3. Full Brand Name (semua kata digabung)
-                                $brandName = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $cleanName));
-                                
-                                // 4. Hanya Kata Pertama (First Word)
-                                $firstWord = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', explode(' ', $cleanName)[0]));
-                                
-                                // 5. UI Avatars (Sebagai cadangan terakhir)
-                                $fallbackAvatar = 'https://ui-avatars.com/api/?name='.urlencode($job->company_name).'&background=random&color=fff&size=128&bold=true&font-size=0.4';
-                            @endphp
-                            
-                            <script>
-                                function handleLogoFallback(img) {
-                                    // Cegah infinite loop jika atribut data-fallback-index belum ada
-                                    if (!img.dataset.fallbackIndex) {
-                                        img.dataset.fallbackIndex = 0;
-                                    }
-                                    
-                                    const fallbacks = [
-                                        'https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://{{ $brandName }}.co.id&size=128',
-                                        'https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://{{ $brandName }}.id&size=128',
-                                        'https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://{{ $firstWord }}.com&size=128',
-                                        'https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://{{ $firstWord }}.co.id&size=128',
-                                        '{!! $fallbackAvatar !!}'
-                                    ];
-                                    
-                                    let idx = parseInt(img.dataset.fallbackIndex);
-                                    
-                                    if (idx < fallbacks.length) {
-                                        img.src = fallbacks[idx];
-                                        img.dataset.fallbackIndex = idx + 1;
-                                    } else {
-                                        img.onerror = null; // Hentikan loop jika semua gagal
-                                    }
-                                }
-                            </script>
+            <!-- Page Header -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-zinc-200/50 pb-4 mb-5">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 bg-zinc-100 border border-zinc-200/60 rounded-lg flex items-center justify-center text-zinc-500 shrink-0 shadow-2xs">
+                        <i class="ph-bold ph-briefcase text-base"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-sm font-bold text-zinc-800 tracking-tight">Opportunity Detail</h1>
+                            <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[9px] font-black uppercase tracking-wider rounded border border-primary-100/60">Insight</span>
+                        </div>
+                        <p class="text-[11px] text-zinc-400 mt-0.5">Track, edit, and research details for this specific application.</p>
+                    </div>
+                </div>
 
-                            <img src="https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://{{ $brandName }}.com&size=128" 
-                                 id="companyLogo-{{ $job->id }}"
-                                 alt="{{ $job->company_name }}" 
-                                 class="w-20 h-20 rounded-[2rem] object-cover shadow-2xl shadow-slate-200 shrink-0 border border-slate-100 bg-white p-2"
-                                 onerror="handleLogoFallback(this)">
-                            
-                            <div class="flex-1 space-y-4">
-                                <div>
-                                    <h1 class="text-3xl font-black text-slate-900 tracking-tight leading-none mb-2">{{ $job->position }}</h1>
-                                    <div class="flex items-center gap-2">
-                                        <p class="text-lg font-bold text-primary-600 italic tracking-tight">{{ $job->company_name }}</p>
-                                        <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
-                                        <p class="text-sm font-medium text-slate-400">{{ $job->location ?? 'Remote' }}</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex flex-wrap gap-2">
-                                    <div class="px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-xl flex items-center gap-2">
-                                        <i class="ph-fill ph-globe text-primary-500"></i>
-                                        <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">{{ $job->platform }}</span>
-                                    </div>
-                                    <div class="px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-xl flex items-center gap-2">
-                                        <i class="ph-fill ph-calendar text-primary-500"></i>
-                                        <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">{{ $job->application_date->format('d M Y') }}</span>
-                                    </div>
-                                </div>
+                <a href="{{ $editUrl }}" class="inline-flex items-center justify-center gap-1.5 h-[30px] px-3 bg-primary-50 hover:bg-primary-100 border border-primary-200/60 text-zinc-800 text-[11px] font-bold rounded-md shadow-3xs transition-all duration-150 active:scale-97 hover:shadow-2xs shrink-0 focus:outline-none uppercase tracking-wider">
+                    <i class="ph-bold ph-pencil-simple text-xs"></i>
+                    <span>Edit Opportunity</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+                
+                {{-- ── Left Side: Main Consolidated Detail Sheet ── --}}
+                <div class="lg:col-span-8 bg-white border border-zinc-200/60 rounded-lg shadow-3xs overflow-hidden">
+                    
+                    {{-- Header / Identity Area --}}
+                    <div class="p-6 border-b border-zinc-100 bg-zinc-50/20">
+                        <div class="flex flex-col sm:flex-row gap-6 items-center">
+                            <div class="w-12 h-12 rounded-lg bg-zinc-100 border border-zinc-200/60 flex items-center justify-center text-zinc-500 shrink-0">
+                                <i class="ph-bold ph-buildings text-xl"></i>
                             </div>
                             
-                            <a href="{{ $editUrl }}" class="shrink-0 p-3 rounded-2xl bg-white border border-slate-200 text-slate-400 hover:text-primary-600 hover:border-primary-200 transition-all shadow-sm">
-                                <i class="ph-bold ph-pencil-simple text-xl"></i>
-                            </a>
+                            <div class="flex-1 min-w-0">
+                                <h2 class="text-lg font-bold text-zinc-900 tracking-tight leading-snug mb-0.5">{{ $job->position }}</h2>
+                                <p class="text-xs font-bold text-zinc-750 mb-1.5">{{ $job->company_name }}</p>
+                                <div class="flex items-center gap-1.5 text-[11px] text-zinc-450 font-medium whitespace-nowrap">
+                                    <i class="ph-bold ph-map-pin text-zinc-400"></i>
+                                    <span>{{ $job->location ?? 'Remote' }}</span>
+                                    <span class="text-zinc-300 mx-1">•</span>
+                                    <i class="ph-bold ph-calendar-blank text-zinc-400"></i>
+                                    <span>Applied {{ $job->application_date->format('d M Y') }}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     @if($job->isGhosted())
                         {{-- Ghosting Alert --}}
-                        <div class="glass-card p-6 rounded-3xl border-l-4 border-l-rose-500 bg-rose-50/50 flex items-start gap-4 shadow-sm animate-pulse">
-                            <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center shrink-0">
-                                <i class="ph-fill ph-ghost text-rose-500 text-lg"></i>
+                        <div class="mx-6 mt-6 bg-rose-50/50 border border-rose-100 rounded-lg p-3.5 flex items-start gap-3 animate-fadeIn">
+                            <div class="w-7 h-7 rounded-md bg-rose-100 flex items-center justify-center shrink-0 text-rose-500">
+                                <i class="ph-bold ph-warning-circle text-base"></i>
                             </div>
                             <div>
-                                <h3 class="text-sm font-black text-rose-900 mb-1">Kemungkinan Di-ghosting</h3>
-                                <p class="text-xs font-medium text-rose-700/80 leading-relaxed">
-                                    Sudah lebih dari 14 hari sejak Anda melamar tanpa ada pembaruan status. Pertimbangkan untuk mengirimkan <span class="font-bold">Email Follow-up</span> ke pihak HRD perusahaan ini.
+                                <h3 class="text-xs font-bold text-rose-800 mb-0.5">Potential Ghosting detected</h3>
+                                <p class="text-[11px] font-medium text-rose-700/95 leading-normal">
+                                    It has been over 14 days since you applied without a status update. We suggest sending a <span class="font-bold">Follow-up Email</span> to the recruiter.
                                 </p>
                             </div>
                         </div>
                     @endif
 
-                    {{-- Pipeline Visualization --}}
-                    <div class="glass-card p-10 rounded-[2.5rem] shadow-sm">
-                        <div class="flex items-center justify-between mb-12">
-                            <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2">
-                                <i class="ph-bold ph-git-merge text-primary-500"></i> Recruitment Pipeline
+                    {{-- Pipeline Visualizer --}}
+                    <div class="p-6 border-b border-zinc-100 bg-white">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
+                                <i class="ph-bold ph-git-merge text-zinc-500"></i> Recruitment Pipeline
                             </h3>
-                            <div class="px-3 py-1 bg-primary-50 text-primary-600 rounded-full text-[9px] font-black uppercase tracking-widest">
+                            <span class="px-2 py-0.5 bg-primary-50 border border-primary-100/60 text-zinc-800 rounded text-[9px] font-bold uppercase tracking-wider">
                                 {{ $job->recruitment_stage }}
-                            </div>
+                            </span>
                         </div>
 
                         <div class="relative px-2">
-                            <div class="pipeline-line"></div>
-                            <div class="pipeline-progress bg-primary-500 shadow-[0_0_15px_rgba(99,102,241,0.4)]" 
+                            <!-- Progress Lines -->
+                            <div class="absolute bg-zinc-100 h-0.5 top-4 left-0 right-0 z-0"></div>
+                            <div class="absolute bg-primary-650 h-0.5 top-4 left-0 z-0 transition-all duration-300" 
                                  style="width: {{ $currentStageGroupIndex > 0 ? ($currentStageGroupIndex / (count($pipelineStages) - 1)) * 100 : 0 }}%"></div>
                             
                             <div class="relative flex justify-between">
@@ -214,101 +126,131 @@
                                         $isPast = $index < $currentStageGroupIndex;
                                         $isCurrent = $index === $currentStageGroupIndex;
                                         
-                                        $circleClass = $isPast ? 'bg-primary-600 text-white' : ($isCurrent ? 'bg-white border-4 border-primary-600 scale-110 shadow-lg' : 'bg-white border-2 border-slate-100 text-slate-300');
+                                        $circleClass = $isPast ? 'bg-primary-650 text-white' : ($isCurrent ? 'bg-white border-2 border-primary-650 scale-105 shadow-3xs' : 'bg-white border border-zinc-200 text-zinc-350');
                                         
-                                        // Final Status Override
                                         if ($isCurrent && $index === 4) {
-                                            if ($job->application_status === 'Accepted') $circleClass = 'bg-emerald-500 text-white border-4 border-emerald-100 scale-110 shadow-lg';
-                                            elseif ($job->application_status === 'Declined') $circleClass = 'bg-rose-500 text-white border-4 border-rose-100 scale-110 shadow-lg';
+                                            if ($job->application_status === 'Accepted') $circleClass = 'bg-emerald-500 text-white border border-emerald-100 scale-105 shadow-3xs';
+                                            elseif ($job->application_status === 'Declined') $circleClass = 'bg-rose-500 text-white border border-rose-100 scale-105 shadow-3xs';
                                         }
                                     @endphp
-                                    <div class="flex flex-col items-center gap-4 group">
-                                        <div class="w-10 h-10 rounded-full flex items-center justify-center relative z-10 transition-all duration-500 {{ $circleClass }}">
-                                            <i class="ph-bold {{ $stage['icon'] }} text-sm"></i>
+                                    <div class="flex flex-col items-center gap-1.5 group">
+                                        <div class="w-8 h-8 rounded-full flex items-center justify-center relative z-10 {{ $circleClass }}">
+                                            <i class="{{ $stage['icon'] }} text-xs"></i>
                                         </div>
-                                        <span class="text-[10px] font-black uppercase tracking-widest {{ $isCurrent ? 'text-slate-900' : 'text-slate-400' }}">{{ $stage['label'] }}</span>
+                                        <span class="text-[9px] font-bold uppercase tracking-wider {{ $isCurrent ? 'text-zinc-800' : 'text-zinc-400' }}">{{ $stage['label'] }}</span>
                                     </div>
                                 @endforeach
                             </div>
                         </div>
                     </div>
 
-                    {{-- Bento Information --}}
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bento-inner space-y-4">
-                            <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Application Status</h3>
-                            <div class="flex items-center gap-4">
-                                <div @class([
-                                    'w-12 h-12 rounded-2xl flex items-center justify-center text-xl',
-                                    'bg-emerald-50 text-emerald-600' => $job->application_status === 'Accepted',
-                                    'bg-rose-50 text-rose-600' => $job->application_status === 'Declined',
-                                    'bg-blue-50 text-blue-600' => $job->application_status === 'On Process',
-                                ])>
-                                    <i class="ph-fill ph-info"></i>
-                                </div>
-                                <div>
-                                    <p class="text-xl font-black text-slate-900 tracking-tight">{{ $job->application_status }}</p>
-                                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Current Milestone</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bento-inner space-y-4">
-                            <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Additional Notes</h3>
-                            <p class="text-xs text-slate-600 leading-relaxed font-medium italic">
+                    {{-- Additional Notes --}}
+                    <div class="p-6 bg-white">
+                        <h3 class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-3">Additional Notes</h3>
+                        <div class="bg-zinc-50/50 border border-zinc-200/60 rounded-md p-3.5 border-l-2 border-l-primary-650">
+                            <p class="text-xs text-zinc-650 leading-relaxed font-medium italic">
                                 {{ $job->notes ? '"'.$job->notes.'"' : 'No additional notes provided for this opportunity.' }}
                             </p>
                         </div>
                     </div>
                 </div>
 
-                {{-- ── Right Side: Actions & Deadlines ── --}}
-                <div class="lg:col-span-4 space-y-8">
+                {{-- ── Right Side: Sidebar Panel ── --}}
+                <div class="lg:col-span-4 space-y-4">
                     
+                    {{-- Notion-Style Properties List --}}
+                    <div class="bg-white border border-zinc-200/60 p-5 rounded-lg shadow-3xs space-y-4">
+                        <h3 class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Properties</h3>
+                        
+                        <div class="space-y-2.5 text-xs font-semibold">
+                            <!-- Platform -->
+                            <div class="flex items-center justify-between border-b border-zinc-100 pb-2">
+                                <span class="text-zinc-400 font-medium">Platform</span>
+                                <span class="text-zinc-800 bg-zinc-50 px-2 py-0.5 border border-zinc-200/60 rounded text-[10px] font-bold uppercase tracking-wider">{{ $job->platform }}</span>
+                            </div>
+                            
+                            <!-- Application Date -->
+                            <div class="flex items-center justify-between border-b border-zinc-100 pb-2">
+                                <span class="text-zinc-400 font-medium">Applied Date</span>
+                                <span class="text-zinc-800 font-bold">{{ $job->application_date->format('d M Y') }}</span>
+                            </div>
+                            
+                            <!-- Career Level -->
+                            <div class="flex items-center justify-between border-b border-zinc-100 pb-2">
+                                <span class="text-zinc-400 font-medium">Career Level</span>
+                                <span class="text-zinc-800 font-bold">{{ $job->career_level ?? 'N/A' }}</span>
+                            </div>
+                            
+                            <!-- Job Link -->
+                            <div class="flex items-center justify-between border-b border-zinc-100 pb-2">
+                                <span class="text-zinc-400 font-medium">Job Link</span>
+                                @if($job->platform_link)
+                                    <a href="{{ $job->platform_link }}" target="_blank" class="text-primary-650 hover:underline inline-flex items-center gap-1">
+                                        <span>Link</span>
+                                        <i class="ph-bold ph-arrow-up-right text-[10px]"></i>
+                                    </a>
+                                @else
+                                    <span class="text-zinc-400">None</span>
+                                @endif
+                            </div>
+
+                            <!-- App Status -->
+                            <div class="flex items-center justify-between">
+                                <span class="text-zinc-400 font-medium">Status</span>
+                                <span @class([
+                                    'px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border',
+                                    'bg-emerald-50 text-emerald-800 border-emerald-155' => $job->application_status === 'Accepted',
+                                    'bg-rose-50 text-rose-800 border-rose-155' => $job->application_status === 'Declined',
+                                    'bg-blue-50 text-blue-800 border-blue-155' => $job->application_status === 'On Process',
+                                ])>
+                                    {{ $job->application_status }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
                     {{-- Interview Spotlight --}}
                     @if($job->interview_date)
                         @php
                             $isPast = $job->interview_date->isPast();
                             $diff = $job->interview_date->diffForHumans();
                         @endphp
-                        <div class="bg-slate-900 rounded-[2.5rem] p-8 text-white relative overflow-hidden shadow-2xl">
-                            <div class="absolute top-0 right-0 w-32 h-32 bg-primary-500/20 rounded-full blur-2xl -mr-16 -mt-16"></div>
+                        <div class="bg-zinc-900 rounded-lg p-5 text-white relative overflow-hidden shadow-3xs">
+                            <h3 class="text-[10px] font-bold text-primary-300 uppercase tracking-widest mb-3.5">Next Interview</h3>
                             
-                            <h3 class="text-[10px] font-black text-primary-400 uppercase tracking-[0.3em] mb-6 relative z-10">Next Interview</h3>
-                            
-                            <div class="space-y-6 relative z-10">
-                                <div class="flex items-center gap-5">
-                                    <div class="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md flex flex-col items-center justify-center border border-white/10">
-                                        <span class="text-[10px] font-black uppercase text-primary-300">{{ $job->interview_date->format('M') }}</span>
-                                        <span class="text-2xl font-black">{{ $job->interview_date->format('d') }}</span>
+                            <div class="space-y-3.5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded bg-white/10 flex flex-col items-center justify-center border border-white/10 shrink-0">
+                                        <span class="text-[8px] font-bold uppercase text-primary-200 leading-none mb-0.5">{{ $job->interview_date->format('M') }}</span>
+                                        <span class="text-base font-bold leading-none">{{ $job->interview_date->format('d') }}</span>
                                     </div>
                                     <div>
-                                        <p class="text-xl font-black leading-tight">{{ $job->interview_date->format('H:i') }}</p>
-                                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ $job->interview_type ?? 'Meeting' }}</p>
+                                        <p class="text-sm font-bold leading-none mb-1">{{ $job->interview_date->format('H:i') }}</p>
+                                        <p class="text-[9px] font-semibold text-zinc-400 uppercase leading-none">{{ $job->interview_type ?? 'Meeting' }}</p>
                                     </div>
                                 </div>
 
                                 @if(!$isPast)
-                                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/20 border border-emerald-500/30 rounded-lg">
-                                        <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
-                                        <span class="text-[9px] font-black uppercase tracking-widest text-emerald-200">{{ $diff }}</span>
+                                    <div class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-emerald-500/15 border border-emerald-500/25 rounded">
+                                        <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span>
+                                        <span class="text-[9px] font-bold uppercase text-emerald-300">{{ $diff }}</span>
                                     </div>
                                 @endif
 
                                 @if($job->interview_location)
-                                    <div class="pt-6 border-t border-white/5 space-y-2">
-                                        <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Location / Link</p>
-                                        <p class="text-xs font-medium text-slate-300 break-all leading-relaxed">{{ $job->interview_location }}</p>
+                                    <div class="pt-3 border-t border-white/10 space-y-1">
+                                        <p class="text-[9px] font-bold text-zinc-500 uppercase">Location / Link</p>
+                                        <p class="text-[11px] font-medium text-zinc-350 break-all leading-normal">{{ $job->interview_location }}</p>
                                     </div>
                                 @endif
 
                                 @if(!$isPast && Auth::user()->canAccessEmailNotifications())
-                                    <div class="pt-6 border-t border-white/5">
+                                    <div class="pt-3 border-t border-white/10">
                                         <form method="POST" action="/jobs/{{ $job->id }}/send-interview-reminder">
                                             @csrf
-                                            <button type="submit" class="w-full py-3 px-4 bg-primary-600 hover:bg-primary-500 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 group">
-                                                <i class="ph-bold ph-envelope-simple group-hover:-translate-y-0.5 transition-transform"></i>
-                                                Send Reminder to My Email
+                                            <button type="submit" class="w-full h-[30px] bg-primary-650 hover:bg-primary-600 text-white rounded-md text-[10px] font-bold transition-all flex items-center justify-center gap-1.5 uppercase tracking-wider">
+                                                <i class="ph-bold ph-envelope-simple text-xs"></i>
+                                                <span>Send Email Reminder</span>
                                             </button>
                                         </form>
                                     </div>
@@ -318,56 +260,44 @@
                     @endif
 
                     {{-- Research Panel --}}
-                    <div class="glass-card p-8 rounded-[2.5rem] space-y-6 shadow-sm">
-                        <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Research Company</h3>
-                        <div class="space-y-3">
-                            <a href="https://www.linkedin.com/search/results/companies/?keywords={{ urlencode($job->company_name) }}" target="_blank" class="flex items-center justify-between p-4 rounded-2xl border border-slate-100 hover:border-primary-200 hover:bg-primary-50/30 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-lg bg-[#0077b5]/10 flex items-center justify-center text-[#0077b5]">
-                                        <i class="ph-bold ph-linkedin-logo text-lg"></i>
+                    <div class="bg-white border border-zinc-200/60 p-5 rounded-lg shadow-3xs space-y-3.5">
+                        <h3 class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Research Company</h3>
+                        <div class="space-y-2">
+                            <a href="https://www.linkedin.com/search/results/companies/?keywords={{ urlencode($job->company_name) }}" target="_blank" class="flex items-center justify-between p-2.5 rounded-md border border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50/50 transition-all active:scale-97 group">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded bg-[#0077b5]/10 flex items-center justify-center text-[#0077b5]">
+                                        <i class="ph-bold ph-linkedin-logo text-sm"></i>
                                     </div>
-                                    <span class="text-xs font-bold text-slate-700">LinkedIn Search</span>
+                                    <span class="text-xs font-semibold text-zinc-700">LinkedIn Search</span>
                                 </div>
-                                <i class="ph-bold ph-arrow-up-right text-slate-300 group-hover:text-primary-600 transition-colors"></i>
+                                <i class="ph-bold ph-arrow-up-right text-zinc-450 group-hover:text-zinc-700 text-xs transition-colors"></i>
                             </a>
 
-                            <a href="https://www.glassdoor.com/Search/results.htm?keyword={{ urlencode($job->company_name) }}" target="_blank" class="flex items-center justify-between p-4 rounded-2xl border border-slate-100 hover:border-emerald-200 hover:bg-emerald-50/30 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-lg bg-[#0CAA41]/10 flex items-center justify-center text-[#0CAA41]">
-                                        <i class="ph-bold ph-star text-lg"></i>
+                            <a href="https://www.glassdoor.com/Search/results.htm?keyword={{ urlencode($job->company_name) }}" target="_blank" class="flex items-center justify-between p-2.5 rounded-md border border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50/50 transition-all active:scale-97 group">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded bg-[#0CAA41]/10 flex items-center justify-center text-[#0CAA41]">
+                                        <i class="ph-bold ph-star text-sm"></i>
                                     </div>
-                                    <span class="text-xs font-bold text-slate-700">Glassdoor Reviews</span>
+                                    <span class="text-xs font-semibold text-zinc-700">Glassdoor Reviews</span>
                                 </div>
-                                <i class="ph-bold ph-arrow-up-right text-slate-300 group-hover:text-[#0CAA41] transition-colors"></i>
+                                <i class="ph-bold ph-arrow-up-right text-zinc-450 group-hover:text-zinc-700 text-xs transition-colors"></i>
                             </a>
-                            
-                            @if($job->platform_link)
-                            <a href="{{ $job->platform_link }}" target="_blank" class="flex items-center justify-between p-4 rounded-2xl border border-slate-100 hover:border-primary-200 hover:bg-primary-50/30 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600">
-                                        <i class="ph-bold ph-link-simple text-lg"></i>
-                                    </div>
-                                    <span class="text-xs font-bold text-slate-700">Original Post</span>
-                                </div>
-                                <i class="ph-bold ph-arrow-up-right text-slate-300 group-hover:text-primary-600 transition-colors"></i>
-                            </a>
-                            @endif
                         </div>
                     </div>
 
-                    {{-- Audit Trail --}}
-                    <div class="glass-card p-8 rounded-[2.5rem] space-y-6 shadow-sm">
-                        <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Application Timeline</h3>
-                        <div class="space-y-6 relative before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-px before:bg-slate-100">
-                            <div class="relative pl-7">
-                                <div class="absolute left-0 top-1 w-[14px] h-[14px] rounded-full bg-primary-600 border-4 border-white shadow-sm"></div>
-                                <p class="text-[10px] font-black text-slate-900 uppercase">Applied</p>
-                                <p class="text-[9px] font-bold text-slate-400">{{ $job->application_date->format('d M Y') }}</p>
+                    {{-- Audit Trail / Timeline --}}
+                    <div class="bg-white border border-zinc-200/60 p-5 rounded-lg shadow-3xs space-y-3.5">
+                        <h3 class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Application Timeline</h3>
+                        <div class="space-y-3.5 relative before:absolute before:left-[5px] before:top-1.5 before:bottom-1.5 before:w-px before:bg-zinc-150">
+                            <div class="relative pl-5">
+                                <div class="absolute left-0 top-1 w-2.5 h-2.5 rounded-full bg-primary-650 border-2 border-white shadow-3xs"></div>
+                                <p class="text-[10px] font-bold text-zinc-700 uppercase tracking-wider">Applied</p>
+                                <p class="text-[9px] font-semibold text-zinc-400 mt-0.5">{{ $job->application_date->format('d M Y') }}</p>
                             </div>
-                            <div class="relative pl-7">
-                                <div class="absolute left-0 top-1 w-[14px] h-[14px] rounded-full bg-slate-200 border-4 border-white shadow-sm"></div>
-                                <p class="text-[10px] font-black text-slate-400 uppercase">Last Updated</p>
-                                <p class="text-[9px] font-bold text-slate-400">{{ $job->updated_at->format('d M Y') }}</p>
+                            <div class="relative pl-5">
+                                <div class="absolute left-0 top-1 w-2.5 h-2.5 rounded-full bg-zinc-300 border-2 border-white shadow-3xs"></div>
+                                <p class="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Last Updated</p>
+                                <p class="text-[9px] font-semibold text-zinc-400 mt-0.5">{{ $job->updated_at->format('d M Y') }}</p>
                             </div>
                         </div>
                     </div>

@@ -42,6 +42,7 @@ class ExtensionController extends Controller
             'user' => [
                 'name' => $user->name,
                 'email' => $user->email,
+                'is_premium' => $user->isPremium()
             ]
         ]);
     }
@@ -54,6 +55,13 @@ class ExtensionController extends Controller
 
     public function saveJob(Request $request)
     {
+        $user = $request->user();
+        if (\App\Models\Setting::isMonetizationEnabled() && !$user->isPremium()) {
+            return response()->json([
+                'message' => 'Menyimpan lowongan via Chrome Extension adalah fitur Premium. Silakan upgrade akun Anda.'
+            ], 403);
+        }
+
         $request->validate([
             'company_name' => 'required|string|max:255',
             'position' => 'required|string|max:255',

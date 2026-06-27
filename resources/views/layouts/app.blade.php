@@ -7,8 +7,7 @@
 
         <title>{{ config('app.name', 'TraKerja') }}</title>
         
-        <!-- View Transitions API (For smooth cross-fades in modern browsers) -->
-        <meta name="view-transition" content="same-origin" />
+
 
         <!-- Favicon -->
         <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
@@ -17,7 +16,7 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600|inter:300,400,500,600,700,800,900|plus-jakarta-sans:400,500,600,700,800&display=swap" rel="stylesheet" />
         
         <!-- Icons -->
         <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -52,21 +51,7 @@
                 color: #4f46e5;
             }
 
-            /* Global Page Transitions */
-            @keyframes pageEnter {
-                from { 
-                    opacity: 0; 
-                    transform: translateY(10px); 
-                }
-                to { 
-                    opacity: 1; 
-                    transform: translateY(0); 
-                }
-            }
 
-            .page-animate-enter {
-                animation: pageEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            }
 
             /* Smooth transition for theme colors */
             body {
@@ -87,38 +72,13 @@
             [x-cloak] { display: none !important; }
         </style>
     </head>
-    <body class="font-sans antialiased bg-[#F8FAFC] text-slate-900"
+    <body class="font-sans antialiased bg-[#fafafa] text-slate-900"
           x-data="{ mobileSidebarOpen: false }"
           @keydown.escape="mobileSidebarOpen = false">
         
-        {{-- Premium Page Loader --}}
-        <div id="page-loader" class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#F8FAFC]/95 backdrop-blur-xl transition-all duration-700">
-            <div class="relative flex flex-col items-center">
-                {{-- Minimalist Circular Progress Container --}}
-                <div class="relative flex items-center justify-center">
-                    {{-- Rotating Track --}}
-                    <svg class="w-32 h-32 transform -rotate-90">
-                        <circle cx="64" cy="64" r="60" stroke="currentColor" stroke-width="1.5" fill="transparent" class="text-slate-100" />
-                        <circle cx="64" cy="64" r="60" stroke="currentColor" stroke-width="1.5" fill="transparent" class="text-primary-500 animate-progress-ring" stroke-dasharray="377" stroke-dashoffset="377" stroke-linecap="round" />
-                    </svg>
-                    
-                    {{-- TraKerja Icon --}}
-                    <div class="absolute w-20 h-20 bg-white rounded-full shadow-[0_15px_35px_rgba(0,0,0,0.05)] flex items-center justify-center border border-slate-100 transition-transform duration-500 hover:scale-105">
-                        <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-10 h-10 object-contain animate-pulse-subtle">
-                    </div>
-                </div>
-                
-                {{-- Professional Branding --}}
-                <div class="mt-10 flex flex-col items-center">
-                    <h2 class="text-[14px] font-black text-slate-800 uppercase tracking-[0.6em] leading-none">TraKerja</h2>
-                    <div class="mt-4 flex items-center gap-2">
-                        <span class="h-[1px] w-4 bg-slate-200"></span>
-                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em]">Elevating Identity</p>
-                        <span class="h-[1px] w-4 bg-slate-200"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {{-- YouTube-Style Top Progress Line Loader --}}
+        <div id="page-loader-bar" class="fixed top-0 left-0 right-0 h-[2.5px] z-[99999] pointer-events-none bg-gradient-to-r from-primary-500 via-violet-500 to-indigo-500 shadow-[0_0_10px_rgba(168,85,247,0.6)] opacity-0" style="width: 0%; will-change: width, opacity;"></div>
+
 
         <div class="h-screen flex overflow-hidden">
             <!-- Sidebar -->
@@ -135,7 +95,7 @@
                 @include('layouts.navigation', ['header' => $header ?? null])
 
                 <!-- Page Content -->
-                <main class="flex-1 overflow-y-auto page-animate-enter">
+                <main class="flex-1 overflow-y-auto">
                     {{ $slot }}
                 </main>
 
@@ -147,31 +107,27 @@
         @include('components.toast-notification')
         @livewireScripts
         
-        {{-- Premium Confirmation Modal (Aligned with Job Modal) --}}
-        <div id="confirmation-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xl hidden z-[10001] flex items-center justify-center p-4 transition-all duration-300 pointer-events-none">
-            <div class="bg-white rounded-[2rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.2)] max-w-sm w-full flex flex-col overflow-hidden border border-slate-100 transform scale-95 opacity-0 transition-all duration-300 pointer-events-auto">
-                <!-- Modal Header: Match Add/Edit Style -->
-                <div class="bg-white px-6 py-5 text-slate-900 flex justify-between items-center border-b border-slate-100 shrink-0">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shadow-sm">
-                            <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-6 h-6 object-contain">
-                        </div>
-                        <div>
-                            <h3 id="confirm-title" class="text-sm font-black tracking-tight">Confirm Action</h3>
-                            <p class="text-slate-400 text-[8px] font-black uppercase tracking-widest mt-0.5">Career Growth Tracking</p>
-                        </div>
+        {{-- Premium Confirmation Modal (Linear-Style Left-Aligned) --}}
+        <div id="confirmation-modal" class="fixed inset-0 bg-zinc-950/40 backdrop-blur-xs hidden z-[10001] flex items-center justify-center p-4 transition-all duration-300 pointer-events-none">
+            <div class="bg-white rounded-lg border border-zinc-200/60 shadow-lg max-w-[400px] w-full flex flex-col overflow-hidden transform scale-95 opacity-0 transition-all duration-300 pointer-events-auto p-5">
+                
+                <div class="flex items-start gap-4">
+                    {{-- Warning Icon Container --}}
+                    <div class="w-10 h-10 rounded-lg bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 shrink-0 shadow-4xs">
+                        <i class="ph-bold ph-trash-simple text-lg"></i>
+                    </div>
+                    
+                    {{-- Title and Message --}}
+                    <div class="flex-1 min-w-0 space-y-1.5">
+                        <h3 id="confirm-title" class="text-sm font-bold text-zinc-900 tracking-tight">Delete Application?</h3>
+                        <p id="confirm-message" class="text-xs font-medium text-zinc-500 leading-relaxed">Are you sure you want to proceed with this action? This cannot be undone.</p>
                     </div>
                 </div>
 
-                <div class="p-8 text-center">
-                    <div class="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-rose-100/50">
-                        <i class="ph-fill ph-trash text-rose-500 text-3xl"></i>
-                    </div>
-                    <p id="confirm-message" class="text-[11px] font-bold text-slate-500 leading-relaxed mb-8 px-4">Are you sure you want to proceed with this action? This cannot be undone.</p>
-                    <div class="flex items-center gap-3">
-                        <button onclick="closeConfirmModal()" class="flex-1 px-6 py-3.5 bg-slate-50 text-slate-400 text-[10px] font-black rounded-xl hover:bg-slate-100 transition-all uppercase tracking-widest">Cancel</button>
-                        <button id="confirm-button" class="flex-1 px-6 py-3.5 bg-rose-600 text-white text-[10px] font-black rounded-xl hover:bg-rose-700 transition-all shadow-xl shadow-rose-100 active:scale-95 uppercase tracking-widest">Confirm</button>
-                    </div>
+                {{-- Action Row --}}
+                <div class="flex items-center justify-end gap-2.5 mt-5 pt-4 border-t border-zinc-100">
+                    <button type="button" onclick="closeConfirmModal()" class="px-3.5 h-8 bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-650 text-xs font-bold rounded-md active:scale-97 transition-all">Cancel</button>
+                    <button type="button" id="confirm-button" class="px-4 h-8 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-md active:scale-97 transition-all shadow-sm shadow-rose-500/10">Confirm</button>
                 </div>
             </div>
         </div>
@@ -261,14 +217,7 @@
                 });
             });
 
-            // Page & View Transitions
-            window.addEventListener('view-switched', (e) => {
-                const container = document.getElementById(`${e.detail.type}-view-container`);
-                if (container) {
-                    container.classList.add('animate-view-fade-in');
-                    setTimeout(() => container.classList.remove('animate-view-fade-in'), 600);
-                }
-            });
+
 
             document.addEventListener('alpine:init', () => {
                 Alpine.store('sidebar', {
@@ -284,7 +233,7 @@
 
             // Magnetic Button Logic
             function initMagneticButtons() {
-                const buttons = document.querySelectorAll('.magnetic-btn, [onclick^="switchView"]');
+                const buttons = document.querySelectorAll('.magnetic-btn');
                 buttons.forEach(btn => {
                     btn.addEventListener('mousemove', (e) => {
                         const position = btn.getBoundingClientRect();
@@ -306,32 +255,42 @@
                 });
             }
 
-            function hidePageLoader() {
-                const loader = document.getElementById('page-loader');
-                if (loader) {
-                    loader.classList.add('opacity-0');
+            let loaderTimer = null;
+
+            function startTopLoader() {
+                const loader = document.getElementById('page-loader-bar');
+                if (!loader) return;
+                if (loaderTimer) clearTimeout(loaderTimer);
+
+                loader.style.transition = 'none';
+                loader.style.width = '0%';
+                loader.style.opacity = '1';
+                void loader.offsetWidth;
+
+                loader.style.transition = 'width 400ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms ease';
+                loader.style.width = '70%';
+            }
+
+            function finishTopLoader() {
+                const loader = document.getElementById('page-loader-bar');
+                if (!loader) return;
+                if (loaderTimer) clearTimeout(loaderTimer);
+
+                loader.style.transition = 'width 150ms ease-out, opacity 200ms ease';
+                loader.style.width = '100%';
+
+                loaderTimer = setTimeout(() => {
+                    loader.style.opacity = '0';
                     setTimeout(() => {
-                        loader.style.display = 'none';
-                    }, 700);
-                }
+                        loader.style.width = '0%';
+                    }, 200);
+                }, 150);
             }
-
-            function showPageLoader() {
-                const loader = document.getElementById('page-loader');
-                if (loader) {
-                    loader.style.display = 'flex';
-                    loader.classList.remove('opacity-0');
-                }
-            }
-
-            // Initial hide
-            window.addEventListener('load', () => setTimeout(hidePageLoader, 800));
-            document.addEventListener('DOMContentLoaded', () => setTimeout(hidePageLoader, 800));
 
             // Handle Livewire Navigation
-            document.addEventListener('livewire:navigate', showPageLoader);
+            document.addEventListener('livewire:navigate', startTopLoader);
             document.addEventListener('livewire:navigated', () => {
-                setTimeout(hidePageLoader, 800);
+                finishTopLoader();
                 initMagneticButtons();
                 if (window.Alpine && Alpine.store('sidebar')) {
                     Alpine.store('sidebar').close();
@@ -343,34 +302,8 @@
         </script>
 
         <style>
-            @keyframes viewFadeIn {
-                from { opacity: 0; transform: translateY(8px) scale(0.995); }
-                to { opacity: 1; transform: translateY(0) scale(1); }
-            }
-            .animate-view-fade-in {
-                animation: viewFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            }
             .magnetic-btn {
                 transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
-            }
-            
-            @keyframes progress-ring {
-                0% { stroke-dashoffset: 377; }
-                50% { stroke-dashoffset: 180; }
-                100% { stroke-dashoffset: 0; }
-            }
-            @keyframes pulse-subtle {
-                0%, 100% { transform: scale(1); opacity: 1; }
-                50% { transform: scale(0.95); opacity: 0.9; }
-            }
-            .animate-progress-ring {
-                animation: progress-ring 0.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-            }
-            .animate-pulse-subtle {
-                animation: pulse-subtle 3s ease-in-out infinite;
-            }
-            #page-loader.opacity-0 {
-                pointer-events: none;
             }
         </style>
         @stack('modals')

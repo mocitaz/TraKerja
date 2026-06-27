@@ -158,8 +158,6 @@
     }
     </style>
 
-    <!-- Toast Notification Container -->
-    <div id="toast-container" class="fixed top-20 right-4 z-[100] space-y-3 pointer-events-none"></div>
 </div>
 
 <script>
@@ -167,116 +165,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Close notification panel when clicking outside
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.notification-bell-container')) {
-            // Check if panel is open and close it
             const panel = document.querySelector('.notification-bell-container .absolute');
             if (panel && panel.style.display !== 'none') {
-                // Trigger Livewire method to close panel
-                Livewire.find(document.querySelector('[wire\\:id]').getAttribute('wire:id')).call('closePanel');
+                const wireObj = Livewire.find(document.querySelector('[wire\\:id]')?.getAttribute('wire:id'));
+                if (wireObj) wireObj.call('closePanel');
             }
         }
     });
-
-    // Toast Notification Handler
-    window.addEventListener('showToast', function(event) {
-        const notification = event.detail;
-        showToastNotification(notification);
-    });
-
-    // Listen to Livewire events
-    Livewire.on('showToast', function(notification) {
-        showToastNotification(notification);
-    });
 });
-
-// Track shown toast IDs to prevent duplicates
-const shownToastIds = new Set();
-
-function showToastNotification(notification) {
-    const container = document.getElementById('toast-container');
-    if (!container) return;
-
-    // Skip if no message
-    if (!notification.message && !notification.title) {
-        return;
-    }
-
-    const toastId = 'toast-' + (notification.id || Date.now());
-    
-    // Prevent duplicate toasts
-    if (shownToastIds.has(toastId)) {
-        return;
-    }
-    shownToastIds.add(toastId);
-
-    const duration = 3000; // Fixed 3 seconds
-
-    // Get message from notification (wajib ada)
-    const message = notification.message || notification.title;
-    if (!message) {
-        return; // Skip if no message
-    }
-
-    // Determine color based on type
-    let bgGradient = 'from-purple-500 to-blue-600';
-    if (notification.type === 'success') {
-        bgGradient = 'from-green-500 to-emerald-600';
-    } else if (notification.type === 'error') {
-        bgGradient = 'from-red-500 to-rose-600';
-    } else if (notification.type === 'warning') {
-        bgGradient = 'from-amber-500 to-orange-600';
-    }
-
-    // Toast notification dengan desain yang lebih baik
-    const toast = document.createElement('div');
-    toast.id = toastId;
-    toast.className = `pointer-events-auto max-w-sm w-full bg-gradient-to-r ${bgGradient} rounded-lg shadow-xl transform transition-all duration-500 ease-out translate-x-full opacity-0 border-l-4 border-white/30`;
-    toast.innerHTML = `
-        <div class="px-4 py-3 flex items-center gap-3">
-            <div class="flex-shrink-0">
-                <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                    ${notification.type === 'success' ? 
-                        '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>' :
-                      notification.type === 'error' ?
-                        '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>' :
-                      notification.type === 'warning' ?
-                        '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path></svg>' :
-                        '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
-                    }
-                </div>
-            </div>
-            <p class="text-sm font-semibold text-white flex-1">${message}</p>
-        </div>
-    `;
-
-    container.appendChild(toast);
-
-    // Animate in
-    setTimeout(() => {
-        toast.classList.remove('translate-x-full', 'opacity-0');
-        toast.classList.add('translate-x-0', 'opacity-100');
-    }, 10);
-
-    // Auto dismiss after 3 seconds
-    setTimeout(() => {
-        closeToast(toastId);
-        // Remove from set after closing
-        setTimeout(() => {
-            shownToastIds.delete(toastId);
-        }, 500);
-    }, duration);
-}
-
-function closeToast(toastId) {
-    const toast = document.getElementById(toastId);
-    if (!toast) return;
-
-    toast.classList.remove('translate-x-0', 'opacity-100');
-    toast.classList.add('translate-x-full', 'opacity-0');
-
-    setTimeout(() => {
-        if (toast.parentNode) {
-            toast.parentNode.removeChild(toast);
-        }
-    }, 500);
-}
 </script>

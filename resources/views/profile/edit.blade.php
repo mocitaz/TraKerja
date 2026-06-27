@@ -1,7 +1,5 @@
 <x-app-layout>
-
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @php
         $profile = $user->profile;
@@ -17,34 +15,42 @@
         $percentage = round(($completeness / $totalItems) * 100);
     @endphp
 
-    <div class="bg-[#f8fafc] min-h-screen pb-20 relative overflow-hidden">
-        {{-- Subtle Ambient Background --}}
-        <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
-            <div class="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-primary-100/30 rounded-full blur-[140px]"></div>
-            <div class="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#d983e4]/10 rounded-full blur-[120px]"></div>
-        </div>
-
-        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 relative z-10">
+    <div class="bg-[#fafafa] min-h-screen pb-16 relative overflow-hidden">
+        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 relative z-10">
             
-            {{-- Floating Pill Navigation (Moved out of topbar) --}}
-            <div class="flex justify-center mb-8 sm:mb-10 w-full overflow-x-auto custom-scrollbar">
-                <nav class="flex p-1 bg-white border border-slate-200/60 rounded-[1.5rem] sm:rounded-[2rem] shadow-sm shrink-0">
-                    @foreach([
-                        ['account',  'ph-user',               'Identity'],
-                        ['personal', 'ph-identification-card', 'Contact'],
-                        ['security', 'ph-shield-check',       'Security'],
-                        ['danger',   'ph-warning-octagon',    'Danger Zone'],
-                    ] as [$tab, $icon, $label])
-                    <button onclick="switchTab('{{ $tab }}')" id="tab-{{ $tab }}"
-                            class="tab-btn {{ $tab === 'account' ? 'active' : '' }} flex items-center gap-1.5 sm:gap-2 px-4 sm:px-8 py-2.5 sm:py-3 rounded-[1.25rem] sm:rounded-[1.5rem] text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all hover:bg-slate-50">
-                        <i class="ph-bold {{ $icon }} text-sm sm:text-base"></i>
-                        <span>{{ $label }}</span>
-                    </button>
-                    @endforeach
-                </nav>
+            <!-- Premium Notion-Inspired Page Header -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-zinc-200/50 pb-4 mb-5">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 bg-zinc-100 border border-zinc-200/60 rounded-lg flex items-center justify-center text-zinc-500 shrink-0 shadow-2xs">
+                        <i class="ph ph-user-circle text-base"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-sm font-bold text-zinc-800 tracking-tight">Account Profile</h1>
+                            <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[9px] font-black uppercase tracking-wider rounded border border-primary-100/60">Settings</span>
+                        </div>
+                        <p class="text-[11px] text-zinc-400 mt-0.5">Manage your personal settings, password, and profile identity details.</p>
+                    </div>
+                </div>
             </div>
 
-            {{-- Global Toast Trigger for Session Status (Fallback for direct access) --}}
+            <!-- Premium Notion-Inspired Tab Switcher -->
+            <div class="flex p-0.5 bg-white border border-zinc-200/70 rounded-md shadow-3xs mb-6 max-w-md">
+                @foreach([
+                    ['account',  'ph-user',               'Identity'],
+                    ['personal', 'ph-identification-card', 'Contact'],
+                    ['security', 'ph-shield-check',       'Security'],
+                    ['danger',   'ph-warning-octagon',    'Danger Zone'],
+                ] as [$tab, $icon, $label])
+                <button onclick="switchTab('{{ $tab }}')" id="tab-{{ $tab }}"
+                        class="tab-btn {{ $tab === 'account' ? 'active' : '' }} flex-1 justify-center flex items-center gap-1.5 py-1.5 text-[11px] font-bold rounded transition-colors focus:outline-none">
+                    <i class="ph {{ $icon }} text-xs"></i>
+                    <span>{{ $label }}</span>
+                </button>
+                @endforeach
+            </div>
+
+            {{-- Global Toast Trigger for Session Status --}}
             @if (session('status'))
                 <script>
                     document.addEventListener('DOMContentLoaded', () => {
@@ -75,59 +81,49 @@
             <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
                 
                 {{-- [BENTO 1] Hero Identity Card (Full Width) --}}
-                <div class="md:col-span-12 group">
-                    <div class="bg-white rounded-[2rem] sm:rounded-[3rem] border border-slate-200/60 p-6 sm:p-10 shadow-sm hover:shadow-xl hover:shadow-primary-500/5 transition-all duration-500 relative overflow-hidden">
-                        {{-- Decorative Background Elements --}}
-                        <div class="absolute -right-20 -top-20 w-80 h-80 bg-gradient-to-br from-primary-100/40 via-[#d983e4]/10 to-transparent rounded-full blur-3xl group-hover:bg-primary-100/60 transition-colors duration-700"></div>
-                        <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-slate-50/80 rounded-full blur-3xl"></div>
-                        
-                        <div class="relative flex flex-col md:flex-row items-center gap-6 sm:gap-10">
-                            {{-- Profile Aura Avatar --}}
-                            <div class="relative group/avatar">
-                                <div class="absolute inset-0 bg-primary-100 rounded-full animate-spin-slow opacity-20 scale-110"></div>
-                                <svg class="absolute inset-[-10px] w-[calc(100%+20px)] h-[calc(100%+20px)] transform -rotate-90">
-                                    <circle cx="50%" cy="50%" r="48%" stroke="currentColor" stroke-width="3" fill="transparent" class="text-slate-100" />
-                                    <circle cx="50%" cy="50%" r="48%" stroke="currentColor" stroke-width="3" fill="transparent" class="text-primary-500 transition-all duration-1000" stroke-dasharray="100" stroke-dashoffset="{{ 100 - $percentage }}" stroke-linecap="round" />
-                                </svg>
-                                
-                                <div class="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden bg-white shadow-2xl border-4 border-white transition-transform duration-500 group-hover/avatar:scale-105">
+                <div class="md:col-span-12">
+                    <div class="bg-white rounded-lg border border-zinc-200/60 p-4 shadow-3xs">
+                        <div class="flex flex-col md:flex-row items-center gap-5 sm:gap-6">
+                            {{-- Profile Avatar --}}
+                            <div class="relative shrink-0">
+                                <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-md overflow-hidden bg-zinc-50 border border-zinc-200 shadow-inner">
                                     @if(Auth::user()->logo)
                                         <img src="{{ Auth::user()->avatar_url }}" alt="Avatar" class="w-full h-full object-cover">
                                     @else
-                                        <div class="w-full h-full bg-slate-50 flex items-center justify-center text-slate-300">
-                                            <i class="ph-fill ph-user text-5xl sm:text-6xl"></i>
+                                        <div class="w-full h-full flex items-center justify-center text-zinc-355 bg-zinc-50">
+                                            <i class="ph ph-user text-3xl"></i>
                                         </div>
                                     @endif
                                 </div>
-                                <button onclick="openProfilePhotoModal()" class="absolute bottom-1 right-1 w-9 h-9 sm:w-10 sm:h-10 bg-slate-900 text-white rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg hover:bg-primary-600 transition-all border-4 border-white">
-                                    <i class="ph-bold ph-camera text-sm sm:text-base"></i>
+                                <button onclick="openProfilePhotoModal()" class="absolute -bottom-1.5 -right-1.5 w-6.5 h-6.5 bg-zinc-950 text-white rounded-md flex items-center justify-center shadow-md hover:bg-zinc-800 transition-colors border border-white focus:outline-none">
+                                    <i class="ph ph-camera text-xs"></i>
                                 </button>
                             </div>
 
                             <div class="flex-1 text-center md:text-left w-full">
-                                <div class="flex flex-col md:flex-row md:items-center justify-center md:justify-start gap-2 sm:gap-3 mb-1 sm:mb-2">
-                                    <h3 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tighter">{{ $user->name }}</h3>
+                                <div class="flex flex-col md:flex-row md:items-center justify-center md:justify-start gap-1.5 mb-0.5">
+                                    <h3 class="text-sm font-bold text-zinc-850 tracking-tight">{{ $user->name }}</h3>
                                     @if($user->is_premium)
-                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-600 border border-amber-100 rounded-full text-[9px] font-black uppercase tracking-widest self-center md:self-auto">
-                                            <i class="ph-fill ph-crown"></i> PRO
+                                        <span class="inline-flex items-center gap-0.5 px-1.5 py-0.2 bg-amber-50 text-amber-600 border border-amber-250/70 rounded text-[8.5px] font-black uppercase tracking-wider self-center md:self-auto leading-none">
+                                            <i class="ph ph-crown text-xs"></i> PRO
                                         </span>
                                     @endif
                                 </div>
-                                <p class="text-xs sm:text-sm font-bold text-slate-400 mb-5 sm:mb-6">{{ $user->email }}</p>
+                                <p class="text-[10px] font-semibold text-zinc-400 mb-3.5">{{ $user->email }}</p>
                                 
-                                <div class="grid grid-cols-2 gap-3 sm:gap-4">
-                                    <div class="bg-slate-50/50 rounded-2xl p-3.5 sm:p-4 border border-slate-100">
-                                        <p class="text-[8px] sm:text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Completeness</p>
-                                        <div class="flex items-center gap-2">
-                                            <span class="text-base sm:text-lg font-black text-slate-800">{{ $percentage }}%</span>
-                                            <div class="flex-1 h-1 bg-slate-200 rounded-full overflow-hidden">
-                                                <div class="h-full bg-primary-500" style="width: {{ $percentage }}%"></div>
+                                <div class="grid grid-cols-2 gap-3 max-w-sm">
+                                    <div class="bg-zinc-50/50 border border-zinc-200 rounded p-2.5">
+                                        <p class="text-[7.5px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Completeness</p>
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="text-[10px] font-bold text-zinc-800">{{ $percentage }}%</span>
+                                            <div class="flex-1 h-1 bg-zinc-200 rounded-full overflow-hidden">
+                                                <div class="h-full bg-zinc-650" style="width: {{ $percentage }}%"></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="bg-slate-50/50 rounded-2xl p-3.5 sm:p-4 border border-slate-100">
-                                        <p class="text-[8px] sm:text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Member Since</p>
-                                        <p class="text-xs sm:text-sm font-black text-slate-800">{{ Auth::user()->created_at->format('M Y') }}</p>
+                                    <div class="bg-zinc-50/50 border border-zinc-200 rounded p-2.5">
+                                        <p class="text-[7.5px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Member Since</p>
+                                        <p class="text-[10px] font-bold text-zinc-800 leading-none mt-0.5">{{ Auth::user()->created_at->format('M Y') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -135,160 +131,70 @@
                     </div>
                 </div>
 
-                {{-- [BENTO 2] Skill Matrix (Radar Chart) --}}
-                <div class="md:col-span-7">
-                    <div class="bg-white rounded-[2rem] sm:rounded-[3rem] border border-slate-200/60 p-5 sm:p-8 shadow-sm h-full relative overflow-hidden group">
-                        <div class="flex items-center justify-between mb-6 sm:mb-8">
-                            <div>
-                                <h4 class="text-[10px] font-black text-primary-500 uppercase tracking-[0.3em] mb-1">Professional Matrix</h4>
-                                <p class="text-base sm:text-lg font-black text-slate-800 tracking-tight">Skill Proficiency</p>
+                {{-- [BENTO 2 & 3] Dynamic Content Containers (Rendered based on active tab) --}}
+                <div class="md:col-span-12">
+                    
+                    {{-- TAB 1: IDENTITY --}}
+                    <div id="section-account" class="content-section space-y-6">
+                        <div class="bg-white rounded-lg border border-zinc-200/60 p-4 shadow-3xs">
+                            <div class="flex items-center gap-2 mb-3 pb-2 border-b border-zinc-100">
+                                <i class="ph ph-user-circle text-zinc-500 text-sm"></i>
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Basic Account Credentials</h3>
                             </div>
-                            <div class="w-9 h-9 sm:w-10 sm:h-10 bg-slate-50 rounded-xl sm:rounded-2xl flex items-center justify-center text-slate-400 group-hover:text-primary-500 transition-colors">
-                                <i class="ph-bold ph-strategy text-base sm:text-lg"></i>
-                            </div>
-                        </div>
-
-                        <div class="relative aspect-square max-h-[300px] mx-auto">
-                            <canvas id="skillMatrixChart"></canvas>
-                        </div>
-
-                        {{-- Legend Placeholder or Small Stats --}}
-                        <div class="mt-6 sm:mt-8 grid grid-cols-3 gap-3 sm:gap-4">
-                            @php
-                                $categories = $user->skills->groupBy('category');
-                            @endphp
-                            @foreach($categories->take(3) as $cat => $skills)
-                                <div class="text-center">
-                                    <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">{{ $cat ?: 'General' }}</p>
-                                    <p class="text-xs font-bold text-slate-700">{{ $skills->count() }} Skills</p>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-
-                {{-- [BENTO 3] Quick Stats / Premium (Small) --}}
-                <div class="md:col-span-5">
-                    <div class="bg-slate-900 rounded-[2rem] sm:rounded-[3rem] p-6 sm:p-8 shadow-xl relative overflow-hidden h-full flex flex-col justify-between group min-h-[220px]">
-                        <div class="absolute right-0 top-0 w-48 h-48 bg-primary-500/30 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-1000"></div>
-                        <div class="absolute left-0 bottom-0 w-32 h-32 bg-[#d983e4]/20 rounded-full blur-2xl"></div>
-                        
-                        <div class="relative">
-                            <h4 class="text-[10px] font-black text-primary-400 uppercase tracking-[0.3em] mb-2">Member Status</h4>
-                            @if($user->is_premium)
-                                <p class="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">Elevated to<br>Premium Access</p>
-                            @else
-                                <p class="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">Unlock Your<br>Full Potential</p>
-                            @endif
-                        </div>
-
-                        <div class="mt-6 sm:mt-8 relative">
-                            @if(!$user->is_premium)
-                                <a href="{{ route('payment.index') }}" class="group/btn bg-white text-slate-900 h-12 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-between px-5 sm:px-6 font-black text-[10px] uppercase tracking-widest hover:bg-primary-50 transition-all">
-                                    <span>Upgrade Now</span>
-                                    <i class="ph-bold ph-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
-                                </a>
-                            @else
-                                <div class="bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-3.5 sm:p-4 border border-white/10 flex items-center justify-between">
-                                    <span class="text-[9px] font-black text-white/60 uppercase tracking-widest">Active Plan</span>
-                                    <span class="text-[9px] font-black text-primary-300 uppercase tracking-widest">Enterprise</span>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-
-                {{-- [BENTO 4] Main Content Sections (Tabbed) --}}
-                <div class="md:col-span-12 lg:col-span-12">
-                    <div class="space-y-6">
-                    {{-- Account --}}
-                    <div id="section-account" class="content-section">
-                        <div class="bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200/60 p-5 sm:p-10 shadow-sm relative overflow-hidden">
-                            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-primary-50/30 rounded-full blur-3xl"></div>
-                            <div class="relative">
-                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 mb-8 sm:mb-10">
-                                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-primary-50 rounded-xl sm:rounded-[1.25rem] flex items-center justify-center text-primary-600 shadow-inner shrink-0">
-                                        <i class="ph-bold ph-user-focus text-xl sm:text-2xl"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Account Information</h3>
-                                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Basic identification details</p>
-                                    </div>
-                                </div>
-                                <div class="premium-form-wrapper">
-                                    @include('profile.partials.update-profile-information-form')
-                                </div>
+                            <div class="premium-form-wrapper">
+                                @include('profile.partials.update-profile-information-form')
                             </div>
                         </div>
                     </div>
 
-                    {{-- Personal --}}
-                    <div id="section-personal" class="content-section hidden">
-                        <div class="bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200/60 p-5 sm:p-10 shadow-sm relative overflow-hidden">
-                            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-primary-50/30 rounded-full blur-3xl"></div>
-                            <div class="relative">
-                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 mb-8 sm:mb-10">
-                                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-primary-50 rounded-xl sm:rounded-[1.25rem] flex items-center justify-center text-primary-600 shadow-inner shrink-0">
-                                        <i class="ph-bold ph-fingerprint text-xl sm:text-2xl"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Personal Information</h3>
-                                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Data for professional matching & CVs</p>
-                                    </div>
-                                </div>
-                                
-                                <form id="personalInfoForm" method="post" action="{{ route('profile.personal.update') }}" class="space-y-6 sm:space-y-8">
+                    {{-- TAB 2: PERSONAL & CONTACT --}}
+                    <div id="section-personal" class="content-section space-y-6 hidden">
+                        <div class="bg-white rounded-lg border border-zinc-200/60 p-4 shadow-3xs">
+                            <div class="flex items-center gap-2 mb-3 pb-2 border-b border-zinc-100">
+                                <i class="ph ph-identification-card text-zinc-500 text-sm"></i>
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Personal & Social Links</h3>
+                            </div>
+                            <div class="premium-form-wrapper">
+                                <form method="post" action="{{ route('profile.personal.update') }}" class="space-y-4">
                                     @csrf
                                     @method('patch')
 
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8">
-                                        <div class="group/field space-y-2">
-                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-primary-600 transition-colors">Phone Number</label>
-                                            <div class="relative">
-                                                <div class="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
-                                                    <i class="ph-bold ph-phone"></i>
-                                                </div>
-                                                <input type="text" name="phone" value="{{ old('phone', $user->profile->phone_number ?? '') }}" class="w-full pl-14 sm:pl-16 pr-6 py-3.5 sm:py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200">
-                                            </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="space-y-1">
+                                            <label class="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider pl-0.5">Phone / WhatsApp</label>
+                                            <input type="text" name="phone_number" value="{{ old('phone_number', $user->profile->phone_number ?? '') }}" class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-[11px] font-semibold text-zinc-700 focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 focus:bg-white transition-colors outline-none" placeholder="+62 812-3456-7890">
                                         </div>
-                                        <div class="group/field space-y-2">
-                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-primary-600 transition-colors">Domicile / Location</label>
-                                            <div class="relative">
-                                                <div class="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
-                                                    <i class="ph-bold ph-map-pin"></i>
-                                                </div>
-                                                <input type="text" name="location" value="{{ old('location', $user->profile->domicile ?? '') }}" class="w-full pl-14 sm:pl-16 pr-6 py-3.5 sm:py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200">
-                                            </div>
-                                        </div>
-                                        <div class="group/field space-y-2">
-                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-primary-600 transition-colors">LinkedIn URL</label>
-                                            <div class="relative">
-                                                <div class="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
-                                                    <i class="ph-bold ph-linkedin-logo"></i>
-                                                </div>
-                                                <input type="url" name="linkedin" value="{{ old('linkedin', $user->profile->linkedin_url ?? '') }}" class="w-full pl-14 sm:pl-16 pr-6 py-3.5 sm:py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200" placeholder="https://linkedin.com/in/...">
-                                            </div>
-                                        </div>
-                                        <div class="group/field space-y-2">
-                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-primary-600 transition-colors">Personal Website</label>
-                                            <div class="relative">
-                                                <div class="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-focus-within/field:bg-primary-100 group-focus-within/field:text-primary-600 transition-all">
-                                                    <i class="ph-bold ph-globe"></i>
-                                                </div>
-                                                <input type="url" name="website" value="{{ old('website', $user->profile->website_url ?? '') }}" class="w-full pl-14 sm:pl-16 pr-6 py-3.5 sm:py-4 bg-slate-50 border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all border-none ring-1 ring-slate-200" placeholder="https://...">
-                                            </div>
+                                        <div class="space-y-1">
+                                            <label class="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider pl-0.5">Domicile / City</label>
+                                            <input type="text" name="domicile" value="{{ old('domicile', $user->profile->domicile ?? '') }}" class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-[11px] font-semibold text-zinc-700 focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 focus:bg-white transition-colors outline-none" placeholder="Jakarta, Indonesia">
                                         </div>
                                     </div>
 
-                                    <div class="group/field space-y-2">
-                                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within/field:text-primary-600 transition-colors">Professional Biography</label>
-                                        <textarea name="bio" rows="6" class="w-full px-6 py-5 sm:px-8 sm:py-6 bg-slate-50 border-none ring-1 ring-slate-200 rounded-3xl text-sm font-medium text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all leading-relaxed" placeholder="Describe your professional background and aspirations...">{{ old('bio', $user->profile->bio ?? '') }}</textarea>
+                                    <div class="space-y-1">
+                                        <label class="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider pl-0.5">Headline / Role Title</label>
+                                        <input type="text" name="headline" value="{{ old('headline', $user->profile->headline ?? '') }}" class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-[11px] font-semibold text-zinc-700 focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 focus:bg-white transition-colors outline-none" placeholder="Senior Product Designer | Full-Stack Architect">
                                     </div>
 
-                                    <div class="flex justify-end pt-4 w-full">
-                                        <button type="submit" class="w-full sm:w-auto justify-center group/btn px-8 sm:px-10 py-3.5 sm:py-4 bg-primary-600 text-white rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 active:scale-95 flex items-center gap-3">
-                                            <i class="ph-bold ph-check-circle text-lg group-hover/btn:scale-110 transition-transform"></i>
-                                            Save Profile Details
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="space-y-1">
+                                            <label class="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider pl-0.5">LinkedIn URL</label>
+                                            <input type="url" name="linkedin_url" value="{{ old('linkedin_url', $user->profile->linkedin_url ?? '') }}" class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-[11px] font-semibold text-zinc-700 focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 focus:bg-white transition-colors outline-none" placeholder="https://linkedin.com/in/username">
+                                        </div>
+                                        <div class="space-y-1">
+                                            <label class="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider pl-0.5">Personal Portfolio / Website</label>
+                                            <input type="url" name="website_url" value="{{ old('website_url', $user->profile->website_url ?? '') }}" class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-[11px] font-semibold text-zinc-700 focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 focus:bg-white transition-colors outline-none" placeholder="https://yourportfolio.com">
+                                        </div>
+                                    </div>
+
+                                    <div class="space-y-1">
+                                        <label class="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider pl-0.5">Professional Biography</label>
+                                        <textarea name="bio" rows="4" class="w-full px-3 py-2 bg-zinc-50/50 border border-zinc-200 rounded-md text-[11px] font-medium text-zinc-700 focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 focus:bg-white transition-colors outline-none resize-none leading-relaxed" placeholder="Describe your professional background and aspirations...">{{ old('bio', $user->profile->bio ?? '') }}</textarea>
+                                    </div>
+
+                                    <div class="flex justify-end pt-2">
+                                        <button type="submit" class="px-3.5 py-1.5 bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 text-[10px] font-bold uppercase tracking-wider rounded-md transition-all flex items-center gap-1.5 shadow-3xs focus:outline-none active:scale-97">
+                                            <i class="ph ph-check-circle text-xs"></i>
+                                            <span>Save Profile Details</span>
                                         </button>
                                     </div>
                                 </form>
@@ -296,40 +202,27 @@
                         </div>
                     </div>
 
-                    {{-- Security --}}
-                    <div id="section-security" class="content-section hidden">
-                        <div class="bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200/60 p-5 sm:p-10 shadow-sm relative overflow-hidden">
-                            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-emerald-50/30 rounded-full blur-3xl"></div>
-                            <div class="relative">
-                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 mb-8 sm:mb-10">
-                                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-emerald-50 rounded-xl sm:rounded-[1.25rem] flex items-center justify-center text-emerald-600 shadow-inner shrink-0">
-                                        <i class="ph-bold ph-shield-check text-xl sm:text-2xl"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Security Settings</h3>
-                                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Keep your credentials safe</p>
-                                    </div>
-                                </div>
-                                <div class="premium-form-wrapper">
-                                    @include('profile.partials.update-password-form')
-                                </div>
+                    {{-- TAB 3: SECURITY --}}
+                    <div id="section-security" class="content-section space-y-6 hidden">
+                        <div class="bg-white rounded-lg border border-zinc-200/60 p-4 shadow-3xs">
+                            <div class="flex items-center gap-2 mb-3 pb-2 border-b border-zinc-100">
+                                <i class="ph ph-shield-check text-zinc-500 text-sm"></i>
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Update Authentication Security</h3>
+                            </div>
+                            <div class="premium-form-wrapper">
+                                @include('profile.partials.update-password-form')
                             </div>
                         </div>
                     </div>
 
-                    {{-- Danger --}}
-                    <div id="section-danger" class="content-section hidden">
-                        <div class="bg-rose-50 rounded-[2rem] sm:rounded-[2.5rem] border border-rose-100 p-5 sm:p-10 shadow-sm">
-                            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 mb-8 sm:mb-10">
-                                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-rose-100 rounded-xl sm:rounded-[1.25rem] flex items-center justify-center text-rose-600 shadow-inner shrink-0">
-                                    <i class="ph-bold ph-warning-octagon text-xl sm:text-2xl"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Danger Zone</h3>
-                                    <p class="text-[10px] font-bold text-rose-400 uppercase tracking-widest mt-1">Irreversible and destructive actions</p>
-                                </div>
+                    {{-- TAB 4: DANGER ZONE --}}
+                    <div id="section-danger" class="content-section space-y-6 hidden">
+                        <div class="bg-white rounded-lg border border-rose-200/60 p-4 shadow-3xs">
+                            <div class="flex items-center gap-2 mb-3 pb-2 border-b border-rose-100 text-rose-600">
+                                <i class="ph ph-warning-octagon text-sm"></i>
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Danger Zone</h3>
                             </div>
-                            <div class="premium-form-wrapper bg-white/50 rounded-2xl sm:rounded-[2rem] p-5 sm:p-6 border border-rose-100/50">
+                            <div class="premium-form-wrapper">
                                 @include('profile.partials.delete-user-form')
                             </div>
                         </div>
@@ -339,103 +232,144 @@
         </div>
     </div>
 
-    {{-- Profile Photo Modal --}}
-    <div id="profilePhotoModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center z-[1000] p-4" onclick="if(event.target === this) closeProfilePhotoModal()">
-        <div class="bg-white rounded-[2rem] sm:rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.2)] max-w-md w-full p-6 sm:p-10 transform transition-all animate-scale-in border border-slate-200/60 overflow-hidden relative">
-            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary-500 via-primary-500 to-primary-500"></div>
-            
-            <div class="flex items-center justify-between mb-8 sm:mb-10">
-                <div class="flex flex-col">
-                    <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Update Identity</h3>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Profile Photo Upload</p>
+    {{-- Profile Photo Upload Modal --}}
+    <div id="profilePhotoModal" class="fixed inset-0 bg-zinc-950/40 hidden items-center justify-center z-[1000] p-4 animate-fade-in" onclick="if(event.target === this) closeProfilePhotoModal()">
+        <div class="bg-white rounded-lg border border-zinc-200 shadow-xl max-w-sm w-full p-5 overflow-hidden">
+            <div class="flex items-center justify-between border-b border-zinc-100 pb-3 mb-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-700 shadow-3xs">
+                        <i class="ph ph-camera text-xs"></i>
+                    </div>
+                    <h3 class="text-xs font-bold text-zinc-850 tracking-tight">Update Identity Photo</h3>
                 </div>
-                <button onclick="closeProfilePhotoModal()" class="w-10 h-10 flex items-center justify-center rounded-2xl hover:bg-slate-100 transition-all text-slate-400 hover:text-slate-900">
-                    <i class="ph-bold ph-x text-lg"></i>
+                <button onclick="closeProfilePhotoModal()" class="w-6 h-6 flex items-center justify-center rounded hover:bg-zinc-55 transition-colors text-zinc-400 hover:text-zinc-850 focus:outline-none">
+                    <i class="ph ph-x text-xs"></i>
                 </button>
             </div>
 
-            <form id="photoUploadForm" method="POST" action="{{ route('profile-photo.upload') }}" enctype="multipart/form-data" class="space-y-8 sm:space-y-10">
+            <form id="photoUploadForm" method="POST" action="{{ route('profile-photo.upload') }}" enctype="multipart/form-data" class="space-y-4">
                 @csrf
                 <div class="flex flex-col items-center">
-                    <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-[2rem] sm:rounded-[3rem] overflow-hidden bg-slate-50 shadow-inner mb-6 sm:mb-8 ring-1 ring-slate-100 group/preview relative">
+                    <div class="w-20 h-20 rounded-md overflow-hidden bg-zinc-50 shadow-inner mb-3 border border-zinc-200 group/preview relative">
                         @if(Auth::user()->logo)
                             <img src="{{ Auth::user()->avatar_url }}" alt="Avatar" id="currentPhotoPreview" class="w-full h-full object-cover">
                         @else
-                            <div class="w-full h-full flex items-center justify-center text-slate-200">
-                                <i class="ph-fill ph-user text-6xl sm:text-7xl"></i>
+                            <div class="w-full h-full flex items-center justify-center text-zinc-350 bg-zinc-50">
+                                <i class="ph ph-user text-3xl"></i>
                             </div>
                         @endif
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/preview:opacity-100 transition-opacity flex items-center justify-center">
-                            <i class="ph-bold ph-image-square text-white text-3xl"></i>
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/preview:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                            <i class="ph ph-image-square text-white text-base"></i>
                         </div>
                     </div>
                     
                     <label class="relative cursor-pointer">
-                        <span class="px-6 py-2.5 bg-slate-50 border border-slate-200 rounded-full text-[10px] font-black text-slate-600 uppercase tracking-widest hover:bg-slate-100 transition-all flex items-center gap-2">
-                            <i class="ph-bold ph-folder-open"></i>
-                            Browse Files
+                        <span class="px-2.5 py-1 bg-zinc-50 border border-zinc-200 hover:bg-zinc-100 text-[10px] font-bold uppercase tracking-wider rounded transition-colors flex items-center gap-1">
+                            <i class="ph ph-folder-open text-xs"></i>
+                            <span>Browse Files</span>
                         </span>
                         <input type="file" name="logo" accept="image/*" onchange="previewPhoto(event)" class="absolute inset-0 opacity-0 cursor-pointer">
                     </label>
-                    <p class="mt-4 text-[9px] font-bold text-slate-400 uppercase tracking-widest text-center">JPG, PNG or GIF. Max 2MB.</p>
+                    <p class="mt-1.5 text-[8px] font-bold text-zinc-400 uppercase tracking-wider text-center">JPG, PNG or GIF. Max 2MB.</p>
                 </div>
 
-                <div class="flex flex-col gap-3 w-full">
-                    <button type="button" onclick="uploadProfilePhoto()" class="w-full py-3.5 sm:py-4 bg-primary-600 text-white rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-700 transition-all flex items-center justify-center gap-3 active:scale-95 shadow-xl shadow-primary-100">
-                        <i class="ph-bold ph-cloud-arrow-up text-lg"></i>
-                        SAVE NEW IDENTITY
+                <div class="flex flex-col gap-1.5 w-full">
+                    <button type="button" onclick="uploadProfilePhoto()" class="w-full py-1.5 bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 rounded font-bold text-[10px] uppercase tracking-wider transition-all flex items-center justify-center gap-1 shadow-3xs focus:outline-none active:scale-97">
+                        <i class="ph ph-cloud-arrow-up text-xs"></i>
+                        <span>Save New Identity</span>
                     </button>
                     @if(Auth::user()->logo)
-                        <button type="button" onclick="removeProfilePhoto()" class="w-full py-3.5 sm:py-4 bg-rose-50 text-rose-600 rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-rose-100 transition-all flex items-center justify-center gap-3">
-                            <i class="ph-bold ph-trash-simple text-lg"></i>
-                            REMOVE CURRENT PHOTO
+                        <button type="button" onclick="removeProfilePhoto()" class="w-full py-1.5 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600 rounded font-bold text-[10px] uppercase tracking-wider transition-colors flex items-center justify-center gap-1 focus:outline-none">
+                            <i class="ph ph-trash-simple text-xs"></i>
+                            <span>Remove Current Photo</span>
                         </button>
                     @endif
                 </div>
             </form>
-            <div id="uploadStatus" class="hidden mt-6"></div>
+            <div id="uploadStatus" class="hidden mt-3"></div>
         </div>
     </div>
 
     <form id="removePhotoForm" method="POST" action="{{ route('profile-photo.delete') }}" class="hidden">@csrf @method('delete')</form>
 
     <style>
-        .tab-btn { color: #94a3b8; }
+        .tab-btn { color: #71717a; }
         .tab-btn.active { 
-            background-color: #f8fafc; 
-            color: #0f172a; 
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            background-color: #f5f3ff; 
+            color: #27272a; 
+            border: 1px solid rgba(221, 214, 254, 0.8);
+            font-weight: 700;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+        }
+        .tab-btn:not(.active):hover {
+            background-color: #f4f4f5;
+            color: #18181b;
         }
         
-        /* Premium Form Styling Overrides */
-        .premium-form-wrapper input:not([type="checkbox"]):not([type="radio"]), 
+        /* Notion-Inspired Form Styling Overrides */
+        .premium-form-wrapper input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), 
         .premium-form-wrapper textarea,
         .premium-form-wrapper select {
-            @apply w-full rounded-[1rem] sm:rounded-2xl border-none ring-1 ring-slate-200 bg-slate-50/50 py-3 px-4 sm:py-4 sm:px-6 text-sm font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all !important;
+            width: 100% !important;
+            border-radius: 6px !important;
+            border: 1px solid #e4e4e7 !important;
+            background-color: rgba(250, 250, 250, 0.5) !important;
+            padding: 6px 10px !important;
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            color: #3f3f46 !important;
+            transition: all 0.15s ease !important;
+            outline: none !important;
+        }
+        .premium-form-wrapper input.pl-9 {
+            padding-left: 36px !important;
+        }
+        .premium-form-wrapper input.pr-9 {
+            padding-right: 36px !important;
+        }
+        .premium-form-wrapper input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):focus, 
+        .premium-form-wrapper textarea:focus,
+        .premium-form-wrapper select:focus {
+            background-color: #ffffff !important;
+            border-color: #a1a1aa !important;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05) !important;
         }
         
         .premium-form-wrapper label {
-            @apply text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.05em !important;
+            font-size: 9.5px !important;
+            font-weight: 700 !important;
+            color: #a1a1aa !important;
+            margin-left: 2px !important;
+            margin-bottom: 4px !important;
+            display: block !important;
         }
         
         .premium-form-wrapper button[type="submit"] {
-            @apply w-full sm:w-auto justify-center flex items-center gap-2 px-8 sm:px-10 py-3.5 sm:py-4 bg-slate-900 text-white rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[2px] hover:bg-primary-600 transition-all shadow-xl shadow-slate-100 active:scale-95 !important;
+            width: auto !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            padding: 6px 14px !important;
+            background-color: #f5f3ff !important;
+            color: #27272a !important;
+            border: 1px solid rgba(221, 214, 254, 0.8) !important;
+            font-size: 10px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.05em !important;
+            border-radius: 6px !important;
+            transition: all 0.15s ease !important;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.02) !important;
+        }
+        .premium-form-wrapper button[type="submit"]:hover {
+            background-color: #ede9fe !important;
+            color: #18181b !important;
         }
 
-        @keyframes spin-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .animate-spin-slow {
-            animation: spin-slow 12s linear infinite;
-        }
-
-        .content-section { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slide-in { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes scale-in { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
-        .animate-slide-in { animation: slide-in 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-        .animate-scale-in { animation: scale-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .content-section { animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 
     <script>
@@ -473,7 +407,7 @@
                     const preview = document.getElementById('currentPhotoPreview');
                     if (preview) preview.src = e.target.result;
                     else {
-                        const div = document.querySelector('#photoUploadForm .w-40');
+                        const div = document.querySelector('#photoUploadForm .w-20');
                         div.innerHTML = `<img src="${e.target.result}" id="currentPhotoPreview" class="w-full h-full object-cover">`;
                     }
                 };
@@ -486,8 +420,8 @@
             const formData = new FormData(form);
             const statusDiv = document.getElementById('uploadStatus');
             
-            statusDiv.className = 'mt-6 bg-slate-900 rounded-2xl p-4 flex items-center gap-3 text-white animate-pulse';
-            statusDiv.innerHTML = `<i class="ph-bold ph-spinner animate-spin text-xl"></i><span class="text-[10px] font-black uppercase tracking-widest">Processing identity update...</span>`;
+            statusDiv.className = 'mt-3 bg-zinc-950 rounded p-2 flex items-center gap-2 text-white animate-pulse';
+            statusDiv.innerHTML = `<span class="w-3 h-3 border-2 border-indigo-400 border-t-white rounded-full animate-spin"></span><span class="text-[8px] font-bold uppercase tracking-wider">Processing identity update...</span>`;
             statusDiv.classList.remove('hidden');
             
             fetch(form.action, {
@@ -498,18 +432,18 @@
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    statusDiv.className = 'mt-6 bg-emerald-500 rounded-2xl p-4 flex items-center gap-3 text-white shadow-lg shadow-emerald-100';
-                    statusDiv.innerHTML = `<i class="ph-bold ph-check-circle text-xl"></i><span class="text-[10px] font-black uppercase tracking-widest">${data.message}</span>`;
+                    statusDiv.className = 'mt-3 bg-emerald-600 rounded p-2 flex items-center gap-2 text-white shadow-3xs';
+                    statusDiv.innerHTML = `<i class="ph ph-check-circle text-sm"></i><span class="text-[8px] font-bold uppercase tracking-wider">${data.message}</span>`;
                     showProfileToast('photo-updated');
-                    setTimeout(() => window.location.reload(), 1500);
+                    setTimeout(() => window.location.reload(), 1200);
                 } else {
-                    statusDiv.className = 'mt-6 bg-rose-500 rounded-2xl p-4 flex items-center gap-3 text-white shadow-lg shadow-rose-100';
-                    statusDiv.innerHTML = `<i class="ph-bold ph-warning text-xl"></i><span class="text-[10px] font-black uppercase tracking-widest">${data.message}</span>`;
+                    statusDiv.className = 'mt-3 bg-rose-600 rounded p-2 flex items-center gap-2 text-white shadow-3xs';
+                    statusDiv.innerHTML = `<i class="ph ph-warning text-sm"></i><span class="text-[8px] font-bold uppercase tracking-wider">${data.message}</span>`;
                 }
             })
             .catch(() => {
-                statusDiv.className = 'mt-6 bg-rose-500 rounded-2xl p-4 flex items-center gap-3 text-white';
-                statusDiv.innerHTML = `<i class="ph-bold ph-warning text-xl"></i><span class="text-[10px] font-black uppercase tracking-widest">Network error occurred.</span>`;
+                statusDiv.className = 'mt-3 bg-rose-600 rounded p-2 flex items-center gap-2 text-white';
+                statusDiv.innerHTML = `<i class="ph ph-warning text-sm"></i><span class="text-[8px] font-bold uppercase tracking-wider">Network error occurred.</span>`;
             });
         }
 
@@ -525,7 +459,7 @@
                 .then(data => { 
                     if (data.success) {
                         showProfileToast('photo-removed');
-                        setTimeout(() => window.location.reload(), 1500);
+                        setTimeout(() => window.location.reload(), 1200);
                     } else {
                         window.showToast('error', 'Removal Failed', data.message);
                     }
@@ -535,72 +469,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Skill Matrix Chart
-            const ctx = document.getElementById('skillMatrixChart');
-            if (ctx) {
-                @php
-                    $skillData = $user->skills->take(6);
-                    $labels = $skillData->pluck('skill_name')->toArray();
-                    $values = $skillData->pluck('proficiency_level')->toArray();
-                    
-                    // Fallback if no skills
-                    if(empty($labels)) {
-                        $labels = ['Technical', 'Communication', 'Leadership', 'Creativity', 'Problem Solving', 'Organization'];
-                        $values = [80, 70, 90, 65, 85, 75];
-                    }
-                @endphp
-
-                new Chart(ctx, {
-                    type: 'radar',
-                    data: {
-                        labels: {!! json_encode($labels) !!},
-                        datasets: [{
-                            label: 'Proficiency',
-                            data: {!! json_encode($values) !!},
-                            fill: true,
-                            backgroundColor: 'rgba(165, 112, 240, 0.15)',
-                            borderColor: '#a570f0',
-                            pointBackgroundColor: '#a570f0',
-                            pointBorderColor: '#fff',
-                            pointHoverBackgroundColor: '#fff',
-                            pointHoverBorderColor: '#a570f0',
-                            borderWidth: 2,
-                            tension: 0.4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            r: {
-                                angleLines: { display: true, color: 'rgba(0,0,0,0.05)' },
-                                grid: { color: 'rgba(0,0,0,0.05)' },
-                                pointLabels: {
-                                    font: { size: 9, weight: '900', family: 'Inter' },
-                                    color: '#94a3b8'
-                                },
-                                ticks: { display: false, stepSize: 20 },
-                                min: 0,
-                                max: 100
-                            }
-                        },
-                        plugins: {
-                            legend: { display: false }
-                        }
-                    }
-                });
-            }
-
-            // Auto-hide notifications
-            setTimeout(() => {
-                document.querySelectorAll('.notification-toast').forEach(t => {
-                    t.style.transition = 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-                    t.style.opacity = '0';
-                    t.style.transform = 'translateX(40px)';
-                    setTimeout(() => t.remove(), 600);
-                });
-            }, 5000);
-
             // AJAX Form Handling
             const profileFormIds = ['identityUpdateForm', 'personalInfoForm', 'passwordUpdateForm'];
 
@@ -617,7 +485,7 @@
                     
                     // Show loading state
                     btn.disabled = true;
-                    btn.innerHTML = `<i class="ph-bold ph-spinner animate-spin text-lg"></i><span>Updating...</span>`;
+                    btn.innerHTML = `<span class="w-3 h-3 border-2 border-slate-400 border-t-white rounded-full animate-spin shrink-0"></span><span>Saving…</span>`;
 
                     fetch(form.action, {
                         method: 'POST', // Always POST for Laravel with _method field
@@ -670,7 +538,7 @@
                                     if (existing) existing.remove();
                                     
                                     const errEl = document.createElement('p');
-                                    errEl.className = 'validation-error mt-1 text-xs text-rose-500 font-bold uppercase tracking-wider';
+                                    errEl.className = 'validation-error mt-1 text-[9px] text-rose-500 font-bold uppercase tracking-wider';
                                     errEl.textContent = error.errors[key][0];
                                     input.parentElement.appendChild(errEl);
                                 }
@@ -684,20 +552,18 @@
         });
     </script>
 
-    <!-- Confirmation Modal for Delete User (Moved to root level via stack to fix backdrop clipping) -->
+    <!-- Confirmation Modal for Delete User -->
     @push('modals')
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <div class="p-6">
+        <div class="p-5">
             <!-- Modal Header -->
             <div class="flex items-center space-x-3 mb-4">
-                <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                    </svg>
+                <div class="w-8 h-8 bg-red-50 border border-red-200 rounded flex items-center justify-center shrink-0">
+                    <i class="ph ph-warning-octagon text-red-600 text-base"></i>
                 </div>
                 <div>
-                    <h2 class="text-lg font-semibold text-gray-900">Delete Account?</h2>
-                    <p class="text-sm text-gray-500">This action is permanent and irreversible</p>
+                    <h2 class="text-xs font-bold text-slate-800 leading-tight">Delete Account?</h2>
+                    <p class="text-[9px] text-slate-450 mt-0.5">This action is permanent and irreversible</p>
                 </div>
             </div>
 
@@ -706,16 +572,16 @@
                 @csrf
                 @method('delete')
 
-                <div class="bg-gray-50 rounded-lg p-4 mb-4">
-                    <p class="text-sm text-gray-700">
+                <div class="bg-slate-50 border border-slate-200 rounded p-3 mb-4">
+                    <p class="text-[11px] text-slate-500 leading-relaxed">
                         Once your account is deleted, all of its resources and data will be permanently deleted. 
                         Please enter your password to confirm you would like to permanently delete your account.
                     </p>
                 </div>
 
                 <!-- Password Confirmation -->
-                <div class="mb-6">
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+                <div class="mb-4 premium-form-wrapper">
+                    <label for="password" class="block text-[9.5px] font-bold text-slate-450 uppercase tracking-wider pl-0.5 mb-1.5">
                         Enter Your Password
                     </label>
                     <input
@@ -723,26 +589,24 @@
                         name="password"
                         type="password"
                         placeholder="Your current password"
-                        class="w-full rounded-lg border-gray-300 focus:border-red-500 focus:ring-red-500 text-sm @error('password', 'userDeletion') border-red-300 @enderror">
+                        class="w-full rounded-md border border-zinc-200 bg-slate-50 py-1.5 px-3 text-xs font-semibold text-zinc-700 outline-none @error('password', 'userDeletion') border-red-300 @enderror">
                     @error('password', 'userDeletion')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-1 text-xs text-rose-500 font-semibold">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Modal Actions -->
-                <div class="flex items-center justify-end space-x-3">
+                <div class="flex items-center justify-end gap-2">
                     <button
                         type="button"
                         x-on:click="$dispatch('close')"
-                        class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors duration-200">
+                        class="px-3.5 py-1.5 border border-slate-200 text-slate-700 rounded-md hover:bg-slate-50 text-[10px] font-bold uppercase tracking-wider shadow-3xs transition-colors focus:outline-none">
                         Cancel
                     </button>
                     <button
                         type="submit"
-                        class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors duration-200 flex items-center space-x-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                        </svg>
+                        class="px-4 py-2 bg-red-600 hover:bg-red-750 text-white rounded-md text-[10px] font-bold uppercase tracking-wider shadow-3xs transition-colors flex items-center gap-1.5 focus:outline-none">
+                        <i class="ph ph-trash text-sm"></i>
                         <span>Yes, Delete Account</span>
                     </button>
                 </div>

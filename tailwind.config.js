@@ -12,7 +12,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Figtree", ...defaultTheme.fontFamily.sans]
+        sans: ["Inter", "Plus Jakarta Sans", "Figtree", "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
+        mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"]
       },
       colors: {
         // TraKerja Brand Colors - Purple Theme
@@ -24,6 +25,7 @@ export default {
           400: "#a78bfa", // Medium light purple
           500: "#a570f0", // Main brand purple (base)
           600: "#a570f0", // Medium purple
+          650: "#9333ea", // Strong brand purple (accent)
           700: "#9333ea", // Strong purple
           800: "#7c3aed", // Dark purple
           900: "#6d28d9", // Darkest purple

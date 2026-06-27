@@ -1,60 +1,67 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex flex-col">
-            <h1 class="text-2xl font-black text-slate-900 leading-tight tracking-tight">
-                CV <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-primary-600 to-[#4e71c5]">Generator</span>
-            </h1>
-            <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mt-1">Select your template · Preview · Export PDF</p>
-        </div>
+        <!-- Ignored layout slot, header is handled inline inside template container for premium consistency -->
     </x-slot>
 
-    <div class="bg-[#f8fafc] min-h-screen pb-20 relative overflow-hidden">
-        {{-- Decorative Background Elements --}}
-        <div class="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-primary-50/30 to-transparent -z-10"></div>
-        <div class="absolute top-40 -right-24 w-96 h-96 bg-primary-200/10 blur-[120px] rounded-full -z-10"></div>
-        <div class="absolute bottom-20 -left-24 w-80 h-80 bg-purple-200/10 blur-[120px] rounded-full -z-10"></div>
+    <div class="bg-[#fafafa] min-h-screen pb-16 relative overflow-hidden">
+        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
 
-        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+            <!-- Premium Notion-Inspired Page Header -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-zinc-200/50 pb-4 mb-5">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 bg-zinc-100 border border-zinc-200/60 rounded-lg flex items-center justify-center text-zinc-500 shrink-0 shadow-2xs">
+                        <i class="ph ph-magic-wand text-base"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-sm font-bold text-zinc-800 tracking-tight">CV Generator</h1>
+                            <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[9px] font-black uppercase tracking-wider rounded border border-primary-100/60">Export</span>
+                        </div>
+                        <p class="text-[11px] text-zinc-400 mt-0.5">Select your template · Preview · Export PDF</p>
+                    </div>
+                </div>
 
-            {{-- Top Navigation & Quick Stats --}}
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-10">
-                <a href="{{ route('cv.builder') }}" class="group inline-flex items-center gap-3 px-6 py-3 bg-white border border-slate-200/60 rounded-2xl text-xs font-black text-slate-600 hover:text-primary-600 hover:border-primary-200 transition-all shadow-sm active:scale-95">
-                    <i class="ph-bold ph-arrow-left transition-transform group-hover:-translate-x-1"></i>
-                    BACK TO BUILDER
-                </a>
-
-                <div class="flex items-center gap-6 bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-[1.5rem] px-6 py-3 shadow-sm">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600">
-                            <i class="ph-duotone ph-check-circle text-xl"></i>
+                <!-- Right: Stats Panel -->
+                <div class="flex items-center gap-4 bg-white border border-zinc-200/60 rounded-md px-3 py-1.5 shadow-3xs shrink-0">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 bg-emerald-50 rounded flex items-center justify-center text-emerald-600 shrink-0">
+                            <i class="ph ph-check-circle text-sm"></i>
                         </div>
                         <div>
-                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest">Generations</p>
-                            <p class="text-xs font-black text-slate-900">Unlimited</p>
+                            <p class="text-[7px] font-bold text-zinc-400 uppercase tracking-widest leading-none">Generations</p>
+                            <p class="text-[10px] font-bold text-zinc-800 mt-0.5 leading-none">Unlimited</p>
                         </div>
                     </div>
-                    <div class="w-px h-8 bg-slate-100"></div>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center text-primary-600">
-                            <i class="ph-duotone ph-layout text-xl"></i>
+                    <div class="w-px h-6 bg-zinc-200"></div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 bg-primary-50 rounded flex items-center justify-center text-primary-650 /* [BRAND_PRIMARY] */ shrink-0">
+                            <i class="ph ph-layout text-sm"></i>
                         </div>
                         <div>
-                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest">Templates</p>
-                            <p class="text-xs font-black text-slate-900">4 Premium</p>
+                            <p class="text-[7px] font-bold text-zinc-400 uppercase tracking-widest leading-none">Templates</p>
+                            <p class="text-[10px] font-bold text-zinc-800 mt-0.5 leading-none">4 Premium</p>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Top Navigation -->
+            <div class="mb-5 flex justify-start">
+                <a href="{{ route('cv.builder') }}" class="group inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-zinc-200 rounded-md text-[11px] font-bold text-zinc-600 hover:text-zinc-800 transition-colors shadow-3xs">
+                    <i class="ph ph-arrow-left transition-transform group-hover:-translate-x-0.5"></i>
+                    <span>Back to Builder</span>
+                </a>
+            </div>
+
             {{-- Section Header --}}
-            <div class="mb-10 text-center max-w-2xl mx-auto">
-                <span class="px-4 py-1.5 bg-primary-50 text-primary-600 rounded-full text-[10px] font-black uppercase tracking-[2px] mb-4 inline-block">Design Selection</span>
-                <h2 class="text-3xl font-black text-slate-900 tracking-tight mb-3">Choose Your Resume Template</h2>
-                <p class="text-sm font-medium text-slate-500 leading-relaxed">Every template is meticulously crafted to be ATS-friendly and visually stunning. Select a style that matches your career goals.</p>
+            <div class="mb-8 text-center max-w-xl mx-auto">
+                <span class="px-2 py-0.5 bg-primary-50 text-zinc-800 rounded text-[8.5px] font-black uppercase tracking-wider mb-2.5 inline-block border border-primary-100/50">Design Selection</span>
+                <h2 class="text-lg font-bold text-zinc-800 tracking-tight mb-2">Choose Your Resume Template</h2>
+                <p class="text-[11px] font-semibold text-zinc-500 leading-relaxed">Every template is meticulously crafted to be ATS-friendly and visually stunning. Select a style that matches your career goals.</p>
             </div>
 
             {{-- Template Grid --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
                 @php
                 $templates = [
@@ -64,11 +71,11 @@
                         'desc'    => 'Clean single-column design, optimized for readability and high ATS scanning scores.',
                         'badge'   => 'ATS GOLD',
                         'color'   => 'slate',
-                        'accent'  => 'bg-slate-900 text-white',
-                        'border'  => 'hover:border-slate-400',
-                        'preview' => 'bg-gradient-to-br from-slate-100 to-slate-200',
+                        'accent'  => 'bg-zinc-900 text-white hover:bg-zinc-800',
+                        'border'  => 'hover:border-zinc-350',
+                        'preview' => 'bg-zinc-100/70',
                         'icon'    => 'ph-file-text',
-                        'lines'   => ['bg-slate-300', 'bg-slate-200', 'bg-slate-200', 'bg-slate-200'],
+                        'lines'   => ['bg-zinc-400', 'bg-zinc-300', 'bg-zinc-300', 'bg-zinc-300'],
                     ],
                     [
                         'key'     => 'professional',
@@ -76,11 +83,11 @@
                         'desc'    => 'Modern structured layout, ideal for senior roles and corporate career applications.',
                         'badge'   => 'Corporate',
                         'color'   => 'blue',
-                        'accent'  => 'bg-blue-600 text-white',
-                        'border'  => 'hover:border-blue-400',
-                        'preview' => 'bg-gradient-to-br from-blue-100 to-primary-100',
+                        'accent'  => 'bg-zinc-900 text-white hover:bg-zinc-800',
+                        'border'  => 'hover:border-zinc-350',
+                        'preview' => 'bg-blue-50/50',
                         'icon'    => 'ph-briefcase',
-                        'lines'   => ['bg-blue-400', 'bg-blue-300', 'bg-blue-200', 'bg-blue-100'],
+                        'lines'   => ['bg-blue-400', 'bg-blue-300', 'bg-blue-200', 'bg-blue-200'],
                     ],
                     [
                         'key'     => 'creative',
@@ -88,9 +95,9 @@
                         'desc'    => 'Dynamic design for designers, developers, and creative-focused professionals.',
                         'badge'   => 'Designer Choice',
                         'color'   => 'primary',
-                        'accent'  => 'bg-primary-600 text-white',
-                        'border'  => 'hover:border-primary-400',
-                        'preview' => 'bg-gradient-to-br from-primary-100 to-fuchsia-100',
+                        'accent'  => 'bg-zinc-900 text-white hover:bg-zinc-800',
+                        'border'  => 'hover:border-zinc-350',
+                        'preview' => 'bg-primary-50/30',
                         'icon'    => 'ph-paint-brush-broad',
                         'lines'   => ['bg-primary-400', 'bg-primary-300', 'bg-fuchsia-300', 'bg-primary-200'],
                     ],
@@ -100,9 +107,9 @@
                         'desc'    => 'Premium two-column layout with a sophisticated, high-end editorial aesthetic.',
                         'badge'   => 'Most Popular',
                         'color'   => 'amber',
-                        'accent'  => 'bg-amber-600 text-white',
-                        'border'  => 'hover:border-amber-400',
-                        'preview' => 'bg-gradient-to-br from-amber-100 to-orange-100',
+                        'accent'  => 'bg-zinc-900 text-white hover:bg-zinc-800',
+                        'border'  => 'hover:border-zinc-350',
+                        'preview' => 'bg-amber-50/20',
                         'icon'    => 'ph-crown',
                         'lines'   => ['bg-amber-400', 'bg-amber-300', 'bg-orange-300', 'bg-amber-200'],
                     ],
@@ -115,70 +122,70 @@
                     $monetizationEnabled = \App\Models\Setting::isMonetizationEnabled();
                     $userHasAccess = $monetizationEnabled ? (auth()->user()->isPremium() || !$isPremiumTemplate) : true;
                 @endphp
-                <div class="group bg-white rounded-[2.5rem] border border-slate-200/60 {{ $t['border'] }} overflow-hidden hover:shadow-[0_32px_64px_-12px_rgba(0,0,0,0.1)] transition-all duration-500 flex flex-col relative">
+                <div class="group bg-white rounded-lg border border-zinc-200/60 {{ $t['border'] }} overflow-hidden shadow-3xs transition-all duration-300 flex flex-col relative">
                     {{-- Thumbnail Container --}}
-                    <div class="relative aspect-[4/5] {{ $t['preview'] }} overflow-hidden flex items-start justify-center pt-8 px-6">
+                    <div class="relative aspect-[4/5] {{ $t['preview'] }} overflow-hidden flex items-start justify-center pt-6 px-4 border-b border-zinc-100">
                         {{-- Simulated CV paper --}}
-                        <div class="w-full h-full bg-white rounded-t-xl shadow-2xl px-5 py-6 space-y-3 group-hover:-translate-y-2 transition-transform duration-700 ease-out border-x border-t border-slate-100">
+                        <div class="w-full h-full bg-white rounded-t border-x border-t border-zinc-150/60 px-4 py-4 space-y-2.5 group-hover:-translate-y-1 transition-transform duration-500 ease-out">
                             {{-- Header block --}}
-                            <div class="flex items-center gap-3 mb-4">
-                                <div class="w-10 h-10 rounded-full {{ $t['lines'][0] }} opacity-60 flex-shrink-0"></div>
-                                <div class="flex-1 space-y-1.5">
-                                    <div class="h-2.5 {{ $t['lines'][0] }} rounded-full w-3/4 opacity-70"></div>
-                                    <div class="h-2 {{ $t['lines'][1] }} rounded-full w-1/2 opacity-50"></div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-7 h-7 rounded-full {{ $t['lines'][0] }} opacity-40 flex-shrink-0"></div>
+                                <div class="flex-1 space-y-1">
+                                    <div class="h-2 {{ $t['lines'][0] }} rounded-full w-3/4 opacity-50"></div>
+                                    <div class="h-1.5 {{ $t['lines'][1] }} rounded-full w-1/2 opacity-30"></div>
                                 </div>
                             </div>
-                            <div class="h-px bg-slate-100 w-full"></div>
+                            <div class="h-px bg-zinc-100 w-full"></div>
                             {{-- Body lines --}}
-                            <div class="space-y-2">
-                                <div class="h-2 {{ $t['lines'][2] }} rounded-full w-full opacity-40"></div>
-                                <div class="h-2 {{ $t['lines'][2] }} rounded-full w-5/6 opacity-40"></div>
-                                <div class="h-2 {{ $t['lines'][2] }} rounded-full w-4/6 opacity-40"></div>
+                            <div class="space-y-1.5">
+                                <div class="h-1.5 {{ $t['lines'][2] }} rounded-full w-full opacity-30"></div>
+                                <div class="h-1.5 {{ $t['lines'][2] }} rounded-full w-5/6 opacity-30"></div>
+                                <div class="h-1.5 {{ $t['lines'][2] }} rounded-full w-4/6 opacity-30"></div>
                             </div>
-                            <div class="h-2 {{ $t['lines'][0] }} rounded-full w-1/3 opacity-60 mt-4"></div>
-                            <div class="space-y-2">
-                                <div class="h-2 {{ $t['lines'][3] }} rounded-full w-full opacity-40"></div>
-                                <div class="h-2 {{ $t['lines'][3] }} rounded-full w-5/6 opacity-40"></div>
+                            <div class="h-1.5 {{ $t['lines'][0] }} rounded-full w-1/3 opacity-40 mt-3"></div>
+                            <div class="space-y-1.5">
+                                <div class="h-1.5 {{ $t['lines'][3] }} rounded-full w-full opacity-30"></div>
+                                <div class="h-1.5 {{ $t['lines'][3] }} rounded-full w-5/6 opacity-30"></div>
                             </div>
                         </div>
                         
                         {{-- Badge Overlay --}}
-                        <div class="absolute top-4 right-4">
-                            <span class="px-3 py-1.5 bg-white/90 backdrop-blur shadow-sm rounded-xl text-[9px] font-black uppercase tracking-[1px] text-slate-800">{{ $t['badge'] }}</span>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-0.5 bg-white/95 border border-zinc-200/50 shadow-3xs rounded text-[8px] font-black uppercase tracking-wider text-zinc-800">{{ $t['badge'] }}</span>
                         </div>
                         
                         {{-- Lock Overlay for Free Users --}}
                         @if(!$userHasAccess)
-                        <div class="absolute inset-0 bg-slate-900/10 backdrop-blur-[2px] flex items-center justify-center z-20 transition-opacity duration-300">
-                            <div class="w-12 h-12 bg-white/90 backdrop-blur rounded-2xl flex items-center justify-center shadow-xl text-slate-400">
-                                <i class="ph-fill ph-lock-key text-2xl"></i>
+                        <div class="absolute inset-0 bg-zinc-950/20 backdrop-blur-xs flex items-center justify-center z-20">
+                            <div class="w-9 h-9 bg-white/95 rounded-md flex items-center justify-center shadow-md text-zinc-500 border border-zinc-250">
+                                <i class="ph-fill ph-lock text-lg"></i>
                             </div>
                         </div>
                         @endif
                     </div>
 
                     {{-- Info & Action --}}
-                    <div class="p-6 flex flex-col flex-1 bg-white relative z-10">
-                        <div class="mb-6 flex-1">
-                            <h4 class="text-lg font-black text-slate-900 tracking-tight mb-2 flex items-center gap-2">
+                    <div class="p-4 flex flex-col flex-1 bg-white relative z-10">
+                        <div class="mb-4 flex-1">
+                            <h4 class="text-xs font-bold text-zinc-800 tracking-tight mb-1 flex items-center gap-1.5">
                                 {{ $t['name'] }}
                                 @if(!$userHasAccess)
-                                    <i class="ph-fill ph-crown text-amber-500 text-sm" title="Premium Template"></i>
+                                    <i class="ph-fill ph-crown text-amber-500 text-xs" title="Premium Template"></i>
                                 @endif
                             </h4>
-                            <p class="text-xs font-medium text-slate-500 leading-relaxed">{{ $t['desc'] }}</p>
+                            <p class="text-[10px] font-semibold text-zinc-400 leading-relaxed">{{ $t['desc'] }}</p>
                         </div>
                         
                         <form method="POST" action="{{ route('cv-builder.preview') }}" target="_blank" @if(!$userHasAccess) onsubmit="event.preventDefault(); typeof showToast === 'function' ? showToast('error', 'Premium Required', 'This template is only available for premium users. Upgrade to access premium templates!', 5000) : alert('This template is only available for premium users.');" @endif>
                             @csrf
                             <input type="hidden" name="template" value="{{ $t['key'] }}">
-                            <button type="submit" class="w-full py-4 {{ !$userHasAccess ? 'bg-slate-100 text-slate-400 hover:bg-slate-200' : $t['accent'] }} rounded-2xl font-black text-[10px] uppercase tracking-[2px] flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-current/20 active:scale-95 transition-all duration-300">
+                            <button type="submit" class="w-full py-2 {{ !$userHasAccess ? 'bg-zinc-100 text-zinc-400 hover:bg-zinc-150 border border-zinc-250' : $t['accent'] }} rounded-md font-bold text-[10px] uppercase tracking-wider flex items-center justify-center gap-1.5 active:scale-98 transition-all duration-150 focus:outline-none">
                                 @if(!$userHasAccess)
-                                    <i class="ph-bold ph-lock-key text-base"></i>
-                                    PREMIUM ONLY
+                                    <i class="ph ph-lock text-xs"></i>
+                                    <span>Premium Only</span>
                                 @else
-                                    <i class="ph-bold ph-eye text-base"></i>
-                                    LIVE PREVIEW
+                                    <i class="ph ph-eye text-xs"></i>
+                                    <span>Live Preview</span>
                                 @endif
                             </button>
                         </form>
@@ -188,22 +195,22 @@
             </div>
 
             {{-- ATS Certification Banner --}}
-            <div class="mt-16 bg-white/60 backdrop-blur-xl rounded-[2.5rem] border border-slate-200/60 p-8 flex flex-col md:flex-row items-center gap-8 shadow-sm">
-                <div class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-inner">
-                    <i class="ph-fill ph-shield-check text-emerald-500 text-3xl"></i>
+            <div class="mt-12 bg-white rounded-lg border border-zinc-200/60 p-5 flex flex-col md:flex-row items-center gap-6 shadow-3xs">
+                <div class="w-10 h-10 bg-emerald-50 rounded flex items-center justify-center flex-shrink-0 shadow-3xs text-emerald-500 border border-emerald-100/50">
+                    <i class="ph-fill ph-shield-check text-xl"></i>
                 </div>
                 <div class="flex-1 text-center md:text-left">
-                    <h4 class="text-lg font-black text-slate-900 mb-1">ATS Optimization Verified</h4>
-                    <p class="text-sm font-medium text-slate-500 leading-relaxed max-w-xl">Our proprietary CV engine ensures every template is parsed correctly by systems like Taleo, Workday, and Lever. Guaranteed 95%+ scanning accuracy.</p>
+                    <h4 class="text-xs font-bold text-zinc-800 mb-0.5 uppercase tracking-wider">ATS Optimization Verified</h4>
+                    <p class="text-[11px] font-medium text-zinc-500 leading-relaxed max-w-xl">Our proprietary CV engine ensures every template is parsed correctly by systems like Taleo, Workday, and Lever. Guaranteed 95%+ scanning accuracy.</p>
                 </div>
-                <div class="flex flex-col items-center gap-3 flex-shrink-0 bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                    <div class="flex -space-x-2">
-                        <div class="w-8 h-8 rounded-full bg-emerald-100 border-2 border-white flex items-center justify-center text-emerald-600 text-[10px] font-black">1</div>
-                        <div class="w-8 h-8 rounded-full bg-blue-100 border-2 border-white flex items-center justify-center text-blue-600 text-[10px] font-black">2</div>
-                        <div class="w-8 h-8 rounded-full bg-purple-100 border-2 border-white flex items-center justify-center text-purple-600 text-[10px] font-black">3</div>
-                        <div class="w-8 h-8 rounded-full bg-amber-100 border-2 border-white flex items-center justify-center text-amber-600 text-[10px] font-black">4</div>
+                <div class="flex flex-col items-center gap-2 flex-shrink-0 bg-zinc-50/50 p-2.5 rounded border border-zinc-200/50">
+                    <div class="flex -space-x-1">
+                        <div class="w-6 h-6 rounded-full bg-emerald-100 border-2 border-white flex items-center justify-center text-emerald-600 text-[8px] font-black leading-none">1</div>
+                        <div class="w-6 h-6 rounded-full bg-blue-100 border-2 border-white flex items-center justify-center text-blue-600 text-[8px] font-black leading-none">2</div>
+                        <div class="w-6 h-6 rounded-full bg-purple-100 border-2 border-white flex items-center justify-center text-purple-600 text-[8px] font-black leading-none">3</div>
+                        <div class="w-6 h-6 rounded-full bg-amber-100 border-2 border-white flex items-center justify-center text-amber-600 text-[8px] font-black leading-none">4</div>
                     </div>
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Certified Designs</span>
+                    <span class="text-[8px] font-bold text-zinc-400 uppercase tracking-widest leading-none">Certified Designs</span>
                 </div>
             </div>
 

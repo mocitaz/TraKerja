@@ -1,21 +1,27 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex flex-col">
-            <h1 class="text-2xl font-black text-slate-900 leading-tight tracking-tight">
-                Interview <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-primary-600 to-[#4e71c5]">Calendar</span>
-            </h1>
-            <p class="text-[11px] text-slate-500 font-black uppercase tracking-[0.25em] mt-1">Strategic schedule management</p>
-        </div>
-    </x-slot>
+    <div class="bg-[#fafafa] min-h-screen pb-16">
+        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+            <!-- Premium Notion-Inspired Page Header -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-zinc-200/50 pb-4 mb-5">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 bg-zinc-100 border border-zinc-200/60 rounded-lg flex items-center justify-center text-zinc-500 shrink-0 shadow-2xs">
+                        <i class="ph ph-calendar text-base"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-sm font-bold text-zinc-800 tracking-tight">Interview Calendar</h1>
+                            <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[9px] font-black uppercase tracking-wider rounded border border-primary-100/60 animate-none">Schedule</span>
+                        </div>
+                        <p class="text-[11px] text-zinc-400 mt-0.5">Strategic schedule management for upcoming recruitment stages.</p>
+                    </div>
+                </div>
+            </div>
 
-    <div class="bg-[#f8fafc] min-h-screen pb-20">
-        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             @livewire('interview-calendar')
         </div>
     </div>
 
-    {{-- Modal pushed to @stack('modals') in app.blade.php — rendered directly inside <body>
-         so fixed inset-0 covers the full viewport including sidebar and topbar. --}}
+    {{-- Modal pushed to @stack('modals') in app.blade.php — rendered directly inside <body> --}}
     @push('modals')
     <div
         id="interview-modal-root"
@@ -33,112 +39,112 @@
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
         class="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+        style="display: none;"
         x-cloak
     >
         {{-- Backdrop --}}
-        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-xl" @click="closeModal()"></div>
+        <div class="absolute inset-0 bg-zinc-950/40 backdrop-blur-xs" @click="closeModal()"></div>
 
         {{-- Modal Card --}}
         <div
             x-show="show"
             x-transition:enter="transition ease-out duration-150"
-            x-transition:enter-start="opacity-0 scale-95 translateY(10px)"
+            x-transition:enter-start="opacity-0 scale-98 translateY(6px)"
             x-transition:enter-end="opacity-100 scale-100 translateY(0)"
             x-transition:leave="transition ease-in duration-100"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95"
-            class="relative bg-white rounded-[2.5rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.18)] max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-100 z-10"
+            x-transition:leave-start="opacity-100 scale-100 translateY(0)"
+            x-transition:leave-end="opacity-0 scale-98 translateY(6px)"
+            class="relative bg-white rounded-lg shadow-xl max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden border border-zinc-200 z-10 text-left"
             @click.stop
         >
-            {{-- Modal Header: Clean White with Icon --}}
-            <div class="bg-white px-6 py-5 text-slate-900 flex justify-between items-center border-b border-slate-100 shrink-0">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shadow-sm">
-                        <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-6 h-6 object-contain">
+            {{-- Modal Header --}}
+            <div class="bg-white px-4 py-3.5 text-zinc-900 flex justify-between items-center border-b border-zinc-150/60 shrink-0">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-7 h-7 rounded bg-zinc-50 border border-zinc-200/60 flex items-center justify-center shadow-3xs">
+                        <i class="ph ph-calendar text-zinc-500 text-sm"></i>
                     </div>
                     <div>
-                        <h3 class="text-sm font-black tracking-tight" x-text="iv.company_name + ' Interview'">Interview Details</h3>
-                        <p class="text-slate-400 text-[8px] font-bold uppercase tracking-widest mt-0.5">Career Growth Tracking</p>
+                        <h3 class="text-xs font-bold text-zinc-800 tracking-tight" x-text="iv.company_name + ' Interview'">Interview Details</h3>
+                        <p class="text-[8px] text-zinc-400 font-bold uppercase tracking-widest mt-0.5">Recruitment Schedule</p>
                     </div>
                 </div>
-                <button @click="closeModal()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-50 transition-all text-slate-400 hover:text-slate-900">
-                    <i class="ph-bold ph-x text-base"></i>
+                <button @click="closeModal()" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 transition-colors text-zinc-400 hover:text-zinc-800">
+                    <i class="ph ph-x text-sm"></i>
                 </button>
             </div>
 
             {{-- Modal Content --}}
-            <div class="p-6 bg-white overflow-y-auto custom-scrollbar space-y-5">
+            <div class="p-4 bg-white overflow-y-auto custom-scrollbar space-y-4">
                 {{-- Quick Info Badges --}}
-                <div class="flex flex-wrap gap-2">
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border"
+                <div class="flex flex-wrap gap-1.5">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-zinc-50 border border-zinc-200 rounded text-[9px] font-semibold text-zinc-600"
                           :class="{
-                            'bg-blue-50 text-blue-700 border-blue-100': ['HR - Interview', 'Psychotest'].includes(iv.recruitment_stage),
-                            'bg-emerald-50 text-emerald-700 border-emerald-100': ['User - Interview', 'Presentation Round'].includes(iv.recruitment_stage),
-                            'bg-purple-50 text-purple-700 border-purple-100': ['Assessment Test', 'LGD'].includes(iv.recruitment_stage),
+                            'bg-blue-50/70 text-blue-700 border-blue-100/50': ['HR - Interview', 'Psychotest'].includes(iv.recruitment_stage),
+                            'bg-emerald-50/70 text-emerald-700 border-emerald-100/50': ['User - Interview', 'Presentation Round'].includes(iv.recruitment_stage),
+                            'bg-purple-50/70 text-purple-700 border-purple-100/50': ['Assessment Test', 'LGD'].includes(iv.recruitment_stage),
                           }">
-                        <i class="ph-bold text-[10px]" :class="iv.recruitment_stage === 'HR - Interview' ? 'ph-users' : 'ph-user-focus'"></i>
+                        <i class="ph text-[10px]" :class="iv.recruitment_stage === 'HR - Interview' ? 'ph-users' : 'ph-user-focus'"></i>
                         <span x-text="iv.recruitment_stage"></span>
                     </span>
-                    <span class="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-xl text-[10px] font-black uppercase tracking-widest border border-slate-200"
+                    <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 rounded text-[9px] font-semibold border border-zinc-200/55"
                           x-text="iv.application_status"></span>
                     <template x-if="iv.is_future">
-                        <span class="inline-flex items-center gap-1 px-3 py-1.5 bg-amber-50 text-amber-700 rounded-xl text-[10px] font-black uppercase tracking-widest border border-amber-100">
-                            <i class="ph-bold ph-hourglass-high text-[10px]"></i>
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-50 text-amber-700 rounded text-[9px] font-semibold border border-amber-100">
+                            <i class="ph ph-clock text-[9px]"></i>
                             <span x-text="iv.diff_humans"></span>
                         </span>
                     </template>
                 </div>
 
                 {{-- Detail Grid --}}
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 transition-all hover:bg-white hover:shadow-sm">
-                        <div class="flex items-center gap-1.5 text-slate-400 mb-2">
-                            <i class="ph-bold ph-calendar-check text-sm"></i>
-                            <span class="text-[9px] font-black uppercase tracking-widest">Schedule</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-zinc-50/30 border border-zinc-200/50 rounded-md p-3">
+                        <div class="flex items-center gap-1.5 text-zinc-400 mb-1">
+                            <i class="ph ph-calendar-check text-xs"></i>
+                            <span class="text-[8px] font-bold uppercase tracking-wider">Schedule</span>
                         </div>
-                        <p class="text-sm font-black text-slate-900" x-text="iv.date_formatted"></p>
-                        <p class="text-base font-black text-primary-600 mt-0.5" x-text="(iv.time_formatted || '') + ' WIB'"></p>
+                        <p class="text-xs font-bold text-zinc-800" x-text="iv.date_formatted"></p>
+                        <p class="text-sm font-bold text-primary-650 /* [BRAND_PRIMARY] */ mt-0.5" x-text="(iv.time_formatted || '') + ' WIB'"></p>
                     </div>
-                    <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 transition-all hover:bg-white hover:shadow-sm">
-                        <div class="flex items-center gap-1.5 text-slate-400 mb-2">
-                            <i class="ph-bold text-sm"
-                               :class="['Phone','Video'].includes(iv.interview_type) ? 'ph-video-camera' : 'ph-map-pin'"></i>
-                            <span class="text-[9px] font-black uppercase tracking-widest">Type / Link</span>
+                    <div class="bg-zinc-50/30 border border-zinc-200/50 rounded-md p-3">
+                        <div class="flex items-center gap-1.5 text-zinc-400 mb-1">
+                            <i class="ph text-xs" :class="['Phone','Video'].includes(iv.interview_type) ? 'ph-video-camera' : 'ph-map-pin'"></i>
+                            <span class="text-[8px] font-bold uppercase tracking-wider">Type / Location</span>
                         </div>
-                        <p class="text-sm font-black text-slate-900" x-text="iv.interview_type || 'Unspecified'"></p>
+                        <p class="text-xs font-bold text-zinc-800" x-text="iv.interview_type || 'Unspecified'"></p>
                         <template x-if="iv.interview_location && iv.interview_location.startsWith('http')">
-                            <a :href="iv.interview_location" target="_blank" class="text-xs font-bold text-primary-600 hover:underline truncate block mt-0.5">Open Link ↗</a>
+                            <a :href="iv.interview_location" target="_blank" class="text-[10px] font-bold text-primary-600 /* [BRAND_PRIMARY] */ hover:underline truncate block mt-0.5">Open Link ↗</a>
                         </template>
                         <template x-if="iv.interview_location && !iv.interview_location.startsWith('http')">
-                            <p class="text-xs font-bold text-slate-500 truncate mt-0.5" x-text="iv.interview_location"></p>
+                            <p class="text-[10px] font-semibold text-zinc-500 truncate mt-0.5" x-text="iv.interview_location"></p>
                         </template>
                         <template x-if="!iv.interview_location">
-                            <p class="text-xs text-slate-400 mt-0.5 italic">No location added</p>
+                            <p class="text-[10px] text-zinc-400 mt-0.5 italic leading-none">No link or address added</p>
                         </template>
                     </div>
                 </div>
 
                 {{-- Notes Section --}}
                 <template x-if="iv.interview_notes">
-                    <div class="bg-primary-50/50 border border-primary-100 rounded-2xl p-4">
-                        <div class="flex items-center gap-1.5 text-primary-600 mb-2">
-                            <i class="ph-bold ph-note-pencil text-sm"></i>
-                            <span class="text-[9px] font-black uppercase tracking-widest">Interview Notes</span>
+                    <div class="bg-primary-50/30 border border-primary-100 rounded-md p-3">
+                        <div class="flex items-center gap-1.5 text-primary-600 /* [BRAND_PRIMARY] */ mb-1">
+                            <i class="ph ph-note-pencil text-xs"></i>
+                            <span class="text-[8px] font-bold uppercase tracking-wider">Interview Notes</span>
                         </div>
-                        <p class="text-[11px] text-slate-700 font-medium leading-relaxed whitespace-pre-line" x-text="iv.interview_notes"></p>
+                        <p class="text-[11px] text-zinc-700 font-medium leading-relaxed whitespace-pre-line" x-text="iv.interview_notes"></p>
                     </div>
                 </template>
             </div>
 
-            {{-- Footer: Clean with TraKerja Branding --}}
-            <div class="px-7 py-5 bg-slate-50/50 border-t border-slate-100 flex items-center justify-between gap-3">
-                <div class="flex items-center gap-1.5">
-                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-4 h-4 grayscale opacity-50">
-                    <span class="text-[10px] font-black text-slate-400 tracking-widest uppercase">TraKerja Tracker</span>
+            {{-- Footer --}}
+            <div class="px-4 py-3 bg-zinc-50/30 border-t border-zinc-150/60 flex items-center justify-between gap-3 shrink-0">
+                <div class="flex items-center gap-1">
+                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-3 h-3 grayscale opacity-40">
+                    <span class="text-[8px] font-bold text-zinc-400 tracking-wider uppercase">TraKerja Calendar</span>
                 </div>
                 <button @click="closeModal()"
-                        class="px-8 py-2.5 bg-primary-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-primary-700 transition-all shadow-lg active:scale-95">
-                    Dismiss
+                        class="px-4 py-1.5 bg-zinc-900 text-white rounded-md font-bold text-[10px] uppercase tracking-wider hover:bg-zinc-800 transition-colors focus:outline-none">
+                    Close
                 </button>
             </div>
         </div>
