@@ -1,12 +1,12 @@
 <?php
-
+ 
 namespace App\Http\Controllers;
-
+ 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Experience;
-use App\Models\Skill;
-
+use App\Models\UserExperience;
+use App\Models\UserSkill;
+ 
 class ResumeParserController extends Controller
 {
     public function importPdf(Request $request)
@@ -24,27 +24,27 @@ class ResumeParserController extends Controller
         }
 
         $user = Auth::user();
-
+ 
         try {
             // Read file content and extract basic text lines if available
             $path = $request->file('resume')->getRealPath();
             $content = @file_get_contents($path);
-
+ 
             // Simple parser simulation / fallback extraction
-            // Creates a sample extracted experience & skills if user has none
+            // Creates a sample extracted experience if user has none
             if ($user->experiences()->count() === 0) {
-                Experience::create([
+                UserExperience::create([
                     'user_id' => $user->id,
-                    'job_title' => 'Professional (Imported from CV)',
-                    'company' => 'Extracted Experience',
+                    'position' => 'Professional (Imported from CV)',
+                    'company_name' => 'Extracted Experience',
                     'location' => 'Indonesia',
                     'start_date' => now()->subYears(2)->format('Y-m-d'),
                     'is_current' => true,
                     'description' => 'Successfully imported resume details via TraKerja AI PDF Parser.',
-                    'order' => 1,
+                    'display_order' => 1,
                 ]);
             }
-
+ 
             return response()->json([
                 'success' => true,
                 'message' => 'CV PDF berhasil diproses dan di-impor ke dalam CV Builder!',
