@@ -68,20 +68,37 @@
                 <div class="lg:col-span-4 space-y-5 lg:sticky lg:top-20 self-start">
                     {{-- User Profile Card --}}
                     <div class="bg-white rounded-lg border border-zinc-200/60 p-5 shadow-3xs flex flex-col items-center text-center">
-                        {{-- Profile Avatar --}}
-                        <div class="relative shrink-0 mb-4 group/avatar">
-                            <div class="relative w-24 h-24 rounded-full overflow-hidden bg-zinc-50 border border-zinc-200 shadow-inner group-hover/avatar:brightness-95 transition-all">
+                        {{-- Profile Avatar with Inline Hover Upload --}}
+                        <div class="relative shrink-0 mb-4 group/avatar cursor-pointer">
+                            <div class="relative w-24 h-24 rounded-full overflow-hidden bg-zinc-50 border border-zinc-200 shadow-inner transition-all flex items-center justify-center">
                                 @if(Auth::user()->logo)
-                                    <img src="{{ Auth::user()->avatar_url }}" alt="Avatar" class="w-full h-full object-cover">
+                                    <img src="{{ Auth::user()->avatar_url }}" alt="Avatar" id="avatarImageDisplay" class="w-full h-full object-cover">
                                 @else
-                                    <div class="w-full h-full flex items-center justify-center text-zinc-300 bg-zinc-50">
+                                    <div class="w-full h-full flex items-center justify-center text-zinc-300 bg-zinc-50" id="avatarPlaceholderDisplay">
                                         <i class="ph ph-user text-4xl"></i>
                                     </div>
                                 @endif
+
+                                {{-- Hover Overlay --}}
+                                <div onclick="document.getElementById('inlineAvatarInput').click()" class="absolute inset-0 bg-black/60 opacity-0 group-hover/avatar:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center text-white gap-1 select-none">
+                                    <i class="ph ph-camera text-base"></i>
+                                    <span class="text-[8px] font-bold uppercase tracking-wider">Change</span>
+                                </div>
                             </div>
-                            <button onclick="openProfilePhotoModal()" class="absolute -bottom-1 -right-1 w-7 h-7 bg-zinc-900 text-white rounded-full flex items-center justify-center shadow-md hover:bg-zinc-800 transition-colors border border-white focus:outline-none">
-                                <i class="ph ph-camera text-xs"></i>
-                            </button>
+                            
+                            {{-- Remove Photo Option if user has custom logo --}}
+                            @if(Auth::user()->logo)
+                                <button onclick="removeProfilePhotoInline(event)" title="Remove Profile Photo" class="absolute -bottom-1 -right-1 w-6 h-6 bg-rose-600 text-white rounded-full flex items-center justify-center shadow-md hover:bg-rose-700 transition-colors border border-white focus:outline-none z-10">
+                                    <i class="ph ph-trash text-[11px]"></i>
+                                </button>
+                            @else
+                                <div onclick="document.getElementById('inlineAvatarInput').click()" class="absolute -bottom-1 -right-1 w-6 h-6 bg-zinc-900 text-white rounded-full flex items-center justify-center shadow-md hover:bg-zinc-800 transition-colors border border-white z-10">
+                                    <i class="ph ph-plus text-[11px]"></i>
+                                </div>
+                            @endif
+
+                            {{-- Hidden file input --}}
+                            <input type="file" id="inlineAvatarInput" accept="image/*" class="hidden" onchange="uploadAvatarInline(this)">
                         </div>
 
                         <div class="w-full">
@@ -235,65 +252,7 @@
         </div>
     </div>
 
-    {{-- Profile Photo Upload Modal --}}
-    <div id="profilePhotoModal" class="fixed inset-0 bg-zinc-950/40 hidden items-center justify-center z-[1000] p-4 animate-fade-in" onclick="if(event.target === this) closeProfilePhotoModal()">
-        <div class="bg-white rounded-lg border border-zinc-200 shadow-xl max-w-sm w-full p-5 overflow-hidden">
-            <div class="flex items-center justify-between border-b border-zinc-100 pb-3 mb-4">
-                <div class="flex items-center gap-2">
-                    <div class="w-7 h-7 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-700 shadow-3xs">
-                        <i class="ph ph-camera text-xs"></i>
-                    </div>
-                    <h3 class="text-xs font-bold text-zinc-850 tracking-tight">Update Identity Photo</h3>
-                </div>
-                <button onclick="closeProfilePhotoModal()" class="w-6 h-6 flex items-center justify-center rounded hover:bg-zinc-55 transition-colors text-zinc-400 hover:text-zinc-850 focus:outline-none">
-                    <i class="ph ph-x text-xs"></i>
-                </button>
-            </div>
 
-            <form id="photoUploadForm" method="POST" action="{{ route('profile-photo.upload') }}" enctype="multipart/form-data" class="space-y-4">
-                @csrf
-                <div class="flex flex-col items-center">
-                    <div class="w-20 h-20 rounded-md overflow-hidden bg-zinc-50 shadow-inner mb-3 border border-zinc-200 group/preview relative">
-                        @if(Auth::user()->logo)
-                            <img src="{{ Auth::user()->avatar_url }}" alt="Avatar" id="currentPhotoPreview" class="w-full h-full object-cover">
-                        @else
-                            <div class="w-full h-full flex items-center justify-center text-zinc-350 bg-zinc-50">
-                                <i class="ph ph-user text-3xl"></i>
-                            </div>
-                        @endif
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/preview:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                            <i class="ph ph-image-square text-white text-base"></i>
-                        </div>
-                    </div>
-                    
-                    <label class="relative cursor-pointer">
-                        <span class="px-2.5 py-1 bg-zinc-50 border border-zinc-200 hover:bg-zinc-100 text-[10px] font-bold uppercase tracking-wider rounded transition-colors flex items-center gap-1">
-                            <i class="ph ph-folder-open text-xs"></i>
-                            <span>Browse Files</span>
-                        </span>
-                        <input type="file" name="logo" accept="image/*" onchange="previewPhoto(event)" class="absolute inset-0 opacity-0 cursor-pointer">
-                    </label>
-                    <p class="mt-1.5 text-[8px] font-bold text-zinc-400 uppercase tracking-wider text-center">JPG, PNG or GIF. Max 2MB.</p>
-                </div>
-
-                <div class="flex flex-col gap-1.5 w-full">
-                    <button type="button" onclick="uploadProfilePhoto()" class="w-full py-1.5 bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 rounded font-bold text-[10px] uppercase tracking-wider transition-all flex items-center justify-center gap-1 shadow-3xs focus:outline-none active:scale-97">
-                        <i class="ph ph-cloud-arrow-up text-xs"></i>
-                        <span>Save New Identity</span>
-                    </button>
-                    @if(Auth::user()->logo)
-                        <button type="button" onclick="removeProfilePhoto()" class="w-full py-1.5 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600 rounded font-bold text-[10px] uppercase tracking-wider transition-colors flex items-center justify-center gap-1 focus:outline-none">
-                            <i class="ph ph-trash-simple text-xs"></i>
-                            <span>Remove Current Photo</span>
-                        </button>
-                    @endif
-                </div>
-            </form>
-            <div id="uploadStatus" class="hidden mt-3"></div>
-        </div>
-    </div>
-
-    <form id="removePhotoForm" method="POST" action="{{ route('profile-photo.delete') }}" class="hidden">@csrf @method('delete')</form>
 
     <style>
         .tab-btn {
@@ -390,46 +349,19 @@
             }
         }
 
-        function openProfilePhotoModal() { 
-            const modal = document.getElementById('profilePhotoModal');
-            modal.classList.remove('hidden'); 
-            modal.classList.add('flex'); 
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeProfilePhotoModal() { 
-            const modal = document.getElementById('profilePhotoModal');
-            modal.classList.add('hidden'); 
-            modal.classList.remove('flex'); 
-            document.body.style.overflow = 'auto';
-        }
+        function uploadAvatarInline(input) {
+            const file = input.files[0];
+            if (!file) return;
 
-        function previewPhoto(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('currentPhotoPreview');
-                    if (preview) preview.src = e.target.result;
-                    else {
-                        const div = document.querySelector('#photoUploadForm .w-20');
-                        div.innerHTML = `<img src="${e.target.result}" id="currentPhotoPreview" class="w-full h-full object-cover">`;
-                    }
-                };
-                reader.readAsDataURL(file);
-            }
-        }
+            const formData = new FormData();
+            formData.append('logo', file);
 
-        function uploadProfilePhoto() {
-            const form = document.getElementById('photoUploadForm');
-            const formData = new FormData(form);
-            const statusDiv = document.getElementById('uploadStatus');
-            
-            statusDiv.className = 'mt-3 bg-zinc-950 rounded p-2 flex items-center gap-2 text-white animate-pulse';
-            statusDiv.innerHTML = `<span class="w-3 h-3 border-2 border-indigo-400 border-t-white rounded-full animate-spin"></span><span class="text-[8px] font-bold uppercase tracking-wider">Processing identity update...</span>`;
-            statusDiv.classList.remove('hidden');
-            
-            fetch(form.action, {
+            const overlay = input.parentElement.querySelector('.bg-black\\/60');
+            const originalHTML = overlay.innerHTML;
+            overlay.innerHTML = `<span class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>`;
+            overlay.style.opacity = '1';
+
+            fetch("{{ route('profile-photo.upload') }}", {
                 method: 'POST',
                 body: formData,
                 headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content }
@@ -437,39 +369,42 @@
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    statusDiv.className = 'mt-3 bg-emerald-600 rounded p-2 flex items-center gap-2 text-white shadow-3xs';
-                    statusDiv.innerHTML = `<i class="ph ph-check-circle text-sm"></i><span class="text-[8px] font-bold uppercase tracking-wider">${data.message}</span>`;
                     showProfileToast('photo-updated');
-                    setTimeout(() => window.location.reload(), 1200);
+                    setTimeout(() => window.location.reload(), 800);
                 } else {
-                    statusDiv.className = 'mt-3 bg-rose-600 rounded p-2 flex items-center gap-2 text-white shadow-3xs';
-                    statusDiv.innerHTML = `<i class="ph ph-warning text-sm"></i><span class="text-[8px] font-bold uppercase tracking-wider">${data.message}</span>`;
+                    overlay.innerHTML = originalHTML;
+                    overlay.style.opacity = '';
+                    window.showToast('error', 'Upload Failed', data.message);
                 }
             })
             .catch(() => {
-                statusDiv.className = 'mt-3 bg-rose-600 rounded p-2 flex items-center gap-2 text-white';
-                statusDiv.innerHTML = `<i class="ph ph-warning text-sm"></i><span class="text-[8px] font-bold uppercase tracking-wider">Network error occurred.</span>`;
+                overlay.innerHTML = originalHTML;
+                overlay.style.opacity = '';
+                window.showToast('error', 'Network Error', 'An error occurred during upload.');
             });
         }
 
-        function removeProfilePhoto() {
+        function removeProfilePhotoInline(event) {
+            event.stopPropagation();
             if (confirm('Are you sure you want to remove your profile photo?')) {
-                const form = document.getElementById('removePhotoForm');
-                fetch(form.action, {
+                const formData = new FormData();
+                formData.append('_method', 'DELETE');
+
+                fetch("{{ route('profile-photo.delete') }}", {
                     method: 'POST',
-                    body: new FormData(form),
+                    body: formData,
                     headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content }
                 })
                 .then(r => r.json())
                 .then(data => { 
                     if (data.success) {
                         showProfileToast('photo-removed');
-                        setTimeout(() => window.location.reload(), 1200);
+                        setTimeout(() => window.location.reload(), 800);
                     } else {
                         window.showToast('error', 'Removal Failed', data.message);
                     }
                 })
-                .catch(() => alert('Failed to remove photo.'));
+                .catch(() => window.showToast('error', 'Error', 'Failed to remove photo.'));
             }
         }
 

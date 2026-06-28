@@ -50,42 +50,46 @@ class JobApplication extends Model
                 throw new \Exception('Location is required');
             }
             
-            // Auto-archive logic: Archive if status is Declined/Rejected or recruitment_stage is Not Processed
-            $shouldBeArchived = in_array($jobApplication->application_status, ['Declined', 'Rejected']) 
-                || $jobApplication->recruitment_stage === 'Not Processed';
-            
-            // Get original values before update
+            // Un-archive if status changes to a non-archived status
             $originalStatus = $jobApplication->getOriginal('application_status');
             $originalStage = $jobApplication->getOriginal('recruitment_stage');
             $wasArchived = $jobApplication->getOriginal('is_archived') ?? false;
             
-            // Check if original status was also archived
-            $wasOriginallyArchived = (in_array($originalStatus, ['Declined', 'Rejected']) || $originalStage === 'Not Processed');
+            $shouldBeArchived = in_array($jobApplication->application_status, ['Declined', 'Rejected']) 
+                || $jobApplication->recruitment_stage === 'Not Processed';
             
-            if ($shouldBeArchived && !$wasArchived) {
-                // Archive the job automatically
-                $jobApplication->is_archived = true;
-                $jobApplication->archived_at = now();
-            } elseif (!$shouldBeArchived && $wasArchived) {
-                // Un-archive if status changed from archived to non-archived
-                // This allows user to change status from Declined/Not Processed to other status
+            if (!$shouldBeArchived && $wasArchived) {
                 $jobApplication->is_archived = false;
                 $jobApplication->archived_at = null;
             }
         });
-        
-        static::created(function ($jobApplication) {
-            // Auto-archive on creation if status is Declined/Rejected or Not Processed
-            $shouldBeArchived = in_array($jobApplication->application_status, ['Declined', 'Rejected']) 
-                || $jobApplication->recruitment_stage === 'Not Processed';
-            
-            if ($shouldBeArchived) {
-                $jobApplication->update([
-                    'is_archived' => true,
-                    'archived_at' => now(),
-                ]);
-            }
-        });
+    }
+
+    /**
+     * Auto-archive user's rejected or declined job applications that are older than 14 days,
+     * if the user has enabled the auto-archive preference.
+     *
+     * @param int $userId
+     * @return int Number of archived jobs
+     */
+    public static function autoArchiveUserJobs($userId)
+    {
+        $user = \App\Models\User::find($userId);
+        if (!$user || !$user->auto_archive_rejected) {
+            return 0;
+        }
+
+        return self::where('user_id', $userId)
+            ->where('is_archived', false)
+            ->where(function ($query) {
+                $query->whereIn('application_status', ['Declined', 'Rejected'])
+                      ->orWhere('recruitment_stage', 'Not Processed');
+            })
+            ->where('updated_at', '<=', now()->subDays(14))
+            ->update([
+                'is_archived' => true,
+                'archived_at' => now(),
+            ]);
     }
 
     protected $casts = [

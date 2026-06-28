@@ -384,6 +384,9 @@ class JobTableList extends Component
 
     public function render()
     {
+        // Trigger auto archive on render
+        JobApplication::autoArchiveUserJobs(auth()->id());
+
         // Get archived count
         $archivedCount = JobApplication::where('user_id', auth()->id())
             ->where('is_archived', true)

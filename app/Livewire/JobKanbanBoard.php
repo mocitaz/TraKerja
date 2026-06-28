@@ -149,6 +149,9 @@ class JobKanbanBoard extends Component
 
     public function render()
     {
+        // Trigger auto archive on render
+        JobApplication::autoArchiveUserJobs(auth()->id());
+
         $archivedCount = JobApplication::where('user_id', auth()->id())->where('is_archived', true)->count();
 
         $statuses = collect($this->statusOptions)->map(function ($status) {

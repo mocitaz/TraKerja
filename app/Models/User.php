@@ -97,6 +97,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'photo_credits',
         'xp',
         'level',
+        'auto_archive_rejected',
     ];
 
     /**
@@ -143,6 +144,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
             'is_admin' => 'boolean',
             'is_premium' => 'boolean',
+            'auto_archive_rejected' => 'boolean',
             'premium_purchased_at' => 'datetime',
             'registered_phase' => 'integer',
             'grandfathered_benefits' => 'array',

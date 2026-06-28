@@ -12,6 +12,7 @@ class DashboardController extends Controller
     public function index()
     {
         $userId = auth()->id();
+        JobApplication::autoArchiveUserJobs($userId);
 
         // 1. Core counters (non-archived only except for declined/rejected)
         $totalApplications = JobApplication::where('user_id', $userId)

@@ -29,13 +29,24 @@ class ArchiveOldDeclinedJobs extends Command
     {
         $this->info('Starting to archive old declined and not processed jobs...');
 
-        // Find all jobs that should be archived but aren't yet
-        $jobsToArchive = JobApplication::where(function ($query) {
-            $query->whereIn('application_status', ['Declined', 'Rejected'])
-                  ->orWhere('recruitment_stage', 'Not Processed');
-        })
-        ->where('is_archived', false)
-        ->get();
+        // Find users who have enabled auto-archive
+        $usersWithAutoArchive = \App\Models\User::where('auto_archive_rejected', true)->pluck('id');
+
+        if ($usersWithAutoArchive->isEmpty()) {
+            $this->info('No users have enabled auto-archive.');
+            return 0;
+        }
+
+        // Find all jobs that should be archived (Declined/Rejected status or Not Processed stage)
+        // and belong to opted-in users and are at least 14 days old
+        $jobsToArchive = JobApplication::whereIn('user_id', $usersWithAutoArchive)
+            ->where(function ($query) {
+                $query->whereIn('application_status', ['Declined', 'Rejected'])
+                      ->orWhere('recruitment_stage', 'Not Processed');
+            })
+            ->where('is_archived', false)
+            ->where('updated_at', '<=', now()->subDays(14))
+            ->get();
 
         if ($jobsToArchive->isEmpty()) {
             $this->info('No jobs found to archive.');
@@ -48,7 +59,6 @@ class ArchiveOldDeclinedJobs extends Command
         $bar->start();
 
         // Use DB update directly to avoid triggering model events
-        // This is more efficient and prevents any potential issues with model boot events
         $updated = DB::table('job_applications')
             ->whereIn('id', $jobsToArchive->pluck('id'))
             ->update([
