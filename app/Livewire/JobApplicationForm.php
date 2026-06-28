@@ -1608,6 +1608,15 @@ class JobApplicationForm extends Component
             return;
         }
 
+        // 2b. If it's general Jakarta, direct to Jakarta Selatan
+        if (preg_match('/^\s*(?:dki\s+)?jakarta(?:\s*,?\s*indonesia)?\s*$/i', $location)) {
+            $this->selectedProvince = 'DKI Jakarta';
+            $this->cities = $this->provinces['DKI Jakarta'];
+            $this->selectedCity = 'Jakarta Selatan';
+            $this->updateLocation();
+            return;
+        }
+
         // Clean location string (remove "Indonesia" or punctuation to make matching easier)
         $cleanLoc = trim(preg_replace('/\b(indonesia)\b/i', '', $location));
         $cleanLoc = trim(preg_replace('/[^a-zA-Z\s]/u', ' ', $cleanLoc)); // replace punctuation with spaces
