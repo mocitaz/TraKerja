@@ -10,7 +10,7 @@
     <!-- Logo & Brand Header -->
     <div class="flex items-center h-16 px-4 border-b border-zinc-200/50 flex-shrink-0 relative bg-[#fafafa]">
         <div class="flex items-center space-x-2 relative z-10 w-full" :class="($store.sidebar.open || mobileSidebarOpen) ? '' : 'justify-center space-x-0'">
-            <div class="relative flex-shrink-0 bg-white p-1 rounded-md border border-zinc-200 shadow-xs flex items-center justify-center">
+            <div class="relative flex-shrink-0 flex items-center justify-center">
                 <img src="{{ asset('images/icon.png') }}" 
                      alt="TraKerja Logo" 
                      class="h-5 w-5 object-contain"

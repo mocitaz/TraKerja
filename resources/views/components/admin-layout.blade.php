@@ -64,7 +64,7 @@
                 <!-- Logo & Brand -->
                 <div class="flex items-center h-12 px-4 border-b border-zinc-200/80 flex-shrink-0 relative bg-white">
                     <div class="flex items-center space-x-2 relative z-10 w-full" :class="sidebarCollapsed ? 'justify-center space-x-0' : ''">
-                        <div class="relative flex-shrink-0 p-1 bg-zinc-50 rounded border border-zinc-200">
+                        <div class="relative flex-shrink-0 flex items-center justify-center">
                             <img src="{{ asset('images/icon.png') }}" 
                                  alt="TraKerja Logo" 
                                  class="h-5 w-5 object-contain"
