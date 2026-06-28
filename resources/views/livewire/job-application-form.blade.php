@@ -176,19 +176,10 @@
                 @error('platform_link') <p class="text-rose-500 text-[9px] font-semibold mt-1 ml-0.5">{{ $message }}</p> @enderror
 
                 <!-- Supported Platforms Info Block -->
-                <div class="mt-2 flex items-center gap-2 text-[8px] font-bold text-zinc-400 uppercase tracking-wider select-none">
-                    <span class="text-zinc-400 text-[7.5px] tracking-widest mr-0.5">Supports:</span>
-                    @foreach([
-                        ['id' => 'linkedin.com', 'name' => 'LinkedIn'],
-                        ['id' => 'glints.com', 'name' => 'Glints'],
-                        ['id' => 'jobstreet.co.id', 'name' => 'JobStreet'],
-                        ['id' => 'kalibrr.com', 'name' => 'Kalibrr'],
-                        ['id' => 'usedeall.com', 'name' => 'Dealls'],
-                        ['id' => 'talentics.id', 'name' => 'Talentics']
-                    ] as $plat)
-                    <img src="https://www.google.com/s2/favicons?domain={{ $plat['id'] }}&sz=64" class="w-3.5 h-3.5 object-contain shrink-0 opacity-70 hover:opacity-100 transition-opacity" title="{{ $plat['name'] }}" alt="{{ $plat['name'] }}" />
-                    @endforeach
-                    <span class="text-zinc-450 font-semibold tracking-normal text-[8px] lowercase">& others</span>
+                <div class="mt-1.5 text-[8.5px] text-zinc-400 font-semibold select-none">
+                    <span>Supports:</span>
+                    <span class="text-zinc-500">LinkedIn, Glints, JobStreet, Kalibrr, Dealls, Talentics</span>
+                    <span class="text-zinc-400 font-normal lowercase">& others</span>
                 </div>
 
                 <!-- Scraper Status Alert message inside FE -->
