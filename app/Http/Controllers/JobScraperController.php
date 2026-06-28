@@ -38,6 +38,7 @@ class JobScraperController extends Controller
             $jobTitle = '';
             $companyName = '';
             $description = '';
+            $location = '';
 
             if ($jsonLd) {
                 if (!empty($jsonLd['title'])) {
@@ -55,6 +56,30 @@ class JobScraperController extends Controller
                     }
                 }
                 
+                if (!empty($jsonLd['jobLocation'])) {
+                    $loc = $jsonLd['jobLocation'];
+                    if (is_array($loc)) {
+                        if (isset($loc['address']) && is_array($loc['address'])) {
+                            $addr = $loc['address'];
+                            $parts = [];
+                            if (!empty($addr['addressLocality'])) {
+                                $parts[] = $addr['addressLocality'];
+                            }
+                            if (!empty($addr['addressRegion'])) {
+                                $parts[] = $addr['addressRegion'];
+                            }
+                            if (!empty($addr['addressCountry'])) {
+                                $parts[] = $addr['addressCountry'];
+                            }
+                            $location = implode(', ', $parts);
+                        } elseif (isset($loc['name'])) {
+                            $location = $loc['name'];
+                        }
+                    } elseif (is_string($loc)) {
+                        $location = $loc;
+                    }
+                }
+
                 if (!empty($jsonLd['description'])) {
                     $descText = $jsonLd['description'];
                     $descText = preg_replace('/<(?:br|p|div|li)[^>]*>/i', "\n", $descText);
@@ -80,6 +105,7 @@ class JobScraperController extends Controller
                         
                         if (preg_match('/(.+?)\s+(?:in|at|@)\s+(.+)/i', $jobTitleRemaining, $locMatches)) {
                             $jobTitle = trim($locMatches[1]);
+                            $location = trim($locMatches[2]);
                         } else {
                             $jobTitle = $jobTitleRemaining;
                         }
@@ -98,6 +124,9 @@ class JobScraperController extends Controller
                         $jobTitle = $jobTitleCandidate;
                         if (empty($companyName) && !empty($companyNameCandidate)) {
                             $companyName = $companyNameCandidate;
+                        }
+                        if (empty($location) && !empty($companyNameCandidate)) {
+                            $location = $companyNameCandidate;
                         }
                     } elseif (Str::contains($cleanedTitle, ' - ')) {
                         $parts = explode(' - ', $cleanedTitle);
@@ -128,16 +157,18 @@ class JobScraperController extends Controller
                 }
             }
 
-            // Clean up suffixes from Job Title & Company Name (e.g. "Software Engineer | Glints")
+            // Clean up suffixes from Job Title, Company Name, and Location (e.g. "Software Engineer | Glints")
             $platforms = ['Glints', 'Jobstreet', 'Indeed', 'Kalibrr', 'Tech in Asia', 'LinkedIn', 'Glassdoor', 'TechInAsia', 'Karir.com', 'JobSDB'];
             foreach ($platforms as $platform) {
                 $jobTitle = preg_replace('/\s*[\|\-\:]\s*' . preg_quote($platform, '/') . '/i', '', $jobTitle);
                 $companyName = preg_replace('/\s*[\|\-\:]\s*' . preg_quote($platform, '/') . '/i', '', $companyName);
+                $location = preg_replace('/\s*[\|\-\:]\s*' . preg_quote($platform, '/') . '/i', '', $location);
             }
 
             // Final trim & fallback to Domain name for company if still empty
             $jobTitle = trim($jobTitle);
             $companyName = trim($companyName);
+            $location = trim($location);
             if (empty($companyName)) {
                 $host = parse_url($url, PHP_URL_HOST);
                 $host = preg_replace('/^www\./i', '', $host);
@@ -149,6 +180,7 @@ class JobScraperController extends Controller
                 'job_title' => $jobTitle,
                 'company_name' => $companyName,
                 'description' => Str::limit($description, 1500),
+                'location' => $location,
             ]);
 
         } catch (\Exception $e) {

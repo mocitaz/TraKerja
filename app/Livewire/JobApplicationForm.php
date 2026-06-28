@@ -1579,7 +1579,6 @@ class JobApplicationForm extends Component
 
     public function parseLocation($location)
     {
-        
         // Reset values
         $this->selectedProvince = '';
         $this->selectedCity = '';
@@ -1595,43 +1594,116 @@ class JobApplicationForm extends Component
             return;
         }
         
-        // Check for special cases first
-        if ($location === 'Remote') {
+        // 1. Check for remote/virtual/wfh keywords
+        if (preg_match('/remote|wfh|virtual|work from home/i', $location)) {
             $this->isRemote = true;
+            $this->updateLocation();
             return;
         }
         
-        if ($location === 'Seluruh Indonesia') {
+        // 2. Check for "Seluruh Indonesia"
+        if (preg_match('/seluruh indonesia/i', $location)) {
             $this->isSeluruhIndonesia = true;
+            $this->updateLocation();
             return;
         }
+
+        // Clean location string (remove "Indonesia" or punctuation to make matching easier)
+        $cleanLoc = trim(preg_replace('/\b(indonesia)\b/i', '', $location));
+        $cleanLoc = trim(preg_replace('/[^a-zA-Z\s]/u', ' ', $cleanLoc)); // replace punctuation with spaces
+        $cleanLoc = preg_replace('/\s+/', ' ', $cleanLoc); // normalize spaces
         
-        // Try to parse "City, Province" format
-        if (strpos($location, ', ') !== false) {
-            $parts = explode(', ', $location);
-            $city = trim($parts[0]);
-            $province = trim($parts[1]);
-            
-            // Check if province exists in our data
-            if (isset($this->provinces[$province])) {
-                $this->selectedProvince = $province;
-                $this->cities = $this->provinces[$province];
+        // 3. Search in Indonesian Provinces and Cities
+        // Check if there is an exact or partial match for province name
+        foreach ($this->provinces as $provinceName => $cityList) {
+            if (stripos($cleanLoc, $provinceName) !== false || stripos($provinceName, $cleanLoc) !== false) {
+                $this->selectedProvince = $provinceName;
+                $this->cities = $cityList;
                 
-                // Check if city exists in the province
-                if (in_array($city, $this->cities)) {
-                    $this->selectedCity = $city;
-                } else {
+                // Search for a matching city in the location string
+                foreach ($cityList as $city) {
+                    $cleanCity = preg_replace('/^(Kota|Kabupaten)\s+/i', '', $city);
+                    if (stripos($cleanLoc, $cleanCity) !== false) {
+                        $this->selectedCity = $city;
+                        $this->updateLocation();
+                        return;
+                    }
                 }
-            } else {
-            }
-        } else {
-            // Check if it's just a province
-            if (isset($this->provinces[$location])) {
-                $this->selectedProvince = $location;
-                $this->cities = $this->provinces[$location];
-            } else {
+                
+                // If no city found, select first city
+                if (!empty($cityList)) {
+                    $this->selectedCity = $cityList[0];
+                }
+                $this->updateLocation();
+                return;
             }
         }
+        
+        // Check if any Indonesian city name is in the location string
+        foreach ($this->provinces as $provinceName => $cityList) {
+            foreach ($cityList as $city) {
+                $cleanCity = preg_replace('/^(Kota|Kabupaten)\s+/i', '', $city);
+                if (stripos($cleanLoc, $cleanCity) !== false || (strlen($cleanLoc) >= 3 && stripos($cleanCity, $cleanLoc) !== false)) {
+                    $this->selectedProvince = $provinceName;
+                    $this->cities = $cityList;
+                    $this->selectedCity = $city;
+                    $this->updateLocation();
+                    return;
+                }
+            }
+        }
+        
+        // 4. Search in International Countries and Cities
+        // Check if country matches
+        foreach ($this->countries as $countryName => $cityList) {
+            if (stripos($cleanLoc, $countryName) !== false || stripos($countryName, $cleanLoc) !== false) {
+                $this->isInternational = true;
+                $this->selectedCountry = $countryName;
+                $this->internationalCities = $cityList;
+                
+                // Search for matching city
+                foreach ($cityList as $city) {
+                    if (stripos($cleanLoc, $city) !== false) {
+                        $this->selectedInternationalCity = $city;
+                        $this->updateLocation();
+                        return;
+                    }
+                }
+                
+                if (!empty($cityList)) {
+                    $this->selectedInternationalCity = $cityList[0];
+                }
+                $this->updateLocation();
+                return;
+            }
+        }
+        
+        // Check if any international city matches
+        foreach ($this->countries as $countryName => $cityList) {
+            foreach ($cityList as $city) {
+                if (stripos($cleanLoc, $city) !== false || (strlen($cleanLoc) >= 3 && stripos($city, $cleanLoc) !== false)) {
+                    $this->isInternational = true;
+                    $this->selectedCountry = $countryName;
+                    $this->internationalCities = $cityList;
+                    $this->selectedInternationalCity = $city;
+                    $this->updateLocation();
+                    return;
+                }
+            }
+        }
+        
+        // Fallback: If still not matched, check if it's outside Indonesia (we can mark as International Other)
+        if (!empty($location)) {
+            $this->isInternational = true;
+            $firstCountry = array_key_first($this->countries);
+            if ($firstCountry) {
+                $this->selectedCountry = $firstCountry;
+                $this->internationalCities = $this->countries[$firstCountry];
+                $this->selectedInternationalCity = $this->internationalCities[0] ?? '';
+            }
+        }
+        
+        $this->updateLocation();
     }
 
     public function clearEditJobSession()

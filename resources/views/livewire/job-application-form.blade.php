@@ -291,6 +291,10 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
             if (data.description && window.Livewire) {
                 @this.set('notes', data.description);
             }
+            if (data.location && window.Livewire) {
+                @this.set('location', data.location);
+                @this.call('parseLocation', data.location);
+            }
 
             if (btn) {
                 btn.disabled = false;
