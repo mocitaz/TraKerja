@@ -3,75 +3,37 @@
 
     <div class="min-h-screen grid grid-cols-1 lg:grid-cols-12 bg-white font-sans antialiased text-zinc-900 selection:bg-primary-100 selection:text-primary-700">
         
-        <!-- Left Side: Clean Light-Slate Corporate Showcase Pane -->
-        <div class="hidden lg:flex lg:col-span-6 xl:col-span-7 bg-[#f8fafc] border-r border-slate-200/60 relative flex-col justify-between p-8 lg:p-12 overflow-hidden select-none">
+        <!-- Left Side: Simple & Professional Showcase Pane -->
+        <div class="hidden lg:flex lg:col-span-6 xl:col-span-7 bg-[#09090b] border-r border-zinc-900 text-white relative flex-col justify-between p-8 lg:p-12 overflow-hidden select-none">
             
-            <!-- Grid Backdrop lines -->
-            <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.4]" style="background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px); background-size: 32px 32px;"></div>
-
             <!-- Top Header Logo Section -->
-            <div class="relative z-10 flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-white border border-slate-200/80 flex items-center justify-center p-1.5 shadow-3xs">
-                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-full h-full object-contain">
-                </div>
-                <div class="flex flex-col">
-                    <span class="text-sm font-black text-slate-800 tracking-tight leading-none mb-0.5">TraKerja</span>
-                    <span class="text-[9px] text-slate-500 font-semibold">by PT. Teknalogi Transformasi Digital</span>
-                </div>
+            <div class="relative z-10 flex items-center justify-between">
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center p-1.5 shadow-sm">
+                        <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-full h-full object-contain">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-sm font-bold text-white tracking-tight leading-none mb-0.5">TraKerja</span>
+                        <span class="text-[9px] text-zinc-500 font-semibold">by PT. Teknalogi Transformasi Digital</span>
+                    </div>
+                </a>
             </div>
 
-            <!-- Main Corporate Content -->
-            <div class="relative z-10 my-auto py-12 max-w-md space-y-8">
-                <div class="space-y-4">
-                    <span class="inline-flex px-2.5 py-0.5 bg-primary-50 border border-primary-200/60 rounded text-[9px] font-bold uppercase tracking-wider text-primary-700">
-                        WORKSPACE KARIR PROFESIONAL
-                    </span>
-                    <h1 class="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                        Kelola pelamaran kerja. <br>Tingkatkan peluang diterima.
-                    </h1>
-                    <p class="text-xs text-slate-600 leading-relaxed font-normal">
-                        TraKerja memfasilitasi pencari kerja profesional dalam mengorganisasikan berkas, mengukur kelayakan ATS resume, serta melacak tahapan rekrutmen secara mandiri dan aman.
-                    </p>
-                </div>
-
-                <!-- Premium Light Mode Mockup Card (The WOW factor) -->
-                <div class="p-5 bg-white border border-slate-200/80 rounded-xl shadow-3xs space-y-4 max-w-sm">
-                    <!-- Header -->
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-6.5 h-6.5 rounded-full bg-primary-50 border border-primary-200/60 flex items-center justify-center font-bold text-primary-750 text-[10px]">
-                                LF
-                            </div>
-                            <div class="flex flex-col">
-                                <span class="text-[11px] font-bold text-slate-800 leading-none mb-0.5">Luthfi Fauzi</span>
-                                <span class="text-[8.5px] text-slate-500 font-semibold leading-none">Engineering Lead</span>
-                            </div>
-                        </div>
-                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[8.5px] font-black rounded border border-emerald-200/60 uppercase">Aktif</span>
-                    </div>
-
-                    <!-- List of parsed status -->
-                    <div class="space-y-2.5">
-                        <div class="flex items-center justify-between text-[10px] border-b border-slate-50 pb-2">
-                            <span class="text-slate-500 font-medium">Kecocokan ATS Resume</span>
-                            <span class="font-bold text-slate-800">98% Sangat Sesuai</span>
-                        </div>
-                        <div class="flex items-center justify-between text-[10px] border-b border-slate-50 pb-2">
-                            <span class="text-slate-500 font-medium">Jadwal Interview Aktif</span>
-                            <span class="font-bold text-primary-605">3 Terjadwal</span>
-                        </div>
-                        <div class="flex items-center justify-between text-[10px]">
-                            <span class="text-slate-500 font-medium">Akurasi Validasi Gaji (UMK)</span>
-                            <span class="font-bold text-slate-800">Sesuai Standar 2026</span>
-                        </div>
-                    </div>
-                </div>
+            <!-- Main Simple Content -->
+            <div class="relative z-10 my-auto py-12 max-w-md space-y-4">
+                <h1 class="text-3xl lg:text-4xl xl:text-5xl font-black text-white tracking-tight leading-[1.15]">
+                    Track your applications. <br>
+                    <span class="bg-gradient-to-r from-primary-300 via-primary-200 to-violet-400 bg-clip-text text-transparent">Build your future.</span>
+                </h1>
+                <p class="text-xs text-zinc-400 leading-relaxed font-normal">
+                    TraKerja membantu Anda mengorganisasi seluruh lamaran pekerjaan, mengoptimalkan berkas resume berbasis ATS, dan melacak tahapan rekrutmen dalam satu platform terintegrasi.
+                </p>
             </div>
 
             <!-- Footer Badge -->
-            <div class="relative z-10 pt-6 border-t border-slate-200/80 flex items-center justify-between text-[11px] text-slate-500">
-                <span class="font-medium">&copy; {{ date('Y') }} TraKerja by PT. Teknalogi Transformasi Digital.</span>
-                <span class="flex items-center gap-1 font-bold text-slate-600"><i class="ph-fill ph-shield-check text-emerald-600 text-sm"></i> Enterprise Security</span>
+            <div class="relative z-10 pt-6 border-t border-zinc-900 flex items-center justify-between text-[11px] text-zinc-500">
+                <span class="font-medium">&copy; {{ date('Y') }} TraKerja. All rights reserved.</span>
+                <span class="flex items-center gap-1 font-bold text-zinc-400"><i class="ph-fill ph-shield-check text-emerald-500 text-sm"></i> Secure Platform</span>
             </div>
         </div>
 
