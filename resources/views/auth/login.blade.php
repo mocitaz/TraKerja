@@ -31,14 +31,104 @@
             </div>
 
             <!-- Main Simple Showcase Content -->
-            <div class="relative z-10 my-auto py-12 max-w-xl">
-                <h1 class="text-3xl lg:text-4xl xl:text-5xl font-black text-white tracking-tight leading-[1.15]">
-                    Organize your job hunt with <span class="bg-gradient-to-r from-primary-300 via-primary-200 to-violet-400 bg-clip-text text-transparent">precision & speed.</span>
-                </h1>
-                
-                <p class="text-sm text-zinc-400 mt-4 leading-relaxed font-normal max-w-lg">
-                    Track applications in real-time, generate tailored ATS resumes, conduct AI mock interviews, and land your dream role faster.
-                </p>
+            <div class="relative z-10 my-auto py-6 max-w-xl w-full flex flex-col gap-6">
+                <div class="space-y-2">
+                    <span class="inline-flex px-2.5 py-1 bg-primary-500/10 border border-primary-500/35 rounded-full text-[10px] font-black uppercase tracking-wider text-primary-300">
+                        Visual Career Tracker
+                    </span>
+                    <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
+                        Visualisasikan karir & <br>
+                        <span class="bg-gradient-to-r from-primary-300 via-primary-200 to-violet-350 bg-clip-text text-transparent">pantau impian Anda.</span>
+                    </h2>
+                </div>
+
+                <!-- Floating Boards Section -->
+                <div class="relative w-full aspect-video rounded-xl bg-zinc-900/50 border border-zinc-800/80 p-5 overflow-hidden backdrop-blur-md shadow-2xl flex flex-col gap-4">
+                    <!-- Board Header Grid -->
+                    <div class="grid grid-cols-3 gap-3 border-b border-zinc-800/60 pb-3 text-[10px] font-bold text-zinc-500 tracking-wider uppercase">
+                        <div class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Wishlist</div>
+                        <div class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Interview</div>
+                        <div class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Offers Received</div>
+                    </div>
+
+                    <!-- Board Cards Grid -->
+                    <div class="grid grid-cols-3 gap-3 flex-1">
+                        <!-- Column 1 -->
+                        <div class="flex flex-col gap-2">
+                            <div class="p-3 bg-zinc-900/85 border border-zinc-850 rounded-lg shadow-3xs flex flex-col gap-1.5 hover:border-zinc-700/60 transition-colors duration-200">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[9px] font-bold text-zinc-400 uppercase tracking-tight">Stripe</span>
+                                    <span class="text-[8px] px-1 bg-zinc-800 rounded text-zinc-400 font-bold">$7.5k/mo</span>
+                                </div>
+                                <h4 class="text-[11px] font-semibold text-zinc-200 truncate">Software Engineer II</h4>
+                                <div class="flex items-center gap-1.5 mt-0.5">
+                                    <span class="text-[8px] px-1.5 py-0.5 bg-blue-500/10 text-blue-400 font-extrabold rounded-sm uppercase">Technical</span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-zinc-900/40 border border-zinc-850/60 rounded-lg shadow-3xs flex flex-col gap-1.5 opacity-60">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-tight">Netflix</span>
+                                </div>
+                                <h4 class="text-[11px] font-semibold text-zinc-400 truncate">Senior Frontend Eng</h4>
+                            </div>
+                        </div>
+
+                        <!-- Column 2 -->
+                        <div class="flex flex-col gap-2 justify-center">
+                            <div class="p-3 bg-zinc-900/85 border border-zinc-800 rounded-lg shadow-3xs flex flex-col gap-1.5 hover:border-primary-500/40 hover:shadow-[0_0_12px_rgba(99,102,241,0.15)] transition-all duration-300 relative group animate-[bounce_3s_infinite_ease-in-out]">
+                                <div class="absolute -top-1 -right-1 flex h-2 w-2">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[9px] font-bold text-zinc-400 uppercase tracking-tight">Gojek</span>
+                                    <span class="text-[8px] text-amber-400 font-extrabold flex items-center gap-0.5"><i class="ph-fill ph-calendar"></i> Today</span>
+                                </div>
+                                <h4 class="text-[11px] font-semibold text-zinc-250 truncate">Engineering Lead</h4>
+                                <div class="flex items-center gap-1.5 mt-0.5">
+                                    <span class="text-[8px] px-1.5 py-0.5 bg-amber-500/10 text-amber-400 font-extrabold rounded-sm uppercase">Technical Interview</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column 3 -->
+                        <div class="flex flex-col gap-2">
+                            <div class="p-3 bg-primary-950/20 border border-emerald-500/30 rounded-lg shadow-2xl flex flex-col gap-1.5 hover:border-emerald-500/50 transition-all duration-300 relative group overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-tr from-emerald-500/5 to-transparent pointer-events-none"></div>
+                                <div class="flex items-center justify-between relative z-10">
+                                    <span class="text-[9px] font-extrabold text-emerald-400 uppercase tracking-tight">Airbnb</span>
+                                    <span class="text-[8px] px-1.5 py-0.5 bg-emerald-500/15 text-emerald-400 font-black rounded-sm uppercase tracking-wide">Selected</span>
+                                </div>
+                                <h4 class="text-[11px] font-bold text-zinc-100 truncate relative z-10">Product Designer</h4>
+                                <div class="flex items-center justify-between mt-1 relative z-10">
+                                    <div class="flex items-center gap-1 text-[8px] font-extrabold text-zinc-400">
+                                        <i class="ph ph-map-pin"></i> Remote
+                                    </div>
+                                    <span class="text-[10px] font-black text-emerald-400">$9.2k/mo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Overlay stats element -->
+                    <div class="absolute bottom-2.5 right-2.5 bg-zinc-950/80 backdrop-blur-md border border-zinc-800 rounded-lg px-2.5 py-1.5 flex items-center gap-2.5 shadow-xl">
+                        <div class="flex flex-col">
+                            <span class="text-[7px] text-zinc-500 font-extrabold uppercase tracking-wide">Goal Progress</span>
+                            <span class="text-[10px] font-bold text-zinc-250">12 of 15 Applied</span>
+                        </div>
+                        <div class="w-8 h-8 rounded-full border border-primary-500/35 flex items-center justify-center bg-primary-500/10 text-[9px] font-black text-primary-300">
+                            80%
+                        </div>
+                    </div>
+
+                    <div class="absolute top-24 -left-3 bg-zinc-950/80 backdrop-blur-md border border-zinc-800 rounded-lg px-2 py-1 flex items-center gap-2 shadow-xl">
+                        <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                        <div class="flex flex-col">
+                            <span class="text-[8px] font-extrabold text-zinc-300 leading-none">Level 5 Achieved!</span>
+                            <span class="text-[7px] text-zinc-500 font-medium leading-none mt-0.5">+450 XP Awarded</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Footer Badge -->
