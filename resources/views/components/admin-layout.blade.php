@@ -35,6 +35,13 @@
             .sidebar-scroll::-webkit-scrollbar { width: 3px; }
             .sidebar-scroll::-webkit-scrollbar-thumb { background: #f4f4f5; }
             .sidebar-scroll:hover::-webkit-scrollbar-thumb { background: #e4e4e7; }
+
+            /* Livewire Navigation Progress Bar Custom Style */
+            .livewire-progress-bar {
+                background-color: #18181b !important;
+                background: #18181b !important;
+                height: 3px !important;
+            }
         </style>
     </head>
     <body class="text-zinc-800 antialiased bg-zinc-50/50 overflow-hidden selection:bg-zinc-900 selection:text-white"

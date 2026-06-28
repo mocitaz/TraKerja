@@ -51,7 +51,12 @@
                 color: #4f46e5;
             }
 
-
+            /* Livewire Navigation Progress Bar Custom Style */
+            .livewire-progress-bar {
+                background-color: #18181b !important;
+                background: #18181b !important;
+                height: 3px !important;
+            }
 
             /* Smooth transition for theme colors */
             body {
