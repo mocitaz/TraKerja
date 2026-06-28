@@ -89,6 +89,28 @@ class JobScraperController extends Controller
                 }
             }
 
+            // Extract from HTML markup containers if description is empty or too short (common on LinkedIn guest page)
+            if (strlen($description) < 200) {
+                $containers = [
+                    '/class="show-more-less-html__markup[^"]*"\s*>\s*(.*?)\s*<\/div>/is',
+                    '/class="description__text[^"]*"\s*>\s*(.*?)\s*<\/div>/is',
+                    '/class="[^"]*job-description[^"]*"\s*>\s*(.*?)\s*<\/div>/is',
+                    '/id="[^"]*job-description[^"]*"\s*>\s*(.*?)\s*<\/div>/is',
+                    '/class="[^"]*JobDescription[^"]*"\s*>\s*(.*?)\s*<\/div>/is',
+                    '/class="[^"]*jobDescription[^"]*"\s*>\s*(.*?)\s*<\/div>/is'
+                ];
+                
+                foreach ($containers as $pattern) {
+                    if (preg_match($pattern, $html, $descMatches)) {
+                        $candidate = trim($descMatches[1]);
+                        if (strlen(strip_tags($candidate)) > 200) {
+                            $description = $this->cleanJobDescriptionMarkup($candidate);
+                            break;
+                        }
+                    }
+                }
+            }
+
             // Fallback: If JSON-LD didn't yield values, parse Meta & Title Tags
             if (empty($jobTitle) || empty($companyName) || empty($description)) {
                 $ogTitle = $this->getMetaContent($html, 'og:title') ?? $this->getMetaContent($html, 'twitter:title') ?? $this->getTitleTag($html);
@@ -271,6 +293,28 @@ class JobScraperController extends Controller
         }
 
         return null;
+    }
+
+    private function cleanJobDescriptionMarkup(string $markup): string
+    {
+        // Replace list items with bullet points
+        $markup = preg_replace('/<li[^>]*>/i', "\n• ", $markup);
+        $markup = preg_replace('/<\/li>/i', '', $markup);
+        
+        // Replace paragraph and break tags with newlines
+        $markup = preg_replace('/<(?:br|p|div|ul|ol)[^>]*>/i', "\n", $markup);
+        
+        // Strip other tags
+        $markup = strip_tags($markup);
+        
+        // Decode HTML entities
+        $markup = html_entity_decode($markup, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        
+        // Normalize consecutive newlines and spaces
+        $markup = preg_replace("/\n+/", "\n\n", $markup);
+        $markup = preg_replace('/[ \t]+/', ' ', $markup);
+        
+        return $this->cleanJobDescription($markup);
     }
 
     private function getMetaContent(string $html, string $property): ?string
