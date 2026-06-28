@@ -50,11 +50,11 @@
             }
             .bento-card {
                 background: #ffffff;
-                transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+                transition: all 0.2s ease-in-out;
             }
             .bento-card:hover {
                 border-color: #a78bfa;
-                transform: translateY(-2px);
+                transform: translateY(-1px);
                 box-shadow: 0 12px 30px -10px rgba(139, 92, 246, 0.08);
             }
             .glow-backdrop {
@@ -97,7 +97,7 @@
                             Login
                         </a>
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="h-7 px-3 bg-zinc-900 hover:bg-zinc-800 text-white rounded-md text-[11px] font-semibold transition-all flex items-center">
+                            <a href="{{ route('register') }}" class="h-7 px-3 bg-primary-600 hover:bg-primary-750 text-white rounded-md text-[11px] font-semibold transition-all flex items-center">
                                 Mulai Gratis
                             </a>
                         @endif
@@ -141,7 +141,7 @@
                         <i class="ph-bold ph-lightning text-sm"></i>
                         <span>Mulai Gratis</span>
                     </a>
-                    <a href="{{ route('login') }}" class="h-9 px-4.5 bg-white border border-zinc-255 hover:bg-zinc-50 text-zinc-700 hover:text-zinc-900 rounded-lg text-xs font-bold transition-all flex items-center">
+                    <a href="{{ route('login') }}" class="h-9 px-4.5 bg-white border border-zinc-250 hover:bg-zinc-50 text-zinc-700 hover:text-zinc-900 rounded-lg text-xs font-bold transition-all flex items-center">
                         Masuk ke Akun
                     </a>
                 @endauth
@@ -203,10 +203,10 @@
                                 <!-- Card 1 -->
                                 <div class="bg-white border border-zinc-200 rounded-lg p-3 hover:border-primary-400 transition-all shadow-3xs">
                                     <h4 class="text-[11px] font-bold text-zinc-900">Frontend Developer</h4>
-                                    <p class="text-[9.5px] text-zinc-450 mt-0.5 font-medium">Tokopedia</p>
+                                    <p class="text-[9.5px] text-zinc-455 mt-0.5 font-medium">Tokopedia</p>
                                     <div class="flex flex-wrap gap-1 mt-2.5">
                                         <span class="px-1.5 py-0.2 bg-zinc-50 border border-zinc-200 text-zinc-500 text-[8px] font-semibold rounded">Full-time</span>
-                                        <span class="px-1.5 py-0.2 bg-primary-50 border border-primary-100 text-primary-600 text-[8px] font-bold rounded">Jakarta</span>
+                                        <span class="px-1.5 py-0.2 bg-primary-50 border border-primary-100 text-primary-650 text-[8px] font-bold rounded">Jakarta</span>
                                     </div>
                                 </div>
                                 <!-- Card 2 -->
@@ -234,7 +234,7 @@
                                     <p class="text-[9.5px] text-zinc-455 mt-0.5 font-medium">Traveloka</p>
                                     <div class="flex flex-wrap gap-1 mt-2.5">
                                         <span class="px-1.5 py-0.2 bg-zinc-50 border border-zinc-200 text-zinc-500 text-[8px] font-semibold rounded">Full-time</span>
-                                        <span class="px-1.5 py-0.2 bg-primary-50 border border-primary-100 text-primary-600 text-[8px] font-bold rounded">Interview HR</span>
+                                        <span class="px-1.5 py-0.2 bg-primary-50 border border-primary-100 text-primary-650 text-[8px] font-bold rounded">Interview HR</span>
                                     </div>
                                 </div>
                             </div>
@@ -263,7 +263,7 @@
                         <div class="flex-1 border border-zinc-200 bg-white rounded-lg p-4 flex flex-col justify-between shadow-3xs">
                             <div class="space-y-3">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-7 h-7 rounded bg-primary-50 border border-primary-100 flex items-center justify-center text-primary-600 shrink-0">
+                                    <div class="w-7 h-7 rounded bg-primary-50 border border-primary-100 flex items-center justify-center text-primary-650 shrink-0">
                                         <i class="ph-bold ph-file-pdf text-sm"></i>
                                     </div>
                                     <div>
@@ -426,7 +426,7 @@
                         </div>
                         <div>
                             <div class="text-sm font-extrabold text-zinc-900 text-emerald-600">4%</div>
-                            <div class="text-[8px] text-emerald-500 font-bold uppercase tracking-wider">Offers</div>
+                            <div class="text-[8px] text-emerald-505 font-bold uppercase tracking-wider">Offers</div>
                         </div>
                     </div>
                 </div>
@@ -519,7 +519,7 @@
                                     <div class="h-full bg-emerald-500 rounded-full" style="width: 92%"></div>
                                 </div>
                             </div>
-                            <div class="p-2 bg-[#fafafa] border border-zinc-200 rounded text-[9px] text-zinc-505 font-bold leading-normal">
+                            <div class="p-2 bg-[#fafafa] border border-zinc-200 rounded text-[9px] text-zinc-550 font-bold leading-normal">
                                 Score CV: 92/100 (Optimal Match)
                             </div>
                         </div>
@@ -544,7 +544,7 @@
                 <div class="bg-white border border-zinc-200 rounded-xl p-5 hover:border-primary-300 transition-all shadow-3xs">
                     <p class="text-xs text-zinc-655 italic leading-relaxed mb-4">"Sebelumnya saya melacak puluhan lamaran kerja menggunakan Excel dan seringkali kehilangan catatan tindak lanjut. Dengan papan Kanban TraKerja, seluruh aktivitas lamaran kerja saya menjadi tersusun sangat rapi dan praktis."</p>
                     <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-full bg-primary-100 flex items-center justify-center font-bold text-primary-700 text-[10px]">LF</div>
+                        <div class="w-7 h-7 rounded-full bg-primary-100 flex items-center justify-center font-bold text-primary-750 text-[10px]">LF</div>
                         <div>
                             <h4 class="text-xs font-bold text-zinc-800">Luthfi Fauzi</h4>
                             <p class="text-[9px] text-zinc-400">Software Engineer</p>
@@ -554,7 +554,7 @@
                 <div class="bg-white border border-zinc-200 rounded-xl p-5 hover:border-primary-300 transition-all shadow-3xs">
                     <p class="text-xs text-zinc-655 italic leading-relaxed mb-4">"Fitur Chrome Auto-Fill Extension sangat membantu! Saya tidak perlu lagi mengetik manual setiap kali melihat lowongan bagus di LinkedIn atau JobStreet. Tombol Auto-Fill-nya sangat cepat dan responsif."</p>
                     <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-full bg-primary-100 flex items-center justify-center font-bold text-primary-700 text-[10px]">RN</div>
+                        <div class="w-7 h-7 rounded-full bg-primary-100 flex items-center justify-center font-bold text-primary-750 text-[10px]">RN</div>
                         <div>
                             <h4 class="text-xs font-bold text-zinc-800">Rian Nugraha</h4>
                             <p class="text-[9px] text-zinc-400">Data Analyst</p>
@@ -608,7 +608,7 @@
 
                 <!-- Premium Pro (Apple Store Outline Highlight with Purple touch) -->
                 <div class="bg-white border border-primary-500 rounded-xl p-6 flex flex-col justify-between relative shadow-sm">
-                    <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 bg-primary-600 text-white text-[8px] font-mono font-bold uppercase tracking-wider rounded shadow-3xs">
+                    <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 bg-primary-650 text-white text-[8px] font-mono font-bold uppercase tracking-wider rounded shadow-3xs">
                         Pilihan Utama
                     </div>
                     <div>
@@ -687,7 +687,7 @@
             <div class="divide-y divide-zinc-200">
                 <!-- FAQ Item 1 -->
                 <div class="faq-item py-4">
-                    <button onclick="toggleFaq(1)" class="faq-trigger w-full flex items-center justify-between text-left text-xs font-bold text-zinc-800 hover:text-zinc-950 transition-colors focus:outline-none" aria-expanded="false">
+                    <button onclick="toggleFaq(1)" class="faq-trigger w-full flex items-center justify-between text-left text-xs font-bold text-zinc-800 hover:text-zinc-955 transition-colors focus:outline-none" aria-expanded="false">
                         <span>Apakah platform TraKerja benar-benar gratis?</span>
                         <i class="ph-bold ph-caret-down faq-icon text-zinc-400 transition-transform duration-200"></i>
                     </button>
@@ -698,7 +698,7 @@
 
                 <!-- FAQ Item 2 -->
                 <div class="faq-item py-4">
-                    <button onclick="toggleFaq(2)" class="faq-trigger w-full flex items-center justify-between text-left text-xs font-bold text-zinc-800 hover:text-zinc-950 transition-colors focus:outline-none" aria-expanded="false">
+                    <button onclick="toggleFaq(2)" class="faq-trigger w-full flex items-center justify-between text-left text-xs font-bold text-zinc-800 hover:text-zinc-955 transition-colors focus:outline-none" aria-expanded="false">
                         <span>Bagaimana cara kerja Chrome Extension Auto-Fill?</span>
                         <i class="ph-bold ph-caret-down faq-icon text-zinc-400 transition-transform duration-200"></i>
                     </button>
@@ -709,7 +709,7 @@
 
                 <!-- FAQ Item 3 -->
                 <div class="faq-item py-4">
-                    <button onclick="toggleFaq(3)" class="faq-trigger w-full flex items-center justify-between text-left text-xs font-bold text-zinc-800 hover:text-zinc-950 transition-colors focus:outline-none" aria-expanded="false">
+                    <button onclick="toggleFaq(3)" class="faq-trigger w-full flex items-center justify-between text-left text-xs font-bold text-zinc-800 hover:text-zinc-955 transition-colors focus:outline-none" aria-expanded="false">
                         <span>Apakah data lamaran kerja saya aman di TraKerja?</span>
                         <i class="ph-bold ph-caret-down faq-icon text-zinc-400 transition-transform duration-200"></i>
                     </button>
