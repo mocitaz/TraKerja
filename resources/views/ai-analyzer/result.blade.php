@@ -72,7 +72,7 @@
             </div>
 
             {{-- The "AI Conversation" Style Results --}}
-            <div class="space-y-6 mb-8">
+            <div class="mb-8">
                 @php
                     $sections = [
                         'profil' => ['title' => 'Profile & Identity', 'icon' => 'ph-identification-card'],
@@ -87,51 +87,52 @@
 
                 @foreach($sections as $key => $section)
                     @if(isset($result[$key]) && (!empty($result[$key]['teks_revisi']) || !empty($result[$key]['alasan_perubahan'])))
-                        <div class="relative pl-8 sm:pl-12 group">
+                        <div class="relative pl-10 sm:pl-12 group pb-6 last:pb-2">
                             {{-- Thread Line --}}
-                            <div class="absolute left-4 sm:left-6 top-0 bottom-0 w-px bg-slate-200 group-last:bottom-auto group-last:h-8"></div>
-                            {{-- Icon --}}
-                            <div class="absolute left-0 top-0 w-8 sm:w-12 h-8 sm:h-12 flex items-center justify-center">
-                                <div class="w-7 sm:w-8 h-7 sm:h-8 bg-white border border-slate-200 rounded-lg flex items-center justify-center text-slate-500 z-10 shadow-sm">
-                                    <i class="ph {{ $section['icon'] }} text-sm sm:text-base"></i>
-                                </div>
+                            <div class="absolute left-[13px] top-2 bottom-0 w-[1px] bg-zinc-200 group-last:bottom-auto group-last:h-4"></div>
+                            
+                            {{-- AI Avatar Bubble --}}
+                            <div class="absolute left-0 top-0.5 w-7 h-7 rounded-full bg-primary-50 text-primary-660 flex items-center justify-center border border-primary-100/60 z-10">
+                                <i class="ph {{ $section['icon'] }} text-xs"></i>
                             </div>
 
-                            <div class="space-y-3 pt-0.5">
-                                <h3 class="text-xs sm:text-sm font-bold text-slate-800 tracking-tight flex flex-wrap items-center gap-1.5 sm:gap-2">
-                                    {{ $section['title'] }}
-                                    <span class="hidden sm:inline w-1 h-1 bg-slate-200 rounded-full"></span>
-                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block w-full sm:w-auto mt-0.5 sm:mt-0">Optimized Analysis</span>
-                                </h3>
-
-                                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-                                    {{-- Reasoning (Thinking Process) --}}
-                                    <div class="lg:col-span-5 bg-white rounded-xl p-4 sm:p-5 border border-slate-200/70 shadow-sm">
-                                        <div class="flex items-center gap-2 mb-3 border-b border-slate-100 pb-2">
-                                            <i class="ph ph-brain text-slate-600"></i>
-                                            <h4 class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Thinking Process</h4>
-                                        </div>
-                                        <div class="text-xs font-medium text-slate-650 leading-relaxed italic formatted-content">
-                                            {{ $result[$key]['alasan_perubahan'] }}
-                                        </div>
-                                    </div>
-
-                                    {{-- Revised Result (Output) --}}
-                                    <div class="lg:col-span-7 bg-slate-50 border border-slate-200 rounded-xl p-4 sm:p-5 relative">
-                                        <div class="flex items-center justify-between mb-3 border-b border-slate-200 pb-2">
-                                            <div class="flex items-center gap-2">
-                                                <i class="ph ph-sparkle text-slate-700"></i>
-                                                <h4 class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Optimized Output</h4>
+                            <div class="space-y-3">
+                                {{-- Collapsible Thinking Process --}}
+                                @if(!empty($result[$key]['alasan_perubahan']))
+                                    <div class="pl-1">
+                                        <details class="group/details w-full outline-none">
+                                            <summary class="flex items-center gap-1 text-[10px] font-bold text-zinc-400 hover:text-zinc-600 uppercase tracking-wider transition-colors outline-none cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                                                <span class="inline-block transition-transform duration-200 group-open/details:rotate-90 text-[8px] mr-0.5">
+                                                    <i class="ph-bold ph-caret-right"></i>
+                                                </span>
+                                                <span>AI Thinking Process</span>
+                                            </summary>
+                                            <div class="mt-1.5 p-3 bg-zinc-50 border-l-2 border-zinc-300 rounded-r-md text-xs italic text-zinc-500 leading-relaxed formatted-content">
+                                                {{ $result[$key]['alasan_perubahan'] }}
                                             </div>
-                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-slate-700 transition-colors">
-                                                <i class="ph ph-copy text-base"></i>
+                                        </details>
+                                    </div>
+                                @endif
+
+                                {{-- Premium AI Chat Response Bubble --}}
+                                @if(!empty($result[$key]['teks_revisi']))
+                                    <div class="bg-white border border-zinc-200/80 rounded-xl rounded-tr-none p-3.5 sm:p-4 shadow-3xs relative group/bubble">
+                                        <!-- Micro Top Bar -->
+                                        <div class="flex items-center justify-between border-b border-zinc-100 pb-2 mb-2.5">
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-xs font-semibold text-zinc-800 tracking-tight">{{ $section['title'] }}</span>
+                                                <span class="px-1.5 py-0.2 bg-primary-50/60 text-primary-700 text-[8.5px] font-bold uppercase tracking-wider rounded border border-primary-100/30">Optimized</span>
+                                            </div>
+                                            <button onclick="copyToClipboard(this)" class="opacity-0 group-hover/bubble:opacity-100 text-zinc-400 hover:text-zinc-700 transition-all cursor-pointer p-1 rounded hover:bg-zinc-50 flex items-center justify-center outline-none">
+                                                <i class="ph ph-copy text-sm"></i>
                                             </button>
                                         </div>
-                                        <div class="text-xs font-semibold text-slate-800 leading-relaxed formatted-content">
+                                        <!-- Content -->
+                                        <div class="text-zinc-700 text-xs sm:text-sm font-medium leading-relaxed formatted-content">
                                             {{ $result[$key]['teks_revisi'] }}
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     @endif
