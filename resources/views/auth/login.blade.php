@@ -152,8 +152,14 @@
         </div>
 
         <!-- Workspace Footer Disclaimer -->
-        <div class="text-center text-[10px] text-slate-400 max-w-[280px] leading-relaxed">
-            By continuing, you acknowledge that you understand and agree to the <span class="hover:underline cursor-pointer">Terms & Conditions</span> and <span class="hover:underline cursor-pointer">Privacy Policy</span>.
+        <div class="text-center space-y-3 max-w-[280px] pb-4">
+            <div class="text-[10px] text-slate-400 leading-relaxed">
+                By continuing, you acknowledge that you understand and agree to the <span class="hover:underline cursor-pointer">Terms & Conditions</span> and <span class="hover:underline cursor-pointer">Privacy Policy</span>.
+            </div>
+            <div class="flex items-center justify-center gap-1.5 text-[9px] font-bold text-slate-400 uppercase tracking-wider pt-2 border-t border-slate-100">
+                <span>Powered by</span>
+                <span class="text-slate-600">PT. Teknalogi Transformasi Digital</span>
+            </div>
         </div>
 
     </div>
