@@ -474,6 +474,15 @@ class JobScraperController extends Controller
         
         // 4. Clean up trailing ellipsis, spaces, and punctuation
         $desc = rtrim($desc, " \t\n\r\0\x0B.…”…");
+
+        // 5. Standardize typical bullet point characters (-, *, small square, checkmark) at the start of any line to a standard bullet point (•)
+        $desc = preg_replace('/^\s*[\-\*▪◦✓•]\s+/mu', '• ', $desc);
+        
+        // 6. Clean up any trailing space or extra newlines immediately following bullet characters
+        $desc = preg_replace('/•\s+/u', '• ', $desc);
+        
+        // 7. Make consecutive bullet items single-spaced for higher information density
+        $desc = preg_replace('/(•[^\n]+)\n+(?=\s*•)/u', "$1\n", $desc);
         
         return trim($desc);
     }
