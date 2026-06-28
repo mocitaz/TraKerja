@@ -49,47 +49,49 @@
     </div>
 
     @if($viewMode === 'month')
-        <!-- Calendar View: Grid Modern -->
-        <div class="bg-white rounded-lg border border-zinc-200/60 overflow-hidden shadow-3xs">
-            <!-- Day Headers -->
-            <div class="grid grid-cols-7 bg-zinc-55/30 border-b border-zinc-150/65">
-                @foreach(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as $day)
-                    <div class="px-2 py-2 text-center text-[9px] font-bold text-zinc-450 uppercase tracking-widest">
-                        {{ $day }}
-                    </div>
-                @endforeach
-            </div>
-
-            <!-- Calendar Grid -->
-            <div class="grid grid-cols-7 divide-x divide-y divide-zinc-150/50 -mt-px -ml-px">
-                @foreach($calendarDays as $day)
-                    <div class="min-h-[80px] p-1.5 border-b border-zinc-100/50 transition-colors {{ $day['isCurrentMonth'] ? 'bg-white' : 'bg-zinc-50/15 opacity-50' }} {{ $day['isToday'] ? 'bg-primary-50/15' : '' }} group">
-                        <!-- Date Number -->
-                        <div class="flex justify-between items-start mb-1">
-                            <span class="inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold rounded 
-                                {{ $day['isToday'] ? 'bg-primary-600 text-white shadow-3xs' : ($day['isCurrentMonth'] ? 'text-zinc-800' : 'text-zinc-400') }}">
-                                {{ $day['date']->format('j') }}
-                            </span>
+        <!-- Calendar View: Grid Modern (Responsive Scroll) -->
+        <div class="overflow-x-auto custom-scrollbar border border-zinc-200/60 rounded-lg shadow-3xs bg-white">
+            <div class="min-w-[600px] bg-white">
+                <!-- Day Headers -->
+                <div class="grid grid-cols-7 bg-zinc-55/30 border-b border-zinc-150/65">
+                    @foreach(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as $day)
+                        <div class="px-2 py-2 text-center text-[9px] font-bold text-zinc-450 uppercase tracking-widest">
+                            {{ $day }}
                         </div>
+                    @endforeach
+                </div>
 
-                        <!-- Interviews on this day -->
-                        <div class="space-y-1">
-                            @foreach($day['interviews'] as $interview)
-                                <button wire:click="viewInterviewDetails({{ $interview['id'] }})" 
-                                         class="w-full text-left px-1.5 py-0.5 rounded text-[8.5px] font-bold border transition-colors focus:outline-none
-                                                {{ in_array($interview['recruitment_stage'], ['HR - Interview', 'Psychotest']) ? 'bg-blue-50/70 text-blue-700 border-blue-100 hover:bg-blue-100/50' : '' }}
-                                                {{ in_array($interview['recruitment_stage'], ['User - Interview', 'Presentation Round']) ? 'bg-emerald-50/70 text-emerald-700 border-emerald-100 hover:bg-emerald-100/50' : '' }}
-                                                {{ in_array($interview['recruitment_stage'], ['Assessment Test', 'LGD']) ? 'bg-purple-50/70 text-purple-700 border-purple-100 hover:bg-purple-100/50' : '' }}">
-                                    <div class="truncate font-bold tracking-tight">{{ $interview['company_name'] }}</div>
-                                    <div class="mt-0.5 opacity-70 flex items-center gap-0.5 text-[7.5px] font-bold">
-                                        <i class="ph ph-clock"></i>
-                                        {{ \Carbon\Carbon::parse($interview['interview_date'])->timezone('Asia/Jakarta')->format('H:i') }}
-                                    </div>
-                                </button>
-                            @endforeach
+                <!-- Calendar Grid -->
+                <div class="grid grid-cols-7 divide-x divide-y divide-zinc-150/50 -mt-px -ml-px">
+                    @foreach($calendarDays as $day)
+                        <div class="min-h-[80px] p-1.5 border-b border-zinc-100/50 transition-colors {{ $day['isCurrentMonth'] ? 'bg-white' : 'bg-zinc-50/15 opacity-50' }} {{ $day['isToday'] ? 'bg-primary-50/15' : '' }} group">
+                            <!-- Date Number -->
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold rounded 
+                                    {{ $day['isToday'] ? 'bg-primary-600 text-white shadow-3xs' : ($day['isCurrentMonth'] ? 'text-zinc-800' : 'text-zinc-400') }}">
+                                    {{ $day['date']->format('j') }}
+                                </span>
+                            </div>
+
+                            <!-- Interviews on this day -->
+                            <div class="space-y-1">
+                                @foreach($day['interviews'] as $interview)
+                                    <button wire:click="viewInterviewDetails({{ $interview['id'] }})" 
+                                             class="w-full text-left px-1.5 py-0.5 rounded text-[8.5px] font-bold border transition-colors focus:outline-none
+                                                    {{ in_array($interview['recruitment_stage'], ['HR - Interview', 'Psychotest']) ? 'bg-blue-50/70 text-blue-700 border-blue-100 hover:bg-blue-100/50' : '' }}
+                                                    {{ in_array($interview['recruitment_stage'], ['User - Interview', 'Presentation Round']) ? 'bg-emerald-50/70 text-emerald-700 border-emerald-100 hover:bg-emerald-100/50' : '' }}
+                                                    {{ in_array($interview['recruitment_stage'], ['Assessment Test', 'LGD']) ? 'bg-purple-50/70 text-purple-700 border-purple-100 hover:bg-purple-100/50' : '' }}">
+                                        <div class="truncate font-bold tracking-tight">{{ $interview['company_name'] }}</div>
+                                        <div class="mt-0.5 opacity-70 flex items-center gap-0.5 text-[7.5px] font-bold">
+                                            <i class="ph ph-clock"></i>
+                                            {{ \Carbon\Carbon::parse($interview['interview_date'])->timezone('Asia/Jakarta')->format('H:i') }}
+                                        </div>
+                                    </button>
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
         </div>
     @else
