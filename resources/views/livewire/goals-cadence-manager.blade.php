@@ -1,9 +1,9 @@
 <!-- Weekly Goal Progress Widget -->
-<div class="bg-white rounded-lg border border-zinc-200/60 p-4 relative overflow-hidden" x-data="{ open: false }">
+<div class="bg-white rounded-lg border border-zinc-200/60 p-4 relative overflow-hidden h-full flex flex-col" x-data="{ open: false }">
     <!-- Decorative Accent -->
     <div class="absolute -right-16 -top-16 w-32 h-32 bg-primary-50/50 rounded-full opacity-35 pointer-events-none"></div>
     
-    <div class="relative z-10">
+    <div class="relative z-10 flex flex-col justify-between flex-1">
         <div class="flex items-center justify-between mb-4">
             <div>
                 <h3 class="text-xs font-bold text-zinc-850 tracking-tight uppercase tracking-wider">Weekly Targets</h3>

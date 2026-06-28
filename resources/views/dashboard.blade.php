@@ -112,112 +112,124 @@
             </div>
 
             <!-- Dashboard Layout Main Area -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5 items-start">
-                <!-- Left Column: Recent Apps & Upcoming Interviews (col-span 2) -->
-                <div class="lg:col-span-2 space-y-5">
-                    
-                    <!-- Recent Applications -->
-                    <div class="bg-white rounded-lg border border-zinc-200/60 p-4">
-                        <div class="flex items-center justify-between mb-4">
-                            <div>
-                                <h3 class="text-xs font-bold text-zinc-850 tracking-tight uppercase tracking-wider">Recent Applications</h3>
-                                <p class="text-[10px] text-zinc-400 font-medium">Your latest job submissions</p>
-                            </div>
-                            <a href="{{ route('tracker') }}" class="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-zinc-200 hover:bg-zinc-50 rounded-md text-[10px] font-semibold text-zinc-600 transition-colors">
-                                <span>View Tracker</span>
-                                <i class="ph ph-arrow-right text-[10px]"></i>
-                            </a>
-                        </div>
-
-                        @if($recentApplications->isEmpty())
-                            <div class="flex flex-col items-center justify-center py-8 text-center bg-zinc-50/30 rounded-lg border border-dashed border-zinc-200/80">
-                                <div class="w-10 h-10 bg-zinc-100 rounded-md flex items-center justify-center text-zinc-400 mb-2.5">
-                                    <i class="ph ph-briefcase text-lg"></i>
+            <!-- Row 1: Recent Applications & Weekly Targets (Equal Height Alignment) -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5 items-stretch">
+                <!-- Left: Recent Applications (col-span 2) -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-lg border border-zinc-200/60 p-4 h-full flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-xs font-bold text-zinc-850 tracking-tight uppercase tracking-wider">Recent Applications</h3>
+                                    <p class="text-[10px] text-zinc-400 font-medium">Your latest job submissions</p>
                                 </div>
-                                <h4 class="text-xs font-bold text-zinc-700">No applications yet</h4>
-                                <p class="text-[10px] text-zinc-400 mt-0.5 max-w-[220px]">Add your first job opportunity to start tracking your career progress!</p>
-                                <button onclick="openJobModal()" class="mt-3 flex items-center gap-1.5 px-2.5 py-1 bg-zinc-900 hover:bg-zinc-800 text-white text-[10px] font-bold rounded-md transition-all active:scale-95">
-                                    <i class="ph ph-plus text-xs"></i>
-                                    <span>Add Application</span>
-                                </button>
+                                <a href="{{ route('tracker') }}" class="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-zinc-200 hover:bg-zinc-50 rounded-md text-[10px] font-semibold text-zinc-600 transition-colors">
+                                    <span>View Tracker</span>
+                                    <i class="ph ph-arrow-right text-[10px]"></i>
+                                </a>
                             </div>
-                        @else
-                            <div class="overflow-x-auto">
-                                <table class="min-w-full divide-y divide-zinc-100">
-                                    <thead>
-                                        <tr class="text-left text-[9px] font-bold text-zinc-400 uppercase tracking-wider">
-                                            <th class="pb-2">Opportunity</th>
-                                            <th class="pb-2 hidden sm:table-cell">Applied Date</th>
-                                            <th class="pb-2">Stage</th>
-                                            <th class="pb-2">Status</th>
-                                            <th class="pb-2 text-right">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-zinc-150/40 text-zinc-700">
-                                        @foreach($recentApplications as $job)
-                                            <tr class="group hover:bg-zinc-50/40 transition-colors cursor-pointer" onclick="window.location='{{ route('jobs.show', $job) }}'">
-                                                <td class="py-2.5">
-                                                    <div class="flex items-center gap-2.5">
-                                                        <div class="w-7 h-7 bg-zinc-50 rounded border border-zinc-200/50 flex items-center justify-center text-zinc-500 font-bold text-[10px] uppercase shrink-0">
-                                                            {{ substr($job->company_name, 0, 2) }}
-                                                        </div>
-                                                        <div class="min-w-0">
-                                                            <h4 class="text-[11px] font-semibold text-zinc-800 hover:text-primary-600 transition-colors truncate max-w-[150px] sm:max-w-[200px] leading-tight">{{ $job->position }}</h4>
-                                                            <p class="text-[9px] text-zinc-400 font-medium truncate leading-tight">{{ $job->company_name }}</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="py-2.5 hidden sm:table-cell text-[11px] font-medium text-zinc-500">
-                                                    {{ $job->application_date ? $job->application_date->translatedFormat('d M Y') : '-' }}
-                                                </td>
-                                                <td class="py-2.5">
-                                                    @php
-                                                        $stageColors = [
-                                                            'Applied' => 'bg-blue-50 text-blue-700 border-blue-100/50',
-                                                            'HR - Interview' => 'bg-orange-50 text-orange-700 border-orange-100/50',
-                                                            'User - Interview' => 'bg-amber-50 text-amber-700 border-amber-100/50',
-                                                            'Offering' => 'bg-emerald-50 text-emerald-700 border-emerald-100/50',
-                                                            'Rejected' => 'bg-rose-50 text-rose-700 border-rose-100/50',
-                                                        ];
-                                                        $color = $stageColors[$job->recruitment_stage] ?? 'bg-zinc-50 text-zinc-700 border-zinc-150/40';
-                                                    @endphp
-                                                    <span class="inline-flex items-center text-[9px] font-semibold border px-1.5 py-0.2 rounded {{ $color }}">
-                                                        {{ $job->recruitment_stage }}
-                                                    </span>
-                                                </td>
-                                                <td class="py-2.5">
-                                                    @php
-                                                        $statusColors = [
-                                                            'On Process' => 'text-blue-600',
-                                                            'Accepted' => 'text-emerald-600',
-                                                            'Declined' => 'text-rose-600',
-                                                        ];
-                                                        $statusDot = [
-                                                            'On Process' => 'bg-blue-600',
-                                                            'Accepted' => 'bg-emerald-600',
-                                                            'Declined' => 'bg-rose-600',
-                                                        ];
-                                                        $sColor = $statusColors[$job->application_status] ?? 'text-zinc-500';
-                                                        $sDot = $statusDot[$job->application_status] ?? 'bg-zinc-500';
-                                                    @endphp
-                                                    <span class="inline-flex items-center gap-1 text-[9px] font-semibold {{ $sColor }}">
-                                                        <span class="w-1.5 h-1.5 rounded-full {{ $sDot }}"></span>
-                                                        {{ $job->application_status }}
-                                                    </span>
-                                                </td>
-                                                <td class="py-2.5 text-right">
-                                                    <a href="{{ route('jobs.show', $job) }}" class="inline-flex items-center justify-center w-6 h-6 rounded-md hover:bg-zinc-100 text-zinc-400 hover:text-zinc-700 transition-colors" onclick="event.stopPropagation();">
-                                                        <i class="ph ph-caret-right text-xs"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @endif
-                    </div>
 
+                            @if($recentApplications->isEmpty())
+                                <div class="flex flex-col items-center justify-center py-8 text-center bg-zinc-50/30 rounded-lg border border-dashed border-zinc-200/80">
+                                    <div class="w-10 h-10 bg-zinc-100 rounded-md flex items-center justify-center text-zinc-400 mb-2.5">
+                                        <i class="ph ph-briefcase text-lg"></i>
+                                    </div>
+                                    <h4 class="text-xs font-bold text-zinc-700">No applications yet</h4>
+                                    <p class="text-[10px] text-zinc-400 mt-0.5 max-w-[220px]">Add your first job opportunity to start tracking your career progress!</p>
+                                    <button onclick="openJobModal()" class="mt-3 flex items-center gap-1.5 px-2.5 py-1 bg-zinc-900 hover:bg-zinc-800 text-white text-[10px] font-bold rounded-md transition-all active:scale-95">
+                                        <i class="ph ph-plus text-xs"></i>
+                                        <span>Add Application</span>
+                                    </button>
+                                </div>
+                            @else
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-zinc-100">
+                                        <thead>
+                                            <tr class="text-left text-[9px] font-bold text-zinc-400 uppercase tracking-wider">
+                                                <th class="pb-2">Opportunity</th>
+                                                <th class="pb-2 hidden sm:table-cell">Applied Date</th>
+                                                <th class="pb-2">Stage</th>
+                                                <th class="pb-2">Status</th>
+                                                <th class="pb-2 text-right">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-zinc-150/40 text-zinc-700">
+                                            @foreach($recentApplications as $job)
+                                                <tr class="group hover:bg-zinc-50/40 transition-colors cursor-pointer" onclick="window.location='{{ route('jobs.show', $job) }}'">
+                                                    <td class="py-2.5">
+                                                        <div class="flex items-center gap-2.5">
+                                                            <div class="w-7 h-7 bg-zinc-50 rounded border border-zinc-200/50 flex items-center justify-center text-zinc-500 font-bold text-[10px] uppercase shrink-0">
+                                                                {{ substr($job->company_name, 0, 2) }}
+                                                            </div>
+                                                            <div class="min-w-0">
+                                                                <h4 class="text-[11px] font-semibold text-zinc-800 hover:text-primary-600 transition-colors truncate max-w-[150px] sm:max-w-[200px] leading-tight">{{ $job->position }}</h4>
+                                                                <p class="text-[9px] text-zinc-400 font-medium truncate leading-tight">{{ $job->company_name }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="py-2.5 hidden sm:table-cell text-[11px] font-medium text-zinc-500">
+                                                        {{ $job->application_date ? $job->application_date->translatedFormat('d M Y') : '-' }}
+                                                    </td>
+                                                    <td class="py-2.5">
+                                                        @php
+                                                            $stageColors = [
+                                                                'Applied' => 'bg-blue-50 text-blue-700 border-blue-100/50',
+                                                                'HR - Interview' => 'bg-orange-50 text-orange-700 border-orange-100/50',
+                                                                'User - Interview' => 'bg-amber-50 text-amber-700 border-amber-100/50',
+                                                                'Offering' => 'bg-emerald-50 text-emerald-700 border-emerald-100/50',
+                                                                'Rejected' => 'bg-rose-50 text-rose-700 border-rose-100/50',
+                                                            ];
+                                                            $color = $stageColors[$job->recruitment_stage] ?? 'bg-zinc-50 text-zinc-700 border-zinc-150/40';
+                                                        @endphp
+                                                        <span class="inline-flex items-center text-[9px] font-semibold border px-1.5 py-0.2 rounded {{ $color }}">
+                                                            {{ $job->recruitment_stage }}
+                                                        </span>
+                                                    </td>
+                                                    <td class="py-2.5">
+                                                        @php
+                                                            $statusColors = [
+                                                                'On Process' => 'text-blue-600',
+                                                                'Accepted' => 'text-emerald-600',
+                                                                'Declined' => 'text-rose-600',
+                                                            ];
+                                                            $statusDot = [
+                                                                'On Process' => 'bg-blue-600',
+                                                                'Accepted' => 'bg-emerald-600',
+                                                                'Declined' => 'bg-rose-600',
+                                                            ];
+                                                            $sColor = $statusColors[$job->application_status] ?? 'text-zinc-500';
+                                                            $sDot = $statusDot[$job->application_status] ?? 'bg-zinc-500';
+                                                        @endphp
+                                                        <span class="inline-flex items-center gap-1 text-[9px] font-semibold {{ $sColor }}">
+                                                            <span class="w-1.5 h-1.5 rounded-full {{ $sDot }}"></span>
+                                                            {{ $job->application_status }}
+                                                        </span>
+                                                    </td>
+                                                    <td class="py-2.5 text-right">
+                                                        <a href="{{ route('jobs.show', $job) }}" class="inline-flex items-center justify-center w-6 h-6 rounded-md hover:bg-zinc-100 text-zinc-400 hover:text-zinc-700 transition-colors" onclick="event.stopPropagation();">
+                                                            <i class="ph ph-caret-right text-xs"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Weekly Goal (col-span 1) -->
+                <div class="col-span-1">
+                    <livewire:goals-cadence-manager />
+                </div>
+            </div>
+
+            <!-- Row 2: Heatmap, Upcoming Interviews, and Quick Actions -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5 items-start">
+                <!-- Left Column: Heatmap & Wawancara (col-span 2) -->
+                <div class="lg:col-span-2 space-y-5">
                     <!-- Job Search Momentum Calendar Heatmap (GitHub Style) -->
                     <div class="bg-white rounded-lg border border-zinc-200/60 p-5 shadow-2xs font-sans">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 select-none">
