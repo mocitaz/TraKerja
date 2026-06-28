@@ -39,25 +39,25 @@
                                         <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:12px;">
                                             <tr>
                                                 <td style="padding:12px 0; border-bottom:1px solid #f4f4f5; vertical-align:top;">
-                                                    <p style="margin:0 0 4px 0; font-size:13px; font-weight:600; color:#18181b;">✨ Desain Workspace Baru (Cupertino-Notion Style)</p>
+                                                    <p style="margin:0 0 4px 0; font-size:13px; font-weight:600; color:#18181b;">Desain Workspace Baru (Cupertino-Notion Style)</p>
                                                     <p style="margin:0; font-size:12px; line-height:18px; color:#71717a;">Tata letak papan pelacakan (Kanban) yang lebih datar, minimalis, dan hemat ruang visual untuk mengurangi rasa jenuh saat melacak puluhan lamaran kerja.</p>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td style="padding:12px 0; border-bottom:1px solid #f4f4f5; vertical-align:top;">
-                                                    <p style="margin:0 0 4px 0; font-size:13px; font-weight:600; color:#18181b;">🤖 AI ATS Resume Scanner & Matcher</p>
+                                                    <p style="margin:0 0 4px 0; font-size:13px; font-weight:600; color:#18181b;">AI ATS Resume Scanner & Matcher</p>
                                                     <p style="margin:0; font-size:12px; line-height:18px; color:#71717a;">Uji kelayakan CV Anda secara instan terhadap deskripsi posisi kerja. Periksa skor ATS dan temukan kata kunci penting yang terlewat sebelum mengirim berkas.</p>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td style="padding:12px 0; border-bottom:1px solid #f4f4f5; vertical-align:top;">
-                                                    <p style="margin:0 0 4px 0; font-size:13px; font-weight:600; color:#18181b;">🔌 Pembaruan Chrome Auto-Fill Extension</p>
+                                                    <p style="margin:0 0 4px 0; font-size:13px; font-weight:600; color:#18181b;">Pembaruan Chrome Auto-Fill Extension</p>
                                                     <p style="margin:0; font-size:12px; line-height:18px; color:#71717a;">Sistem ekstraksi data yang kini mendukung integrasi portal kerja lebih luas (LinkedIn, Glints, JobStreet, Kalibrr, Dealls, Talentics) hanya dengan satu klik.</p>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td style="padding:12px 0; vertical-align:top;">
-                                                    <p style="margin:0 0 4px 0; font-size:13px; font-weight:600; color:#18181b;">📈 Wawasan Estimasi Gaji Regional (UMK Tracker)</p>
+                                                    <p style="margin:0 0 4px 0; font-size:13px; font-weight:600; color:#18181b;">Wawasan Estimasi Gaji Regional (UMK Tracker)</p>
                                                     <p style="margin:0; font-size:12px; line-height:18px; color:#71717a;">Lacak penawaran gaji pasar yang wajar untuk posisi kerja Anda dan dapatkan perbandingan otomatis terhadap batas minimal UMK wilayah regional tujuan.</p>
                                                 </td>
                                             </tr>
