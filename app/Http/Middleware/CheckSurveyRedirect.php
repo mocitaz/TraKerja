@@ -18,11 +18,13 @@ class CheckSurveyRedirect
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check()) {
-            $user = Auth::user();
+        // Only run redirection for standard GET requests (page navigations)
+        if ($request->isMethod('GET') && !$request->ajax() && !$request->pjax() && !$request->wantsJson()) {
+            if (Auth::check()) {
+                $user = Auth::user();
 
-            // Only enforce for normal users (non-admins)
-            if (!$user->isAdmin()) {
+                // Only enforce for normal users (non-admins)
+                if (!$user->isAdmin()) {
                 
                 // Do not ask new users unless their account age is at least 3 days
                 $accountAgeInDays = $user->created_at ? $user->created_at->diffInDays(now()) : 0;
@@ -56,6 +58,7 @@ class CheckSurveyRedirect
                     }
                 }
             }
+        }
         }
 
         return $next($request);

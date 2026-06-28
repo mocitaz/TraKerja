@@ -19,6 +19,7 @@
                 elseif(request()->routeIs('profile.edit'))  $pageTitle = 'My Profile';
                 elseif(request()->routeIs('automation.*') || request()->routeIs('csv.*')) $pageTitle = 'Automation';
                 elseif(request()->routeIs('support.*'))     $pageTitle = 'Support';
+                elseif(request()->routeIs('survey.show'))   $pageTitle = 'User Survey & Feedback';
             @endphp
             <div class="hidden sm:flex items-center space-x-1.5 text-xs font-semibold text-zinc-400 select-none">
                 <span class="hover:text-zinc-700 transition-colors">TraKerja</span>
