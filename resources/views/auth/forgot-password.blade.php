@@ -1,16 +1,14 @@
 <x-guest-layout>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <div class="min-h-screen bg-white font-sans antialiased text-[#37352f] flex flex-col justify-between items-center py-16 px-6 selection:bg-[#2383e2]/10">
+    <div class="min-h-screen bg-white font-sans antialiased text-[#37352f] flex flex-col items-center pt-16 pb-6 px-6 selection:bg-[#2383e2]/10">
         
         <!-- Main Container -->
-        <div class="w-full max-w-[340px] mx-auto my-auto flex flex-col items-center space-y-6">
+        <div class="w-full max-w-[340px] flex-1 flex flex-col justify-center items-center space-y-6">
             
             <!-- Logo Section -->
             <div class="flex flex-col items-center text-center">
-                <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 shadow-2xs flex items-center justify-center p-2 mb-4">
-                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-full h-full object-contain">
-                </div>
+                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-12 h-12 object-contain mb-4">
                 <h1 class="text-xl font-bold text-[#37352f] tracking-tight leading-snug">
                     Forgot your password?
                 </h1>
