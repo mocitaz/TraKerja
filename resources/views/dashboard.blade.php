@@ -321,7 +321,7 @@
                     </div>
 
                     <!-- Upcoming Interviews -->
-                    <div class="bg-white rounded-lg border border-zinc-200/60 p-4 mt-5">
+                    <div class="bg-white rounded-lg border border-zinc-200/60 p-4">
                         <div class="flex items-center justify-between mb-4">
                             <div>
                                 <h3 class="text-xs font-bold text-zinc-850 tracking-tight uppercase tracking-wider">Upcoming Interviews</h3>
@@ -390,10 +390,10 @@
                 </div>
 
                 <!-- Right Column: Quick Actions (col-span 1) -->
-                <div class="col-span-1 h-full">
+                <div class="col-span-1 flex flex-col">
 
                     <!-- Quick Actions Panel -->
-                    <div class="bg-white rounded-lg border border-zinc-200/60 p-4 h-full flex flex-col justify-between">
+                    <div class="bg-white rounded-lg border border-zinc-200/60 p-4 flex-1 flex flex-col justify-between">
                         <div class="flex items-center justify-between mb-3.5 select-none">
                             <div>
                                 <h3 class="text-xs font-bold text-zinc-850 tracking-tight uppercase tracking-wider">Quick Actions</h3>
