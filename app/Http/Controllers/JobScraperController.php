@@ -62,6 +62,40 @@ class JobScraperController extends Controller
                 }
             }
 
+            // 1b. Try Talentics Vue Data Parsing (specific Vue initialization state)
+            if (empty($jobTitle) || empty($companyName)) {
+                if (strpos($url, 'talentics.id') !== false) {
+                    if (preg_match('/new Vue\(\{\s*el:\s*[\'"]#job-detail-page[\'"],\s*data:\s*(\{.*)/is', $html, $vueMatches)) {
+                        $jsBlock = $vueMatches[1];
+                        $jobJson = $this->extractBraceBalancedJSON($jsBlock, 'job');
+                        $orgJson = $this->extractBraceBalancedJSON($jsBlock, 'organization');
+                        
+                        if ($jobJson) {
+                            $jobData = json_decode($jobJson, true);
+                            if (json_last_error() === JSON_ERROR_NONE) {
+                                if (!empty($jobData['title'])) {
+                                    $jobTitle = html_entity_decode(strip_tags($jobData['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                }
+                                if (!empty($jobData['location'])) {
+                                    $location = html_entity_decode(strip_tags($jobData['location']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                }
+                            }
+                        }
+                        
+                        if ($orgJson) {
+                            $orgData = json_decode($orgJson, true);
+                            if (json_last_error() === JSON_ERROR_NONE) {
+                                if (!empty($orgData['company_name'])) {
+                                    $companyName = html_entity_decode(strip_tags($orgData['company_name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                } elseif (!empty($orgData['name'])) {
+                                    $companyName = html_entity_decode(strip_tags($orgData['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             // 2. Try JSON-LD if not filled by Redux (Search Engine optimized structured data)
             if (empty($jobTitle) || empty($companyName) || empty($description)) {
                 $jsonLd = $this->extractJsonLd($html);
@@ -274,6 +308,40 @@ class JobScraperController extends Controller
                         }
                         if (!empty($jobDetails['content'])) {
                             $description = $this->cleanJobDescriptionMarkup($jobDetails['content']);
+                        }
+                    }
+                }
+            }
+
+            // 1b. Try Talentics Vue Data Parsing (specific Vue initialization state)
+            if (empty($jobTitle) || empty($companyName)) {
+                if (strpos($url, 'talentics.id') !== false) {
+                    if (preg_match('/new Vue\(\{\s*el:\s*[\'"]#job-detail-page[\'"],\s*data:\s*(\{.*)/is', $html, $vueMatches)) {
+                        $jsBlock = $vueMatches[1];
+                        $jobJson = $this->extractBraceBalancedJSON($jsBlock, 'job');
+                        $orgJson = $this->extractBraceBalancedJSON($jsBlock, 'organization');
+                        
+                        if ($jobJson) {
+                            $jobData = json_decode($jobJson, true);
+                            if (json_last_error() === JSON_ERROR_NONE) {
+                                if (!empty($jobData['title'])) {
+                                    $jobTitle = html_entity_decode(strip_tags($jobData['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                }
+                                if (!empty($jobData['location'])) {
+                                    $location = html_entity_decode(strip_tags($jobData['location']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                }
+                            }
+                        }
+                        
+                        if ($orgJson) {
+                            $orgData = json_decode($orgJson, true);
+                            if (json_last_error() === JSON_ERROR_NONE) {
+                                if (!empty($orgData['company_name'])) {
+                                    $companyName = html_entity_decode(strip_tags($orgData['company_name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                } elseif (!empty($orgData['name'])) {
+                                    $companyName = html_entity_decode(strip_tags($orgData['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                }
+                            }
                         }
                     }
                 }
@@ -591,6 +659,37 @@ class JobScraperController extends Controller
     {
         if (preg_match('/<title[^>]*>(.*?)<\/title>/i', $html, $matches)) {
             return trim($matches[1]);
+        }
+        return null;
+    }
+
+    private function extractBraceBalancedJSON(string $str, string $key): ?string
+    {
+        $pos = strpos($str, $key . ':');
+        if ($pos === false) {
+            $pos = strpos($str, '"' . $key . '":');
+        }
+        if ($pos === false) {
+            $pos = strpos($str, "'" . $key . "':");
+        }
+        if ($pos === false) return null;
+        
+        $startPos = strpos($str, '{', $pos);
+        if ($startPos === false) return null;
+        
+        $len = strlen($str);
+        $braceCount = 0;
+        
+        for ($i = $startPos; $i < $len; $i++) {
+            $char = $str[$i];
+            if ($char === '{') {
+                $braceCount++;
+            } elseif ($char === '}') {
+                $braceCount--;
+                if ($braceCount === 0) {
+                    return substr($str, $startPos, $i - $startPos + 1);
+                }
+            }
         }
         return null;
     }

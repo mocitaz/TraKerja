@@ -299,6 +299,8 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
                 detectPlatform = 'LinkedIn';
             } else if (url.includes('jobstreet.com') || url.includes('seek.com')) {
                 detectPlatform = 'JobStreet';
+            } else if (url.includes('talentics.id')) {
+                detectPlatform = 'Talentics';
             }
             if (detectPlatform && window.Livewire) {
                 @this.set('platform', detectPlatform);
@@ -367,6 +369,8 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
                         detectPlatform = 'LinkedIn';
                     } else if (url.includes('jobstreet.com') || url.includes('seek.com')) {
                         detectPlatform = 'JobStreet';
+                    } else if (url.includes('talentics.id')) {
+                        detectPlatform = 'Talentics';
                     }
                     if (detectPlatform && window.Livewire) {
                         @this.set('platform', detectPlatform);
