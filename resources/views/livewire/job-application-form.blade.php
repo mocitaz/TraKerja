@@ -163,10 +163,10 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
                 <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Job Link (URL)</label>
-                <div class="relative group flex items-center">
+                <div class="relative group">
                     <i class="ph-bold ph-link absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-400 text-sm group-focus-within:text-zinc-700 transition-colors"></i>
                     <input id="job-url-input" wire:model.live="platform_link" type="url" class="block w-full pl-8 pr-[86px] h-[32px] bg-zinc-50/40 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 focus:ring-1 focus:ring-primary-500/20 focus:bg-white focus:border-primary-500 transition-all outline-none" placeholder="https://...">
-                    <button type="button" onclick="fetchJobDetailsFromUrl()" id="scrape-btn" class="absolute right-1 top-[3px] h-[26px] px-2.5 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded text-[9px] font-bold transition-all flex items-center gap-1 active:scale-95 select-none z-10">
+                    <button type="button" onclick="fetchJobDetailsFromUrl()" id="scrape-btn" class="absolute right-1 top-1/2 -translate-y-1/2 h-[26px] px-2.5 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded text-[9px] font-bold transition-all flex items-center gap-1 active:scale-95 select-none z-10">
                         <i class="ph-bold ph-sparkle text-[10px]"></i>
                         <span>Auto-Fill</span>
                     </button>
@@ -174,26 +174,22 @@
                 @error('platform_link') <p class="text-rose-500 text-[9px] font-semibold mt-1 ml-0.5">{{ $message }}</p> @enderror
 
                 <!-- Supported Platforms Info Block -->
-                <div class="mt-1.5 flex items-center gap-1 text-[8.5px] text-zinc-400 font-semibold select-none flex-wrap">
-                    <span class="text-zinc-400">Supports:</span>
-                    <span class="inline-flex items-center gap-0.5 px-1 py-0.5 bg-zinc-100/50 rounded text-zinc-500 border border-zinc-200/40">
-                        <i class="ph-bold ph-linkedin-logo text-blue-600 text-[9px]"></i> LinkedIn
-                    </span>
-                    <span class="inline-flex items-center gap-0.5 px-1 py-0.5 bg-zinc-100/50 rounded text-zinc-500 border border-zinc-200/40">
-                        <span class="w-1 h-1 rounded-full bg-cyan-500"></span> Glints
-                    </span>
-                    <span class="inline-flex items-center gap-0.5 px-1 py-0.5 bg-zinc-100/50 rounded text-zinc-500 border border-zinc-200/40">
-                        <span class="w-1 h-1 rounded-full bg-indigo-900"></span> JobStreet
-                    </span>
-                    <span class="inline-flex items-center gap-0.5 px-1 py-0.5 bg-zinc-100/50 rounded text-zinc-500 border border-zinc-200/40">
-                        <span class="w-1 h-1 rounded-full bg-blue-500"></span> Kalibrr
-                    </span>
-                    <span class="inline-flex items-center gap-0.5 px-1 py-0.5 bg-zinc-100/50 rounded text-zinc-500 border border-zinc-200/40">
-                        <span class="w-1 h-1 rounded-full bg-amber-500"></span> Dealls
-                    </span>
-                    <span class="inline-flex items-center gap-0.5 px-1 py-0.5 bg-zinc-100/50 rounded text-zinc-500 border border-zinc-200/40">
-                        <span class="w-1 h-1 rounded-full bg-violet-600"></span> Talentics
-                    </span>
+                <div class="mt-2 flex flex-wrap items-center gap-1.5 text-[8px] font-bold text-zinc-400 uppercase tracking-wider select-none">
+                    <span class="text-zinc-400 text-[7.5px] tracking-widest mr-0.5">Supports:</span>
+                    @foreach([
+                        ['id' => 'linkedin.com', 'name' => 'LinkedIn'],
+                        ['id' => 'glints.com', 'name' => 'Glints'],
+                        ['id' => 'jobstreet.co.id', 'name' => 'JobStreet'],
+                        ['id' => 'kalibrr.com', 'name' => 'Kalibrr'],
+                        ['id' => 'usedeall.com', 'name' => 'Dealls'],
+                        ['id' => 'talentics.id', 'name' => 'Talentics']
+                    ] as $plat)
+                    <div class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-zinc-50 border border-zinc-200/60 rounded text-zinc-600 shadow-3xs hover:bg-zinc-100 transition-all cursor-default">
+                        <img src="https://www.google.com/s2/favicons?domain={{ $plat['id'] }}&sz=64" class="w-3 h-3 object-contain shrink-0" alt="{{ $plat['name'] }}" />
+                        <span>{{ $plat['name'] }}</span>
+                    </div>
+                    @endforeach
+                    <span class="text-zinc-400 font-semibold tracking-normal text-[8px] lowercase">& others</span>
                 </div>
 
                 <!-- Scraper Status Alert message inside FE -->
@@ -299,7 +295,7 @@ window.updateScrapeStatus = function(state, message = '') {
         statusDiv.classList.add('hidden');
         if (btn) {
             btn.disabled = false;
-            btn.className = "absolute right-1 top-[3px] h-[26px] px-2.5 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded text-[9px] font-bold transition-all flex items-center gap-1 active:scale-95 select-none z-10";
+            btn.className = "absolute right-1 top-1/2 -translate-y-1/2 h-[26px] px-2.5 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded text-[9px] font-bold transition-all flex items-center gap-1 active:scale-95 select-none z-10";
             btn.innerHTML = '<i class="ph-bold ph-sparkle text-[10px]"></i> <span>Auto-Fill</span>';
         }
     } else if (state === 'fetching') {
@@ -310,7 +306,7 @@ window.updateScrapeStatus = function(state, message = '') {
         
         if (btn) {
             btn.disabled = true;
-            btn.className = "absolute right-1 top-[3px] h-[26px] px-2.5 bg-zinc-50 text-zinc-400 border border-zinc-200 rounded text-[9px] font-bold transition-all flex items-center gap-1 select-none z-10";
+            btn.className = "absolute right-1 top-1/2 -translate-y-1/2 h-[26px] px-2.5 bg-zinc-50 text-zinc-400 border border-zinc-200 rounded text-[9px] font-bold transition-all flex items-center gap-1 select-none z-10";
             btn.innerHTML = '<i class="ph-bold ph-spinner animate-spin text-[10px]"></i> <span>Fetching...</span>';
         }
     } else if (state === 'bypassing') {
@@ -321,7 +317,7 @@ window.updateScrapeStatus = function(state, message = '') {
         
         if (btn) {
             btn.disabled = true;
-            btn.className = "absolute right-1 top-[3px] h-[26px] px-2.5 bg-amber-50 text-amber-600 border border-amber-200 rounded text-[9px] font-bold transition-all flex items-center gap-1 select-none z-10 animate-pulse";
+            btn.className = "absolute right-1 top-1/2 -translate-y-1/2 h-[26px] px-2.5 bg-amber-50 text-amber-600 border border-amber-200 rounded text-[9px] font-bold transition-all flex items-center gap-1 select-none z-10 animate-pulse";
             btn.innerHTML = '<i class="ph-bold ph-shield-warning text-[10px]"></i> <span>Bypassing...</span>';
         }
     } else if (state === 'success') {
@@ -332,7 +328,7 @@ window.updateScrapeStatus = function(state, message = '') {
         
         if (btn) {
             btn.disabled = false;
-            btn.className = "absolute right-1 top-[3px] h-[26px] px-2.5 bg-emerald-50 text-emerald-800 border border-emerald-250 rounded text-[9px] font-bold transition-all flex items-center gap-1 select-none z-10";
+            btn.className = "absolute right-1 top-1/2 -translate-y-1/2 h-[26px] px-2.5 bg-emerald-50 text-emerald-800 border border-emerald-250 rounded text-[9px] font-bold transition-all flex items-center gap-1 select-none z-10";
             btn.innerHTML = '<i class="ph-bold ph-check text-[10px]"></i> <span>Filled!</span>';
         }
         
@@ -347,7 +343,7 @@ window.updateScrapeStatus = function(state, message = '') {
         
         if (btn) {
             btn.disabled = false;
-            btn.className = "absolute right-1 top-[3px] h-[26px] px-2.5 bg-rose-50 text-rose-800 border border-rose-200 rounded text-[9px] font-bold transition-all flex items-center gap-1 select-none z-10";
+            btn.className = "absolute right-1 top-1/2 -translate-y-1/2 h-[26px] px-2.5 bg-rose-50 text-rose-800 border border-rose-200 rounded text-[9px] font-bold transition-all flex items-center gap-1 select-none z-10";
             btn.innerHTML = '<i class="ph-bold ph-x text-[10px]"></i> <span>Failed</span>';
         }
         
