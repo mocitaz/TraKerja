@@ -32,60 +32,83 @@ class JobScraperController extends Controller
 
             $html = $response->body();
 
-            // Extract using JSON-LD (Search Engine optimized structured data, works on 99% of major job sites)
-            $jsonLd = $this->extractJsonLd($html);
-            
             $jobTitle = '';
             $companyName = '';
             $description = '';
             $location = '';
 
-            if ($jsonLd) {
-                if (!empty($jsonLd['title'])) {
-                    $jobTitle = html_entity_decode(strip_tags($jsonLd['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-                } elseif (!empty($jsonLd['jobTitle'])) {
-                    $jobTitle = html_entity_decode(strip_tags($jsonLd['jobTitle']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-                }
-                
-                if (!empty($jsonLd['hiringOrganization'])) {
-                    $org = $jsonLd['hiringOrganization'];
-                    if (is_array($org) && !empty($org['name'])) {
-                        $companyName = html_entity_decode(strip_tags($org['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-                    } elseif (is_string($org)) {
-                        $companyName = html_entity_decode(strip_tags($org), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-                    }
-                }
-                
-                if (!empty($jsonLd['jobLocation'])) {
-                    $loc = $jsonLd['jobLocation'];
-                    if (is_array($loc)) {
-                        if (isset($loc['address']) && is_array($loc['address'])) {
-                            $addr = $loc['address'];
-                            $parts = [];
-                            if (!empty($addr['addressLocality'])) {
-                                $parts[] = $addr['addressLocality'];
-                            }
-                            if (!empty($addr['addressRegion'])) {
-                                $parts[] = $addr['addressRegion'];
-                            }
-                            if (!empty($addr['addressCountry'])) {
-                                $parts[] = $addr['addressCountry'];
-                            }
-                            $location = implode(', ', $parts);
-                        } elseif (isset($loc['name'])) {
-                            $location = $loc['name'];
+            // 1. Try SEEK/Jobstreet Redux Data Parsing (highly specific & complete state payload)
+            if (preg_match('/window\.SEEK_REDUX_DATA\s*=\s*(\{.*?\});/is', $html, $reduxMatches)) {
+                $data = json_decode($reduxMatches[1], true);
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $jobDetails = $data['jobdetails']['result']['job'] ?? null;
+                    if ($jobDetails) {
+                        if (!empty($jobDetails['title'])) {
+                            $jobTitle = html_entity_decode(strip_tags($jobDetails['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
                         }
-                    } elseif (is_string($loc)) {
-                        $location = $loc;
+                        if (!empty($jobDetails['advertiser']['name'])) {
+                            $companyName = html_entity_decode(strip_tags($jobDetails['advertiser']['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                        }
+                        if (!empty($jobDetails['location']['label'])) {
+                            $location = html_entity_decode(strip_tags($jobDetails['location']['label']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                        }
+                        if (!empty($jobDetails['content'])) {
+                            $description = $this->cleanJobDescriptionMarkup($jobDetails['content']);
+                        }
                     }
                 }
+            }
 
-                if (!empty($jsonLd['description'])) {
-                    $descText = $jsonLd['description'];
-                    $descText = preg_replace('/<(?:br|p|div|li)[^>]*>/i', "\n", $descText);
-                    $descText = html_entity_decode(strip_tags($descText), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-                    $descText = preg_replace("/\n+/", "\n\n", $descText);
-                    $description = $this->cleanJobDescription($descText);
+            // 2. Try JSON-LD if not filled by Redux (Search Engine optimized structured data)
+            if (empty($jobTitle) || empty($companyName) || empty($description)) {
+                $jsonLd = $this->extractJsonLd($html);
+                if ($jsonLd) {
+                    if (!empty($jsonLd['title'])) {
+                        $jobTitle = html_entity_decode(strip_tags($jsonLd['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                    } elseif (!empty($jsonLd['jobTitle'])) {
+                        $jobTitle = html_entity_decode(strip_tags($jsonLd['jobTitle']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                    }
+                    
+                    if (!empty($jsonLd['hiringOrganization'])) {
+                        $org = $jsonLd['hiringOrganization'];
+                        if (is_array($org) && !empty($org['name'])) {
+                            $companyName = html_entity_decode(strip_tags($org['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                        } elseif (is_string($org)) {
+                            $companyName = html_entity_decode(strip_tags($org), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                        }
+                    }
+                    
+                    if (!empty($jsonLd['jobLocation'])) {
+                        $loc = $jsonLd['jobLocation'];
+                        if (is_array($loc)) {
+                            if (isset($loc['address']) && is_array($loc['address'])) {
+                                $addr = $loc['address'];
+                                $parts = [];
+                                if (!empty($addr['addressLocality'])) {
+                                    $parts[] = $addr['addressLocality'];
+                                }
+                                if (!empty($addr['addressRegion'])) {
+                                    $parts[] = $addr['addressRegion'];
+                                }
+                                if (!empty($addr['addressCountry'])) {
+                                    $parts[] = $addr['addressCountry'];
+                                }
+                                $location = implode(', ', $parts);
+                            } elseif (isset($loc['name'])) {
+                                $location = $loc['name'];
+                            }
+                        } elseif (is_string($loc)) {
+                            $location = $loc;
+                        }
+                    }
+
+                    if (!empty($jsonLd['description'])) {
+                        $descText = $jsonLd['description'];
+                        $descText = preg_replace('/<(?:br|p|div|li)[^>]*>/i', "\n", $descText);
+                        $descText = html_entity_decode(strip_tags($descText), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                        $descText = preg_replace("/\n+/", "\n\n", $descText);
+                        $description = $this->cleanJobDescription($descText);
+                    }
                 }
             }
 
@@ -97,7 +120,9 @@ class JobScraperController extends Controller
                     '/class="[^"]*job-description[^"]*"\s*>\s*(.*?)\s*<\/div>/is',
                     '/id="[^"]*job-description[^"]*"\s*>\s*(.*?)\s*<\/div>/is',
                     '/class="[^"]*JobDescription[^"]*"\s*>\s*(.*?)\s*<\/div>/is',
-                    '/class="[^"]*jobDescription[^"]*"\s*>\s*(.*?)\s*<\/div>/is'
+                    '/class="[^"]*jobDescription[^"]*"\s*>\s*(.*?)\s*<\/div>/is',
+                    '/data-automation="jobDescription"[^>]*>\s*(.*?)\s*<\/div>/is',
+                    '/data-automation="jobAdDetails"[^>]*>\s*(.*?)\s*<\/div>/is'
                 ];
                 
                 foreach ($containers as $pattern) {
