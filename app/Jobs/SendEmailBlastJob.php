@@ -48,6 +48,9 @@ class SendEmailBlastJob implements ShouldQueue
                 case 'monthly_motivation':
                     Mail::to($this->user->email)->send(new MonthlyMotivationMail($this->user));
                     break;
+                case 'new_vibe':
+                    Mail::to($this->user->email)->send(new \App\Mail\NewVibeMail($this->user));
+                    break;
                 case 'custom':
                     Mail::to($this->user->email)->send(new CustomEmailBlastMail(
                         $this->user,

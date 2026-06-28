@@ -505,6 +505,9 @@ class UserManagement extends Component
                 case 'follow_up_feature':
                     Mail::to($user->email)->send(new FollowUpFeatureAnnouncementMail($user));
                     break;
+                case 'new_vibe':
+                    Mail::to($user->email)->send(new \App\Mail\NewVibeMail($user));
+                    break;
                 case 'idul_adha':
                     Mail::to($user->email)->send(new \App\Mail\IdulAdhaMail($user));
                     break;
@@ -560,6 +563,7 @@ class UserManagement extends Component
                 'premium_granted'         => 'Premium Granted Notification',
                 'product_update'          => 'Major Product Update',
                 'hiring_season'           => 'Hiring Season Alert',
+                'new_vibe'                => 'Suasana Baru TraKerja',
                 're_engagement' => 'Re-engagement',
                 'ai_photo' => 'AI Photo Announcement',
                 'follow_up_feature' => 'Follow Up Feature',

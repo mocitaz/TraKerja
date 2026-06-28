@@ -204,6 +204,23 @@
                                 </div>
                             </label>
 
+                            <!-- Suasana Baru (New Vibe) -->
+                            <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
+                                <input type="radio" name="email_type" value="new_vibe" class="sr-only" required>
+                                <div class="flex items-center gap-4 w-full">
+                                    <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-650 flex items-center justify-center  transition-transform">
+                                        <i class="ph-duotone ph-sparkles text-2xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-sm font-bold text-slate-900">Suasana Baru TraKerja</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Pengumuman penyegaran antarmuka dan transisi pengalaman karier baru.</p>
+                                    </div>
+                                    <div class="indicator hidden w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                                        <i class="ph-bold ph-check text-xs"></i>
+                                    </div>
+                                </div>
+                            </label>
+
                             <!-- Hiring Season Alert -->
                             <label class="group relative flex cursor-pointer rounded-2xl border-2 border-slate-100 p-5 focus:outline-none hover:border-primary-200 hover:bg-slate-50 transition-all">
                                 <input type="radio" name="email_type" value="hiring_season" class="sr-only" required>
