@@ -5,7 +5,7 @@
             @if($hasCompleted)
                 {{-- THANK YOU STATE --}}
                 <div class="bg-white border border-zinc-200 rounded-lg shadow-sm overflow-hidden mt-10">
-                    <div class="h-2 bg-purple-650"></div>
+                    <div class="h-2 bg-primary-500"></div>
                     <div class="p-6 sm:p-8 text-center space-y-5 max-w-md mx-auto">
                         <div class="w-14 h-14 bg-emerald-50 border border-emerald-100 rounded-full flex items-center justify-center text-emerald-600 mx-auto shadow-2xs">
                             <i class="ph-bold ph-heart text-2xl animate-pulse"></i>
@@ -32,7 +32,7 @@
 
                     {{-- Card 1: Form Header (Google Forms Style) --}}
                     <div class="bg-white border border-zinc-200 rounded-lg shadow-2xs overflow-hidden">
-                        <div class="h-2.5 bg-purple-600"></div>
+                        <div class="h-2.5 bg-primary-500"></div>
                         <div class="p-5 sm:p-6 space-y-3">
                             <h1 class="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight">Evaluasi & Kepuasan Layanan TraKerja</h1>
                             <p class="text-xs text-zinc-650 leading-relaxed text-justify">
@@ -188,7 +188,7 @@
 
                     {{-- Action Row Card --}}
                     <div class="flex items-center justify-between pt-2">
-                        <button type="submit" class="px-6 py-2 bg-purple-600 hover:bg-purple-750 text-white rounded-md text-[10px] font-bold uppercase tracking-wider transition-colors shadow-2xs">
+                        <button type="submit" class="px-6 py-2 bg-primary-500 hover:bg-primary-650 text-white rounded-md text-[10px] font-bold uppercase tracking-wider transition-colors shadow-2xs">
                             Kirim Tanggapan
                         </button>
                         <button type="reset" class="px-4 py-2 text-zinc-500 hover:text-zinc-800 text-[10px] font-bold uppercase tracking-wider transition-colors">
