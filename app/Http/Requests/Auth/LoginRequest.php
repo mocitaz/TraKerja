@@ -26,11 +26,21 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
-            'cf-turnstile-response' => ['required', new \App\Rules\TurnstileRule()],
         ];
+
+        // Skip turnstile verification if using Cloudflare dummy keys (meaning real production credentials aren't set)
+        $siteKey = env('TURNSTILE_SITE_KEY', '0x4AAAAAADVwvVUur2OE6_b9');
+        $isDummy = $siteKey === '0x4AAAAAADVwvVUur2OE6_b9';
+        $isLocal = app()->environment('local') || in_array(request()->getHost(), ['localhost', '127.0.0.1']);
+
+        if (!$isLocal && !$isDummy) {
+            $rules['cf-turnstile-response'] = ['required', new \App\Rules\TurnstileRule()];
+        }
+
+        return $rules;
     }
 
     public function messages(): array
