@@ -284,9 +284,7 @@
                                 @endforeach
                             </div>
                         @endif
-                    </div>
-
-                    <!-- Job Search Momentum Calendar Heatmap (GitHub Style) -->
+                    </div>                    <!-- Job Search Momentum Calendar Heatmap (GitHub Style) -->
                     <div class="bg-white rounded-lg border border-zinc-200/60 p-5 shadow-2xs font-sans">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 select-none">
                             <div>
@@ -300,12 +298,12 @@
 
                         {{-- Heatmap Grid Container with Horizontal Scroll --}}
                         <div class="overflow-x-auto select-none custom-scrollbar pb-2 pt-4">
-                            <div class="flex gap-[3px] min-w-[760px] relative">
+                            <div class="flex" style="gap: 3px; min-width: 760px; position: relative;">
                                 {{-- Days Labels on Left --}}
-                                <div class="grid grid-rows-7 gap-[3px] text-[9px] text-zinc-400 select-none shrink-0 pr-2 font-sans font-medium h-[88px] leading-none">
-                                    <span class="row-start-1 leading-none self-center">Mon</span>
-                                    <span class="row-start-3 leading-none self-center">Wed</span>
-                                    <span class="row-start-5 leading-none self-center">Fri</span>
+                                <div class="flex flex-col justify-between select-none shrink-0 pr-2 font-sans font-medium text-zinc-400" style="height: 88px; font-size: 9px; line-height: 1;">
+                                    <span style="height: 10px; display: flex; align-items: center;">Mon</span>
+                                    <span style="height: 10px; display: flex; align-items: center;">Wed</span>
+                                    <span style="height: 10px; display: flex; align-items: center;">Fri</span>
                                 </div>
 
                                 {{-- Week Columns --}}
@@ -322,10 +320,10 @@
                                             $lastMonth = $firstDay->format('M');
                                         }
                                     @endphp
-                                    <div class="flex flex-col gap-[3px] relative shrink-0">
+                                    <div class="flex flex-col shrink-0" style="gap: 3px; position: relative;">
                                         {{-- Month Label at top of column --}}
                                         @if($monthName)
-                                            <span class="absolute -top-4.5 left-0 text-[9px] font-medium text-zinc-500 font-sans whitespace-nowrap">{{ $monthName }}</span>
+                                            <span class="absolute font-sans text-zinc-500 font-medium" style="top: -18px; left: 0; font-size: 9px; white-space: nowrap;">{{ $monthName }}</span>
                                         @endif
                                         
                                         @foreach($dayOrder as $dIdx)
@@ -335,21 +333,21 @@
                                                 
                                                 // GitHub exact color hexes
                                                 if ($count == 0) {
-                                                    $colorClass = 'bg-[#ebedf0] hover:bg-[#e1e4e8]';
+                                                    $bgColor = '#ebedf0';
                                                 } elseif ($count == 1) {
-                                                    $colorClass = 'bg-[#9be9a8]';
+                                                    $bgColor = '#9be9a8';
                                                 } elseif ($count == 2) {
-                                                    $colorClass = 'bg-[#40c463]';
+                                                    $bgColor = '#40c463';
                                                 } elseif ($count == 3) {
-                                                    $colorClass = 'bg-[#30a14e]';
+                                                    $bgColor = '#30a14e';
                                                 } else {
-                                                    $colorClass = 'bg-[#216e39]';
+                                                    $bgColor = '#216e39';
                                                 }
                                             @endphp
                                             
                                             @if($day)
                                                 <div class="group relative shrink-0">
-                                                    <div class="w-[10px] h-[10px] rounded-[2px] {{ $colorClass }} transition-colors cursor-pointer"></div>
+                                                    <div class="transition-colors cursor-pointer" style="width: 10px; height: 10px; border-radius: 2px; background-color: {{ $bgColor }};"></div>
                                                     {{-- Tooltip overlay --}}
                                                     <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 hidden group-hover:block z-50 bg-zinc-900 text-white text-[9px] font-semibold py-1 px-2 rounded shadow-sm whitespace-nowrap leading-none pointer-events-none">
                                                         {{ $count }} lamaran • {{ $day['formattedDate'] }}
@@ -357,7 +355,7 @@
                                                 </div>
                                             @else
                                                 {{-- Blank spacer for missing days --}}
-                                                <div class="w-[10px] h-[10px] bg-transparent shrink-0"></div>
+                                                <div style="width: 10px; height: 10px; background-color: transparent;"></div>
                                             @endif
                                         @endforeach
                                     </div>
@@ -371,13 +369,13 @@
                                 Learn how we count contributions
                             </a>
                             
-                            <div class="flex items-center gap-[3px]">
+                            <div class="flex items-center" style="gap: 3px;">
                                 <span class="mr-1">Less</span>
-                                <div class="w-[10px] h-[10px] rounded-[2px] bg-[#ebedf0]"></div>
-                                <div class="w-[10px] h-[10px] rounded-[2px] bg-[#9be9a8]"></div>
-                                <div class="w-[10px] h-[10px] rounded-[2px] bg-[#40c463]"></div>
-                                <div class="w-[10px] h-[10px] rounded-[2px] bg-[#30a14e]"></div>
-                                <div class="w-[10px] h-[10px] rounded-[2px] bg-[#216e39]"></div>
+                                <div style="width: 10px; height: 10px; border-radius: 2px; background-color: #ebedf0;"></div>
+                                <div style="width: 10px; height: 10px; border-radius: 2px; background-color: #9be9a8;"></div>
+                                <div style="width: 10px; height: 10px; border-radius: 2px; background-color: #40c463;"></div>
+                                <div style="width: 10px; height: 10px; border-radius: 2px; background-color: #30a14e;"></div>
+                                <div style="width: 10px; height: 10px; border-radius: 2px; background-color: #216e39;"></div>
                                 <span class="ml-1">More</span>
                             </div>
                         </div>
