@@ -1,127 +1,111 @@
 <x-admin-layout>
-    <div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6 sm:space-y-8 pb-10" x-data="{ replyingTicketId: null }">
+    <div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-5 space-y-5 pb-10" x-data="{ replyingTicketId: null }">
 
-        {{-- Header --}}
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 sm:mb-8">
-            <div class="flex items-center gap-3 sm:gap-4 min-w-0">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white border border-slate-200/60 rounded-[1.25rem] sm:rounded-[1.5rem] flex items-center justify-center text-primary-600 shadow-sm shrink-0">
-                    <i class="ph-duotone ph-chat-circle text-xl sm:text-2xl"></i>
-                </div>
-                <div class="flex flex-col min-w-0">
-                    <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight truncate">User Feedback & Support</h3>
-                    <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mt-1 sm:mt-1.5 truncate">Kelola feedback & tiket bantuan</p>
-                </div>
+        <!-- Sticky Global Sub-Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-200/80">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <span class="text-xs font-mono font-medium text-zinc-400">Admin</span>
+                <span class="text-zinc-300">/</span>
+                <h1 class="text-sm font-semibold tracking-tight text-zinc-900">Feedbacks & Support</h1>
             </div>
         </div>
 
         {{-- Flash Alerts --}}
         @if(session('success_message'))
-            <div
-                class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl flex items-center gap-3 shadow-sm animate-fade-in">
-                <div class="w-8 h-8 rounded-lg bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow">
-                    <i class="ph-bold ph-check text-base"></i>
-                </div>
-                <p class="text-sm font-semibold">{{ session('success_message') }}</p>
+            <div class="p-3.5 bg-emerald-50 border border-emerald-250 text-emerald-800 rounded-lg flex items-center gap-2.5">
+                <i class="ph-bold ph-check text-base text-emerald-650 shrink-0"></i>
+                <p class="text-xs font-semibold">{{ session('success_message') }}</p>
             </div>
         @endif
 
-        {{-- Statistics Grid --}}
+        {{-- Statistics Bento Grid --}}
         <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
             {{-- Total Tickets --}}
-            <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 bento-card-stat relative overflow-hidden col-span-2 lg:col-span-1">
-                <div class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-full blur-2xl -z-10"></div>
+            <div class="bg-white rounded-lg p-4 border border-zinc-200/80 hover:bg-zinc-50/50 transition-colors col-span-2 lg:col-span-1">
                 <div class="flex items-start justify-between">
                     <div>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Feedback</p>
-                        <h3 class="text-xl lg:text-2xl font-black text-slate-900 tracking-tight">
-                            {{ number_format($totalFeedbacks) }}</h3>
-                        <p class="text-[9px] font-bold text-slate-400 mt-1">Semua tiket masuk</p>
+                        <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Total Feedback</p>
+                        <h3 class="text-lg font-semibold tracking-tight text-zinc-900">{{ number_format($totalFeedbacks) }}</h3>
+                        <p class="text-[10px] text-zinc-400 mt-1">Semua tiket masuk</p>
                     </div>
-                    <div class="w-10 h-10 rounded-[1.25rem] bg-indigo-50 flex items-center justify-center text-indigo-600 shadow-sm border border-indigo-100">
-                        <i class="ph-bold ph-folder text-lg"></i>
+                    <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/80 flex items-center justify-center text-zinc-650 shrink-0">
+                        <i class="ph-bold ph-folder text-base"></i>
                     </div>
                 </div>
             </div>
 
             {{-- Pending Tickets --}}
-            <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 bento-card-stat relative overflow-hidden">
-                <div class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-amber-50 to-amber-100 rounded-full blur-2xl -z-10"></div>
+            <div class="bg-white rounded-lg p-4 border border-zinc-200/80 hover:bg-zinc-50/50 transition-colors">
                 <div class="flex items-start justify-between">
                     <div>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Pending</p>
-                        <h3 class="text-xl lg:text-2xl font-black text-amber-600 tracking-tight flex items-center gap-1.5">
+                        <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Pending</p>
+                        <h3 class="text-lg font-semibold tracking-tight text-amber-600 flex items-center gap-1">
                             {{ number_format($pendingFeedbacks) }}
                             @if($pendingFeedbacks > 0)
-                                <span class="flex h-2 w-2 relative">
+                                <span class="flex h-1.5 w-1.5 relative">
                                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                                    <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
                                 </span>
                             @endif
                         </h3>
-                        <p class="text-[9px] font-bold text-slate-400 mt-1">Butuh balasan</p>
+                        <p class="text-[10px] text-zinc-400 mt-1">Butuh balasan</p>
                     </div>
-                    <div class="w-10 h-10 rounded-[1.25rem] bg-amber-50 flex items-center justify-center text-amber-600 shadow-sm border border-amber-100">
-                        <i class="ph-bold ph-clock text-lg"></i>
+                    <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/80 flex items-center justify-center text-zinc-650 shrink-0">
+                        <i class="ph-bold ph-clock text-base"></i>
                     </div>
                 </div>
             </div>
 
             {{-- Replied Tickets --}}
-            <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 bento-card-stat relative overflow-hidden">
-                <div class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-sky-50 to-sky-100 rounded-full blur-2xl -z-10"></div>
+            <div class="bg-white rounded-lg p-4 border border-zinc-200/80 hover:bg-zinc-50/50 transition-colors">
                 <div class="flex items-start justify-between">
                     <div>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Replied</p>
-                        <h3 class="text-xl lg:text-2xl font-black text-sky-600 tracking-tight">
-                            {{ number_format($repliedFeedbacks) }}</h3>
-                        <p class="text-[9px] font-bold text-slate-400 mt-1">Telah direspon</p>
+                        <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Replied</p>
+                        <h3 class="text-lg font-semibold tracking-tight text-blue-600">{{ number_format($repliedFeedbacks) }}</h3>
+                        <p class="text-[10px] text-zinc-400 mt-1">Telah direspon</p>
                     </div>
-                    <div class="w-10 h-10 rounded-[1.25rem] bg-sky-50 flex items-center justify-center text-sky-600 shadow-sm border border-sky-100">
-                        <i class="ph-bold ph-chat-circle-dots text-lg"></i>
+                    <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/80 flex items-center justify-center text-zinc-650 shrink-0">
+                        <i class="ph-bold ph-chat-circle-dots text-base"></i>
                     </div>
                 </div>
             </div>
 
             {{-- Completed Tickets --}}
-            <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 bento-card-stat relative overflow-hidden">
-                <div class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-full blur-2xl -z-10"></div>
+            <div class="bg-white rounded-lg p-4 border border-zinc-200/80 hover:bg-zinc-50/50 transition-colors">
                 <div class="flex items-start justify-between">
                     <div>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Completed</p>
-                        <h3 class="text-xl lg:text-2xl font-black text-emerald-600 tracking-tight">
-                            {{ number_format($completedFeedbacks) }}</h3>
-                        <p class="text-[9px] font-bold text-slate-400 mt-1">Selesai / ditutup</p>
+                        <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Completed</p>
+                        <h3 class="text-lg font-semibold tracking-tight text-emerald-600">{{ number_format($completedFeedbacks) }}</h3>
+                        <p class="text-[10px] text-zinc-400 mt-1">Selesai / ditutup</p>
                     </div>
-                    <div class="w-10 h-10 rounded-[1.25rem] bg-emerald-50 flex items-center justify-center text-emerald-600 shadow-sm border border-emerald-100">
-                        <i class="ph-bold ph-check-circle text-lg"></i>
+                    <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/80 flex items-center justify-center text-zinc-650 shrink-0">
+                        <i class="ph-bold ph-check-circle text-base"></i>
                     </div>
                 </div>
             </div>
 
             {{-- On Hold Tickets --}}
-            <div class="bg-white rounded-[2rem] p-6 border border-slate-200/60 bento-card-stat relative overflow-hidden">
-                <div class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-rose-50 to-rose-100 rounded-full blur-2xl -z-10"></div>
+            <div class="bg-white rounded-lg p-4 border border-zinc-200/80 hover:bg-zinc-50/50 transition-colors">
                 <div class="flex items-start justify-between">
                     <div>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">On Hold</p>
-                        <h3 class="text-xl lg:text-2xl font-black text-rose-600 tracking-tight">
-                            {{ number_format($onHoldFeedbacks) }}</h3>
-                        <p class="text-[9px] font-bold text-slate-400 mt-1">Tertunda / review</p>
+                        <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">On Hold</p>
+                        <h3 class="text-lg font-semibold tracking-tight text-red-650">{{ number_format($onHoldFeedbacks) }}</h3>
+                        <p class="text-[10px] text-zinc-400 mt-1">Tertunda / review</p>
                     </div>
-                    <div class="w-10 h-10 rounded-[1.25rem] bg-rose-50 flex items-center justify-center text-rose-600 shadow-sm border border-rose-100">
-                        <i class="ph-bold ph-warning-circle text-lg"></i>
+                    <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/80 flex items-center justify-center text-zinc-650 shrink-0">
+                        <i class="ph-bold ph-warning-circle text-base"></i>
                     </div>
                 </div>
             </div>
         </div>
 
-        {{-- Filter panel --}}
-        <div class="bg-white p-6 rounded-[2rem] border border-slate-200/60 bento-card">
-            <form action="{{ route('admin.feedbacks.index') }}" method="GET" class="flex flex-wrap items-end gap-4">
+        {{-- Filter Panel (Ramping & Sleek) --}}
+        <div class="bg-white p-3.5 rounded-lg border border-zinc-200/80">
+            <form action="{{ route('admin.feedbacks.index') }}" method="GET" class="flex flex-wrap items-end gap-3">
                 <div class="w-full sm:w-48">
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Filter Status</label>
+                    <label class="block text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Filter Status</label>
                     <select name="status" onchange="this.form.submit()"
-                        class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:bg-white focus:ring-1 focus:ring-primary-500 focus:border-primary-500 transition-colors">
+                        class="w-full px-2.5 py-1.5 bg-zinc-50 border border-zinc-200 rounded-md text-xs font-medium text-zinc-800 focus:bg-white focus:ring-1 focus:ring-primary-600 focus:border-primary-600 transition-colors">
                         <option value="">Semua Status</option>
                         <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending (Belum Dibalas)</option>
                         <option value="replied" {{ request('status') === 'replied' ? 'selected' : '' }}>Replied (Sudah Dibalas)</option>
@@ -130,9 +114,9 @@
                     </select>
                 </div>
                 <div class="w-full sm:w-56">
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Filter Kategori</label>
+                    <label class="block text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Filter Kategori</label>
                     <select name="category" onchange="this.form.submit()"
-                        class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:bg-white focus:ring-1 focus:ring-primary-500 focus:border-primary-500 transition-colors">
+                        class="w-full px-2.5 py-1.5 bg-zinc-50 border border-zinc-200 rounded-md text-xs font-medium text-zinc-800 focus:bg-white focus:ring-1 focus:ring-primary-600 focus:border-primary-600 transition-colors">
                         <option value="">Semua Kategori</option>
                         <option value="technical_issue" {{ request('category') === 'technical_issue' ? 'selected' : '' }}>Technical Issue</option>
                         <option value="payment_billing" {{ request('category') === 'payment_billing' ? 'selected' : '' }}>Payment & Billing</option>
@@ -142,23 +126,23 @@
                 </div>
                 @if(request()->filled('status') || request()->filled('category'))
                     <a href="{{ route('admin.feedbacks.index') }}"
-                        class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 h-[34px] w-full sm:w-auto">
-                        <i class="ph-bold ph-x"></i> Hapus Filter
+                        class="px-3 py-1.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-600 rounded-md text-xs font-medium transition-colors flex items-center justify-center gap-1 w-full sm:w-auto h-[30px]">
+                        <i class="ph-bold ph-x text-sm"></i> Hapus Filter
                     </a>
                 @endif
             </form>
         </div>
 
         {{-- Main Feedbacks List --}}
-        <div class="space-y-4">
+        <div class="space-y-3.5">
             @forelse($tickets as $ticket)
                 @php
                     $statusClasses = [
-                        'pending' => 'bg-amber-100 text-amber-800 border-amber-200',
-                        'replied' => 'bg-sky-100 text-sky-800 border-sky-200',
-                        'completed' => 'bg-emerald-100 text-emerald-800 border-emerald-200',
-                        'on_hold' => 'bg-rose-100 text-rose-800 border-rose-200',
-                    ][$ticket->status] ?? 'bg-slate-100 text-slate-800 border-slate-200';
+                        'pending' => 'bg-amber-50 text-amber-700 border-amber-200',
+                        'replied' => 'bg-blue-50 text-blue-700 border-blue-150',
+                        'completed' => 'bg-emerald-50 text-emerald-700 border-emerald-150',
+                        'on_hold' => 'bg-red-50 text-red-700 border-red-200',
+                    ][$ticket->status] ?? 'bg-zinc-100 text-zinc-700 border-zinc-200';
 
                     $statusIcon = [
                         'pending' => 'ph-clock',
@@ -168,58 +152,58 @@
                     ][$ticket->status] ?? 'ph-question';
                     
                     $statusBgIcon = [
-                        'pending' => 'bg-amber-50 text-amber-600',
-                        'replied' => 'bg-sky-50 text-sky-600',
-                        'completed' => 'bg-emerald-50 text-emerald-600',
-                        'on_hold' => 'bg-rose-50 text-rose-600',
-                    ][$ticket->status] ?? 'bg-slate-50 text-slate-600';
+                        'pending' => 'bg-amber-50/50 text-amber-600 border border-amber-200/40',
+                        'replied' => 'bg-blue-50/50 text-blue-600 border border-blue-150/40',
+                        'completed' => 'bg-emerald-50/50 text-emerald-600 border border-emerald-150/40',
+                        'on_hold' => 'bg-red-50/50 text-red-600 border border-red-200/40',
+                    ][$ticket->status] ?? 'bg-zinc-50 text-zinc-650 border border-zinc-200/50';
                 @endphp
 
-                <div class="bg-white border border-slate-200/60 rounded-[2rem] overflow-hidden bento-card transition-all duration-300"
+                <div class="bg-white border border-zinc-200/80 rounded-lg overflow-hidden transition-all"
                     x-data="{ expanded: false }">
 
                     {{-- Summary Card Row --}}
-                    <div class="p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-5 cursor-pointer hover:bg-slate-50/20"
+                    <div class="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer hover:bg-zinc-50/50 transition-colors"
                         @click="expanded = !expanded">
-                        <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-inner {{ $statusBgIcon }}">
-                                <i class="ph-bold {{ $statusIcon }} text-lg"></i>
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 {{ $statusBgIcon }}">
+                                <i class="ph-bold {{ $statusIcon }} text-base"></i>
                             </div>
                             <div class="min-w-0">
-                                <div class="flex flex-wrap items-center gap-2 mb-1.5">
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-black border uppercase tracking-widest {{ $statusClasses }}">
+                                <div class="flex flex-wrap items-center gap-1.5 mb-1">
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-mono font-bold border uppercase tracking-wider {{ $statusClasses }}">
                                         {{ $ticket->status }}
                                     </span>
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-black bg-indigo-50 text-indigo-700 border border-indigo-100 uppercase tracking-widest">
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-mono font-bold bg-zinc-50 text-zinc-600 border border-zinc-200 uppercase tracking-wider">
                                         {{ $ticket->category_label }}
                                     </span>
                                 </div>
-                                <h4 class="text-base font-black text-slate-800 leading-snug tracking-tight mb-1">
+                                <h4 class="text-xs font-semibold text-zinc-900 leading-snug tracking-tight mb-0.5">
                                     {{ $ticket->subject }}</h4>
-                                <div class="flex items-center gap-2 text-xs text-slate-400 flex-wrap">
-                                    <span class="font-extrabold text-slate-600">{{ $ticket->user ? $ticket->user->name : ($ticket->guest_name ?? 'Guest') }}</span>
+                                <div class="flex items-center gap-1.5 text-[10px] text-zinc-400 flex-wrap">
+                                    <span class="font-bold text-zinc-600">{{ $ticket->user ? $ticket->user->name : ($ticket->guest_name ?? 'Guest') }}</span>
                                     <span>({{ $ticket->user ? $ticket->user->email : ($ticket->guest_email ?? 'no-email') }})</span>
-                                    <span class="w-1.5 h-1.5 bg-slate-200 rounded-full"></span>
+                                    <span class="w-1 h-1 bg-zinc-200 rounded-full"></span>
                                     <span>{{ $ticket->created_at->format('d M Y H:i') }} WIB</span>
                                 </div>
                             </div>
                         </div>
 
-                        {{-- Quick Row Action --}}
-                        <div class="flex items-center gap-3 self-end md:self-center">
+                        {{-- Row Actions --}}
+                        <div class="flex items-center gap-2.5 self-end md:self-center">
                             <form action="{{ route('admin.feedbacks.destroy', $ticket->id) }}" method="POST" class="inline"
                                 onsubmit="return confirm('Apakah Anda yakin ingin menghapus feedback pengguna ini?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" @click.stop
-                                    class="w-9 h-9 rounded-xl hover:bg-rose-50 text-slate-400 hover:text-rose-500 flex items-center justify-center transition-colors">
-                                    <i class="ph-bold ph-trash text-lg"></i>
+                                    class="w-7 h-7 rounded hover:bg-red-50 border border-zinc-200 text-zinc-400 hover:text-red-600 flex items-center justify-center transition-colors">
+                                    <i class="ph-bold ph-trash text-sm"></i>
                                 </button>
                             </form>
                             <button
-                                class="px-4 py-2 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-1.5">
+                                class="px-2.5 py-1 bg-zinc-50 hover:bg-zinc-100 text-zinc-700 rounded border border-zinc-200 text-[10px] font-bold transition-all flex items-center gap-1">
                                 <span x-text="expanded ? 'Tutup' : 'Lihat & Kelola'"></span>
-                                <i class="ph-bold ph-caret-down text-xs transition-transform duration-300"
+                                <i class="ph-bold ph-caret-down text-[9px] transition-transform"
                                     :class="expanded ? 'rotate-180' : ''"></i>
                             </button>
                         </div>
@@ -227,52 +211,51 @@
 
                     {{-- Expanded Detail View & Reply Box --}}
                     <div x-show="expanded" x-collapse x-cloak
-                        class="border-t border-slate-100 bg-slate-50/40 p-6 space-y-6 animate-fade-in">
+                        class="border-t border-zinc-150 bg-zinc-50/50 p-4 sm:p-5 space-y-4">
 
                         {{-- Original Message block --}}
-                        <div class="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
-                            <h5
-                                class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
-                                <i class="ph-bold ph-user-circle text-base text-slate-500"></i> Pesan Pengguna
+                        <div class="bg-white rounded border border-zinc-200 p-4">
+                            <h5 class="text-[9px] font-mono font-bold text-zinc-450 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                <i class="ph-bold ph-user-circle text-sm text-zinc-500"></i> Pesan Pengguna
                             </h5>
-                            <p class="text-sm font-medium text-slate-700 leading-relaxed whitespace-pre-line">
+                            <p class="text-xs text-zinc-800 leading-relaxed whitespace-pre-line">
                                 {{ $ticket->message }}</p>
                         </div>
 
-                        {{-- If already replied, render reply history --}}
+                        {{-- Reply history --}}
                         @if($ticket->isReplied())
-                            <div class="bg-indigo-50/20 border border-indigo-100 p-5 rounded-2xl shadow-sm">
-                                <h5
-                                    class="text-[10px] font-black text-indigo-500 uppercase tracking-widest mb-3 flex items-center gap-1.5">
-                                    <i class="ph-bold ph-shield-check text-base text-indigo-500"></i> Balasan Terkirim
+                            <div class="bg-indigo-50/40 border border-indigo-150 p-4 rounded">
+                                <h5 class="text-[9px] font-mono font-bold text-indigo-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                    <i class="ph-bold ph-shield-check text-sm"></i> Balasan Terkirim
                                 </h5>
-                                <p class="text-sm font-medium text-indigo-900 leading-relaxed whitespace-pre-line mb-3">
+                                <p class="text-xs text-indigo-900 leading-relaxed whitespace-pre-line mb-2">
                                     {{ $ticket->admin_reply }}</p>
-                                <p class="text-[10px] font-bold text-indigo-400">Dibalas oleh Admin pada
+                                <p class="text-[9px] font-mono font-bold text-indigo-400">Dibalas oleh Admin pada
                                     {{ $ticket->replied_at->format('d M Y H:i') }} WIB</p>
                             </div>
                         @endif
 
                         {{-- Direct Status Selector --}}
-                        <div class="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="bg-white rounded border border-zinc-200 p-4">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                                 <div>
-                                    <h5 class="text-xs font-black text-slate-800 mb-1 flex items-center gap-1.5">
-                                        <i class="ph-bold ph-sliders-horizontal text-base text-slate-500"></i> Ganti Status Tiket Secara Langsung
+                                    <h5 class="text-xs font-bold text-zinc-800 mb-0.5 flex items-center gap-1.5">
+                                        <i class="ph-bold ph-sliders-horizontal text-zinc-450"></i> Ganti Status Tiket Secara Langsung
                                     </h5>
-                                    <p class="text-[11px] font-medium text-slate-400">Ganti status tiket bantuan secara langsung tanpa harus menulis balasan pesan baru.</p>
+                                    <p class="text-[10px] text-zinc-450">Ganti status tiket bantuan secara langsung tanpa menulis balasan baru.</p>
                                 </div>
                                 <form action="{{ route('admin.feedbacks.status', $ticket->id) }}" method="POST" class="flex items-center gap-2">
                                     @csrf
                                     @method('PATCH')
                                     <select name="status" required
-                                        class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:bg-white focus:ring-1 focus:ring-primary-500 focus:border-primary-500 transition-colors h-[36px]">
+                                        class="px-2.5 py-1 bg-zinc-50 border border-zinc-200 rounded text-xs font-medium text-zinc-800 focus:bg-white focus:ring-1 focus:ring-primary-600 focus:border-primary-600 transition-colors h-[30px]">
                                         <option value="pending" {{ $ticket->status === 'pending' ? 'selected' : '' }}>Pending (Butuh Balasan)</option>
                                         <option value="replied" {{ $ticket->status === 'replied' ? 'selected' : '' }}>Replied (Sudah Dibalas)</option>
                                         <option value="completed" {{ $ticket->status === 'completed' ? 'selected' : '' }}>Completed (Selesai)</option>
                                         <option value="on_hold" {{ $ticket->status === 'on_hold' ? 'selected' : '' }}>On Hold (Tertunda)</option>
                                     </select>
-                                    <button type="submit" class="px-4 py-2 bg-slate-900 text-white hover:bg-slate-800 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-sm h-[36px]">
+                                    <button type="submit" 
+                                            class="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded text-[10px] font-bold transition-colors h-[30px]">
                                         Simpan
                                     </button>
                                 </form>
@@ -280,68 +263,60 @@
                         </div>
 
                         {{-- Reply form panel --}}
-                        <div class="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
-                            <h5 class="text-xs font-black text-slate-800 mb-3 flex items-center gap-1.5">
-                                <i class="ph-bold ph-arrow-bend-up-left text-base text-primary-500"></i>
+                        <div class="bg-white rounded border border-zinc-200 p-4">
+                            <h5 class="text-xs font-bold text-zinc-800 mb-3 flex items-center gap-1.5">
+                                <i class="ph-bold ph-arrow-bend-up-left text-zinc-400"></i>
                                 {{ $ticket->isReplied() ? 'Kirim Balasan Baru / Perbarui Balasan' : 'Tulis Balasan Dukungan' }}
                             </h5>
-                            <form action="{{ route('admin.feedbacks.reply', $ticket->id) }}" method="POST"
-                                class="space-y-4">
+                            <form action="{{ route('admin.feedbacks.reply', $ticket->id) }}" method="POST" class="space-y-3">
                                 @csrf
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                                     <div class="md:col-span-2">
-                                        <textarea name="admin_reply" rows="5" required
+                                        <textarea name="admin_reply" rows="4" required
                                             placeholder="Tulis tanggapan atau instruksi solusi di sini..."
-                                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white transition-all shadow-sm resize-none h-[140px]">{{ $ticket->admin_reply }}</textarea>
+                                            class="w-full px-3 py-2 bg-zinc-50 border border-zinc-200 rounded text-xs text-zinc-900 focus:bg-white focus:ring-1 focus:ring-primary-600 focus:border-primary-600 transition-all resize-none h-[110px]">{{ $ticket->admin_reply }}</textarea>
                                         @error('admin_reply')
-                                            <p class="mt-2 text-xs font-bold text-rose-500">{{ $message }}</p>
+                                            <p class="mt-1 text-[10px] font-bold text-red-500">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-200/60 flex flex-col justify-between">
+                                    <div class="bg-zinc-50/50 p-3.5 rounded border border-zinc-200/80 flex flex-col justify-between">
                                         <div>
-                                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Update Status Tiket</label>
+                                            <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Update Status Tiket</label>
                                             <select name="status" required
-                                                class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 transition-colors">
+                                                class="w-full px-2.5 py-1 bg-white border border-zinc-200 rounded text-xs font-medium text-zinc-800 focus:ring-1 focus:ring-primary-600 focus:border-primary-600 transition-colors">
                                                 <option value="replied" {{ $ticket->status === 'replied' ? 'selected' : '' }}>Replied (Dibalas)</option>
                                                 <option value="completed" {{ $ticket->status === 'completed' ? 'selected' : '' }}>Completed (Selesai)</option>
                                                 <option value="on_hold" {{ $ticket->status === 'on_hold' ? 'selected' : '' }}>On Hold (Tertunda)</option>
                                                 <option value="pending" {{ $ticket->status === 'pending' ? 'selected' : '' }}>Pending (Butuh Balasan)</option>
                                             </select>
                                         </div>
-                                        <div class="mt-3 text-[10px] text-slate-400 leading-relaxed font-bold uppercase tracking-wider">
+                                        <div class="mt-2 text-[9px] text-zinc-450 leading-relaxed font-mono uppercase tracking-wider">
                                             Status diperbarui bersamaan dengan pengiriman balasan.
                                         </div>
                                     </div>
                                 </div>
                                 <button type="submit"
-                                    class="px-6 py-2.5 bg-slate-900 text-white hover:bg-slate-800 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-md flex items-center gap-1.5">
+                                    class="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 text-white rounded text-[10px] font-bold transition-all flex items-center gap-1">
                                     <i class="ph-bold ph-paper-plane-tilt"></i> Kirim Balasan & Update Status
                                 </button>
                             </form>
                         </div>
-
                     </div>
-
                 </div>
             @empty
-                <div class="bg-white rounded-[2rem] border border-slate-200/60 p-12 text-center bento-card">
-                    <div
-                        class="w-16 h-16 mx-auto bg-slate-50 text-slate-400 rounded-[1.25rem] flex items-center justify-center mb-4 border border-slate-200/60 shadow-sm">
-                        <i class="ph-duotone ph-chat-circle-slash text-3xl"></i>
-                    </div>
-                    <h4 class="text-base font-black text-slate-800 mb-1">Tidak ada feedback ditemukan</h4>
-                    <p class="text-xs font-medium text-slate-500 max-w-sm mx-auto leading-relaxed">Belum ada tiket support
-                        atau feedback yang diajukan oleh pengguna dengan filter ini.</p>
+                <div class="bg-white rounded-lg border border-zinc-200/80 p-10 text-center">
+                    <i class="ph-bold ph-chat-circle-slash text-2xl text-zinc-300 mb-2"></i>
+                    <h4 class="text-xs font-bold text-zinc-800 mb-0.5">Tidak ada feedback ditemukan</h4>
+                    <p class="text-[10px] text-zinc-400 max-w-sm mx-auto">Belum ada tiket support atau feedback yang diajukan oleh pengguna dengan filter ini.</p>
                 </div>
             @endforelse
 
             {{-- Pagination Links --}}
             @if($tickets->hasPages())
-                <div class="pt-4">
+                <div class="pt-2">
                     {{ $tickets->links() }}
                 </div>
             @endif
         </div>
-
     </div>
 </x-admin-layout>
