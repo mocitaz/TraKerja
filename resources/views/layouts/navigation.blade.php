@@ -33,8 +33,8 @@
         <div class="flex items-center space-x-3.5">
             {{-- Desktop User Dropdown --}}
             <div class="relative shrink-0" x-data="{ open: false }">
-                <button @click="open = !open" class="flex items-center gap-2 px-2 py-1 rounded-lg border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50/60 transition-all cursor-pointer bg-white shadow-3xs focus:outline-none max-w-[200px] sm:max-w-[240px]">
-                    <div class="w-7 h-7 rounded-full overflow-hidden border border-zinc-200 shrink-0 flex items-center justify-center bg-white">
+                <button @click="open = !open" class="flex items-center gap-2.5 px-2 py-1 rounded-lg hover:bg-zinc-200/50 transition-colors cursor-pointer focus:outline-none max-w-[200px] sm:max-w-[240px]">
+                    <div class="w-7 h-7 rounded-full overflow-hidden border border-zinc-200 shrink-0 flex items-center justify-center bg-zinc-50">
                         @if(Auth::user()->logo)
                             <img src="{{ Auth::user()->avatar_url }}" 
                                  alt="Profile Photo" 
