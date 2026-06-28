@@ -12,7 +12,7 @@
                     <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-full h-full object-contain">
                 </div>
                 <h1 class="text-xl font-bold text-[#37352f] tracking-tight leading-snug">
-                    Your AI career workspace.
+                    Your integrated career workspace.
                 </h1>
                 <p class="text-sm text-slate-400 font-normal mt-0.5">Log in to your TraKerja account</p>
             </div>
