@@ -76,8 +76,8 @@
           x-data="{ mobileSidebarOpen: false }"
           @keydown.escape="mobileSidebarOpen = false">
         
-        {{-- YouTube-Style Top Progress Line Loader --}}
-        <div id="page-loader-bar" class="fixed top-0 left-0 right-0 h-[2.5px] z-[99999] pointer-events-none bg-gradient-to-r from-primary-500 via-violet-500 to-indigo-500 shadow-[0_0_10px_rgba(168,85,247,0.6)] opacity-0" style="width: 0%; will-change: width, opacity;"></div>
+        {{-- Premium Notion-Style Top Progress Line Loader --}}
+        <div id="page-loader-bar" class="fixed top-0 left-0 right-0 h-[2px] z-[99999] pointer-events-none bg-black opacity-0" style="width: 0%; will-change: width, opacity;"></div>
 
 
         <div class="h-screen flex overflow-hidden">
