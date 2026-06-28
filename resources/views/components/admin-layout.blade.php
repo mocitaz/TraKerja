@@ -277,14 +277,14 @@
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">System</span>
                     </div>
 
-                    <a href="{{ route('admin.integration-hub') }}"
-                       class="group relative flex items-center px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 overflow-hidden {{ request()->routeIs('admin.integration-hub') ? 'bg-primary-50 text-primary-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
+                    <a href="{{ route('admin.settings', ['tab' => 'integration']) }}"
+                       class="group relative flex items-center px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 overflow-hidden {{ (request()->routeIs('admin.settings') && request('tab') === 'integration') ? 'bg-primary-50 text-primary-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
-                        @if(request()->routeIs('admin.integration-hub'))
+                        @if(request()->routeIs('admin.settings') && request('tab') === 'integration')
                             <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-primary-600 rounded-r-full"></div>
                         @endif
                         <div class="flex items-center justify-center flex-shrink-0 relative z-10" :class="sidebarCollapsed ? '' : 'w-8'">
-                            <i class="text-[1.25rem] transition-transform duration-300 group-hover:scale-110 {{ request()->routeIs('admin.integration-hub') ? 'ph-fill ph-plugs text-primary-600' : 'ph ph-plugs' }}"></i>
+                            <i class="text-[1.25rem] transition-transform duration-300 group-hover:scale-110 {{ (request()->routeIs('admin.settings') && request('tab') === 'integration') ? 'ph-fill ph-plugs text-primary-600' : 'ph ph-plugs' }}"></i>
                         </div>
                         <span x-show="!sidebarCollapsed" x-transition.opacity.duration.300ms class="ml-3 truncate">Integration</span>
                         
@@ -295,14 +295,14 @@
                         </div>
                     </a>
 
-                    <a href="{{ route('admin.database-maintenance') }}"
-                       class="group relative flex items-center px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 overflow-hidden {{ request()->routeIs('admin.database-maintenance') ? 'bg-primary-50 text-primary-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
+                    <a href="{{ route('admin.settings', ['tab' => 'database']) }}"
+                       class="group relative flex items-center px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 overflow-hidden {{ (request()->routeIs('admin.settings') && request('tab') === 'database') ? 'bg-primary-50 text-primary-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
-                        @if(request()->routeIs('admin.database-maintenance'))
+                        @if(request()->routeIs('admin.settings') && request('tab') === 'database')
                             <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-primary-600 rounded-r-full"></div>
                         @endif
                         <div class="flex items-center justify-center flex-shrink-0 relative z-10" :class="sidebarCollapsed ? '' : 'w-8'">
-                            <i class="text-[1.25rem] transition-transform duration-300 group-hover:scale-110 {{ request()->routeIs('admin.database-maintenance') ? 'ph-fill ph-database text-primary-600' : 'ph ph-database' }}"></i>
+                            <i class="text-[1.25rem] transition-transform duration-300 group-hover:scale-110 {{ (request()->routeIs('admin.settings') && request('tab') === 'database') ? 'ph-fill ph-database text-primary-600' : 'ph ph-database' }}"></i>
                         </div>
                         <span x-show="!sidebarCollapsed" x-transition.opacity.duration.300ms class="ml-3 truncate">Database</span>
                         
@@ -314,13 +314,13 @@
                     </a>
 
                     <a href="{{ route('admin.settings') }}"
-                       class="group relative flex items-center px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 overflow-hidden {{ request()->routeIs('admin.settings') ? 'bg-primary-50 text-primary-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
+                       class="group relative flex items-center px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 overflow-hidden {{ (request()->routeIs('admin.settings') && (!request()->has('tab') || request('tab') === 'general')) ? 'bg-primary-50 text-primary-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
-                        @if(request()->routeIs('admin.settings'))
+                        @if(request()->routeIs('admin.settings') && (!request()->has('tab') || request('tab') === 'general'))
                             <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-primary-600 rounded-r-full"></div>
                         @endif
                         <div class="flex items-center justify-center flex-shrink-0 relative z-10" :class="sidebarCollapsed ? '' : 'w-8'">
-                            <i class="text-[1.25rem] transition-transform duration-300 group-hover:scale-110 {{ request()->routeIs('admin.settings') ? 'ph-fill ph-gear-six text-primary-600' : 'ph ph-gear-six' }}"></i>
+                            <i class="text-[1.25rem] transition-transform duration-300 group-hover:scale-110 {{ (request()->routeIs('admin.settings') && (!request()->has('tab') || request('tab') === 'general')) ? 'ph-fill ph-gear-six text-primary-600' : 'ph ph-gear-six' }}"></i>
                         </div>
                         <span x-show="!sidebarCollapsed" x-transition.opacity.duration.300ms class="ml-3 truncate">Settings</span>
                         

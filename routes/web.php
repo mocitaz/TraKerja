@@ -463,11 +463,21 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         return view('admin.settings');
     })->name('settings');
 
-    // Integration Hub (Livewire)
-    Route::get('/integration-hub', \App\Livewire\Admin\IntegrationHub::class)->name('integration-hub');
+    // Integration Hub (Redirect to Settings Tab)
+    Route::get('/integration-hub', function () {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return redirect()->route('admin.settings', ['tab' => 'integration']);
+    })->name('integration-hub');
 
-    // Database & Maintenance (Livewire)
-    Route::get('/database-maintenance', \App\Livewire\Admin\DatabaseMaintenance::class)->name('database-maintenance');
+    // Database & Maintenance (Redirect to Settings Tab)
+    Route::get('/database-maintenance', function () {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return redirect()->route('admin.settings', ['tab' => 'database']);
+    })->name('database-maintenance');
     
     // Backup Download (Controller)
     Route::get('/database/download-backup', [\App\Http\Controllers\Admin\DatabaseMaintenanceController::class, 'downloadBackup'])->name('database.download');
