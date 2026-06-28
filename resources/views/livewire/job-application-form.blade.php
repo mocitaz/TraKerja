@@ -191,8 +191,8 @@
                 </div>
 
                 <!-- Scraper Status Alert message inside FE -->
-                <div id="scrape-status-message" class="hidden mt-1.5 px-2.5 py-1 text-[9px] font-semibold rounded items-center gap-1.5 transition-all duration-300">
-                    <i class="ph-bold text-xs" id="scrape-status-icon"></i>
+                <div id="scrape-status-message" class="hidden mt-1.5 text-[9px] font-semibold items-center gap-1 transition-all duration-300 select-none">
+                    <i class="ph-bold text-[10px]" id="scrape-status-icon"></i>
                     <span id="scrape-status-text"></span>
                 </div>
             </div>
@@ -298,7 +298,7 @@ window.updateScrapeStatus = function(state, message = '') {
         }
     } else if (state === 'fetching') {
         statusDiv.classList.remove('hidden');
-        statusDiv.classList.add('bg-zinc-50', 'border', 'border-zinc-200', 'text-zinc-600');
+        statusDiv.className = "mt-1.5 text-[9px] font-semibold flex items-center gap-1 transition-all duration-300 select-none text-zinc-500";
         iconEl.className = "ph-bold ph-spinner animate-spin text-[10px] text-zinc-500";
         textEl.textContent = message || "Membaca data lowongan...";
         
@@ -309,7 +309,7 @@ window.updateScrapeStatus = function(state, message = '') {
         }
     } else if (state === 'bypassing') {
         statusDiv.classList.remove('hidden');
-        statusDiv.classList.add('bg-amber-50/60', 'border', 'border-amber-200/60', 'text-amber-800');
+        statusDiv.className = "mt-1.5 text-[9px] font-semibold flex items-center gap-1 transition-all duration-300 select-none text-amber-600";
         iconEl.className = "ph-bold ph-shield-warning animate-bounce text-[10px] text-amber-500";
         textEl.textContent = message || "Mendeteksi bot-block, mencoba melewati Cloudflare...";
         
@@ -320,7 +320,7 @@ window.updateScrapeStatus = function(state, message = '') {
         }
     } else if (state === 'success') {
         statusDiv.classList.remove('hidden');
-        statusDiv.classList.add('bg-emerald-50', 'border', 'border-emerald-250', 'text-emerald-800');
+        statusDiv.className = "mt-1.5 text-[9px] font-semibold flex items-center gap-1 transition-all duration-300 select-none text-emerald-600";
         iconEl.className = "ph-bold ph-check-circle text-[10px] text-emerald-600";
         textEl.textContent = message || "Berhasil memuat data lowongan!";
         
@@ -335,8 +335,8 @@ window.updateScrapeStatus = function(state, message = '') {
         }, 3000);
     } else if (state === 'error') {
         statusDiv.classList.remove('hidden');
-        statusDiv.classList.add('bg-rose-50', 'border', 'border-rose-200', 'text-rose-800');
-        iconEl.className = "ph-bold ph-warning-circle text-[10px] text-rose-600";
+        statusDiv.className = "mt-1.5 text-[9px] font-semibold flex items-center gap-1 transition-all duration-300 select-none text-rose-600";
+        iconEl.className = "ph-bold ph-warning-circle text-[10px] text-rose-650";
         textEl.textContent = message || "Gagal mengambil data dari URL.";
         
         if (btn) {
