@@ -162,18 +162,45 @@
         {{-- Row 6: App Link & Date --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-                <div class="flex items-center justify-between mb-1">
-                    <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Job Link (URL)</label>
-                    <button type="button" onclick="fetchJobDetailsFromUrl()" id="scrape-btn" class="px-2 py-0.5 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded text-[9px] font-bold transition-all flex items-center gap-1 active:scale-97">
+                <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Job Link (URL)</label>
+                <div class="relative group flex items-center">
+                    <i class="ph-bold ph-link absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-400 text-sm group-focus-within:text-zinc-700 transition-colors"></i>
+                    <input id="job-url-input" wire:model.live="platform_link" type="url" class="block w-full pl-8 pr-[86px] h-[32px] bg-zinc-50/40 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 focus:ring-1 focus:ring-primary-500/20 focus:bg-white focus:border-primary-500 transition-all outline-none" placeholder="https://...">
+                    <button type="button" onclick="fetchJobDetailsFromUrl()" id="scrape-btn" class="absolute right-1 top-[3px] h-[26px] px-2.5 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded text-[9px] font-bold transition-all flex items-center gap-1 active:scale-95 select-none z-10">
                         <i class="ph-bold ph-sparkle text-[10px]"></i>
-                        <span>Auto-Fill Info</span>
+                        <span>Auto-Fill</span>
                     </button>
                 </div>
-                <div class="relative group">
-                    <i class="ph-bold ph-link absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-400 text-sm group-focus-within:text-zinc-700 transition-colors"></i>
-                    <input id="job-url-input" wire:model.live="platform_link" type="url" class="block w-full pl-8 pr-3 h-[32px] bg-zinc-50/40 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 focus:ring-1 focus:ring-primary-500/20 focus:bg-white focus:border-primary-500 transition-all outline-none" placeholder="https://...">
-                </div>
                 @error('platform_link') <p class="text-rose-500 text-[9px] font-semibold mt-1 ml-0.5">{{ $message }}</p> @enderror
+
+                <!-- Supported Platforms Info Block -->
+                <div class="mt-1.5 flex items-center gap-1 text-[8.5px] text-zinc-400 font-semibold select-none flex-wrap">
+                    <span class="text-zinc-400">Supports:</span>
+                    <span class="inline-flex items-center gap-0.5 px-1 py-0.5 bg-zinc-100/50 rounded text-zinc-500 border border-zinc-200/40">
+                        <i class="ph-bold ph-linkedin-logo text-blue-600 text-[9px]"></i> LinkedIn
+                    </span>
+                    <span class="inline-flex items-center gap-0.5 px-1 py-0.5 bg-zinc-100/50 rounded text-zinc-500 border border-zinc-200/40">
+                        <span class="w-1 h-1 rounded-full bg-cyan-500"></span> Glints
+                    </span>
+                    <span class="inline-flex items-center gap-0.5 px-1 py-0.5 bg-zinc-100/50 rounded text-zinc-500 border border-zinc-200/40">
+                        <span class="w-1 h-1 rounded-full bg-indigo-900"></span> JobStreet
+                    </span>
+                    <span class="inline-flex items-center gap-0.5 px-1 py-0.5 bg-zinc-100/50 rounded text-zinc-500 border border-zinc-200/40">
+                        <span class="w-1 h-1 rounded-full bg-blue-500"></span> Kalibrr
+                    </span>
+                    <span class="inline-flex items-center gap-0.5 px-1 py-0.5 bg-zinc-100/50 rounded text-zinc-500 border border-zinc-200/40">
+                        <span class="w-1 h-1 rounded-full bg-amber-500"></span> Dealls
+                    </span>
+                    <span class="inline-flex items-center gap-0.5 px-1 py-0.5 bg-zinc-100/50 rounded text-zinc-500 border border-zinc-200/40">
+                        <span class="w-1 h-1 rounded-full bg-violet-600"></span> Talentics
+                    </span>
+                </div>
+
+                <!-- Scraper Status Alert message inside FE -->
+                <div id="scrape-status-message" class="hidden mt-1.5 px-2.5 py-1 text-[9px] font-semibold rounded items-center gap-1.5 transition-all duration-300">
+                    <i class="ph-bold text-xs" id="scrape-status-icon"></i>
+                    <span id="scrape-status-text"></span>
+                </div>
             </div>
             <div>
                 <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Application Date *</label>
@@ -258,18 +285,87 @@
 </div>
 
 <script>
+window.updateScrapeStatus = function(state, message = '') {
+    const statusDiv = document.getElementById('scrape-status-message');
+    const iconEl = document.getElementById('scrape-status-icon');
+    const textEl = document.getElementById('scrape-status-text');
+    const btn = document.getElementById('scrape-btn');
+    
+    if (!statusDiv || !iconEl || !textEl) return;
+    
+    statusDiv.className = "mt-1.5 px-2 py-1 text-[9px] font-semibold rounded flex items-center gap-1.5 transition-all duration-300";
+    
+    if (state === 'idle') {
+        statusDiv.classList.add('hidden');
+        if (btn) {
+            btn.disabled = false;
+            btn.className = "absolute right-1 top-[3px] h-[26px] px-2.5 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded text-[9px] font-bold transition-all flex items-center gap-1 active:scale-95 select-none z-10";
+            btn.innerHTML = '<i class="ph-bold ph-sparkle text-[10px]"></i> <span>Auto-Fill</span>';
+        }
+    } else if (state === 'fetching') {
+        statusDiv.classList.remove('hidden');
+        statusDiv.classList.add('bg-zinc-50', 'border', 'border-zinc-200', 'text-zinc-600');
+        iconEl.className = "ph-bold ph-spinner animate-spin text-[10px] text-zinc-500";
+        textEl.textContent = message || "Membaca data lowongan...";
+        
+        if (btn) {
+            btn.disabled = true;
+            btn.className = "absolute right-1 top-[3px] h-[26px] px-2.5 bg-zinc-50 text-zinc-400 border border-zinc-200 rounded text-[9px] font-bold transition-all flex items-center gap-1 select-none z-10";
+            btn.innerHTML = '<i class="ph-bold ph-spinner animate-spin text-[10px]"></i> <span>Fetching...</span>';
+        }
+    } else if (state === 'bypassing') {
+        statusDiv.classList.remove('hidden');
+        statusDiv.classList.add('bg-amber-50/60', 'border', 'border-amber-200/60', 'text-amber-800');
+        iconEl.className = "ph-bold ph-shield-warning animate-bounce text-[10px] text-amber-500";
+        textEl.textContent = message || "Mendeteksi bot-block, mencoba melewati Cloudflare...";
+        
+        if (btn) {
+            btn.disabled = true;
+            btn.className = "absolute right-1 top-[3px] h-[26px] px-2.5 bg-amber-50 text-amber-600 border border-amber-200 rounded text-[9px] font-bold transition-all flex items-center gap-1 select-none z-10 animate-pulse";
+            btn.innerHTML = '<i class="ph-bold ph-shield-warning text-[10px]"></i> <span>Bypassing...</span>';
+        }
+    } else if (state === 'success') {
+        statusDiv.classList.remove('hidden');
+        statusDiv.classList.add('bg-emerald-50', 'border', 'border-emerald-250', 'text-emerald-800');
+        iconEl.className = "ph-bold ph-check-circle text-[10px] text-emerald-600";
+        textEl.textContent = message || "Berhasil memuat data lowongan!";
+        
+        if (btn) {
+            btn.disabled = false;
+            btn.className = "absolute right-1 top-[3px] h-[26px] px-2.5 bg-emerald-50 text-emerald-800 border border-emerald-250 rounded text-[9px] font-bold transition-all flex items-center gap-1 select-none z-10";
+            btn.innerHTML = '<i class="ph-bold ph-check text-[10px]"></i> <span>Filled!</span>';
+        }
+        
+        setTimeout(() => {
+            window.updateScrapeStatus('idle');
+        }, 3000);
+    } else if (state === 'error') {
+        statusDiv.classList.remove('hidden');
+        statusDiv.classList.add('bg-rose-50', 'border', 'border-rose-200', 'text-rose-800');
+        iconEl.className = "ph-bold ph-warning-circle text-[10px] text-rose-600";
+        textEl.textContent = message || "Gagal mengambil data dari URL.";
+        
+        if (btn) {
+            btn.disabled = false;
+            btn.className = "absolute right-1 top-[3px] h-[26px] px-2.5 bg-rose-50 text-rose-800 border border-rose-200 rounded text-[9px] font-bold transition-all flex items-center gap-1 select-none z-10";
+            btn.innerHTML = '<i class="ph-bold ph-x text-[10px]"></i> <span>Failed</span>';
+        }
+        
+        setTimeout(() => {
+            window.updateScrapeStatus('idle');
+        }, 5000);
+    }
+};
+
 window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
     const urlInput = document.getElementById('job-url-input');
     const url = urlInput ? urlInput.value.trim() : '';
     if (!url) {
-        alert('Mohon masukkan URL lowongan kerja terlebih dahulu!');
+        window.updateScrapeStatus('error', 'Silakan masukkan URL lowongan kerja terlebih dahulu!');
         return;
     }
-    const btn = document.getElementById('scrape-btn');
-    if (btn) {
-        btn.disabled = true;
-        btn.innerHTML = '<i class="ph ph-spinner animate-spin text-[10px]"></i> <span>Fetching...</span>';
-    }
+    
+    window.updateScrapeStatus('fetching', 'Menghubungkan ke server untuk mengambil info lowongan...');
 
     fetch('/jobs/scrape-url', {
         method: 'POST',
@@ -312,24 +408,10 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
                 @this.set('platform', detectPlatform);
             }
 
-            if (btn) {
-                btn.disabled = false;
-                // Add green success classes
-                btn.classList.remove('bg-primary-50', 'text-zinc-800', 'border-primary-200/60');
-                btn.classList.add('bg-emerald-50', 'text-emerald-800', 'border-emerald-250');
-                btn.innerHTML = '<i class="ph-bold ph-check text-emerald-600"></i> <span>Auto-Filled!</span>';
-                
-                setTimeout(() => {
-                    btn.classList.remove('bg-emerald-50', 'text-emerald-800', 'border-emerald-250');
-                    btn.classList.add('bg-primary-50', 'text-zinc-800', 'border-primary-200/60');
-                    btn.innerHTML = '<i class="ph-bold ph-sparkle text-[10px]"></i> <span>Auto-Fill Info</span>';
-                }, 2500);
-            }
+            window.updateScrapeStatus('success', 'Berhasil mengisi detail lowongan dari ' + (detectPlatform || 'URL') + '!');
         } else {
             console.warn('Backend scrape failed. Attempting client-side bypass proxy...');
-            if (btn) {
-                btn.innerHTML = '<i class="ph ph-spinner animate-spin text-[10px]"></i> <span>Bypassing Bot...</span>';
-            }
+            window.updateScrapeStatus('bypassing', 'Melewati proteksi keamanan website (Cloudflare bypass)...');
             
             // Try fetching through api.allorigins.win (public CORS proxy)
             fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(url))
@@ -388,38 +470,20 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
                         @this.set('platform', detectPlatform);
                     }
 
-                    if (btn) {
-                        btn.disabled = false;
-                        btn.classList.remove('bg-primary-50', 'text-zinc-800', 'border-primary-200/60');
-                        btn.classList.add('bg-emerald-50', 'text-emerald-800', 'border-emerald-250');
-                        btn.innerHTML = '<i class="ph-bold ph-check text-emerald-600"></i> <span>Auto-Filled!</span>';
-                        
-                        setTimeout(() => {
-                            btn.classList.remove('bg-emerald-50', 'text-emerald-800', 'border-emerald-250');
-                            btn.classList.add('bg-primary-50', 'text-zinc-800', 'border-primary-200/60');
-                            btn.innerHTML = '<i class="ph-bold ph-sparkle text-[10px]"></i> <span>Auto-Fill Info</span>';
-                        }, 2500);
-                    }
+                    window.updateScrapeStatus('success', 'Bypass berhasil! Detail lowongan terisi dari ' + (detectPlatform || 'URL') + '.');
                 } else {
                     throw new Error(finalData.message || 'Gagal memproses data dari proxy.');
                 }
             })
             .catch(proxyErr => {
                 console.error('Proxy bypass failed:', proxyErr);
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="ph-bold ph-sparkle text-[10px]"></i> <span>Auto-Fill Info</span>';
-                }
-                alert('Gagal mengambil data lowongan. Website memblokir server kami (403 Cloudflare).');
+                window.updateScrapeStatus('error', 'Gagal memproses data. Keamanan website (403/Cloudflare) memblokir server.');
             });
         }
     })
     .catch(err => {
-        if (btn) {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="ph-bold ph-sparkle text-[10px]"></i> <span>Auto-Fill Info</span>';
-        }
-        alert('Gagal mengambil data dari URL.');
+        console.error('Scrape connection error:', err);
+        window.updateScrapeStatus('error', 'Gagal mengambil data dari URL. Silakan masukkan data manual.');
     });
 };
 </script>
