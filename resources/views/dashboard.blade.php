@@ -112,7 +112,7 @@
             </div>
 
             <!-- Dashboard Layout Main Area -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5 items-start">
                 <!-- Left Column: Recent Apps & Upcoming Interviews (col-span 2) -->
                 <div class="lg:col-span-2 space-y-5">
                     
@@ -155,14 +155,14 @@
                                     </thead>
                                     <tbody class="divide-y divide-zinc-150/40 text-zinc-700">
                                         @foreach($recentApplications as $job)
-                                            <tr class="group hover:bg-zinc-50/40 transition-colors">
+                                            <tr class="group hover:bg-zinc-50/40 transition-colors cursor-pointer" onclick="window.location='{{ route('jobs.show', $job) }}'">
                                                 <td class="py-2.5">
                                                     <div class="flex items-center gap-2.5">
                                                         <div class="w-7 h-7 bg-zinc-50 rounded border border-zinc-200/50 flex items-center justify-center text-zinc-500 font-bold text-[10px] uppercase shrink-0">
                                                             {{ substr($job->company_name, 0, 2) }}
                                                         </div>
                                                         <div class="min-w-0">
-                                                            <h4 class="text-[11px] font-semibold text-zinc-800 truncate max-w-[150px] sm:max-w-[200px] leading-tight">{{ $job->position }}</h4>
+                                                            <h4 class="text-[11px] font-semibold text-zinc-800 hover:text-primary-600 transition-colors truncate max-w-[150px] sm:max-w-[200px] leading-tight">{{ $job->position }}</h4>
                                                             <p class="text-[9px] text-zinc-400 font-medium truncate leading-tight">{{ $job->company_name }}</p>
                                                         </div>
                                                     </div>
@@ -206,7 +206,7 @@
                                                     </span>
                                                 </td>
                                                 <td class="py-2.5 text-right">
-                                                    <a href="{{ route('tracker') }}" class="inline-flex items-center justify-center w-6 h-6 rounded-md hover:bg-zinc-100 text-zinc-400 hover:text-zinc-700 transition-colors">
+                                                    <a href="{{ route('jobs.show', $job) }}" class="inline-flex items-center justify-center w-6 h-6 rounded-md hover:bg-zinc-100 text-zinc-400 hover:text-zinc-700 transition-colors" onclick="event.stopPropagation();">
                                                         <i class="ph ph-caret-right text-xs"></i>
                                                     </a>
                                                 </td>
@@ -385,13 +385,13 @@
                 </div>
 
                 <!-- Right Column: Weekly Goal & Quick Actions (col-span 1) -->
-                <div class="space-y-5">
+                <div class="space-y-5 items-start">
                     <!-- Weekly Goal Progress Widget -->
                     <livewire:goals-cadence-manager />
 
                     <!-- Quick Actions Panel -->
                     <div class="bg-white rounded-lg border border-zinc-200/60 p-4">
-                        <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center justify-between mb-3.5 select-none">
                             <div>
                                 <h3 class="text-xs font-bold text-zinc-850 tracking-tight uppercase tracking-wider">Quick Actions</h3>
                                 <p class="text-[9px] text-zinc-400 font-medium mt-0.5">Shortcuts to accelerate your search</p>
@@ -399,41 +399,41 @@
                             <i class="ph ph-lightning text-amber-500 text-sm"></i>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-2.5">
+                        <div class="space-y-1">
                             <!-- Action 1: Add App -->
-                            <button onclick="openJobModal()" class="flex flex-col items-start p-2.5 bg-zinc-50/50 hover:bg-zinc-100/50 border border-zinc-200/60 rounded-md group transition-all text-left">
-                                <div class="w-7 h-7 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center shadow-3xs">
-                                    <i class="ph ph-plus text-xs"></i>
+                            <button onclick="openJobModal()" class="w-full flex items-center justify-between p-2 hover:bg-zinc-50 rounded-md group transition-all text-left">
+                                <div class="flex items-center gap-2.5">
+                                    <i class="ph ph-plus text-zinc-400 group-hover:text-zinc-700 transition-colors text-sm"></i>
+                                    <span class="text-[11px] font-semibold text-zinc-650 group-hover:text-zinc-900 transition-colors">Add New Application</span>
                                 </div>
-                                <span class="text-[11px] font-bold text-zinc-700 mt-2 transition-colors">Add Job</span>
-                                <span class="text-[8.5px] text-zinc-400 mt-0.5">Log application</span>
+                                <i class="ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
                             </button>
 
                             <!-- Action 2: CV Builder -->
-                            <a href="{{ route('cv.builder') }}" class="flex flex-col items-start p-2.5 bg-zinc-50/50 hover:bg-zinc-100/50 border border-zinc-200/60 rounded-md group transition-all text-left">
-                                <div class="w-7 h-7 rounded-md bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-3xs">
-                                    <i class="ph ph-file-text text-xs"></i>
+                            <a href="{{ route('cv.builder') }}" class="w-full flex items-center justify-between p-2 hover:bg-zinc-50 rounded-md group transition-all text-left">
+                                <div class="flex items-center gap-2.5">
+                                    <i class="ph ph-file-text text-zinc-400 group-hover:text-zinc-700 transition-colors text-sm"></i>
+                                    <span class="text-[11px] font-semibold text-zinc-650 group-hover:text-zinc-900 transition-colors">CV Builder & Editor</span>
                                 </div>
-                                <span class="text-[11px] font-bold text-zinc-700 mt-2 transition-colors">CV Builder</span>
-                                <span class="text-[8.5px] text-zinc-400 mt-0.5">Resume creator</span>
+                                <i class="ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
                             </a>
 
                             <!-- Action 3: AI Analyzer -->
-                            <a href="{{ route('ai-analyzer.index') }}" class="flex flex-col items-start p-2.5 bg-zinc-50/50 hover:bg-zinc-100/50 border border-zinc-200/60 rounded-md group transition-all text-left">
-                                <div class="w-7 h-7 rounded-md bg-violet-50 text-violet-600 flex items-center justify-center shadow-3xs">
-                                    <i class="ph ph-sparkle text-xs"></i>
+                            <a href="{{ route('ai-analyzer.index') }}" class="w-full flex items-center justify-between p-2 hover:bg-zinc-50 rounded-md group transition-all text-left">
+                                <div class="flex items-center gap-2.5">
+                                    <i class="ph ph-sparkle text-zinc-400 group-hover:text-zinc-700 transition-colors text-sm"></i>
+                                    <span class="text-[11px] font-semibold text-zinc-650 group-hover:text-zinc-900 transition-colors">AI CV & JD Analyzer</span>
                                 </div>
-                                <span class="text-[11px] font-bold text-zinc-700 mt-2 transition-colors">AI Analyzer</span>
-                                <span class="text-[8.5px] text-zinc-400 mt-0.5">Scan & evaluate</span>
-                            </button>
+                                <i class="ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
+                            </a>
 
                             <!-- Action 4: Cover Letter -->
-                            <a href="{{ route('cover-letters.index') }}" class="flex flex-col items-start p-2.5 bg-zinc-50/50 hover:bg-zinc-100/50 border border-zinc-200/60 rounded-md group transition-all text-left">
-                                <div class="w-7 h-7 rounded-md bg-emerald-50 text-emerald-600 flex items-center justify-center shadow-3xs">
-                                    <i class="ph ph-envelope-simple text-xs"></i>
+                            <a href="{{ route('cover-letters.index') }}" class="w-full flex items-center justify-between p-2 hover:bg-zinc-50 rounded-md group transition-all text-left">
+                                <div class="flex items-center gap-2.5">
+                                    <i class="ph ph-envelope-simple text-zinc-400 group-hover:text-zinc-700 transition-colors text-sm"></i>
+                                    <span class="text-[11px] font-semibold text-zinc-650 group-hover:text-zinc-900 transition-colors">Cover Letter Generator</span>
                                 </div>
-                                <span class="text-[11px] font-bold text-zinc-700 mt-2 transition-colors">Cover Letter</span>
-                                <span class="text-[8.5px] text-zinc-400 mt-0.5">Write instantly</span>
+                                <i class="ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
                             </a>
                         </div>
                     </div>
