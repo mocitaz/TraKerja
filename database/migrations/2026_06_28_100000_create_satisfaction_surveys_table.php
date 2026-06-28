@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             
-            // 11 Rating questions (1-5 scale)
+            // 12 Rating questions (1-5 scale)
             $table->unsignedTinyInteger('q1_overall');
             $table->unsignedTinyInteger('q2_navigation');
             $table->unsignedTinyInteger('q3_speed');
@@ -23,10 +23,11 @@ return new class extends Migration
             $table->unsignedTinyInteger('q5_ai_analyzer');
             $table->unsignedTinyInteger('q6_job_tracker');
             $table->unsignedTinyInteger('q7_cover_letter');
-            $table->unsignedTinyInteger('q8_summary');
+            $table->unsignedTinyInteger('q8_interviews');
             $table->unsignedTinyInteger('q9_premium');
             $table->unsignedTinyInteger('q10_recommend');
             $table->unsignedTinyInteger('q11_design');
+            $table->unsignedTinyInteger('q12_cv_templates');
             
             $table->text('feedback')->nullable(); // Suggestions / feedback text
             $table->timestamps();
