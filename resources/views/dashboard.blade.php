@@ -143,61 +143,65 @@
                                 </div>
                             @else
                                 <div class="overflow-x-auto">
-                                    <table class="min-w-full">
-                                        <tbody class="divide-y divide-zinc-100 text-zinc-700">
+                                    <table class="min-w-full divide-y divide-zinc-150/40">
+                                        <thead>
+                                            <tr class="text-left text-[9px] font-bold text-zinc-400 uppercase tracking-wider bg-zinc-55/10">
+                                                <th class="px-3 py-2">Company</th>
+                                                <th class="px-3 py-2">Position</th>
+                                                <th class="px-3 py-2 hidden sm:table-cell">Applied</th>
+                                                <th class="px-3 py-2 text-center">Stage</th>
+                                                <th class="px-3 py-2 text-center">Status</th>
+                                                <th class="px-3 py-2 text-right pr-4">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-zinc-150/40 text-zinc-700 bg-white">
                                             @foreach($recentApplications as $job)
-                                                <tr class="group hover:bg-zinc-50/50 transition-colors cursor-pointer" onclick="window.location='{{ route('jobs.show', $job) }}'">
-                                                    <td class="py-3 pr-3">
-                                                        <div class="flex items-center gap-3">
-                                                            {{-- Sqircle logo placeholder --}}
-                                                            <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/50 flex items-center justify-center text-zinc-500 font-extrabold text-[10.5px] uppercase shrink-0">
-                                                                {{ substr($job->company_name, 0, 2) }}
-                                                            </div>
-                                                            <div class="min-w-0">
-                                                                <h4 class="text-[11.5px] font-bold text-zinc-850 group-hover:text-primary-600 transition-colors truncate max-w-[155px] sm:max-w-[210px] leading-tight">{{ $job->position }}</h4>
-                                                                <p class="text-[9.5px] text-zinc-400 font-semibold truncate leading-tight mt-0.5">{{ $job->company_name }}</p>
-                                                            </div>
-                                                        </div>
+                                                <tr class="transition-colors cursor-pointer group hover:bg-zinc-50/45" onclick="window.location='{{ route('jobs.show', $job) }}'">
+                                                    {{-- Company --}}
+                                                    <td class="px-3 py-2.5 whitespace-nowrap">
+                                                        <span class="text-xs font-bold text-zinc-800 group-hover:text-primary-600 transition-colors">{{ $job->company_name }}</span>
                                                     </td>
-                                                    <td class="py-3 px-3 text-[10px] font-semibold text-zinc-400 hidden sm:table-cell">
+                                                    {{-- Position --}}
+                                                    <td class="px-3 py-2.5 whitespace-nowrap">
+                                                        <span class="text-xs font-medium text-zinc-650">{{ $job->position }}</span>
+                                                    </td>
+                                                    {{-- Applied --}}
+                                                    <td class="px-3 py-2.5 whitespace-nowrap text-xs text-zinc-450 hidden sm:table-cell">
                                                         {{ $job->application_date ? $job->application_date->translatedFormat('d M Y') : '-' }}
                                                     </td>
-                                                    <td class="py-3 px-3">
+                                                    {{-- Stage --}}
+                                                    <td class="px-3 py-2.5 text-center whitespace-nowrap">
                                                         @php
                                                             $stageColors = [
-                                                                'Applied' => 'bg-blue-50/70 text-blue-700 border-blue-100/50',
-                                                                'HR - Interview' => 'bg-orange-50/70 text-orange-700 border-orange-100/50',
-                                                                'User - Interview' => 'bg-amber-50/70 text-amber-700 border-amber-100/50',
-                                                                'Offering' => 'bg-emerald-50/70 text-emerald-700 border-emerald-100/50',
-                                                                'Rejected' => 'bg-rose-50/70 text-rose-700 border-rose-100/50',
+                                                                'Applied' => ['bg' => '#3b82f612', 'text' => '#2563eb', 'border' => '#3b82f620'],
+                                                                'HR - Interview' => ['bg' => '#f9731612', 'text' => '#ea580c', 'border' => '#f9731620'],
+                                                                'User - Interview' => ['bg' => '#eab30812', 'text' => '#ca8a04', 'border' => '#eab30820'],
+                                                                'Offering' => ['bg' => '#10b98112', 'text' => '#059669', 'border' => '#10b98120'],
+                                                                'Rejected' => ['bg' => '#ef444412', 'text' => '#dc2626', 'border' => '#ef444420'],
                                                             ];
-                                                            $color = $stageColors[$job->recruitment_stage] ?? 'bg-zinc-50 text-zinc-700 border-zinc-150/40';
+                                                            $stg = $stageColors[$job->recruitment_stage] ?? ['bg' => '#f4f4f5', 'text' => '#71717a', 'border' => '#e4e4e7'];
                                                         @endphp
-                                                        <span class="inline-flex items-center text-[9px] font-extrabold border px-2 py-0.5 rounded-full {{ $color }} leading-none">
+                                                        <span class="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase" style="background-color: {{ $stg['bg'] }}; color: {{ $stg['text'] }}; border: 1px solid {{ $stg['border'] }};">
                                                             {{ $job->recruitment_stage }}
                                                         </span>
                                                     </td>
-                                                    <td class="py-3 px-3 text-right">
+                                                    {{-- Status --}}
+                                                    <td class="px-3 py-2.5 text-center whitespace-nowrap">
                                                         @php
                                                             $statusColors = [
-                                                                'On Process' => 'bg-blue-50/50 text-blue-700 border-blue-100/30',
-                                                                'Accepted' => 'bg-emerald-50/50 text-emerald-700 border-emerald-100/30',
-                                                                'Declined' => 'bg-rose-50/50 text-rose-700 border-rose-100/30',
+                                                                'On Process' => ['bg' => '#3b82f612', 'text' => '#2563eb', 'border' => '#3b82f620'],
+                                                                'Accepted' => ['bg' => '#10b98112', 'text' => '#059669', 'border' => '#10b98120'],
+                                                                'Declined' => ['bg' => '#ef444412', 'text' => '#dc2626', 'border' => '#ef444420'],
                                                             ];
-                                                            $statusTexts = [
-                                                                'On Process' => 'Active',
-                                                                'Accepted' => 'Hired',
-                                                                'Declined' => 'Closed',
-                                                            ];
-                                                            $statusPill = $statusColors[$job->application_status] ?? 'bg-zinc-50 text-zinc-500 border-zinc-200/40';
-                                                            $statusText = $statusTexts[$job->application_status] ?? $job->application_status;
+                                                            $stat = $statusColors[$job->application_status] ?? ['bg' => '#f4f4f5', 'text' => '#71717a', 'border' => '#e4e4e7'];
                                                         @endphp
-                                                        <span class="inline-flex items-center text-[9px] font-extrabold border px-2 py-0.5 rounded-full {{ $statusPill }} leading-none">
-                                                            {{ $statusText }}
+                                                        <span class="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase" style="background-color: {{ $stat['bg'] }}; color: {{ $stat['text'] }}; border: 1px solid {{ $stat['border'] }};">
+                                                            {{ $job->application_status }}
                                                         </span>
                                                     </td>
-                                                    <td class="py-3 pl-3 text-right">
-                                                        <i class="ph ph-caret-right text-[11px] text-zinc-300 group-hover:text-zinc-500 transition-colors"></i>
+                                                    {{-- Action --}}
+                                                    <td class="px-3 py-2.5 text-right pr-4 whitespace-nowrap">
+                                                        <i class="ph ph-caret-right text-xs text-zinc-300 group-hover:text-zinc-500 transition-colors"></i>
                                                     </td>
                                                 </tr>
                                             @endforeach
