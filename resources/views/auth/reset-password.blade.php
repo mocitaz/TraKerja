@@ -1,22 +1,22 @@
 <x-guest-layout>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <div class="min-h-screen bg-white font-sans antialiased text-[#37352f] flex flex-col items-center pt-12 pb-6 px-4 selection:bg-[#2383e2]/10">
+    <div class="min-h-screen bg-white font-sans antialiased text-[#37352f] flex flex-col justify-center items-center py-12 px-4 selection:bg-[#2383e2]/10">
         
         <!-- Main Container -->
-        <div class="w-full max-w-[320px] flex-1 flex flex-col justify-center items-center space-y-5">
+        <div class="w-full max-w-[320px] flex flex-col items-center space-y-5">
             
             <!-- Logo Section -->
             <div class="flex flex-col items-center text-center">
-                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-10 h-10 object-contain mb-3">
-                <h1 class="text-[18px] font-bold text-[#37352f] tracking-tight leading-tight">
+                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-9 h-9 object-contain mb-2">
+                <h1 class="text-[17px] font-bold text-[#37352f] tracking-tight leading-tight">
                     Reset your password.
                 </h1>
-                <p class="text-xs text-slate-455 font-normal mt-1">Enter your new password details</p>
+                <p class="text-xs text-slate-400 font-normal mt-0.5">Enter your new password details</p>
             </div>
 
             <!-- Form -->
-            <form method="POST" action="{{ route('password.store') }}" class="w-full space-y-3.5 text-left">
+            <form method="POST" action="{{ route('password.store') }}" class="w-full space-y-3 text-left">
                 @csrf
 
                 <!-- Password Reset Token -->
@@ -24,7 +24,7 @@
 
                 <!-- Email Field -->
                 <div>
-                    <label for="email" class="block text-[10.5px] font-medium text-slate-500 mb-1">Email</label>
+                    <label for="email" class="block text-[10.5px] font-medium text-slate-550 mb-1">Email</label>
                     <input id="email" name="email" type="email" autocomplete="email" required value="{{ old('email', $request->email) }}"
                            class="w-full px-3 py-1.5 bg-[#fcfcfc] border border-slate-200 rounded-md text-xs font-normal text-[#37352f] placeholder-slate-400 focus:border-[#2383e2] focus:bg-white shadow-3xs outline-none transition-colors @error('email') border-rose-300 bg-rose-50/20 @enderror"
                            placeholder="Enter your email address...">
@@ -35,7 +35,7 @@
 
                 <!-- Password Field -->
                 <div>
-                    <label for="password" class="block text-[10.5px] font-medium text-slate-500 mb-1">New Password</label>
+                    <label for="password" class="block text-[10.5px] font-medium text-slate-555 mb-1">New Password</label>
                     <div class="relative">
                         <input id="password" name="password" type="password" autocomplete="new-password" required
                                style="padding-right: 34px !important;"
@@ -53,7 +53,7 @@
 
                 <!-- Confirm Password Field -->
                 <div>
-                    <label for="password_confirmation" class="block text-[10.5px] font-medium text-slate-500 mb-1">Confirm Password</label>
+                    <label for="password_confirmation" class="block text-[10.5px] font-medium text-slate-555 mb-1">Confirm Password</label>
                     <div class="relative">
                         <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required
                                style="padding-right: 34px !important;"
@@ -77,17 +77,17 @@
                 Remember your password? <a href="{{ route('login') }}" class="text-[#2383e2] hover:underline">Back to login</a>
             </div>
 
-        </div>
+            <!-- Workspace Footer Disclaimer -->
+            <div class="w-full text-center space-y-2 pt-6 border-t border-slate-100">
+                <p class="text-[9.5px] text-slate-400 leading-normal">
+                    By continuing, you acknowledge that you understand and agree to the <span class="hover:underline cursor-pointer">Terms & Conditions</span> and <span class="hover:underline cursor-pointer">Privacy Policy</span>.
+                </p>
+                <div class="flex items-center justify-center gap-1.5 text-[8.5px] font-bold text-slate-400 uppercase tracking-wider">
+                    <span>Powered by</span>
+                    <span class="text-slate-600">PT. Teknalogi Transformasi Digital</span>
+                </div>
+            </div>
 
-        <!-- Workspace Footer Disclaimer -->
-        <div class="text-center space-y-2.5 max-w-[280px] mt-8">
-            <div class="text-[9.5px] text-slate-400 leading-relaxed">
-                By continuing, you acknowledge that you understand and agree to the <span class="hover:underline cursor-pointer">Terms & Conditions</span> and <span class="hover:underline cursor-pointer">Privacy Policy</span>.
-            </div>
-            <div class="flex items-center justify-center gap-1.5 text-[8.5px] font-bold text-slate-400 uppercase tracking-wider pt-2 border-t border-slate-100">
-                <span>Powered by</span>
-                <span class="text-slate-600">PT. Teknalogi Transformasi Digital</span>
-            </div>
         </div>
 
     </div>
