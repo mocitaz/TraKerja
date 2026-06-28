@@ -9,9 +9,17 @@ class SatisfactionSurvey extends Model
 {
     protected $fillable = [
         'user_id',
-        'score',
-        'ease_of_use',
-        'features_helpful',
+        'q1_overall',
+        'q2_navigation',
+        'q3_speed',
+        'q4_cv_builder',
+        'q5_ai_analyzer',
+        'q6_job_tracker',
+        'q7_cover_letter',
+        'q8_summary',
+        'q9_premium',
+        'q10_recommend',
+        'q11_design',
         'feedback',
     ];
 

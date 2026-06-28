@@ -24,6 +24,12 @@ class CheckSurveyRedirect
             // Only enforce for normal users (non-admins)
             if (!$user->isAdmin()) {
                 
+                // Do not ask new users unless their account age is at least 3 days
+                $accountAgeInDays = $user->created_at ? $user->created_at->diffInDays(now()) : 0;
+                if ($accountAgeInDays < 3) {
+                    return $next($request);
+                }
+
                 // Check if survey is globally enabled
                 if (Setting::get('survey_enabled', false)) {
                     

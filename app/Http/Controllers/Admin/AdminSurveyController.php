@@ -27,11 +27,19 @@ class AdminSurveyController extends Controller
         // Calculate statistics
         $totalRespondents = SatisfactionSurvey::count();
         
-        $avgScore = SatisfactionSurvey::avg('score') ?: 0.0;
-        $avgEaseOfUse = SatisfactionSurvey::avg('ease_of_use') ?: 0.0;
-        $avgFeaturesHelpful = SatisfactionSurvey::avg('features_helpful') ?: 0.0;
+        $avgQ1Overall = SatisfactionSurvey::avg('q1_overall') ?: 0.0;
+        $avgQ2Navigation = SatisfactionSurvey::avg('q2_navigation') ?: 0.0;
+        $avgQ3Speed = SatisfactionSurvey::avg('q3_speed') ?: 0.0;
+        $avgQ4CvBuilder = SatisfactionSurvey::avg('q4_cv_builder') ?: 0.0;
+        $avgQ5AiAnalyzer = SatisfactionSurvey::avg('q5_ai_analyzer') ?: 0.0;
+        $avgQ6JobTracker = SatisfactionSurvey::avg('q6_job_tracker') ?: 0.0;
+        $avgQ7CoverLetter = SatisfactionSurvey::avg('q7_cover_letter') ?: 0.0;
+        $avgQ8Summary = SatisfactionSurvey::avg('q8_summary') ?: 0.0;
+        $avgQ9Premium = SatisfactionSurvey::avg('q9_premium') ?: 0.0;
+        $avgQ10Recommend = SatisfactionSurvey::avg('q10_recommend') ?: 0.0;
+        $avgQ11Design = SatisfactionSurvey::avg('q11_design') ?: 0.0;
 
-        // Calculate score distributions (1-5)
+        // Calculate score distributions (1-5) for Q1 Overall
         $distributions = [
             1 => 0,
             2 => 0,
@@ -41,9 +49,9 @@ class AdminSurveyController extends Controller
         ];
 
         if ($totalRespondents > 0) {
-            $rawDistributions = SatisfactionSurvey::select('score', \DB::raw('count(*) as count'))
-                ->groupBy('score')
-                ->pluck('count', 'score')
+            $rawDistributions = SatisfactionSurvey::select('q1_overall', \DB::raw('count(*) as count'))
+                ->groupBy('q1_overall')
+                ->pluck('count', 'q1_overall')
                 ->toArray();
 
             foreach ($rawDistributions as $score => $count) {
@@ -59,9 +67,17 @@ class AdminSurveyController extends Controller
         return view('admin.survey', [
             'surveyEnabled' => $surveyEnabled,
             'totalRespondents' => $totalRespondents,
-            'avgScore' => number_format($avgScore, 1),
-            'avgEaseOfUse' => number_format($avgEaseOfUse, 1),
-            'avgFeaturesHelpful' => number_format($avgFeaturesHelpful, 1),
+            'avgQ1Overall' => number_format($avgQ1Overall, 1),
+            'avgQ2Navigation' => number_format($avgQ2Navigation, 1),
+            'avgQ3Speed' => number_format($avgQ3Speed, 1),
+            'avgQ4CvBuilder' => number_format($avgQ4CvBuilder, 1),
+            'avgQ5AiAnalyzer' => number_format($avgQ5AiAnalyzer, 1),
+            'avgQ6JobTracker' => number_format($avgQ6JobTracker, 1),
+            'avgQ7CoverLetter' => number_format($avgQ7CoverLetter, 1),
+            'avgQ8Summary' => number_format($avgQ8Summary, 1),
+            'avgQ9Premium' => number_format($avgQ9Premium, 1),
+            'avgQ10Recommend' => number_format($avgQ10Recommend, 1),
+            'avgQ11Design' => number_format($avgQ11Design, 1),
             'distributions' => $distributions,
             'responses' => $responses
         ]);
@@ -85,7 +101,7 @@ class AdminSurveyController extends Controller
         Setting::clearCache();
 
         $message = $newState 
-            ? 'User Satisfaction Survey berhasil DIAKTIFKAN! Pengguna akan dipaksa mengisi survey setelah login.' 
+            ? 'User Satisfaction Survey berhasil DIAKTIFKAN! Pengguna lama (akun >= 3 hari) akan dipaksa mengisi survey setelah login.' 
             : 'User Satisfaction Survey berhasil DINONAKTIFKAN!';
 
         return redirect()->route('admin.survey.index')->with('success', $message);

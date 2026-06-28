@@ -14,10 +14,21 @@ return new class extends Migration
         Schema::create('satisfaction_surveys', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->unsignedTinyInteger('score'); // 1-5 overall satisfaction
-            $table->unsignedTinyInteger('ease_of_use'); // 1-5 ease of use
-            $table->unsignedTinyInteger('features_helpful'); // 1-5 helpfulness of features
-            $table->text('feedback')->nullable(); // suggestions / feedback text
+            
+            // 11 Rating questions (1-5 scale)
+            $table->unsignedTinyInteger('q1_overall');
+            $table->unsignedTinyInteger('q2_navigation');
+            $table->unsignedTinyInteger('q3_speed');
+            $table->unsignedTinyInteger('q4_cv_builder');
+            $table->unsignedTinyInteger('q5_ai_analyzer');
+            $table->unsignedTinyInteger('q6_job_tracker');
+            $table->unsignedTinyInteger('q7_cover_letter');
+            $table->unsignedTinyInteger('q8_summary');
+            $table->unsignedTinyInteger('q9_premium');
+            $table->unsignedTinyInteger('q10_recommend');
+            $table->unsignedTinyInteger('q11_design');
+            
+            $table->text('feedback')->nullable(); // Suggestions / feedback text
             $table->timestamps();
         });
     }
