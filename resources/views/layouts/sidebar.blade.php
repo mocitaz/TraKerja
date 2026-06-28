@@ -60,7 +60,7 @@
             <span x-show="$store.sidebar.open || mobileSidebarOpen" x-transition.opacity.duration.200ms class="ml-2.5 truncate whitespace-nowrap">{{ $link['label'] }}</span>
             <!-- Tooltip (Alpine.js driven, safe from overflow clipping) -->
             <div x-show="!$store.sidebar.open && hovered" x-transition.opacity.duration.100ms
-                 class="absolute px-2.5 py-1 bg-primary-50 border border-primary-200/60 text-zinc-850 text-[9px] font-bold uppercase tracking-wider rounded-md shadow-lg z-50 whitespace-nowrap" style="left: 46px;">
+                 class="absolute px-2.5 py-1 bg-zinc-800 border border-zinc-700 text-white text-[9px] font-bold uppercase tracking-wider rounded-md shadow-lg z-50 whitespace-nowrap" style="left: 46px;">
                 {{ $link['label'] }}
             </div>
         </a>
@@ -92,7 +92,7 @@
             <span x-show="$store.sidebar.open || mobileSidebarOpen" x-transition.opacity.duration.200ms class="ml-2.5 truncate whitespace-nowrap">{{ $link['label'] }}</span>
             <!-- Tooltip (Alpine.js driven, safe from overflow clipping) -->
             <div x-show="!$store.sidebar.open && hovered" x-transition.opacity.duration.100ms
-                 class="absolute px-2.5 py-1 bg-primary-50 border border-primary-200/60 text-zinc-850 text-[9px] font-bold uppercase tracking-wider rounded-md shadow-lg z-50 whitespace-nowrap" style="left: 46px;">
+                 class="absolute px-2.5 py-1 bg-zinc-800 border border-zinc-700 text-white text-[9px] font-bold uppercase tracking-wider rounded-md shadow-lg z-50 whitespace-nowrap" style="left: 46px;">
                 {{ $link['label'] }}
             </div>
         </a>
@@ -111,7 +111,7 @@
             <span x-show="$store.sidebar.open || mobileSidebarOpen" x-transition.opacity.duration.200ms class="ml-2.5 truncate whitespace-nowrap">Admin Panel</span>
             <!-- Tooltip (Alpine.js driven, safe from overflow clipping) -->
             <div x-show="!$store.sidebar.open && hovered" x-transition.opacity.duration.100ms
-                 class="absolute px-2.5 py-1 bg-primary-50 border border-primary-200/60 text-zinc-850 text-[9px] font-bold uppercase tracking-wider rounded-md shadow-lg z-50 whitespace-nowrap" style="left: 46px;">
+                 class="absolute px-2.5 py-1 bg-zinc-800 border border-zinc-700 text-white text-[9px] font-bold uppercase tracking-wider rounded-md shadow-lg z-50 whitespace-nowrap" style="left: 46px;">
                 Admin Panel
             </div>
         </a>
@@ -154,7 +154,7 @@
 
             <!-- Tooltip for Collapsed Sidebar Profile -->
             <div x-show="!$store.sidebar.open && hovered" x-transition.opacity.duration.100ms
-                 class="absolute px-2.5 py-1 bg-primary-50 border border-primary-200/60 text-zinc-850 text-[9px] font-bold uppercase tracking-wider rounded-md shadow-lg z-50 whitespace-nowrap" style="left: 46px;">
+                 class="absolute px-2.5 py-1 bg-zinc-800 border border-zinc-700 text-white text-[9px] font-bold uppercase tracking-wider rounded-md shadow-lg z-50 whitespace-nowrap" style="left: 46px;">
                 Profile Settings
             </div>
         </a>
