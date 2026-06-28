@@ -387,8 +387,6 @@
 
                 <!-- Right Column: Weekly Goal & Quick Actions (col-span 1) -->
                 <div class="space-y-5 items-start">
-                    <!-- Weekly Goal Progress Widget -->
-                    <livewire:goals-cadence-manager />
 
                     <!-- Quick Actions Panel -->
                     <div class="bg-white rounded-lg border border-zinc-200/60 p-4">
