@@ -168,18 +168,29 @@
                         <i class="ph-bold ph-link absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-400 text-sm group-focus-within:text-zinc-700 transition-colors"></i>
                         <input id="job-url-input" wire:model.live="platform_link" type="url" class="block w-full pl-8 pr-3 h-[32px] bg-zinc-50/40 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 focus:ring-1 focus:ring-primary-500/20 focus:bg-white focus:border-primary-500 transition-all outline-none" placeholder="https://...">
                     </div>
-                    <button type="button" onclick="fetchJobDetailsFromUrl()" id="scrape-btn" class="h-[32px] px-3 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded-md text-[10px] font-bold transition-all flex items-center gap-1 active:scale-95 select-none shrink-0">
-                        <i class="ph-bold ph-sparkle text-[10px]"></i>
+                    <button type="button" onclick="fetchJobDetailsFromUrl()" id="scrape-btn" class="h-[28px] px-2.5 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded-md text-[9px] font-bold transition-all flex items-center justify-center active:scale-95 select-none shrink-0 self-center">
                         <span>Auto-Fill</span>
                     </button>
                 </div>
                 @error('platform_link') <p class="text-rose-500 text-[9px] font-semibold mt-1 ml-0.5">{{ $message }}</p> @enderror
 
                 <!-- Supported Platforms Info Block -->
-                <div class="mt-1.5 text-[8.5px] text-zinc-400 font-semibold select-none">
-                    <span>Supports:</span>
-                    <span class="text-zinc-500">LinkedIn, Glints, JobStreet, Kalibrr, Dealls, Talentics</span>
-                    <span class="text-zinc-400 font-normal lowercase">& others</span>
+                <div class="mt-2 flex flex-wrap items-center gap-1.5 text-[8px] font-bold text-zinc-400 uppercase tracking-wider select-none">
+                    <span class="text-zinc-400 text-[7.5px] tracking-widest mr-0.5">Supports:</span>
+                    @foreach([
+                        ['id' => 'linkedin.com', 'name' => 'LinkedIn'],
+                        ['id' => 'glints.com', 'name' => 'Glints'],
+                        ['id' => 'jobstreet.co.id', 'name' => 'JobStreet'],
+                        ['id' => 'kalibrr.com', 'name' => 'Kalibrr'],
+                        ['id' => 'usedeall.com', 'name' => 'Dealls'],
+                        ['id' => 'talentics.id', 'name' => 'Talentics']
+                    ] as $plat)
+                    <div class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-zinc-50 border border-zinc-200/60 rounded text-zinc-650 shadow-3xs hover:bg-zinc-100/80 transition-all cursor-default">
+                        <img src="https://www.google.com/s2/favicons?domain={{ $plat['id'] }}&sz=64" class="w-3 h-3 object-contain shrink-0" alt="{{ $plat['name'] }}" />
+                        <span>{{ $plat['name'] }}</span>
+                    </div>
+                    @endforeach
+                    <span class="text-zinc-400 font-semibold tracking-normal text-[8px] lowercase">& others</span>
                 </div>
 
                 <!-- Scraper Status Alert message inside FE -->
@@ -285,8 +296,8 @@ window.updateScrapeStatus = function(state, message = '') {
         statusDiv.classList.add('hidden');
         if (btn) {
             btn.disabled = false;
-            btn.className = "h-[32px] px-3 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded-md text-[10px] font-bold transition-all flex items-center gap-1 active:scale-95 select-none shrink-0";
-            btn.innerHTML = '<i class="ph-bold ph-sparkle text-[10px]"></i> <span>Auto-Fill</span>';
+            btn.className = "h-[28px] px-2.5 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded-md text-[9px] font-bold transition-all flex items-center justify-center active:scale-95 select-none shrink-0 self-center";
+            btn.innerHTML = '<span>Auto-Fill</span>';
         }
     } else if (state === 'fetching') {
         statusDiv.classList.remove('hidden');
@@ -296,8 +307,8 @@ window.updateScrapeStatus = function(state, message = '') {
         
         if (btn) {
             btn.disabled = true;
-            btn.className = "h-[32px] px-3 bg-zinc-50 text-zinc-400 border border-zinc-200 rounded-md text-[10px] font-bold transition-all flex items-center gap-1 select-none shrink-0";
-            btn.innerHTML = '<i class="ph-bold ph-spinner animate-spin text-[10px]"></i> <span>Fetching...</span>';
+            btn.className = "h-[28px] px-2.5 bg-zinc-50 text-zinc-400 border border-zinc-200 rounded-md text-[9px] font-bold transition-all flex items-center justify-center select-none shrink-0 self-center";
+            btn.innerHTML = '<i class="ph-bold ph-spinner animate-spin text-[10px] mr-1"></i><span>Fetching...</span>';
         }
     } else if (state === 'bypassing') {
         statusDiv.classList.remove('hidden');
@@ -307,8 +318,8 @@ window.updateScrapeStatus = function(state, message = '') {
         
         if (btn) {
             btn.disabled = true;
-            btn.className = "h-[32px] px-3 bg-amber-50 text-amber-650 border border-amber-200 rounded-md text-[10px] font-bold transition-all flex items-center gap-1 select-none shrink-0 animate-pulse";
-            btn.innerHTML = '<i class="ph-bold ph-shield-warning text-[10px]"></i> <span>Bypassing...</span>';
+            btn.className = "h-[28px] px-2.5 bg-amber-50 text-amber-650 border border-amber-200 rounded-md text-[9px] font-bold transition-all flex items-center justify-center select-none shrink-0 self-center animate-pulse";
+            btn.innerHTML = '<i class="ph-bold ph-shield-warning text-[10px] mr-1"></i><span>Bypassing...</span>';
         }
     } else if (state === 'success') {
         statusDiv.classList.remove('hidden');
@@ -318,8 +329,8 @@ window.updateScrapeStatus = function(state, message = '') {
         
         if (btn) {
             btn.disabled = false;
-            btn.className = "h-[32px] px-3 bg-emerald-50 text-emerald-800 border border-emerald-250 rounded-md text-[10px] font-bold transition-all flex items-center gap-1 select-none shrink-0";
-            btn.innerHTML = '<i class="ph-bold ph-check text-[10px]"></i> <span>Filled!</span>';
+            btn.className = "h-[28px] px-2.5 bg-emerald-50 text-emerald-800 border border-emerald-250 rounded-md text-[9px] font-bold transition-all flex items-center justify-center select-none shrink-0 self-center";
+            btn.innerHTML = '<i class="ph-bold ph-check text-[10px] mr-1"></i><span>Filled!</span>';
         }
         
         setTimeout(() => {
@@ -333,8 +344,8 @@ window.updateScrapeStatus = function(state, message = '') {
         
         if (btn) {
             btn.disabled = false;
-            btn.className = "h-[32px] px-3 bg-rose-50 text-rose-800 border border-rose-200 rounded-md text-[10px] font-bold transition-all flex items-center gap-1 select-none shrink-0";
-            btn.innerHTML = '<i class="ph-bold ph-x text-[10px]"></i> <span>Failed</span>';
+            btn.className = "h-[28px] px-2.5 bg-rose-50 text-rose-800 border border-rose-200 rounded-md text-[9px] font-bold transition-all flex items-center justify-center select-none shrink-0 self-center";
+            btn.innerHTML = '<i class="ph-bold ph-x text-[10px] mr-1"></i><span>Failed</span>';
         }
         
         setTimeout(() => {
