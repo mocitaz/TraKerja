@@ -50,22 +50,22 @@
             }
             .bento-card {
                 background: #ffffff;
-                transition: all 0.2s ease-in-out;
+                transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             }
             .bento-card:hover {
                 border-color: #a78bfa;
-                transform: translateY(-1px);
-                box-shadow: 0 12px 30px -10px rgba(139, 92, 246, 0.08);
+                transform: translateY(-2px);
+                box-shadow: 0 16px 36px -12px rgba(139, 92, 246, 0.08);
             }
             .glow-backdrop {
-                background: radial-gradient(circle at center, rgba(167, 139, 250, 0.08) 0%, transparent 65%);
+                background: radial-gradient(circle at center, rgba(167, 139, 250, 0.09) 0%, transparent 65%);
             }
             .faq-trigger[aria-expanded="true"] .faq-icon {
                 transform: rotate(180deg);
             }
         </style>
     </head>
-<body class="bg-white text-zinc-800 antialiased selection:bg-primary-50 selection:text-primary-900">
+<body class="bg-white text-zinc-800 antialiased selection:bg-primary-50 selection:text-primary-950">
 
     <!-- Navigation Header -->
     <nav class="fixed top-0 left-0 right-0 h-12 bg-white/70 backdrop-blur-md border-b border-zinc-200/50 z-50">
@@ -75,14 +75,6 @@
                 <div class="w-5 h-5 bg-zinc-900 group-hover:bg-primary-600 rounded flex items-center justify-center text-white text-[10px] font-black transition-colors">T</div>
                 <span class="text-xs font-bold tracking-tight text-zinc-900 group-hover:text-primary-600 transition-colors">TraKerja</span>
             </a>
-
-            <!-- Menu Navigation -->
-            <div class="hidden md:flex items-center gap-6 text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-400">
-                <a href="#fitur" class="hover:text-zinc-950 transition-colors">Fitur</a>
-                <a href="#cara-kerja" class="hover:text-zinc-950 transition-colors">Cara Kerja</a>
-                <a href="#pricing" class="hover:text-zinc-950 transition-colors">Harga</a>
-                <a href="#faq" class="hover:text-zinc-950 transition-colors">FAQ</a>
-            </div>
 
             <!-- Action Controls -->
             <div class="flex items-center gap-2">
@@ -97,7 +89,7 @@
                             Login
                         </a>
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="h-7 px-3 bg-primary-600 hover:bg-primary-750 text-white rounded-md text-[11px] font-semibold transition-all flex items-center">
+                            <a href="{{ route('register') }}" class="h-7 px-3 bg-primary-600 hover:bg-primary-700 text-white rounded-md text-[11px] font-semibold transition-all flex items-center">
                                 Mulai Gratis
                             </a>
                         @endif
@@ -108,7 +100,7 @@
     </nav>
 
     <!-- Hero Section (Apple-style Centered Layout) -->
-    <section class="relative pt-24 pb-16 bg-white overflow-hidden border-b border-zinc-200/50">
+    <section class="relative pt-24 pb-20 bg-white overflow-hidden border-b border-zinc-200/50">
         <!-- Subtle Purple Radial Backlight Glow (Apple Style) -->
         <div class="absolute inset-0 glow-backdrop pointer-events-none z-0"></div>
 
@@ -116,51 +108,52 @@
             <!-- Badge -->
             <div class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-primary-50 border border-primary-200/60 text-primary-750 font-mono text-[9px] rounded font-bold uppercase tracking-wider mb-6 select-none shadow-3xs">
                 <span class="w-1.5 h-1.5 bg-primary-500 rounded-full animate-pulse"></span>
-                <span>#1 Job Tracking Platform Indonesia</span>
+                <span>#1 Career Tracking Platform Indonesia</span>
             </div>
 
             <!-- Big Apple Title -->
             <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-zinc-900 tracking-tighter leading-[1.05] mb-6 max-w-3xl select-none">
-                Satu workspace untuk<br>semua lamaran kerja Anda.
+                Kelola lamaran kerja<br><span class="text-primary-600">jauh lebih cerdas.</span>
             </h1>
 
             <!-- Subheading -->
-            <p class="text-sm sm:text-base text-zinc-500 max-w-xl font-medium antialiased leading-relaxed mb-8 select-none">
-                Platform pelacakan lamaran kerja yang sederhana, efektif, dan gratis. Dipercaya oleh pencari kerja Indonesia untuk membangun karier impian.
+            <p class="text-sm sm:text-base text-zinc-550 max-w-xl font-medium antialiased leading-relaxed mb-8 select-none">
+                Platform pelacakan lamaran kerja yang sederhana, efektif, dan 100% gratis. Buat CV standar ATS, dapatkan estimasi gaji kompetitif, dan otomatisasi input lamaran Anda.
             </p>
 
             <!-- Action Buttons -->
             <div class="flex flex-wrap items-center justify-center gap-3 mb-16">
                 @auth
-                    <a href="{{ url('/tracker') }}" class="h-9 px-4.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-3xs">
+                    <a href="{{ url('/tracker') }}" class="h-9 px-5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-97">
                         <i class="ph-bold ph-columns text-sm"></i>
                         <span>Buka Dashboard</span>
                     </a>
                 @else
-                    <a href="{{ route('register') }}" class="h-9 px-4.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-3xs">
+                    <a href="{{ route('register') }}" class="h-9 px-5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-97">
                         <i class="ph-bold ph-lightning text-sm"></i>
-                        <span>Mulai Gratis</span>
+                        <span>Mulai Gratis Sekarang</span>
                     </a>
-                    <a href="{{ route('login') }}" class="h-9 px-4.5 bg-white border border-zinc-250 hover:bg-zinc-50 text-zinc-700 hover:text-zinc-900 rounded-lg text-xs font-bold transition-all flex items-center">
+                    <a href="{{ route('login') }}" class="h-9 px-5 bg-white border border-zinc-250 hover:bg-zinc-50 text-zinc-700 hover:text-zinc-900 rounded-lg text-xs font-bold transition-all flex items-center active:scale-97">
                         Masuk ke Akun
                     </a>
                 @endauth
             </div>
 
             <!-- Showcase Interactive Browser Mockup (1px Border Notion Style) -->
-            <div class="w-full max-w-4xl border border-zinc-200/80 rounded-xl bg-white p-1 shadow-3xs">
-                <div class="relative overflow-hidden rounded-lg border border-zinc-200/80 bg-zinc-50 flex flex-col aspect-[16/10] select-none text-left">
+            <div class="w-full max-w-4xl border border-zinc-200/80 rounded-xl bg-white p-1.5 shadow-xs">
+                <div class="relative overflow-hidden rounded-lg border border-zinc-200 bg-zinc-50 flex flex-col aspect-[16/10] select-none text-left">
                     <!-- Title Bar -->
-                    <div class="bg-white border-b border-zinc-200/80 h-9 px-4 flex items-center justify-between shrink-0">
+                    <div class="bg-white border-b border-zinc-200 h-9 px-4 flex items-center justify-between shrink-0">
                         <div class="flex items-center gap-1.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-zinc-200"></span>
-                            <span class="w-2.5 h-2.5 rounded-full bg-zinc-200"></span>
-                            <span class="w-2.5 h-2.5 rounded-full bg-zinc-200"></span>
+                            <span class="w-2 h-2 rounded-full bg-zinc-200"></span>
+                            <span class="w-2 h-2 rounded-full bg-zinc-200"></span>
+                            <span class="w-2 h-2 rounded-full bg-zinc-200"></span>
                         </div>
+                        <!-- Tab switcher -->
                         <div class="flex p-0.5 bg-zinc-100 border border-zinc-200 rounded-md text-[9px] font-bold text-zinc-500 gap-1 shadow-inner">
-                            <button onclick="switchMockupTab('tracker')" id="mockup-tab-btn-tracker" class="px-3 py-1 bg-white border border-zinc-200 rounded text-zinc-800 shadow-3xs font-black transition-all">Kanban Board</button>
-                            <button onclick="switchMockupTab('ai')" id="mockup-tab-btn-ai" class="px-3 py-1 hover:bg-white/40 rounded transition-all">AI Studio</button>
-                            <button onclick="switchMockupTab('extension')" id="mockup-tab-btn-extension" class="px-3 py-1 hover:bg-white/40 rounded transition-all">Auto-Fill Panel</button>
+                            <button onclick="switchMockupTab('tracker')" id="mockup-tab-btn-tracker" class="px-3.5 py-1 bg-white border border-zinc-200 rounded text-zinc-800 shadow-3xs font-black transition-all">Kanban Board</button>
+                            <button onclick="switchMockupTab('ai')" id="mockup-tab-btn-ai" class="px-3.5 py-1 hover:bg-white/40 rounded transition-all">AI Match Scanner</button>
+                            <button onclick="switchMockupTab('extension')" id="mockup-tab-btn-extension" class="px-3.5 py-1 hover:bg-white/40 rounded transition-all">Auto-Fill Panel</button>
                         </div>
                         <div class="w-12"></div>
                     </div>
@@ -168,9 +161,9 @@
                     <!-- Mockup Tab 1: Kanban Board View -->
                     <div id="mockup-tab-tracker" class="flex-1 flex overflow-hidden">
                         <!-- Sidebar -->
-                        <div class="w-36 bg-white border-r border-zinc-200/80 p-3 hidden sm:flex flex-col justify-between shrink-0">
+                        <div class="w-36 bg-white border-r border-zinc-200 p-3.5 hidden sm:flex flex-col justify-between shrink-0">
                             <div class="space-y-3.5">
-                                <div class="flex items-center gap-1.5 text-[9px] font-mono text-zinc-400 font-bold uppercase tracking-wider">Workspace</div>
+                                <div class="flex items-center gap-1.5 text-[8.5px] font-mono text-zinc-400 font-bold uppercase tracking-wider">Workspace</div>
                                 <div class="space-y-1">
                                     <div class="flex items-center gap-1.5 p-1.5 bg-primary-50 border border-primary-100 text-primary-700 rounded text-[10px] font-bold">
                                         <i class="ph-bold ph-columns text-xs"></i>
@@ -186,7 +179,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-1.5 text-[9px] text-zinc-400 font-mono">
+                            <div class="flex items-center gap-1.5 text-[8.5px] text-zinc-400 font-mono">
                                 <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
                                 <span>Free Tier Plan</span>
                             </div>
@@ -198,15 +191,15 @@
                             <div class="w-52 shrink-0 flex flex-col gap-2">
                                 <div class="flex items-center justify-between text-[9px] font-bold text-zinc-400 font-mono uppercase tracking-wider mb-1">
                                     <span>Applied</span>
-                                    <span class="px-1.5 bg-zinc-200/60 rounded text-zinc-650">2</span>
+                                    <span class="px-1.5 bg-zinc-200 rounded text-zinc-600">2</span>
                                 </div>
                                 <!-- Card 1 -->
                                 <div class="bg-white border border-zinc-200 rounded-lg p-3 hover:border-primary-400 transition-all shadow-3xs">
                                     <h4 class="text-[11px] font-bold text-zinc-900">Frontend Developer</h4>
-                                    <p class="text-[9.5px] text-zinc-455 mt-0.5 font-medium">Tokopedia</p>
+                                    <p class="text-[9.5px] text-zinc-450 mt-0.5 font-medium">Tokopedia</p>
                                     <div class="flex flex-wrap gap-1 mt-2.5">
-                                        <span class="px-1.5 py-0.2 bg-zinc-50 border border-zinc-200 text-zinc-500 text-[8px] font-semibold rounded">Full-time</span>
-                                        <span class="px-1.5 py-0.2 bg-primary-50 border border-primary-100 text-primary-650 text-[8px] font-bold rounded">Jakarta</span>
+                                        <span class="px-1.5 py-0.2 bg-zinc-50 border border-zinc-200 text-zinc-550 text-[8px] font-semibold rounded">Full-time</span>
+                                        <span class="px-1.5 py-0.2 bg-primary-50 border border-primary-100 text-primary-600 text-[8px] font-bold rounded">Jakarta</span>
                                     </div>
                                 </div>
                                 <!-- Card 2 -->
@@ -214,7 +207,7 @@
                                     <h4 class="text-[11px] font-bold text-zinc-900">Software Engineer</h4>
                                     <p class="text-[9.5px] text-zinc-455 mt-0.5 font-medium">GoTo Financial</p>
                                     <div class="flex flex-wrap gap-1 mt-2.5">
-                                        <span class="px-1.5 py-0.2 bg-zinc-50 border border-zinc-200 text-zinc-500 text-[8px] font-semibold rounded">Remote</span>
+                                        <span class="px-1.5 py-0.2 bg-zinc-50 border border-zinc-200 text-zinc-550 text-[8px] font-semibold rounded">Remote</span>
                                     </div>
                                 </div>
                             </div>
@@ -223,7 +216,7 @@
                             <div class="w-52 shrink-0 flex flex-col gap-2">
                                 <div class="flex items-center justify-between text-[9px] font-bold text-zinc-400 font-mono uppercase tracking-wider mb-1">
                                     <span>Interviewing</span>
-                                    <span class="px-1.5 bg-zinc-200/60 rounded text-zinc-600">1</span>
+                                    <span class="px-1.5 bg-zinc-200 rounded text-zinc-650">1</span>
                                 </div>
                                 <!-- Card 1 -->
                                 <div class="bg-white border-l-2 border-l-primary-500 border border-zinc-200 rounded-lg p-3 hover:border-primary-400 transition-all shadow-3xs">
@@ -233,8 +226,8 @@
                                     </div>
                                     <p class="text-[9.5px] text-zinc-455 mt-0.5 font-medium">Traveloka</p>
                                     <div class="flex flex-wrap gap-1 mt-2.5">
-                                        <span class="px-1.5 py-0.2 bg-zinc-50 border border-zinc-200 text-zinc-500 text-[8px] font-semibold rounded">Full-time</span>
-                                        <span class="px-1.5 py-0.2 bg-primary-50 border border-primary-100 text-primary-650 text-[8px] font-bold rounded">Interview HR</span>
+                                        <span class="px-1.5 py-0.2 bg-zinc-50 border border-zinc-200 text-zinc-550 text-[8px] font-semibold rounded">Full-time</span>
+                                        <span class="px-1.5 py-0.2 bg-primary-50 border border-primary-100 text-primary-600 text-[8px] font-bold rounded">Interview HR</span>
                                     </div>
                                 </div>
                             </div>
@@ -243,7 +236,7 @@
                             <div class="w-52 shrink-0 flex flex-col gap-2">
                                 <div class="flex items-center justify-between text-[9px] font-bold text-zinc-400 font-mono uppercase tracking-wider mb-1">
                                     <span>Offering</span>
-                                    <span class="px-1.5 bg-zinc-200/60 rounded text-zinc-600">1</span>
+                                    <span class="px-1.5 bg-zinc-200 rounded text-zinc-600">1</span>
                                 </div>
                                 <!-- Card 1 -->
                                 <div class="bg-white border-l-2 border-l-emerald-500 border border-zinc-200 rounded-lg p-3 hover:border-emerald-450 transition-all shadow-3xs">
@@ -251,7 +244,7 @@
                                     <p class="text-[9.5px] text-zinc-455 mt-0.5 font-medium">Shopee</p>
                                     <div class="flex flex-wrap gap-1 mt-2.5">
                                         <span class="px-1.5 py-0.2 bg-emerald-50 border border-emerald-100 text-emerald-600 text-[8px] font-bold rounded">Offered</span>
-                                        <span class="px-1.5 py-0.2 bg-zinc-50 border border-zinc-200 text-zinc-500 text-[8px] font-semibold rounded">Rp 22jt/mo</span>
+                                        <span class="px-1.5 py-0.2 bg-zinc-50 border border-zinc-200 text-zinc-550 text-[8px] font-semibold rounded">Rp 22jt/mo</span>
                                     </div>
                                 </div>
                             </div>
@@ -338,8 +331,41 @@
         </div>
     </section>
 
-    <!-- Features Bento Grid Section -->
-    <section id="fitur" class="py-20 bg-white border-t border-zinc-200/60">
+    <!-- Platform Support Favicon Strip (Unified Clean Layout) -->
+    <div class="py-6 border-b border-zinc-200/50 bg-[#fafafa]">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <span class="font-mono text-[9px] font-bold text-zinc-400 uppercase tracking-widest">Supported Portals</span>
+            <div class="flex flex-wrap items-center gap-6">
+                <!-- LinkedIn -->
+                <a href="https://linkedin.com" target="_blank" class="opacity-45 hover:opacity-100 transition-opacity">
+                    <img src="https://www.google.com/s2/favicons?domain=linkedin.com&sz=64" alt="LinkedIn" class="w-3.5 h-3.5 filter grayscale hover:grayscale-0 transition-all">
+                </a>
+                <!-- Glints -->
+                <a href="https://glints.com" target="_blank" class="opacity-45 hover:opacity-100 transition-opacity">
+                    <img src="https://www.google.com/s2/favicons?domain=glints.com&sz=64" alt="Glints" class="w-3.5 h-3.5 filter grayscale hover:grayscale-0 transition-all">
+                </a>
+                <!-- JobStreet -->
+                <a href="https://jobstreet.co.id" target="_blank" class="opacity-45 hover:opacity-100 transition-opacity">
+                    <img src="https://www.google.com/s2/favicons?domain=jobstreet.co.id&sz=64" alt="JobStreet" class="w-3.5 h-3.5 filter grayscale hover:grayscale-0 transition-all">
+                </a>
+                <!-- Kalibrr -->
+                <a href="https://kalibrr.com" target="_blank" class="opacity-45 hover:opacity-100 transition-opacity">
+                    <img src="https://www.google.com/s2/favicons?domain=kalibrr.com&sz=64" alt="Kalibrr" class="w-3.5 h-3.5 filter grayscale hover:grayscale-0 transition-all">
+                </a>
+                <!-- Dealls -->
+                <a href="https://dealls.com" target="_blank" class="opacity-45 hover:opacity-100 transition-opacity">
+                    <img src="https://www.google.com/s2/favicons?domain=dealls.com&sz=64" alt="Dealls" class="w-3.5 h-3.5 filter grayscale hover:grayscale-0 transition-all">
+                </a>
+                <!-- Talentics -->
+                <a href="https://talentics.id" target="_blank" class="opacity-45 hover:opacity-100 transition-opacity">
+                    <img src="https://www.google.com/s2/favicons?domain=talentics.id&sz=64" alt="Talentics" class="w-3.5 h-3.5 filter grayscale hover:grayscale-0 transition-all">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bento Grid Section -->
+    <section id="fitur" class="py-20 bg-white">
         <div class="max-w-5xl mx-auto px-4">
             <!-- Header -->
             <div class="text-center max-w-xl mx-auto mb-16">
@@ -425,8 +451,8 @@
                             <div class="text-[8px] text-primary-500 font-bold uppercase tracking-wider">Interviews</div>
                         </div>
                         <div>
-                            <div class="text-sm font-extrabold text-zinc-900 text-emerald-600">4%</div>
-                            <div class="text-[8px] text-emerald-505 font-bold uppercase tracking-wider">Offers</div>
+                            <div class="text-sm font-extrabold text-zinc-900 text-emerald-650">4%</div>
+                            <div class="text-[8px] text-emerald-500 font-bold uppercase tracking-wider">Offers</div>
                         </div>
                     </div>
                 </div>
@@ -435,7 +461,7 @@
     </section>
 
     <!-- How It Works Section (Notion Sidebar Stepper Style) -->
-    <section id="cara-kerja" class="py-20 bg-white border-t border-zinc-200/60">
+    <section id="cara-kerja" class="py-20 bg-[#fafafa] border-t border-zinc-200/60">
         <div class="max-w-4xl mx-auto px-4">
             <!-- Header -->
             <div class="text-center max-w-xl mx-auto mb-16">
@@ -449,7 +475,7 @@
                 <!-- Steppers sidebar -->
                 <div class="space-y-3">
                     <!-- Step 1 -->
-                    <div onclick="toggleHowItWorks(1)" id="hiw-trigger-1" class="hiw-card cursor-pointer border-l-2 border-primary-500 bg-primary-50/20 p-4 rounded-r-lg transition-all duration-200 select-none">
+                    <div onclick="toggleHowItWorks(1)" id="hiw-trigger-1" class="hiw-card cursor-pointer border-l-2 border-primary-500 bg-white p-4 rounded-r-lg transition-all duration-200 select-none shadow-3xs">
                         <div class="flex items-center gap-3">
                             <span class="font-mono text-xs font-bold text-primary-650" id="hiw-num-1">01</span>
                             <h3 class="text-xs font-bold text-zinc-900">Salin URL & Auto-Fill Data</h3>
@@ -460,10 +486,10 @@
                     </div>
 
                     <!-- Step 2 -->
-                    <div onclick="toggleHowItWorks(2)" id="hiw-trigger-2" class="hiw-card cursor-pointer border-l border-zinc-200 hover:border-zinc-300 p-4 rounded-r-lg transition-all duration-200 select-none">
+                    <div onclick="toggleHowItWorks(2)" id="hiw-trigger-2" class="hiw-card cursor-pointer border-l border-zinc-200 hover:border-zinc-300 bg-white/40 p-4 rounded-r-lg transition-all duration-200 select-none">
                         <div class="flex items-center gap-3">
                             <span class="font-mono text-xs font-bold text-zinc-400" id="hiw-num-2">02</span>
-                            <h3 class="text-xs font-bold text-zinc-400">Lacak Siklus Lamaran</h3>
+                            <h3 class="text-xs font-bold text-zinc-450">Lacak Siklus Lamaran</h3>
                         </div>
                         <div id="hiw-content-2" class="mt-2 text-[11px] text-zinc-500 leading-relaxed pl-7 hidden">
                             Pantau kemajuan rekrutmen lamaran Anda secara tersusun. Tambahkan jadwal wawancara, riwayat tes tertulis, serta data korespondensi dalam satu tempat terpusat.
@@ -471,10 +497,10 @@
                     </div>
 
                     <!-- Step 3 -->
-                    <div onclick="toggleHowItWorks(3)" id="hiw-trigger-3" class="hiw-card cursor-pointer border-l border-zinc-200 hover:border-zinc-300 p-4 rounded-r-lg transition-all duration-200 select-none">
+                    <div onclick="toggleHowItWorks(3)" id="hiw-trigger-3" class="hiw-card cursor-pointer border-l border-zinc-200 hover:border-zinc-300 bg-white/40 p-4 rounded-r-lg transition-all duration-200 select-none">
                         <div class="flex items-center gap-3">
                             <span class="font-mono text-xs font-bold text-zinc-400" id="hiw-num-3">03</span>
-                            <h3 class="text-xs font-bold text-zinc-400">Optimasi CV via AI</h3>
+                            <h3 class="text-xs font-bold text-zinc-450">Optimasi CV via AI</h3>
                         </div>
                         <div id="hiw-content-3" class="mt-2 text-[11px] text-zinc-500 leading-relaxed pl-7 hidden">
                             Manfaatkan model kecerdasan buatan untuk mengecek skor kelolosan CV Anda. Buat draf surat lamaran kerja terpersonalisasi yang cocok dengan spesifikasi deskripsi lowongan.
@@ -483,7 +509,7 @@
                 </div>
 
                 <!-- Preview Board (CSS Mockup Window - NO External Images) -->
-                <div class="border border-zinc-200 bg-zinc-50/50 p-1.5 rounded-xl shadow-3xs">
+                <div class="border border-zinc-200 bg-white p-1.5 rounded-xl shadow-3xs">
                     <div class="relative overflow-hidden rounded-lg aspect-video bg-white border border-zinc-200 shadow-3xs">
                         <!-- Step 1 Live View -->
                         <div id="how-it-works-img-1" class="how-it-works-image w-full h-full p-4 flex flex-col justify-between transition-opacity duration-200 opacity-100">
@@ -529,150 +555,6 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="py-20 bg-[#fafafa] border-t border-zinc-200/60">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <!-- Header -->
-            <div class="max-w-xl mx-auto mb-16">
-                <p class="font-mono text-[9px] tracking-wider text-primary-600 font-bold uppercase mb-2">Testimonials</p>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-zinc-900 tracking-tight mb-3">Apa Kata Pencari Kerja?</h2>
-                <p class="text-xs sm:text-sm text-zinc-500 font-medium">Cerita sukses mereka yang berhasil mengamankan pekerjaan impian bersama TraKerja.</p>
-            </div>
-
-            <!-- Clean Static Quotes Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-left">
-                <div class="bg-white border border-zinc-200 rounded-xl p-5 hover:border-primary-300 transition-all shadow-3xs">
-                    <p class="text-xs text-zinc-655 italic leading-relaxed mb-4">"Sebelumnya saya melacak puluhan lamaran kerja menggunakan Excel dan seringkali kehilangan catatan tindak lanjut. Dengan papan Kanban TraKerja, seluruh aktivitas lamaran kerja saya menjadi tersusun sangat rapi dan praktis."</p>
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-full bg-primary-100 flex items-center justify-center font-bold text-primary-750 text-[10px]">LF</div>
-                        <div>
-                            <h4 class="text-xs font-bold text-zinc-800">Luthfi Fauzi</h4>
-                            <p class="text-[9px] text-zinc-400">Software Engineer</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white border border-zinc-200 rounded-xl p-5 hover:border-primary-300 transition-all shadow-3xs">
-                    <p class="text-xs text-zinc-655 italic leading-relaxed mb-4">"Fitur Chrome Auto-Fill Extension sangat membantu! Saya tidak perlu lagi mengetik manual setiap kali melihat lowongan bagus di LinkedIn atau JobStreet. Tombol Auto-Fill-nya sangat cepat dan responsif."</p>
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-full bg-primary-100 flex items-center justify-center font-bold text-primary-750 text-[10px]">RN</div>
-                        <div>
-                            <h4 class="text-xs font-bold text-zinc-800">Rian Nugraha</h4>
-                            <p class="text-[9px] text-zinc-400">Data Analyst</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section (Apple Store Style Pricing Panels) -->
-    <section id="pricing" class="py-20 bg-white border-t border-zinc-200/60">
-        <div class="max-w-5xl mx-auto px-4">
-            <!-- Header -->
-            <div class="text-center max-w-xl mx-auto mb-16">
-                <p class="font-mono text-[9px] tracking-wider text-primary-600 font-bold uppercase mb-2">Pricing Plans</p>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-zinc-900 tracking-tight mb-3">Pilih paket sesuai kebutuhan.</h2>
-                <p class="text-xs sm:text-sm text-zinc-500 font-medium">Akses tracker gratis selamanya atau naikkan level persiapan dengan asisten AI terintegrasi.</p>
-            </div>
-
-            <!-- Pricing Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-                <!-- Free Plan -->
-                <div class="bg-white border border-zinc-200 rounded-xl p-6 flex flex-col justify-between hover:border-zinc-300 transition-colors shadow-3xs">
-                    <div>
-                        <div class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-2">Free Tracker</div>
-                        <div class="flex items-baseline gap-1.5 mb-4">
-                            <span class="text-3xl font-extrabold text-zinc-900">Rp 0</span>
-                            <span class="text-[9px] font-mono text-zinc-450 font-bold uppercase">selamanya</span>
-                        </div>
-                        <p class="text-xs text-zinc-500 mb-6 leading-relaxed">Paket dasar untuk pelacakan lamaran kerja secara tertata dan rapi.</p>
-                        <div class="border-t border-zinc-100 pt-6 space-y-3">
-                            <div class="flex items-center gap-2 text-xs text-zinc-650">
-                                <i class="ph-bold ph-check text-emerald-600 text-sm shrink-0"></i>
-                                <span>Manajemen Papan Kanban</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-xs text-zinc-650">
-                                <i class="ph-bold ph-check text-emerald-600 text-sm shrink-0"></i>
-                                <span>Auto-Fill Ekstensi (LinkedIn & JobStreet)</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-xs text-zinc-650">
-                                <i class="ph-bold ph-check text-emerald-600 text-sm shrink-0"></i>
-                                <span>Statistik Dasar Lamaran</span>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="{{ route('register') }}" class="mt-8 h-8 bg-zinc-50 hover:bg-zinc-100 text-zinc-700 border border-zinc-200 rounded-lg text-xs font-bold transition-all flex items-center justify-center shadow-3xs">
-                        Mulai Gratis
-                    </a>
-                </div>
-
-                <!-- Premium Pro (Apple Store Outline Highlight with Purple touch) -->
-                <div class="bg-white border border-primary-500 rounded-xl p-6 flex flex-col justify-between relative shadow-sm">
-                    <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 bg-primary-650 text-white text-[8px] font-mono font-bold uppercase tracking-wider rounded shadow-3xs">
-                        Pilihan Utama
-                    </div>
-                    <div>
-                        <div class="text-[9px] font-mono font-bold text-primary-600 uppercase tracking-wider mb-2 mt-1">Premium Pro</div>
-                        <div class="flex items-baseline gap-1.5 mb-4">
-                            <span class="text-3xl font-extrabold text-zinc-900">Rp 15k</span>
-                            <span class="text-[9px] font-mono text-zinc-455 font-bold uppercase">/ bulan</span>
-                        </div>
-                        <p class="text-xs text-zinc-500 mb-6 leading-relaxed">Akses penuh fitur AI cerdas untuk memperbesar rasio kelolosan proses lamaran kerja.</p>
-                        <div class="border-t border-zinc-100 pt-6 space-y-3">
-                            <div class="flex items-center gap-2 text-xs text-zinc-655">
-                                <i class="ph-bold ph-check text-primary-600 text-sm shrink-0"></i>
-                                <span>Seluruh Fitur Free Tracker</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-xs text-zinc-655">
-                                <i class="ph-bold ph-check text-primary-600 text-sm shrink-0"></i>
-                                <span>AI Resume & Cover Letter Analyzer</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-xs text-zinc-655">
-                                <i class="ph-bold ph-check text-primary-600 text-sm shrink-0"></i>
-                                <span>Smart Salary Estimation</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-xs text-zinc-655">
-                                <i class="ph-bold ph-check text-primary-600 text-sm shrink-0"></i>
-                                <span>Custom Export CSV / Data Excel</span>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="{{ route('register') }}" class="mt-8 h-8 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-xs font-bold transition-all flex items-center justify-center shadow-3xs">
-                        Tingkatkan Karir
-                    </a>
-                </div>
-
-                <!-- Custom / Team -->
-                <div class="bg-white border border-zinc-200 rounded-xl p-6 flex flex-col justify-between hover:border-zinc-300 transition-colors shadow-3xs">
-                    <div>
-                        <div class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-2">Corporate & Teams</div>
-                        <div class="flex items-baseline gap-1.5 mb-4">
-                            <span class="text-3xl font-extrabold text-zinc-900">Hubungi</span>
-                        </div>
-                        <p class="text-xs text-zinc-500 mb-6 leading-relaxed">Solusi khusus untuk agensi rekrutmen, portal loker, atau tim pencari kerja skala besar.</p>
-                        <div class="border-t border-zinc-100 pt-6 space-y-3">
-                            <div class="flex items-center gap-2 text-xs text-zinc-650">
-                                <i class="ph-bold ph-check text-emerald-600 text-sm shrink-0"></i>
-                                <span>Custom Integration API</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-xs text-zinc-650">
-                                <i class="ph-bold ph-check text-emerald-600 text-sm shrink-0"></i>
-                                <span>Dedicated Database Server</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-xs text-zinc-650">
-                                <i class="ph-bold ph-check text-emerald-600 text-sm shrink-0"></i>
-                                <span>Support SLA Prioritas 24/7</span>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="button" onclick="openContactWidget()" class="mt-8 h-8 bg-zinc-50 hover:bg-zinc-100 text-zinc-700 border border-zinc-200 rounded-lg text-xs font-bold transition-all flex items-center justify-center shadow-3xs">
-                        Hubungi Penjualan
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- FAQ Section (Borderless accordion lines) -->
     <section id="faq" class="py-20 bg-white border-t border-zinc-200/60">
         <div class="max-w-2xl mx-auto px-4">
@@ -687,33 +569,33 @@
             <div class="divide-y divide-zinc-200">
                 <!-- FAQ Item 1 -->
                 <div class="faq-item py-4">
-                    <button onclick="toggleFaq(1)" class="faq-trigger w-full flex items-center justify-between text-left text-xs font-bold text-zinc-800 hover:text-zinc-955 transition-colors focus:outline-none" aria-expanded="false">
+                    <button onclick="toggleFaq(1)" class="faq-trigger w-full flex items-center justify-between text-left text-xs font-bold text-zinc-800 hover:text-zinc-950 transition-colors focus:outline-none" aria-expanded="false">
                         <span>Apakah platform TraKerja benar-benar gratis?</span>
                         <i class="ph-bold ph-caret-down faq-icon text-zinc-400 transition-transform duration-200"></i>
                     </button>
-                    <div id="faq-content-1" class="faq-content hidden mt-3 text-[11px] text-zinc-505 leading-relaxed pl-1">
-                        Ya, fitur utama pelacakan lamaran kerja (Kanban Tracker) dan integrasi Ekstensi Chrome dapat digunakan 100% gratis selamanya. Kami menawarkan opsi paket Premium Pro berbayar bagi pengguna yang ingin menggunakan fungsionalitas asisten kecerdasan buatan (AI) terintegrasi.
+                    <div id="faq-content-1" class="faq-content hidden mt-3 text-[11px] text-zinc-550 leading-relaxed pl-1">
+                        Ya, seluruh fitur utama pelacakan lamaran kerja (Kanban Tracker) dan integrasi Ekstensi Chrome dapat digunakan 100% gratis selamanya. Kami menawarkan opsi integrasi premium bagi pengguna korporat yang membutuhkan dedicated server.
                     </div>
                 </div>
 
                 <!-- FAQ Item 2 -->
                 <div class="faq-item py-4">
-                    <button onclick="toggleFaq(2)" class="faq-trigger w-full flex items-center justify-between text-left text-xs font-bold text-zinc-800 hover:text-zinc-955 transition-colors focus:outline-none" aria-expanded="false">
+                    <button onclick="toggleFaq(2)" class="faq-trigger w-full flex items-center justify-between text-left text-xs font-bold text-zinc-800 hover:text-zinc-950 transition-colors focus:outline-none" aria-expanded="false">
                         <span>Bagaimana cara kerja Chrome Extension Auto-Fill?</span>
                         <i class="ph-bold ph-caret-down faq-icon text-zinc-400 transition-transform duration-200"></i>
                     </button>
-                    <div id="faq-content-2" class="faq-content hidden mt-3 text-[11px] text-zinc-505 leading-relaxed pl-1">
+                    <div id="faq-content-2" class="faq-content hidden mt-3 text-[11px] text-zinc-555 leading-relaxed pl-1">
                         Setelah memasang ekstensi resmi kami dari Chrome Web Store, Anda cukup membuka halaman lowongan kerja aktif (seperti LinkedIn, JobStreet, atau Glints) lalu mengeklik ikon ekstensi. Data detail lowongan akan diekstrak secara otomatis dan langsung diunggah ke papan lamaran Anda.
                     </div>
                 </div>
 
                 <!-- FAQ Item 3 -->
                 <div class="faq-item py-4">
-                    <button onclick="toggleFaq(3)" class="faq-trigger w-full flex items-center justify-between text-left text-xs font-bold text-zinc-800 hover:text-zinc-955 transition-colors focus:outline-none" aria-expanded="false">
+                    <button onclick="toggleFaq(3)" class="faq-trigger w-full flex items-center justify-between text-left text-xs font-bold text-zinc-800 hover:text-zinc-950 transition-colors focus:outline-none" aria-expanded="false">
                         <span>Apakah data lamaran kerja saya aman di TraKerja?</span>
                         <i class="ph-bold ph-caret-down faq-icon text-zinc-400 transition-transform duration-200"></i>
                     </button>
-                    <div id="faq-content-3" class="faq-content hidden mt-3 text-[11px] text-zinc-505 leading-relaxed pl-1">
+                    <div id="faq-content-3" class="faq-content hidden mt-3 text-[11px] text-zinc-555 leading-relaxed pl-1">
                         Sangat aman. Seluruh data lamaran kerja, resume, dan dokumen pendukung Anda disimpan dengan protokol enkripsi standar industri dan tidak akan pernah dibagikan kepada pihak ketiga tanpa persetujuan eksplisit Anda.
                     </div>
                 </div>
@@ -734,7 +616,6 @@
             <div class="flex items-center gap-6 text-[9px] font-mono">
                 <a href="#fitur" class="hover:text-zinc-700 transition-colors">Fitur</a>
                 <a href="#cara-kerja" class="hover:text-zinc-700 transition-colors">Cara Kerja</a>
-                <a href="#pricing" class="hover:text-zinc-700 transition-colors">Harga</a>
                 <a href="#faq" class="hover:text-zinc-700 transition-colors">FAQ</a>
             </div>
         </div>
@@ -869,7 +750,7 @@
                 const btn = document.getElementById('mockup-tab-btn-' + t);
                 if (el) el.classList.add('hidden');
                 if (btn) {
-                    btn.className = "px-3 py-1 hover:bg-white/40 rounded transition-all";
+                    btn.className = "px-3.5 py-1 hover:bg-white/40 rounded transition-all";
                 }
             });
 
@@ -878,7 +759,7 @@
             const activeBtn = document.getElementById('mockup-tab-btn-' + tab);
             if (activeEl) activeEl.classList.remove('hidden');
             if (activeBtn) {
-                activeBtn.className = "px-3 py-1 bg-white border border-zinc-200 rounded text-zinc-800 shadow-3xs font-black transition-all";
+                activeBtn.className = "px-3.5 py-1 bg-white border border-zinc-200 rounded text-zinc-800 shadow-3xs font-black transition-all";
             }
         }
 
@@ -886,7 +767,7 @@
         function toggleHowItWorks(step) {
             // Reset trigger styling
             document.querySelectorAll('.hiw-card').forEach(card => {
-                card.className = "hiw-card cursor-pointer border-l border-zinc-200 hover:border-zinc-300 p-4 rounded-r-lg transition-all duration-200 select-none";
+                card.className = "hiw-card cursor-pointer border-l border-zinc-200 hover:border-zinc-350 p-4 rounded-r-lg transition-all duration-200 bg-white/45 select-none";
             });
             document.querySelectorAll('[id^="hiw-content-"]').forEach(content => {
                 content.classList.add('hidden');
@@ -902,7 +783,7 @@
             // Set active stepper style
             const activeCard = document.getElementById('hiw-trigger-' + step);
             if (activeCard) {
-                activeCard.className = "hiw-card cursor-pointer border-l-2 border-primary-500 bg-primary-50/20 p-4 rounded-r-lg transition-all duration-200 select-none";
+                activeCard.className = "hiw-card cursor-pointer border-l-2 border-primary-500 bg-white p-4 rounded-r-lg transition-all duration-200 select-none shadow-3xs";
             }
             const activeContent = document.getElementById('hiw-content-' + step);
             if (activeContent) {
