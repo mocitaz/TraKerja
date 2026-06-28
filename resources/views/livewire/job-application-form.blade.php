@@ -288,9 +288,6 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
             if (data.job_title && window.Livewire) {
                 @this.set('position', data.job_title);
             }
-            if (data.description && window.Livewire) {
-                @this.set('notes', data.description);
-            }
             if (data.location && window.Livewire) {
                 @this.set('location', data.location);
                 @this.call('parseLocation', data.location);
@@ -358,9 +355,6 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
                     }
                     if (finalData.job_title && window.Livewire) {
                         @this.set('position', finalData.job_title);
-                    }
-                    if (finalData.description && window.Livewire) {
-                        @this.set('notes', finalData.description);
                     }
                     if (finalData.location && window.Livewire) {
                         @this.set('location', finalData.location);
