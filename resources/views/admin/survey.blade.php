@@ -92,11 +92,11 @@
 
         </div>
 
-        {{-- 11 Parameter Summary Card --}}
+        {{-- 12 Parameter Summary Card --}}
         <div class="bg-white rounded-lg border border-zinc-200/80 p-4 space-y-3.5">
             <div class="flex items-center gap-1.5 pb-2 border-b border-zinc-150">
                 <i class="ph ph-sliders text-zinc-800 text-sm"></i>
-                <h3 class="text-xs font-bold text-zinc-900 tracking-tight">Rata-rata Skor per Parameter Layanan (11 Pertanyaan)</h3>
+                <h3 class="text-xs font-bold text-zinc-900 tracking-tight">Rata-rata Skor per Parameter Layanan (12 Pertanyaan)</h3>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
@@ -109,10 +109,11 @@
                         ['label' => '5. Ketepatan Review AI Analyzer', 'val' => $avgQ5AiAnalyzer],
                         ['label' => '6. Efektivitas Pelacak Lamaran (Job Tracker)', 'val' => $avgQ6JobTracker],
                         ['label' => '7. AI Cover Letter Generator', 'val' => $avgQ7CoverLetter],
-                        ['label' => '8. Visualisasi Statistik (Halaman Summary)', 'val' => $avgQ8Summary],
+                        ['label' => '8. Manajemen & Penjadwalan Wawancara (Interviews)', 'val' => $avgQ8Interviews],
                         ['label' => '9. Nilai Ekonomis Layanan Premium', 'val' => $avgQ9Premium],
                         ['label' => '10. Tingkat Rekomendasi Layanan (NPS)', 'val' => $avgQ10Recommend],
                         ['label' => '11. Estetika & Desain Visual Halaman', 'val' => $avgQ11Design],
+                        ['label' => '12. Desain & Kerapihan Template CV (CV Builder)', 'val' => $avgQ12CvTemplates],
                     ];
                 @endphp
                 @foreach($metrics as $m)

@@ -16,10 +16,11 @@ class SatisfactionSurvey extends Model
         'q5_ai_analyzer',
         'q6_job_tracker',
         'q7_cover_letter',
-        'q8_summary',
+        'q8_interviews',
         'q9_premium',
         'q10_recommend',
         'q11_design',
+        'q12_cv_templates',
         'feedback',
     ];
 

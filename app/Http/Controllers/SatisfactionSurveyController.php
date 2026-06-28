@@ -63,10 +63,11 @@ class SatisfactionSurveyController extends Controller
             'q5_ai_analyzer' => 'required|integer|min:1|max:5',
             'q6_job_tracker' => 'required|integer|min:1|max:5',
             'q7_cover_letter' => 'required|integer|min:1|max:5',
-            'q8_summary' => 'required|integer|min:1|max:5',
+            'q8_interviews' => 'required|integer|min:1|max:5',
             'q9_premium' => 'required|integer|min:1|max:5',
             'q10_recommend' => 'required|integer|min:1|max:5',
             'q11_design' => 'required|integer|min:1|max:5',
+            'q12_cv_templates' => 'required|integer|min:1|max:5',
             'feedback' => 'nullable|string|max:1000',
         ], [
             'q1_overall.required' => 'Mohon isi penilaian kepuasan keseluruhan.',
@@ -76,10 +77,11 @@ class SatisfactionSurveyController extends Controller
             'q5_ai_analyzer.required' => 'Mohon isi penilaian kegunaan AI Analyzer.',
             'q6_job_tracker.required' => 'Mohon isi penilaian kegunaan Job Tracker.',
             'q7_cover_letter.required' => 'Mohon isi penilaian kegunaan Cover Letter.',
-            'q8_summary.required' => 'Mohon isi penilaian kesesuaian halaman Summary.',
+            'q8_interviews.required' => 'Mohon isi penilaian fitur Interviews Tracker.',
             'q9_premium.required' => 'Mohon isi penilaian nilai ekonomis premium.',
             'q10_recommend.required' => 'Mohon isi tingkat rekomendasi layanan.',
             'q11_design.required' => 'Mohon isi penilaian estetika desain visual.',
+            'q12_cv_templates.required' => 'Mohon isi penilaian desain & kerapihan template CV.',
         ]);
 
         SatisfactionSurvey::create([
@@ -91,10 +93,11 @@ class SatisfactionSurveyController extends Controller
             'q5_ai_analyzer' => $validated['q5_ai_analyzer'],
             'q6_job_tracker' => $validated['q6_job_tracker'],
             'q7_cover_letter' => $validated['q7_cover_letter'],
-            'q8_summary' => $validated['q8_summary'],
+            'q8_interviews' => $validated['q8_interviews'],
             'q9_premium' => $validated['q9_premium'],
             'q10_recommend' => $validated['q10_recommend'],
             'q11_design' => $validated['q11_design'],
+            'q12_cv_templates' => $validated['q12_cv_templates'],
             'feedback' => $validated['feedback'],
         ]);
 

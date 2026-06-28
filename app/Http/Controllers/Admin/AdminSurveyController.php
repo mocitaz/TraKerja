@@ -34,10 +34,11 @@ class AdminSurveyController extends Controller
         $avgQ5AiAnalyzer = SatisfactionSurvey::avg('q5_ai_analyzer') ?: 0.0;
         $avgQ6JobTracker = SatisfactionSurvey::avg('q6_job_tracker') ?: 0.0;
         $avgQ7CoverLetter = SatisfactionSurvey::avg('q7_cover_letter') ?: 0.0;
-        $avgQ8Summary = SatisfactionSurvey::avg('q8_summary') ?: 0.0;
+        $avgQ8Interviews = SatisfactionSurvey::avg('q8_interviews') ?: 0.0;
         $avgQ9Premium = SatisfactionSurvey::avg('q9_premium') ?: 0.0;
         $avgQ10Recommend = SatisfactionSurvey::avg('q10_recommend') ?: 0.0;
         $avgQ11Design = SatisfactionSurvey::avg('q11_design') ?: 0.0;
+        $avgQ12CvTemplates = SatisfactionSurvey::avg('q12_cv_templates') ?: 0.0;
 
         // Calculate score distributions (1-5) for Q1 Overall
         $distributions = [
@@ -74,10 +75,11 @@ class AdminSurveyController extends Controller
             'avgQ5AiAnalyzer' => number_format($avgQ5AiAnalyzer, 1),
             'avgQ6JobTracker' => number_format($avgQ6JobTracker, 1),
             'avgQ7CoverLetter' => number_format($avgQ7CoverLetter, 1),
-            'avgQ8Summary' => number_format($avgQ8Summary, 1),
+            'avgQ8Interviews' => number_format($avgQ8Interviews, 1),
             'avgQ9Premium' => number_format($avgQ9Premium, 1),
             'avgQ10Recommend' => number_format($avgQ10Recommend, 1),
             'avgQ11Design' => number_format($avgQ11Design, 1),
+            'avgQ12CvTemplates' => number_format($avgQ12CvTemplates, 1),
             'distributions' => $distributions,
             'responses' => $responses
         ]);

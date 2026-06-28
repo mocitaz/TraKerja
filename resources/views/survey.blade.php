@@ -106,12 +106,12 @@
                                 'low' => 'Tidak Puas',
                                 'high' => 'Sangat Puas'
                             ],
-                            'q8_summary' => [
+                            'q8_interviews' => [
                                 'num' => 8,
-                                'title' => 'Visualisasi Statistik (Halaman Summary)',
-                                'desc' => 'Seberapa informatif visualisasi data ringkasan lamaran kerja Anda?',
-                                'low' => 'Tidak Informatif',
-                                'high' => 'Sangat Informatif'
+                                'title' => 'Manajemen & Penjadwalan Wawancara (Interviews)',
+                                'desc' => 'Seberapa terbantu Anda dengan fitur pencatatan dan pengelolaan jadwal wawancara kerja?',
+                                'low' => 'Tidak Membantu',
+                                'high' => 'Sangat Membantu'
                             ],
                             'q9_premium' => [
                                 'num' => 9,
@@ -133,6 +133,13 @@
                                 'desc' => 'Bagaimana penilaian Anda terhadap aspek estetika visual (Notion-Cupertino style)?',
                                 'low' => 'Sangat Buruk',
                                 'high' => 'Sangat Estetis'
+                            ],
+                            'q12_cv_templates' => [
+                                'num' => 12,
+                                'title' => 'Desain & Kerapihan Template CV (CV Builder)',
+                                'desc' => 'Bagaimana penilaian Anda terhadap kualitas desain template dan hasil ekspor PDF di CV Builder?',
+                                'low' => 'Sangat Buruk',
+                                'high' => 'Sangat Baik'
                             ]
                         ];
                     @endphp
@@ -173,7 +180,7 @@
                     <div class="bg-white border border-zinc-200 rounded-lg p-5 space-y-3.5 shadow-2xs">
                         <div class="space-y-1">
                             <h3 class="text-xs sm:text-sm font-bold text-zinc-900 leading-snug">
-                                12. Saran, Kritik, atau Fitur Tambahan (Opsional)
+                                {{ count($questions) + 1 }}. Saran, Kritik, atau Fitur Tambahan (Opsional)
                             </h3>
                             <p class="text-[11px] text-zinc-550 leading-relaxed">Berikan saran spesifik mengenai hal-hal yang perlu kami tingkatkan pada platform ini.</p>
                         </div>
