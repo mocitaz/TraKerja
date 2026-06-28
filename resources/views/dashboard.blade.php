@@ -288,8 +288,8 @@
                     <div class="bg-white rounded-lg border border-zinc-200/60 p-5 shadow-2xs font-sans">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 select-none">
                             <div>
-                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight uppercase tracking-wider">{{ $totalHeatmapApps }} contributions in the last year</h3>
-                                <p class="text-[10px] text-zinc-400 font-medium mt-0.5">Visualizing your daily application consistency over the last 12 months</p>
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight uppercase tracking-wider">{{ $totalHeatmapApps }} lamaran terkirim setahun terakhir</h3>
+                                <p class="text-[10px] text-zinc-400 font-medium mt-0.5">Visualisasi konsistensi pengiriman lamaran kerja Anda dalam 12 bulan terakhir</p>
                             </div>
                             <div class="text-[9px] text-zinc-450 font-mono bg-zinc-50 border border-zinc-150/60 px-2 py-0.5 rounded-md shrink-0">
                                 Avg: <strong class="text-zinc-800">{{ number_format($totalHeatmapApps / 365, 2) }}</strong> / day
@@ -366,7 +366,7 @@
                         {{-- Legend & Footer Row --}}
                         <div class="flex items-center justify-between text-[10px] text-zinc-400 mt-3 select-none">
                             <a href="{{ route('tracker') }}" class="text-[10px] text-zinc-400 hover:text-zinc-650 transition-colors font-medium">
-                                Learn how we count contributions
+                                Pelajari pelacakan aktivitas lamaran
                             </a>
                             
                             <div class="flex items-center" style="gap: 3px;">
