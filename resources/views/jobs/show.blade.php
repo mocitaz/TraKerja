@@ -59,6 +59,78 @@
                 }
             }
         }
+
+        // Realistic salary estimation algorithm based on position and career level
+        $salaryEstimate = null;
+        if ($matchedUmk) {
+            $pos = strtolower(trim($job->position ?? ''));
+            $lvl = strtolower(trim($job->career_level ?? ''));
+            $minimumSalary = $matchedUmk['minimum_salary'];
+            
+            // Determine base multiplier based on role category
+            $minMult = 1.1;
+            $maxMult = 1.8;
+            
+            // High-Paying Tech/IT roles
+            if (preg_match('/(developer|engineer|programmer|software|backend|frontend|fullstack|data scientist|analyst|devops|system administrator|sysadmin|network|it|cyber|security|qa|testing|scrum|product manager|ui\/ux|data analyst)/i', $pos)) {
+                $minMult = 1.6;
+                $maxMult = 3.0;
+            }
+            // Management / Leadership roles
+            elseif (preg_match('/(manager|lead|head|director|vp|vice president|ceo|cto|cfo|coo|chief|supervisor|spv)/i', $pos)) {
+                $minMult = 1.8;
+                $maxMult = 3.5;
+            }
+            // Entry / Admin / Services roles
+            elseif (preg_match('/(admin|clerk|data entry|customer service|cs|call center|receptionist|cashier|operator|staff|officer|assistant|driver|courier|security|cleaning|waiter|magang|intern)/i', $pos)) {
+                $minMult = 1.0;
+                $maxMult = 1.35;
+            }
+            // Standard professional roles
+            elseif (preg_match('/(marketing|sales|hr|human resources|finance|accountant|accounting|consultant|legal|lawyer|designer|writer|copywriter|content creator)/i', $pos)) {
+                $minMult = 1.2;
+                $maxMult = 2.0;
+            }
+            
+            // Adjust based on seniority keywords in title
+            if (preg_match('/(senior|sr\.|lead|head|principal)/i', $pos)) {
+                $minMult *= 1.5;
+                $maxMult *= 2.0;
+            } elseif (preg_match('/(junior|jr\.|entry|associate|assistant)/i', $pos)) {
+                $minMult *= 0.8;
+                $maxMult *= 1.0;
+            }
+            
+            // Adjust based on career level field
+            if ($lvl === 'intern') {
+                $minMult = 0.3;
+                $maxMult = 0.7;
+            } elseif ($lvl === 'freelance') {
+                $minMult *= 0.7;
+                $maxMult *= 1.1;
+            }
+            
+            // Ensure logical constraints
+            if ($minMult > $maxMult) {
+                $temp = $minMult;
+                $minMult = $maxMult;
+                $maxMult = $temp;
+            }
+            
+            // Prevent multipliers from dropping below reasonable bounds
+            if ($lvl !== 'intern' && !str_contains($pos, 'intern') && !str_contains($pos, 'magang')) {
+                $minMult = max(1.0, $minMult);
+                $maxMult = max(1.15, $maxMult);
+            } else {
+                $minMult = max(0.25, $minMult);
+                $maxMult = max(0.5, $maxMult);
+            }
+            
+            $salaryEstimate = [
+                'min' => $minimumSalary * $minMult,
+                'max' => $minimumSalary * $maxMult
+            ];
+        }
     @endphp
 
     <div class="bg-[#fafafa] min-h-screen pb-16">
@@ -257,7 +329,7 @@
                             <div class="pt-2.5 border-t border-zinc-100 space-y-1">
                                 <div class="flex items-center justify-between text-xs font-semibold">
                                     <span class="text-zinc-400 font-medium">Est. Gaji Kompetitif</span>
-                                    <span class="text-primary-650 font-bold">Rp {{ number_format($matchedUmk['minimum_salary'] * 1.5, 0, ',', '.') }} - Rp {{ number_format($matchedUmk['minimum_salary'] * 3.5, 0, ',', '.') }}</span>
+                                    <span class="text-primary-650 font-bold">Rp {{ number_format($salaryEstimate['min'], 0, ',', '.') }} - Rp {{ number_format($salaryEstimate['max'], 0, ',', '.') }}</span>
                                 </div>
                                 <p class="text-[8.5px] text-zinc-400 italic leading-snug mt-1">{{ $matchedUmk['sumber_sk'] }}</p>
                             </div>
