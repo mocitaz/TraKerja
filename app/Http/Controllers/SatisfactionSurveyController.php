@@ -28,13 +28,11 @@ class SatisfactionSurveyController extends Controller
             return redirect()->route('tracker');
         }
 
-        // If user has already completed the survey, redirect to home/tracker
         $hasCompleted = SatisfactionSurvey::where('user_id', $user->id)->exists();
-        if ($hasCompleted) {
-            return redirect()->route('tracker');
-        }
 
-        return view('survey');
+        return view('survey', [
+            'hasCompleted' => $hasCompleted
+        ]);
     }
 
     /**
@@ -100,6 +98,6 @@ class SatisfactionSurveyController extends Controller
             'feedback' => $validated['feedback'],
         ]);
 
-        return redirect()->route('tracker')->with('success', 'Terima kasih atas tanggapan Anda! Masukan Anda sangat berarti bagi pengembangan TraKerja.');
+        return redirect()->route('survey.show')->with('success', 'Terima kasih atas tanggapan Anda! Masukan Anda sangat berarti bagi pengembangan TraKerja.');
     }
 }
