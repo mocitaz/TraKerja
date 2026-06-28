@@ -37,10 +37,16 @@
             .sidebar-scroll:hover::-webkit-scrollbar-thumb { background: #e4e4e7; }
 
             /* Livewire Navigation Progress Bar Custom Style */
-            .livewire-progress-bar {
-                background-color: #18181b !important;
+            #nprogress .bar {
                 background: #18181b !important;
                 height: 3px !important;
+            }
+            #nprogress .peg {
+                box-shadow: 0 0 10px #18181b, 0 0 5px #18181b !important;
+            }
+            #nprogress .spinner-icon {
+                border-top-color: #18181b !important;
+                border-left-color: #18181b !important;
             }
         </style>
     </head>
