@@ -1,7 +1,7 @@
 <aside 
     :class="{ 
-        'w-14': !$store.sidebar.open && !mobileSidebarOpen, 
-        'w-56': $store.sidebar.open || mobileSidebarOpen,
+        'w-12': !$store.sidebar.open && !mobileSidebarOpen, 
+        'w-48': $store.sidebar.open || mobileSidebarOpen,
         'translate-x-0': mobileSidebarOpen,
         '-translate-x-full': !mobileSidebarOpen 
     }"
