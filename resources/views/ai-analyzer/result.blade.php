@@ -174,27 +174,42 @@
 
             {{-- Action Roadmap --}}
             @if(isset($result['rencana_aksi']) && is_array($result['rencana_aksi']) && count($result['rencana_aksi']) > 0)
-                <div class="bg-white rounded-xl p-5 sm:p-8 border border-slate-200/70 shadow-sm relative overflow-hidden mb-12">
-                    <div class="relative z-10 mb-4 sm:mb-6">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 bg-slate-50 border border-slate-200 rounded flex items-center justify-center text-slate-600 shrink-0">
-                                <i class="ph ph-list-numbers text-lg"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-sm font-bold text-slate-800 tracking-tight">The Roadmap to 95%+</h3>
-                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">A clear path to making your profile irresistible</p>
-                            </div>
+                <div class="bg-white rounded-2xl p-6 sm:p-8 border border-zinc-200/80 shadow-3xs relative overflow-hidden mb-12">
+                    <!-- Heading -->
+                    <div class="relative z-10 mb-6 pb-4 border-b border-zinc-100 flex items-center gap-3">
+                        <div class="w-9 h-9 bg-primary-50 text-primary-650 rounded-lg flex items-center justify-center border border-primary-100/50 shrink-0">
+                            <i class="ph ph-map-trifold text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-zinc-800 tracking-tight">The Roadmap to 95%+</h3>
+                            <p class="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider mt-0.5">A clear path to making your profile irresistible</p>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
+                    <!-- Vertical Roadmap Timeline -->
+                    <div class="relative pl-1 sm:pl-2 space-y-6">
+                        {{-- Connecting line --}}
+                        <div class="absolute left-[13px] sm:left-[17px] top-3 bottom-3 w-[2px] bg-gradient-to-b from-primary-100 via-primary-200 to-zinc-100"></div>
+
                         @foreach($result['rencana_aksi'] as $index => $action)
-                            <div class="flex gap-3 p-3 rounded-lg border border-slate-150 bg-slate-50 hover:bg-white hover:border-slate-350 transition-colors">
-                                <div class="w-6 h-6 shrink-0 bg-slate-900 text-white rounded flex items-center justify-center text-[10px] font-bold">
+                            @php
+                                // Clean up duplicate "Langkah X:" prefixes from AI response text
+                                $cleanAction = preg_replace('/^(Langkah\s+\d+:\s*|Step\s+\d+:\s*)/iu', '', $action);
+                            @endphp
+                            <div class="relative flex gap-4 items-start group">
+                                {{-- Timeline Node Badge --}}
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border-2 border-primary-200 text-primary-700 flex items-center justify-center text-xs font-bold shrink-0 z-10 shadow-3xs group-hover:border-primary-500 group-hover:bg-primary-50 transition-all">
                                     {{ $index + 1 }}
                                 </div>
-                                <div class="pt-0.5">
-                                    <p class="text-xs font-medium text-slate-600 leading-relaxed text-justify">{{ $action }}</p>
+                                
+                                {{-- Step Card --}}
+                                <div class="flex-1 bg-zinc-50/40 hover:bg-zinc-50 border border-zinc-150/70 hover:border-zinc-200 rounded-xl p-3.5 transition-all">
+                                    <div class="flex items-center gap-2 mb-1.5">
+                                        <span class="text-[9px] font-bold text-primary-650 uppercase tracking-wider">Step {{ $index + 1 }}</span>
+                                        <span class="w-1 h-1 bg-zinc-300 rounded-full"></span>
+                                        <span class="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">Priority {{ $index == 0 ? 'High' : ($index < 3 ? 'Medium' : 'Standard') }}</span>
+                                    </div>
+                                    <p class="text-xs font-semibold text-zinc-700 leading-relaxed text-justify">{{ $cleanAction }}</p>
                                 </div>
                             </div>
                         @endforeach
