@@ -13,91 +13,96 @@
         </div>
 
         @if(!$this->currentGoal)
-            <div class="py-6 text-center">
-                <p class="text-xs text-zinc-400 font-medium">No active goal set for this week.</p>
-                <button type="button" wire:click="openGoalModal" class="mt-4 inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 text-xs font-bold rounded-md shadow-3xs transition-all active:scale-97">
-                    <span>Set Weekly Target</span>
-                    <i class="ph ph-arrow-right text-[10px]"></i>
-                </button>
-            </div>
-        @else
-            <div class="space-y-4">
-                {{-- Cupertino Circular Activity Rings Row --}}
-                <div class="flex items-center justify-around gap-4 py-2 border-b border-zinc-150 pb-4">
-                    {{-- Applications Ring --}}
-                    <div class="flex flex-col items-center text-center space-y-2 select-none">
-                        <div class="relative w-18 h-18 flex items-center justify-center">
-                            {{-- SVG Progress Ring (circumference: 163.36 for r=26) --}}
-                            <svg class="w-16 h-16 transform -rotate-90">
-                                <circle cx="32" cy="32" r="26" stroke="#f4f4f5" stroke-width="4.5" fill="transparent" />
-                                <circle cx="32" cy="32" r="26" stroke="url(#primaryGradient)" stroke-width="4.5" fill="transparent"
-                                        stroke-dasharray="163.36"
-                                        stroke-dashoffset="{{ 163.36 - (163.36 * min(100, $this->appliedProgress) / 100) }}"
-                                        stroke-linecap="round"
-                                        class="transition-all duration-500 ease-out" />
-                            </svg>
-                            <div class="absolute inset-0 flex flex-col items-center justify-center leading-none">
-                                <span class="text-[11px] font-extrabold text-zinc-800 leading-none">{{ $this->actualApplied }}</span>
-                                <span class="text-[8px] font-bold text-zinc-400 mt-0.5 leading-none">/{{ $targetAppliedWeekly }}</span>
-                            </div>
-                        </div>
-                        <span class="text-[9px] font-bold text-zinc-450 uppercase tracking-wider">Applications</span>
-                    </div>
-
-                    {{-- Follow-ups Ring --}}
-                    <div class="flex flex-col items-center text-center space-y-2 select-none">
-                        <div class="relative w-18 h-18 flex items-center justify-center">
-                            {{-- SVG Progress Ring (circumference: 163.36 for r=26) --}}
-                            <svg class="w-16 h-16 transform -rotate-90">
-                                <circle cx="32" cy="32" r="26" stroke="#f4f4f5" stroke-width="4.5" fill="transparent" />
-                                <circle cx="32" cy="32" r="26" stroke="url(#emeraldGradient)" stroke-width="4.5" fill="transparent"
-                                        stroke-dasharray="163.36"
-                                        stroke-dashoffset="{{ 163.36 - (163.36 * min(100, $this->followupProgress) / 100) }}"
-                                        stroke-linecap="round"
-                                        class="transition-all duration-500 ease-out" />
-                            </svg>
-                            <div class="absolute inset-0 flex flex-col items-center justify-center leading-none">
-                                <span class="text-[11px] font-extrabold text-zinc-800 leading-none">{{ $this->followUpCount }}</span>
-                                <span class="text-[8px] font-bold text-zinc-400 mt-0.5 leading-none">/{{ $targetFollowupWeekly }}</span>
-                            </div>
-                        </div>
-                        <span class="text-[9px] font-bold text-zinc-450 uppercase tracking-wider">Follow-ups</span>
-                    </div>
+            <div class="mb-3.5 p-2.5 bg-zinc-50/50 border border-dashed border-zinc-200 rounded-lg flex items-center gap-2 select-none">
+                <div class="w-5 h-5 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-400 shrink-0">
+                    <i class="ph ph-info text-xs"></i>
                 </div>
-
-                {{-- Definitions of gradients --}}
-                <svg class="absolute w-0 h-0 pointer-events-none">
-                    <defs>
-                        <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#a570f0" />
-                            <stop offset="100%" stop-color="#7c3aed" />
-                        </linearGradient>
-                        <linearGradient id="emeraldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#34d399" />
-                            <stop offset="100%" stop-color="#059669" />
-                        </linearGradient>
-                    </defs>
-                </svg>
-
-                <div>
-                    <!-- Streak Counter -->
-                    <div class="flex items-center gap-3 bg-gradient-to-r from-amber-500/5 to-orange-500/5 p-2.5 rounded-xl border border-amber-100/50">
-                        <div class="w-8 h-8 bg-gradient-to-r from-amber-500 to-orange-600 rounded-lg flex items-center justify-center text-white shadow-sm shrink-0">
-                            <i class="ph ph-fire text-base"></i>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-bold text-amber-850">{{ $this->currentStreak }} Day Streak!</h4>
-                            <p class="text-[9px] text-amber-600/70 font-semibold tracking-wide mt-0.5">Keep updating your applications</p>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="button" wire:click="openGoalModal" class="w-full justify-center mt-1 flex items-center gap-1.5 px-3 py-1.5 bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 rounded-md text-xs font-bold shadow-3xs transition-all active:scale-97">
-                    <span>Adjust Targets</span>
-                    <i class="ph ph-gear text-xs"></i>
-                </button>
+                <p class="text-[9.5px] font-semibold text-zinc-500 leading-normal">
+                    Target belum aktif minggu ini. Atur target Anda di bawah.
+                </p>
             </div>
         @endif
+
+        <div class="space-y-4">
+            {{-- Cupertino Circular Activity Rings Row --}}
+            <div class="flex items-center justify-around gap-4 py-2 border-b border-zinc-150 pb-4">
+                {{-- Applications Ring --}}
+                <div class="flex flex-col items-center text-center space-y-2 select-none">
+                    <div class="relative w-18 h-18 flex items-center justify-center">
+                        {{-- SVG Progress Ring (circumference: 163.36 for r=26) --}}
+                        <svg class="w-16 h-16 transform -rotate-90">
+                            <circle cx="32" cy="32" r="26" stroke="#f4f4f5" stroke-width="4.5" fill="transparent" />
+                            <circle cx="32" cy="32" r="26" stroke="url(#primaryGradient)" stroke-width="4.5" fill="transparent"
+                                    stroke-dasharray="163.36"
+                                    stroke-dashoffset="{{ 163.36 - (163.36 * min(100, $this->appliedProgress) / 100) }}"
+                                    stroke-linecap="round"
+                                    class="transition-all duration-500 ease-out" />
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center leading-none">
+                            <span class="text-[11px] font-extrabold text-zinc-800 leading-none">{{ $this->actualApplied }}</span>
+                            <span class="text-[8px] font-bold text-zinc-400 mt-0.5 leading-none">/{{ $targetAppliedWeekly }}</span>
+                        </div>
+                    </div>
+                    <span class="text-[9px] font-bold text-zinc-450 uppercase tracking-wider">Applications</span>
+                </div>
+
+                {{-- Follow-ups Ring --}}
+                <div class="flex flex-col items-center text-center space-y-2 select-none">
+                    <div class="relative w-18 h-18 flex items-center justify-center">
+                        {{-- SVG Progress Ring (circumference: 163.36 for r=26) --}}
+                        <svg class="w-16 h-16 transform -rotate-90">
+                            <circle cx="32" cy="32" r="26" stroke="#f4f4f5" stroke-width="4.5" fill="transparent" />
+                            <circle cx="32" cy="32" r="26" stroke="url(#emeraldGradient)" stroke-width="4.5" fill="transparent"
+                                    stroke-dasharray="163.36"
+                                    stroke-dashoffset="{{ 163.36 - (163.36 * min(100, $this->followupProgress) / 100) }}"
+                                    stroke-linecap="round"
+                                    class="transition-all duration-500 ease-out" />
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center leading-none">
+                            <span class="text-[11px] font-extrabold text-zinc-800 leading-none">{{ $this->followUpCount }}</span>
+                            <span class="text-[8px] font-bold text-zinc-400 mt-0.5 leading-none">/{{ $targetFollowupWeekly }}</span>
+                        </div>
+                    </div>
+                    <span class="text-[9px] font-bold text-zinc-450 uppercase tracking-wider">Follow-ups</span>
+                </div>
+            </div>
+
+            {{-- Definitions of gradients --}}
+            <svg class="absolute w-0 h-0 pointer-events-none">
+                <defs>
+                    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#a570f0" />
+                        <stop offset="100%" stop-color="#7c3aed" />
+                    </linearGradient>
+                    <linearGradient id="emeraldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#34d399" />
+                        <stop offset="100%" stop-color="#059669" />
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <div>
+                <!-- Streak Counter -->
+                <div class="flex items-center gap-3 {{ $this->currentGoal ? 'bg-gradient-to-r from-amber-500/5 to-orange-500/5 border-amber-100/50' : 'bg-zinc-50 border-zinc-150' }} p-2.5 rounded-xl border">
+                    <div class="w-8 h-8 {{ $this->currentGoal ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-3xs' : 'bg-zinc-100 text-zinc-400 border border-zinc-200/60 shadow-3xs' }} rounded-lg flex items-center justify-center shrink-0">
+                        <i class="ph ph-fire text-base"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold {{ $this->currentGoal ? 'text-amber-850' : 'text-zinc-500' }}">{{ $this->currentStreak }} Day Streak!</h4>
+                        <p class="text-[9px] {{ $this->currentGoal ? 'text-amber-600/70' : 'text-zinc-400' }} font-semibold tracking-wide mt-0.5">Keep updating your applications</p>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" wire:click="openGoalModal" class="w-full justify-center mt-1 flex items-center gap-1.5 px-3 py-1.5 bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 rounded-md text-xs font-bold shadow-3xs transition-all active:scale-97">
+                <span>{{ $this->currentGoal ? 'Adjust Targets' : 'Set Weekly Target' }}</span>
+                @if($this->currentGoal)
+                    <i class="ph ph-gear text-xs"></i>
+                @else
+                    <i class="ph ph-arrow-right text-xs"></i>
+                @endif
+            </button>
+        </div>
     </div>
 
     <!-- Configuration Modal using Teleport overlay -->
