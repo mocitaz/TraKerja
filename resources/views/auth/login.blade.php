@@ -1,7 +1,7 @@
 <x-guest-layout>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <div class="min-h-screen bg-white font-sans antialiased text-[#37352f] flex flex-col justify-between items-center py-16 px-6 selection:bg-[#2383e2]/10">
+    <div class="min-h-screen bg-white font-sans antialiased text-[#37352f] flex flex-col justify-between items-center pt-16 pb-6 px-6 selection:bg-[#2383e2]/10">
         
         <!-- Main Container -->
         <div class="w-full max-w-[340px] mx-auto my-auto flex flex-col items-center space-y-6">
@@ -152,7 +152,7 @@
         </div>
 
         <!-- Workspace Footer Disclaimer -->
-        <div class="text-center space-y-3 max-w-[280px] pb-4">
+        <div class="text-center space-y-3 max-w-[280px]">
             <div class="text-[10px] text-slate-400 leading-relaxed">
                 By continuing, you acknowledge that you understand and agree to the <span class="hover:underline cursor-pointer">Terms & Conditions</span> and <span class="hover:underline cursor-pointer">Privacy Policy</span>.
             </div>
