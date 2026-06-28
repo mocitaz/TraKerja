@@ -50,23 +50,29 @@
             }
             .bento-card {
                 background: #ffffff;
-                transition: all 0.2s ease-in-out;
+                transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             }
             .bento-card:hover {
-                border-color: #a78bfa; /* primary-400 */
-                transform: translateY(-1px);
+                border-color: #a78bfa;
+                transform: translateY(-2px);
+                box-shadow: 0 12px 30px -10px rgba(139, 92, 246, 0.08);
+            }
+            .glow-backdrop {
+                background: radial-gradient(circle at center, rgba(167, 139, 250, 0.08) 0%, transparent 65%);
+            }
+            .faq-trigger[aria-expanded="true"] .faq-icon {
+                transform: rotate(180deg);
             }
         </style>
     </head>
 <body class="bg-white text-zinc-800 antialiased selection:bg-primary-50 selection:text-primary-900">
 
     <!-- Navigation Header -->
-    <nav class="fixed top-0 left-0 right-0 h-12 bg-white/80 backdrop-blur-md border-b border-zinc-200/50 z-50">
+    <nav class="fixed top-0 left-0 right-0 h-12 bg-white/70 backdrop-blur-md border-b border-zinc-200/50 z-50">
         <div class="max-w-5xl mx-auto px-4 h-full flex items-center justify-between">
             <!-- Brand Logo -->
-            <a href="{{ url('/') }}" class="flex items-center gap-1.5 group select-none">
-                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-5 h-5 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="w-5 h-5 bg-primary-600 rounded flex items-center justify-center text-white text-[9px] font-bold" style="display: none;">T</div>
+            <a href="{{ url('/') }}" class="flex items-center gap-2 group select-none">
+                <div class="w-5 h-5 bg-zinc-900 group-hover:bg-primary-600 rounded flex items-center justify-center text-white text-[10px] font-black transition-colors">T</div>
                 <span class="text-xs font-bold tracking-tight text-zinc-900 group-hover:text-primary-600 transition-colors">TraKerja</span>
             </a>
 
@@ -91,7 +97,7 @@
                             Login
                         </a>
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="h-7 px-3 bg-primary-600 hover:bg-primary-750 text-white rounded-md text-[11px] font-semibold transition-all flex items-center">
+                            <a href="{{ route('register') }}" class="h-7 px-3 bg-zinc-900 hover:bg-zinc-800 text-white rounded-md text-[11px] font-semibold transition-all flex items-center">
                                 Mulai Gratis
                             </a>
                         @endif
@@ -102,17 +108,20 @@
     </nav>
 
     <!-- Hero Section (Apple-style Centered Layout) -->
-    <section class="relative pt-24 pb-16 bg-white overflow-hidden border-b border-zinc-200/60">
-        <div class="max-w-4xl mx-auto px-4 text-center flex flex-col items-center">
+    <section class="relative pt-24 pb-16 bg-white overflow-hidden border-b border-zinc-200/50">
+        <!-- Subtle Purple Radial Backlight Glow (Apple Style) -->
+        <div class="absolute inset-0 glow-backdrop pointer-events-none z-0"></div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-4 text-center flex flex-col items-center">
             <!-- Badge -->
-            <div class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-primary-50 border border-primary-200/80 text-primary-700 font-mono text-[9px] rounded font-bold uppercase tracking-wider mb-6 select-none shadow-3xs">
+            <div class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-primary-50 border border-primary-200/60 text-primary-750 font-mono text-[9px] rounded font-bold uppercase tracking-wider mb-6 select-none shadow-3xs">
                 <span class="w-1.5 h-1.5 bg-primary-500 rounded-full animate-pulse"></span>
                 <span>#1 Job Tracking Platform Indonesia</span>
             </div>
 
-            <!-- Big Apple Title with Purple Touch -->
-            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-zinc-900 tracking-tighter leading-[1.05] mb-6 max-w-2xl select-none">
-                Kelola lamaran kerja <span class="text-primary-600">lebih cerdas</span>.
+            <!-- Big Apple Title -->
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-zinc-900 tracking-tighter leading-[1.05] mb-6 max-w-3xl select-none">
+                Satu workspace untuk<br>semua lamaran kerja Anda.
             </h1>
 
             <!-- Subheading -->
@@ -123,32 +132,32 @@
             <!-- Action Buttons -->
             <div class="flex flex-wrap items-center justify-center gap-3 mb-16">
                 @auth
-                    <a href="{{ url('/tracker') }}" class="h-9 px-4.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-3xs hover:shadow-2xs">
+                    <a href="{{ url('/tracker') }}" class="h-9 px-4.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-3xs">
                         <i class="ph-bold ph-columns text-sm"></i>
                         <span>Buka Dashboard</span>
                     </a>
                 @else
-                    <a href="{{ route('register') }}" class="h-9 px-4.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-3xs hover:shadow-2xs">
+                    <a href="{{ route('register') }}" class="h-9 px-4.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-3xs">
                         <i class="ph-bold ph-lightning text-sm"></i>
                         <span>Mulai Gratis</span>
                     </a>
-                    <a href="{{ route('login') }}" class="h-9 px-4.5 bg-white border border-zinc-250 hover:bg-zinc-50 text-zinc-700 hover:text-zinc-900 rounded-lg text-xs font-bold transition-all flex items-center">
+                    <a href="{{ route('login') }}" class="h-9 px-4.5 bg-white border border-zinc-255 hover:bg-zinc-50 text-zinc-700 hover:text-zinc-900 rounded-lg text-xs font-bold transition-all flex items-center">
                         Masuk ke Akun
                     </a>
                 @endauth
             </div>
 
-            <!-- Interactive Workspace Mockup (Pure HTML/CSS - NO Static Image Assets!) -->
-            <div class="w-full max-w-4xl border border-zinc-200 rounded-xl bg-white p-1 shadow-3xs">
-                <div class="relative overflow-hidden rounded-lg border border-zinc-200 bg-zinc-50 flex flex-col aspect-[16/10] select-none text-left">
-                    <!-- Browser Window Title Bar -->
-                    <div class="bg-white border-b border-zinc-200 h-9 px-4 flex items-center justify-between shrink-0">
+            <!-- Showcase Interactive Browser Mockup (1px Border Notion Style) -->
+            <div class="w-full max-w-4xl border border-zinc-200/80 rounded-xl bg-white p-1 shadow-3xs">
+                <div class="relative overflow-hidden rounded-lg border border-zinc-200/80 bg-zinc-50 flex flex-col aspect-[16/10] select-none text-left">
+                    <!-- Title Bar -->
+                    <div class="bg-white border-b border-zinc-200/80 h-9 px-4 flex items-center justify-between shrink-0">
                         <div class="flex items-center gap-1.5">
                             <span class="w-2.5 h-2.5 rounded-full bg-zinc-200"></span>
                             <span class="w-2.5 h-2.5 rounded-full bg-zinc-200"></span>
                             <span class="w-2.5 h-2.5 rounded-full bg-zinc-200"></span>
                         </div>
-                        <div class="flex p-0.5 bg-zinc-100 border border-zinc-200 rounded-md text-[9px] font-bold text-zinc-500 gap-1">
+                        <div class="flex p-0.5 bg-zinc-100 border border-zinc-200 rounded-md text-[9px] font-bold text-zinc-500 gap-1 shadow-inner">
                             <button onclick="switchMockupTab('tracker')" id="mockup-tab-btn-tracker" class="px-3 py-1 bg-white border border-zinc-200 rounded text-zinc-800 shadow-3xs font-black transition-all">Kanban Board</button>
                             <button onclick="switchMockupTab('ai')" id="mockup-tab-btn-ai" class="px-3 py-1 hover:bg-white/40 rounded transition-all">AI Studio</button>
                             <button onclick="switchMockupTab('extension')" id="mockup-tab-btn-extension" class="px-3 py-1 hover:bg-white/40 rounded transition-all">Auto-Fill Panel</button>
@@ -159,7 +168,7 @@
                     <!-- Mockup Tab 1: Kanban Board View -->
                     <div id="mockup-tab-tracker" class="flex-1 flex overflow-hidden">
                         <!-- Sidebar -->
-                        <div class="w-36 bg-white border-r border-zinc-200 p-3 hidden sm:flex flex-col justify-between shrink-0">
+                        <div class="w-36 bg-white border-r border-zinc-200/80 p-3 hidden sm:flex flex-col justify-between shrink-0">
                             <div class="space-y-3.5">
                                 <div class="flex items-center gap-1.5 text-[9px] font-mono text-zinc-400 font-bold uppercase tracking-wider">Workspace</div>
                                 <div class="space-y-1">
@@ -234,7 +243,7 @@
                             <div class="w-52 shrink-0 flex flex-col gap-2">
                                 <div class="flex items-center justify-between text-[9px] font-bold text-zinc-400 font-mono uppercase tracking-wider mb-1">
                                     <span>Offering</span>
-                                    <span class="px-1.5 bg-zinc-200/60 rounded text-zinc-605">1</span>
+                                    <span class="px-1.5 bg-zinc-200/60 rounded text-zinc-600">1</span>
                                 </div>
                                 <!-- Card 1 -->
                                 <div class="bg-white border-l-2 border-l-emerald-500 border border-zinc-200 rounded-lg p-3 hover:border-emerald-450 transition-all shadow-3xs">
@@ -251,7 +260,6 @@
 
                     <!-- Mockup Tab 2: AI Studio View -->
                     <div id="mockup-tab-ai" class="flex-1 flex overflow-hidden hidden p-4 gap-4 bg-[#fafafa]">
-                        <!-- Uploaded CV details -->
                         <div class="flex-1 border border-zinc-200 bg-white rounded-lg p-4 flex flex-col justify-between shadow-3xs">
                             <div class="space-y-3">
                                 <div class="flex items-center gap-2.5">
@@ -280,7 +288,6 @@
                             </div>
                         </div>
 
-                        <!-- AI Recommendations -->
                         <div class="w-56 border border-zinc-200 bg-white rounded-lg p-4 flex flex-col justify-between shrink-0 shadow-3xs">
                             <div class="space-y-3">
                                 <div class="text-[8.5px] font-mono text-zinc-400 font-bold uppercase tracking-wider">AI Suggestions</div>
@@ -300,7 +307,6 @@
                     <!-- Mockup Tab 3: Chrome Extension Panel View -->
                     <div id="mockup-tab-extension" class="flex-1 flex items-center justify-center hidden p-4 bg-[#fafafa]">
                         <div class="w-72 bg-white border border-zinc-200 rounded-xl shadow-sm overflow-hidden flex flex-col">
-                            <!-- Extension Bar -->
                             <div class="bg-zinc-950 p-2.5 text-white flex items-center justify-between">
                                 <div class="flex items-center gap-1.5">
                                     <div class="w-4 h-4 rounded bg-primary-500 flex items-center justify-center text-[8px] font-bold">T</div>
@@ -308,7 +314,6 @@
                                 </div>
                                 <span class="text-[8px] font-mono text-zinc-400 uppercase tracking-wider font-bold">Active</span>
                             </div>
-                            <!-- Extension Content -->
                             <div class="p-4 space-y-3">
                                 <div class="space-y-1">
                                     <div class="text-[8px] font-mono text-zinc-400 font-bold uppercase">Scraped Target</div>
@@ -537,7 +542,7 @@
             <!-- Clean Static Quotes Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-left">
                 <div class="bg-white border border-zinc-200 rounded-xl p-5 hover:border-primary-300 transition-all shadow-3xs">
-                    <p class="text-xs text-zinc-650 italic leading-relaxed mb-4">"Sebelumnya saya melacak puluhan lamaran kerja menggunakan Excel dan seringkali kehilangan catatan tindak lanjut. Dengan papan Kanban TraKerja, seluruh aktivitas lamaran kerja saya menjadi tersusun sangat rapi dan praktis."</p>
+                    <p class="text-xs text-zinc-655 italic leading-relaxed mb-4">"Sebelumnya saya melacak puluhan lamaran kerja menggunakan Excel dan seringkali kehilangan catatan tindak lanjut. Dengan papan Kanban TraKerja, seluruh aktivitas lamaran kerja saya menjadi tersusun sangat rapi dan praktis."</p>
                     <div class="flex items-center gap-2.5">
                         <div class="w-7 h-7 rounded-full bg-primary-100 flex items-center justify-center font-bold text-primary-700 text-[10px]">LF</div>
                         <div>
@@ -547,7 +552,7 @@
                     </div>
                 </div>
                 <div class="bg-white border border-zinc-200 rounded-xl p-5 hover:border-primary-300 transition-all shadow-3xs">
-                    <p class="text-xs text-zinc-650 italic leading-relaxed mb-4">"Fitur Chrome Auto-Fill Extension sangat membantu! Saya tidak perlu lagi mengetik manual setiap kali melihat lowongan bagus di LinkedIn atau JobStreet. Tombol Auto-Fill-nya sangat cepat dan responsif."</p>
+                    <p class="text-xs text-zinc-655 italic leading-relaxed mb-4">"Fitur Chrome Auto-Fill Extension sangat membantu! Saya tidak perlu lagi mengetik manual setiap kali melihat lowongan bagus di LinkedIn atau JobStreet. Tombol Auto-Fill-nya sangat cepat dan responsif."</p>
                     <div class="flex items-center gap-2.5">
                         <div class="w-7 h-7 rounded-full bg-primary-100 flex items-center justify-center font-bold text-primary-700 text-[10px]">RN</div>
                         <div>
@@ -614,19 +619,19 @@
                         </div>
                         <p class="text-xs text-zinc-500 mb-6 leading-relaxed">Akses penuh fitur AI cerdas untuk memperbesar rasio kelolosan proses lamaran kerja.</p>
                         <div class="border-t border-zinc-100 pt-6 space-y-3">
-                            <div class="flex items-center gap-2 text-xs text-zinc-650">
+                            <div class="flex items-center gap-2 text-xs text-zinc-655">
                                 <i class="ph-bold ph-check text-primary-600 text-sm shrink-0"></i>
                                 <span>Seluruh Fitur Free Tracker</span>
                             </div>
-                            <div class="flex items-center gap-2 text-xs text-zinc-650">
+                            <div class="flex items-center gap-2 text-xs text-zinc-655">
                                 <i class="ph-bold ph-check text-primary-600 text-sm shrink-0"></i>
                                 <span>AI Resume & Cover Letter Analyzer</span>
                             </div>
-                            <div class="flex items-center gap-2 text-xs text-zinc-650">
+                            <div class="flex items-center gap-2 text-xs text-zinc-655">
                                 <i class="ph-bold ph-check text-primary-600 text-sm shrink-0"></i>
                                 <span>Smart Salary Estimation</span>
                             </div>
-                            <div class="flex items-center gap-2 text-xs text-zinc-650">
+                            <div class="flex items-center gap-2 text-xs text-zinc-655">
                                 <i class="ph-bold ph-check text-primary-600 text-sm shrink-0"></i>
                                 <span>Custom Export CSV / Data Excel</span>
                             </div>
@@ -686,7 +691,7 @@
                         <span>Apakah platform TraKerja benar-benar gratis?</span>
                         <i class="ph-bold ph-caret-down faq-icon text-zinc-400 transition-transform duration-200"></i>
                     </button>
-                    <div id="faq-content-1" class="faq-content hidden mt-3 text-[11px] text-zinc-500 leading-relaxed pl-1">
+                    <div id="faq-content-1" class="faq-content hidden mt-3 text-[11px] text-zinc-505 leading-relaxed pl-1">
                         Ya, fitur utama pelacakan lamaran kerja (Kanban Tracker) dan integrasi Ekstensi Chrome dapat digunakan 100% gratis selamanya. Kami menawarkan opsi paket Premium Pro berbayar bagi pengguna yang ingin menggunakan fungsionalitas asisten kecerdasan buatan (AI) terintegrasi.
                     </div>
                 </div>
@@ -697,7 +702,7 @@
                         <span>Bagaimana cara kerja Chrome Extension Auto-Fill?</span>
                         <i class="ph-bold ph-caret-down faq-icon text-zinc-400 transition-transform duration-200"></i>
                     </button>
-                    <div id="faq-content-2" class="faq-content hidden mt-3 text-[11px] text-zinc-500 leading-relaxed pl-1">
+                    <div id="faq-content-2" class="faq-content hidden mt-3 text-[11px] text-zinc-505 leading-relaxed pl-1">
                         Setelah memasang ekstensi resmi kami dari Chrome Web Store, Anda cukup membuka halaman lowongan kerja aktif (seperti LinkedIn, JobStreet, atau Glints) lalu mengeklik ikon ekstensi. Data detail lowongan akan diekstrak secara otomatis dan langsung diunggah ke papan lamaran Anda.
                     </div>
                 </div>
@@ -708,7 +713,7 @@
                         <span>Apakah data lamaran kerja saya aman di TraKerja?</span>
                         <i class="ph-bold ph-caret-down faq-icon text-zinc-400 transition-transform duration-200"></i>
                     </button>
-                    <div id="faq-content-3" class="faq-content hidden mt-3 text-[11px] text-zinc-500 leading-relaxed pl-1">
+                    <div id="faq-content-3" class="faq-content hidden mt-3 text-[11px] text-zinc-505 leading-relaxed pl-1">
                         Sangat aman. Seluruh data lamaran kerja, resume, dan dokumen pendukung Anda disimpan dengan protokol enkripsi standar industri dan tidak akan pernah dibagikan kepada pihak ketiga tanpa persetujuan eksplisit Anda.
                     </div>
                 </div>
@@ -768,7 +773,7 @@
                 </div>
                 <div>
                     <h5 class="text-[10px] font-bold text-zinc-800">Kemitraan Bisnis</h5>
-                    <p class="text-[8.5px] text-zinc-450 leading-none mt-0.5">Kolaborasi & integrasi sistem</p>
+                    <p class="text-[8.5px] text-zinc-455 leading-none mt-0.5">Kolaborasi & integrasi sistem</p>
                 </div>
             </button>
 
@@ -778,7 +783,7 @@
                 </div>
                 <div>
                     <h5 class="text-[10px] font-bold text-zinc-800">WhatsApp Support</h5>
-                    <p class="text-[8.5px] text-zinc-450 leading-none mt-0.5">Dukungan teknis & integrasi</p>
+                    <p class="text-[8.5px] text-zinc-455 leading-none mt-0.5">Dukungan teknis & integrasi</p>
                 </div>
             </button>
 
@@ -788,7 +793,7 @@
                 </div>
                 <div>
                     <h5 class="text-[10px] font-bold text-zinc-800">Email Support</h5>
-                    <p class="text-[8.5px] text-zinc-450 leading-none mt-0.5">Hubungi kami melalui pesan email</p>
+                    <p class="text-[8.5px] text-zinc-455 leading-none mt-0.5">Hubungi kami melalui pesan email</p>
                 </div>
             </button>
         </div>
@@ -963,6 +968,7 @@
             }
         }
 
+        // Back to Options
         function backToScreen1() {
             hideAllScreens();
             resetForm();
