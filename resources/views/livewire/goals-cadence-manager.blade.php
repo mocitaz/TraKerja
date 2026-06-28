@@ -21,40 +21,65 @@
                 </button>
             </div>
         @else
-            <div class="space-y-5">
-                <!-- Applied Goal -->
-                <div>
-                    <div class="flex justify-between items-end mb-1.5">
-                        <span class="text-xs font-semibold text-slate-600">Applications Submitted</span>
-                        <span class="text-xs font-bold text-primary-700">{{ $this->actualApplied }} / {{ $targetAppliedWeekly }}</span>
+            <div class="space-y-4">
+                {{-- Cupertino Circular Activity Rings Row --}}
+                <div class="flex items-center justify-around gap-4 py-2 border-b border-zinc-150 pb-4">
+                    {{-- Applications Ring --}}
+                    <div class="flex flex-col items-center text-center space-y-2 select-none">
+                        <div class="relative w-18 h-18 flex items-center justify-center">
+                            {{-- SVG Progress Ring (circumference: 163.36 for r=26) --}}
+                            <svg class="w-16 h-16 transform -rotate-90">
+                                <circle cx="32" cy="32" r="26" stroke="#f4f4f5" stroke-width="4.5" fill="transparent" />
+                                <circle cx="32" cy="32" r="26" stroke="url(#primaryGradient)" stroke-width="4.5" fill="transparent"
+                                        stroke-dasharray="163.36"
+                                        stroke-dashoffset="{{ 163.36 - (163.36 * min(100, $this->appliedProgress) / 100) }}"
+                                        stroke-linecap="round"
+                                        class="transition-all duration-500 ease-out" />
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center leading-none">
+                                <span class="text-[11px] font-extrabold text-zinc-800 leading-none">{{ $this->actualApplied }}</span>
+                                <span class="text-[8px] font-bold text-zinc-400 mt-0.5 leading-none">/{{ $targetAppliedWeekly }}</span>
+                            </div>
+                        </div>
+                        <span class="text-[9px] font-bold text-zinc-450 uppercase tracking-wider">Applications</span>
                     </div>
-                    <!-- Progress Bar -->
-                    <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-blue-500 to-indigo-650 rounded-full transition-all duration-550" style="width: {{ $this->appliedProgress }}%"></div>
-                    </div>
-                    <div class="flex justify-between items-center mt-1">
-                        <span class="text-[9px] text-slate-400 font-semibold">Weekly Target</span>
-                        <span class="text-[9px] font-bold text-slate-500 bg-slate-50 border border-slate-200/50 px-1.5 py-0.5 rounded">{{ $this->appliedProgress }}%</span>
+
+                    {{-- Follow-ups Ring --}}
+                    <div class="flex flex-col items-center text-center space-y-2 select-none">
+                        <div class="relative w-18 h-18 flex items-center justify-center">
+                            {{-- SVG Progress Ring (circumference: 163.36 for r=26) --}}
+                            <svg class="w-16 h-16 transform -rotate-90">
+                                <circle cx="32" cy="32" r="26" stroke="#f4f4f5" stroke-width="4.5" fill="transparent" />
+                                <circle cx="32" cy="32" r="26" stroke="url(#emeraldGradient)" stroke-width="4.5" fill="transparent"
+                                        stroke-dasharray="163.36"
+                                        stroke-dashoffset="{{ 163.36 - (163.36 * min(100, $this->followupProgress) / 100) }}"
+                                        stroke-linecap="round"
+                                        class="transition-all duration-500 ease-out" />
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center leading-none">
+                                <span class="text-[11px] font-extrabold text-zinc-800 leading-none">{{ $this->followUpCount }}</span>
+                                <span class="text-[8px] font-bold text-zinc-400 mt-0.5 leading-none">/{{ $targetFollowupWeekly }}</span>
+                            </div>
+                        </div>
+                        <span class="text-[9px] font-bold text-zinc-450 uppercase tracking-wider">Follow-ups</span>
                     </div>
                 </div>
 
-                <!-- Followup Goal -->
-                <div>
-                    <div class="flex justify-between items-end mb-1.5">
-                        <span class="text-xs font-semibold text-slate-600">Follow-up Checks</span>
-                        <span class="text-xs font-bold text-emerald-700">{{ $this->followUpCount }} / {{ $targetFollowupWeekly }}</span>
-                    </div>
-                    <!-- Progress Bar -->
-                    <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-550" style="width: {{ $this->followupProgress }}%"></div>
-                    </div>
-                    <div class="flex justify-between items-center mt-1">
-                        <span class="text-[9px] text-slate-400 font-semibold">Weekly Target</span>
-                        <span class="text-[9px] font-bold text-slate-500 bg-slate-50 border border-slate-200/50 px-1.5 py-0.5 rounded">{{ $this->followupProgress }}%</span>
-                    </div>
-                </div>
+                {{-- Definitions of gradients --}}
+                <svg class="absolute w-0 h-0 pointer-events-none">
+                    <defs>
+                        <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#a570f0" />
+                            <stop offset="100%" stop-color="#7c3aed" />
+                        </linearGradient>
+                        <linearGradient id="emeraldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#34d399" />
+                            <stop offset="100%" stop-color="#059669" />
+                        </linearGradient>
+                    </defs>
+                </svg>
 
-                <div class="border-t border-slate-100 pt-3.5 mt-2">
+                <div>
                     <!-- Streak Counter -->
                     <div class="flex items-center gap-3 bg-gradient-to-r from-amber-500/5 to-orange-500/5 p-2.5 rounded-xl border border-amber-100/50">
                         <div class="w-8 h-8 bg-gradient-to-r from-amber-500 to-orange-600 rounded-lg flex items-center justify-center text-white shadow-sm shrink-0">

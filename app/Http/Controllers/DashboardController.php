@@ -64,6 +64,38 @@ class DashboardController extends Controller
             ->groupBy('career_level')
             ->get();
 
+        // 4. Job Search Momentum Heatmap data (last 365 days)
+        $oneYearAgo = Carbon::now()->subYear()->startOfDay();
+        $applicationsByDate = JobApplication::where('user_id', $userId)
+            ->where('application_date', '>=', $oneYearAgo)
+            ->selectRaw('DATE(application_date) as date, COUNT(*) as count')
+            ->groupBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        // Generate exactly 53 weeks starting from start of week 52 weeks ago
+        $startDate = Carbon::now()->subWeeks(52)->startOfWeek();
+        $endDate = Carbon::now();
+
+        $heatmapWeeks = [];
+        $currentDate = clone $startDate;
+        
+        while ($currentDate <= $endDate) {
+            $weekKey = $currentDate->copy()->startOfWeek()->format('Y-m-d');
+            $dayOfWeek = $currentDate->dayOfWeek; // 0 (Sunday) to 6 (Saturday)
+            $dateString = $currentDate->format('Y-m-d');
+            
+            $heatmapWeeks[$weekKey][$dayOfWeek] = [
+                'date' => $dateString,
+                'count' => $applicationsByDate[$dateString] ?? 0,
+                'formattedDate' => $currentDate->translatedFormat('d M Y')
+            ];
+            $currentDate->addDay();
+        }
+
+        // Count total applications in the last 12 months for heatmap subtext
+        $totalHeatmapApps = array_sum($applicationsByDate);
+
         return view('dashboard', [
             'totalApplications' => $totalApplications,
             'recentApplications' => $recentApplications,
@@ -73,6 +105,8 @@ class DashboardController extends Controller
             'declinedCount' => $declinedCount,
             'totalInterviewsCount' => $totalInterviewsCount,
             'careerLevelBreakdown' => $careerLevelBreakdown,
+            'heatmapWeeks' => $heatmapWeeks,
+            'totalHeatmapApps' => $totalHeatmapApps,
         ]);
     }
 }
