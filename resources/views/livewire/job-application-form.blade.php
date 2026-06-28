@@ -310,11 +310,76 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
                 }, 2500);
             }
         } else {
+            console.warn('Backend scrape failed. Attempting client-side bypass proxy...');
             if (btn) {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="ph-bold ph-sparkle text-[10px]"></i> <span>Auto-Fill Info</span>';
+                btn.innerHTML = '<i class="ph ph-spinner animate-spin text-[10px]"></i> <span>Bypassing Bot...</span>';
             }
-            alert(data.message || 'Gagal mengambil informasi dari URL.');
+            
+            // Try fetching through api.allorigins.win (public CORS proxy)
+            fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(url))
+            .then(proxyRes => {
+                if (!proxyRes.ok) throw new Error('Proxy server returned ' + proxyRes.status);
+                return proxyRes.json();
+            })
+            .then(proxyData => {
+                if (!proxyData || !proxyData.contents) {
+                    throw new Error('Gagal mendapatkan isi halaman dari proxy.');
+                }
+                
+                // Send this raw HTML content to our backend for parsing
+                return fetch('/jobs/scrape-html', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({
+                        html: proxyData.contents,
+                        url: url
+                    })
+                });
+            })
+            .then(res => res.json())
+            .then(finalData => {
+                if (finalData.success) {
+                    if (finalData.company_name && window.Livewire) {
+                        @this.set('company_name', finalData.company_name);
+                    }
+                    if (finalData.job_title && window.Livewire) {
+                        @this.set('position', finalData.job_title);
+                    }
+                    if (finalData.description && window.Livewire) {
+                        @this.set('notes', finalData.description);
+                    }
+                    if (finalData.location && window.Livewire) {
+                        @this.set('location', finalData.location);
+                        @this.call('parseLocation', finalData.location);
+                    }
+
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.classList.remove('bg-primary-50', 'text-zinc-800', 'border-primary-200/60');
+                        btn.classList.add('bg-emerald-50', 'text-emerald-800', 'border-emerald-250');
+                        btn.innerHTML = '<i class="ph-bold ph-check text-emerald-600"></i> <span>Auto-Filled!</span>';
+                        
+                        setTimeout(() => {
+                            btn.classList.remove('bg-emerald-50', 'text-emerald-800', 'border-emerald-250');
+                            btn.classList.add('bg-primary-50', 'text-zinc-800', 'border-primary-200/60');
+                            btn.innerHTML = '<i class="ph-bold ph-sparkle text-[10px]"></i> <span>Auto-Fill Info</span>';
+                        }, 2500);
+                    }
+                } else {
+                    throw new Error(finalData.message || 'Gagal memproses data dari proxy.');
+                }
+            })
+            .catch(proxyErr => {
+                console.error('Proxy bypass failed:', proxyErr);
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="ph-bold ph-sparkle text-[10px]"></i> <span>Auto-Fill Info</span>';
+                }
+                alert('Gagal mengambil data lowongan. Website memblokir server kami (403 Cloudflare).');
+            });
         }
     })
     .catch(err => {

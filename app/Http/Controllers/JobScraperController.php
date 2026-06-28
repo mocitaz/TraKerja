@@ -241,6 +241,223 @@ class JobScraperController extends Controller
         }
     }
 
+    public function scrapeHtml(Request $request)
+    {
+        $request->validate([
+            'html' => 'required|string',
+            'url' => 'required|url',
+        ]);
+
+        $html = $request->input('html');
+        $url = $request->input('url');
+
+        try {
+            $jobTitle = '';
+            $companyName = '';
+            $description = '';
+            $location = '';
+
+            // 1. Try SEEK/Jobstreet Redux Data Parsing (highly specific & complete state payload)
+            if (preg_match('/window\.SEEK_REDUX_DATA\s*=\s*(\{.*?\});/is', $html, $reduxMatches)) {
+                $data = json_decode($reduxMatches[1], true);
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $jobDetails = $data['jobdetails']['result']['job'] ?? null;
+                    if ($jobDetails) {
+                        if (!empty($jobDetails['title'])) {
+                            $jobTitle = html_entity_decode(strip_tags($jobDetails['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                        }
+                        if (!empty($jobDetails['advertiser']['name'])) {
+                            $companyName = html_entity_decode(strip_tags($jobDetails['advertiser']['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                        }
+                        if (!empty($jobDetails['location']['label'])) {
+                            $location = html_entity_decode(strip_tags($jobDetails['location']['label']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                        }
+                        if (!empty($jobDetails['content'])) {
+                            $description = $this->cleanJobDescriptionMarkup($jobDetails['content']);
+                        }
+                    }
+                }
+            }
+
+            // 2. Try JSON-LD if not filled by Redux (Search Engine optimized structured data)
+            if (empty($jobTitle) || empty($companyName) || empty($description)) {
+                $jsonLd = $this->extractJsonLd($html);
+                if ($jsonLd) {
+                    if (!empty($jsonLd['title'])) {
+                        $jobTitle = html_entity_decode(strip_tags($jsonLd['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                    } elseif (!empty($jsonLd['jobTitle'])) {
+                        $jobTitle = html_entity_decode(strip_tags($jsonLd['jobTitle']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                    }
+                    
+                    if (!empty($jsonLd['hiringOrganization'])) {
+                        $org = $jsonLd['hiringOrganization'];
+                        if (is_array($org) && !empty($org['name'])) {
+                            $companyName = html_entity_decode(strip_tags($org['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                        } elseif (is_string($org)) {
+                            $companyName = html_entity_decode(strip_tags($org), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                        }
+                    }
+                    
+                    if (!empty($jsonLd['jobLocation'])) {
+                        $loc = $jsonLd['jobLocation'];
+                        if (is_array($loc)) {
+                            if (isset($loc['address']) && is_array($loc['address'])) {
+                                $addr = $loc['address'];
+                                $parts = [];
+                                if (!empty($addr['addressLocality'])) {
+                                    $parts[] = $addr['addressLocality'];
+                                }
+                                if (!empty($addr['addressRegion'])) {
+                                    $parts[] = $addr['addressRegion'];
+                                }
+                                if (!empty($addr['addressCountry'])) {
+                                    $parts[] = $addr['addressCountry'];
+                                }
+                                $location = implode(', ', $parts);
+                            } elseif (isset($loc['name'])) {
+                                $location = $loc['name'];
+                            }
+                        } elseif (is_string($loc)) {
+                            $location = $loc;
+                        }
+                    }
+
+                    if (!empty($jsonLd['description'])) {
+                        $descText = $jsonLd['description'];
+                        $descText = preg_replace('/<(?:br|p|div|li)[^>]*>/i', "\n", $descText);
+                        $descText = html_entity_decode(strip_tags($descText), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                        $descText = preg_replace("/\n+/", "\n\n", $descText);
+                        $description = $this->cleanJobDescription($descText);
+                    }
+                }
+            }
+
+            // Extract from HTML markup containers if description is empty or too short (common on LinkedIn guest page)
+            if (strlen($description) < 200) {
+                $containers = [
+                    '/class="show-more-less-html__markup[^"]*"\s*>\s*(.*?)\s*<\/div>/is',
+                    '/class="description__text[^"]*"\s*>\s*(.*?)\s*<\/div>/is',
+                    '/class="[^"]*job-description[^"]*"\s*>\s*(.*?)\s*<\/div>/is',
+                    '/id="[^"]*job-description[^"]*"\s*>\s*(.*?)\s*<\/div>/is',
+                    '/class="[^"]*JobDescription[^"]*"\s*>\s*(.*?)\s*<\/div>/is',
+                    '/class="[^"]*jobDescription[^"]*"\s*>\s*(.*?)\s*<\/div>/is',
+                    '/data-automation="jobDescription"[^>]*>\s*(.*?)\s*<\/div>/is',
+                    '/data-automation="jobAdDetails"[^>]*>\s*(.*?)\s*<\/div>/is'
+                ];
+                
+                foreach ($containers as $pattern) {
+                    if (preg_match($pattern, $html, $descMatches)) {
+                        $candidate = trim($descMatches[1]);
+                        if (strlen(strip_tags($candidate)) > 200) {
+                            $description = $this->cleanJobDescriptionMarkup($candidate);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Fallback: If JSON-LD didn't yield values, parse Meta & Title Tags
+            if (empty($jobTitle) || empty($companyName) || empty($description)) {
+                $ogTitle = $this->getMetaContent($html, 'og:title') ?? $this->getMetaContent($html, 'twitter:title') ?? $this->getTitleTag($html);
+                $ogDescription = $this->getMetaContent($html, 'og:description') ?? $this->getMetaContent($html, 'twitter:description') ?? $this->getMetaContent($html, 'description');
+                $ogSiteName = $this->getMetaContent($html, 'og:site_name');
+
+                if (empty($jobTitle) && $ogTitle) {
+                    $cleanedTitle = html_entity_decode(strip_tags($ogTitle), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                    
+                    // Check if formatted like "Company hiring Position..." (very common in LinkedIn title tag fallbacks)
+                    if (preg_match('/(.+?)\s+hiring\s+(.+)/i', $cleanedTitle, $hiringMatches)) {
+                        $companyNameCandidate = trim($hiringMatches[1]);
+                        $jobTitleRemaining = trim($hiringMatches[2]);
+                        
+                        if (preg_match('/(.+?)\s+(?:in|at|@)\s+(.+)/i', $jobTitleRemaining, $locMatches)) {
+                            $jobTitle = trim($locMatches[1]);
+                            $location = trim($locMatches[2]);
+                        } else {
+                            $jobTitle = $jobTitleRemaining;
+                        }
+                        
+                        $companyName = $companyNameCandidate;
+                    } elseif (preg_match('/\s+(?:at|@|in)\s+(.+)/i', $cleanedTitle, $matches)) {
+                        $companyNameCandidate = trim($matches[1]);
+                        $jobTitleCandidate = trim(preg_replace('/\s+(?:at|@|in)\s+.+/i', '', $cleanedTitle));
+                        
+                        // Clean up platform name suffixes (e.g. "Glints", "Jobstreet") from company candidate
+                        if ($ogSiteName) {
+                            $companyNameCandidate = str_ireplace($ogSiteName, '', $companyNameCandidate);
+                            $companyNameCandidate = trim(trim($companyNameCandidate, '-|/ '));
+                        }
+                        
+                        $jobTitle = $jobTitleCandidate;
+                        if (empty($companyName) && !empty($companyNameCandidate)) {
+                            $companyName = $companyNameCandidate;
+                        }
+                        if (empty($location) && !empty($companyNameCandidate)) {
+                            $location = $companyNameCandidate;
+                        }
+                    } elseif (Str::contains($cleanedTitle, ' - ')) {
+                        $parts = explode(' - ', $cleanedTitle);
+                        $jobTitle = trim($parts[0]);
+                        if (empty($companyName) && !empty($parts[1])) {
+                            $companyName = trim($parts[1]);
+                        }
+                    } elseif (Str::contains($cleanedTitle, ' | ')) {
+                        $parts = explode(' | ', $cleanedTitle);
+                        $jobTitle = trim($parts[0]);
+                        if (empty($companyName) && !empty($parts[1])) {
+                            $companyName = trim($parts[1]);
+                        }
+                    } else {
+                        $jobTitle = $cleanedTitle;
+                    }
+                }
+
+                if (empty($companyName) && $ogSiteName) {
+                    $companyName = html_entity_decode(strip_tags($ogSiteName), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                }
+
+                if (empty($description) && $ogDescription) {
+                    $descText = preg_replace('/<(?:br|p|div|li)[^>]*>/i', "\n", $ogDescription);
+                    $descText = html_entity_decode(strip_tags($descText), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                    $descText = preg_replace("/\n+/", "\n\n", $descText);
+                    $description = $this->cleanJobDescriptionMarkup($descText);
+                }
+            }
+
+            // Clean up suffixes from Job Title, Company Name, and Location (e.g. "Software Engineer | Glints")
+            $platforms = ['Glints', 'Jobstreet', 'Indeed', 'Kalibrr', 'Tech in Asia', 'LinkedIn', 'Glassdoor', 'TechInAsia', 'Karir.com', 'JobSDB'];
+            foreach ($platforms as $platform) {
+                $jobTitle = preg_replace('/\s*[\|\-\:]\s*' . preg_quote($platform, '/') . '/i', '', $jobTitle);
+                $companyName = preg_replace('/\s*[\|\-\:]\s*' . preg_quote($platform, '/') . '/i', '', $companyName);
+                $location = preg_replace('/\s*[\|\-\:]\s*' . preg_quote($platform, '/') . '/i', '', $location);
+            }
+
+            // Final trim & fallback to Domain name for company if still empty
+            $jobTitle = trim($jobTitle);
+            $companyName = trim($companyName);
+            $location = trim($location);
+            if (empty($companyName)) {
+                $host = parse_url($url, PHP_URL_HOST);
+                $host = preg_replace('/^www\./i', '', $host);
+                $companyName = ucfirst(explode('.', $host)[0]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'job_title' => $jobTitle,
+                'company_name' => $companyName,
+                'description' => Str::limit($description, 1500),
+                'location' => $location,
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memproses HTML lowongan: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
     private function cleanJobDescription(string $desc): string
     {
         // 1. Remove LinkedIn/platform posting timestamps (e.g. "Posted 3:30:47 AM.", "Posted 3 days ago.", etc.)

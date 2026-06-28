@@ -255,6 +255,7 @@ Route::middleware('auth')->group(function () {
     })->name('csv.import.process');
 
     Route::post('/jobs/scrape-url', [\App\Http\Controllers\JobScraperController::class, 'scrapeUrl'])->name('jobs.scrape-url');
+    Route::post('/jobs/scrape-html', [\App\Http\Controllers\JobScraperController::class, 'scrapeHtml'])->name('jobs.scrape-html');
 
     // Premium Landing Page (Standard URL)
     Route::get('/premium', function () {
