@@ -181,6 +181,31 @@ class JobScraperController extends Controller
                 }
             }
 
+            // 2c. Try Next.js __NEXT_DATA__ Kalibrr JDP structure
+            if (empty($jobTitle) || empty($companyName)) {
+                if (preg_match('/<script\s+[^>]*?id=["\']__NEXT_DATA__["\'][^>]*?>(.*?)<\/script>/is', $html, $nextMatches)) {
+                    $nextData = json_decode($nextMatches[1], true);
+                    if (json_last_error() === JSON_ERROR_NONE) {
+                        $job = $nextData['props']['pageProps']['job'] ?? null;
+                        if ($job) {
+                            if (empty($jobTitle) && !empty($job['name'])) {
+                                $jobTitle = html_entity_decode(strip_tags($job['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                            }
+                            if (empty($companyName)) {
+                                if (!empty($job['companyInfo']['name'])) {
+                                    $companyName = html_entity_decode(strip_tags($job['companyInfo']['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                } elseif (!empty($job['company']['name'])) {
+                                    $companyName = html_entity_decode(strip_tags($job['company']['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                }
+                            }
+                            if (empty($location) && !empty($job['googleLocation']['formattedAddress'])) {
+                                $location = html_entity_decode(strip_tags($job['googleLocation']['formattedAddress']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                            }
+                        }
+                    }
+                }
+            }
+
             // Extract from HTML markup containers if description is empty or too short (common on LinkedIn guest page)
             if (strlen($description) < 200) {
                 $containers = [
@@ -458,6 +483,31 @@ class JobScraperController extends Controller
                                         $location = $loc;
                                     }
                                 }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 2c. Try Next.js __NEXT_DATA__ Kalibrr JDP structure
+            if (empty($jobTitle) || empty($companyName)) {
+                if (preg_match('/<script\s+[^>]*?id=["\']__NEXT_DATA__["\'][^>]*?>(.*?)<\/script>/is', $html, $nextMatches)) {
+                    $nextData = json_decode($nextMatches[1], true);
+                    if (json_last_error() === JSON_ERROR_NONE) {
+                        $job = $nextData['props']['pageProps']['job'] ?? null;
+                        if ($job) {
+                            if (empty($jobTitle) && !empty($job['name'])) {
+                                $jobTitle = html_entity_decode(strip_tags($job['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                            }
+                            if (empty($companyName)) {
+                                if (!empty($job['companyInfo']['name'])) {
+                                    $companyName = html_entity_decode(strip_tags($job['companyInfo']['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                } elseif (!empty($job['company']['name'])) {
+                                    $companyName = html_entity_decode(strip_tags($job['company']['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                }
+                            }
+                            if (empty($location) && !empty($job['googleLocation']['formattedAddress'])) {
+                                $location = html_entity_decode(strip_tags($job['googleLocation']['formattedAddress']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
                             }
                         }
                     }
