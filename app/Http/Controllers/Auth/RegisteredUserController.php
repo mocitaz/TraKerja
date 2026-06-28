@@ -42,11 +42,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', new StrongPassword()],
         ];
 
-        // Skip turnstile verification if using Cloudflare dummy keys (meaning real production credentials aren't set)
-        $siteKey = env('TURNSTILE_SITE_KEY', '0x4AAAAAADVwvVUur2OE6_b9');
-        $isDummy = $siteKey === '0x4AAAAAADVwvVUur2OE6_b9';
-
-        if (!app()->environment('local') && !in_array($request->getHost(), ['localhost', '127.0.0.1']) && !$isDummy) {
+        if (!app()->environment('local') && !in_array($request->getHost(), ['localhost', '127.0.0.1'])) {
             $rules['cf-turnstile-response'] = ['required', new \App\Rules\TurnstileRule()];
         }
 

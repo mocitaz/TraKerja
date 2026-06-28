@@ -15,10 +15,7 @@ class TurnstileRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $siteKey = env('TURNSTILE_SITE_KEY', '0x4AAAAAADVwvVUur2OE6_b9');
-        $isDummy = $siteKey === '0x4AAAAAADVwvVUur2OE6_b9';
-
-        if (app()->environment('local') || in_array(request()->getHost(), ['localhost', '127.0.0.1']) || $isDummy) {
+        if (app()->environment('local') || in_array(request()->getHost(), ['localhost', '127.0.0.1'])) {
             return;
         }
 
