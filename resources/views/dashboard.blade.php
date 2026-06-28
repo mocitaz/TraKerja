@@ -111,100 +111,8 @@
                 </div>
             </div>
 
-            <!-- Job Search Momentum Calendar Heatmap -->
-            <div class="bg-white rounded-lg border border-zinc-200/60 p-4 mb-5 shadow-2xs">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pt-1">
-                    <div>
-                        <h3 class="text-xs font-bold text-zinc-850 tracking-tight uppercase tracking-wider">Job Search Momentum</h3>
-                        <p class="text-[10px] text-zinc-400 font-medium mt-0.5">Visualizing your daily application consistency over the last 12 months</p>
-                    </div>
-                    <div class="flex items-center gap-1.5 text-zinc-500 font-mono text-[9px] bg-zinc-50 border border-zinc-200/60 px-2.5 py-1 rounded-md shrink-0 select-none">
-                        <i class="ph-bold ph-calendar text-primary-500 text-xs"></i>
-                        <span>Total: <strong class="text-zinc-800">{{ $totalHeatmapApps }}</strong> lamaran</span>
-                    </div>
-                </div>
-
-                {{-- Heatmap Grid Container with Horizontal Scroll --}}
-                <div class="overflow-x-auto select-none custom-scrollbar pb-2 pt-4">
-                    <div class="flex gap-[3.5px] min-w-[780px] relative">
-                        {{-- Days Labels on Left --}}
-                        <div class="flex flex-col justify-between text-[8px] font-bold text-zinc-400 font-mono pr-2.5 h-[91px] py-1 shrink-0 select-none">
-                            <span>Sen</span>
-                            <span>Rab</span>
-                            <span>Jum</span>
-                        </div>
-
-                        {{-- Week Columns --}}
-                        @php
-                            $lastMonth = '';
-                            $dayOrder = [1, 2, 3, 4, 5, 6, 0]; // Monday to Sunday
-                        @endphp
-                        @foreach($heatmapWeeks as $weekKey => $days)
-                            @php
-                                $firstDay = \Carbon\Carbon::parse($weekKey);
-                                $monthName = '';
-                                if ($firstDay->translatedFormat('M') !== $lastMonth) {
-                                    $monthName = $firstDay->translatedFormat('M');
-                                    $lastMonth = $firstDay->translatedFormat('M');
-                                }
-                            @endphp
-                            <div class="flex flex-col gap-[3.5px] relative shrink-0">
-                                {{-- Month Label at top of column --}}
-                                @if($monthName)
-                                    <span class="absolute -top-4.5 left-0 text-[8px] font-extrabold text-zinc-400 uppercase tracking-wider whitespace-nowrap">{{ $monthName }}</span>
-                                @endif
-                                
-                                @foreach($dayOrder as $dIdx)
-                                    @php
-                                        $day = $days[$dIdx] ?? null;
-                                        $count = $day ? $day['count'] : 0;
-                                        
-                                        // Color map logic matching brand purple theme
-                                        if ($count == 0) {
-                                            $colorClass = 'bg-zinc-100 hover:bg-zinc-200/80';
-                                        } elseif ($count == 1) {
-                                            $colorClass = 'bg-primary-100 border border-primary-200/20';
-                                        } elseif ($count == 2) {
-                                            $colorClass = 'bg-primary-300';
-                                        } elseif ($count == 3) {
-                                            $colorClass = 'bg-primary-500';
-                                        } else {
-                                            $colorClass = 'bg-primary-700';
-                                        }
-                                    @endphp
-                                    
-                                    @if($day)
-                                        <div class="group relative shrink-0">
-                                            <div class="w-[10px] h-[10px] rounded-[1.5px] {{ $colorClass }} transition-colors cursor-pointer"></div>
-                                            {{-- Tooltip overlay --}}
-                                            <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 hidden group-hover:block z-50 bg-zinc-900 text-white text-[9px] font-semibold py-1 px-2 rounded shadow-sm whitespace-nowrap leading-none pointer-events-none">
-                                                {{ $count }} lamaran • {{ $day['formattedDate'] }}
-                                            </div>
-                                        </div>
-                                    @else
-                                        {{-- Blank spacer for missing days --}}
-                                        <div class="w-[10px] h-[10px] bg-transparent shrink-0"></div>
-                                    @endif
-                                @endforeach
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                {{-- Legend block --}}
-                <div class="flex items-center justify-end gap-1.5 text-[9px] font-mono text-zinc-400 mt-2.5 px-1 select-none">
-                    <span>Kurang</span>
-                    <div class="w-[10px] h-[10px] rounded-[1.5px] bg-zinc-100"></div>
-                    <div class="w-[10px] h-[10px] rounded-[1.5px] bg-primary-100"></div>
-                    <div class="w-[10px] h-[10px] rounded-[1.5px] bg-primary-300"></div>
-                    <div class="w-[10px] h-[10px] rounded-[1.5px] bg-primary-500"></div>
-                    <div class="w-[10px] h-[10px] rounded-[1.5px] bg-primary-700"></div>
-                    <span>Lebih</span>
-                </div>
-            </div>
-
             <!-- Dashboard Layout Main Area -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5">
                 <!-- Left Column: Recent Apps & Upcoming Interviews (col-span 2) -->
                 <div class="lg:col-span-2 space-y-5">
                     
@@ -431,6 +339,103 @@
                                 <span class="text-[8.5px] text-zinc-400 mt-0.5">Write instantly</span>
                             </a>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Search Momentum Calendar Heatmap (GitHub Style) -->
+            <div class="bg-white rounded-lg border border-zinc-200/60 p-5 mt-5 shadow-2xs font-sans">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 select-none">
+                    <div>
+                        <h3 class="text-xs font-bold text-zinc-800 tracking-tight uppercase tracking-wider">{{ $totalHeatmapApps }} contributions in the last year</h3>
+                        <p class="text-[10px] text-zinc-400 font-medium mt-0.5">Visualizing your daily application consistency over the last 12 months</p>
+                    </div>
+                    <div class="text-[9px] text-zinc-450 font-mono bg-zinc-50 border border-zinc-150/60 px-2 py-0.5 rounded-md shrink-0">
+                        Avg: <strong class="text-zinc-800">{{ number_format($totalHeatmapApps / 365, 2) }}</strong> / day
+                    </div>
+                </div>
+
+                {{-- Heatmap Grid Container with Horizontal Scroll --}}
+                <div class="overflow-x-auto select-none custom-scrollbar pb-2 pt-4">
+                    <div class="flex gap-[3px] min-w-[760px] relative">
+                        {{-- Days Labels on Left --}}
+                        <div class="grid grid-rows-7 gap-[3px] text-[9px] text-zinc-400 select-none shrink-0 pr-2 font-sans font-medium h-[88px] leading-none">
+                            <span class="row-start-1 leading-none self-center">Mon</span>
+                            <span class="row-start-3 leading-none self-center">Wed</span>
+                            <span class="row-start-5 leading-none self-center">Fri</span>
+                        </div>
+
+                        {{-- Week Columns --}}
+                        @php
+                            $lastMonth = '';
+                            $dayOrder = [1, 2, 3, 4, 5, 6, 0]; // Monday to Sunday
+                        @endphp
+                        @foreach($heatmapWeeks as $weekKey => $days)
+                            @php
+                                $firstDay = \Carbon\Carbon::parse($weekKey);
+                                $monthName = '';
+                                if ($firstDay->format('M') !== $lastMonth) {
+                                    $monthName = $firstDay->format('M');
+                                    $lastMonth = $firstDay->format('M');
+                                }
+                            @endphp
+                            <div class="flex flex-col gap-[3px] relative shrink-0">
+                                {{-- Month Label at top of column --}}
+                                @if($monthName)
+                                    <span class="absolute -top-4.5 left-0 text-[9px] font-medium text-zinc-500 font-sans whitespace-nowrap">{{ $monthName }}</span>
+                                @endif
+                                
+                                @foreach($dayOrder as $dIdx)
+                                    @php
+                                        $day = $days[$dIdx] ?? null;
+                                        $count = $day ? $day['count'] : 0;
+                                        
+                                        // GitHub exact color hexes
+                                        if ($count == 0) {
+                                            $colorClass = 'bg-[#ebedf0] hover:bg-[#e1e4e8]';
+                                        } elseif ($count == 1) {
+                                            $colorClass = 'bg-[#9be9a8]';
+                                        } elseif ($count == 2) {
+                                            $colorClass = 'bg-[#40c463]';
+                                        } elseif ($count == 3) {
+                                            $colorClass = 'bg-[#30a14e]';
+                                        } else {
+                                            $colorClass = 'bg-[#216e39]';
+                                        }
+                                    @endphp
+                                    
+                                    @if($day)
+                                        <div class="group relative shrink-0">
+                                            <div class="w-[10px] h-[10px] rounded-[2px] {{ $colorClass }} transition-colors cursor-pointer"></div>
+                                            {{-- Tooltip overlay --}}
+                                            <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 hidden group-hover:block z-50 bg-zinc-900 text-white text-[9px] font-semibold py-1 px-2 rounded shadow-sm whitespace-nowrap leading-none pointer-events-none">
+                                                {{ $count }} lamaran • {{ $day['formattedDate'] }}
+                                            </div>
+                                        </div>
+                                    @else
+                                        {{-- Blank spacer for missing days --}}
+                                        <div class="w-[10px] h-[10px] bg-transparent shrink-0"></div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- Legend & Footer Row --}}
+                <div class="flex items-center justify-between text-[10px] text-zinc-400 mt-3 select-none">
+                    <a href="{{ route('tracker') }}" class="text-[10px] text-zinc-400 hover:text-zinc-600 transition-colors font-medium">
+                        Learn how we count contributions
+                    </a>
+                    
+                    <div class="flex items-center gap-[3px]">
+                        <span class="mr-1">Less</span>
+                        <div class="w-[10px] h-[10px] rounded-[2px] bg-[#ebedf0]"></div>
+                        <div class="w-[10px] h-[10px] rounded-[2px] bg-[#9be9a8]"></div>
+                        <div class="w-[10px] h-[10px] rounded-[2px] bg-[#40c463]"></div>
+                        <div class="w-[10px] h-[10px] rounded-[2px] bg-[#30a14e]"></div>
+                        <div class="w-[10px] h-[10px] rounded-[2px] bg-[#216e39]"></div>
+                        <span class="ml-1">More</span>
                     </div>
                 </div>
             </div>
