@@ -4,11 +4,11 @@
     <div class="min-h-screen bg-white font-sans antialiased text-[#37352f] flex flex-col justify-center items-center py-12 px-4 selection:bg-[#2383e2]/10">
         
         <!-- Main Container -->
-        <div class="w-full max-w-[320px] flex flex-col items-center space-y-5">
+        <div class="w-full max-w-[320px] flex flex-col items-center">
             
             <!-- Logo Section -->
-            <div class="flex flex-col items-center text-center">
-                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-9 h-9 object-contain mb-2">
+            <div class="flex flex-col items-center text-center mb-4">
+                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-9 h-9 object-contain mb-1.5">
                 <h1 class="text-[17px] font-bold text-[#37352f] tracking-tight leading-tight">
                     Create your account.
                 </h1>
@@ -16,21 +16,19 @@
             </div>
 
             <!-- Validation Errors Alert Summary -->
-            <div class="w-full">
-                @if ($errors->any())
-                    <div class="mb-3 p-3 bg-rose-50/50 border border-rose-200/80 rounded-md text-rose-955 text-xs font-semibold flex items-start gap-2 text-left">
-                        <i class="ph-fill ph-warning-circle text-rose-600 text-sm shrink-0 mt-0.5"></i>
-                        <div>
-                            <p class="font-bold text-[11px] leading-tight">Registration Failed</p>
-                            <ul class="mt-1 text-[10px] text-rose-750 font-medium list-disc list-inside space-y-0.5">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+            @if ($errors->any())
+                <div class="w-full mb-3 p-3 bg-rose-50/50 border border-rose-200/80 rounded-md text-rose-955 text-xs font-semibold flex items-start gap-2 text-left">
+                    <i class="ph-fill ph-warning-circle text-rose-600 text-sm shrink-0 mt-0.5"></i>
+                    <div>
+                        <p class="font-bold text-[11px] leading-tight">Registration Failed</p>
+                        <ul class="mt-1 text-[10px] text-rose-750 font-medium list-disc list-inside space-y-0.5">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
-                @endif
-            </div>
+                </div>
+            @endif
 
             <!-- Form -->
             <form method="POST" action="{{ route('register') }}" class="w-full space-y-3 text-left">
@@ -109,7 +107,7 @@
             </form>
 
             <!-- Divider -->
-            <div class="relative w-full my-2">
+            <div class="relative w-full my-3">
                 <div class="absolute inset-0 flex items-center">
                     <div class="w-full border-t border-slate-200/60"></div>
                 </div>
@@ -141,12 +139,12 @@
             </div>
 
             <!-- Sign In Footer link -->
-            <div class="text-xs font-normal text-slate-500 pt-1">
-                Already registered? <a href="{{ route('login') }}" class="text-[#2383e2] hover:underline">Sign in</a>
+            <div class="text-xs font-normal text-[#37352f] mt-3">
+                <span class="text-slate-500">Already registered?</span> <a href="{{ route('login') }}" class="text-[#2383e2] hover:underline">Sign in</a>
             </div>
 
             <!-- Workspace Footer Disclaimer -->
-            <div class="w-full text-center space-y-2 pt-6 border-t border-slate-100">
+            <div class="w-full text-center space-y-2 pt-5 mt-5 border-t border-slate-100">
                 <p class="text-[9.5px] text-slate-400 leading-normal">
                     By continuing, you acknowledge that you understand and agree to the <span class="hover:underline cursor-pointer">Terms & Conditions</span> and <span class="hover:underline cursor-pointer">Privacy Policy</span>.
                 </p>

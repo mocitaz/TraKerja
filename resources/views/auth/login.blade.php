@@ -4,11 +4,11 @@
     <div class="min-h-screen bg-white font-sans antialiased text-[#37352f] flex flex-col justify-center items-center py-12 px-4 selection:bg-[#2383e2]/10">
         
         <!-- Main Container -->
-        <div class="w-full max-w-[320px] flex flex-col items-center space-y-5">
+        <div class="w-full max-w-[320px] flex flex-col items-center">
             
             <!-- Logo Section -->
-            <div class="flex flex-col items-center text-center">
-                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-9 h-9 object-contain mb-2">
+            <div class="flex flex-col items-center text-center mb-4">
+                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-9 h-9 object-contain mb-1.5">
                 <h1 class="text-[17px] font-bold text-[#37352f] tracking-tight leading-tight">
                     Your integrated career workspace.
                 </h1>
@@ -16,37 +16,35 @@
             </div>
 
             <!-- Status Alerts -->
-            <div class="w-full">
-                @if (session('status') === 'registration-successful' || session('status') === 'verification-link-sent')
-                    <div class="mb-3 p-3 bg-amber-50/50 border border-amber-200/80 rounded-md text-amber-955 text-xs font-semibold flex items-start gap-2 text-left">
-                        <i class="ph-fill ph-warning-circle text-amber-600 text-sm shrink-0 mt-0.5"></i>
-                        <div>
-                            <p class="font-bold text-[11px] leading-tight">Verification Required</p>
-                            <p class="text-[10px] text-amber-700 mt-0.5 font-medium leading-normal">Check your email inbox or spam folder to verify your account.</p>
-                        </div>
+            @if (session('status') === 'registration-successful' || session('status') === 'verification-link-sent')
+                <div class="w-full mb-3 p-3 bg-amber-50/50 border border-amber-200/80 rounded-md text-amber-955 text-xs font-semibold flex items-start gap-2 text-left">
+                    <i class="ph-fill ph-warning-circle text-amber-600 text-sm shrink-0 mt-0.5"></i>
+                    <div>
+                        <p class="font-bold text-[11px] leading-tight">Verification Required</p>
+                        <p class="text-[10px] text-amber-700 mt-0.5 font-medium leading-normal">Check your email inbox or spam folder to verify your account.</p>
                     </div>
-                @endif
+                </div>
+            @endif
 
-                @if (session('status') === 'email-not-verified')
-                    <div class="mb-3 p-3 bg-rose-50/50 border border-rose-200/80 rounded-md text-rose-955 text-xs font-semibold flex items-start gap-2 text-left">
-                        <i class="ph-fill ph-x-circle text-rose-600 text-sm shrink-0 mt-0.5"></i>
-                        <div>
-                            <p class="font-bold text-[11px] leading-tight">Email Unverified</p>
-                            <p class="text-[10px] text-rose-700 mt-0.5 font-medium leading-normal">Please verify your email address before signing in.</p>
-                        </div>
+            @if (session('status') === 'email-not-verified')
+                <div class="w-full mb-3 p-3 bg-rose-50/50 border border-rose-200/80 rounded-md text-rose-955 text-xs font-semibold flex items-start gap-2 text-left">
+                    <i class="ph-fill ph-x-circle text-rose-600 text-sm shrink-0 mt-0.5"></i>
+                    <div>
+                        <p class="font-bold text-[11px] leading-tight">Email Unverified</p>
+                        <p class="text-[10px] text-rose-700 mt-0.5 font-medium leading-normal">Please verify your email address before signing in.</p>
                     </div>
-                @endif
+                </div>
+            @endif
 
-                @if ($errors->has('email') && !$errors->has('password'))
-                    <div class="mb-3 p-3 bg-rose-50/50 border border-rose-200/80 rounded-md text-rose-955 text-xs font-semibold flex items-start gap-2 text-left">
-                        <i class="ph-fill ph-warning text-rose-600 text-sm shrink-0 mt-0.5"></i>
-                        <div>
-                            <p class="font-bold text-[11px] leading-tight">Authentication Failed</p>
-                            <p class="text-[10px] text-rose-700 mt-0.5 font-medium leading-normal">{{ $errors->first('email') }}</p>
-                        </div>
+            @if ($errors->has('email') && !$errors->has('password'))
+                <div class="w-full mb-3 p-3 bg-rose-50/50 border border-rose-200/80 rounded-md text-rose-955 text-xs font-semibold flex items-start gap-2 text-left">
+                    <i class="ph-fill ph-warning text-rose-600 text-sm shrink-0 mt-0.5"></i>
+                    <div>
+                        <p class="font-bold text-[11px] leading-tight">Authentication Failed</p>
+                        <p class="text-[10px] text-rose-700 mt-0.5 font-medium leading-normal">{{ $errors->first('email') }}</p>
                     </div>
-                @endif
-            </div>
+                </div>
+            @endif
 
             <!-- Form -->
             <form method="POST" action="{{ route('login') }}" class="w-full space-y-3 text-left">
@@ -92,7 +90,7 @@
                 <div class="flex items-center justify-between pt-0.5">
                     <label for="remember_me" class="flex items-center gap-2 cursor-pointer group">
                         <input id="remember_me" name="remember" type="checkbox" class="w-3.5 h-3.5 rounded border-slate-300 text-[#2383e2] focus:ring-0 cursor-pointer">
-                        <span class="text-xs text-slate-500 group-hover:text-slate-700 transition-colors">Remember this browser</span>
+                        <span class="text-xs text-slate-550 group-hover:text-slate-700 transition-colors">Remember this browser</span>
                     </label>
                 </div>
 
@@ -111,7 +109,7 @@
             </form>
 
             <!-- Divider -->
-            <div class="relative w-full my-2">
+            <div class="relative w-full my-3">
                 <div class="absolute inset-0 flex items-center">
                     <div class="w-full border-t border-slate-200/60"></div>
                 </div>
@@ -143,12 +141,12 @@
             </div>
 
             <!-- Sign Up Footer link -->
-            <div class="text-xs font-normal text-slate-500 pt-1">
-                New to TraKerja? <a href="{{ route('register') }}" class="text-[#2383e2] hover:underline">Sign up</a>
+            <div class="text-xs font-normal text-[#37352f] mt-3">
+                <span class="text-slate-500">New to TraKerja?</span> <a href="{{ route('register') }}" class="text-[#2383e2] hover:underline">Sign up</a>
             </div>
 
             <!-- Workspace Footer Disclaimer -->
-            <div class="w-full text-center space-y-2 pt-6 border-t border-slate-100">
+            <div class="w-full text-center space-y-2 pt-5 mt-5 border-t border-slate-100">
                 <p class="text-[9.5px] text-slate-400 leading-normal">
                     By continuing, you acknowledge that you understand and agree to the <span class="hover:underline cursor-pointer">Terms & Conditions</span> and <span class="hover:underline cursor-pointer">Privacy Policy</span>.
                 </p>

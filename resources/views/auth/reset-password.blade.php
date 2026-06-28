@@ -4,11 +4,11 @@
     <div class="min-h-screen bg-white font-sans antialiased text-[#37352f] flex flex-col justify-center items-center py-12 px-4 selection:bg-[#2383e2]/10">
         
         <!-- Main Container -->
-        <div class="w-full max-w-[320px] flex flex-col items-center space-y-5">
+        <div class="w-full max-w-[320px] flex flex-col items-center">
             
             <!-- Logo Section -->
-            <div class="flex flex-col items-center text-center">
-                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-9 h-9 object-contain mb-2">
+            <div class="flex flex-col items-center text-center mb-4">
+                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-9 h-9 object-contain mb-1.5">
                 <h1 class="text-[17px] font-bold text-[#37352f] tracking-tight leading-tight">
                     Reset your password.
                 </h1>
@@ -73,12 +73,12 @@
             </form>
 
             <!-- Sign In Footer link -->
-            <div class="text-xs font-normal text-slate-500 pt-1">
-                Remember your password? <a href="{{ route('login') }}" class="text-[#2383e2] hover:underline">Back to login</a>
+            <div class="text-xs font-normal text-[#37352f] mt-3">
+                <span class="text-slate-500">Remember your password?</span> <a href="{{ route('login') }}" class="text-[#2383e2] hover:underline">Back to login</a>
             </div>
 
             <!-- Workspace Footer Disclaimer -->
-            <div class="w-full text-center space-y-2 pt-6 border-t border-slate-100">
+            <div class="w-full text-center space-y-2 pt-5 mt-5 border-t border-slate-100">
                 <p class="text-[9.5px] text-slate-400 leading-normal">
                     By continuing, you acknowledge that you understand and agree to the <span class="hover:underline cursor-pointer">Terms & Conditions</span> and <span class="hover:underline cursor-pointer">Privacy Policy</span>.
                 </p>
