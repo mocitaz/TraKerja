@@ -10,6 +10,14 @@
 
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
             
+            <!-- Breadcrumbs -->
+            <div class="mb-4 relative z-10">
+                <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-1.5 text-[11px] font-bold text-zinc-500 hover:text-zinc-850 uppercase tracking-wider transition-colors">
+                    <i class="ph-bold ph-arrow-left text-xs"></i>
+                    <span>Back to Dashboard</span>
+                </a>
+            </div>
+
             <!-- Premium Glass-Style Page Header -->
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-zinc-200/50 pb-4 mb-6 relative z-10">
                 <div class="flex items-center gap-3">
