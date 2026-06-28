@@ -305,6 +305,8 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
                 detectPlatform = 'Dealls';
             } else if (url.includes('kalibrr.com')) {
                 detectPlatform = 'Kalibrr';
+            } else if (url.includes('glints.com')) {
+                detectPlatform = 'Glints';
             }
             if (detectPlatform && window.Livewire) {
                 @this.set('platform', detectPlatform);
@@ -379,6 +381,8 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
                         detectPlatform = 'Dealls';
                     } else if (url.includes('kalibrr.com')) {
                         detectPlatform = 'Kalibrr';
+                    } else if (url.includes('glints.com')) {
+                        detectPlatform = 'Glints';
                     }
                     if (detectPlatform && window.Livewire) {
                         @this.set('platform', detectPlatform);

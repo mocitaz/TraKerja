@@ -206,6 +206,36 @@ class JobScraperController extends Controller
                 }
             }
 
+            // 2d. Try Next.js __NEXT_DATA__ Glints JDP structure
+            if (empty($jobTitle) || empty($companyName)) {
+                if (preg_match('/<script\s+[^>]*?id=["\']__NEXT_DATA__["\'][^>]*?>(.*?)<\/script>/is', $html, $nextMatches)) {
+                    $nextData = json_decode($nextMatches[1], true);
+                    if (json_last_error() === JSON_ERROR_NONE) {
+                        $glintsData = $nextData['props']['pageProps']['initialData']['data'] ?? null;
+                        if ($glintsData) {
+                            if (empty($jobTitle) && !empty($glintsData['title'])) {
+                                $jobTitle = html_entity_decode(strip_tags($glintsData['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                            }
+                            if (empty($companyName) && !empty($glintsData['company']['name'])) {
+                                $companyName = html_entity_decode(strip_tags($glintsData['company']['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                            }
+                            if (empty($location)) {
+                                $locParts = [];
+                                if (!empty($glintsData['city']['name'])) {
+                                    $locParts[] = $glintsData['city']['name'];
+                                }
+                                if (!empty($glintsData['country']['name'])) {
+                                    $locParts[] = $glintsData['country']['name'];
+                                }
+                                if (!empty($locParts)) {
+                                    $location = html_entity_decode(strip_tags(implode(', ', $locParts)), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             // Extract from HTML markup containers if description is empty or too short (common on LinkedIn guest page)
             if (strlen($description) < 200) {
                 $containers = [
@@ -508,6 +538,36 @@ class JobScraperController extends Controller
                             }
                             if (empty($location) && !empty($job['googleLocation']['formattedAddress'])) {
                                 $location = html_entity_decode(strip_tags($job['googleLocation']['formattedAddress']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 2d. Try Next.js __NEXT_DATA__ Glints JDP structure
+            if (empty($jobTitle) || empty($companyName)) {
+                if (preg_match('/<script\s+[^>]*?id=["\']__NEXT_DATA__["\'][^>]*?>(.*?)<\/script>/is', $html, $nextMatches)) {
+                    $nextData = json_decode($nextMatches[1], true);
+                    if (json_last_error() === JSON_ERROR_NONE) {
+                        $glintsData = $nextData['props']['pageProps']['initialData']['data'] ?? null;
+                        if ($glintsData) {
+                            if (empty($jobTitle) && !empty($glintsData['title'])) {
+                                $jobTitle = html_entity_decode(strip_tags($glintsData['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                            }
+                            if (empty($companyName) && !empty($glintsData['company']['name'])) {
+                                $companyName = html_entity_decode(strip_tags($glintsData['company']['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                            }
+                            if (empty($location)) {
+                                $locParts = [];
+                                if (!empty($glintsData['city']['name'])) {
+                                    $locParts[] = $glintsData['city']['name'];
+                                }
+                                if (!empty($glintsData['country']['name'])) {
+                                    $locParts[] = $glintsData['country']['name'];
+                                }
+                                if (!empty($locParts)) {
+                                    $location = html_entity_decode(strip_tags(implode(', ', $locParts)), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                }
                             }
                         }
                     }
