@@ -102,7 +102,7 @@
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">Dashboard</span>
                         
                         <!-- Tooltip -->
-                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap">
+                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             Dashboard
                         </div>
                     </a>
@@ -117,7 +117,7 @@
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">User Management</span>
                         
                         <!-- Tooltip -->
-                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap">
+                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             Users
                         </div>
                     </a>
@@ -132,7 +132,7 @@
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">Activity Log</span>
                         
                         <!-- Tooltip -->
-                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap">
+                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             Activity Log
                         </div>
                     </a>
@@ -147,7 +147,7 @@
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">Analytics</span>
                         
                         <!-- Tooltip -->
-                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap">
+                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             Analytics
                         </div>
                     </a>
@@ -171,7 +171,7 @@
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">Email Blast</span>
                         
                         <!-- Tooltip -->
-                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap">
+                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             Email Blast
                         </div>
                     </a>
@@ -186,7 +186,7 @@
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">User Feedback</span>
                         
                         <!-- Tooltip -->
-                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap">
+                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             User Feedback
                         </div>
                     </a>
@@ -210,7 +210,7 @@
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">Settings</span>
                         
                         <!-- Tooltip -->
-                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap">
+                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             Settings
                         </div>
                     </a>
