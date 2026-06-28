@@ -3,51 +3,80 @@
 
     <div class="min-h-screen grid grid-cols-1 lg:grid-cols-12 bg-white font-sans antialiased text-zinc-900 selection:bg-primary-100 selection:text-primary-700">
         
-        <!-- Left Side: Formal Corporate Showcase Pane -->
-        <div class="hidden lg:flex lg:col-span-6 xl:col-span-7 text-white relative flex-col justify-between p-8 lg:p-12 overflow-hidden select-none border-r border-slate-800"
-             style="background-image: url('{{ asset('images/corporate_login_bg.png') }}'); background-size: cover; background-position: center;">
+        <!-- Left Side: Clean Light-Slate Corporate Showcase Pane -->
+        <div class="hidden lg:flex lg:col-span-6 xl:col-span-7 bg-[#f8fafc] border-r border-slate-200/60 relative flex-col justify-between p-8 lg:p-12 overflow-hidden select-none">
             
-            <!-- Dark Overlay for High Text Contrast -->
-            <div class="absolute inset-0 z-0 bg-[#090d16]/80 mix-blend-multiply pointer-events-none"></div>
-            <div class="absolute inset-0 z-0 bg-gradient-to-tr from-[#090d16] via-[#090d16]/50 to-transparent pointer-events-none"></div>
+            <!-- Grid Backdrop lines -->
+            <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.4]" style="background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px); background-size: 32px 32px;"></div>
 
             <!-- Top Header Logo Section -->
-            <div class="relative z-10 flex items-center justify-between">
-                <a href="/" class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded bg-white flex items-center justify-center p-1.5 shadow-sm">
-                        <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-full h-full object-contain">
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="text-sm font-black text-white tracking-tight leading-none mb-0.5">TraKerja Enterprise</span>
-                        <span class="text-[9px] text-slate-400 font-bold">by PT. Teknalogi Transformasi Digital</span>
-                    </div>
-                </a>
+            <div class="relative z-10 flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-white border border-slate-200/80 flex items-center justify-center p-1.5 shadow-3xs">
+                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-full h-full object-contain">
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-sm font-black text-slate-800 tracking-tight leading-none mb-0.5">TraKerja</span>
+                    <span class="text-[9px] text-slate-500 font-semibold">by PT. Teknalogi Transformasi Digital</span>
+                </div>
             </div>
 
             <!-- Main Corporate Content -->
-            <div class="relative z-10 my-auto py-12 max-w-lg space-y-6">
+            <div class="relative z-10 my-auto py-12 max-w-md space-y-8">
                 <div class="space-y-4">
-                    <span class="inline-flex px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[9px] font-black uppercase tracking-widest text-slate-300 backdrop-blur-md">
-                        Workspace Karir Terpadu
+                    <span class="inline-flex px-2.5 py-0.5 bg-primary-50 border border-primary-200/60 rounded text-[9px] font-bold uppercase tracking-wider text-primary-700">
+                        WORKSPACE KARIR PROFESIONAL
                     </span>
-                    <h1 class="text-3xl lg:text-4xl xl:text-5xl font-extrabold text-white tracking-tight leading-[1.15]">
-                        Satu platform. <br>Semua tahapan karir Anda.
+                    <h1 class="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                        Kelola pelamaran kerja. <br>Tingkatkan peluang diterima.
                     </h1>
-                    <p class="text-xs text-slate-350 leading-relaxed font-normal max-w-sm">
-                        Workspace profesional untuk mengelola berkas lamaran, mengoptimalkan resume berbasis kualifikasi ATS, dan mempersiapkan evaluasi rekrutmen secara mandiri dan aman.
+                    <p class="text-xs text-slate-600 leading-relaxed font-normal">
+                        TraKerja memfasilitasi pencari kerja profesional dalam mengorganisasikan berkas, mengukur kelayakan ATS resume, serta melacak tahapan rekrutmen secara mandiri dan aman.
                     </p>
+                </div>
+
+                <!-- Premium Light Mode Mockup Card (The WOW factor) -->
+                <div class="p-5 bg-white border border-slate-200/80 rounded-xl shadow-3xs space-y-4 max-w-sm">
+                    <!-- Header -->
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-6.5 h-6.5 rounded-full bg-primary-50 border border-primary-200/60 flex items-center justify-center font-bold text-primary-750 text-[10px]">
+                                LF
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-[11px] font-bold text-slate-800 leading-none mb-0.5">Luthfi Fauzi</span>
+                                <span class="text-[8.5px] text-slate-500 font-semibold leading-none">Engineering Lead</span>
+                            </div>
+                        </div>
+                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[8.5px] font-black rounded border border-emerald-200/60 uppercase">Aktif</span>
+                    </div>
+
+                    <!-- List of parsed status -->
+                    <div class="space-y-2.5">
+                        <div class="flex items-center justify-between text-[10px] border-b border-slate-50 pb-2">
+                            <span class="text-slate-500 font-medium">Kecocokan ATS Resume</span>
+                            <span class="font-bold text-slate-800">98% Sangat Sesuai</span>
+                        </div>
+                        <div class="flex items-center justify-between text-[10px] border-b border-slate-50 pb-2">
+                            <span class="text-slate-500 font-medium">Jadwal Interview Aktif</span>
+                            <span class="font-bold text-primary-605">3 Terjadwal</span>
+                        </div>
+                        <div class="flex items-center justify-between text-[10px]">
+                            <span class="text-slate-500 font-medium">Akurasi Validasi Gaji (UMK)</span>
+                            <span class="font-bold text-slate-800">Sesuai Standar 2026</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Footer Badge -->
-            <div class="relative z-10 pt-6 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
+            <div class="relative z-10 pt-6 border-t border-slate-200/80 flex items-center justify-between text-[11px] text-slate-500">
                 <span class="font-medium">&copy; {{ date('Y') }} TraKerja by PT. Teknalogi Transformasi Digital.</span>
-                <span class="flex items-center gap-1 font-bold text-slate-300"><i class="ph-fill ph-shield-check text-emerald-400 text-sm"></i> Enterprise Security</span>
+                <span class="flex items-center gap-1 font-bold text-slate-600"><i class="ph-fill ph-shield-check text-emerald-600 text-sm"></i> Enterprise Security</span>
             </div>
         </div>
 
         <!-- Right Side: Clean Workspace Form Pane -->
-        <div class="col-span-12 lg:col-span-6 xl:col-span-5 flex flex-col justify-between p-6 sm:p-10 bg-[#fafafa] relative min-h-screen">
+        <div class="col-span-12 lg:col-span-6 xl:col-span-5 flex flex-col justify-between p-6 sm:p-10 bg-white relative min-h-screen">
             
             <!-- Mobile Header / Top Bar Switcher -->
             <div class="flex items-center justify-between w-full mb-6 lg:mb-0">
@@ -138,7 +167,7 @@
                         <div class="flex items-center justify-between mb-1.5">
                             <label for="password" class="block text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider pl-0.5 mb-0">Password</label>
                             @if (Route::has('password.request'))
-                                <a href="{{ route('password.request') }}" class="text-[11px] font-bold text-zinc-500 hover:text-zinc-850 transition-colors">
+                                <a href="{{ route('password.request') }}" class="text-[11px] font-bold text-zinc-500 hover:text-zinc-855 transition-colors">
                                     Forgot?
                                 </a>
                             @endif
@@ -165,7 +194,7 @@
                     <div class="flex items-center justify-between pt-0.5">
                         <label for="remember_me" class="flex items-center gap-2 cursor-pointer group">
                             <input id="remember_me" name="remember" type="checkbox" class="w-3.5 h-3.5 rounded border-zinc-300 text-zinc-900 focus:ring-0 cursor-pointer">
-                            <span class="text-xs font-semibold text-zinc-600 group-hover:text-zinc-855 transition-colors">Remember this browser</span>
+                            <span class="text-xs font-semibold text-zinc-650 group-hover:text-zinc-855 transition-colors">Remember this browser</span>
                         </label>
                     </div>
 
@@ -190,7 +219,7 @@
                         <div class="w-full border-t border-zinc-200/80"></div>
                     </div>
                     <div class="relative flex justify-center text-[9px] uppercase tracking-wider font-bold">
-                        <span class="px-2.5 bg-[#fafafa] text-zinc-400">Or continue with</span>
+                        <span class="px-2.5 bg-white text-zinc-400">Or continue with</span>
                     </div>
                 </div>
 
