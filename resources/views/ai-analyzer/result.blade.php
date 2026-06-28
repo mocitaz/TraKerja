@@ -1,194 +1,307 @@
 <x-app-layout>
-    <div class="bg-[#fafafa] min-h-screen pb-24 font-sans">
-        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+    <div class="bg-zinc-50/50 min-h-screen pb-32 font-sans">
+        <div class="max-w-[850px] mx-auto px-4 sm:px-6 lg:px-8 pt-5 space-y-6">
             
-            <!-- Premium Notion-Inspired Page Header -->
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200/60 pb-5 mb-6">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-gradient-to-tr from-primary-50 to-primary-100/50 rounded-xl flex items-center justify-center text-primary-600 shrink-0 border border-primary-100/50 shadow-inner">
-                        <i class="ph ph-sparkle text-lg"></i>
+            {{-- Premium Header --}}
+            <div class="flex items-center justify-between pb-3 border-b border-zinc-200/80">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 bg-purple-50 rounded border border-purple-150 flex items-center justify-center text-purple-650 shrink-0">
+                        <i class="ph ph-sparkle text-base"></i>
                     </div>
                     <div>
-                        <div class="flex items-center gap-2">
-                            <h1 class="text-base font-bold text-slate-800 tracking-tight">Analysis Results</h1>
-                            <span class="px-2 py-0.5 bg-primary-50 text-primary-600 text-[9px] font-black uppercase tracking-wider rounded-md border border-primary-100/60">AI Studio</span>
+                        <div class="flex items-center gap-1.5">
+                            <h1 class="text-xs font-bold text-zinc-900 tracking-tight">AI Analyzer Log</h1>
+                            <span class="px-1.5 py-0.5 bg-purple-50 text-purple-700 text-[8px] font-mono font-bold uppercase tracking-wider rounded border border-purple-150">Active Thread</span>
                         </div>
-                        <p class="text-xs text-slate-455 mt-0.5">Deep AI analysis of your professional profile.</p>
+                        <p class="text-[10px] text-zinc-400">Conversational resume critique & optimization roadmap</p>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-2">
-                    <a href="{{ route('ai-analyzer.index') }}" class="px-3.5 py-1.5 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 text-xs font-semibold rounded-lg shadow-sm transition-colors flex items-center gap-1.5">
-                        <i class="ph ph-arrow-left text-sm"></i>
-                        <span>Back to Studio</span>
+                <div>
+                    <a href="{{ route('ai-analyzer.index') }}" 
+                       class="px-2.5 py-1.5 bg-white border border-zinc-250 text-zinc-700 hover:bg-zinc-50 text-[10px] font-bold uppercase tracking-wider rounded-md transition-colors flex items-center gap-1">
+                        <i class="ph ph-arrow-left text-xs"></i>
+                        <span>Studio</span>
                     </a>
                 </div>
             </div>
-            
-            {{-- Compact Top Dashboard --}}
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-6">
-                {{-- Score Card --}}
-                <div class="md:col-span-3 bg-white rounded-xl p-5 border border-slate-200/70 shadow-sm flex flex-col items-center justify-center relative overflow-hidden">
-                    <div class="relative w-24 h-24 mb-3">
-                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                            <circle class="text-slate-100" stroke-width="8" stroke="currentColor" fill="none" r="42" cx="50" cy="50" />
-                            <circle class="text-slate-800 transition-all duration-1000 ease-out" stroke-width="8" stroke-dasharray="264" stroke-dashoffset="{{ 264 * (1 - 85/100) }}" stroke-linecap="round" stroke="currentColor" fill="none" r="42" cx="50" cy="50" />
-                        </svg>
-                        <div class="absolute inset-0 flex flex-col items-center justify-center">
-                            <span class="text-2xl font-bold text-slate-800 tracking-tight">85<span class="text-xs font-semibold text-slate-400">%</span></span>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">Match Score</p>
-                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-650 rounded text-[9px] font-bold uppercase tracking-wider border border-emerald-100">Strong</span>
-                    </div>
-                </div>
 
-                {{-- Key Insights Card --}}
-                <div class="md:col-span-9 bg-slate-900 rounded-xl p-5 text-white shadow-sm flex flex-col md:flex-row items-center gap-6 relative overflow-hidden">
-                    <div class="relative z-10 flex-1">
-                        <div class="flex items-center gap-2 mb-2">
-                            <div class="w-6 h-6 bg-white/10 rounded flex items-center justify-center shrink-0">
-                                <i class="ph ph-lightning text-white text-xs"></i>
-                            </div>
-                            <h3 class="text-[9px] font-bold uppercase tracking-wider text-slate-300">Executive Summary</h3>
+            {{-- Conversational Thread --}}
+            <div class="space-y-6">
+                
+                {{-- MESSAGE 1: User Request --}}
+                <div class="flex items-start justify-end gap-3">
+                    <div class="flex flex-col items-end max-w-[85%]">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-[9px] font-mono font-bold text-zinc-400">You</span>
+                            <span class="text-[9px] font-mono text-zinc-300">•</span>
+                            <span class="text-[9px] font-mono text-zinc-400">Just Now</span>
                         </div>
-                        <p class="text-xs sm:text-sm font-medium text-slate-100 leading-relaxed italic text-justify">
-                            "Your technical background is impressive. To reach the next level, focus on quantifying your impact with metrics and aligning your skill descriptions more closely with the specific industry jargon used in this JD."
-                        </p>
-                    </div>
-                    
-                    <div class="relative z-10 flex flex-row md:flex-col gap-2 w-full md:w-auto min-w-0 md:min-w-[180px] border-t border-white/10 md:border-t-0 pt-3 md:pt-0">
-                        <div class="flex-1 md:flex-initial px-3.5 py-2 bg-white/5 border border-white/10 rounded-lg flex items-center gap-2 justify-center md:justify-start">
-                            <i class="ph ph-check-circle text-emerald-400"></i>
-                            <span class="text-[9px] font-bold uppercase tracking-wider text-slate-200">Quantified Impact</span>
-                        </div>
-                        <div class="flex-1 md:flex-initial px-3.5 py-2 bg-white/5 border border-white/10 rounded-lg flex items-center gap-2 justify-center md:justify-start">
-                            <i class="ph ph-check-circle text-emerald-400"></i>
-                            <span class="text-[9px] font-bold uppercase tracking-wider text-slate-200">Keyword Optimized</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- The "AI Conversation" Style Results --}}
-            <div class="space-y-6 mb-8">
-                @php
-                    $sections = [
-                        'profil' => ['title' => 'Profile & Identity', 'icon' => 'ph-identification-card'],
-                        'pendidikan' => ['title' => 'Academic History', 'icon' => 'ph-graduation-cap'],
-                        'pengalaman_kerja' => ['title' => 'Professional Career', 'icon' => 'ph-briefcase'],
-                        'pengalaman_organisasi' => ['title' => 'Leadership & Community', 'icon' => 'ph-users-three'],
-                        'projek' => ['title' => 'Technical Projects', 'icon' => 'ph-layout'],
-                        'keterampilan' => ['title' => 'Skill Ecosystem', 'icon' => 'ph-atom'],
-                        'prestasi_dan_publikasi' => ['title' => 'Awards & Impact', 'icon' => 'ph-medal'],
-                    ];
-                @endphp
-
-                @foreach($sections as $key => $section)
-                    @if(isset($result[$key]) && (!empty($result[$key]['teks_revisi']) || !empty($result[$key]['alasan_perubahan'])))
-                        <div class="relative pl-8 sm:pl-12 group">
-                            {{-- Thread Line --}}
-                            <div class="absolute left-4 sm:left-6 top-0 bottom-0 w-px bg-slate-200 group-last:bottom-auto group-last:h-8"></div>
-                            {{-- Icon --}}
-                            <div class="absolute left-0 top-0 w-8 sm:w-12 h-8 sm:h-12 flex items-center justify-center">
-                                <div class="w-7 sm:w-8 h-7 sm:h-8 bg-white border border-slate-200 rounded-lg flex items-center justify-center text-slate-500 z-10 shadow-sm">
-                                    <i class="ph {{ $section['icon'] }} text-sm sm:text-base"></i>
+                        <div class="bg-zinc-900 text-white text-xs font-medium rounded-2xl rounded-tr-none px-4 py-2.5 shadow-sm space-y-2">
+                            <p class="leading-relaxed">Halo TraKerja AI! Tolong analisis kecocokan profil profesional saya dengan target pekerjaan yang ingin saya lamar.</p>
+                            @if(isset($job_description))
+                                <div class="bg-white/5 border border-white/10 rounded-md p-2 text-[10px] text-zinc-300">
+                                    <p class="font-bold font-mono text-[8px] uppercase tracking-wider text-zinc-400 mb-1">Target Job Description:</p>
+                                    <p class="line-clamp-2 italic leading-relaxed text-justify">{{ $job_description }}</p>
                                 </div>
-                            </div>
-
-                            <div class="space-y-3 pt-0.5">
-                                <h3 class="text-xs sm:text-sm font-bold text-slate-800 tracking-tight flex flex-wrap items-center gap-1.5 sm:gap-2">
-                                    {{ $section['title'] }}
-                                    <span class="hidden sm:inline w-1 h-1 bg-slate-200 rounded-full"></span>
-                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block w-full sm:w-auto mt-0.5 sm:mt-0">Optimized Analysis</span>
-                                </h3>
-
-                                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-                                    {{-- Reasoning (Thinking Process) --}}
-                                    <div class="lg:col-span-5 bg-white rounded-xl p-4 sm:p-5 border border-slate-200/70 shadow-sm">
-                                        <div class="flex items-center gap-2 mb-3 border-b border-slate-100 pb-2">
-                                            <i class="ph ph-brain text-slate-600"></i>
-                                            <h4 class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Thinking Process</h4>
-                                        </div>
-                                        <div class="text-xs font-medium text-slate-650 leading-relaxed italic formatted-content">
-                                            {{ $result[$key]['alasan_perubahan'] }}
-                                        </div>
-                                    </div>
-
-                                    {{-- Revised Result (Output) --}}
-                                    <div class="lg:col-span-7 bg-slate-50 border border-slate-200 rounded-xl p-4 sm:p-5 relative">
-                                        <div class="flex items-center justify-between mb-3 border-b border-slate-200 pb-2">
-                                            <div class="flex items-center gap-2">
-                                                <i class="ph ph-sparkle text-slate-700"></i>
-                                                <h4 class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Optimized Output</h4>
-                                            </div>
-                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-slate-700 transition-colors">
-                                                <i class="ph ph-copy text-base"></i>
-                                            </button>
-                                        </div>
-                                        <div class="text-xs font-semibold text-slate-800 leading-relaxed formatted-content">
-                                            {{ $result[$key]['teks_revisi'] }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    @php $user = Auth::user(); @endphp
+                    @if($user && $user->logo)
+                        <img src="{{ $user->avatar_url }}" alt="You" class="h-8 w-8 rounded-full object-cover shrink-0 border border-zinc-200">
+                    @else
+                        <div class="h-8 w-8 bg-zinc-100 border border-zinc-200 rounded-full flex items-center justify-center shrink-0">
+                            <span class="text-zinc-700 font-bold text-xs">{{ substr($user->name ?? 'U', 0, 1) }}</span>
                         </div>
                     @endif
-                @endforeach
-            </div>
+                </div>
 
-            {{-- Action Roadmap --}}
-            @if(isset($result['rencana_aksi']) && is_array($result['rencana_aksi']) && count($result['rencana_aksi']) > 0)
-                <div class="bg-white rounded-xl p-5 sm:p-8 border border-slate-200/70 shadow-sm relative overflow-hidden mb-12">
-                    <div class="relative z-10 mb-4 sm:mb-6">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 bg-slate-50 border border-slate-200 rounded flex items-center justify-center text-slate-600 shrink-0">
-                                <i class="ph ph-list-numbers text-lg"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-sm font-bold text-slate-800 tracking-tight">The Roadmap to 95%+</h3>
-                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">A clear path to making your profile irresistible</p>
+                {{-- MESSAGE 2: AI Overview Response --}}
+                <div class="flex items-start gap-3">
+                    <div class="h-8 w-8 bg-purple-50 text-purple-650 border border-purple-150 rounded-full flex items-center justify-center shrink-0 shadow-sm">
+                        <i class="ph ph-sparkle text-sm"></i>
+                    </div>
+                    <div class="flex flex-col items-start max-w-[85%] w-full">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-[9px] font-mono font-bold text-purple-750">TraKerja AI</span>
+                            <span class="text-[9px] font-mono text-zinc-300">•</span>
+                            <span class="text-[9px] font-mono text-zinc-400">Just Now</span>
+                        </div>
+                        
+                        <div class="bg-white border border-zinc-200/80 rounded-2xl rounded-tl-none p-4 shadow-sm w-full space-y-4">
+                            <p class="text-xs text-zinc-650 leading-relaxed text-justify">Halo! Saya telah melakukan analisis mendalam terhadap profil Anda. Berikut adalah ringkasan skor dan executive summary kecocokan profil Anda:</p>
+                            
+                            {{-- Executive Summary Bento Layout --}}
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                {{-- Score --}}
+                                <div class="md:col-span-1 bg-zinc-50 border border-zinc-200 rounded-lg p-3 flex flex-col items-center justify-center">
+                                    <div class="relative w-16 h-16 mb-2">
+                                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                            <circle class="text-zinc-200" stroke-width="8" stroke="currentColor" fill="none" r="42" cx="50" cy="50" />
+                                            <circle class="text-zinc-900 transition-all duration-1000 ease-out" stroke-width="8" stroke-dasharray="264" stroke-dashoffset="{{ 264 * (1 - 85/100) }}" stroke-linecap="round" stroke="currentColor" fill="none" r="42" cx="50" cy="50" />
+                                        </svg>
+                                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                            <span class="text-sm font-bold text-zinc-900 tracking-tight">85<span class="text-[9px] font-bold text-zinc-450">%</span></span>
+                                        </div>
+                                    </div>
+                                    <p class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-0.5">Match Score</p>
+                                    <span class="px-1.5 py-0.2 bg-emerald-50 text-emerald-700 text-[8px] font-mono font-bold uppercase tracking-wider rounded border border-emerald-150">Strong</span>
+                                </div>
+
+                                {{-- Text Summary --}}
+                                <div class="md:col-span-3 bg-zinc-900 text-white rounded-lg p-3.5 relative overflow-hidden flex flex-col justify-center">
+                                    <div class="flex items-center gap-1.5 mb-1.5">
+                                        <i class="ph ph-lightning text-amber-400 text-sm"></i>
+                                        <h4 class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider">Executive Summary</h4>
+                                    </div>
+                                    <p class="text-xs font-medium text-zinc-200 leading-relaxed italic text-justify">
+                                        "Your technical background is impressive. To reach the next level, focus on quantifying your impact with metrics and aligning your skill descriptions more closely with the specific industry jargon used in this JD."
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
-                        @foreach($result['rencana_aksi'] as $index => $action)
-                            <div class="flex gap-3 p-3 rounded-lg border border-slate-150 bg-slate-50 hover:bg-white hover:border-slate-350 transition-colors">
-                                <div class="w-6 h-6 shrink-0 bg-slate-900 text-white rounded flex items-center justify-center text-[10px] font-bold">
-                                    {{ $index + 1 }}
+                {{-- MESSAGE 3: User Ask Details --}}
+                <div class="flex items-start justify-end gap-3">
+                    <div class="flex flex-col items-end max-w-[85%]">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-[9px] font-mono font-bold text-zinc-400">You</span>
+                            <span class="text-[9px] font-mono text-zinc-300">•</span>
+                            <span class="text-[9px] font-mono text-zinc-400">Just Now</span>
+                        </div>
+                        <div class="bg-zinc-900 text-white text-xs font-medium rounded-2xl rounded-tr-none px-4 py-2">
+                            <p class="leading-relaxed">Bagaimana dengan analisis detail per bagian CV saya?</p>
+                        </div>
+                    </div>
+                    @if($user && $user->logo)
+                        <img src="{{ $user->avatar_url }}" alt="You" class="h-8 w-8 rounded-full object-cover shrink-0 border border-zinc-200">
+                    @else
+                        <div class="h-8 w-8 bg-zinc-100 border border-zinc-200 rounded-full flex items-center justify-center shrink-0">
+                            <span class="text-zinc-700 font-bold text-xs">{{ substr($user->name ?? 'U', 0, 1) }}</span>
+                        </div>
+                    @endif
+                </div>
+
+                {{-- MESSAGE 4: AI Section critique --}}
+                <div class="flex items-start gap-3">
+                    <div class="h-8 w-8 bg-purple-50 text-purple-650 border border-purple-150 rounded-full flex items-center justify-center shrink-0 shadow-sm">
+                        <i class="ph ph-sparkle text-sm"></i>
+                    </div>
+                    <div class="flex flex-col items-start max-w-[85%] w-full">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-[9px] font-mono font-bold text-purple-750">TraKerja AI</span>
+                            <span class="text-[9px] font-mono text-zinc-300">•</span>
+                            <span class="text-[9px] font-mono text-zinc-400">Just Now</span>
+                        </div>
+                        
+                        <div class="bg-white border border-zinc-200/80 rounded-2xl rounded-tl-none p-4 shadow-sm w-full space-y-4">
+                            <p class="text-xs text-zinc-650 leading-relaxed text-justify">Tentu, ini adalah analisis kritis untuk masing-masing bagian CV Anda. Anda dapat berpindah tab di bawah untuk melihat rincian hasil revisi serta pemikiran analisis saya:</p>
+                            
+                            {{-- Interactive Tabs Component --}}
+                            @php
+                                $sections = [
+                                    'profil' => ['title' => 'Profile & Identity', 'icon' => 'ph-identification-card'],
+                                    'pendidikan' => ['title' => 'Academic History', 'icon' => 'ph-graduation-cap'],
+                                    'pengalaman_kerja' => ['title' => 'Professional Career', 'icon' => 'ph-briefcase'],
+                                    'pengalaman_organisasi' => ['title' => 'Leadership & Community', 'icon' => 'ph-users-three'],
+                                    'projek' => ['title' => 'Technical Projects', 'icon' => 'ph-layout'],
+                                    'keterampilan' => ['title' => 'Skill Ecosystem', 'icon' => 'ph-atom'],
+                                    'prestasi_dan_publikasi' => ['title' => 'Awards & Impact', 'icon' => 'ph-medal'],
+                                ];
+                                
+                                // Filter sections that have data
+                                $validSections = [];
+                                foreach($sections as $key => $section) {
+                                    if(isset($result[$key]) && (!empty($result[$key]['teks_revisi']) || !empty($result[$key]['alasan_perubahan']))) {
+                                        $validSections[$key] = $section;
+                                    }
+                                }
+                                $firstKey = array_key_first($validSections);
+                            @endphp
+
+                            @if(count($validSections) > 0)
+                                <div x-data="{ activeTab: '{{ $firstKey }}' }" class="space-y-4 w-full">
+                                    {{-- Navigation pills (horizontal scrolling) --}}
+                                    <div class="flex items-center gap-1.5 overflow-x-auto pb-2 border-b border-zinc-150 scrollbar-none">
+                                        @foreach($validSections as $key => $section)
+                                            <button @click="activeTab = '{{ $key }}'" 
+                                                    type="button"
+                                                    :class="activeTab === '{{ $key }}' ? 'bg-zinc-900 text-white' : 'bg-zinc-50 border border-zinc-200 text-zinc-600 hover:bg-zinc-100'"
+                                                    class="px-2.5 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all whitespace-nowrap shrink-0 flex items-center gap-1">
+                                                <i class="ph {{ $section['icon'] }} text-xs"></i>
+                                                <span>{{ $section['title'] }}</span>
+                                            </button>
+                                        @endforeach
+                                    </div>
+
+                                    {{-- Tab Contents --}}
+                                    @foreach($validSections as $key => $section)
+                                        <div x-show="activeTab === '{{ $key }}'" x-transition.opacity.duration.150ms class="space-y-3.5">
+                                            <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5">
+                                                {{-- Thinking Process --}}
+                                                <div class="md:col-span-5 bg-zinc-50 rounded-lg p-3.5 border border-zinc-200/80">
+                                                    <div class="flex items-center gap-1.5 mb-2 pb-1.5 border-b border-zinc-200">
+                                                        <i class="ph ph-brain text-zinc-700 text-sm"></i>
+                                                        <h4 class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider">Thinking Process</h4>
+                                                    </div>
+                                                    <div class="text-[11px] font-medium text-zinc-650 leading-relaxed italic formatted-content">
+                                                        {{ $result[$key]['alasan_perubahan'] }}
+                                                    </div>
+                                                </div>
+
+                                                {{-- Revised Output --}}
+                                                <div class="md:col-span-7 bg-white border border-zinc-250 rounded-lg p-3.5 relative">
+                                                    <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-zinc-150">
+                                                        <div class="flex items-center gap-1.5">
+                                                            <i class="ph ph-sparkle text-purple-600 text-sm"></i>
+                                                            <h4 class="text-[8px] font-mono font-bold text-zinc-500 uppercase tracking-wider">Optimized Output</h4>
+                                                        </div>
+                                                        <button onclick="copyToClipboard(this)" class="text-zinc-450 hover:text-zinc-800 transition-colors">
+                                                            <i class="ph ph-copy text-base"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="text-[11px] font-semibold text-zinc-800 leading-relaxed formatted-content">
+                                                        {{ $result[$key]['teks_revisi'] }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
-                                <div class="pt-0.5">
-                                    <p class="text-xs font-medium text-slate-600 leading-relaxed text-justify">{{ $action }}</p>
-                                </div>
-                            </div>
-                        @endforeach
+                            @endif
+                        </div>
                     </div>
                 </div>
-            @endif
 
-            @push('modals')
-            {{-- Sticky Action Bar --}}
-            <div class="fixed bottom-4 left-1/2 -translate-x-1/2 w-full max-w-md px-4 z-50">
-                <div class="bg-slate-900/95 rounded-xl p-1.5 flex items-center gap-2 shadow-lg border border-slate-850">
-                    <a href="{{ route('cv.builder') }}" class="flex-1 py-2 bg-slate-100 text-slate-800 hover:bg-white text-xs font-semibold rounded-lg transition-colors flex items-center justify-center gap-1.5">
-                        <i class="ph ph-pencil text-sm"></i>
-                        <span>Apply Changes</span>
-                    </a>
-                    <a href="{{ route('ai-analyzer.index') }}" class="px-4 py-2 bg-slate-800 text-white hover:bg-slate-700 text-xs font-semibold rounded-lg transition-colors flex items-center justify-center gap-1.5">
-                        <i class="ph ph-arrow-counter-clockwise text-sm"></i>
-                        <span>Reset</span>
-                    </a>
+                {{-- MESSAGE 5: User Ask Roadmap --}}
+                @if(isset($result['rencana_aksi']) && is_array($result['rencana_aksi']) && count($result['rencana_aksi']) > 0)
+                    <div class="flex items-start justify-end gap-3">
+                        <div class="flex flex-col items-end max-w-[85%]">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[9px] font-mono font-bold text-zinc-400">You</span>
+                                <span class="text-[9px] font-mono text-zinc-300">•</span>
+                                <span class="text-[9px] font-mono text-zinc-400">Just Now</span>
+                            </div>
+                            <div class="bg-zinc-900 text-white text-xs font-medium rounded-2xl rounded-tr-none px-4 py-2">
+                                <p class="leading-relaxed">Apa rencana aksi yang disarankan untuk meningkatkan profil saya?</p>
+                            </div>
+                        </div>
+                        @if($user && $user->logo)
+                            <img src="{{ $user->avatar_url }}" alt="You" class="h-8 w-8 rounded-full object-cover shrink-0 border border-zinc-200">
+                        @else
+                            <div class="h-8 w-8 bg-zinc-100 border border-zinc-200 rounded-full flex items-center justify-center shrink-0">
+                                <span class="text-zinc-700 font-bold text-xs">{{ substr($user->name ?? 'U', 0, 1) }}</span>
+                            </div>
+                        @endif
+                    </div>
+
+                    {{-- MESSAGE 6: AI Roadmap Response --}}
+                    <div class="flex items-start gap-3">
+                        <div class="h-8 w-8 bg-purple-50 text-purple-650 border border-purple-150 rounded-full flex items-center justify-center shrink-0 shadow-sm">
+                            <i class="ph ph-sparkle text-sm"></i>
+                        </div>
+                        <div class="flex flex-col items-start max-w-[85%] w-full">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[9px] font-mono font-bold text-purple-750">TraKerja AI</span>
+                                <span class="text-[9px] font-mono text-zinc-300">•</span>
+                                <span class="text-[9px] font-mono text-zinc-400">Just Now</span>
+                            </div>
+                            
+                            <div class="bg-white border border-zinc-200/80 rounded-2xl rounded-tl-none p-4 shadow-sm w-full space-y-4">
+                                <p class="text-xs text-zinc-650 leading-relaxed text-justify">Tentu! Berikut adalah rencana aksi langkah-demi-langkah (Roadmap to 95%+) untuk menyempurnakan profil Anda agar sangat menarik bagi rekruter:</p>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    @foreach($result['rencana_aksi'] as $index => $action)
+                                        <div class="flex gap-2.5 p-3 rounded-lg border border-zinc-200 bg-zinc-50/50 hover:bg-white transition-colors">
+                                            <div class="w-5.5 h-5.5 shrink-0 bg-zinc-900 text-white rounded flex items-center justify-center text-[10px] font-bold font-mono">
+                                                {{ $index + 1 }}
+                                            </div>
+                                            <div class="pt-0.5">
+                                                <p class="text-xs font-semibold text-zinc-700 leading-relaxed text-justify">{{ $action }}</p>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+            </div>
+
+            {{-- Mock Sticky Chat Input (Bottom Action Hub) --}}
+            <div class="fixed bottom-4 left-1/2 -translate-x-1/2 w-full max-w-lg px-4 z-50">
+                <div class="bg-white border border-zinc-200 rounded-xl p-2 shadow-lg flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-2 text-zinc-400 px-2 flex-1">
+                        <i class="ph ph-chat-circle-text text-base"></i>
+                        <span class="text-[10px] font-semibold text-zinc-400 truncate">Pilih aksi selanjutnya di kanan...</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <a href="{{ route('cv.builder') }}" 
+                           class="px-4 py-1.5 bg-zinc-900 hover:bg-zinc-800 text-white text-[10px] font-bold uppercase tracking-wider rounded-md transition-colors flex items-center gap-1.5 shrink-0">
+                            <i class="ph ph-pencil-simple text-sm"></i>
+                            <span>Apply Changes</span>
+                        </a>
+                        <a href="{{ route('ai-analyzer.index') }}" 
+                           class="px-3 py-1.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-650 text-[10px] font-bold uppercase tracking-wider rounded-md transition-colors flex items-center gap-1 shrink-0">
+                            <i class="ph ph-arrow-counter-clockwise text-xs"></i>
+                            <span>Reset</span>
+                        </a>
+                    </div>
                 </div>
             </div>
-            @endpush
+
         </div>
     </div>
 
     <style>
         .formatted-content { line-height: 1.6; text-align: justify; }
-        .formatted-content strong { font-weight: 700; color: #0f172a; }
+        .formatted-content strong { font-weight: 700; color: #18181b; }
+        .scrollbar-none::-webkit-scrollbar { display: none; }
+        .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 
     <script>
@@ -210,17 +323,17 @@
                 let lines = text.split('\n');
                 let formatted = lines.map(line => {
                     line = line.trim();
-                    if (!line) return '<div class="h-2"></div>';
+                    if (!line) return '<div class="h-1.5"></div>';
                     
                     line = line.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
                     
                     if (line.startsWith('●') || line.startsWith('•') || line.startsWith('-')) {
-                        return `<div class="flex items-start gap-2 mb-1"><span class="text-slate-600 shrink-0 mt-1 font-bold">•</span><span>${line.substring(1).trim()}</span></div>`;
+                        return `<div class="flex items-start gap-1.5 mb-1"><span class="text-zinc-600 shrink-0 mt-1 font-bold">•</span><span>${line.substring(1).trim()}</span></div>`;
                     }
                     
                     const numMatch = line.match(/^\d+\.\s+(.+)/);
                     if (numMatch) {
-                        return `<div class="flex items-start gap-2.5 mb-1"><span class="font-bold text-slate-800 shrink-0 w-4 h-4 bg-slate-200 rounded flex items-center justify-center text-[9px]">${line.split('.')[0]}</span><span>${numMatch[1]}</span></div>`;
+                        return `<div class="flex items-start gap-2 mb-1"><span class="font-bold text-zinc-800 shrink-0 w-3.5 h-3.5 bg-zinc-200 rounded flex items-center justify-center text-[8px] font-mono">${line.split('.')[0]}</span><span>${numMatch[1]}</span></div>`;
                     }
                     
                     return `<p class="mb-1">${line}</p>`;
