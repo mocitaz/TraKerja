@@ -281,10 +281,6 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
     })
     .then(res => res.json())
     .then(data => {
-        if (btn) {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="ph-bold ph-sparkle text-[10px]"></i> <span>Auto-Fill Info</span>';
-        }
         if (data.success) {
             if (data.company_name && window.Livewire) {
                 @this.set('company_name', data.company_name);
@@ -295,7 +291,25 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
             if (data.description && window.Livewire) {
                 @this.set('notes', data.description);
             }
+
+            if (btn) {
+                btn.disabled = false;
+                // Add green success classes
+                btn.classList.remove('bg-primary-50', 'text-zinc-800', 'border-primary-200/60');
+                btn.classList.add('bg-emerald-50', 'text-emerald-800', 'border-emerald-250');
+                btn.innerHTML = '<i class="ph-bold ph-check text-emerald-600"></i> <span>Auto-Filled!</span>';
+                
+                setTimeout(() => {
+                    btn.classList.remove('bg-emerald-50', 'text-emerald-800', 'border-emerald-250');
+                    btn.classList.add('bg-primary-50', 'text-zinc-800', 'border-primary-200/60');
+                    btn.innerHTML = '<i class="ph-bold ph-sparkle text-[10px]"></i> <span>Auto-Fill Info</span>';
+                }, 2500);
+            }
         } else {
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="ph-bold ph-sparkle text-[10px]"></i> <span>Auto-Fill Info</span>';
+            }
             alert(data.message || 'Gagal mengambil informasi dari URL.');
         }
     })
