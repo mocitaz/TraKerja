@@ -197,6 +197,36 @@ Route::middleware('auth')->group(function () {
         abort_unless($job->user_id === Auth::id(), 403);
         return view('jobs.show', ['job' => $job]);
     })->name('jobs.show');
+
+    Route::delete('/jobs/{job}', function (JobApplication $job) {
+        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+            abort(403, 'Admin cannot delete job applications');
+        }
+        abort_unless($job->user_id === Auth::id(), 403);
+        $companyName = $job->company_name;
+        $job->delete();
+        
+        $user = Auth::user();
+        if ($user) {
+            $user->deductXP(10);
+        }
+        
+        return redirect()->route('tracker')->with('success', "Successfully deleted application for {$companyName}. 10 XP deducted.");
+    })->name('jobs.destroy');
+
+    Route::post('/jobs/{job}/toggle-archive', function (JobApplication $job) {
+        if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+            abort(403, 'Admin cannot archive job applications');
+        }
+        abort_unless($job->user_id === Auth::id(), 403);
+        
+        $job->is_archived = !$job->is_archived;
+        $job->archived_at = $job->is_archived ? now() : null;
+        $job->save();
+        
+        $statusMessage = $job->is_archived ? 'archived' : 'restored from archive';
+        return redirect()->route('tracker')->with('success', "Successfully {$statusMessage} application for {$job->company_name}.");
+    })->name('jobs.toggle-archive');
     
     // Export routes (Only for regular users)
     // DISABLED: Export CSV feature temporarily disabled

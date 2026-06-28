@@ -159,10 +159,37 @@
                     </div>
                 </div>
 
-                <a href="{{ $editUrl }}" class="inline-flex items-center justify-center gap-1.5 h-[30px] px-3 bg-primary-50 hover:bg-primary-100 border border-primary-200/60 text-zinc-800 text-[11px] font-bold rounded-md shadow-3xs transition-all duration-150 active:scale-97 hover:shadow-2xs shrink-0 focus:outline-none uppercase tracking-wider">
-                    <i class="ph-bold ph-pencil-simple text-xs"></i>
-                    <span>Edit Opportunity</span>
-                </a>
+                <div class="flex items-center gap-2 w-full sm:w-auto overflow-x-auto no-scrollbar py-0.5 shrink-0">
+                    <a href="{{ $editUrl }}" class="inline-flex items-center justify-center gap-1.5 h-[30px] px-3 bg-primary-50 hover:bg-primary-100 border border-primary-200/60 text-zinc-800 text-[11px] font-bold rounded-md shadow-3xs transition-all duration-150 active:scale-97 hover:shadow-2xs shrink-0 focus:outline-none uppercase tracking-wider">
+                        <i class="ph-bold ph-pencil-simple text-xs"></i>
+                        <span>Edit</span>
+                    </a>
+
+                    <!-- Archive Toggle Button -->
+                    <form action="{{ route('jobs.toggle-archive', $job->id) }}" method="POST" class="inline">
+                        @csrf
+                        @method('POST')
+                        <button type="submit" class="inline-flex items-center justify-center gap-1.5 h-[30px] px-3 bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-700 text-[11px] font-bold rounded-md shadow-3xs transition-all duration-150 active:scale-97 hover:shadow-2xs shrink-0 focus:outline-none uppercase tracking-wider">
+                            @if($job->is_archived)
+                                <i class="ph-bold ph-archive-out text-xs"></i>
+                                <span>Unarchive</span>
+                            @else
+                                <i class="ph-bold ph-archive-in text-xs"></i>
+                                <span>Archive</span>
+                            @endif
+                        </button>
+                    </form>
+
+                    <!-- Delete Button with confirmation -->
+                    <form action="{{ route('jobs.destroy', $job->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus lamaran ini secara permanen? Tindakan ini tidak dapat dibatalkan.')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="inline-flex items-center justify-center gap-1.5 h-[30px] px-3 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-[11px] font-bold rounded-md shadow-3xs transition-all duration-150 active:scale-97 hover:shadow-2xs shrink-0 focus:outline-none uppercase tracking-wider">
+                            <i class="ph-bold ph-trash text-xs"></i>
+                            <span>Delete</span>
+                        </button>
+                    </form>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
