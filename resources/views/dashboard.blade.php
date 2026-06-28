@@ -218,80 +218,14 @@
                         @endif
                     </div>
 
-                    <!-- Upcoming Interviews -->
-                    <div class="bg-white rounded-lg border border-zinc-200/60 p-4">
-                        <div class="flex items-center justify-between mb-4">
-                            <div>
-                                <h3 class="text-xs font-bold text-zinc-850 tracking-tight uppercase tracking-wider">Upcoming Interviews</h3>
-                                <p class="text-[10px] text-zinc-400 font-medium">Your schedule for the next interviews</p>
-                            </div>
-                            <a href="{{ route('interviews') }}" class="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-zinc-200 hover:bg-zinc-50 rounded-md text-[10px] font-semibold text-zinc-600 transition-colors">
-                                <span>View Calendar</span>
-                                <i class="ph ph-arrow-right text-[10px]"></i>
-                            </a>
-                        </div>
-
-                        @if($upcomingInterviews->isEmpty())
-                            <div class="flex flex-col items-center justify-center py-8 text-center bg-zinc-50/30 rounded-lg border border-dashed border-zinc-200/80">
-                                <div class="w-10 h-10 bg-zinc-100 rounded-md flex items-center justify-center text-zinc-400 mb-2.5">
-                                    <i class="ph ph-calendar text-lg"></i>
-                                </div>
-                                <h4 class="text-xs font-bold text-zinc-700">No upcoming interviews</h4>
-                                <p class="text-[10px] text-zinc-400 mt-0.5 max-w-[220px]">Take a break or apply to more jobs to schedule an interview!</p>
-                            </div>
-                        @else
-                            <div class="divide-y divide-zinc-150/40">
-                                @foreach($upcomingInterviews as $interview)
-                                    <div class="flex items-center gap-3.5 py-2.5 group first:pt-0 last:pb-0">
-                                        <!-- Date Bubble -->
-                                        <div class="shrink-0 w-8 h-8 bg-zinc-50 rounded-md border border-zinc-200/50 flex flex-col items-center justify-center text-zinc-700 font-bold leading-none shadow-2xs">
-                                            <span class="text-[11px] font-extrabold leading-none">{{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('d') }}</span>
-                                            <span class="text-[7.5px] font-black uppercase tracking-wider mt-0.5 text-zinc-450">{{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('M') }}</span>
-                                        </div>
-                                        
-                                        <!-- Interview Details -->
-                                        <div class="min-w-0 flex-1">
-                                            <div class="flex items-center justify-between gap-2">
-                                                <h4 class="text-[11px] font-bold text-zinc-800 truncate leading-tight">
-                                                    {{ $interview->recruitment_stage }} - {{ $interview->position }}
-                                                </h4>
-                                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-zinc-105 text-zinc-500 border border-zinc-200/40 leading-none">
-                                                    {{ $interview->interview_type ?? 'N/A' }}
-                                                </span>
-                                            </div>
-                                            <div class="flex items-center gap-2 mt-0.5 leading-none">
-                                                <p class="text-[9px] text-zinc-450 font-medium leading-none">{{ $interview->company_name }}</p>
-                                                @if($interview->interview_location)
-                                                    <span class="text-zinc-300 text-[8px] leading-none">•</span>
-                                                    <div class="flex items-center gap-0.5 text-[9px] text-zinc-400 font-medium leading-none truncate">
-                                                        <i class="ph ph-map-pin"></i>
-                                                        <span class="truncate">{{ $interview->interview_location }}</span>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <!-- Time -->
-                                        <div class="shrink-0 text-right">
-                                            <p class="text-[11px] font-bold text-zinc-800 leading-tight">
-                                                {{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('H:i') }}
-                                            </p>
-                                            <p class="text-[7.5px] text-zinc-450 font-bold uppercase tracking-wider leading-none">
-                                                {{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('T') }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endif
-                    </div>                    <!-- Job Search Momentum Calendar Heatmap (GitHub Style) -->
+                    <!-- Job Search Momentum Calendar Heatmap (GitHub Style) -->
                     <div class="bg-white rounded-lg border border-zinc-200/60 p-5 shadow-2xs font-sans">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 select-none">
                             <div>
-                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight uppercase tracking-wider">{{ $totalHeatmapApps }} lamaran terkirim setahun terakhir</h3>
-                                <p class="text-[10px] text-zinc-400 font-medium mt-0.5">Visualisasi konsistensi pengiriman lamaran kerja Anda dalam 12 bulan terakhir</p>
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight uppercase tracking-wider">{{ $totalHeatmapApps }} applications submitted in the last year</h3>
+                                <p class="text-[10px] text-zinc-400 font-medium mt-0.5">Visualizing your daily application consistency over the last 12 months</p>
                             </div>
-                            <div class="text-[9px] text-zinc-450 font-mono bg-zinc-50 border border-zinc-150/60 px-2 py-0.5 rounded-md shrink-0">
+                            <div class="text-[9px] text-zinc-450 font-mono bg-zinc-50 border border-[#e4e4e7] px-2 py-0.5 rounded-md shrink-0">
                                 Avg: <strong class="text-zinc-800">{{ number_format($totalHeatmapApps / 365, 2) }}</strong> / day
                             </div>
                         </div>
@@ -366,7 +300,7 @@
                         {{-- Legend & Footer Row --}}
                         <div class="flex items-center justify-between text-[10px] text-zinc-400 mt-3 select-none">
                             <a href="{{ route('tracker') }}" class="text-[10px] text-zinc-400 hover:text-zinc-650 transition-colors font-medium">
-                                Pelajari pelacakan aktivitas lamaran
+                                Learn how we track application activity
                             </a>
                             
                             <div class="flex items-center" style="gap: 3px;">
@@ -379,6 +313,74 @@
                                 <span class="ml-1">More</span>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Upcoming Interviews -->
+                    <div class="bg-white rounded-lg border border-zinc-200/60 p-4 mt-5">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-xs font-bold text-zinc-850 tracking-tight uppercase tracking-wider">Upcoming Interviews</h3>
+                                <p class="text-[10px] text-zinc-400 font-medium">Your schedule for the next interviews</p>
+                            </div>
+                            <a href="{{ route('interviews') }}" class="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-zinc-200 hover:bg-zinc-50 rounded-md text-[10px] font-semibold text-zinc-600 transition-colors">
+                                <span>View Calendar</span>
+                                <i class="ph ph-arrow-right text-[10px]"></i>
+                            </a>
+                        </div>
+
+                        @if($upcomingInterviews->isEmpty())
+                            <div class="flex flex-col items-center justify-center py-8 text-center bg-zinc-50/30 rounded-lg border border-dashed border-zinc-200/80 animate-none">
+                                <div class="w-10 h-10 bg-zinc-100 rounded-md flex items-center justify-center text-zinc-400 mb-2.5">
+                                    <i class="ph ph-calendar text-lg"></i>
+                                </div>
+                                <h4 class="text-xs font-bold text-zinc-700">No upcoming interviews</h4>
+                                <p class="text-[10px] text-zinc-400 mt-0.5 max-w-[220px]">Take a break or apply to more jobs to schedule an interview!</p>
+                            </div>
+                        @else
+                            <div class="divide-y divide-zinc-150/40">
+                                @foreach($upcomingInterviews as $interview)
+                                    <div class="flex items-center gap-3.5 py-2.5 group first:pt-0 last:pb-0">
+                                        <!-- Date Bubble -->
+                                        <div class="shrink-0 w-8 h-8 bg-zinc-50 rounded-md border border-zinc-200/50 flex flex-col items-center justify-center text-zinc-700 font-bold leading-none shadow-2xs">
+                                            <span class="text-[11px] font-extrabold leading-none">{{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('d') }}</span>
+                                            <span class="text-[7.5px] font-black uppercase tracking-wider mt-0.5 text-zinc-450">{{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('M') }}</span>
+                                        </div>
+                                        
+                                        <!-- Interview Details -->
+                                        <div class="min-w-0 flex-1">
+                                            <div class="flex items-center justify-between gap-2">
+                                                <h4 class="text-[11px] font-bold text-zinc-800 truncate leading-tight">
+                                                    {{ $interview->recruitment_stage }} - {{ $interview->position }}
+                                                </h4>
+                                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-zinc-105 text-zinc-500 border border-zinc-200/40 leading-none">
+                                                    {{ $interview->interview_type ?? 'N/A' }}
+                                                </span>
+                                            </div>
+                                            <div class="flex items-center gap-2 mt-0.5 leading-none">
+                                                <p class="text-[9px] text-zinc-450 font-medium leading-none">{{ $interview->company_name }}</p>
+                                                @if($interview->interview_location)
+                                                    <span class="text-zinc-300 text-[8px] leading-none">•</span>
+                                                    <div class="flex items-center gap-0.5 text-[9px] text-zinc-400 font-medium leading-none truncate">
+                                                        <i class="ph ph-map-pin"></i>
+                                                        <span class="truncate">{{ $interview->interview_location }}</span>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <!-- Time -->
+                                        <div class="shrink-0 text-right">
+                                            <p class="text-[11px] font-bold text-zinc-800 leading-tight">
+                                                {{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('H:i') }}
+                                            </p>
+                                            <p class="text-[7.5px] text-zinc-450 font-bold uppercase tracking-wider leading-none">
+                                                {{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('T') }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
 

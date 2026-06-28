@@ -72,9 +72,10 @@ class UserGoal extends Model
      */
     public static function getCurrentWeekGoal(int $userId): ?self
     {
+        $today = Carbon::today('Asia/Jakarta');
         return self::where('user_id', $userId)
-            ->where('start_date', '<=', Carbon::now())
-            ->where('end_date', '>=', Carbon::now())
+            ->where('start_date', '<=', $today)
+            ->where('end_date', '>=', $today)
             ->first();
     }
 
