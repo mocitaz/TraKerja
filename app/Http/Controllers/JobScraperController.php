@@ -60,7 +60,7 @@ class JobScraperController extends Controller
                     $descText = preg_replace('/<(?:br|p|div|li)[^>]*>/i', "\n", $descText);
                     $descText = html_entity_decode(strip_tags($descText), ENT_QUOTES | ENT_HTML5, 'UTF-8');
                     $descText = preg_replace("/\n+/", "\n\n", $descText);
-                    $description = trim($descText);
+                    $description = $this->cleanJobDescription($descText);
                 }
             }
 
@@ -124,7 +124,7 @@ class JobScraperController extends Controller
                     $descText = preg_replace('/<(?:br|p|div|li)[^>]*>/i', "\n", $ogDescription);
                     $descText = html_entity_decode(strip_tags($descText), ENT_QUOTES | ENT_HTML5, 'UTF-8');
                     $descText = preg_replace("/\n+/", "\n\n", $descText);
-                    $description = trim($descText);
+                    $description = $this->cleanJobDescription($descText);
                 }
             }
 
@@ -157,6 +157,26 @@ class JobScraperController extends Controller
                 'message' => 'Gagal mengambil data lowongan: ' . $e->getMessage(),
             ], 500);
         }
+    }
+
+    private function cleanJobDescription(string $desc): string
+    {
+        // 1. Remove LinkedIn/platform posting timestamps (e.g. "Posted 3:30:47 AM.", "Posted 3 days ago.", etc.)
+        $desc = preg_replace('/^(?:Posted|Lived|Aktif)\s+[^.]+?\.\s*/iu', '', $desc);
+        
+        // 2. Fix squashed section headers (e.g. "Job DescriptionDeliver" -> "Job Description:\n\nDeliver")
+        $desc = preg_replace('/Job Description\s*([A-Za-z])/iu', "Job Description:\n\n$1", $desc);
+        $desc = preg_replace('/About the job\s*([A-Za-z])/iu', "About the Job:\n\n$1", $desc);
+        $desc = preg_replace('/Key Responsibilities\s*([A-Za-z])/iu', "Key Responsibilities:\n\n$1", $desc);
+        $desc = preg_replace('/Requirements\s*([A-Za-z])/iu', "Requirements:\n\n$1", $desc);
+        
+        // 3. Strip platform footer promotional text
+        $desc = preg_replace('/(?:See this and similar jobs|See jobs like this|Apply now|Apply online|Lihat lowongan kerja ini|Hubungkan dengan).*?$/iu', '', $desc);
+        
+        // 4. Clean up trailing ellipsis, spaces, and punctuation
+        $desc = rtrim($desc, " \t\n\r\0\x0B.…”…");
+        
+        return trim($desc);
     }
 
     private function extractJsonLd(string $html): ?array
