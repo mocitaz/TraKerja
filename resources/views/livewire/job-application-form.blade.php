@@ -168,7 +168,7 @@
                         <i class="ph-bold ph-link absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-400 text-sm group-focus-within:text-zinc-700 transition-colors"></i>
                         <input id="job-url-input" wire:model.live="platform_link" type="url" class="block w-full pl-8 pr-3 h-[32px] bg-zinc-50/40 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 focus:ring-1 focus:ring-primary-500/20 focus:bg-white focus:border-primary-500 transition-all outline-none" placeholder="https://...">
                     </div>
-                    <button type="button" onclick="fetchJobDetailsFromUrl()" id="scrape-btn" class="h-[28px] px-2.5 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded-md text-[9px] font-bold transition-all flex items-center justify-center active:scale-95 select-none shrink-0 self-center">
+                    <button type="button" onclick="fetchJobDetailsFromUrl()" id="scrape-btn" class="h-[32px] px-3.5 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded-md text-[10px] font-bold transition-all flex items-center justify-center active:scale-95 select-none shrink-0">
                         <span>Auto-Fill</span>
                     </button>
                 </div>
@@ -293,7 +293,7 @@ window.updateScrapeStatus = function(state, message = '') {
         statusDiv.classList.add('hidden');
         if (btn) {
             btn.disabled = false;
-            btn.className = "h-[28px] px-2.5 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded-md text-[9px] font-bold transition-all flex items-center justify-center active:scale-95 select-none shrink-0 self-center";
+            btn.className = "h-[32px] px-3.5 bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 rounded-md text-[10px] font-bold transition-all flex items-center justify-center active:scale-95 select-none shrink-0";
             btn.innerHTML = '<span>Auto-Fill</span>';
         }
     } else if (state === 'fetching') {
@@ -304,7 +304,7 @@ window.updateScrapeStatus = function(state, message = '') {
         
         if (btn) {
             btn.disabled = true;
-            btn.className = "h-[28px] px-2.5 bg-zinc-50 text-zinc-400 border border-zinc-200 rounded-md text-[9px] font-bold transition-all flex items-center justify-center select-none shrink-0 self-center";
+            btn.className = "h-[32px] px-3.5 bg-zinc-50 text-zinc-400 border border-zinc-200 rounded-md text-[10px] font-bold transition-all flex items-center justify-center select-none shrink-0";
             btn.innerHTML = '<i class="ph-bold ph-spinner animate-spin text-[10px] mr-1"></i><span>Fetching...</span>';
         }
     } else if (state === 'bypassing') {
@@ -315,7 +315,7 @@ window.updateScrapeStatus = function(state, message = '') {
         
         if (btn) {
             btn.disabled = true;
-            btn.className = "h-[28px] px-2.5 bg-amber-50 text-amber-650 border border-amber-200 rounded-md text-[9px] font-bold transition-all flex items-center justify-center select-none shrink-0 self-center animate-pulse";
+            btn.className = "h-[32px] px-3.5 bg-amber-50 text-amber-650 border border-amber-200 rounded-md text-[10px] font-bold transition-all flex items-center justify-center select-none shrink-0 animate-pulse";
             btn.innerHTML = '<i class="ph-bold ph-shield-warning text-[10px] mr-1"></i><span>Bypassing...</span>';
         }
     } else if (state === 'success') {
@@ -326,7 +326,7 @@ window.updateScrapeStatus = function(state, message = '') {
         
         if (btn) {
             btn.disabled = false;
-            btn.className = "h-[28px] px-2.5 bg-emerald-50 text-emerald-800 border border-emerald-250 rounded-md text-[9px] font-bold transition-all flex items-center justify-center select-none shrink-0 self-center";
+            btn.className = "h-[32px] px-3.5 bg-emerald-50 text-emerald-800 border border-emerald-250 rounded-md text-[10px] font-bold transition-all flex items-center justify-center select-none shrink-0";
             btn.innerHTML = '<i class="ph-bold ph-check text-[10px] mr-1"></i><span>Filled!</span>';
         }
         
@@ -341,7 +341,7 @@ window.updateScrapeStatus = function(state, message = '') {
         
         if (btn) {
             btn.disabled = false;
-            btn.className = "h-[28px] px-2.5 bg-rose-50 text-rose-800 border border-rose-200 rounded-md text-[9px] font-bold transition-all flex items-center justify-center select-none shrink-0 self-center";
+            btn.className = "h-[32px] px-3.5 bg-rose-50 text-rose-800 border border-rose-200 rounded-md text-[10px] font-bold transition-all flex items-center justify-center select-none shrink-0";
             btn.innerHTML = '<i class="ph-bold ph-x text-[10px] mr-1"></i><span>Failed</span>';
         }
         
