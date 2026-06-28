@@ -296,6 +296,17 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
                 @this.call('parseLocation', data.location);
             }
 
+            // Auto-detect platform from URL
+            let detectPlatform = '';
+            if (url.includes('linkedin.com')) {
+                detectPlatform = 'LinkedIn';
+            } else if (url.includes('jobstreet.com') || url.includes('seek.com')) {
+                detectPlatform = 'JobStreet';
+            }
+            if (detectPlatform && window.Livewire) {
+                @this.set('platform', detectPlatform);
+            }
+
             if (btn) {
                 btn.disabled = false;
                 // Add green success classes
@@ -354,6 +365,17 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
                     if (finalData.location && window.Livewire) {
                         @this.set('location', finalData.location);
                         @this.call('parseLocation', finalData.location);
+                    }
+
+                    // Auto-detect platform from URL
+                    let detectPlatform = '';
+                    if (url.includes('linkedin.com')) {
+                        detectPlatform = 'LinkedIn';
+                    } else if (url.includes('jobstreet.com') || url.includes('seek.com')) {
+                        detectPlatform = 'JobStreet';
+                    }
+                    if (detectPlatform && window.Livewire) {
+                        @this.set('platform', detectPlatform);
                     }
 
                     if (btn) {
