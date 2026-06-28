@@ -26,82 +26,55 @@
             </div>
 
             <!-- Main Corporate Content -->
-            <div class="relative z-10 my-auto py-6 max-w-md space-y-6">
+            <div class="relative z-10 my-auto py-6 max-w-md space-y-8">
                 <div class="space-y-4">
                     <span class="inline-flex px-2.5 py-0.5 bg-slate-850 border border-slate-800 rounded text-[9px] font-black uppercase tracking-wider text-slate-400">
-                        Platform Manajemen Rekrutmen
+                        Workspace Karir Profesional
                     </span>
                     <h1 class="text-3xl font-extrabold text-white tracking-tight leading-tight">
-                        Sistem Manajemen Karir & Pelacakan Lowongan Kerja.
+                        Kelola lamaran pekerjaan <br>dengan standar industri.
                     </h1>
                     <p class="text-xs text-slate-400 leading-relaxed font-normal">
-                        TraKerja menyediakan infrastruktur mandiri untuk mengelola berkas lamaran, mengukur keselarasan CV dengan kualifikasi industri (ATS), serta melatih kecakapan komunikasi kandidat secara profesional.
+                        TraKerja menyediakan workspace terstruktur untuk memantau jalur rekrutmen, menyesuaikan resume dengan profil ATS, dan memvalidasi kompensasi kerja secara mandiri.
                     </p>
                 </div>
 
-                <!-- WOW Feature Showcase: Glassmorphic Realtime ATS Ingest Card -->
-                <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl relative overflow-hidden backdrop-blur-md shadow-2xl flex flex-col gap-3.5 max-w-sm mt-6">
-                    <!-- Ambient Card Inner Glow -->
-                    <div class="absolute -right-16 -top-16 w-32 h-32 bg-primary-500/10 rounded-full blur-2xl"></div>
-                    
-                    <!-- Card Header -->
-                    <div class="flex items-center justify-between border-b border-slate-850 pb-3">
-                        <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded bg-primary-500/10 border border-primary-500/30 flex items-center justify-center">
-                                <i class="ph ph-cpu text-primary-450 text-xs animate-[spin_4s_linear_infinite]"></i>
+                <!-- Sleek B2B Bento Showcase -->
+                <div class="space-y-3.5">
+                    <!-- Item 1 -->
+                    <div class="p-4 bg-slate-900/40 border border-slate-850/80 rounded-xl flex items-center justify-between hover:border-slate-800 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 rounded-full bg-primary-500"></div>
+                            <div class="flex flex-col">
+                                <span class="text-xs font-bold text-slate-200">Pelacakan Rekrutmen Terpadu</span>
+                                <span class="text-[10px] text-slate-500 mt-0.5">Kelola seluruh lamaran Anda dalam satu papan kanban terstruktur.</span>
                             </div>
-                            <span class="text-[9.5px] font-extrabold tracking-wider text-slate-400 uppercase">TraKerja AI Engine</span>
                         </div>
-                        <div class="flex items-center gap-1.5 text-[8.5px] font-extrabold text-emerald-450 uppercase bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Online
-                        </div>
+                        <span class="text-[9px] font-extrabold text-slate-550 uppercase tracking-wider shrink-0 bg-slate-950/40 px-2 py-0.5 rounded border border-slate-850">BETA</span>
                     </div>
 
-                    <!-- File details -->
-                    <div class="flex items-center justify-between bg-slate-950/40 border border-slate-850 p-3 rounded-lg">
-                        <div class="flex items-center gap-2 min-w-0">
-                            <i class="ph-fill ph-file-pdf text-rose-500 text-lg shrink-0"></i>
-                            <div class="flex flex-col min-w-0">
-                                <span class="text-[10px] font-bold text-slate-200 truncate max-w-[150px]">CV_Luthfi_Fauzi.pdf</span>
-                                <span class="text-[8px] text-slate-500 font-medium">98.4 KB • Ingestion Complete</span>
+                    <!-- Item 2 -->
+                    <div class="p-4 bg-slate-900/40 border border-slate-850/80 rounded-xl flex items-center justify-between hover:border-slate-800 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 rounded-full bg-primary-500"></div>
+                            <div class="flex flex-col">
+                                <span class="text-xs font-bold text-slate-200">Optimasi Keselarasan ATS</span>
+                                <span class="text-[10px] text-slate-500 mt-0.5">Analisis kecocokan kata kunci berkas resume dengan kualifikasi lowongan.</span>
                             </div>
                         </div>
-                        <div class="text-[9px] font-extrabold text-primary-400 flex items-center gap-0.5 shrink-0">
-                            <i class="ph-bold ph-check text-xs"></i> Parsed
-                        </div>
+                        <span class="text-[9px] font-extrabold text-slate-550 uppercase tracking-wider shrink-0 bg-slate-950/40 px-2 py-0.5 rounded border border-slate-850">AI ENGINE</span>
                     </div>
 
-                    <!-- Progress Indicators / Extraction Grid -->
-                    <div class="grid grid-cols-2 gap-3">
-                        <!-- Circular Score SVG -->
-                        <div class="p-3 bg-slate-950/20 border border-slate-850/60 rounded-lg flex flex-col items-center justify-center relative overflow-hidden">
-                            <div class="relative w-14 h-14 flex items-center justify-center">
-                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                                    <circle cx="18" cy="18" r="15.915" fill="none" class="text-slate-800" stroke-width="2.5" stroke="currentColor"></circle>
-                                    <circle cx="18" cy="18" r="15.915" fill="none" class="text-primary-500" stroke-width="2.5" stroke-dasharray="98 100" stroke-linecap="round" stroke="currentColor"></circle>
-                                </svg>
-                                <div class="absolute flex flex-col items-center justify-center">
-                                    <span class="text-xs font-black text-white leading-none">98%</span>
-                                    <span class="text-[5.5px] font-bold text-slate-500 uppercase mt-0.5">Match</span>
-                                </div>
-                            </div>
-                            <span class="text-[8px] font-extrabold text-slate-400 uppercase tracking-wide mt-2">ATS Pass Score</span>
-                        </div>
-
-                        <!-- Parsed Fields Grid -->
-                        <div class="p-3 bg-slate-950/20 border border-slate-850/60 rounded-lg flex flex-col justify-between text-[9px] gap-2">
-                            <div class="space-y-0.5">
-                                <span class="block text-[7.5px] text-slate-500 uppercase font-bold">Identified Role</span>
-                                <span class="block font-bold text-slate-200 truncate text-[9.5px]">Engineering Lead</span>
-                            </div>
-                            <div class="space-y-1">
-                                <span class="block text-[7.5px] text-slate-500 uppercase font-bold">Extracted Stack</span>
-                                <div class="flex flex-wrap gap-1">
-                                    <span class="px-1 py-0.5 bg-slate-800 text-slate-300 font-bold rounded-[2px] text-[7.5px]">Laravel</span>
-                                    <span class="px-1 py-0.5 bg-slate-800 text-slate-300 font-bold rounded-[2px] text-[7.5px]">Livewire</span>
-                                </div>
+                    <!-- Item 3 -->
+                    <div class="p-4 bg-slate-900/40 border border-slate-850/80 rounded-xl flex items-center justify-between hover:border-slate-800 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 rounded-full bg-primary-500"></div>
+                            <div class="flex flex-col">
+                                <span class="text-xs font-bold text-slate-200">Kompensasi Sesuai UMK 2026</span>
+                                <span class="text-[10px] text-slate-500 mt-0.5">Bandingkan standar upah wilayah Indonesia secara transparan dan akurat.</span>
                             </div>
                         </div>
+                        <span class="text-[9px] font-extrabold text-slate-550 uppercase tracking-wider shrink-0 bg-slate-950/40 px-2 py-0.5 rounded border border-slate-850">LIVE DATA</span>
                     </div>
                 </div>
             </div>
