@@ -220,7 +220,7 @@
             </div>
 
             <!-- Row 2: Heatmap, Upcoming Interviews, and Quick Actions -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5 items-start">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5 items-stretch">
                 <!-- Left Column: Heatmap & Wawancara (col-span 2) -->
                 <div class="lg:col-span-2 space-y-5">
                     <!-- Job Search Momentum Calendar Heatmap (GitHub Style) -->
@@ -289,7 +289,7 @@
                                                     <div class="transition-colors cursor-pointer" style="width: 10px; height: 10px; border-radius: 2px; background-color: {{ $bgColor }};"></div>
                                                     {{-- Tooltip overlay --}}
                                                     <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 hidden group-hover:block z-50 bg-zinc-900 text-white text-[9px] font-semibold py-1 px-2 rounded shadow-sm whitespace-nowrap leading-none pointer-events-none">
-                                                        {{ $count }} lamaran • {{ $day['formattedDate'] }}
+                                                        {{ $count }} {{ Str::plural('application', $count) }} • {{ $day['formattedDate'] }}
                                                     </div>
                                                 </div>
                                             @else
@@ -389,11 +389,11 @@
                     </div>
                 </div>
 
-                <!-- Right Column: Weekly Goal & Quick Actions (col-span 1) -->
-                <div class="space-y-5 items-start">
+                <!-- Right Column: Quick Actions (col-span 1) -->
+                <div class="col-span-1 h-full">
 
                     <!-- Quick Actions Panel -->
-                    <div class="bg-white rounded-lg border border-zinc-200/60 p-4">
+                    <div class="bg-white rounded-lg border border-zinc-200/60 p-4 h-full flex flex-col justify-between">
                         <div class="flex items-center justify-between mb-3.5 select-none">
                             <div>
                                 <h3 class="text-xs font-bold text-zinc-850 tracking-tight uppercase tracking-wider">Quick Actions</h3>
@@ -402,7 +402,7 @@
                             <i class="ph ph-lightning text-amber-500 text-sm"></i>
                         </div>
 
-                        <div class="space-y-1">
+                        <div class="space-y-1 flex-1 flex flex-col justify-center">
                             <!-- Action 1: Add App -->
                             <button onclick="openJobModal()" class="w-full flex items-center justify-between p-2 hover:bg-zinc-50 rounded-md group transition-all text-left">
                                 <div class="flex items-center gap-2.5">
