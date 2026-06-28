@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>TraKerja - Platform Manajemen & Pelacakan Lamaran Kerja #1 di Indonesia</title>
+        <title>TraKerja - Workspace Pelacakan Lamaran Kerja Terintegrasi</title>
         <meta name="description" content="TraKerja adalah platform ATS & tracker lamaran kerja gratis. Pantau status lamaran, buat CV standar ATS, dan dapatkan insight analitik untuk karir impian Anda.">
         <meta name="keywords" content="loker, lowongan kerja, tracker lamaran kerja, ats checker, cv ats friendly, karir, hrd, job portal, trakerja, manajemen lamaran">
         <meta name="author" content="PT. Teknalogi Transformasi Digital">
@@ -18,13 +18,6 @@
         <meta property="og:title" content="TraKerja - Platform Manajemen & Pelacakan Lamaran Kerja">
         <meta property="og:description" content="Tingkatkan peluang lolos kerja dengan tracker cerdas, AI Cover Letter, dan analitik lengkap. Gratis untuk pencari kerja Indonesia.">
         <meta property="og:image" content="{{ asset('images/fitur-section.jpg') }}">
-
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image">
-        <meta property="twitter:url" content="{{ url('/') }}">
-        <meta property="twitter:title" content="TraKerja - Aplikasi Pelacakan Karir & Pekerjaan">
-        <meta property="twitter:description" content="Pantau status lamaran, buat CV standar ATS, dan analisis skor interview Anda.">
-        <meta property="twitter:image" content="{{ asset('images/fitur-section.jpg') }}">
 
         <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
@@ -48,17 +41,26 @@
             body {
                 font-family: 'Inter', sans-serif;
             }
+            /* Blueprint Grid Pattern Background (SaaS Premium Visual) */
+            .blueprint-bg {
+                background-image: 
+                    linear-gradient(to right, rgba(228, 228, 231, 0.4) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(228, 228, 231, 0.4) 1px, transparent 1px);
+                background-size: 32px 32px;
+                mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+                -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+            }
             .bento-card {
                 background: #ffffff;
-                transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+                transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             }
             .bento-card:hover {
                 border-color: #a78bfa;
                 transform: translateY(-2px);
-                box-shadow: 0 16px 36px -12px rgba(139, 92, 246, 0.08);
+                box-shadow: 0 20px 40px -16px rgba(139, 92, 246, 0.06);
             }
-            .glow-backdrop {
-                background: radial-gradient(circle at center, rgba(167, 139, 250, 0.09) 0%, transparent 65%);
+            .glow-spotlight {
+                background: radial-gradient(circle at center, rgba(167, 139, 250, 0.07) 0%, transparent 60%);
             }
             .faq-trigger[aria-expanded="true"] .faq-icon {
                 transform: rotate(180deg);
@@ -67,8 +69,8 @@
     </head>
 <body class="bg-white text-zinc-800 antialiased selection:bg-primary-50 selection:text-primary-950">
 
-    <!-- Navigation Header -->
-    <nav class="fixed top-0 left-0 right-0 h-12 bg-white/70 backdrop-blur-md border-b border-zinc-200/50 z-50">
+    <!-- Sticky Glassmorphic Header Navigation (Cupertino style) -->
+    <nav class="fixed top-0 left-0 right-0 h-12 bg-white/75 backdrop-blur-md border-b border-zinc-200/50 z-50">
         <div class="max-w-5xl mx-auto px-4 h-full flex items-center justify-between">
             <!-- Brand Logo -->
             <a href="{{ url('/') }}" class="flex items-center gap-2 group select-none">
@@ -76,7 +78,7 @@
                 <span class="text-xs font-bold tracking-tight text-zinc-900 group-hover:text-primary-600 transition-colors">TraKerja</span>
             </a>
 
-            <!-- Action Controls -->
+            <!-- Menu Controls -->
             <div class="flex items-center gap-2">
                 @if (Route::has('login'))
                     @auth
@@ -99,29 +101,30 @@
         </div>
     </nav>
 
-    <!-- Hero Section (Apple-style Centered Layout) -->
+    <!-- Main Hero Block -->
     <section class="relative pt-24 pb-20 bg-white overflow-hidden border-b border-zinc-200/50">
-        <!-- Subtle Purple Radial Backlight Glow (Apple Style) -->
-        <div class="absolute inset-0 glow-backdrop pointer-events-none z-0"></div>
+        <!-- Grid Canvas + Light Radial Backlight -->
+        <div class="absolute inset-0 blueprint-bg pointer-events-none z-0"></div>
+        <div class="absolute inset-0 glow-spotlight pointer-events-none z-0"></div>
 
         <div class="relative z-10 max-w-4xl mx-auto px-4 text-center flex flex-col items-center">
             <!-- Badge -->
-            <div class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-primary-50 border border-primary-200/60 text-primary-750 font-mono text-[9px] rounded font-bold uppercase tracking-wider mb-6 select-none shadow-3xs">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-primary-50 border border-primary-200/60 text-primary-750 font-mono text-[9px] rounded font-bold uppercase tracking-wider mb-6 select-none shadow-3xs">
                 <span class="w-1.5 h-1.5 bg-primary-500 rounded-full animate-pulse"></span>
-                <span>#1 Career Tracking Platform Indonesia</span>
+                <span>#1 Career Hub Platform Indonesia</span>
             </div>
 
-            <!-- Big Apple Title -->
+            <!-- Giant Cupertino Headline -->
             <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-zinc-900 tracking-tighter leading-[1.05] mb-6 max-w-3xl select-none">
                 Kelola lamaran kerja<br><span class="text-primary-600">jauh lebih cerdas.</span>
             </h1>
 
             <!-- Subheading -->
             <p class="text-sm sm:text-base text-zinc-550 max-w-xl font-medium antialiased leading-relaxed mb-8 select-none">
-                Platform pelacakan lamaran kerja yang sederhana, efektif, dan 100% gratis. Buat CV standar ATS, dapatkan estimasi gaji kompetitif, dan otomatisasi input lamaran Anda.
+                Satu workspace modular untuk melacak status rekrutmen, mencocokkan CV standar ATS, dan memantau estimasi gaji regional. Gratis selamanya.
             </p>
 
-            <!-- Action Buttons -->
+            <!-- Action buttons -->
             <div class="flex flex-wrap items-center justify-center gap-3 mb-16">
                 @auth
                     <a href="{{ url('/tracker') }}" class="h-9 px-5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-97">
@@ -131,15 +134,15 @@
                 @else
                     <a href="{{ route('register') }}" class="h-9 px-5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-97">
                         <i class="ph-bold ph-lightning text-sm"></i>
-                        <span>Mulai Gratis Sekarang</span>
+                        <span>Mulai Pelacakan Gratis</span>
                     </a>
                     <a href="{{ route('login') }}" class="h-9 px-5 bg-white border border-zinc-250 hover:bg-zinc-50 text-zinc-700 hover:text-zinc-900 rounded-lg text-xs font-bold transition-all flex items-center active:scale-97">
-                        Masuk ke Akun
+                        Masuk
                     </a>
                 @endauth
             </div>
 
-            <!-- Showcase Interactive Browser Mockup (1px Border Notion Style) -->
+            <!-- Showcase Interactive Workspace Mockup (Clean 1px Borders) -->
             <div class="w-full max-w-4xl border border-zinc-200/80 rounded-xl bg-white p-1.5 shadow-xs">
                 <div class="relative overflow-hidden rounded-lg border border-zinc-200 bg-zinc-50 flex flex-col aspect-[16/10] select-none text-left">
                     <!-- Title Bar -->
@@ -149,10 +152,9 @@
                             <span class="w-2 h-2 rounded-full bg-zinc-200"></span>
                             <span class="w-2 h-2 rounded-full bg-zinc-200"></span>
                         </div>
-                        <!-- Tab switcher -->
                         <div class="flex p-0.5 bg-zinc-100 border border-zinc-200 rounded-md text-[9px] font-bold text-zinc-500 gap-1 shadow-inner">
                             <button onclick="switchMockupTab('tracker')" id="mockup-tab-btn-tracker" class="px-3.5 py-1 bg-white border border-zinc-200 rounded text-zinc-800 shadow-3xs font-black transition-all">Kanban Board</button>
-                            <button onclick="switchMockupTab('ai')" id="mockup-tab-btn-ai" class="px-3.5 py-1 hover:bg-white/40 rounded transition-all">AI Match Scanner</button>
+                            <button onclick="switchMockupTab('ai')" id="mockup-tab-btn-ai" class="px-3.5 py-1 hover:bg-white/40 rounded transition-all">AI Studio</button>
                             <button onclick="switchMockupTab('extension')" id="mockup-tab-btn-extension" class="px-3.5 py-1 hover:bg-white/40 rounded transition-all">Auto-Fill Panel</button>
                         </div>
                         <div class="w-12"></div>
@@ -256,7 +258,7 @@
                         <div class="flex-1 border border-zinc-200 bg-white rounded-lg p-4 flex flex-col justify-between shadow-3xs">
                             <div class="space-y-3">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-7 h-7 rounded bg-primary-50 border border-primary-100 flex items-center justify-center text-primary-650 shrink-0">
+                                    <div class="w-7 h-7 rounded bg-primary-50 border border-primary-100 flex items-center justify-center text-primary-655 shrink-0">
                                         <i class="ph-bold ph-file-pdf text-sm"></i>
                                     </div>
                                     <div>
@@ -432,27 +434,31 @@
                     </div>
                 </div>
 
-                <!-- Card 4: Insightful Analytics (Large - span 2) -->
+                <!-- Card 4: Interactive Salary Estimator (Large - span 2) -->
                 <div class="bento-card bg-white border border-zinc-200 rounded-xl p-6 flex flex-col justify-between aspect-[16/10] md:aspect-auto">
                     <div class="mb-6">
                         <div class="w-7 h-7 rounded bg-primary-50 border border-primary-200/50 flex items-center justify-center text-primary-600 mb-4 shadow-3xs">
                             <i class="ph-bold ph-chart-line-up text-sm"></i>
                         </div>
-                        <h3 class="text-sm font-bold text-zinc-900 mb-1">Analytics & Salary Estimation</h3>
-                        <p class="text-xs text-zinc-500 leading-relaxed max-w-md">Pantau conversion rate lamaran Anda. Dapatkan taksiran gaji kompetitif yang disesuaikan dengan jenis role serta kualifikasi UMK regional.</p>
+                        <h3 class="text-sm font-bold text-zinc-900 mb-1">Interactive Salary Insights</h3>
+                        <p class="text-xs text-zinc-500 leading-relaxed max-w-md">Dapatkan estimasi penawaran gaji berdasarkan data historis kota serta perbandingan terhadap nilai UMK regional.</p>
                     </div>
-                    <div class="grid grid-cols-3 gap-2 bg-[#fafafa] border border-zinc-200 rounded-lg p-2.5 text-center select-none shadow-3xs">
-                        <div>
-                            <div class="text-sm font-extrabold text-zinc-900">84%</div>
-                            <div class="text-[8px] text-zinc-400 font-bold uppercase tracking-wider">Applied</div>
+                    <!-- Live interactive component inside bento grid! -->
+                    <div class="bg-zinc-50 border border-zinc-200 rounded-lg p-3 shadow-3xs">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex gap-1.5 p-0.5 bg-zinc-200/60 rounded border border-zinc-300">
+                                <button onclick="selectSalaryWidgetCity('Jakarta')" id="sal-btn-Jakarta" class="px-2 py-0.5 bg-white border border-zinc-200 text-zinc-800 text-[8px] font-black rounded shadow-3xs">Jakarta</button>
+                                <button onclick="selectSalaryWidgetCity('Surabaya')" id="sal-btn-Surabaya" class="px-2 py-0.5 hover:bg-white/30 text-zinc-500 text-[8px] font-bold rounded">Surabaya</button>
+                                <button onclick="selectSalaryWidgetCity('Bandung')" id="sal-btn-Bandung" class="px-2 py-0.5 hover:bg-white/30 text-zinc-500 text-[8px] font-bold rounded">Bandung</button>
+                            </div>
+                            <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase">Estimated Range</span>
                         </div>
-                        <div>
-                            <div class="text-sm font-extrabold text-zinc-900 text-primary-650">12%</div>
-                            <div class="text-[8px] text-primary-500 font-bold uppercase tracking-wider">Interviews</div>
-                        </div>
-                        <div>
-                            <div class="text-sm font-extrabold text-zinc-900 text-emerald-650">4%</div>
-                            <div class="text-[8px] text-emerald-500 font-bold uppercase tracking-wider">Offers</div>
+                        <div class="flex items-baseline justify-between">
+                            <div>
+                                <span class="text-xs font-bold text-zinc-400 block text-[8px] uppercase font-mono leading-none">Role: Software Engineer</span>
+                                <span class="text-lg font-black text-zinc-900 tracking-tight" id="sal-widget-val">Rp 8.5M - Rp 16.0M</span>
+                            </div>
+                            <span class="px-1.5 py-0.2 bg-emerald-50 border border-emerald-100 text-emerald-600 text-[8.5px] font-bold rounded" id="sal-widget-ratio">1.8x dari UMK Regional</span>
                         </div>
                     </div>
                 </div>
@@ -477,7 +483,7 @@
                     <!-- Step 1 -->
                     <div onclick="toggleHowItWorks(1)" id="hiw-trigger-1" class="hiw-card cursor-pointer border-l-2 border-primary-500 bg-white p-4 rounded-r-lg transition-all duration-200 select-none shadow-3xs">
                         <div class="flex items-center gap-3">
-                            <span class="font-mono text-xs font-bold text-primary-650" id="hiw-num-1">01</span>
+                            <span class="font-mono text-xs font-bold text-primary-655" id="hiw-num-1">01</span>
                             <h3 class="text-xs font-bold text-zinc-900">Salin URL & Auto-Fill Data</h3>
                         </div>
                         <div id="hiw-content-1" class="mt-2 text-[11px] text-zinc-500 leading-relaxed pl-7">
@@ -486,23 +492,23 @@
                     </div>
 
                     <!-- Step 2 -->
-                    <div onclick="toggleHowItWorks(2)" id="hiw-trigger-2" class="hiw-card cursor-pointer border-l border-zinc-200 hover:border-zinc-300 bg-white/40 p-4 rounded-r-lg transition-all duration-200 select-none">
+                    <div onclick="toggleHowItWorks(2)" id="hiw-trigger-2" class="hiw-card cursor-pointer border-l border-zinc-200 hover:border-zinc-350 bg-white/40 p-4 rounded-r-lg transition-all duration-200 select-none">
                         <div class="flex items-center gap-3">
                             <span class="font-mono text-xs font-bold text-zinc-400" id="hiw-num-2">02</span>
                             <h3 class="text-xs font-bold text-zinc-450">Lacak Siklus Lamaran</h3>
                         </div>
-                        <div id="hiw-content-2" class="mt-2 text-[11px] text-zinc-500 leading-relaxed pl-7 hidden">
+                        <div id="hiw-content-2" class="mt-2 text-[11px] text-zinc-550 leading-relaxed pl-7 hidden">
                             Pantau kemajuan rekrutmen lamaran Anda secara tersusun. Tambahkan jadwal wawancara, riwayat tes tertulis, serta data korespondensi dalam satu tempat terpusat.
                         </div>
                     </div>
 
                     <!-- Step 3 -->
-                    <div onclick="toggleHowItWorks(3)" id="hiw-trigger-3" class="hiw-card cursor-pointer border-l border-zinc-200 hover:border-zinc-300 bg-white/40 p-4 rounded-r-lg transition-all duration-200 select-none">
+                    <div onclick="toggleHowItWorks(3)" id="hiw-trigger-3" class="hiw-card cursor-pointer border-l border-zinc-200 hover:border-zinc-350 bg-white/40 p-4 rounded-r-lg transition-all duration-200 select-none">
                         <div class="flex items-center gap-3">
                             <span class="font-mono text-xs font-bold text-zinc-400" id="hiw-num-3">03</span>
-                            <h3 class="text-xs font-bold text-zinc-450">Optimasi CV via AI</h3>
+                            <h3 class="text-xs font-bold text-zinc-455">Optimasi CV via AI</h3>
                         </div>
-                        <div id="hiw-content-3" class="mt-2 text-[11px] text-zinc-500 leading-relaxed pl-7 hidden">
+                        <div id="hiw-content-3" class="mt-2 text-[11px] text-zinc-550 leading-relaxed pl-7 hidden">
                             Manfaatkan model kecerdasan buatan untuk mengecek skor kelolosan CV Anda. Buat draf surat lamaran kerja terpersonalisasi yang cocok dengan spesifikasi deskripsi lowongan.
                         </div>
                     </div>
@@ -763,6 +769,38 @@
             }
         }
 
+        // Select city in interactive bento salary widget
+        function selectSalaryWidgetCity(city) {
+            // Reset tab styling
+            ['Jakarta', 'Surabaya', 'Bandung'].forEach(c => {
+                const btn = document.getElementById('sal-btn-' + c);
+                if (btn) {
+                    btn.className = "px-2 py-0.5 hover:bg-white/30 text-zinc-500 text-[8px] font-bold rounded";
+                }
+            });
+
+            // Set active tab styling
+            const activeBtn = document.getElementById('sal-btn-' + city);
+            if (activeBtn) {
+                activeBtn.className = "px-2 py-0.5 bg-white border border-zinc-200 text-zinc-800 text-[8px] font-black rounded shadow-3xs";
+            }
+
+            // Set dynamic value & ratio
+            const valEl = document.getElementById('sal-widget-val');
+            const ratioEl = document.getElementById('sal-widget-ratio');
+
+            if (city === 'Jakarta') {
+                valEl.textContent = 'Rp 8.5M - Rp 16.0M';
+                ratioEl.textContent = '1.8x dari UMK Regional';
+            } else if (city === 'Surabaya') {
+                valEl.textContent = 'Rp 6.2M - Rp 11.5M';
+                ratioEl.textContent = '1.4x dari UMK Regional';
+            } else if (city === 'Bandung') {
+                valEl.textContent = 'Rp 5.5M - Rp 10.0M';
+                ratioEl.textContent = '1.3x dari UMK Regional';
+            }
+        }
+
         // Toggle How it Works Stepper
         function toggleHowItWorks(step) {
             // Reset trigger styling
@@ -893,7 +931,7 @@
             const formData = new FormData(form);
 
             try {
-                const response = await fetch('{{ route("contact.store") }}', {
+                const response = await fetch('{{ route("support.store") }}', {
                     method: 'POST',
                     body: formData,
                     headers: {
