@@ -181,10 +181,12 @@
                     </form>
 
                     <!-- Delete Button with confirmation -->
-                    <form action="{{ route('jobs.destroy', $job->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus lamaran ini secara permanen? Tindakan ini tidak dapat dibatalkan.')">
+                    <form id="delete-job-form" action="{{ route('jobs.destroy', $job->id) }}" method="POST" class="inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="inline-flex items-center justify-center gap-1.5 h-[30px] px-3 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-[11px] font-bold rounded-md shadow-3xs transition-all duration-150 active:scale-97 hover:shadow-2xs shrink-0 focus:outline-none uppercase tracking-wider">
+                        <button type="button" 
+                                onclick="window.openConfirmModal('Delete Application?', 'Data lamaran untuk {{ str_replace('\'', '\\\'', $job->company_name) }} ini akan dihapus permanen (10 XP akan ditarik kembali). Anda juga bisa mengedit lamaran jika hanya salah isi data.', 'Delete Now', () => { document.getElementById('delete-job-form').submit(); });" 
+                                class="inline-flex items-center justify-center gap-1.5 h-[30px] px-3 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-[11px] font-bold rounded-md shadow-3xs transition-all duration-150 active:scale-97 hover:shadow-2xs shrink-0 focus:outline-none uppercase tracking-wider">
                             <i class="ph-bold ph-trash text-xs"></i>
                             <span>Delete</span>
                         </button>
