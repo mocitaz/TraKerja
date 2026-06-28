@@ -2,24 +2,24 @@
     <div class="bg-[#fafafa] min-h-screen pb-24 font-sans">
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
             
-            <!-- Premium Notion-Inspired Page Header -->
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200/60 pb-5 mb-6">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-gradient-to-tr from-primary-50 to-primary-100/50 rounded-xl flex items-center justify-center text-primary-600 shrink-0 border border-primary-100/50 shadow-inner">
-                        <i class="ph ph-sparkle text-lg"></i>
+            <!-- Standardized Page Header (Aligned with all other TraKerja pages) -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-zinc-200/50 pb-4 mb-5">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 bg-zinc-100 border border-zinc-200/60 rounded-lg flex items-center justify-center text-zinc-500 shrink-0 shadow-2xs">
+                        <i class="ph ph-sparkle text-base"></i>
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <h1 class="text-base font-bold text-slate-800 tracking-tight">Analysis Results</h1>
-                            <span class="px-2 py-0.5 bg-primary-50 text-primary-600 text-[9px] font-black uppercase tracking-wider rounded-md border border-primary-100/60">AI Studio</span>
+                            <h1 class="text-sm font-bold text-zinc-800 tracking-tight">Analysis Results</h1>
+                            <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[9px] font-black uppercase tracking-wider rounded border border-primary-100/60">AI Studio</span>
                         </div>
-                        <p class="text-xs text-slate-455 mt-0.5">Deep AI analysis of your professional profile.</p>
+                        <p class="text-[11px] text-zinc-400 mt-0.5">Deep AI analysis of your professional profile.</p>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <a href="{{ route('ai-analyzer.index') }}" class="px-3.5 py-1.5 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 text-xs font-semibold rounded-lg shadow-sm transition-colors flex items-center gap-1.5">
-                        <i class="ph ph-arrow-left text-sm"></i>
+                    <a href="{{ route('ai-analyzer.index') }}" class="px-3 py-1.5 bg-white border border-zinc-200 hover:bg-zinc-50 text-[11px] font-bold text-zinc-650 rounded-md transition-all shadow-3xs flex items-center gap-1.5">
+                        <i class="ph ph-arrow-left text-xs"></i>
                         <span>Back to Studio</span>
                     </a>
                 </div>
