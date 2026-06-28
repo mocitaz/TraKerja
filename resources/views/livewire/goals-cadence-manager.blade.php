@@ -28,9 +28,9 @@
             <div class="flex items-center justify-around gap-4 py-2 border-b border-zinc-150 pb-4">
                 {{-- Applications Ring --}}
                 <div class="flex flex-col items-center text-center space-y-2 select-none">
-                    <div class="relative w-18 h-18 flex items-center justify-center">
+                    <div class="relative w-16 h-16 flex items-center justify-center">
                         {{-- SVG Progress Ring (circumference: 163.36 for r=26) --}}
-                        <svg class="w-16 h-16 transform -rotate-90">
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 64 64">
                             <circle cx="32" cy="32" r="26" stroke="#f4f4f5" stroke-width="4.5" fill="transparent" />
                             <circle cx="32" cy="32" r="26" stroke="url(#primaryGradient)" stroke-width="4.5" fill="transparent"
                                     stroke-dasharray="163.36"
@@ -48,9 +48,9 @@
 
                 {{-- Follow-ups Ring --}}
                 <div class="flex flex-col items-center text-center space-y-2 select-none">
-                    <div class="relative w-18 h-18 flex items-center justify-center">
+                    <div class="relative w-16 h-16 flex items-center justify-center">
                         {{-- SVG Progress Ring (circumference: 163.36 for r=26) --}}
-                        <svg class="w-16 h-16 transform -rotate-90">
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 64 64">
                             <circle cx="32" cy="32" r="26" stroke="#f4f4f5" stroke-width="4.5" fill="transparent" />
                             <circle cx="32" cy="32" r="26" stroke="url(#emeraldGradient)" stroke-width="4.5" fill="transparent"
                                     stroke-dasharray="163.36"
@@ -83,13 +83,13 @@
 
             <div>
                 <!-- Streak Counter -->
-                <div class="flex items-center gap-3 {{ $this->currentGoal ? 'bg-gradient-to-r from-amber-500/5 to-orange-500/5 border-amber-100/50' : 'bg-zinc-50 border-zinc-150' }} p-2.5 rounded-xl border">
-                    <div class="w-8 h-8 {{ $this->currentGoal ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-3xs' : 'bg-zinc-100 text-zinc-400 border border-zinc-200/60 shadow-3xs' }} rounded-lg flex items-center justify-center shrink-0">
+                <div class="flex items-center gap-3 {{ $this->currentStreak > 0 ? 'bg-gradient-to-r from-amber-500/5 to-orange-500/5 border-amber-100/50' : 'bg-zinc-50 border-zinc-200' }} p-2.5 rounded-xl border">
+                    <div class="w-8 h-8 {{ $this->currentStreak > 0 ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-3xs' : 'bg-zinc-100 text-zinc-400 border border-zinc-200/60 shadow-3xs' }} rounded-lg flex items-center justify-center shrink-0">
                         <i class="ph ph-fire text-base"></i>
                     </div>
                     <div>
-                        <h4 class="text-xs font-bold {{ $this->currentGoal ? 'text-amber-850' : 'text-zinc-500' }}">{{ $this->currentStreak }} Day Streak!</h4>
-                        <p class="text-[9px] {{ $this->currentGoal ? 'text-amber-600/70' : 'text-zinc-400' }} font-semibold tracking-wide mt-0.5">Keep updating your applications</p>
+                        <h4 class="text-xs font-bold {{ $this->currentStreak > 0 ? 'text-amber-850' : 'text-zinc-500' }}">{{ $this->currentStreak }} Day Streak!</h4>
+                        <p class="text-[9px] {{ $this->currentStreak > 0 ? 'text-amber-600/70' : 'text-zinc-400' }} font-semibold tracking-wide mt-0.5">Keep updating your applications</p>
                     </div>
                 </div>
             </div>
