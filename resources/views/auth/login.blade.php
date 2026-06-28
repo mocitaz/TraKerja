@@ -3,73 +3,67 @@
 
     <div class="min-h-screen grid grid-cols-1 lg:grid-cols-12 bg-white font-sans antialiased text-zinc-900 selection:bg-primary-100 selection:text-primary-700">
         
-        <!-- Left Side: Sleek minimalist timeline showcase -->
-        <div class="hidden lg:flex lg:col-span-6 xl:col-span-7 bg-zinc-950 border-r border-zinc-800/80 text-white relative flex-col justify-between p-8 lg:p-12 overflow-hidden select-none">
+        <!-- Left Side: Formal Corporate Showcase Pane -->
+        <div class="hidden lg:flex lg:col-span-6 xl:col-span-7 bg-[#0f172a] border-r border-slate-800 text-white relative flex-col justify-between p-8 lg:p-12 overflow-hidden select-none">
             
-            <!-- Grid Lines Backdrop -->
+            <!-- Subtle Radial Corporate Glow Backdrop -->
             <div class="absolute inset-0 z-0 pointer-events-none">
-                <div class="w-full h-full opacity-[0.03]" style="background-image: radial-gradient(rgba(255,255,255,0.8) 1.5px, transparent 0); background-size: 24px 24px;"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/75 to-zinc-950/40"></div>
-                <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary-950/30 via-transparent to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-tr from-[#0f172a] via-[#0f172a] to-[#1e293b]"></div>
+                <div class="absolute top-0 right-0 w-96 h-96 bg-primary-600/10 rounded-full blur-[120px]"></div>
             </div>
 
             <!-- Top Header Logo Section -->
             <div class="relative z-10 flex items-center justify-between">
-                <a href="/" class="flex items-center gap-3 group">
-                    <div class="w-10 h-10 rounded-xl bg-zinc-900/90 border border-zinc-700/80 flex items-center justify-center p-1.5 shadow-md group-hover:border-primary-500/50 transition-colors backdrop-blur-md">
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded bg-white flex items-center justify-center p-1.5 shadow-sm">
                         <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-full h-full object-contain">
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-base font-black text-white tracking-tight leading-none mb-0.5">TraKerja</span>
-                        <div class="flex items-center gap-1">
-                            <span class="text-[9px] text-zinc-400 font-bold leading-none">powered by</span>
-                            <span class="text-[9px] font-extrabold text-zinc-300 leading-none">Teknalogi</span>
-                        </div>
+                        <span class="text-sm font-bold text-white tracking-tight leading-none mb-0.5">TraKerja Enterprise</span>
+                        <span class="text-[9px] text-slate-400 font-medium">by PT. Teknalogi Transformasi Digital</span>
                     </div>
                 </a>
             </div>
 
-            <!-- Main Timeline Content -->
+            <!-- Main Corporate Content -->
             <div class="relative z-10 my-auto py-12 max-w-md space-y-8">
-                <div class="space-y-3">
-                    <span class="inline-flex px-2.5 py-0.5 bg-primary-500/10 border border-primary-500/30 rounded text-[9px] font-black uppercase tracking-wider text-primary-400">
-                        Workflow Pelacakan
+                <div class="space-y-4">
+                    <span class="inline-flex px-2.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[9px] font-bold uppercase tracking-wider text-slate-300">
+                        Platform Manajemen Rekrutmen
                     </span>
                     <h1 class="text-3xl font-extrabold text-white tracking-tight leading-tight">
-                        Your entire job search, <br>
-                        <span class="bg-gradient-to-r from-primary-300 to-violet-300 bg-clip-text text-transparent">streamlined.</span>
+                        Sistem Manajemen Karir & Pelacakan Lowongan Kerja.
                     </h1>
+                    <p class="text-xs text-slate-300 leading-relaxed font-normal">
+                        TraKerja menyediakan infrastruktur mandiri untuk mengelola berkas lamaran, mengukur keselarasan CV dengan kualifikasi industri (ATS), serta melatih kecakapan komunikasi kandidat secara profesional.
+                    </p>
                 </div>
 
-                <!-- Vertical Steps -->
-                <div class="space-y-8 pl-1.5 border-l border-zinc-800/80 mt-6">
-                    <!-- Step 1 -->
-                    <div class="relative pl-6">
-                        <div class="absolute -left-[10.5px] top-1.5 w-2 h-2 rounded-full bg-primary-400 ring-4 ring-primary-500/10"></div>
-                        <h3 class="text-xs font-bold text-zinc-200 uppercase tracking-wider">01 / Temukan Lowongan</h3>
-                        <p class="text-[10.5px] text-zinc-450 mt-1 leading-relaxed">Impor detail posisi langsung dari tautan lowongan web terkemuka menggunakan scraper cerdas.</p>
+                <!-- Corporate Statistics Section -->
+                <div class="grid grid-cols-2 gap-6 pt-8 border-t border-slate-800/80">
+                    <div>
+                        <span class="block text-2xl font-extrabold text-white leading-none">95%</span>
+                        <span class="block text-[9px] font-bold uppercase tracking-wider text-slate-400 mt-2">Optimalisasi ATS</span>
                     </div>
-
-                    <!-- Step 2 -->
-                    <div class="relative pl-6">
-                        <div class="absolute -left-[10.5px] top-1.5 w-2 h-2 rounded-full bg-zinc-700"></div>
-                        <h3 class="text-xs font-bold text-zinc-300 uppercase tracking-wider">02 / Sesuaikan Resume</h3>
-                        <p class="text-[10.5px] text-zinc-450 mt-1 leading-relaxed">Gunakan optimasi ATS pintar untuk menyesuaikan kata kunci resume agar pas dengan kualifikasi perusahaan.</p>
+                    <div>
+                        <span class="block text-2xl font-extrabold text-white leading-none">10k+</span>
+                        <span class="block text-[9px] font-bold uppercase tracking-wider text-slate-400 mt-2">Aktivitas Terlacak</span>
                     </div>
-
-                    <!-- Step 3 -->
-                    <div class="relative pl-6">
-                        <div class="absolute -left-[10.5px] top-1.5 w-2 h-2 rounded-full bg-zinc-700"></div>
-                        <h3 class="text-xs font-bold text-zinc-300 uppercase tracking-wider">03 / Pantau Kemajuan</h3>
-                        <p class="text-[10.5px] text-zinc-450 mt-1 leading-relaxed">Kelola semua tahapan rekrutmen Anda di papan Kanban dan terima penawaran karir terbaik.</p>
+                    <div>
+                        <span class="block text-2xl font-extrabold text-white leading-none">100%</span>
+                        <span class="block text-[9px] font-bold uppercase tracking-wider text-slate-400 mt-2">Privasi Terjamin</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-extrabold text-white leading-none">UMK 2026</span>
+                        <span class="block text-[9px] font-bold uppercase tracking-wider text-slate-400 mt-2">Kesesuaian Standar Gaji</span>
                     </div>
                 </div>
             </div>
 
             <!-- Footer Badge -->
-            <div class="relative z-10 pt-6 border-t border-zinc-800/80 flex items-center justify-between text-[11px] text-zinc-400">
+            <div class="relative z-10 pt-6 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
                 <span class="font-medium">&copy; {{ date('Y') }} TraKerja by PT. Teknalogi Transformasi Digital.</span>
-                <span class="flex items-center gap-1 font-bold text-zinc-300"><i class="ph-fill ph-shield-check text-emerald-400 text-sm"></i> Enterprise Security</span>
+                <span class="flex items-center gap-1 font-bold text-slate-300"><i class="ph-fill ph-shield-check text-emerald-400 text-sm"></i> Enterprise Security</span>
             </div>
         </div>
 
