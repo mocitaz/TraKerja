@@ -73,8 +73,19 @@ class JobScraperController extends Controller
                 if (empty($jobTitle) && $ogTitle) {
                     $cleanedTitle = html_entity_decode(strip_tags($ogTitle), ENT_QUOTES | ENT_HTML5, 'UTF-8');
                     
-                    // Split job title and company if formatted like "Title at Company"
-                    if (preg_match('/\s+(?:at|@|in)\s+(.+)/i', $cleanedTitle, $matches)) {
+                    // Check if formatted like "Company hiring Position..." (very common in LinkedIn title tag fallbacks)
+                    if (preg_match('/(.+?)\s+hiring\s+(.+)/i', $cleanedTitle, $hiringMatches)) {
+                        $companyNameCandidate = trim($hiringMatches[1]);
+                        $jobTitleRemaining = trim($hiringMatches[2]);
+                        
+                        if (preg_match('/(.+?)\s+(?:in|at|@)\s+(.+)/i', $jobTitleRemaining, $locMatches)) {
+                            $jobTitle = trim($locMatches[1]);
+                        } else {
+                            $jobTitle = $jobTitleRemaining;
+                        }
+                        
+                        $companyName = $companyNameCandidate;
+                    } elseif (preg_match('/\s+(?:at|@|in)\s+(.+)/i', $cleanedTitle, $matches)) {
                         $companyNameCandidate = trim($matches[1]);
                         $jobTitleCandidate = trim(preg_replace('/\s+(?:at|@|in)\s+.+/i', '', $cleanedTitle));
                         
