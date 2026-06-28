@@ -72,71 +72,104 @@
             </div>
 
             {{-- The "AI Conversation" Style Results --}}
-            <div class="mb-8">
-                @php
-                    $sections = [
-                        'profil' => ['title' => 'Profile & Identity', 'icon' => 'ph-identification-card'],
-                        'pendidikan' => ['title' => 'Academic History', 'icon' => 'ph-graduation-cap'],
-                        'pengalaman_kerja' => ['title' => 'Professional Career', 'icon' => 'ph-briefcase'],
-                        'pengalaman_organisasi' => ['title' => 'Leadership & Community', 'icon' => 'ph-users-three'],
-                        'projek' => ['title' => 'Technical Projects', 'icon' => 'ph-layout'],
-                        'keterampilan' => ['title' => 'Skill Ecosystem', 'icon' => 'ph-atom'],
-                        'prestasi_dan_publikasi' => ['title' => 'Awards & Impact', 'icon' => 'ph-medal'],
-                    ];
-                @endphp
+            <div class="mb-8 space-y-6">
+                {{-- User Prompt Bubble --}}
+                <div class="flex items-start gap-3 pl-1 sm:pl-2">
+                    <div class="w-8 h-8 rounded-full bg-zinc-100 text-zinc-600 flex items-center justify-center shrink-0 border border-zinc-200">
+                        <i class="ph ph-user text-sm"></i>
+                    </div>
+                    <div class="flex-1 bg-zinc-50/50 border border-zinc-200/60 rounded-2xl rounded-tl-none p-3.5 sm:p-4">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-bold text-zinc-800">You (Job Seeker)</span>
+                            <span class="text-[9px] text-zinc-400 font-medium">Uploaded CV & Job Description</span>
+                        </div>
+                        <p class="text-xs text-zinc-500 leading-relaxed italic">
+                            "Analyze my professional profile against the job description. Please provide a detailed analysis of my strengths, weaknesses, and clear revisions to optimize each section of my CV."
+                        </p>
+                    </div>
+                </div>
 
-                @foreach($sections as $key => $section)
-                    @if(isset($result[$key]) && (!empty($result[$key]['teks_revisi']) || !empty($result[$key]['alasan_perubahan'])))
-                        <div class="relative pl-10 sm:pl-12 group pb-6 last:pb-2">
-                            {{-- Thread Line --}}
-                            <div class="absolute left-[13px] top-2 bottom-0 w-[1px] bg-zinc-200 group-last:bottom-auto group-last:h-4"></div>
-                            
-                            {{-- AI Avatar Bubble --}}
-                            <div class="absolute left-0 top-0.5 w-7 h-7 rounded-full bg-primary-50 text-primary-660 flex items-center justify-center border border-primary-100/60 z-10">
-                                <i class="ph {{ $section['icon'] }} text-xs"></i>
+                {{-- AI Response Thread --}}
+                <div class="flex items-start gap-3 pl-1 sm:pl-2">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-primary-500 to-primary-650 text-white flex items-center justify-center shrink-0 shadow-sm">
+                        <i class="ph ph-sparkle text-sm"></i>
+                    </div>
+                    <div class="flex-1 space-y-4">
+                        <div class="flex items-center justify-between mb-1">
+                            <div>
+                                <span class="text-xs font-bold text-zinc-800">TraKerja AI</span>
+                                <span class="ml-1.5 px-1.5 py-0.2 bg-primary-50 text-primary-700 text-[8.5px] font-bold uppercase tracking-wider rounded border border-primary-100/60">Assistant</span>
                             </div>
+                            <span class="text-[9px] text-zinc-400 font-medium">Just now</span>
+                        </div>
 
-                            <div class="space-y-3">
-                                {{-- Collapsible Thinking Process --}}
-                                @if(!empty($result[$key]['alasan_perubahan']))
-                                    <div class="pl-1">
-                                        <details class="group/details w-full outline-none">
-                                            <summary class="flex items-center gap-1 text-[10px] font-bold text-zinc-400 hover:text-zinc-600 uppercase tracking-wider transition-colors outline-none cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                                                <span class="inline-block transition-transform duration-200 group-open/details:rotate-90 text-[8px] mr-0.5">
-                                                    <i class="ph-bold ph-caret-right"></i>
-                                                </span>
-                                                <span>AI Thinking Process</span>
-                                            </summary>
-                                            <div class="mt-1.5 p-3 bg-zinc-50 border-l-2 border-zinc-300 rounded-r-md text-xs italic text-zinc-500 leading-relaxed formatted-content">
-                                                {{ $result[$key]['alasan_perubahan'] }}
-                                            </div>
-                                        </details>
-                                    </div>
-                                @endif
+                        {{-- The continuous conversation flow --}}
+                        <div class="space-y-5">
+                            @php
+                                $sections = [
+                                    'profil' => ['title' => 'Profile & Identity', 'icon' => 'ph-identification-card'],
+                                    'pendidikan' => ['title' => 'Academic History', 'icon' => 'ph-graduation-cap'],
+                                    'pengalaman_kerja' => ['title' => 'Professional Career', 'icon' => 'ph-briefcase'],
+                                    'pengalaman_organisasi' => ['title' => 'Leadership & Community', 'icon' => 'ph-users-three'],
+                                    'projek' => ['title' => 'Technical Projects', 'icon' => 'ph-layout'],
+                                    'keterampilan' => ['title' => 'Skill Ecosystem', 'icon' => 'ph-atom'],
+                                    'prestasi_dan_publikasi' => ['title' => 'Awards & Impact', 'icon' => 'ph-medal'],
+                                ];
+                            @endphp
 
-                                {{-- Premium AI Chat Response Bubble --}}
-                                @if(!empty($result[$key]['teks_revisi']))
-                                    <div class="bg-white border border-zinc-200/80 rounded-xl rounded-tr-none p-3.5 sm:p-4 shadow-3xs relative group/bubble">
-                                        <!-- Micro Top Bar -->
-                                        <div class="flex items-center justify-between border-b border-zinc-100 pb-2 mb-2.5">
+                            @foreach($sections as $key => $section)
+                                @if(isset($result[$key]) && (!empty($result[$key]['teks_revisi']) || !empty($result[$key]['alasan_perubahan'])))
+                                    <div class="border border-zinc-200/80 bg-white rounded-2xl p-4 sm:p-5 shadow-3xs hover:shadow-2xs transition-shadow relative group/bubble ai-response-card">
+                                        
+                                        {{-- Section Header --}}
+                                        <div class="flex items-center justify-between border-b border-zinc-100 pb-2 mb-3">
                                             <div class="flex items-center gap-2">
-                                                <span class="text-xs font-semibold text-zinc-800 tracking-tight">{{ $section['title'] }}</span>
+                                                <div class="w-5 h-5 rounded bg-zinc-50 text-zinc-650 flex items-center justify-center border border-zinc-150 shrink-0">
+                                                    <i class="ph {{ $section['icon'] }} text-xs"></i>
+                                                </div>
+                                                <span class="text-xs font-bold text-zinc-800 tracking-tight">{{ $section['title'] }}</span>
                                                 <span class="px-1.5 py-0.2 bg-primary-50/60 text-primary-700 text-[8.5px] font-bold uppercase tracking-wider rounded border border-primary-100/30">Optimized</span>
                                             </div>
-                                            <button onclick="copyToClipboard(this)" class="opacity-0 group-hover/bubble:opacity-100 text-zinc-400 hover:text-zinc-700 transition-all cursor-pointer p-1 rounded hover:bg-zinc-50 flex items-center justify-center outline-none">
-                                                <i class="ph ph-copy text-sm"></i>
-                                            </button>
+                                            
+                                            <div class="flex items-center gap-2">
+                                                <button onclick="copyToClipboard(this)" class="opacity-0 group-hover/bubble:opacity-100 text-zinc-400 hover:text-zinc-700 transition-all cursor-pointer p-1 rounded hover:bg-zinc-50 flex items-center justify-center outline-none">
+                                                    <i class="ph ph-copy text-sm"></i>
+                                                </button>
+                                            </div>
                                         </div>
-                                        <!-- Content -->
-                                        <div class="text-zinc-700 text-xs sm:text-sm font-medium leading-relaxed formatted-content">
-                                            {{ $result[$key]['teks_revisi'] }}
+
+                                        <div class="space-y-3.5">
+                                            {{-- Claude-style Thought Block --}}
+                                            @if(!empty($result[$key]['alasan_perubahan']))
+                                                <details class="group/details w-full outline-none">
+                                                    <summary class="flex items-center gap-1.5 text-[9px] font-bold text-zinc-400 hover:text-zinc-600 uppercase tracking-wider transition-colors outline-none cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                                                        <span class="w-3.5 h-3.5 bg-zinc-50 rounded border border-zinc-150 flex items-center justify-center shrink-0">
+                                                            <i class="ph ph-brain text-[10px] text-zinc-450 group-open/details:text-zinc-600"></i>
+                                                        </span>
+                                                        <span>Thought Process</span>
+                                                        <span class="inline-block transition-transform duration-200 group-open/details:rotate-90 text-[7px] ml-0.5">
+                                                            <i class="ph-bold ph-caret-right"></i>
+                                                        </span>
+                                                    </summary>
+                                                    <div class="mt-2 p-3 bg-zinc-50/60 border-l-2 border-zinc-300 rounded-r-md text-xs italic text-zinc-550 leading-relaxed formatted-content">
+                                                        {{ $result[$key]['alasan_perubahan'] }}
+                                                    </div>
+                                                </details>
+                                            @endif
+
+                                            {{-- Output Content --}}
+                                            @if(!empty($result[$key]['teks_revisi']))
+                                                <div class="text-zinc-700 text-xs sm:text-sm font-medium leading-relaxed formatted-content formatted-content-revisi pl-0.5">
+                                                    {{ $result[$key]['teks_revisi'] }}
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 @endif
-                            </div>
+                            @endforeach
                         </div>
-                    @endif
-                @endforeach
+                    </div>
+                </div>
             </div>
 
             {{-- Action Roadmap --}}
@@ -194,7 +227,10 @@
 
     <script>
         function copyToClipboard(btn) {
-            const content = btn.closest('div').nextElementSibling.innerText;
+            const card = btn.closest('.ai-response-card');
+            const contentEl = card.querySelector('.formatted-content-revisi');
+            if (!contentEl) return;
+            const content = contentEl.innerText;
             navigator.clipboard.writeText(content).then(() => {
                 const icon = btn.querySelector('i');
                 icon.className = 'ph ph-check text-emerald-500';
