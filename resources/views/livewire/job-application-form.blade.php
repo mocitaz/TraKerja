@@ -301,6 +301,8 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
                 detectPlatform = 'JobStreet';
             } else if (url.includes('talentics.id')) {
                 detectPlatform = 'Talentics';
+            } else if (url.includes('dealls.com')) {
+                detectPlatform = 'Dealls';
             }
             if (detectPlatform && window.Livewire) {
                 @this.set('platform', detectPlatform);
@@ -371,6 +373,8 @@ window.fetchJobDetailsFromUrl = window.fetchJobDetailsFromUrl || function() {
                         detectPlatform = 'JobStreet';
                     } else if (url.includes('talentics.id')) {
                         detectPlatform = 'Talentics';
+                    } else if (url.includes('dealls.com')) {
+                        detectPlatform = 'Dealls';
                     }
                     if (detectPlatform && window.Livewire) {
                         @this.set('platform', detectPlatform);

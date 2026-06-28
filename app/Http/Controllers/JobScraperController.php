@@ -149,6 +149,38 @@ class JobScraperController extends Controller
                 }
             }
 
+            // 2b. Try __NEXT_DATA__ parsing for Next.js-based portals (Dealls, etc.)
+            if (empty($jobTitle) || empty($companyName)) {
+                if (preg_match('/<script\s+[^>]*?id=["\']__NEXT_DATA__["\'][^>]*?>(.*?)<\/script>/is', $html, $nextMatches)) {
+                    $nextData = json_decode($nextMatches[1], true);
+                    if (json_last_error() === JSON_ERROR_NONE) {
+                        $queries = $nextData['props']['pageProps']['dehydratedState']['queries'] ?? [];
+                        foreach ($queries as $query) {
+                            $data = $query['state']['data'] ?? null;
+                            if (is_array($data)) {
+                                if (empty($jobTitle) && !empty($data['title'])) {
+                                    $jobTitle = html_entity_decode(strip_tags($data['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                }
+                                if (empty($companyName) && !empty($data['company']['name'])) {
+                                    $companyName = html_entity_decode(strip_tags($data['company']['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                }
+                                if (empty($location) && !empty($data['location'])) {
+                                    $loc = $data['location'];
+                                    if (is_array($loc)) {
+                                        $locParts = [];
+                                        if (!empty($loc['city'])) $locParts[] = $loc['city'];
+                                        if (!empty($loc['country'])) $locParts[] = $loc['country'];
+                                        $location = implode(', ', $locParts);
+                                    } else {
+                                        $location = $loc;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             // Extract from HTML markup containers if description is empty or too short (common on LinkedIn guest page)
             if (strlen($description) < 200) {
                 $containers = [
@@ -396,6 +428,38 @@ class JobScraperController extends Controller
                         $descText = html_entity_decode(strip_tags($descText), ENT_QUOTES | ENT_HTML5, 'UTF-8');
                         $descText = preg_replace("/\n+/", "\n\n", $descText);
                         $description = $this->cleanJobDescription($descText);
+                    }
+                }
+            }
+
+            // 2b. Try __NEXT_DATA__ parsing for Next.js-based portals (Dealls, etc.)
+            if (empty($jobTitle) || empty($companyName)) {
+                if (preg_match('/<script\s+[^>]*?id=["\']__NEXT_DATA__["\'][^>]*?>(.*?)<\/script>/is', $html, $nextMatches)) {
+                    $nextData = json_decode($nextMatches[1], true);
+                    if (json_last_error() === JSON_ERROR_NONE) {
+                        $queries = $nextData['props']['pageProps']['dehydratedState']['queries'] ?? [];
+                        foreach ($queries as $query) {
+                            $data = $query['state']['data'] ?? null;
+                            if (is_array($data)) {
+                                if (empty($jobTitle) && !empty($data['title'])) {
+                                    $jobTitle = html_entity_decode(strip_tags($data['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                }
+                                if (empty($companyName) && !empty($data['company']['name'])) {
+                                    $companyName = html_entity_decode(strip_tags($data['company']['name']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                                }
+                                if (empty($location) && !empty($data['location'])) {
+                                    $loc = $data['location'];
+                                    if (is_array($loc)) {
+                                        $locParts = [];
+                                        if (!empty($loc['city'])) $locParts[] = $loc['city'];
+                                        if (!empty($loc['country'])) $locParts[] = $loc['country'];
+                                        $location = implode(', ', $locParts);
+                                    } else {
+                                        $location = $loc;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
