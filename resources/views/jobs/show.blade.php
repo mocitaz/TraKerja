@@ -217,32 +217,34 @@
                             </span>
                         </div>
 
-                        <div class="relative px-2">
-                            <!-- Progress Lines -->
-                            <div class="absolute bg-zinc-100 h-0.5 top-4 left-0 right-0 z-0"></div>
-                            <div class="absolute bg-primary-650 h-0.5 top-4 left-0 z-0 transition-all duration-300" 
-                                 style="width: {{ $currentStageGroupIndex > 0 ? ($currentStageGroupIndex / (count($pipelineStages) - 1)) * 100 : 0 }}%"></div>
-                            
-                            <div class="relative flex justify-between">
-                                @foreach($pipelineStages as $index => $stage)
-                                    @php
-                                        $isPast = $index < $currentStageGroupIndex;
-                                        $isCurrent = $index === $currentStageGroupIndex;
-                                        
-                                        $circleClass = $isPast ? 'bg-primary-650 text-white' : ($isCurrent ? 'bg-white border-2 border-primary-650 scale-105 shadow-3xs' : 'bg-white border border-zinc-200 text-zinc-350');
-                                        
-                                        if ($isCurrent && $index === 4) {
-                                            if ($job->application_status === 'Accepted') $circleClass = 'bg-emerald-500 text-white border border-emerald-100 scale-105 shadow-3xs';
-                                            elseif ($job->application_status === 'Declined') $circleClass = 'bg-rose-500 text-white border border-rose-100 scale-105 shadow-3xs';
-                                        }
-                                    @endphp
-                                    <div class="flex flex-col items-center gap-1.5 group">
-                                        <div class="w-8 h-8 rounded-full flex items-center justify-center relative z-10 {{ $circleClass }}">
-                                            <i class="{{ $stage['icon'] }} text-xs"></i>
+                        <div class="overflow-x-auto custom-scrollbar pb-2 pt-1">
+                            <div class="relative px-2 min-w-[420px]">
+                                <!-- Progress Lines -->
+                                <div class="absolute bg-zinc-100 h-0.5 top-4 left-0 right-0 z-0"></div>
+                                <div class="absolute bg-primary-650 h-0.5 top-4 left-0 z-0 transition-all duration-300" 
+                                     style="width: {{ $currentStageGroupIndex > 0 ? ($currentStageGroupIndex / (count($pipelineStages) - 1)) * 100 : 0 }}%"></div>
+                                
+                                <div class="relative flex justify-between">
+                                    @foreach($pipelineStages as $index => $stage)
+                                        @php
+                                            $isPast = $index < $currentStageGroupIndex;
+                                            $isCurrent = $index === $currentStageGroupIndex;
+                                            
+                                            $circleClass = $isPast ? 'bg-primary-650 text-white' : ($isCurrent ? 'bg-white border-2 border-primary-650 scale-105 shadow-3xs' : 'bg-white border border-zinc-200 text-zinc-350');
+                                            
+                                            if ($isCurrent && $index === 4) {
+                                                if ($job->application_status === 'Accepted') $circleClass = 'bg-emerald-500 text-white border border-emerald-100 scale-105 shadow-3xs';
+                                                elseif ($job->application_status === 'Declined') $circleClass = 'bg-rose-500 text-white border border-rose-100 scale-105 shadow-3xs';
+                                            }
+                                        @endphp
+                                        <div class="flex flex-col items-center gap-1.5 group">
+                                            <div class="w-8 h-8 rounded-full flex items-center justify-center relative z-10 {{ $circleClass }}">
+                                                <i class="{{ $stage['icon'] }} text-xs"></i>
+                                            </div>
+                                            <span class="text-[9px] font-bold uppercase tracking-wider {{ $isCurrent ? 'text-zinc-800' : 'text-zinc-400' }}">{{ $stage['label'] }}</span>
                                         </div>
-                                        <span class="text-[9px] font-bold uppercase tracking-wider {{ $isCurrent ? 'text-zinc-800' : 'text-zinc-400' }}">{{ $stage['label'] }}</span>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>

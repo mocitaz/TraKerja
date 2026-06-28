@@ -3,44 +3,48 @@
         <!-- Ignored layout slot, header is handled inline inside template container for premium consistency -->
     </x-slot>
 
-    <div class="bg-[#fafafa] min-h-screen pb-16" x-data="{ activeTab: 'experiences', previewOpen: false, importModalOpen: false }">
+    <div class="bg-[#fafafa] min-h-screen pb-16 relative overflow-hidden" x-data="{ activeTab: 'experiences', previewOpen: false, importModalOpen: false }">
+        <!-- Premium Abstract Background Blobs -->
+        <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-violet-200/20 to-indigo-200/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-gradient-to-br from-cyan-200/20 to-blue-200/10 rounded-full blur-[100px] pointer-events-none"></div>
+
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
             
-            <!-- Premium Notion-Inspired Page Header -->
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-zinc-200/50 pb-4 mb-5">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 bg-zinc-100 border border-zinc-200/60 rounded-lg flex items-center justify-center text-zinc-500 shrink-0 shadow-2xs">
-                        <i class="ph ph-identification-card text-base"></i>
+            <!-- Premium Glass-Style Page Header -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-zinc-200/50 pb-4 mb-6 relative z-10">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-white border border-zinc-200/60 rounded-xl flex items-center justify-center text-zinc-650 shrink-0 shadow-sm transition-all duration-300 hover:border-violet-400">
+                        <i class="ph ph-identification-card text-lg bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent"></i>
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <h1 class="text-sm font-bold text-zinc-800 tracking-tight">CV Builder</h1>
-                            <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[9px] font-black uppercase tracking-wider rounded border border-primary-100/60">Portfolio</span>
+                            <h1 class="text-sm font-black text-zinc-800 tracking-tight">CV Builder</h1>
+                            <span class="px-2 py-0.5 bg-gradient-to-r from-violet-500/10 to-indigo-500/10 border border-violet-500/20 text-violet-750 text-[9px] font-black uppercase tracking-wider rounded-full shadow-4xs select-none">Portfolio</span>
                         </div>
-                        <p class="text-[11px] text-zinc-400 mt-0.5">Craft, organize, and export your professional resume and credentials.</p>
+                        <p class="text-[11px] text-zinc-400 mt-0.5 font-medium">Craft, organize, and export your professional resume and credentials.</p>
                     </div>
                 </div>
 
                 <!-- Header Actions Grid -->
                 <div class="flex items-center gap-2 w-full md:w-auto overflow-x-auto no-scrollbar py-1 shrink-0">
-                    <button type="button" @click="importModalOpen = true" id="import-pdf-btn" class="px-3 py-1.5 bg-white text-zinc-700 border border-zinc-200 rounded-md hover:bg-zinc-50 text-[11px] font-bold shadow-3xs transition-all duration-200 flex items-center gap-1.5 shrink-0 focus:outline-none">
+                    <button type="button" @click="importModalOpen = true" id="import-pdf-btn" class="px-3.5 py-1.5 bg-white text-zinc-700 border border-zinc-200 rounded-md hover:bg-zinc-50 text-[11px] font-bold shadow-3xs transition-all duration-200 flex items-center gap-1.5 shrink-0 focus:outline-none hover:border-zinc-300">
                         <i class="ph ph-file-arrow-up text-xs"></i>
                         <span id="import-pdf-text">Import PDF</span>
                     </button>
-                    <button @click="$dispatch('openPublishModal')" class="px-3 py-1.5 bg-white text-zinc-700 border border-zinc-200 rounded-md hover:bg-zinc-50 text-[11px] font-bold shadow-3xs transition-all duration-200 flex items-center gap-1.5 shrink-0 focus:outline-none">
+                    <button @click="$dispatch('openPublishModal')" class="px-3.5 py-1.5 bg-white text-zinc-700 border border-zinc-200 rounded-md hover:bg-zinc-50 text-[11px] font-bold shadow-3xs transition-all duration-200 flex items-center gap-1.5 shrink-0 focus:outline-none hover:border-zinc-300">
                         <i class="ph ph-globe text-xs"></i>
                         <span>Publish Site</span>
                     </button>
-                    <button @click="previewOpen = true" class="px-3 py-1.5 bg-white text-zinc-700 border border-zinc-200 rounded-md hover:bg-zinc-50 text-[11px] font-bold shadow-3xs transition-all duration-200 flex items-center gap-1.5 shrink-0 focus:outline-none">
+                    <button @click="previewOpen = true" class="px-3.5 py-1.5 bg-white text-zinc-700 border border-zinc-200 rounded-md hover:bg-zinc-50 text-[11px] font-bold shadow-3xs transition-all duration-200 flex items-center gap-1.5 shrink-0 focus:outline-none hover:border-zinc-300">
                         <i class="ph ph-eye text-xs"></i>
                         <span>Quick Preview</span>
                     </button>
-                    <a href="{{ route('cv.generator') }}" class="px-3 py-1.5 bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 text-[11px] font-bold rounded-md shadow-3xs transition-all duration-200 flex items-center gap-1.5 shrink-0 focus:outline-none">
+                    <a href="{{ route('cv.generator') }}" class="px-4 py-1.5 bg-gradient-to-r from-violet-650 to-indigo-650 hover:from-violet-600 hover:to-indigo-600 text-white text-[11px] font-extrabold rounded-md shadow-sm shadow-indigo-600/10 hover:shadow-md hover:shadow-indigo-600/20 transition-all duration-250 flex items-center gap-1.5 shrink-0 focus:outline-none active:scale-97">
                         <i class="ph ph-magic-wand text-xs"></i>
                         <span>Generate CV</span>
                     </a>
                     @if(!auth()->user()->is_premium)
-                        <a href="{{ route('payment.premium') }}" class="px-3 py-1.5 bg-white text-amber-600 border border-amber-250 hover:bg-amber-50/70 text-[11px] font-bold rounded-md shadow-3xs transition-all duration-200 flex items-center gap-1.5 shrink-0 focus:outline-none">
+                        <a href="{{ route('payment.premium') }}" class="px-3.5 py-1.5 bg-white text-amber-600 border border-amber-250 hover:bg-amber-50/70 text-[11px] font-bold rounded-md shadow-3xs transition-all duration-200 flex items-center gap-1.5 shrink-0 focus:outline-none">
                             <i class="ph ph-crown text-xs"></i>
                             <span>Upgrade</span>
                         </a>
@@ -49,28 +53,29 @@
             </div>
 
             @if(session('success'))
-                <div class="mb-5 p-3 bg-emerald-50 border border-emerald-150/50 rounded-md flex items-center gap-2.5 text-emerald-700">
+                <div class="mb-5 p-3 bg-emerald-50 border border-emerald-150/50 rounded-md flex items-center gap-2.5 text-emerald-700 relative z-10">
                     <i class="ph ph-check-circle text-base"></i>
                     <p class="text-[10px] font-bold uppercase tracking-wider">{{ session('success') }}</p>
                 </div>
             @endif
 
             @if(session('error'))
-                <div class="mb-5 p-3 bg-rose-50 border border-rose-150/50 rounded-md flex items-center gap-2.5 text-rose-700">
+                <div class="mb-5 p-3 bg-rose-50 border border-rose-150/50 rounded-md flex items-center gap-2.5 text-rose-700 relative z-10">
                     <i class="ph ph-warning-circle text-base"></i>
                     <p class="text-[10px] font-bold uppercase tracking-wider">{{ session('error') }}</p>
                 </div>
             @endif
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch relative z-10">
                 {{-- Left Sidebar: Navigation & Strength --}}
                 <div class="lg:col-span-4 space-y-5">
                     {{-- Profile Strength Card --}}
-                    <div class="bg-white rounded-lg border border-zinc-200/60 p-4 shadow-3xs relative overflow-hidden">
+                    <div class="bg-gradient-to-br from-white to-zinc-50/50 rounded-xl border border-zinc-200/60 p-5 shadow-3xs relative overflow-hidden">
+                        <div class="absolute -right-8 -top-8 w-24 h-24 bg-violet-500/5 rounded-full pointer-events-none"></div>
                         <div class="relative z-10">
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none">Profile Strength</h3>
-                                <div class="w-6 h-6 bg-zinc-50 border border-zinc-200/50 rounded flex items-center justify-center text-zinc-400 shadow-3xs shrink-0">
+                            <div class="flex items-center justify-between mb-3.5">
+                                <h3 class="text-[9.5px] font-bold text-zinc-400 uppercase tracking-widest leading-none">Profile Strength</h3>
+                                <div class="w-6 h-6 bg-white border border-zinc-200/50 rounded flex items-center justify-center text-zinc-400 shadow-3xs shrink-0">
                                     <i class="ph ph-chart-pie-slice text-xs"></i>
                                 </div>
                             </div>
@@ -87,23 +92,34 @@
                                 $percentage = ($filled / $total) * 100;
                             @endphp
 
-                            <div class="relative w-28 h-28 mx-auto mb-3">
+                            <div class="relative w-28 h-28 mx-auto mb-4">
                                 <svg class="w-full h-full transform -rotate-90">
-                                    <circle cx="56" cy="56" r="46" stroke="currentColor" stroke-width="7" fill="transparent" class="text-zinc-50" />
-                                    <circle cx="56" cy="56" r="46" stroke="currentColor" stroke-width="7" fill="transparent" 
+                                    <circle cx="56" cy="56" r="46" stroke="#f4f4f5" stroke-width="6.5" fill="transparent" />
+                                    <circle cx="56" cy="56" r="46" stroke="url(#strengthGradient)" stroke-width="6.5" fill="transparent" 
                                         stroke-dasharray="289" 
                                         stroke-dashoffset="{{ 289 - (289 * $percentage / 100) }}" 
-                                        class="text-primary-500 /* [BRAND_PRIMARY] */ transition-all duration-1000 ease-out" 
+                                        class="transition-all duration-1000 ease-out" 
                                         stroke-linecap="round" />
                                 </svg>
                                 <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                    <span class="text-xl font-bold text-zinc-800 leading-none tracking-tight">{{ number_format($percentage, 0) }}<span class="text-xs font-semibold text-zinc-400">%</span></span>
-                                    <span class="text-[8px] font-bold text-zinc-400 uppercase tracking-widest mt-0.5">Optimized</span>
+                                    <span class="text-xl font-black text-zinc-800 leading-none tracking-tight">
+                                        {{ number_format($percentage, 0) }}<span class="text-xs font-semibold text-zinc-400">%</span>
+                                    </span>
+                                    <span class="text-[7.5px] font-black text-emerald-600 bg-emerald-50 px-1 py-0.2 rounded border border-emerald-100/50 mt-1 select-none leading-none">ATS READY</span>
                                 </div>
                             </div>
 
-                            <div class="bg-zinc-50/50 rounded border border-zinc-200/60 p-2.5 text-center">
-                                <p class="text-[10px] font-medium text-zinc-500 leading-normal">
+                            <svg class="absolute w-0 h-0 pointer-events-none">
+                                <defs>
+                                    <linearGradient id="strengthGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#8b5cf6" />
+                                        <stop offset="100%" stop-color="#4f46e5" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+
+                            <div class="bg-zinc-100/40 rounded-lg border border-zinc-200/50 p-3 text-center">
+                                <p class="text-[10px] font-semibold text-zinc-500 leading-normal">
                                     {{ $filled < $total ? 'Complete ' . ($total - $filled) . ' more sections to reach peak performance.' : 'Your profile is 100% complete and perfectly optimized.' }}
                                 </p>
                             </div>
@@ -111,33 +127,46 @@
                     </div>
 
                     {{-- Vertical Section Navigation --}}
-                    <div class="bg-white rounded-lg border border-zinc-200/60 p-1 shadow-3xs">
-                        <nav class="flex lg:flex-col overflow-x-auto lg:overflow-x-visible no-scrollbar p-0.5 gap-1">
+                    <div class="bg-white rounded-xl border border-zinc-200/60 p-1.5 shadow-3xs">
+                        <nav class="flex lg:flex-col overflow-x-auto lg:overflow-x-visible no-scrollbar p-0.5 gap-1.5">
                             @php
                                 $tabs = [
-                                    ['key' => 'experiences', 'label' => 'Experience', 'icon' => 'ph-briefcase', 'count' => $experiences->count()],
-                                    ['key' => 'education', 'label' => 'Education', 'icon' => 'ph-graduation-cap', 'count' => $educations->count()],
-                                    ['key' => 'skills', 'label' => 'Skills', 'icon' => 'ph-star', 'count' => $skills->count()],
-                                    ['key' => 'organizations', 'label' => 'Organizations', 'icon' => 'ph-users-three', 'count' => $organizations->count()],
-                                    ['key' => 'achievements', 'label' => 'Achievements', 'icon' => 'ph-trophy', 'count' => $achievements->count()],
-                                    ['key' => 'projects', 'label' => 'Projects', 'icon' => 'ph-code', 'count' => $projects->count()],
+                                    ['key' => 'experiences', 'label' => 'Work Experience', 'icon' => 'ph-briefcase', 'count' => $experiences->count(), 'color' => 'blue'],
+                                    ['key' => 'education', 'label' => 'Academic History', 'icon' => 'ph-graduation-cap', 'count' => $educations->count(), 'color' => 'emerald'],
+                                    ['key' => 'skills', 'label' => 'Skill Ecosystem', 'icon' => 'ph-star', 'count' => $skills->count(), 'color' => 'amber'],
+                                    ['key' => 'organizations', 'label' => 'Organizations', 'icon' => 'ph-users-three', 'count' => $organizations->count(), 'color' => 'violet'],
+                                    ['key' => 'achievements', 'label' => 'Achievements', 'icon' => 'ph-trophy', 'count' => $achievements->count(), 'color' => 'rose'],
+                                    ['key' => 'projects', 'label' => 'Projects & Coding', 'icon' => 'ph-code', 'count' => $projects->count(), 'color' => 'cyan'],
                                 ];
                             @endphp
 
                             @foreach($tabs as $tab)
+                            @php
+                                $colorClasses = [
+                                    'blue' => ['bg' => 'bg-blue-50 text-blue-600', 'border' => 'border-blue-100/50'],
+                                    'emerald' => ['bg' => 'bg-emerald-50 text-emerald-600', 'border' => 'border-emerald-100/50'],
+                                    'amber' => ['bg' => 'bg-amber-50 text-amber-600', 'border' => 'border-amber-100/50'],
+                                    'violet' => ['bg' => 'bg-violet-50 text-violet-600', 'border' => 'border-violet-100/50'],
+                                    'rose' => ['bg' => 'bg-rose-50 text-rose-600', 'border' => 'border-rose-100/50'],
+                                    'cyan' => ['bg' => 'bg-cyan-50 text-cyan-600', 'border' => 'border-cyan-100/50'],
+                                ];
+                                $color = $colorClasses[$tab['color']] ?? $colorClasses['blue'];
+                            @endphp
                             <button @click="activeTab = '{{ $tab['key'] }}'" 
-                                    :class="activeTab === '{{ $tab['key'] }}' ? 'bg-zinc-900 text-white' : 'text-zinc-600 hover:bg-zinc-50'"
-                                    class="flex-shrink-0 flex items-center justify-between px-3.5 py-2 rounded-md text-[11px] font-bold transition-all duration-150 group focus:outline-none w-full">
+                                    :class="activeTab === '{{ $tab['key'] }}' ? 'bg-gradient-to-r from-violet-600 to-indigo-650 text-white shadow-md shadow-indigo-600/10' : 'text-zinc-650 hover:bg-zinc-50/80 hover:translate-x-0.5'"
+                                    class="flex-shrink-0 flex items-center justify-between px-3 h-10 rounded-lg text-[11px] font-extrabold transition-all duration-200 group focus:outline-none w-full">
                                 <div class="flex items-center gap-2.5">
-                                    <i class="ph {{ $tab['icon'] }} text-sm"></i>
+                                    <div :class="activeTab === '{{ $tab['key'] }}' ? 'bg-white/15 text-white' : '{{ $color['bg'] }}'" class="w-6.5 h-6.5 rounded-md flex items-center justify-center transition-colors">
+                                        <i class="ph {{ $tab['icon'] }} text-xs sm:text-sm"></i>
+                                    </div>
                                     <span class="tracking-tight">{{ $tab['label'] }}</span>
                                 </div>
                                 @if($tab['count'] > 0)
-                                    <div :class="activeTab === '{{ $tab['key'] }}' ? 'bg-white/20 text-white' : 'bg-emerald-50 text-emerald-600 border border-emerald-100/50'" class="w-4 h-4 rounded-md flex items-center justify-center text-[9px] shrink-0">
+                                    <div :class="activeTab === '{{ $tab['key'] }}' ? 'bg-white/20 text-white' : 'bg-emerald-50 text-emerald-600 border border-emerald-100/50'" class="w-4.5 h-4.5 rounded-md flex items-center justify-center text-[9px] shrink-0 font-bold shadow-4xs">
                                         <i class="ph ph-check"></i>
                                     </div>
                                 @else
-                                    <div class="w-4 h-4 border border-zinc-200/80 rounded-md shrink-0"></div>
+                                    <div :class="activeTab === '{{ $tab['key'] }}' ? 'border-white/30' : 'border-zinc-200/80'" class="w-4.5 h-4.5 border rounded-md shrink-0 transition-colors"></div>
                                 @endif
                             </button>
                             @endforeach
@@ -147,9 +176,11 @@
 
                 {{-- Right Content: Form Panel --}}
                 <div class="lg:col-span-8">
-                    <div class="bg-white rounded-lg border border-zinc-200/60 overflow-hidden min-h-full flex flex-col shadow-3xs">
+                    <div class="bg-white rounded-xl border border-zinc-200/60 overflow-hidden min-h-full flex flex-col shadow-3xs relative">
+                        <!-- Top Glowing Line Accent -->
+                        <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-violet-500 via-indigo-500 to-cyan-500"></div>
                         
-                        <div class="p-4 sm:p-5 flex-1">
+                        <div class="p-4 sm:p-6 flex-1 pt-6 sm:pt-7">
                             <div x-show="activeTab === 'experiences'" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
                                 @livewire('cv-builder.experience-form')
                             </div>
@@ -176,12 +207,13 @@
                         </div>
 
                         {{-- Precision Footer --}}
-                        <div class="px-4 py-3 bg-zinc-50/30 border-t border-zinc-150/60 flex items-center gap-3">
-                            <div class="w-7 h-7 bg-white border border-zinc-200/50 rounded shadow-3xs flex items-center justify-center text-primary-500 shrink-0">
-                                <i class="ph ph-lightbulb text-base"></i>
+                        <div class="px-4.5 py-3.5 bg-gradient-to-r from-indigo-500/5 via-violet-500/5 to-transparent border-t border-zinc-150/60 flex items-center gap-3">
+                            <div class="w-7.5 h-7.5 bg-white border border-zinc-200/50 rounded-lg shadow-4xs flex items-center justify-center text-indigo-550 shrink-0">
+                                <i class="ph ph-lightbulb text-sm bg-gradient-to-br from-violet-600 to-indigo-650 bg-clip-text text-transparent"></i>
                             </div>
-                            <p class="text-[10px] text-zinc-500 font-medium leading-relaxed">
-                                <span class="font-bold text-zinc-700">Expert Advice:</span> Quantify your achievements with numbers to make your CV stand out.
+                            <p class="text-[10px] text-zinc-500 font-bold leading-normal">
+                                <span class="text-zinc-750 uppercase tracking-widest text-[8.5px] block mb-0.5">Expert Advice</span> 
+                                <span class="font-medium text-zinc-550">Quantify your achievements with numbers to make your CV stand out.</span>
                             </p>
                         </div>
                     </div>
