@@ -70,14 +70,18 @@
             }
 
             [x-cloak] { display: none !important; }
+
+            /* Customize Livewire Native Progress Bar to simple solid black without glow */
+            .livewire-progress-bar {
+                background-color: #000000 !important;
+                box-shadow: none !important;
+                height: 2px !important;
+            }
         </style>
     </head>
     <body class="font-sans antialiased bg-[#fafafa] text-slate-900"
           x-data="{ mobileSidebarOpen: false }"
           @keydown.escape="mobileSidebarOpen = false">
-        
-        {{-- Premium Notion-Style Top Progress Line Loader --}}
-        <div id="page-loader-bar" class="fixed top-0 left-0 right-0 h-[2px] z-[99999] pointer-events-none bg-black opacity-0" style="width: 0%; will-change: width, opacity;"></div>
 
 
         <div class="h-screen flex overflow-hidden">
@@ -255,42 +259,8 @@
                 });
             }
 
-            window.topLoaderTimer = window.topLoaderTimer || null;
-
-            function startTopLoader() {
-                const loader = document.getElementById('page-loader-bar');
-                if (!loader) return;
-                if (window.topLoaderTimer) clearTimeout(window.topLoaderTimer);
-
-                loader.style.transition = 'none';
-                loader.style.width = '0%';
-                loader.style.opacity = '1';
-                void loader.offsetWidth;
-
-                loader.style.transition = 'width 400ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms ease';
-                loader.style.width = '70%';
-            }
-
-            function finishTopLoader() {
-                const loader = document.getElementById('page-loader-bar');
-                if (!loader) return;
-                if (window.topLoaderTimer) clearTimeout(window.topLoaderTimer);
-
-                loader.style.transition = 'width 150ms ease-out, opacity 200ms ease';
-                loader.style.width = '100%';
-
-                window.topLoaderTimer = setTimeout(() => {
-                    loader.style.opacity = '0';
-                    setTimeout(() => {
-                        loader.style.width = '0%';
-                    }, 200);
-                }, 150);
-            }
-
             // Handle Livewire Navigation
-            document.addEventListener('livewire:navigate', startTopLoader);
             document.addEventListener('livewire:navigated', () => {
-                finishTopLoader();
                 initMagneticButtons();
                 if (window.Alpine && Alpine.store('sidebar')) {
                     Alpine.store('sidebar').close();
