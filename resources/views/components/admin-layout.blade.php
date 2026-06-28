@@ -191,6 +191,21 @@
                         </div>
                     </a>
 
+                    <!-- User Survey -->
+                    <a href="{{ route('admin.survey.index') }}"
+                       class="group relative flex items-center px-2 py-1.5 rounded-md text-xs font-medium transition-colors {{ request()->routeIs('admin.survey.index') ? 'bg-zinc-100 text-zinc-900 font-semibold' : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900' }}"
+                       :class="sidebarCollapsed ? 'justify-center' : ''">
+                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-5">
+                            <i class="text-base {{ request()->routeIs('admin.survey.index') ? 'ph-bold ph-heart text-zinc-900' : 'ph ph-heart' }}"></i>
+                        </div>
+                        <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">User Survey</span>
+                        
+                        <!-- Tooltip -->
+                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            User Survey
+                        </div>
+                    </a>
+
                     <!-- Section Divider -->
                     <div class="py-2">
                         <div class="border-t border-zinc-150"></div>
@@ -258,6 +273,7 @@
                     elseif(request()->routeIs('admin.monetization')) $pageTitle = 'Monetization';
                     elseif(request()->routeIs('admin.integration-hub')) $pageTitle = 'Integration Hub';
                     elseif(request()->routeIs('admin.database-maintenance')) $pageTitle = 'Database & Storage';
+                    elseif(request()->routeIs('admin.survey.index')) $pageTitle = 'User Survey & Feedback';
                 @endphp
                 
                 <!-- Sticky Global Header (Cupertino-Notion) -->

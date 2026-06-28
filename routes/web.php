@@ -382,6 +382,10 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         return redirect()->route('admin.monetization')
             ->with('success', 'Premium price updated successfully to Rp ' . number_format($validated['premium_price'], 0, ',', '.'));
     })->name('update-premium-price');
+
+    // Admin Survey Panel
+    Route::get('/survey', [\App\Http\Controllers\Admin\AdminSurveyController::class, 'index'])->name('survey.index');
+    Route::post('/survey/toggle', [\App\Http\Controllers\Admin\AdminSurveyController::class, 'toggle'])->name('survey.toggle');
     
     // Users management
     Route::get('/users', function () {
@@ -569,6 +573,12 @@ Route::get('/test/error/{code}', function ($code) {
     }
     abort((int)$code);
 })->where('code', '[0-9]+')->name('test.error');
+
+// User satisfaction survey routes
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/survey', [\App\Http\Controllers\SatisfactionSurveyController::class, 'show'])->name('survey.show');
+    Route::post('/survey', [\App\Http\Controllers\SatisfactionSurveyController::class, 'store'])->name('survey.submit');
+});
 
 require __DIR__.'/auth.php';
 
