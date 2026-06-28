@@ -37,7 +37,7 @@
                             <span class="text-[9px] font-mono text-zinc-300">•</span>
                             <span class="text-[9px] font-mono text-zinc-400">Just Now</span>
                         </div>
-                        <div class="bg-zinc-900 text-white text-xs font-medium rounded-2xl rounded-tr-none px-4 py-2.5 shadow-sm space-y-2">
+                        <div class="bg-zinc-900 text-white text-xs font-medium rounded-lg rounded-tr-none px-4 py-2.5 shadow-sm space-y-2">
                             <p class="leading-relaxed">Halo TraKerja AI! Tolong analisis kecocokan profil profesional saya dengan target pekerjaan yang ingin saya lamar.</p>
                             @if(isset($job_description))
                                 <div class="bg-white/5 border border-white/10 rounded-md p-2 text-[10px] text-zinc-300">
@@ -69,7 +69,7 @@
                             <span class="text-[9px] font-mono text-zinc-400">Just Now</span>
                         </div>
                         
-                        <div class="bg-white border border-zinc-200/80 rounded-2xl rounded-tl-none p-4 shadow-sm w-full space-y-4">
+                        <div class="bg-white border border-zinc-200/80 rounded-lg rounded-tl-none p-4 shadow-sm w-full space-y-4">
                             <p class="text-xs text-zinc-650 leading-relaxed text-justify">Halo! Saya telah melakukan analisis mendalam terhadap profil Anda. Berikut adalah ringkasan skor dan executive summary kecocokan profil Anda:</p>
                             
                             {{-- Executive Summary Bento Layout --}}
@@ -82,11 +82,11 @@
                                             <circle class="text-zinc-900 transition-all duration-1000 ease-out" stroke-width="8" stroke-dasharray="264" stroke-dashoffset="{{ 264 * (1 - 85/100) }}" stroke-linecap="round" stroke="currentColor" fill="none" r="42" cx="50" cy="50" />
                                         </svg>
                                         <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                            <span class="text-sm font-bold text-zinc-900 tracking-tight">85<span class="text-[9px] font-bold text-zinc-450">%</span></span>
+                                            <span class="text-sm font-bold text-zinc-900 tracking-tight">85<span class="text-[9px] font-bold text-zinc-455">%</span></span>
                                         </div>
                                     </div>
                                     <p class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-0.5">Match Score</p>
-                                    <span class="px-1.5 py-0.2 bg-emerald-50 text-emerald-700 text-[8px] font-mono font-bold uppercase tracking-wider rounded border border-emerald-150">Strong</span>
+                                    <span class="px-1.5 py-0.2 bg-emerald-50 text-emerald-750 text-[8px] font-mono font-bold uppercase tracking-wider rounded border border-emerald-150">Strong</span>
                                 </div>
 
                                 {{-- Text Summary --}}
@@ -112,7 +112,7 @@
                             <span class="text-[9px] font-mono text-zinc-300">•</span>
                             <span class="text-[9px] font-mono text-zinc-400">Just Now</span>
                         </div>
-                        <div class="bg-zinc-900 text-white text-xs font-medium rounded-2xl rounded-tr-none px-4 py-2">
+                        <div class="bg-zinc-900 text-white text-xs font-medium rounded-lg rounded-tr-none px-4 py-2">
                             <p class="leading-relaxed">Bagaimana dengan analisis detail per bagian CV saya?</p>
                         </div>
                     </div>
@@ -137,10 +137,10 @@
                             <span class="text-[9px] font-mono text-zinc-400">Just Now</span>
                         </div>
                         
-                        <div class="bg-white border border-zinc-200/80 rounded-2xl rounded-tl-none p-4 shadow-sm w-full space-y-4">
-                            <p class="text-xs text-zinc-650 leading-relaxed text-justify">Tentu, ini adalah analisis kritis untuk masing-masing bagian CV Anda. Anda dapat berpindah tab di bawah untuk melihat rincian hasil revisi serta pemikiran analisis saya:</p>
+                        <div class="bg-white border border-zinc-200/80 rounded-lg rounded-tl-none p-4 shadow-sm w-full space-y-4">
+                            <p class="text-xs text-zinc-650 leading-relaxed text-justify">Tentu, ini adalah analisis kritis untuk masing-masing bagian CV Anda. Anda dapat memilih tab di bawah untuk melihat rincian hasil revisi serta pemikiran analisis saya:</p>
                             
-                            {{-- Interactive Tabs Component --}}
+                            {{-- Segmented Tab Menu --}}
                             @php
                                 $sections = [
                                     'profil' => ['title' => 'Profile & Identity', 'icon' => 'ph-identification-card'],
@@ -152,7 +152,6 @@
                                     'prestasi_dan_publikasi' => ['title' => 'Awards & Impact', 'icon' => 'ph-medal'],
                                 ];
                                 
-                                // Filter sections that have data
                                 $validSections = [];
                                 foreach($sections as $key => $section) {
                                     if(isset($result[$key]) && (!empty($result[$key]['teks_revisi']) || !empty($result[$key]['alasan_perubahan']))) {
@@ -164,13 +163,13 @@
 
                             @if(count($validSections) > 0)
                                 <div x-data="{ activeTab: '{{ $firstKey }}' }" class="space-y-4 w-full">
-                                    {{-- Navigation pills (horizontal scrolling) --}}
-                                    <div class="flex items-center gap-1.5 overflow-x-auto pb-2 border-b border-zinc-150 scrollbar-none">
+                                    {{-- Segmented Navigation List --}}
+                                    <div class="inline-flex items-center gap-1 p-1 bg-zinc-100 border border-zinc-200/50 rounded-lg max-w-full overflow-x-auto scrollbar-none w-full">
                                         @foreach($validSections as $key => $section)
                                             <button @click="activeTab = '{{ $key }}'" 
                                                     type="button"
-                                                    :class="activeTab === '{{ $key }}' ? 'bg-zinc-900 text-white' : 'bg-zinc-50 border border-zinc-200 text-zinc-600 hover:bg-zinc-100'"
-                                                    class="px-2.5 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all whitespace-nowrap shrink-0 flex items-center gap-1">
+                                                    :class="activeTab === '{{ $key }}' ? 'bg-white text-zinc-900 shadow-sm border border-zinc-200/50 font-bold' : 'text-zinc-500 hover:text-zinc-800 border border-transparent font-medium'"
+                                                    class="flex-1 px-3 py-1.5 rounded-md text-[10px] uppercase tracking-wider transition-all whitespace-nowrap flex items-center justify-center gap-1.5">
                                                 <i class="ph {{ $section['icon'] }} text-xs"></i>
                                                 <span>{{ $section['title'] }}</span>
                                             </button>
@@ -225,7 +224,7 @@
                                 <span class="text-[9px] font-mono text-zinc-300">•</span>
                                 <span class="text-[9px] font-mono text-zinc-400">Just Now</span>
                             </div>
-                            <div class="bg-zinc-900 text-white text-xs font-medium rounded-2xl rounded-tr-none px-4 py-2">
+                            <div class="bg-zinc-900 text-white text-xs font-medium rounded-lg rounded-tr-none px-4 py-2">
                                 <p class="leading-relaxed">Apa rencana aksi yang disarankan untuk meningkatkan profil saya?</p>
                             </div>
                         </div>
@@ -250,17 +249,19 @@
                                 <span class="text-[9px] font-mono text-zinc-400">Just Now</span>
                             </div>
                             
-                            <div class="bg-white border border-zinc-200/80 rounded-2xl rounded-tl-none p-4 shadow-sm w-full space-y-4">
+                            <div class="bg-white border border-zinc-200/80 rounded-lg rounded-tl-none p-4 shadow-sm w-full space-y-4">
                                 <p class="text-xs text-zinc-650 leading-relaxed text-justify">Tentu! Berikut adalah rencana aksi langkah-demi-langkah (Roadmap to 95%+) untuk menyempurnakan profil Anda agar sangat menarik bagi rekruter:</p>
                                 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     @foreach($result['rencana_aksi'] as $index => $action)
-                                        <div class="flex gap-2.5 p-3 rounded-lg border border-zinc-200 bg-zinc-50/50 hover:bg-white transition-colors">
-                                            <div class="w-5.5 h-5.5 shrink-0 bg-zinc-900 text-white rounded flex items-center justify-center text-[10px] font-bold font-mono">
+                                        <div class="flex items-start gap-3 p-3 bg-zinc-50/50 border border-zinc-200 hover:bg-white rounded-lg hover:border-zinc-300 transition-colors">
+                                            <div class="w-5 h-5 rounded-full bg-zinc-100 border border-zinc-250 flex items-center justify-center text-[10px] font-bold text-zinc-700 shrink-0 font-mono">
                                                 {{ $index + 1 }}
                                             </div>
-                                            <div class="pt-0.5">
-                                                <p class="text-xs font-semibold text-zinc-700 leading-relaxed text-justify">{{ $action }}</p>
+                                            <div class="min-w-0 flex-1">
+                                                <p class="text-xs font-semibold text-zinc-800 leading-relaxed text-justify">
+                                                    {{ preg_replace('/^Langkah\s+\d+:\s*/i', '', $action) }}
+                                                </p>
                                             </div>
                                         </div>
                                     @endforeach
@@ -305,6 +306,7 @@
     </style>
 
     <script>
+        // Copy functionality
         function copyToClipboard(btn) {
             const content = btn.closest('div').nextElementSibling.innerText;
             navigator.clipboard.writeText(content).then(() => {
