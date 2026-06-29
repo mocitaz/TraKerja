@@ -49,13 +49,56 @@
                 </button>
             </div>
         </div>
+
+        <!-- Row 2: Advanced filters -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3 pt-3 border-t border-zinc-100">
+            <!-- Bidang Pekerjaan Dropdown -->
+            <div>
+                <label class="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Bidang Kerja</label>
+                <select wire:model.live="selectedField" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-hidden focus:border-zinc-950">
+                    <option value="">Semua Bidang</option>
+                    <option value="Backend Developer">Backend Developer</option>
+                    <option value="Frontend Developer">Frontend Developer</option>
+                    <option value="Fullstack Developer">Fullstack Developer</option>
+                    <option value="Mobile Developer">Mobile Developer</option>
+                    <option value="DevOps / Cloud">DevOps / Cloud</option>
+                    <option value="QA / Testing">QA / Testing</option>
+                    <option value="Data & AI">Data & AI</option>
+                    <option value="Software Engineer">Software Engineer</option>
+                </select>
+            </div>
+
+            <!-- Jurusan Dropdown -->
+            <div>
+                <label class="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Jurusan Terkait</label>
+                <select wire:model.live="selectedMajor" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-hidden focus:border-zinc-950">
+                    <option value="">Semua Jurusan</option>
+                    <option value="Teknik Informatika">Teknik Informatika</option>
+                    <option value="Sistem Informasi">Sistem Informasi</option>
+                    <option value="Matematika / Statistika">Matematika / Statistika</option>
+                    <option value="Teknik Elektro">Teknik Elektro</option>
+                    <option value="Semua Jurusan IT">Semua Jurusan IT</option>
+                </select>
+            </div>
+
+            <!-- Tipe Kerja Dropdown -->
+            <div>
+                <label class="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Tipe Kerja</label>
+                <select wire:model.live="selectedWorkType" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-hidden focus:border-zinc-950">
+                    <option value="">Semua Tipe</option>
+                    <option value="Remote">Remote</option>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="Onsite">Onsite</option>
+                </select>
+            </div>
+        </div>
     </div>
 
     <!-- Active Job Postings Grid -->
     @if ($postings->count() > 0)
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
             @foreach ($postings as $job)
-                <div class="bg-white rounded-xl border border-zinc-200 shadow-3xs p-4 flex flex-col justify-between hover:border-zinc-350 transition-all duration-150 h-[190px]">
+                <div class="bg-white rounded-xl border border-zinc-200 shadow-3xs p-4 flex flex-col justify-between hover:border-zinc-350 transition-all duration-150 min-h-[220px] h-auto">
                     <div>
                         <!-- Header Card -->
                         <div class="flex items-start justify-between gap-2 mb-2">
@@ -66,16 +109,35 @@
                             
                             <!-- Platform Badges -->
                             @if (str_contains($job->scraperSource->target_domain, 'linkedin'))
-                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-blue-50 text-blue-700 border border-blue-100 uppercase font-mono">
+                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-blue-50 text-blue-700 border border-blue-100 uppercase font-mono shrink-0">
                                     LinkedIn
                                 </span>
                             @elseif (str_contains($job->scraperSource->target_domain, 'jobstreet'))
-                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-red-50 text-red-700 border border-red-100 uppercase font-mono">
+                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-red-50 text-red-700 border border-red-100 uppercase font-mono shrink-0">
                                     JobStreet
                                 </span>
                             @else
-                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 uppercase font-mono">
+                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 uppercase font-mono shrink-0">
                                     Kalibrr
+                                </span>
+                            @endif
+                        </div>
+
+                        <!-- Category Tags -->
+                        <div class="flex flex-wrap gap-1 mb-2.5">
+                            @if($job->category_field)
+                                <span class="inline-flex items-center px-1.5 py-0.5 rounded-sm text-[8px] font-medium bg-zinc-50 text-zinc-600 border border-zinc-150">
+                                    {{ $job->category_field }}
+                                </span>
+                            @endif
+                            @if($job->category_major)
+                                <span class="inline-flex items-center px-1.5 py-0.5 rounded-sm text-[8px] font-medium bg-zinc-50 text-zinc-600 border border-zinc-150">
+                                    {{ $job->category_major }}
+                                </span>
+                            @endif
+                            @if($job->work_type)
+                                <span class="inline-flex items-center px-1.5 py-0.5 rounded-sm text-[8px] font-bold bg-amber-50 text-amber-800 border border-amber-250 uppercase font-mono">
+                                    {{ $job->work_type }}
                                 </span>
                             @endif
                         </div>

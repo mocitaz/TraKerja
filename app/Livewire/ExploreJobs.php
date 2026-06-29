@@ -12,10 +12,16 @@ class ExploreJobs extends Component
 
     public $search = '';
     public $selectedPlatform = '';
+    public $selectedField = '';
+    public $selectedMajor = '';
+    public $selectedWorkType = '';
 
     protected $queryString = [
         'search' => ['except' => ''],
         'selectedPlatform' => ['except' => ''],
+        'selectedField' => ['except' => ''],
+        'selectedMajor' => ['except' => ''],
+        'selectedWorkType' => ['except' => ''],
     ];
 
     public function mount()
@@ -31,6 +37,21 @@ class ExploreJobs extends Component
     }
 
     public function updatingSelectedPlatform()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSelectedField()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSelectedMajor()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSelectedWorkType()
     {
         $this->resetPage();
     }
@@ -103,6 +124,18 @@ class ExploreJobs extends Component
             $query->whereHas('scraperSource', function($q) {
                 $q->where('target_domain', 'like', '%' . $this->selectedPlatform . '%');
             });
+        }
+
+        if (!empty($this->selectedField)) {
+            $query->where('category_field', $this->selectedField);
+        }
+
+        if (!empty($this->selectedMajor)) {
+            $query->where('category_major', $this->selectedMajor);
+        }
+
+        if (!empty($this->selectedWorkType)) {
+            $query->where('work_type', $this->selectedWorkType);
         }
 
         $postings = $query->orderBy('created_at', 'desc')->paginate(12);
