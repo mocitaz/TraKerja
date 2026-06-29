@@ -119,13 +119,26 @@ class ScraperSource extends Model
                 return [];
             }
             
-            preg_match_all('/href="([^"]*?' . preg_quote($this->target_domain, '/') . '[^"]*?)"/i', $html, $matches);
+            // Parse host from seed_url to handle relative paths
+            $parsedUrl = parse_url($this->seed_url);
+            $scheme = $parsedUrl['scheme'] ?? 'https';
+            $hostName = $parsedUrl['host'] ?? $this->target_domain;
+            $baseUrl = $scheme . '://' . $hostName;
+
+            preg_match_all('/href="([^"]*)"/i', $html, $matches);
             
-            $urls = array_unique($matches[1] ?? []);
+            $rawUrls = array_unique($matches[1] ?? []);
             $filteredUrls = [];
             
-            foreach ($urls as $url) {
-                $url = html_entity_decode($url);
+            foreach ($rawUrls as $url) {
+                $url = html_entity_decode(trim($url));
+                
+                // Convert relative URLs to absolute
+                if (str_starts_with($url, '/') && !str_starts_with($url, '//')) {
+                    $url = $baseUrl . $url;
+                } elseif (str_starts_with($url, '//')) {
+                    $url = 'https:' . $url;
+                }
                 
                 if (str_contains($this->target_domain, 'linkedin.com')) {
                     if (str_contains($url, '/jobs/view/') && !str_contains($url, 'signup') && !str_contains($url, 'login')) {
@@ -140,7 +153,9 @@ class ScraperSource extends Model
                         $filteredUrls[] = $url;
                     }
                 } else {
-                    $filteredUrls[] = $url;
+                    if (str_contains($url, $this->target_domain)) {
+                        $filteredUrls[] = $url;
+                    }
                 }
             }
             
