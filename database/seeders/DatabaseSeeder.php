@@ -36,8 +36,5 @@ class DatabaseSeeder extends Seeder
 
         // Seed default scraper sources
         $this->call(ScraperSourceSeeder::class);
-
-        // Seed dummy job postings for explore view testing
-        $this->call(DummyJobPostingSeeder::class);
     }
 }
