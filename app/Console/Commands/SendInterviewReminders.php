@@ -31,11 +31,11 @@ class SendInterviewReminders extends Command
     {
         $this->info('Checking for upcoming interviews...');
         
-        // Get interviews happening in the next 24 hours
-        $tomorrow = Carbon::now()->addDay();
-        $dayAfterTomorrow = Carbon::now()->addDays(2);
+        // Get interviews happening on the next calendar day (tomorrow)
+        $tomorrowStart = Carbon::tomorrow('Asia/Jakarta')->startOfDay();
+        $tomorrowEnd = Carbon::tomorrow('Asia/Jakarta')->endOfDay();
         
-        $applications = JobApplication::whereBetween('interview_date', [$tomorrow, $dayAfterTomorrow])
+        $applications = JobApplication::whereBetween('interview_date', [$tomorrowStart, $tomorrowEnd])
             ->whereNotNull('interview_date')
             ->with('user')
             ->get();
@@ -43,14 +43,20 @@ class SendInterviewReminders extends Command
         $count = 0;
         
         foreach ($applications as $application) {
+            $user = $application->user;
+            if (!$user || !$user->canAccessEmailNotifications() || !$user->notify_interview_reminders) {
+                $this->info("Skipped {$application->company_name} for user {$user->email} (limit or preferences disabled)");
+                continue;
+            }
+            
             try {
-                Mail::to($application->user->email)
+                Mail::to($user->email)
                     ->send(new InterviewReminderMail($application));
                 
                 $count++;
-                $this->info("✓ Sent reminder to {$application->user->email} for {$application->company}");
+                $this->info("✓ Sent reminder to {$user->email} for {$application->company_name}");
             } catch (\Exception $e) {
-                $this->error("✗ Failed to send reminder to {$application->user->email}: {$e->getMessage()}");
+                $this->error("✗ Failed to send reminder to {$user->email}: {$e->getMessage()}");
             }
         }
         

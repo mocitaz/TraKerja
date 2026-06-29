@@ -19,7 +19,9 @@ return new class extends Migration
             ->update(['payment_status' => 'free']);
 
         // Modify the column to use ENUM with valid values
-        DB::statement("ALTER TABLE users MODIFY COLUMN payment_status ENUM('free', 'paid', 'expired') NOT NULL DEFAULT 'free'");
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement("ALTER TABLE users MODIFY COLUMN payment_status ENUM('free', 'paid', 'expired') NOT NULL DEFAULT 'free'");
+        }
     }
 
     /**
@@ -28,6 +30,8 @@ return new class extends Migration
     public function down(): void
     {
         // Revert back to string column
-        DB::statement("ALTER TABLE users MODIFY COLUMN payment_status VARCHAR(255) NOT NULL DEFAULT 'free'");
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement("ALTER TABLE users MODIFY COLUMN payment_status VARCHAR(255) NOT NULL DEFAULT 'free'");
+        }
     }
 };

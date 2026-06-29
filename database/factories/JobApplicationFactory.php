@@ -27,12 +27,10 @@ class JobApplicationFactory extends Factory
      */
     public function definition(): array
     {
-        $platform = CustomPlatform::factory()->create();
-        $status = CustomStatus::factory()->create();
         $platforms = ['LinkedIn', 'JobStreet', 'Kalibrr', 'Glints', 'Indeed', 'Glassdoor', 'Other'];
         $statuses = ['On Process', 'Rejected', 'Accepted', 'Withdrawn'];
         $stages = ['Applied', 'Phone Screening', 'Technical Interview', 'HR Interview', 'Final Interview', 'Offer'];
-        $careerLevels = ['Full Time', 'Part Time', 'Contract', 'Internship', 'Freelance'];
+        $careerLevels = ['Intern', 'Full Time', 'Contract', 'MT', 'Freelance'];
         $companies = ['Google', 'Microsoft', 'Amazon', 'Meta', 'Apple', 'Netflix', 'Spotify', 'Uber', 'Airbnb', 'Tesla'];
 
         return [
@@ -40,8 +38,6 @@ class JobApplicationFactory extends Factory
             'company_name' => $this->faker->randomElement($companies),
             'position' => $this->faker->jobTitle(),
             'location' => $this->faker->city() . ', ' . $this->faker->state(),
-            'platform_id' => $platform->id,
-            'status_id' => $status->id,
             'platform' => $this->faker->randomElement($platforms),
             'status' => $this->faker->randomElement(['Applied', 'Interview', 'Rejected', 'Accepted']),
             'application_status' => $this->faker->randomElement($statuses),

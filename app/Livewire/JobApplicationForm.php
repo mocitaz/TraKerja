@@ -1380,6 +1380,7 @@ class JobApplicationForm extends Component
 
         try {
             if ($this->isEditing) {
+                $originalInterviewDate = $this->jobApplication->interview_date;
                 $this->jobApplication->update($data);
                 session()->flash('message', 'Job application updated successfully!');
                 
@@ -1396,6 +1397,24 @@ class JobApplicationForm extends Component
                 // Dispatch interview-updated event for calendar refresh
                 if (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && $this->interview_date) {
                     $this->dispatch('interview-updated');
+                    
+                    // Check if interview was newly scheduled or rescheduled
+                    $newInterviewDate = $this->jobApplication->interview_date;
+                    if ($newInterviewDate) {
+                        $shouldSend = false;
+                        if (!$originalInterviewDate) {
+                            $shouldSend = true;
+                        } else {
+                            $origStr = $originalInterviewDate instanceof \Carbon\Carbon ? $originalInterviewDate->format('Y-m-d H:i') : \Carbon\Carbon::parse($originalInterviewDate)->format('Y-m-d H:i');
+                            $newStr = $newInterviewDate instanceof \Carbon\Carbon ? $newInterviewDate->format('Y-m-d H:i') : \Carbon\Carbon::parse($newInterviewDate)->format('Y-m-d H:i');
+                            if ($origStr !== $newStr) {
+                                $shouldSend = true;
+                            }
+                        }
+                        if ($shouldSend) {
+                            $this->sendInterviewScheduledEmail($this->jobApplication);
+                        }
+                    }
                 }
 
                 if ($this->application_status === 'Accepted') {
@@ -1418,6 +1437,7 @@ class JobApplicationForm extends Component
                 // Dispatch interview-updated event for calendar refresh
                 if (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && $this->interview_date) {
                     $this->dispatch('interview-updated');
+                    $this->sendInterviewScheduledEmail($newJob);
                 }
 
                 if ($this->application_status === 'Accepted') {
@@ -1754,6 +1774,19 @@ class JobApplicationForm extends Component
         $this->notes = '';
         $this->isEditing = false;
         $this->jobApplication = null;
+    }
+
+    protected function sendInterviewScheduledEmail($jobApplication)
+    {
+        try {
+            $user = $jobApplication->user;
+            if ($user && $user->canAccessEmailNotifications() && $user->notify_interview_reminders) {
+                \Illuminate\Support\Facades\Mail::to($user->email)
+                    ->send(new \App\Mail\InterviewScheduledMail($jobApplication));
+            }
+        } catch (\Exception $e) {
+            Log::error('Failed to send interview scheduled email', ['error' => $e->getMessage()]);
+        }
     }
 
     public function render()
