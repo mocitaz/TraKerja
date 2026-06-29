@@ -292,81 +292,80 @@
                                 $matchPercent = round(($matchedCount / $totalCount) * 100);
                             }
                         @endphp
-                        <div class="bg-white rounded-xl border border-zinc-200/80 shadow-3xs p-4 flex flex-col justify-between hover:border-zinc-350 hover:shadow-2xs transition-all duration-150 min-h-[260px] h-auto group relative">
+                        <div class="bg-white rounded-xl border border-zinc-200/80 shadow-3xs p-4 flex flex-col justify-between hover:border-zinc-350 hover:shadow-2xs transition-all duration-150 min-h-[220px] h-auto group relative">
                             <div>
                                 <!-- Header Card with Dynamic Company Logo and Portal Badge -->
-                                <div class="flex gap-3 items-start mb-3">
-                                    <div class="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm shrink-0 border uppercase shadow-3xs select-none {{ $colorClass }}">
+                                <div class="flex gap-2.5 items-start mb-3">
+                                    <div class="w-9 h-9 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 border uppercase shadow-3xs select-none {{ $colorClass }}">
                                         {{ $firstLetter }}
                                     </div>
                                     <div class="min-w-0 flex-1">
                                         <div class="flex items-center justify-between gap-1">
-                                            <h3 class="text-xs font-bold text-zinc-900 truncate leading-tight tracking-tight hover:text-zinc-800 transition-colors" title="{{ $job->title }}">
+                                            <h3 class="text-xs font-bold text-zinc-900 truncate leading-tight tracking-tight hover:text-zinc-850 transition-colors" title="{{ $job->title }}">
                                                 {{ $job->title }}
                                             </h3>
                                             
                                             <!-- Match Badge -->
                                             @if(auth()->check() && $matchPercent !== null)
                                                 <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold tracking-tight border uppercase font-mono shrink-0
-                                                    {{ $matchPercent >= 80 ? 'bg-emerald-50 text-emerald-700 border-emerald-250' : ($matchPercent >= 50 ? 'bg-amber-50 text-amber-700 border-amber-250' : 'bg-zinc-50 text-zinc-650 border-zinc-200') }}">
+                                                    {{ $matchPercent >= 80 ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : ($matchPercent >= 50 ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-zinc-50 text-zinc-650 border-zinc-200') }}">
                                                     {{ $matchPercent }}% Match
                                                 </span>
                                             @endif
                                         </div>
                                         <div class="flex items-center gap-1.5 mt-1 select-none">
-                                            <span class="text-[10px] font-medium text-zinc-550 truncate">{{ $job->company_name }}</span>
+                                            <span class="text-[10px] font-semibold text-zinc-500 truncate">{{ $job->company_name }}</span>
                                             <span class="text-zinc-300">&bull;</span>
-                                            <span class="inline-flex items-center gap-0.5 px-1 py-0.2 rounded text-[8px] font-bold uppercase tracking-tight border {{ $portalStyle }} shrink-0">
-                                                <i class="{{ $portalIcon }} text-[9px] shrink-0"></i>
-                                                {{ $portalName }}
+                                            <span class="w-5 h-5 rounded-full border {{ $portalStyle }} flex items-center justify-center shrink-0 shadow-3xs" title="{{ $portalName }}">
+                                                <i class="{{ $portalIcon }} text-[9px]"></i>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Category & Location Tags -->
-                                <div class="flex flex-wrap gap-1 mb-2.5 select-none">
-                                    @if($job->category_field)
-                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded-md text-[8px] font-bold bg-primary-50 text-primary-700 border border-primary-100/60 uppercase tracking-tight">
-                                            {{ $job->category_field }}
+                                <div class="flex flex-wrap gap-1 mb-2 select-none">
+                                    @if($job->category_field && strtolower($job->category_field) !== 'semua bidang')
+                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8.5px] font-semibold bg-primary-50 text-primary-700 border border-primary-100/50">
+                                            {{ Str::title(str_replace('Sektor ', '', $job->category_field)) }}
                                         </span>
                                     @endif
-                                    @if($job->category_major)
-                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded-md text-[8px] font-bold bg-blue-50 text-blue-700 border border-blue-150 uppercase tracking-tight">
-                                            {{ $job->category_major }}
+                                    @if($job->category_major && strtolower($job->category_major) !== 'semua jurusan')
+                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8.5px] font-semibold bg-blue-50/70 text-blue-700 border border-blue-100/50">
+                                            {{ Str::title($job->category_major) }}
                                         </span>
                                     @endif
                                     @if($job->work_type)
-                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded-md text-[8px] font-bold bg-amber-50 text-amber-705 border border-amber-200/65 uppercase tracking-tight">
-                                            {{ $job->work_type }}
+                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8.5px] font-bold bg-amber-50 text-amber-700 border border-amber-200/50">
+                                            {{ Str::title($job->work_type) }}
                                         </span>
                                     @endif
                                     @if($job->location)
-                                        <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-[8px] font-bold bg-zinc-50 text-zinc-600 border border-zinc-200/80 uppercase tracking-tight" title="{{ $job->location }}">
+                                        <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[8.5px] font-semibold bg-zinc-50 text-zinc-650 border border-zinc-200/80" title="{{ $job->location }}">
                                             <i class="ph ph-map-pin text-[9px] shrink-0 text-zinc-400"></i>
-                                            {{ $job->location }}
+                                            {{ Str::title($job->location) }}
                                         </span>
                                     @endif
                                 </div>
 
                                 <!-- Tech Stack Tags -->
                                 @if(!empty($jobStack))
-                                    <div class="flex flex-wrap gap-1 mb-2.5 select-none">
-                                        @foreach(array_slice($jobStack, 0, 4) as $tech)
-                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded-md text-[8px] font-bold bg-zinc-50 text-zinc-500 border border-zinc-150 uppercase tracking-tight">
+                                    <div class="flex flex-wrap gap-1 mb-2 select-none">
+                                        @foreach(array_slice($jobStack, 0, 3) as $tech)
+                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-zinc-50 text-zinc-500 border border-zinc-150 uppercase tracking-tight">
                                                 {{ $tech }}
                                             </span>
                                         @endforeach
-                                        @if(count($jobStack) > 4)
-                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded-md text-[8px] font-bold bg-zinc-50 text-zinc-400 border border-zinc-150">
-                                                +{{ count($jobStack) - 4 }}
+                                        @if(count($jobStack) > 3)
+                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-zinc-50 text-zinc-400 border border-zinc-150">
+                                                +{{ count($jobStack) - 3 }}
                                             </span>
                                         @endif
                                     </div>
                                 @endif
 
                                 <!-- Snippet description -->
-                                <p class="text-[10px] text-zinc-450 leading-normal line-clamp-3 mb-3">
+                                <p class="text-[10px] text-zinc-400 leading-relaxed line-clamp-2 mb-3 mt-1.5 italic font-medium">
                                     {{ strip_tags($job->description) }}
                                 </p>
                             </div>
@@ -382,9 +381,9 @@
                                     @else
                                         <button type="button" 
                                                 wire:click="initiateReportExpired({{ $job->id }})" 
-                                                class="text-[9px] text-zinc-400 hover:text-rose-600 transition-colors flex items-center gap-1 font-semibold uppercase tracking-wider focus:outline-hidden">
-                                            <i class="ph ph-warning-circle text-xs"></i>
-                                            Laporkan Ditutup
+                                                class="text-[9px] text-zinc-400 hover:text-rose-600 transition-colors flex items-center gap-1 font-bold uppercase tracking-wider focus:outline-hidden">
+                                            <i class="ph ph-warning-circle text-[11px] shrink-0"></i>
+                                            Laporkan
                                         </button>
                                     @endif
                                 </div>
@@ -403,15 +402,15 @@
                                     @else
                                         <button type="button" 
                                                 wire:click="initiateTrackJob({{ $job->id }})" 
-                                                class="px-2.5 h-[26px] bg-primary-50 text-zinc-800 hover:bg-primary-100 border border-primary-200/60 text-[9.5px] font-bold rounded-md shadow-3xs transition-all active:scale-97 hover:shadow-2xs uppercase tracking-wider flex items-center justify-center focus:outline-hidden">
+                                                class="px-3 h-[24px] bg-primary-50 text-primary-750 hover:bg-primary-100 border border-primary-200/50 text-[9.5px] font-bold rounded-md shadow-3xs transition-all active:scale-97 hover:shadow-2xs uppercase tracking-wider flex items-center justify-center focus:outline-hidden">
                                             Track
                                         </button>
                                     @endif
                                     <a href="{{ $job->raw_url }}" 
                                        target="_blank" 
-                                       class="px-3 h-[26px] bg-zinc-950 text-white hover:bg-zinc-800 text-[9.5px] font-bold rounded-md shadow-3xs transition-all active:scale-97 hover:shadow-2xs uppercase tracking-wider flex items-center justify-center gap-0.5">
+                                       class="px-3.5 h-[24px] bg-zinc-950 text-white hover:bg-zinc-800 text-[9.5px] font-bold rounded-md shadow-3xs transition-all active:scale-97 hover:shadow-2xs uppercase tracking-wider flex items-center justify-center gap-0.5">
                                         Lamar
-                                        <i class="ph-bold ph-arrow-up-right text-[10px]"></i>
+                                        <i class="ph-bold ph-arrow-up-right text-[9px]"></i>
                                     </a>
                                 </div>
                             </div>
