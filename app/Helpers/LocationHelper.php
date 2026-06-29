@@ -96,7 +96,8 @@ class LocationHelper
         // 1. Check for remote/wfh
         foreach (self::$remoteKeywords as $keyword) {
             if (stripos($locationText, $keyword) !== false || 
-                stripos($title, $keyword) !== false) {
+                stripos($title, $keyword) !== false ||
+                stripos(substr($description, 0, 1000), $keyword) !== false) {
                 return [
                     'province' => 'Remote / WFH',
                     'city' => 'Remote'
