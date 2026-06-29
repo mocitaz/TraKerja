@@ -15,6 +15,16 @@ return new class extends Migration
             $table->string('location')->nullable()->after('category_major');
             $table->index('location');
         });
+
+        // Auto-backfill locations for already scraped job postings using title/description scanning
+        \App\Models\JobPosting::chunk(100, function ($postings) {
+            foreach ($postings as $posting) {
+                $classification = \App\Helpers\LocationHelper::classify('', $posting->title, $posting->description);
+                $posting->update([
+                    'location' => $classification['city']
+                ]);
+            }
+        });
     }
 
     /**
