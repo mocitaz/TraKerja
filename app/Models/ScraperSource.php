@@ -66,7 +66,11 @@ class ScraperSource extends Model
             $html = $response->body();
             preg_match_all('/href="([^"]*?' . preg_quote($this->target_domain, '/') . '[^"]*?)"/i', $html, $matches);
             
-            return array_slice(array_unique($matches[1] ?? []), 0, 10);
+            $urls = array_slice(array_unique($matches[1] ?? []), 0, 10);
+            
+            \Illuminate\Support\Facades\Log::info("Discovery for source {$this->id} ({$this->name}): status " . $response->status() . ", body size " . strlen($html) . " bytes, found " . count($urls) . " links.");
+            
+            return $urls;
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error("Discovery failed for source {$this->id}: " . $e->getMessage());
             return [];
