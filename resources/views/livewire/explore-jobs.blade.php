@@ -16,11 +16,11 @@
     </div>
 
     <!-- Premium Hero Search Card -->
-    <div class="relative bg-zinc-100 border border-zinc-200/80 rounded-2xl p-8 md:p-12 text-center shadow-3xs overflow-hidden mb-6 select-none">
+    <div class="relative bg-white border border-zinc-200/80 rounded-2xl p-8 md:p-12 text-center shadow-3xs overflow-hidden mb-6 select-none">
         <!-- Background Image with low opacity and grayscale tone -->
-        <div class="absolute inset-0 bg-cover bg-center grayscale opacity-8 pointer-events-none" style="background-image: url('{{ asset('images/ikn.png') }}');"></div>
+        <div class="absolute inset-0 bg-cover bg-center grayscale opacity-15 pointer-events-none" style="background-image: url('{{ asset('images/ATL, Geogia 🙇🏽.jpeg') }}');"></div>
         <!-- Soft gradient overlay to blend -->
-        <div class="absolute inset-0 bg-gradient-to-b from-zinc-50/20 via-zinc-100/60 to-zinc-100/90 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-white/50 to-white/90 pointer-events-none"></div>
 
         <div class="relative z-10 max-w-5xl mx-auto space-y-4">
             <h2 class="text-xl md:text-2xl font-black text-zinc-800 tracking-tight leading-tight">
