@@ -215,7 +215,7 @@ class ExploreJobsTest extends TestCase
             'raw_url' => 'https://linkedin.com/jobs/view/500',
             'unique_hash' => md5('https://linkedin.com/jobs/view/500'),
             'status' => 'active',
-            'location' => 'Jakarta',
+            'location' => 'Jakarta Selatan',
         ]);
 
         JobPosting::create([
@@ -226,7 +226,7 @@ class ExploreJobsTest extends TestCase
             'raw_url' => 'https://linkedin.com/jobs/view/501',
             'unique_hash' => md5('https://linkedin.com/jobs/view/501'),
             'status' => 'active',
-            'location' => 'Surabaya',
+            'location' => 'Kota Surabaya',
         ]);
 
         Livewire::actingAs($this->user)
@@ -234,7 +234,7 @@ class ExploreJobsTest extends TestCase
             ->set('selectedProvince', 'DKI Jakarta')
             ->assertSee('Jakarta Senior Engineer')
             ->assertDontSee('Surabaya Senior Engineer')
-            ->set('selectedLocation', 'Jakarta')
+            ->set('selectedLocation', 'Jakarta Selatan')
             ->assertSee('Jakarta Senior Engineer');
     }
 
@@ -247,11 +247,11 @@ class ExploreJobsTest extends TestCase
 
         // Test specific city
         $resCity = \App\Helpers\LocationHelper::classify('Kota Bandung, Jawa Barat', 'Developer Bandung', 'Description');
-        $this->assertEquals('Bandung', $resCity['city']);
+        $this->assertEquals('Kota Bandung', $resCity['city']);
         $this->assertEquals('Jawa Barat', $resCity['province']);
 
         // Test normalisation
-        $this->assertEquals('Surakarta', \App\Helpers\LocationHelper::normalizeCity('Solo'));
-        $this->assertEquals('Yogyakarta', \App\Helpers\LocationHelper::normalizeCity('Jogja'));
+        $this->assertEquals('Kota Surakarta', \App\Helpers\LocationHelper::normalizeCity('Solo'));
+        $this->assertEquals('Kota Yogyakarta', \App\Helpers\LocationHelper::normalizeCity('Jogja'));
     }
 }
