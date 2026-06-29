@@ -43,9 +43,15 @@ class ScraperDashboardTest extends TestCase
         $component = Livewire::actingAs($this->adminUser)
             ->test(\App\Livewire\Admin\ScraperDashboard::class);
 
-        // Verify default tab shows Dashboard stats and Proxy Monitor
+        // Verify default tab shows Dashboard stats and metrics
         $component->assertSet('activeTab', 'dashboard');
+        $component->assertSee('Metrik Grafik Performa Platform');
+
+        // Transition to Control Tab
+        $component->set('activeTab', 'control');
+        $component->assertSet('activeTab', 'control');
         $component->assertSee('Proxy Pool Monitor');
+        $component->assertSee('Queue Worker Trigger');
 
         // Transition to Target Tab
         $component->set('activeTab', 'target');

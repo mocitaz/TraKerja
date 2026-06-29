@@ -23,52 +23,7 @@
             <span class="text-zinc-300">/</span>
             <h1 class="text-sm font-semibold tracking-tight text-zinc-900">Scraper Engine</h1>
         </div>
-        <div class="flex items-center gap-2.5 flex-wrap">
-            <!-- Start Background Queue Worker -->
-            <button type="button" 
-                    wire:click="startQueueWorker" 
-                    wire:loading.attr="disabled"
-                    class="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs rounded-md px-3 py-1.5 transition-all duration-150 disabled:opacity-50 shadow-3xs">
-                <span wire:loading.remove wire:target="startQueueWorker" class="flex items-center gap-1.5">
-                    <i class="ph ph-cpu text-sm"></i>
-                    Jalankan Queue Worker
-                </span>
-                <span wire:loading wire:target="startQueueWorker" class="flex items-center gap-1.5">
-                    <span class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                    Menjalankan Worker...
-                </span>
-            </button>
-
-            <!-- Verify Active Listings Link Check -->
-            <button type="button" 
-                    wire:click="verifyActiveListings" 
-                    wire:loading.attr="disabled"
-                    class="inline-flex items-center gap-1.5 bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-700 font-medium text-xs rounded-md px-3 py-1.5 transition-all duration-150 disabled:opacity-50">
-                <span wire:loading.remove wire:target="verifyActiveListings" class="flex items-center gap-1.5">
-                    <i class="ph ph-shield-warning text-sm"></i>
-                    Cek & Sinkronisasi Link Tutup
-                </span>
-                <span wire:loading wire:target="verifyActiveListings" class="flex items-center gap-1.5">
-                    <span class="w-3 h-3 border-2 border-zinc-500 border-t-transparent rounded-full animate-spin"></span>
-                    Mensinkronisasi...
-                </span>
-            </button>
-
-            <!-- Trigger Manual Scraper Ingestion -->
-            <button type="button" 
-                    wire:click="triggerManualCrawl" 
-                    wire:loading.attr="disabled"
-                    class="inline-flex items-center gap-1.5 bg-zinc-950 hover:bg-zinc-900 text-white font-medium text-xs rounded-md px-3 py-1.5 transition-all duration-150 disabled:opacity-50">
-                <span wire:loading.remove wire:target="triggerManualCrawl" class="flex items-center gap-1.5">
-                    <i class="ph ph-play text-sm"></i>
-                    Jalankan Scraper Manual
-                </span>
-                <span wire:loading wire:target="triggerManualCrawl" class="flex items-center gap-1.5">
-                    <span class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                    Memicu Scraper...
-                </span>
-            </button>
-
+        <div class="flex items-center gap-2.5">
             <span class="inline-flex items-center px-2 py-1.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse mr-1"></span>
                 Engine Ready
@@ -106,7 +61,7 @@
             </div>
         </div>
 
-        {{-- Active Sources --}}
+        {{-- Active Platforms --}}
         <div class="bg-white rounded-lg p-4 border border-zinc-200/80 relative overflow-hidden shadow-3xs">
             <div class="flex items-start justify-between">
                 <div>
@@ -138,21 +93,26 @@
         </div>
     </div>
 
-    {{-- Interactive Tabs Navigation Row (Optimized to 3 Tabs) --}}
+    {{-- Interactive Tabs Navigation Row (4 Tabs) --}}
     <div class="flex border-b border-zinc-200 bg-white rounded-t-lg shadow-3xs">
         <button type="button" 
                 wire:click="$set('activeTab', 'dashboard')"
-                class="px-6 py-3.5 border-b-2 text-xs font-semibold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'dashboard' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50' : 'border-transparent text-zinc-400 hover:text-zinc-700' }}">
-            <i class="ph-bold ph-sliders text-sm"></i> Dashboard & Pemantau Sistem
+                class="px-5 py-3.5 border-b-2 text-xs font-semibold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'dashboard' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50' : 'border-transparent text-zinc-400 hover:text-zinc-700' }}">
+            <i class="ph-bold ph-chart-line text-sm"></i> Overview & Grafik
+        </button>
+        <button type="button" 
+                wire:click="$set('activeTab', 'control')"
+                class="px-5 py-3.5 border-b-2 text-xs font-semibold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'control' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50' : 'border-transparent text-zinc-400 hover:text-zinc-700' }}">
+            <i class="ph-bold ph-sliders text-sm"></i> Kontrol Engine & Worker
         </button>
         <button type="button" 
                 wire:click="$set('activeTab', 'target')"
-                class="px-6 py-3.5 border-b-2 text-xs font-semibold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'target' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50' : 'border-transparent text-zinc-400 hover:text-zinc-700' }}">
+                class="px-5 py-3.5 border-b-2 text-xs font-semibold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'target' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50' : 'border-transparent text-zinc-400 hover:text-zinc-700' }}">
             <i class="ph-bold ph-crosshair text-sm"></i> Target-Driven Ingestion
         </button>
         <button type="button" 
                 wire:click="$set('activeTab', 'sandbox')"
-                class="px-6 py-3.5 border-b-2 text-xs font-semibold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'sandbox' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50' : 'border-transparent text-zinc-400 hover:text-zinc-700' }}">
+                class="px-5 py-3.5 border-b-2 text-xs font-semibold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'sandbox' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50' : 'border-transparent text-zinc-400 hover:text-zinc-700' }}">
             <i class="ph-bold ph-terminal-window text-sm"></i> Sandbox & CSS Selector Tester
         </button>
     </div>
@@ -160,10 +120,202 @@
     <!-- Active Tab Workspace Container -->
     <div>
         @if ($activeTab === 'dashboard')
-            <!-- TAB 1: DASHBOARD & CRAWLER CONTROL -->
-            <div class="space-y-5 animate-fade-in">
+            <!-- TAB 1: OVERVIEW DASHBOARD & METRICS -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch animate-fade-in text-zinc-900">
+                <!-- Stacked Bar Performance Chart (2/3 width) -->
+                <div class="lg:col-span-2 bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col gap-4 shadow-3xs">
+                    <div class="flex-1 flex flex-col">
+                        <div class="flex items-center gap-2 pb-3 mb-4 border-b border-zinc-100 shrink-0">
+                            <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
+                                <i class="ph-bold ph-chart-bar text-xs"></i>
+                            </div>
+                            <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Metrik Grafik Performa Platform</h2>
+                        </div>
+                        
+                        <div class="flex-1 min-h-[260px] relative w-full" wire:ignore>
+                            <canvas id="scraperPerformanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Log Streamer Console (1/3 width) -->
+                <div class="lg:col-span-1 bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col justify-between shadow-3xs">
+                    <div class="w-full">
+                        <div class="flex items-center justify-between pb-3 mb-4 border-b border-zinc-100">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
+                                    <i class="ph-bold ph-terminal text-xs"></i>
+                                </div>
+                                <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider font-semibold">Live Logs Streamer</h2>
+                            </div>
+                            <button type="button" 
+                                    wire:click="clearLiveLogs"
+                                    class="text-[9px] font-mono font-bold text-rose-600 hover:text-rose-800 transition-colors uppercase tracking-wider flex items-center gap-1 focus:outline-hidden">
+                                <i class="ph ph-trash text-xs"></i> Hapus Log
+                            </button>
+                        </div>
+
+                        @if (count($liveLogs) > 0)
+                            <div class="bg-[#121214] text-[#e4e4e7] border border-zinc-800 p-3 rounded-lg font-mono text-[9px] leading-relaxed shadow-inner max-h-[300px] overflow-y-auto space-y-1.5 custom-scrollbar">
+                                @foreach ($liveLogs as $log)
+                                    <div class="whitespace-pre-wrap tracking-tight flex items-start gap-1">
+                                        <span class="text-zinc-500 shrink-0">[{{ $log['timestamp'] }}]</span>
+                                        <span class="shrink-0 {{ $log['level'] === 'SUCCESS' ? 'text-emerald-500' : ($log['level'] === 'ERROR' ? 'text-rose-500' : ($log['level'] === 'WARNING' ? 'text-amber-500' : 'text-zinc-400')) }}">
+                                            [{{ $log['level'] }}]
+                                        </span>
+                                        <span class="text-zinc-200 flex-1">{{ $log['message'] }}</span>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="bg-zinc-50 border border-zinc-150 rounded-lg p-10 text-center flex flex-col items-center justify-center border-dashed">
+                                <i class="ph ph-activity text-zinc-400 text-3xl mb-2"></i>
+                                <p class="text-xs font-semibold text-zinc-600">Console logs empty</p>
+                                <p class="text-[10px] text-zinc-400 max-w-[200px] mt-0.5">Logs akan tampil secara live ketika aktivitas scraping berjalan.</p>
+                            </div>
+                        @endif
+                    </div>
+                    
+                    <div class="text-[9px] font-mono text-zinc-400 pt-3 border-t border-zinc-150 leading-tight mt-4">
+                        Polling visual terupdate secara berkala setiap 5 detik.
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        @if ($activeTab === 'control')
+            <!-- TAB 2: ENGINE CONTROLLER & DIAGNOSTICS -->
+            <div class="space-y-5 animate-fade-in text-zinc-900">
+                <!-- Grid of 3 Action Controllers -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    
+                    <!-- 1. Background Queue Worker Card -->
+                    <div class="bg-white border border-zinc-200 rounded-lg p-5 flex flex-col justify-between shadow-3xs space-y-4">
+                        <div>
+                            <div class="flex items-center gap-2 pb-2.5 border-b border-zinc-100">
+                                <div class="w-6 h-6 rounded bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700">
+                                    <i class="ph-bold ph-cpu text-xs"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xs font-bold text-zinc-900 tracking-tight">Queue Worker Trigger</h3>
+                                    <p class="text-[9px] text-zinc-400">Jalankan worker di latar belakang VM</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-3.5 space-y-2 text-[10px] font-mono">
+                                <div class="flex justify-between">
+                                    <span class="text-zinc-500">Status Worker:</span>
+                                    <span class="font-bold text-emerald-600 flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                        {{ $stats['worker_status'] }}
+                                    </span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-zinc-500">Jumlah Antrean:</span>
+                                    <span class="font-bold text-zinc-800">{{ $stats['jobs_pending_in_queue'] }} jobs</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" 
+                                wire:click="startQueueWorker" 
+                                wire:loading.attr="disabled"
+                                class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-md py-2 transition-all duration-150 shadow-3xs flex items-center justify-center gap-1.5">
+                            <span wire:loading.remove wire:target="startQueueWorker" class="flex items-center gap-1.5">
+                                <i class="ph ph-play-circle text-base"></i>
+                                Jalankan Queue Worker
+                            </span>
+                            <span wire:loading wire:target="startQueueWorker" class="flex items-center gap-1.5">
+                                <span class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                Memicu Worker...
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- 2. Dead-Link Validator Card -->
+                    <div class="bg-white border border-zinc-200 rounded-lg p-5 flex flex-col justify-between shadow-3xs space-y-4">
+                        <div>
+                            <div class="flex items-center gap-2 pb-2.5 border-b border-zinc-100">
+                                <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
+                                    <i class="ph-bold ph-shield-warning text-xs"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xs font-bold text-zinc-900 tracking-tight">Dead-Link Synchronizer</h3>
+                                    <p class="text-[9px] text-zinc-400">Verifikasi status keaktifan URL lowongan</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-3.5 space-y-2 text-[10px] font-mono">
+                                <div class="flex justify-between">
+                                    <span class="text-zinc-500">Metode Validasi:</span>
+                                    <span class="font-bold text-zinc-800">404 / Footprint Check</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-zinc-500">Target Validasi:</span>
+                                    <span class="font-bold text-zinc-800">Loker Status 'active'</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" 
+                                wire:click="verifyActiveListings" 
+                                wire:loading.attr="disabled"
+                                class="w-full bg-white hover:bg-zinc-50 border border-zinc-250 text-zinc-700 font-semibold text-xs rounded-md py-2 transition-all duration-150 flex items-center justify-center gap-1.5 shadow-3xs">
+                            <span wire:loading.remove wire:target="verifyActiveListings" class="flex items-center gap-1.5">
+                                <i class="ph ph-arrows-counter-clockwise text-base"></i>
+                                Cek & Sinkronisasi Link Tutup
+                            </span>
+                            <span wire:loading wire:target="verifyActiveListings" class="flex items-center gap-1.5">
+                                <span class="w-3 h-3 border-2 border-zinc-500 border-t-transparent rounded-full animate-spin"></span>
+                                Sinkronisasi Berjalan...
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- 3. Manual Scraper Ingestion Card -->
+                    <div class="bg-white border border-zinc-200 rounded-lg p-5 flex flex-col justify-between shadow-3xs space-y-4">
+                        <div>
+                            <div class="flex items-center gap-2 pb-2.5 border-b border-zinc-100">
+                                <div class="w-6 h-6 rounded bg-zinc-900 text-white flex items-center justify-center">
+                                    <i class="ph-bold ph-play text-[10px]"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xs font-bold text-zinc-900 tracking-tight">Manual Scraper Ingestion</h3>
+                                    <p class="text-[9px] text-zinc-400">Trigger penelusuran tautan semua platform</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-3.5 space-y-2 text-[10px] font-mono">
+                                <div class="flex justify-between">
+                                    <span class="text-zinc-500">Metode Ingesti:</span>
+                                    <span class="font-bold text-zinc-800">Multi-Keyword Discovery</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-zinc-500">Tingkat Penjelajahan:</span>
+                                    <span class="font-bold text-zinc-800">Halaman 1 (Semua Sektor)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" 
+                                wire:click="triggerManualCrawl" 
+                                wire:loading.attr="disabled"
+                                class="w-full bg-zinc-950 hover:bg-zinc-900 text-white font-semibold text-xs rounded-md py-2 transition-all duration-150 shadow-3xs flex items-center justify-center gap-1.5">
+                            <span wire:loading.remove wire:target="triggerManualCrawl" class="flex items-center gap-1.5">
+                                <i class="ph ph-lightning text-base"></i>
+                                Jalankan Scrape Manual
+                            </span>
+                            <span wire:loading wire:target="triggerManualCrawl" class="flex items-center gap-1.5">
+                                <span class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                Memicu Scraper...
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bottom Config Block: Throttling Rules (Left) and Proxy Pool (Right) -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch">
-                    <!-- Left Side: Source Configuration & Throttling (1/3) -->
+                    <!-- Left: Throttling Rules Configuration (1/3) -->
                     <div class="lg:col-span-1 bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col justify-between shadow-3xs">
                         <div>
                             <div class="flex items-center gap-2 pb-3 mb-4 border-b border-zinc-100">
@@ -190,10 +342,10 @@
 
                             @if ($editingSourceId)
                                 <!-- Settings Input Form -->
-                                <form wire:submit.prevent="saveSourceSettings" class="space-y-5">
+                                <form wire:submit.prevent="saveSourceSettings" class="space-y-4">
                                     
                                     <!-- Toggle Switch -->
-                                    <div class="flex items-center justify-between bg-zinc-50/50 border border-zinc-200/80 rounded-md p-3 text-zinc-900">
+                                    <div class="flex items-center justify-between bg-zinc-50/50 border border-zinc-200/80 rounded-md p-3">
                                         <div>
                                             <label class="text-xs font-semibold text-zinc-900 tracking-tight">Active Crawler Status</label>
                                             <p class="text-[10px] text-zinc-400">Run cron cycles for this target</p>
@@ -206,31 +358,29 @@
                                     </div>
 
                                     <!-- Politeness Delay -->
-                                    <div class="text-zinc-900">
+                                    <div>
                                         <div class="flex justify-between items-baseline mb-1">
                                             <label class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider">Politeness Delay</label>
-                                            <span class="text-xs font-mono font-semibold text-zinc-950">{{ $delay_between_requests_ms }}ms</span>
+                                            <span class="text-xs font-mono font-semibold text-zinc-955">{{ $delay_between_requests_ms }}ms</span>
                                         </div>
                                         <input type="range" min="0" max="10000" step="250" 
                                                wire:model.live="delay_between_requests_ms"
                                                class="w-full accent-zinc-955 bg-zinc-150 h-1.5 rounded-lg cursor-pointer">
-                                        <span class="text-[10px] text-zinc-400 mt-1 block">Cooldown delay between detail listing queries</span>
                                     </div>
 
                                     <!-- Concurrency Limit -->
-                                    <div class="text-zinc-900">
+                                    <div>
                                         <div class="flex justify-between items-baseline mb-1">
                                             <label class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider">Concurrency Limit</label>
-                                            <span class="text-xs font-mono font-semibold text-zinc-950">{{ $max_concurrency }} parallel</span>
+                                            <span class="text-xs font-mono font-semibold text-zinc-955">{{ $max_concurrency }} parallel</span>
                                         </div>
                                         <input type="range" min="1" max="15" step="1" 
                                                wire:model.live="max_concurrency"
                                                class="w-full accent-zinc-955 bg-zinc-150 h-1.5 rounded-lg cursor-pointer">
-                                        <span class="text-[10px] text-zinc-400 mt-1 block">Maximum concurrent Chromium worker containers</span>
                                     </div>
 
                                     <!-- Schedule Interval -->
-                                    <div class="text-zinc-900">
+                                    <div>
                                         <label class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider block mb-1">Crawl Frequency Interval</label>
                                         <div class="relative">
                                             <input type="number" 
@@ -239,7 +389,6 @@
                                                    required>
                                             <span class="absolute right-3 top-2 text-[10px] font-mono text-zinc-400">minutes</span>
                                         </div>
-                                        <span class="text-[10px] text-zinc-400 mt-1 block">Interval cooldown to scan seed URL updates</span>
                                     </div>
 
                                     <button type="submit" 
@@ -250,139 +399,79 @@
                                 </form>
                             @endif
                         </div>
-
-                        <div class="mt-6 pt-4 border-t border-zinc-150 text-[10px] text-zinc-400 space-y-1.5 font-mono leading-tight">
-                            <div class="flex items-center gap-1.5">
-                                <span class="w-1 h-1 rounded-full bg-zinc-300"></span>
-                                <span>Throttles sync to Redis store instantly.</span>
-                            </div>
-                            <div class="flex items-center gap-1.5">
-                                <span class="w-1 h-1 rounded-full bg-zinc-300"></span>
-                                <span>Auto-backoff triggers above 15% error rate.</span>
-                            </div>
-                        </div>
                     </div>
 
-                    <!-- Right Side: Performance Chart & Live Terminal Console (2/3) -->
-                    <div class="lg:col-span-2 bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col gap-4 shadow-3xs">
-                        <div class="flex-1 flex flex-col">
-                            <div class="flex items-center gap-2 pb-3 mb-4 border-b border-zinc-100 shrink-0">
-                                <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
-                                    <i class="ph-bold ph-chart-bar text-xs"></i>
-                                </div>
-                                <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Metrik Grafik Performa Platform</h2>
-                            </div>
-                            
-                            <div class="flex-1 min-h-[240px] relative w-full" wire:ignore>
-                                <canvas id="scraperPerformanceChart"></canvas>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-5 pt-4 border-t border-zinc-150">
-                            <div class="flex items-center justify-between pb-2">
+                    <!-- Right: Proxy Pool Monitor (2/3 width) -->
+                    <div class="lg:col-span-2 bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col justify-between shadow-3xs">
+                        <div>
+                            <div class="flex items-center justify-between pb-3 mb-4 border-b border-zinc-100">
                                 <div class="flex items-center gap-2">
-                                    <div class="w-5 h-5 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
-                                        <i class="ph-bold ph-terminal text-xs"></i>
+                                    <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
+                                        <i class="ph-bold ph-shield-check text-xs"></i>
                                     </div>
-                                    <h3 class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider">Live Log Streamer Console</h3>
+                                    <div>
+                                        <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Proxy Pool Monitor</h2>
+                                        <p class="text-[9px] text-zinc-400">Status rotasi IP bypass bot-blocker</p>
+                                    </div>
                                 </div>
+                                
                                 <button type="button" 
-                                        wire:click="clearLiveLogs"
-                                        class="text-[9px] font-mono font-bold text-rose-600 hover:text-rose-800 transition-colors uppercase tracking-wider flex items-center gap-1 focus:outline-hidden">
-                                    <i class="ph ph-trash"></i> Bersihkan Log
+                                        wire:click="checkProxyHealth" 
+                                        wire:loading.attr="disabled"
+                                        class="inline-flex items-center gap-1 bg-zinc-950 hover:bg-zinc-900 text-white font-semibold text-[10px] rounded px-2.5 py-1.5 transition-all duration-150 shadow-3xs disabled:opacity-50">
+                                    <span wire:loading.remove wire:target="checkProxyHealth" class="flex items-center gap-1">
+                                        <i class="ph ph-heartbeat"></i> Ping Proxy
+                                    </span>
+                                    <span wire:loading wire:target="checkProxyHealth" class="flex items-center gap-1">
+                                        <span class="w-2.5 h-2.5 border border-white border-t-transparent rounded-full animate-spin"></span>
+                                        Memverifikasi...
+                                    </span>
                                 </button>
                             </div>
 
-                            @if (count($liveLogs) > 0)
-                                <div class="bg-[#121214] text-[#e4e4e7] border border-zinc-800 p-3 rounded-lg font-mono text-[9px] leading-relaxed shadow-inner max-h-[140px] overflow-y-auto space-y-1 custom-scrollbar">
-                                    @foreach ($liveLogs as $log)
-                                        <div class="whitespace-pre-wrap tracking-tight flex items-start gap-1">
-                                            <span class="text-zinc-500 shrink-0">[{{ $log['timestamp'] }}]</span>
-                                            <span class="shrink-0 {{ $log['level'] === 'SUCCESS' ? 'text-emerald-500' : ($log['level'] === 'ERROR' ? 'text-rose-500' : ($log['level'] === 'WARNING' ? 'text-amber-500' : 'text-zinc-400')) }}">
-                                                [{{ $log['level'] }}]
-                                            </span>
-                                            <span class="text-zinc-200 flex-1">{{ $log['message'] }}</span>
+                            <!-- Proxy Cards Grid -->
+                            @if (count($proxyStatusList) > 0)
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    @foreach ($proxyStatusList as $index => $proxyItem)
+                                        <div class="border rounded-md p-3 flex flex-col justify-between space-y-2 shadow-3xs {{ $proxyItem['class'] }}">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-[8px] font-mono font-bold uppercase tracking-wider text-zinc-400">PROXY #{{ $index + 1 }}</span>
+                                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[7px] font-mono font-black border border-current">
+                                                    {{ $proxyItem['status'] }}
+                                                </span>
+                                            </div>
+                                            <div class="space-y-1 text-[9px] font-mono">
+                                                <span class="text-zinc-800 truncate block">{{ parse_url($proxyItem['address'], PHP_URL_HOST) ?? $proxyItem['address'] }}</span>
+                                                <span class="text-zinc-500 font-bold block">IP: {{ $proxyItem['ip'] }}</span>
+                                            </div>
+                                            <div class="flex justify-between border-t border-zinc-200/50 pt-1.5 text-[8px] font-mono">
+                                                <span>Latency:</span>
+                                                <span class="font-bold text-zinc-850">{{ $proxyItem['latency'] > 0 ? $proxyItem['latency'] . ' ms' : 'N/A' }}</span>
+                                            </div>
                                         </div>
                                     @endforeach
                                 </div>
                             @else
-                                <div class="bg-zinc-50 border border-zinc-150 rounded-lg p-5 text-center flex flex-col items-center justify-center border-dashed">
-                                    <i class="ph ph-activity text-zinc-400 text-2xl mb-1.5"></i>
-                                    <p class="text-[10px] font-semibold text-zinc-600">Console logs empty</p>
-                                </div>
+                                @if ($isPingingProxies)
+                                    <div class="flex items-center justify-center p-8 text-center border border-dashed rounded bg-zinc-50 border-zinc-200/80">
+                                        <span class="w-5 h-5 border-2 border-zinc-950 border-t-transparent rounded-full animate-spin mr-2"></span>
+                                        <p class="text-[10px] text-zinc-650">Menguji latency proxy pool...</p>
+                                    </div>
+                                @else
+                                    <div class="flex flex-col items-center justify-center p-8 text-center border border-dashed rounded bg-zinc-50 border-zinc-200/80 border-dashed">
+                                        <p class="text-[10px] font-semibold text-zinc-500 mb-1">Status Proxy Belum Diuji</p>
+                                        <p class="text-[9px] text-zinc-400">Tekan tombol ping untuk melakukan verifikasi status IP Pool.</p>
+                                    </div>
+                                @endif
                             @endif
                         </div>
                     </div>
-                </div>
-
-                <!-- Integrated Proxy Health & Latency Dashboard (Merged here for UI simplicity) -->
-                <div class="bg-white border border-zinc-200/80 rounded-lg p-5 shadow-3xs space-y-4">
-                    <div class="flex items-center justify-between pb-3 border-b border-zinc-100 text-zinc-900">
-                        <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
-                                <i class="ph-bold ph-shield-check text-xs"></i>
-                            </div>
-                            <div>
-                                <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Proxy Pool Monitor</h2>
-                                <p class="text-[9px] text-zinc-400">Status rotasi IP bypass bot-blocker</p>
-                            </div>
-                        </div>
-                        
-                        <button type="button" 
-                                wire:click="checkProxyHealth" 
-                                wire:loading.attr="disabled"
-                                class="inline-flex items-center gap-1 bg-zinc-950 hover:bg-zinc-900 text-white font-medium text-[10px] rounded px-2.5 py-1.5 transition-all duration-150 shadow-3xs disabled:opacity-50">
-                            <span wire:loading.remove wire:target="checkProxyHealth" class="flex items-center gap-1">
-                                <i class="ph ph-heartbeat"></i> Ping Proxy
-                            </span>
-                            <span wire:loading wire:target="checkProxyHealth" class="flex items-center gap-1">
-                                <span class="w-2.5 h-2.5 border border-white border-t-transparent rounded-full animate-spin"></span>
-                                Memverifikasi...
-                            </span>
-                        </button>
-                    </div>
-
-                    <!-- Proxy Cards Grid -->
-                    @if (count($proxyStatusList) > 0)
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-zinc-900">
-                            @foreach ($proxyStatusList as $index => $proxyItem)
-                                <div class="border rounded-md p-3 flex flex-col justify-between space-y-2 shadow-3xs {{ $proxyItem['class'] }}">
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-[8px] font-mono font-bold uppercase tracking-wider text-zinc-400">PROXY #{{ $index + 1 }}</span>
-                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[7px] font-mono font-black border border-current">
-                                            {{ $proxyItem['status'] }}
-                                        </span>
-                                    </div>
-                                    <div class="space-y-1 text-[9px] font-mono">
-                                        <span class="text-zinc-800 truncate block">{{ parse_url($proxyItem['address'], PHP_URL_HOST) ?? $proxyItem['address'] }}</span>
-                                        <span class="text-zinc-500 font-bold block">IP: {{ $proxyItem['ip'] }}</span>
-                                    </div>
-                                    <div class="flex justify-between border-t border-zinc-200/50 pt-1.5 text-[8px] font-mono">
-                                        <span>Latency:</span>
-                                        <span class="font-bold text-zinc-800">{{ $proxyItem['latency'] > 0 ? $proxyItem['latency'] . ' ms' : 'N/A' }}</span>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @else
-                        @if ($isPingingProxies)
-                            <div class="flex items-center justify-center p-6 text-center border border-dashed rounded bg-zinc-50 border-zinc-200/80">
-                                <span class="w-5 h-5 border-2 border-zinc-950 border-t-transparent rounded-full animate-spin mr-2"></span>
-                                <p class="text-[10px] text-zinc-650">Menguji latency proxy pool...</p>
-                            </div>
-                        @else
-                            <div class="flex flex-col items-center justify-center p-6 text-center border border-dashed rounded bg-zinc-50 border-zinc-200/80 border-dashed">
-                                <p class="text-[10px] font-semibold text-zinc-500 mb-1">Status Proxy Belum Diuji</p>
-                                <p class="text-[9px] text-zinc-400">Tekan tombol ping untuk melakukan verifikasi status IP Pool.</p>
-                            </div>
-                        @endif
-                    @endif
                 </div>
             </div>
         @endif
 
         @if ($activeTab === 'target')
-            <!-- TAB 2: TARGET-DRIVEN INGESTION -->
+            <!-- TAB 3: TARGET-DRIVEN INGESTION -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch animate-fade-in text-zinc-900">
                 <!-- Request Form Card -->
                 <div class="lg:col-span-1 bg-white border border-zinc-200/80 rounded-lg p-4 shadow-3xs flex flex-col justify-between">
@@ -525,7 +614,7 @@
         @endif
 
         @if ($activeTab === 'sandbox')
-            <!-- TAB 3: SANDBOX & CSS SELECTOR TESTER -->
+            <!-- TAB 4: SANDBOX & CSS SELECTOR TESTER -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch animate-fade-in text-zinc-900">
                 <!-- Selectors Configuration Card -->
                 <div class="lg:col-span-1 bg-white border border-zinc-200/80 rounded-lg p-4 shadow-3xs flex flex-col justify-between">
