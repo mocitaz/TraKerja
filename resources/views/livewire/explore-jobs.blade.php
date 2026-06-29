@@ -389,28 +389,28 @@
                                 </div>
 
                                 <!-- Right Action: Apply & Track Link -->
-                                <div class="flex items-center gap-2">
+                                <div class="flex items-center gap-1.5">
                                     @if (session()->has('track_success_' . $job->id))
-                                        <span class="inline-flex items-center gap-1 text-[9.5px] font-bold text-emerald-600">
-                                            <i class="ph ph-check-circle text-xs"></i>
-                                            Disimpan ke Tracker!
+                                        <span class="w-7 h-7 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-md flex items-center justify-center shadow-3xs" title="Disimpan ke Tracker!">
+                                            <i class="ph ph-check-circle text-[13px]"></i>
                                         </span>
                                     @elseif (session()->has('track_info_' . $job->id))
-                                        <span class="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider">
-                                            Sudah Ada
+                                        <span class="w-7 h-7 bg-zinc-50 text-zinc-400 border border-zinc-200 rounded-md flex items-center justify-center shadow-3xs" title="Sudah disimpan sebelumnya">
+                                            <i class="ph ph-check text-[13px]"></i>
                                         </span>
                                     @else
                                         <button type="button" 
                                                 wire:click="initiateTrackJob({{ $job->id }})" 
-                                                class="px-3 h-[24px] bg-primary-50 text-primary-750 hover:bg-primary-100 border border-primary-200/50 text-[9.5px] font-bold rounded-md shadow-3xs transition-all active:scale-97 hover:shadow-2xs uppercase tracking-wider flex items-center justify-center focus:outline-hidden">
-                                            Track
+                                                title="Simpan ke Tracker"
+                                                class="w-7 h-7 bg-primary-50 text-primary-750 hover:bg-primary-100 border border-primary-200/50 rounded-md shadow-3xs transition-all active:scale-97 flex items-center justify-center focus:outline-hidden">
+                                            <i class="ph ph-folder-notch-plus text-[13px]"></i>
                                         </button>
                                     @endif
                                     <a href="{{ $job->raw_url }}" 
                                        target="_blank" 
-                                       class="px-3.5 h-[24px] bg-zinc-950 text-white hover:bg-zinc-800 text-[9.5px] font-bold rounded-md shadow-3xs transition-all active:scale-97 hover:shadow-2xs uppercase tracking-wider flex items-center justify-center gap-0.5">
-                                        Lamar
-                                        <i class="ph-bold ph-arrow-up-right text-[9px]"></i>
+                                       title="Lamar Lowongan (Buka Link)"
+                                       class="w-7 h-7 bg-zinc-950 text-white hover:bg-zinc-800 rounded-md shadow-3xs transition-all active:scale-97 flex items-center justify-center">
+                                        <i class="ph-bold ph-arrow-up-right text-[11px]"></i>
                                     </a>
                                 </div>
                             </div>
