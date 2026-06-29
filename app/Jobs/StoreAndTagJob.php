@@ -33,24 +33,38 @@ class StoreAndTagJob implements ShouldQueue
         
         $hash = md5($this->url . $company . $title);
 
-        // 1. Categorize Field (Bidang)
+        // 1. Categorize Field (Sektor Ekonomi)
         $searchStr = strtolower($title . ' ' . $description);
-        $field = 'Software Engineer';
+        $field = 'Sektor Jasa Profesional, Ilmiah, dan Teknis'; // Default fallback
         
-        if (str_contains($searchStr, 'backend') || str_contains($searchStr, 'php') || str_contains($searchStr, 'laravel') || str_contains($searchStr, 'golang') || str_contains($searchStr, 'python') || str_contains($searchStr, 'node') || str_contains($searchStr, 'java') || str_contains($searchStr, 'api')) {
-            $field = 'Backend Developer';
-        } elseif (str_contains($searchStr, 'frontend') || str_contains($searchStr, 'vue') || str_contains($searchStr, 'react') || str_contains($searchStr, 'angular') || str_contains($searchStr, 'css') || str_contains($searchStr, 'html') || str_contains($searchStr, 'javascript') || str_contains($searchStr, 'tail')) {
-            $field = 'Frontend Developer';
-        } elseif (str_contains($searchStr, 'full stack') || str_contains($searchStr, 'fullstack') || str_contains($searchStr, 'web developer')) {
-            $field = 'Fullstack Developer';
-        } elseif (str_contains($searchStr, 'mobile') || str_contains($searchStr, 'android') || str_contains($searchStr, 'ios') || str_contains($searchStr, 'flutter') || str_contains($searchStr, 'react native')) {
-            $field = 'Mobile Developer';
-        } elseif (str_contains($searchStr, 'devops') || str_contains($searchStr, 'cloud') || str_contains($searchStr, 'aws') || str_contains($searchStr, 'kubernetes') || str_contains($searchStr, 'sysadmin') || str_contains($searchStr, 'system admin')) {
-            $field = 'DevOps / Cloud';
-        } elseif (str_contains($searchStr, 'qa') || str_contains($searchStr, 'tester') || str_contains($searchStr, 'quality assurance') || str_contains($searchStr, 'testing')) {
-            $field = 'QA / Testing';
-        } elseif (str_contains($searchStr, 'data') || str_contains($searchStr, 'analysis') || str_contains($searchStr, 'analytics') || str_contains($searchStr, 'machine learning') || str_contains($searchStr, 'ai')) {
-            $field = 'Data & AI';
+        if (str_contains($searchStr, 'tani') || str_contains($searchStr, 'kebun') || str_contains($searchStr, 'hutan') || str_contains($searchStr, 'nelayan') || str_contains($searchStr, 'perikanan') || str_contains($searchStr, 'kehutanan') || str_contains($searchStr, 'ternak')) {
+            $field = 'Sektor Pertanian, Kehutanan, dan Perikanan';
+        } elseif (str_contains($searchStr, 'tambang') || str_contains($searchStr, 'galian') || str_contains($searchStr, 'migas') || str_contains($searchStr, 'drilling') || str_contains($searchStr, 'geologist') || str_contains($searchStr, 'minyak') || str_contains($searchStr, 'batubara')) {
+            $field = 'Sektor Pertambangan dan Penggalian';
+        } elseif (str_contains($searchStr, 'pabrik') || str_contains($searchStr, 'manufaktur') || str_contains($searchStr, 'garmen') || str_contains($searchStr, 'perakitan') || str_contains($searchStr, 'tekstil') || str_contains($searchStr, 'qc') || str_contains($searchStr, 'operator produksi')) {
+            $field = 'Sektor Industri Pengolahan (Manufaktur)';
+        } elseif (str_contains($searchStr, 'pln') || str_contains($searchStr, 'pdam') || str_contains($searchStr, 'listrik') || str_contains($searchStr, 'utilitas') || str_contains($searchStr, 'gardu') || str_contains($searchStr, 'limbah') || str_contains($searchStr, 'sanitasi')) {
+            $field = 'Sektor Pengadaan Listrik, Gas, Air, dan Pengelolaan Sampah';
+        } elseif (str_contains($searchStr, 'sipil') || str_contains($searchStr, 'civil') || str_contains($searchStr, 'arsitek') || str_contains($searchStr, 'konstruksi') || str_contains($searchStr, 'bangunan') || str_contains($searchStr, 'properti') || str_contains($searchStr, 'crane')) {
+            $field = 'Sektor Konstruksi';
+        } elseif (str_contains($searchStr, 'retail') || str_contains($searchStr, 'sales') || str_contains($searchStr, 'marketing') || str_contains($searchStr, 'bengkel') || str_contains($searchStr, 'mekanik') || str_contains($searchStr, 'dagang') || str_contains($searchStr, 'pramuniaga') || str_contains($searchStr, 'suku cadang')) {
+            $field = 'Sektor Perdagangan Besar dan Eceran; Reparasi Mobil dan Sepeda Motor';
+        } elseif (str_contains($searchStr, 'logistik') || str_contains($searchStr, 'gudang') || str_contains($searchStr, 'warehouse') || str_contains($searchStr, 'kurir') || str_contains($searchStr, 'ekspedisi') || str_contains($searchStr, 'transportasi') || str_contains($searchStr, 'driver') || str_contains($searchStr, 'ojek') || str_contains($searchStr, 'supply chain')) {
+            $field = 'Sektor Transportasi, Logistik, dan Pergudangan';
+        } elseif (str_contains($searchStr, 'hotel') || str_contains($searchStr, 'resepsionis') || str_contains($searchStr, 'koki') || str_contains($searchStr, 'chef') || str_contains($searchStr, 'barista') || str_contains($searchStr, 'katering') || str_contains($searchStr, 'restoran') || str_contains($searchStr, 'culinary') || str_contains($searchStr, 'hospitality')) {
+            $field = 'Sektor Penyediaan Akomodasi dan Penyediaan Makan Minum (Hospitality)';
+        } elseif (str_contains($searchStr, 'software') || str_contains($searchStr, 'developer') || str_contains($searchStr, 'programmer') || str_contains($searchStr, 'data scientist') || str_contains($searchStr, 'network') || str_contains($searchStr, 'laravel') || str_contains($searchStr, 'react') || str_contains($searchStr, 'vue') || str_contains($searchStr, 'golang') || str_contains($searchStr, 'seo') || str_contains($searchStr, 'content creator') || str_contains($searchStr, 'media') || str_contains($searchStr, 'it') || str_contains($searchStr, 'information technology')) {
+            $field = 'Sektor Informasi dan Komunikasi (TIK)';
+        } elseif (str_contains($searchStr, 'bank') || str_contains($searchStr, 'teller') || str_contains($searchStr, 'akuntan') || str_contains($searchStr, 'finance') || str_contains($searchStr, 'keuangan') || str_contains($searchStr, 'asuransi') || str_contains($searchStr, 'saham') || str_contains($searchStr, 'agen properti') || str_contains($searchStr, 'real estate')) {
+            $field = 'Sektor Keuangan, Asuransi, dan Real Estat';
+        } elseif (str_contains($searchStr, 'pns') || str_contains($searchStr, 'pppk') || str_contains($searchStr, 'tni') || str_contains($searchStr, 'polri') || str_contains($searchStr, 'pemerintah') || str_contains($searchStr, 'birokrasi') || str_contains($searchStr, 'goverment')) {
+            $field = 'Sektor Administrasi Pemerintahan, Pertahanan, dan Jaminan Sosial Wajib';
+        } elseif (str_contains($searchStr, 'guru') || str_contains($searchStr, 'dosen') || str_contains($searchStr, 'tutor') || str_contains($searchStr, 'pendidikan') || str_contains($searchStr, 'sekolah') || str_contains($searchStr, 'bimbel') || str_contains($searchStr, 'edutech')) {
+            $field = 'Sektor Jasa Pendidikan';
+        } elseif (str_contains($searchStr, 'dokter') || str_contains($searchStr, 'perawat') || str_contains($searchStr, 'medis') || str_contains($searchStr, 'apoteker') || str_contains($searchStr, 'bidan') || str_contains($searchStr, 'klinik') || str_contains($searchStr, 'sosial')) {
+            $field = 'Sektor Kesehatan Manusia dan Kegiatan Sosial';
+        } elseif (str_contains($searchStr, 'musisi') || str_contains($searchStr, 'aktor') || str_contains($searchStr, 'film') || str_contains($searchStr, 'hiburan') || str_contains($searchStr, 'rekreasi') || str_contains($searchStr, 'seni') || str_contains($searchStr, 'atlet') || str_contains($searchStr, 'sutradara')) {
+            $field = 'Sektor Jasa Kesenian, Hiburan, dan Rekreasi';
         }
 
         // 2. Categorize Major (Jurusan)
