@@ -51,13 +51,23 @@ class ScraperSource extends Model
     {
         try {
             echo "  [HTTP GET] Requesting: " . $this->seed_url . "\n";
-            $response = \Illuminate\Support\Facades\Http::timeout(30)
+            
+            $request = \Illuminate\Support\Facades\Http::timeout(30)
                 ->withHeaders([
                     'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
                     'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
                     'Accept-Language' => 'en-US,en;q=0.9',
-                ])
-                ->get($this->seed_url);
+                ]);
+
+            // Route via a proxy if configured to prevent 429 Rate Limiting
+            $proxies = config('scraper.proxies', []);
+            if (!empty($proxies)) {
+                $proxy = $proxies[array_rand($proxies)];
+                $request = $request->withOptions(['proxy' => $proxy]);
+                echo "  [PROXY] Routing via: " . (parse_url($proxy, PHP_URL_HOST) ?: $proxy) . "\n";
+            }
+
+            $response = $request->get($this->seed_url);
                 
             if ($response->failed()) {
                 echo "  [HTTP FAIL] Status code: " . $response->status() . "\n";
