@@ -184,46 +184,45 @@
                         </div>
 
                         @if (count($liveLogs) > 0)
-                            <div class="bg-[#0f0f11] border border-zinc-800 rounded-lg overflow-hidden flex flex-col h-[300px] shadow-lg">
-                                <!-- Titlebar -->
-                                <div class="flex items-center justify-between bg-[#1b1b1f] px-3 py-1.5 border-b border-zinc-800/80 shrink-0 select-none">
-                                    <div class="flex items-center gap-1.5">
-                                        <span class="w-2 h-2 rounded-full bg-red-500"></span>
-                                        <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
-                                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
-                                    </div>
-                                    <span class="text-[9px] font-mono text-zinc-500">scraper_engine.log</span>
-                                    <span class="w-9"></span>
-                                </div>
-                                <div class="flex-1 p-3 overflow-y-auto space-y-1.5 custom-scrollbar font-mono text-[9px] text-[#e4e4e7] leading-relaxed">
+                            <div class="border border-zinc-200 rounded-xl overflow-hidden shadow-2xs bg-white">
+                                <div class="divide-y divide-zinc-100 overflow-y-auto h-[300px] custom-scrollbar">
                                     @foreach ($liveLogs as $log)
-                                        <div class="whitespace-pre-wrap tracking-tight flex items-start gap-1">
-                                            <span class="text-zinc-500 shrink-0">[{{ $log['timestamp'] }}]</span>
-                                            <span class="shrink-0 font-bold {{ $log['level'] === 'SUCCESS' ? 'text-emerald-500' : ($log['level'] === 'ERROR' ? 'text-rose-500' : ($log['level'] === 'WARNING' ? 'text-amber-500' : 'text-blue-400')) }}">
-                                                [{{ $log['level'] }}]
-                                            </span>
-                                            <span class="text-zinc-200 flex-1">{{ $log['message'] }}</span>
+                                        @php
+                                            $icon = 'ph-bold ph-info';
+                                            $iconColor = 'text-blue-700 bg-blue-50 border-blue-100';
+                                            if ($log['level'] === 'SUCCESS') {
+                                                $icon = 'ph-bold ph-check-circle';
+                                                $iconColor = 'text-emerald-700 bg-emerald-50 border-emerald-100';
+                                            } elseif ($log['level'] === 'ERROR') {
+                                                $icon = 'ph-bold ph-warning-octagon';
+                                                $iconColor = 'text-rose-700 bg-rose-50 border-rose-100';
+                                            } elseif ($log['level'] === 'WARNING') {
+                                                $icon = 'ph-bold ph-warning';
+                                                $iconColor = 'text-amber-700 bg-amber-50 border-amber-100';
+                                            }
+                                        @endphp
+                                        <div class="p-3 flex items-start justify-between gap-3 hover:bg-zinc-50/40 transition-colors duration-150">
+                                            <div class="flex items-start gap-2.5 min-w-0">
+                                                <div class="w-6 h-6 rounded-lg flex items-center justify-center border shrink-0 {{ $iconColor }}">
+                                                    <i class="{{ $icon }} text-xs"></i>
+                                                </div>
+                                                <div class="min-w-0">
+                                                    <p class="text-[11px] font-medium text-zinc-800 leading-tight break-words">{{ $log['message'] }}</p>
+                                                    <span class="text-[9px] font-mono text-zinc-400 block mt-0.5">{{ $log['level'] }} Event</span>
+                                                </div>
+                                            </div>
+                                            <span class="text-[9px] font-mono text-zinc-400 shrink-0 mt-0.5">{{ $log['timestamp'] }}</span>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
                         @else
-                            <div class="bg-[#0f0f11] border border-zinc-800 rounded-lg overflow-hidden flex flex-col h-[300px] shadow-lg">
-                                <!-- Titlebar -->
-                                <div class="flex items-center justify-between bg-[#1b1b1f] px-3 py-1.5 border-b border-zinc-800/80 shrink-0 select-none">
-                                    <div class="flex items-center gap-1.5">
-                                        <span class="w-2 h-2 rounded-full bg-red-500"></span>
-                                        <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
-                                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
-                                    </div>
-                                    <span class="text-[9px] font-mono text-zinc-550">scraper_engine.log</span>
-                                    <span class="w-9"></span>
+                            <div class="border border-zinc-200 border-dashed rounded-xl p-8 text-center flex flex-col items-center justify-center h-[300px] bg-zinc-50/50">
+                                <div class="w-10 h-10 rounded-full bg-zinc-100 border border-zinc-200 flex items-center justify-center text-zinc-400 mb-3 shadow-3xs">
+                                    <i class="ph-bold ph-bell-simple-slash text-base"></i>
                                 </div>
-                                <div class="flex-1 flex flex-col items-center justify-center p-6 text-center">
-                                    <i class="ph ph-terminal text-zinc-650 text-2xl mb-1.5 animate-pulse"></i>
-                                    <p class="text-[10px] font-bold text-zinc-400 font-mono">CONSOLE LOG EMPTY</p>
-                                    <p class="text-[9px] text-zinc-500 font-mono max-w-[200px] mt-0.5 leading-relaxed">Logs will stream here in real-time when the scraping jobs run.</p>
-                                </div>
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Tidak ada aktivitas baru</h3>
+                                <p class="text-[10px] text-zinc-400 max-w-[220px] mt-1 leading-normal">Log aktivitas penarikan data akan mengalir secara live ke sini saat scraper sedang berjalan.</p>
                             </div>
                         @endif
                     </div>
