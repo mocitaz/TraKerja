@@ -33,5 +33,8 @@ class DatabaseSeeder extends Seeder
 
         // Seed customer support tickets & feedbacks
         $this->call(SupportTicketSeeder::class);
+
+        // Seed default scraper sources
+        $this->call(ScraperSourceSeeder::class);
     }
 }
