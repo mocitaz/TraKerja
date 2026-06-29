@@ -230,6 +230,6 @@ class ScraperDashboard extends Component
 
         return view('livewire.admin.scraper-dashboard', [
             'stats' => $stats
-        ])->layout('layouts.admin');
+        ])->layout('components.admin-layout');
     }
 }
