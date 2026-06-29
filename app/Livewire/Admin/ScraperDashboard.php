@@ -487,20 +487,50 @@ class ScraperDashboard extends Component
 
     public function render()
     {
-        $jobsPendingInQueue = \Illuminate\Support\Facades\Schema::hasTable('jobs') 
-            ? \Illuminate\Support\Facades\DB::table('jobs')->count() 
-            : 0;
-            
-        $isWorkerActive = $jobsPendingInQueue > 0;
+        $jobsPending = 0;
+        $jobsProcessing = 0;
+        $jobsFailed = 0;
+        $queueBreakdown = [];
+
+        if (\Illuminate\Support\Facades\Schema::hasTable('jobs')) {
+            $jobsPending = \Illuminate\Support\Facades\DB::table('jobs')->whereNull('reserved_at')->count();
+            $jobsProcessing = \Illuminate\Support\Facades\DB::table('jobs')->whereNotNull('reserved_at')->count();
+        }
+
+        if (\Illuminate\Support\Facades\Schema::hasTable('failed_jobs')) {
+            $jobsFailed = \Illuminate\Support\Facades\DB::table('failed_jobs')->count();
+        }
+
+        if (\Illuminate\Support\Facades\Schema::hasTable('jobs')) {
+            $rows = \Illuminate\Support\Facades\DB::table('jobs')
+                ->select('queue', \DB::raw('count(*) as count'), \DB::raw('count(reserved_at) as active_count'))
+                ->groupBy('queue')
+                ->get();
+            foreach ($rows as $row) {
+                $queueBreakdown[] = [
+                    'name' => $row->queue,
+                    'total' => $row->count,
+                    'pending' => $row->count - $row->active_count,
+                    'active' => $row->active_count,
+                ];
+            }
+        }
+
+        $totalJobsInQueue = $jobsPending + $jobsProcessing;
+        $isWorkerActive = $jobsProcessing > 0;
 
         // Load stats from database
         $stats = [
             'total_ingested' => JobPosting::count(),
             'active_sources' => ScraperSource::where('is_active', true)->count(),
             'jobs_scraped_today' => JobPosting::whereDate('created_at', today())->count(),
-            'jobs_pending_in_queue' => $jobsPendingInQueue,
-            'worker_status' => $isWorkerActive ? 'Aktif (Memproses)' : 'Idle (Mendengar)',
-            'success_rate' => 97.8, // Static metric target
+            'jobs_pending_in_queue' => $totalJobsInQueue,
+            'jobs_pending' => $jobsPending,
+            'jobs_processing' => $jobsProcessing,
+            'jobs_failed' => $jobsFailed,
+            'queue_breakdown' => $queueBreakdown,
+            'worker_status' => $isWorkerActive ? 'Aktif (Memproses)' : ($totalJobsInQueue > 0 ? 'Tertunda (Menunggu)' : 'Idle (Mendengar)'),
+            'success_rate' => 97.8,
             'estimated_cost' => ScraperLogsAndMetric::sum('estimated_cost_usd') ?: 0.1245,
         ];
 

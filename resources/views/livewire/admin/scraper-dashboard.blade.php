@@ -76,19 +76,47 @@
         </div>
 
         {{-- Queue & Worker Monitor --}}
-        <div class="bg-white rounded-lg p-4 border border-zinc-200/80 relative overflow-hidden shadow-3xs">
-            <div class="flex items-start justify-between">
-                <div>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Worker & Queue Monitor</p>
-                    <h3 class="text-sm font-bold tracking-tight text-zinc-900 mt-0.5 flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full {{ $stats['jobs_pending_in_queue'] > 0 ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500' }}"></span>
-                        {{ $stats['worker_status'] }}
-                    </h3>
-                    <p class="text-[10px] text-zinc-400 mt-1.5 font-semibold">{{ $stats['jobs_pending_in_queue'] }} jobs in queue</p>
+        <div class="bg-white rounded-lg p-4 border border-zinc-200/80 relative overflow-hidden shadow-3xs flex flex-col justify-between">
+            <div>
+                <div class="flex items-start justify-between border-b border-zinc-100 pb-2 mb-2">
+                    <div>
+                        <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Queue & Worker Monitor</p>
+                        <h3 class="text-xs font-bold text-zinc-900 mt-0.5 flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full {{ $stats['jobs_pending_in_queue'] > 0 ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500' }}"></span>
+                            {{ $stats['worker_status'] }}
+                        </h3>
+                    </div>
+                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650 shrink-0">
+                        <i class="ph-bold ph-cpu text-sm"></i>
+                    </div>
                 </div>
-                <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650 shrink-0">
-                    <i class="ph-bold ph-cpu text-base"></i>
-                </div>
+                
+                @if(count($stats['queue_breakdown']) > 0)
+                    <div class="space-y-1 max-h-[85px] overflow-y-auto pr-1">
+                        @foreach($stats['queue_breakdown'] as $q)
+                            <div class="flex items-center justify-between text-[9px] bg-zinc-50 border border-zinc-150 rounded px-2 py-0.5">
+                                <span class="font-mono text-zinc-550 truncate max-w-[80px]" title="queue: {{ $q['name'] }}">
+                                    {{ $q['name'] }}
+                                </span>
+                                <div class="flex items-center gap-1 shrink-0">
+                                    <span class="text-blue-600 font-bold" title="Running/Active">{{ $q['active'] }} R</span>
+                                    <span class="text-zinc-300">|</span>
+                                    <span class="text-amber-600 font-bold" title="Pending">{{ $q['pending'] }} P</span>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="text-center py-2 text-[9px] text-zinc-400 flex items-center justify-center gap-1">
+                        <i class="ph ph-check-circle text-emerald-500 text-[10px]"></i>
+                        Queue empty / idle
+                    </div>
+                @endif
+            </div>
+
+            <div class="mt-2 pt-2 border-t border-zinc-100 flex items-center justify-between text-[9px] text-zinc-500 font-mono">
+                <span>Failed: <span class="font-bold {{ $stats['jobs_failed'] > 0 ? 'text-red-650' : 'text-zinc-650' }}">{{ $stats['jobs_failed'] }}</span></span>
+                <span>Total: <span class="font-bold text-zinc-700">{{ $stats['jobs_pending_in_queue'] }}</span></span>
             </div>
         </div>
     </div>
