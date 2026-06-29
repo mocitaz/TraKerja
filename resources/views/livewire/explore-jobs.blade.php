@@ -337,7 +337,7 @@
                                         <span class="text-[9px] text-zinc-500 block font-semibold">{{ session('report_info_' . $job->id) }}</span>
                                     @else
                                         <button type="button" 
-                                                wire:click="reportExpired({{ $job->id }})" 
+                                                wire:click="initiateReportExpired({{ $job->id }})" 
                                                 class="text-[9px] text-zinc-400 hover:text-red-600 transition-colors flex items-center gap-1">
                                             <i class="ph ph-warning-circle text-xs"></i>
                                             Laporkan Ditutup
@@ -439,6 +439,61 @@
                             wire:click="confirmTrackJob" 
                             class="px-4 h-[30px] bg-primary-50 text-zinc-800 hover:bg-primary-100 border border-primary-200/60 text-[10px] font-bold rounded-md shadow-3xs transition-all active:scale-97 hover:shadow-2xs uppercase tracking-wider flex items-center justify-center focus:outline-hidden">
                         Ya, Sudah Melamar
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <!-- Confirmation Modal: Report Expired -->
+    @if($confirmingReportJobId)
+        <div class="fixed inset-0 z-[99999] bg-zinc-950/40 backdrop-blur-xs flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden border border-zinc-200 transform transition-all animate-fadeIn">
+                <!-- Modal Header: Clean White -->
+                <div class="bg-white px-4 py-3 text-zinc-900 flex justify-between items-center border-b border-zinc-150/60 shrink-0">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/60 flex items-center justify-center shadow-3xs">
+                            <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-4 h-4 object-contain" onerror="this.src='{{ asset('favicon.png') }}'">
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-1.5">
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Laporkan Ditutup</h3>
+                                <span class="px-1.5 py-0.5 bg-rose-50 text-rose-800 text-[8.5px] font-bold uppercase tracking-wider rounded border border-rose-100/60 leading-none">Report</span>
+                            </div>
+                            <p class="text-zinc-400 text-[9px] font-medium mt-0.5">Job Board Integrity</p>
+                        </div>
+                    </div>
+                    <button wire:click="cancelReportExpired" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 transition-all text-zinc-400 hover:text-zinc-800 focus:outline-hidden">
+                        <i class="ph ph-x text-sm"></i>
+                    </button>
+                </div>
+
+                <!-- Content -->
+                <div class="p-5 bg-white overflow-y-auto custom-scrollbar flex-1 flex flex-col text-left">
+                    <p class="text-xs text-zinc-700 leading-relaxed font-semibold">
+                        Apakah Anda yakin ingin melaporkan bahwa lowongan kerja ini sudah ditutup?
+                    </p>
+                    <p class="text-[11px] text-zinc-550 mt-2 leading-relaxed">
+                        Anda akan melaporkan posisi <span class="font-bold text-zinc-800">{{ $confirmingReportJobTitle }}</span> di <span class="font-bold text-zinc-800">{{ $confirmingReportJobCompany }}</span> sebagai expired/closed.
+                    </p>
+                    <div class="mt-4 flex items-start gap-2 text-rose-700 bg-rose-50/30 p-3 rounded-md border border-rose-100/60 select-none">
+                        <i class="ph ph-warning-octagon text-base shrink-0"></i>
+                        <p class="text-[10px] font-medium leading-relaxed">Melaporkan lowongan kerja yang sudah tidak aktif membantu menjaga kualitas informasi di TraKerja. Sistem akan secara otomatis mengarsipkan lowongan setelah menerima beberapa laporan serupa.</p>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="px-4 py-3 border-t border-zinc-150/60 bg-zinc-50/50 flex justify-end gap-3 shrink-0">
+                    <button type="button" 
+                            wire:click="cancelReportExpired"
+                            class="h-[30px] flex items-center justify-center text-[10px] font-bold text-zinc-500 hover:text-zinc-700 uppercase tracking-wider transition-colors focus:outline-hidden">
+                        Batal
+                    </button>
+                    
+                    <button type="button" 
+                            wire:click="confirmReportExpired" 
+                            class="px-4 h-[30px] bg-rose-50 text-rose-800 hover:bg-rose-100 border border-rose-200/60 text-[10px] font-bold rounded-md shadow-3xs transition-all active:scale-97 hover:shadow-2xs uppercase tracking-wider flex items-center justify-center focus:outline-hidden">
+                        Ya, Laporkan
                     </button>
                 </div>
             </div>

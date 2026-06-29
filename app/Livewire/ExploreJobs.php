@@ -25,6 +25,11 @@ class ExploreJobs extends Component
     public $confirmingJobPortal = '';
     public $confirmingJobUrl = '';
 
+    // Modal Confirmation properties for reporting expired jobs
+    public $confirmingReportJobId = null;
+    public $confirmingReportJobTitle = '';
+    public $confirmingReportJobCompany = '';
+
     protected $queryString = [
         'search' => ['except' => ''],
         'selectedPlatform' => ['except' => ''],
@@ -99,6 +104,29 @@ class ExploreJobs extends Component
             return \App\Helpers\CategoryHelper::getMajorsForSektor($this->selectedField);
         }
         return \App\Helpers\CategoryHelper::getAllMajors();
+    }
+
+    public function initiateReportExpired($id)
+    {
+        $posting = JobPosting::find($id);
+        if ($posting) {
+            $this->confirmingReportJobId = $id;
+            $this->confirmingReportJobTitle = $posting->title;
+            $this->confirmingReportJobCompany = $posting->company_name;
+        }
+    }
+
+    public function cancelReportExpired()
+    {
+        $this->confirmingReportJobId = null;
+    }
+
+    public function confirmReportExpired()
+    {
+        if ($this->confirmingReportJobId) {
+            $this->reportExpired($this->confirmingReportJobId);
+            $this->confirmingReportJobId = null;
+        }
     }
 
     public function reportExpired($id)
