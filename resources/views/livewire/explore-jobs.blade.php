@@ -391,16 +391,29 @@
         </div>
     <!-- Confirmation Modal: Save to Tracker -->
     @if($confirmingTrackJobId)
-        <div class="fixed inset-0 z-[9999] bg-zinc-950/40 backdrop-blur-xs flex items-center justify-center p-4">
-            <div class="bg-white border border-zinc-200 rounded-xl max-w-sm w-full p-5 shadow-lg relative animate-fadeIn">
-                <!-- Close Button -->
-                <button type="button" 
-                        wire:click="cancelTrackJob" 
-                        class="absolute top-4 right-4 w-6 h-6 flex items-center justify-center rounded-md hover:bg-zinc-50 text-zinc-400 hover:text-zinc-700 transition-colors">
-                    <i class="ph ph-x text-sm"></i>
-                </button>
+        <div class="fixed inset-0 z-[99999] bg-zinc-950/40 backdrop-blur-xs flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden border border-zinc-200 transform transition-all animate-fadeIn">
+                <!-- Modal Header: Clean White -->
+                <div class="bg-white px-4 py-3 text-zinc-900 flex justify-between items-center border-b border-zinc-150/60 shrink-0">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/60 flex items-center justify-center shadow-3xs">
+                            <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-4 h-4 object-contain" onerror="this.src='{{ asset('favicon.png') }}'">
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-1.5">
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Simpan Tracker</h3>
+                                <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[8.5px] font-bold uppercase tracking-wider rounded border border-primary-100/60 leading-none">Confirm</span>
+                            </div>
+                            <p class="text-zinc-400 text-[9px] font-medium mt-0.5">Career Growth Tracking</p>
+                        </div>
+                    </div>
+                    <button wire:click="cancelTrackJob" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 transition-all text-zinc-400 hover:text-zinc-800 focus:outline-hidden">
+                        <i class="ph ph-x text-sm"></i>
+                    </button>
+                </div>
 
-                <div class="flex flex-col items-center text-center">
+                <!-- Content -->
+                <div class="p-5 bg-white overflow-y-auto custom-scrollbar flex-1 flex flex-col items-center text-center">
                     <!-- Icon badge depending on platform -->
                     @php
                         $portalIconColor = 'bg-blue-50 border-blue-200 text-blue-700';
@@ -412,7 +425,7 @@
                             $portalIconColor = 'bg-emerald-50 border-emerald-150 text-emerald-700';
                         }
                     @endphp
-                    <div class="w-12 h-12 rounded-full flex items-center justify-center border shadow-3xs mb-3 {{ $portalIconColor }}">
+                    <div class="w-12 h-12 rounded-full flex items-center justify-center border shadow-3xs mb-3.5 {{ $portalIconColor }}">
                         @if($confirmingJobPortal === 'LinkedIn')
                             <i class="ph-fill ph-linkedin-logo text-xl"></i>
                         @elseif($confirmingJobPortal === 'JobStreet')
@@ -422,25 +435,24 @@
                         @endif
                     </div>
 
-                    <h3 class="text-sm font-bold text-zinc-900 tracking-tight">Simpan ke Tracker?</h3>
-                    <p class="text-[11px] text-zinc-500 mt-1.5 leading-relaxed max-w-[280px]">
-                        Apakah Anda yakin sudah melamar posisi <span class="font-bold text-zinc-800">{{ $confirmingJobTitle }}</span> di <span class="font-bold text-zinc-800">{{ $confirmingJobCompany }}</span> melalui portal <span class="font-bold text-zinc-800">{{ $confirmingJobPortal }}</span>?
+                    <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Apakah Anda yakin?</h3>
+                    <p class="text-[11px] text-zinc-500 mt-2 leading-relaxed max-w-[320px]">
+                        Apakah Anda sudah melamar lowongan kerja <span class="font-bold text-zinc-800">{{ $confirmingJobTitle }}</span> di <span class="font-bold text-zinc-800">{{ $confirmingJobCompany }}</span> melalui portal <span class="font-bold text-zinc-800">{{ $confirmingJobPortal }}</span>?
                     </p>
                 </div>
 
-                <div class="mt-5 grid grid-cols-2 gap-2">
-                    <!-- Cancel Button / Open Job URL if they haven't applied yet -->
+                <!-- Footer -->
+                <div class="px-4 py-3 border-t border-zinc-150/60 bg-zinc-50/50 flex justify-end gap-2 shrink-0">
                     <a href="{{ $confirmingJobUrl }}" 
                        target="_blank" 
                        wire:click="cancelTrackJob"
-                       class="text-center bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 text-zinc-700 font-semibold text-xs rounded-lg py-2 transition-all duration-150 focus:outline-hidden">
+                       class="px-3.5 py-1.5 text-xs font-bold text-zinc-655 bg-zinc-100 hover:bg-zinc-200 rounded-md transition-colors text-center focus:outline-hidden">
                         Belum, Lamar Dulu
                     </a>
                     
-                    <!-- Confirm Button -->
                     <button type="button" 
                             wire:click="confirmTrackJob" 
-                            class="bg-zinc-950 hover:bg-zinc-900 text-white font-semibold text-xs rounded-lg py-2 transition-all duration-150 shadow-3xs focus:outline-hidden">
+                            class="px-3.5 py-1.5 text-xs font-bold text-white bg-zinc-950 hover:bg-zinc-900 rounded-md shadow-3xs transition-all focus:outline-hidden">
                         Ya, Sudah Melamar
                     </button>
                 </div>
