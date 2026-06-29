@@ -57,6 +57,25 @@ class ScraperStats extends Command
 
         $this->newLine();
         $this->info("----------------------------------------------");
+        $this->info("      Jumlah Loker per Portal / Platform      ");
+        $this->info("----------------------------------------------");
+
+        $platforms = DB::table('job_postings')
+            ->join('scraper_sources', 'job_postings.scraper_source_id', '=', 'scraper_sources.id')
+            ->select('scraper_sources.name', DB::raw('count(*) as total'))
+            ->groupBy('scraper_sources.name')
+            ->get();
+
+        if ($platforms->isEmpty()) {
+            $this->comment("Belum ada data loker.");
+        } else {
+            foreach ($platforms as $platform) {
+                $this->line(" - {$platform->name}: {$platform->total} loker");
+            }
+        }
+
+        $this->newLine();
+        $this->info("----------------------------------------------");
         $this->info("    Penyebaran Loker per Sektor / Jurusan     ");
         $this->info("----------------------------------------------");
 
