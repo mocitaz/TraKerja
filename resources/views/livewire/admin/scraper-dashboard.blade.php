@@ -264,16 +264,16 @@
                     </div>
 
                     <!-- Right Side: Performance Chart & Live Terminal Console (2/3) -->
-                    <div class="lg:col-span-2 bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col justify-between shadow-3xs">
-                        <div>
-                            <div class="flex items-center gap-2 pb-3 mb-4 border-b border-zinc-100">
+                    <div class="lg:col-span-2 bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col gap-4 shadow-3xs">
+                        <div class="flex-1 flex flex-col">
+                            <div class="flex items-center gap-2 pb-3 mb-4 border-b border-zinc-100 shrink-0">
                                 <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
                                     <i class="ph-bold ph-chart-bar text-xs"></i>
                                 </div>
                                 <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Metrik Grafik Performa Platform</h2>
                             </div>
                             
-                            <div class="relative h-[180px] w-full" wire:ignore>
+                            <div class="flex-1 min-h-[240px] relative w-full" wire:ignore>
                                 <canvas id="scraperPerformanceChart"></canvas>
                             </div>
                         </div>
@@ -693,14 +693,16 @@
                             {
                                 label: 'Sukses',
                                 data: successData,
-                                backgroundColor: '#10b981', // emerald-550
+                                backgroundColor: '#10b981', // emerald-500
                                 borderRadius: 4,
+                                maxBarThickness: 24,
                             },
                             {
                                 label: 'Gagal / Diblokir',
                                 data: failData,
                                 backgroundColor: '#f43f5e', // rose-500
                                 borderRadius: 4,
+                                maxBarThickness: 24,
                             }
                         ]
                     },
@@ -709,9 +711,12 @@
                         maintainAspectRatio: false,
                         plugins: {
                             legend: {
-                                position: 'bottom',
+                                position: 'top',
+                                align: 'end',
                                 labels: {
-                                    boxWidth: 10,
+                                    boxWidth: 8,
+                                    usePointStyle: true,
+                                    pointStyle: 'circle',
                                     font: {
                                         size: 9,
                                         family: 'Plus Jakarta Sans',
@@ -732,9 +737,9 @@
                             },
                             y: {
                                 stacked: true,
-                                grid: { color: '#f4f4f5' },
+                                grid: { color: '#f4f4f5', drawTicks: false },
+                                border: { dash: [4, 4] },
                                 ticks: {
-                                    stepSize: 10,
                                     font: { size: 9, family: 'Plus Jakarta Sans', weight: 600 },
                                     color: '#71717a'
                                 }
