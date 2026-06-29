@@ -145,4 +145,29 @@ class ExploreJobsTest extends TestCase
         $this->assertEquals(3, $posting->fresh()->report_dead_count);
         $this->assertEquals('closed', $posting->fresh()->status);
     }
+
+    public function test_user_can_save_scraped_job_to_job_tracker()
+    {
+        $posting = JobPosting::create([
+            'scraper_source_id' => $this->source->id,
+            'title' => 'Ruby Programmer',
+            'company_name' => 'RubyCorp',
+            'description' => 'Ruby job description',
+            'raw_url' => 'https://linkedin.com/jobs/view/400',
+            'unique_hash' => md5('https://linkedin.com/jobs/view/400'),
+            'status' => 'active',
+        ]);
+
+        Livewire::actingAs($this->user)
+            ->test(\App\Livewire\ExploreJobs::class)
+            ->call('trackJob', $posting->id)
+            ->assertSee('Disimpan ke Tracker!');
+
+        $this->assertDatabaseHas('job_applications', [
+            'user_id' => $this->user->id,
+            'company_name' => 'RubyCorp',
+            'position' => 'Ruby Programmer',
+            'platform_link' => 'https://linkedin.com/jobs/view/400',
+        ]);
+    }
 }

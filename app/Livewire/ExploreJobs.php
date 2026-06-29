@@ -49,10 +49,42 @@ class ExploreJobs extends Component
                 // Dispatching background verification or archiving
                 $posting->update(['status' => 'closed']); // Archive immediately to showcase loop
                 
-                session()->flash('info_' . $id, 'This listing has been reported multiple times and is now archived.');
+                session()->flash('report_info_' . $id, 'This listing has been reported multiple times and is now archived.');
             } else {
-                session()->flash('success_' . $id, 'Terima kasih atas laporan Anda! Link ini akan segera diverifikasi.');
+                session()->flash('report_success_' . $id, 'Laporan Diterima!');
             }
+        }
+    }
+
+    public function trackJob($id)
+    {
+        $posting = JobPosting::find($id);
+        
+        if ($posting) {
+            $exists = \App\Models\JobApplication::where('user_id', auth()->id())
+                ->where('company_name', $posting->company_name)
+                ->where('position', $posting->title)
+                ->exists();
+                
+            if ($exists) {
+                session()->flash('track_info_' . $id, 'Sudah ditambahkan!');
+                return;
+            }
+
+            \App\Models\JobApplication::create([
+                'user_id' => auth()->id(),
+                'company_name' => $posting->company_name,
+                'position' => $posting->title,
+                'location' => 'Jakarta, Indonesia',
+                'platform' => str_contains($posting->scraperSource->target_domain, 'linkedin') ? 'LinkedIn' : (str_contains($posting->scraperSource->target_domain, 'jobstreet') ? 'JobStreet' : 'Kalibrr'),
+                'platform_link' => $posting->raw_url,
+                'application_status' => 'Applied',
+                'recruitment_stage' => 'Applied',
+                'application_date' => now()->format('Y-m-d'),
+                'notes' => 'Lowongan disimpan secara otomatis dari halaman Explore Jobs.',
+            ]);
+
+            session()->flash('track_success_' . $id, 'Disimpan ke Tracker!');
         }
     }
 

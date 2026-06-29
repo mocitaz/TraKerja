@@ -90,10 +90,10 @@
                     <div class="border-t border-zinc-100 pt-3 flex items-center justify-between gap-2 shrink-0">
                         <!-- Left Action: Report Expired Link -->
                         <div class="relative">
-                            @if (session()->has('success_' . $job->id))
+                            @if (session()->has('report_success_' . $job->id))
                                 <span class="text-[9px] text-emerald-600 font-semibold block animate-pulse">Laporan Diterima!</span>
-                            @elseif (session()->has('info_' . $job->id))
-                                <span class="text-[9px] text-zinc-500 block font-semibold">{{ session('info_' . $job->id) }}</span>
+                            @elseif (session()->has('report_info_' . $job->id))
+                                <span class="text-[9px] text-zinc-500 block font-semibold">{{ session('report_info_' . $job->id) }}</span>
                             @else
                                 <button type="button" 
                                         wire:click="reportExpired({{ $job->id }})" 
@@ -104,13 +104,32 @@
                             @endif
                         </div>
 
-                        <!-- Right Action: Apply Link -->
-                        <a href="{{ $job->raw_url }}" 
-                           target="_blank" 
-                           class="inline-flex items-center gap-1 text-[10px] font-bold text-zinc-950 hover:text-zinc-700 transition-colors">
-                            Lamar Sekarang
-                            <i class="ph-bold ph-arrow-up-right text-xs"></i>
-                        </a>
+                        <!-- Right Action: Apply & Track Link -->
+                        <div class="flex items-center gap-3">
+                            @if (session()->has('track_success_' . $job->id))
+                                <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600">
+                                    <i class="ph ph-check-circle text-xs"></i>
+                                    Disimpan ke Tracker!
+                                </span>
+                            @elseif (session()->has('track_info_' . $job->id))
+                                <span class="text-[10px] font-medium text-zinc-400">
+                                    Sudah Ditambahkan!
+                                </span>
+                            @else
+                                <button type="button" 
+                                        wire:click="trackJob({{ $job->id }})" 
+                                        class="inline-flex items-center gap-1 text-[10px] font-bold text-zinc-500 hover:text-zinc-950 transition-colors">
+                                    <i class="ph ph-plus-circle text-xs"></i>
+                                    Simpan Tracker
+                                </button>
+                            @endif
+                            <a href="{{ $job->raw_url }}" 
+                               target="_blank" 
+                               class="inline-flex items-center gap-1 text-[10px] font-bold text-zinc-950 hover:text-zinc-700 transition-colors">
+                                Lamar Sekarang
+                                <i class="ph-bold ph-arrow-up-right text-xs"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             @endforeach
