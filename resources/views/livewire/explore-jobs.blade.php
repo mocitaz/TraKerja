@@ -166,7 +166,7 @@
                         <div class="space-y-1">
                             <!-- Province Header Button -->
                             <button type="button" 
-                                    wire:click="$set('selectedProvince', '{{ $provinceName }}'); $set('selectedLocation', '')" 
+                                    wire:click="selectLocation('{{ $provinceName }}', '')" 
                                     class="w-full flex items-center justify-between text-[11px] font-bold py-1 text-left rounded transition-colors
                                         {{ $isProvinceSelected 
                                             ? 'text-blue-700 bg-blue-55/10 px-1 border-b border-blue-200' 
@@ -185,7 +185,7 @@
                                             $isCitySelected = $selectedLocation === $cityInfo['name'];
                                         @endphp
                                         <button type="button" 
-                                                wire:click="$set('selectedProvince', '{{ $provinceName }}'); $set('selectedLocation', '{{ $cityInfo['name'] }}')" 
+                                                wire:click="selectLocation('{{ $provinceName }}', '{{ $cityInfo['name'] }}')" 
                                                 class="w-full text-left flex items-center justify-between text-[10px] py-1 px-1.5 rounded transition-all duration-150 
                                                     {{ $isCitySelected 
                                                         ? 'bg-blue-50 text-blue-800 font-bold border border-blue-200' 

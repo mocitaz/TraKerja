@@ -72,6 +72,13 @@ class ExploreJobs extends Component
         $this->selectedLocation = '';
     }
 
+    public function selectLocation(string $province, string $location = '')
+    {
+        $this->selectedProvince = $province;
+        $this->selectedLocation = $location;
+        $this->resetPage();
+    }
+
     public function resetLocationFilter()
     {
         $this->selectedProvince = '';
