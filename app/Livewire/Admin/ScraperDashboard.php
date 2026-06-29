@@ -88,6 +88,33 @@ class ScraperDashboard extends Component
         }
     }
 
+    public function triggerManualCrawl()
+    {
+        \App\Jobs\DiscoverLinksJob::dispatch();
+        session()->flash('success', "Discovery pipeline scraper berhasil dipicu di background worker.");
+    }
+
+    public function verifyActiveListings(DeadLinkDetector $detector)
+    {
+        $activePostings = JobPosting::where('status', 'active')->get();
+        $closedCount = 0;
+
+        foreach ($activePostings as $posting) {
+            $status = $detector->validate($posting);
+            
+            if ($status === 'closed') {
+                $posting->update(['status' => 'closed']);
+                $closedCount++;
+            }
+        }
+
+        if ($closedCount > 0) {
+            session()->flash('success', "Sinkronisasi selesai! {$closedCount} lowongan terdeteksi ditutup dan telah dinonaktifkan (take down).");
+        } else {
+            session()->flash('success', "Sinkronisasi selesai! Seluruh lowongan aktif divalidasi dan masih tersedia.");
+        }
+    }
+
     public function runTestSandbox(DeadLinkDetector $detector)
     {
         $this->validateOnly('testUrl', [

@@ -17,8 +17,38 @@
             <span class="text-zinc-300">/</span>
             <h1 class="text-sm font-semibold tracking-tight text-zinc-900">Scraper Engine</h1>
         </div>
-        <div class="flex items-center gap-2">
-            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+        <div class="flex items-center gap-2.5 flex-wrap">
+            <!-- Verify Active Listings Link Check -->
+            <button type="button" 
+                    wire:click="verifyActiveListings" 
+                    wire:loading.attr="disabled"
+                    class="inline-flex items-center gap-1.5 bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-700 font-medium text-xs rounded-md px-3 py-1.5 transition-all duration-150 disabled:opacity-50">
+                <span wire:loading.remove wire:target="verifyActiveListings" class="flex items-center gap-1.5">
+                    <i class="ph ph-shield-warning text-sm"></i>
+                    Cek & Sinkronisasi Link Tutup
+                </span>
+                <span wire:loading wire:target="verifyActiveListings" class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 border-2 border-zinc-500 border-t-transparent rounded-full animate-spin"></span>
+                    Mensinkronisasi...
+                </span>
+            </button>
+
+            <!-- Trigger Manual Scraper Ingestion -->
+            <button type="button" 
+                    wire:click="triggerManualCrawl" 
+                    wire:loading.attr="disabled"
+                    class="inline-flex items-center gap-1.5 bg-zinc-950 hover:bg-zinc-900 text-white font-medium text-xs rounded-md px-3 py-1.5 transition-all duration-150 disabled:opacity-50">
+                <span wire:loading.remove wire:target="triggerManualCrawl" class="flex items-center gap-1.5">
+                    <i class="ph ph-play text-sm"></i>
+                    Jalankan Scraper Manual
+                </span>
+                <span wire:loading wire:target="triggerManualCrawl" class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    Memicu Scraper...
+                </span>
+            </button>
+
+            <span class="inline-flex items-center px-2 py-1.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse mr-1"></span>
                 Engine Ready
             </span>
