@@ -202,7 +202,54 @@ class ExploreJobsTest extends TestCase
             ->test(\App\Livewire\Admin\ScraperDashboard::class)
             ->call('verifyActiveListings', $detectorMock)
             ->assertSee('Sinkronisasi selesai! 1 lowongan terdeteksi ditutup');
-
         $this->assertEquals('closed', $posting->fresh()->status);
+    }
+
+    public function test_user_can_filter_by_location()
+    {
+        JobPosting::create([
+            'scraper_source_id' => $this->source->id,
+            'title' => 'Jakarta Senior Engineer',
+            'company_name' => 'GoCorp',
+            'description' => 'Great job description',
+            'raw_url' => 'https://linkedin.com/jobs/view/500',
+            'unique_hash' => md5('https://linkedin.com/jobs/view/500'),
+            'status' => 'active',
+            'location' => 'Jakarta',
+        ]);
+
+        JobPosting::create([
+            'scraper_source_id' => $this->source->id,
+            'title' => 'Surabaya Senior Engineer',
+            'company_name' => 'SuraCorp',
+            'description' => 'Great job description',
+            'raw_url' => 'https://linkedin.com/jobs/view/501',
+            'unique_hash' => md5('https://linkedin.com/jobs/view/501'),
+            'status' => 'active',
+            'location' => 'Surabaya',
+        ]);
+
+        Livewire::actingAs($this->user)
+            ->test(\App\Livewire\ExploreJobs::class)
+            ->set('selectedLocation', 'Jakarta')
+            ->assertSee('Jakarta Senior Engineer')
+            ->assertDontSee('Surabaya Senior Engineer');
+    }
+
+    public function test_location_classification_and_statistics()
+    {
+        // Test remote
+        $resRemote = \App\Helpers\LocationHelper::classify('Remote / WFH', 'React Developer', 'Work from home');
+        $this->assertEquals('Remote', $resRemote['city']);
+        $this->assertEquals('Remote / WFH', $resRemote['province']);
+
+        // Test specific city
+        $resCity = \App\Helpers\LocationHelper::classify('Kota Bandung, Jawa Barat', 'Developer Bandung', 'Description');
+        $this->assertEquals('Bandung', $resCity['city']);
+        $this->assertEquals('Jawa Barat', $resCity['province']);
+
+        // Test normalisation
+        $this->assertEquals('Surakarta', \App\Helpers\LocationHelper::normalizeCity('Solo'));
+        $this->assertEquals('Yogyakarta', \App\Helpers\LocationHelper::normalizeCity('Jogja'));
     }
 }

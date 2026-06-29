@@ -41,6 +41,7 @@ class ScrapeJobDetailsJob implements ShouldQueue
         $title = null;
         $company = null;
         $bodyContent = null;
+        $location = null;
         $success = false;
 
         // ==========================================
@@ -110,6 +111,7 @@ class ScrapeJobDetailsJob implements ShouldQueue
                 $titleSelector = $selectors['title'] ?? 'h1';
                 $companySelector = $selectors['company'] ?? '';
                 $bodySelector = $selectors['body'] ?? '';
+                $locationSelector = $selectors['location'] ?? '';
 
                 // Extract title
                 if ($crawler->filter($titleSelector)->count() > 0) {
@@ -124,6 +126,11 @@ class ScrapeJobDetailsJob implements ShouldQueue
                 // Extract body / description
                 if ($bodySelector && $crawler->filter($bodySelector)->count() > 0) {
                     $bodyContent = trim($crawler->filter($bodySelector)->first()->text());
+                }
+
+                // Extract location
+                if ($locationSelector && $crawler->filter($locationSelector)->count() > 0) {
+                    $location = trim($crawler->filter($locationSelector)->first()->text());
                 }
                 
                 self::logToLiveBuffer("CSS Crawler berhasil mengekstrak data detail.", 'success');
@@ -181,6 +188,7 @@ class ScrapeJobDetailsJob implements ShouldQueue
                 'title' => $title,
                 'company' => $company,
                 'description' => $bodyContent ?: 'Job description content. Please refer to the source portal link to view details and apply.',
+                'location' => $location,
                 'isClosed' => str_contains(strtolower($html ?? ''), 'no longer accepting applications') || str_contains(strtolower($html ?? ''), 'sudah ditutup') || str_contains(strtolower($html ?? ''), 'expired'),
                 'success' => true
             ];

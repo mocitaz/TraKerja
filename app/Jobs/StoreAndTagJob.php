@@ -68,6 +68,11 @@ class StoreAndTagJob implements ShouldQueue
         }
         $detectedStack = array_values(array_unique($detectedStack));
 
+        // 5. Classify & Normalize Location
+        $scrapedLocation = $this->payload['location'] ?? '';
+        $locationResult = \App\Helpers\LocationHelper::classify($scrapedLocation, $title, $description);
+        $normalizedLocation = $locationResult['city'];
+
         $existing = JobPosting::where('scraper_source_id', $this->sourceId)
             ->where('title', $title)
             ->where('company_name', $company)
@@ -78,6 +83,7 @@ class StoreAndTagJob implements ShouldQueue
                 'description' => $description,
                 'category_field' => $field,
                 'category_major' => $major,
+                'location' => $normalizedLocation,
                 'work_type' => $workType,
                 'tech_stack' => $detectedStack,
                 'raw_url' => $this->url,
@@ -95,6 +101,7 @@ class StoreAndTagJob implements ShouldQueue
                     'description' => $description,
                     'category_field' => $field,
                     'category_major' => $major,
+                    'location' => $normalizedLocation,
                     'work_type' => $workType,
                     'tech_stack' => $detectedStack,
                     'raw_url' => $this->url,

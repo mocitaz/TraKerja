@@ -17,6 +17,7 @@ class JobPosting extends Model
         'description',
         'category_field',
         'category_major',
+        'location',
         'work_type',
         'tech_stack',
         'raw_url',

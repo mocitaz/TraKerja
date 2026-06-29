@@ -15,6 +15,7 @@ class ExploreJobs extends Component
     public $selectedField = '';
     public $selectedMajor = '';
     public $selectedWorkType = '';
+    public $selectedLocation = '';
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -22,6 +23,7 @@ class ExploreJobs extends Component
         'selectedField' => ['except' => ''],
         'selectedMajor' => ['except' => ''],
         'selectedWorkType' => ['except' => ''],
+        'selectedLocation' => ['except' => ''],
     ];
 
     public function mount()
@@ -53,6 +55,11 @@ class ExploreJobs extends Component
     }
 
     public function updatingSelectedWorkType()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSelectedLocation()
     {
         $this->resetPage();
     }
@@ -147,12 +154,18 @@ class ExploreJobs extends Component
             $query->where('work_type', $this->selectedWorkType);
         }
 
+        if (!empty($this->selectedLocation)) {
+            $query->where('location', $this->selectedLocation);
+        }
+
         $postings = $query->orderBy('created_at', 'desc')->paginate(12);
 
         return view('livewire.explore-jobs', [
             'postings' => $postings,
             'fieldsList' => \App\Helpers\CategoryHelper::getSektorList(),
             'majorsList' => $this->majors,
+            'locationStats' => \App\Helpers\LocationHelper::getLocationStatistics(),
+            'locationsList' => JobPosting::where('status', 'active')->whereNotNull('location')->where('location', '!=', '')->distinct()->orderBy('location')->pluck('location'),
         ])->layout('layouts.app');
     }
 }
