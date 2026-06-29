@@ -302,4 +302,26 @@ class ExploreJobsTest extends TestCase
         $this->assertEquals('Kota Surakarta', \App\Helpers\LocationHelper::normalizeCity('Solo'));
         $this->assertEquals('Kota Yogyakarta', \App\Helpers\LocationHelper::normalizeCity('Jogja'));
     }
+
+    public function test_user_can_reset_all_filters()
+    {
+        $component = Livewire::actingAs($this->user)
+            ->test(\App\Livewire\ExploreJobs::class)
+            ->set('search', 'Ruby')
+            ->set('selectedPlatform', 'linkedin.com')
+            ->set('selectedField', 'IT')
+            ->set('selectedMajor', 'CS')
+            ->set('selectedWorkType', 'Remote')
+            ->set('selectedProvince', 'DKI Jakarta')
+            ->set('selectedLocation', 'Jakarta Selatan')
+            ->call('resetFilters');
+
+        $this->assertEquals('', $component->get('search'));
+        $this->assertEquals('', $component->get('selectedPlatform'));
+        $this->assertEquals('', $component->get('selectedField'));
+        $this->assertEquals('', $component->get('selectedMajor'));
+        $this->assertEquals('', $component->get('selectedWorkType'));
+        $this->assertEquals('', $component->get('selectedProvince'));
+        $this->assertEquals('', $component->get('selectedLocation'));
+    }
 }

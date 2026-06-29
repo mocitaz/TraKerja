@@ -98,6 +98,18 @@ class ExploreJobs extends Component
         $this->resetPage();
     }
 
+    public function resetFilters()
+    {
+        $this->search = '';
+        $this->selectedPlatform = '';
+        $this->selectedField = '';
+        $this->selectedMajor = '';
+        $this->selectedWorkType = '';
+        $this->selectedProvince = '';
+        $this->selectedLocation = '';
+        $this->resetPage();
+    }
+
     public function getMajorsProperty()
     {
         if (!empty($this->selectedField)) {

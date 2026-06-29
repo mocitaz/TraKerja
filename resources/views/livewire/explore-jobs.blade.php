@@ -15,21 +15,109 @@
         </div>
     </div>
 
-    <!-- Search and Filters bar -->
-    <div class="bg-white rounded-xl border border-zinc-200 p-4 shadow-3xs mb-6 select-none">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-            <div class="md:col-span-2 relative">
-                <input type="text" 
-                       wire:model.live.debounce.300ms="search" 
-                       placeholder="Cari judul pekerjaan atau nama perusahaan..." 
-                       class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded-md px-3 py-2 pl-9 text-zinc-900 outline-none focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white transition-all font-semibold">
-                <div class="absolute left-3 top-2.5 text-zinc-400">
-                    <i class="ph ph-magnifying-glass text-sm"></i>
+    <!-- Premium Hero Search Card -->
+    <div class="relative bg-zinc-50/50 border border-zinc-200/80 rounded-2xl p-8 md:p-10 text-center shadow-3xs overflow-hidden mb-6 select-none">
+        <!-- Radial Gradient background -->
+        <div class="absolute inset-0 bg-gradient-to-b from-primary-50/20 via-transparent to-transparent pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-3xl mx-auto space-y-4">
+            <h2 class="text-xl md:text-2xl font-black text-zinc-800 tracking-tight leading-tight">
+                Temukan Karir <span class="text-primary-650 block sm:inline">Impian Anda Hari Ini</span>
+            </h2>
+            <p class="text-[11px] md:text-xs text-zinc-400 max-w-lg mx-auto leading-relaxed">
+                Jelajahi ribuan peluang magang & lowongan terverifikasi anti-ghosting dari berbagai perusahaan ternama di seluruh Indonesia.
+            </p>
+
+            <!-- Pill Search Bar (Unified Row) -->
+            <div class="bg-white border border-zinc-200 rounded-xl md:rounded-full p-1.5 shadow-2xs flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-0 mt-4">
+                <!-- Search input -->
+                <div class="flex-1 relative flex items-center pl-3">
+                    <i class="ph ph-magnifying-glass text-zinc-400 text-xs absolute left-3"></i>
+                    <input type="text" 
+                           wire:model.live.debounce.300ms="search" 
+                           placeholder="Posisi, skill, atau perusahaan..." 
+                           class="w-full text-xs bg-transparent border-0 focus:ring-0 text-zinc-900 pl-6 pr-2 py-1.5 font-semibold placeholder-zinc-400 focus:outline-hidden">
                 </div>
+
+                <div class="hidden md:block w-[1px] h-5 bg-zinc-200"></div>
+
+                <!-- Dropdown Provinsi -->
+                <div class="relative flex items-center px-3">
+                    <i class="ph ph-map-pin text-zinc-400 text-xs mr-1"></i>
+                    <select wire:model.live="selectedProvince" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer min-w-[125px] outline-none">
+                        <option value="">Provinsi</option>
+                        @foreach($provincesList as $provItem)
+                            <option value="{{ $provItem }}">{{ $provItem }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="hidden md:block w-[1px] h-5 bg-zinc-200"></div>
+
+                <!-- Dropdown Kota -->
+                <div class="relative flex items-center px-3">
+                    <i class="ph ph-map-pin-line text-zinc-400 text-xs mr-1"></i>
+                    <select wire:model.live="selectedLocation" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer min-w-[125px] outline-none" {{ empty($selectedProvince) ? 'disabled' : '' }}>
+                        @if(empty($selectedProvince))
+                            <option value="">Pilih Provinsi</option>
+                        @else
+                            <option value="">Semua Kota</option>
+                            @foreach($locationsList as $locItem)
+                                <option value="{{ $locItem }}">{{ $locItem }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+
+                <div class="hidden md:block w-[1px] h-5 bg-zinc-200"></div>
+
+                <!-- Dropdown Tipe Kerja -->
+                <div class="relative flex items-center px-3">
+                    <i class="ph ph-briefcase text-zinc-400 text-xs mr-1"></i>
+                    <select wire:model.live="selectedWorkType" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer min-w-[110px] outline-none">
+                        <option value="">Tipe Kerja</option>
+                        <option value="Onsite">Onsite</option>
+                        <option value="Remote">Remote</option>
+                        <option value="Hybrid">Hybrid</option>
+                    </select>
+                </div>
+
+                <!-- Action Cari Button -->
+                <button type="button" 
+                        class="md:ml-2 px-6 h-[34px] bg-primary-650 hover:bg-primary-700 text-white text-[11px] font-black rounded-lg md:rounded-full uppercase tracking-wider transition-all duration-150 active:scale-97 flex items-center justify-center gap-1 shrink-0 focus:outline-hidden">
+                    Cari
+                </button>
             </div>
-            
-            <div class="md:col-span-2 flex gap-2">
-                <!-- Platform Filters -->
+
+            <!-- Total Posisi, Refresh & Reset Row -->
+            <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[9.5px] font-mono font-bold text-zinc-400 uppercase tracking-wider pt-2">
+                <div class="flex items-center gap-1 text-zinc-650 bg-zinc-100 border border-zinc-200 px-2.5 py-0.5 rounded-full shadow-3xs">
+                    <i class="ph ph-briefcase-metal text-[11px]"></i>
+                    <span>Total Lowongan: {{ $postings->total() }}</span>
+                </div>
+                <span class="text-zinc-200 hidden sm:inline">&bull;</span>
+                <button type="button" 
+                        wire:click="$refresh" 
+                        class="flex items-center gap-1 hover:text-zinc-700 transition-colors focus:outline-hidden cursor-pointer">
+                    <i class="ph ph-arrows-clockwise text-xs"></i>
+                    Refresh Feed
+                </button>
+                <span class="text-zinc-200 hidden sm:inline">&bull;</span>
+                <button type="button" 
+                        wire:click="resetFilters" 
+                        class="flex items-center gap-1 hover:text-rose-650 transition-colors focus:outline-hidden cursor-pointer">
+                    <i class="ph ph-trash text-xs"></i>
+                    Reset Filter
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Secondary Filters Box (Platform, Sektor & Jurusan) -->
+    <div class="bg-white rounded-xl border border-zinc-200 p-4 shadow-3xs mb-6 select-none">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+            <!-- Platform Pills -->
+            <div class="lg:col-span-6 flex gap-2">
                 <button type="button" 
                         wire:click="$set('selectedPlatform', '')" 
                         class="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-[11px] font-bold border transition-all duration-150 shadow-3xs focus:outline-hidden {{ $selectedPlatform === '' ? 'bg-zinc-950 border-zinc-950 text-white' : 'bg-white border-zinc-200 text-zinc-650 hover:bg-zinc-50' }}">
@@ -55,62 +143,26 @@
                     <span>Kalibrr</span>
                 </button>
             </div>
-        </div>
 
-        <!-- Row 2: Advanced filters -->
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-4 pt-4 border-t border-zinc-100">
-            <div>
-                <label class="block text-[8.5px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Bidang Kerja</label>
-                <select wire:model.live="selectedField" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded-md px-2.5 py-1.5 text-zinc-700 outline-none transition-all focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white cursor-pointer font-semibold">
-                    <option value="">Semua Bidang</option>
-                    @foreach($fieldsList as $fieldItem)
-                        <option value="{{ $fieldItem }}">{{ $fieldItem }}</option>
-                    @endforeach
-                </select>
-            </div>
-            
-            <div>
-                <label class="block text-[8.5px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Jurusan Terkait</label>
-                <select wire:model.live="selectedMajor" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded-md px-2.5 py-1.5 text-zinc-700 outline-none transition-all focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white cursor-pointer font-semibold">
-                    <option value="">Semua Jurusan</option>
-                    @foreach($majorsList as $majorItem)
-                        <option value="{{ $majorItem }}">{{ $majorItem }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div>
-                <label class="block text-[8.5px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Tipe Kerja</label>
-                <select wire:model.live="selectedWorkType" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded-md px-2.5 py-1.5 text-zinc-700 outline-none transition-all focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white cursor-pointer font-semibold">
-                    <option value="">Semua Tipe</option>
-                    <option value="Onsite">Onsite</option>
-                    <option value="Remote">Remote</option>
-                    <option value="Hybrid">Hybrid</option>
-                </select>
-            </div>
-
-            <div>
-                <label class="block text-[8.5px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Provinsi</label>
-                <select wire:model.live="selectedProvince" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded-md px-2.5 py-1.5 text-zinc-700 outline-none transition-all focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white cursor-pointer font-semibold">
-                    <option value="">Semua Provinsi</option>
-                    @foreach($provincesList as $provItem)
-                        <option value="{{ $provItem }}">{{ $provItem }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="col-span-2 md:col-span-1">
-                <label class="block text-[8.5px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Kota / Kabupaten</label>
-                <select wire:model.live="selectedLocation" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded-md px-2.5 py-1.5 text-zinc-700 outline-none transition-all focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white cursor-pointer font-semibold" {{ empty($selectedProvince) ? 'disabled' : '' }}>
-                    @if(empty($selectedProvince))
-                        <option value="">Pilih Provinsi Dulu</option>
-                    @else
-                        <option value="">Semua Kota</option>
-                        @foreach($locationsList as $locItem)
-                            <option value="{{ $locItem }}">{{ $locItem }}</option>
+            <!-- Sektor & Jurusan Dropdowns -->
+            <div class="lg:col-span-6 grid grid-cols-2 gap-3">
+                <div>
+                    <select wire:model.live="selectedField" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded-md px-2.5 py-1.5 text-zinc-700 outline-none transition-all focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white cursor-pointer font-semibold">
+                        <option value="">Semua Sektor Bidang</option>
+                        @foreach($fieldsList as $fieldItem)
+                            <option value="{{ $fieldItem }}">{{ $fieldItem }}</option>
                         @endforeach
-                    @endif
-                </select>
+                    </select>
+                </div>
+                
+                <div>
+                    <select wire:model.live="selectedMajor" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded-md px-2.5 py-1.5 text-zinc-700 outline-none transition-all focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white cursor-pointer font-semibold">
+                        <option value="">Semua Jurusan</option>
+                        @foreach($majorsList as $majorItem)
+                            <option value="{{ $majorItem }}">{{ $majorItem }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
         </div>
     </div>
