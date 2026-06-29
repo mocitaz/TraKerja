@@ -21,11 +21,15 @@ class DiscoverLinksJob implements ShouldQueue
     public function handle()
     {
         $sources = ScraperSource::where('is_active', true)->get();
+        echo "Processing " . $sources->count() . " active scraper sources...\n";
 
         foreach ($sources as $source) {
+            echo "Running discovery for: " . $source->name . " (" . $source->target_domain . ")...\n";
             $discoveredUrls = $source->executeDiscovery();
+            echo "Discovered " . count($discoveredUrls) . " URLs for " . $source->name . "\n";
 
             foreach ($discoveredUrls as $url) {
+                echo "-> Dispatching ScrapeJobDetailsJob for URL: " . $url . "\n";
                 ScrapeJobDetailsJob::dispatch($url, $source)->onQueue('extraction');
             }
             

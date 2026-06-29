@@ -50,6 +50,7 @@ class ScraperSource extends Model
     public function executeDiscovery(): array
     {
         try {
+            echo "  [HTTP GET] Requesting: " . $this->seed_url . "\n";
             $response = \Illuminate\Support\Facades\Http::timeout(30)
                 ->withHeaders([
                     'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -59,11 +60,13 @@ class ScraperSource extends Model
                 ->get($this->seed_url);
                 
             if ($response->failed()) {
+                echo "  [HTTP FAIL] Status code: " . $response->status() . "\n";
                 \Illuminate\Support\Facades\Log::warning("Discovery request failed for source {$this->id} ({$this->name}) with status code: " . $response->status() . " on URL: " . $this->seed_url);
                 return [];
             }
             
             $html = $response->body();
+            echo "  [HTTP SUCCESS] Received " . strlen($html) . " bytes\n";
             preg_match_all('/href="([^"]*?' . preg_quote($this->target_domain, '/') . '[^"]*?)"/i', $html, $matches);
             
             $urls = array_slice(array_unique($matches[1] ?? []), 0, 10);
@@ -72,6 +75,7 @@ class ScraperSource extends Model
             
             return $urls;
         } catch (\Exception $e) {
+            echo "  [HTTP ERROR] Exception thrown: " . $e->getMessage() . "\n";
             \Illuminate\Support\Facades\Log::error("Discovery failed for source {$this->id}: " . $e->getMessage());
             return [];
         }
