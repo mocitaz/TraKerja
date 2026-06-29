@@ -485,6 +485,29 @@ class ScraperDashboard extends Component
         return $this->targetSector ? \App\Helpers\CategoryHelper::getMajorsForSektor($this->targetSector) : [];
     }
 
+    public function restoreReportedJob($id)
+    {
+        $job = JobPosting::find($id);
+        if ($job) {
+            $job->update([
+                'status' => 'active',
+                'report_dead_count' => 0
+            ]);
+            session()->flash('report_action_success', "Berhasil memulihkan lowongan '{$job->title}' ke status aktif dan mereset jumlah laporan!");
+        }
+    }
+
+    public function closeReportedJob($id)
+    {
+        $job = JobPosting::find($id);
+        if ($job) {
+            $job->update([
+                'status' => 'closed'
+            ]);
+            session()->flash('report_action_success', "Berhasil menutup/mengarsipkan lowongan '{$job->title}' secara permanen!");
+        }
+    }
+
     public function render()
     {
         $jobsPending = 0;
@@ -552,10 +575,16 @@ class ScraperDashboard extends Component
             ];
         }
 
+        $reportedJobs = JobPosting::where('report_dead_count', '>', 0)
+            ->orderBy('report_dead_count', 'desc')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
         return view('livewire.admin.scraper-dashboard', [
             'stats' => $stats,
             'platformMetrics' => $platformMetrics,
             'targetedProgress' => $targetedProgress,
+            'reportedJobs' => $reportedJobs,
         ])->layout('components.admin-layout');
     }
 }

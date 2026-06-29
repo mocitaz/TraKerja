@@ -108,4 +108,43 @@ class ScraperDashboardTest extends TestCase
         $component->assertHasNoErrors();
         $this->assertTrue(count($component->get('proxyStatusList')) > 0);
     }
+
+    /** @test */
+    public function admin_can_moderate_reported_expired_jobs()
+    {
+        $source = ScraperSource::create([
+            'name' => 'LinkedIn Scraper',
+            'target_domain' => 'linkedin.com',
+            'seed_url' => 'https://linkedin.com',
+            'selectors_config' => ['title' => '.job-title'],
+            'is_active' => true,
+        ]);
+
+        $job = JobPosting::create([
+            'scraper_source_id' => $source->id,
+            'title' => 'Ruby Dev',
+            'company_name' => 'RubyCorp',
+            'description' => 'Ruby details',
+            'raw_url' => 'https://linkedin.com/jobs/view/9991',
+            'unique_hash' => md5('https://linkedin.com/jobs/view/9991'),
+            'status' => 'active',
+            'report_dead_count' => 3,
+        ]);
+
+        $component = Livewire::actingAs($this->adminUser)
+            ->test(\App\Livewire\Admin\ScraperDashboard::class)
+            ->set('activeTab', 'reports')
+            ->assertSee('Moderasi Laporan')
+            ->assertSee('Ruby Dev')
+            ->call('restoreReportedJob', $job->id)
+            ->assertSee('Berhasil memulihkan lowongan');
+
+        $this->assertEquals(0, $job->fresh()->report_dead_count);
+        $this->assertEquals('active', $job->fresh()->status);
+
+        $component->call('closeReportedJob', $job->id)
+            ->assertSee('Berhasil menutup/mengarsipkan lowongan');
+
+        $this->assertEquals('closed', $job->fresh()->status);
+    }
 }

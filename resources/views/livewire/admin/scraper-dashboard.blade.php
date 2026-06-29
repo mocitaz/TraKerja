@@ -143,6 +143,16 @@
                 class="px-5 py-3.5 border-b-2 text-xs font-semibold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'sandbox' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50' : 'border-transparent text-zinc-400 hover:text-zinc-700' }}">
             <i class="ph-bold ph-terminal-window text-sm"></i> Sandbox & CSS Selector Tester
         </button>
+        <button type="button" 
+                wire:click="$set('activeTab', 'reports')"
+                class="px-5 py-3.5 border-b-2 text-xs font-semibold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'reports' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50' : 'border-transparent text-zinc-400 hover:text-zinc-700' }}">
+            <i class="ph-bold ph-warning-octagon text-sm"></i> Laporan Loker Ditutup
+            @if(count($reportedJobs) > 0)
+                <span class="px-1.5 py-0.5 bg-rose-500 text-white text-[9px] font-black rounded-full leading-none animate-pulse">
+                    {{ count($reportedJobs) }}
+                </span>
+            @endif
+        </button>
     </div>
 
     <!-- Active Tab Workspace Container -->
@@ -810,6 +820,120 @@
                     <div class="mt-6 pt-4 border-t border-zinc-100 text-[10px] font-mono text-zinc-400">
                         Visual selector builder bermanfaat untuk memotong bug perubahan struktur HTML pada platform loker eksternal.
                     </div>
+                </div>
+            </div>
+        @endif
+
+        @if ($activeTab === 'reports')
+            <!-- TAB 5: REPORTED JOB LISTINGS MODERATION -->
+            <div class="space-y-5 animate-fade-in text-zinc-900">
+                <!-- Status Notifications / Session Alert -->
+                @if (session()->has('report_action_success'))
+                    <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg p-3 text-xs font-semibold flex items-center gap-2 select-none shadow-3xs">
+                        <i class="ph-bold ph-check-circle text-sm text-emerald-600"></i>
+                        <span>{{ session('report_action_success') }}</span>
+                    </div>
+                @endif
+
+                <div class="bg-white border border-zinc-200/80 rounded-lg p-5 shadow-3xs">
+                    <div class="flex items-center justify-between pb-3.5 border-b border-zinc-150/60 mb-5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-650 shadow-3xs">
+                                <i class="ph-bold ph-warning-octagon text-base"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Moderasi Laporan Lowongan Ditutup</h3>
+                                <p class="text-zinc-400 text-[9px] font-medium mt-0.5">Daftar lowongan kerja yang dilaporkan sudah ditutup oleh pengguna di halaman pencarian.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if(count($reportedJobs) > 0)
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-[11px] text-zinc-650 border-collapse">
+                                <thead>
+                                    <tr class="bg-zinc-50 border-b border-zinc-200 text-left font-mono font-bold text-zinc-400 uppercase tracking-wider text-[9px]">
+                                        <th class="py-2.5 px-3">Detail Lowongan</th>
+                                        <th class="py-2.5 px-3">Platform</th>
+                                        <th class="py-2.5 px-3 text-center">Jumlah Laporan</th>
+                                        <th class="py-2.5 px-3">Status Saat Ini</th>
+                                        <th class="py-2.5 px-3 text-right">Aksi Audit</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-zinc-150/60">
+                                    @foreach($reportedJobs as $job)
+                                        <tr class="hover:bg-zinc-50/30 transition-colors duration-150">
+                                            <td class="py-3 px-3">
+                                                <div class="font-bold text-zinc-800">{{ $job->title }}</div>
+                                                <div class="text-[10px] text-zinc-400 font-medium mt-0.5">{{ $job->company_name }} &bull; {{ $job->location ?: 'Indonesia' }}</div>
+                                            </td>
+                                            <td class="py-3 px-3 font-mono font-bold text-[10px]">
+                                                @php
+                                                    $portalName = str_contains($job->scraperSource->target_domain, 'linkedin') ? 'LinkedIn' : (str_contains($job->scraperSource->target_domain, 'jobstreet') ? 'JobStreet' : 'Kalibrr');
+                                                    $badgeStyle = 'bg-blue-50 text-blue-700 border border-blue-200';
+                                                    if ($portalName === 'JobStreet') {
+                                                        $badgeStyle = 'bg-red-50 text-red-700 border border-red-200';
+                                                    } elseif ($portalName === 'Kalibrr') {
+                                                        $badgeStyle = 'bg-emerald-50 text-emerald-700 border border-emerald-250';
+                                                    }
+                                                @endphp
+                                                <span class="px-1.5 py-0.5 rounded text-[8.5px] uppercase font-bold {{ $badgeStyle }} shrink-0">
+                                                    {{ $portalName }}
+                                                </span>
+                                            </td>
+                                            <td class="py-3 px-3 text-center">
+                                                <div class="inline-flex items-center gap-1 px-2 py-0.5 bg-rose-50 border border-rose-150 rounded text-rose-700 font-mono font-bold text-[10px]">
+                                                    <i class="ph-bold ph-warning text-[10px]"></i>
+                                                    {{ $job->report_dead_count }}x Dilaporkan
+                                                </div>
+                                            </td>
+                                            <td class="py-3 px-3 font-mono font-bold text-[9px] uppercase">
+                                                @if($job->status === 'closed')
+                                                    <span class="text-zinc-400 bg-zinc-100 border border-zinc-200 px-1.5 py-0.5 rounded">Closed/Archived</span>
+                                                @elseif($job->status === 'reported_dead')
+                                                    <span class="text-red-700 bg-red-50 border border-red-200 px-1.5 py-0.5 rounded">Reported Dead</span>
+                                                @else
+                                                    <span class="text-emerald-700 bg-emerald-50 border border-emerald-250 px-1.5 py-0.5 rounded">Active</span>
+                                                @endif
+                                            </td>
+                                            <td class="py-3 px-3 text-right">
+                                                <div class="flex items-center justify-end gap-2.5">
+                                                    <!-- Check original link -->
+                                                    <a href="{{ $job->raw_url }}" 
+                                                       target="_blank" 
+                                                       class="text-[9.5px] font-bold text-zinc-500 hover:text-zinc-800 transition-colors uppercase tracking-wider flex items-center gap-0.5">
+                                                        <i class="ph ph-arrow-square-out text-xs"></i> Cek Link
+                                                    </a>
+                                                    <span class="text-zinc-200">|</span>
+                                                    <!-- Restore / Re-activate -->
+                                                    <button type="button" 
+                                                            wire:click="restoreReportedJob({{ $job->id }})" 
+                                                            class="text-[9.5px] font-bold text-emerald-600 hover:text-emerald-800 transition-colors uppercase tracking-wider flex items-center gap-0.5">
+                                                        <i class="ph ph-check text-xs"></i> Pulihkan
+                                                    </button>
+                                                    <span class="text-zinc-200">|</span>
+                                                    <!-- Close permanently -->
+                                                    <button type="button" 
+                                                            wire:click="closeReportedJob({{ $job->id }})" 
+                                                            class="text-[9.5px] font-bold text-rose-600 hover:text-rose-800 transition-colors uppercase tracking-wider flex items-center gap-0.5">
+                                                        <i class="ph ph-archive text-xs"></i> Arsipkan
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="border border-dashed border-zinc-200 rounded-xl p-12 text-center flex flex-col items-center justify-center bg-zinc-50/30 select-none">
+                            <div class="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-500 mb-3 shadow-3xs">
+                                <i class="ph-bold ph-shield-check text-base"></i>
+                            </div>
+                            <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Semua Bersih</h3>
+                            <p class="text-[10px] text-zinc-400 max-w-[280px] mt-1 leading-normal">Tidak ada laporan aktif dari pengguna saat ini. Semua lowongan dalam status operasional normal.</p>
+                        </div>
+                    @endif
                 </div>
             </div>
         @endif
