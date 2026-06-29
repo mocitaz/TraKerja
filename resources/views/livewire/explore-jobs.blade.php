@@ -41,6 +41,32 @@
 
                 <div class="hidden md:block w-[1px] h-5 bg-zinc-200"></div>
 
+                <!-- Dropdown Sektor -->
+                <div class="relative flex items-center px-3">
+                    <i class="ph ph-circles-four text-zinc-400 text-xs mr-1"></i>
+                    <select wire:model.live="selectedField" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer min-w-[135px] outline-none">
+                        <option value="">Semua Sektor</option>
+                        @foreach($fieldsList as $fieldItem)
+                            <option value="{{ $fieldItem }}">{{ $fieldItem }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="hidden md:block w-[1px] h-5 bg-zinc-200"></div>
+
+                <!-- Dropdown Jurusan -->
+                <div class="relative flex items-center px-3">
+                    <i class="ph ph-graduation-cap text-zinc-400 text-xs mr-1"></i>
+                    <select wire:model.live="selectedMajor" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer min-w-[135px] outline-none">
+                        <option value="">Semua Jurusan</option>
+                        @foreach($majorsList as $majorItem)
+                            <option value="{{ $majorItem }}">{{ $majorItem }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="hidden md:block w-[1px] h-5 bg-zinc-200"></div>
+
                 <!-- Dropdown Provinsi -->
                 <div class="relative flex items-center px-3">
                     <i class="ph ph-map-pin text-zinc-400 text-xs mr-1"></i>
@@ -109,60 +135,6 @@
                     <i class="ph ph-trash text-xs"></i>
                     Reset Filter
                 </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Secondary Filters Box (Platform, Sektor & Jurusan) -->
-    <div class="bg-white rounded-xl border border-zinc-200 p-4 shadow-3xs mb-6 select-none">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
-            <!-- Platform Pills -->
-            <div class="lg:col-span-6 flex gap-2">
-                <button type="button" 
-                        wire:click="$set('selectedPlatform', '')" 
-                        class="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-[11px] font-bold border transition-all duration-150 shadow-3xs focus:outline-hidden {{ $selectedPlatform === '' ? 'bg-zinc-950 border-zinc-950 text-white' : 'bg-white border-zinc-200 text-zinc-650 hover:bg-zinc-50' }}">
-                    <i class="ph ph-globe text-xs"></i>
-                    <span>Semua</span>
-                </button>
-                <button type="button" 
-                        wire:click="$set('selectedPlatform', 'linkedin.com')" 
-                        class="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-[11px] font-bold border transition-all duration-150 shadow-3xs focus:outline-hidden {{ $selectedPlatform === 'linkedin.com' ? 'bg-[#0a66c2]/10 border-[#0a66c2]/30 text-[#0a66c2]' : 'bg-white border-zinc-200 text-zinc-650 hover:bg-zinc-50' }}">
-                    <i class="ph-fill ph-linkedin-logo text-xs"></i>
-                    <span>LinkedIn</span>
-                </button>
-                <button type="button" 
-                        wire:click="$set('selectedPlatform', 'jobstreet.co.id')" 
-                        class="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-[11px] font-bold border transition-all duration-150 shadow-3xs focus:outline-hidden {{ $selectedPlatform === 'jobstreet.co.id' ? 'bg-[#0d3b66]/10 border-[#0d3b66]/30 text-[#0d3b66]' : 'bg-white border-zinc-200 text-zinc-650 hover:bg-zinc-50' }}">
-                    <i class="ph-bold ph-newspaper text-xs"></i>
-                    <span>JobStreet</span>
-                </button>
-                <button type="button" 
-                        wire:click="$set('selectedPlatform', 'kalibrr.com')" 
-                        class="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-[11px] font-bold border transition-all duration-150 shadow-3xs focus:outline-hidden {{ $selectedPlatform === 'kalibrr.com' ? 'bg-[#00c0a3]/10 border-[#00c0a3]/30 text-[#00c0a3]' : 'bg-white border-zinc-200 text-zinc-650 hover:bg-zinc-50' }}">
-                    <i class="ph-bold ph-briefcase text-xs"></i>
-                    <span>Kalibrr</span>
-                </button>
-            </div>
-
-            <!-- Sektor & Jurusan Dropdowns -->
-            <div class="lg:col-span-6 grid grid-cols-2 gap-3">
-                <div>
-                    <select wire:model.live="selectedField" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded-md px-2.5 py-1.5 text-zinc-700 outline-none transition-all focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white cursor-pointer font-semibold">
-                        <option value="">Semua Sektor Bidang</option>
-                        @foreach($fieldsList as $fieldItem)
-                            <option value="{{ $fieldItem }}">{{ $fieldItem }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                
-                <div>
-                    <select wire:model.live="selectedMajor" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded-md px-2.5 py-1.5 text-zinc-700 outline-none transition-all focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white cursor-pointer font-semibold">
-                        <option value="">Semua Jurusan</option>
-                        @foreach($majorsList as $majorItem)
-                            <option value="{{ $majorItem }}">{{ $majorItem }}</option>
-                        @endforeach
-                    </select>
-                </div>
             </div>
         </div>
     </div>
