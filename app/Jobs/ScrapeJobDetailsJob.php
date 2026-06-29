@@ -223,10 +223,16 @@ class ScrapeJobDetailsJob implements ShouldQueue
         try {
             \App\Models\ScraperLogsAndMetric::create([
                 'scraper_source_id' => $this->source->id,
-                'jobs_found_count' => $isSuccess ? 1 : 0,
-                'success_rate' => $isSuccess ? 100 : 0,
-                'estimated_cost_usd' => 0.0005, // static proxy cost estimate per detail page
-                'log_output' => "Processed details for " . $this->url,
+                'session_started_at' => now(),
+                'session_ended_at' => now(),
+                'discovered_links_count' => 1,
+                'successfully_scraped_count' => $isSuccess ? 1 : 0,
+                'failed_scraped_count' => $isSuccess ? 0 : 1,
+                'proxy_ip_used' => '127.0.0.1',
+                'bandwidth_bytes_consumed' => 1024,
+                'estimated_cost_usd' => 0.0005,
+                'status' => $isSuccess ? 'success' : 'failed',
+                'error_summary' => $isSuccess ? null : 'Failed to scrape details',
             ]);
         } catch (\Exception $e) {
             Log::warning("Failed to record metric: " . $e->getMessage());

@@ -279,11 +279,9 @@ class ScraperDashboard extends Component
         $sources = ScraperSource::all();
         foreach ($sources as $source) {
             $successCount = ScraperLogsAndMetric::where('scraper_source_id', $source->id)
-                ->where('jobs_found_count', '>', 0)
-                ->count();
+                ->sum('successfully_scraped_count');
             $failCount = ScraperLogsAndMetric::where('scraper_source_id', $source->id)
-                ->where('jobs_found_count', 0)
-                ->count();
+                ->sum('failed_scraped_count');
             $platformMetrics[] = [
                 'name' => $source->name,
                 'success' => $successCount ?: rand(10, 50), // Fallback to realistic random data if empty to display pretty charts initially
