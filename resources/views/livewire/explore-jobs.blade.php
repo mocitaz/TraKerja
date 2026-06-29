@@ -18,9 +18,9 @@
     <!-- Premium Hero Search Card -->
     <div class="relative bg-white border border-zinc-200/80 rounded-2xl p-8 md:p-12 text-center shadow-3xs overflow-hidden mb-6 select-none">
         <!-- Background Image with low opacity and grayscale tone -->
-        <div class="absolute inset-0 bg-cover bg-center grayscale opacity-15 pointer-events-none" style="background-image: url('{{ asset('images/ATL, Geogia 🙇🏽.jpeg') }}');"></div>
+        <div class="absolute inset-0 bg-cover bg-center grayscale opacity-25 pointer-events-none" style="background-image: url('{{ asset('images/ATL, Geogia 🙇🏽.jpeg') }}');"></div>
         <!-- Soft gradient overlay to blend -->
-        <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-white/50 to-white/90 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-white/5 via-white/20 to-white/70 pointer-events-none"></div>
 
         <div class="relative z-10 max-w-5xl mx-auto space-y-4">
             <h2 class="text-xl md:text-2xl font-black text-zinc-900 tracking-tight leading-tight">
@@ -267,14 +267,14 @@
                             
                             $portalDomain = $job->scraperSource->target_domain;
                             $portalName = str_contains($portalDomain, 'linkedin') ? 'LinkedIn' : (str_contains($portalDomain, 'jobstreet') ? 'JobStreet' : 'Kalibrr');
-                            $portalStyle = 'bg-blue-50/50 text-blue-700 border-blue-150';
                             $portalIcon = 'ph-fill ph-linkedin-logo';
+                            $portalIconColor = 'text-[#0a66c2]';
                             if ($portalName === 'JobStreet') {
-                                $portalStyle = 'bg-red-50/50 text-red-700 border-red-150';
-                                $portalIcon = 'ph-bold ph-newspaper';
+                                $portalIcon = 'ph-fill ph-newspaper';
+                                $portalIconColor = 'text-red-500';
                             } elseif ($portalName === 'Kalibrr') {
-                                $portalStyle = 'bg-emerald-50/50 text-emerald-700 border-emerald-150';
-                                $portalIcon = 'ph-bold ph-briefcase';
+                                $portalIcon = 'ph-fill ph-briefcase';
+                                $portalIconColor = 'text-emerald-500';
                             }
 
                             // Match user skills with tech stack
@@ -315,10 +315,6 @@
                                         </div>
                                         <div class="flex items-center gap-1.5 mt-1 select-none">
                                             <span class="text-[10px] font-semibold text-zinc-500 truncate">{{ $job->company_name }}</span>
-                                            <span class="text-zinc-300">&bull;</span>
-                                            <span class="w-5 h-5 rounded-full border {{ $portalStyle }} flex items-center justify-center shrink-0 shadow-3xs" title="{{ $portalName }}">
-                                                <i class="{{ $portalIcon }} text-[9px]"></i>
-                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -372,20 +368,26 @@
 
                             <!-- Footer Action bar inside card -->
                             <div class="border-t border-zinc-100 pt-3 flex items-center justify-between gap-2 shrink-0">
-                                <!-- Left Action: Report Expired Link -->
-                                <div class="relative">
-                                    @if (session()->has('report_success_' . $job->id))
-                                        <span class="text-[9px] text-emerald-600 font-semibold block animate-pulse">Laporan Diterima!</span>
-                                    @elseif (session()->has('report_info_' . $job->id))
-                                        <span class="text-[9px] text-zinc-500 block font-semibold">{{ session('report_info_' . $job->id) }}</span>
-                                    @else
-                                        <button type="button" 
-                                                wire:click="initiateReportExpired({{ $job->id }})" 
-                                                class="text-[9px] text-zinc-400 hover:text-rose-600 transition-colors flex items-center gap-1 font-bold uppercase tracking-wider focus:outline-hidden">
-                                            <i class="ph ph-warning-circle text-[11px] shrink-0"></i>
-                                            Laporkan
-                                        </button>
-                                    @endif
+                                <!-- Left Action: Platform Icon & Report Expired Link -->
+                                <div class="flex items-center gap-2 select-none">
+                                    <!-- Clear Platform Logo -->
+                                    <i class="{{ $portalIcon }} {{ $portalIconColor }} text-xs shrink-0" title="{{ $portalName }}"></i>
+                                    <span class="text-zinc-200 text-[10px] shrink-0">&bull;</span>
+                                    
+                                    <div class="relative">
+                                        @if (session()->has('report_success_' . $job->id))
+                                            <span class="text-[9px] text-emerald-600 font-semibold block animate-pulse">Laporan Diterima!</span>
+                                        @elseif (session()->has('report_info_' . $job->id))
+                                            <span class="text-[9px] text-zinc-500 block font-semibold">{{ session('report_info_' . $job->id) }}</span>
+                                        @else
+                                            <button type="button" 
+                                                    wire:click="initiateReportExpired({{ $job->id }})" 
+                                                    class="text-[9px] text-zinc-400 hover:text-rose-600 transition-colors flex items-center gap-1 font-bold uppercase tracking-wider focus:outline-hidden">
+                                                <i class="ph ph-warning-circle text-[11px] shrink-0"></i>
+                                                Laporkan
+                                            </button>
+                                        @endif
+                                    </div>
                                 </div>
 
                                 <!-- Right Action: Apply & Track Link -->
