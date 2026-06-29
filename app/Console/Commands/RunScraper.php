@@ -12,7 +12,7 @@ class RunScraper extends Command
      *
      * @var string
      */
-    protected $signature = 'jobs:run-scraper {--sync : Run the scraping jobs synchronously for immediate terminal output}';
+    protected $signature = 'jobs:run-scraper {--sync : Run the scraping jobs synchronously for immediate terminal output} {--force : Force run bypassing scheduling isDue checks}';
 
     /**
      * The console command description.
@@ -27,14 +27,16 @@ class RunScraper extends Command
     public function handle()
     {
         $this->info("Initiating TraKerja Ingestion Pipeline...");
+        
+        $force = $this->option('force') || $this->option('sync');
 
         if ($this->option('sync')) {
             $this->comment("Executing DiscoverLinksJob synchronously...");
-            DiscoverLinksJob::dispatchSync();
+            DiscoverLinksJob::dispatchSync($force);
             $this->info("Synchronous crawl cycle dispatched successfully.");
         } else {
             $this->comment("Dispatching DiscoverLinksJob to background queue worker...");
-            DiscoverLinksJob::dispatch();
+            DiscoverLinksJob::dispatch($force);
             $this->info("Job successfully pushed to the discovery queue.");
         }
 

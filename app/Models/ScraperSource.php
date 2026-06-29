@@ -111,4 +111,16 @@ class ScraperSource extends Model
     {
         $this->update(['last_run_at' => now()]);
     }
+
+    /**
+     * Check if the source is due for crawling based on last_run_at and frequency_minutes.
+     */
+    public function isDue(): bool
+    {
+        if (is_null($this->last_run_at)) {
+            return true;
+        }
+
+        return now()->diffInMinutes($this->last_run_at) >= $this->frequency_minutes;
+    }
 }

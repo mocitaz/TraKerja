@@ -1,4 +1,4 @@
-<div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-5 space-y-5 pb-10">
+<div wire:poll.5s class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-5 space-y-5 pb-10">
     
     {{-- Alert Messages --}}
     @if (session()->has('success'))
@@ -71,16 +71,16 @@
             </div>
         </div>
 
-        {{-- Success Rate --}}
+        {{-- Jobs Scraped Today --}}
         <div class="bg-white rounded-lg p-4 border border-zinc-200/80 relative overflow-hidden shadow-3xs">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Scraper Success Rate</p>
-                    <h3 class="text-lg font-semibold tracking-tight text-zinc-900">{{ $stats['success_rate'] }}%</h3>
-                    <p class="text-[10px] text-zinc-400 mt-1">Target threshold 95%+</p>
+                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Scraped Today</p>
+                    <h3 class="text-lg font-semibold tracking-tight text-zinc-900">{{ number_format($stats['jobs_scraped_today']) }}</h3>
+                    <p class="text-[10px] text-zinc-400 mt-1">Ingested in last 24 hours</p>
                 </div>
                 <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650 shrink-0">
-                    <i class="ph-bold ph-shield-check text-base"></i>
+                    <i class="ph-bold ph-calendar-check text-base"></i>
                 </div>
             </div>
         </div>
@@ -99,16 +99,19 @@
             </div>
         </div>
 
-        {{-- Proxy Cost --}}
+        {{-- Queue & Worker Monitor --}}
         <div class="bg-white rounded-lg p-4 border border-zinc-200/80 relative overflow-hidden shadow-3xs">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Estimated Proxy Cost</p>
-                    <h3 class="text-lg font-semibold tracking-tight text-zinc-900">${{ number_format($stats['estimated_cost'], 4) }}</h3>
-                    <p class="text-[10px] text-zinc-400 mt-1">Residential data usage</p>
+                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Worker & Queue Monitor</p>
+                    <h3 class="text-sm font-bold tracking-tight text-zinc-900 mt-0.5 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full {{ $stats['jobs_pending_in_queue'] > 0 ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500' }}"></span>
+                        {{ $stats['worker_status'] }}
+                    </h3>
+                    <p class="text-[10px] text-zinc-400 mt-1.5 font-semibold">{{ $stats['jobs_pending_in_queue'] }} jobs in queue</p>
                 </div>
                 <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650 shrink-0">
-                    <i class="ph-bold ph-currency-dollar text-base"></i>
+                    <i class="ph-bold ph-cpu text-base"></i>
                 </div>
             </div>
         </div>

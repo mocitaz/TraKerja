@@ -90,7 +90,7 @@ class ScraperDashboard extends Component
 
     public function triggerManualCrawl()
     {
-        \App\Jobs\DiscoverLinksJob::dispatch();
+        \App\Jobs\DiscoverLinksJob::dispatch(true);
         session()->flash('success', "Discovery pipeline scraper berhasil dipicu di background worker.");
     }
 
@@ -247,10 +247,19 @@ class ScraperDashboard extends Component
 
     public function render()
     {
+        $jobsPendingInQueue = \Illuminate\Support\Facades\Schema::hasTable('jobs') 
+            ? \Illuminate\Support\Facades\DB::table('jobs')->count() 
+            : 0;
+            
+        $isWorkerActive = $jobsPendingInQueue > 0;
+
         // Load stats from database
         $stats = [
             'total_ingested' => JobPosting::count(),
             'active_sources' => ScraperSource::where('is_active', true)->count(),
+            'jobs_scraped_today' => JobPosting::whereDate('created_at', today())->count(),
+            'jobs_pending_in_queue' => $jobsPendingInQueue,
+            'worker_status' => $isWorkerActive ? 'Aktif (Memproses)' : 'Idle (Mendengar)',
             'success_rate' => 97.8, // Static metric target
             'estimated_cost' => ScraperLogsAndMetric::sum('estimated_cost_usd') ?: 0.1245,
         ];

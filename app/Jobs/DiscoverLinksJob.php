@@ -13,14 +13,26 @@ class DiscoverLinksJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct()
+    public bool $force;
+
+    public function __construct(bool $force = false)
     {
+        $this->force = $force;
         $this->queue = 'discovery';
     }
 
     public function handle()
     {
         $sources = ScraperSource::where('is_active', true)->get();
+
+        if (!$this->force) {
+            $sources = $sources->filter(fn($source) => $source->isDue());
+            if ($sources->isEmpty()) {
+                echo "No active scraper sources are due for crawling.\n";
+                return;
+            }
+        }
+
         echo "Processing " . $sources->count() . " active scraper sources...\n";
 
         // Multi-keyword and multi-page configurations to scale to 1000+ postings safely
