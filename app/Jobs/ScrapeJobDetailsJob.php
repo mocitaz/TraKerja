@@ -209,7 +209,7 @@ class ScrapeJobDetailsJob implements ShouldQueue
             'level' => strtoupper($level),
             'message' => $message
         ];
-        if (count($logs) > 60) {
+        if (count($logs) > 30) {
             array_shift($logs);
         }
         \Illuminate\Support\Facades\Cache::put('scraper_live_logs', $logs, now()->addHours(12));
