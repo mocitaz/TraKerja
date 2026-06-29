@@ -98,11 +98,18 @@
             <!-- Kota/Kabupaten Dropdown -->
             <div>
                 <label class="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Kota / Kabupaten</label>
-                <select wire:model.live="selectedLocation" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-hidden focus:border-zinc-950">
-                    <option value="">Semua Kota/Kab</option>
-                    @foreach($locationsList as $locItem)
-                        <option value="{{ $locItem }}">{{ $locItem }}</option>
-                    @endforeach
+                <select wire:model.live="selectedLocation" 
+                        class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-hidden focus:border-zinc-950
+                            {{ empty($selectedProvince) ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer' }}" 
+                        {{ empty($selectedProvince) ? 'disabled' : '' }}>
+                    <option value="">
+                        {{ empty($selectedProvince) ? 'Pilih Provinsi Dulu' : 'Semua Kota/Kab' }}
+                    </option>
+                    @if(!empty($selectedProvince))
+                        @foreach($locationsList as $locItem)
+                            <option value="{{ $locItem }}">{{ $locItem }}</option>
+                        @endforeach
+                    @endif
                 </select>
             </div>
         </div>
