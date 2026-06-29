@@ -50,10 +50,10 @@
             </div>
         </div>
 
-        <!-- Row 2: Advanced filters -->
-        <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 mt-3 pt-3 border-t border-zinc-100">
+        <!-- Row 2: Advanced filters (Forced single row on all viewports, labels hidden on mobile) -->
+        <div class="grid grid-cols-5 gap-2 mt-3 pt-3 border-t border-zinc-100">
             <div>
-                <label class="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Bidang Kerja</label>
+                <label class="hidden sm:block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Bidang Kerja</label>
                 <select wire:model.live="selectedField" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-hidden focus:border-zinc-950">
                     <option value="">Semua Bidang</option>
                     @foreach($fieldsList as $fieldItem)
@@ -64,7 +64,7 @@
 
             <!-- Jurusan Dropdown -->
             <div>
-                <label class="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Jurusan Terkait</label>
+                <label class="hidden sm:block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Jurusan Terkait</label>
                 <select wire:model.live="selectedMajor" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-hidden focus:border-zinc-950">
                     <option value="">Semua Jurusan</option>
                     @foreach($majorsList as $majorItem)
@@ -75,7 +75,7 @@
 
             <!-- Tipe Kerja Dropdown -->
             <div>
-                <label class="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Tipe Kerja</label>
+                <label class="hidden sm:block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Tipe Kerja</label>
                 <select wire:model.live="selectedWorkType" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-hidden focus:border-zinc-950">
                     <option value="">Semua Tipe</option>
                     <option value="Remote">Remote</option>
@@ -86,7 +86,7 @@
 
             <!-- Provinsi Dropdown -->
             <div>
-                <label class="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Provinsi</label>
+                <label class="hidden sm:block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Provinsi</label>
                 <select wire:model.live="selectedProvince" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-hidden focus:border-zinc-950">
                     <option value="">Semua Provinsi</option>
                     @foreach($provincesList as $provItem)
@@ -97,7 +97,7 @@
 
             <!-- Kota/Kabupaten Dropdown -->
             <div>
-                <label class="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Kota / Kabupaten</label>
+                <label class="hidden sm:block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Kota / Kabupaten</label>
                 <select wire:model.live="selectedLocation" 
                         class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-hidden focus:border-zinc-950
                             {{ empty($selectedProvince) ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer' }}" 
