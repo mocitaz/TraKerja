@@ -13,8 +13,6 @@ class StoreAndTagJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $queue = 'processing';
-    
     public array $payload;
     public string $url;
     public int $sourceId;
@@ -24,6 +22,7 @@ class StoreAndTagJob implements ShouldQueue
         $this->payload = $payload;
         $this->url = $url;
         $this->sourceId = $sourceId;
+        $this->queue = 'processing';
     }
 
     public function handle()

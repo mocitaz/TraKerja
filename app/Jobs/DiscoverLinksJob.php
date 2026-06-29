@@ -13,7 +13,10 @@ class DiscoverLinksJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $queue = 'discovery';
+    public function __construct()
+    {
+        $this->queue = 'discovery';
+    }
 
     public function handle()
     {

@@ -15,7 +15,6 @@ class ScrapeJobDetailsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $queue = 'extraction';
     public $tries = 3;
     
     public string $url;
@@ -25,6 +24,7 @@ class ScrapeJobDetailsJob implements ShouldQueue
     {
         $this->url = $url;
         $this->source = $source;
+        $this->queue = 'extraction';
     }
 
     public function handle()
