@@ -37,9 +37,34 @@ class DiscoverLinksJob implements ShouldQueue
         ScrapeJobDetailsJob::logToLiveBuffer("Discovery Engine: Memulai penelusuran tautan lowongan kerja untuk " . $sources->count() . " platform aktif.", 'success');
         echo "Processing " . $sources->count() . " active scraper sources...\n";
 
-        // Multi-keyword and multi-page configurations to scale to 1000+ postings safely
-        $keywords = ['Laravel', 'PHP', 'React', 'Vue', 'Golang', 'DevOps', 'Mobile', 'QA', 'Python'];
-        $pagesToCrawl = 3;
+        // Multi-keyword configurations representing all 15 Sektor Ekonomi for diverse coverage
+        $keywords = [
+            // 1. Pertanian, Kehutanan, Perikanan
+            'Pertanian', 'Agribisnis', 'Peternakan', 'Kehutanan',
+            // 2. Pertambangan
+            'Pertambangan', 'Perminyakan', 'Geologist',
+            // 3. Industri Pengolahan (Manufaktur)
+            'Teknik Mesin', 'Teknik Industri', 'Operator Produksi', 'Teknologi Pangan',
+            // 4. Pengadaan Energi & Limbah
+            'Teknik Lingkungan', 'Tenaga Listrik',
+            // 5. Konstruksi
+            'Teknik Sipil', 'Arsitektur',
+            // 6. Perdagangan & Retail
+            'Marketing', 'Sales', 'Retail',
+            // 7. Transportasi & Logistik
+            'Logistik', 'Warehouse', 'Supply Chain',
+            // 8. Akomodasi & Kuliner (Hospitality)
+            'Hotel', 'Chef', 'Pariwisata', 'Barista',
+            // 9. Informasi & Komunikasi (TIK)
+            'Programmer', 'IT Support', 'DKV', 'Software',
+            // 10 & 11. Keuangan, Hukum, & Profesional
+            'Akuntansi', 'Finance', 'Legal', 'HRD', 'Psikologi',
+            // 12 & 13. Pemerintahan & Pendidikan
+            'Administrasi', 'Guru', 'Pendidikan',
+            // 14 & 15. Kesehatan, Seni & Kesenian
+            'Perawat', 'Farmasi', 'Desain', 'Olahraga'
+        ];
+        $pagesToCrawl = 1;
         $delaySeconds = 0;
 
         foreach ($sources as $source) {
