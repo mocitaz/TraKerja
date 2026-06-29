@@ -23,8 +23,8 @@
         <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-white/50 to-white/90 pointer-events-none"></div>
 
         <div class="relative z-10 max-w-5xl mx-auto space-y-4">
-            <h2 class="text-xl md:text-2xl font-black text-zinc-800 tracking-tight leading-tight">
-                Temukan Karir <span class="text-primary-650">Impian Anda Hari Ini</span>
+            <h2 class="text-xl md:text-2xl font-black text-zinc-900 tracking-tight leading-tight">
+                Temukan Karir Impian Anda Hari Ini
             </h2>
             <p class="text-[11px] md:text-xs text-zinc-500 max-w-xl mx-auto leading-relaxed">
                 Jelajahi ribuan lowongan kerja terverifikasi anti-ghosting dari berbagai perusahaan ternama di seluruh Indonesia secara real-time.
