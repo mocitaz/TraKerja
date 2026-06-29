@@ -56,21 +56,9 @@
                 <label class="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Bidang Kerja</label>
                 <select wire:model.live="selectedField" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-hidden focus:border-zinc-950">
                     <option value="">Semua Bidang</option>
-                    <option value="Sektor Pertanian, Kehutanan, dan Perikanan">Sektor Pertanian, Kehutanan, dan Perikanan</option>
-                    <option value="Sektor Pertambangan dan Penggalian">Sektor Pertambangan dan Penggalian</option>
-                    <option value="Sektor Industri Pengolahan (Manufaktur)">Sektor Industri Pengolahan (Manufaktur)</option>
-                    <option value="Sektor Pengadaan Listrik, Gas, Air, dan Pengelolaan Sampah">Sektor Pengadaan Listrik, Gas, Air, dan Pengelolaan Sampah</option>
-                    <option value="Sektor Konstruksi">Sektor Konstruksi</option>
-                    <option value="Sektor Perdagangan Besar dan Eceran; Reparasi Mobil dan Sepeda Motor">Sektor Perdagangan Besar dan Eceran; Reparasi Mobil...</option>
-                    <option value="Sektor Transportasi, Logistik, dan Pergudangan">Sektor Transportasi, Logistik, dan Pergudangan</option>
-                    <option value="Sektor Penyediaan Akomodasi dan Penyediaan Makan Minum (Hospitality)">Sektor Akomodasi & Kuliner (Hospitality)</option>
-                    <option value="Sektor Informasi dan Komunikasi (TIK)">Sektor Informasi dan Komunikasi (TIK)</option>
-                    <option value="Sektor Keuangan, Asuransi, dan Real Estat">Sektor Keuangan, Asuransi, dan Real Estat</option>
-                    <option value="Sektor Jasa Profesional, Ilmiah, dan Teknis">Sektor Jasa Profesional, Ilmiah, dan Teknis</option>
-                    <option value="Sektor Administrasi Pemerintahan, Pertahanan, dan Jaminan Sosial Wajib">Sektor Administrasi Pemerintahan...</option>
-                    <option value="Sektor Jasa Pendidikan">Sektor Jasa Pendidikan</option>
-                    <option value="Sektor Kesehatan Manusia dan Kegiatan Sosial">Sektor Kesehatan & Medis</option>
-                    <option value="Sektor Jasa Kesenian, Hiburan, dan Rekreasi">Sektor Jasa Kesenian, Hiburan, dan Rekreasi</option>
+                    @foreach($fieldsList as $fieldItem)
+                        <option value="{{ $fieldItem }}">{{ $fieldItem }}</option>
+                    @endforeach
                 </select>
             </div>
 
@@ -79,11 +67,9 @@
                 <label class="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Jurusan Terkait</label>
                 <select wire:model.live="selectedMajor" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-hidden focus:border-zinc-950">
                     <option value="">Semua Jurusan</option>
-                    <option value="Teknik Informatika">Teknik Informatika</option>
-                    <option value="Sistem Informasi">Sistem Informasi</option>
-                    <option value="Matematika / Statistika">Matematika / Statistika</option>
-                    <option value="Teknik Elektro">Teknik Elektro</option>
-                    <option value="Semua Jurusan IT">Semua Jurusan IT</option>
+                    @foreach($majorsList as $majorItem)
+                        <option value="{{ $majorItem }}">{{ $majorItem }}</option>
+                    @endforeach
                 </select>
             </div>
 

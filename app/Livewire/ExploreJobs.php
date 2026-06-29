@@ -44,6 +44,7 @@ class ExploreJobs extends Component
     public function updatingSelectedField()
     {
         $this->resetPage();
+        $this->selectedMajor = ''; // Reset major choice when sector changes
     }
 
     public function updatingSelectedMajor()
@@ -54,6 +55,14 @@ class ExploreJobs extends Component
     public function updatingSelectedWorkType()
     {
         $this->resetPage();
+    }
+
+    public function getMajorsProperty()
+    {
+        if (!empty($this->selectedField)) {
+            return \App\Helpers\CategoryHelper::getMajorsForSektor($this->selectedField);
+        }
+        return \App\Helpers\CategoryHelper::getAllMajors();
     }
 
     public function reportExpired($id)
@@ -141,7 +150,9 @@ class ExploreJobs extends Component
         $postings = $query->orderBy('created_at', 'desc')->paginate(12);
 
         return view('livewire.explore-jobs', [
-            'postings' => $postings
+            'postings' => $postings,
+            'fieldsList' => \App\Helpers\CategoryHelper::getSektorList(),
+            'majorsList' => $this->majors,
         ])->layout('layouts.app');
     }
 }
