@@ -24,10 +24,10 @@
 
         <div class="relative z-10 max-w-5xl mx-auto space-y-4">
             <h2 class="text-xl md:text-2xl font-black text-zinc-800 tracking-tight leading-tight">
-                Temukan Karir <span class="text-primary-500">Impian Anda Hari Ini</span>
+                Temukan Karir <span class="text-primary-650">Impian Anda Hari Ini</span>
             </h2>
             <p class="text-[11px] md:text-xs text-zinc-500 max-w-xl mx-auto leading-relaxed">
-                Jelajahi ribuan peluang magang & lowongan terverifikasi anti-ghosting dari berbagai perusahaan ternama di seluruh Indonesia.
+                Jelajahi ribuan lowongan kerja terverifikasi anti-ghosting dari berbagai perusahaan ternama di seluruh Indonesia secara real-time.
             </p>
 
             <!-- Pill Search Bar (Unified Row) -->
@@ -112,7 +112,7 @@
 
                 <!-- Action Cari Button -->
                 <button type="button" 
-                        class="md:ml-2 px-5 h-[34px] bg-primary-500 hover:bg-primary-650 text-white text-[11px] font-black rounded-lg md:rounded-full uppercase tracking-wider transition-all duration-150 active:scale-97 flex items-center justify-center gap-1 shrink-0 focus:outline-hidden">
+                        class="md:ml-2 px-5 h-[34px] bg-primary-50 hover:bg-primary-100 text-primary-750 border border-primary-200/60 text-[11px] font-black rounded-lg md:rounded-full uppercase tracking-wider transition-all duration-150 active:scale-97 flex items-center justify-center gap-1 shrink-0 focus:outline-hidden">
                     Cari
                 </button>
             </div>
