@@ -61,7 +61,7 @@ class ScraperSourceSeeder extends Seeder
                     'company' => 'a.k-text-subdued',
                     'description' => 'div.k-description',
                     'link' => 'a.k-card-title',
-                    'location' => 'span[itemprop="addressLocality"], a.k-text-subdued + span',
+                    'location' => '[itemprop="addressLocality"], [itemProp="addressLocality"], [itemtype*="PostalAddress"], .k-icon-navigation-pin + span',
                 ],
                 'frequency_minutes' => 360,
                 'delay_between_requests_ms' => 1000,

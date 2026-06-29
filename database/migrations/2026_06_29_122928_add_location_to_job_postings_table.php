@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('job_postings', function (Blueprint $table) {
-            $table->string('location')->nullable()->after('category_major');
-            $table->index('location');
-        });
+        if (!Schema::hasColumn('job_postings', 'location')) {
+            Schema::table('job_postings', function (Blueprint $table) {
+                $table->string('location')->nullable()->after('category_major');
+                $table->index('location');
+            });
+        }
 
         // Auto-backfill locations for already scraped job postings using title/description scanning
         \App\Models\JobPosting::chunk(100, function ($postings) {
@@ -32,9 +34,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('job_postings', function (Blueprint $table) {
-            $table->dropIndex(['location']);
-            $table->dropColumn('location');
-        });
+        if (Schema::hasColumn('job_postings', 'location')) {
+            Schema::table('job_postings', function (Blueprint $table) {
+                try {
+                    $table->dropIndex(['location']);
+                } catch (\Exception $e) {}
+                $table->dropColumn('location');
+            });
+        }
     }
 };

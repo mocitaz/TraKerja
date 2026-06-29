@@ -130,17 +130,10 @@ class LocationHelper
             }
         }
         
-        // 4. Default fallback
-        if (stripos($locationText, 'indonesia') !== false) {
-            return [
-                'province' => 'DKI Jakarta',
-                'city' => 'Jakarta'
-            ];
-        }
-        
+        // 4. Default fallback: if it doesn't match any known cities, return 'Indonesia'
         return [
             'province' => 'Lainnya',
-            'city' => !empty($locationText) ? self::normalizeCity($locationText) : 'Indonesia'
+            'city' => 'Indonesia'
         ];
     }
     
