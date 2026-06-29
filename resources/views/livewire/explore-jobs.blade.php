@@ -104,29 +104,54 @@
     @if ($postings->count() > 0)
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
             @foreach ($postings as $job)
-                <div class="bg-white rounded-xl border border-zinc-200 shadow-3xs p-4 flex flex-col justify-between hover:border-zinc-350 transition-all duration-150 min-h-[220px] h-auto">
+                @php
+                    $firstLetter = strtoupper(substr($job->company_name, 0, 1));
+                    $hash = md5($job->company_name);
+                    $colors = [
+                        ['bg-blue-50 text-blue-700 border-blue-150', 'bg-blue-500/10'],
+                        ['bg-indigo-50 text-indigo-700 border-indigo-150', 'bg-indigo-500/10'],
+                        ['bg-purple-50 text-purple-700 border-purple-150', 'bg-purple-500/10'],
+                        ['bg-pink-50 text-pink-700 border-pink-150', 'bg-pink-500/10'],
+                        ['bg-rose-50 text-rose-700 border-rose-150', 'bg-rose-500/10'],
+                        ['bg-amber-50 text-amber-800 border-amber-200', 'bg-amber-500/10'],
+                        ['bg-emerald-50 text-emerald-700 border-emerald-150', 'bg-emerald-500/10'],
+                        ['bg-teal-50 text-teal-700 border-teal-150', 'bg-teal-500/10'],
+                        ['bg-cyan-50 text-cyan-700 border-cyan-150', 'bg-cyan-500/10'],
+                    ];
+                    $colorIndex = hexdec(substr($hash, 0, 2)) % count($colors);
+                    $colorClass = $colors[$colorIndex][0];
+                    $portalDomain = $job->scraperSource->target_domain;
+                @endphp
+                <div class="bg-white rounded-xl border border-zinc-200 shadow-3xs p-4 flex flex-col justify-between hover:border-zinc-350 hover:shadow-2xs transition-all duration-150 min-h-[230px] h-auto">
                     <div>
-                        <!-- Header Card -->
-                        <div class="flex items-start justify-between gap-2 mb-2">
-                            <div class="min-w-0">
-                                <h3 class="text-xs font-bold text-zinc-900 truncate leading-tight tracking-tight">{{ $job->title }}</h3>
-                                <span class="text-[10px] font-medium text-zinc-500 block truncate">{{ $job->company_name }}</span>
+                        <!-- Header Card with Dynamic Company Logo and Portal Badge -->
+                        <div class="flex gap-3 items-start mb-3">
+                            <div class="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm shrink-0 border uppercase {{ $colorClass }}">
+                                {{ $firstLetter }}
                             </div>
-                            
-                            <!-- Platform Badges -->
-                            @if (str_contains($job->scraperSource->target_domain, 'linkedin'))
-                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-blue-50 text-blue-700 border border-blue-100 uppercase font-mono shrink-0">
-                                    LinkedIn
-                                </span>
-                            @elseif (str_contains($job->scraperSource->target_domain, 'jobstreet'))
-                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-red-50 text-red-700 border border-red-100 uppercase font-mono shrink-0">
-                                    JobStreet
-                                </span>
-                            @else
-                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 uppercase font-mono shrink-0">
-                                    Kalibrr
-                                </span>
-                            @endif
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-center justify-between gap-1">
+                                    <h3 class="text-xs font-bold text-zinc-900 truncate leading-tight tracking-tight hover:text-zinc-800 transition-colors" title="{{ $job->title }}">
+                                        {{ $job->title }}
+                                    </h3>
+                                    
+                                    <!-- Platform Badge -->
+                                    @if (str_contains($portalDomain, 'linkedin'))
+                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-blue-50 text-blue-700 border border-blue-100 uppercase font-mono shrink-0">
+                                            LinkedIn
+                                        </span>
+                                    @elseif (str_contains($portalDomain, 'jobstreet'))
+                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-red-50 text-red-700 border border-red-100 uppercase font-mono shrink-0">
+                                            JobStreet
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 uppercase font-mono shrink-0">
+                                            Kalibrr
+                                        </span>
+                                    @endif
+                                </div>
+                                <span class="text-[10px] font-medium text-zinc-500 block truncate mt-0.5">{{ $job->company_name }}</span>
+                            </div>
                         </div>
 
                         <!-- Category Tags -->
