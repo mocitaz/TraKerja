@@ -135,20 +135,10 @@
                                         {{ $job->title }}
                                     </h3>
                                     
-                                    <!-- Platform Badge -->
-                                    @if (str_contains($portalDomain, 'linkedin'))
-                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-blue-50 text-blue-700 border border-blue-100 uppercase font-mono shrink-0">
-                                            LinkedIn
-                                        </span>
-                                    @elseif (str_contains($portalDomain, 'jobstreet'))
-                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-red-50 text-red-700 border border-red-100 uppercase font-mono shrink-0">
-                                            JobStreet
-                                        </span>
-                                    @else
-                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 uppercase font-mono shrink-0">
-                                            Kalibrr
-                                        </span>
-                                    @endif
+                                    <!-- Portal Favicon Badge -->
+                                    <div class="w-5.5 h-5.5 rounded-full bg-zinc-50 border border-zinc-200/80 flex items-center justify-center shrink-0 shadow-3xs p-0.5" title="{{ $job->scraperSource->name }}">
+                                        <img src="https://www.google.com/s2/favicons?domain={{ $portalDomain }}&sz=64" class="w-3.5 h-3.5 object-contain rounded-xs" alt="{{ $job->scraperSource->name }}" />
+                                    </div>
                                 </div>
                                 <span class="text-[10px] font-medium text-zinc-500 block truncate mt-0.5">{{ $job->company_name }}</span>
                             </div>
