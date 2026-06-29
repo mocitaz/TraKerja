@@ -121,8 +121,23 @@
                     $colorIndex = hexdec(substr($hash, 0, 2)) % count($colors);
                     $colorClass = $colors[$colorIndex][0];
                     $portalDomain = $job->scraperSource->target_domain;
+
+                    // Match user skills with tech stack
+                    $userSkills = auth()->check() ? auth()->user()->skills->pluck('skill_name')->map(fn($s) => strtolower(trim($s)))->toArray() : [];
+                    $jobStack = $job->tech_stack ?? [];
+                    $matchedCount = 0;
+                    $totalCount = count($jobStack);
+                    $matchPercent = null;
+                    if ($totalCount > 0 && !empty($userSkills)) {
+                        foreach ($jobStack as $tech) {
+                            if (in_array(strtolower(trim($tech)), $userSkills)) {
+                                $matchedCount++;
+                            }
+                        }
+                        $matchPercent = round(($matchedCount / $totalCount) * 100);
+                    }
                 @endphp
-                <div class="bg-white rounded-xl border border-zinc-200 shadow-3xs p-4 flex flex-col justify-between hover:border-zinc-350 hover:shadow-2xs transition-all duration-150 min-h-[230px] h-auto">
+                <div class="bg-white rounded-xl border border-zinc-200 shadow-3xs p-4 flex flex-col justify-between hover:border-zinc-350 hover:shadow-2xs transition-all duration-150 min-h-[250px] h-auto">
                     <div>
                         <!-- Header Card with Dynamic Company Logo and Portal Badge -->
                         <div class="flex gap-3 items-start mb-3">
@@ -135,9 +150,18 @@
                                         {{ $job->title }}
                                     </h3>
                                     
-                                    <!-- Portal Favicon Badge -->
-                                    <div class="w-5.5 h-5.5 rounded-full bg-zinc-50 border border-zinc-200/80 flex items-center justify-center shrink-0 shadow-3xs p-0.5" title="{{ $job->scraperSource->name }}">
-                                        <img src="https://www.google.com/s2/favicons?domain={{ $portalDomain }}&sz=64" class="w-3.5 h-3.5 object-contain rounded-xs" alt="{{ $job->scraperSource->name }}" />
+                                    <!-- Portal Favicon & Match Badge -->
+                                    <div class="flex items-center gap-1.5 shrink-0">
+                                        @if(auth()->check() && $matchPercent !== null)
+                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold tracking-tight border uppercase font-mono
+                                                {{ $matchPercent >= 80 ? 'bg-emerald-50 text-emerald-700 border-emerald-250 animate-pulse' : ($matchPercent >= 50 ? 'bg-amber-50 text-amber-700 border-amber-250' : 'bg-zinc-50 text-zinc-650 border-zinc-200') }}">
+                                                {{ $matchPercent }}% Match
+                                            </span>
+                                        @endif
+
+                                        <div class="w-5.5 h-5.5 rounded-full bg-zinc-50 border border-zinc-200/80 flex items-center justify-center shrink-0 shadow-3xs p-0.5" title="{{ $job->scraperSource->name }}">
+                                            <img src="https://www.google.com/s2/favicons?domain={{ $portalDomain }}&sz=64" class="w-3.5 h-3.5 object-contain rounded-xs" alt="{{ $job->scraperSource->name }}" />
+                                        </div>
                                     </div>
                                 </div>
                                 <span class="text-[10px] font-medium text-zinc-500 block truncate mt-0.5">{{ $job->company_name }}</span>
@@ -162,6 +186,22 @@
                                 </span>
                             @endif
                         </div>
+
+                        <!-- Tech Stack Tags -->
+                        @if(!empty($jobStack))
+                            <div class="flex flex-wrap gap-1 mb-2.5">
+                                @foreach(array_slice($jobStack, 0, 4) as $tech)
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded-sm text-[8px] font-semibold bg-zinc-50 text-zinc-600 border border-zinc-200">
+                                        {{ $tech }}
+                                    </span>
+                                @endforeach
+                                @if(count($jobStack) > 4)
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded-sm text-[8px] font-semibold bg-zinc-50 text-zinc-400 border border-zinc-150">
+                                        +{{ count($jobStack) - 4 }}
+                                    </span>
+                                @endif
+                            </div>
+                        @endif
 
                         <!-- Snippet description -->
                         <p class="text-[10px] text-zinc-500 leading-normal line-clamp-3 mb-3">

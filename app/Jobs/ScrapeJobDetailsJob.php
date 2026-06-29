@@ -29,88 +29,207 @@ class ScrapeJobDetailsJob implements ShouldQueue
 
     public function handle()
     {
-        $proxy = [
-            'host' => '127.0.0.1',
-            'port' => '8080',
-            'username' => 'user',
-            'password' => 'pass'
-        ];
+        $proxy = null;
+        $proxies = config('scraper.proxies', []);
+        if (!empty($proxies)) {
+            $proxy = $proxies[array_rand($proxies)];
+            self::logToLiveBuffer("Rotasi Proxy terpilih: " . parse_url($proxy, PHP_URL_HOST) ?: $proxy);
+        }
 
         $microserviceUrl = config('scraper.microservice_url');
-        
+        $html = null;
+        $title = null;
+        $company = null;
+        $bodyContent = null;
+        $success = false;
+
+        // ==========================================
+        // TAHAP 1: Headless Puppeteer Render Engine
+        // ==========================================
         if ($microserviceUrl) {
             try {
+                self::logToLiveBuffer("Tahap 1: Mengirim ke Headless Puppeteer untuk URL: " . basename($this->url));
                 $response = Http::timeout(45)
                     ->post($microserviceUrl . '/scrape', [
                         'url' => $this->url,
                         'proxy' => $proxy,
-                        'selectors' => $this->source->selectors_config
                     ]);
 
                 if ($response->successful() && $response->json('success')) {
-                    StoreAndTagJob::dispatchSync($response->json(), $this->url, $this->source->id);
-                    return;
+                    $html = $response->json('html');
+                    $title = $response->json('title');
+                    self::logToLiveBuffer("Tahap 1 Sukses: Berhasil merender halaman menggunakan Puppeteer", 'success');
+                    $success = true;
                 }
             } catch (\Exception $e) {
-                Log::warning("External microservice failed for {$this->url}: " . $e->getMessage() . ". Falling back to lightweight HTTP GET parser.");
+                self::logToLiveBuffer("Tahap 1 Gagal: " . $e->getMessage(), 'warning');
+                Log::warning("External microservice failed for {$this->url}: " . $e->getMessage());
             }
         }
 
-        // Lightweight HTTP GET parser fallback
-        try {
-            $response = Http::timeout(20)
-                ->withHeaders([
-                    'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-                ])
-                ->get($this->url);
-
-            if ($response->successful()) {
-                $html = $response->body();
+        // ==========================================
+        // TAHAP 2: Direct HTTP GET + Proxy Rotation
+        // ==========================================
+        if (!$success) {
+            try {
+                self::logToLiveBuffer("Tahap 2: Guzzle Direct GET dengan Rotasi Proxy untuk URL: " . basename($this->url));
                 
+                $request = Http::timeout(25)
+                    ->withHeaders([
+                        'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                        'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+                    ]);
+
+                if ($proxy) {
+                    $request = $request->withOptions(['proxy' => $proxy]);
+                }
+
+                $response = $request->get($this->url);
+
+                if ($response->successful()) {
+                    $html = $response->body();
+                    self::logToLiveBuffer("Tahap 2 Sukses: Berhasil melakukan GET langsung", 'success');
+                    $success = true;
+                } else {
+                    self::logToLiveBuffer("Tahap 2 Gagal: Status HTTP " . $response->status(), 'warning');
+                }
+            } catch (\Exception $e) {
+                self::logToLiveBuffer("Tahap 2 Gagal: " . $e->getMessage(), 'warning');
+                Log::warning("Direct GET failed for {$this->url}: " . $e->getMessage());
+            }
+        }
+
+        // ==========================================
+        // PARSING & PENGEKSTRAKAN DATA (Symfony DomCrawler & CSS Selectors)
+        // ==========================================
+        if ($success && $html) {
+            try {
+                $crawler = new \Symfony\Component\DomCrawler\Crawler($html);
+                
+                $selectors = $this->source->selectors_config;
+                $titleSelector = $selectors['title'] ?? 'h1';
+                $companySelector = $selectors['company'] ?? '';
+                $bodySelector = $selectors['body'] ?? '';
+
                 // Extract title
+                if ($crawler->filter($titleSelector)->count() > 0) {
+                    $title = trim($crawler->filter($titleSelector)->first()->text());
+                }
+
+                // Extract company
+                if ($companySelector && $crawler->filter($companySelector)->count() > 0) {
+                    $company = trim($crawler->filter($companySelector)->first()->text());
+                }
+
+                // Extract body / description
+                if ($bodySelector && $crawler->filter($bodySelector)->count() > 0) {
+                    $bodyContent = trim($crawler->filter($bodySelector)->first()->text());
+                }
+                
+                self::logToLiveBuffer("CSS Crawler berhasil mengekstrak data detail.", 'success');
+            } catch (\Exception $e) {
+                self::logToLiveBuffer("Gagal mem-parsing HTML dengan CSS Selector: " . $e->getMessage(), 'warning');
+            }
+        }
+
+        // ==========================================
+        // TAHAP 3: Regex Fallback (Terakhir)
+        // ==========================================
+        if (!$title || !$company) {
+            self::logToLiveBuffer("Tahap 3: Menjalankan Regex Parser Fallback");
+            
+            if ($html) {
                 preg_match('/<title>(.*?)<\/title>/i', $html, $titleMatch);
-                $title = trim($titleMatch[1] ?? 'Job Opportunity');
-                $company = $this->source->name ?: 'Target Portal';
+                $pageTitle = trim($titleMatch[1] ?? 'Job Opportunity');
 
                 // Try to extract clean title and company name from page titles
                 if (str_contains($this->source->target_domain, 'linkedin.com')) {
-                    // Indonesian: "PT Berca Hardayaperkasa membuka lowongan Pengembang Fullstack di Jakarta | LinkedIn"
-                    if (preg_match('/^(.*?)\s+membuka\s+lowongan\s+(.*?)(?:\s+di\s+.*?)?(\s*\|.*)?$/i', $title, $titleParts)) {
+                    if (preg_match('/^(.*?)\s+membuka\s+lowongan\s+(.*?)(?:\s+di\s+.*?)?(\s*\|.*)?$/i', $pageTitle, $titleParts)) {
                         $company = trim($titleParts[1]);
                         $title = trim($titleParts[2]);
-                    }
-                    // English: "Nordia Digital hiring Junior Web Developer in Jakarta, ID | LinkedIn"
-                    elseif (preg_match('/^(.*?)\s+hiring\s+(.*?)(?:\s+in\s+.*?)?(\s*\|.*)?$/i', $title, $titleParts)) {
+                    } elseif (preg_match('/^(.*?)\s+hiring\s+(.*?)(?:\s+in\s+.*?)?(\s*\|.*)?$/i', $pageTitle, $titleParts)) {
                         $company = trim($titleParts[1]);
                         $title = trim($titleParts[2]);
                     }
                 } elseif (str_contains($this->source->target_domain, 'kalibrr.com')) {
-                    // Kalibrr: "Junior Laravel Developer at KoinWorks | Kalibrr"
-                    if (preg_match('/^(.*?)\s+at\s+(.*?)(?:\s*\|.*)?$/i', $title, $titleParts)) {
+                    if (preg_match('/^(.*?)\s+at\s+(.*?)(?:\s*\|.*)?$/i', $pageTitle, $titleParts)) {
                         $title = trim($titleParts[1]);
                         $company = trim($titleParts[2]);
                     }
                 }
 
-                // Clean remaining suffix patterns
-                $title = preg_replace('/ - Jobs.*| \| LinkedIn.*| Lowongan.*| Karir.*| \| Kalibrr.*/i', '', $title);
-                $company = preg_replace('/ - Jobs.*| \| LinkedIn.*| Lowongan.*| Karir.*| \| Kalibrr.*/i', '', $company);
-
-                $payload = [
-                    'title' => $title ?: 'Job Opportunity',
-                    'company' => $company ?: ($this->source->name ?: 'Target Portal'),
-                    'description' => 'Job description content. Please refer to the source portal link to view details and apply.',
-                    'isClosed' => str_contains(strtolower($html), 'no longer accepting applications') || str_contains(strtolower($html), 'sudah ditutup') || str_contains(strtolower($html), 'expired'),
-                    'success' => true
-                ];
-
-                StoreAndTagJob::dispatchSync($payload, $this->url, $this->source->id);
-            } else {
-                throw new \Exception("Lightweight HTTP fetch failed with status: " . $response->status());
+                if (!$title) {
+                    $title = preg_replace('/ - Jobs.*| \| LinkedIn.*| Lowongan.*| Karir.*| \| Kalibrr.*/i', '', $pageTitle);
+                }
             }
+        }
+
+        // Clean company and title
+        $title = $title ?: 'Job Opportunity';
+        $company = $company ?: ($this->source->name ?: 'Target Portal');
+        
+        $title = preg_replace('/ - Jobs.*| \| LinkedIn.*| Lowongan.*| Karir.*| \| Kalibrr.*/i', '', $title);
+        $company = preg_replace('/ - Jobs.*| \| LinkedIn.*| Lowongan.*| Karir.*| \| Kalibrr.*/i', '', $company);
+
+        // ==========================================
+        // TAHAP 4: Finalize & Simpan Metrics
+        // ==========================================
+        if ($success) {
+            self::logToLiveBuffer("Menyimpan hasil ke database untuk lowongan: {$title}", 'success');
+            
+            $payload = [
+                'title' => $title,
+                'company' => $company,
+                'description' => $bodyContent ?: 'Job description content. Please refer to the source portal link to view details and apply.',
+                'isClosed' => str_contains(strtolower($html ?? ''), 'no longer accepting applications') || str_contains(strtolower($html ?? ''), 'sudah ditutup') || str_contains(strtolower($html ?? ''), 'expired'),
+                'success' => true
+            ];
+
+            StoreAndTagJob::dispatchSync($payload, $this->url, $this->source->id);
+            
+            // Record success metric
+            $this->recordMetric(true);
+        } else {
+            self::logToLiveBuffer("Tahap 4 Gagal: Gagal mengekstrak data apa pun untuk URL " . basename($this->url), 'error');
+            Log::error("ScrapeJobDetailsJob completely failed for URL: {$this->url}");
+            
+            $this->recordMetric(false);
+            throw new \Exception("Failed to scrape details for URL: " . $this->url);
+        }
+    }
+
+    /**
+     * Helper to write logs to cache memory live buffer.
+     */
+    public static function logToLiveBuffer(string $message, string $level = 'info'): void
+    {
+        $logs = \Illuminate\Support\Facades\Cache::get('scraper_live_logs', []);
+        $logs[] = [
+            'timestamp' => now()->timezone('Asia/Jakarta')->format('H:i:s'),
+            'level' => strtoupper($level),
+            'message' => $message
+        ];
+        if (count($logs) > 60) {
+            array_shift($logs);
+        }
+        \Illuminate\Support\Facades\Cache::put('scraper_live_logs', $logs, now()->addHours(12));
+    }
+
+    /**
+     * Record metrics to DB.
+     */
+    protected function recordMetric(bool $isSuccess): void
+    {
+        try {
+            \App\Models\ScraperLogsAndMetric::create([
+                'scraper_source_id' => $this->source->id,
+                'jobs_found_count' => $isSuccess ? 1 : 0,
+                'success_rate' => $isSuccess ? 100 : 0,
+                'estimated_cost_usd' => 0.0005, // static proxy cost estimate per detail page
+                'log_output' => "Processed details for " . $this->url,
+            ]);
         } catch (\Exception $e) {
-            Log::error("ScrapeJobDetailsJob completely failed for URL: {$this->url} -> " . $e->getMessage());
-            throw $e;
+            Log::warning("Failed to record metric: " . $e->getMessage());
         }
     }
 }

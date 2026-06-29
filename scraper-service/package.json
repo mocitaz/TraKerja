@@ -1,0 +1,13 @@
+{
+  "name": "trakerja-headless-scraper",
+  "version": "1.0.0",
+  "description": "Headless Puppeteer browser render engine for TraKerja job ingestion",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^21.6.1"
+  }
+}

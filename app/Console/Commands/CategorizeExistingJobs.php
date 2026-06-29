@@ -31,6 +31,7 @@ class CategorizeExistingJobs extends Command
         $postings = JobPosting::whereNull('category_field')
             ->orWhereNull('category_major')
             ->orWhereNull('work_type')
+            ->orWhereNull('tech_stack')
             ->get();
 
         $count = $postings->count();
@@ -102,10 +103,32 @@ class CategorizeExistingJobs extends Command
                 $workType = 'Hybrid';
             }
 
+            // 4. Extract Tech Stack
+            $techStackKeywords = [
+                'React', 'Vue', 'Angular', 'Svelte', 'JavaScript', 'TypeScript', 'Node.js', 'Express',
+                'PHP', 'Laravel', 'Symfony', 'Golang', 'Python', 'Django', 'Flask', 'Ruby', 'Rails',
+                'Java', 'Kotlin', 'Swift', 'Flutter', 'React Native', 'MySQL', 'PostgreSQL', 
+                'MongoDB', 'Redis', 'Docker', 'Kubernetes', 'AWS', 'Git', 'CI/CD', 
+                'DevOps', 'QA', 'Selenium', 'Cypress', 'Figma', 'Tailwind', 'Bootstrap'
+            ];
+            
+            $detectedStack = [];
+            foreach ($techStackKeywords as $tech) {
+                $pattern = '/\b' . preg_quote(strtolower($tech), '/') . '\b/i';
+                if (str_contains($tech, '.')) {
+                    $pattern = '/' . preg_quote(strtolower($tech), '/') . '/i';
+                }
+                if (preg_match($pattern, $searchStr)) {
+                    $detectedStack[] = $tech;
+                }
+            }
+            $detectedStack = array_values(array_unique($detectedStack));
+
             $posting->update([
                 'category_field' => $field,
                 'category_major' => $major,
                 'work_type' => $workType,
+                'tech_stack' => $detectedStack,
             ]);
 
             $bar->advance();

@@ -87,6 +87,27 @@ class StoreAndTagJob implements ShouldQueue
             $workType = 'Hybrid';
         }
 
+        // 4. Extract Tech Stack
+        $techStackKeywords = [
+            'React', 'Vue', 'Angular', 'Svelte', 'JavaScript', 'TypeScript', 'Node.js', 'Express',
+            'PHP', 'Laravel', 'Symfony', 'Golang', 'Python', 'Django', 'Flask', 'Ruby', 'Rails',
+            'Java', 'Kotlin', 'Swift', 'Flutter', 'React Native', 'MySQL', 'PostgreSQL', 
+            'MongoDB', 'Redis', 'Docker', 'Kubernetes', 'AWS', 'Git', 'CI/CD', 
+            'DevOps', 'QA', 'Selenium', 'Cypress', 'Figma', 'Tailwind', 'Bootstrap'
+        ];
+        
+        $detectedStack = [];
+        foreach ($techStackKeywords as $tech) {
+            $pattern = '/\b' . preg_quote(strtolower($tech), '/') . '\b/i';
+            if (str_contains($tech, '.')) {
+                $pattern = '/' . preg_quote(strtolower($tech), '/') . '/i';
+            }
+            if (preg_match($pattern, $searchStr)) {
+                $detectedStack[] = $tech;
+            }
+        }
+        $detectedStack = array_values(array_unique($detectedStack));
+
         JobPosting::updateOrCreate(
             ['unique_hash' => $hash],
             [
@@ -97,6 +118,7 @@ class StoreAndTagJob implements ShouldQueue
                 'category_field' => $field,
                 'category_major' => $major,
                 'work_type' => $workType,
+                'tech_stack' => $detectedStack,
                 'raw_url' => $this->url,
                 'status' => ($this->payload['isClosed'] ?? false) ? 'closed' : 'active',
                 'last_validated_at' => now(),

@@ -28,11 +28,13 @@ class DiscoverLinksJob implements ShouldQueue
         if (!$this->force) {
             $sources = $sources->filter(fn($source) => $source->isDue());
             if ($sources->isEmpty()) {
+                ScrapeJobDetailsJob::logToLiveBuffer("Discovery Engine: Tidak ada platform yang jatuh tempo jadwal scraping.");
                 echo "No active scraper sources are due for crawling.\n";
                 return;
             }
         }
 
+        ScrapeJobDetailsJob::logToLiveBuffer("Discovery Engine: Memulai penelusuran tautan lowongan kerja untuk " . $sources->count() . " platform aktif.", 'success');
         echo "Processing " . $sources->count() . " active scraper sources...\n";
 
         // Multi-keyword and multi-page configurations to scale to 1000+ postings safely
@@ -41,6 +43,7 @@ class DiscoverLinksJob implements ShouldQueue
         $delaySeconds = 0;
 
         foreach ($sources as $source) {
+            ScrapeJobDetailsJob::logToLiveBuffer("Discovery Engine: Menjelajah " . $source->name);
             echo "Running discovery for: " . $source->name . " (" . $source->target_domain . ")...\n";
             $originalSeedUrl = $source->seed_url;
             $discoveredCount = 0;
@@ -58,6 +61,7 @@ class DiscoverLinksJob implements ShouldQueue
                         $source->seed_url = "https://www.jobstreet.co.id/id/" . urlencode(strtolower($keyword)) . "-jobs?page=" . $page;
                     }
 
+                    ScrapeJobDetailsJob::logToLiveBuffer(" -> Mencari kata kunci [" . $keyword . "] Halaman " . $page);
                     echo "  -> Discovery Query: [" . $keyword . "] page " . $page . "\n";
                     $discoveredUrls = $source->executeDiscovery();
                     $discoveredCount += count($discoveredUrls);
@@ -77,6 +81,7 @@ class DiscoverLinksJob implements ShouldQueue
             $source->seed_url = $originalSeedUrl;
             $source->updateLastRun();
 
+            ScrapeJobDetailsJob::logToLiveBuffer("Discovery Engine: Selesai! Berhasil mengantrekan " . $discoveredCount . " tautan detail lowongan untuk " . $source->name, 'success');
             echo "Discovered and queued total of " . $discoveredCount . " job details URLs for " . $source->name . ".\n";
         }
     }

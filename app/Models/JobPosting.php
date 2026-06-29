@@ -18,6 +18,7 @@ class JobPosting extends Model
         'category_field',
         'category_major',
         'work_type',
+        'tech_stack',
         'raw_url',
         'unique_hash',
         'status',
@@ -28,6 +29,7 @@ class JobPosting extends Model
     protected $casts = [
         'last_validated_at' => 'datetime',
         'report_dead_count' => 'integer',
+        'tech_stack' => 'array',
     ];
 
     /**

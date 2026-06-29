@@ -329,4 +329,139 @@
             </div>
         </div>
     </div>
+
+    <!-- Live Logs & Performance Chart Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch mt-2">
+        <!-- Platform Performance Charts -->
+        <div class="bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col justify-between shadow-3xs" wire:ignore>
+            <div>
+                <div class="flex items-center gap-2 pb-3 mb-4 border-b border-zinc-100">
+                    <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
+                        <i class="ph-bold ph-chart-bar text-xs"></i>
+                    </div>
+                    <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Metrik Grafik Performa Platform</h2>
+                </div>
+                
+                <div class="relative h-[250px] w-full">
+                    <canvas id="scraperPerformanceChart"></canvas>
+                </div>
+            </div>
+            
+            <p class="text-[9px] font-mono text-zinc-400 mt-3">Statistik keberhasilan scraping dan penyaringan loker dari database log.</p>
+        </div>
+
+        <!-- Live Log Streamer Terminal -->
+        <div class="bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col justify-between shadow-3xs">
+            <div>
+                <div class="flex items-center justify-between pb-3 mb-4 border-b border-zinc-100">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
+                            <i class="ph-bold ph-terminal text-xs"></i>
+                        </div>
+                        <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Live Log Streamer Console</h2>
+                    </div>
+                    
+                    <button type="button" 
+                            wire:click="clearLiveLogs"
+                            class="text-[9px] font-mono font-bold text-rose-600 hover:text-rose-800 transition-colors uppercase tracking-wider flex items-center gap-1 focus:outline-hidden">
+                        <i class="ph ph-trash"></i> Bersihkan Log
+                    </button>
+                </div>
+
+                @if (count($liveLogs) > 0)
+                    <div class="bg-[#121214] text-[#e4e4e7] border border-zinc-800 p-4 rounded-lg font-mono text-[10px] leading-relaxed shadow-inner max-h-[220px] overflow-y-auto space-y-1.5 custom-scrollbar">
+                        @foreach ($liveLogs as $log)
+                            <div class="whitespace-pre-wrap tracking-tight flex items-start gap-1">
+                                <span class="text-zinc-500 shrink-0">[{{ $log['timestamp'] }}]</span>
+                                <span class="shrink-0 {{ $log['level'] === 'SUCCESS' ? 'text-emerald-500' : ($log['level'] === 'ERROR' ? 'text-rose-500' : ($log['level'] === 'WARNING' ? 'text-amber-500' : 'text-zinc-400')) }}">
+                                    [{{ $log['level'] }}]
+                                </span>
+                                <span class="text-zinc-200 flex-1">{{ $log['message'] }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="bg-zinc-50 border border-zinc-150 rounded-lg p-10 text-center flex flex-col items-center justify-center border-dashed max-h-[220px] h-full">
+                        <i class="ph ph-activity text-zinc-400 text-3xl mb-2.5"></i>
+                        <p class="text-xs font-semibold text-zinc-600 mb-0.5">Scraper Engine logs are empty</p>
+                        <p class="text-[10px] text-zinc-400 max-w-sm">No live background crawler activity has been recorded in cache yet. Logs will stream here dynamically during execution.</p>
+                    </div>
+                @endif
+            </div>
+            
+            <p class="text-[9px] font-mono text-zinc-400 mt-3">Konsol terminal diperbarui otomatis setiap siklus polling dashboard (5 detik).</p>
+        </div>
+    </div>
+
+    <!-- Chart.js CDN & Setup Script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const metrics = @json($platformMetrics);
+            const ctx = document.getElementById('scraperPerformanceChart').getContext('2d');
+            
+            const labels = metrics.map(m => m.name);
+            const successData = metrics.map(m => m.success);
+            const failData = metrics.map(m => m.fail);
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Sukses',
+                            data: successData,
+                            backgroundColor: '#10b981', // emerald-500
+                            borderRadius: 4,
+                        },
+                        {
+                            label: 'Gagal / Diblokir',
+                            data: failData,
+                            backgroundColor: '#f43f5e', // rose-500
+                            borderRadius: 4,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 10,
+                                font: {
+                                    size: 9,
+                                    family: 'Plus Jakarta Sans',
+                                    weight: 600
+                                },
+                                color: '#71717a'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            grid: { display: false },
+                            ticks: {
+                                font: { size: 9, family: 'Plus Jakarta Sans', weight: 600 },
+                                color: '#71717a'
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                            grid: { color: '#f4f4f5' },
+                            ticks: {
+                                stepSize: 10,
+                                font: { size: 9, family: 'Plus Jakarta Sans', weight: 600 },
+                                color: '#71717a'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </div>
+
