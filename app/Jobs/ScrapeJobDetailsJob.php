@@ -48,7 +48,7 @@ class ScrapeJobDetailsJob implements ShouldQueue
                     ]);
 
                 if ($response->successful() && $response->json('success')) {
-                    StoreAndTagJob::dispatch($response->json(), $this->url, $this->source->id)->onQueue('processing');
+                    StoreAndTagJob::dispatchSync($response->json(), $this->url, $this->source->id);
                     return;
                 }
             } catch (\Exception $e) {
@@ -82,7 +82,7 @@ class ScrapeJobDetailsJob implements ShouldQueue
                     'success' => true
                 ];
 
-                StoreAndTagJob::dispatch($payload, $this->url, $this->source->id)->onQueue('processing');
+                StoreAndTagJob::dispatchSync($payload, $this->url, $this->source->id);
             } else {
                 throw new \Exception("Lightweight HTTP fetch failed with status: " . $response->status());
             }
