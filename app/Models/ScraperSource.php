@@ -69,7 +69,30 @@ class ScraperSource extends Model
             echo "  [HTTP SUCCESS] Received " . strlen($html) . " bytes\n";
             preg_match_all('/href="([^"]*?' . preg_quote($this->target_domain, '/') . '[^"]*?)"/i', $html, $matches);
             
-            $urls = array_slice(array_unique($matches[1] ?? []), 0, 10);
+            $urls = array_unique($matches[1] ?? []);
+            $filteredUrls = [];
+            
+            foreach ($urls as $url) {
+                $url = html_entity_decode($url);
+                
+                if (str_contains($this->target_domain, 'linkedin.com')) {
+                    if (str_contains($url, '/jobs/view/') && !str_contains($url, 'signup') && !str_contains($url, 'login')) {
+                        $filteredUrls[] = $url;
+                    }
+                } elseif (str_contains($this->target_domain, 'jobstreet.co.id')) {
+                    if (str_contains($url, '/job/') || str_contains($url, '/jobs/')) {
+                        $filteredUrls[] = $url;
+                    }
+                } elseif (str_contains($this->target_domain, 'kalibrr.com')) {
+                    if (str_contains($url, '/c/') && str_contains($url, '/jobs/')) {
+                        $filteredUrls[] = $url;
+                    }
+                } else {
+                    $filteredUrls[] = $url;
+                }
+            }
+            
+            $urls = array_slice(array_unique($filteredUrls), 0, 10);
             
             \Illuminate\Support\Facades\Log::info("Discovery for source {$this->id} ({$this->name}): status " . $response->status() . ", body size " . strlen($html) . " bytes, found " . count($urls) . " links.");
             

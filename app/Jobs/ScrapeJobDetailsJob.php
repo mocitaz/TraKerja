@@ -70,13 +70,35 @@ class ScrapeJobDetailsJob implements ShouldQueue
                 // Extract title
                 preg_match('/<title>(.*?)<\/title>/i', $html, $titleMatch);
                 $title = trim($titleMatch[1] ?? 'Job Opportunity');
-                
-                // Clean title suffix
-                $title = preg_replace('/ - Jobs.*| \| LinkedIn.*| Lowongan.*| Karir.*/i', '', $title);
+                $company = $this->source->name ?: 'Target Portal';
+
+                // Try to extract clean title and company name from page titles
+                if (str_contains($this->source->target_domain, 'linkedin.com')) {
+                    // Indonesian: "PT Berca Hardayaperkasa membuka lowongan Pengembang Fullstack di Jakarta | LinkedIn"
+                    if (preg_match('/^(.*?)\s+membuka\s+lowongan\s+(.*?)(?:\s+di\s+.*?)?(\s*\|.*)?$/i', $title, $titleParts)) {
+                        $company = trim($titleParts[1]);
+                        $title = trim($titleParts[2]);
+                    }
+                    // English: "Nordia Digital hiring Junior Web Developer in Jakarta, ID | LinkedIn"
+                    elseif (preg_match('/^(.*?)\s+hiring\s+(.*?)(?:\s+in\s+.*?)?(\s*\|.*)?$/i', $title, $titleParts)) {
+                        $company = trim($titleParts[1]);
+                        $title = trim($titleParts[2]);
+                    }
+                } elseif (str_contains($this->source->target_domain, 'kalibrr.com')) {
+                    // Kalibrr: "Junior Laravel Developer at KoinWorks | Kalibrr"
+                    if (preg_match('/^(.*?)\s+at\s+(.*?)(?:\s*\|.*)?$/i', $title, $titleParts)) {
+                        $title = trim($titleParts[1]);
+                        $company = trim($titleParts[2]);
+                    }
+                }
+
+                // Clean remaining suffix patterns
+                $title = preg_replace('/ - Jobs.*| \| LinkedIn.*| Lowongan.*| Karir.*| \| Kalibrr.*/i', '', $title);
+                $company = preg_replace('/ - Jobs.*| \| LinkedIn.*| Lowongan.*| Karir.*| \| Kalibrr.*/i', '', $company);
 
                 $payload = [
                     'title' => $title ?: 'Job Opportunity',
-                    'company' => $this->source->name ?: 'Target Portal',
+                    'company' => $company ?: ($this->source->name ?: 'Target Portal'),
                     'description' => 'Job description content. Please refer to the source portal link to view details and apply.',
                     'isClosed' => str_contains(strtolower($html), 'no longer accepting applications') || str_contains(strtolower($html), 'sudah ditutup') || str_contains(strtolower($html), 'expired'),
                     'success' => true
