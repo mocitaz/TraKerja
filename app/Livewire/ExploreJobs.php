@@ -15,6 +15,7 @@ class ExploreJobs extends Component
     public $selectedField = '';
     public $selectedMajor = '';
     public $selectedWorkType = '';
+    public $selectedProvince = '';
     public $selectedLocation = '';
 
     protected $queryString = [
@@ -23,6 +24,7 @@ class ExploreJobs extends Component
         'selectedField' => ['except' => ''],
         'selectedMajor' => ['except' => ''],
         'selectedWorkType' => ['except' => ''],
+        'selectedProvince' => ['except' => ''],
         'selectedLocation' => ['except' => ''],
     ];
 
@@ -61,6 +63,19 @@ class ExploreJobs extends Component
 
     public function updatingSelectedLocation()
     {
+        $this->resetPage();
+    }
+
+    public function updatingSelectedProvince()
+    {
+        $this->resetPage();
+        $this->selectedLocation = '';
+    }
+
+    public function resetLocationFilter()
+    {
+        $this->selectedProvince = '';
+        $this->selectedLocation = '';
         $this->resetPage();
     }
 
@@ -154,7 +169,14 @@ class ExploreJobs extends Component
             $query->where('work_type', $this->selectedWorkType);
         }
 
-        if (!empty($this->selectedLocation)) {
+        if (!empty($this->selectedProvince)) {
+            if (!empty($this->selectedLocation)) {
+                $query->where('location', $this->selectedLocation);
+            } else {
+                $provinceCities = \App\Helpers\LocationHelper::getCitiesForProvince($this->selectedProvince);
+                $query->whereIn('location', $provinceCities);
+            }
+        } elseif (!empty($this->selectedLocation)) {
             $query->where('location', $this->selectedLocation);
         }
 
@@ -165,7 +187,10 @@ class ExploreJobs extends Component
             'fieldsList' => \App\Helpers\CategoryHelper::getSektorList(),
             'majorsList' => $this->majors,
             'locationStats' => \App\Helpers\LocationHelper::getLocationStatistics(),
-            'locationsList' => JobPosting::where('status', 'active')->whereNotNull('location')->where('location', '!=', '')->distinct()->orderBy('location')->pluck('location'),
+            'provincesList' => \App\Helpers\LocationHelper::getAllProvinces(),
+            'locationsList' => !empty($this->selectedProvince) 
+                ? \App\Helpers\LocationHelper::getCitiesForProvince($this->selectedProvince)
+                : JobPosting::where('status', 'active')->whereNotNull('location')->where('location', '!=', '')->distinct()->orderBy('location')->pluck('location'),
         ])->layout('layouts.app');
     }
 }

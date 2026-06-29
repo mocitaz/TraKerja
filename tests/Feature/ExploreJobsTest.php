@@ -231,9 +231,11 @@ class ExploreJobsTest extends TestCase
 
         Livewire::actingAs($this->user)
             ->test(\App\Livewire\ExploreJobs::class)
-            ->set('selectedLocation', 'Jakarta')
+            ->set('selectedProvince', 'DKI Jakarta')
             ->assertSee('Jakarta Senior Engineer')
-            ->assertDontSee('Surabaya Senior Engineer');
+            ->assertDontSee('Surabaya Senior Engineer')
+            ->set('selectedLocation', 'Jakarta')
+            ->assertSee('Jakarta Senior Engineer');
     }
 
     public function test_location_classification_and_statistics()

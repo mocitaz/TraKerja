@@ -221,4 +221,24 @@ class LocationHelper
         
         return $stats;
     }
+
+    /**
+     * Get list of all provinces in Indonesia.
+     */
+    public static function getAllProvinces(): array
+    {
+        return array_keys(self::$provinces);
+    }
+
+    /**
+     * Get list of cities belonging to a specific province.
+     */
+    public static function getCitiesForProvince(string $province): array
+    {
+        $province = trim($province);
+        if (isset(self::$provinces[$province])) {
+            return array_values(array_unique(array_map([self::class, 'normalizeCity'], self::$provinces[$province])));
+        }
+        return [];
+    }
 }

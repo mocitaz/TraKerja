@@ -51,7 +51,7 @@
         </div>
 
         <!-- Row 2: Advanced filters -->
-        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 mt-3 pt-3 border-t border-zinc-100">
+        <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 mt-3 pt-3 border-t border-zinc-100">
             <div>
                 <label class="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Bidang Kerja</label>
                 <select wire:model.live="selectedField" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-hidden focus:border-zinc-950">
@@ -84,11 +84,22 @@
                 </select>
             </div>
 
-            <!-- Lokasi Dropdown -->
+            <!-- Provinsi Dropdown -->
             <div>
-                <label class="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Lokasi Kerja</label>
+                <label class="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Provinsi</label>
+                <select wire:model.live="selectedProvince" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-hidden focus:border-zinc-950">
+                    <option value="">Semua Provinsi</option>
+                    @foreach($provincesList as $provItem)
+                        <option value="{{ $provItem }}">{{ $provItem }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- Kota/Kabupaten Dropdown -->
+            <div>
+                <label class="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">Kota / Kabupaten</label>
                 <select wire:model.live="selectedLocation" class="w-full text-xs bg-zinc-50 border border-zinc-200 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-hidden focus:border-zinc-950">
-                    <option value="">Semua Lokasi</option>
+                    <option value="">Semua Kota/Kab</option>
                     @foreach($locationsList as $locItem)
                         <option value="{{ $locItem }}">{{ $locItem }}</option>
                     @endforeach
@@ -113,14 +124,22 @@
                 </div>
 
                 <!-- Selected Location Badge -->
-                @if ($selectedLocation)
+                @if ($selectedProvince || $selectedLocation)
                     <div class="mb-3 p-2 bg-blue-50/50 border border-blue-200 rounded-lg flex items-center justify-between">
                         <div class="flex items-center gap-1.5 min-w-0">
                             <i class="ph-bold ph-map-pin text-blue-700 text-xs shrink-0"></i>
-                            <span class="text-[10px] font-bold text-blue-800 truncate">{{ $selectedLocation }}</span>
+                            <span class="text-[10px] font-bold text-blue-800 truncate">
+                                @if ($selectedLocation && $selectedProvince)
+                                    {{ $selectedLocation }}, {{ $selectedProvince }}
+                                @elseif ($selectedLocation)
+                                    {{ $selectedLocation }}
+                                @else
+                                    {{ $selectedProvince }}
+                                @endif
+                            </span>
                         </div>
                         <button type="button" 
-                                wire:click="$set('selectedLocation', '')" 
+                                wire:click="resetLocationFilter" 
                                 class="w-5 h-5 flex items-center justify-center rounded-md hover:bg-blue-100 text-blue-500 hover:text-blue-800 transition-colors shrink-0">
                             <i class="ph ph-x text-xs"></i>
                         </button>
@@ -135,15 +154,21 @@
                     @foreach($locationStats as $provinceName => $provinceData)
                         @php
                             $hasLocations = true;
+                            $isProvinceSelected = $selectedProvince === $provinceName;
                         @endphp
                         <div class="space-y-1">
-                            <!-- Province Header -->
-                            <div class="flex items-center justify-between text-[11px] font-bold text-zinc-805 py-0.5 border-b border-zinc-100">
+                            <!-- Province Header Button -->
+                            <button type="button" 
+                                    wire:click="$set('selectedProvince', '{{ $provinceName }}'); $set('selectedLocation', '')" 
+                                    class="w-full flex items-center justify-between text-[11px] font-bold py-1 text-left rounded transition-colors
+                                        {{ $isProvinceSelected 
+                                            ? 'text-blue-700 bg-blue-55/10 px-1 border-b border-blue-200' 
+                                            : 'text-zinc-805 hover:text-zinc-950 border-b border-zinc-100' }}">
                                 <span class="truncate">{{ $provinceName }}</span>
                                 <span class="px-1.5 py-0.5 bg-zinc-100 border border-zinc-200 text-zinc-500 text-[9px] rounded font-mono font-bold shrink-0">
                                     {{ $provinceData['count'] }}
                                 </span>
-                            </div>
+                            </button>
                             
                             <!-- Cities under Province -->
                             <div class="pl-2 border-l border-zinc-150 space-y-0.5">
@@ -152,7 +177,7 @@
                                         $isCitySelected = $selectedLocation === $cityInfo['name'];
                                     @endphp
                                     <button type="button" 
-                                            wire:click="$set('selectedLocation', '{{ $cityInfo['name'] }}')" 
+                                            wire:click="$set('selectedProvince', '{{ $provinceName }}'); $set('selectedLocation', '{{ $cityInfo['name'] }}')" 
                                             class="w-full text-left flex items-center justify-between text-[10px] py-1 px-1.5 rounded transition-all duration-150 
                                                 {{ $isCitySelected 
                                                     ? 'bg-blue-50 text-blue-800 font-bold border border-blue-200' 
