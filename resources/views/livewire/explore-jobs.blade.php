@@ -413,46 +413,31 @@
                 </div>
 
                 <!-- Content -->
-                <div class="p-5 bg-white overflow-y-auto custom-scrollbar flex-1 flex flex-col items-center text-center">
-                    <!-- Icon badge depending on platform -->
-                    @php
-                        $portalIconColor = 'bg-blue-50 border-blue-200 text-blue-700';
-                        if ($confirmingJobPortal === 'LinkedIn') {
-                            $portalIconColor = 'bg-blue-50 border-blue-150 text-blue-700';
-                        } elseif ($confirmingJobPortal === 'JobStreet') {
-                            $portalIconColor = 'bg-red-50 border-red-150 text-red-650';
-                        } elseif ($confirmingJobPortal === 'Kalibrr') {
-                            $portalIconColor = 'bg-emerald-50 border-emerald-150 text-emerald-700';
-                        }
-                    @endphp
-                    <div class="w-12 h-12 rounded-full flex items-center justify-center border shadow-3xs mb-3.5 {{ $portalIconColor }}">
-                        @if($confirmingJobPortal === 'LinkedIn')
-                            <i class="ph-fill ph-linkedin-logo text-xl"></i>
-                        @elseif($confirmingJobPortal === 'JobStreet')
-                            <i class="ph-bold ph-newspaper text-xl"></i>
-                        @else
-                            <i class="ph-bold ph-briefcase text-xl"></i>
-                        @endif
-                    </div>
-
-                    <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Apakah Anda yakin?</h3>
-                    <p class="text-[11px] text-zinc-500 mt-2 leading-relaxed max-w-[320px]">
-                        Apakah Anda sudah melamar lowongan kerja <span class="font-bold text-zinc-800">{{ $confirmingJobTitle }}</span> di <span class="font-bold text-zinc-800">{{ $confirmingJobCompany }}</span> melalui portal <span class="font-bold text-zinc-800">{{ $confirmingJobPortal }}</span>?
+                <div class="p-5 bg-white overflow-y-auto custom-scrollbar flex-1 flex flex-col text-left">
+                    <p class="text-xs text-zinc-700 leading-relaxed font-semibold">
+                        Apakah Anda yakin sudah melamar lowongan kerja ini?
                     </p>
+                    <p class="text-[11px] text-zinc-550 mt-2 leading-relaxed">
+                        Apakah Anda sudah melamar posisi <span class="font-bold text-zinc-800">{{ $confirmingJobTitle }}</span> di <span class="font-bold text-zinc-800">{{ $confirmingJobCompany }}</span> melalui portal <span class="font-bold text-zinc-800">{{ $confirmingJobPortal }}</span>?
+                    </p>
+                    <div class="mt-4 flex items-start gap-2 text-primary-700 bg-primary-50/30 p-3 rounded-md border border-primary-100/60 select-none">
+                        <i class="ph ph-info text-base shrink-0"></i>
+                        <p class="text-[10px] font-medium leading-relaxed">Menyimpan lowongan kerja ini akan mendaftarkannya sebagai lamaran aktif dalam pelacak karier Anda dengan status <span class="font-bold text-zinc-700">Applied</span>.</p>
+                    </div>
                 </div>
 
                 <!-- Footer -->
-                <div class="px-4 py-3 border-t border-zinc-150/60 bg-zinc-50/50 flex justify-end gap-2 shrink-0">
+                <div class="px-4 py-3 border-t border-zinc-150/60 bg-zinc-50/50 flex justify-end gap-3 shrink-0">
                     <a href="{{ $confirmingJobUrl }}" 
                        target="_blank" 
                        wire:click="cancelTrackJob"
-                       class="px-3.5 py-1.5 text-xs font-bold text-zinc-655 bg-zinc-100 hover:bg-zinc-200 rounded-md transition-colors text-center focus:outline-hidden">
+                       class="h-[30px] flex items-center justify-center text-[10px] font-bold text-zinc-500 hover:text-zinc-700 uppercase tracking-wider transition-colors focus:outline-hidden">
                         Belum, Lamar Dulu
                     </a>
                     
                     <button type="button" 
                             wire:click="confirmTrackJob" 
-                            class="px-3.5 py-1.5 text-xs font-bold text-white bg-zinc-950 hover:bg-zinc-900 rounded-md shadow-3xs transition-all focus:outline-hidden">
+                            class="px-4 h-[30px] bg-primary-50 text-zinc-800 hover:bg-primary-100 border border-primary-200/60 text-[10px] font-bold rounded-md shadow-3xs transition-all active:scale-97 hover:shadow-2xs uppercase tracking-wider flex items-center justify-center focus:outline-hidden">
                         Ya, Sudah Melamar
                     </button>
                 </div>
