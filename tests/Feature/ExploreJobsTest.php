@@ -171,6 +171,32 @@ class ExploreJobsTest extends TestCase
         ]);
     }
 
+    public function test_user_can_save_scraped_job_via_confirmation_modal()
+    {
+        $posting = JobPosting::create([
+            'scraper_source_id' => $this->source->id,
+            'title' => 'Swift Programmer',
+            'company_name' => 'SwiftCorp',
+            'description' => 'Swift job description',
+            'raw_url' => 'https://linkedin.com/jobs/view/401',
+            'unique_hash' => md5('https://linkedin.com/jobs/view/401'),
+            'status' => 'active',
+        ]);
+
+        \Livewire\Livewire::actingAs($this->user)
+            ->test(\App\Livewire\ExploreJobs::class)
+            ->call('initiateTrackJob', $posting->id)
+            ->assertSet('confirmingTrackJobId', $posting->id)
+            ->call('confirmTrackJob')
+            ->assertSee('Disimpan ke Tracker!');
+
+        $this->assertDatabaseHas('job_applications', [
+            'user_id' => $this->user->id,
+            'company_name' => 'SwiftCorp',
+            'position' => 'Swift Programmer',
+        ]);
+    }
+
     public function test_admin_can_trigger_manual_crawl_and_verify_active_listings()
     {
         $admin = User::factory()->create(['role' => 'admin']);

@@ -17,6 +17,13 @@ class ExploreJobs extends Component
     public $selectedWorkType = '';
     public $selectedProvince = '';
     public $selectedLocation = '';
+    
+    // Modal Confirmation properties for saving jobs
+    public $confirmingTrackJobId = null;
+    public $confirmingJobTitle = '';
+    public $confirmingJobCompany = '';
+    public $confirmingJobPortal = '';
+    public $confirmingJobUrl = '';
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -115,6 +122,31 @@ class ExploreJobs extends Component
         }
     }
 
+    public function initiateTrackJob($id)
+    {
+        $posting = JobPosting::find($id);
+        if ($posting) {
+            $this->confirmingTrackJobId = $id;
+            $this->confirmingJobTitle = $posting->title;
+            $this->confirmingJobCompany = $posting->company_name;
+            $this->confirmingJobPortal = str_contains($posting->scraperSource->target_domain, 'linkedin') ? 'LinkedIn' : (str_contains($posting->scraperSource->target_domain, 'jobstreet') ? 'JobStreet' : 'Kalibrr');
+            $this->confirmingJobUrl = $posting->raw_url;
+        }
+    }
+
+    public function cancelTrackJob()
+    {
+        $this->confirmingTrackJobId = null;
+    }
+
+    public function confirmTrackJob()
+    {
+        if ($this->confirmingTrackJobId) {
+            $this->trackJob($this->confirmingTrackJobId);
+            $this->confirmingTrackJobId = null;
+        }
+    }
+
     public function trackJob($id)
     {
         $posting = JobPosting::find($id);
@@ -130,12 +162,14 @@ class ExploreJobs extends Component
                 return;
             }
 
+            $portalName = str_contains($posting->scraperSource->target_domain, 'linkedin') ? 'LinkedIn' : (str_contains($posting->scraperSource->target_domain, 'jobstreet') ? 'JobStreet' : 'Kalibrr');
+
             \App\Models\JobApplication::create([
                 'user_id' => auth()->id(),
                 'company_name' => $posting->company_name,
                 'position' => $posting->title,
-                'location' => 'Jakarta, Indonesia',
-                'platform' => str_contains($posting->scraperSource->target_domain, 'linkedin') ? 'LinkedIn' : (str_contains($posting->scraperSource->target_domain, 'jobstreet') ? 'JobStreet' : 'Kalibrr'),
+                'location' => $posting->location ?: 'Indonesia',
+                'platform' => $portalName,
                 'platform_link' => $posting->raw_url,
                 'application_status' => 'Applied',
                 'recruitment_stage' => 'Applied',

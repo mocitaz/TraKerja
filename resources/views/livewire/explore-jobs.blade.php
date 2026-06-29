@@ -358,7 +358,7 @@
                                         </span>
                                     @else
                                         <button type="button" 
-                                                wire:click="trackJob({{ $job->id }})" 
+                                                wire:click="initiateTrackJob({{ $job->id }})" 
                                                 class="inline-flex items-center gap-1 text-[10px] font-bold text-zinc-500 hover:text-zinc-950 transition-colors">
                                             <i class="ph ph-plus-circle text-xs"></i>
                                             Simpan Tracker
@@ -389,5 +389,62 @@
                 </div>
             @endif
         </div>
-    </div>
+    <!-- Confirmation Modal: Save to Tracker -->
+    @if($confirmingTrackJobId)
+        <div class="fixed inset-0 z-[9999] bg-zinc-950/40 backdrop-blur-xs flex items-center justify-center p-4">
+            <div class="bg-white border border-zinc-200 rounded-xl max-w-sm w-full p-5 shadow-lg relative animate-fadeIn">
+                <!-- Close Button -->
+                <button type="button" 
+                        wire:click="cancelTrackJob" 
+                        class="absolute top-4 right-4 w-6 h-6 flex items-center justify-center rounded-md hover:bg-zinc-50 text-zinc-400 hover:text-zinc-700 transition-colors">
+                    <i class="ph ph-x text-sm"></i>
+                </button>
+
+                <div class="flex flex-col items-center text-center">
+                    <!-- Icon badge depending on platform -->
+                    @php
+                        $portalIconColor = 'bg-blue-50 border-blue-200 text-blue-700';
+                        if ($confirmingJobPortal === 'LinkedIn') {
+                            $portalIconColor = 'bg-blue-50 border-blue-150 text-blue-700';
+                        } elseif ($confirmingJobPortal === 'JobStreet') {
+                            $portalIconColor = 'bg-red-50 border-red-150 text-red-650';
+                        } elseif ($confirmingJobPortal === 'Kalibrr') {
+                            $portalIconColor = 'bg-emerald-50 border-emerald-150 text-emerald-700';
+                        }
+                    @endphp
+                    <div class="w-12 h-12 rounded-full flex items-center justify-center border shadow-3xs mb-3 {{ $portalIconColor }}">
+                        @if($confirmingJobPortal === 'LinkedIn')
+                            <i class="ph-fill ph-linkedin-logo text-xl"></i>
+                        @elseif($confirmingJobPortal === 'JobStreet')
+                            <i class="ph-bold ph-newspaper text-xl"></i>
+                        @else
+                            <i class="ph-bold ph-briefcase text-xl"></i>
+                        @endif
+                    </div>
+
+                    <h3 class="text-sm font-bold text-zinc-900 tracking-tight">Simpan ke Tracker?</h3>
+                    <p class="text-[11px] text-zinc-500 mt-1.5 leading-relaxed max-w-[280px]">
+                        Apakah Anda yakin sudah melamar posisi <span class="font-bold text-zinc-800">{{ $confirmingJobTitle }}</span> di <span class="font-bold text-zinc-800">{{ $confirmingJobCompany }}</span> melalui portal <span class="font-bold text-zinc-800">{{ $confirmingJobPortal }}</span>?
+                    </p>
+                </div>
+
+                <div class="mt-5 grid grid-cols-2 gap-2">
+                    <!-- Cancel Button / Open Job URL if they haven't applied yet -->
+                    <a href="{{ $confirmingJobUrl }}" 
+                       target="_blank" 
+                       wire:click="cancelTrackJob"
+                       class="text-center bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 text-zinc-700 font-semibold text-xs rounded-lg py-2 transition-all duration-150 focus:outline-hidden">
+                        Belum, Lamar Dulu
+                    </a>
+                    
+                    <!-- Confirm Button -->
+                    <button type="button" 
+                            wire:click="confirmTrackJob" 
+                            class="bg-zinc-950 hover:bg-zinc-900 text-white font-semibold text-xs rounded-lg py-2 transition-all duration-150 shadow-3xs focus:outline-hidden">
+                        Ya, Sudah Melamar
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>
