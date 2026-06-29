@@ -16,22 +16,24 @@
     </div>
 
     <!-- Premium Hero Search Card -->
-    <div class="relative bg-zinc-50/50 border border-zinc-200/80 rounded-2xl p-8 md:p-10 text-center shadow-3xs overflow-hidden mb-6 select-none">
-        <!-- Radial Gradient background -->
-        <div class="absolute inset-0 bg-gradient-to-b from-primary-50/20 via-transparent to-transparent pointer-events-none"></div>
+    <div class="relative bg-zinc-100 border border-zinc-200/80 rounded-2xl p-8 md:p-12 text-center shadow-3xs overflow-hidden mb-6 select-none">
+        <!-- Background Image with low opacity and grayscale tone -->
+        <div class="absolute inset-0 bg-cover bg-center grayscale opacity-8 pointer-events-none" style="background-image: url('{{ asset('images/ikn.png') }}');"></div>
+        <!-- Soft gradient overlay to blend -->
+        <div class="absolute inset-0 bg-gradient-to-b from-zinc-50/20 via-zinc-100/60 to-zinc-100/90 pointer-events-none"></div>
 
-        <div class="relative z-10 max-w-3xl mx-auto space-y-4">
+        <div class="relative z-10 max-w-5xl mx-auto space-y-4">
             <h2 class="text-xl md:text-2xl font-black text-zinc-800 tracking-tight leading-tight">
-                Temukan Karir <span class="text-primary-650 block sm:inline">Impian Anda Hari Ini</span>
+                Temukan Karir <span class="text-primary-650">Impian Anda Hari Ini</span>
             </h2>
-            <p class="text-[11px] md:text-xs text-zinc-400 max-w-lg mx-auto leading-relaxed">
+            <p class="text-[11px] md:text-xs text-zinc-500 max-w-xl mx-auto leading-relaxed">
                 Jelajahi ribuan peluang magang & lowongan terverifikasi anti-ghosting dari berbagai perusahaan ternama di seluruh Indonesia.
             </p>
 
             <!-- Pill Search Bar (Unified Row) -->
-            <div class="bg-white border border-zinc-200 rounded-xl md:rounded-full p-1.5 shadow-2xs flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-0 mt-4">
+            <div class="bg-white border border-zinc-200 rounded-xl md:rounded-full p-1.5 shadow-2xs flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-0 mt-6 max-w-5xl mx-auto">
                 <!-- Search input -->
-                <div class="flex-1 relative flex items-center pl-3">
+                <div class="flex-1 min-w-[150px] relative flex items-center pl-3">
                     <i class="ph ph-magnifying-glass text-zinc-400 text-xs absolute left-3"></i>
                     <input type="text" 
                            wire:model.live.debounce.300ms="search" 
@@ -39,12 +41,12 @@
                            class="w-full text-xs bg-transparent border-0 focus:ring-0 text-zinc-900 pl-6 pr-2 py-1.5 font-semibold placeholder-zinc-400 focus:outline-hidden">
                 </div>
 
-                <div class="hidden md:block w-[1px] h-5 bg-zinc-200"></div>
+                <div class="hidden md:block w-[1px] h-5 bg-zinc-200 shrink-0"></div>
 
                 <!-- Dropdown Sektor -->
-                <div class="relative flex items-center px-3">
-                    <i class="ph ph-circles-four text-zinc-400 text-xs mr-1"></i>
-                    <select wire:model.live="selectedField" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer min-w-[135px] outline-none">
+                <div class="relative flex items-center px-2">
+                    <i class="ph ph-circles-four text-zinc-400 text-xs mr-1 shrink-0"></i>
+                    <select wire:model.live="selectedField" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-[120px] truncate outline-none select-none appearance-none">
                         <option value="">Semua Sektor</option>
                         @foreach($fieldsList as $fieldItem)
                             <option value="{{ $fieldItem }}">{{ $fieldItem }}</option>
@@ -52,12 +54,12 @@
                     </select>
                 </div>
 
-                <div class="hidden md:block w-[1px] h-5 bg-zinc-200"></div>
+                <div class="hidden md:block w-[1px] h-5 bg-zinc-200 shrink-0"></div>
 
                 <!-- Dropdown Jurusan -->
-                <div class="relative flex items-center px-3">
-                    <i class="ph ph-graduation-cap text-zinc-400 text-xs mr-1"></i>
-                    <select wire:model.live="selectedMajor" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer min-w-[135px] outline-none">
+                <div class="relative flex items-center px-2">
+                    <i class="ph ph-graduation-cap text-zinc-400 text-xs mr-1 shrink-0"></i>
+                    <select wire:model.live="selectedMajor" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-[120px] truncate outline-none select-none appearance-none">
                         <option value="">Semua Jurusan</option>
                         @foreach($majorsList as $majorItem)
                             <option value="{{ $majorItem }}">{{ $majorItem }}</option>
@@ -65,12 +67,12 @@
                     </select>
                 </div>
 
-                <div class="hidden md:block w-[1px] h-5 bg-zinc-200"></div>
+                <div class="hidden md:block w-[1px] h-5 bg-zinc-200 shrink-0"></div>
 
                 <!-- Dropdown Provinsi -->
-                <div class="relative flex items-center px-3">
-                    <i class="ph ph-map-pin text-zinc-400 text-xs mr-1"></i>
-                    <select wire:model.live="selectedProvince" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer min-w-[125px] outline-none">
+                <div class="relative flex items-center px-2">
+                    <i class="ph ph-map-pin text-zinc-400 text-xs mr-1 shrink-0"></i>
+                    <select wire:model.live="selectedProvince" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-[110px] truncate outline-none select-none appearance-none">
                         <option value="">Provinsi</option>
                         @foreach($provincesList as $provItem)
                             <option value="{{ $provItem }}">{{ $provItem }}</option>
@@ -78,12 +80,12 @@
                     </select>
                 </div>
 
-                <div class="hidden md:block w-[1px] h-5 bg-zinc-200"></div>
+                <div class="hidden md:block w-[1px] h-5 bg-zinc-200 shrink-0"></div>
 
                 <!-- Dropdown Kota -->
-                <div class="relative flex items-center px-3">
-                    <i class="ph ph-map-pin-line text-zinc-400 text-xs mr-1"></i>
-                    <select wire:model.live="selectedLocation" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer min-w-[125px] outline-none" {{ empty($selectedProvince) ? 'disabled' : '' }}>
+                <div class="relative flex items-center px-2">
+                    <i class="ph ph-map-pin-line text-zinc-400 text-xs mr-1 shrink-0"></i>
+                    <select wire:model.live="selectedLocation" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-[110px] truncate outline-none select-none appearance-none" {{ empty($selectedProvince) ? 'disabled' : '' }}>
                         @if(empty($selectedProvince))
                             <option value="">Pilih Provinsi</option>
                         @else
@@ -95,12 +97,12 @@
                     </select>
                 </div>
 
-                <div class="hidden md:block w-[1px] h-5 bg-zinc-200"></div>
+                <div class="hidden md:block w-[1px] h-5 bg-zinc-200 shrink-0"></div>
 
                 <!-- Dropdown Tipe Kerja -->
-                <div class="relative flex items-center px-3">
-                    <i class="ph ph-briefcase text-zinc-400 text-xs mr-1"></i>
-                    <select wire:model.live="selectedWorkType" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer min-w-[110px] outline-none">
+                <div class="relative flex items-center px-2">
+                    <i class="ph ph-briefcase text-zinc-400 text-xs mr-1 shrink-0"></i>
+                    <select wire:model.live="selectedWorkType" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-[100px] truncate outline-none select-none appearance-none">
                         <option value="">Tipe Kerja</option>
                         <option value="Onsite">Onsite</option>
                         <option value="Remote">Remote</option>
@@ -110,7 +112,7 @@
 
                 <!-- Action Cari Button -->
                 <button type="button" 
-                        class="md:ml-2 px-6 h-[34px] bg-primary-650 hover:bg-primary-700 text-white text-[11px] font-black rounded-lg md:rounded-full uppercase tracking-wider transition-all duration-150 active:scale-97 flex items-center justify-center gap-1 shrink-0 focus:outline-hidden">
+                        class="md:ml-2 px-5 h-[34px] bg-[#9333ea] hover:bg-purple-700 text-white text-[11px] font-black rounded-lg md:rounded-full uppercase tracking-wider transition-all duration-150 active:scale-97 flex items-center justify-center gap-1 shrink-0 focus:outline-hidden">
                     Cari
                 </button>
             </div>
