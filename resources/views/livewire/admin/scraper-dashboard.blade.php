@@ -149,9 +149,9 @@
     <div>
         @if ($activeTab === 'dashboard')
             <!-- TAB 1: OVERVIEW DASHBOARD & METRICS -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch animate-fade-in text-zinc-900">
-                <!-- Stacked Bar Performance Chart (2/3 width) -->
-                <div class="lg:col-span-2 bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col gap-4 shadow-3xs">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch animate-fade-in text-zinc-900">
+                <!-- Stacked Bar Performance Chart (50% width) -->
+                <div class="lg:col-span-1 bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col gap-4 shadow-3xs justify-between">
                     <div class="flex-1 flex flex-col">
                         <div class="flex items-center gap-2 pb-3 mb-4 border-b border-zinc-100 shrink-0">
                             <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
@@ -160,13 +160,13 @@
                             <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Metrik Grafik Performa Platform</h2>
                         </div>
                         
-                        <div class="flex-1 min-h-[260px] relative w-full" wire:ignore>
+                        <div class="flex-1 min-h-[300px] relative w-full" wire:ignore>
                             <canvas id="scraperPerformanceChart"></canvas>
                         </div>
                     </div>
                 </div>
 
-                <!-- Live Log Streamer Console (1/3 width) -->
+                <!-- Live Log Streamer Console (50% width) -->
                 <div class="lg:col-span-1 bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col justify-between shadow-3xs">
                     <div class="w-full">
                         <div class="flex items-center justify-between pb-3 mb-4 border-b border-zinc-100">
@@ -184,28 +184,53 @@
                         </div>
 
                         @if (count($liveLogs) > 0)
-                            <div class="bg-[#121214] text-[#e4e4e7] border border-zinc-800 p-3 rounded-lg font-mono text-[9px] leading-relaxed shadow-inner max-h-[300px] overflow-y-auto space-y-1.5 custom-scrollbar">
-                                @foreach ($liveLogs as $log)
-                                    <div class="whitespace-pre-wrap tracking-tight flex items-start gap-1">
-                                        <span class="text-zinc-500 shrink-0">[{{ $log['timestamp'] }}]</span>
-                                        <span class="shrink-0 {{ $log['level'] === 'SUCCESS' ? 'text-emerald-500' : ($log['level'] === 'ERROR' ? 'text-rose-500' : ($log['level'] === 'WARNING' ? 'text-amber-500' : 'text-zinc-400')) }}">
-                                            [{{ $log['level'] }}]
-                                        </span>
-                                        <span class="text-zinc-200 flex-1">{{ $log['message'] }}</span>
+                            <div class="bg-[#0f0f11] border border-zinc-800 rounded-lg overflow-hidden flex flex-col h-[300px] shadow-lg">
+                                <!-- Titlebar -->
+                                <div class="flex items-center justify-between bg-[#1b1b1f] px-3 py-1.5 border-b border-zinc-800/80 shrink-0 select-none">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                                        <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+                                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
                                     </div>
-                                @endforeach
+                                    <span class="text-[9px] font-mono text-zinc-500">scraper_engine.log</span>
+                                    <span class="w-9"></span>
+                                </div>
+                                <div class="flex-1 p-3 overflow-y-auto space-y-1.5 custom-scrollbar font-mono text-[9px] text-[#e4e4e7] leading-relaxed">
+                                    @foreach ($liveLogs as $log)
+                                        <div class="whitespace-pre-wrap tracking-tight flex items-start gap-1">
+                                            <span class="text-zinc-500 shrink-0">[{{ $log['timestamp'] }}]</span>
+                                            <span class="shrink-0 font-bold {{ $log['level'] === 'SUCCESS' ? 'text-emerald-500' : ($log['level'] === 'ERROR' ? 'text-rose-500' : ($log['level'] === 'WARNING' ? 'text-amber-500' : 'text-blue-400')) }}">
+                                                [{{ $log['level'] }}]
+                                            </span>
+                                            <span class="text-zinc-200 flex-1">{{ $log['message'] }}</span>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         @else
-                            <div class="bg-zinc-50 border border-zinc-150 rounded-lg p-10 text-center flex flex-col items-center justify-center border-dashed">
-                                <i class="ph ph-activity text-zinc-400 text-3xl mb-2"></i>
-                                <p class="text-xs font-semibold text-zinc-600">Console logs empty</p>
-                                <p class="text-[10px] text-zinc-400 max-w-[200px] mt-0.5">Logs akan tampil secara live ketika aktivitas scraping berjalan.</p>
+                            <div class="bg-[#0f0f11] border border-zinc-800 rounded-lg overflow-hidden flex flex-col h-[300px] shadow-lg">
+                                <!-- Titlebar -->
+                                <div class="flex items-center justify-between bg-[#1b1b1f] px-3 py-1.5 border-b border-zinc-800/80 shrink-0 select-none">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                                        <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+                                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                    </div>
+                                    <span class="text-[9px] font-mono text-zinc-550">scraper_engine.log</span>
+                                    <span class="w-9"></span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center justify-center p-6 text-center">
+                                    <i class="ph ph-terminal text-zinc-650 text-2xl mb-1.5 animate-pulse"></i>
+                                    <p class="text-[10px] font-bold text-zinc-400 font-mono">CONSOLE LOG EMPTY</p>
+                                    <p class="text-[9px] text-zinc-500 font-mono max-w-[200px] mt-0.5 leading-relaxed">Logs will stream here in real-time when the scraping jobs run.</p>
+                                </div>
                             </div>
                         @endif
                     </div>
                     
-                    <div class="text-[9px] font-mono text-zinc-400 pt-3 border-t border-zinc-150 leading-tight mt-4">
-                        Polling visual terupdate secara berkala setiap 5 detik.
+                    <div class="text-[9px] font-mono text-zinc-400 pt-3 border-t border-zinc-150 leading-tight mt-4 flex items-center justify-between">
+                        <span>Polling visual terupdate secara berkala setiap 5 detik.</span>
+                        <span class="text-zinc-500 font-bold uppercase tracking-wider flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Live</span>
                     </div>
                 </div>
             </div>
