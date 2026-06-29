@@ -228,6 +228,21 @@
                         <span class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider">System</span>
                     </div>
 
+                    <!-- Scraper Engine -->
+                    <a href="{{ route('admin.scraper') }}"
+                       class="group relative flex items-center px-2 py-1.5 rounded-md text-xs font-medium transition-colors {{ request()->routeIs('admin.scraper') ? 'bg-zinc-100 text-zinc-900 font-semibold' : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900' }}"
+                       :class="sidebarCollapsed ? 'justify-center' : ''">
+                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-5">
+                            <i class="text-base {{ request()->routeIs('admin.scraper') ? 'ph-bold ph-terminal-window text-zinc-900' : 'ph ph-terminal-window' }}"></i>
+                        </div>
+                        <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">Scraper Engine</span>
+                        
+                        <!-- Tooltip -->
+                        <div x-show="sidebarCollapsed" class="absolute left-12 px-2 py-1 bg-zinc-800 text-white text-[10px] font-bold rounded shadow-md pointer-events-none z-50 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            Scraper Engine
+                        </div>
+                    </a>
+
                     <!-- Settings -->
                     <a href="{{ route('admin.settings') }}"
                        class="group relative flex items-center px-2 py-1.5 rounded-md text-xs font-medium transition-colors {{ request()->routeIs('admin.settings') ? 'bg-zinc-100 text-zinc-900 font-semibold' : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900' }}"

@@ -88,6 +88,10 @@ Route::get('/interviews', function () {
     return view('interviews.calendar');
 })->middleware(['auth', 'verified'])->name('interviews');
 
+Route::get('/explore', \App\Livewire\ExploreJobs::class)
+    ->middleware(['auth', 'verified'])
+    ->name('jobs.explore');
+
 // AI Studio routes (Only for regular users)
 Route::get('/ai-studio', [AiStudioController::class, 'index'])->middleware(['auth', 'verified'])->name('ai-studio.index');
 Route::post('/ai-studio/outreach', [AiStudioController::class, 'generateOutreach'])->middleware(['auth', 'verified'])->name('ai-studio.outreach');
@@ -416,6 +420,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     // Admin Survey Panel
     Route::get('/survey', [\App\Http\Controllers\Admin\AdminSurveyController::class, 'index'])->name('survey.index');
     Route::post('/survey/toggle', [\App\Http\Controllers\Admin\AdminSurveyController::class, 'toggle'])->name('survey.toggle');
+
+    // Scraper Dashboard
+    Route::get('/scraper', \App\Livewire\Admin\ScraperDashboard::class)->name('scraper');
     
     // Users management
     Route::get('/users', function () {

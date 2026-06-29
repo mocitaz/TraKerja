@@ -45,6 +45,7 @@
             ['route' => 'dashboard', 'routeIs' => 'dashboard', 'icon' => 'ph-circles-four', 'label' => 'Dashboard'],
             ['route' => 'tracker',   'routeIs' => 'tracker',   'icon' => 'ph-layout',     'label' => 'Track Progress'],
             ['route' => 'summary',   'routeIs' => 'summary',   'icon' => 'ph-chart-bar',  'label' => 'Summary'],
+            ['route' => 'jobs.explore', 'routeIs' => 'jobs.explore', 'icon' => 'ph-magnifying-glass', 'label' => 'Explore Jobs'],
         ];
         @endphp
 
