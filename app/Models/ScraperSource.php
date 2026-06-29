@@ -50,33 +50,75 @@ class ScraperSource extends Model
     public function executeDiscovery(): array
     {
         try {
-            echo "  [HTTP GET] Requesting: " . $this->seed_url . "\n";
+            echo "  [HTTP GET] Requesting search page: " . $this->seed_url . "\n";
             
-            $request = \Illuminate\Support\Facades\Http::timeout(30)
-                ->withHeaders([
-                    'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                    'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-                    'Accept-Language' => 'en-US,en;q=0.9',
-                ]);
-
-            // Route via a proxy if configured to prevent 429 Rate Limiting
+            $proxy = null;
             $proxies = config('scraper.proxies', []);
             if (!empty($proxies)) {
                 $proxy = $proxies[array_rand($proxies)];
-                $request = $request->withOptions(['proxy' => $proxy]);
-                echo "  [PROXY] Routing via: " . (parse_url($proxy, PHP_URL_HOST) ?: $proxy) . "\n";
             }
 
-            $response = $request->get($this->seed_url);
-                
-            if ($response->failed()) {
-                echo "  [HTTP FAIL] Status code: " . $response->status() . "\n";
-                \Illuminate\Support\Facades\Log::warning("Discovery request failed for source {$this->id} ({$this->name}) with status code: " . $response->status() . " on URL: " . $this->seed_url);
+            $html = null;
+            $success = false;
+
+            // Stage 1: Puppeteer rendering microservice (headless)
+            $microserviceUrl = config('scraper.microservice_url');
+            if ($microserviceUrl) {
+                try {
+                    echo "  [STAGE 1] Discovery via Headless Puppeteer...\n";
+                    $response = \Illuminate\Support\Facades\Http::timeout(40)
+                        ->post($microserviceUrl . '/scrape', [
+                            'url' => $this->seed_url,
+                            'proxy' => $proxy,
+                        ]);
+
+                    if ($response->successful() && $response->json('success')) {
+                        $html = $response->json('html');
+                        $success = true;
+                        echo "  [STAGE 1 SUCCESS] Rendered search page successfully (" . strlen($html) . " bytes)\n";
+                    } else {
+                        echo "  [STAGE 1 FAILED] Puppeteer render error.\n";
+                    }
+                } catch (\Exception $e) {
+                    echo "  [STAGE 1 ERROR] " . $e->getMessage() . "\n";
+                }
+            }
+
+            // Stage 2: Direct HTTP GET with User-Agent & optional proxy fallback
+            if (!$success) {
+                try {
+                    echo "  [STAGE 2] Direct GET fallback...\n";
+                    $request = \Illuminate\Support\Facades\Http::timeout(25)
+                        ->withHeaders([
+                            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                            'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+                            'Accept-Language' => 'en-US,en;q=0.9',
+                        ]);
+
+                    if ($proxy) {
+                        $request = $request->withOptions(['proxy' => $proxy]);
+                        echo "  [PROXY] Routing via: " . (parse_url($proxy, PHP_URL_HOST) ?: $proxy) . "\n";
+                    }
+
+                    $response = $request->get($this->seed_url);
+                        
+                    if ($response->successful()) {
+                        $html = $response->body();
+                        $success = true;
+                        echo "  [STAGE 2 SUCCESS] Received " . strlen($html) . " bytes\n";
+                    } else {
+                        echo "  [STAGE 2 FAIL] Status code: " . $response->status() . "\n";
+                        \Illuminate\Support\Facades\Log::warning("Discovery request failed for source {$this->id} ({$this->name}) with status code: " . $response->status() . " on URL: " . $this->seed_url);
+                    }
+                } catch (\Exception $e) {
+                    echo "  [STAGE 2 ERROR] Exception thrown: " . $e->getMessage() . "\n";
+                }
+            }
+
+            if (!$success || !$html) {
                 return [];
             }
             
-            $html = $response->body();
-            echo "  [HTTP SUCCESS] Received " . strlen($html) . " bytes\n";
             preg_match_all('/href="([^"]*?' . preg_quote($this->target_domain, '/') . '[^"]*?)"/i', $html, $matches);
             
             $urls = array_unique($matches[1] ?? []);

@@ -68,12 +68,13 @@ class StoreAndTagJob implements ShouldQueue
         }
         $detectedStack = array_values(array_unique($detectedStack));
 
-        JobPosting::updateOrCreate(
-            ['unique_hash' => $hash],
-            [
-                'scraper_source_id' => $this->sourceId,
-                'title' => $title,
-                'company_name' => $company,
+        $existing = JobPosting::where('scraper_source_id', $this->sourceId)
+            ->where('title', $title)
+            ->where('company_name', $company)
+            ->first();
+
+        if ($existing) {
+            $existing->update([
                 'description' => $description,
                 'category_field' => $field,
                 'category_major' => $major,
@@ -82,7 +83,47 @@ class StoreAndTagJob implements ShouldQueue
                 'raw_url' => $this->url,
                 'status' => ($this->payload['isClosed'] ?? false) ? 'closed' : 'active',
                 'last_validated_at' => now(),
-            ]
-        );
+            ]);
+            $posting = $existing;
+        } else {
+            $posting = JobPosting::updateOrCreate(
+                ['unique_hash' => $hash],
+                [
+                    'scraper_source_id' => $this->sourceId,
+                    'title' => $title,
+                    'company_name' => $company,
+                    'description' => $description,
+                    'category_field' => $field,
+                    'category_major' => $major,
+                    'work_type' => $workType,
+                    'tech_stack' => $detectedStack,
+                    'raw_url' => $this->url,
+                    'status' => ($this->payload['isClosed'] ?? false) ? 'closed' : 'active',
+                    'last_validated_at' => now(),
+                ]
+            );
+        }
+
+        if ($posting->wasRecentlyCreated) {
+            $cacheKey = 'targeted_scraping_progress';
+            if (\Illuminate\Support\Facades\Cache::has($cacheKey)) {
+                $progress = \Illuminate\Support\Facades\Cache::get($cacheKey);
+                if (
+                    ($progress['status'] ?? '') === 'RUNNING' &&
+                    $progress['sector'] === $field &&
+                    $progress['major'] === $major
+                ) {
+                    $progress['current']++;
+                    if ($progress['current'] >= $progress['target']) {
+                        $progress['status'] = 'COMPLETED';
+                        $progress['completed_at'] = now()->toDateTimeString();
+                        \App\Jobs\ScrapeJobDetailsJob::logToLiveBuffer("Targeted Ingestion: Target kuota " . $progress['target'] . " loker baru untuk " . $progress['major'] . " telah TERPENUHI!", 'success');
+                    } else {
+                        \App\Jobs\ScrapeJobDetailsJob::logToLiveBuffer("Targeted Ingestion: Menemukan loker baru (" . $progress['current'] . "/" . $progress['target'] . ") untuk " . $progress['major']);
+                    }
+                    \Illuminate\Support\Facades\Cache::put($cacheKey, $progress, now()->addHours(6));
+                }
+            }
+        }
     }
 }

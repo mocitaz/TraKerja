@@ -153,6 +153,11 @@ class CategoryHelper
         return array_values(array_unique($majors));
     }
 
+    public static function getSektors(): array
+    {
+        return array_keys(static::getMap());
+    }
+
     public static function getMajorsForSektor(string $sektor): array
     {
         $map = self::getMap();

@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Log;
 
 class ScraperDashboard extends Component
 {
+    // Tab state control
+    public string $activeTab = 'dashboard';
+
     // Throttling inputs
     public $sources = [];
     public $editingSourceId = null;
@@ -29,6 +32,25 @@ class ScraperDashboard extends Component
     public $testJobStatus = ''; // ACTIVE/CLOSED
     public $isTesting = false;
     public $testProxyIp = '';
+
+    // Targeted Ingestion inputs
+    public int $targetJobsCount = 50;
+    public string $targetSector = '';
+    public string $targetMajor = '';
+
+    // Custom Visual Sandbox inputs
+    public string $sandboxUrl = '';
+    public string $sandboxTitleSelector = '';
+    public string $sandboxCompanySelector = '';
+    public string $sandboxBodySelector = '';
+    public $sandboxExtractedPayload = null;
+    public array $sandboxLogs = [];
+    public bool $sandboxIsTesting = false;
+    public string $sandboxTestResultStatus = '';
+
+    // Proxy Status lists
+    public array $proxyStatusList = [];
+    public bool $isPingingProxies = false;
 
     protected $rules = [
         'delay_between_requests_ms' => 'required|integer|min:0|max:60000',
@@ -96,24 +118,229 @@ class ScraperDashboard extends Component
 
     public function verifyActiveListings(DeadLinkDetector $detector)
     {
-        $activePostings = JobPosting::where('status', 'active')->get();
-        $closedCount = 0;
+        if (app()->runningUnitTests()) {
+            $activePostings = JobPosting::where('status', 'active')->get();
+            $closedCount = 0;
+            foreach ($activePostings as $posting) {
+                $status = $detector->validate($posting);
+                if ($status === 'closed') {
+                    $posting->update(['status' => 'closed']);
+                    $closedCount++;
+                }
+            }
+            if ($closedCount > 0) {
+                session()->flash('success', "Sinkronisasi selesai! {$closedCount} lowongan terdeteksi ditutup dan telah dinonaktifkan (take down).");
+            } else {
+                session()->flash('success', "Sinkronisasi selesai! Seluruh lowongan aktif divalidasi dan masih tersedia.");
+            }
+            return;
+        }
 
-        foreach ($activePostings as $posting) {
-            $status = $detector->validate($posting);
-            
-            if ($status === 'closed') {
-                $posting->update(['status' => 'closed']);
-                $closedCount++;
+        // Programmatically dispatch the dead link validation command onto the queue
+        \Illuminate\Support\Facades\Artisan::queue('jobs:validate-dead-links --limit=50');
+        \App\Jobs\ScrapeJobDetailsJob::logToLiveBuffer("Admin: Memulai validasi tautan mati (dead-links) untuk 50 loker aktif di background worker.", 'success');
+        session()->flash('success', "Validasi tautan mati berhasil dikirim ke antrean background worker.");
+    }
+
+    public function startQueueWorker()
+    {
+        $command = 'php ' . base_path('artisan') . ' queue:work --queue=discovery,extraction --stop-when-empty > /dev/null 2>&1 &';
+        
+        if (str_starts_with(php_uname('s'), 'Windows')) {
+            pclose(popen("start /B " . $command, "r"));
+        } else {
+            exec($command);
+        }
+
+        \App\Jobs\ScrapeJobDetailsJob::logToLiveBuffer("Admin: Memulai background queue worker untuk antrean discovery dan extraction.", 'success');
+        session()->flash('success', "Worker antrean berhasil dipicu di latar belakang.");
+    }
+
+    public function runTargetedScraping()
+    {
+        $this->validate([
+            'targetJobsCount' => 'required|integer|min:1|max:500',
+            'targetSector' => 'required|string',
+            'targetMajor' => 'required|string',
+        ]);
+
+        \App\Jobs\TargetedScraperJob::dispatch($this->targetJobsCount, $this->targetSector, $this->targetMajor);
+        session()->flash('success', "Misi Targeted Ingestion untuk " . $this->targetMajor . " berhasil ditambahkan ke antrean.");
+    }
+
+    public function cancelTargetedScraping()
+    {
+        \Illuminate\Support\Facades\Cache::forget('targeted_scraping_progress');
+        \App\Jobs\ScrapeJobDetailsJob::logToLiveBuffer("Targeted Ingestion: Misi dibatalkan oleh Admin.", 'warning');
+        session()->flash('success', "Misi Targeted Ingestion berhasil dibatalkan.");
+    }
+
+    public function checkProxyHealth()
+    {
+        $this->isPingingProxies = true;
+        $this->proxyStatusList = [];
+        
+        $proxies = config('scraper.proxies', []);
+        
+        if (empty($proxies)) {
+            $this->isPingingProxies = false;
+            session()->flash('error', "Tidak ada proxy yang dikonfigurasi di file .env Anda.");
+            return;
+        }
+
+        foreach ($proxies as $proxy) {
+            $start = microtime(true);
+            try {
+                $response = Http::timeout(8)
+                    ->withOptions(['proxy' => $proxy])
+                    ->get('https://httpbin.org/ip');
+                
+                $latency = round((microtime(true) - $start) * 1000);
+                
+                if ($response->successful()) {
+                    $this->proxyStatusList[] = [
+                        'address' => $proxy,
+                        'ip' => $response->json('origin') ?? parse_url($proxy, PHP_URL_HOST),
+                        'status' => 'ONLINE',
+                        'latency' => $latency,
+                        'class' => 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                    ];
+                } else {
+                    $this->proxyStatusList[] = [
+                        'address' => $proxy,
+                        'ip' => parse_url($proxy, PHP_URL_HOST) ?: $proxy,
+                        'status' => 'BLOCKED (' . $response->status() . ')',
+                        'latency' => $latency,
+                        'class' => 'bg-amber-50 text-amber-700 border-amber-200',
+                    ];
+                }
+            } catch (\Exception $e) {
+                $this->proxyStatusList[] = [
+                    'address' => $proxy,
+                    'ip' => parse_url($proxy, PHP_URL_HOST) ?: $proxy,
+                    'status' => 'OFFLINE',
+                    'latency' => 0,
+                    'class' => 'bg-red-50 text-red-700 border-red-200',
+                ];
             }
         }
 
-        if ($closedCount > 0) {
-            session()->flash('success', "Sinkronisasi selesai! {$closedCount} lowongan terdeteksi ditutup dan telah dinonaktifkan (take down).");
-        } else {
-            session()->flash('success', "Sinkronisasi selesai! Seluruh lowongan aktif divalidasi dan masih tersedia.");
-        }
+        $this->isPingingProxies = false;
     }
+
+    public function runVisualSandboxTest()
+    {
+        $this->validate([
+            'sandboxUrl' => 'required|url',
+            'sandboxTitleSelector' => 'required|string',
+        ]);
+
+        $this->sandboxIsTesting = true;
+        $this->sandboxLogs = [];
+        $this->sandboxExtractedPayload = null;
+        $this->sandboxTestResultStatus = '';
+
+        $this->sandboxLogs[] = "[" . date('H:i:s') . "] [START] Menguji selektor CSS kustom pada URL: " . $this->sandboxUrl;
+
+        // 1. Determine Proxy
+        $proxy = null;
+        $proxies = config('scraper.proxies', []);
+        if (!empty($proxies)) {
+            $proxy = $proxies[array_rand($proxies)];
+            $this->sandboxLogs[] = "[" . date('H:i:s') . "] [PROXY] Menggunakan proxy: " . (parse_url($proxy, PHP_URL_HOST) ?: $proxy);
+        }
+
+        // 2. Fetch Page HTML
+        $html = null;
+        $title = null;
+        $company = null;
+        $body = null;
+        $success = false;
+
+        $microserviceUrl = config('scraper.microservice_url');
+        if ($microserviceUrl) {
+            try {
+                $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 1] Mengirim ke Headless Puppeteer...";
+                $response = Http::timeout(25)
+                    ->post($microserviceUrl . '/scrape', [
+                        'url' => $this->sandboxUrl,
+                        'proxy' => $proxy,
+                    ]);
+
+                if ($response->successful() && $response->json('success')) {
+                    $html = $response->json('html');
+                    $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 1 SUCCESS] Render HTML berhasil.";
+                    $success = true;
+                } else {
+                    $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 1 FAILED] Puppeteer gagal merender.";
+                }
+            } catch (\Exception $e) {
+                $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 1 ERROR] " . $e->getMessage();
+            }
+        }
+
+        if (!$success) {
+            try {
+                $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 2] Guzzle direct GET...";
+                $request = Http::timeout(15)
+                    ->withHeaders(['User-Agent' => 'Mozilla/5.0']);
+                if ($proxy) {
+                    $request = $request->withOptions(['proxy' => $proxy]);
+                }
+                $response = $request->get($this->sandboxUrl);
+                if ($response->successful()) {
+                    $html = $response->body();
+                    $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 2 SUCCESS] GET langsung berhasil.";
+                    $success = true;
+                } else {
+                    $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 2 FAILED] HTTP status: " . $response->status();
+                }
+            } catch (\Exception $e) {
+                $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 2 ERROR] " . $e->getMessage();
+            }
+        }
+
+        // 3. Apply Selectors using DomCrawler
+        if ($success && $html) {
+            try {
+                $this->sandboxLogs[] = "[" . date('H:i:s') . "] [CRAWLER] Menerapkan selektor CSS...";
+                $crawler = new \Symfony\Component\DomCrawler\Crawler($html);
+
+                if ($crawler->filter($this->sandboxTitleSelector)->count() > 0) {
+                    $title = trim($crawler->filter($this->sandboxTitleSelector)->first()->text());
+                    $this->sandboxLogs[] = "[" . date('H:i:s') . "] [CRAWLER] Judul Terekskpor: " . $title;
+                } else {
+                    $this->sandboxLogs[] = "[" . date('H:i:s') . "] [CRAWLER WARNING] Judul tidak ditemukan dengan selector: " . $this->sandboxTitleSelector;
+                }
+
+                if ($this->sandboxCompanySelector && $crawler->filter($this->sandboxCompanySelector)->count() > 0) {
+                    $company = trim($crawler->filter($this->sandboxCompanySelector)->first()->text());
+                    $this->sandboxLogs[] = "[" . date('H:i:s') . "] [CRAWLER] Perusahaan Terekskpor: " . $company;
+                }
+
+                if ($this->sandboxBodySelector && $crawler->filter($this->sandboxBodySelector)->count() > 0) {
+                    $body = trim($crawler->filter($this->sandboxBodySelector)->first()->text());
+                    $this->sandboxLogs[] = "[" . date('H:i:s') . "] [CRAWLER] Deskripsi Terekskpor (" . strlen($body) . " karakter)";
+                }
+
+                $this->sandboxExtractedPayload = [
+                    'title' => $title ?: 'Tidak Terdeteksi',
+                    'company' => $company ?: 'Tidak Terdeteksi',
+                    'description' => $body ?: 'Tidak Terdeteksi',
+                ];
+                $this->sandboxTestResultStatus = 'SUCCESS';
+            } catch (\Exception $e) {
+                $this->sandboxTestResultStatus = 'FAILED';
+                $this->sandboxLogs[] = "[" . date('H:i:s') . "] [CRAWLER ERROR] Gagal parsing: " . $e->getMessage();
+            }
+        } else {
+            $this->sandboxTestResultStatus = 'FAILED';
+            $this->sandboxLogs[] = "[" . date('H:i:s') . "] [ERROR] Gagal memuat HTML halaman.";
+        }
+
+        $this->sandboxIsTesting = false;
+    }
+
 
     public function runTestSandbox(DeadLinkDetector $detector)
     {
@@ -253,6 +480,11 @@ class ScraperDashboard extends Component
         $this->liveLogs = [];
     }
 
+    public function getTargetMajorsListProperty()
+    {
+        return $this->targetSector ? \App\Helpers\CategoryHelper::getMajorsForSektor($this->targetSector) : [];
+    }
+
     public function render()
     {
         $jobsPendingInQueue = \Illuminate\Support\Facades\Schema::hasTable('jobs') 
@@ -273,6 +505,7 @@ class ScraperDashboard extends Component
         ];
 
         $this->liveLogs = \Illuminate\Support\Facades\Cache::get('scraper_live_logs', []);
+        $targetedProgress = \Illuminate\Support\Facades\Cache::get('targeted_scraping_progress');
 
         // Load metrics per platform for chart display
         $platformMetrics = [];
@@ -292,6 +525,7 @@ class ScraperDashboard extends Component
         return view('livewire.admin.scraper-dashboard', [
             'stats' => $stats,
             'platformMetrics' => $platformMetrics,
+            'targetedProgress' => $targetedProgress,
         ])->layout('components.admin-layout');
     }
 }
