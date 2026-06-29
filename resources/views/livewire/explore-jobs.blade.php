@@ -177,25 +177,27 @@
                                 </span>
                             </button>
                             
-                            <!-- Cities under Province -->
-                            <div class="pl-2 border-l border-zinc-150 space-y-0.5">
-                                @foreach($provinceData['cities'] as $cityInfo)
-                                    @php
-                                        $isCitySelected = $selectedLocation === $cityInfo['name'];
-                                    @endphp
-                                    <button type="button" 
-                                            wire:click="$set('selectedProvince', '{{ $provinceName }}'); $set('selectedLocation', '{{ $cityInfo['name'] }}')" 
-                                            class="w-full text-left flex items-center justify-between text-[10px] py-1 px-1.5 rounded transition-all duration-150 
-                                                {{ $isCitySelected 
-                                                    ? 'bg-blue-50 text-blue-800 font-bold border border-blue-200' 
-                                                    : 'text-zinc-550 hover:bg-zinc-50 hover:text-zinc-850' }}">
-                                        <span class="truncate">{{ $cityInfo['name'] }}</span>
-                                        <span class="text-[9px] font-mono font-semibold text-zinc-400">
-                                            {{ $cityInfo['count'] }}
-                                        </span>
-                                    </button>
-                                @endforeach
-                            </div>
+                            <!-- Cities under Province (Only expand if province is selected) -->
+                            @if ($isProvinceSelected)
+                                <div class="pl-2 border-l border-zinc-150 space-y-0.5 mt-1 animate-fadeIn">
+                                    @foreach($provinceData['cities'] as $cityInfo)
+                                        @php
+                                            $isCitySelected = $selectedLocation === $cityInfo['name'];
+                                        @endphp
+                                        <button type="button" 
+                                                wire:click="$set('selectedProvince', '{{ $provinceName }}'); $set('selectedLocation', '{{ $cityInfo['name'] }}')" 
+                                                class="w-full text-left flex items-center justify-between text-[10px] py-1 px-1.5 rounded transition-all duration-150 
+                                                    {{ $isCitySelected 
+                                                        ? 'bg-blue-50 text-blue-800 font-bold border border-blue-200' 
+                                                        : 'text-zinc-550 hover:bg-zinc-50 hover:text-zinc-850' }}">
+                                            <span class="truncate">{{ $cityInfo['name'] }}</span>
+                                            <span class="text-[9px] font-mono font-semibold text-zinc-400">
+                                                {{ $cityInfo['count'] }}
+                                            </span>
+                                        </button>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
                     @endforeach
 

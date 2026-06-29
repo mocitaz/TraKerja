@@ -27,24 +27,32 @@ class ReScrapeLocations extends Command
      */
     public function handle()
     {
-        // 1. Clean up garbage locations in the DB
-        $validCities = [];
-        foreach (\App\Helpers\LocationHelper::getAllProvinces() as $prov) {
-            foreach (\App\Helpers\LocationHelper::getCitiesForProvince($prov) as $city) {
-                $validCities[] = $city;
+        // 1. Normalize all existing location values in the DB to match official prefixed names
+        $this->info("Normalizing existing location values...");
+        $postings = JobPosting::whereNotNull('location')->get();
+        $normalizedCount = 0;
+        foreach ($postings as $posting) {
+            $norm = \App\Helpers\LocationHelper::normalizeCity($posting->location);
+            
+            // Trash check: if the location is garbage, reset to Indonesia
+            $junkKeywords = ['web', 'developer', 'engineer', 'programmer', 'full stack', 'frontend', 'backend', 'design', 'development', 'technology', 'creative'];
+            $isJunk = false;
+            foreach ($junkKeywords as $junk) {
+                if (strcasecmp($norm, $junk) === 0 || stripos($norm, ' ' . $junk) !== false) {
+                    $isJunk = true;
+                    break;
+                }
+            }
+            if ($isJunk) {
+                $norm = 'Indonesia';
+            }
+            
+            if ($posting->location !== $norm) {
+                $posting->update(['location' => $norm]);
+                $normalizedCount++;
             }
         }
-        $validCities[] = 'Remote';
-        $validCities[] = 'Indonesia';
-
-        $this->info("Cleaning up invalid/garbage locations (like 'web', 'Web Developer')...");
-        
-        // Find postings where the location column doesn't match any standard city/province/remote tag
-        $invalidJobsCount = JobPosting::whereNotNull('location')
-            ->whereNotIn('location', $validCities)
-            ->update(['location' => 'Indonesia']);
-            
-        $this->info("Reset {$invalidJobsCount} postings with invalid location values back to 'Indonesia'.");
+        $this->info("Normalized {$normalizedCount} postings to their official prefixed names.");
 
         // 2. Perform a local scan to re-classify postings based on title/description
         $this->info("Re-classifying locations using title/description text-scan...");

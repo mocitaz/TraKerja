@@ -336,6 +336,15 @@ class LocationHelper
     {
         $locationText = trim($locationText);
         
+        // Junk check: if it is garbage text due to scraper failure
+        $junkKeywords = ['web', 'developer', 'engineer', 'programmer', 'full stack', 'frontend', 'backend', 'design', 'development', 'technology', 'creative'];
+        foreach ($junkKeywords as $junk) {
+            if (strcasecmp($locationText, $junk) === 0 || stripos($locationText, ' ' . $junk) !== false) {
+                $locationText = '';
+                break;
+            }
+        }
+        
         // 1. Check for remote/wfh
         foreach (self::$remoteKeywords as $keyword) {
             if (stripos($locationText, $keyword) !== false || 
@@ -457,8 +466,33 @@ class LocationHelper
     public static function normalizeCity(string $city): string
     {
         $city = trim($city);
-        if (strcasecmp($city, 'Solo') === 0 || strcasecmp($city, 'Kota Solo') === 0) return 'Kota Surakarta';
-        if (strcasecmp($city, 'Jogja') === 0 || strcasecmp($city, 'Kota Jogja') === 0) return 'Kota Yogyakarta';
+        if (strcasecmp($city, 'Solo') === 0 || strcasecmp($city, 'Kota Solo') === 0) {
+            return 'Kota Surakarta';
+        }
+        if (strcasecmp($city, 'Jogja') === 0 || strcasecmp($city, 'Kota Jogja') === 0) {
+            return 'Kota Yogyakarta';
+        }
+        if (strcasecmp($city, 'Jakarta') === 0 || strcasecmp($city, 'Jakarta Raya') === 0) {
+            return 'Jakarta Selatan';
+        }
+        if (strcasecmp($city, 'Pasar Minggu') === 0) {
+            return 'Jakarta Selatan';
+        }
+        if (strcasecmp($city, 'Lembang') === 0) {
+            return 'Kota Bandung';
+        }
+        
+        $cleanCity = preg_replace('/^(Kabupaten|Kota)\s+/i', '', $city);
+        
+        foreach (self::$provinces as $province => $cities) {
+            foreach ($cities as $c) {
+                $cleanC = preg_replace('/^(Kabupaten|Kota)\s+/i', '', $c);
+                if (strcasecmp($cleanCity, $cleanC) === 0) {
+                    return $c; // Return the official prefixed name (e.g., "Kota Bandung")
+                }
+            }
+        }
+        
         return $city;
     }
 
