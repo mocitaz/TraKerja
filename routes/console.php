@@ -27,3 +27,9 @@ Schedule::command('jobs:archive-old-declined')
     ->dailyAt('02:00')
     ->timezone('Asia/Jakarta')
     ->description('Archive old job applications with Declined status or Not Processed stage');
+
+// Schedule dead-link check for job postings (Anti-Ghost Jobs)
+Schedule::command('jobs:validate-dead-links --limit=100')
+    ->dailyAt('03:00')
+    ->timezone('Asia/Jakarta')
+    ->description('Validate active job postings URLs for dead-links and footprint markers');
