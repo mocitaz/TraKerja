@@ -189,10 +189,16 @@ class ExploreJobs extends Component
 
         $postings = $query->orderBy('created_at', 'desc')->paginate(12);
 
+        $fieldsList = \App\Helpers\CategoryHelper::getSektorList();
+        sort($fieldsList);
+
+        $majorsList = $this->majors;
+        sort($majorsList);
+
         return view('livewire.explore-jobs', [
             'postings' => $postings,
-            'fieldsList' => \App\Helpers\CategoryHelper::getSektorList(),
-            'majorsList' => $this->majors,
+            'fieldsList' => $fieldsList,
+            'majorsList' => $majorsList,
             'locationStats' => \App\Helpers\LocationHelper::getLocationStatistics(),
             'provincesList' => \App\Helpers\LocationHelper::getAllProvinces(),
             'locationsList' => !empty($this->selectedProvince) 
