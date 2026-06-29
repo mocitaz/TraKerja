@@ -40,31 +40,37 @@ class DiscoverLinksJob implements ShouldQueue
         // Multi-keyword configurations representing all 15 Sektor Ekonomi for diverse coverage
         $keywords = [
             // 1. Pertanian, Kehutanan, Perikanan
-            'Pertanian', 'Agribisnis', 'Peternakan', 'Kehutanan',
-            // 2. Pertambangan
-            'Pertambangan', 'Perminyakan', 'Geologist',
+            'Pertanian', 'Agribisnis', 'Peternakan', 'Perkebunan', 'Kehutanan', 'Perikanan', 'Agroteknologi',
+            // 2. Pertambangan & Energi
+            'Pertambangan', 'Perminyakan', 'Geologist', 'Tambang Batubara', 'HSE Mining', 'K3 Tambang',
             // 3. Industri Pengolahan (Manufaktur)
-            'Teknik Mesin', 'Teknik Industri', 'Operator Produksi', 'Teknologi Pangan',
-            // 4. Pengadaan Energi & Limbah
-            'Teknik Lingkungan', 'Tenaga Listrik',
-            // 5. Konstruksi
-            'Teknik Sipil', 'Arsitektur',
+            'Teknik Mesin', 'Teknik Industri', 'Operator Produksi', 'Quality Control', 'Teknologi Pangan', 'Teknik Kimia', 'Mekanik', 'Teknisi',
+            // 4. Energi & Utilitas
+            'Teknik Elektro', 'Tenaga Listrik', 'Teknik Lingkungan', 'K3 Industri', 'Safety Officer',
+            // 5. Konstruksi & Properti
+            'Teknik Sipil', 'Arsitektur', 'Site Manager', 'Drafter', 'Quantity Surveyor', 'Estimator',
             // 6. Perdagangan & Retail
-            'Marketing', 'Sales', 'Retail',
+            'Marketing', 'Sales', 'Retail', 'Sales Promotion', 'Brand Ambassador', 'Merchandiser', 'Digital Marketing', 'Social Media',
             // 7. Transportasi & Logistik
-            'Logistik', 'Warehouse', 'Supply Chain',
-            // 8. Akomodasi & Kuliner (Hospitality)
-            'Hotel', 'Chef', 'Pariwisata', 'Barista',
-            // 9. Informasi & Komunikasi (TIK)
-            'Programmer', 'IT Support', 'DKV', 'Software',
-            // 10 & 11. Keuangan, Hukum, & Profesional
-            'Akuntansi', 'Finance', 'Legal', 'HRD', 'Psikologi',
-            // 12 & 13. Pemerintahan & Pendidikan
-            'Administrasi', 'Guru', 'Pendidikan',
-            // 14 & 15. Kesehatan, Seni & Kesenian
-            'Perawat', 'Farmasi', 'Desain', 'Olahraga'
+            'Logistik', 'Warehouse', 'Supply Chain', 'Procurement', 'Ekspedisi', 'Kurir', 'Admin Logistik',
+            // 8. Akomodasi, Kuliner & Pariwisata
+            'Hotel', 'Chef', 'Pariwisata', 'Barista', 'Front Office', 'Housekeeping', 'Tour Guide', 'Hospitality',
+            // 9. Informasi & Komunikasi (lebih sedikit agar tidak dominan)
+            'IT Support', 'Data Analyst', 'UI UX',
+            // 10. Keuangan & Perbankan
+            'Akuntansi', 'Finance', 'Audit', 'Perpajakan', 'Teller Bank', 'Analis Kredit', 'Asuransi',
+            // 11. Hukum & Konsultasi Profesional
+            'Legal', 'Notaris', 'Konsultan', 'Business Development',
+            // 12. Sumber Daya Manusia & Administrasi
+            'HRD', 'Rekrutmen', 'Administrasi', 'Sekretaris', 'General Affairs', 'Staff Umum', 'Resepsionis',
+            // 13. Pendidikan & Pelatihan
+            'Guru', 'Pengajar', 'Tutor', 'Instruktur', 'Staf Akademik',
+            // 14. Kesehatan & Farmasi
+            'Perawat', 'Dokter', 'Apoteker', 'Farmasi', 'Bidan', 'Radiologi', 'Analis Laboratorium',
+            // 15. Seni, Kreatif & Komunikasi
+            'Desain Grafis', 'Fotografer', 'Videografer', 'Copywriter', 'Jurnalis', 'Penyiar',
         ];
-        $pagesToCrawl = 1;
+        $pagesToCrawl = 2;
         $delaySeconds = 0;
 
         foreach ($sources as $source) {
