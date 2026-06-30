@@ -187,4 +187,7 @@
             }
         });
     </script>
+    @if (!app()->environment('local') && !in_array(request()->getHost(), ['localhost', '127.0.0.1']))
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    @endif
 </x-guest-layout>
