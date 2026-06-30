@@ -47,4 +47,18 @@ return [
         'redirect'      => env('LINKEDIN_REDIRECT_URI'),
     ],
 
+    'turnstile' => [
+        'site_key' => env('TURNSTILE_SITE_KEY', '0x4AAAAAADVwvVUur2OE6_b9'),
+        'secret_key' => env('TURNSTILE_SECRET_KEY', '0x4AAAAAADVwvVXbLO-XxaY8vtaI7CMsw28'),
+    ],
+
+    'photo_api' => [
+        'url' => env('PHOTO_API_URL', 'https://aiphoto.apitrakerja.online'),
+    ],
+
+    'admin' => [
+        'email' => env('ADMIN_EMAIL', 'infoteknalogi@gmail.com'),
+    ],
+
 ];
+

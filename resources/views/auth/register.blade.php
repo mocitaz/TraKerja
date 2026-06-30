@@ -92,7 +92,7 @@
                 <!-- Turnstile Verification -->
                 @if (!app()->environment('local') && !in_array(request()->getHost(), ['localhost', '127.0.0.1']))
                 <div class="flex flex-col items-center justify-center pt-1">
-                    <div class="cf-turnstile scale-90 origin-center" data-sitekey="{{ env('TURNSTILE_SITE_KEY', '0x4AAAAAADVwvVUur2OE6_b9') }}" data-theme="light"></div>
+                    <div class="cf-turnstile scale-90 origin-center" data-sitekey="{{ config('services.turnstile.site_key', '0x4AAAAAADVwvVUur2OE6_b9') }}" data-theme="light"></div>
                     @error('cf-turnstile-response')
                         <p class="mt-1 text-[9px] text-rose-500 font-bold uppercase tracking-wider">{{ $message }}</p>
                     @enderror

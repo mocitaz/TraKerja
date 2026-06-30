@@ -46,7 +46,7 @@ class VerifyEmailController extends Controller
             
             // Send admin notification about email verification
             try {
-                $adminEmail = env('ADMIN_EMAIL', 'infoteknalogi@gmail.com');
+                $adminEmail = config('services.admin.email', 'infoteknalogi@gmail.com');
                 Mail::to($adminEmail)->send(new UserEmailVerifiedMail($user));
             } catch (\Exception $e) {
                 \Log::error('Failed to send admin notification about email verification: ' . $e->getMessage());

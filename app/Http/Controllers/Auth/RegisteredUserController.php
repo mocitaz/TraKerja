@@ -42,7 +42,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', new StrongPassword()],
         ];
 
-        if (!app()->environment('local') && !in_array($request->getHost(), ['localhost', '127.0.0.1'])) {
+        if (!app()->environment('local', 'testing') && !in_array($request->getHost(), ['localhost', '127.0.0.1'])) {
             $rules['cf-turnstile-response'] = ['required', new \App\Rules\TurnstileRule()];
         }
 
@@ -111,7 +111,7 @@ class RegisteredUserController extends Controller
         // Send admin notification asynchronously after HTTP response is sent to user
         dispatch(function () use ($user) {
             try {
-                $adminEmail = env('ADMIN_EMAIL', 'infoteknalogi@gmail.com');
+                $adminEmail = config('services.admin.email', 'infoteknalogi@gmail.com');
                 Mail::to($adminEmail)->send(new NewUserRegistrationMail($user));
                 \Log::info('Admin notification email sent after response');
             } catch (\Exception $e) {

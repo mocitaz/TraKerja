@@ -110,7 +110,7 @@ class GoogleAuthController extends Controller
 
         // Kirim notifikasi ke admin
         try {
-            $adminEmail = env('ADMIN_EMAIL', 'infoteknalogi@gmail.com');
+            $adminEmail = config('services.admin.email', 'infoteknalogi@gmail.com');
             Mail::to($adminEmail)->send(new NewUserRegistrationMail($newUser));
         } catch (\Exception $e) {
             \Log::error('Failed to send admin notification (Google OAuth): ' . $e->getMessage());

@@ -15,12 +15,12 @@ class TurnstileRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (app()->environment('local') || in_array(request()->getHost(), ['localhost', '127.0.0.1'])) {
+        if (app()->environment('local', 'testing') || in_array(request()->getHost(), ['localhost', '127.0.0.1'])) {
             return;
         }
 
         $response = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
-            'secret' => env('TURNSTILE_SECRET_KEY'),
+            'secret' => config('services.turnstile.secret_key'),
             'response' => $value,
             'remoteip' => request()->ip(),
         ]);
