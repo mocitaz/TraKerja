@@ -63,10 +63,8 @@
     <div class="relative z-10 w-full max-w-[430px] px-6 py-12 flex flex-col">
         
         <!-- Header -->
-        <div class="flex items-center space-x-2.5 mb-6">
-            <div class="w-7 h-7 bg-white rounded-lg border border-zinc-200/80 flex items-center justify-center p-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
-                <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="w-full h-full object-contain">
-            </div>
+        <div class="flex items-center space-x-2 mb-6">
+            <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="w-5.5 h-5.5 object-contain">
             <span class="text-xs font-bold text-zinc-800 tracking-tight">TraKerja</span>
         </div>
 
@@ -123,7 +121,7 @@
         <!-- Footer -->
         <div class="mt-6 text-left px-1 flex justify-between items-center text-[9px] font-semibold text-zinc-400">
             <span>TraKerja &copy; {{ date('Y') }}</span>
-            <span>Butuh bantuan? <a href="mailto:support@trakerja.com" class="text-zinc-500 hover:text-zinc-800 underline underline-offset-2 transition-colors">Hubungi kami</a></span>
+            <span>Butuh bantuan? <a href="mailto:trakerja@teknalogi.id" class="text-zinc-500 hover:text-zinc-800 underline underline-offset-2 transition-colors">Hubungi kami</a></span>
         </div>
         
     </div>
