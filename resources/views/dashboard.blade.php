@@ -7,22 +7,30 @@
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
             
             <!-- Premium Notion-Inspired Page Header -->
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-zinc-200/50 pb-4 mb-5">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 bg-zinc-100 border border-zinc-200/60 rounded-lg flex items-center justify-center text-zinc-500 shrink-0 shadow-2xs">
-                        <i class="ph ph-circles-four text-base"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h1 class="text-sm font-bold text-zinc-800 tracking-tight">Dashboard Overview</h1>
-                            <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 /* [BRAND_PRIMARY] */ text-[9px] font-black uppercase tracking-wider rounded border border-primary-100/60">Live</span>
-                        </div>
-                        <p class="text-[11px] text-zinc-400 mt-0.5">Welcome back, <span class="font-bold text-zinc-700">{{ explode(' ', Auth::user()->name)[0] }}</span>! Here is your career momentum and tracking progress.</p>
-                    </div>
+            <div class="flex items-start gap-2.5 border-b border-zinc-200/50 pb-4 mb-5 select-none">
+                <!-- Icon Logo -->
+                <div class="w-8 h-8 bg-zinc-100 border border-zinc-200/60 rounded-lg flex items-center justify-center text-zinc-500 shrink-0 shadow-2xs mt-0.5">
+                    <i class="ph ph-circles-four text-base"></i>
                 </div>
-                <div class="flex items-center gap-1.5 text-[11px] font-medium text-zinc-500 select-none shrink-0 self-start md:self-end md:mb-0">
-                    <i class="ph ph-calendar-blank text-zinc-600 text-sm"></i>
-                    <span class="tracking-tight">{{ now()->timezone('Asia/Jakarta')->translatedFormat('l, d F Y') }}</span>
+                
+                <!-- Main Header Content -->
+                <div class="flex-1 min-w-0">
+                    <!-- Row 1: Title & Badge -->
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-sm font-bold text-zinc-800 tracking-tight">Dashboard Overview</h1>
+                        <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[9px] font-black uppercase tracking-wider rounded border border-primary-100/60">Live</span>
+                    </div>
+                    
+                    <!-- Row 2: Tagline & Date (Flex row to align them perfectly!) -->
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-1">
+                        <p class="text-[11px] text-zinc-400">
+                            Welcome back, <span class="font-bold text-zinc-700">{{ explode(' ', Auth::user()->name)[0] }}</span>! Here is your career momentum and tracking progress.
+                        </p>
+                        <div class="flex items-center gap-1.5 text-[11px] font-medium text-zinc-550 shrink-0">
+                            <i class="ph ph-calendar-blank text-zinc-450 text-sm"></i>
+                            <span class="tracking-tight">{{ now()->timezone('Asia/Jakarta')->translatedFormat('l, d F Y') }}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
