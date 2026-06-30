@@ -30,8 +30,13 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Only handle GET requests and exclude livewire endpoints or chrome extension URLs
-  if (event.request.method !== 'GET' || event.request.url.includes('/livewire/') || event.request.url.includes('chrome-extension')) {
+  // 1. Only intercept GET requests belonging to our own origin (excludes cross-origin scripts like Cloudflare, Google Analytics, etc.)
+  if (
+    event.request.method !== 'GET' ||
+    !event.request.url.startsWith(self.location.origin) ||
+    event.request.url.includes('/livewire/') ||
+    event.request.url.includes('chrome-extension')
+  ) {
     return;
   }
 
@@ -48,7 +53,7 @@ self.addEventListener('fetch', (event) => {
         return response;
       })
       .catch(() => {
-        // If network fails, serve from cache
+        // If network fails, try to serve from cache
         return caches.match(event.request).then((cachedResponse) => {
           if (cachedResponse) {
             return cachedResponse;
@@ -57,6 +62,12 @@ self.addEventListener('fetch', (event) => {
           if (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html')) {
             return caches.match('/offline.html');
           }
+          // Return a valid error response for assets to prevent Service Worker TypeError
+          return new Response('Network connection lost.', {
+            status: 503,
+            statusText: 'Service Unavailable',
+            headers: new Headers({ 'Content-Type': 'text/plain' })
+          });
         });
       })
   );
