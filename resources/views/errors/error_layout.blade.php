@@ -12,7 +12,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css?family=Outfit:400,500,600,700,800|Plus+Jakarta+Sans:300,400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Plus+Jakarta+Sans:300,400,500,600,700&display=swap" rel="stylesheet" />
     
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -23,99 +23,65 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0b0c10;
-        }
-        h1, .font-display {
-            font-family: 'Outfit', sans-serif;
-        }
-        .grain {
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-        .animate-float-slow {
-            animation: floatSlow 8s ease-in-out infinite;
-        }
-        .animate-float-delayed {
-            animation: floatSlow 8s ease-in-out infinite;
-            animation-delay: 3s;
-        }
-        @keyframes floatSlow {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
+            background-color: #fafafa;
         }
         [x-cloak] { display: none !important; }
     </style>
 </head>
-<body class="antialiased text-zinc-300 selection:bg-indigo-500 selection:text-white flex items-center justify-center min-h-screen relative overflow-hidden bg-[#07080d]">
+<body class="antialiased text-zinc-650 selection:bg-zinc-200 selection:text-zinc-800 flex items-center justify-center min-h-screen relative bg-[#fafafa]">
 
-    <!-- Ambient Glowing Gradients -->
-    <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <!-- Top glow -->
-        <div class="absolute -top-[20%] left-1/2 -translate-x-1/2 w-[600px] sm:w-[900px] h-[400px] bg-indigo-600/15 rounded-full blur-[120px] animate-pulse" style="animation-duration: 8s;"></div>
-        <!-- Bottom glow -->
-        <div class="absolute -bottom-[20%] left-1/2 -translate-x-1/2 w-[500px] sm:w-[700px] h-[350px] bg-violet-600/15 rounded-full blur-[100px] animate-pulse" style="animation-duration: 10s;"></div>
-        <!-- Floating neon blur particles -->
-        <div class="absolute top-[25%] left-[15%] w-72 h-72 bg-purple-500/5 rounded-full blur-[60px] animate-float-slow"></div>
-        <div class="absolute bottom-[25%] right-[15%] w-80 h-80 bg-indigo-500/5 rounded-full blur-[70px] animate-float-delayed"></div>
-        <!-- Noise Overlay -->
-        <div class="absolute inset-0 grain opacity-[0.025] mix-blend-overlay"></div>
-    </div>
-
-    <div class="relative z-10 w-full max-w-[460px] px-6 py-12 flex flex-col items-center">
+    <div class="w-full max-w-[420px] px-6 py-12 flex flex-col">
         
-        <!-- Logo -->
-        <div class="mb-8 relative group">
-            <div class="absolute inset-0 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-2xl blur-md opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
-            <div class="w-16 h-16 bg-zinc-900/90 backdrop-blur-md rounded-2xl border border-zinc-800/80 flex items-center justify-center p-3.5 relative overflow-hidden transition-transform duration-300 group-hover:scale-105">
+        <!-- Logo Header (Notion-style, clean & compact) -->
+        <div class="flex items-center space-x-2.5 mb-6">
+            <div class="w-7 h-7 bg-white rounded-lg border border-zinc-200/80 flex items-center justify-center p-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
                 <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="w-full h-full object-contain">
             </div>
+            <span class="text-xs font-bold text-zinc-800 tracking-tight">TraKerja</span>
         </div>
 
-        <!-- Main Glassmorphic Container -->
-        <div class="w-full bg-zinc-950/40 backdrop-blur-2xl rounded-[2.25rem] p-8 sm:p-10 border border-zinc-800/60 shadow-[0_24px_70px_-10px_rgba(0,0,0,0.7)] text-center relative overflow-hidden group">
-            <!-- Top indicator line -->
-            <div class="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-indigo-500/80 to-transparent"></div>
+        <!-- Main Card -->
+        <div class="bg-white rounded-2xl p-7 sm:p-8 border border-zinc-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.02),0_12px_24px_-4px_rgba(0,0,0,0.03)] relative overflow-hidden">
             
-            <!-- Error Icon & Visual Circle -->
-            <div class="mb-6 inline-flex items-center justify-center relative">
-                <div class="absolute inset-0 bg-indigo-500/10 rounded-full blur-md animate-ping" style="animation-duration: 3s;"></div>
-                <div class="w-20 h-20 rounded-2xl bg-zinc-900/90 border border-zinc-800 flex items-center justify-center text-indigo-400 shadow-inner relative z-10">
-                    <i class="ph-fill @yield('icon') text-4xl"></i>
+            <!-- Icon -->
+            <div class="mb-5 flex items-center justify-start">
+                <div class="w-10 h-10 rounded-xl bg-zinc-50 border border-zinc-200/60 flex items-center justify-center text-zinc-400">
+                    <i class="ph @yield('icon') text-xl"></i>
                 </div>
             </div>
-            
-            <!-- Error Code & Badge -->
-            <div class="mb-4">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[10px] font-extrabold uppercase tracking-widest text-indigo-400 mb-3">
-                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-                    Error @yield('code')
+
+            <!-- Error Code & Title -->
+            <div class="mb-3 text-left">
+                <span class="inline-block font-mono text-[9px] font-bold text-zinc-400 bg-zinc-100 border border-zinc-200/60 rounded px-1.5 py-0.5 tracking-wider uppercase mb-2.5">
+                    ERROR @yield('code')
                 </span>
-                <h1 class="text-3xl font-extrabold text-white tracking-tight">
+                <h1 class="text-lg font-bold text-zinc-800 tracking-tight leading-tight">
                     @yield('title')
                 </h1>
             </div>
             
             <!-- Description -->
-            <p class="text-[13px] text-zinc-400 font-medium leading-relaxed mb-8 px-2">
+            <p class="text-[12px] text-zinc-500 font-medium leading-relaxed mb-6 text-left">
                 @yield('description')
             </p>
             
-            <!-- Actions Buttons -->
-            <div class="space-y-3">
-                <a href="{{ url('/') }}" class="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition-all duration-200 font-bold text-sm shadow-lg shadow-indigo-600/15 active:scale-[0.98]">
-                    <i class="ph-bold ph-house text-base"></i>
-                    Kembali ke Beranda
+            <!-- Actions Buttons (Notion style, clean stacked or side-by-side) -->
+            <div class="flex flex-col sm:flex-row gap-2">
+                <a href="{{ url('/') }}" class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl transition-all duration-150 font-bold text-xs shadow-xs active:scale-[0.98]">
+                    <i class="ph-bold ph-house text-xs"></i>
+                    Ke Beranda
                 </a>
-                <button onclick="window.history.back()" class="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white rounded-xl transition-all duration-200 font-bold text-sm active:scale-[0.98]">
-                    <i class="ph-bold ph-arrow-left text-base"></i>
-                    Kembali Halaman Sebelumnya
+                <button onclick="window.history.back()" class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-600 hover:text-zinc-800 rounded-xl transition-all duration-150 font-bold text-xs active:scale-[0.98]">
+                    <i class="ph-bold ph-arrow-left text-xs"></i>
+                    Kembali
                 </button>
             </div>
         </div>
         
         <!-- Footer -->
-        <div class="mt-10 text-center flex flex-col items-center gap-2">
-            <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">TraKerja &copy; {{ date('Y') }}</span>
-            <span class="text-[11px] font-semibold text-zinc-500">Butuh bantuan? <a href="mailto:support@trakerja.com" class="text-indigo-400 hover:text-indigo-300 transition-colors underline decoration-indigo-400/30 underline-offset-4">Hubungi Admin</a></span>
+        <div class="mt-6 text-left px-1 flex justify-between items-center text-[9px] font-semibold text-zinc-400">
+            <span>TraKerja &copy; {{ date('Y') }}</span>
+            <span>Butuh bantuan? <a href="mailto:support@trakerja.com" class="text-zinc-500 hover:text-zinc-800 underline underline-offset-2 transition-colors">Hubungi kami</a></span>
         </div>
         
     </div>
