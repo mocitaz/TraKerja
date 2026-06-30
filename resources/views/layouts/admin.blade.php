@@ -13,6 +13,7 @@
 
         <!-- PWA Meta & Manifest -->
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+        <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta name="apple-mobile-web-app-title" content="TraKerja">
@@ -388,7 +389,7 @@
 
         // View Transition API integration with Livewire
         document.addEventListener('livewire:navigating', (ev) => {
-            if (!document.startViewTransition) return;
+            if (!document.startViewTransition || !ev.detail || typeof ev.detail.beforeDomUpdate !== 'function') return;
 
             ev.detail.beforeDomUpdate((navigation) => {
                 return new Promise((resolve) => {
