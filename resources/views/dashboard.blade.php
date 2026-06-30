@@ -248,16 +248,23 @@
                                 {{-- Week Columns --}}
                                 @php
                                     $lastMonth = '';
+                                    $lastMonthColIndex = -10;
                                     $dayOrder = [1, 2, 3, 4, 5, 6, 0]; // Monday to Sunday
+                                    $colIndex = 0;
                                 @endphp
                                 @foreach($heatmapWeeks as $weekKey => $days)
                                     @php
                                         $firstDay = \Carbon\Carbon::parse($weekKey);
                                         $monthName = '';
-                                        if ($firstDay->format('M') !== $lastMonth) {
-                                            $monthName = $firstDay->format('M');
-                                            $lastMonth = $firstDay->format('M');
+                                        $currentMonth = $firstDay->format('M');
+                                        if ($currentMonth !== $lastMonth) {
+                                            if (($colIndex - $lastMonthColIndex) >= 3) {
+                                                $monthName = $currentMonth;
+                                                $lastMonthColIndex = $colIndex;
+                                            }
+                                            $lastMonth = $currentMonth;
                                         }
+                                        $colIndex++;
                                     @endphp
                                     <div class="flex flex-col shrink-0" style="gap: 3px; position: relative;">
                                         {{-- Month Label at top of column --}}
