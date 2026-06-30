@@ -42,6 +42,13 @@
                     });
                 </script>
             @endif
+            @if (session('error'))
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        showProfileToast("{{ session('error') }}");
+                    });
+                </script>
+            @endif
 
             <script>
                 function showProfileToast(status) {
@@ -51,7 +58,9 @@
                         'password-updated': { type: 'success', title: 'Security Updated', message: 'Your account password has been changed successfully.' },
                         'photo-updated': { type: 'success', title: 'Photo Updated', message: 'Your profile identity photo has been updated.' },
                         'photo-removed': { type: 'info', title: 'Photo Removed', message: 'Your profile photo has been removed from your account.' },
-                        'verification-link-sent': { type: 'info', title: 'Link Sent', message: 'A new verification link has been sent to your email.' }
+                        'verification-link-sent': { type: 'info', title: 'Link Sent', message: 'A new verification link has been sent to your email.' },
+                        'notifications-updated': { type: 'success', title: 'Preferences Saved', message: 'Your email notification preferences have been saved.' },
+                        'upgrade-required': { type: 'warning', title: 'Premium Feature', message: 'Email notifications are a PRO plan benefit.' }
                     };
                     
                     const config = statusMap[status];
@@ -121,6 +130,40 @@
                                     <div class="w-full h-1.5 bg-zinc-100 rounded-full overflow-hidden border border-zinc-200/20">
                                         <div class="h-full bg-zinc-700 rounded-full transition-all duration-500" style="width: {{ $percentage }}%"></div>
                                     </div>
+
+                                    {{-- Collapsible Checklist --}}
+                                    <div x-data="{ open: false }" class="mt-2.5 pt-2 border-t border-zinc-100/50">
+                                        <button @click="open = !open" class="flex items-center justify-between w-full text-[8.5px] font-bold text-zinc-400 hover:text-zinc-650 focus:outline-none">
+                                            <span>CHECKLIST KELENGKAPAN</span>
+                                            <i class="ph-bold text-[8px] transition-transform duration-200" :class="open ? 'ph-caret-up' : 'ph-caret-down'"></i>
+                                        </button>
+                                        <div x-show="open" x-transition class="mt-2 space-y-1.5" style="display: none;">
+                                            <div class="flex items-center justify-between text-[9px] font-semibold">
+                                                <span class="text-zinc-450">Foto Profil</span>
+                                                <i class="ph-bold {{ $user->logo ? 'ph-check-circle text-emerald-500' : 'ph-x-circle text-zinc-300' }} text-[11px]"></i>
+                                            </div>
+                                            <div class="flex items-center justify-between text-[9px] font-semibold">
+                                                <span class="text-zinc-450">WhatsApp / Telepon</span>
+                                                <i class="ph-bold {{ $user->profile?->phone_number ? 'ph-check-circle text-emerald-500' : 'ph-x-circle text-zinc-300' }} text-[11px]"></i>
+                                            </div>
+                                            <div class="flex items-center justify-between text-[9px] font-semibold">
+                                                <span class="text-zinc-450">Domisili / Kota</span>
+                                                <i class="ph-bold {{ $user->profile?->domicile ? 'ph-check-circle text-emerald-500' : 'ph-x-circle text-zinc-300' }} text-[11px]"></i>
+                                            </div>
+                                            <div class="flex items-center justify-between text-[9px] font-semibold">
+                                                <span class="text-zinc-450">Headline Karir</span>
+                                                <i class="ph-bold {{ $user->profile?->headline ? 'ph-check-circle text-emerald-500' : 'ph-x-circle text-zinc-300' }} text-[11px]"></i>
+                                            </div>
+                                            <div class="flex items-center justify-between text-[9px] font-semibold">
+                                                <span class="text-zinc-450">Link LinkedIn</span>
+                                                <i class="ph-bold {{ $user->profile?->linkedin_url ? 'ph-check-circle text-emerald-500' : 'ph-x-circle text-zinc-300' }} text-[11px]"></i>
+                                            </div>
+                                            <div class="flex items-center justify-between text-[9px] font-semibold">
+                                                <span class="text-zinc-450">Biografi Karir</span>
+                                                <i class="ph-bold {{ $user->profile?->bio ? 'ph-check-circle text-emerald-500' : 'ph-x-circle text-zinc-300' }} text-[11px]"></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="flex items-center justify-between text-[10px] font-semibold pt-1">
@@ -146,6 +189,22 @@
                             <div class="flex items-center gap-2">
                                 <i class="ph ph-shield-check text-sm"></i>
                                 <span>Security & Control</span>
+                            </div>
+                            <i class="ph ph-caret-right text-[10px] opacity-60"></i>
+                        </button>
+                        <button onclick="switchTab('notifications')" id="tab-notifications"
+                                class="tab-btn w-full flex items-center justify-between px-3 py-2.5 text-[11px] font-bold rounded-md transition-all focus:outline-none">
+                            <div class="flex items-center gap-2">
+                                <i class="ph ph-bell text-sm"></i>
+                                <span>Email Notifications</span>
+                            </div>
+                            <i class="ph ph-caret-right text-[10px] opacity-60"></i>
+                        </button>
+                        <button onclick="switchTab('activities')" id="tab-activities"
+                                class="tab-btn w-full flex items-center justify-between px-3 py-2.5 text-[11px] font-bold rounded-md transition-all focus:outline-none">
+                            <div class="flex items-center gap-2">
+                                <i class="ph ph-list-dashes text-sm"></i>
+                                <span>Activity Log</span>
                             </div>
                             <i class="ph ph-caret-right text-[10px] opacity-60"></i>
                         </button>
@@ -244,6 +303,172 @@
                             <div class="premium-form-wrapper">
                                 @include('profile.partials.delete-user-form')
                             </div>
+                        </div>
+                    </div>
+
+                    {{-- TAB 3: EMAIL NOTIFICATIONS --}}
+                    <div id="section-notifications" class="content-section space-y-6 hidden">
+                        <div class="bg-white rounded-lg border border-zinc-200/60 p-5 shadow-3xs">
+                            <div class="flex items-center gap-2 mb-4 pb-2.5 border-b border-zinc-100">
+                                <i class="ph ph-bell text-zinc-500 text-sm"></i>
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Email Notification Preferences</h3>
+                            </div>
+                            
+                            @if(!$user->canAccessEmailNotifications())
+                                {{-- Locked Premium State --}}
+                                <div class="p-6 my-2 bg-amber-50/30 border border-amber-100 rounded-xl flex flex-col items-center text-center">
+                                    <div class="w-10 h-10 rounded-full bg-amber-100/60 border border-amber-200/50 flex items-center justify-center text-amber-600 mb-3">
+                                        <i class="ph-bold ph-lock text-base"></i>
+                                    </div>
+                                    <h4 class="text-xs font-bold text-zinc-855 mb-1">PRO Feature Benefit</h4>
+                                    <p class="text-[10.5px] text-zinc-450 max-w-[280px] leading-relaxed mb-4">
+                                        Email notifications, weekly goals check-ins, and direct interview alerts are available on our PRO plan.
+                                    </p>
+                                    <a href="{{ route('payment.premium') }}" wire:navigate class="px-4 py-1.8 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all shadow-3xs active:scale-97">
+                                        Upgrade to PRO
+                                    </a>
+                                </div>
+                            @else
+                                {{-- Active Preferences Form --}}
+                                <div class="premium-form-wrapper">
+                                    <form method="post" action="{{ route('profile.notifications.update') }}" class="space-y-4">
+                                        @csrf
+                                        @method('patch')
+
+                                        <!-- Toggle 1: Global Email Alerts -->
+                                        <div class="flex items-start justify-between p-3.5 bg-zinc-50/50 border border-zinc-200 rounded-xl transition-all hover:bg-zinc-50/80">
+                                            <div class="space-y-0.5 max-w-[80%]">
+                                                <label class="text-[11px] font-bold text-zinc-850">Master Email Alerts</label>
+                                                <p class="text-[9.5px] text-zinc-450 font-medium leading-relaxed">
+                                                    Enable or disable all automated email communication from TraKerja.
+                                                </p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer mt-1 select-none">
+                                                <input type="checkbox" name="email_notifications_enabled" value="1" {{ old('email_notifications_enabled', $user->email_notifications_enabled ?? false) ? 'checked' : '' }} class="sr-only peer">
+                                                <div class="w-7 h-4 bg-zinc-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-zinc-800"></div>
+                                            </label>
+                                        </div>
+
+                                        <!-- Toggle 2: Weekly Goal Reminders -->
+                                        <div class="flex items-start justify-between p-3.5 bg-zinc-50/50 border border-zinc-200 rounded-xl transition-all hover:bg-zinc-50/80">
+                                            <div class="space-y-0.5 max-w-[80%]">
+                                                <label class="text-[11px] font-bold text-zinc-850">Weekly Goal Reminders</label>
+                                                <p class="text-[9.5px] text-zinc-450 font-medium leading-relaxed">
+                                                    Receive a weekly summary email check-in of your active career goals progress.
+                                                </p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer mt-1 select-none">
+                                                <input type="checkbox" name="notify_goal_reminders" value="1" {{ old('notify_goal_reminders', $user->notify_goal_reminders ?? false) ? 'checked' : '' }} class="sr-only peer">
+                                                <div class="w-7 h-4 bg-zinc-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-zinc-800"></div>
+                                            </label>
+                                        </div>
+
+                                        <!-- Toggle 3: Interview Reminders -->
+                                        <div class="flex items-start justify-between p-3.5 bg-zinc-50/50 border border-zinc-200 rounded-xl transition-all hover:bg-zinc-50/80">
+                                            <div class="space-y-0.5 max-w-[80%]">
+                                                <label class="text-[11px] font-bold text-zinc-850">Direct Interview Alerts</label>
+                                                <p class="text-[9.5px] text-zinc-450 font-medium leading-relaxed">
+                                                    Get direct email alerts 2 hours prior to scheduled interviews so you never miss a slot.
+                                                </p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer mt-1 select-none">
+                                                <input type="checkbox" name="notify_interview_reminders" value="1" {{ old('notify_interview_reminders', $user->notify_interview_reminders ?? false) ? 'checked' : '' }} class="sr-only peer">
+                                                <div class="w-7 h-4 bg-zinc-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-zinc-800"></div>
+                                            </label>
+                                        </div>
+
+                                        <!-- Toggle 4: Goal Achieved -->
+                                        <div class="flex items-start justify-between p-3.5 bg-zinc-50/50 border border-zinc-200 rounded-xl transition-all hover:bg-zinc-50/80">
+                                            <div class="space-y-0.5 max-w-[80%]">
+                                                <label class="text-[11px] font-bold text-zinc-850">Goal Achievement Alerts</label>
+                                                <p class="text-[9.5px] text-zinc-450 font-medium leading-relaxed">
+                                                    Receive a celebratory milestone email report once you achieve your target career goals.
+                                                </p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer mt-1 select-none">
+                                                <input type="checkbox" name="notify_goal_achieved" value="1" {{ old('notify_goal_achieved', $user->notify_goal_achieved ?? false) ? 'checked' : '' }} class="sr-only peer">
+                                                <div class="w-7 h-4 bg-zinc-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-zinc-800"></div>
+                                            </label>
+                                        </div>
+
+                                        <!-- Submit button -->
+                                        <div class="flex justify-end pt-3 border-t border-zinc-100">
+                                            <button type="submit" class="px-3.5 py-1.5 bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1 shadow-3xs focus:outline-none active:scale-97">
+                                                <i class="ph ph-check text-xs"></i>
+                                                <span>Save Preferences</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    {{-- TAB 4: ACTIVITY LOG --}}
+                    <div id="section-activities" class="content-section space-y-6 hidden">
+                        <div class="bg-white rounded-lg border border-zinc-200/60 p-5 shadow-3xs">
+                            <div class="flex items-center gap-2 mb-4 pb-2.5 border-b border-zinc-100">
+                                <i class="ph ph-list-dashes text-zinc-500 text-sm"></i>
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Recent Account Activity Log</h3>
+                            </div>
+                            
+                            @if($activities->isEmpty())
+                                <div class="p-6 text-center text-[11px] text-zinc-400 font-semibold">
+                                    No recent account activities recorded.
+                                </div>
+                            @else
+                                <div class="flow-root relative pl-4 mt-2">
+                                    <!-- Timeline line border -->
+                                    <div class="absolute left-[19px] top-2 bottom-2 w-[1px] bg-zinc-150"></div>
+                                    
+                                    <div class="space-y-5">
+                                        @foreach($activities as $activity)
+                                            @php
+                                                // Icon color mapping
+                                                $statusColor = match($activity->status) {
+                                                    'success' => 'bg-emerald-50 text-emerald-600 border border-emerald-200/40',
+                                                    'failed' => 'bg-rose-50 text-rose-600 border border-rose-200/40',
+                                                    default => 'bg-zinc-50 text-zinc-500 border border-zinc-200/40',
+                                                };
+                                                
+                                                // Activity type icon mapping
+                                                $typeIcon = match($activity->activity_type) {
+                                                    'login' => 'ph-sign-in',
+                                                    'logout' => 'ph-sign-out',
+                                                    'profile_update' => 'ph-user-focus',
+                                                    'cv_builder', 'cv_generate' => 'ph-file-pdf',
+                                                    'payment' => 'ph-credit-card',
+                                                    default => 'ph-circle',
+                                                };
+                                            @endphp
+                                            <div class="flex items-start gap-4.5 relative z-10 group">
+                                                <!-- Status circle indicator -->
+                                                <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-2xs {{ $statusColor }}">
+                                                    <i class="ph {{ $typeIcon }} text-sm"></i>
+                                                </div>
+                                                <div class="flex-1 min-w-0 pt-0.5">
+                                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                                                        <p class="text-[11px] font-bold text-zinc-800 leading-tight">
+                                                            {{ $activity->description }}
+                                                        </p>
+                                                        <span class="text-[9px] font-medium text-zinc-400 whitespace-nowrap leading-none shrink-0" title="{{ $activity->created_at->format('d M Y H:i:s') }}">
+                                                            {{ $activity->created_at->diffForHumans() }}
+                                                        </span>
+                                                    </div>
+                                                    <div class="flex items-center gap-2 mt-1.5 text-[8.5px] font-bold text-zinc-400">
+                                                        <span class="bg-zinc-50 border border-zinc-150 px-1.5 py-0.5 rounded flex items-center gap-1 select-none">
+                                                            <i class="ph ph-desktop text-[10px]"></i> {{ Str::before(Str::after($activity->user_agent, '('), ';') }}
+                                                        </span>
+                                                        <span class="bg-zinc-50 border border-zinc-150 px-1.5 py-0.5 rounded flex items-center gap-1 select-none">
+                                                            <i class="ph ph-globe text-[10px]"></i> {{ $activity->ip_address }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
 

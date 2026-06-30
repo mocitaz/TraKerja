@@ -98,6 +98,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'xp',
         'level',
         'auto_archive_rejected',
+        'email_notifications_enabled',
+        'notify_goal_reminders',
+        'notify_interview_reminders',
+        'notify_goal_achieved',
     ];
 
     /**
@@ -159,6 +163,10 @@ class User extends Authenticatable implements MustVerifyEmail
             'has_used_ai_analyzer_trial' => 'boolean',
             'ai_analyzer_trial_used_at' => 'datetime',
             'photo_credits' => 'integer',
+            'email_notifications_enabled' => 'boolean',
+            'notify_goal_reminders' => 'boolean',
+            'notify_interview_reminders' => 'boolean',
+            'notify_goal_achieved' => 'boolean',
         ];
     }
 
@@ -207,6 +215,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function jobApplications(): HasMany
     {
         return $this->hasMany(JobApplication::class);
+    }
+
+    /**
+     * Get the user activity logs.
+     */
+    public function activities(): HasMany
+    {
+        return $this->hasMany(UserActivity::class);
     }
 
     /**

@@ -19,8 +19,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $user = $request->user();
+        $activities = $user->activities()->latest()->take(10)->get();
+
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $user,
+            'activities' => $activities,
         ]);
     }
 
@@ -95,6 +99,43 @@ class ProfileController extends Controller
         }
 
         return Redirect::route('profile.edit')->with('status', 'personal-info-updated');
+    }
+
+    /**
+     * Update the user's notification preferences.
+     */
+    public function updateNotifications(Request $request): RedirectResponse|\Illuminate\Http\JsonResponse
+    {
+        $user = $request->user();
+
+        // Check if user has premium access to notifications (if restricted)
+        if (!$user->canAccessEmailNotifications()) {
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'message' => 'Fitur ini hanya tersedia untuk pengguna Premium.'], 403);
+            }
+            return Redirect::route('profile.edit')->with('error', 'upgrade-required');
+        }
+
+        $user->update([
+            'email_notifications_enabled' => $request->boolean('email_notifications_enabled'),
+            'notify_goal_reminders' => $request->boolean('notify_goal_reminders'),
+            'notify_interview_reminders' => $request->boolean('notify_interview_reminders'),
+            'notify_goal_achieved' => $request->boolean('notify_goal_achieved'),
+        ]);
+
+        ActivityLogger::log(
+            'profile_update',
+            "User memperbarui preferensi notifikasi email",
+            'success',
+            [],
+            $user->id
+        );
+
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true, 'status' => 'notifications-updated']);
+        }
+
+        return Redirect::route('profile.edit')->with('status', 'notifications-updated');
     }
 
     /**
