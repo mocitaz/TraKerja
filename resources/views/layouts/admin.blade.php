@@ -73,6 +73,15 @@
                 background-color: #e2e8f0;
                 border-radius: 10px;
             }
+
+            /* Snappy premium view transition */
+            @media (prefers-reduced-motion: no-preference) {
+                ::view-transition-old(root),
+                ::view-transition-new(root) {
+                    animation-duration: 180ms;
+                    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                }
+            }
         </style>
     </head>
     <body class="font-sans antialiased text-gray-900 bg-gray-50">
@@ -365,6 +374,20 @@
                     }
                 });
             }
+        });
+
+        // View Transition API integration with Livewire
+        document.addEventListener('livewire:navigating', (ev) => {
+            if (!document.startViewTransition) return;
+
+            ev.detail.beforeDomUpdate((navigation) => {
+                return new Promise((resolve) => {
+                    document.startViewTransition(async () => {
+                        resolve();
+                        await navigation.complete;
+                    });
+                });
+            });
         });
         </script>
 
