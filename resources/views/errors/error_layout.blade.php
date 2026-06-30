@@ -64,7 +64,7 @@
         
         <!-- Header -->
         <div class="flex items-center space-x-2 mb-6">
-            <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="w-5.5 h-5.5 object-contain">
+            <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="w-6 h-6 object-contain">
             <span class="text-xs font-bold text-zinc-800 tracking-tight">TraKerja</span>
         </div>
 
