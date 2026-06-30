@@ -15,7 +15,7 @@
   ],
   "host_permissions": [
     "http://localhost:8000/*",
-    "https://trakerja.web.id/*",
+    "https://trakerja.com/*",
     "*://*.linkedin.com/*",
     "*://*.glints.com/*/opportunities/jobs/*",
     "*://*.jobstreet.co.id/*/job/*",

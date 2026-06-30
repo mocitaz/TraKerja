@@ -405,7 +405,7 @@
                             <label class="block text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">URL Tujuan Tombol Aksi (Opsional)</label>
                             <input type="url" name="custom_button_url" id="custom_button_url" 
                                    class="w-full px-3 py-1.5 bg-zinc-50 border border-zinc-200 rounded-md text-xs text-zinc-900 focus:bg-white focus:ring-1 focus:ring-primary-600 focus:border-primary-600 transition-all" 
-                                   placeholder="https://trakerja.web.id/career-tracker">
+                                   placeholder="https://trakerja.com/career-tracker">
                         </div>
                     </div>
                 </div>

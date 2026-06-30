@@ -1,6 +1,6 @@
 [program:trakerja-worker]
 process_name=%(program_name)s_%(process_num)02d
-command=php /home/u672201335/domains/trakerja.web.id/artisan queue:work --sleep=3 --tries=3 --max-time=3600
+command=php /home/u672201335/domains/trakerja.com/artisan queue:work --sleep=3 --tries=3 --max-time=3600
 autostart=true
 autorestart=true
 stopasgroup=true
@@ -8,7 +8,7 @@ killasgroup=true
 user=u672201335
 numprocs=2
 redirect_stderr=true
-stdout_logfile=/home/u672201335/domains/trakerja.web.id/storage/logs/worker.log
+stdout_logfile=/home/u672201335/domains/trakerja.com/storage/logs/worker.log
 stopwaitsecs=3600
 
 
