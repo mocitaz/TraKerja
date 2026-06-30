@@ -11,7 +11,7 @@
             </div>
 
             <div class="grid grid-cols-2 sm:flex sm:items-center gap-2 w-full lg:w-auto">
-                <select wire:model.live="platformFilter" class="w-full bg-zinc-50/50 border border-zinc-200 rounded-md text-[11px] font-semibold text-zinc-655 h-[30px] py-0 pl-2.5 pr-8 focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white outline-none cursor-pointer">
+                <select wire:model.live="platformFilter" class="w-full bg-zinc-50/50 border border-zinc-200 rounded-md text-[11px] font-semibold text-zinc-600 h-[30px] py-0 pl-2.5 pr-8 focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white outline-none cursor-pointer">
                     <option value="">PLATFORM</option>
                     @foreach($platformOptions as $platform) <option value="{{ $platform }}">{{ strtoupper($platform) }}</option> @endforeach
                 </select>
@@ -73,7 +73,7 @@
                                         </div>
                                         <div class="min-w-0">
                                             <h4 class="text-[11px] font-bold text-zinc-800 group-hover:text-primary-600 transition-colors leading-tight truncate">{{ $job->company_name }}</h4>
-                                            <p class="text-[9px] font-semibold text-zinc-450 mt-0.5 truncate">{{ $job->position }}</p>
+                                            <p class="text-[9px] font-semibold text-zinc-500 mt-0.5 truncate">{{ $job->position }}</p>
                                         </div>
                                     </div>
                                     @if($job->isGhosted())
@@ -87,7 +87,7 @@
                                     @endif
                                 </div>
 
-                                <div class="flex items-center justify-between pt-2.5 border-t border-zinc-150/40" onclick="event.stopPropagation();">
+                                <div class="flex items-center justify-between pt-2.5 border-t border-zinc-200/60" onclick="event.stopPropagation();">
                                     <div class="flex items-center gap-1">
                                         <button wire:click.stop="edit('{{ $job->id }}')" class="p-1 text-zinc-400 hover:text-indigo-600 hover:bg-zinc-50 border border-zinc-200 rounded transition-colors">
                                             <i class="ph ph-pencil-simple text-xs"></i>

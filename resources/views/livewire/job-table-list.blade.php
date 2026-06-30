@@ -25,7 +25,7 @@
                     <option value="">PLATFORM</option>
                     @foreach($platformOptions as $platform) <option value="{{ $platform }}">{{ strtoupper($platform) }}</option> @endforeach
                 </select>
-                <button wire:click="toggleArchived" class="col-span-2 sm:col-span-1 w-full sm:w-auto px-3 h-[30px] rounded-md text-[11px] font-bold border transition-all duration-150 active:scale-97 hover:shadow-2xs focus:outline-none flex items-center justify-center gap-1 {{ $showArchived ? 'bg-primary-50 hover:bg-primary-100 text-zinc-800 border-primary-200/60 shadow-3xs' : 'bg-white border-zinc-200 text-zinc-500 hover:bg-zinc-50 hover:text-zinc-800 shadow-3xs' }}">
+                <button wire:click="toggleArchived" class="w-full sm:w-auto px-3 h-[30px] rounded-md text-[11px] font-bold border transition-all duration-150 active:scale-97 hover:shadow-2xs focus:outline-none flex items-center justify-center gap-1 {{ $showArchived ? 'bg-primary-50 hover:bg-primary-100 text-zinc-800 border-primary-200/60 shadow-3xs' : 'bg-white border-zinc-200 text-zinc-500 hover:bg-zinc-50 hover:text-zinc-800 shadow-3xs' }}">
                     <i class="ph ph-archive text-[13px]"></i>
                     <span>{{ $showArchived ? 'Active' : 'Archive' }}</span>
                 </button>
@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="min-w-0">
                                     <h4 class="text-xs font-bold text-zinc-800 leading-tight mb-0.5 truncate group-hover:text-primary-600 transition-colors">{{ $job->company_name }}</h4>
-                                    <p class="text-[10px] font-semibold text-zinc-450 truncate">{{ $job->position }}</p>
+                                    <p class="text-[10px] font-semibold text-zinc-500 truncate">{{ $job->position }}</p>
                                 </div>
                             </div>
                             <span class="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase shrink-0" style="background-color: {{ $this->getStatusColor($job->application_status) }}12; color: {{ $this->getStatusColor($job->application_status) }}; border: 1px solid {{ $this->getStatusColor($job->application_status) }}20;">
@@ -82,10 +82,10 @@
                         </div>
 
                         <!-- Card Details Grid -->
-                        <div class="grid grid-cols-2 gap-2 mb-3 p-2.5 bg-zinc-50/40 rounded border border-zinc-150/60">
+                        <div class="grid grid-cols-2 gap-2 mb-3 p-2.5 bg-zinc-50/40 rounded border border-zinc-200/50">
                             <div class="flex flex-col">
                                 <span class="text-[8px] font-bold text-zinc-400 uppercase tracking-wider mb-0.5">Platform</span>
-                                <span class="text-[10px] font-bold text-zinc-650 truncate uppercase">{{ $job->platform }}</span>
+                                <span class="text-[10px] font-bold text-zinc-600 truncate uppercase">{{ $job->platform }}</span>
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-[8px] font-bold text-zinc-400 uppercase tracking-wider mb-0.5">Stage</span>
@@ -108,7 +108,7 @@
                         </div>
 
                         <!-- Card Actions -->
-                        <div class="flex justify-between items-center pt-2.5 border-t border-zinc-150/60" onclick="event.stopPropagation();">
+                        <div class="flex justify-between items-center pt-2.5 border-t border-zinc-200/60" onclick="event.stopPropagation();">
                             <div class="flex items-center gap-1 bg-zinc-50 rounded px-2 py-0.5 border border-zinc-200">
                                 <i class="ph ph-map-pin text-zinc-400 text-[10px]"></i>
                                 <span class="text-[9px] font-bold text-zinc-500 uppercase truncate max-w-[120px]">{{ $job->location }}</span>
@@ -135,7 +135,7 @@
                         <div class="w-10 h-10 bg-zinc-50 rounded-md flex items-center justify-center mb-2.5 text-zinc-350">
                             <i class="ph ph-folder-open text-xl"></i>
                         </div>
-                        <span class="text-xs font-semibold text-zinc-450 italic">No applications found...</span>
+                        <span class="text-xs font-semibold text-zinc-500 italic">No applications found...</span>
                     </div>
                 @endforelse
             </div>
@@ -144,23 +144,23 @@
         <!-- Desktop Full Info Compact Table (Visible only on lg screens) -->
         <div class="hidden lg:block bg-white border border-zinc-200/60 rounded-lg shadow-3xs overflow-hidden w-full">
             <div class="overflow-x-auto w-full custom-scrollbar">
-                <table class="min-w-full divide-y divide-zinc-150/40">
-                    <thead class="bg-zinc-55/30">
+                <table class="min-w-full divide-y divide-zinc-200/60">
+                    <thead class="bg-zinc-50/50">
                         <tr>
-                            <th class="px-3.5 py-2 text-center text-[10px] font-bold text-zinc-450 uppercase tracking-wider whitespace-nowrap">#</th>
-                            <th class="px-3.5 py-2 text-left text-[10px] font-bold text-zinc-450 uppercase tracking-wider whitespace-nowrap">Company</th>
-                            <th class="px-3.5 py-2 text-left text-[10px] font-bold text-zinc-450 uppercase tracking-wider whitespace-nowrap">Position</th>
-                            <th class="px-3.5 py-2 text-left text-[10px] font-bold text-zinc-450 uppercase tracking-wider whitespace-nowrap">Location</th>
-                            <th class="px-3.5 py-2 text-center text-[10px] font-bold text-zinc-450 uppercase tracking-wider whitespace-nowrap">Platform</th>
-                            <th class="px-3.5 py-2 text-center text-[10px] font-bold text-zinc-450 uppercase tracking-wider whitespace-nowrap">Status</th>
-                            <th class="px-3.5 py-2 text-center text-[10px] font-bold text-zinc-450 uppercase tracking-wider whitespace-nowrap">Stage</th>
-                            <th class="px-3.5 py-2 text-center text-[10px] font-bold text-zinc-450 uppercase tracking-wider whitespace-nowrap">Level</th>
-                            <th class="px-3.5 py-2 text-center text-[10px] font-bold text-zinc-450 uppercase tracking-wider whitespace-nowrap">Applied</th>
-                            <th class="px-3.5 py-2 text-center text-[10px] font-bold text-zinc-450 uppercase tracking-wider whitespace-nowrap">Interview</th>
-                            <th class="px-3.5 py-2 text-right text-[10px] font-bold text-zinc-450 uppercase tracking-wider whitespace-nowrap pr-5">Actions</th>
+                            <th class="px-3.5 py-2 text-center text-[10px] font-bold text-zinc-500 uppercase tracking-wider whitespace-nowrap">#</th>
+                            <th class="px-3.5 py-2 text-left text-[10px] font-bold text-zinc-500 uppercase tracking-wider whitespace-nowrap">Company</th>
+                            <th class="px-3.5 py-2 text-left text-[10px] font-bold text-zinc-500 uppercase tracking-wider whitespace-nowrap">Position</th>
+                            <th class="px-3.5 py-2 text-left text-[10px] font-bold text-zinc-500 uppercase tracking-wider whitespace-nowrap">Location</th>
+                            <th class="px-3.5 py-2 text-center text-[10px] font-bold text-zinc-500 uppercase tracking-wider whitespace-nowrap">Platform</th>
+                            <th class="px-3.5 py-2 text-center text-[10px] font-bold text-zinc-500 uppercase tracking-wider whitespace-nowrap">Status</th>
+                            <th class="px-3.5 py-2 text-center text-[10px] font-bold text-zinc-500 uppercase tracking-wider whitespace-nowrap">Stage</th>
+                            <th class="px-3.5 py-2 text-center text-[10px] font-bold text-zinc-500 uppercase tracking-wider whitespace-nowrap">Level</th>
+                            <th class="px-3.5 py-2 text-center text-[10px] font-bold text-zinc-500 uppercase tracking-wider whitespace-nowrap">Applied</th>
+                            <th class="px-3.5 py-2 text-center text-[10px] font-bold text-zinc-500 uppercase tracking-wider whitespace-nowrap">Interview</th>
+                            <th class="px-3.5 py-2 text-right text-[10px] font-bold text-zinc-500 uppercase tracking-wider whitespace-nowrap pr-5">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-zinc-150/40 bg-white">
+                    <tbody class="divide-y divide-zinc-200/60 bg-white">
                         {{-- Skeleton Loading Rows --}}
                         @for($i = 0; $i < 4; $i++)
                             <tr wire:loading.class.remove="hidden" class="hidden">
@@ -177,8 +177,8 @@
                                 <td class="px-3 py-2 text-right"><div class="h-5 w-14 bg-zinc-100 rounded ml-auto skeleton"></div></td>
                             </tr>
                         @endfor
-
-                        <tbody wire:loading.remove class="divide-y divide-zinc-150/40">
+ 
+                        <tbody wire:loading.remove class="divide-y divide-zinc-200/60">
                             @forelse($jobApplications as $index => $job)
                             <tr class="transition-colors cursor-pointer group {{ $job->isGhosted() ? 'bg-amber-50/15 hover:bg-amber-50/25' : 'hover:bg-zinc-50/45' }}" onclick="window.location.href='{{ route('jobs.show', $job) }}'">
                                 <td class="px-3.5 py-2 text-center text-xs font-semibold text-zinc-400 whitespace-nowrap">{{ ($jobApplications->firstItem() + $index) }}</td>
@@ -186,10 +186,10 @@
                                     <span class="text-xs font-bold text-zinc-800 group-hover:text-primary-600 transition-colors">{{ $job->company_name }}</span>
                                 </td>
                                 <td class="px-3.5 py-2 whitespace-nowrap">
-                                    <span class="text-xs font-medium text-zinc-650">{{ $job->position }}</span>
+                                    <span class="text-xs font-medium text-zinc-600">{{ $job->position }}</span>
                                 </td>
                                 <td class="px-3.5 py-2 whitespace-nowrap">
-                                    <span class="text-[11px] font-medium text-zinc-450">{{ $job->location }}</span>
+                                    <span class="text-[11px] font-medium text-zinc-500">{{ $job->location }}</span>
                                 </td>
                                 <td class="px-3.5 py-2 text-center whitespace-nowrap">
                                     <span class="px-1.5 py-0.2 bg-zinc-100 rounded text-[9px] font-bold text-zinc-500 uppercase">{{ $job->platform }}</span>
@@ -276,7 +276,7 @@
                  class="bg-white rounded-lg shadow-xl w-full max-w-xl max-h-[90vh] overflow-hidden border border-zinc-200 flex flex-col relative" @click.stop>
                  
                 <!-- Header -->
-                <div class="px-4 py-3.5 border-b border-zinc-150/60 flex items-center justify-between bg-white sticky top-0 z-10 shrink-0">
+                <div class="px-4 py-3.5 border-b border-zinc-200/60 flex items-center justify-between bg-white sticky top-0 z-10 shrink-0">
                     <div class="flex items-center gap-2.5">
                         <div class="w-7 h-7 rounded bg-zinc-50 border border-zinc-200/60 flex items-center justify-center p-1">
                             <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-full h-full object-contain">
@@ -305,8 +305,8 @@
                 </div>
 
                 <!-- Footer -->
-                <div class="px-4 py-3 border-t border-zinc-150/60 bg-white flex items-center justify-end gap-2 sticky bottom-0 z-10 shrink-0">
-                    <button wire:click="closeFollowUpModal" class="px-3.5 py-1.5 rounded-md text-[9px] font-bold text-zinc-400 hover:text-zinc-650 uppercase tracking-wider transition-colors">Batal</button>
+                <div class="px-4 py-3 border-t border-zinc-200/60 bg-white flex items-center justify-end gap-2 sticky bottom-0 z-10 shrink-0">
+                    <button wire:click="closeFollowUpModal" class="px-3.5 py-1.5 rounded-md text-[9px] font-bold text-zinc-400 hover:text-zinc-600 uppercase tracking-wider transition-colors">Batal</button>
                     <button type="button" @click="navigator.clipboard.writeText($wire.followUpDraft); window.showToast('success', 'Disalin!', 'Draft email berhasil disalin ke clipboard')" class="px-3 py-1.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-600 text-[9px] font-bold uppercase tracking-wider transition-colors flex items-center gap-1.5 rounded-md">
                         <i class="ph ph-copy text-xs"></i>
                         <span>Salin Teks</span>
