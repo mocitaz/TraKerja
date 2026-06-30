@@ -51,68 +51,68 @@
             </style>
 
             <!-- Stats Overview Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-5">
                 <!-- On Process Card -->
-                <div class="bg-white rounded-lg border border-zinc-200/60 p-3.5 flex items-center justify-between transition-all hover:border-blue-400 hover:shadow-[0_4px_12px_rgba(59,130,246,0.02)] group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 bg-blue-50/50 rounded-md flex items-center justify-center text-blue-600">
-                            <i class="ph ph-spinner-gap text-base animate-spin-slow"></i>
+                <div class="bg-white rounded-lg border border-zinc-200/60 p-3 sm:p-3.5 flex items-center justify-between transition-all hover:border-blue-400 hover:shadow-[0_4px_12px_rgba(59,130,246,0.02)] group">
+                    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-blue-50/50 rounded-md flex items-center justify-center text-blue-600 shrink-0">
+                            <i class="ph ph-spinner-gap text-sm sm:text-base animate-spin-slow"></i>
                         </div>
-                        <div>
-                            <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none">On Process</p>
-                            <p class="text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none">Active Apps</p>
+                        <div class="min-w-0">
+                            <p class="text-[8px] sm:text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">On Process</p>
+                            <p class="text-[9px] sm:text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none truncate">Active Apps</p>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <p class="text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $onProcessCount }}</p>
+                    <div class="text-right shrink-0">
+                        <p class="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $onProcessCount }}</p>
                     </div>
                 </div>
 
                 <!-- Offering/Accepted Card -->
-                <div class="bg-white rounded-lg border border-zinc-200/60 p-3.5 flex items-center justify-between transition-all hover:border-emerald-400 hover:shadow-[0_4px_12px_rgba(16,185,129,0.02)] group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 bg-emerald-50/50 rounded-md flex items-center justify-center text-emerald-600">
-                            <i class="ph ph-check-circle text-base"></i>
+                <div class="bg-white rounded-lg border border-zinc-200/60 p-3 sm:p-3.5 flex items-center justify-between transition-all hover:border-emerald-400 hover:shadow-[0_4px_12px_rgba(16,185,129,0.02)] group">
+                    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-emerald-50/50 rounded-md flex items-center justify-center text-emerald-600 shrink-0">
+                            <i class="ph ph-check-circle text-sm sm:text-base"></i>
                         </div>
-                        <div>
-                            <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none">Success</p>
-                            <p class="text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none">Offers & Recs</p>
+                        <div class="min-w-0">
+                            <p class="text-[8px] sm:text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">Success</p>
+                            <p class="text-[9px] sm:text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none truncate">Offers & Recs</p>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <p class="text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $offeringAcceptedCount }}</p>
+                    <div class="text-right shrink-0">
+                        <p class="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $offeringAcceptedCount }}</p>
                     </div>
                 </div>
 
                 <!-- Declined Card -->
-                <div class="bg-white rounded-lg border border-zinc-200/60 p-3.5 flex items-center justify-between transition-all hover:border-rose-400 hover:shadow-[0_4px_12px_rgba(244,63,94,0.02)] group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 bg-rose-50/50 rounded-md flex items-center justify-center text-rose-600">
-                            <i class="ph ph-x-circle text-base"></i>
+                <div class="bg-white rounded-lg border border-zinc-200/60 p-3 sm:p-3.5 flex items-center justify-between transition-all hover:border-rose-400 hover:shadow-[0_4px_12px_rgba(244,63,94,0.02)] group">
+                    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-rose-50/50 rounded-md flex items-center justify-center text-rose-600 shrink-0">
+                            <i class="ph ph-x-circle text-sm sm:text-base"></i>
                         </div>
-                        <div>
-                            <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none">Declined</p>
-                            <p class="text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none">Rejected</p>
+                        <div class="min-w-0">
+                            <p class="text-[8px] sm:text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">Declined</p>
+                            <p class="text-[9px] sm:text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none truncate">Rejected</p>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <p class="text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $declinedCount }}</p>
+                    <div class="text-right shrink-0">
+                        <p class="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $declinedCount }}</p>
                     </div>
                 </div>
 
                 <!-- Total Interviews Card -->
-                <div class="bg-white rounded-lg border border-zinc-200/60 p-3.5 flex items-center justify-between transition-all hover:border-orange-400 hover:shadow-[0_4px_12px_rgba(245,158,11,0.02)] group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 bg-orange-50/50 rounded-md flex items-center justify-center text-orange-600">
-                            <i class="ph ph-calendar text-base"></i>
+                <div class="bg-white rounded-lg border border-zinc-200/60 p-3 sm:p-3.5 flex items-center justify-between transition-all hover:border-orange-400 hover:shadow-[0_4px_12px_rgba(245,158,11,0.02)] group">
+                    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-orange-50/50 rounded-md flex items-center justify-center text-orange-600 shrink-0">
+                            <i class="ph ph-calendar text-sm sm:text-base"></i>
                         </div>
-                        <div>
-                            <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none">Interviews</p>
-                            <p class="text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none">Total Scheduled</p>
+                        <div class="min-w-0">
+                            <p class="text-[8px] sm:text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">Interviews</p>
+                            <p class="text-[9px] sm:text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none truncate">Total Scheduled</p>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <p class="text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $totalInterviewsCount }}</p>
+                    <div class="text-right shrink-0">
+                        <p class="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $totalInterviewsCount }}</p>
                     </div>
                 </div>
             </div>
@@ -148,10 +148,58 @@
                                     </button>
                                 </div>
                             @else
-                                <div class="overflow-x-auto">
-                                    <table class="min-w-full divide-y divide-zinc-150/40">
+                                {{-- Mobile List View (visible on mobile, hidden on desktop) --}}
+                                <div class="block sm:hidden space-y-2.5">
+                                    @foreach($recentApplications as $job)
+                                        @php
+                                            $stageColors = [
+                                                'Applied' => ['bg' => '#3b82f612', 'text' => '#2563eb', 'border' => '#3b82f620'],
+                                                'HR - Interview' => ['bg' => '#f9731612', 'text' => '#ea580c', 'border' => '#f9731620'],
+                                                'User - Interview' => ['bg' => '#eab30812', 'text' => '#ca8a04', 'border' => '#eab30820'],
+                                                'Offering' => ['bg' => '#10b98112', 'text' => '#059669', 'border' => '#10b98120'],
+                                                'Rejected' => ['bg' => '#ef444412', 'text' => '#dc2626', 'border' => '#ef444420'],
+                                            ];
+                                            $stg = $stageColors[$job->recruitment_stage] ?? ['bg' => '#f4f4f5', 'text' => '#71717a', 'border' => '#e4e4e7'];
+                                            
+                                            $statusColors = [
+                                                'On Process' => ['bg' => '#3b82f612', 'text' => '#2563eb', 'border' => '#3b82f620'],
+                                                'Accepted' => ['bg' => '#10b98112', 'text' => '#059669', 'border' => '#10b98120'],
+                                                'Declined' => ['bg' => '#ef444412', 'text' => '#dc2626', 'border' => '#ef444420'],
+                                            ];
+                                            $stat = $statusColors[$job->application_status] ?? ['bg' => '#f4f4f5', 'text' => '#71717a', 'border' => '#e4e4e7'];
+                                        @endphp
+                                        <div onclick="window.location='{{ route('jobs.show', $job) }}'" 
+                                             class="bg-zinc-50/50 hover:bg-zinc-50 border border-zinc-200/50 p-3 rounded-lg flex items-center justify-between gap-3 active:scale-98 transition-all">
+                                            <div class="min-w-0 flex-1">
+                                                <div class="flex items-center gap-1.5 flex-wrap">
+                                                    <span class="text-xs font-bold text-zinc-800 truncate">{{ $job->company_name }}</span>
+                                                    <span class="text-[10px] text-zinc-300">•</span>
+                                                    <span class="text-[10px] text-zinc-500 truncate font-medium">{{ $job->position }}</span>
+                                                </div>
+                                                <div class="flex items-center gap-2 mt-2">
+                                                    <span class="px-1.5 py-0.2 rounded text-[8.5px] font-bold uppercase" style="background-color: {{ $stg['bg'] }}; color: {{ $stg['text'] }}; border: 1px solid {{ $stg['border'] }};">
+                                                        {{ $job->recruitment_stage }}
+                                                    </span>
+                                                    <span class="px-1.5 py-0.2 rounded text-[8.5px] font-bold uppercase" style="background-color: {{ $stat['bg'] }}; color: {{ $stat['text'] }}; border: 1px solid {{ $stat['border'] }};">
+                                                        {{ $job->application_status }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col items-end shrink-0 gap-1">
+                                                <span class="text-[9px] font-semibold text-zinc-400">
+                                                    {{ $job->application_date ? $job->application_date->translatedFormat('d M Y') : '-' }}
+                                                </span>
+                                                <i class="ph ph-caret-right text-xs text-zinc-300"></i>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                {{-- Desktop Table View (hidden on mobile, visible on desktop) --}}
+                                <div class="hidden sm:block overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-zinc-200/60">
                                         <thead>
-                                            <tr class="text-left text-[9px] font-bold text-zinc-400 uppercase tracking-wider bg-zinc-55/10">
+                                            <tr class="text-left text-[9px] font-bold text-zinc-400 uppercase tracking-wider bg-zinc-50/50">
                                                 <th class="px-3 py-2">Company</th>
                                                 <th class="px-3 py-2">Position</th>
                                                 <th class="px-3 py-2 hidden sm:table-cell">Applied</th>
@@ -160,7 +208,7 @@
                                                 <th class="px-3 py-2 text-right pr-4">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="divide-y divide-zinc-150/40 text-zinc-700 bg-white">
+                                        <tbody class="divide-y divide-zinc-200/60 text-zinc-700 bg-white">
                                             @foreach($recentApplications as $job)
                                                 <tr class="transition-colors cursor-pointer group hover:bg-zinc-50/45" onclick="window.location='{{ route('jobs.show', $job) }}'">
                                                     {{-- Company --}}
@@ -169,10 +217,10 @@
                                                     </td>
                                                     {{-- Position --}}
                                                     <td class="px-3 py-2.5 whitespace-nowrap">
-                                                        <span class="text-xs font-medium text-zinc-650">{{ $job->position }}</span>
+                                                        <span class="text-xs font-medium text-zinc-600">{{ $job->position }}</span>
                                                     </td>
                                                     {{-- Applied --}}
-                                                    <td class="px-3 py-2.5 whitespace-nowrap text-xs text-zinc-450 hidden sm:table-cell">
+                                                    <td class="px-3 py-2.5 whitespace-nowrap text-xs text-zinc-500 hidden sm:table-cell">
                                                         {{ $job->application_date ? $job->application_date->translatedFormat('d M Y') : '-' }}
                                                     </td>
                                                     {{-- Stage --}}
@@ -349,47 +397,56 @@
                     <div class="bg-white rounded-lg border border-zinc-200/60 p-4 flex-1 flex flex-col justify-between">
                         <div class="flex items-center justify-between mb-3.5 select-none shrink-0">
                             <div>
-                                <h3 class="text-xs font-bold text-zinc-850 tracking-tight uppercase tracking-wider">Quick Actions</h3>
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight uppercase tracking-wider">Quick Actions</h3>
                                 <p class="text-[9px] text-zinc-400 font-medium mt-0.5">Shortcuts to accelerate your search</p>
                             </div>
                             <i class="ph ph-lightning text-amber-500 text-sm"></i>
                         </div>
 
-                        <div class="space-y-1 flex-1 flex flex-col justify-center">
+                        <!-- 2x2 grid on mobile, vertical stack on desktop -->
+                        <div class="grid grid-cols-2 gap-2.5 sm:grid-cols-1 sm:gap-0 sm:space-y-1 flex-1">
                             <!-- Action 1: Add App -->
-                            <button onclick="openJobModal()" class="w-full flex items-center justify-between p-2 hover:bg-zinc-50 rounded-md group transition-all text-left">
-                                <div class="flex items-center gap-2.5">
-                                    <i class="ph ph-plus text-zinc-400 group-hover:text-zinc-700 transition-colors text-sm"></i>
-                                    <span class="text-[11px] font-semibold text-zinc-650 group-hover:text-zinc-900 transition-colors">Add New Application</span>
+                            <button onclick="openJobModal()" class="w-full flex flex-col sm:flex-row items-center sm:justify-between p-3 sm:p-2 bg-zinc-50/40 sm:bg-transparent border border-zinc-200/50 sm:border-transparent hover:bg-zinc-50 rounded-md group transition-all text-center sm:text-left active:scale-97 sm:active:scale-100">
+                                <div class="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5">
+                                    <div class="w-7 h-7 sm:w-auto sm:h-auto rounded-full bg-white sm:bg-transparent flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs sm:shadow-none border border-zinc-200/60 sm:border-transparent">
+                                        <i class="ph ph-plus text-zinc-500 group-hover:text-zinc-700 transition-colors text-xs sm:text-sm"></i>
+                                    </div>
+                                    <span class="text-[9.5px] sm:text-[11px] font-bold sm:font-semibold text-zinc-650 group-hover:text-zinc-900 transition-colors leading-tight">Add New App</span>
                                 </div>
-                                <i class="ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
+                                <i class="hidden sm:block ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
                             </button>
 
                             <!-- Action 2: CV Builder -->
-                            <a href="{{ route('cv.builder') }}" class="w-full flex items-center justify-between p-2 hover:bg-zinc-50 rounded-md group transition-all text-left">
-                                <div class="flex items-center gap-2.5">
-                                    <i class="ph ph-file-text text-zinc-400 group-hover:text-zinc-700 transition-colors text-sm"></i>
-                                    <span class="text-[11px] font-semibold text-zinc-655 group-hover:text-zinc-900 transition-colors">CV Builder & Editor</span>
+                            <a href="{{ route('cv.builder') }}" class="w-full flex flex-col sm:flex-row items-center sm:justify-between p-3 sm:p-2 bg-zinc-50/40 sm:bg-transparent border border-zinc-200/50 sm:border-transparent hover:bg-zinc-50 rounded-md group transition-all text-center sm:text-left active:scale-97 sm:active:scale-100">
+                                <div class="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5">
+                                    <div class="w-7 h-7 sm:w-auto sm:h-auto rounded-full bg-white sm:bg-transparent flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs sm:shadow-none border border-zinc-200/60 sm:border-transparent">
+                                        <i class="ph ph-file-text text-zinc-500 group-hover:text-zinc-700 transition-colors text-xs sm:text-sm"></i>
+                                    </div>
+                                    <span class="text-[9.5px] sm:text-[11px] font-bold sm:font-semibold text-zinc-655 group-hover:text-zinc-900 transition-colors leading-tight">CV Builder</span>
                                 </div>
-                                <i class="ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
+                                <i class="hidden sm:block ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
                             </a>
 
                             <!-- Action 3: AI Analyzer -->
-                            <a href="{{ route('ai-analyzer.index') }}" class="w-full flex items-center justify-between p-2 hover:bg-zinc-50 rounded-md group transition-all text-left">
-                                <div class="flex items-center gap-2.5">
-                                    <i class="ph ph-sparkle text-zinc-400 group-hover:text-zinc-700 transition-colors text-sm"></i>
-                                    <span class="text-[11px] font-semibold text-zinc-655 group-hover:text-zinc-900 transition-colors">AI CV & JD Analyzer</span>
+                            <a href="{{ route('ai-analyzer.index') }}" class="w-full flex flex-col sm:flex-row items-center sm:justify-between p-3 sm:p-2 bg-zinc-50/40 sm:bg-transparent border border-zinc-200/50 sm:border-transparent hover:bg-zinc-50 rounded-md group transition-all text-center sm:text-left active:scale-97 sm:active:scale-100">
+                                <div class="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5">
+                                    <div class="w-7 h-7 sm:w-auto sm:h-auto rounded-full bg-white sm:bg-transparent flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs sm:shadow-none border border-zinc-200/60 sm:border-transparent">
+                                        <i class="ph ph-sparkle text-zinc-500 group-hover:text-zinc-700 transition-colors text-xs sm:text-sm"></i>
+                                    </div>
+                                    <span class="text-[9.5px] sm:text-[11px] font-bold sm:font-semibold text-zinc-655 group-hover:text-zinc-900 transition-colors leading-tight">AI Analyzer</span>
                                 </div>
-                                <i class="ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
+                                <i class="hidden sm:block ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
                             </a>
 
                             <!-- Action 4: Cover Letter -->
-                            <a href="{{ route('cover-letters.index') }}" class="w-full flex items-center justify-between p-2 hover:bg-zinc-50 rounded-md group transition-all text-left">
-                                <div class="flex items-center gap-2.5">
-                                    <i class="ph ph-envelope-simple text-zinc-400 group-hover:text-zinc-700 transition-colors text-sm"></i>
-                                    <span class="text-[11px] font-semibold text-zinc-655 group-hover:text-zinc-900 transition-colors">Cover Letter Generator</span>
+                            <a href="{{ route('cover-letters.index') }}" class="w-full flex flex-col sm:flex-row items-center sm:justify-between p-3 sm:p-2 bg-zinc-50/40 sm:bg-transparent border border-zinc-200/50 sm:border-transparent hover:bg-zinc-50 rounded-md group transition-all text-center sm:text-left active:scale-97 sm:active:scale-100">
+                                <div class="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5">
+                                    <div class="w-7 h-7 sm:w-auto sm:h-auto rounded-full bg-white sm:bg-transparent flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs sm:shadow-none border border-zinc-200/60 sm:border-transparent">
+                                        <i class="ph ph-envelope-simple text-zinc-500 group-hover:text-zinc-700 transition-colors text-xs sm:text-sm"></i>
+                                    </div>
+                                    <span class="text-[9.5px] sm:text-[11px] font-bold sm:font-semibold text-zinc-655 group-hover:text-zinc-900 transition-colors leading-tight">Cover Letter</span>
                                 </div>
-                                <i class="ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
+                                <i class="hidden sm:block ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
                             </a>
                         </div>
                     </div>
@@ -400,7 +457,7 @@
             <div class="bg-white rounded-lg border border-zinc-200/60 p-4 mb-5">
                 <div class="flex items-center justify-between mb-4">
                     <div>
-                        <h3 class="text-xs font-bold text-zinc-850 tracking-tight uppercase tracking-wider">Upcoming Interviews</h3>
+                        <h3 class="text-xs font-bold text-zinc-800 tracking-tight uppercase tracking-wider">Upcoming Interviews</h3>
                         <p class="text-[10px] text-zinc-400 font-medium">Your schedule for the next interviews</p>
                     </div>
                     <a href="{{ route('interviews') }}" class="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-zinc-200 hover:bg-zinc-50 rounded-md text-[10px] font-semibold text-zinc-600 transition-colors">
@@ -418,27 +475,27 @@
                         <p class="text-[10px] text-zinc-400 mt-0.5 max-w-[220px]">Take a break or apply to more jobs to schedule an interview!</p>
                     </div>
                 @else
-                    <div class="divide-y divide-zinc-150/40">
+                    <div class="divide-y divide-zinc-200/60">
                         @foreach($upcomingInterviews as $interview)
                             <div class="flex items-center gap-3.5 py-2.5 group first:pt-0 last:pb-0">
                                 <!-- Date Bubble -->
                                 <div class="shrink-0 w-8 h-8 bg-zinc-50 rounded-md border border-zinc-200/50 flex flex-col items-center justify-center text-zinc-700 font-bold leading-none shadow-2xs">
                                     <span class="text-[11px] font-extrabold leading-none">{{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('d') }}</span>
-                                    <span class="text-[7.5px] font-black uppercase tracking-wider mt-0.5 text-zinc-455">{{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('M') }}</span>
+                                    <span class="text-[7.5px] font-black uppercase tracking-wider mt-0.5 text-zinc-500">{{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('M') }}</span>
                                 </div>
                                 
                                 <!-- Interview Details -->
                                 <div class="min-w-0 flex-1">
-                                    <div class="flex items-center justify-between gap-2">
+                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
                                         <h4 class="text-[11px] font-bold text-zinc-800 truncate leading-tight">
                                             {{ $interview->recruitment_stage }} - {{ $interview->position }}
                                         </h4>
-                                        <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-zinc-105 text-zinc-500 border border-zinc-200/40 leading-none">
+                                        <span class="self-start sm:self-auto text-[8.5px] sm:text-[9px] font-bold px-1.5 py-0.2 rounded bg-zinc-100 text-zinc-500 border border-zinc-200/40 leading-none">
                                             {{ $interview->interview_type ?? 'N/A' }}
                                         </span>
                                     </div>
                                     <div class="flex items-center gap-2 mt-0.5 leading-none">
-                                        <p class="text-[9px] text-zinc-455 font-medium leading-none">{{ $interview->company_name }}</p>
+                                        <p class="text-[9px] text-zinc-500 font-medium leading-none">{{ $interview->company_name }}</p>
                                         @if($interview->interview_location)
                                             <span class="text-zinc-300 text-[8px] leading-none">•</span>
                                             <div class="flex items-center gap-0.5 text-[9px] text-zinc-400 font-medium leading-none truncate">
@@ -454,7 +511,7 @@
                                     <p class="text-[11px] font-bold text-zinc-800 leading-tight">
                                         {{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('H:i') }}
                                     </p>
-                                    <p class="text-[7.5px] text-zinc-455 font-bold uppercase tracking-wider leading-none">
+                                    <p class="text-[7.5px] text-zinc-550 font-bold uppercase tracking-wider leading-none">
                                         {{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('T') }}
                                     </p>
                                 </div>
