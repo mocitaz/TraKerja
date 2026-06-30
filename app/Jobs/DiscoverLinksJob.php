@@ -74,46 +74,17 @@ class DiscoverLinksJob implements ShouldQueue
         $delaySeconds = 0;
 
         foreach ($sources as $source) {
-            ScrapeJobDetailsJob::logToLiveBuffer("Discovery Engine: Menjelajah " . $source->name);
-            echo "Running discovery for: " . $source->name . " (" . $source->target_domain . ")...\n";
-            $originalSeedUrl = $source->seed_url;
-            $discoveredCount = 0;
+            ScrapeJobDetailsJob::logToLiveBuffer("Discovery Engine: Menjadwalkan penelusuran kata kunci untuk " . $source->name);
+            echo "Scheduling discovery for: " . $source->name . " (" . $source->target_domain . ")...\n";
 
             foreach ($keywords as $keyword) {
-                for ($page = 1; $page <= $pagesToCrawl; $page++) {
-                    
-                    // Generate dynamic seed URL for pages and keywords
-                    if (str_contains($source->target_domain, 'linkedin.com')) {
-                        $start = ($page - 1) * 25;
-                        $source->seed_url = "https://id.linkedin.com/jobs/search?keywords=" . urlencode($keyword) . "&start=" . $start;
-                    } elseif (str_contains($source->target_domain, 'kalibrr.com')) {
-                        $source->seed_url = "https://www.kalibrr.com/job-board/te/" . urlencode(strtolower($keyword)) . "/" . $page;
-                    } elseif (str_contains($source->target_domain, 'jobstreet.co.id')) {
-                        $source->seed_url = "https://www.jobstreet.co.id/id/" . urlencode(strtolower($keyword)) . "-jobs?page=" . $page;
-                    }
-
-                    ScrapeJobDetailsJob::logToLiveBuffer(" -> Mencari kata kunci [" . $keyword . "] Halaman " . $page);
-                    echo "  -> Discovery Query: [" . $keyword . "] page " . $page . "\n";
-                    $discoveredUrls = $source->executeDiscovery();
-                    $discoveredCount += count($discoveredUrls);
-
-                    foreach ($discoveredUrls as $url) {
-                        // Stagger execution delay (e.g. 4 seconds increment) to prevent anti-bot blocking
-                        ScrapeJobDetailsJob::dispatch($url, $source)
-                            ->delay(now()->addSeconds($delaySeconds))
-                            ->onQueue('extraction');
-                        
-                        $delaySeconds += 4;
-                    }
-                }
+                // Dispatch each keyword discovery job with a 10 seconds stagger
+                DiscoverPlatformKeywordJob::dispatch($source, $keyword, $pagesToCrawl)
+                    ->delay(now()->addSeconds($delaySeconds))
+                    ->onQueue('discovery');
+                
+                $delaySeconds += 10;
             }
-
-            // Restore original seed url structure
-            $source->seed_url = $originalSeedUrl;
-            $source->updateLastRun();
-
-            ScrapeJobDetailsJob::logToLiveBuffer("Discovery Engine: Selesai! Berhasil mengantrekan " . $discoveredCount . " tautan detail lowongan untuk " . $source->name, 'success');
-            echo "Discovered and queued total of " . $discoveredCount . " job details URLs for " . $source->name . ".\n";
         }
     }
 }
