@@ -251,6 +251,7 @@
                                     $lastMonthColIndex = -10;
                                     $dayOrder = [1, 2, 3, 4, 5, 6, 0]; // Monday to Sunday
                                     $colIndex = 0;
+                                    $weekKeys = array_keys($heatmapWeeks);
                                 @endphp
                                 @foreach($heatmapWeeks as $weekKey => $days)
                                     @php
@@ -258,7 +259,15 @@
                                         $monthName = '';
                                         $currentMonth = $firstDay->format('M');
                                         if ($currentMonth !== $lastMonth) {
-                                            if (($colIndex - $lastMonthColIndex) >= 3) {
+                                            $skipFirst = false;
+                                            if ($colIndex === 0) {
+                                                $week2Key = $weekKeys[2] ?? null;
+                                                $week2Month = $week2Key ? \Carbon\Carbon::parse($week2Key)->format('M') : $currentMonth;
+                                                if ($currentMonth !== $week2Month) {
+                                                    $skipFirst = true;
+                                                }
+                                            }
+                                            if (!$skipFirst && ($colIndex - $lastMonthColIndex) >= 3) {
                                                 $monthName = $currentMonth;
                                                 $lastMonthColIndex = $colIndex;
                                             }
