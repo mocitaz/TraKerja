@@ -20,7 +20,7 @@
                         <p class="text-[11px] text-zinc-400 mt-0.5">Welcome back, <span class="font-bold text-zinc-700">{{ explode(' ', Auth::user()->name)[0] }}</span>! Here is your career momentum and tracking progress.</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-1.5 text-[11px] font-medium text-zinc-500 select-none shrink-0 self-start md:self-end md:mb-[2px]">
+                <div class="flex items-center gap-1.5 text-[11px] font-medium text-zinc-500 select-none shrink-0 self-start md:self-end md:mb-0">
                     <i class="ph ph-calendar-blank text-zinc-600 text-sm"></i>
                     <span class="tracking-tight">{{ now()->timezone('Asia/Jakarta')->translatedFormat('l, d F Y') }}</span>
                 </div>
