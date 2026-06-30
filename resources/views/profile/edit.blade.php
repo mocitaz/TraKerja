@@ -406,7 +406,52 @@
 
                     {{-- TAB 4: ACTIVITY LOG --}}
                     <div id="section-activities" class="content-section space-y-6 hidden">
-                        <div class="bg-white rounded-lg border border-zinc-200/60 p-5 shadow-3xs">
+                        @php
+                            $parseAgent = function($userAgent) {
+                                $os = 'Device';
+                                $icon = 'ph-desktop';
+                                $browser = '';
+
+                                if (!$userAgent) {
+                                    return ['os' => 'System', 'browser' => 'System', 'icon' => 'ph-gear'];
+                                }
+
+                                if (stripos($userAgent, 'Macintosh') !== false || stripos($userAgent, 'Mac OS X') !== false) {
+                                    $os = 'macOS';
+                                    $icon = 'ph-laptop';
+                                } elseif (stripos($userAgent, 'Windows') !== false) {
+                                    $os = 'Windows';
+                                    $icon = 'ph-desktop';
+                                } elseif (stripos($userAgent, 'Android') !== false) {
+                                    $os = 'Android';
+                                    $icon = 'ph-device-mobile';
+                                } elseif (stripos($userAgent, 'iPhone') !== false || stripos($userAgent, 'iPad') !== false) {
+                                    $os = 'iOS';
+                                    $icon = 'ph-device-mobile';
+                                } elseif (stripos($userAgent, 'Linux') !== false) {
+                                    $os = 'Linux';
+                                    $icon = 'ph-terminal-window';
+                                }
+
+                                if (stripos($userAgent, 'Chrome') !== false) {
+                                    $browser = 'Chrome';
+                                } elseif (stripos($userAgent, 'Safari') !== false) {
+                                    $browser = 'Safari';
+                                } elseif (stripos($userAgent, 'Firefox') !== false) {
+                                    $browser = 'Firefox';
+                                } elseif (stripos($userAgent, 'Edge') !== false) {
+                                    $browser = 'Edge';
+                                }
+
+                                return [
+                                    'os' => $os,
+                                    'browser' => $browser ?: 'Browser',
+                                    'icon' => $icon
+                                ];
+                            };
+                        @endphp
+                        
+                        <div class="bg-white rounded-lg border border-zinc-200/60 p-5 shadow-3xs overflow-hidden">
                             <div class="flex items-center gap-2 mb-4 pb-2.5 border-b border-zinc-100">
                                 <i class="ph ph-list-dashes text-zinc-500 text-sm"></i>
                                 <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Recent Account Activity Log</h3>
@@ -417,56 +462,71 @@
                                     No recent account activities recorded.
                                 </div>
                             @else
-                                <div class="flow-root relative pl-4 mt-2">
-                                    <!-- Timeline line border -->
-                                    <div class="absolute left-[19px] top-2 bottom-2 w-[1px] bg-zinc-150"></div>
-                                    
-                                    <div class="space-y-5">
-                                        @foreach($activities as $activity)
-                                            @php
-                                                // Icon color mapping
-                                                $statusColor = match($activity->status) {
-                                                    'success' => 'bg-emerald-50 text-emerald-600 border border-emerald-200/40',
-                                                    'failed' => 'bg-rose-50 text-rose-600 border border-rose-200/40',
-                                                    default => 'bg-zinc-50 text-zinc-500 border border-zinc-200/40',
-                                                };
-                                                
-                                                // Activity type icon mapping
-                                                $typeIcon = match($activity->activity_type) {
-                                                    'login' => 'ph-sign-in',
-                                                    'logout' => 'ph-sign-out',
-                                                    'profile_update' => 'ph-user-focus',
-                                                    'cv_builder', 'cv_generate' => 'ph-file-pdf',
-                                                    'payment' => 'ph-credit-card',
-                                                    default => 'ph-circle',
-                                                };
-                                            @endphp
-                                            <div class="flex items-start gap-4.5 relative z-10 group">
-                                                <!-- Status circle indicator -->
-                                                <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-2xs {{ $statusColor }}">
-                                                    <i class="ph {{ $typeIcon }} text-sm"></i>
-                                                </div>
-                                                <div class="flex-1 min-w-0 pt-0.5">
-                                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                                                        <p class="text-[11px] font-bold text-zinc-800 leading-tight">
-                                                            {{ $activity->description }}
-                                                        </p>
-                                                        <span class="text-[9px] font-medium text-zinc-400 whitespace-nowrap leading-none shrink-0" title="{{ $activity->created_at->format('d M Y H:i:s') }}">
-                                                            {{ $activity->created_at->diffForHumans() }}
-                                                        </span>
-                                                    </div>
-                                                    <div class="flex items-center gap-2 mt-1.5 text-[8.5px] font-bold text-zinc-400">
-                                                        <span class="bg-zinc-50 border border-zinc-150 px-1.5 py-0.5 rounded flex items-center gap-1 select-none">
-                                                            <i class="ph ph-desktop text-[10px]"></i> {{ Str::before(Str::after($activity->user_agent, '('), ';') }}
-                                                        </span>
-                                                        <span class="bg-zinc-50 border border-zinc-150 px-1.5 py-0.5 rounded flex items-center gap-1 select-none">
-                                                            <i class="ph ph-globe text-[10px]"></i> {{ $activity->ip_address }}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
+                                <div class="overflow-x-auto -mx-5 -mb-5">
+                                    <table class="w-full text-left border-collapse">
+                                        <thead>
+                                            <tr class="border-b border-zinc-150 bg-zinc-50/50 text-[9px] font-bold text-zinc-400 uppercase tracking-widest">
+                                                <th class="py-3 pl-5">Aktivitas</th>
+                                                <th class="py-3 px-4">Perangkat</th>
+                                                <th class="py-3 px-4">Alamat IP</th>
+                                                <th class="py-3 pr-5 text-right">Waktu</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-zinc-100 text-[11px] text-zinc-650">
+                                            @foreach($activities as $activity)
+                                                @php
+                                                    $agent = $parseAgent($activity->user_agent);
+                                                    
+                                                    // Style mapping
+                                                    $badgeStyle = match($activity->activity_type) {
+                                                        'login' => 'bg-emerald-50 text-emerald-700 border border-emerald-100',
+                                                        'logout' => 'bg-zinc-50 text-zinc-550 border border-zinc-200/50',
+                                                        'profile_update' => 'bg-indigo-50/70 text-indigo-700 border border-indigo-100/60',
+                                                        'payment' => 'bg-amber-50 text-amber-700 border border-amber-100',
+                                                        default => 'bg-zinc-50 text-zinc-600 border border-zinc-200/50',
+                                                    };
+                                                    
+                                                    $icon = match($activity->activity_type) {
+                                                        'login' => 'ph-sign-in',
+                                                        'logout' => 'ph-sign-out',
+                                                        'profile_update' => 'ph-user-focus',
+                                                        'payment' => 'ph-credit-card',
+                                                        default => 'ph-activity',
+                                                    };
+                                                @endphp
+                                                <tr class="hover:bg-zinc-50/30 transition-colors">
+                                                    <!-- Aktivitas -->
+                                                    <td class="py-3 pl-5">
+                                                        <div class="flex items-center gap-2.5">
+                                                            <span class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 shadow-3xs {{ $badgeStyle }}">
+                                                                <i class="ph {{ $icon }} text-xs"></i>
+                                                            </span>
+                                                            <span class="text-zinc-800 font-bold max-w-[200px] truncate" title="{{ $activity->description }}">
+                                                                {{ $activity->description }}
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <!-- Perangkat -->
+                                                    <td class="py-3 px-4 font-semibold text-zinc-500">
+                                                        <div class="flex items-center gap-1.5">
+                                                            <i class="ph {{ $agent['icon'] }} text-sm text-zinc-400"></i>
+                                                            <span>{{ $agent['os'] }}</span>
+                                                            <span class="text-zinc-300">•</span>
+                                                            <span class="text-[9.5px] text-zinc-400 font-medium">{{ $agent['browser'] }}</span>
+                                                        </div>
+                                                    </td>
+                                                    <!-- Alamat IP -->
+                                                    <td class="py-3 px-4 font-mono text-[9.5px] text-zinc-450">
+                                                        {{ $activity->ip_address }}
+                                                    </td>
+                                                    <!-- Waktu -->
+                                                    <td class="py-3 pr-5 text-right text-[9.5px] font-semibold text-zinc-400">
+                                                        {{ $activity->created_at->diffForHumans() }}
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             @endif
                         </div>
