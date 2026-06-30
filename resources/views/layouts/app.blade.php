@@ -13,6 +13,12 @@
         <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}?v=2">
         <link rel="apple-touch-icon" href="{{ asset('images/icon.png') }}?v=2">
 
+        <!-- PWA Meta & Manifest -->
+        <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-title" content="TraKerja">
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600|inter:300,400,500,600,700,800,900|plus-jakarta-sans:400,500,600,700,800&display=swap" rel="stylesheet" />
@@ -291,6 +297,15 @@
                     });
                 });
             });
+
+            // Register PWA Service Worker
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js')
+                        .then(reg => console.log('PWA Service Worker registered!'))
+                        .catch(err => console.log('PWA Service Worker failed:', err));
+                });
+            }
 
             // Handle Livewire Navigation
             document.addEventListener('livewire:navigated', () => {

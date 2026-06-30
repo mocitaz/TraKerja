@@ -8,9 +8,14 @@
         <title>{{ config('app.name', 'TraKerja') }}</title>
         
         <!-- Favicon -->
-        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-        <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
+        <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}?v=2">
+        <link rel="apple-touch-icon" href="{{ asset('images/icon.png') }}?v=2">
+
+        <!-- PWA Meta & Manifest -->
+        <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-title" content="TraKerja">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -34,6 +39,15 @@
         
         @livewireScripts
         
-
+        <!-- Register PWA Service Worker -->
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js')
+                        .then(reg => console.log('PWA Service Worker registered!'))
+                        .catch(err => console.log('PWA Service Worker failed:', err));
+                });
+            }
+        </script>
     </body>
 </html>
