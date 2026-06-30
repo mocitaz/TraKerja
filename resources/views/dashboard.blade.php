@@ -20,11 +20,9 @@
                         <p class="text-[11px] text-zinc-400 mt-0.5">Welcome back, <span class="font-bold text-zinc-700">{{ explode(' ', Auth::user()->name)[0] }}</span>! Here is your career momentum and tracking progress.</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-2.5 shrink-0 self-start md:self-center">
-                    <div class="flex items-center gap-2 px-2.5 py-1.5 bg-white border border-zinc-200/60 rounded-md text-[11px] font-semibold text-zinc-650 shadow-2xs">
-                        <i class="ph ph-calendar text-primary-500 /* [BRAND_PRIMARY] */"></i>
-                        <span>{{ now()->timezone('Asia/Jakarta')->translatedFormat('l, d F Y') }}</span>
-                    </div>
+                <div class="flex items-center gap-1.5 text-[11px] font-semibold text-zinc-500 select-none shrink-0 self-start md:self-center">
+                    <i class="ph ph-calendar-blank text-zinc-700 text-sm"></i>
+                    <span class="tracking-tight">{{ now()->timezone('Asia/Jakarta')->translatedFormat('l, d F Y') }}</span>
                 </div>
             </div>
 
