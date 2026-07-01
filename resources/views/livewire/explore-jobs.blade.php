@@ -10,7 +10,7 @@
                     <h1 class="text-sm font-bold text-zinc-800 tracking-tight">Explore Jobs</h1>
                     <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[9px] font-black uppercase tracking-wider rounded border border-primary-100/60 leading-none">Scraper Feed</span>
                 </div>
-                <p class="text-[11px] text-zinc-400 mt-0.5">Hasil agregasi lowongan kerja terverifikasi anti-ghosting dari berbagai platform terpercaya.</p>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Verified, anti-ghosting job postings aggregated from multiple trusted platforms.</p>
             </div>
         </div>
     </div>
@@ -24,18 +24,20 @@
 
         <div class="relative z-10 max-w-5xl mx-auto space-y-4">
             <h2 class="text-xl md:text-2xl font-black text-zinc-900 tracking-tight leading-tight">
-                Temukan Karir Impian Anda Hari Ini
+                Find Your Dream Career Today
             </h2>
             <p class="text-[11px] md:text-xs text-zinc-500 max-w-xl mx-auto leading-relaxed">
-                Jelajahi ribuan lowongan kerja terverifikasi anti-ghosting dari berbagai perusahaan ternama di seluruh Indonesia secara real-time.
-                        <!-- Pill Search Bar (Unified Row) -->
+                Explore thousands of verified anti-ghosting job openings from leading companies across Indonesia in real-time.
+            </p>
+            
+            <!-- Pill Search Bar (Unified Row) -->
             <div class="bg-white border border-zinc-200 rounded-2xl md:rounded-full p-2 md:p-1.5 shadow-2xs flex flex-col md:flex-row items-stretch md:items-center gap-2.5 md:gap-0 mt-6 max-w-5xl mx-auto">
                 <!-- Search input -->
                 <div class="flex-grow min-w-[150px] relative flex items-center pl-3">
                     <i class="ph ph-magnifying-glass text-zinc-400 text-xs absolute left-3"></i>
                     <input type="text" 
                            wire:model.live.debounce.300ms="search" 
-                           placeholder="Posisi, skill, atau perusahaan..." 
+                           placeholder="Job title, skills, or company name..." 
                            class="w-full text-xs bg-transparent border-0 focus:ring-0 text-zinc-900 pl-6 pr-2 py-1.5 font-semibold placeholder-zinc-400 focus:outline-hidden">
                 </div>
 
@@ -45,7 +47,7 @@
                 <div class="relative flex items-center px-3 md:px-2 py-1.5 md:py-0 border border-zinc-100 md:border-0 rounded-lg bg-zinc-50/50 md:bg-transparent">
                     <i class="ph ph-circles-four text-zinc-400 text-xs mr-2 md:mr-1 shrink-0"></i>
                     <select wire:model.live="selectedField" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1 md:py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-full md:w-[120px] truncate outline-none select-none appearance-none">
-                        <option value="">Semua Sektor</option>
+                        <option value="">All Sectors</option>
                         @foreach($fieldsList as $fieldItem)
                             <option value="{{ $fieldItem }}">{{ $fieldItem }}</option>
                         @endforeach
@@ -58,7 +60,7 @@
                 <div class="relative flex items-center px-3 md:px-2 py-1.5 md:py-0 border border-zinc-100 md:border-0 rounded-lg bg-zinc-50/50 md:bg-transparent">
                     <i class="ph ph-graduation-cap text-zinc-400 text-xs mr-2 md:mr-1 shrink-0"></i>
                     <select wire:model.live="selectedMajor" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1 md:py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-full md:w-[120px] truncate outline-none select-none appearance-none">
-                        <option value="">Semua Jurusan</option>
+                        <option value="">All Majors</option>
                         @foreach($majorsList as $majorItem)
                             <option value="{{ $majorItem }}">{{ $majorItem }}</option>
                         @endforeach
@@ -71,7 +73,7 @@
                 <div class="relative flex items-center px-3 md:px-2 py-1.5 md:py-0 border border-zinc-100 md:border-0 rounded-lg bg-zinc-50/50 md:bg-transparent">
                     <i class="ph ph-map-pin text-zinc-400 text-xs mr-2 md:mr-1 shrink-0"></i>
                     <select wire:model.live="selectedProvince" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1 md:py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-full md:w-[110px] truncate outline-none select-none appearance-none">
-                        <option value="">Provinsi</option>
+                        <option value="">Province</option>
                         @foreach($provincesList as $provItem)
                             <option value="{{ $provItem }}">{{ $provItem }}</option>
                         @endforeach
@@ -85,9 +87,9 @@
                     <i class="ph ph-map-pin-line text-zinc-400 text-xs mr-2 md:mr-1 shrink-0"></i>
                     <select wire:model.live="selectedLocation" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1 md:py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-full md:w-[110px] truncate outline-none select-none appearance-none" {{ empty($selectedProvince) ? 'disabled' : '' }}>
                         @if(empty($selectedProvince))
-                            <option value="">Pilih Provinsi</option>
+                            <option value="">Select Province</option>
                         @else
-                            <option value="">Semua Kota</option>
+                            <option value="">All Cities</option>
                             @foreach($locationsList as $locItem)
                                 <option value="{{ $locItem }}">{{ $locItem }}</option>
                             @endforeach
@@ -101,7 +103,7 @@
                 <div class="relative flex items-center px-3 md:px-2 py-1.5 md:py-0 border border-zinc-100 md:border-0 rounded-lg bg-zinc-50/50 md:bg-transparent">
                     <i class="ph ph-briefcase text-zinc-400 text-xs mr-2 md:mr-1 shrink-0"></i>
                     <select wire:model.live="selectedWorkType" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1 md:py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-full md:w-[100px] truncate outline-none select-none appearance-none">
-                        <option value="">Tipe Kerja</option>
+                        <option value="">Work Type</option>
                         <option value="Onsite">Onsite</option>
                         <option value="Remote">Remote</option>
                         <option value="Hybrid">Hybrid</option>
@@ -111,7 +113,7 @@
                 <!-- Action Cari Button -->
                 <button type="button" 
                         class="md:ml-2 px-5 h-[34px] bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 text-[11px] font-black rounded-lg md:rounded-full uppercase tracking-wider transition-all duration-150 active:scale-97 flex items-center justify-center gap-1 shrink-0 focus:outline-hidden">
-                    Cari
+                    Search
                 </button>
             </div>
 
@@ -119,7 +121,7 @@
             <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[9.5px] font-mono font-bold text-zinc-400 uppercase tracking-wider pt-2">
                 <div class="flex items-center gap-1 text-zinc-600 bg-zinc-100 border border-zinc-200 px-2.5 py-0.5 rounded-full shadow-3xs">
                     <i class="ph ph-briefcase-metal text-[11px]"></i>
-                    <span>Total Lowongan: {{ $postings->total() }}</span>
+                    <span>Total Openings: {{ $postings->total() }}</span>
                 </div>
                 <span class="text-zinc-200 hidden sm:inline">&bull;</span>
                 <button type="button" 
@@ -133,7 +135,7 @@
                         wire:click="resetFilters" 
                         class="flex items-center gap-1 hover:text-rose-600 transition-colors focus:outline-hidden cursor-pointer">
                     <i class="ph ph-trash text-xs"></i>
-                    Reset Filter
+                    Reset Filters
                 </button>
             </div>
         </div>
@@ -234,7 +236,7 @@
                     @if (!$hasLocations)
                         <div class="text-center py-6 text-zinc-400 text-[10px]">
                             <i class="ph ph-map-pin-line text-lg mb-1 block"></i>
-                            Belum ada lokasi terdeteksi.
+                            No locations detected.
                         </div>
                     @endif
                 </div>
@@ -374,7 +376,7 @@
                                     
                                     <div class="relative">
                                         @if (session()->has('report_success_' . $job->id))
-                                            <span class="text-[9px] text-emerald-600 font-semibold block animate-pulse">Laporan Diterima!</span>
+                                            <span class="text-[9px] text-emerald-600 font-semibold block animate-pulse">Report Received!</span>
                                         @elseif (session()->has('report_info_' . $job->id))
                                             <span class="text-[9px] text-zinc-500 block font-semibold">{{ session('report_info_' . $job->id) }}</span>
                                         @else
@@ -382,7 +384,7 @@
                                                     wire:click="initiateReportExpired({{ $job->id }})" 
                                                     class="text-[9px] text-zinc-400 hover:text-rose-600 transition-colors flex items-center gap-1 font-bold uppercase tracking-wider focus:outline-hidden">
                                                 <i class="ph ph-warning-circle text-[11px] shrink-0"></i>
-                                                Laporkan
+                                                Report
                                             </button>
                                         @endif
                                     </div>
@@ -391,24 +393,24 @@
                                 <!-- Right Action: Apply & Track Link -->
                                 <div class="flex items-center gap-1.5">
                                     @if (session()->has('track_success_' . $job->id))
-                                        <span class="w-7 h-7 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-md flex items-center justify-center shadow-3xs" title="Disimpan ke Tracker!">
+                                        <span class="w-7 h-7 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-md flex items-center justify-center shadow-3xs" title="Saved to Tracker!">
                                             <i class="ph ph-check-circle text-[13px]"></i>
                                         </span>
                                     @elseif (session()->has('track_info_' . $job->id))
-                                        <span class="w-7 h-7 bg-zinc-50 text-zinc-400 border border-zinc-200 rounded-md flex items-center justify-center shadow-3xs" title="Sudah disimpan sebelumnya">
+                                        <span class="w-7 h-7 bg-zinc-50 text-zinc-400 border border-zinc-200 rounded-md flex items-center justify-center shadow-3xs" title="Already saved previously">
                                             <i class="ph ph-check text-[13px]"></i>
                                         </span>
                                     @else
                                         <button type="button" 
                                                 wire:click="initiateTrackJob({{ $job->id }})" 
-                                                title="Simpan ke Tracker"
+                                                title="Save to Tracker"
                                                 class="w-7 h-7 bg-primary-50 text-primary-750 hover:bg-primary-100 border border-primary-200/50 rounded-md shadow-3xs transition-all active:scale-97 flex items-center justify-center focus:outline-hidden">
                                             <i class="ph ph-folder-notch-plus text-[13px]"></i>
                                         </button>
                                     @endif
                                     <a href="{{ $job->raw_url }}" 
                                        target="_blank" 
-                                       title="Lamar Lowongan (Buka Link)"
+                                       title="Apply for Job (Open Link)"
                                        class="w-7 h-7 bg-zinc-950 text-white hover:bg-zinc-800 rounded-md shadow-3xs transition-all active:scale-97 flex items-center justify-center">
                                         <i class="ph-bold ph-arrow-up-right text-[11px]"></i>
                                     </a>
@@ -426,8 +428,8 @@
                 <!-- Empty State listings -->
                 <div class="bg-white border border-zinc-200 rounded-xl p-16 text-center shadow-3xs select-none">
                     <i class="ph ph-briefcase-metal text-zinc-300 text-5xl mb-3 block mx-auto animate-pulse"></i>
-                    <h3 class="text-xs font-bold text-zinc-800 mb-1">Belum Ada Lowongan Kerja Aktif</h3>
-                    <p class="text-[11px] text-zinc-500 max-w-sm mx-auto mb-4">Sistem scraping belum merekam data dari feed target dengan kriteria filter terpilih.</p>
+                    <h3 class="text-xs font-bold text-zinc-800 mb-1">No Active Job Postings Found</h3>
+                    <p class="text-[11px] text-zinc-500 max-w-sm mx-auto mb-4">No listings found matching your search filters.</p>
                 </div>
             @endif
         </div>
@@ -445,7 +447,7 @@
                         </div>
                         <div>
                             <div class="flex items-center gap-1.5">
-                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Simpan Tracker</h3>
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Save to Tracker</h3>
                                 <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[8.5px] font-bold uppercase tracking-wider rounded border border-primary-100/60 leading-none">Confirm</span>
                             </div>
                             <p class="text-zinc-400 text-[9px] font-medium mt-0.5">Career Growth Tracking</p>
@@ -459,14 +461,14 @@
                 <!-- Content -->
                 <div class="p-5 bg-white overflow-y-auto custom-scrollbar flex-1 flex flex-col text-left">
                     <p class="text-xs text-zinc-700 leading-relaxed font-semibold">
-                        Apakah Anda yakin sudah melamar lowongan kerja ini?
+                        Are you sure you have applied for this job?
                     </p>
                     <p class="text-[11px] text-zinc-500 mt-2 leading-relaxed">
-                        Apakah Anda sudah melamar posisi <span class="font-bold text-zinc-800">{{ $confirmingJobTitle }}</span> di <span class="font-bold text-zinc-800">{{ $confirmingJobCompany }}</span> melalui portal <span class="font-bold text-zinc-800">{{ $confirmingJobPortal }}</span>?
+                        Have you applied for the position of <span class="font-bold text-zinc-800">{{ $confirmingJobTitle }}</span> at <span class="font-bold text-zinc-800">{{ $confirmingJobCompany }}</span> via <span class="font-bold text-zinc-800">{{ $confirmingJobPortal }}</span>?
                     </p>
                     <div class="mt-4 flex items-start gap-2 text-primary-700 bg-primary-50/30 p-3 rounded-md border border-primary-100/60 select-none">
                         <i class="ph ph-info text-base shrink-0"></i>
-                        <p class="text-[10px] font-medium leading-relaxed">Menyimpan lowongan kerja ini akan mendaftarkannya sebagai lamaran aktif dalam pelacak karier Anda dengan status <span class="font-bold text-zinc-700">Applied</span>.</p>
+                        <p class="text-[10px] font-medium leading-relaxed">Saving this job will register it as an active application in your career tracker with the status of <span class="font-bold text-zinc-700">Applied</span>.</p>
                     </div>
                 </div>
 
@@ -476,13 +478,13 @@
                        target="_blank" 
                        wire:click="cancelTrackJob"
                        class="h-[30px] flex items-center justify-center text-[10px] font-bold text-zinc-500 hover:text-zinc-700 uppercase tracking-wider transition-colors focus:outline-hidden">
-                        Belum, Lamar Dulu
+                        Not Yet, Apply First
                     </a>
                     
                     <button type="button" 
                             wire:click="confirmTrackJob" 
                             class="px-4 h-[30px] bg-primary-50 text-zinc-800 hover:bg-primary-100 border border-primary-200/60 text-[10px] font-bold rounded-md shadow-3xs transition-all active:scale-97 hover:shadow-2xs uppercase tracking-wider flex items-center justify-center focus:outline-hidden">
-                        Ya, Sudah Melamar
+                        Yes, Already Applied
                     </button>
                 </div>
             </div>
@@ -501,7 +503,7 @@
                         </div>
                         <div>
                             <div class="flex items-center gap-1.5">
-                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Laporkan Ditutup</h3>
+                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Report Closed</h3>
                                 <span class="px-1.5 py-0.5 bg-rose-50 text-rose-800 text-[8.5px] font-bold uppercase tracking-wider rounded border border-rose-100/60 leading-none">Report</span>
                             </div>
                             <p class="text-zinc-400 text-[9px] font-medium mt-0.5">Job Board Integrity</p>
@@ -515,14 +517,14 @@
                 <!-- Content -->
                 <div class="p-5 bg-white overflow-y-auto custom-scrollbar flex-1 flex flex-col text-left">
                     <p class="text-xs text-zinc-700 leading-relaxed font-semibold">
-                        Apakah Anda yakin ingin melaporkan bahwa lowongan kerja ini sudah ditutup?
+                        Are you sure you want to report this job posting as closed?
                     </p>
                     <p class="text-[11px] text-zinc-500 mt-2 leading-relaxed">
-                        Anda akan melaporkan posisi <span class="font-bold text-zinc-800">{{ $confirmingReportJobTitle }}</span> di <span class="font-bold text-zinc-800">{{ $confirmingReportJobCompany }}</span> sebagai expired/closed.
+                        You will report the position of <span class="font-bold text-zinc-800">{{ $confirmingReportJobTitle }}</span> at <span class="font-bold text-zinc-800">{{ $confirmingReportJobCompany }}</span> as expired/closed.
                     </p>
                     <div class="mt-4 flex items-start gap-2 text-rose-700 bg-rose-50/30 p-3 rounded-md border border-rose-100/60 select-none">
                         <i class="ph ph-warning-octagon text-base shrink-0"></i>
-                        <p class="text-[10px] font-medium leading-relaxed">Melaporkan lowongan kerja yang sudah tidak aktif membantu menjaga kualitas informasi di TraKerja. Sistem akan secara otomatis mengarsipkan lowongan setelah menerima beberapa laporan serupa.</p>
+                        <p class="text-[10px] font-medium leading-relaxed">Reporting inactive job listings helps maintain the data quality of TraKerja. The system will automatically archive the listing after receiving several reports.</p>
                     </div>
                 </div>
 
@@ -531,13 +533,13 @@
                     <button type="button" 
                             wire:click="cancelReportExpired"
                             class="h-[30px] flex items-center justify-center text-[10px] font-bold text-zinc-500 hover:text-zinc-700 uppercase tracking-wider transition-colors focus:outline-hidden">
-                        Batal
+                        Cancel
                     </button>
                     
                     <button type="button" 
                             wire:click="confirmReportExpired" 
                             class="px-4 h-[30px] bg-rose-50 text-rose-800 hover:bg-rose-100 border border-rose-200/60 text-[10px] font-bold rounded-md shadow-3xs transition-all active:scale-97 hover:shadow-2xs uppercase tracking-wider flex items-center justify-center focus:outline-hidden">
-                        Ya, Laporkan
+                        Yes, Report
                     </button>
                 </div>
             </div>

@@ -18,7 +18,7 @@
                     <i class="ph ph-info text-xs"></i>
                 </div>
                 <p class="text-[9.5px] font-semibold text-zinc-500 leading-normal">
-                    Target belum aktif minggu ini. Atur target Anda di bawah.
+                    Weekly targets are not active. Set your targets below.
                 </p>
             </div>
         @endif
