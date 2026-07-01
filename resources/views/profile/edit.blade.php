@@ -175,38 +175,38 @@
                     </div>
 
                     {{-- macOS-style Sidebar Tab Switcher --}}
-                    <div class="bg-white rounded-lg border border-zinc-200/60 p-2 shadow-3xs space-y-1">
+                    <div class="bg-white rounded-lg border border-zinc-200/60 p-1 shadow-3xs flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-visible no-scrollbar gap-1">
                         <button onclick="switchTab('profile')" id="tab-profile"
-                                class="tab-btn active w-full flex items-center justify-between px-3 py-2.5 text-[11px] font-bold rounded-md transition-all focus:outline-none">
+                                class="tab-btn active shrink-0 flex items-center justify-between px-3 py-2 text-[11px] font-bold rounded-md transition-all focus:outline-none w-auto lg:w-full gap-4">
                             <div class="flex items-center gap-2">
                                 <i class="ph ph-user-focus text-sm"></i>
                                 <span>Profile Details</span>
                             </div>
-                            <i class="ph ph-caret-right text-[10px] opacity-60"></i>
+                            <i class="ph ph-caret-right text-[10px] opacity-60 hidden lg:block"></i>
                         </button>
                         <button onclick="switchTab('security')" id="tab-security"
-                                class="tab-btn w-full flex items-center justify-between px-3 py-2.5 text-[11px] font-bold rounded-md transition-all focus:outline-none">
+                                class="tab-btn shrink-0 flex items-center justify-between px-3 py-2 text-[11px] font-bold rounded-md transition-all focus:outline-none w-auto lg:w-full gap-4">
                             <div class="flex items-center gap-2">
                                 <i class="ph ph-shield-check text-sm"></i>
                                 <span>Security & Control</span>
                             </div>
-                            <i class="ph ph-caret-right text-[10px] opacity-60"></i>
+                            <i class="ph ph-caret-right text-[10px] opacity-60 hidden lg:block"></i>
                         </button>
                         <button onclick="switchTab('notifications')" id="tab-notifications"
-                                class="tab-btn w-full flex items-center justify-between px-3 py-2.5 text-[11px] font-bold rounded-md transition-all focus:outline-none">
+                                class="tab-btn shrink-0 flex items-center justify-between px-3 py-2 text-[11px] font-bold rounded-md transition-all focus:outline-none w-auto lg:w-full gap-4">
                             <div class="flex items-center gap-2">
                                 <i class="ph ph-bell text-sm"></i>
                                 <span>Email Notifications</span>
                             </div>
-                            <i class="ph ph-caret-right text-[10px] opacity-60"></i>
+                            <i class="ph ph-caret-right text-[10px] opacity-60 hidden lg:block"></i>
                         </button>
                         <button onclick="switchTab('activities')" id="tab-activities"
-                                class="tab-btn w-full flex items-center justify-between px-3 py-2.5 text-[11px] font-bold rounded-md transition-all focus:outline-none">
+                                class="tab-btn shrink-0 flex items-center justify-between px-3 py-2 text-[11px] font-bold rounded-md transition-all focus:outline-none w-auto lg:w-full gap-4">
                             <div class="flex items-center gap-2">
                                 <i class="ph ph-list-dashes text-sm"></i>
                                 <span>Activity Log</span>
                             </div>
-                            <i class="ph ph-caret-right text-[10px] opacity-60"></i>
+                            <i class="ph ph-caret-right text-[10px] opacity-60 hidden lg:block"></i>
                         </button>
                     </div>
                 </div>

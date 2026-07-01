@@ -119,7 +119,7 @@
                                         <div class="w-1.5 h-1.5 rounded-full bg-zinc-300"></div>
                                         <div class="w-1.5 h-1.5 rounded-full bg-zinc-300"></div>
                                     </div>
-                                    <div class="flex-1 mx-2 h-3.5 bg-white rounded border border-zinc-150 flex items-center px-1">
+                                    <div class="flex-1 mx-2 h-3.5 bg-white rounded border border-zinc-200 flex items-center px-1">
                                         <i class="ph ph-lock text-[6px] text-zinc-400 mr-1 shrink-0"></i>
                                         <div class="h-0.5 w-10 bg-zinc-200 rounded-full"></div>
                                     </div>
@@ -166,7 +166,7 @@
                     </div>
 
                     <!-- Platform strip -->
-                    <div class="border-t border-zinc-150 bg-zinc-50/50 px-5 py-3 rounded-b-lg flex flex-wrap justify-between items-center gap-4 mt-5">
+                    <div class="border-t border-zinc-200 bg-zinc-50/50 px-5 py-3 rounded-b-lg flex flex-wrap justify-between items-center gap-4 mt-5">
                         <p class="text-[8px] font-bold text-zinc-400 uppercase tracking-widest w-full md:w-auto text-center leading-none">Supported Platforms</p>
                         <div class="flex flex-wrap justify-center items-center gap-4 sm:gap-5 flex-1">
                             @foreach([
@@ -178,7 +178,7 @@
                             ] as $platform)
                             <div class="flex items-center gap-1 opacity-70">
                                 <img src="https://www.google.com/s2/favicons?domain={{ $platform['id'] }}&sz=64" class="w-3 h-3 object-contain shrink-0" alt="{{ $platform['name'] }}" />
-                                <span class="text-[9px] font-bold text-zinc-550 leading-none">{{ $platform['name'] }}</span>
+                                <span class="text-[9px] font-bold text-zinc-500 leading-none">{{ $platform['name'] }}</span>
                             </div>
                             @endforeach
                         </div>
@@ -219,7 +219,7 @@
                     <!-- Setup manual card -->
                     <div class="bg-white rounded-lg border border-zinc-200/60 p-4 shadow-3xs">
                         <h3 class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3.5 pb-1.5 border-b border-zinc-100 leading-none">Manual Developer Mode Install</h3>
-                        <div class="space-y-3.5 relative before:absolute before:inset-0 before:ml-[0.65rem] before:h-[75%] before:w-px before:bg-zinc-150">
+                        <div class="space-y-3.5 relative before:absolute before:inset-0 before:ml-[0.65rem] before:h-[75%] before:w-px before:bg-zinc-200">
                             
                             <div class="relative flex items-start gap-2.5">
                                 <div class="w-5.5 h-5.5 rounded bg-zinc-50 border border-zinc-200 shadow-3xs flex items-center justify-center shrink-0 z-10 text-[8px] font-bold text-zinc-400 leading-none">01</div>
@@ -335,7 +335,7 @@
                             <!-- Step 1: Upload Source -->
                             <div x-show="currentStep === 1" class="space-y-6">
                                 <div class="bg-white rounded-lg border border-zinc-200/60 shadow-3xs overflow-hidden">
-                                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 border-b border-zinc-150 w-full">
+                                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 border-b border-zinc-200 w-full">
                                         <div class="flex items-center gap-2.5">
                                             <div class="w-6.5 h-6.5 rounded bg-zinc-950 flex items-center justify-center text-white shrink-0">
                                                 <i class="ph ph-cloud-arrow-up text-sm"></i>
@@ -366,7 +366,7 @@
                                                        @change="fileName = $event.target.files[0].name; startScan()">
                                                 
                                                 <div class="upload-icon flex flex-col items-center gap-2">
-                                                    <div class="w-10 h-10 rounded bg-zinc-50 border border-zinc-150 flex items-center justify-center text-zinc-400 group-hover:text-zinc-600 group-hover:border-zinc-350 transition-colors shadow-3xs">
+                                                    <div class="w-10 h-10 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-400 group-hover:text-zinc-600 group-hover:border-zinc-300 transition-colors shadow-3xs">
                                                         <i class="ph ph-file-csv text-xl"></i>
                                                     </div>
                                                     <div>
@@ -421,7 +421,7 @@
 
                                 <!-- Preview Table -->
                                 <div class="bg-white rounded-lg border border-zinc-200/60 shadow-3xs overflow-hidden">
-                                    <div class="flex items-center justify-between px-4 py-3 border-b border-zinc-150">
+                                    <div class="flex items-center justify-between px-4 py-3 border-b border-zinc-200">
                                         <div>
                                             <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Structured Preview</h3>
                                             <p class="text-[8px] font-bold text-zinc-400 uppercase mt-0.5 leading-none" x-text="fileName"></p>
@@ -433,9 +433,9 @@
                                         <table class="w-full border-collapse min-w-[600px]">
                                             <thead>
                                                 <tr class="bg-zinc-50/50">
-                                                    <th class="w-8 px-2 py-1.5 border-b border-zinc-150"></th>
+                                                    <th class="w-8 px-2 py-1.5 border-b border-zinc-200"></th>
                                                     @foreach(['Company','Position','Location','Platform','Status','Date'] as $header)
-                                                        <th class="px-3 py-1.5 text-left border-b border-zinc-150">
+                                                        <th class="px-3 py-1.5 text-left border-b border-zinc-200">
                                                             <span class="text-[8px] font-bold text-zinc-400 uppercase tracking-widest leading-none">{{ $header }}</span>
                                                         </th>
                                                     @endforeach
@@ -449,7 +449,7 @@
                                                 ] as $i => $row)
                                                 <tr class="hover:bg-zinc-50/50 transition-colors">
                                                     <td class="px-2 py-2 text-center border-b border-zinc-100">
-                                                        <span class="text-[8px] font-bold text-zinc-350">{{ $i+1 }}</span>
+                                                        <span class="text-[8px] font-bold text-zinc-400">{{ $i+1 }}</span>
                                                     </td>
                                                     @foreach($row as $cell)
                                                         <td class="px-3 py-2 border-b border-zinc-100">
@@ -462,7 +462,7 @@
                                         </table>
                                     </div>
 
-                                    <div class="px-4 py-2.5 flex items-center justify-between border-t border-zinc-150">
+                                    <div class="px-4 py-2.5 flex items-center justify-between border-t border-zinc-200">
                                         <button type="button" @click="currentStep = 1" class="text-[9px] font-bold text-zinc-400 hover:text-zinc-700 uppercase tracking-wider flex items-center gap-1 focus:outline-none">
                                             <i class="ph ph-arrow-left"></i> Re-Upload
                                         </button>

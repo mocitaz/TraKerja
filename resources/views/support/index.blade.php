@@ -22,7 +22,7 @@
 
             {{-- Flash Alert Messages --}}
             @if(session('success_message'))
-                <div class="mb-5 p-3.5 bg-emerald-50/40 border border-emerald-250 text-emerald-800 rounded-md flex items-center gap-2.5 shadow-3xs">
+                <div class="mb-5 p-3.5 bg-emerald-50/40 border border-emerald-200 text-emerald-800 rounded-md flex items-center gap-2.5 shadow-3xs">
                     <i class="ph ph-check-circle text-emerald-600 text-base shrink-0"></i>
                     <p class="text-xs font-semibold leading-normal">{{ session('success_message') }}</p>
                 </div>
@@ -200,7 +200,7 @@
                             <i class="ph ph-headset text-sm text-zinc-200"></i>
                         </div>
                         <h4 class="text-xs font-bold tracking-tight mb-1">Premium Help Desk</h4>
-                        <p class="text-[11px] text-zinc-450 leading-relaxed mb-4 font-semibold">Our support team operates Monday - Friday from 9:00 AM to 6:00 PM (GMT+7). We aim to respond within 2-4 hours.</p>
+                        <p class="text-[11px] text-zinc-400 leading-relaxed mb-4 font-semibold">Our support team operates Monday - Friday from 9:00 AM to 6:00 PM (GMT+7). We aim to respond within 2-4 hours.</p>
 
                         <div class="space-y-3 pt-3.5 border-t border-white/5">
                             <div class="flex items-center gap-2">
@@ -226,11 +226,11 @@
                         <div class="space-y-4">
                             <div>
                                 <h5 class="text-xs font-bold text-zinc-800 leading-tight">Response Time?</h5>
-                                <p class="text-[11px] font-medium text-zinc-550 mt-1.5 leading-relaxed">Typically you will receive a comprehensive resolution from our admin support desk within a few hours on business days.</p>
+                                <p class="text-[11px] font-medium text-zinc-500 mt-1.5 leading-relaxed">Typically you will receive a comprehensive resolution from our admin support desk within a few hours on business days.</p>
                             </div>
                             <div>
                                 <h5 class="text-xs font-bold text-zinc-800 leading-tight">Feature Requests?</h5>
-                                <p class="text-[11px] font-medium text-zinc-550 mt-1.5 leading-relaxed">Absolutely! Please submit them under the 'Feature Request' category. We track popular suggestions closely.</p>
+                                <p class="text-[11px] font-medium text-zinc-500 mt-1.5 leading-relaxed">Absolutely! Please submit them under the 'Feature Request' category. We track popular suggestions closely.</p>
                             </div>
                         </div>
                     </div>
@@ -244,7 +244,7 @@
                     @php
                         $userStatusClasses = [
                             'pending' => 'bg-amber-50 text-amber-700 border-amber-200/60',
-                            'replied' => 'bg-indigo-50 text-indigo-750 border-indigo-200/60',
+                            'replied' => 'bg-indigo-50 text-indigo-700 border-indigo-200/60',
                             'completed' => 'bg-emerald-50 text-emerald-700 border-emerald-200/60',
                             'on_hold' => 'bg-rose-50 text-rose-700 border-rose-200/60',
                         ][$ticket->status] ?? 'bg-zinc-50 text-zinc-700 border-zinc-200/60';
@@ -288,7 +288,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" @click.stop
-                                        class="w-6.5 h-6.5 rounded hover:bg-rose-50 border border-transparent hover:border-rose-150 text-zinc-400 hover:text-rose-600 flex items-center justify-center transition-colors focus:outline-none">
+                                        class="w-6.5 h-6.5 rounded hover:bg-rose-50 border border-transparent hover:border-rose-200 text-zinc-400 hover:text-rose-600 flex items-center justify-center transition-colors focus:outline-none">
                                         <i class="ph ph-trash text-sm"></i>
                                     </button>
                                 </form>
@@ -299,7 +299,7 @@
                         </div>
 
                         {{-- Expanded Content --}}
-                        <div x-show="expanded" x-cloak class="border-t border-zinc-150 bg-zinc-50/40 p-4 space-y-4">
+                        <div x-show="expanded" x-cloak class="border-t border-zinc-200 bg-zinc-50/40 p-4 space-y-4">
 
                             {{-- User Message --}}
                             <div class="bg-white rounded-md border border-zinc-200 p-3 shadow-3xs">
@@ -312,7 +312,7 @@
                                         <p class="text-[8px] font-semibold text-zinc-400 mt-0.5 leading-none">{{ $ticket->created_at->format('d M Y H:i') }}</p>
                                     </div>
                                 </div>
-                                <p class="text-xs font-medium text-zinc-650 leading-relaxed whitespace-pre-line">
+                                <p class="text-xs font-medium text-zinc-600 leading-relaxed whitespace-pre-line">
                                     {{ $ticket->message }}
                                 </p>
                             </div>
@@ -329,7 +329,7 @@
                                             <p class="text-[8px] font-semibold text-zinc-400 mt-0.5 leading-none">{{ $ticket->replied_at->format('d M Y H:i') }}</p>
                                         </div>
                                     </div>
-                                    <p class="text-xs font-medium text-zinc-650 leading-relaxed whitespace-pre-line">
+                                    <p class="text-xs font-medium text-zinc-600 leading-relaxed whitespace-pre-line">
                                         {{ $ticket->admin_reply }}
                                     </p>
                                 </div>
@@ -344,7 +344,7 @@
                     </div>
                 @empty
                     <div class="bg-white rounded-lg border border-zinc-200/60 p-6 text-center shadow-3xs animate-fade-in">
-                        <div class="w-9 h-9 mx-auto bg-zinc-50 text-zinc-450 border border-zinc-200 rounded flex items-center justify-center mb-3">
+                        <div class="w-9 h-9 mx-auto bg-zinc-50 text-zinc-500 border border-zinc-200 rounded flex items-center justify-center mb-3">
                             <i class="ph ph-folder text-lg"></i>
                         </div>
                         <h4 class="text-xs font-bold text-zinc-850 mb-0.5 uppercase tracking-wider">No ticket history found</h4>

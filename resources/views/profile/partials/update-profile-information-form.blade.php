@@ -67,7 +67,7 @@
     <div class="pt-2">
         <label class="block text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider pl-0.5 mb-2.5">Preferences</label>
         
-        <div class="flex items-start gap-2.5 p-3.5 bg-zinc-50/50 rounded-lg border border-zinc-150/60 transition-all hover:bg-zinc-50/80">
+        <div class="flex items-start gap-2.5 p-3.5 bg-zinc-50/50 rounded-lg border border-zinc-200/60 transition-all hover:bg-zinc-50/80">
             <div class="flex items-center h-5 shrink-0">
                 <input id="auto_archive_rejected" name="auto_archive_rejected" type="checkbox" value="1"
                        {{ old('auto_archive_rejected', $user->auto_archive_rejected) ? 'checked' : '' }}
