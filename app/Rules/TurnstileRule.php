@@ -26,7 +26,7 @@ class TurnstileRule implements ValidationRule
         ]);
 
         if (! $response->json('success')) {
-            $fail('Verifikasi keamanan gagal. Silakan coba lagi.');
+            $fail('Security verification failed. Please try again.');
         }
     }
 }

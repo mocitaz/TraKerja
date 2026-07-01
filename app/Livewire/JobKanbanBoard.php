@@ -89,7 +89,7 @@ class JobKanbanBoard extends Component
         if ($job) {
             $this->dispatch('confirm-action', [
                 'title' => 'Delete Application?',
-                'message' => "Data lamaran untuk {$job->company_name} ini akan dihapus permanen (10 XP akan ditarik kembali). Anda juga bisa mengedit lamaran jika hanya salah isi data.",
+                'message' => "The application data for {$job->company_name} will be permanently deleted (10 XP will be deducted). You can also edit the application details instead.",
                 'btnText' => 'Delete Now',
                 'onConfirm' => 'delete-confirmed',
                 'params' => ['jobId' => $jobId]
@@ -259,12 +259,12 @@ class JobKanbanBoard extends Component
                 // Open modal AFTER draft is ready
                 $this->showFollowUpModal = true;
             } else {
-                $this->followUpDraft = "Maaf, gagal membuat draft email. Silakan coba lagi nanti.";
+                $this->followUpDraft = "Sorry, failed to generate email draft. Please try again later.";
                 $this->showFollowUpModal = true;
             }
         } catch (\Exception $e) {
             Log::error('AI Follow Up Error: ' . $e->getMessage());
-            $this->followUpDraft = "Terjadi kesalahan saat menghubungi server AI.";
+            $this->followUpDraft = "An error occurred while contacting the AI server.";
             $this->showFollowUpModal = true;
         }
 

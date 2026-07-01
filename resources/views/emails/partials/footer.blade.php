@@ -9,13 +9,13 @@
                         TraKerja &copy; {{ date('Y') }}. All rights reserved.
                     </p>
                     <p style="margin: 0 0 16px 0; font-size: 11px; color: #a1a1aa; line-height: 1.5;">
-                        Workspace Pelacakan Lamaran Kerja Terintegrasi.<br>
-                        Dikelola oleh PT Teknalogi Transformasi Digital.
+                        Integrated Job Application Tracking Workspace.<br>
+                        Managed by PT Teknalogi Transformasi Digital.
                     </p>
                     
                     <!-- Links -->
                     <div style="text-align: left;">
-                        <a href="mailto:infoteknalogi@gmail.com" style="color: #71717a; text-decoration: none; font-size: 11px; font-weight: 600;">Hubungi Kami</a>
+                        <a href="mailto:infoteknalogi@gmail.com" style="color: #71717a; text-decoration: none; font-size: 11px; font-weight: 600;">Contact Us</a>
                         <span style="color: #e4e4e7; margin: 0 8px;">•</span>
                         <a href="https://instagram.com/teknalogi.id" style="color: #71717a; text-decoration: none; font-size: 11px; font-weight: 600;">Instagram</a>
                     </div>

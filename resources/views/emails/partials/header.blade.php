@@ -26,7 +26,7 @@
                     
                     <!-- Subtitle -->
                     <p style="margin: 0; font-size: 13px; font-weight: 450; color: #71717a; line-height: 1.5;">
-                        {{ $subtitle ?? 'Workspace Pelacakan Lamaran Kerja Terintegrasi' }}
+                        {{ $subtitle ?? 'Integrated Job Application Tracking Workspace' }}
                     </p>
                 </td>
             </tr>
