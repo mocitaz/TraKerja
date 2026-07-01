@@ -58,7 +58,7 @@
             @click.stop
         >
             {{-- Modal Header --}}
-            <div class="bg-white px-4 py-3.5 text-zinc-900 flex justify-between items-center border-b border-zinc-150/60 shrink-0">
+            <div class="bg-white px-4 py-3.5 text-zinc-900 flex justify-between items-center border-b border-zinc-200/60 shrink-0">
                 <div class="flex items-center gap-2.5">
                     <div class="w-7 h-7 rounded bg-zinc-50 border border-zinc-200/60 flex items-center justify-center shadow-3xs">
                         <i class="ph ph-calendar text-zinc-500 text-sm"></i>
@@ -86,7 +86,7 @@
                         <i class="ph text-[10px]" :class="iv.recruitment_stage === 'HR - Interview' ? 'ph-users' : 'ph-user-focus'"></i>
                         <span x-text="iv.recruitment_stage"></span>
                     </span>
-                    <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 rounded text-[9px] font-semibold border border-zinc-200/55"
+                    <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 rounded text-[9px] font-semibold border border-zinc-200"
                           x-text="iv.application_status"></span>
                     <template x-if="iv.is_future">
                         <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-50 text-amber-700 rounded text-[9px] font-semibold border border-amber-100">
@@ -137,7 +137,7 @@
             </div>
 
             {{-- Footer --}}
-            <div class="px-4 py-3 bg-zinc-50/30 border-t border-zinc-150/60 flex items-center justify-between gap-3 shrink-0">
+            <div class="px-4 py-3 bg-zinc-50/30 border-t border-zinc-200/60 flex items-center justify-between gap-3 shrink-0">
                 <div class="flex items-center gap-1">
                     <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-3 h-3 grayscale opacity-40">
                     <span class="text-[8px] font-bold text-zinc-400 tracking-wider uppercase">TraKerja Calendar</span>

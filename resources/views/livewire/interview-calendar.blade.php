@@ -2,12 +2,12 @@
     <!-- Controls Bar: Compact & Premium -->
     <div class="flex flex-col md:flex-row items-center justify-between gap-3 mb-5">
         <!-- Left: Month Navigation -->
-        <div class="flex items-center gap-1 bg-white border border-zinc-200/60 p-1 rounded-md shadow-3xs">
-            <button wire:click="previousMonth" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 text-zinc-650 transition-colors focus:outline-none">
+        <div class="flex items-center justify-between md:justify-start gap-1 bg-white border border-zinc-200/60 p-1 rounded-md shadow-3xs w-full md:w-auto">
+            <button wire:click="previousMonth" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 text-zinc-600 transition-colors focus:outline-none">
                 <i class="ph ph-caret-left"></i>
             </button>
             <h2 class="text-xs font-bold text-zinc-800 min-w-[120px] text-center tracking-tight">{{ $monthName }}</h2>
-            <button wire:click="nextMonth" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 text-zinc-650 transition-colors focus:outline-none">
+            <button wire:click="nextMonth" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 text-zinc-600 transition-colors focus:outline-none">
                 <i class="ph ph-caret-right"></i>
             </button>
             <div class="w-px h-4 bg-zinc-200 mx-1"></div>
@@ -19,13 +19,13 @@
         <!-- Right: View Toggle & Filter -->
         <div class="flex items-center gap-2.5 w-full md:w-auto">
             <!-- View Mode Switcher -->
-            <div class="flex p-0.5 bg-zinc-100 rounded-md shrink-0 shadow-3xs">
+            <div class="flex p-0.5 bg-zinc-100 rounded-md shrink-0 shadow-3xs flex-1 md:flex-initial">
                 <button wire:click="$set('viewMode', 'month')" 
-                    class="px-3.5 py-1 text-xs font-semibold rounded-md {{ $viewMode === 'month' ? 'bg-primary-50 text-zinc-800 border border-primary-200/60 shadow-3xs font-bold' : 'text-zinc-500 hover:text-zinc-800 border border-transparent' }} transition-all focus:outline-none">
+                    class="flex-1 md:flex-none px-3.5 py-1.5 text-xs font-semibold rounded-md {{ $viewMode === 'month' ? 'bg-primary-50 text-zinc-800 border border-primary-200/60 shadow-3xs font-bold' : 'text-zinc-500 hover:text-zinc-800 border border-transparent' }} transition-all focus:outline-none">
                     Month
                 </button>
                 <button wire:click="$set('viewMode', 'list')" 
-                    class="px-3.5 py-1 text-xs font-semibold rounded-md {{ $viewMode === 'list' ? 'bg-primary-50 text-zinc-800 border border-primary-200/60 shadow-3xs font-bold' : 'text-zinc-500 hover:text-zinc-800 border border-transparent' }} transition-all focus:outline-none">
+                    class="flex-1 md:flex-none px-3.5 py-1.5 text-xs font-semibold rounded-md {{ $viewMode === 'list' ? 'bg-primary-50 text-zinc-800 border border-primary-200/60 shadow-3xs font-bold' : 'text-zinc-500 hover:text-zinc-800 border border-transparent' }} transition-all focus:outline-none">
                     List
                 </button>
             </div>
@@ -53,16 +53,16 @@
         <div class="overflow-x-auto custom-scrollbar border border-zinc-200/60 rounded-lg shadow-3xs bg-white">
             <div class="min-w-[600px] bg-white">
                 <!-- Day Headers -->
-                <div class="grid grid-cols-7 bg-zinc-55/30 border-b border-zinc-150/65">
+                <div class="grid grid-cols-7 bg-zinc-50/50 border-b border-zinc-200/60">
                     @foreach(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as $day)
-                        <div class="px-2 py-2 text-center text-[9px] font-bold text-zinc-450 uppercase tracking-widest">
+                        <div class="px-2 py-2 text-center text-[9px] font-bold text-zinc-500 uppercase tracking-widest">
                             {{ $day }}
                         </div>
                     @endforeach
                 </div>
 
                 <!-- Calendar Grid -->
-                <div class="grid grid-cols-7 divide-x divide-y divide-zinc-150/50 -mt-px -ml-px">
+                <div class="grid grid-cols-7 divide-x divide-y divide-zinc-200/50 -mt-px -ml-px">
                     @foreach($calendarDays as $day)
                         <div class="min-h-[80px] p-1.5 border-b border-zinc-100/50 transition-colors {{ $day['isCurrentMonth'] ? 'bg-white' : 'bg-zinc-50/15 opacity-50' }} {{ $day['isToday'] ? 'bg-primary-50/15' : '' }} group">
                             <!-- Date Number -->
@@ -134,12 +134,12 @@
                                 <span>Outlook</span>
                             </a>
                         </div>
-                        <i class="ph ph-arrow-right text-zinc-350 group-hover:text-zinc-700 group-hover:translate-x-0.5 transition-transform ml-1"></i>
+                        <i class="ph ph-arrow-right text-zinc-400 group-hover:text-zinc-700 group-hover:translate-x-0.5 transition-transform ml-1"></i>
                     </div>
                 </div>
             @empty
                 <div class="bg-white rounded-lg p-12 text-center border border-zinc-200/60 shadow-3xs border-dashed">
-                    <div class="w-10 h-10 bg-zinc-50 border border-zinc-150 rounded-md flex items-center justify-center text-zinc-400 mx-auto mb-3">
+                    <div class="w-10 h-10 bg-zinc-50 border border-zinc-200 rounded-md flex items-center justify-center text-zinc-400 mx-auto mb-3">
                         <i class="ph ph-calendar text-xl"></i>
                     </div>
                     <h3 class="text-xs font-bold text-zinc-800 mb-1">No Interviews Found</h3>
