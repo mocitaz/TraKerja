@@ -27,28 +27,28 @@
             </div>
 
             <!-- Standardized Tab Switcher (Lavender Outline Theme) -->
-            <div class="flex p-0.5 bg-white border border-zinc-200/70 rounded-md shadow-3xs mb-6 max-w-xl">
+            <div class="flex overflow-x-auto no-scrollbar p-0.5 bg-white border border-zinc-200/70 rounded-md shadow-3xs mb-6 max-w-xl">
                 <button @click="activeTab = 'analyzer'; updateUrl('analyzer')" 
                         :class="activeTab === 'analyzer' ? 'bg-primary-50 text-zinc-800 border border-primary-200/60 font-bold shadow-3xs' : 'text-zinc-500 hover:bg-zinc-50 font-semibold'"
-                        class="flex-1 justify-center flex items-center gap-1.5 py-1.5 text-[11px] rounded transition-all focus:outline-none">
+                        class="flex-1 md:flex-initial shrink-0 justify-center flex items-center gap-1.5 py-1.5 px-3.5 text-[11px] rounded transition-all focus:outline-none">
                     <i class="ph ph-sparkle text-xs"></i>
                     <span>Resume Analyzer</span>
                 </button>
                 <button @click="activeTab = 'cover-letter'; updateUrl('cover-letter')" 
                         :class="activeTab === 'cover-letter' ? 'bg-primary-50 text-zinc-800 border border-primary-200/60 font-bold shadow-3xs' : 'text-zinc-500 hover:bg-zinc-50 font-semibold'"
-                        class="flex-1 justify-center flex items-center gap-1.5 py-1.5 text-[11px] rounded transition-all focus:outline-none">
+                        class="flex-1 md:flex-initial shrink-0 justify-center flex items-center gap-1.5 py-1.5 px-3.5 text-[11px] rounded transition-all focus:outline-none">
                     <i class="ph ph-envelope-simple text-xs"></i>
                     <span>Cover Letter</span>
                 </button>
                 <button @click="activeTab = 'photo'; updateUrl('photo')" 
                         :class="activeTab === 'photo' ? 'bg-primary-50 text-zinc-800 border border-primary-200/60 font-bold shadow-3xs' : 'text-zinc-500 hover:bg-zinc-50 font-semibold'"
-                        class="flex-1 justify-center flex items-center gap-1.5 py-1.5 text-[11px] rounded transition-all focus:outline-none">
+                        class="flex-1 md:flex-initial shrink-0 justify-center flex items-center gap-1.5 py-1.5 px-3.5 text-[11px] rounded transition-all focus:outline-none">
                     <i class="ph ph-camera text-xs"></i>
                     <span>Photo Studio</span>
                 </button>
                 <button @click="activeTab = 'outreach'; updateUrl('outreach')" 
                         :class="activeTab === 'outreach' ? 'bg-primary-50 text-zinc-800 border border-primary-200/60 font-bold shadow-3xs' : 'text-zinc-500 hover:bg-zinc-50 font-semibold'"
-                        class="flex-1 justify-center flex items-center gap-1.5 py-1.5 text-[11px] rounded transition-all focus:outline-none">
+                        class="flex-1 md:flex-initial shrink-0 justify-center flex items-center gap-1.5 py-1.5 px-3.5 text-[11px] rounded transition-all focus:outline-none">
                     <i class="ph ph-paper-plane-tilt text-xs"></i>
                     <span>Outreach</span>
                 </button>
@@ -189,7 +189,7 @@
                             </div>
 
                             <!-- Integrated Form Action Footer -->
-                            <div class="px-5 py-3.5 bg-zinc-50/60 border-t border-zinc-150/60 flex items-center justify-between">
+                            <div class="px-5 py-3.5 bg-zinc-50/60 border-t border-zinc-200/60 flex items-center justify-between">
                                 <p class="text-[10px] text-zinc-400 font-medium">ATS Keyword Match Scan</p>
                                 <button type="submit" id="submit-btn-analyzer"
                                         {{ !$analyzerCanAccess ? 'disabled' : '' }}
@@ -383,7 +383,7 @@
                                 </div>
                             </div>
 
-                            <div class="px-5 py-3.5 bg-zinc-50/60 border-t border-zinc-150/60 flex items-center justify-between">
+                            <div class="px-5 py-3.5 bg-zinc-50/60 border-t border-zinc-200/60 flex items-center justify-between">
                                 <p class="text-[10px] text-zinc-400 font-medium">Generative AI Compiler</p>
                                 <button type="submit" id="submit-btn-cl"
                                     {{ !$clRemainingUses && !\App\Models\Setting::isMonetizationEnabled() ? 'disabled' : '' }}
@@ -637,7 +637,7 @@
                                 </div>
                             </div>
 
-                            <div class="px-5 py-3.5 bg-zinc-50/60 border-t border-zinc-150/60 flex items-center justify-between">
+                            <div class="px-5 py-3.5 bg-zinc-50/60 border-t border-zinc-200/60 flex items-center justify-between">
                                 <p class="text-[10px] text-zinc-400 font-medium">Face Recognition AI Engine</p>
                                 <button type="submit" id="submit-btn-photo"
                                         class="flex items-center justify-center gap-2 py-2 px-4 bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 text-[10.5px] font-bold uppercase tracking-wider rounded-lg transition-all shadow-3xs focus:outline-none">
@@ -679,7 +679,7 @@
                                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 flex-1">
                                     @foreach($photoHistory as $photo)
                                         <div class="group bg-white border border-zinc-200/80 rounded-lg overflow-hidden shadow-3xs flex flex-col justify-between">
-                                            <div class="relative bg-zinc-50 overflow-hidden pt-[120%] shrink-0 border-b border-zinc-150">
+                                            <div class="relative bg-zinc-50 overflow-hidden pt-[120%] shrink-0 border-b border-zinc-200">
                                                 <img src="{{ $photo->result_url }}" alt="AI Portrait" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105">
                                             </div>
                                             <div class="p-2 flex flex-col gap-1.5 bg-zinc-50/30">
@@ -753,7 +753,7 @@
                                 </div>
                             </div>
 
-                            <div class="p-4 bg-zinc-50/50 border-t border-zinc-150/60 flex items-center justify-between">
+                            <div class="p-4 bg-zinc-50/50 border-t border-zinc-200/60 flex items-center justify-between">
                                 <span class="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider">Instant AI Outreach</span>
                                 <button type="submit" id="submit-btn-outreach" class="px-4 h-[32px] bg-primary-50 text-zinc-800 hover:bg-primary-100 border border-primary-200/60 text-xs font-bold rounded-md shadow-3xs transition-all active:scale-97 flex items-center gap-1.5 focus:outline-none">
                                     <span id="submit-text-outreach">Generate Outreach Message</span>
@@ -766,7 +766,7 @@
                     <!-- Right Output Preview Card -->
                     <div class="lg:col-span-6 flex flex-col">
                         <div class="bg-white border border-zinc-200/60 rounded-xl shadow-3xs p-5 flex flex-col justify-between flex-1 relative min-h-[350px]">
-                            <div class="flex items-center justify-between pb-3 border-b border-zinc-150/60 mb-4">
+                            <div class="flex items-center justify-between pb-3 border-b border-zinc-200/60 mb-4">
                                 <div class="flex items-center gap-2">
                                     <i class="ph-bold ph-paper-plane-tilt text-zinc-700 text-sm"></i>
                                     <h3 class="text-xs font-bold text-zinc-800">Generated Message Preview</h3>
