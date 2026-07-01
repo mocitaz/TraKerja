@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Riwayat Cover Letter') }}
+            {{ __('Cover Letter History') }}
         </h2>
     </x-slot>
 
@@ -10,9 +10,9 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-lg font-bold">Surat Lamaran Tersimpan</h3>
+                        <h3 class="text-lg font-bold">Saved Cover Letters</h3>
                         <a href="{{ route('cover-letters.index') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors">
-                            + Buat Baru
+                            + Create New
                         </a>
                     </div>
 
@@ -21,8 +21,8 @@
                             <div class="text-slate-400 mb-2">
                                 <i class="ph-fill ph-file-text text-4xl"></i>
                             </div>
-                            <p class="text-gray-500">Belum ada riwayat cover letter.</p>
-                            <p class="text-sm text-gray-400 mt-1">Gunakan AI untuk membuat surat lamaran profesional pertama Anda.</p>
+                            <p class="text-gray-500">No cover letter history found.</p>
+                            <p class="text-sm text-gray-400 mt-1">Use AI to craft your first professional cover letter.</p>
                         </div>
                     @else
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -325,8 +325,8 @@
                         <i class="ph ph-file-pdf text-xl"></i>
                     </div>
                     
-                    <h4 class="text-xs font-bold text-zinc-700 leading-tight">Drag & Drop CV PDF Anda di sini</h4>
-                    <p class="text-[10px] text-zinc-400 font-medium mt-1">atau <span class="text-primary-650 font-bold group-hover:underline">Pilih berkas dari komputer</span></p>
+                    <h4 class="text-xs font-bold text-zinc-700 leading-tight">Drag & Drop your CV PDF here</h4>
+                    <p class="text-[10px] text-zinc-400 font-medium mt-1">or <span class="text-primary-650 font-bold group-hover:underline">Choose a file from your computer</span></p>
                     
                     <div class="mt-4 pt-3.5 border-t border-zinc-100/80 w-full flex items-center justify-center gap-4 text-[9px] font-semibold text-zinc-400 uppercase tracking-wider">
                         <span>PDF Format Only</span>

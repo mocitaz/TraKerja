@@ -284,7 +284,7 @@
 
                             <div class="flex items-center gap-1.5 self-end sm:self-center">
                                 <form action="{{ route('support.destroy', $ticket->id) }}" method="POST" class="inline"
-                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus tiket bantuan ini?');">
+                                    onsubmit="return confirm('Are you sure you want to delete this support ticket?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" @click.stop

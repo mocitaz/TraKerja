@@ -185,7 +185,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="button" 
-                                onclick="window.openConfirmModal('Delete Application?', 'Data lamaran untuk {{ str_replace('\'', '\\\'', $job->company_name) }} ini akan dihapus permanen (10 XP akan ditarik kembali). Anda juga bisa mengedit lamaran jika hanya salah isi data.', 'Delete Now', () => { document.getElementById('delete-job-form').submit(); });" 
+                                onclick="window.openConfirmModal('Delete Application?', 'The application data for {{ str_replace('\'', '\\\'', $job->company_name) }} will be permanently deleted (10 XP will be deducted). You can also edit the application details instead.', 'Delete Now', () => { document.getElementById('delete-job-form').submit(); });" 
                                 class="inline-flex items-center justify-center gap-1.5 h-[30px] px-3 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-[11px] font-bold rounded-md shadow-3xs transition-all duration-150 active:scale-97 hover:shadow-2xs shrink-0 focus:outline-none uppercase tracking-wider">
                             <i class="ph-bold ph-trash text-xs"></i>
                             <span>Delete</span>
