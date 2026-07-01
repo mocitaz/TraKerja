@@ -138,12 +138,16 @@
                     </div>
                 </div>
             @empty
-                <div class="bg-white rounded-lg p-12 text-center border border-zinc-200/60 shadow-3xs border-dashed">
-                    <div class="w-10 h-10 bg-zinc-50 border border-zinc-200 rounded-md flex items-center justify-center text-zinc-400 mx-auto mb-3">
-                        <i class="ph ph-calendar text-xl"></i>
+                <div class="bg-white border border-zinc-200/60 rounded-xl p-12 text-center flex flex-col items-center justify-center border-dashed shadow-3xs">
+                    <div class="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center mb-3.5 text-primary-600 border border-primary-100/60 shadow-3xs select-none">
+                        <i class="ph ph-calendar-blank text-2xl"></i>
                     </div>
-                    <h3 class="text-xs font-bold text-zinc-800 mb-1">No Interviews Found</h3>
-                    <p class="text-[10px] text-zinc-500 font-medium">Update your job applications to "Interview" stage to see them here.</p>
+                    <h3 class="text-xs font-extrabold text-zinc-800 mb-1">Belum Ada Jadwal Wawancara</h3>
+                    <p class="text-[10px] text-zinc-500 font-semibold max-w-[280px] leading-relaxed mb-4">Jadwal wawancara kerja yang Anda tambahkan di Tracker akan muncul secara otomatis di kalender ini.</p>
+                    <a href="{{ route('tracker') }}" class="px-3.5 py-1.8 bg-zinc-900 hover:bg-zinc-800 text-white rounded-md text-[9.5px] font-bold uppercase tracking-wider shadow-3xs transition-colors flex items-center gap-1.5 cursor-pointer active:scale-97 select-none">
+                        <i class="ph ph-layout text-xs"></i>
+                        <span>Buka Job Tracker</span>
+                    </a>
                 </div>
             @endforelse
         </div>

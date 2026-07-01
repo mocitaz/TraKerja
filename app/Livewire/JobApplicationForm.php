@@ -1740,9 +1740,19 @@ class JobApplicationForm extends Component
         session()->forget('edit-job-id');
     }
 
-    public function resetFormForNewJob()
+    public function resetFormForNewJob($defaultStage = null)
     {
         $this->resetForm();
+        
+        if ($defaultStage) {
+            $this->recruitment_stage = $defaultStage;
+            if (in_array($defaultStage, ['Offering', 'Accepted', 'Rejected'])) {
+                $this->application_status = $defaultStage;
+            } else {
+                $this->application_status = 'On Process';
+            }
+            $this->updateLocation();
+        }
         
         // Force component refresh to update the UI
         $this->dispatch('$refresh');

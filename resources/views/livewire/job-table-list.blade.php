@@ -131,11 +131,16 @@
                         </div>
                     </div>
                 @empty
-                    <div class="bg-white border border-zinc-200/60 rounded-lg p-8 text-center flex flex-col items-center justify-center border-dashed">
-                        <div class="w-10 h-10 bg-zinc-50 rounded-md flex items-center justify-center mb-2.5 text-zinc-350">
-                            <i class="ph ph-folder-open text-xl"></i>
+                    <div class="bg-white border border-zinc-200/60 rounded-xl p-8 text-center flex flex-col items-center justify-center border-dashed shadow-3xs">
+                        <div class="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center mb-3.5 text-primary-600 border border-primary-100/60 shadow-3xs select-none">
+                            <i class="ph ph-briefcase text-2xl"></i>
                         </div>
-                        <span class="text-xs font-semibold text-zinc-500 italic">No applications found...</span>
+                        <h3 class="text-xs font-extrabold text-zinc-800 mb-1">Belum Ada Lamaran Kerja</h3>
+                        <p class="text-[10px] text-zinc-500 font-semibold max-w-[240px] leading-relaxed mb-4">Mulai lacak lamaran pekerjaan Anda secara teratur dan pantau progresnya hingga Anda diterima kerja.</p>
+                        <button type="button" onclick="openJobModal()" class="px-3.5 py-1.8 bg-zinc-900 hover:bg-zinc-800 text-white rounded-md text-[9.5px] font-bold uppercase tracking-wider shadow-3xs transition-colors focus:outline-none flex items-center gap-1.5 cursor-pointer active:scale-97">
+                            <i class="ph ph-plus text-xs"></i>
+                            <span>Tambah Lamaran</span>
+                        </button>
                     </div>
                 @endforelse
             </div>
@@ -241,7 +246,21 @@
                                 </td>
                             </tr>
                             @empty
-                            <tr><td colspan="11" class="py-8 text-center text-xs text-zinc-400 italic">Data not found...</td></tr>
+                            <tr>
+                                <td colspan="11" class="py-12 text-center select-none">
+                                    <div class="flex flex-col items-center justify-center">
+                                        <div class="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center mb-3.5 text-primary-600 border border-primary-100/60 shadow-3xs">
+                                            <i class="ph ph-briefcase text-2xl"></i>
+                                        </div>
+                                        <h3 class="text-xs font-extrabold text-zinc-800 mb-1">Belum Ada Lamaran Kerja</h3>
+                                        <p class="text-[10px] text-zinc-500 font-semibold max-w-[280px] leading-relaxed mb-4">Mulai lacak lamaran pekerjaan Anda secara teratur dan pantau progresnya hingga Anda diterima kerja.</p>
+                                        <button type="button" onclick="openJobModal()" class="px-3.5 py-1.8 bg-zinc-900 hover:bg-zinc-800 text-white rounded-md text-[9.5px] font-bold uppercase tracking-wider shadow-3xs transition-colors focus:outline-none flex items-center gap-1.5 cursor-pointer active:scale-97">
+                                            <i class="ph ph-plus text-xs"></i>
+                                            <span>Tambah Lamaran Baru</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
                             @endforelse
                         </tbody>
                     </tbody>

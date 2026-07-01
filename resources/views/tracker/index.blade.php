@@ -112,12 +112,12 @@
             window.openJobModal(true);
         });
 
-        window.openJobModal = function(isEdit = false) {
+        window.openJobModal = function(isEdit = false, defaultStage = null) {
             const modal = document.getElementById('jobModal');
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
             if (!isEdit) {
-                Livewire.dispatch('resetFormForNewJob');
+                Livewire.dispatch('resetFormForNewJob', { defaultStage: defaultStage });
             }
         }
 
