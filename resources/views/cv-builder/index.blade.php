@@ -127,7 +127,7 @@
                             @foreach($tabs as $tab)
                             <button @click="activeTab = '{{ $tab['key'] }}'" 
                                     :class="activeTab === '{{ $tab['key'] }}' ? 'bg-zinc-900 text-white' : 'text-zinc-600 hover:bg-zinc-50'"
-                                    class="flex-shrink-0 flex items-center justify-between px-3.5 py-2 rounded-md text-[11px] font-bold transition-all duration-150 group focus:outline-none w-full">
+                                    class="flex-shrink-0 flex items-center justify-between px-3.5 py-2 rounded-md text-[11px] font-bold transition-all duration-150 group focus:outline-none w-auto lg:w-full gap-4">
                                 <div class="flex items-center gap-2.5">
                                     <i class="ph {{ $tab['icon'] }} text-sm"></i>
                                     <span class="tracking-tight">{{ $tab['label'] }}</span>
@@ -176,7 +176,7 @@
                         </div>
 
                         {{-- Precision Footer --}}
-                        <div class="px-4 py-3 bg-zinc-50/30 border-t border-zinc-150/60 flex items-center gap-3">
+                        <div class="px-4 py-3 bg-zinc-50/30 border-t border-zinc-200/60 flex items-center gap-3">
                             <div class="w-7 h-7 bg-white border border-zinc-200/50 rounded shadow-3xs flex items-center justify-center text-primary-500 shrink-0">
                                 <i class="ph ph-lightbulb text-base"></i>
                             </div>
@@ -213,7 +213,7 @@
                      x-transition:enter-end="opacity-100 scale-100 translateY(0)">
                     
                     {{-- Modal Header --}}
-                    <div class="px-4 py-3.5 border-b border-zinc-150/60 flex items-center justify-between bg-white shrink-0">
+                    <div class="px-4 py-3.5 border-b border-zinc-200/60 flex items-center justify-between bg-white shrink-0">
                         <div class="flex items-center gap-2.5">
                             <div class="w-7 h-7 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 shadow-3xs shrink-0">
                                 <i class="ph ph-eye text-sm"></i>
@@ -253,7 +253,7 @@
                     </div>
 
                     {{-- Modal Footer --}}
-                    <div class="px-4 py-3 border-t border-zinc-150/60 bg-zinc-50/20 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
+                    <div class="px-4 py-3 border-t border-zinc-200/60 bg-zinc-50/20 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
                         <p class="text-[8.5px] text-zinc-400 font-bold uppercase tracking-wider text-center sm:text-left leading-none">
                             <i class="ph ph-info mr-1 text-xs"></i> Data syncs automatically on save
                         </p>
@@ -299,7 +299,7 @@
              x-transition:leave-end="opacity-0 scale-95 translate-y-2">
 
             <!-- Modal Header -->
-            <div class="px-5 py-4 border-b border-zinc-150/60 bg-[#ffffff] flex items-center justify-between">
+            <div class="px-5 py-4 border-b border-zinc-200/60 bg-white flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
                     <div class="w-8 h-8 rounded-lg bg-primary-50 border border-primary-200/60 flex items-center justify-center text-zinc-800">
                         <i class="ph ph-file-arrow-up text-sm"></i>
@@ -321,7 +321,7 @@
                      onclick="document.getElementById('import-pdf-input').click()"
                      class="border-2 border-dashed border-zinc-200 hover:border-primary-400/80 hover:bg-zinc-50/50 rounded-xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group">
                     
-                    <div class="w-12 h-12 bg-zinc-50 group-hover:bg-primary-50 border border-zinc-150 group-hover:border-primary-200 rounded-xl flex items-center justify-center text-zinc-450 group-hover:text-primary-650 shadow-3xs mb-3 transition-colors">
+                    <div class="w-12 h-12 bg-zinc-50 group-hover:bg-primary-50 border border-zinc-200 group-hover:border-primary-200 rounded-xl flex items-center justify-center text-zinc-500 group-hover:text-primary-650 shadow-3xs mb-3 transition-colors">
                         <i class="ph ph-file-pdf text-xl"></i>
                     </div>
                     
@@ -346,11 +346,11 @@
                         </div>
                         <div class="flex-1 min-w-0">
                             <h4 class="text-xs font-bold text-zinc-800 truncate leading-none mb-0.5" id="uploading-filename">resume.pdf</h4>
-                            <p class="text-[10px] font-medium text-zinc-450 leading-none">Mengekstrak data menggunakan AI Parser...</p>
+                            <p class="text-[10px] font-medium text-zinc-500 leading-none">Mengekstrak data menggunakan AI Parser...</p>
                         </div>
                     </div>
                     <!-- Animated Bar -->
-                    <div class="w-full h-1 bg-zinc-150 rounded-full overflow-hidden">
+                    <div class="w-full h-1 bg-zinc-200 rounded-full overflow-hidden">
                         <div class="h-full bg-primary-650 rounded-full animate-shimmer" style="width: 100%; background-image: linear-gradient(to right, #4f46e5, #8b5cf6, #4f46e5); background-size: 200% 100%;"></div>
                     </div>
                 </div>
