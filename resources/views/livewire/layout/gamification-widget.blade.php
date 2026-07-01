@@ -12,18 +12,18 @@
     @endphp
 
     <!-- Profile Dropdown Trigger Bar -->
-    <div class="flex items-center justify-between w-full">
-        <div class="flex items-center gap-1.5">
-            <div class="flex items-center justify-center px-1.5 py-0.5 bg-primary-50 text-zinc-800 border border-primary-200/60 rounded text-[9px] font-bold tracking-tight shrink-0 shadow-3xs">
+    <div class="flex items-center justify-between w-full mt-2.5">
+        <div class="flex items-center gap-2">
+            <div class="flex items-center justify-center px-2 py-0.5 bg-primary-50 text-zinc-800 border border-primary-200/60 rounded-md text-[10px] font-bold tracking-tight shrink-0 shadow-3xs">
                 L{{ $currentLvl }}
             </div>
-            <div class="flex items-center gap-1 text-[10px] font-bold text-zinc-800">
+            <div class="flex items-center gap-1 text-[11px] font-bold text-zinc-800">
                 <span>{{ $currentXp }}</span>
-                <span class="text-[8px] font-semibold text-zinc-400 uppercase">XP</span>
-                <i class="ph-fill ph-lightning text-amber-500 text-[10px]"></i>
+                <span class="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">XP</span>
+                <i class="ph-fill ph-lightning text-amber-500 text-xs animate-pulse"></i>
             </div>
         </div>
-        <button type="button" @click="showGamificationInfo = true" class="text-[9.5px] font-bold text-zinc-650 hover:text-zinc-950 bg-zinc-100/80 hover:bg-zinc-100 px-2 py-0.5 rounded transition-colors flex items-center gap-1 focus:outline-none cursor-pointer">
+        <button type="button" @click="showGamificationInfo = true" class="text-[10px] font-bold text-zinc-700 hover:text-zinc-950 bg-zinc-100 hover:bg-zinc-200/65 border border-zinc-200/60 px-2.5 py-1 rounded-md transition-all flex items-center gap-1 shadow-3xs focus:outline-none cursor-pointer active:scale-97">
             <span>Rewards</span>
             <i class="ph-bold ph-caret-right text-[8px]"></i>
         </button>
