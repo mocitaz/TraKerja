@@ -34,8 +34,10 @@
         }
 
         function initDayOfWeekChart() {
-            const ctx = document.getElementById('dayOfWeekChart')?.getContext('2d');
-            if (!ctx) return;
+            const canvas = document.getElementById('dayOfWeekChart');
+            if (!canvas) return;
+            Chart.getChart(canvas)?.destroy();
+            const ctx = canvas.getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -57,8 +59,10 @@
         }
 
         function initVelocityChart() {
-            const ctx = document.getElementById('velocityChart')?.getContext('2d');
-            if (!ctx) return;
+            const canvas = document.getElementById('velocityChart');
+            if (!canvas) return;
+            Chart.getChart(canvas)?.destroy();
+            const ctx = canvas.getContext('2d');
             new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -85,8 +89,10 @@
 
         // Apply a modern color scheme to the bar charts
         function initRolesChart() {
-            const ctx = document.getElementById('rolesChart')?.getContext('2d');
-            if (!ctx) return;
+            const canvas = document.getElementById('rolesChart');
+            if (!canvas) return;
+            Chart.getChart(canvas)?.destroy();
+            const ctx = canvas.getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -125,8 +131,10 @@
         }
 
         function initTimelineChart() {
-            const ctx = document.getElementById('timelineChart')?.getContext('2d');
-            if (!ctx) return;
+            const canvas = document.getElementById('timelineChart');
+            if (!canvas) return;
+            Chart.getChart(canvas)?.destroy();
+            const ctx = canvas.getContext('2d');
             new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -141,8 +149,10 @@
         }
 
         function initPlatformChart() {
-            const ctx = document.getElementById('platformChart')?.getContext('2d');
-            if (!ctx) return;
+            const canvas = document.getElementById('platformChart');
+            if (!canvas) return;
+            Chart.getChart(canvas)?.destroy();
+            const ctx = canvas.getContext('2d');
             new Chart(ctx, {
                 type: 'doughnut',
                 data: {
@@ -154,8 +164,10 @@
         }
 
         function initCareerLevelChart() {
-            const ctx = document.getElementById('careerLevelChart')?.getContext('2d');
-            if (!ctx) return;
+            const canvas = document.getElementById('careerLevelChart');
+            if (!canvas) return;
+            Chart.getChart(canvas)?.destroy();
+            const ctx = canvas.getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -185,8 +197,10 @@
         }
 
         function initProvinceChart() {
-            const ctx = document.getElementById('provinceChart')?.getContext('2d');
-            if (!ctx) return;
+            const canvas = document.getElementById('provinceChart');
+            if (!canvas) return;
+            Chart.getChart(canvas)?.destroy();
+            const ctx = canvas.getContext('2d');
             const prov = @json($locationAnalysis['provinces'] ?? []);
             new Chart(ctx, {
                 type: 'pie',
@@ -209,8 +223,10 @@
         }
 
         function initCityChart() {
-            const ctx = document.getElementById('cityChart')?.getContext('2d');
-            if (!ctx) return;
+            const canvas = document.getElementById('cityChart');
+            if (!canvas) return;
+            Chart.getChart(canvas)?.destroy();
+            const ctx = canvas.getContext('2d');
             const cities = @json($locationAnalysis['cities'] ?? []);
             new Chart(ctx, {
                 type: 'pie',

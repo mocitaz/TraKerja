@@ -797,6 +797,9 @@
                 @csrf
                 @method('delete')
 
+                <!-- Hidden username field for accessibility -->
+                <input type="hidden" name="username" value="{{ Auth::user()->email }}" autocomplete="username">
+
                 <div class="bg-slate-50 border border-slate-200 rounded p-3 mb-4">
                     <p class="text-[11px] text-slate-500 leading-relaxed">
                         Once your account is deleted, all of its resources and data will be permanently deleted. 
@@ -806,13 +809,14 @@
 
                 <!-- Password Confirmation -->
                 <div class="mb-4 premium-form-wrapper">
-                    <label for="password" class="block text-[9.5px] font-bold text-slate-450 uppercase tracking-wider pl-0.5 mb-1.5">
+                    <label for="password" class="block text-[9.5px] font-bold text-slate-455 uppercase tracking-wider pl-0.5 mb-1.5">
                         Enter Your Password
                     </label>
                     <input
                         id="password"
                         name="password"
                         type="password"
+                        autocomplete="current-password"
                         placeholder="Your current password"
                         class="w-full rounded-md border border-zinc-200 bg-slate-50 py-1.5 px-3 text-xs font-semibold text-zinc-700 outline-none @error('password', 'userDeletion') border-red-300 @enderror">
                     @error('password', 'userDeletion')

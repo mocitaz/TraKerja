@@ -246,7 +246,8 @@
             @if ($postings->count() > 0)
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
                     @foreach ($postings as $job)
-                                                   $firstLetter = strtoupper(substr($job->company_name, 0, 1));
+                        @php
+                            $firstLetter = strtoupper(substr($job->company_name, 0, 1));
                             $hash = md5($job->company_name);
                             $colors = [
                                 ['bg-blue-50 text-blue-700 border-blue-200', 'bg-blue-500/10'],
