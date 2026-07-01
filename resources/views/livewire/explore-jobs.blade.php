@@ -28,12 +28,10 @@
             </h2>
             <p class="text-[11px] md:text-xs text-zinc-500 max-w-xl mx-auto leading-relaxed">
                 Jelajahi ribuan lowongan kerja terverifikasi anti-ghosting dari berbagai perusahaan ternama di seluruh Indonesia secara real-time.
-            </p>
-
-            <!-- Pill Search Bar (Unified Row) -->
-            <div class="bg-white border border-zinc-200 rounded-xl md:rounded-full p-1.5 shadow-2xs flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-0 mt-6 max-w-5xl mx-auto">
+                        <!-- Pill Search Bar (Unified Row) -->
+            <div class="bg-white border border-zinc-200 rounded-2xl md:rounded-full p-2 md:p-1.5 shadow-2xs flex flex-col md:flex-row items-stretch md:items-center gap-2.5 md:gap-0 mt-6 max-w-5xl mx-auto">
                 <!-- Search input -->
-                <div class="flex-1 min-w-[150px] relative flex items-center pl-3">
+                <div class="flex-grow min-w-[150px] relative flex items-center pl-3">
                     <i class="ph ph-magnifying-glass text-zinc-400 text-xs absolute left-3"></i>
                     <input type="text" 
                            wire:model.live.debounce.300ms="search" 
@@ -44,9 +42,9 @@
                 <div class="hidden md:block w-[1px] h-5 bg-zinc-200 shrink-0"></div>
 
                 <!-- Dropdown Sektor -->
-                <div class="relative flex items-center px-2">
-                    <i class="ph ph-circles-four text-zinc-400 text-xs mr-1 shrink-0"></i>
-                    <select wire:model.live="selectedField" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-[120px] truncate outline-none select-none appearance-none">
+                <div class="relative flex items-center px-3 md:px-2 py-1.5 md:py-0 border border-zinc-100 md:border-0 rounded-lg bg-zinc-50/50 md:bg-transparent">
+                    <i class="ph ph-circles-four text-zinc-400 text-xs mr-2 md:mr-1 shrink-0"></i>
+                    <select wire:model.live="selectedField" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1 md:py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-full md:w-[120px] truncate outline-none select-none appearance-none">
                         <option value="">Semua Sektor</option>
                         @foreach($fieldsList as $fieldItem)
                             <option value="{{ $fieldItem }}">{{ $fieldItem }}</option>
@@ -57,9 +55,9 @@
                 <div class="hidden md:block w-[1px] h-5 bg-zinc-200 shrink-0"></div>
 
                 <!-- Dropdown Jurusan -->
-                <div class="relative flex items-center px-2">
-                    <i class="ph ph-graduation-cap text-zinc-400 text-xs mr-1 shrink-0"></i>
-                    <select wire:model.live="selectedMajor" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-[120px] truncate outline-none select-none appearance-none">
+                <div class="relative flex items-center px-3 md:px-2 py-1.5 md:py-0 border border-zinc-100 md:border-0 rounded-lg bg-zinc-50/50 md:bg-transparent">
+                    <i class="ph ph-graduation-cap text-zinc-400 text-xs mr-2 md:mr-1 shrink-0"></i>
+                    <select wire:model.live="selectedMajor" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1 md:py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-full md:w-[120px] truncate outline-none select-none appearance-none">
                         <option value="">Semua Jurusan</option>
                         @foreach($majorsList as $majorItem)
                             <option value="{{ $majorItem }}">{{ $majorItem }}</option>
@@ -70,9 +68,9 @@
                 <div class="hidden md:block w-[1px] h-5 bg-zinc-200 shrink-0"></div>
 
                 <!-- Dropdown Provinsi -->
-                <div class="relative flex items-center px-2">
-                    <i class="ph ph-map-pin text-zinc-400 text-xs mr-1 shrink-0"></i>
-                    <select wire:model.live="selectedProvince" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-[110px] truncate outline-none select-none appearance-none">
+                <div class="relative flex items-center px-3 md:px-2 py-1.5 md:py-0 border border-zinc-100 md:border-0 rounded-lg bg-zinc-50/50 md:bg-transparent">
+                    <i class="ph ph-map-pin text-zinc-400 text-xs mr-2 md:mr-1 shrink-0"></i>
+                    <select wire:model.live="selectedProvince" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1 md:py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-full md:w-[110px] truncate outline-none select-none appearance-none">
                         <option value="">Provinsi</option>
                         @foreach($provincesList as $provItem)
                             <option value="{{ $provItem }}">{{ $provItem }}</option>
@@ -83,9 +81,9 @@
                 <div class="hidden md:block w-[1px] h-5 bg-zinc-200 shrink-0"></div>
 
                 <!-- Dropdown Kota -->
-                <div class="relative flex items-center px-2">
-                    <i class="ph ph-map-pin-line text-zinc-400 text-xs mr-1 shrink-0"></i>
-                    <select wire:model.live="selectedLocation" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-[110px] truncate outline-none select-none appearance-none" {{ empty($selectedProvince) ? 'disabled' : '' }}>
+                <div class="relative flex items-center px-3 md:px-2 py-1.5 md:py-0 border border-zinc-100 md:border-0 rounded-lg bg-zinc-50/50 md:bg-transparent">
+                    <i class="ph ph-map-pin-line text-zinc-400 text-xs mr-2 md:mr-1 shrink-0"></i>
+                    <select wire:model.live="selectedLocation" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1 md:py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-full md:w-[110px] truncate outline-none select-none appearance-none" {{ empty($selectedProvince) ? 'disabled' : '' }}>
                         @if(empty($selectedProvince))
                             <option value="">Pilih Provinsi</option>
                         @else
@@ -100,9 +98,9 @@
                 <div class="hidden md:block w-[1px] h-5 bg-zinc-200 shrink-0"></div>
 
                 <!-- Dropdown Tipe Kerja -->
-                <div class="relative flex items-center px-2">
-                    <i class="ph ph-briefcase text-zinc-400 text-xs mr-1 shrink-0"></i>
-                    <select wire:model.live="selectedWorkType" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-[100px] truncate outline-none select-none appearance-none">
+                <div class="relative flex items-center px-3 md:px-2 py-1.5 md:py-0 border border-zinc-100 md:border-0 rounded-lg bg-zinc-50/50 md:bg-transparent">
+                    <i class="ph ph-briefcase text-zinc-400 text-xs mr-2 md:mr-1 shrink-0"></i>
+                    <select wire:model.live="selectedWorkType" class="bg-transparent border-0 focus:ring-0 text-[11px] py-1 md:py-1.5 pr-8 pl-1 font-bold text-zinc-700 cursor-pointer w-full md:w-[100px] truncate outline-none select-none appearance-none">
                         <option value="">Tipe Kerja</option>
                         <option value="Onsite">Onsite</option>
                         <option value="Remote">Remote</option>
@@ -112,14 +110,14 @@
 
                 <!-- Action Cari Button -->
                 <button type="button" 
-                        class="md:ml-2 px-5 h-[34px] bg-primary-50 hover:bg-primary-100 text-primary-750 border border-primary-200/60 text-[11px] font-black rounded-lg md:rounded-full uppercase tracking-wider transition-all duration-150 active:scale-97 flex items-center justify-center gap-1 shrink-0 focus:outline-hidden">
+                        class="md:ml-2 px-5 h-[34px] bg-primary-50 hover:bg-primary-100 text-zinc-800 border border-primary-200/60 text-[11px] font-black rounded-lg md:rounded-full uppercase tracking-wider transition-all duration-150 active:scale-97 flex items-center justify-center gap-1 shrink-0 focus:outline-hidden">
                     Cari
                 </button>
             </div>
 
             <!-- Total Posisi, Refresh & Reset Row -->
             <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[9.5px] font-mono font-bold text-zinc-400 uppercase tracking-wider pt-2">
-                <div class="flex items-center gap-1 text-zinc-650 bg-zinc-100 border border-zinc-200 px-2.5 py-0.5 rounded-full shadow-3xs">
+                <div class="flex items-center gap-1 text-zinc-600 bg-zinc-100 border border-zinc-200 px-2.5 py-0.5 rounded-full shadow-3xs">
                     <i class="ph ph-briefcase-metal text-[11px]"></i>
                     <span>Total Lowongan: {{ $postings->total() }}</span>
                 </div>
@@ -133,7 +131,7 @@
                 <span class="text-zinc-200 hidden sm:inline">&bull;</span>
                 <button type="button" 
                         wire:click="resetFilters" 
-                        class="flex items-center gap-1 hover:text-rose-650 transition-colors focus:outline-hidden cursor-pointer">
+                        class="flex items-center gap-1 hover:text-rose-600 transition-colors focus:outline-hidden cursor-pointer">
                     <i class="ph ph-trash text-xs"></i>
                     Reset Filter
                 </button>
@@ -144,10 +142,10 @@
     <!-- Active Job Postings Content Layout (Sidebar + Main Grid) -->
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-6">
         <!-- Sidebar: Location Tracker Explorer -->
-        <div class="lg:col-span-1 flex flex-col gap-4">
+        <div class="lg:col-span-1 flex flex-col gap-4 order-2 lg:order-1">
             <div class="bg-white rounded-xl border border-zinc-200 p-4 shadow-3xs">
-                <div class="flex items-center gap-2 mb-4 border-b border-zinc-150 pb-2">
-                    <div class="w-7 h-7 bg-blue-50 border border-blue-150 text-blue-700 rounded-lg flex items-center justify-center shrink-0 shadow-3xs">
+                <div class="flex items-center gap-2 mb-4 border-b border-zinc-200 pb-2">
+                    <div class="w-7 h-7 bg-blue-50 border border-blue-200 text-blue-700 rounded-lg flex items-center justify-center shrink-0 shadow-3xs">
                         <i class="ph ph-map-trifold text-sm"></i>
                     </div>
                     <div>
@@ -196,12 +194,12 @@
                                     class="w-full flex items-center justify-between text-[11px] font-bold py-2 px-2.5 text-left rounded-lg transition-colors focus:outline-hidden
                                         {{ $isProvinceSelected 
                                             ? 'text-blue-800' 
-                                            : 'text-zinc-705 hover:bg-zinc-50 hover:text-zinc-950' }}">
+                                            : 'text-zinc-700 hover:bg-zinc-50 hover:text-zinc-950' }}">
                                 <span class="truncate flex items-center gap-1.5">
                                     <i class="ph ph-caret-right text-[10px] transition-transform duration-200 {{ $isProvinceSelected ? 'rotate-90 text-blue-600' : 'text-zinc-400' }}"></i>
                                     {{ $provinceName }}
                                 </span>
-                                <span class="px-1.5 py-0.5 bg-zinc-50 border border-zinc-150 text-zinc-550 text-[9px] rounded-full font-mono font-bold shrink-0">
+                                <span class="px-1.5 py-0.5 bg-zinc-50 border border-zinc-200 text-zinc-500 text-[9px] rounded-full font-mono font-bold shrink-0">
                                     {{ $provinceData['count'] }}
                                 </span>
                             </button>
@@ -218,7 +216,7 @@
                                                 class="w-full text-left flex items-center justify-between text-[10px] py-1 px-2 rounded-md transition-all duration-150 focus:outline-hidden
                                                     {{ $isCitySelected 
                                                         ? 'bg-blue-50 text-blue-800 font-bold border border-blue-200 shadow-3xs' 
-                                                        : 'text-zinc-550 hover:bg-zinc-50 hover:text-zinc-800' }}">
+                                                        : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-800' }}">
                                             <span class="truncate flex items-center gap-1">
                                                 <i class="ph ph-map-pin-line text-[9px] shrink-0 text-zinc-400"></i>
                                                 {{ $cityInfo['name'] }}
@@ -244,23 +242,22 @@
         </div>
 
         <!-- Main Content: Job Postings Grid -->
-        <div class="lg:col-span-3">
+        <div class="lg:col-span-3 order-1 lg:order-2">
             @if ($postings->count() > 0)
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
                     @foreach ($postings as $job)
-                        @php
-                            $firstLetter = strtoupper(substr($job->company_name, 0, 1));
+                                                   $firstLetter = strtoupper(substr($job->company_name, 0, 1));
                             $hash = md5($job->company_name);
                             $colors = [
-                                ['bg-blue-50 text-blue-700 border-blue-150', 'bg-blue-500/10'],
-                                ['bg-indigo-50 text-indigo-700 border-indigo-150', 'bg-indigo-500/10'],
-                                ['bg-purple-50 text-purple-700 border-purple-150', 'bg-purple-500/10'],
-                                ['bg-pink-50 text-pink-700 border-pink-150', 'bg-pink-500/10'],
-                                ['bg-rose-50 text-rose-700 border-rose-150', 'bg-rose-500/10'],
-                                ['bg-amber-50 text-amber-805 border-amber-200', 'bg-amber-500/10'],
-                                ['bg-emerald-50 text-emerald-700 border-emerald-150', 'bg-emerald-500/10'],
-                                ['bg-teal-50 text-teal-700 border-teal-150', 'bg-teal-500/10'],
-                                ['bg-cyan-50 text-cyan-700 border-cyan-150', 'bg-cyan-500/10'],
+                                ['bg-blue-50 text-blue-700 border-blue-200', 'bg-blue-500/10'],
+                                ['bg-indigo-50 text-indigo-700 border-indigo-200', 'bg-indigo-500/10'],
+                                ['bg-purple-50 text-purple-700 border-purple-200', 'bg-purple-500/10'],
+                                ['bg-pink-50 text-pink-700 border-pink-200', 'bg-pink-500/10'],
+                                ['bg-rose-50 text-rose-700 border-rose-200', 'bg-rose-500/10'],
+                                ['bg-amber-50 text-amber-800 border-amber-200', 'bg-amber-500/10'],
+                                ['bg-emerald-50 text-emerald-700 border-emerald-200', 'bg-emerald-500/10'],
+                                ['bg-teal-50 text-teal-700 border-teal-200', 'bg-teal-500/10'],
+                                ['bg-cyan-50 text-cyan-700 border-cyan-200', 'bg-cyan-500/10'],
                             ];
                             $colorIndex = hexdec(substr($hash, 0, 2)) % count($colors);
                             $colorClass = $colors[$colorIndex][0];
@@ -276,7 +273,7 @@
                                 $portalIcon = 'ph-fill ph-briefcase';
                                 $portalIconColor = 'text-emerald-500';
                             }
-
+ 
                             // Match user skills with tech stack
                             $userSkills = auth()->check() ? auth()->user()->skills->pluck('skill_name')->map(fn($s) => strtolower(trim($s)))->toArray() : [];
                             $jobStack = $job->tech_stack ?? [];
@@ -301,14 +298,14 @@
                                     </div>
                                     <div class="min-w-0 flex-1">
                                         <div class="flex items-center justify-between gap-1">
-                                            <h3 class="text-xs font-bold text-zinc-900 truncate leading-tight tracking-tight hover:text-zinc-850 transition-colors" title="{{ $job->title }}">
+                                            <h3 class="text-xs font-bold text-zinc-900 truncate leading-tight tracking-tight hover:text-zinc-800 transition-colors" title="{{ $job->title }}">
                                                 {{ $job->title }}
                                             </h3>
                                             
                                             <!-- Match Badge -->
                                             @if(auth()->check() && $matchPercent !== null)
                                                 <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold tracking-tight border uppercase font-mono shrink-0
-                                                    {{ $matchPercent >= 80 ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : ($matchPercent >= 50 ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-zinc-50 text-zinc-650 border-zinc-200') }}">
+                                                    {{ $matchPercent >= 80 ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : ($matchPercent >= 50 ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-zinc-50 text-zinc-600 border-zinc-200') }}">
                                                     {{ $matchPercent }}% Match
                                                 </span>
                                             @endif
@@ -318,7 +315,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+ 
                                 <!-- Category & Location Tags -->
                                 <div class="flex flex-wrap gap-1 mb-2 select-none">
                                     @if($job->category_field && strtolower($job->category_field) !== 'semua bidang')
@@ -337,29 +334,29 @@
                                         </span>
                                     @endif
                                     @if($job->location)
-                                        <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[8.5px] font-semibold bg-zinc-50 text-zinc-650 border border-zinc-200/80" title="{{ $job->location }}">
+                                        <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[8.5px] font-semibold bg-zinc-50 text-zinc-600 border border-zinc-200/80" title="{{ $job->location }}">
                                             <i class="ph ph-map-pin text-[9px] shrink-0 text-zinc-400"></i>
                                             {{ Str::title($job->location) }}
                                         </span>
                                     @endif
                                 </div>
-
+ 
                                 <!-- Tech Stack Tags -->
                                 @if(!empty($jobStack))
                                     <div class="flex flex-wrap gap-1 mb-2 select-none">
                                         @foreach(array_slice($jobStack, 0, 3) as $tech)
-                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-zinc-50 text-zinc-500 border border-zinc-150 uppercase tracking-tight">
+                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-zinc-50 text-zinc-500 border border-zinc-200 uppercase tracking-tight">
                                                 {{ $tech }}
                                             </span>
                                         @endforeach
                                         @if(count($jobStack) > 3)
-                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-zinc-50 text-zinc-400 border border-zinc-150">
+                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold bg-zinc-50 text-zinc-400 border border-zinc-200">
                                                 +{{ count($jobStack) - 3 }}
                                             </span>
                                         @endif
                                     </div>
                                 @endif
-
+ 
                                 <!-- Snippet description -->
                                 <p class="text-[10px] text-zinc-400 leading-relaxed line-clamp-2 mb-3 mt-1.5 italic font-medium">
                                     {{ strip_tags($job->description) }}
@@ -440,7 +437,7 @@
         <div class="fixed inset-0 z-[99999] bg-zinc-950/40 backdrop-blur-xs flex items-center justify-center p-4">
             <div class="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden border border-zinc-200 transform transition-all animate-fadeIn">
                 <!-- Modal Header: Clean White -->
-                <div class="bg-white px-4 py-3 text-zinc-900 flex justify-between items-center border-b border-zinc-150/60 shrink-0">
+                <div class="bg-white px-4 py-3 text-zinc-900 flex justify-between items-center border-b border-zinc-200/60 shrink-0">
                     <div class="flex items-center gap-2.5">
                         <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/60 flex items-center justify-center shadow-3xs">
                             <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-4 h-4 object-contain" onerror="this.src='{{ asset('favicon.png') }}'">
@@ -463,7 +460,7 @@
                     <p class="text-xs text-zinc-700 leading-relaxed font-semibold">
                         Apakah Anda yakin sudah melamar lowongan kerja ini?
                     </p>
-                    <p class="text-[11px] text-zinc-550 mt-2 leading-relaxed">
+                    <p class="text-[11px] text-zinc-500 mt-2 leading-relaxed">
                         Apakah Anda sudah melamar posisi <span class="font-bold text-zinc-800">{{ $confirmingJobTitle }}</span> di <span class="font-bold text-zinc-800">{{ $confirmingJobCompany }}</span> melalui portal <span class="font-bold text-zinc-800">{{ $confirmingJobPortal }}</span>?
                     </p>
                     <div class="mt-4 flex items-start gap-2 text-primary-700 bg-primary-50/30 p-3 rounded-md border border-primary-100/60 select-none">
@@ -473,7 +470,7 @@
                 </div>
 
                 <!-- Footer -->
-                <div class="px-4 py-3 border-t border-zinc-150/60 bg-zinc-50/50 flex justify-end gap-3 shrink-0">
+                <div class="px-4 py-3 border-t border-zinc-200/60 bg-zinc-50/50 flex justify-end gap-3 shrink-0">
                     <a href="{{ $confirmingJobUrl }}" 
                        target="_blank" 
                        wire:click="cancelTrackJob"
@@ -496,7 +493,7 @@
         <div class="fixed inset-0 z-[99999] bg-zinc-950/40 backdrop-blur-xs flex items-center justify-center p-4">
             <div class="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden border border-zinc-200 transform transition-all animate-fadeIn">
                 <!-- Modal Header: Clean White -->
-                <div class="bg-white px-4 py-3 text-zinc-900 flex justify-between items-center border-b border-zinc-150/60 shrink-0">
+                <div class="bg-white px-4 py-3 text-zinc-900 flex justify-between items-center border-b border-zinc-200/60 shrink-0">
                     <div class="flex items-center gap-2.5">
                         <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/60 flex items-center justify-center shadow-3xs">
                             <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-4 h-4 object-contain" onerror="this.src='{{ asset('favicon.png') }}'">
@@ -519,7 +516,7 @@
                     <p class="text-xs text-zinc-700 leading-relaxed font-semibold">
                         Apakah Anda yakin ingin melaporkan bahwa lowongan kerja ini sudah ditutup?
                     </p>
-                    <p class="text-[11px] text-zinc-550 mt-2 leading-relaxed">
+                    <p class="text-[11px] text-zinc-500 mt-2 leading-relaxed">
                         Anda akan melaporkan posisi <span class="font-bold text-zinc-800">{{ $confirmingReportJobTitle }}</span> di <span class="font-bold text-zinc-800">{{ $confirmingReportJobCompany }}</span> sebagai expired/closed.
                     </p>
                     <div class="mt-4 flex items-start gap-2 text-rose-700 bg-rose-50/30 p-3 rounded-md border border-rose-100/60 select-none">
@@ -529,7 +526,7 @@
                 </div>
 
                 <!-- Footer -->
-                <div class="px-4 py-3 border-t border-zinc-150/60 bg-zinc-50/50 flex justify-end gap-3 shrink-0">
+                <div class="px-4 py-3 border-t border-zinc-200/60 bg-zinc-50/50 flex justify-end gap-3 shrink-0">
                     <button type="button" 
                             wire:click="cancelReportExpired"
                             class="h-[30px] flex items-center justify-center text-[10px] font-bold text-zinc-500 hover:text-zinc-700 uppercase tracking-wider transition-colors focus:outline-hidden">
