@@ -74,16 +74,16 @@
                 </div>
                 
                 <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tighter leading-[1.1] sm:leading-[1.05]">
-                    Lupakan Cara Lama. <br/> Upgrade <span class="text-primary-600">Strategi</span> Anda.
+                    Forget the old way. <br/> Upgrade your <span class="text-primary-600">strategy</span>.
                 </h2>
                 
                 <p class="text-slate-500 text-sm sm:text-base lg:text-lg leading-relaxed font-medium px-2 sm:px-6">
-                    TraKerja Pro memberikan alat bantu berbasis AI dan manajemen data tanpa batas untuk memastikan setiap lamaran Anda memiliki peluang menang yang maksimal.
+                    TraKerja Pro provides AI-powered tools and unlimited data management to ensure every application has the maximum chance of success.
                 </p>
 
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 w-full px-4 sm:px-0">
                     <a href="{{ route('payment.index') }}" class="w-full sm:w-auto text-center px-6 sm:px-8 py-3.5 sm:py-4 bg-slate-900 text-white rounded-xl font-black text-[10px] sm:text-[11px] uppercase tracking-[0.2em] shadow-2xl hover:bg-primary-600 hover:-translate-y-1 transition-all active:scale-95">
-                        Upgrade Sekarang — Rp {{ number_format($premiumPrice, 0, ',', '.') }}
+                        Upgrade Now — Rp {{ number_format($premiumPrice, 0, ',', '.') }}
                     </a>
                 </div>
             </div>
@@ -95,7 +95,7 @@
                         <i class="ph-fill ph-magic-wand text-xl sm:text-2xl text-primary-600"></i>
                     </div>
                     <h3 class="text-base sm:text-lg font-black text-slate-900 tracking-tight mb-3 sm:mb-4">AI Analysis</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed font-medium">Analisis kecocokan CV dengan job description secara instan menggunakan teknologi GPT terbaru.</p>
+                    <p class="text-xs text-slate-400 leading-relaxed font-medium">Instant compatibility analysis between your CV and job descriptions using the latest GPT models.</p>
                 </div>
 
                 <div class="benefit-card p-6 sm:p-10 rounded-[1.5rem] sm:rounded-[2rem] flex flex-col items-center text-center">
@@ -103,7 +103,7 @@
                         <i class="ph-fill ph-infinity text-xl sm:text-2xl text-emerald-600"></i>
                     </div>
                     <h3 class="text-base sm:text-lg font-black text-slate-900 tracking-tight mb-3 sm:mb-4">Unlimited Jobs</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed font-medium">Lacak lamaran kerja tanpa batas. Simpan seluruh riwayat karier Anda dalam satu tempat aman.</p>
+                    <p class="text-xs text-slate-400 leading-relaxed font-medium">Track unlimited job applications. Keep your entire career history in one safe place.</p>
                 </div>
 
                 <div class="benefit-card p-6 sm:p-10 rounded-[1.5rem] sm:rounded-[2rem] flex flex-col items-center text-center">
@@ -111,7 +111,7 @@
                         <i class="ph-fill ph-layout text-xl sm:text-2xl text-amber-600"></i>
                     </div>
                     <h3 class="text-base sm:text-lg font-black text-slate-900 tracking-tight mb-3 sm:mb-4">50+ Templates</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed font-medium">Buka akses ke semua template CV ATS-friendly yang didesain secara khusus oleh pakar rekrutmen.</p>
+                    <p class="text-xs text-slate-400 leading-relaxed font-medium">Unlock access to all ATS-friendly CV templates designed by recruitment experts.</p>
                 </div>
             </div>
 
@@ -119,8 +119,8 @@
             <div class="pricing-section p-6 sm:p-12 lg:p-20 flex flex-col lg:flex-row items-center gap-10 lg:gap-16 text-white shadow-2xl rounded-[1.5rem] sm:rounded-[2.5rem]">
                 <div class="lg:w-1/2 space-y-6 sm:space-y-8 w-full">
                     <div class="space-y-3 sm:space-y-4">
-                        <h4 class="text-xs font-black text-primary-400 uppercase tracking-widest">Kenapa Pro?</h4>
-                        <h3 class="text-3xl sm:text-4xl font-black tracking-tight leading-tight">Sekali Bayar. <br/> Akses Selamanya.</h3>
+                        <h4 class="text-xs font-black text-primary-400 uppercase tracking-widest">Why Pro?</h4>
+                        <h3 class="text-3xl sm:text-4xl font-black tracking-tight leading-tight">Pay Once. <br/> Access Forever.</h3>
                     </div>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
@@ -146,7 +146,7 @@
                 <div class="lg:w-1/2 w-full">
                     <div class="bg-white/5 backdrop-blur-md border border-white/10 p-6 sm:p-10 rounded-[1.5rem] sm:rounded-[2rem] text-center space-y-6 sm:space-y-8">
                         <div class="space-y-2">
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Penawaran Spesial</p>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Special Offer</p>
                             <div class="flex items-center justify-center gap-3">
                                 <span class="text-3xl sm:text-5xl font-black">Rp {{ number_format($premiumPrice, 0, ',', '.') }}</span>
                                 <span class="text-slate-500 line-through text-xs sm:text-sm">Rp 150.000</span>
@@ -155,7 +155,7 @@
 
                         <div class="space-y-4">
                             <a href="{{ route('payment.index') }}" class="block w-full py-4 sm:py-5 bg-white text-slate-900 rounded-xl font-black text-[10px] sm:text-xs uppercase tracking-[0.2em] shadow-xl hover:bg-slate-100 transition-all active:scale-95 text-center">
-                                Klaim Akses Pro
+                                Claim Pro Access
                             </a>
                             <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">No subscription. No hidden fees.</p>
                         </div>
@@ -175,7 +175,7 @@
             {{-- ── Footer Note ────────────────────────────── --}}
             <div class="mt-12 sm:mt-16 text-center px-4">
                 <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] leading-relaxed">
-                    Bergabunglah dengan <span class="text-slate-900">1.200+ pengguna</span> yang telah meng-upgrade strategi karier mereka minggu ini.
+                    Join <span class="text-slate-900">1,200+ users</span> who upgraded their career strategy this week.
                 </p>
             </div>
         </div>

@@ -12,15 +12,15 @@
                         </div>
                         
                         <div class="space-y-2">
-                            <h2 class="text-base font-bold text-zinc-900 tracking-tight">Terima Kasih Banyak!</h2>
+                            <h2 class="text-base font-bold text-zinc-900 tracking-tight">Thank You Very Much!</h2>
                             <p class="text-xs text-zinc-500 leading-relaxed">
-                                Tanggapan dan masukan berharga Anda telah berhasil kami simpan. Umpan balik dari Anda sangat membantu kami dalam menyempurnakan fitur-fitur TraKerja agar menjadi lebih baik.
+                                Your valuable feedback has been saved. It helps us tremendously in improving TraKerja features.
                             </p>
                         </div>
 
                         <div class="pt-2">
                             <a href="{{ route('tracker') }}" class="inline-flex items-center justify-center w-full py-2 bg-zinc-900 hover:bg-zinc-800 text-white rounded-md text-xs font-bold uppercase tracking-wider transition-colors">
-                                Lanjut ke Dashboard
+                                Go to Dashboard
                             </a>
                         </div>
                     </div>
@@ -34,13 +34,13 @@
                     <div class="bg-white border border-zinc-200 rounded-lg shadow-2xs overflow-hidden">
                         <div class="h-2.5 bg-primary-500"></div>
                         <div class="p-5 sm:p-6 space-y-3">
-                            <h1 class="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight">Evaluasi & Kepuasan Layanan TraKerja</h1>
+                            <h1 class="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight">TraKerja Service Evaluation & Satisfaction Survey</h1>
                             <p class="text-xs text-zinc-650 leading-relaxed text-justify">
-                                Tanggapan Anda akan membantu kami terus meningkatkan dan mempersonalisasi fitur-fitur di TraKerja. Mohon luangkan waktu sebentar untuk menjawab 11 pertanyaan di bawah ini.
+                                Your feedback helps us continuously improve and personalize TraKerja. Please take a moment to answer the questions below.
                             </p>
                             <div class="pt-2 border-t border-zinc-100 flex items-center gap-1 text-[10px] text-red-600 font-semibold font-mono">
                                 <span>*</span>
-                                <span>Menunjukkan pertanyaan yang wajib diisi</span>
+                                <span>Indicates required question</span>
                             </div>
                         </div>
                     </div>
@@ -49,8 +49,8 @@
                     <div class="bg-amber-50/70 border border-amber-200 rounded-lg p-3.5 flex items-start gap-3 shadow-2xs">
                         <i class="ph-bold ph-warning-circle text-base text-amber-600 shrink-0 mt-0.5"></i>
                         <div class="text-[11px] text-amber-800 leading-relaxed">
-                            <p class="font-bold">Akses Terbatas Sementara</p>
-                            <p class="mt-0.5">Akun Anda terpilih untuk memberikan umpan balik berkala. Silakan selesaikan survey ini untuk mengaktifkan kembali akses penuh ke seluruh fitur Job Tracker dan AI Studio.</p>
+                            <p class="font-bold">Temporary Limited Access</p>
+                            <p class="mt-0.5">Your account has been selected for periodic feedback. Please complete this survey to reactivate full access to Job Tracker and AI Studio.</p>
                         </div>
                     </div>
 
@@ -59,87 +59,87 @@
                         $questions = [
                             'q1_overall' => [
                                 'num' => 1,
-                                'title' => 'Kepuasan Keseluruhan',
-                                'desc' => 'Seberapa puas Anda dengan layanan TraKerja secara keseluruhan?',
-                                'low' => 'Sangat Tidak Puas',
-                                'high' => 'Sangat Puas'
+                                'title' => 'Overall Satisfaction',
+                                'desc' => 'How satisfied are you with TraKerja overall?',
+                                'low' => 'Highly Dissatisfied',
+                                'high' => 'Highly Satisfied'
                             ],
                             'q2_navigation' => [
                                 'num' => 2,
-                                'title' => 'Kemudahan Navigasi & Struktur Menu',
-                                'desc' => 'Seberapa mudah Anda bernavigasi menggunakan sidebar dan menu di TraKerja?',
-                                'low' => 'Sangat Sulit',
-                                'high' => 'Sangat Mudah'
+                                'title' => 'Ease of Navigation & Menu Structure',
+                                'desc' => 'How easy is it to navigate using the sidebar and menus in TraKerja?',
+                                'low' => 'Highly Difficult',
+                                'high' => 'Highly Easy'
                             ],
                             'q3_speed' => [
                                 'num' => 3,
-                                'title' => 'Kecepatan & Performa Halaman',
-                                'desc' => 'Bagaimana penilaian Anda terhadap kecepatan waktu muat halaman?',
-                                'low' => 'Sangat Lambat',
-                                'high' => 'Sangat Cepat'
+                                'title' => 'Page Speed & Performance',
+                                'desc' => 'How would you rate the loading speed of the pages?',
+                                'low' => 'Highly Slow',
+                                'high' => 'Highly Fast'
                             ],
                             'q4_cv_builder' => [
                                 'num' => 4,
-                                'title' => 'Kualitas Resume / CV Builder',
-                                'desc' => 'Seberapa terbantu Anda dengan fitur pembuat resume (CV Builder)?',
-                                'low' => 'Tidak Membantu',
-                                'high' => 'Sangat Membantu'
+                                'title' => 'Resume & CV Builder Quality',
+                                'desc' => 'How helpful has the CV Builder feature been for you?',
+                                'low' => 'Not Helpful',
+                                'high' => 'Highly Helpful'
                             ],
                             'q5_ai_analyzer' => [
                                 'num' => 5,
-                                'title' => 'Ketepatan Review AI Analyzer',
-                                'desc' => 'Bagaimana Anda menilai kegunaan AI Analyzer dalam mereview resume?',
-                                'low' => 'Tidak Berguna',
-                                'high' => 'Sangat Berguna'
+                                'title' => 'AI Analyzer Review Accuracy',
+                                'desc' => 'How would you rate the usefulness of the AI Analyzer in reviewing resumes?',
+                                'low' => 'Not Useful',
+                                'high' => 'Highly Useful'
                             ],
                             'q6_job_tracker' => [
                                 'num' => 6,
-                                'title' => 'Efektivitas Pelacak Lamaran (Job Tracker)',
-                                'desc' => 'Bagaimana kemudahan mengelola & memperbarui status lamaran kerja Anda?',
-                                'low' => 'Sangat Sulit',
-                                'high' => 'Sangat Mudah'
+                                'title' => 'Job Tracker Effectiveness',
+                                'desc' => 'How easy is it to manage & update your job application statuses?',
+                                'low' => 'Highly Difficult',
+                                'high' => 'Highly Easy'
                             ],
                             'q7_cover_letter' => [
                                 'num' => 7,
                                 'title' => 'AI Cover Letter Generator',
-                                'desc' => 'Seberapa puas Anda dengan kualitas surat lamaran yang dihasilkan AI?',
-                                'low' => 'Tidak Puas',
-                                'high' => 'Sangat Puas'
+                                'desc' => 'How satisfied are you with the quality of the cover letters generated by AI?',
+                                'low' => 'Dissatisfied',
+                                'high' => 'Highly Satisfied'
                             ],
                             'q8_interviews' => [
                                 'num' => 8,
-                                'title' => 'Manajemen & Penjadwalan Wawancara (Interviews)',
-                                'desc' => 'Seberapa terbantu Anda dengan fitur pencatatan dan pengelolaan jadwal wawancara kerja?',
-                                'low' => 'Tidak Membantu',
-                                'high' => 'Sangat Membantu'
+                                'title' => 'Interview Management & Scheduling',
+                                'desc' => 'How helpful has the interview scheduling and logging feature been?',
+                                'low' => 'Not Helpful',
+                                'high' => 'Highly Helpful'
                             ],
                             'q9_premium' => [
                                 'num' => 9,
-                                'title' => 'Nilai Ekonomis Layanan Premium',
-                                'desc' => 'Bagaimana Anda menilai kesesuaian harga premium dengan fitur yang didapat?',
-                                'low' => 'Sangat Buruk',
-                                'high' => 'Sangat Baik'
+                                'title' => 'Premium Service Value',
+                                'desc' => 'How would you rate the value for money of the Premium plans?',
+                                'low' => 'Highly Poor',
+                                'high' => 'Highly Good'
                             ],
                             'q10_recommend' => [
                                 'num' => 10,
-                                'title' => 'Tingkat Rekomendasi (Net Promoter Score)',
-                                'desc' => 'Seberapa besar kemungkinan Anda merekomendasikan TraKerja ke rekan Anda?',
-                                'low' => 'Sangat Kecil',
-                                'high' => 'Sangat Besar'
+                                'title' => 'Recommendation Likelihood (Net Promoter Score)',
+                                'desc' => 'How likely are you to recommend TraKerja to a friend or colleague?',
+                                'low' => 'Highly Unlikely',
+                                'high' => 'Highly Likely'
                             ],
                             'q11_design' => [
                                 'num' => 11,
-                                'title' => 'Estetika & Desain Visual Halaman',
-                                'desc' => 'Bagaimana penilaian Anda terhadap aspek estetika visual (Notion-Cupertino style)?',
-                                'low' => 'Sangat Buruk',
-                                'high' => 'Sangat Estetis'
+                                'title' => 'Visual Design & Aesthetics',
+                                'desc' => 'How would you rate the visual aesthetics (Notion-Cupertino style)?',
+                                'low' => 'Highly Poor',
+                                'high' => 'Highly Aesthetic'
                             ],
                             'q12_cv_templates' => [
                                 'num' => 12,
-                                'title' => 'Desain & Kerapihan Template CV (CV Builder)',
-                                'desc' => 'Bagaimana penilaian Anda terhadap kualitas desain template dan hasil ekspor PDF di CV Builder?',
-                                'low' => 'Sangat Buruk',
-                                'high' => 'Sangat Baik'
+                                'title' => 'CV Templates Design & PDF Export',
+                                'desc' => 'How would you rate the layout quality and PDF export of templates in CV Builder?',
+                                'low' => 'Highly Poor',
+                                'high' => 'Highly Good'
                             ]
                         ];
                     @endphp
@@ -180,12 +180,12 @@
                     <div class="bg-white border border-zinc-200 rounded-lg p-5 space-y-3.5 shadow-2xs">
                         <div class="space-y-1">
                             <h3 class="text-xs sm:text-sm font-bold text-zinc-900 leading-snug">
-                                {{ count($questions) + 1 }}. Saran, Kritik, atau Fitur Tambahan (Opsional)
+                                {{ count($questions) + 1 }}. Suggestions, Feedback, or Additional Features (Optional)
                             </h3>
-                            <p class="text-[11px] text-zinc-550 leading-relaxed">Berikan saran spesifik mengenai hal-hal yang perlu kami tingkatkan pada platform ini.</p>
+                            <p class="text-[11px] text-zinc-550 leading-relaxed">Provide specific suggestions on what we can improve on this platform.</p>
                         </div>
                         <div class="pt-1.5">
-                            <textarea name="feedback" rows="4" placeholder="Tuliskan jawaban Anda di sini..."
+                            <textarea name="feedback" rows="4" placeholder="Type your answer here..."
                                       class="w-full px-3 py-2 bg-zinc-50/50 border border-zinc-200 focus:bg-white focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 rounded-md text-xs text-zinc-850 transition-all">{{ old('feedback') }}</textarea>
                             @error('feedback')
                                 <p class="text-[10px] text-red-600 font-medium mt-1">{{ $message }}</p>
@@ -196,10 +196,10 @@
                     {{-- Action Row Card --}}
                     <div class="flex items-center justify-between pt-2">
                         <button type="submit" class="px-6 py-2 bg-primary-500 hover:bg-primary-650 text-white rounded-md text-[10px] font-bold uppercase tracking-wider transition-colors shadow-2xs">
-                            Kirim Tanggapan
+                            Submit Feedback
                         </button>
                         <button type="reset" class="px-4 py-2 text-zinc-500 hover:text-zinc-800 text-[10px] font-bold uppercase tracking-wider transition-colors">
-                            Batal
+                            Cancel
                         </button>
                     </div>
                 </form>
