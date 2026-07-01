@@ -128,12 +128,12 @@
                              @empty
                              <div class="group/empty flex flex-col items-center justify-center py-8 bg-white/30 rounded-lg border border-dashed border-zinc-200/60 hover:bg-white/60 hover:border-zinc-300 transition-all duration-150">
                                  <div class="w-8 h-8 bg-zinc-100/60 rounded-md flex items-center justify-center text-zinc-400 mb-2 shadow-3xs group-hover/empty:scale-105 transition-transform duration-150">
-                                     <i class="ph ph-folder-open text-sm"></i>
+                                     <i class="ph ph-folder text-sm"></i>
                                  </div>
                                  <span class="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider mb-2">No Applications</span>
                                  <button type="button" onclick="openJobModal(false, '{{ $status->name === 'On Process' ? 'Applied' : ($status->name === 'Accepted' ? 'Offering' : 'Not Processed') }}')" class="opacity-0 group-hover/empty:opacity-100 transition-opacity duration-150 px-2 py-0.8 bg-zinc-900 hover:bg-zinc-800 text-white rounded text-[8.5px] font-black uppercase tracking-wider shadow-3xs focus:outline-none flex items-center gap-1 cursor-pointer active:scale-95">
                                      <i class="ph ph-plus text-[9px] font-bold"></i>
-                                     <span>Tambah</span>
+                                     <span>Add</span>
                                  </button>
                              </div>
                              @endforelse

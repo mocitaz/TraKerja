@@ -347,11 +347,11 @@
                         <div class="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center mb-3.5 text-primary-600 border border-primary-100/60 shadow-3xs select-none">
                             <i class="ph ph-chats-teardrop text-2xl"></i>
                         </div>
-                        <h3 class="text-xs font-extrabold text-zinc-800 mb-1">Belum Ada Tiket Bantuan</h3>
-                        <p class="text-[10px] text-zinc-500 font-semibold max-w-[280px] leading-relaxed mb-4">Punya kendala teknis atau saran fitur baru? Hubungi tim support kami dengan mengirimkan tiket bantuan.</p>
+                        <h3 class="text-xs font-extrabold text-zinc-800 mb-1">No Support Tickets Found</h3>
+                        <p class="text-[10px] text-zinc-500 font-semibold max-w-[280px] leading-relaxed mb-4">Need technical help or want to suggest a new feature? Contact our support team by submitting a ticket.</p>
                         <button type="button" @click="activeTab = 'submit'" class="px-3.5 py-1.8 bg-zinc-900 hover:bg-zinc-800 text-white rounded-md text-[9.5px] font-bold uppercase tracking-wider shadow-3xs transition-colors flex items-center gap-1.5 cursor-pointer active:scale-97 select-none">
                             <i class="ph ph-envelope-open text-xs"></i>
-                            <span>Kirim Tiket Bantuan</span>
+                            <span>Submit Support Ticket</span>
                         </button>
                     </div>
                 @endforelse
