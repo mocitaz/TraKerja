@@ -143,11 +143,7 @@
                         <i class="ph ph-calendar-blank text-2xl"></i>
                     </div>
                     <h3 class="text-xs font-extrabold text-zinc-800 mb-1">No Interviews Scheduled</h3>
-                    <p class="text-[10px] text-zinc-500 font-semibold max-w-[280px] leading-relaxed mb-4">Your interview schedules will automatically appear here once added in the Job Tracker.</p>
-                    <a href="{{ route('tracker') }}" class="px-4.5 h-[32px] bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-[10px] font-bold uppercase tracking-wider shadow-3xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer active:scale-97 select-none">
-                        <i class="ph ph-layout text-xs"></i>
-                        <span>Open Job Tracker</span>
-                    </a>
+                    <p class="text-[10px] text-zinc-500 font-semibold max-w-[280px] leading-relaxed">Your interview schedules will automatically appear here once added in the Job Tracker.</p>
                 </div>
             @endforelse
         </div>
