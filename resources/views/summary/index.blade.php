@@ -313,85 +313,85 @@
                 $onProcess = $statusDistribution->where('application_status', 'On Process')->first()->count ?? 0;
                 $rejectedCount = $funnelData['Rejected'] ?? 0;
             @endphp
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-5">
                 <!-- On Process Card -->
-                <div class="bg-white rounded-lg border border-zinc-200/60 p-3.5 flex items-center justify-between transition-colors hover:border-blue-400 group shadow-3xs">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 bg-blue-50/50 rounded-md flex items-center justify-center text-blue-600">
-                            <i class="ph ph-spinner-gap text-base animate-spin-slow"></i>
+                <div class="bg-white rounded-lg border border-zinc-200/60 p-3 sm:p-3.5 flex items-center justify-between transition-colors hover:border-blue-400 group shadow-3xs">
+                    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-blue-50/50 rounded-md flex items-center justify-center text-blue-600 shrink-0">
+                            <i class="ph ph-spinner-gap text-sm sm:text-base animate-spin-slow"></i>
                         </div>
-                        <div>
-                            <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none">On Process</p>
-                            <p class="text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none">Active Apps</p>
+                        <div class="min-w-0">
+                            <p class="text-[8px] sm:text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">On Process</p>
+                            <p class="text-[9px] sm:text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none truncate">Active Apps</p>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <p class="text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $onProcess }}</p>
+                    <div class="text-right shrink-0">
+                        <p class="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $onProcess }}</p>
                     </div>
                 </div>
 
                 <!-- Offering/Accepted Card -->
-                <div class="bg-white rounded-lg border border-zinc-200/60 p-3.5 flex items-center justify-between transition-colors hover:border-emerald-400 group shadow-3xs">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 bg-emerald-50/50 rounded-md flex items-center justify-center text-emerald-600">
-                            <i class="ph ph-check-circle text-base"></i>
+                <div class="bg-white rounded-lg border border-zinc-200/60 p-3 sm:p-3.5 flex items-center justify-between transition-colors hover:border-emerald-400 group shadow-3xs">
+                    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-emerald-50/50 rounded-md flex items-center justify-center text-emerald-600 shrink-0">
+                            <i class="ph ph-check-circle text-sm sm:text-base"></i>
                         </div>
-                        <div>
-                            <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none">Success</p>
-                            <p class="text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none">Offers & Recs</p>
+                        <div class="min-w-0">
+                            <p class="text-[8px] sm:text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">Success</p>
+                            <p class="text-[9px] sm:text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none truncate">Offers & Recs</p>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <p class="text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $offeringAcceptedCount }}</p>
+                    <div class="text-right shrink-0">
+                        <p class="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $offeringAcceptedCount }}</p>
                     </div>
                 </div>
 
                 <!-- Declined Card -->
-                <div class="bg-white rounded-lg border border-zinc-200/60 p-3.5 flex items-center justify-between transition-colors hover:border-rose-400 group shadow-3xs">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 bg-rose-50/50 rounded-md flex items-center justify-center text-rose-600">
-                            <i class="ph ph-x-circle text-base"></i>
+                <div class="bg-white rounded-lg border border-zinc-200/60 p-3 sm:p-3.5 flex items-center justify-between transition-colors hover:border-rose-400 group shadow-3xs">
+                    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-rose-50/50 rounded-md flex items-center justify-center text-rose-600 shrink-0">
+                            <i class="ph ph-x-circle text-sm sm:text-base"></i>
                         </div>
-                        <div>
-                            <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none">Declined</p>
-                            <p class="text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none">Rejected</p>
+                        <div class="min-w-0">
+                            <p class="text-[8px] sm:text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">Declined</p>
+                            <p class="text-[9px] sm:text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none truncate">Rejected</p>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <p class="text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $rejectedCount }}</p>
+                    <div class="text-right shrink-0">
+                        <p class="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $rejectedCount }}</p>
                     </div>
                 </div>
 
                 <!-- Total Interviews Card -->
-                <div class="bg-white rounded-lg border border-zinc-200/60 p-3.5 flex items-center justify-between transition-colors hover:border-orange-400 group shadow-3xs">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 bg-orange-50/50 rounded-md flex items-center justify-center text-orange-600">
-                            <i class="ph ph-calendar text-base"></i>
+                <div class="bg-white rounded-lg border border-zinc-200/60 p-3 sm:p-3.5 flex items-center justify-between transition-colors hover:border-orange-400 group shadow-3xs">
+                    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-orange-50/50 rounded-md flex items-center justify-center text-orange-600 shrink-0">
+                            <i class="ph ph-calendar text-sm sm:text-base"></i>
                         </div>
-                        <div>
-                            <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none">Interviews</p>
-                            <p class="text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none">Total Scheduled</p>
+                        <div class="min-w-0">
+                            <p class="text-[8px] sm:text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">Interviews</p>
+                            <p class="text-[9px] sm:text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none truncate">Total Scheduled</p>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <p class="text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $interviews }}</p>
+                    <div class="text-right shrink-0">
+                        <p class="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $interviews }}</p>
                     </div>
                 </div>
             </div>
 
             {{-- Productivity Highlights --}}
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-5">
                 <!-- Streak Card -->
                 <div class="bg-white border border-zinc-200/60 rounded-lg p-3 flex items-center justify-between hover:border-orange-400 transition-colors shadow-3xs">
                     <div class="flex items-center gap-2.5">
-                        <div class="w-8 h-8 rounded bg-orange-50/50 flex items-center justify-center text-orange-600 shrink-0">
+                        <div class="w-8 h-8 bg-orange-50/50 rounded bg-orange-50/50 flex items-center justify-center text-orange-600 shrink-0">
                             <i class="ph ph-fire text-base"></i>
                         </div>
                         <div class="flex flex-col">
                             <span class="text-[8px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Daily Streak</span>
                             <div class="flex items-baseline gap-1">
                                 <span class="text-base font-bold text-zinc-800 leading-none">{{ $dailyStreak['current_streak'] }}</span>
-                                <span class="text-[8px] font-bold text-zinc-450 uppercase leading-none">/ Best {{ $dailyStreak['best_streak'] }}</span>
+                                <span class="text-[8px] font-bold text-zinc-500 uppercase leading-none">/ Best {{ $dailyStreak['best_streak'] }}</span>
                             </div>
                         </div>
                     </div>
@@ -407,7 +407,7 @@
                             <span class="text-[8px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Weekly Goal</span>
                             <div class="flex items-baseline gap-1">
                                 <span class="text-base font-bold text-zinc-800 leading-none">{{ $weeklyProgress['this_week_applications'] }}</span>
-                                <span class="text-[8px] font-bold text-zinc-450 uppercase leading-none">/ {{ $weeklyProgress['weekly_goal'] }}</span>
+                                <span class="text-[8px] font-bold text-zinc-500 uppercase leading-none">/ {{ $weeklyProgress['weekly_goal'] }}</span>
                             </div>
                         </div>
                     </div>
@@ -423,7 +423,7 @@
                             <span class="text-[8px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Avg Daily</span>
                             <div class="flex items-baseline gap-1">
                                 <span class="text-base font-bold text-zinc-800 leading-none">{{ $cadenceEffect['average_daily'] }}</span>
-                                <span class="text-[8px] font-bold text-zinc-450 uppercase leading-none">/ {{ $cadenceEffect['consistency_score'] }}%</span>
+                                <span class="text-[8px] font-bold text-zinc-500 uppercase leading-none">/ {{ $cadenceEffect['consistency_score'] }}%</span>
                             </div>
                         </div>
                     </div>
@@ -453,7 +453,7 @@
 
                 {{-- Application Funnel --}}
                 <div class="bg-white rounded-lg border border-zinc-200/60 overflow-hidden shadow-3xs">
-                    <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+                    <div class="px-4 py-3 border-b border-zinc-200/60 bg-zinc-50/20">
                         <div class="flex items-center gap-3">
                             <div class="w-8 h-8 bg-zinc-50 border border-zinc-200/50 rounded flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
                                 <i class="ph ph-funnel text-base"></i>
@@ -502,7 +502,7 @@
                                             $conversionRate = $totalApps > 0 ? round(($pendingCount / $totalApps) * 100) : 0;
                                         }
                                     @endphp
-                                    <div class="bg-zinc-50/30 p-3 rounded border border-zinc-200/50">
+                                    <div class="bg-zinc-50/30 p-3 rounded border border-zinc-200/50 {{ $label === 'Pending' ? 'col-span-2 md:col-span-1' : '' }}">
                                         <div class="flex items-center justify-between mb-2">
                                             <div class="w-6 h-6 {{ $statusColors[$label] ?? 'bg-indigo-500' }} rounded flex items-center justify-center text-white shrink-0">
                                                 <i class="ph {{ $label === 'Applied' ? 'ph-paper-plane-tilt' : ($label === 'Interview' ? 'ph-chats-circle' : ($label === 'Accepted' ? 'ph-check-circle' : ($label === 'Rejected' ? 'ph-x-circle' : 'ph-clock'))) }} text-xs"></i>
@@ -526,7 +526,7 @@
                 {{-- Productivity Insights (Day of Week & Velocity) --}}
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <div class="bg-white rounded-lg border border-zinc-200/60 overflow-hidden shadow-3xs">
-                        <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+                        <div class="px-4 py-3 border-b border-zinc-200/60 bg-zinc-50/20">
                             <div class="flex items-center gap-3">
                                 <div class="w-8 h-8 bg-zinc-50 border border-zinc-200/50 rounded flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
                                     <i class="ph ph-calendar-check text-base"></i>
@@ -545,7 +545,7 @@
                     </div>
 
                     <div class="bg-white rounded-lg border border-zinc-200/60 overflow-hidden shadow-3xs">
-                        <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+                        <div class="px-4 py-3 border-b border-zinc-200/60 bg-zinc-50/20">
                             <div class="flex items-center gap-3">
                                 <div class="w-8 h-8 bg-zinc-50 border border-zinc-200/50 rounded flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
                                     <i class="ph ph-speedometer text-base"></i>
@@ -568,7 +568,7 @@
                 {{-- Advanced Analytics Grid --}}
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <div class="bg-white rounded-lg border border-zinc-200/60 overflow-hidden shadow-3xs">
-                        <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+                        <div class="px-4 py-3 border-b border-zinc-200/60 bg-zinc-50/20">
                             <div class="flex items-center gap-3">
                                 <div class="w-8 h-8 bg-zinc-50 border border-zinc-200/50 rounded flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
                                     <i class="ph ph-globe text-base"></i>
@@ -586,7 +586,7 @@
                         </div>
                     </div>
                     <div class="bg-white rounded-lg border border-zinc-200/60 overflow-hidden shadow-3xs">
-                        <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+                        <div class="px-4 py-3 border-b border-zinc-200/60 bg-zinc-50/20">
                             <div class="flex items-center gap-3">
                                 <div class="w-8 h-8 bg-zinc-50 border border-zinc-200/50 rounded flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
                                     <i class="ph ph-stairs text-base"></i>
@@ -607,7 +607,7 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <div class="bg-white rounded-lg border border-zinc-200/60 overflow-hidden shadow-3xs">
-                        <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+                        <div class="px-4 py-3 border-b border-zinc-200/60 bg-zinc-50/20">
                             <div class="flex items-center gap-3">
                                 <div class="w-8 h-8 bg-zinc-50 border border-zinc-200/50 rounded flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
                                     <i class="ph ph-map-trifold text-base"></i>
@@ -625,7 +625,7 @@
                         </div>
                     </div>
                     <div class="bg-white rounded-lg border border-zinc-200/60 overflow-hidden shadow-3xs">
-                        <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+                        <div class="px-4 py-3 border-b border-zinc-200/60 bg-zinc-50/20">
                             <div class="flex items-center gap-3">
                                 <div class="w-8 h-8 bg-zinc-50 border border-zinc-200/50 rounded flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
                                     <i class="ph ph-buildings text-base"></i>
@@ -647,7 +647,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     {{-- Top Companies Leaderboard --}}
                     <div class="bg-white rounded-lg border border-zinc-200/60 overflow-hidden shadow-3xs">
-                        <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+                        <div class="px-4 py-3 border-b border-zinc-200/60 bg-zinc-50/20">
                             <div class="flex items-center gap-3">
                                 <div class="w-8 h-8 bg-zinc-50 border border-zinc-200/50 rounded flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
                                     <i class="ph ph-crown text-base"></i>
@@ -663,7 +663,7 @@
                                 @forelse($topCompanies as $index => $company)
                                     <div class="flex items-center justify-between p-2.5 rounded-md bg-zinc-50/30 border border-zinc-200/50 group hover:bg-white hover:border-zinc-300 transition-colors">
                                         <div class="flex items-center gap-3">
-                                            <div class="w-7 h-7 rounded bg-zinc-100 flex items-center justify-center font-bold text-[10px] shrink-0 text-zinc-650 uppercase">
+                                            <div class="w-7 h-7 rounded bg-zinc-100 flex items-center justify-center font-bold text-[10px] shrink-0 text-zinc-600 uppercase">
                                                 {{ substr($company['company_name'], 0, 2) }}
                                             </div>
                                             <div class="flex flex-col min-w-0">
@@ -682,7 +682,7 @@
                                         </div>
                                         <div class="flex flex-col items-end">
                                             <span class="text-xs font-bold text-zinc-800">{{ round(($company['applications'] / $applicationsCount) * 100) }}%</span>
-                                            <span class="text-[8px] font-bold text-zinc-405 uppercase tracking-wide mt-0.5">Share</span>
+                                            <span class="text-[8px] font-bold text-zinc-400 uppercase tracking-wide mt-0.5">Share</span>
                                         </div>
                                     </div>
                                 @empty
@@ -691,10 +691,10 @@
                             </div>
                         </div>
                     </div>
-
+ 
                     {{-- Popular Roles Chart --}}
                     <div class="bg-white rounded-lg border border-zinc-200/60 overflow-hidden shadow-3xs">
-                        <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+                        <div class="px-4 py-3 border-b border-zinc-200/60 bg-zinc-50/20">
                             <div class="flex items-center gap-3">
                                 <div class="w-8 h-8 bg-zinc-50 border border-zinc-200/50 rounded flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
                                     <i class="ph ph-briefcase text-base"></i>
@@ -713,7 +713,7 @@
                     </div>
                 </div>
             </div>
-
+ 
             
             {{-- Gamification: Career Profile Card (Notion-style bottom layout) --}}
             <div class="mt-8 border-t border-zinc-200/50 pt-5">
@@ -721,16 +721,16 @@
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 bg-primary-50 rounded-lg flex items-center justify-center border border-primary-100/60 shrink-0 relative group">
                             <i class="ph-fill ph-trophy text-xl text-primary-650"></i>
-                            <div class="absolute -top-1.5 -right-1.5 bg-primary-50 text-primary-650 text-[7.5px] font-black px-1.5 py-0.2 rounded border border-primary-150 shadow-3xs">
+                            <div class="absolute -top-1.5 -right-1.5 bg-primary-50 text-primary-650 text-[7.5px] font-black px-1.5 py-0.2 rounded border border-primary-200 shadow-3xs">
                                 L{{ $user->level ?? 1 }}
                             </div>
                         </div>
                         <div>
-                            <h2 class="text-xs font-bold text-zinc-850 tracking-tight">{{ $user->level_title ?? 'Job Seeker' }}</h2>
+                            <h2 class="text-xs font-bold text-zinc-800 tracking-tight">{{ $user->level_title ?? 'Job Seeker' }}</h2>
                             <p class="text-[9px] font-bold text-zinc-400 mt-0.5 uppercase tracking-wider leading-none">Keep moving stages to earn XP</p>
                         </div>
                     </div>
-
+ 
                     <div class="w-full md:w-1/3 flex flex-col">
                         @php
                             $currentLvl = $user->level ?? 1;
@@ -748,7 +748,7 @@
                             <span class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none">Progress</span>
                             <span class="text-xs font-bold text-zinc-700 leading-none">{{ $currentXp }} <span class="text-[9px] text-zinc-400 font-semibold">/ {{ $nextThreshold }} XP</span></span>
                         </div>
-                        <div class="w-full h-1 bg-zinc-150 rounded-full overflow-hidden">
+                        <div class="w-full h-1 bg-zinc-200 rounded-full overflow-hidden">
                             <div class="h-full bg-primary-650 rounded-full transition-all duration-1000" style="width: {{ $percentage }}%"></div>
                         </div>
                         @if($currentLvl < 5)
