@@ -15,6 +15,7 @@ class UserProfile extends Model
         'full_name',
         'phone_number',
         'domicile',
+        'headline',
         'bio',
         'linkedin_url',
         'github_url',

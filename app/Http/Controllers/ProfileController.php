@@ -65,11 +65,12 @@ class ProfileController extends Controller
     public function updatePersonalInfo(Request $request): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         $validated = $request->validate([
-            'phone' => ['nullable', 'string', 'max:20'],
-            'location' => ['nullable', 'string', 'max:255'],
-            'linkedin' => ['nullable', 'url', 'max:255'],
-            'website' => ['nullable', 'url', 'max:255'],
-            'bio' => ['nullable', 'string', 'max:1000'],
+            'phone_number' => ['nullable', 'string', 'max:20'],
+            'domicile'     => ['nullable', 'string', 'max:255'],
+            'headline'     => ['nullable', 'string', 'max:255'],
+            'linkedin_url' => ['nullable', 'url', 'max:255'],
+            'website_url'  => ['nullable', 'url', 'max:255'],
+            'bio'          => ['nullable', 'string', 'max:1000'],
         ]);
 
         $user = $request->user();
@@ -78,11 +79,12 @@ class ProfileController extends Controller
         $user->profile()->updateOrCreate(
             ['user_id' => $user->id],
             [
-                'phone_number' => $validated['phone'] ?? null,
-                'domicile' => $validated['location'] ?? null,
-                'linkedin_url' => $validated['linkedin'] ?? null,
-                'website_url' => $validated['website'] ?? null,
-                'bio' => $validated['bio'] ?? null,
+                'phone_number' => $validated['phone_number'] ?? null,
+                'domicile'     => $validated['domicile'] ?? null,
+                'headline'     => $validated['headline'] ?? null,
+                'linkedin_url' => $validated['linkedin_url'] ?? null,
+                'website_url'  => $validated['website_url'] ?? null,
+                'bio'          => $validated['bio'] ?? null,
             ]
         );
 
