@@ -64,30 +64,35 @@
                             <div>
                                 <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Portfolio Theme</label>
                                 <div class="grid grid-cols-2 gap-2">
-                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border border-zinc-200 rounded-md cursor-pointer hover:bg-zinc-100/60 transition-colors">
-                                        <input type="radio" name="portfolio_theme" value="slate" checked class="text-primary-600 focus:ring-0">
+                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border rounded-md cursor-pointer transition-colors {{ $theme === 'slate' ? 'border-primary-400 bg-primary-50/30' : 'border-zinc-200 hover:bg-zinc-100/60' }}">
+                                        <input type="radio" wire:model.live="theme" value="slate" class="text-primary-600 focus:ring-0">
                                         <span class="text-[10px] font-bold text-zinc-700">Minimal Slate</span>
                                     </label>
-                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border border-zinc-200 rounded-md cursor-pointer hover:bg-zinc-100/60 transition-colors">
-                                        <input type="radio" name="portfolio_theme" value="dark" class="text-primary-600 focus:ring-0">
+                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border rounded-md cursor-pointer transition-colors {{ $theme === 'dark' ? 'border-primary-400 bg-primary-50/30' : 'border-zinc-200 hover:bg-zinc-100/60' }}">
+                                        <input type="radio" wire:model.live="theme" value="dark" class="text-primary-600 focus:ring-0">
                                         <span class="text-[10px] font-bold text-zinc-700">Obsidian Dark</span>
                                     </label>
-                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border border-zinc-200 rounded-md cursor-pointer hover:bg-zinc-100/60 transition-colors">
-                                        <input type="radio" name="portfolio_theme" value="emerald" class="text-primary-600 focus:ring-0">
+                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border rounded-md cursor-pointer transition-colors {{ $theme === 'emerald' ? 'border-primary-400 bg-primary-50/30' : 'border-zinc-200 hover:bg-zinc-100/60' }}">
+                                        <input type="radio" wire:model.live="theme" value="emerald" class="text-primary-600 focus:ring-0">
                                         <span class="text-[10px] font-bold text-zinc-700">Emerald Luxe</span>
                                     </label>
-                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border border-zinc-200 rounded-md cursor-pointer hover:bg-zinc-100/60 transition-colors">
-                                        <input type="radio" name="portfolio_theme" value="violet" class="text-primary-600 focus:ring-0">
+                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border rounded-md cursor-pointer transition-colors {{ $theme === 'violet' ? 'border-primary-400 bg-primary-50/30' : 'border-zinc-200 hover:bg-zinc-100/60' }}">
+                                        <input type="radio" wire:model.live="theme" value="violet" class="text-primary-600 focus:ring-0">
                                         <span class="text-[10px] font-bold text-zinc-700">Royal Violet</span>
                                     </label>
                                 </div>
+                                @error('theme') <p class="text-rose-500 text-[9px] mt-1">{{ $message }}</p> @enderror
                             </div>
 
                             {{-- Custom Domain --}}
                             <div>
                                 <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Custom Domain (CNAME)</label>
-                                <input type="text" placeholder="e.g. karir.domainanda.com" class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 focus:bg-white focus:border-primary-500 outline-none">
+                                <input type="text"
+                                       wire:model.blur="customDomain"
+                                       placeholder="e.g. karir.domainanda.com"
+                                       class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 focus:bg-white focus:border-primary-500 outline-none @error('customDomain') border-rose-400 @enderror">
                                 <p class="text-[8.5px] text-zinc-400 mt-1">Point A/CNAME record to <span class="font-bold text-zinc-600">cname.trakerja.com</span></p>
+                                @error('customDomain') <p class="text-rose-500 text-[9px] mt-1">{{ $message }}</p> @enderror
                             </div>
                         </div>
 

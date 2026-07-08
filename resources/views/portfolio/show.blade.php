@@ -46,8 +46,8 @@
         [x-cloak] { display: none !important; }
         
         body {
-            background-color: #fafafa;
-            background-image: radial-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 0);
+            background-color: var(--theme-bg, #fafafa);
+            background-image: radial-gradient(var(--theme-dot, rgba(0,0,0,0.02)) 1px, transparent 0);
             background-size: 24px 24px;
         }
 
@@ -62,7 +62,77 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Theme: Minimal Slate (default) */
+        :root {
+            --theme-bg: #fafafa;
+            --theme-dot: rgba(0,0,0,0.02);
+            --theme-card: #ffffff;
+            --theme-border: #e4e4e7;
+            --theme-text: #18181b;
+            --theme-text-muted: #71717a;
+            --theme-accent: #7c3aed;
+            --theme-accent-bg: #f5f3ff;
+        }
+
+        @php $theme = $user->portfolio_theme ?? 'slate'; @endphp
     </style>
+
+    @php $theme = $user->portfolio_theme ?? 'slate'; @endphp
+
+    @if($theme === 'dark')
+    <style>
+        :root {
+            --theme-bg: #09090b;
+            --theme-dot: rgba(255,255,255,0.03);
+            --theme-card: #18181b;
+            --theme-border: #27272a;
+            --theme-text: #fafafa;
+            --theme-text-muted: #a1a1aa;
+            --theme-accent: #a78bfa;
+            --theme-accent-bg: #1c1030;
+        }
+        body { color: #fafafa; }
+        header { background: rgba(9,9,11,0.85) !important; border-color: #27272a !important; }
+        header span.text-zinc-800 { color: #fafafa !important; }
+        header .bg-white { background: #18181b !important; }
+        .bg-white { background-color: #18181b !important; }
+        .border-zinc-200, .border-zinc-150\/60 { border-color: #27272a !important; }
+        .text-zinc-800, .text-zinc-700 { color: #f4f4f5 !important; }
+        .text-zinc-500, .text-zinc-400 { color: #a1a1aa !important; }
+        .bg-zinc-50, .bg-zinc-100 { background-color: #27272a !important; }
+        .text-zinc-900 { color: #fafafa !important; }
+    </style>
+    @elseif($theme === 'emerald')
+    <style>
+        :root {
+            --theme-bg: #f0fdf4;
+            --theme-dot: rgba(16,185,129,0.04);
+            --theme-card: #ffffff;
+            --theme-border: #bbf7d0;
+            --theme-text: #14532d;
+            --theme-text-muted: #16a34a;
+            --theme-accent: #059669;
+            --theme-accent-bg: #dcfce7;
+        }
+        header { border-color: #bbf7d0 !important; }
+        .border-primary-500, .focus\:border-primary-500:focus { border-color: #059669 !important; }
+    </style>
+    @elseif($theme === 'violet')
+    <style>
+        :root {
+            --theme-bg: #faf5ff;
+            --theme-dot: rgba(124,58,237,0.04);
+            --theme-card: #ffffff;
+            --theme-border: #e9d5ff;
+            --theme-text: #4c1d95;
+            --theme-text-muted: #7c3aed;
+            --theme-accent: #7c3aed;
+            --theme-accent-bg: #f3e8ff;
+        }
+        header { border-color: #e9d5ff !important; }
+    </style>
+    @endif
 </head>
 
 <body class="font-sans text-zinc-800 antialiased min-h-screen selection:bg-primary-100 selection:text-zinc-900">

@@ -92,6 +92,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'ai_analyzer_trial_used_at',
         'portfolio_slug',
         'is_portfolio_published',
+        'portfolio_theme',
+        'portfolio_custom_domain',
         'ai_credits',
         'cl_credits',
         'photo_credits',

@@ -12,6 +12,10 @@ class PortfolioPublishModal extends Component
     public $slug = '';
     public $isPublished = false;
     public $portfolioUrl = '';
+    public $theme = 'slate';
+    public $customDomain = '';
+
+    public $validThemes = ['slate', 'dark', 'emerald', 'violet'];
 
     protected $listeners = ['openPublishModal' => 'openModal'];
 
@@ -19,8 +23,10 @@ class PortfolioPublishModal extends Component
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        $this->slug = $user->portfolio_slug ?? Str::slug($user->name);
-        $this->isPublished = $user->is_portfolio_published;
+        $this->slug         = $user->portfolio_slug ?? Str::slug($user->name);
+        $this->isPublished  = $user->is_portfolio_published;
+        $this->theme        = $user->portfolio_theme ?? 'slate';
+        $this->customDomain = $user->portfolio_custom_domain ?? '';
         $this->updateUrl();
     }
 
@@ -43,7 +49,13 @@ class PortfolioPublishModal extends Component
     public function publish()
     {
         $this->validate([
-            'slug' => 'required|string|max:50|unique:users,portfolio_slug,' . Auth::id(),
+            'slug'         => 'required|string|alpha_dash|max:50|unique:users,portfolio_slug,' . Auth::id(),
+            'theme'        => 'required|in:slate,dark,emerald,violet',
+            'customDomain' => 'nullable|string|max:255|regex:/^[a-zA-Z0-9\-\.]+$/',
+        ], [
+            'slug.alpha_dash'     => 'Slug may only contain letters, numbers, dashes, and underscores.',
+            'slug.unique'         => 'This slug is already taken. Please choose another.',
+            'customDomain.regex'  => 'Custom domain format is invalid.',
         ]);
 
         /** @var \App\Models\User $user */
@@ -57,15 +69,18 @@ class PortfolioPublishModal extends Component
             ]);
             return;
         }
+
         $user->update([
-            'portfolio_slug' => $this->slug,
-            'is_portfolio_published' => true,
+            'portfolio_slug'          => $this->slug,
+            'is_portfolio_published'  => true,
+            'portfolio_theme'         => $this->theme,
+            'portfolio_custom_domain' => $this->customDomain ?: null,
         ]);
 
         $this->isPublished = true;
         $this->dispatch('showNotification', [
-            'type' => 'success',
-            'title' => 'Published!',
+            'type'    => 'success',
+            'title'   => 'Published!',
             'message' => 'Your personal portfolio is now live.',
         ]);
     }
