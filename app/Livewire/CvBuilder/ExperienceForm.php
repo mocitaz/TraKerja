@@ -13,6 +13,8 @@ class ExperienceForm extends Component
     public $showModal = false;
     public $editMode = false;
     public $experienceId;
+    public $showDeleteConfirm = false;
+    public $deleteId = null;
     
     // Form fields
     public $company_name = '';
@@ -151,25 +153,31 @@ class ExperienceForm extends Component
     
     public function confirmDelete($id)
     {
-        $this->dispatch('confirm-action', [
-            'title' => 'Delete Experience?',
-            'message' => 'Are you sure you want to delete this work experience? This action cannot be undone.',
-            'btnText' => 'Delete Now',
-            'onConfirm' => 'delete',
-            'params' => ['id' => $id]
-        ]);
+        $this->deleteId = $id;
+        $this->showDeleteConfirm = true;
     }
-    
-    public function delete($id)
+
+    public function cancelDelete()
     {
-        $experience = UserExperience::findOrFail($id);
-        
+        $this->deleteId = null;
+        $this->showDeleteConfirm = false;
+    }
+
+    public function delete()
+    {
+        if (!$this->deleteId) return;
+
+        $experience = UserExperience::findOrFail($this->deleteId);
+
         // Security check
         if ($experience->user_id !== Auth::id()) {
             abort(403);
         }
-        
+
         $experience->delete();
+
+        $this->deleteId = null;
+        $this->showDeleteConfirm = false;
         
         $this->dispatch('showNotification', [
             'type' => 'info',

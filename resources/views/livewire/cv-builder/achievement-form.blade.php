@@ -125,4 +125,35 @@
         </div>
     </div>
     @endteleport
+    {{-- Inline Delete Confirmation Modal --}}
+    @teleport('body')
+    <div class="fixed inset-0 z-[10000] bg-zinc-950/50 backdrop-blur-xs flex items-center justify-center p-4 {{ !$showDeleteConfirm ? 'hidden' : '' }}">
+        <div class="bg-white rounded-xl shadow-xl max-w-sm w-full border border-zinc-200 overflow-hidden" @click.stop>
+            <div class="p-5">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-9 h-9 rounded-full bg-rose-50 border border-rose-100 flex items-center justify-center shrink-0">
+                        <i class="ph ph-trash text-rose-600 text-base"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-zinc-800">Confirm Delete?</h4>
+                        <p class="text-[10px] text-zinc-400 mt-0.5">This action cannot be undone.</p>
+                    </div>
+                </div>
+                <p class="text-[11px] text-zinc-600 font-medium leading-relaxed mb-4">
+                    Are you sure you want to delete this record?
+                </p>
+                <div class="flex justify-end gap-2 pt-3 border-t border-zinc-100">
+                    <button type="button" wire:click="cancelDelete" class="px-3.5 py-1.5 text-[10px] font-bold text-zinc-600 bg-zinc-100 hover:bg-zinc-200 rounded-md transition-colors focus:outline-none">
+                        Cancel
+                    </button>
+                    <button type="button" wire:click="delete" class="px-3.5 py-1.5 text-[10px] font-bold bg-rose-600 text-white hover:bg-rose-700 rounded-md transition-colors shadow-sm focus:outline-none flex items-center gap-1.5 active:scale-97">
+                        <i class="ph ph-trash text-xs"></i>
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endteleport
+
 </div>

@@ -13,6 +13,8 @@ class OrganizationForm extends Component
     public $showModal = false;
     public $editMode = false;
     public $organizationId;
+    public $showDeleteConfirm = false;
+    public $deleteId = null;
     
     // Form fields
     public $organization_name = '';
@@ -135,25 +137,31 @@ class OrganizationForm extends Component
     
     public function confirmDelete($id)
     {
-        $this->dispatch('confirm-action', [
-            'title' => 'Delete Organization?',
-            'message' => 'Are you sure you want to delete this organization? This action cannot be undone.',
-            'btnText' => 'Delete Now',
-            'onConfirm' => 'delete',
-            'params' => ['id' => $id]
-        ]);
+        $this->deleteId = $id;
+        $this->showDeleteConfirm = true;
     }
 
-    public function delete($id)
+    public function cancelDelete()
     {
-        $organization = UserOrganization::findOrFail($id);
-        
+        $this->deleteId = null;
+        $this->showDeleteConfirm = false;
+    }
+
+    public function delete()
+    {
+        if (!$this->deleteId) return;
+
+        $organization = UserOrganization::findOrFail($this->deleteId);
+
         if ($organization->user_id !== Auth::id()) {
             abort(403);
         }
-        
+
         $organization->delete();
-        
+
+        $this->deleteId = null;
+        $this->showDeleteConfirm = false;
+
         $this->dispatch('showNotification', [
             'type' => 'info',
             'title' => 'Deleted',

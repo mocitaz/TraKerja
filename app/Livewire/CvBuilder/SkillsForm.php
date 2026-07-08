@@ -13,6 +13,8 @@ class SkillsForm extends Component
     public $showModal = false;
     public $editMode = false;
     public $skillId;
+    public $showDeleteConfirm = false;
+    public $deleteId = null;
     
     // Form fields
     public $skill_name = '';
@@ -139,25 +141,31 @@ class SkillsForm extends Component
     
     public function confirmDelete($id)
     {
-        $this->dispatch('confirm-action', [
-            'title' => 'Delete Skill?',
-            'message' => 'Are you sure you want to delete this skill? This action cannot be undone.',
-            'btnText' => 'Delete Now',
-            'onConfirm' => 'delete',
-            'params' => ['id' => $id]
-        ]);
+        $this->deleteId = $id;
+        $this->showDeleteConfirm = true;
     }
 
-    public function delete($id)
+    public function cancelDelete()
     {
-        $skill = UserSkill::findOrFail($id);
-        
+        $this->deleteId = null;
+        $this->showDeleteConfirm = false;
+    }
+
+    public function delete()
+    {
+        if (!$this->deleteId) return;
+
+        $skill = UserSkill::findOrFail($this->deleteId);
+
         if ($skill->user_id !== Auth::id()) {
             abort(403);
         }
-        
+
         $skill->delete();
-        
+
+        $this->deleteId = null;
+        $this->showDeleteConfirm = false;
+
         $this->dispatch('showNotification', [
             'type' => 'info',
             'title' => 'Deleted',

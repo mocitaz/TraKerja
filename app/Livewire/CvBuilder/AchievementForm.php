@@ -13,6 +13,8 @@ class AchievementForm extends Component
     public $showModal = false;
     public $editMode = false;
     public $achievementId;
+    public $showDeleteConfirm = false;
+    public $deleteId = null;
     
     // Form fields
     public $title = '';
@@ -132,25 +134,31 @@ class AchievementForm extends Component
     
     public function confirmDelete($id)
     {
-        $this->dispatch('confirm-action', [
-            'title' => 'Delete Achievement?',
-            'message' => 'Are you sure you want to delete this achievement? This action cannot be undone.',
-            'btnText' => 'Delete Now',
-            'onConfirm' => 'delete',
-            'params' => ['id' => $id]
-        ]);
+        $this->deleteId = $id;
+        $this->showDeleteConfirm = true;
     }
 
-    public function delete($id)
+    public function cancelDelete()
     {
-        $achievement = UserAchievement::findOrFail($id);
-        
+        $this->deleteId = null;
+        $this->showDeleteConfirm = false;
+    }
+
+    public function delete()
+    {
+        if (!$this->deleteId) return;
+
+        $achievement = UserAchievement::findOrFail($this->deleteId);
+
         if ($achievement->user_id !== Auth::id()) {
             abort(403);
         }
-        
+
         $achievement->delete();
-        
+
+        $this->deleteId = null;
+        $this->showDeleteConfirm = false;
+
         $this->dispatch('showNotification', [
             'type' => 'info',
             'title' => 'Deleted',
