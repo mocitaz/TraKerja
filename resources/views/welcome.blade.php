@@ -652,7 +652,7 @@
                             </div>
                             <div class="min-w-0">
                                 <h4 class="font-extrabold text-zinc-800 text-xs leading-tight">Kanban Board Tracker</h4>
-                                <p class="text-[10px] text-zinc-450 mt-0.5 leading-normal hidden md:block">Monitor all application statuses in one centralized board.</p>
+                                <p class="text-[10px] text-zinc-450 mt-0.5 leading-normal">Monitor all application statuses in one centralized board.</p>
                             </div>
                         </div>
 
@@ -666,7 +666,7 @@
                             </div>
                             <div class="min-w-0">
                                 <h4 class="font-bold text-zinc-650 text-xs leading-tight">AI CV Analyzer</h4>
-                                <p class="text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block">Audit and check your resume ATS compatibility score instantly.</p>
+                                <p class="text-[10px] text-zinc-400 mt-0.5 leading-normal">Audit and check your resume ATS compatibility score instantly.</p>
                             </div>
                         </div>
 
@@ -683,7 +683,7 @@
                             </div>
                             <div class="min-w-0">
                                 <h4 class="font-bold text-zinc-650 text-xs leading-tight">AI Cover Letter</h4>
-                                <p class="text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block">Generate tailored, custom cover letters automatically.</p>
+                                <p class="text-[10px] text-zinc-400 mt-0.5 leading-normal">Generate tailored, custom cover letters automatically.</p>
                             </div>
                         </div>
 
@@ -697,7 +697,7 @@
                             </div>
                             <div class="min-w-0">
                                 <h4 class="font-bold text-zinc-650 text-xs leading-tight">Career Analytics</h4>
-                                <p class="text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block">Track interview conversion rates and job search statistics.</p>
+                                <p class="text-[10px] text-zinc-400 mt-0.5 leading-normal">Track interview conversion rates and job search statistics.</p>
                             </div>
                         </div>
                     </div>
