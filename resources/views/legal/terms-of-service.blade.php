@@ -60,10 +60,10 @@
 
                 <div class="flex items-center gap-2">
                     @auth
-                        <a href="{{ url('/tracker') }}" class="px-3.5 py-1.5 bg-zinc-900 text-white rounded-lg text-xs font-bold hover:bg-zinc-800 transition">Dashboard</a>
+                        <a href="{{ url('/tracker') }}" class="px-3.5 py-1.5 bg-[#0066cc] text-white rounded-lg text-xs font-bold hover:bg-[#0052a3] transition">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}" class="px-3 py-1.5 text-zinc-600 rounded-lg text-xs font-bold hover:bg-zinc-100 transition">Log in</a>
-                        <a href="{{ route('register') }}" class="px-3.5 py-1.5 bg-zinc-900 text-white rounded-lg text-xs font-bold hover:bg-zinc-800 transition shadow-xs">Get Started</a>
+                        <a href="{{ route('register') }}" class="px-3.5 py-1.5 bg-[#0066cc] text-white rounded-lg text-xs font-bold hover:bg-[#0052a3] transition shadow-xs">Get Started</a>
                     @endauth
                 </div>
             </div>
