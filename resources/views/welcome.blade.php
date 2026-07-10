@@ -188,10 +188,10 @@
 
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-12 reveal">
                 @auth
-                    <a href="{{ url('/tracker') }}" class="px-6 py-3 bg-zinc-900 text-white rounded-lg text-base font-bold hover:bg-zinc-800 transition shadow-xs w-full sm:w-auto">Open Dashboard</a>
+                    <a href="{{ url('/tracker') }}" class="px-6 py-3 bg-[#0066cc] hover:bg-[#0052a3] text-white rounded-lg text-base font-bold transition shadow-xs w-full sm:w-auto">Open Dashboard</a>
                 @else
-                    <a href="{{ route('register') }}" class="px-6 py-3 bg-zinc-900 text-white rounded-lg text-base font-bold hover:bg-zinc-800 transition shadow-xs w-full sm:w-auto">Get TraKerja Free</a>
-                    <a href="#fitur" class="px-6 py-3 bg-white text-zinc-600 border border-zinc-200 rounded-lg text-base font-bold hover:bg-zinc-50 transition w-full sm:w-auto">Explore Features</a>
+                    <a href="{{ route('register') }}" class="px-6 py-3 bg-[#0066cc] hover:bg-[#0052a3] text-white rounded-lg text-base font-bold transition shadow-xs w-full sm:w-auto">Get TraKerja Free</a>
+                    <a href="#fitur" class="px-6 py-3 bg-blue-50/40 text-[#0066cc] border border-blue-100/70 rounded-lg text-base font-bold hover:bg-blue-50/80 transition w-full sm:w-auto">Explore Features</a>
                 @endauth
             </div>
 
