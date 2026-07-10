@@ -1357,10 +1357,10 @@
     {{-- ============ FOOTER ============ --}}
     <footer class="bg-zinc-50/60 border-t border-zinc-200/50 py-16 text-[11px] font-semibold text-zinc-500">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-zinc-200/50">
+            <div class="grid grid-cols-2 md:grid-cols-12 gap-x-8 gap-y-10 pb-12 border-b border-zinc-200/50">
                 
                 <!-- Brand Column -->
-                <div class="md:col-span-4 space-y-4">
+                <div class="col-span-2 md:col-span-4 space-y-4">
                     <div class="flex items-center gap-2 text-xs font-bold text-zinc-800 tracking-tight select-none">
                         <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="w-5 h-5 object-contain">
                         <span>TraKerja</span>
@@ -1371,7 +1371,7 @@
                 </div>
 
                 <!-- Product Links Column -->
-                <div class="md:col-span-2 space-y-3">
+                <div class="col-span-1 md:col-span-2 space-y-3">
                     <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Product</h4>
                     <ul class="space-y-2">
                         <li><a href="#fitur" class="hover:text-zinc-800 transition-colors">Features</a></li>
@@ -1381,17 +1381,17 @@
                 </div>
 
                 <!-- Legal/Resources Column -->
-                <div class="md:col-span-3 space-y-3">
+                <div class="col-span-1 md:col-span-3 space-y-3">
                     <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Legal & Info</h4>
                     <ul class="space-y-2">
                         <li><a href="{{ route('legal.privacy') }}" class="hover:text-zinc-800 transition-colors">Privacy Policy</a></li>
                         <li><a href="{{ route('legal.terms') }}" class="hover:text-zinc-800 transition-colors">Terms of Service</a></li>
-                        <li><span class="text-zinc-400 font-medium">PT Teknalogi Transformasi Digital</span></li>
+                        <li><span class="text-zinc-400 font-medium leading-relaxed">PT Teknalogi Transformasi Digital</span></li>
                     </ul>
                 </div>
 
                 <!-- Contact & Social Column -->
-                <div class="md:col-span-3 space-y-3">
+                <div class="col-span-2 md:col-span-3 space-y-3">
                     <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Contact & Socials</h4>
                     <ul class="space-y-2.5">
                         <li class="flex items-center gap-2">
