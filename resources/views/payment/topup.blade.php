@@ -73,27 +73,27 @@
                                 @foreach($channels as $channel)
                                 <label class="relative block cursor-pointer select-none">
                                     <input type="radio" name="payment_channel_code" value="{{ $channel['code'] }}" class="peer sr-only" x-model="selectedMethod" required>
-                                    <div class="p-3 rounded-lg border border-zinc-200/80 bg-white hover:bg-zinc-50/80 hover:border-zinc-300 transition-all peer-checked:border-primary-500 peer-checked:bg-primary-50/20 peer-checked:ring-1 peer-checked:ring-primary-500/30 flex flex-col justify-between h-full min-h-[95px] relative group">
-                                        
-                                        {{-- Selected Checkmark Indicator --}}
-                                        <div class="absolute top-2 right-2 w-4 h-4 rounded-full bg-primary-600 text-white opacity-0 transition-all flex items-center justify-center shadow-3xs"
-                                             :class="selectedMethod === '{{ $channel['code'] }}' ? 'opacity-100 scale-100' : 'opacity-0 scale-75'">
-                                            <i class="ph-bold ph-check text-[10px]"></i>
-                                        </div>
-                                        
-                                        {{-- Logo Container --}}
-                                        <div class="h-9 w-full bg-zinc-50/50 rounded border border-zinc-100 p-1 flex items-center justify-center mb-2 group-hover:bg-white transition-colors">
-                                            <img src="{{ $channel['image_url'] }}" alt="{{ $channel['name'] }}" loading="lazy" class="max-h-full max-w-[85%] object-contain"
-                                                 onerror="this.onerror=null; this.src='https://api.iconify.design/ph:bank-bold.svg?color=%2371717a'">
-                                        </div>
-                                        
-                                        <div class="text-left">
-                                            <p class="text-[11px] font-bold text-zinc-800 leading-tight tracking-tight truncate">{{ $channel['name'] }}</p>
-                                            <p class="text-[9px] font-medium text-zinc-400 uppercase tracking-wider mt-0.5">Instant Settlement</p>
-                                        </div>
-                                    </div>
-                                </label>
-                                @endforeach
+                                    <div class="p-3 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 transition-all peer-checked:border-zinc-800 peer-checked:ring-1 peer-checked:ring-zinc-800/10 flex flex-col justify-between h-full min-h-[95px] relative group">
+                                         
+                                         {{-- Selected Checkmark Indicator --}}
+                                         <div class="absolute top-2 right-2 w-4 h-4 rounded-full bg-zinc-900 text-white opacity-0 transition-all flex items-center justify-center shadow-3xs"
+                                              :class="selectedMethod === '{{ $channel['code'] }}' ? 'opacity-100 scale-100' : 'opacity-0 scale-75'">
+                                             <i class="ph-bold ph-check text-[9px]"></i>
+                                         </div>
+                                         
+                                         {{-- Logo Container --}}
+                                         <div class="h-9 w-full bg-zinc-50/50 rounded p-1 flex items-center justify-center mb-2 group-hover:bg-white transition-colors">
+                                             <img src="{{ $channel['image_url'] }}" alt="{{ $channel['name'] }}" loading="lazy" class="max-h-full max-w-[85%] object-contain"
+                                                  onerror="this.onerror=null; this.src='https://api.iconify.design/ph:bank-bold.svg?color=%2371717a'">
+                                         </div>
+                                         
+                                         <div class="text-left">
+                                             <p class="text-[10px] font-extrabold text-zinc-800 leading-tight tracking-tight truncate">{{ $channel['name'] }}</p>
+                                             <p class="text-[8px] font-bold text-zinc-400 uppercase tracking-widest mt-0.5">Instant</p>
+                                         </div>
+                                     </div>
+                                 </label>
+                                 @endforeach
                             </div>
                         </div>
                         @endforeach

@@ -115,10 +115,9 @@
     <nav class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-zinc-200/60 z-50">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="flex items-center justify-between h-14">
-                <a href="{{ url('/') }}" class="flex items-center gap-2">
-                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-7 h-7" onerror="this.style.display='none';">
-                    <span class="text-sm font-extrabold tracking-tight">TraKerja</span>
-                    <span class="px-1.5 py-0.5 bg-zinc-100 text-zinc-650 text-[9px] font-bold uppercase rounded border border-zinc-200">Career OS</span>
+                <a href="{{ url('/') }}" class="flex items-center gap-2 text-xs font-bold text-zinc-800 tracking-tight select-none">
+                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="w-5 h-5 object-contain" onerror="this.style.display='none';">
+                    <span>TraKerja</span>
                 </a>
 
                 <div class="hidden md:flex items-center gap-1 text-xs font-semibold text-zinc-500">
@@ -141,38 +140,62 @@
     </nav>
 
     {{-- ============ HERO ============ --}}
-    <section class="relative pt-24 pb-16 sm:pt-32 sm:pb-24 overflow-hidden border-b border-zinc-100">
-        <div class="max-w-4xl mx-auto px-4 text-center">
+    <section class="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden border-b border-zinc-100 bg-white">
+        <div class="max-w-5xl mx-auto px-4 text-center">
             
-            <!-- Hand-drawn avatars pile concept -->
-            <div class="flex justify-center -space-x-2.5 mb-6 reveal">
-                <div class="w-9 h-9 rounded-full border border-zinc-300 bg-blue-100 flex items-center justify-center text-sm shadow-2xs">🕵️‍♂️</div>
-                <div class="w-9 h-9 rounded-full border border-zinc-300 bg-amber-100 flex items-center justify-center text-sm shadow-2xs">💼</div>
-                <div class="w-9 h-9 rounded-full border border-zinc-300 bg-emerald-100 flex items-center justify-center text-sm shadow-2xs">🎯</div>
-                <div class="w-9 h-9 rounded-full border border-zinc-300 bg-rose-100 flex items-center justify-center text-sm shadow-2xs">🧠</div>
+            <!-- Notion-style line-art branding icons -->
+            <div class="flex justify-center -space-x-3 mb-8 reveal">
+                <!-- User/Detect (Blue circle) -->
+                <div class="w-11 h-11 rounded-full border-2 border-[#0066cc] bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-30">
+                    <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <!-- Portfolio/Briefcase (White circle, black border) -->
+                <div class="w-11 h-11 rounded-full border-2 border-zinc-950 bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-20">
+                    <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                </div>
+                <!-- Target (Red circle) -->
+                <div class="w-11 h-11 rounded-full border-2 border-red-500 bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-10">
+                    <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <circle cx="12" cy="12" r="6"></circle>
+                        <circle cx="12" cy="12" r="2"></circle>
+                    </svg>
+                </div>
+                <!-- Idea/Brain (Amber circle) -->
+                <div class="w-11 h-11 rounded-full border-2 border-amber-500 bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-0">
+                    <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9.663 17h4.673M12 3v1m6.364 1.364l-.707.707M21 12h-1M4 12H3m3.364-5.636l-.707-.707M12 21v-1m0-12a4 4 0 1 0 0 8h.01"></path>
+                    </svg>
+                </div>
             </div>
 
-            <h1 class="notion-h1 text-4xl sm:text-6xl text-zinc-900 mb-6 leading-tight reveal">
-                Where job seekers & careers <br>
-                <span class="relative inline-block px-3.5 py-1 bg-amber-50 rounded-full border border-amber-250 text-zinc-800 select-none">
+            <h1 class="notion-h1 text-5xl sm:text-7xl text-zinc-950 mb-8 leading-[1.1] tracking-tight reveal">
+                Where job seekers & careers <br class="hidden sm:inline">
+                <span class="inline-block mt-5 px-6 py-2.5 bg-amber-50 rounded-full border border-amber-200 text-zinc-900 select-none shadow-3xs">
                     Grow together.
                 </span>
             </h1>
 
-            <p class="text-sm sm:text-base text-zinc-500 max-w-xl mx-auto mb-8 font-medium leading-relaxed reveal">
-                Satu workspace minimalis ala Notion untuk mengelola seluruh lamaran kerja Anda, membuat CV standar ATS, dan mengoptimasi peluang karir menggunakan AI.
+            <p class="text-base sm:text-lg text-zinc-500 max-w-2xl mx-auto mb-10 font-medium leading-relaxed reveal">
+                A unified, minimalist workspace to manage your entire job application pipeline, build ATS-optimized resumes, and accelerate your career using AI.
             </p>
 
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-2.5 mb-10 reveal">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-12 reveal">
                 @auth
-                    <a href="{{ url('/tracker') }}" class="px-5 py-2.5 bg-zinc-900 text-white rounded-lg text-sm font-bold hover:bg-zinc-800 transition shadow-xs w-full sm:w-auto">Buka Dashboard</a>
+                    <a href="{{ url('/tracker') }}" class="px-6 py-3 bg-zinc-900 text-white rounded-lg text-base font-bold hover:bg-zinc-800 transition shadow-xs w-full sm:w-auto">Open Dashboard</a>
                 @else
-                    <a href="{{ route('register') }}" class="px-5 py-2.5 bg-zinc-900 text-white rounded-lg text-sm font-bold hover:bg-zinc-800 transition shadow-xs w-full sm:w-auto">Get TraKerja Free</a>
-                    <a href="#fitur" class="px-5 py-2.5 bg-white text-zinc-600 border border-zinc-200 rounded-lg text-sm font-bold hover:bg-zinc-50 transition w-full sm:w-auto">Explore Features</a>
+                    <a href="{{ route('register') }}" class="px-6 py-3 bg-zinc-900 text-white rounded-lg text-base font-bold hover:bg-zinc-800 transition shadow-xs w-full sm:w-auto">Get TraKerja Free</a>
+                    <a href="#fitur" class="px-6 py-3 bg-white text-zinc-600 border border-zinc-200 rounded-lg text-base font-bold hover:bg-zinc-50 transition w-full sm:w-auto">Explore Features</a>
                 @endauth
             </div>
 
-            <p class="text-[11px] text-zinc-400 font-semibold uppercase tracking-wider reveal">
+            <p class="text-xs text-zinc-400 font-bold uppercase tracking-wider reveal">
                 ⚡️ 100% Free to Start • No Credit Card Required
             </p>
         </div>
@@ -606,7 +629,7 @@
     <section id="fitur" class="py-20 sm:py-24 border-b border-zinc-100">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="max-w-xl mb-12 reveal">
-                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 mt-3">Semua yang Anda butuhkan untuk memenangkan persaingan kerja.</h2>
+                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 mt-3">Everything you need to win your dream career.</h2>
             </div>
 
             <!-- Notion-style Interactive Feature Grid (Left selectors, Right browser visual mockup) -->
@@ -620,38 +643,61 @@
                     
                     <div class="space-y-1 flex-1">
                         <!-- Kanban Board Selector -->
-                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/80 bg-zinc-50/50 hover:bg-zinc-50/90 cursor-pointer transition flex items-start gap-3 select-none" id="feat-item-1" onclick="switchFeature(1)">
-                            <div class="w-7 h-7 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0 text-sm">📋</div>
+                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/80 bg-zinc-50/50 hover:bg-zinc-50/90 cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-1" onclick="switchFeature(1)">
+                            <div class="w-9 h-9 rounded-full border border-zinc-950 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
+                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                </svg>
+                            </div>
                             <div class="min-w-0">
                                 <h4 class="font-extrabold text-zinc-800 text-xs leading-tight">Kanban Board Tracker</h4>
-                                <p class="text-[10px] text-zinc-450 mt-0.5 leading-normal hidden md:block">Pantau seluruh status lamaran kerja terpusat.</p>
+                                <p class="text-[10px] text-zinc-450 mt-0.5 leading-normal hidden md:block">Monitor all application statuses in one centralized board.</p>
                             </div>
                         </div>
 
                         <!-- AI CV Analyzer Selector -->
-                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/10 bg-transparent hover:bg-zinc-50/50 cursor-pointer transition flex items-start gap-3 select-none" id="feat-item-2" onclick="switchFeature(2)">
-                            <div class="w-7 h-7 rounded-lg bg-rose-50 border border-rose-100 flex items-center justify-center shrink-0 text-sm">🧠</div>
+                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/10 bg-transparent hover:bg-zinc-50/50 cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-2" onclick="switchFeature(2)">
+                            <div class="w-9 h-9 rounded-full border border-blue-600 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
+                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                </svg>
+                            </div>
                             <div class="min-w-0">
                                 <h4 class="font-bold text-zinc-650 text-xs leading-tight">AI CV Analyzer</h4>
-                                <p class="text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block">Analisis skor ATS CV Anda instan.</p>
+                                <p class="text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block">Audit and check your resume ATS compatibility score instantly.</p>
                             </div>
                         </div>
 
                         <!-- AI Cover Letter Selector -->
-                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/10 bg-transparent hover:bg-zinc-50/50 cursor-pointer transition flex items-start gap-3 select-none" id="feat-item-3" onclick="switchFeature(3)">
-                            <div class="w-7 h-7 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center shrink-0 text-sm">✨</div>
+                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/10 bg-transparent hover:bg-zinc-50/50 cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-3" onclick="switchFeature(3)">
+                            <div class="w-9 h-9 rounded-full border border-red-500 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
+                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                </svg>
+                            </div>
                             <div class="min-w-0">
                                 <h4 class="font-bold text-zinc-650 text-xs leading-tight">AI Cover Letter</h4>
-                                <p class="text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block">Buat surat lamaran kustom otomatis.</p>
+                                <p class="text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block">Generate tailored, custom cover letters automatically.</p>
                             </div>
                         </div>
 
                         <!-- Career Analytics Selector -->
-                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/10 bg-transparent hover:bg-zinc-50/50 cursor-pointer transition flex items-start gap-3 select-none" id="feat-item-4" onclick="switchFeature(4)">
-                            <div class="w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0 text-sm">📈</div>
+                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/10 bg-transparent hover:bg-zinc-50/50 cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-4" onclick="switchFeature(4)">
+                            <div class="w-9 h-9 rounded-full border border-amber-500 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
+                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 3v18h18"></path>
+                                    <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+                                </svg>
+                            </div>
                             <div class="min-w-0">
                                 <h4 class="font-bold text-zinc-650 text-xs leading-tight">Career Analytics</h4>
-                                <p class="text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block">Pantau performa & grafik progress.</p>
+                                <p class="text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block">Track interview conversion rates and job search statistics.</p>
                             </div>
                         </div>
                     </div>
@@ -662,94 +708,316 @@
                     <div class="w-full bg-[#f8fafc] border border-zinc-200 rounded-xl p-4 md:p-6 shadow-2xs relative min-h-[300px] overflow-hidden flex flex-col justify-between">
                         
                         <!-- Panel: Kanban Tracker Mock -->
-                        <div id="feature-pane-1" class="feature-pane space-y-4">
-                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60">
-                                <div class="flex items-center gap-1.5">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
-                                    <span class="font-bold text-zinc-800 text-[10px] uppercase tracking-wider">Kanban Board Tracker</span>
+                        <div id="feature-pane-1" class="feature-pane space-y-4 h-full flex flex-col justify-between">
+                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60 select-none shrink-0">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                                    <span class="font-extrabold text-zinc-800 text-[10px] uppercase tracking-wider">Kanban Board Tracker</span>
                                 </div>
-                                <span class="text-[9px] text-zinc-400">Drag & Drop Cards</span>
+                                <span class="text-[8.5px] text-zinc-400 font-bold flex items-center gap-1">
+                                    <i class="ph ph-hand-grabbing text-xs"></i> Drag & Drop Cards
+                                </span>
                             </div>
                             
-                            <div class="grid grid-cols-3 gap-3">
-                                <!-- Col 1: Applied -->
-                                <div class="bg-white border border-zinc-200 rounded-lg p-2.5 space-y-2">
-                                    <div class="flex items-center justify-between"><span class="text-[8px] font-bold text-zinc-500 uppercase">Wishlist (2)</span></div>
-                                    <div class="bg-zinc-50 border border-zinc-200/60 p-2 rounded shadow-3xs"><p class="font-bold text-zinc-800 text-[9px]">Shopee</p><p class="text-[7.5px] text-zinc-400">Product Manager</p></div>
-                                    <div class="bg-zinc-50 border border-zinc-200/60 p-2 rounded shadow-3xs"><p class="font-bold text-zinc-800 text-[9px]">Gojek</p><p class="text-[7.5px] text-zinc-400">UX Researcher</p></div>
+                            <!-- 3-Column Kanban Board matching livewire/job-kanban-board.blade.php -->
+                            <div class="grid grid-cols-3 gap-4 select-none items-stretch flex-1 mt-2.5">
+                                <!-- Col 1: WISHLIST -->
+                                <div class="flex flex-col bg-zinc-50/40 rounded-lg p-2.5 border border-zinc-200/50 justify-between min-h-[220px]">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2.5 px-0.5">
+                                            <div class="flex items-center gap-1.5">
+                                                <div class="w-1.5 h-1.5 rounded-full bg-zinc-400"></div>
+                                                <h3 class="text-[9px] font-bold text-zinc-650 uppercase tracking-widest">WISHLIST</h3>
+                                            </div>
+                                            <span class="text-[8px] font-bold bg-white text-zinc-400 px-1.5 py-0.2 rounded border border-zinc-200/60 shadow-3xs">2</span>
+                                        </div>
+                                        
+                                        <div class="space-y-2">
+                                            <!-- Shopee Card -->
+                                            <div class="group bg-white rounded-md p-2.5 border border-zinc-200 shadow-3xs hover:border-zinc-300 transition-all cursor-grab">
+                                                <div class="flex items-start justify-between gap-2 mb-2">
+                                                    <div class="flex items-center gap-2 min-w-0">
+                                                        <div class="w-6.5 h-6.5 rounded bg-zinc-50 border border-zinc-200/50 flex items-center justify-center text-zinc-500 font-bold text-[9px] shrink-0 shadow-3xs">S</div>
+                                                        <div class="min-w-0">
+                                                            <h4 class="text-[10px] font-bold text-zinc-800 leading-tight truncate">Shopee</h4>
+                                                            <p class="text-[8.5px] font-semibold text-zinc-500 mt-0.5 truncate">Product Manager</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center justify-between pt-2 border-t border-zinc-150/80">
+                                                    <div class="flex items-center gap-1">
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-zinc-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-pencil-simple"></i></span>
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-rose-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-trash"></i></span>
+                                                    </div>
+                                                    <div class="flex items-center gap-1 px-1.5 py-0.5 bg-zinc-50 rounded border border-zinc-200 text-[8px] text-zinc-500 font-bold">
+                                                        <i class="ph ph-calendar"></i>
+                                                        <span>10 Jul</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Gojek Card -->
+                                            <div class="group bg-white rounded-md p-2.5 border border-zinc-200 shadow-3xs hover:border-zinc-300 transition-all cursor-grab">
+                                                <div class="flex items-start justify-between gap-2 mb-2">
+                                                    <div class="flex items-center gap-2 min-w-0">
+                                                        <div class="w-6.5 h-6.5 rounded bg-zinc-50 border border-zinc-200/50 flex items-center justify-center text-zinc-500 font-bold text-[9px] shrink-0 shadow-3xs">G</div>
+                                                        <div class="min-w-0">
+                                                            <h4 class="text-[10px] font-bold text-zinc-800 leading-tight truncate">Gojek</h4>
+                                                            <p class="text-[8.5px] font-semibold text-zinc-500 mt-0.5 truncate">UX Researcher</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center justify-between pt-2 border-t border-zinc-150/80">
+                                                    <div class="flex items-center gap-1">
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-zinc-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-pencil-simple"></i></span>
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-rose-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-trash"></i></span>
+                                                    </div>
+                                                    <div class="flex items-center gap-1 px-1.5 py-0.5 bg-zinc-50 rounded border border-zinc-200 text-[8px] text-zinc-500 font-bold">
+                                                        <i class="ph ph-calendar"></i>
+                                                        <span>09 Jul</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <!-- Col 2: In Process -->
-                                <div class="bg-white border border-zinc-200 rounded-lg p-2.5 space-y-2">
-                                    <div class="flex items-center justify-between"><span class="text-[8px] font-bold text-blue-600 uppercase">Applied (1)</span></div>
-                                    <div class="bg-blue-50/30 border border-blue-100 p-2 rounded shadow-3xs"><p class="font-bold text-zinc-800 text-[9px]">Tokopedia</p><p class="text-[7.5px] text-blue-650 font-semibold">Frontend Engineer</p></div>
+
+                                <!-- Col 2: APPLIED -->
+                                <div class="flex flex-col bg-zinc-50/40 rounded-lg p-2.5 border border-zinc-200/50 justify-between min-h-[220px]">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2.5 px-0.5">
+                                            <div class="flex items-center gap-1.5">
+                                                <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
+                                                <h3 class="text-[9px] font-bold text-zinc-650 uppercase tracking-widest">APPLIED</h3>
+                                            </div>
+                                            <span class="text-[8px] font-bold bg-white text-zinc-400 px-1.5 py-0.2 rounded border border-zinc-200/60 shadow-3xs">1</span>
+                                        </div>
+                                        
+                                        <div class="space-y-2">
+                                            <!-- Tokopedia Card -->
+                                            <div class="group bg-white rounded-md p-2.5 border border-zinc-200 shadow-3xs hover:border-zinc-300 transition-all cursor-grab border-l-2 border-l-blue-500">
+                                                <div class="flex items-start justify-between gap-2 mb-2">
+                                                    <div class="flex items-center gap-2 min-w-0">
+                                                        <div class="w-6.5 h-6.5 rounded bg-zinc-50 border border-zinc-200/50 flex items-center justify-center text-zinc-500 font-bold text-[9px] shrink-0 shadow-3xs">T</div>
+                                                        <div class="min-w-0">
+                                                            <h4 class="text-[10px] font-bold text-zinc-800 leading-tight truncate">Tokopedia</h4>
+                                                            <p class="text-[8.5px] font-semibold text-zinc-500 mt-0.5 truncate">Frontend Engineer</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center justify-between pt-2 border-t border-zinc-150/80">
+                                                    <div class="flex items-center gap-1">
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-zinc-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-pencil-simple"></i></span>
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-rose-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-trash"></i></span>
+                                                    </div>
+                                                    <div class="flex items-center gap-1 px-1.5 py-0.5 bg-zinc-50 rounded border border-zinc-200 text-[8px] text-zinc-500 font-bold">
+                                                        <i class="ph ph-calendar"></i>
+                                                        <span>08 Jul</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2 flex items-center">
+                                                    <span class="px-1.5 py-0.5 rounded text-[8px] font-bold uppercase bg-blue-50 text-blue-600 border border-blue-100">Applied</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <!-- Col 3: Interview -->
-                                <div class="bg-white border border-zinc-200 rounded-lg p-2.5 space-y-2">
-                                    <div class="flex items-center justify-between"><span class="text-[8px] font-bold text-amber-600 uppercase">Interview (1)</span></div>
-                                    <div class="bg-amber-50/30 border border-amber-100 p-2 rounded shadow-3xs border-l-2 border-l-amber-500"><p class="font-bold text-zinc-800 text-[9px]">Traveloka</p><p class="text-[7.5px] text-amber-650 font-semibold">UI Designer</p></div>
+
+                                <!-- Col 3: INTERVIEW -->
+                                <div class="flex flex-col bg-zinc-50/40 rounded-lg p-2.5 border border-zinc-200/50 justify-between min-h-[220px]">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2.5 px-0.5">
+                                            <div class="flex items-center gap-1.5">
+                                                <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
+                                                <h3 class="text-[9px] font-bold text-zinc-650 uppercase tracking-widest">INTERVIEW</h3>
+                                            </div>
+                                            <span class="text-[8px] font-bold bg-white text-zinc-400 px-1.5 py-0.2 rounded border border-zinc-200/60 shadow-3xs">1</span>
+                                        </div>
+                                        
+                                        <div class="space-y-2">
+                                            <!-- Traveloka Card -->
+                                            <div class="group bg-white rounded-md p-2.5 border border-zinc-200 shadow-3xs hover:border-zinc-300 transition-all cursor-grab border-l-2 border-l-amber-500">
+                                                <div class="flex items-start justify-between gap-2 mb-2">
+                                                    <div class="flex items-center gap-2 min-w-0">
+                                                        <div class="w-6.5 h-6.5 rounded bg-zinc-50 border border-zinc-200/50 flex items-center justify-center text-zinc-500 font-bold text-[9px] shrink-0 shadow-3xs">T</div>
+                                                        <div class="min-w-0">
+                                                            <h4 class="text-[10px] font-bold text-zinc-800 leading-tight truncate">Traveloka</h4>
+                                                            <p class="text-[8.5px] font-semibold text-zinc-500 mt-0.5 truncate">UI Designer</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center justify-between pt-2 border-t border-zinc-150/80">
+                                                    <div class="flex items-center gap-1">
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-zinc-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-pencil-simple"></i></span>
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-rose-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-trash"></i></span>
+                                                    </div>
+                                                    <div class="flex items-center gap-1 px-1.5 py-0.5 bg-zinc-50 rounded border border-zinc-200 text-[8px] text-zinc-500 font-bold">
+                                                        <i class="ph ph-calendar"></i>
+                                                        <span>07 Jul</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2 flex items-center">
+                                                    <span class="px-1.5 py-0.5 rounded text-[8px] font-bold uppercase bg-amber-50 text-amber-600 border border-amber-100">HR - Interview</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Panel: AI CV Analyzer -->
-                        <div id="feature-pane-2" class="feature-pane hidden space-y-4">
-                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60">
-                                <div class="flex items-center gap-1.5">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
-                                    <span class="font-bold text-zinc-800 text-[10px] uppercase tracking-wider">AI CV Analyzer (ATS Audit)</span>
+                        <div id="feature-pane-2" class="feature-pane hidden space-y-4 h-full flex flex-col justify-between">
+                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60 select-none shrink-0">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-1.5 h-1.5 bg-purple-500 rounded-full"></div>
+                                    <span class="font-extrabold text-zinc-800 text-[10px] uppercase tracking-wider">AI CV Analyzer (ATS Audit)</span>
                                 </div>
-                                <span class="px-1.5 py-0.2 bg-emerald-50 text-emerald-700 text-[8px] font-bold rounded">92% Match</span>
+                                <span class="px-1.5 py-0.5 bg-purple-50 text-purple-700 text-[7px] font-extrabold rounded border border-purple-100/60 uppercase">Active Thread</span>
                             </div>
-                            <div class="bg-white border border-zinc-200 rounded-lg p-4 space-y-3">
-                                <div class="flex justify-between items-center">
-                                    <div>
-                                        <h4 class="text-xs font-bold text-zinc-800">CV_Luthfi_Fauzi.pdf</h4>
-                                        <p class="text-[8.5px] text-zinc-400">Scanned for Frontend Engineer position</p>
-                                    </div>
-                                    <div class="w-10 h-10 rounded-full border-4 border-emerald-500 flex items-center justify-center text-[10px] font-black text-emerald-600">85</div>
+                            
+                            <!-- Conversational Response Box resembling ai-analyzer/result.blade.php -->
+                            <div class="bg-white border border-zinc-200 rounded-lg p-3.5 shadow-3xs flex-1 mt-2.5 space-y-3 flex flex-col justify-between">
+                                <div class="flex items-center gap-2 text-[8px] text-zinc-400 font-mono">
+                                    <span class="font-bold text-purple-650 flex items-center gap-1"><i class="ph ph-sparkle text-xs"></i> TraKerja AI</span>
+                                    <span>•</span>
+                                    <span>Just Now</span>
                                 </div>
-                                <div class="space-y-1.5 text-[8.5px] text-zinc-650">
-                                    <div class="flex items-center gap-2"><span class="text-emerald-500">✓</span> <span>Mengandung keyword esensial: React, TailwindCSS, REST API.</span></div>
-                                    <div class="flex items-center gap-2"><span class="text-amber-500">⚠</span> <span>Tambahkan pencapaian kuantitatif di bagian pengalaman kerja.</span></div>
+                                
+                                <p class="text-[9px] text-zinc-550 leading-relaxed">Berikut adalah ringkasan skor dan executive summary kecocokan profil Anda:</p>
+                                
+                                <!-- Executive Summary Bento Layout -->
+                                <div class="grid grid-cols-4 gap-3 bg-zinc-50/50 p-2 border border-zinc-150 rounded-lg">
+                                    <!-- Score Circle -->
+                                    <div class="col-span-1 bg-white border border-zinc-200 rounded-md p-1.5 flex flex-col items-center justify-center select-none">
+                                        <div class="relative w-10 h-10 mb-1">
+                                            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                                <circle class="text-zinc-100" stroke-width="10" stroke="currentColor" fill="none" r="40" cx="50" cy="50" />
+                                                <circle class="text-zinc-900" stroke-width="10" stroke-dasharray="251.2" stroke-dashoffset="37.68" stroke-linecap="round" stroke="currentColor" fill="none" r="40" cx="50" cy="50" />
+                                            </svg>
+                                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                                <span class="text-[9px] font-black text-zinc-900 leading-none">85<span class="text-[6px] font-bold text-zinc-500">%</span></span>
+                                            </div>
+                                        </div>
+                                        <span class="px-1 py-0.2 bg-emerald-50 text-emerald-700 text-[6px] font-bold uppercase rounded border border-emerald-100">Strong</span>
+                                    </div>
+
+                                    <!-- Executive Summary Text -->
+                                    <div class="col-span-3 bg-zinc-900 text-white rounded-md p-2 flex flex-col justify-center">
+                                        <div class="flex items-center gap-1 mb-1">
+                                            <i class="ph ph-lightning text-amber-400 text-[10px]"></i>
+                                            <span class="text-[6px] font-bold text-zinc-400 uppercase tracking-wider">Executive Summary</span>
+                                        </div>
+                                        <p class="text-[8px] font-medium text-zinc-200 leading-normal italic">
+                                            "Your technical background is impressive. Focus on quantifying your impact with metrics..."
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Panel: AI Cover Letter -->
-                        <div id="feature-pane-3" class="feature-pane hidden space-y-4">
-                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60">
-                                <div class="flex items-center gap-1.5">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-                                    <span class="font-bold text-zinc-800 text-[10px] uppercase tracking-wider">AI Cover Letter Builder</span>
+                        <div id="feature-pane-3" class="feature-pane hidden space-y-4 h-full flex flex-col justify-between">
+                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60 select-none shrink-0">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-1.5 h-1.5 bg-amber-500 rounded-full"></div>
+                                    <span class="font-extrabold text-zinc-800 text-[10px] uppercase tracking-wider">AI Cover Letter Builder</span>
                                 </div>
-                                <span class="text-[8px] text-zinc-400">Generated in 1.4s</span>
+                                <span class="text-[8px] text-zinc-400 font-semibold">Generated in 1.4s</span>
                             </div>
-                            <div class="bg-white border border-zinc-200 rounded-lg p-4 space-y-2 select-text font-serif text-[7.5px] leading-relaxed text-zinc-600 max-h-[140px] overflow-y-auto">
-                                <p class="font-bold font-sans text-zinc-800">Kepada Yth. Tim Rekrutmen Gojek Indonesia,</p>
-                                <p>Saya sangat antusias untuk mengajukan lamaran sebagai Product Designer. Dengan latar belakang saya di bidang desain sistem antarmuka minimalis dan pengujian kegunaan pengguna...</p>
-                                <p>Melalui portofolio proyek-proyek saya sebelumnya, saya konsisten menerapkan standar visual modern yang mengedepankan efisiensi alur pengguna...</p>
+                            
+                            <div class="bg-white border border-zinc-200 rounded-lg p-3.5 shadow-3xs flex-1 mt-2.5 flex flex-col justify-between">
+                                <div class="border-b border-zinc-150/60 pb-2 mb-2 flex items-center justify-between">
+                                    <div>
+                                        <h4 class="text-[10px] font-bold text-zinc-800 leading-none">Cover Letter - Gojek</h4>
+                                        <p class="text-[8px] text-zinc-450 mt-1 font-semibold flex items-center gap-1"><i class="ph ph-buildings"></i> PT GoTo Gojek Tokopedia</p>
+                                    </div>
+                                    <span class="px-1.5 py-0.2 bg-zinc-50 border border-zinc-200 rounded text-[7.5px] font-bold text-zinc-500">Professional Tone</span>
+                                </div>
+                                <div class="bg-zinc-50/50 border border-zinc-200 rounded p-2.5 select-text font-serif text-[7.5px] leading-relaxed text-zinc-650 max-h-[105px] overflow-y-auto">
+                                    <p class="font-bold font-sans text-zinc-800 mb-1">Kepada Yth. Tim Rekrutmen Gojek Indonesia,</p>
+                                    <p class="mb-1">Saya sangat antusias untuk mengajukan lamaran sebagai Frontend Engineer. Dengan latar belakang saya di bidang pengembangan antarmuka web minimalis...</p>
+                                    <p>Saya terbiasa berkolaborasi erat dengan tim produk menggunakan React dan TailwindCSS guna mewujudkan fungsionalitas UI yang konsisten dan responsif...</p>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Panel: Career Analytics -->
-                        <div id="feature-pane-4" class="feature-pane hidden space-y-4">
-                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60">
-                                <div class="flex items-center gap-1.5">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                                    <span class="font-bold text-zinc-800 text-[10px] uppercase tracking-wider">Career Analytics Dashboard</span>
+                        <div id="feature-pane-4" class="feature-pane hidden space-y-3.5 h-full flex flex-col justify-between">
+                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60 select-none shrink-0">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-5 h-5 bg-zinc-100 border border-zinc-200/60 rounded flex items-center justify-center text-zinc-500 shrink-0">
+                                        <i class="ph ph-chart-line-up text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-extrabold text-zinc-800 text-[10px] uppercase tracking-wider">Analytics Summary</span>
+                                    </div>
                                 </div>
-                                <span class="text-[8px] text-zinc-400">Real-time stats</span>
+                                <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[8px] font-bold rounded border border-primary-100/60 uppercase">Overview</span>
                             </div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div class="bg-white border border-zinc-200 rounded-lg p-3 space-y-2">
-                                    <span class="text-[8px] font-bold text-zinc-400 uppercase">Conversion Rate</span>
-                                    <p class="text-lg font-black text-zinc-800">25.4%</p>
-                                    <p class="text-[7.5px] text-emerald-600 font-bold">↑ 4.2% dari bulan lalu</p>
+                            
+                            <!-- Main Layout split matching summary/index.blade.php -->
+                            <div class="flex-1 mt-2 select-none overflow-y-auto max-h-[190px] space-y-3 pr-1">
+                                <!-- Top Stats Cards -->
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div class="bg-white rounded border border-zinc-200/60 p-2 flex items-center justify-between shadow-3xs">
+                                        <div class="min-w-0">
+                                            <p class="text-[7px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">Active Apps</p>
+                                            <p class="text-[12px] font-black text-zinc-800 mt-1">12</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white rounded border border-zinc-200/60 p-2 flex items-center justify-between shadow-3xs">
+                                        <div class="min-w-0">
+                                            <p class="text-[7px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">Offers</p>
+                                            <p class="text-[12px] font-black text-zinc-800 mt-1">3</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white rounded border border-zinc-200/60 p-2 flex items-center justify-between shadow-3xs">
+                                        <div class="min-w-0">
+                                            <p class="text-[7px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">Interviews</p>
+                                            <p class="text-[12px] font-black text-zinc-800 mt-1">6</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="bg-white border border-zinc-200 rounded-lg p-3 space-y-2">
-                                    <span class="text-[8px] font-bold text-zinc-400 uppercase">Top Hiring Channel</span>
-                                    <p class="text-lg font-black text-zinc-800">LinkedIn</p>
-                                    <p class="text-[7.5px] text-zinc-400 font-semibold">12 interview calls</p>
+
+                                <!-- Highlights Row (Streak & Weekly Goal) -->
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div class="bg-white border border-zinc-200/60 rounded p-2 flex items-center gap-2 shadow-3xs">
+                                        <div class="w-6 h-6 bg-orange-50/50 rounded flex items-center justify-center text-orange-600 shrink-0"><i class="ph ph-fire text-xs"></i></div>
+                                        <div class="flex flex-col">
+                                            <span class="text-[6.5px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-0.5">Daily Streak</span>
+                                            <span class="text-[10px] font-bold text-zinc-800 leading-none">5 <span class="text-[6.5px] font-bold text-zinc-400">/ Best 14</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white border border-zinc-200/60 rounded p-2 flex items-center gap-2 shadow-3xs">
+                                        <div class="w-6 h-6 bg-primary-50/50 rounded flex items-center justify-center text-primary-650 shrink-0"><i class="ph ph-target text-xs"></i></div>
+                                        <div class="flex flex-col">
+                                            <span class="text-[6.5px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-0.5">Weekly Goal</span>
+                                            <span class="text-[10px] font-bold text-zinc-800 leading-none">4 <span class="text-[6.5px] font-bold text-zinc-400">/ 10</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Simulated Timeline Chart Area -->
+                                <div class="bg-white border border-zinc-200/60 rounded p-2 shadow-3xs">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-[7.5px] font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1"><i class="ph ph-chart-line text-[10px]"></i> Timeline Activity</span>
+                                        <span class="text-[6.5px] text-zinc-400 font-semibold">weekly trend</span>
+                                    </div>
+                                    <!-- Simple static mockup line graph SVG -->
+                                    <div class="h-14 flex items-end justify-between px-1 relative">
+                                        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 30" preserveAspectRatio="none">
+                                            <!-- Chart Line -->
+                                            <path d="M 5,25 Q 25,5 45,18 T 85,10 T 100,5" fill="none" stroke="#4f46e5" stroke-width="1.5"></path>
+                                            <path d="M 5,25 Q 25,5 45,18 T 85,10 T 100,5 L 100,30 L 5,30 Z" fill="rgba(79, 70, 229, 0.04)"></path>
+                                            
+                                            <path d="M 5,28 Q 30,15 55,25 T 85,22 T 100,18" fill="none" stroke="#10b981" stroke-width="1.5"></path>
+                                            <path d="M 5,28 Q 30,15 55,25 T 85,22 T 100,18 L 100,30 L 5,30 Z" fill="rgba(16, 185, 129, 0.02)"></path>
+                                        </svg>
+                                        <div class="w-full flex justify-between text-[6.5px] text-zinc-400 font-bold mt-auto pt-14 border-t border-zinc-100 z-10 select-none">
+                                            <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -760,55 +1028,85 @@
     </section>
 
     {{-- ============ HOW IT WORKS (Notion interactive switcher) ============ --}}
-    <section class="py-20 sm:py-24 bg-zinc-50/50 border-b border-zinc-100">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <section class="py-20 sm:py-24 bg-white border-b border-zinc-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-14 reveal">
-                <span class="px-2 py-0.5 bg-emerald-50 text-emerald-800 text-[9px] font-extrabold uppercase rounded border border-emerald-100">Workflow</span>
-                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 mt-3">Mulai dalam 3 langkah praktis.</h2>
+                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900">Start in 3 simple steps.</h2>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                 <!-- Selectors -->
-                <div class="lg:col-span-5 space-y-3.5 reveal">
-                    <div class="how-it-works-item bento-card overflow-hidden cursor-pointer" style="border-color:var(--notion-yellow-border); background:var(--notion-yellow);" id="hiw-item-1" onclick="toggleHowItWorks(1)">
+                <div class="lg:col-span-5 space-y-4 reveal">
+                    <div class="how-it-works-item bento-card overflow-hidden cursor-pointer border border-zinc-200/80 bg-zinc-50/50 hover:bg-zinc-50 transition-all duration-350" id="hiw-item-1" onclick="toggleHowItWorks(1)">
                         <div class="p-5 flex items-start gap-4">
-                            <div class="w-8 h-8 rounded-lg bg-white border border-zinc-200/60 flex items-center justify-center shrink-0 font-bold text-xs">1</div>
+                            <!-- Notion Settings/Gear icon -->
+                            <div class="w-9 h-9 rounded-full border border-blue-600 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
+                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                </svg>
+                            </div>
                             <div>
-                                <h3 class="font-bold text-zinc-800 text-sm">Daftar & Atur Profil Karir</h3>
-                                <p class="text-xs text-zinc-500 mt-1 leading-relaxed">Lengkapi profil Anda sekali. Informasi ini akan digunakan secara otomatis untuk kustomisasi dokumen lamaran.</p>
+                                <h3 class="font-extrabold text-zinc-900 text-xs tracking-tight">Register & Set Career Profile</h3>
+                                <p class="text-[10px] font-semibold text-zinc-500 mt-1 leading-relaxed">Fill out your profile once. This information is automatically used to customize application documents.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="how-it-works-item bento-card overflow-hidden cursor-pointer" id="hiw-item-2" onclick="toggleHowItWorks(2)">
+                    <div class="how-it-works-item bento-card overflow-hidden cursor-pointer border border-zinc-200/40 bg-white hover:bg-zinc-50 transition-all duration-350" id="hiw-item-2" onclick="toggleHowItWorks(2)">
                         <div class="p-5 flex items-start gap-4">
-                            <div class="w-8 h-8 rounded-lg bg-white border border-zinc-200/60 flex items-center justify-center shrink-0 font-bold text-xs">2</div>
+                            <!-- Notion Calendar icon -->
+                            <div class="w-9 h-9 rounded-full border border-red-500 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
+                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </div>
                             <div>
-                                <h3 class="font-bold text-zinc-800 text-sm">Track Lamaran Kerja</h3>
-                                <p class="text-xs text-zinc-500 mt-1 leading-relaxed">Tambah lamaran langsung atau via PDF. Pantau riwayat status wawancara & tawaran kerja dengan mudah.</p>
+                                <h3 class="font-bold text-zinc-700 text-xs tracking-tight">Track Job Applications</h3>
+                                <p class="text-[10px] font-semibold text-zinc-400 mt-1 leading-relaxed">Add applications manually or via PDF upload. Monitor interview status and job offers easily.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="how-it-works-item bento-card overflow-hidden cursor-pointer" id="hiw-item-3" onclick="toggleHowItWorks(3)">
+                    <div class="how-it-works-item bento-card overflow-hidden cursor-pointer border border-zinc-200/40 bg-white hover:bg-zinc-50 transition-all duration-350" id="hiw-item-3" onclick="toggleHowItWorks(3)">
                         <div class="p-5 flex items-start gap-4">
-                            <div class="w-8 h-8 rounded-lg bg-white border border-zinc-200/60 flex items-center justify-center shrink-0 font-bold text-xs">3</div>
+                            <!-- Notion Shield/Verified check icon -->
+                            <div class="w-9 h-9 rounded-full border border-amber-500 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
+                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                    <path d="m9 11 2 2 4-4"></path>
+                                </svg>
+                            </div>
                             <div>
-                                <h3 class="font-bold text-zinc-800 text-sm">Optimasi & Raih Karir Impian</h3>
-                                <p class="text-xs text-zinc-500 mt-1 leading-relaxed">Gunakan analitik karir, AI CV Analyzer, dan Cover Letter Generator untuk terus melesat maju.</p>
+                                <h3 class="font-bold text-zinc-700 text-xs tracking-tight">Optimize & Win Your Dream Job</h3>
+                                <p class="text-[10px] font-semibold text-zinc-400 mt-1 leading-relaxed">Use career analytics, AI CV Analyzer, and Cover Letter Generator to accelerate your path.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Preview Display -->
-                <div class="lg:col-span-7 relative flex flex-col items-center justify-center reveal">
-                    <div class="relative w-full aspect-[16/10] bento-card border-zinc-200 bg-white p-2">
-                        <div class="w-full h-full border border-zinc-200/60 rounded-lg overflow-hidden bg-zinc-50/50 relative">
-                            <img id="how-it-works-img-1" src="{{ asset('images/mu0.png') }}" alt="Daftar & atur profil" class="how-it-works-image absolute inset-0 w-full h-full object-contain transition-opacity duration-300" style="opacity:1;">
-                            <img id="how-it-works-img-2" src="{{ asset('images/mu1.png') }}" alt="Kelola lamaran" class="how-it-works-image absolute inset-0 w-full h-full object-contain transition-opacity duration-300 hidden opacity-0">
-                            <img id="how-it-works-img-3" src="{{ asset('images/mu2.png') }}" alt="Analisis & optimalkan" class="how-it-works-image absolute inset-0 w-full h-full object-contain transition-opacity duration-300 hidden opacity-0">
+                <!-- Preview Display (Apple Macbook Mockup) -->
+                <div class="lg:col-span-7 relative flex flex-col items-center justify-center reveal py-4">
+                    <div class="relative w-full max-w-[580px] mx-auto pl-4 lg:pl-10">
+                        <!-- MacBook Screen/Lid Frame -->
+                        <div class="relative rounded-t-2xl border-4 border-zinc-950 bg-zinc-950 p-[5px] shadow-2xl aspect-[16/10] overflow-hidden">
+                            <!-- Internal Screen Container -->
+                            <div class="relative w-full h-full rounded-t-xl overflow-hidden bg-white border border-zinc-900">
+                                <img id="how-it-works-img-1" src="{{ asset('images/sslogin.png') }}" alt="Register & setup profile" class="how-it-works-image absolute inset-0 w-full h-full object-cover object-top rounded-t-xl transition-opacity duration-300" style="opacity:1;">
+                                <img id="how-it-works-img-2" src="{{ asset('images/sstrack.png') }}" alt="Manage applications" class="how-it-works-image absolute inset-0 w-full h-full object-cover object-top rounded-t-xl transition-opacity duration-300 hidden opacity-0">
+                                <img id="how-it-works-img-3" src="{{ asset('images/ssoptimasi.png') }}" alt="Analyze & optimize" class="how-it-works-image absolute inset-0 w-full h-full object-cover object-top rounded-t-xl transition-opacity duration-300 hidden opacity-0">
+                            </div>
                         </div>
+                        <!-- MacBook Base/Keyboard Lip -->
+                        <div class="relative -mt-0.5 w-[114%] -ml-[7%] h-3 bg-zinc-300 border-t border-zinc-200 rounded-b-xl shadow-xl flex items-center justify-center z-10">
+                            <!-- Display Opening Notch -->
+                            <div class="w-16 h-1.5 bg-zinc-450 rounded-b-md -mt-1 shadow-inner"></div>
+                        </div>
+                        <!-- MacBook Shadow/Base feet -->
+                        <div class="w-[84%] mx-auto h-2 bg-zinc-950/20 rounded-full blur-sm"></div>
                     </div>
                 </div>
             </div>
@@ -816,141 +1114,295 @@
     </section>
 
     {{-- ============ PRICING ============ --}}
-    <section class="py-20 sm:py-24 border-b border-zinc-100" id="pricing">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+    <section class="py-20 sm:py-24 bg-zinc-50/50 border-b border-zinc-100" id="pricing">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-14 reveal">
-                <span class="px-2 py-0.5 bg-rose-50 text-rose-800 text-[9px] font-extrabold uppercase rounded border border-rose-100">Simple Pricing</span>
-                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 mt-3">Skema harga transparan & hemat.</h2>
+                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 mt-3">Simple pricing. No hidden fees.</h2>
             </div>
 
-            <!-- Pricing Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch reveal">
+            <!-- Pricing Grid (3 columns) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch reveal">
                 
                 <!-- Free Tier -->
-                <div class="bento-card p-8 flex flex-col">
-                    <h3 class="font-bold text-zinc-500 text-xs uppercase tracking-wider">Free Standar</h3>
-                    <p class="text-4xl font-extrabold text-zinc-900 mt-4 mb-1">Gratis</p>
-                    <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-6">Selamanya</p>
-                    
-                    <div class="border-t border-zinc-200/70 pt-6 space-y-3.5 flex-1 mb-8 text-xs font-medium text-zinc-600">
-                        <div class="flex items-center gap-2"><span>✓</span> <span>Maksimal 25 job tracker</span></div>
-                        <div class="flex items-center gap-2"><span>✓</span> <span>2 template CV standar</span></div>
-                        <div class="flex items-center gap-2"><span>✓</span> <span>1 kredit AI Analyzer gratis</span></div>
-                        <div class="flex items-center gap-2"><span>✓</span> <span>3 kredit Cover Letter Generator</span></div>
-                        <div class="flex items-center gap-2"><span>✓</span> <span>Dashboard & analitik standar</span></div>
+                <div class="bento-card p-6 flex flex-col justify-between transition-all bg-white hover:border-zinc-300">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-extrabold text-zinc-400 text-[10px] uppercase tracking-widest">Free Standard</h3>
+                            <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-[8px] font-bold rounded uppercase">Free</span>
+                        </div>
+                        <p class="text-3xl font-black text-zinc-950 mt-4 mb-1">Free</p>
+                        <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-6">Lifetime Access</p>
+                        
+                        <div class="border-t border-zinc-200/70 pt-6 space-y-3.5 text-xs font-semibold text-zinc-650">
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>Up to 25 job trackers</span></div>
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>2 standard ATS templates</span></div>
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>1 free AI Resume credit</span></div>
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>3 Cover Letter credits</span></div>
+                        </div>
                     </div>
 
-                    <a href="{{ route('register') }}" class="w-full py-2 bg-zinc-50 hover:bg-zinc-100 text-zinc-800 border border-zinc-200/80 rounded-lg text-xs font-bold transition text-center">Mulai Gratis</a>
+                    <a href="{{ route('register') }}" class="w-full mt-8 py-2.5 bg-zinc-50 hover:bg-zinc-100 text-zinc-800 border border-zinc-250 rounded-lg text-xs font-bold transition text-center shadow-3xs">Get Started Free</a>
                 </div>
 
                 <!-- Premium Tier -->
-                <div class="bento-card p-8 flex flex-col relative border-zinc-900/40 shadow-xs" style="background:#FCFCFC;">
-                    <span class="absolute -top-3 left-6 bg-zinc-900 text-white text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Best Value</span>
-                    <h3 class="font-bold text-zinc-900 text-xs uppercase tracking-wider mt-1">Premium Pro</h3>
-                    <p class="text-4xl font-extrabold text-zinc-900 mt-4 mb-1">Rp 19.999</p>
-                    <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-6">Sekali bayar, akses selamanya</p>
+                <div class="bento-card p-6 flex flex-col justify-between relative border-zinc-350 shadow-xs hover:border-zinc-900/40 transition-all bg-[#fafafa]">
+                    <span class="absolute -top-3 left-6 bg-zinc-900 text-white text-[8px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider select-none">Best Value</span>
+                    <div>
+                        <div class="flex items-center justify-between mt-1">
+                            <h3 class="font-extrabold text-zinc-900 text-[10px] uppercase tracking-widest">Premium Pro</h3>
+                            <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[8px] font-bold rounded border border-emerald-100 uppercase">Pro</span>
+                        </div>
+                        <p class="text-3xl font-black text-zinc-950 mt-4 mb-1">Rp 19.999</p>
+                        <p class="text-[9px] font-bold text-emerald-600 uppercase tracking-widest mb-6">One-time, lifetime access</p>
 
-                    <div class="border-t border-zinc-200/70 pt-6 space-y-3.5 flex-1 mb-8 text-xs font-medium text-zinc-600">
-                        <div class="flex items-center gap-2 text-zinc-900 font-bold"><span>✓</span> <span>Unlimited job tracker</span></div>
-                        <div class="flex items-center gap-2"><span>✓</span> <span>50+ template CV premium</span></div>
-                        <div class="flex items-center gap-2"><span>✓</span> <span>Bulk importer lamaran kerja</span></div>
-                        <div class="flex items-center gap-2"><span>✓</span> <span>Full analytics & dashboard</span></div>
-                        <div class="flex items-center gap-2"><span>✓</span> <span>5 kredit bonus AI CV Analyzer</span></div>
-                        <div class="flex items-center gap-2"><span>✓</span> <span>15 kredit Cover Letter Generator</span></div>
+                        <div class="border-t border-zinc-200/70 pt-6 space-y-3.5 text-xs font-semibold text-zinc-700">
+                            <div class="flex items-center gap-2 font-bold"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>Unlimited job trackers</span></div>
+                            <div class="flex items-center gap-2 font-bold"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>50+ premium templates</span></div>
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>Bulk job importer (.csv)</span></div>
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>Full advanced dashboard</span></div>
+                        </div>
                     </div>
 
-                    <a href="{{ route('payment.index') }}" class="w-full py-2 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold transition text-center shadow-sm">Beli Premium Pro</a>
+                    <a href="{{ route('payment.index') }}" class="w-full mt-8 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold transition text-center shadow-sm">Upgrade to Premium Pro</a>
+                </div>
+
+                <!-- Add-On Pack -->
+                <div class="bento-card p-6 flex flex-col justify-between transition-all bg-white hover:border-zinc-300 border-zinc-200">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-extrabold text-zinc-400 text-[10px] uppercase tracking-widest">Top Up Add-On</h3>
+                            <span class="px-2 py-0.5 bg-blue-50 text-blue-700 text-[8px] font-bold rounded uppercase border border-blue-100">Add-On</span>
+                        </div>
+                        <p class="text-3xl font-black text-zinc-950 mt-4 mb-1">Rp 14.999</p>
+                        <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-6">Kredit Langsung Aktif</p>
+                        
+                        <div class="border-t border-zinc-200/70 pt-6 space-y-3.5 text-xs font-semibold text-zinc-650">
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>10 Kredit AI Analyzer</span></div>
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>15 Kredit Cover Letter</span></div>
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>5 Kredit AI Photo Studio</span></div>
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>Kredit Permanen (No Expired)</span></div>
+                        </div>
+                    </div>
+
+                    <a href="{{ route('payment.topup') }}" class="w-full mt-8 py-2.5 bg-white hover:bg-zinc-50 text-zinc-700 border border-zinc-250 rounded-lg text-xs font-bold transition text-center shadow-3xs">Buy Add-On Pack</a>
                 </div>
             </div>
         </div>
     </section>
 
     {{-- ============ TESTIMONIALS ============ --}}
-    <section class="py-20 sm:py-24 border-b border-zinc-100" id="testimonials">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6">
-            <div class="text-center mb-14 reveal">
-                <span class="px-2 py-0.5 bg-blue-50 text-blue-800 text-[9px] font-extrabold uppercase rounded border border-blue-100">Testimonials</span>
-                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 mt-3">Telah membantu pencari kerja sukses.</h2>
+    <section class="py-20 sm:py-24 bg-white border-b border-zinc-100" id="testimonials">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="mb-12 reveal">
+                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-950 font-black tracking-tight">Trusted by candidates who land.</h2>
             </div>
 
-            <!-- Single large minimalist testimonial layout -->
-            <div class="relative w-full overflow-hidden reveal">
-                <div class="flex transition-transform duration-500 ease-in-out" id="testimonial-track">
+            <!-- Notion Full-Image Quote Cards (3-Column Layout) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
+                
+                <!-- Card 1: Rendika Azhar (Red Theme) -->
+                <div class="relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/4] flex flex-col justify-end p-8 group transition-all duration-300 hover:shadow-lg shadow-md">
+                    <!-- Background image with red overlay -->
+                    <img src="{{ asset('images/Rendika Azhar.png') }}" alt="Rendika Azhar" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-red-950 via-red-900/60 to-red-900/40 mix-blend-multiply"></div>
+                    <div class="absolute inset-0 bg-red-800/20 mix-blend-color"></div>
                     
-                    <div class="w-full flex-shrink-0 px-1">
-                        <div class="bento-card p-8 md:p-10 flex flex-col md:flex-row gap-6 items-center">
-                            <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-2xl shrink-0">🎓</div>
-                            <div>
-                                <p class="text-sm font-semibold text-zinc-700 italic leading-relaxed">"TraKerja merubah spreadsheet lamaran kerja saya yang sangat berantakan menjadi visual Kanban board yang super clean. Benar-benar game-changer bagi fresh graduate!"</p>
-                                <div class="mt-4 flex items-center gap-2">
-                                    <h4 class="text-xs font-bold text-zinc-800">Rendika</h4>
-                                    <span class="text-[10px] text-zinc-400 font-bold">• Fresh Graduate</span>
-                                </div>
-                            </div>
+                    <!-- Overlay Content -->
+                    <div class="relative z-10 text-white flex flex-col justify-between h-full pointer-events-none">
+                        <div class="flex items-center gap-1 opacity-90">
+                            <span class="font-extrabold text-[10px] tracking-wider uppercase font-sans">FRESH GRADUATE</span>
+                        </div>
+                        
+                        <div class="space-y-3 mt-auto">
+                            <p class="text-xs font-semibold leading-relaxed text-zinc-100">
+                                "TraKerja transformed my chaotic job application spreadsheet into a super clean, visual Kanban tracker. It's an absolute game-changer for organizing my career search!"
+                            </p>
+                            <p class="text-[10px] font-bold text-zinc-300">
+                                Rendika Azhar, Junior UI Designer
+                            </p>
                         </div>
                     </div>
+                </div>
 
-                    <div class="w-full flex-shrink-0 px-1">
-                        <div class="bento-card p-8 md:p-10 flex flex-col md:flex-row gap-6 items-center">
-                            <div class="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center text-2xl shrink-0">🚀</div>
-                            <div>
-                                <p class="text-sm font-semibold text-zinc-700 italic leading-relaxed">"Dashboard-nya sangat intuitif dan minimalis. Analitik lamaran kerjanya mempermudah saya mengetahui status perkembangan lamaran kerja saya secara real-time."</p>
-                                <div class="mt-4 flex items-center gap-2">
-                                    <h4 class="text-xs font-bold text-zinc-800">Andi</h4>
-                                    <span class="text-[10px] text-zinc-400 font-bold">• Career Switcher</span>
-                                </div>
-                            </div>
+                <!-- Card 2: Andi Ahyaul Wajdi (Blue Theme) -->
+                <div class="relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/4] flex flex-col justify-end p-8 group transition-all duration-300 hover:shadow-lg shadow-md">
+                    <!-- Background image with blue overlay -->
+                    <img src="{{ asset('images/iyal.png') }}" alt="Andi Ahyaul Wajdi" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-950 via-blue-900/60 to-blue-900/40 mix-blend-multiply"></div>
+                    <div class="absolute inset-0 bg-blue-800/20 mix-blend-color"></div>
+                    
+                    <!-- Overlay Content -->
+                    <div class="relative z-10 text-white flex flex-col justify-between h-full pointer-events-none">
+                        <div class="flex items-center gap-1 opacity-90">
+                            <span class="font-extrabold text-[10px] tracking-wider uppercase font-sans">CAREER SWITCHER</span>
+                        </div>
+                        
+                        <div class="space-y-3 mt-auto">
+                            <p class="text-xs font-semibold leading-relaxed text-zinc-100">
+                                "The dashboard is incredibly clean and intuitive. Having real-time stage progression metrics and automated AI insights made my entire application process transparent."
+                            </p>
+                            <p class="text-[10px] font-bold text-zinc-300">
+                                Andi Ahyaul Wajdi, Frontend Developer
+                            </p>
                         </div>
                     </div>
-
                 </div>
-            </div>
 
-            <!-- Navigation Controls -->
-            <div class="flex justify-between items-center mt-6 reveal">
-                <span class="notion-mono text-[10px] font-bold text-zinc-400" id="testi-counter">01 / 02</span>
-                <div class="flex gap-2">
-                    <button onclick="moveTestimonial(-1)" class="w-8 h-8 flex items-center justify-center rounded-lg border border-zinc-200 hover:bg-zinc-50 transition"><i class="ph ph-caret-left font-bold"></i></button>
-                    <button onclick="moveTestimonial(1)" class="w-8 h-8 flex items-center justify-center rounded-lg border border-zinc-200 hover:bg-zinc-50 transition"><i class="ph ph-caret-right font-bold"></i></button>
+                <!-- Card 3: Derva Anargya (Amber Theme) -->
+                <div class="relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/4] flex flex-col justify-end p-8 group transition-all duration-300 hover:shadow-lg shadow-md">
+                    <!-- Background image with amber overlay -->
+                    <img src="{{ asset('images/derva.png') }}" alt="Derva Anargya" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-amber-950 via-amber-900/60 to-amber-900/40 mix-blend-multiply"></div>
+                    <div class="absolute inset-0 bg-amber-800/20 mix-blend-color"></div>
+                    
+                    <!-- Overlay Content -->
+                    <div class="relative z-10 text-white flex flex-col justify-between h-full pointer-events-none">
+                        <div class="flex items-center gap-1 opacity-90">
+                            <span class="font-extrabold text-[10px] tracking-wider uppercase font-sans">PRODUCT LEADER</span>
+                        </div>
+                        
+                        <div class="space-y-3 mt-auto">
+                            <p class="text-xs font-semibold leading-relaxed text-zinc-100">
+                                "The Chrome Extension is spectacular. Saving jobs from LinkedIn directly into my Kanban board in one click saves me hours of manual data entry every single week."
+                            </p>
+                            <p class="text-[10px] font-bold text-zinc-300">
+                                Derva Anargya, Product Manager
+                            </p>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </section>
 
     {{-- ============ FAQ ============ --}}
-    <section class="py-20 sm:py-24" id="faq">
+    <section class="py-20 sm:py-24 bg-zinc-50/50 border-b border-zinc-100" id="faq">
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
             <h2 class="text-center notion-h1 text-2xl sm:text-3xl text-zinc-900 mb-10 reveal">Frequently Asked Questions</h2>
             
-            <div class="divide-y divide-zinc-200/80 border-t border-b border-zinc-200/80 reveal">
+            <div class="space-y-3.5 reveal">
                 @php
                     $faqs = [
-                        ['Apakah TraKerja benar-benar gratis?', 'Ya! TraKerja menyediakan paket gratis selamanya yang mencakup fitur utama seperti Kanban board, My Profile, dan monitoring lamaran. Jika Anda membutuhkan workspace tanpa batas dengan template premium, Anda dapat memilih paket Premium Pro.'],
-                        ['Bagaimana cara kerja AI CV Analyzer?', 'AI CV Analyzer kami bekerja dengan mensimulasikan pembacaan ATS HRD profesional. AI memindai CV Anda, mencocokkannya dengan kriteria ATS standar, dan memberikan feedback konkret untuk optimasi.'],
-                        ['Apakah data pribadi saya aman?', 'Sangat aman. Privasi dan keamanan data Anda adalah prioritas kami. Seluruh dokumen dan informasi lamaran disimpan secara privat dan hanya dapat diakses oleh Anda.'],
+                        [
+                            'Is TraKerja really free?', 
+                            'Yes! TraKerja offers a free-forever tier that includes all core features like the Kanban board tracker, profile dashboard, and basic activity metrics. If you need unlimited job tracking, advanced analytics, and AI Studio features, you can upgrade to Premium Pro at any time.'
+                        ],
+                        [
+                            'How does the AI CV Analyzer work?', 
+                            'Our AI CV Analyzer simulates the behavior of professional ATS (Applicant Tracking Systems) and recruiter screening algorithms. It audits your resume structure, measures keyword density match for your target role, and provides actionable recommendations to optimize your CV.'
+                        ],
+                        [
+                            'Is my personal data secure?', 
+                            'Absolutely. We prioritize your privacy and data security. All uploaded documents, profiles, and application history data are encrypted and strictly private. We never share or sell your data to third parties.'
+                        ],
+                        [
+                            'What payment options are available for Premium Pro?',
+                            'We support multiple secure payment channels including major Credit Cards, E-Wallets (GoPay, OVO, Dana), and Virtual Account Bank Transfers (Mandiri, BCA, BNI, BRI) powered by Midtrans.'
+                        ],
+                        [
+                            'Does TraKerja support browser extensions?',
+                            'Yes! TraKerja offers a dedicated Chrome Extension that allows you to scrape and save job opportunities from LinkedIn, Jobstreet, and other hiring portals directly into your Kanban board with a single click.'
+                        ],
+                        [
+                            'Can I import existing application data?',
+                            'Definitely. Premium Pro users can download our standardized spreadsheet template and upload all their past job application records in bulk using Excel (.xlsx) or CSV formats instantly.'
+                        ],
                     ];
                 @endphp
                 @foreach ($faqs as $faq)
-                    <div class="py-4">
-                        <button class="w-full text-left py-2 flex justify-between items-center group focus:outline-none" onclick="toggleFaq(this)">
-                            <span class="text-sm font-bold text-zinc-800 group-hover:text-zinc-600 transition">{{ $faq[0] }}</span>
-                            <span class="faq-icon transition-transform duration-200 text-zinc-400 shrink-0 ml-4"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg></span>
+                    <div class="bento-card bg-[#fafafa] hover:bg-white border border-zinc-200 transition-all rounded-lg overflow-hidden">
+                        <button class="w-full text-left p-4 flex justify-between items-center group focus:outline-none" onclick="toggleFaq(this)">
+                            <span class="text-xs font-bold text-zinc-800 group-hover:text-zinc-950 transition flex items-center gap-2">
+                                <i class="ph ph-question text-zinc-400 text-sm"></i>
+                                {{ $faq[0] }}
+                            </span>
+                            <span class="faq-icon transition-transform duration-200 text-zinc-400 shrink-0 ml-4">
+                                <i class="ph ph-caret-down text-sm font-bold"></i>
+                            </span>
                         </button>
-                        <div class="faq-answer hidden mt-2 text-xs font-semibold text-zinc-500 leading-relaxed pr-8">{{ $faq[1] }}</div>
+                        <div class="faq-answer hidden px-4 pb-4 text-[10.5px] font-semibold text-zinc-500 leading-relaxed border-t border-zinc-100 pt-3 bg-white">
+                            {{ $faq[1] }}
+                        </div>
                     </div>
                 @endforeach
             </div>
         </div>
     </section>
 
-    {{-- ============ FOOTER ============ --}}
-    <footer class="bg-zinc-50/50 border-t border-zinc-200/60 py-12 text-xs text-zinc-500">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-2">
-                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-6 h-6">
-                <span class="font-extrabold text-zinc-800">TraKerja</span>
+    {{-- ============ CTA BANNER ============ --}}
+    <section class="py-28 bg-white border-b border-zinc-100 select-none">
+        <div class="max-w-2xl mx-auto px-4 text-center reveal">
+            <h2 class="text-4xl sm:text-5xl font-black text-zinc-950 tracking-tight leading-none mb-4">Get started today.</h2>
+            <p class="text-sm sm:text-base font-semibold text-zinc-400 mb-8 leading-relaxed max-w-lg mx-auto">Build ATS-friendly CVs, track applications, and optimize your path with AI.</p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a href="{{ route('register') }}" class="w-full sm:w-auto px-6 py-3 bg-[#0066cc] hover:bg-[#0052a3] text-white text-xs sm:text-sm font-bold rounded-lg transition-colors shadow-sm text-center">Get TraKerja free</a>
+                <a href="#fitur" class="w-full sm:w-auto px-6 py-3 bg-white border border-zinc-250 text-zinc-700 hover:bg-zinc-50 text-xs sm:text-sm font-bold rounded-lg transition-colors shadow-3xs text-center">Explore features</a>
             </div>
-            <p>© 2026 PT Teknalogi Transformasi Digital. Built for career growth.</p>
+        </div>
+    </section>
+
+    {{-- ============ FOOTER ============ --}}
+    <footer class="bg-zinc-50/60 border-t border-zinc-200/50 py-16 text-[11px] font-semibold text-zinc-500">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-zinc-200/50">
+                
+                <!-- Brand Column -->
+                <div class="md:col-span-4 space-y-4">
+                    <div class="flex items-center gap-2 text-xs font-bold text-zinc-800 tracking-tight select-none">
+                        <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="w-5 h-5 object-contain">
+                        <span>TraKerja</span>
+                    </div>
+                    <p class="text-zinc-400 font-medium leading-relaxed max-w-xs">
+                        A unified, minimalist workspace to manage your entire job application pipeline, build ATS-friendly CVs, and accelerate your career using AI.
+                    </p>
+                </div>
+
+                <!-- Product Links Column -->
+                <div class="md:col-span-2 space-y-3">
+                    <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Product</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#fitur" class="hover:text-zinc-800 transition-colors">Features</a></li>
+                        <li><a href="#pricing" class="hover:text-zinc-800 transition-colors">Pricing Plans</a></li>
+                        <li><a href="#testimonials" class="hover:text-zinc-800 transition-colors">Testimonials</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal/Resources Column -->
+                <div class="md:col-span-3 space-y-3">
+                    <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Legal & Info</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{{ route('legal.privacy') }}" class="hover:text-zinc-800 transition-colors">Privacy Policy</a></li>
+                        <li><a href="{{ route('legal.terms') }}" class="hover:text-zinc-800 transition-colors">Terms of Service</a></li>
+                        <li><span class="text-zinc-400 font-medium">PT Teknalogi Transformasi Digital</span></li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Social Column -->
+                <div class="md:col-span-3 space-y-3">
+                    <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Contact & Socials</h4>
+                    <ul class="space-y-2.5">
+                        <li class="flex items-center gap-2">
+                            <i class="ph-bold ph-envelope text-zinc-700 text-xs"></i>
+                            <a href="mailto:trakerja@teknalogi.id" class="hover:text-zinc-800 transition-colors">trakerja@teknalogi.id</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="ph-bold ph-instagram-logo text-zinc-700 text-xs"></i>
+                            <a href="https://instagram.com/jointrakerja" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-800 transition-colors">@jointrakerja</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="ph-bold ph-globe text-zinc-700 text-xs"></i>
+                            <span class="text-zinc-400 font-medium">teknalogi.id</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-zinc-400 font-medium">
+                <p>© 2026 PT Teknalogi Transformasi Digital. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
@@ -998,12 +1450,18 @@
 
             allItems.forEach((item, idx) => {
                 const currentIdx = idx + 1;
+                const h3 = item.querySelector('h3');
+                const p = item.querySelector('p');
                 if (currentIdx === step) {
-                    item.style.borderColor = 'var(--notion-yellow-border)';
-                    item.style.background = 'var(--notion-yellow)';
+                    item.classList.remove('border-zinc-200/40', 'bg-white');
+                    item.classList.add('border-zinc-200/80', 'bg-zinc-50/50');
+                    if (h3) h3.className = 'font-extrabold text-zinc-900 text-xs tracking-tight';
+                    if (p) p.className = 'text-[10px] font-semibold text-zinc-500 mt-1 leading-relaxed';
                 } else {
-                    item.style.borderColor = '';
-                    item.style.background = '';
+                    item.classList.remove('border-zinc-200/80', 'bg-zinc-50/50');
+                    item.classList.add('border-zinc-200/40', 'bg-white');
+                    if (h3) h3.className = 'font-bold text-zinc-700 text-xs tracking-tight';
+                    if (p) p.className = 'text-[10px] font-semibold text-zinc-400 mt-1 leading-relaxed';
                 }
             });
 
@@ -1049,17 +1507,6 @@
                     pane.classList.add('hidden');
                 }
             });
-        }
-
-        // Testimonial Carousel
-        let currentTesti = 0;
-        const totalTesti = 2;
-        function moveTestimonial(direction) {
-            currentTesti = (currentTesti + direction + totalTesti) % totalTesti;
-            const track = document.getElementById('testimonial-track');
-            if (track) track.style.transform = `translateX(-${currentTesti * 100}%)`;
-            const counter = document.getElementById('testi-counter');
-            if (counter) counter.innerText = `0${currentTesti + 1} / 0${totalTesti}`;
         }
     </script>
 </body>

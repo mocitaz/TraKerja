@@ -1,283 +1,280 @@
-@extends('layouts.guest')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Privacy Policy - TraKerja</title>
+    <meta name="description" content="TraKerja Privacy Policy - We are committed to protecting your personal data with the highest security standards.">
+    
+    <!-- Fonts Bunny: Inter + Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,850,900|plus-jakarta-sans:700,800" rel="stylesheet" />
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-@section('title', 'Privacy Policy - TraKerja')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 
-@section('content')
-<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50">
-    <!-- Hero Section -->
-    <div class="relative overflow-hidden bg-gradient-to-r from-[#4e71c5] to-[#d983e4] py-16">
-        <div class="absolute inset-0 bg-black/10"></div>
-        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="inline-flex items-center px-6 py-3 rounded-full bg-white/20 backdrop-blur-sm text-white mb-8">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                </svg>
-                <span class="font-semibold">Data Protection</span>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            background-color: #FFFFFF;
+            color: #1A1A1A;
+        }
+        .notion-h1 {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            letter-spacing: -0.03em;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+        .bento-card {
+            border: 1px solid #E3E2E0;
+            border-radius: 12px;
+            background: #FFFFFF;
+            transition: all 0.2s ease;
+        }
+        .bento-card:hover {
+            border-color: rgba(26, 26, 26, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="antialiased bg-white">
+
+    {{-- ============ NAVIGATION ============ --}}
+    <nav class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-zinc-200/60 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-between h-14">
+                <a href="{{ url('/') }}" class="flex items-center gap-2 text-xs font-bold text-zinc-800 tracking-tight select-none">
+                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="w-5 h-5 object-contain" onerror="this.style.display='none';">
+                    <span>TraKerja</span>
+                </a>
+
+                <div class="hidden md:flex items-center gap-1 text-xs font-semibold text-zinc-500">
+                    <a href="{{ url('/') }}#fitur" class="px-3 py-1.5 rounded hover:bg-zinc-100 hover:text-zinc-900 transition-colors">Features</a>
+                    <a href="{{ url('/') }}#pricing" class="px-3 py-1.5 rounded hover:bg-zinc-100 hover:text-zinc-900 transition-colors">Pricing</a>
+                    <a href="{{ url('/') }}#testimonials" class="px-3 py-1.5 rounded hover:bg-zinc-100 hover:text-zinc-900 transition-colors">Testimonials</a>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    @auth
+                        <a href="{{ url('/tracker') }}" class="px-3.5 py-1.5 bg-zinc-900 text-white rounded-lg text-xs font-bold hover:bg-zinc-800 transition">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="px-3 py-1.5 text-zinc-600 rounded-lg text-xs font-bold hover:bg-zinc-100 transition">Log in</a>
+                        <a href="{{ route('register') }}" class="px-3.5 py-1.5 bg-zinc-900 text-white rounded-lg text-xs font-bold hover:bg-zinc-800 transition shadow-xs">Get Started</a>
+                    @endauth
+                </div>
             </div>
-            <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">
+        </div>
+    </nav>
+
+    {{-- ============ HERO ============ --}}
+    <section class="relative pt-28 pb-16 sm:pt-36 sm:pb-20 overflow-hidden border-b border-zinc-100 bg-white">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <!-- Notion-style line-art branding icons -->
+            <div class="flex justify-center -space-x-3 mb-6">
+                <!-- Lock Icon (Blue circle) -->
+                <div class="w-11 h-11 rounded-full border-2 border-[#0066cc] bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-20">
+                    <i class="ph-bold ph-lock text-zinc-800 text-lg"></i>
+                </div>
+                <!-- Shield Icon (White circle, black border) -->
+                <div class="w-11 h-11 rounded-full border-2 border-zinc-950 bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-10">
+                    <i class="ph-bold ph-shield-check text-zinc-800 text-lg"></i>
+                </div>
+            </div>
+
+            <h1 class="notion-h1 text-4xl sm:text-5xl text-zinc-950 mb-6 leading-[1.1] tracking-tight">
                 Privacy Policy
             </h1>
-            <p class="text-xl text-white/90 max-w-3xl mx-auto mb-8">
-                Privasi Anda adalah segalanya. Kami berkomitmen melindungi setiap detail pribadi Anda dengan teknologi keamanan terdepan.
+
+            <p class="text-sm sm:text-base text-zinc-500 max-w-xl mx-auto mb-8 font-medium leading-relaxed">
+                We are fully committed to protecting your personal data privacy with the highest encryption standards.
             </p>
-            <div class="flex items-center justify-center space-x-6 text-white/80">
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span>Last updated: {{ date('F d, Y') }}</span>
-                </div>
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span>100% Secure</span>
-                </div>
+
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-zinc-50 border border-zinc-200 rounded-full text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
+                <span>Last updated: {{ date('d F Y') }}</span>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Content Section -->
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-
-        <!-- Privacy Philosophy Section -->
-        <div class="bg-white rounded-2xl shadow-xl p-8 mb-12 border border-gray-100">
-            <div class="text-center mb-8">
-                <div class="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-[#4e71c5]/10 to-[#d983e4]/10 text-[#4e71c5] mb-4">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                    </svg>
-                    <span class="font-semibold">Filosofi Privasi TraKerja</span>
-                </div>
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Privasi Anda adalah Segalanya</h2>
-                <p class="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                    Di TraKerja, kami memahami bahwa data pribadi Anda adalah aset yang paling berharga. 
-                    Kami tidak hanya melindungi informasi Anda, tetapi juga memastikan bahwa setiap byte data 
-                    diperlakukan dengan hormat, aman, dan transparan. Privasi bukan hanya kebijakan—ini adalah 
-                    komitmen fundamental kami kepada Anda.
-                </p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="text-center p-6 bg-gradient-to-br from-[#4e71c5]/5 to-[#d983e4]/5 rounded-xl">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#4e71c5] to-[#d983e4] rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Zero Data Selling</h3>
-                    <p class="text-gray-600">Kami TIDAK PERNAH menjual data Anda. Ini adalah janji yang tidak akan pernah kami langgar.</p>
-                </div>
+    {{-- ============ CONTENT ============ --}}
+    <section class="py-16 bg-white">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="space-y-12 text-xs font-semibold text-zinc-650 leading-relaxed">
                 
-                <div class="text-center p-6 bg-gradient-to-br from-[#d983e4]/5 to-[#4e71c5]/5 rounded-xl">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#d983e4] to-[#4e71c5] rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
+                <!-- 1. Introduction -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-800 shrink-0 shadow-3xs">
+                            <i class="ph ph-hand-waving text-base"></i>
+                        </div>
+                        <h2 class="text-sm font-black text-zinc-900 uppercase tracking-wider">
+                            1. Introduction
+                        </h2>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Military-Grade Encryption</h3>
-                    <p class="text-gray-600">Data Anda dienkripsi dengan standar AES-256 yang digunakan oleh militer</p>
-                </div>
-                
-                <div class="text-center p-6 bg-gradient-to-br from-[#4e71c5]/5 to-[#d983e4]/5 rounded-xl">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#4e71c5] to-[#d983e4] rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Full Transparency</h3>
-                    <p class="text-gray-600">Anda tahu persis apa yang kami lakukan dengan data Anda, kapan saja</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Content -->
-        <div class="bg-white rounded-2xl shadow-xl p-8 prose prose-lg max-w-none">
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">1. Pengenalan</h2>
-                <p class="text-gray-700 leading-relaxed">
-                    TraKerja ("kami," "kita," atau "kita") berkomitmen untuk melindungi privasi Anda. 
-                    Privacy Policy ini menjelaskan bagaimana kami mengumpulkan, menggunakan, mengungkapkan, 
-                    dan melindungi informasi Anda ketika Anda menggunakan platform tracking job application kami.
-                </p>
-                <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mt-4">
-                    <p class="text-blue-800 font-medium">
-                        <strong>Komitmen Kami:</strong> Dengan menggunakan TraKerja, Anda menyetujui praktik data yang dijelaskan dalam kebijakan ini.
+                    <p class="pl-11">
+                        TraKerja ("we", "us", or "our platform") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and protect your information when you use our job application tracking platform operated under PT Teknalogi Transformasi Digital.
                     </p>
                 </div>
-            </div>
 
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">2. Information We Collect</h2>
-                
-                <h3 class="text-xl font-semibold text-gray-900 mb-3">2.1 Personal Information</h3>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                    We collect information you provide directly to us, including:
-                </p>
-                <ul class="list-disc pl-6 text-gray-700 space-y-2">
-                    <li>Name and contact information (email address)</li>
-                    <li>Profile information and preferences</li>
-                    <li>Job application data (company names, positions, dates, status)</li>
-                    <li>Interview schedules and notes</li>
-                    <li>Career goals and objectives</li>
-                    <li>CV and resume information</li>
-                </ul>
+                <!-- 2. Information We Collect -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-800 shrink-0 shadow-3xs">
+                            <i class="ph ph-database text-base"></i>
+                        </div>
+                        <h2 class="text-sm font-black text-zinc-900 uppercase tracking-wider">
+                            2. Information We Collect
+                        </h2>
+                    </div>
+                    
+                    <div class="pl-11 space-y-4">
+                        <div>
+                            <h3 class="text-xs font-bold text-zinc-800 mb-1">2.1 Personal Data</h3>
+                            <p>We collect personal information that you provide directly to us while using this platform, including:</p>
+                            <ul class="list-disc pl-5 space-y-1 mt-1.5 text-zinc-500">
+                                <li>Full name and email address.</li>
+                                <li>Profile details & career preferences.</li>
+                                <li>Job tracker data (company names, positions, statuses, dates).</li>
+                                <li>Interview notes and task schedules.</li>
+                                <li>CV documents and other uploaded career files.</li>
+                            </ul>
+                        </div>
 
-                <h3 class="text-xl font-semibold text-gray-900 mb-3 mt-6">2.2 Usage Information</h3>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                    We automatically collect certain information when you use our service:
-                </p>
-                <ul class="list-disc pl-6 text-gray-700 space-y-2">
-                    <li>Device information (browser type, operating system)</li>
-                    <li>IP address and location data</li>
-                    <li>Usage patterns and feature interactions</li>
-                    <li>Performance and error logs</li>
-                </ul>
-            </div>
-
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">3. How We Use Your Information</h2>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                    We use the information we collect to:
-                </p>
-                <ul class="list-disc pl-6 text-gray-700 space-y-2">
-                    <li>Provide and maintain our job tracking services</li>
-                    <li>Process and organize your job applications</li>
-                    <li>Send reminders and notifications</li>
-                    <li>Generate analytics and insights</li>
-                    <li>Improve our platform and user experience</li>
-                    <li>Communicate with you about your account</li>
-                    <li>Ensure security and prevent fraud</li>
-                    <li>Comply with legal obligations</li>
-                </ul>
-            </div>
-
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">4. Information Sharing and Disclosure</h2>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                    We do not sell, trade, or rent your personal information to third parties. We may share your information only in the following circumstances:
-                </p>
-                <ul class="list-disc pl-6 text-gray-700 space-y-2">
-                    <li><strong>Service Providers:</strong> With trusted third-party providers who assist in operating our platform</li>
-                    <li><strong>Legal Requirements:</strong> When required by law or to protect our rights</li>
-                    <li><strong>Business Transfers:</strong> In connection with a merger, acquisition, or sale of assets</li>
-                    <li><strong>Consent:</strong> When you explicitly consent to sharing</li>
-                </ul>
-            </div>
-
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">5. Data Security</h2>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                    We implement appropriate security measures to protect your personal information:
-                </p>
-                <ul class="list-disc pl-6 text-gray-700 space-y-2">
-                    <li>Encryption of data in transit and at rest</li>
-                    <li>Secure servers and databases</li>
-                    <li>Regular security audits and updates</li>
-                    <li>Access controls and authentication</li>
-                    <li>Employee training on data protection</li>
-                </ul>
-                <p class="text-gray-700 leading-relaxed mt-4">
-                    However, no method of transmission over the internet is 100% secure. While we strive to protect your information, we cannot guarantee absolute security.
-                </p>
-            </div>
-
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">6. Data Retention</h2>
-                <p class="text-gray-700 leading-relaxed">
-                    We retain your personal information for as long as necessary to provide our services and fulfill the purposes outlined in this Privacy Policy. We will delete your data when:
-                </p>
-                <ul class="list-disc pl-6 text-gray-700 space-y-2 mt-4">
-                    <li>You request account deletion</li>
-                    <li>Your account has been inactive for an extended period</li>
-                    <li>We are required to do so by law</li>
-                </ul>
-            </div>
-
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">7. Your Rights and Choices</h2>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                    You have the following rights regarding your personal information:
-                </p>
-                <ul class="list-disc pl-6 text-gray-700 space-y-2">
-                    <li><strong>Access:</strong> Request a copy of your personal data</li>
-                    <li><strong>Correction:</strong> Update or correct inaccurate information</li>
-                    <li><strong>Deletion:</strong> Request deletion of your personal data</li>
-                    <li><strong>Portability:</strong> Export your data in a structured format</li>
-                    <li><strong>Restriction:</strong> Limit how we process your data</li>
-                    <li><strong>Objection:</strong> Object to certain processing activities</li>
-                </ul>
-                <p class="text-gray-700 leading-relaxed mt-4">
-                    To exercise these rights, please contact us at infoteknalogi@gmail.com.
-                </p>
-            </div>
-
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">8. Cookies and Tracking Technologies</h2>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                    We use cookies and similar technologies to enhance your experience:
-                </p>
-                <ul class="list-disc pl-6 text-gray-700 space-y-2">
-                    <li><strong>Essential Cookies:</strong> Required for basic platform functionality</li>
-                    <li><strong>Analytics Cookies:</strong> Help us understand how you use our service</li>
-                    <li><strong>Preference Cookies:</strong> Remember your settings and preferences</li>
-                </ul>
-                <p class="text-gray-700 leading-relaxed mt-4">
-                    You can control cookie settings through your browser, but disabling certain cookies may affect platform functionality.
-                </p>
-            </div>
-
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">9. International Data Transfers</h2>
-                <p class="text-gray-700 leading-relaxed">
-                    Your information may be transferred to and processed in countries other than your country of residence. We ensure appropriate safeguards are in place to protect your data during such transfers.
-                </p>
-            </div>
-
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">10. Children's Privacy</h2>
-                <p class="text-gray-700 leading-relaxed">
-                    TraKerja is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If we become aware that we have collected such information, we will take steps to delete it.
-                </p>
-            </div>
-
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">11. Changes to This Privacy Policy</h2>
-                <p class="text-gray-700 leading-relaxed">
-                    We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date. We encourage you to review this Privacy Policy periodically.
-                </p>
-            </div>
-
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">12. Contact Us</h2>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                    If you have any questions about this Privacy Policy or our data practices, please contact us:
-                </p>
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <p class="text-gray-700"><strong>Email:</strong> infoteknalogi@gmail.com</p>
-                    <p class="text-gray-700"><strong>Company:</strong> PT Teknalogi Transformasi Digital</p>
-                    <p class="text-gray-700"><strong>Instagram:</strong> @teknalogi.id</p>
-                    <p class="text-gray-700"><strong>Response Time:</strong> We will respond to your inquiries within 48 hours</p>
+                        <div>
+                            <h3 class="text-xs font-bold text-zinc-800 mb-1">2.2 Usage Data</h3>
+                            <p>We automatically collect technical metrics when you access our services:</p>
+                            <ul class="list-disc pl-5 space-y-1 mt-1.5 text-zinc-500">
+                                <li>Device information and web browser type.</li>
+                                <li>IP address and activity logs.</li>
+                                <li>Feature usage details and session durations.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">13. Compliance with Indonesian Law</h2>
-                <p class="text-gray-700 leading-relaxed">
-                    This Privacy Policy is designed to comply with Indonesian data protection laws and regulations. We are committed to protecting the privacy rights of our users in accordance with applicable Indonesian legislation.
-                </p>
+                <!-- 3. How We Use Information -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-800 shrink-0 shadow-3xs">
+                            <i class="ph ph-gear text-base"></i>
+                        </div>
+                        <h2 class="text-sm font-black text-zinc-900 uppercase tracking-wider">
+                            3. How We Use Information
+                        </h2>
+                    </div>
+                    <div class="pl-11 space-y-2">
+                        <p>We only process your data to maintain and improve our core services:</p>
+                        <ul class="list-disc pl-5 space-y-1 text-zinc-500">
+                            <li>Provide and power the job tracking dashboard & performance analytics.</li>
+                            <li>Send reminders and notification updates for upcoming interviews.</li>
+                            <li>Optimize the AI Resume Analyzer & Cover Letter Generator algorithms tailored to you.</li>
+                            <li>Maintain server security and prevent fraudulent platform activities.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 4. Data Security -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-800 shrink-0 shadow-3xs">
+                            <i class="ph ph-lock-key text-base"></i>
+                        </div>
+                        <h2 class="text-sm font-black text-zinc-900 uppercase tracking-wider">
+                            4. Data Security
+                        </h2>
+                    </div>
+                    <p class="pl-11">
+                        We implement industry-standard end-to-end encryption (AES-256) both in transit and at rest. Database access is strictly restricted to authorized systems and audited regularly to guarantee the complete safety of your data.
+                    </p>
+                </div>
+
+                <!-- 5. User Rights -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-800 shrink-0 shadow-3xs">
+                            <i class="ph ph-user-focus text-base"></i>
+                        </div>
+                        <h2 class="text-sm font-black text-zinc-900 uppercase tracking-wider">
+                            5. Your Rights and Choices
+                        </h2>
+                    </div>
+                    <div class="pl-11 space-y-3">
+                        <p>
+                            You have full control over your personal data. At any time, you can edit your profile, export your application logs, or request permanent deletion of your account and all associated records from our systems.
+                        </p>
+                        <p class="pt-1">
+                            If you have questions or concerns about this privacy policy, please contact our support team via email at <a href="mailto:trakerja@teknalogi.id" class="text-zinc-800 underline underline-offset-2 hover:text-zinc-900 font-bold">trakerja@teknalogi.id</a>.
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </div>
+    </section>
 
-        <!-- Back Button -->
-        <div class="text-center mt-8">
-            <a href="{{ route('register') }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-[#d983e4] to-[#4e71c5] hover:shadow-lg transition-all duration-200">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-                Back to Registration
-            </a>
+    {{-- ============ FOOTER ============ --}}
+    <footer class="bg-zinc-50/60 border-t border-zinc-200/50 py-16 text-[11px] font-semibold text-zinc-500">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-zinc-200/50">
+                
+                <!-- Brand Column -->
+                <div class="md:col-span-4 space-y-4">
+                    <div class="flex items-center gap-2 text-xs font-bold text-zinc-800 tracking-tight select-none">
+                        <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="w-5 h-5 object-contain">
+                        <span>TraKerja</span>
+                    </div>
+                    <p class="text-zinc-400 font-medium leading-relaxed max-w-xs">
+                        A unified, minimalist workspace to manage your entire job application pipeline, build ATS-friendly CVs, and accelerate your career using AI.
+                    </p>
+                </div>
+
+                <!-- Product Links Column -->
+                <div class="md:col-span-2 space-y-3">
+                    <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Product</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{{ url('/') }}#fitur" class="hover:text-zinc-800 transition-colors">Features</a></li>
+                        <li><a href="{{ url('/') }}#pricing" class="hover:text-zinc-800 transition-colors">Pricing Plans</a></li>
+                        <li><a href="{{ url('/') }}#testimonials" class="hover:text-zinc-800 transition-colors">Testimonials</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal/Resources Column -->
+                <div class="md:col-span-3 space-y-3">
+                    <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Legal & Info</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{{ route('legal.privacy') }}" class="hover:text-zinc-800 transition-colors">Privacy Policy</a></li>
+                        <li><a href="{{ route('legal.terms') }}" class="hover:text-zinc-800 transition-colors">Terms of Service</a></li>
+                        <li><span class="text-zinc-400 font-medium">PT Teknalogi Transformasi Digital</span></li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Social Column -->
+                <div class="md:col-span-3 space-y-3">
+                    <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Contact & Socials</h4>
+                    <ul class="space-y-2.5">
+                        <li class="flex items-center gap-2">
+                            <i class="ph-bold ph-envelope text-zinc-700 text-xs"></i>
+                            <a href="mailto:trakerja@teknalogi.id" class="hover:text-zinc-800 transition-colors">trakerja@teknalogi.id</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="ph-bold ph-instagram-logo text-zinc-700 text-xs"></i>
+                            <a href="https://instagram.com/jointrakerja" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-800 transition-colors">@jointrakerja</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-zinc-400 font-medium">
+                <p>© 2026 PT Teknalogi Transformasi Digital. All rights reserved.</p>
+            </div>
         </div>
-    </div>
-</div>
-@endsection
+    </footer>
+
+    @livewireScripts
+</body>
+</html>

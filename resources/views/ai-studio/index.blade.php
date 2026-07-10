@@ -218,7 +218,14 @@
                             
                             <div class="flex justify-between items-center text-[11px] font-semibold text-zinc-600">
                                 <span>Remaining Runs This Month</span>
-                                <span class="font-bold text-zinc-800">{{ $analyzerRemainingUses }} runs</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold text-zinc-800">{{ $analyzerRemainingUses }} runs</span>
+                                    @if(\App\Models\Setting::isMonetizationEnabled() && Auth::user()->isPremium())
+                                        <a href="{{ route('payment.topup', ['package' => 'analyzer']) }}" class="px-2 py-0.5 bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 text-[9px] font-bold uppercase tracking-wider rounded transition-colors">
+                                            Top-up
+                                        </a>
+                                    @endif
+                                </div>
                             </div>
 
                             @if(!$analyzerIsPremium)
@@ -445,7 +452,14 @@
                         <div class="bg-white rounded-xl border border-zinc-200/60 p-4 shadow-3xs flex-1 flex flex-col">
                             <div class="flex items-center justify-between mb-3">
                                 <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Saved Letters</h3>
-                                <span class="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">{{ $clRemainingUses }} Runs Remaining</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">{{ $clRemainingUses }} Runs Remaining</span>
+                                    @if(\App\Models\Setting::isMonetizationEnabled() && Auth::user()->isPremium())
+                                        <a href="{{ route('payment.topup', ['package' => 'cover_letter']) }}" class="px-2 py-0.5 bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 text-[9px] font-bold uppercase tracking-wider rounded transition-colors">
+                                            Top-up
+                                        </a>
+                                    @endif
+                                </div>
                             </div>
 
                             @if($clHistory->isEmpty())
@@ -655,9 +669,16 @@
                         <div class="bg-white border border-zinc-200/60 rounded-xl p-4 shadow-3xs">
                             <h3 class="text-xs font-bold text-zinc-800 tracking-tight pb-2.5 mb-2.5 border-b border-zinc-100">Studio Configuration</h3>
                             <div class="grid grid-cols-2 gap-4 text-[11px] font-semibold">
-                                <div class="p-3 bg-zinc-50/50 border border-zinc-200/60 rounded-lg">
-                                    <span class="text-[8.5px] font-bold text-zinc-400 uppercase tracking-wider block mb-1">Available Credits</span>
-                                    <span class="text-zinc-800 font-bold text-xs">{{ $photoStats['remaining_credits'] }} generations</span>
+                                <div class="p-3 bg-zinc-50/50 border border-zinc-200/60 rounded-lg flex flex-col justify-between">
+                                    <div>
+                                        <span class="text-[8.5px] font-bold text-zinc-400 uppercase tracking-wider block mb-1">Available Credits</span>
+                                        <span class="text-zinc-800 font-bold text-xs">{{ $photoStats['remaining_credits'] }} generations</span>
+                                    </div>
+                                    @if(\App\Models\Setting::isMonetizationEnabled() && Auth::user()->isPremium())
+                                        <a href="{{ route('payment.topup', ['package' => 'photo']) }}" class="mt-2 text-center py-1 bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 text-[9px] font-bold uppercase tracking-wider rounded transition-colors block">
+                                            Top-up Credits
+                                        </a>
+                                    @endif
                                 </div>
                                 <div class="p-3 bg-zinc-50/50 border border-zinc-200/60 rounded-lg">
                                     <span class="text-[8.5px] font-bold text-zinc-400 uppercase tracking-wider block mb-1">Total Generated</span>
