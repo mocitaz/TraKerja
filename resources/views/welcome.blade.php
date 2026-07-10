@@ -186,7 +186,10 @@
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
                         </div>
                         <div class="mx-auto bg-white border border-zinc-200/60 rounded-md text-[10px] text-zinc-400 font-bold px-12 py-0.5 select-none truncate max-w-xs md:max-w-md">
-                            <!-- Simulated Premium Notion-Style Dashboard Layout -->
+                            trakerja.com/dashboard
+                        </div>
+                    </div>
+                    <!-- Simulated Premium Notion-Style Dashboard Layout -->
                     <div class="w-full bg-[#fafafa] text-zinc-800 text-[10px] font-medium p-4 select-none relative overflow-hidden flex gap-4 min-h-[380px]">
                         <!-- Mini Sidebar -->
                         <div class="w-36 shrink-0 border-r border-zinc-200/80 pr-3 flex flex-col justify-between hidden sm:flex select-none">
