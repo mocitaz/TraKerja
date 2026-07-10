@@ -1207,7 +1207,7 @@
                     <!-- Card 1: Rendika Azhar (Red Theme) -->
                     <div class="relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/4] flex flex-col justify-end p-8 group transition-all duration-300 hover:shadow-lg shadow-md shrink-0 w-[85vw] md:w-auto snap-center">
                         <!-- Background image with red overlay -->
-                        <img src="{{ asset('images/Rendika Azhar.png') }}" alt="Rendika Azhar" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <img src="{{ asset('images/rendikaasli.png') }}" alt="Rendika Azhar" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-red-950 via-red-900/60 to-red-900/40 mix-blend-multiply"></div>
                         <div class="absolute inset-0 bg-red-800/20 mix-blend-color"></div>
                         
