@@ -28,7 +28,7 @@
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,850,900|plus-jakarta-sans:700,800|jetbrains-mono:400,600" rel="stylesheet" />
     
     <!-- Phosphor Icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/phosphor-icons/2.0.6/index.min.js" integrity="sha512-4UqGxlG1Q8cI67+o0MokU3dJt5L0O832gN+z4q4/v/0WjE5Y2S3bU1oW2w1dM1f8xVzQ2v2W/2S3bU1oW2" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web@2.0.6"></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
