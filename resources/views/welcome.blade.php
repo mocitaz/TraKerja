@@ -356,18 +356,241 @@
                             
                             <!-- Heatmap Grid Mock -->
                             <div class="flex gap-[3px] overflow-hidden select-none">
-                                @for ($col = 0; $col < 52; $col++)
-                                    <div class="flex flex-col gap-[3px]">
-                                        @for ($row = 0; $row < 7; $row++)
-                                            @php
-                                                $val = rand(0, 4);
-                                                $bgMap = [0 => 'bg-zinc-100', 1 => 'bg-[#9be9a8]', 2 => 'bg-[#40c463]', 3 => 'bg-[#30a14e]', 4 => 'bg-[#216e39]'];
-                                                $bg = $bgMap[$val] ?? 'bg-zinc-100';
-                                            @endphp
-                                            <div class="w-[7px] h-[7px] rounded-[1.5px] {{ $bg }}"></div>
-                                        @endfor
-                                    </div>
-                                @endforeach
+                                <!-- 52 columns of static blocks representing 12 months -->
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                </div>
+                                <div class="flex flex-col gap-[3px]">
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#30a14e]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#216e39]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#40c463]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-[#9be9a8]"></div>
+                                    <div class="w-[7px] h-[7px] rounded-[1.5px] bg-zinc-100"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
