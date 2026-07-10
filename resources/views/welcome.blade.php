@@ -1423,8 +1423,9 @@
     <script>
         // Reveal on scroll
         (function () {
+            const reveals = document.querySelectorAll('.reveal');
             if (!('IntersectionObserver' in window)) {
-                document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+                reveals.forEach(el => el.classList.add('visible'));
                 return;
             }
             const observer = new IntersectionObserver((entries) => {
@@ -1435,9 +1436,9 @@
                     }
                 });
             }, { threshold: 0.05 });
-            document.addEventListener('DOMContentLoaded', () => {
-                document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-            });
+            
+            // Immediately initialize
+            reveals.forEach(el => observer.observe(el));
         })();
 
         // FAQ Toggle
