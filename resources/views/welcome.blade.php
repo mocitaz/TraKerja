@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>TraKerja - Platform Pelacakan & Manajemen Lamaran Kerja ala Notion</title>
-    <meta name="description" content="TraKerja adalah platform ATS & tracker lamaran kerja gratis. Pantau status lamaran, buat CV standar ATS, dan dapatkan insight analitik untuk karir impian Anda.">
-    <meta name="keywords" content="loker, lowongan kerja, tracker lamaran kerja, ats checker, cv ats friendly, karir, hrd, job portal, trakerja, manajemen lamaran">
+    <title>TraKerja - Notion-Style Job Application Tracker & AI Career Workspace</title>
+    <meta name="description" content="TraKerja is a free-forever, minimalist job application pipeline tracker. Manage job pipelines, check ATS CV compatibility scores, and generate AI Cover Letters.">
+    <meta name="keywords" content="job tracker, loker, lowongan kerja, ats checker, cv ats friendly, karir, hrd, job portal, trakerja, kanban job board">
     <meta name="author" content="PT. Teknalogi Transformasi Digital">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ url('/') }}">
@@ -15,12 +15,34 @@
     <!-- OpenGraph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url('/') }}">
-    <meta property="og:title" content="TraKerja - Platform Manajemen & Pelacakan Lamaran Kerja">
+    <meta property="og:title" content="TraKerja - Notion-Style Job Application Tracker & AI Career Workspace">
     <meta property="og:description" content="Tingkatkan peluang lolos kerja dengan tracker cerdas, AI Cover Letter, dan analitik lengkap. Gratis untuk pencari kerja Indonesia.">
     <meta property="og:image" content="{{ asset('images/fitur-section.jpg') }}">
 
+    <!-- Schema.org JSON-LD Metadata -->
+    <script type="application/ld-json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "TraKerja",
+      "operatingSystem": "All",
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "IDR"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "PT. Teknalogi Transformasi Digital",
+        "url": "https://teknalogi.id"
+      },
+      "description": "A unified, minimalist workspace to manage your entire job application pipeline, build ATS-friendly CVs, and accelerate your career using AI."
+    }
+    </script>
+
     <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}?v=2">
-    <link rel="apple-touch-icon" href="{{ asset('images/icon.png') }}?v=2">
+    <link class="apple-touch-icon" href="{{ asset('images/icon.png') }}?v=2">
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     
     <!-- Fonts Bunny: Inter + Plus Jakarta Sans + JetBrains Mono -->
@@ -50,6 +72,23 @@
             --notion-green-border: #D1E4D1;
         }
 
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(26, 26, 26, 0.15);
+            border-radius: 9999px;
+            border: 2px solid #FFFFFF;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(26, 26, 26, 0.3);
+        }
+
         body {
             background-color: var(--notion-bg);
             color: var(--notion-text);
@@ -66,6 +105,13 @@
 
         .notion-mono {
             font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Notion Grid Dot Pattern */
+        .notion-grid-dots {
+            background-color: #ffffff;
+            background-image: radial-gradient(rgba(26, 26, 26, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
         /* Bento Grid Card */
@@ -140,7 +186,7 @@
     </nav>
 
     {{-- ============ HERO ============ --}}
-    <section class="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden border-b border-zinc-100 bg-white">
+    <section class="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden border-b border-zinc-100 notion-grid-dots">
         <div class="max-w-5xl mx-auto px-4 text-center">
             
             <!-- Notion-style line-art branding icons -->
@@ -195,9 +241,18 @@
                 @endauth
             </div>
 
-            <p class="text-xs text-zinc-400 font-bold uppercase tracking-wider reveal">
-                ⚡️ 100% Free to Start • No Credit Card Required
-            </p>
+            <div class="flex flex-col items-center gap-6 reveal">
+                <p class="text-xs text-zinc-400 font-bold uppercase tracking-wider">
+                    ⚡️ 100% Free to Start • No Credit Card Required
+                </p>
+                <!-- Mouse Scroll Indicator -->
+                <a href="#fitur" class="hidden sm:flex flex-col items-center gap-1.5 group select-none mt-2">
+                    <div class="w-5 h-8.5 rounded-full border-2 border-zinc-350 flex justify-center p-1 group-hover:border-zinc-550 transition-colors">
+                        <div class="w-1 h-2 bg-zinc-400 rounded-full animate-bounce"></div>
+                    </div>
+                    <span class="text-[9px] font-black text-zinc-450 uppercase tracking-widest group-hover:text-zinc-650 transition-colors">Scroll</span>
+                </a>
+            </div>
         </div>
 
         <!-- Dashboard mockup container -->
@@ -1199,81 +1254,91 @@
                 <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-950 font-black tracking-tight">Trusted by candidates who land.</h2>
             </div>
 
-            <!-- Notion Full-Image Quote Cards (3-Column Layout) -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
-                
-                <!-- Card 1: Rendika Azhar (Red Theme) -->
-                <div class="relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/4] flex flex-col justify-end p-8 group transition-all duration-300 hover:shadow-lg shadow-md">
-                    <!-- Background image with red overlay -->
-                    <img src="{{ asset('images/Rendika Azhar.png') }}" alt="Rendika Azhar" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-red-950 via-red-900/60 to-red-900/40 mix-blend-multiply"></div>
-                    <div class="absolute inset-0 bg-red-800/20 mix-blend-color"></div>
+            <!-- Responsive Testimonial Carousel -->
+            <div class="relative">
+                <!-- Overflow container (Scrollable on mobile, Grid on desktop) -->
+                <div class="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory scroll-smooth -mx-4 px-4 md:mx-0 md:px-0 scrollbar-none" id="testimonial-carousel">
                     
-                    <!-- Overlay Content -->
-                    <div class="relative z-10 text-white flex flex-col justify-between h-full pointer-events-none">
-                        <div class="flex items-center gap-1 opacity-90">
-                            <span class="font-extrabold text-[10px] tracking-wider uppercase font-sans">FRESH GRADUATE</span>
-                        </div>
+                    <!-- Card 1: Rendika Azhar (Red Theme) -->
+                    <div class="relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/4] flex flex-col justify-end p-8 group transition-all duration-300 hover:shadow-lg shadow-md shrink-0 w-[85vw] md:w-auto snap-center">
+                        <!-- Background image with red overlay -->
+                        <img src="{{ asset('images/Rendika Azhar.png') }}" alt="Rendika Azhar" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-red-950 via-red-900/60 to-red-900/40 mix-blend-multiply"></div>
+                        <div class="absolute inset-0 bg-red-800/20 mix-blend-color"></div>
                         
-                        <div class="space-y-3 mt-auto">
-                            <p class="text-xs font-semibold leading-relaxed text-zinc-100">
-                                "TraKerja transformed my chaotic job application spreadsheet into a super clean, visual Kanban tracker. It's an absolute game-changer for organizing my career search!"
-                            </p>
-                            <p class="text-[10px] font-bold text-zinc-300">
-                                Rendika Azhar, Junior UI Designer
-                            </p>
+                        <!-- Overlay Content -->
+                        <div class="relative z-10 text-white flex flex-col justify-between h-full pointer-events-none">
+                            <div class="flex items-center gap-1 opacity-90">
+                                <span class="font-extrabold text-[10px] tracking-wider uppercase font-sans">FRESH GRADUATE</span>
+                            </div>
+                            
+                            <div class="space-y-3 mt-auto">
+                                <p class="text-xs font-semibold leading-relaxed text-zinc-100">
+                                    "TraKerja transformed my chaotic job application spreadsheet into a super clean, visual Kanban tracker. It's an absolute game-changer for organizing my career search!"
+                                </p>
+                                <p class="text-[10px] font-bold text-zinc-300">
+                                    Rendika Azhar, Junior UI Designer
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Card 2: Andi Ahyaul Wajdi (Blue Theme) -->
-                <div class="relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/4] flex flex-col justify-end p-8 group transition-all duration-300 hover:shadow-lg shadow-md">
-                    <!-- Background image with blue overlay -->
-                    <img src="{{ asset('images/iyal.png') }}" alt="Andi Ahyaul Wajdi" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-blue-950 via-blue-900/60 to-blue-900/40 mix-blend-multiply"></div>
-                    <div class="absolute inset-0 bg-blue-800/20 mix-blend-color"></div>
-                    
-                    <!-- Overlay Content -->
-                    <div class="relative z-10 text-white flex flex-col justify-between h-full pointer-events-none">
-                        <div class="flex items-center gap-1 opacity-90">
-                            <span class="font-extrabold text-[10px] tracking-wider uppercase font-sans">CAREER SWITCHER</span>
-                        </div>
+                    <!-- Card 2: Andi Ahyaul Wajdi (Blue Theme) -->
+                    <div class="relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/4] flex flex-col justify-end p-8 group transition-all duration-300 hover:shadow-lg shadow-md shrink-0 w-[85vw] md:w-auto snap-center">
+                        <!-- Background image with blue overlay -->
+                        <img src="{{ asset('images/iyal.png') }}" alt="Andi Ahyaul Wajdi" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-950 via-blue-900/60 to-blue-900/40 mix-blend-multiply"></div>
+                        <div class="absolute inset-0 bg-blue-800/20 mix-blend-color"></div>
                         
-                        <div class="space-y-3 mt-auto">
-                            <p class="text-xs font-semibold leading-relaxed text-zinc-100">
-                                "The dashboard is incredibly clean and intuitive. Having real-time stage progression metrics and automated AI insights made my entire application process transparent."
-                            </p>
-                            <p class="text-[10px] font-bold text-zinc-300">
-                                Andi Ahyaul Wajdi, Frontend Developer
-                            </p>
+                        <!-- Overlay Content -->
+                        <div class="relative z-10 text-white flex flex-col justify-between h-full pointer-events-none">
+                            <div class="flex items-center gap-1 opacity-90">
+                                <span class="font-extrabold text-[10px] tracking-wider uppercase font-sans">CAREER SWITCHER</span>
+                            </div>
+                            
+                            <div class="space-y-3 mt-auto">
+                                <p class="text-xs font-semibold leading-relaxed text-zinc-100">
+                                    "The dashboard is incredibly clean and intuitive. Having real-time stage progression metrics and automated AI insights made my entire application process transparent."
+                                </p>
+                                <p class="text-[10px] font-bold text-zinc-300">
+                                    Andi Ahyaul Wajdi, Frontend Developer
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Card 3: Derva Anargya (Amber Theme) -->
-                <div class="relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/4] flex flex-col justify-end p-8 group transition-all duration-300 hover:shadow-lg shadow-md">
-                    <!-- Background image with amber overlay -->
-                    <img src="{{ asset('images/derva.png') }}" alt="Derva Anargya" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-amber-950 via-amber-900/60 to-amber-900/40 mix-blend-multiply"></div>
-                    <div class="absolute inset-0 bg-amber-800/20 mix-blend-color"></div>
-                    
-                    <!-- Overlay Content -->
-                    <div class="relative z-10 text-white flex flex-col justify-between h-full pointer-events-none">
-                        <div class="flex items-center gap-1 opacity-90">
-                            <span class="font-extrabold text-[10px] tracking-wider uppercase font-sans">PRODUCT LEADER</span>
-                        </div>
+                    <!-- Card 3: Derva Anargya (Amber Theme) -->
+                    <div class="relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/4] flex flex-col justify-end p-8 group transition-all duration-300 hover:shadow-lg shadow-md shrink-0 w-[85vw] md:w-auto snap-center">
+                        <!-- Background image with amber overlay -->
+                        <img src="{{ asset('images/derva.png') }}" alt="Derva Anargya" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-amber-950 via-amber-900/60 to-amber-900/40 mix-blend-multiply"></div>
+                        <div class="absolute inset-0 bg-amber-800/20 mix-blend-color"></div>
                         
-                        <div class="space-y-3 mt-auto">
-                            <p class="text-xs font-semibold leading-relaxed text-zinc-100">
-                                "The Chrome Extension is spectacular. Saving jobs from LinkedIn directly into my Kanban board in one click saves me hours of manual data entry every single week."
-                            </p>
-                            <p class="text-[10px] font-bold text-zinc-300">
-                                Derva Anargya, Product Manager
-                            </p>
+                        <!-- Overlay Content -->
+                        <div class="relative z-10 text-white flex flex-col justify-between h-full pointer-events-none">
+                            <div class="flex items-center gap-1 opacity-90">
+                                <span class="font-extrabold text-[10px] tracking-wider uppercase font-sans">PRODUCT LEADER</span>
+                            </div>
+                            
+                            <div class="space-y-3 mt-auto">
+                                <p class="text-xs font-semibold leading-relaxed text-zinc-100">
+                                    "The Chrome Extension is spectacular. Saving jobs from LinkedIn directly into my Kanban board in one click saves me hours of manual data entry every single week."
+                                </p>
+                                <p class="text-[10px] font-bold text-zinc-300">
+                                    Derva Anargya, Product Manager
+                                </p>
+                            </div>
                         </div>
                     </div>
+
                 </div>
 
+                <!-- Carousel Indicators (Mobile Only) -->
+                <div class="flex md:hidden items-center justify-center gap-2 mt-6">
+                    <button class="w-2.5 h-2.5 rounded-full bg-zinc-900 transition-colors" id="test-dot-1" onclick="scrollTestimonial(0)"></button>
+                    <button class="w-2.5 h-2.5 rounded-full bg-zinc-200 transition-colors" id="test-dot-2" onclick="scrollTestimonial(1)"></button>
+                    <button class="w-2.5 h-2.5 rounded-full bg-zinc-200 transition-colors" id="test-dot-3" onclick="scrollTestimonial(2)"></button>
+                </div>
             </div>
         </div>
     </section>
@@ -1510,6 +1575,99 @@
                 }
             });
         }
+
+        // Testimonial Scroll Dots mapping
+        function scrollTestimonial(index) {
+            const container = document.getElementById('testimonial-carousel');
+            if (!container) return;
+            const cardWidth = container.querySelector('.shrink-0').offsetWidth;
+            const gap = 24; // gap-6 equivalent
+            container.scrollTo({
+                left: index * (cardWidth + gap),
+                behavior: 'smooth'
+            });
+        }
+
+        // Auto update testimonial dots active styling
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('testimonial-carousel');
+            if (container) {
+                container.addEventListener('scroll', () => {
+                    const cardWidth = container.querySelector('.shrink-0').offsetWidth;
+                    const gap = 24;
+                    const index = Math.round(container.scrollLeft / (cardWidth + gap));
+                    
+                    for (let i = 1; i <= 3; i++) {
+                        const dot = document.getElementById(`test-dot-${i}`);
+                        if (dot) {
+                            if (i === (index + 1)) {
+                                dot.classList.remove('bg-zinc-200');
+                                dot.classList.add('bg-zinc-900');
+                            } else {
+                                dot.classList.remove('bg-zinc-900');
+                                dot.classList.add('bg-zinc-200');
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Glassmorphism Navbar Scroll Effect
+            const nav = document.querySelector('nav');
+            if (nav) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 15) {
+                        nav.classList.add('shadow-[0_2px_20px_-10px_rgba(0,0,0,0.05)]', 'border-zinc-200/80');
+                        nav.classList.remove('border-zinc-200/60');
+                    } else {
+                        nav.classList.remove('shadow-[0_2px_20px_-10px_rgba(0,0,0,0.05)]', 'border-zinc-200/80');
+                        nav.classList.add('border-zinc-200/60');
+                    }
+                });
+            }
+
+            // Feature Grid Auto Play Slideshow
+            let activeFeature = 1;
+            const featureInterval = setInterval(() => {
+                activeFeature = activeFeature % 4 + 1;
+                switchFeature(activeFeature);
+            }, 6000);
+
+            // Pause auto play when user manually selects a feature
+            window.switchFeature = (step) => {
+                clearInterval(featureInterval);
+                activeFeature = step;
+                
+                const allItems = document.querySelectorAll('.feature-selector-item');
+                const allPanes = document.querySelectorAll('.feature-pane');
+
+                allItems.forEach((item, idx) => {
+                    const currentIdx = idx + 1;
+                    const h4 = item.querySelector('h4');
+                    const p = item.querySelector('p');
+                    if (currentIdx === step) {
+                        item.classList.remove('border-zinc-200/10', 'bg-transparent');
+                        item.classList.add('border-zinc-200/80', 'bg-zinc-50/50');
+                        if (h4) h4.className = 'font-extrabold text-zinc-800 text-xs leading-tight';
+                        if (p) p.className = 'text-[10px] text-zinc-450 mt-0.5 leading-normal hidden md:block';
+                    } else {
+                        item.classList.remove('border-zinc-200/80', 'bg-zinc-50/50');
+                        item.classList.add('border-zinc-200/10', 'bg-transparent');
+                        if (h4) h4.className = 'font-bold text-zinc-650 text-xs leading-tight';
+                        if (p) p.className = 'text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block';
+                    }
+                });
+
+                allPanes.forEach((pane, idx) => {
+                    const currentIdx = idx + 1;
+                    if (currentIdx === step) {
+                        pane.classList.remove('hidden');
+                    } else {
+                        pane.classList.add('hidden');
+                    }
+                });
+            };
+        });
     </script>
 </body>
 </html>
