@@ -606,7 +606,6 @@
     <section id="fitur" class="py-20 sm:py-24 border-b border-zinc-100">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="max-w-xl mb-12 reveal">
-                <span class="px-2 py-0.5 bg-blue-50 text-blue-800 text-[9px] font-extrabold uppercase rounded border border-blue-100">One Tool, All Careers</span>
                 <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 mt-3">Semua yang Anda butuhkan untuk memenangkan persaingan kerja.</h2>
             </div>
 
