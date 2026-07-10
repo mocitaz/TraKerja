@@ -146,7 +146,7 @@
             <!-- Workspace Footer Disclaimer -->
             <div class="w-full text-center space-y-2 pt-5 mt-5 border-t border-slate-100">
                 <p class="text-[9.5px] text-slate-400 leading-normal">
-                    By continuing, you acknowledge that you understand and agree to the <span class="hover:underline cursor-pointer">Terms & Conditions</span> and <span class="hover:underline cursor-pointer">Privacy Policy</span>.
+                    By continuing, you acknowledge that you understand and agree to the <a href="{{ route('legal.terms') }}" class="text-slate-500 hover:text-zinc-800 font-bold underline underline-offset-2">Terms & Conditions</a> and <a href="{{ route('legal.privacy') }}" class="text-slate-500 hover:text-zinc-800 font-bold underline underline-offset-2">Privacy Policy</a>.
                 </p>
                 <div class="flex items-center justify-center gap-1.5 text-[8.5px] font-bold text-slate-400 uppercase tracking-wider">
                     <span>Powered by</span>
