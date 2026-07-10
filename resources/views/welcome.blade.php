@@ -645,7 +645,7 @@
                         <!-- Kanban Board Selector -->
                         <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/80 bg-zinc-50/50 hover:bg-zinc-50/90 cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-1" onclick="switchFeature(1)">
                             <div class="w-9 h-9 rounded-full border border-zinc-950 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
-                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                                     <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                                     <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
                                 </svg>
@@ -659,7 +659,7 @@
                         <!-- AI CV Analyzer Selector -->
                         <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/10 bg-transparent hover:bg-zinc-50/50 cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-2" onclick="switchFeature(2)">
                             <div class="w-9 h-9 rounded-full border border-blue-600 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
-                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                                     <circle cx="12" cy="12" r="3"></circle>
                                     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                                 </svg>
@@ -673,7 +673,7 @@
                         <!-- AI Cover Letter Selector -->
                         <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/10 bg-transparent hover:bg-zinc-50/50 cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-3" onclick="switchFeature(3)">
                             <div class="w-9 h-9 rounded-full border border-red-500 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
-                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                     <polyline points="14 2 14 8 20 8"></polyline>
                                     <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -690,7 +690,7 @@
                         <!-- Career Analytics Selector -->
                         <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/10 bg-transparent hover:bg-zinc-50/50 cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-4" onclick="switchFeature(4)">
                             <div class="w-9 h-9 rounded-full border border-amber-500 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
-                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                                     <path d="M3 3v18h18"></path>
                                     <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
                                 </svg>
@@ -1043,7 +1043,7 @@
                         <div class="p-5 flex items-start gap-4">
                             <!-- Notion Settings/Gear icon -->
                             <div class="w-9 h-9 rounded-full border border-blue-600 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
-                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                                     <circle cx="12" cy="12" r="3"></circle>
                                     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                                 </svg>
@@ -1059,7 +1059,7 @@
                         <div class="p-5 flex items-start gap-4">
                             <!-- Notion Calendar icon -->
                             <div class="w-9 h-9 rounded-full border border-red-500 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
-                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                                     <line x1="16" y1="2" x2="16" y2="6"></line>
                                     <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -1077,7 +1077,7 @@
                         <div class="p-5 flex items-start gap-4">
                             <!-- Notion Shield/Verified check icon -->
                             <div class="w-9 h-9 rounded-full border border-amber-500 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
-                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                                     <path d="m9 11 2 2 4-4"></path>
                                 </svg>
