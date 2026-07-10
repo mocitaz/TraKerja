@@ -190,7 +190,6 @@
                         </div>
                     </div>
                     <div class="w-full aspect-video bg-zinc-50 flex items-center justify-center">
-                        <p class="text-xs text-zinc-400 font-semibold">Trakerja Dashboard Preview</p>
                     </div>
                 </div>
             </div>
