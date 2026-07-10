@@ -1222,7 +1222,7 @@
                                     "TraKerja transformed my chaotic job application spreadsheet into a super clean, visual Kanban tracker. It's an absolute game-changer for organizing my career search!"
                                 </p>
                                 <p class="text-[10px] font-bold text-zinc-300">
-                                    Rendika Azhar, Junior UI Designer
+                                    Rendika Azhar, Graphic Designer
                                 </p>
                             </div>
                         </div>
