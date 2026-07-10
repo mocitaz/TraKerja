@@ -193,17 +193,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Floating Stage Chips from Previous Version -->
-            <div class="notion-pill applied absolute -left-4 sm:-left-10 top-8 hidden sm:inline-flex shadow-md border border-blue-200/85" style="transform: rotate(-6deg);">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Applied
-            </div>
-            <div class="notion-pill interview absolute -right-4 sm:-right-8 top-1/3 hidden sm:inline-flex shadow-md border border-amber-200/85" style="transform: rotate(4deg);">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Interview
-            </div>
-            <div class="notion-pill offer absolute -left-2 sm:-left-6 bottom-6 hidden sm:inline-flex shadow-md border border-emerald-200/85" style="transform: rotate(-3deg);">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Offer
-            </div>
         </div>
     </section>
 
