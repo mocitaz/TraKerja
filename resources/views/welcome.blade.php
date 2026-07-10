@@ -1165,7 +1165,7 @@
                         </div>
                     </div>
 
-                    <a href="{{ route('payment.index') }}" class="w-full mt-8 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold transition text-center shadow-sm">Upgrade to Premium Pro</a>
+                    <a href="{{ route('payment.index') }}" class="w-full mt-8 py-2.5 bg-[#0066cc] hover:bg-[#0052a3] text-white rounded-lg text-xs font-bold transition text-center shadow-sm">Upgrade to Premium Pro</a>
                 </div>
 
                 <!-- Add-On Pack -->
