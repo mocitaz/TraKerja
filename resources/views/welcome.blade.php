@@ -720,7 +720,8 @@
                             </div>
                             
                             <!-- 3-Column Kanban Board matching livewire/job-kanban-board.blade.php -->
-                            <div class="grid grid-cols-3 gap-4 select-none items-stretch flex-1 mt-2.5">
+                            <div class="overflow-x-auto -mx-4 px-4 scrollbar-thin">
+                                <div class="grid grid-cols-3 gap-4 select-none items-stretch flex-1 mt-2.5 min-w-[640px] md:min-w-0">
                                 <!-- Col 1: WISHLIST -->
                                 <div class="flex flex-col bg-zinc-50/40 rounded-lg p-2.5 border border-zinc-200/50 justify-between min-h-[220px]">
                                     <div>
@@ -861,6 +862,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
