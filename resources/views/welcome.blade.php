@@ -1228,10 +1228,10 @@
                         </div>
                     </div>
 
-                    <!-- Card 2: Andi Ahyaul Wajdi (Blue Theme) -->
+                    <!-- Card 2: Fadhail Bima Dharmawan (Blue Theme) -->
                     <div class="relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/4] flex flex-col justify-end p-8 group transition-all duration-300 hover:shadow-lg shadow-md shrink-0 w-[85vw] md:w-auto snap-center">
                         <!-- Background image with blue overlay -->
-                        <img src="{{ asset('images/iyal.png') }}" alt="Andi Ahyaul Wajdi" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <img src="{{ asset('images/bima.png') }}" alt="Fadhail Bima Dharmawan" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-blue-950 via-blue-900/60 to-blue-900/40 mix-blend-multiply"></div>
                         <div class="absolute inset-0 bg-blue-800/20 mix-blend-color"></div>
                         
@@ -1243,10 +1243,10 @@
                             
                             <div class="space-y-3 mt-auto">
                                 <p class="text-xs font-semibold leading-relaxed text-zinc-100">
-                                    "The dashboard is incredibly clean and intuitive. Having real-time stage progression metrics and automated AI insights made my entire application process transparent."
+                                     "The dashboard is incredibly clean and intuitive. Having real-time stage progression metrics and automated AI insights made my entire application process transparent."
                                 </p>
                                 <p class="text-[10px] font-bold text-zinc-300">
-                                    Andi Ahyaul Wajdi, Frontend Developer
+                                    Fadhail Bima Dharmawan, Frontend Developer
                                 </p>
                             </div>
                         </div>
@@ -1255,7 +1255,7 @@
                     <!-- Card 3: Derva Anargya (Amber Theme) -->
                     <div class="relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/4] flex flex-col justify-end p-8 group transition-all duration-300 hover:shadow-lg shadow-md shrink-0 w-[85vw] md:w-auto snap-center">
                         <!-- Background image with amber overlay -->
-                        <img src="{{ asset('images/derva.png') }}" alt="Derva Anargya" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <img src="{{ asset('images/dervaril.png') }}" alt="Derva Anargya" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-amber-950 via-amber-900/60 to-amber-900/40 mix-blend-multiply"></div>
                         <div class="absolute inset-0 bg-amber-800/20 mix-blend-color"></div>
                         
