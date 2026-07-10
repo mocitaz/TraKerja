@@ -32,7 +32,7 @@ Route::get('auth/linkedin/callback', [\App\Http\Controllers\Auth\LinkedInAuthCon
 
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return view('welcome');
 });
 
 // Landing Page Photos (Public)
