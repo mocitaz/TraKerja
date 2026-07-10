@@ -144,7 +144,7 @@
         <div class="max-w-5xl mx-auto px-4 text-center">
             
             <!-- Notion-style line-art branding icons -->
-            <div class="flex justify-center -space-x-3 mb-8 reveal">
+            <div class="flex justify-center -space-x-3 mb-8">
                 <!-- User/Detect (Blue circle) -->
                 <div class="w-11 h-11 rounded-full border-2 border-[#0066cc] bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-30">
                     <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
