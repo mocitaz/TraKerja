@@ -189,8 +189,7 @@
                             trakerja.com/dashboard
                         </div>
                     </div>
-                    <img src="{{ asset('images/mu-trakerja.png') }}" alt="Dashboard TraKerja" class="w-full h-auto block" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="w-full aspect-video bg-zinc-50 items-center justify-center hidden">
+                    <div class="w-full aspect-video bg-zinc-50 flex items-center justify-center">
                         <p class="text-xs text-zinc-400 font-semibold">Trakerja Dashboard Preview</p>
                     </div>
                 </div>
