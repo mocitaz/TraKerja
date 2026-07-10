@@ -610,38 +610,152 @@
                 <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 mt-3">Semua yang Anda butuhkan untuk memenangkan persaingan kerja.</h2>
             </div>
 
-            <!-- Bento Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 reveal">
-                
-                <div class="bento-card p-6 flex flex-col md:col-span-2">
-                    <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-lg mb-5">📋</div>
-                    <h3 class="font-bold text-zinc-800 text-sm mb-1.5">Kanban Board Tracker</h3>
-                    <p class="text-xs text-zinc-500 leading-relaxed mb-4 flex-1">Pantau seluruh siklus lamaran Anda mulai dari tahap pencarian, applied, interview, hingga offer. Cukup drag and drop untuk merapikan progres.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="notion-pill applied"><span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Applied</span>
-                        <span class="notion-pill interview"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Interview</span>
-                        <span class="notion-pill offer"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Offer</span>
+            <!-- Notion-style Interactive Feature Grid (Left selectors, Right browser visual mockup) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch reveal mt-8">
+                <!-- Left Column selectors (Notion List items) -->
+                <div class="lg:col-span-4 flex flex-col justify-between space-y-2">
+                    <div>
+                        <span class="text-[9px] font-black text-zinc-400 uppercase tracking-widest">Custom Tools</span>
+                        <h3 class="text-lg font-extrabold text-zinc-900 tracking-tight mt-1 mb-5">Automate and track your career growth.</h3>
+                    </div>
+                    
+                    <div class="space-y-1 flex-1">
+                        <!-- Kanban Board Selector -->
+                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/80 bg-zinc-50/50 hover:bg-zinc-50/90 cursor-pointer transition flex items-start gap-3 select-none" id="feat-item-1" onclick="switchFeature(1)">
+                            <div class="w-7 h-7 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0 text-sm">📋</div>
+                            <div class="min-w-0">
+                                <h4 class="font-extrabold text-zinc-800 text-xs leading-tight">Kanban Board Tracker</h4>
+                                <p class="text-[10px] text-zinc-450 mt-0.5 leading-normal hidden md:block">Pantau seluruh status lamaran kerja terpusat.</p>
+                            </div>
+                        </div>
+
+                        <!-- AI CV Analyzer Selector -->
+                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/10 bg-transparent hover:bg-zinc-50/50 cursor-pointer transition flex items-start gap-3 select-none" id="feat-item-2" onclick="switchFeature(2)">
+                            <div class="w-7 h-7 rounded-lg bg-rose-50 border border-rose-100 flex items-center justify-center shrink-0 text-sm">🧠</div>
+                            <div class="min-w-0">
+                                <h4 class="font-bold text-zinc-650 text-xs leading-tight">AI CV Analyzer</h4>
+                                <p class="text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block">Analisis skor ATS CV Anda instan.</p>
+                            </div>
+                        </div>
+
+                        <!-- AI Cover Letter Selector -->
+                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/10 bg-transparent hover:bg-zinc-50/50 cursor-pointer transition flex items-start gap-3 select-none" id="feat-item-3" onclick="switchFeature(3)">
+                            <div class="w-7 h-7 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center shrink-0 text-sm">✨</div>
+                            <div class="min-w-0">
+                                <h4 class="font-bold text-zinc-650 text-xs leading-tight">AI Cover Letter</h4>
+                                <p class="text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block">Buat surat lamaran kustom otomatis.</p>
+                            </div>
+                        </div>
+
+                        <!-- Career Analytics Selector -->
+                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/10 bg-transparent hover:bg-zinc-50/50 cursor-pointer transition flex items-start gap-3 select-none" id="feat-item-4" onclick="switchFeature(4)">
+                            <div class="w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0 text-sm">📈</div>
+                            <div class="min-w-0">
+                                <h4 class="font-bold text-zinc-650 text-xs leading-tight">Career Analytics</h4>
+                                <p class="text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block">Pantau performa & grafik progress.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bento-card p-6 flex flex-col">
-                    <div class="w-9 h-9 rounded-lg bg-rose-50 border border-rose-100 flex items-center justify-center text-lg mb-5">🧠</div>
-                    <h3 class="font-bold text-zinc-800 text-sm mb-1.5">AI CV Analyzer</h3>
-                    <p class="text-xs text-zinc-500 leading-relaxed">Analisis CV Anda layaknya software ATS HRD. Dapatkan skor instan, identifikasi kata kunci yang hilang, dan optimalkan CV Anda agar lolos rekrutmen.</p>
-                </div>
+                <!-- Right Column (The visual preview card showing mockup matching active state) -->
+                <div class="lg:col-span-8 flex flex-col justify-center">
+                    <div class="w-full bg-[#f8fafc] border border-zinc-200 rounded-xl p-4 md:p-6 shadow-2xs relative min-h-[300px] overflow-hidden flex flex-col justify-between">
+                        
+                        <!-- Panel: Kanban Tracker Mock -->
+                        <div id="feature-pane-1" class="feature-pane space-y-4">
+                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+                                    <span class="font-bold text-zinc-800 text-[10px] uppercase tracking-wider">Kanban Board Tracker</span>
+                                </div>
+                                <span class="text-[9px] text-zinc-400">Drag & Drop Cards</span>
+                            </div>
+                            
+                            <div class="grid grid-cols-3 gap-3">
+                                <!-- Col 1: Applied -->
+                                <div class="bg-white border border-zinc-200 rounded-lg p-2.5 space-y-2">
+                                    <div class="flex items-center justify-between"><span class="text-[8px] font-bold text-zinc-500 uppercase">Wishlist (2)</span></div>
+                                    <div class="bg-zinc-50 border border-zinc-200/60 p-2 rounded shadow-3xs"><p class="font-bold text-zinc-800 text-[9px]">Shopee</p><p class="text-[7.5px] text-zinc-400">Product Manager</p></div>
+                                    <div class="bg-zinc-50 border border-zinc-200/60 p-2 rounded shadow-3xs"><p class="font-bold text-zinc-800 text-[9px]">Gojek</p><p class="text-[7.5px] text-zinc-400">UX Researcher</p></div>
+                                </div>
+                                <!-- Col 2: In Process -->
+                                <div class="bg-white border border-zinc-200 rounded-lg p-2.5 space-y-2">
+                                    <div class="flex items-center justify-between"><span class="text-[8px] font-bold text-blue-600 uppercase">Applied (1)</span></div>
+                                    <div class="bg-blue-50/30 border border-blue-100 p-2 rounded shadow-3xs"><p class="font-bold text-zinc-800 text-[9px]">Tokopedia</p><p class="text-[7.5px] text-blue-650 font-semibold">Frontend Engineer</p></div>
+                                </div>
+                                <!-- Col 3: Interview -->
+                                <div class="bg-white border border-zinc-200 rounded-lg p-2.5 space-y-2">
+                                    <div class="flex items-center justify-between"><span class="text-[8px] font-bold text-amber-600 uppercase">Interview (1)</span></div>
+                                    <div class="bg-amber-50/30 border border-amber-100 p-2 rounded shadow-3xs border-l-2 border-l-amber-500"><p class="font-bold text-zinc-800 text-[9px]">Traveloka</p><p class="text-[7.5px] text-amber-650 font-semibold">UI Designer</p></div>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="bento-card p-6 flex flex-col">
-                    <div class="w-9 h-9 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center text-lg mb-5">✨</div>
-                    <h3 class="font-bold text-zinc-800 text-sm mb-1.5">AI Cover Letter</h3>
-                    <p class="text-xs text-zinc-500 leading-relaxed">Buat surat lamaran kerja kustom berkualitas tinggi hanya dalam hitungan detik. Disesuaikan khusus dengan deskripsi pekerjaan yang dilamar.</p>
-                </div>
+                        <!-- Panel: AI CV Analyzer -->
+                        <div id="feature-pane-2" class="feature-pane hidden space-y-4">
+                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                                    <span class="font-bold text-zinc-800 text-[10px] uppercase tracking-wider">AI CV Analyzer (ATS Audit)</span>
+                                </div>
+                                <span class="px-1.5 py-0.2 bg-emerald-50 text-emerald-700 text-[8px] font-bold rounded">92% Match</span>
+                            </div>
+                            <div class="bg-white border border-zinc-200 rounded-lg p-4 space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="text-xs font-bold text-zinc-800">CV_Luthfi_Fauzi.pdf</h4>
+                                        <p class="text-[8.5px] text-zinc-400">Scanned for Frontend Engineer position</p>
+                                    </div>
+                                    <div class="w-10 h-10 rounded-full border-4 border-emerald-500 flex items-center justify-center text-[10px] font-black text-emerald-600">85</div>
+                                </div>
+                                <div class="space-y-1.5 text-[8.5px] text-zinc-650">
+                                    <div class="flex items-center gap-2"><span class="text-emerald-500">✓</span> <span>Mengandung keyword esensial: React, TailwindCSS, REST API.</span></div>
+                                    <div class="flex items-center gap-2"><span class="text-amber-500">⚠</span> <span>Tambahkan pencapaian kuantitatif di bagian pengalaman kerja.</span></div>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="bento-card p-6 flex flex-col md:col-span-2">
-                    <div class="w-9 h-9 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center text-lg mb-5">📈</div>
-                    <h3 class="font-bold text-zinc-800 text-sm mb-1.5">Career Analytics</h3>
-                    <p class="text-xs text-zinc-500 leading-relaxed">Dapatkan visualisasi analitik lengkap dari riwayat pencarian kerja Anda. Ketahui platform mana yang paling efektif mendatangkan panggilan interview.</p>
-                </div>
+                        <!-- Panel: AI Cover Letter -->
+                        <div id="feature-pane-3" class="feature-pane hidden space-y-4">
+                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                                    <span class="font-bold text-zinc-800 text-[10px] uppercase tracking-wider">AI Cover Letter Builder</span>
+                                </div>
+                                <span class="text-[8px] text-zinc-400">Generated in 1.4s</span>
+                            </div>
+                            <div class="bg-white border border-zinc-200 rounded-lg p-4 space-y-2 select-text font-serif text-[7.5px] leading-relaxed text-zinc-600 max-h-[140px] overflow-y-auto">
+                                <p class="font-bold font-sans text-zinc-800">Kepada Yth. Tim Rekrutmen Gojek Indonesia,</p>
+                                <p>Saya sangat antusias untuk mengajukan lamaran sebagai Product Designer. Dengan latar belakang saya di bidang desain sistem antarmuka minimalis dan pengujian kegunaan pengguna...</p>
+                                <p>Melalui portofolio proyek-proyek saya sebelumnya, saya konsisten menerapkan standar visual modern yang mengedepankan efisiensi alur pengguna...</p>
+                            </div>
+                        </div>
 
+                        <!-- Panel: Career Analytics -->
+                        <div id="feature-pane-4" class="feature-pane hidden space-y-4">
+                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                                    <span class="font-bold text-zinc-800 text-[10px] uppercase tracking-wider">Career Analytics Dashboard</span>
+                                </div>
+                                <span class="text-[8px] text-zinc-400">Real-time stats</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-white border border-zinc-200 rounded-lg p-3 space-y-2">
+                                    <span class="text-[8px] font-bold text-zinc-400 uppercase">Conversion Rate</span>
+                                    <p class="text-lg font-black text-zinc-800">25.4%</p>
+                                    <p class="text-[7.5px] text-emerald-600 font-bold">↑ 4.2% dari bulan lalu</p>
+                                </div>
+                                <div class="bg-white border border-zinc-200 rounded-lg p-3 space-y-2">
+                                    <span class="text-[8px] font-bold text-zinc-400 uppercase">Top Hiring Channel</span>
+                                    <p class="text-lg font-black text-zinc-800">LinkedIn</p>
+                                    <p class="text-[7.5px] text-zinc-400 font-semibold">12 interview calls</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -906,6 +1020,38 @@
             });
         }
 
+        // Feature Selector Switcher (Notion Style)
+        function switchFeature(step) {
+            const allItems = document.querySelectorAll('.feature-selector-item');
+            const allPanes = document.querySelectorAll('.feature-pane');
+
+            allItems.forEach((item, idx) => {
+                const currentIdx = idx + 1;
+                const h4 = item.querySelector('h4');
+                const p = item.querySelector('p');
+                if (currentIdx === step) {
+                    item.classList.remove('border-zinc-200/10', 'bg-transparent');
+                    item.classList.add('border-zinc-200/80', 'bg-zinc-50/50');
+                    if (h4) h4.className = 'font-extrabold text-zinc-800 text-xs leading-tight';
+                    if (p) p.className = 'text-[10px] text-zinc-450 mt-0.5 leading-normal hidden md:block';
+                } else {
+                    item.classList.remove('border-zinc-200/80', 'bg-zinc-50/50');
+                    item.classList.add('border-zinc-200/10', 'bg-transparent');
+                    if (h4) h4.className = 'font-bold text-zinc-650 text-xs leading-tight';
+                    if (p) p.className = 'text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block';
+                }
+            });
+
+            allPanes.forEach((pane, idx) => {
+                const currentIdx = idx + 1;
+                if (currentIdx === step) {
+                    pane.classList.remove('hidden');
+                } else {
+                    pane.classList.add('hidden');
+                }
+            });
+        }
+
         // Testimonial Carousel
         let currentTesti = 0;
         const totalTesti = 2;
@@ -916,8 +1062,8 @@
             const counter = document.getElementById('testi-counter');
             if (counter) counter.innerText = `0${currentTesti + 1} / 0${totalTesti}`;
         }
-
-
     </script>
 </body>
 </html>
+
+
