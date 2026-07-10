@@ -106,15 +106,7 @@
 </head>
 <body class="antialiased bg-white">
 
-    {{-- Welcome / announcement popup --}}
-    <div id="welcome-popup" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300 bg-black/40 backdrop-blur-xs px-4">
-        <div class="relative bg-white rounded-xl shadow-2xl overflow-hidden max-w-md w-full border border-zinc-200 transform scale-95 transition-transform duration-300" id="welcome-popup-content">
-            <button onclick="closeWelcomePopup()" class="absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center bg-black/10 hover:bg-black/20 text-zinc-700 rounded-full transition-colors">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            <img src="{{ asset('images/msg.png') }}" alt="Welcome Message" class="w-full h-auto block" onerror="this.src='https://placehold.co/600x400/FFFFFF/1A1A1A?text=Pengumuman'">
-        </div>
-    </div>
+
 
     {{-- ============ NAVIGATION ============ --}}
     <nav class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-zinc-200/60 z-50">
@@ -532,27 +524,7 @@
             if (counter) counter.innerText = `0${currentTesti + 1} / 0${totalTesti}`;
         }
 
-        // Welcome popup trigger
-        document.addEventListener('DOMContentLoaded', () => {
-            const popup = document.getElementById('welcome-popup');
-            const popupContent = document.getElementById('welcome-popup-content');
-            setTimeout(() => {
-                popup.classList.remove('hidden');
-                void popup.offsetWidth;
-                popup.classList.remove('opacity-0');
-                popupContent.classList.remove('scale-95');
-                popupContent.classList.add('scale-100');
-            }, 600);
-        });
 
-        function closeWelcomePopup() {
-            const popup = document.getElementById('welcome-popup');
-            const popupContent = document.getElementById('welcome-popup-content');
-            popup.classList.add('opacity-0');
-            popupContent.classList.remove('scale-100');
-            popupContent.classList.add('scale-95');
-            setTimeout(() => popup.classList.add('hidden'), 300);
-        }
     </script>
 </body>
 </html>
