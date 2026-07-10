@@ -233,7 +233,7 @@
                                 </div>
                                 <div class="flex items-center justify-between gap-2 mt-0.5">
                                     <p class="text-[8px] text-zinc-400">
-                                        Welcome back, <span class="font-bold text-zinc-650">Luthfi</span>! Here is your career momentum and tracking progress.
+                                        Welcome back, <span class="font-bold text-zinc-650">Habib</span>! Here is your career momentum and tracking progress.
                                     </p>
                                     <div class="flex items-center gap-1 text-[8.5px] font-semibold text-zinc-550 shrink-0">
                                         <i class="ph ph-calendar-blank text-zinc-450"></i>
