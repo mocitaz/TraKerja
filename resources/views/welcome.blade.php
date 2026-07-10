@@ -147,21 +147,21 @@
             <div class="flex justify-center -space-x-3 mb-8">
                 <!-- User/Detect (Blue circle) -->
                 <div class="w-11 h-11 rounded-full border-2 border-[#0066cc] bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-30">
-                    <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px;">
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
                 </div>
                 <!-- Portfolio/Briefcase (White circle, black border) -->
                 <div class="w-11 h-11 rounded-full border-2 border-zinc-950 bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-20">
-                    <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px;">
                         <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                         <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
                     </svg>
                 </div>
                 <!-- Target (Red circle) -->
                 <div class="w-11 h-11 rounded-full border-2 border-red-500 bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-10">
-                    <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px;">
                         <circle cx="12" cy="12" r="10"></circle>
                         <circle cx="12" cy="12" r="6"></circle>
                         <circle cx="12" cy="12" r="2"></circle>
@@ -169,7 +169,7 @@
                 </div>
                 <!-- Idea/Brain (Amber circle) -->
                 <div class="w-11 h-11 rounded-full border-2 border-amber-500 bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-0">
-                    <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px;">
                         <path d="M9.663 17h4.673M12 3v1m6.364 1.364l-.707.707M21 12h-1M4 12H3m3.364-5.636l-.707-.707M12 21v-1m0-12a4 4 0 1 0 0 8h.01"></path>
                     </svg>
                 </div>
