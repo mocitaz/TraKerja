@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>TraKerja - Notion-Style Job Application Tracker & AI Career Workspace</title>
-    <meta name="description" content="TraKerja is a free-forever, minimalist job application pipeline tracker. Manage job pipelines, check ATS CV compatibility scores, and generate AI Cover Letters.">
-    <meta name="keywords" content="job tracker, loker, lowongan kerja, ats checker, cv ats friendly, karir, hrd, job portal, trakerja, kanban job board">
+    <title>TraKerja - Platform Pelacakan & Manajemen Lamaran Kerja ala Notion</title>
+    <meta name="description" content="TraKerja adalah platform ATS & tracker lamaran kerja gratis. Pantau status lamaran, buat CV standar ATS, dan dapatkan insight analitik untuk karir impian Anda.">
+    <meta name="keywords" content="loker, lowongan kerja, tracker lamaran kerja, ats checker, cv ats friendly, karir, hrd, job portal, trakerja, manajemen lamaran">
     <meta name="author" content="PT. Teknalogi Transformasi Digital">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ url('/') }}">
@@ -15,34 +15,12 @@
     <!-- OpenGraph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url('/') }}">
-    <meta property="og:title" content="TraKerja - Notion-Style Job Application Tracker & AI Career Workspace">
+    <meta property="og:title" content="TraKerja - Platform Manajemen & Pelacakan Lamaran Kerja">
     <meta property="og:description" content="Tingkatkan peluang lolos kerja dengan tracker cerdas, AI Cover Letter, dan analitik lengkap. Gratis untuk pencari kerja Indonesia.">
     <meta property="og:image" content="{{ asset('images/fitur-section.jpg') }}">
 
-    <!-- Schema.org JSON-LD Metadata -->
-    <script type="application/ld-json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "TraKerja",
-      "operatingSystem": "All",
-      "applicationCategory": "BusinessApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0.00",
-        "priceCurrency": "IDR"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "PT. Teknalogi Transformasi Digital",
-        "url": "https://teknalogi.id"
-      },
-      "description": "A unified, minimalist workspace to manage your entire job application pipeline, build ATS-friendly CVs, and accelerate your career using AI."
-    }
-    </script>
-
     <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}?v=2">
-    <link class="apple-touch-icon" href="{{ asset('images/icon.png') }}?v=2">
+    <link rel="apple-touch-icon" href="{{ asset('images/icon.png') }}?v=2">
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     
     <!-- Fonts Bunny: Inter + Plus Jakarta Sans + JetBrains Mono -->
@@ -72,23 +50,6 @@
             --notion-green-border: #D1E4D1;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(26, 26, 26, 0.15);
-            border-radius: 9999px;
-            border: 2px solid #FFFFFF;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(26, 26, 26, 0.3);
-        }
-
         body {
             background-color: var(--notion-bg);
             color: var(--notion-text);
@@ -105,13 +66,6 @@
 
         .notion-mono {
             font-family: 'JetBrains Mono', monospace;
-        }
-
-        /* Notion Grid Dot Pattern */
-        .notion-grid-dots {
-            background-color: #ffffff;
-            background-image: radial-gradient(rgba(26, 26, 26, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
         }
 
         /* Bento Grid Card */
@@ -186,7 +140,7 @@
     </nav>
 
     {{-- ============ HERO ============ --}}
-    <section class="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden border-b border-zinc-100 notion-grid-dots">
+    <section class="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden border-b border-zinc-100 bg-white">
         <div class="max-w-5xl mx-auto px-4 text-center">
             
             <!-- Notion-style line-art branding icons -->
@@ -241,18 +195,9 @@
                 @endauth
             </div>
 
-            <div class="flex flex-col items-center gap-6 reveal">
-                <p class="text-xs text-zinc-400 font-bold uppercase tracking-wider">
-                    ⚡️ 100% Free to Start • No Credit Card Required
-                </p>
-                <!-- Mouse Scroll Indicator -->
-                <a href="#fitur" class="hidden sm:flex flex-col items-center gap-1.5 group select-none mt-2">
-                    <div class="w-5 h-8.5 rounded-full border-2 border-zinc-350 flex justify-center p-1 group-hover:border-zinc-550 transition-colors">
-                        <div class="w-1 h-2 bg-zinc-400 rounded-full animate-bounce"></div>
-                    </div>
-                    <span class="text-[9px] font-black text-zinc-450 uppercase tracking-widest group-hover:text-zinc-650 transition-colors">Scroll</span>
-                </a>
-            </div>
+            <p class="text-xs text-zinc-400 font-bold uppercase tracking-wider reveal">
+                ⚡️ 100% Free to Start • No Credit Card Required
+            </p>
         </div>
 
         <!-- Dashboard mockup container -->
