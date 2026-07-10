@@ -1395,15 +1395,15 @@
                     <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Contact & Socials</h4>
                     <ul class="space-y-2.5">
                         <li class="flex items-center gap-2">
-                            <i class="ph-bold ph-envelope text-zinc-700 text-xs"></i>
+                            <i class="ph ph-envelope text-zinc-700 text-xs"></i>
                             <a href="mailto:trakerja@teknalogi.id" class="hover:text-zinc-800 transition-colors">trakerja@teknalogi.id</a>
                         </li>
                         <li class="flex items-center gap-2">
-                            <i class="ph-bold ph-instagram-logo text-zinc-700 text-xs"></i>
+                            <i class="ph ph-instagram-logo text-zinc-700 text-xs"></i>
                             <a href="https://instagram.com/jointrakerja" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-800 transition-colors">@jointrakerja</a>
                         </li>
                         <li class="flex items-center gap-2">
-                            <i class="ph-bold ph-globe text-zinc-700 text-xs"></i>
+                            <i class="ph ph-globe text-zinc-700 text-xs"></i>
                             <span class="text-zinc-400 font-medium">teknalogi.id</span>
                         </li>
                     </ul>
