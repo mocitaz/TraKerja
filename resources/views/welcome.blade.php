@@ -190,169 +190,184 @@
                         </div>
                     </div>
                     <!-- Simulated Premium Notion-Style Dashboard Layout -->
-                    <div class="w-full bg-[#fafafa] text-zinc-800 text-[10px] font-medium p-4 select-none relative overflow-hidden flex gap-4 min-h-[380px]">
-                        <!-- Mini Sidebar -->
-                        <div class="w-36 shrink-0 border-r border-zinc-200/80 pr-3 flex flex-col justify-between hidden sm:flex select-none">
-                            <div class="space-y-4">
-                                <div class="flex items-center gap-1.5 px-1 py-1">
-                                    <div class="w-5 h-5 rounded bg-zinc-900 flex items-center justify-center text-white text-[8px] font-black">T</div>
-                                    <span class="font-extrabold text-zinc-800 text-[11px]">TraKerja</span>
-                                </div>
-                                <div class="space-y-1">
-                                    <div class="flex items-center gap-2 px-2 py-1 bg-zinc-150/70 text-zinc-900 rounded font-bold"><i class="ph ph-circles-four text-xs"></i> <span>Dashboard</span></div>
-                                    <div class="flex items-center gap-2 px-2 py-1 text-zinc-500 rounded hover:bg-zinc-100"><i class="ph ph-kanban text-xs"></i> <span>Job Tracker</span></div>
-                                    <div class="flex items-center gap-2 px-2 py-1 text-zinc-500 rounded hover:bg-zinc-100"><i class="ph ph-file-text text-xs"></i> <span>CV Builder</span></div>
-                                    <div class="flex items-center gap-2 px-2 py-1 text-zinc-500 rounded hover:bg-zinc-100"><i class="ph ph-sparkle text-xs"></i> <span>AI Studio</span></div>
-                                    <div class="flex items-center gap-2 px-2 py-1 text-zinc-500 rounded hover:bg-zinc-100"><i class="ph ph-calendar text-xs"></i> <span>Interviews</span></div>
-                                </div>
+                    <div class="w-full bg-[#fafafa] text-zinc-800 text-[10px] font-medium p-4 select-none relative overflow-hidden min-h-[380px]">
+                        
+                        <!-- Premium Notion-Inspired Page Header -->
+                        <div class="flex items-start gap-2 border-b border-zinc-200/50 pb-3 mb-4">
+                            <!-- Icon Logo -->
+                            <div class="w-6.5 h-6.5 bg-zinc-100 border border-zinc-200/60 rounded flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs mt-0.5">
+                                <i class="ph ph-circles-four text-xs"></i>
                             </div>
-                            <div class="text-[8px] text-zinc-400 font-semibold px-2 py-1">
-                                PT Teknalogi
+                            
+                            <!-- Main Header Content -->
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-1.5">
+                                    <h1 class="text-[11px] font-bold text-zinc-800 tracking-tight">Dashboard Overview</h1>
+                                    <span class="px-1 py-0.2 bg-emerald-50 text-emerald-700 text-[7px] font-bold uppercase rounded border border-emerald-100/65">Live</span>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 mt-0.5">
+                                    <p class="text-[8px] text-zinc-400">
+                                        Welcome back, <span class="font-bold text-zinc-650">Luthfi</span>! Here is your career momentum and tracking progress.
+                                    </p>
+                                    <div class="flex items-center gap-1 text-[8.5px] font-semibold text-zinc-550 shrink-0">
+                                        <i class="ph ph-calendar-blank text-zinc-450"></i>
+                                        <span>Friday, 10 July 2026</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Main Dashboard Area -->
-                        <div class="flex-1 min-w-0">
-                            <!-- Dashboard Inside Header -->
-                            <div class="flex items-center justify-between border-b border-zinc-200 pb-3 mb-4">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-6 h-6 bg-zinc-100 border border-zinc-200 rounded flex items-center justify-center text-zinc-500 shadow-3xs">
-                                        <i class="ph ph-circles-four text-xs"></i>
-                                    </div>
-                                    <div>
-                                        <div class="flex items-center gap-1.5">
-                                            <span class="font-bold text-zinc-800 text-xs">Dashboard Overview</span>
-                                            <span class="px-1.5 py-0.2 bg-emerald-50 text-emerald-700 text-[7px] font-bold uppercase rounded border border-emerald-100">Live</span>
-                                        </div>
+                        <!-- Stats Overview Cards -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
+                            <!-- On Process Card -->
+                            <div class="bg-white rounded border border-zinc-200/60 p-2 flex items-center justify-between shadow-3xs">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <div class="w-6 h-6 bg-blue-50/50 rounded flex items-center justify-center text-blue-600 shrink-0"><i class="ph ph-spinner-gap text-xs animate-spin-slow"></i></div>
+                                    <div class="min-w-0">
+                                        <p class="text-[5px] font-bold text-zinc-400 uppercase tracking-wider leading-none">On Process</p>
+                                        <p class="text-[7px] text-zinc-500 font-semibold mt-0.5 leading-none">Active Apps</p>
                                     </div>
                                 </div>
-                                <div class="flex items-center gap-1.5 text-zinc-400 font-semibold text-[8px]">
-                                    <i class="ph ph-calendar-blank"></i>
-                                    <span>Today</span>
-                                </div>
+                                <p class="text-xs font-bold text-zinc-800 leading-none">12</p>
                             </div>
 
-                            <!-- Mini Stats Grid -->
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
-                                <div class="bg-white border border-zinc-200 rounded-lg p-2.5 flex items-center justify-between shadow-3xs">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-5 h-5 bg-blue-50/50 rounded flex items-center justify-center text-blue-500"><i class="ph ph-spinner-gap text-xs"></i></div>
-                                        <div>
-                                            <p class="text-[6px] font-black text-zinc-400 uppercase tracking-wider">Active</p>
-                                            <p class="text-[8px] font-bold text-zinc-700">12 Apps</p>
-                                        </div>
+                            <!-- Success Card -->
+                            <div class="bg-white rounded border border-zinc-200/60 p-2 flex items-center justify-between shadow-3xs">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <div class="w-6 h-6 bg-emerald-50/50 rounded flex items-center justify-center text-emerald-600 shrink-0"><i class="ph ph-check-circle text-xs"></i></div>
+                                    <div class="min-w-0">
+                                        <p class="text-[5px] font-bold text-zinc-400 uppercase tracking-wider leading-none">Success</p>
+                                        <p class="text-[7px] text-zinc-500 font-semibold mt-0.5 leading-none">Offers & Recs</p>
                                     </div>
                                 </div>
-                                <div class="bg-white border border-zinc-200 rounded-lg p-2.5 flex items-center justify-between shadow-3xs">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-5 h-5 bg-emerald-50/50 rounded flex items-center justify-center text-emerald-500"><i class="ph ph-check-circle text-xs"></i></div>
-                                        <div>
-                                            <p class="text-[6px] font-black text-zinc-400 uppercase tracking-wider">Success</p>
-                                            <p class="text-[8px] font-bold text-zinc-700">3 Offers</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bg-white border border-zinc-200 rounded-lg p-2.5 flex items-center justify-between shadow-3xs">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-5 h-5 bg-rose-50/50 rounded flex items-center justify-center text-rose-500"><i class="ph ph-x-circle text-xs"></i></div>
-                                        <div>
-                                            <p class="text-[6px] font-black text-zinc-400 uppercase tracking-wider">Declined</p>
-                                            <p class="text-[8px] font-bold text-zinc-700">5 Rejections</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bg-white border border-zinc-200 rounded-lg p-2.5 flex items-center justify-between shadow-3xs">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-5 h-5 bg-orange-50/50 rounded flex items-center justify-center text-orange-500"><i class="ph ph-calendar text-xs"></i></div>
-                                        <div>
-                                            <p class="text-[6px] font-black text-zinc-400 uppercase tracking-wider">Interviews</p>
-                                            <p class="text-[8px] font-bold text-zinc-700">4 Scheduled</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                <p class="text-xs font-bold text-zinc-800 leading-none">3</p>
                             </div>
 
-                            <!-- Middle Section: Recent Applications & Weekly Targets -->
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-                                <div class="col-span-2 bg-white border border-zinc-200 rounded-lg p-3 shadow-3xs flex flex-col justify-between">
-                                    <div>
-                                        <div class="flex items-center justify-between mb-2">
-                                            <span class="font-bold text-zinc-700 text-[9px] uppercase tracking-wider">Recent Applications</span>
-                                            <span class="text-[8px] text-zinc-400">View All →</span>
+                            <!-- Declined Card -->
+                            <div class="bg-white rounded border border-zinc-200/60 p-2 flex items-center justify-between shadow-3xs">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <div class="w-6 h-6 bg-rose-50/50 rounded flex items-center justify-center text-rose-600 shrink-0"><i class="ph ph-x-circle text-xs"></i></div>
+                                    <div class="min-w-0">
+                                        <p class="text-[5px] font-bold text-zinc-400 uppercase tracking-wider leading-none">Declined</p>
+                                        <p class="text-[7px] text-zinc-500 font-semibold mt-0.5 leading-none">Rejected</p>
+                                    </div>
+                                </div>
+                                <p class="text-xs font-bold text-zinc-800 leading-none">5</p>
+                            </div>
+
+                            <!-- Interviews Card -->
+                            <div class="bg-white rounded border border-zinc-200/60 p-2 flex items-center justify-between shadow-3xs">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <div class="w-6 h-6 bg-orange-50/50 rounded flex items-center justify-center text-orange-600 shrink-0"><i class="ph ph-calendar text-xs"></i></div>
+                                    <div class="min-w-0">
+                                        <p class="text-[5px] font-bold text-zinc-400 uppercase tracking-wider leading-none">Interviews</p>
+                                        <p class="text-[7px] text-zinc-500 font-semibold mt-0.5 leading-none">Total Scheduled</p>
+                                    </div>
+                                </div>
+                                <p class="text-xs font-bold text-zinc-800 leading-none">4</p>
+                            </div>
+                        </div>
+
+                        <!-- Main Layout Splits -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                            <!-- Recent Applications -->
+                            <div class="col-span-2 bg-white rounded border border-zinc-200/60 p-3 shadow-3xs flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div>
+                                            <span class="font-bold text-zinc-800 text-[9px] uppercase tracking-wider">Recent Applications</span>
+                                            <p class="text-[7px] text-zinc-400 mt-0.5">Your latest job submissions</p>
                                         </div>
-                                        <div class="space-y-1.5">
-                                            <div class="bg-zinc-50 border border-zinc-150/60 p-2 rounded flex items-center justify-between">
-                                                <div class="flex items-center gap-1.5">
-                                                    <span class="font-bold text-zinc-800">Gojek</span>
-                                                    <span class="text-zinc-300">•</span>
-                                                    <span class="text-zinc-500 font-medium">Product Designer</span>
-                                                </div>
-                                                <span class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-amber-50 text-amber-700 border border-amber-100">Interview</span>
+                                        <span class="px-2 py-0.5 bg-white border border-zinc-200 rounded text-[7px] font-bold text-zinc-650 hover:bg-zinc-50 transition cursor-pointer">View Tracker →</span>
+                                    </div>
+                                    <div class="space-y-1.5">
+                                        <div class="bg-zinc-50 border border-zinc-200/50 p-2 rounded flex items-center justify-between">
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="font-bold text-zinc-800 text-[10px]">Gojek</span>
+                                                <span class="text-zinc-300 text-[8px]">•</span>
+                                                <span class="text-zinc-550 font-semibold text-[9px]">Product Designer</span>
                                             </div>
-                                            <div class="bg-zinc-50 border border-zinc-150/60 p-2 rounded flex items-center justify-between">
-                                                <div class="flex items-center gap-1.5">
-                                                    <span class="font-bold text-zinc-800">Tokopedia</span>
-                                                    <span class="text-zinc-300">•</span>
-                                                    <span class="text-zinc-500 font-medium">Frontend Engineer</span>
-                                                </div>
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-amber-50 text-amber-700 border border-amber-100">HR - Interview</span>
+                                                <span class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-blue-50 text-blue-700 border border-blue-100">On Process</span>
+                                            </div>
+                                        </div>
+                                        <div class="bg-zinc-50 border border-zinc-200/50 p-2 rounded flex items-center justify-between">
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="font-bold text-zinc-800 text-[10px]">Tokopedia</span>
+                                                <span class="text-zinc-300 text-[8px]">•</span>
+                                                <span class="text-zinc-550 font-semibold text-[9px]">Frontend Engineer</span>
+                                            </div>
+                                            <div class="flex items-center gap-1.5">
                                                 <span class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-blue-50 text-blue-700 border border-blue-100">Applied</span>
+                                                <span class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-blue-50 text-blue-700 border border-blue-100">On Process</span>
                                             </div>
-                                            <div class="bg-zinc-50 border border-zinc-150/60 p-2 rounded flex items-center justify-between">
-                                                <div class="flex items-center gap-1.5">
-                                                    <span class="font-bold text-zinc-800">Traveloka</span>
-                                                    <span class="text-zinc-300">•</span>
-                                                    <span class="text-zinc-500 font-medium">UI Designer</span>
-                                                </div>
+                                        </div>
+                                        <div class="bg-zinc-50 border border-zinc-200/50 p-2 rounded flex items-center justify-between">
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="font-bold text-zinc-800 text-[10px]">Traveloka</span>
+                                                <span class="text-zinc-300 text-[8px]">•</span>
+                                                <span class="text-zinc-550 font-semibold text-[9px]">UI Designer</span>
+                                            </div>
+                                            <div class="flex items-center gap-1.5">
                                                 <span class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-emerald-50 text-emerald-700 border border-emerald-100">Offering</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="bg-white border border-zinc-200 rounded-lg p-3 shadow-3xs flex flex-col justify-between">
-                                    <div>
-                                        <div class="flex items-center justify-between mb-2">
-                                            <span class="font-bold text-zinc-700 text-[9px] uppercase tracking-wider">Weekly Targets</span>
-                                        </div>
-                                        <p class="text-[8px] text-zinc-500 leading-relaxed mb-2.5">Target lamaran minggu ini.</p>
-                                        <div class="space-y-2">
-                                            <div class="flex justify-between text-[8px] font-bold">
-                                                <span>Progress</span>
-                                                <span>8 / 10 applied</span>
-                                            </div>
-                                            <div class="h-1.5 w-full bg-zinc-100 rounded-full overflow-hidden">
-                                                <div class="h-full bg-zinc-800 rounded-full" style="width: 80%;"></div>
+                                                <span class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-emerald-50 text-emerald-700 border border-emerald-100">Accepted</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Bottom Section: GitHub Style Activity Heatmap -->
-                            <div class="bg-white border border-zinc-200 rounded-lg p-3 shadow-3xs">
-                                <div class="flex items-center justify-between mb-2.5">
-                                    <div>
-                                        <span class="font-bold text-zinc-700 text-[9px] uppercase tracking-wider">Job Search Momentum</span>
-                                        <p class="text-[7.5px] text-zinc-400 mt-0.5">Consistency tracker over the last months</p>
+                            <!-- Weekly Target -->
+                            <div class="bg-white rounded border border-zinc-200/60 p-3 shadow-3xs flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-bold text-zinc-850 text-[9px] uppercase tracking-wider">Weekly Target</span>
                                     </div>
-                                    <span class="text-[7px] font-semibold bg-zinc-100 px-1.5 py-0.5 rounded text-zinc-500">Avg: 1.2 / day</span>
-                                </div>
-                                
-                                <!-- Heatmap Grid Mock -->
-                                <div class="flex gap-[3px] overflow-hidden select-none">
-                                    @for ($col = 0; $col < 32; $col++)
-                                        <div class="flex flex-col gap-[3px]">
-                                            @for ($row = 0; $row < 7; $row++)
-                                                @php
-                                                    $val = rand(0, 4);
-                                                    $bgMap = [0 => 'bg-zinc-100', 1 => 'bg-emerald-100', 2 => 'bg-emerald-300', 3 => 'bg-emerald-500', 4 => 'bg-emerald-700'];
-                                                    $bg = $bgMap[$val] ?? 'bg-zinc-100';
-                                                @endphp
-                                                <div class="w-[8px] h-[8px] rounded-[1.5px] {{ $bg }}"></div>
-                                            @endfor
+                                    <p class="text-[7.5px] text-zinc-400 font-medium leading-relaxed mb-3">Keep up your momentum this week!</p>
+                                    <div class="space-y-2.5">
+                                        <div class="flex justify-between text-[8px] font-bold text-zinc-650">
+                                            <span>Progress</span>
+                                            <span class="text-emerald-700 font-extrabold">8 / 10 applied</span>
                                         </div>
-                                    @endfor
+                                        <div class="h-1.5 w-full bg-zinc-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-emerald-500 rounded-full" style="width: 80%;"></div>
+                                        </div>
+                                        <div class="flex flex-wrap gap-1.5 pt-1.5 select-none">
+                                            <span class="px-1 py-0.2 bg-blue-50 text-blue-700 border border-blue-100 text-[6.5px] font-bold rounded">3 applied</span>
+                                            <span class="px-1 py-0.2 bg-amber-50 text-amber-700 border border-amber-100 text-[6.5px] font-bold rounded">2 interview</span>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Heatmap Section -->
+                        <div class="bg-white rounded border border-zinc-200/60 p-3 shadow-3xs">
+                            <div class="flex items-center justify-between mb-2.5">
+                                <div>
+                                    <span class="font-bold text-zinc-800 text-[9px] uppercase tracking-wider">Job Search Momentum</span>
+                                    <p class="text-[7px] text-zinc-400 font-medium mt-0.5">Visualizing your daily application consistency over the last 12 months</p>
+                                </div>
+                                <div class="text-[7px] font-semibold bg-zinc-50 border border-zinc-200 px-1.5 py-0.5 rounded text-zinc-500">
+                                    Avg: <strong class="text-zinc-700">1.2</strong> / day
+                                </div>
+                            </div>
+                            
+                            <!-- Heatmap Grid Mock -->
+                            <div class="flex gap-[3px] overflow-hidden select-none">
+                                @for ($col = 0; $col < 52; $col++)
+                                    <div class="flex flex-col gap-[3px]">
+                                        @for ($row = 0; $row < 7; $row++)
+                                            @php
+                                                $val = rand(0, 4);
+                                                $bgMap = [0 => 'bg-zinc-100', 1 => 'bg-[#9be9a8]', 2 => 'bg-[#40c463]', 3 => 'bg-[#30a14e]', 4 => 'bg-[#216e39]'];
+                                                $bg = $bgMap[$val] ?? 'bg-zinc-100';
+                                            @endphp
+                                            <div class="w-[7px] h-[7px] rounded-[1.5px] {{ $bg }}"></div>
+                                        @endfor
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
