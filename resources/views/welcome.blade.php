@@ -189,7 +189,122 @@
                             trakerja.com/dashboard
                         </div>
                     </div>
-                    <div class="w-full aspect-video bg-zinc-50 flex items-center justify-center">
+                    <!-- Simulated Premium Notion-Style Dashboard Layout -->
+                    <div class="w-full bg-[#fafafa] text-zinc-800 text-[10px] font-medium p-4 select-none relative overflow-hidden">
+                        <!-- Dashboard Inside Header -->
+                        <div class="flex items-center justify-between border-b border-zinc-200 pb-3 mb-4">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 bg-zinc-100 border border-zinc-200 rounded flex items-center justify-center text-zinc-500 shadow-3xs">
+                                    <i class="ph ph-circles-four text-xs"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-1">
+                                        <span class="font-bold text-zinc-800 text-xs">Dashboard Overview</span>
+                                        <span class="px-1 py-0.2 bg-emerald-50 text-emerald-700 text-[7px] font-bold uppercase rounded border border-emerald-100">Live</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-1.5 text-zinc-400 font-semibold text-[8px]">
+                                <i class="ph ph-calendar-blank"></i>
+                                <span>Today</span>
+                            </div>
+                        </div>
+
+                        <!-- Mini Stats Grid -->
+                        <div class="grid grid-cols-4 gap-2 mb-4">
+                            <div class="bg-white border border-zinc-200 rounded-lg p-2.5 flex items-center justify-between shadow-3xs">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 bg-blue-50/50 rounded flex items-center justify-center text-blue-500"><i class="ph ph-spinner-gap text-xs"></i></div>
+                                    <div>
+                                        <p class="text-[6px] font-black text-zinc-400 uppercase tracking-wider">Active</p>
+                                        <p class="text-[8px] font-bold text-zinc-700">12 Apps</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white border border-zinc-200 rounded-lg p-2.5 flex items-center justify-between shadow-3xs">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 bg-emerald-50/50 rounded flex items-center justify-center text-emerald-500"><i class="ph ph-check-circle text-xs"></i></div>
+                                    <div>
+                                        <p class="text-[6px] font-black text-zinc-400 uppercase tracking-wider">Success</p>
+                                        <p class="text-[8px] font-bold text-zinc-700">3 Offers</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white border border-zinc-200 rounded-lg p-2.5 flex items-center justify-between shadow-3xs">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 bg-rose-50/50 rounded flex items-center justify-center text-rose-500"><i class="ph ph-x-circle text-xs"></i></div>
+                                    <div>
+                                        <p class="text-[6px] font-black text-zinc-400 uppercase tracking-wider">Declined</p>
+                                        <p class="text-[8px] font-bold text-zinc-700">5 Rejections</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white border border-zinc-200 rounded-lg p-2.5 flex items-center justify-between shadow-3xs">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 bg-orange-50/50 rounded flex items-center justify-center text-orange-500"><i class="ph ph-calendar text-xs"></i></div>
+                                    <div>
+                                        <p class="text-[6px] font-black text-zinc-400 uppercase tracking-wider">Interviews</p>
+                                        <p class="text-[8px] font-bold text-zinc-700">4 Scheduled</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pipeline & Grid Simulation -->
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="col-span-2 bg-white border border-zinc-200 rounded-lg p-3 shadow-3xs flex flex-col justify-between min-h-[160px]">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-bold text-zinc-700 text-[10px]">Recent Applications</span>
+                                        <span class="text-[8px] text-zinc-400">View All →</span>
+                                    </div>
+                                    <div class="space-y-1.5">
+                                        <div class="bg-zinc-50 border border-zinc-150/60 p-2 rounded flex items-center justify-between">
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="font-bold text-zinc-800">Gojek</span>
+                                                <span class="text-zinc-300">•</span>
+                                                <span class="text-zinc-500 font-medium">Product Designer</span>
+                                            </div>
+                                            <span class="px-1.5 py-0.2 rounded text-[7.5px] font-bold uppercase bg-amber-50 text-amber-700 border border-amber-100">Interview</span>
+                                        </div>
+                                        <div class="bg-zinc-50 border border-zinc-150/60 p-2 rounded flex items-center justify-between">
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="font-bold text-zinc-800">Tokopedia</span>
+                                                <span class="text-zinc-300">•</span>
+                                                <span class="text-zinc-500 font-medium">Frontend Engineer</span>
+                                            </div>
+                                            <span class="px-1.5 py-0.2 rounded text-[7.5px] font-bold uppercase bg-blue-50 text-blue-700 border border-blue-100">Applied</span>
+                                        </div>
+                                        <div class="bg-zinc-50 border border-zinc-150/60 p-2 rounded flex items-center justify-between">
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="font-bold text-zinc-800">Traveloka</span>
+                                                <span class="text-zinc-300">•</span>
+                                                <span class="text-zinc-500 font-medium">UI Designer</span>
+                                            </div>
+                                            <span class="px-1.5 py-0.2 rounded text-[7.5px] font-bold uppercase bg-emerald-50 text-emerald-700 border border-emerald-100">Offering</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white border border-zinc-200 rounded-lg p-3 shadow-3xs flex flex-col justify-between min-h-[160px]">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-bold text-zinc-700 text-[10px]">Weekly Targets</span>
+                                    </div>
+                                    <p class="text-[9px] text-zinc-500 leading-relaxed mb-2">Progress lamaran kerja minggu ini.</p>
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between text-[8px] font-bold">
+                                            <span>Target</span>
+                                            <span>8 / 10 applied</span>
+                                        </div>
+                                        <div class="h-1.5 w-full bg-zinc-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-zinc-800 rounded-full" style="width: 80%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
