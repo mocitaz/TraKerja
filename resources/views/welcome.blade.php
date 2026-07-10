@@ -17,7 +17,7 @@
     <meta property="og:url" content="{{ url('/') }}">
     <meta property="og:title" content="TraKerja - Platform Manajemen & Pelacakan Lamaran Kerja">
     <meta property="og:description" content="Tingkatkan peluang lolos kerja dengan tracker cerdas, AI Cover Letter, dan analitik lengkap. Gratis untuk pencari kerja Indonesia.">
-    <meta property="og:image" content="{{ asset('images/fitur-section.jpg') }}">
+    <meta property="og:image" content="{{ asset('images/icon.png') }}">
 
     <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}?v=2">
     <link rel="apple-touch-icon" href="{{ asset('images/icon.png') }}?v=2">
