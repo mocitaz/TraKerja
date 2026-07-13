@@ -47,7 +47,7 @@ class AuthenticatedSessionController extends Controller
             }
 
             // Regular users go to dashboard
-            return redirect()->intended(route('dashboard', absolute: false));
+            return redirect()->intended(route('dashboard', absolute: false))->with('show_telegram_popup', true);
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             throw $e;

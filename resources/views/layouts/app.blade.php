@@ -328,6 +328,69 @@
                 transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
             }
         </style>
+        {{-- Telegram Community Pop-Up Modal (Notion-Style Compact) --}}
+        @if(session('show_telegram_popup'))
+        <div x-data="{ open: true }" 
+             x-show="open" 
+             class="fixed inset-0 bg-zinc-950/45 backdrop-blur-xs z-[99999] flex items-center justify-center p-4"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             x-init="
+                // Auto trigger confetti for delightful login experience
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 80,
+                        spread: 60,
+                        origin: { y: 0.7 }
+                    });
+                }, 300);
+             ">
+            <!-- Modal Body (Notion Styled) -->
+            <div @click.away="open = false" 
+                 class="bg-white rounded-xl border border-zinc-200/80 shadow-2xl max-w-[360px] w-full overflow-hidden transform transition-all p-6 text-center"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="scale-95 translate-y-4"
+                 x-transition:enter-end="scale-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="scale-100 translate-y-0"
+                 x-transition:leave-end="scale-95 translate-y-4">
+                
+                <!-- Close Button -->
+                <button @click="open = false" class="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 transition">
+                    <i class="ph ph-x text-lg"></i>
+                </button>
+
+                <!-- Telegram Icon Circle -->
+                <div class="w-12 h-12 rounded-full bg-blue-50/70 flex items-center justify-center mx-auto mb-4">
+                    <i class="ph ph-telegram-logo text-blue-600 text-2xl"></i>
+                </div>
+
+                <!-- Text Content -->
+                <h3 class="text-base font-bold text-zinc-900 tracking-tight leading-tight">Welcome Back!</h3>
+                <p class="text-[11px] font-semibold text-zinc-450 mt-1 mb-5">
+                    Connect with fellow job seekers and receive real-time job vacancy alerts in our Telegram community.
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="space-y-2">
+                    <a href="https://t.me/HubTrakerja" target="_blank" rel="noopener noreferrer" @click="open = false" 
+                       class="w-full py-2 bg-[#0066cc] hover:bg-[#0052a3] text-white text-xs font-bold rounded-lg transition-colors shadow-3xs flex items-center justify-center gap-1.5">
+                        <i class="ph-bold ph-paper-plane-tilt text-xs"></i>
+                        Join HubTrakerja
+                    </a>
+                    <button @click="open = false" 
+                            class="w-full py-2 bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs font-bold rounded-lg transition-colors">
+                        Go to Dashboard
+                    </button>
+                </div>
+            </div>
+        </div>
+        @endif
+
         @stack('modals')
     </body>
 </html>
