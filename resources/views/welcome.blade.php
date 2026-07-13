@@ -1123,8 +1123,6 @@
                 <i class="ph ph-telegram-logo text-blue-600 text-3xl"></i>
             </div>
             
-            <span class="text-[9px] font-black text-blue-600 uppercase tracking-widest font-sans">Official Channel</span>
-            
             <h2 class="text-3xl sm:text-4xl font-black text-zinc-950 tracking-tight mt-4 mb-4 leading-tight">
                 Join Our Job Seeker Community
             </h2>
