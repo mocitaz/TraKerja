@@ -338,17 +338,7 @@
              x-transition:enter-end="opacity-100"
              x-transition:leave="transition ease-in duration-200"
              x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
-             x-init="
-                // Auto trigger confetti for delightful login experience
-                setTimeout(() => {
-                    confetti({
-                        particleCount: 80,
-                        spread: 60,
-                        origin: { y: 0.7 }
-                    });
-                }, 300);
-             ">
+             x-transition:leave-end="opacity-0">
             <!-- Modal Body (Notion Styled) -->
             <div @click.away="open = false" 
                  class="bg-white rounded-xl border border-zinc-200/80 shadow-2xl max-w-[360px] w-full overflow-hidden transform transition-all p-6 text-center"
