@@ -1342,6 +1342,32 @@
         </div>
     </section>
 
+    {{-- ============ TELEGRAM COMMUNITY SECTION ============ --}}
+    <section class="py-20 bg-white border-b border-zinc-100 relative overflow-hidden select-none">
+        <!-- Notion Pattern background -->
+        <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 16px 16px;"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 text-center relative z-10 reveal">
+            <!-- Telegram Notion Icon Badge -->
+            <div class="w-12 h-12 rounded-full border border-blue-100 bg-blue-50/50 flex items-center justify-center mx-auto mb-6 shadow-3xs">
+                <i class="ph ph-telegram-logo text-blue-600 text-2xl"></i>
+            </div>
+            
+            <span class="text-[9px] font-black text-blue-600 bg-blue-50/60 px-2.5 py-1 rounded border border-blue-100 uppercase tracking-widest">Join Community</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-zinc-950 tracking-tight mt-4 mb-3">Gabung Komunitas TraKerja</h2>
+            <p class="text-xs sm:text-sm font-semibold text-zinc-500 mb-8 leading-relaxed max-w-lg mx-auto">
+                Dapatkan info lowongan kerja ter-update setiap hari, diskusikan CV Anda dengan sesama pelamar kerja, dan perluas jaringan karir profesional Anda secara real-time.
+            </p>
+            
+            <div class="inline-flex flex-col sm:flex-row items-center gap-3">
+                <a href="https://t.me/HubTrakerja" target="_blank" rel="noopener noreferrer" class="px-6 py-3 bg-[#0066cc] hover:bg-[#0052a3] text-white text-xs font-bold rounded-lg transition-colors shadow-sm text-center flex items-center gap-2">
+                    <i class="ph ph-telegram-logo text-base"></i>
+                    Join t.me/HubTrakerja
+                </a>
+            </div>
+        </div>
+    </section>
+
     {{-- ============ CTA BANNER ============ --}}
     <section class="py-28 bg-white border-b border-zinc-100 select-none">
         <div class="max-w-2xl mx-auto px-4 text-center reveal">
@@ -1401,6 +1427,10 @@
                         <li class="flex items-center gap-2">
                             <i class="ph ph-instagram-logo text-zinc-700 text-xs"></i>
                             <a href="https://instagram.com/jointrakerja" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-800 transition-colors">@jointrakerja</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="ph ph-telegram-logo text-zinc-700 text-xs"></i>
+                            <a href="https://t.me/HubTrakerja" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-800 transition-colors">Telegram Community</a>
                         </li>
                         <li class="flex items-center gap-2">
                             <i class="ph ph-globe text-zinc-700 text-xs"></i>
