@@ -1116,52 +1116,42 @@
     </section>
 
     {{-- ============ TELEGRAM COMMUNITY SECTION ============ --}}
-    <section class="py-24 bg-white border-b border-zinc-100 relative overflow-hidden select-none">
-        <!-- Notion Dot Grid Background pattern -->
-        <div class="absolute inset-0 opacity-[0.4] pointer-events-none" style="background-image: radial-gradient(#e4e4e7 1.5px, transparent 1.5px); background-size: 20px 20px;"></div>
-        
-        <div class="max-w-4xl mx-auto px-4 relative z-10 reveal">
-            <!-- Container Bento Premium -->
-            <div class="bento-card bg-[#fafafa]/80 backdrop-blur-xs border border-zinc-200 p-8 md:p-12 rounded-2xl shadow-3xs hover:border-zinc-300 hover:shadow-2xs transition-all duration-300 text-center relative overflow-hidden">
-                <!-- Decorative Blue Gradient Blob -->
-                <div class="absolute -top-24 -left-24 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-sky-500/5 rounded-full blur-3xl pointer-events-none"></div>
-                
-                <!-- Telegram Notion Icon Badge -->
-                <div class="w-14 h-14 rounded-2xl border-2 border-blue-500 bg-white flex items-center justify-center mx-auto mb-6 shadow-3xs transform -rotate-3 hover:rotate-0 transition-transform duration-350">
-                    <i class="ph ph-telegram-logo text-blue-600 text-3xl"></i>
+    <section class="py-24 bg-white border-b border-zinc-100 relative select-none">
+        <div class="max-w-3xl mx-auto px-4 text-center reveal">
+            <!-- Telegram Notion Icon Badge (Clean Borderless Circular) -->
+            <div class="w-14 h-14 rounded-full bg-blue-50/70 flex items-center justify-center mx-auto mb-6">
+                <i class="ph ph-telegram-logo text-blue-600 text-3xl"></i>
+            </div>
+            
+            <span class="text-[9px] font-black text-blue-600 uppercase tracking-widest font-sans">Official Channel</span>
+            
+            <h2 class="text-3xl sm:text-4xl font-black text-zinc-950 tracking-tight mt-4 mb-4 leading-tight">
+                Join Our Job Seeker Community
+            </h2>
+            
+            <p class="text-xs sm:text-sm font-semibold text-zinc-400 mb-8 leading-relaxed max-w-xl mx-auto">
+                Stay ahead with real-time job alerts, daily vacancy updates, CV reviews with peers, and share strategic career insights with thousands of active candidates instantly.
+            </p>
+            
+            <!-- Mock Community Members Avatars & Info -->
+            <div class="flex flex-col items-center justify-center gap-3 mb-8">
+                <div class="flex items-center -space-x-2">
+                    <div class="w-7 h-7 rounded-full border-2 border-white bg-blue-50 flex items-center justify-center text-[9px] font-black text-blue-600 shadow-3xs z-30">A</div>
+                    <div class="w-7 h-7 rounded-full border-2 border-white bg-amber-50 flex items-center justify-center text-[9px] font-black text-amber-600 shadow-3xs z-20">B</div>
+                    <div class="w-7 h-7 rounded-full border-2 border-white bg-rose-50 flex items-center justify-center text-[9px] font-black text-rose-600 shadow-3xs z-10">D</div>
+                    <div class="w-7 h-7 rounded-full border-2 border-white bg-emerald-50 flex items-center justify-center text-[9px] font-black text-emerald-600 shadow-3xs z-0">R</div>
                 </div>
-                
-                <span class="text-[9px] font-black text-blue-600 bg-blue-50/70 px-3 py-1 rounded-full border border-blue-100 uppercase tracking-widest font-sans">Official Channel</span>
-                
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-zinc-950 tracking-tight mt-5 mb-3 leading-tight">
-                    Join Our Job Seeker Community
-                </h2>
-                
-                <p class="text-xs sm:text-sm font-semibold text-zinc-500 mb-8 leading-relaxed max-w-xl mx-auto">
-                    Stay ahead with real-time job alerts, daily vacancy updates, CV reviews with peers, and share strategic career insights with thousands of active candidates instantly.
+                <p class="text-[9.5px] font-black text-zinc-400 uppercase tracking-widest">
+                    ⚡️ Active discussions happening daily
                 </p>
-                
-                <!-- Mock Community Members Avatars & Info -->
-                <div class="flex flex-col items-center justify-center gap-3.5 mb-8">
-                    <div class="flex items-center -space-x-2.5">
-                        <div class="w-7 h-7 rounded-full border border-zinc-200 bg-zinc-50 flex items-center justify-center text-[10px] font-bold text-zinc-600 shadow-3xs z-30">A</div>
-                        <div class="w-7 h-7 rounded-full border border-zinc-200 bg-zinc-100 flex items-center justify-center text-[10px] font-bold text-zinc-700 shadow-3xs z-20">B</div>
-                        <div class="w-7 h-7 rounded-full border border-zinc-200 bg-zinc-50 flex items-center justify-center text-[10px] font-bold text-zinc-600 shadow-3xs z-10">D</div>
-                        <div class="w-7 h-7 rounded-full border border-zinc-200 bg-zinc-100 flex items-center justify-center text-[10px] font-bold text-zinc-700 shadow-3xs z-0">R</div>
-                    </div>
-                    <p class="text-[10px] font-extrabold text-zinc-400 uppercase tracking-wider">
-                        ⚡️ Active discussions happening daily
-                    </p>
-                </div>
-                
-                <div class="inline-flex">
-                    <a href="https://t.me/HubTrakerja" target="_blank" rel="noopener noreferrer" 
-                       class="px-8 py-3.5 bg-[#0066cc] hover:bg-[#0052a3] hover:scale-[1.02] active:scale-[0.98] text-white text-xs font-bold rounded-lg transition-all duration-200 shadow-3xs hover:shadow-2xs text-center flex items-center justify-center gap-2">
-                        <i class="ph-bold ph-paper-plane-tilt text-sm"></i>
-                        Connect to t.me/HubTrakerja
-                    </a>
-                </div>
+            </div>
+            
+            <div class="inline-flex">
+                <a href="https://t.me/HubTrakerja" target="_blank" rel="noopener noreferrer" 
+                   class="px-8 py-3.5 bg-[#0066cc] hover:bg-[#0052a3] text-white text-xs font-bold rounded-lg transition-colors shadow-3xs hover:shadow-2xs text-center flex items-center justify-center gap-2">
+                    <i class="ph-bold ph-paper-plane-tilt text-sm"></i>
+                    Connect to t.me/HubTrakerja
+                </a>
             </div>
         </div>
     </section>
