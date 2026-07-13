@@ -626,7 +626,7 @@
     </section>
 
     {{-- ============ FEATURES GRID ============ --}}
-    <section id="fitur" class="py-20 sm:py-24 border-b border-zinc-100">
+    <section id="fitur" class="py-20 sm:py-24 bg-zinc-50/50 border-b border-zinc-100">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="max-w-xl mb-12 reveal">
                 <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 mt-3">Everything you need to win your dream career.</h2>
