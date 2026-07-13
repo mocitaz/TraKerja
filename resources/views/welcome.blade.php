@@ -1136,10 +1136,10 @@
             <!-- Mock Community Members Avatars & Info -->
             <div class="flex flex-col items-center justify-center gap-3 mb-8">
                 <div class="flex items-center -space-x-2">
-                    <div class="w-7 h-7 rounded-full border-2 border-white bg-blue-50 flex items-center justify-center text-[9px] font-black text-blue-600 shadow-3xs z-30">A</div>
-                    <div class="w-7 h-7 rounded-full border-2 border-white bg-amber-50 flex items-center justify-center text-[9px] font-black text-amber-600 shadow-3xs z-20">B</div>
-                    <div class="w-7 h-7 rounded-full border-2 border-white bg-rose-50 flex items-center justify-center text-[9px] font-black text-rose-600 shadow-3xs z-10">D</div>
-                    <div class="w-7 h-7 rounded-full border-2 border-white bg-emerald-50 flex items-center justify-center text-[9px] font-black text-emerald-600 shadow-3xs z-0">R</div>
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100&q=80" alt="Community Member" class="w-7 h-7 rounded-full border-2 border-white object-cover shadow-3xs z-30">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=80" alt="Community Member" class="w-7 h-7 rounded-full border-2 border-white object-cover shadow-3xs z-20">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&h=100&q=80" alt="Community Member" class="w-7 h-7 rounded-full border-2 border-white object-cover shadow-3xs z-10">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&h=100&q=80" alt="Community Member" class="w-7 h-7 rounded-full border-2 border-white object-cover shadow-3xs z-0">
                 </div>
                 <p class="text-[9.5px] font-black text-zinc-400 uppercase tracking-widest">
                     ⚡️ Active discussions happening daily
