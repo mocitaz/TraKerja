@@ -56,38 +56,40 @@
             ->get();
 
         // Menggunakan inline style hex gradient agar 100% aman ter-render di produksi (CORS & Tailwind Dynamic Class Safe)
-        function getAvatarStyle($name) {
-            $char = strtoupper(substr($name ?? 'A', 0, 1));
-            $colors = [
-                'A' => ['#6366f1', '#a855f7'],
-                'B' => ['#a855f7', '#ec4899'],
-                'C' => ['#ec4899', '#f43f5e'],
-                'D' => ['#f43f5e', '#ef4444'],
-                'E' => ['#ef4444', '#f97316'],
-                'F' => ['#f97316', '#f59e0b'],
-                'G' => ['#f59e0b', '#eab308'],
-                'H' => ['#eab308', '#84cc16'],
-                'I' => ['#84cc16', '#22c55e'],
-                'J' => ['#22c55e', '#10b981'],
-                'K' => ['#10b981', '#14b8a6'],
-                'L' => ['#14b8a6', '#06b6d4'],
-                'M' => ['#06b6d4', '#0ea5e9'],
-                'N' => ['#0ea5e9', '#3b82f6'],
-                'O' => ['#3b82f6', '#6366f1'],
-                'P' => ['#6366f1', '#8b5cf6'],
-                'Q' => ['#8b5cf6', '#d946ef'],
-                'R' => ['#d946ef', '#ec4899'],
-                'S' => ['#ec4899', '#f43f5e'],
-                'T' => ['#f43f5e', '#f97316'],
-                'U' => ['#f97316', '#eab308'],
-                'V' => ['#eab308', '#22c55e'],
-                'W' => ['#22c55e', '#14b8a6'],
-                'X' => ['#14b8a6', '#0ea5e9'],
-                'Y' => ['#0ea5e9', '#6366f1'],
-                'Z' => ['#6366f1', '#ec4899'],
-            ];
-            $pair = $colors[$char] ?? ['#71717a', '#52525b'];
-            return "background: linear-gradient(135deg, {$pair[0]} 0%, {$pair[1]} 100%);";
+        if (!function_exists('getAvatarStyle')) {
+            function getAvatarStyle($name) {
+                $char = strtoupper(substr($name ?? 'A', 0, 1));
+                $colors = [
+                    'A' => ['#6366f1', '#a855f7'],
+                    'B' => ['#a855f7', '#ec4899'],
+                    'C' => ['#ec4899', '#f43f5e'],
+                    'D' => ['#f43f5e', '#ef4444'],
+                    'E' => ['#ef4444', '#f97316'],
+                    'F' => ['#f97316', '#f59e0b'],
+                    'G' => ['#f59e0b', '#eab308'],
+                    'H' => ['#eab308', '#84cc16'],
+                    'I' => ['#84cc16', '#22c55e'],
+                    'J' => ['#22c55e', '#10b981'],
+                    'K' => ['#10b981', '#14b8a6'],
+                    'L' => ['#14b8a6', '#06b6d4'],
+                    'M' => ['#06b6d4', '#0ea5e9'],
+                    'N' => ['#0ea5e9', '#3b82f6'],
+                    'O' => ['#3b82f6', '#6366f1'],
+                    'P' => ['#6366f1', '#8b5cf6'],
+                    'Q' => ['#8b5cf6', '#d946ef'],
+                    'R' => ['#d946ef', '#ec4899'],
+                    'S' => ['#ec4899', '#f43f5e'],
+                    'T' => ['#f43f5e', '#f97316'],
+                    'U' => ['#f97316', '#eab308'],
+                    'V' => ['#eab308', '#22c55e'],
+                    'W' => ['#22c55e', '#14b8a6'],
+                    'X' => ['#14b8a6', '#0ea5e9'],
+                    'Y' => ['#0ea5e9', '#6366f1'],
+                    'Z' => ['#6366f1', '#ec4899'],
+                ];
+                $pair = $colors[$char] ?? ['#71717a', '#52525b'];
+                return "background: linear-gradient(135deg, {$pair[0]} 0%, {$pair[1]} 100%);";
+            }
         }
     @endphp
 
