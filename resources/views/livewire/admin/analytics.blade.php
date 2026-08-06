@@ -175,7 +175,7 @@
                 </div>
             </div>
         </div>
-        <div class="p-4">
+        <div class="p-5">
             <div class="h-80 w-full relative">
                 <canvas id="userGrowthChart"></canvas>
             </div>
@@ -195,7 +195,7 @@
                     </div>
                 </div>
             </div>
-            <div class="p-4 flex-1">
+            <div class="p-5 flex-1">
                 <div class="h-64 w-full relative">
                     <canvas id="jobApplicationsOverTimeChart"></canvas>
                 </div>
@@ -213,7 +213,7 @@
                     </div>
                 </div>
             </div>
-            <div class="p-4 flex-1">
+            <div class="p-5 flex-1">
                 <div class="h-64 w-full relative">
                     <canvas id="userRegistrationByDayChart"></canvas>
                 </div>
@@ -231,7 +231,7 @@
                     <h3 class="text-xs font-bold text-zinc-900 font-sans truncate">Premium Ratio</h3>
                 </div>
             </div>
-            <div class="p-4 flex-1 flex flex-col items-center justify-center">
+            <div class="p-5 flex-1 flex flex-col items-center justify-center">
                 <div class="h-44 w-full relative">
                     <canvas id="premiumVsFreeChart"></canvas>
                 </div>
@@ -246,7 +246,7 @@
                     <h3 class="text-xs font-bold text-zinc-900 font-sans truncate">Goals Success</h3>
                 </div>
             </div>
-            <div class="p-4 flex-1 flex flex-col items-center justify-center">
+            <div class="p-5 flex-1 flex flex-col items-center justify-center">
                 <div class="h-44 w-full relative">
                     <canvas id="goalsAchievementChart"></canvas>
                 </div>
@@ -261,7 +261,7 @@
                     <h3 class="text-xs font-bold text-zinc-900 font-sans truncate">Verification Ratio</h3>
                 </div>
             </div>
-            <div class="p-4 flex-1 flex flex-col items-center justify-center">
+            <div class="p-5 flex-1 flex flex-col items-center justify-center">
                 <div class="h-44 w-full relative">
                     <canvas id="verifiedVsUnverifiedChart"></canvas>
                 </div>
@@ -280,7 +280,7 @@
                 </div>
             </div>
         </div>
-        <div class="p-4">
+        <div class="p-5">
             @if(count($jobApplicationsByStatus['labels'] ?? []) > 0)
                 @php
                     $appliedIdx = array_search('Applied', $jobApplicationsByStatus['labels']);
@@ -387,7 +387,7 @@
                     <h3 class="text-xs font-bold text-zinc-900 font-sans tracking-tight">Top Targeted Companies</h3>
                 </div>
             </div>
-            <div class="p-4 space-y-2 flex-1 overflow-y-auto custom-scrollbar">
+            <div class="p-5 space-y-2 flex-1 overflow-y-auto custom-scrollbar">
                 @forelse($topCompanies as $company)
                     <div class="flex items-center justify-between p-3 rounded-xl bg-[#f7f7f5]/30 border border-zinc-200/80 hover:bg-[#f7f7f5]/80 hover:border-zinc-350 transition-all">
                         <span class="text-xs font-bold text-zinc-700 truncate pr-4">{{ $company['company_name'] }}</span>
@@ -410,7 +410,7 @@
                     <h3 class="text-xs font-bold text-zinc-900 font-sans tracking-tight">Most Wanted Positions</h3>
                 </div>
             </div>
-            <div class="p-4 space-y-2 flex-1 overflow-y-auto custom-scrollbar">
+            <div class="p-5 space-y-2 flex-1 overflow-y-auto custom-scrollbar">
                 @forelse($topPositions as $pos)
                     <div class="flex items-center justify-between p-3 rounded-xl bg-[#f7f7f5]/30 border border-zinc-200/80 hover:bg-[#f7f7f5]/80 hover:border-zinc-350 transition-all">
                         <span class="text-xs font-bold text-zinc-700 truncate pr-4">{{ $pos['position'] }}</span>
@@ -437,7 +437,7 @@
                 </div>
             </div>
         </div>
-        <div class="p-4 flex-1">
+        <div class="p-5 flex-1">
             @if(count($jobApplicationsByPlatform['labels'] ?? []) > 0)
                 <div class="h-64 w-full relative">
                     <canvas id="jobApplicationsByPlatformChart"></canvas>
@@ -464,7 +464,7 @@
                     </div>
                 </div>
             </div>
-            <div class="p-4 flex-1">
+            <div class="p-5 flex-1">
                 @if(count($gamificationLeaderboard) > 0)
                     <div class="space-y-2">
                         @foreach($gamificationLeaderboard as $player)
@@ -540,7 +540,7 @@
                     @endif
                 </div>
             </div>
-            <div class="p-4 flex-1 flex flex-col">
+            <div class="p-5 flex-1 flex flex-col">
                 <div class="flex-1 min-h-[220px] w-full relative">
                     <canvas id="peakActivityChart"></canvas>
                 </div>
@@ -560,7 +560,7 @@
                     </div>
                 </div>
             </div>
-            <div class="p-4 flex-1 space-y-5">
+            <div class="p-5 flex-1 space-y-5">
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     <div class="p-3 bg-zinc-50 border border-zinc-200 rounded-xl text-center shadow-3xs">
                         <p class="text-[10px] font-bold text-zinc-450 uppercase tracking-wider mb-1">Analyzer</p>
@@ -613,7 +613,7 @@
                     </div>
                 </div>
             </div>
-            <div class="p-4 flex-1 space-y-4">
+            <div class="p-5 flex-1 space-y-4">
                 <div class="grid grid-cols-2 gap-2">
                     <div class="p-3 bg-zinc-50 border border-zinc-200 rounded-xl flex items-center gap-2.5 shadow-3xs">
                         <div class="w-7 h-7 rounded-lg bg-zinc-200/50 text-zinc-650 flex items-center justify-center shrink-0 shadow-3xs">
@@ -708,7 +708,7 @@
                     </div>
                 </div>
             </div>
-            <div class="p-4 flex-1 space-y-2">
+            <div class="p-5 flex-1 space-y-2">
                 @forelse($retentionCohort as $cohort)
                     <div class="flex items-center gap-3 p-2 hover:bg-[#f7f7f5]/80 rounded-xl border border-transparent hover:border-zinc-200 transition-all text-left">
                         <div class="w-16 shrink-0 bg-zinc-50 border border-zinc-200 text-zinc-650 py-0.5 rounded-lg text-[9px] font-mono font-bold uppercase text-center shadow-3xs">
@@ -748,7 +748,7 @@
                     </div>
                 </div>
             </div>
-            <div class="p-4 flex-1">
+            <div class="p-5 flex-1">
                 @if(count($cvTemplatePopularity['templates'] ?? []) > 0)
                     @php $maxUsage = max(array_column($cvTemplatePopularity['templates'], 'usage_count') ?: [1]); @endphp
                     <div class="space-y-2">
