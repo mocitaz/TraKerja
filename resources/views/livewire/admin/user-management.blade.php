@@ -35,7 +35,7 @@
         }
     }
 @endphp
-<div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-5 space-y-6 pb-12">
+<div class="space-y-6 pb-12">
     
     <!-- Header Section (Sleek and Clean) -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-200">
@@ -113,7 +113,7 @@
                     <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none">{{ number_format($stats['ai_analyzer_trial_used']) }}</h3>
                 </div>
                 <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0">
-                    <i class="ph ph-sparkles text-xs"></i>
+                    <i class="ph-bold ph-sparkles text-xs"></i>
                 </div>
             </div>
             <p class="text-[10px] text-zinc-400 font-bold mt-4">Resume analyses run</p>
@@ -287,33 +287,33 @@
                             </td>
                             <!-- Action buttons -->
                             <td class="px-4 py-3 whitespace-nowrap text-right">
-                                <div class="flex items-center justify-end gap-1.5">
+                                <div class="flex items-center justify-end gap-1">
                                     <!-- Send Email Action -->
                                     <button wire:click="openSendEmailModal({{ $user->id }})" 
-                                            class="text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50 bg-white border border-zinc-200 p-1.2 rounded-lg transition-all shadow-3xs hover:shadow-2xs" 
+                                            class="w-7 h-7 flex items-center justify-center text-zinc-500 hover:text-zinc-950 hover:bg-zinc-100 rounded-lg transition-all" 
                                             title="Send Email">
-                                        <i class="ph ph-paper-plane-tilt text-xs"></i>
+                                        <i class="ph-bold ph-paper-plane-tilt text-[11px]"></i>
                                     </button>
 
                                     <!-- Premium Manual Switch Action -->
                                     <button wire:click="openPremiumConfirmModal({{ $user->id }})" 
-                                            class="p-1.2 rounded-lg border transition-all shadow-3xs hover:shadow-2xs {{ $user->is_premium ? 'text-purple-750 bg-purple-50/50 border-purple-200/70' : 'text-zinc-550 bg-white hover:text-zinc-800 border-zinc-200 hover:bg-zinc-50' }}" 
+                                            class="w-7 h-7 flex items-center justify-center rounded-lg transition-all {{ $user->is_premium ? 'text-purple-600 bg-purple-50 hover:bg-purple-100' : 'text-zinc-500 hover:text-zinc-950 hover:bg-zinc-100' }}" 
                                             title="Manual Premium Override">
-                                        <i class="ph ph-crown text-xs"></i>
+                                        <i class="ph-bold ph-crown text-[11px]"></i>
                                     </button>
 
                                     <!-- View Details Action -->
                                     <button wire:click="editUser({{ $user->id }})" 
-                                            class="text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50 bg-white border border-zinc-200 p-1.2 rounded-lg transition-all shadow-3xs hover:shadow-2xs" 
+                                            class="w-7 h-7 flex items-center justify-center text-zinc-500 hover:text-zinc-955 hover:bg-zinc-100 rounded-lg transition-all" 
                                             title="View Details">
-                                        <i class="ph ph-eye text-xs"></i>
+                                        <i class="ph-bold ph-eye text-[11px]"></i>
                                     </button>
 
                                     <!-- Delete Action -->
                                     <button onclick="confirmDeleteUser({{ $user->id }}, '{{ addslashes($user->name) }}', '{{ addslashes($user->email) }}')"
-                                            class="text-red-650 hover:bg-red-50/50 border border-zinc-200 p-1.2 rounded-lg transition-all shadow-3xs hover:shadow-2xs" 
+                                            class="w-7 h-7 flex items-center justify-center text-red-650 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all" 
                                             title="Delete User">
-                                        <i class="ph ph-trash text-xs"></i>
+                                        <i class="ph-bold ph-trash text-[11px]"></i>
                                     </button>
                                 </div>
                             </td>
@@ -395,81 +395,81 @@
                         @endif
                         
                         <!-- Simple Info Data Fields -->
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-2 gap-3.5">
                             <div>
-                                <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Status Premium</label>
-                                <div class="h-8 px-2.5 bg-zinc-50 border border-zinc-200/80 rounded text-xs font-semibold flex items-center">
+                                <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Status Premium</label>
+                                <div class="h-8 px-2.5 bg-[#fafafa] border border-zinc-200 rounded-lg text-xs font-bold flex items-center shadow-3xs">
                                     @if($editIsPremium)
-                                        <span class="text-purple-750 flex items-center gap-1"><i class="ph-fill ph-crown text-[10px]"></i> Premium</span>
+                                        <span class="text-purple-650 flex items-center gap-1"><i class="ph-bold ph-crown text-[10px]"></i> Premium</span>
                                     @else
-                                        <span class="text-zinc-500">Free Tier</span>
+                                        <span class="text-zinc-500 font-semibold">Free Tier</span>
                                     @endif
                                 </div>
                             </div>
 
                             <div>
-                                <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Status Admin</label>
-                                <div class="h-8 px-2.5 bg-zinc-50 border border-zinc-200/80 rounded text-xs font-semibold flex items-center">
+                                <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Status Admin</label>
+                                <div class="h-8 px-2.5 bg-[#fafafa] border border-zinc-200 rounded-lg text-xs font-bold flex items-center shadow-3xs">
                                     @if($editIsAdmin)
-                                        <span class="text-zinc-800 flex items-center gap-1"><i class="ph-fill ph-shield-check text-[10px]"></i> Admin</span>
+                                        <span class="text-zinc-800 flex items-center gap-1"><i class="ph-bold ph-shield-check text-[10px]"></i> Admin</span>
                                     @else
-                                        <span class="text-zinc-500">User</span>
+                                        <span class="text-zinc-500 font-semibold">User</span>
                                     @endif
                                 </div>
                             </div>
 
                             <div>
-                                <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Total Lamaran</label>
-                                <div class="h-8 px-2.5 bg-zinc-50 border border-zinc-200/80 rounded text-xs text-zinc-700 flex items-center">
+                                <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Total Lamaran</label>
+                                <div class="h-8 px-2.5 bg-[#fafafa] border border-zinc-200 rounded-lg text-xs text-zinc-700 font-semibold flex items-center shadow-3xs">
                                     {{ $editingUser ? $editingUser->getJobApplicationsCount() : 0 }} lamaran
                                 </div>
                             </div>
 
                             <div>
-                                <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Bergabung Sejak</label>
-                                <div class="h-8 px-2.5 bg-zinc-50 border border-zinc-200/80 rounded text-xs text-zinc-700 flex items-center">
+                                <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Bergabung Sejak</label>
+                                <div class="h-8 px-2.5 bg-[#fafafa] border border-zinc-200 rounded-lg text-xs text-zinc-700 font-semibold flex items-center shadow-3xs">
                                     {{ $editingUser && $editingUser->created_at ? $editingUser->created_at->format('d M Y') : '-' }}
                                 </div>
                             </div>
                         </div>
                         
                         <!-- AI Credits Quota Admin Management -->
-                        <div class="pt-4 border-t border-zinc-150">
+                        <div class="pt-4 border-t border-zinc-100">
                             <div class="flex items-center justify-between mb-3">
-                                <h4 class="text-[9px] font-mono font-bold text-zinc-455 uppercase tracking-wider flex items-center gap-1">
-                                    <i class="ph ph-robot text-xs"></i> AI Quotas Management
+                                <h4 class="text-[9px] font-mono font-bold text-zinc-450 uppercase tracking-wider flex items-center gap-1">
+                                    <i class="ph-bold ph-cpu text-xs"></i> AI Quotas Management
                                 </h4>
-                                <button type="button" wire:click="resetAllAiQuotas" class="text-[8px] font-mono font-bold text-purple-750 uppercase tracking-wider hover:underline transition-all">
+                                <button type="button" wire:click="resetAllAiQuotas" class="text-[8px] font-mono font-bold text-purple-600 uppercase tracking-wider hover:underline transition-all">
                                     Reset Ke Standar
                                 </button>
                             </div>
                             
                             <div class="grid grid-cols-3 gap-3">
                                 <div>
-                                    <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1 text-center">Analyzer</label>
-                                    <input type="number" wire:model="editAiCredits" class="w-full h-8 px-2 bg-zinc-50 border border-zinc-250 focus:border-zinc-400 focus:bg-white rounded text-xs text-zinc-800 font-mono text-center focus:outline-none focus:ring-0 transition-colors" min="0">
+                                    <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1 text-center">Analyzer</label>
+                                    <input type="number" wire:model="editAiCredits" class="w-full h-8 px-2 bg-zinc-50 border border-zinc-200 focus:border-zinc-400 focus:bg-white rounded-lg text-xs text-zinc-800 font-mono text-center focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all" min="0">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1 text-center">Cover Letter</label>
-                                    <input type="number" wire:model="editClCredits" class="w-full h-8 px-2 bg-zinc-50 border border-zinc-250 focus:border-zinc-400 focus:bg-white rounded text-xs text-zinc-800 font-mono text-center focus:outline-none focus:ring-0 transition-colors" min="0">
+                                    <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1 text-center">Cover Letter</label>
+                                    <input type="number" wire:model="editClCredits" class="w-full h-8 px-2 bg-zinc-50 border border-zinc-200 focus:border-zinc-400 focus:bg-white rounded-lg text-xs text-zinc-800 font-mono text-center focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all" min="0">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1 text-center">AI Photo</label>
-                                    <input type="number" wire:model="editPhotoCredits" class="w-full h-8 px-2 bg-zinc-50 border border-zinc-250 focus:border-zinc-400 focus:bg-white rounded text-xs text-zinc-800 font-mono text-center focus:outline-none focus:ring-0 transition-colors" min="0">
+                                    <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1 text-center">AI Photo</label>
+                                    <input type="number" wire:model="editPhotoCredits" class="w-full h-8 px-2 bg-zinc-50 border border-zinc-200 focus:border-zinc-400 focus:bg-white rounded-lg text-xs text-zinc-800 font-mono text-center focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all" min="0">
                                 </div>
                             </div>
                             
                             @if($editingUser)
-                                <div class="mt-4 flex justify-between items-center bg-zinc-50 border border-zinc-200 rounded p-3">
-                                    <div class="text-[10px] text-zinc-500">
+                                <div class="mt-4 flex justify-between items-center bg-zinc-50 border border-zinc-200 rounded-xl p-3 shadow-3xs">
+                                    <div class="text-[10px] text-zinc-500 font-semibold">
                                         Trial Analyzer Dipakai: 
                                         <span class="font-bold text-zinc-700 font-mono">
                                             {{ $editingUser->has_used_ai_analyzer_trial ? ($editingUser->ai_analyzer_trial_used_at ? $editingUser->ai_analyzer_trial_used_at->format('d M Y') : 'Ya') : 'Belum' }}
                                         </span>
                                     </div>
-                                    <button type="button" wire:click="saveAiQuotas" class="h-7 px-3 bg-zinc-900 hover:bg-zinc-800 text-white rounded text-[10px] font-semibold transition-colors flex items-center justify-center">
+                                    <button type="button" wire:click="saveAiQuotas" class="h-7 px-3 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-[10px] font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
                                         Simpan Quota
                                     </button>
                                 </div>
@@ -478,7 +478,7 @@
 
                         <!-- Footer -->
                         <div class="pt-2 flex justify-end gap-2 border-t border-zinc-100">
-                            <button type="button" wire:click="closeModal" class="h-8 px-4 border border-zinc-250 hover:bg-zinc-50 text-zinc-700 rounded text-xs font-semibold transition-colors flex items-center justify-center">
+                            <button type="button" wire:click="closeModal" class="h-8 px-4 border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
                                 Tutup
                             </button>
                         </div>
@@ -595,13 +595,13 @@
                     <!-- Modal Body -->
                     <div class="p-6 overflow-y-auto custom-scrollbar space-y-4">
                         <!-- Recipient preview card -->
-                        <div class="bg-zinc-50 border border-zinc-200 rounded p-3 flex items-center gap-3">
-                            <div class="w-8 h-8 bg-zinc-200 rounded flex items-center justify-center font-bold text-zinc-700 text-xs shrink-0">
+                        <div class="bg-zinc-50 border border-zinc-200 rounded-xl p-3 flex items-center gap-3 shadow-3xs">
+                            <div class="w-8 h-8 rounded-full border border-zinc-200 bg-zinc-100 flex items-center justify-center font-bold text-zinc-700 text-xs shrink-0">
                                 {{ strtoupper(substr($emailTargetUserName ?? 'U', 0, 1)) }}
                             </div>
                             <div class="min-w-0">
                                 <p class="text-xs font-bold text-zinc-900 truncate leading-none mb-1.5">{{ $emailTargetUserName ?? '-' }}</p>
-                                <p class="text-[10px] text-zinc-455 font-mono truncate leading-none">{{ $emailTargetUserEmail ?? '-' }}</p>
+                                <p class="text-[10px] text-zinc-500 font-mono truncate leading-none">{{ $emailTargetUserEmail ?? '-' }}</p>
                             </div>
                         </div>
 
@@ -639,17 +639,17 @@
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                         @foreach($types as $type => $info)
                                             @php $isSelected = $emailType === $type; @endphp
-                                            <label class="relative flex cursor-pointer rounded border p-2.5 transition-all {{ $isSelected ? 'border-zinc-900 bg-zinc-50/50 shadow-none' : 'border-zinc-200/80 bg-white hover:bg-zinc-50/50' }}">
+                                            <label class="relative flex cursor-pointer rounded-lg border p-2.5 transition-all {{ $isSelected ? 'border-zinc-900 bg-[#fafafa] shadow-3xs' : 'border-zinc-200 bg-white hover:bg-zinc-50/50' }}">
                                                 <input type="radio" wire:model.live="emailType" value="{{ $type }}" class="sr-only">
                                                 <div class="flex items-center gap-2.5 w-full">
-                                                    <div class="w-7 h-7 rounded bg-zinc-100 border border-zinc-200/50 flex items-center justify-center text-zinc-500">
+                                                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
                                                         <i class="ph {{ $info['icon'] }} text-xs"></i>
                                                     </div>
                                                     <div class="flex-1 min-w-0">
-                                                        <p class="text-[10px] font-bold text-zinc-800 leading-none mb-1">{{ $info['label'] }}</p>
-                                                        <p class="text-[8px] text-zinc-400 truncate leading-none">{{ $info['desc'] }}</p>
+                                                        <p class="text-[10px] font-bold text-zinc-900 leading-none mb-1">{{ $info['label'] }}</p>
+                                                        <p class="text-[8px] text-zinc-400 font-semibold truncate leading-none">{{ $info['desc'] }}</p>
                                                     </div>
-                                                    <div class="w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 {{ $isSelected ? 'border-zinc-900 bg-zinc-900' : 'border-zinc-300 bg-transparent' }}">
+                                                    <div class="w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 {{ $isSelected ? 'border-zinc-900 bg-zinc-900' : 'border-zinc-300 bg-transparent' }} transition-colors duration-150">
                                                         @if($isSelected)
                                                             <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
                                                         @endif
@@ -664,10 +664,10 @@
 
                         <!-- Footer -->
                         <div class="pt-4 flex justify-end gap-2 border-t border-zinc-100">
-                            <button type="button" wire:click="closeSendEmailModal" class="h-8 px-4 border border-zinc-250 hover:bg-zinc-50 text-zinc-700 rounded text-xs font-semibold transition-colors flex items-center justify-center">
+                            <button type="button" wire:click="closeSendEmailModal" class="h-8 px-4 border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
                                 Batal
                             </button>
-                            <button type="button" wire:click="sendEmail" class="h-8 px-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded text-xs font-semibold transition-colors flex items-center justify-center">
+                            <button type="button" wire:click="sendEmail" class="h-8 px-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
                                 Kirim Email
                             </button>
                         </div>
@@ -680,41 +680,43 @@
     <!-- Modal: Manual Premium Switch Override Confirm -->
     @if($showPremiumConfirmModal)
         <template x-teleport="body">
-            <div class="fixed inset-0 bg-zinc-950/20 backdrop-blur-[2px] z-50 flex items-center justify-center p-4" style="z-index: 9999;">
-                <div class="bg-white rounded border border-zinc-200 shadow-sm max-w-sm w-full relative">
+            <div class="fixed inset-0 bg-zinc-955/35 backdrop-blur-[3px] z-50 flex items-center justify-center p-4" style="z-index: 9999;">
+                <div class="bg-white rounded-2xl border border-zinc-200/80 shadow-xl max-w-sm w-full relative overflow-hidden">
                     
-                    <!-- Header -->
-                    <div class="bg-white px-6 py-4 flex justify-between items-center border-b border-zinc-150 shrink-0">
-                        <div class="flex items-center gap-2">
-                            <i class="ph ph-crown text-zinc-400 text-base"></i>
+                    <!-- Modal Header -->
+                    <div class="bg-white px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-lg bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 shadow-3xs">
+                                <i class="ph-bold ph-crown text-sm"></i>
+                            </div>
                             <div>
                                 <h3 class="text-xs font-bold text-zinc-900 font-sans">Premium Override</h3>
-                                <p class="text-[9px] text-zinc-400 mt-0.5">Manual Status Update</p>
+                                <p class="text-[9px] text-zinc-400 font-semibold mt-0.5">Manual Status Update</p>
                             </div>
                         </div>
-                        <button wire:click="closePremiumConfirmModal" class="w-5 h-5 flex items-center justify-center rounded hover:bg-zinc-100 text-zinc-400 hover:text-zinc-650 transition-colors">
+                        <button wire:click="closePremiumConfirmModal" class="w-6 h-6 flex items-center justify-center rounded-lg hover:bg-zinc-100 text-zinc-400 hover:text-zinc-650 transition-all">
                             <i class="ph ph-x text-sm"></i>
                         </button>
                     </div>
 
                     <div class="p-6">
-                        <div class="bg-zinc-50 border border-zinc-200 rounded p-3 mb-4">
+                        <div class="bg-zinc-50 border border-zinc-200 rounded-xl p-3 mb-4 shadow-3xs">
                             <span class="text-xs font-bold text-zinc-900 block truncate mb-1.5">{{ $confirmTargetUserName }}</span>
                             <span class="text-[9px] text-zinc-500 block leading-none">
                                 Status Saat Ini: 
-                                <span class="font-bold {{ $confirmTargetUserIsPremium ? 'text-purple-750' : 'text-zinc-600' }}">
+                                <span class="font-bold {{ $confirmTargetUserIsPremium ? 'text-purple-650' : 'text-zinc-650' }}">
                                     {{ $confirmTargetUserIsPremium ? 'Premium' : 'Free Tier' }}
                                 </span>
                             </span>
                         </div>
 
-                        <div class="flex justify-end gap-2">
+                        <div class="flex justify-end gap-2 pt-2">
                             <button wire:click="closePremiumConfirmModal" 
-                                    class="h-8 px-4 border border-zinc-250 hover:bg-zinc-50 text-zinc-700 rounded font-semibold text-xs transition-colors flex items-center justify-center">
+                                    class="h-8 px-4 border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg font-bold text-xs transition-all flex items-center justify-center shadow-3xs">
                                 Batal
                             </button>
                             <button wire:click="toggleManualPremium" 
-                                    class="h-8 px-4 {{ $confirmTargetUserIsPremium ? 'bg-zinc-900 hover:bg-zinc-800' : 'bg-purple-700 hover:bg-purple-800' }} text-white rounded font-semibold text-xs transition-colors flex items-center justify-center">
+                                    class="h-8 px-4 {{ $confirmTargetUserIsPremium ? 'bg-zinc-900 hover:bg-zinc-800' : 'bg-purple-700 hover:bg-purple-800' }} text-white rounded-lg font-bold text-xs transition-all flex items-center justify-center shadow-3xs">
                                 {{ $confirmTargetUserIsPremium ? 'Downgrade ke Free' : 'Upgrade ke Premium' }}
                             </button>
                         </div>
@@ -724,33 +726,35 @@
         </template>
     @endif
 
-    <!-- Modal: Delete User Confirm (Notion Flat Layout) -->
+    <!-- Modal: Delete User Confirm -->
     <template x-teleport="body">
-        <div id="deleteUserModal" class="fixed inset-0 bg-zinc-950/20 backdrop-blur-[2px] z-50 hidden items-center justify-center p-4" style="z-index: 9999;">
+        <div id="deleteUserModal" class="fixed inset-0 bg-zinc-955/35 backdrop-blur-[3px] z-50 hidden items-center justify-center p-4" style="z-index: 9999;">
             <div class="absolute inset-0" onclick="closeDeleteUserModal()"></div>
-            <div class="bg-white rounded border border-zinc-200 shadow-sm max-w-sm w-full relative z-10 transition-all scale-98 opacity-0 duration-150" id="deleteUserModalContent">
+            <div class="bg-white rounded-2xl border border-zinc-200/80 shadow-xl max-w-sm w-full relative z-10 transition-all scale-98 opacity-0 duration-150 overflow-hidden" id="deleteUserModalContent">
                 
-                <!-- Header -->
-                <div class="bg-white px-6 py-4 flex justify-between items-center border-b border-zinc-150 shrink-0">
-                    <div class="flex items-center gap-2">
-                        <i class="ph ph-warning text-red-500 text-base"></i>
+                <!-- Modal Header -->
+                <div class="bg-white px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-lg bg-red-50 border border-red-100 flex items-center justify-center text-red-600 shadow-3xs">
+                            <i class="ph-bold ph-trash text-sm"></i>
+                        </div>
                         <div>
                             <h3 class="text-xs font-bold text-zinc-900 font-sans">Hapus User</h3>
-                            <p class="text-[9px] text-zinc-400 mt-0.5">Aksi ini bersifat permanen</p>
+                            <p class="text-[9px] text-zinc-400 font-semibold mt-0.5">Aksi ini bersifat permanen</p>
                         </div>
                     </div>
-                    <button onclick="closeDeleteUserModal()" class="w-5 h-5 flex items-center justify-center rounded hover:bg-zinc-100 text-zinc-400 hover:text-zinc-650 transition-colors">
+                    <button onclick="closeDeleteUserModal()" class="w-6 h-6 flex items-center justify-center rounded-lg hover:bg-zinc-100 text-zinc-400 hover:text-zinc-650 transition-all">
                         <i class="ph ph-x text-sm"></i>
                     </button>
                 </div>
 
                 <div class="p-6">
-                    <div class="bg-red-50/30 border border-red-100 rounded p-3 mb-4 text-left">
+                    <div class="bg-red-50/30 border border-red-100 rounded-xl p-3 mb-4 text-left shadow-3xs">
                         <span class="text-xs font-bold text-zinc-900 block truncate mb-1.5" id="deleteUserName"></span>
                         <span class="text-[10px] text-zinc-500 block font-mono leading-none" id="deleteUserEmail"></span>
                     </div>
 
-                    <div class="bg-zinc-50 border border-zinc-200 rounded p-3 text-[10px] text-zinc-500 leading-relaxed mb-5 flex gap-2 text-left">
+                    <div class="bg-zinc-50 border border-zinc-200 rounded-xl p-3 text-[10px] text-zinc-500 leading-relaxed mb-5 flex gap-2 text-left shadow-3xs">
                         <i class="ph ph-info text-zinc-400 text-xs shrink-0 mt-0.5"></i>
                         <div>
                             Seluruh data lamaran kerja, riwayat aktivitas, dan quota AI pengguna ini akan dihapus secara permanen dari database.
@@ -759,11 +763,11 @@
 
                     <div class="flex justify-end gap-2">
                         <button type="button" onclick="closeDeleteUserModal()" 
-                                class="h-8 px-4 border border-zinc-250 hover:bg-zinc-50 text-zinc-700 rounded font-semibold text-xs transition-colors flex items-center justify-center">
+                                class="h-8 px-4 border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg font-bold text-xs transition-all flex items-center justify-center shadow-3xs">
                             Batal
                         </button>
                         <button type="button" onclick="confirmDeleteUserAction()" 
-                                class="h-8 px-4 bg-red-600 hover:bg-red-700 text-white rounded font-semibold text-xs transition-colors flex items-center justify-center">
+                                class="h-8 px-4 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold text-xs transition-all flex items-center justify-center shadow-3xs">
                             Ya, Hapus User
                         </button>
                     </div>
