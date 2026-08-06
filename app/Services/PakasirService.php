@@ -47,7 +47,7 @@ class PakasirService
                     'project' => $this->slug,
                     'amount' => $amount,
                     'order_id' => $orderId,
-                    'api_key' => $this->apiKey,
+                    'ApiKey' => $this->apiKey,
                 ]);
 
             if ($response->successful()) {
