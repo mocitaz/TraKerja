@@ -502,10 +502,10 @@
                                 </span>
                             </div>
                             <div class="flex gap-2 shrink-0">
-                                <button type="button" wire:click="closeModal" class="h-8.5 px-4 border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
+                                <button type="button" wire:click="closeModal" class="h-9.5 px-4.5 bg-zinc-100 hover:bg-zinc-200/80 text-zinc-700 rounded-xl text-xs font-bold transition-all flex items-center justify-center">
                                     Tutup
                                 </button>
-                                <button type="button" wire:click="saveAiQuotas" class="h-8.5 px-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
+                                <button type="button" wire:click="saveAiQuotas" class="h-9.5 px-4.5 bg-zinc-950 hover:bg-zinc-900 text-white rounded-xl text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
                                     Simpan Quota
                                 </button>
                             </div>
@@ -692,10 +692,10 @@
 
                         <!-- Footer -->
                         <div class="pt-4 flex justify-end gap-2 border-t border-zinc-100">
-                            <button type="button" wire:click="closeSendEmailModal" class="h-8 px-4 border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
+                            <button type="button" wire:click="closeSendEmailModal" class="h-9.5 px-4.5 bg-zinc-100 hover:bg-zinc-200/80 text-zinc-700 rounded-xl text-xs font-bold transition-all flex items-center justify-center">
                                 Batal
                             </button>
-                            <button type="button" wire:click="sendEmail" class="h-8 px-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
+                            <button type="button" wire:click="sendEmail" class="h-9.5 px-4.5 bg-zinc-950 hover:bg-zinc-900 text-white rounded-xl text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
                                 Kirim Email
                             </button>
                         </div>
@@ -740,11 +740,11 @@
 
                         <div class="flex justify-end gap-2 pt-2">
                             <button wire:click="closePremiumConfirmModal" 
-                                    class="h-9 px-4 border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg font-bold text-xs transition-all flex items-center justify-center shadow-3xs">
+                                    class="h-9.5 px-4.5 bg-zinc-100 hover:bg-zinc-200/80 text-zinc-700 rounded-xl text-xs font-bold transition-all flex items-center justify-center">
                                 Batal
                             </button>
                             <button wire:click="toggleManualPremium" 
-                                    class="h-9 px-4 {{ $confirmTargetUserIsPremium ? 'bg-zinc-900 hover:bg-zinc-800' : 'bg-amber-600 hover:bg-amber-700' }} text-white rounded-lg font-bold text-xs transition-all flex items-center justify-center shadow-3xs">
+                                    class="h-9.5 px-4.5 {{ $confirmTargetUserIsPremium ? 'bg-zinc-950 hover:bg-zinc-900' : 'bg-amber-600 hover:bg-amber-700' }} text-white rounded-xl text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
                                 {{ $confirmTargetUserIsPremium ? 'Downgrade ke Free' : 'Upgrade ke Premium' }}
                             </button>
                         </div>
@@ -791,11 +791,11 @@
 
                     <div class="flex justify-end gap-2">
                         <button type="button" onclick="closeDeleteUserModal()" 
-                                class="h-9 px-4 border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg font-bold text-xs transition-all flex items-center justify-center shadow-3xs">
+                                class="h-9.5 px-4.5 bg-zinc-100 hover:bg-zinc-200/80 text-zinc-700 rounded-xl text-xs font-bold transition-all flex items-center justify-center">
                             Batal
                         </button>
                         <button type="button" onclick="confirmDeleteUserAction()" 
-                                class="h-9 px-4 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold text-xs transition-all flex items-center justify-center shadow-3xs">
+                                class="h-9.5 px-4.5 bg-red-650 hover:bg-red-750 text-white rounded-xl text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
                             Ya, Hapus User
                         </button>
                     </div>
