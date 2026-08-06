@@ -447,7 +447,7 @@
                 <div class="divide-y divide-zinc-100 flex-1 overflow-y-auto custom-scrollbar">
                     @forelse($topAppliedUsers as $index => $user)
                         <div class="flex items-center gap-2.5 p-3 hover:bg-zinc-50/50 transition">
-                            <div class="w-5.5 h-5.5 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center font-mono font-black text-[9px] shrink-0 {{ $index === 0 ? 'bg-amber-50 border-amber-200 text-amber-800' : ($index === 1 ? 'bg-zinc-100 text-zinc-650' : ($index === 2 ? 'bg-orange-50 border-orange-200 text-orange-850' : 'text-zinc-400')) }}">
+                            <div class="w-5 h-5 rounded-md bg-zinc-50 border border-zinc-200 flex items-center justify-center font-mono font-black text-[9px] shrink-0 {{ $index === 0 ? 'bg-amber-50 border-amber-200 text-amber-800' : ($index === 1 ? 'bg-zinc-100 text-zinc-650' : ($index === 2 ? 'bg-orange-50 border-orange-200 text-orange-850' : 'text-zinc-400')) }}">
                                 {{ $index + 1 }}
                             </div>
                             <div class="flex-1 min-w-0 flex items-center gap-2">
@@ -493,7 +493,7 @@
                 <div class="divide-y divide-zinc-100 flex-1 overflow-y-auto custom-scrollbar">
                     @forelse($topDeclinedUsers as $index => $user)
                         <div class="flex items-center gap-2.5 p-3 hover:bg-zinc-50/50 transition">
-                            <div class="w-5.5 h-5.5 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center font-mono font-black text-[9px] shrink-0 {{ $index === 0 ? 'bg-rose-50 border-rose-200 text-rose-800' : 'text-zinc-400' }}">
+                            <div class="w-5 h-5 rounded-md bg-zinc-50 border border-zinc-200 flex items-center justify-center font-mono font-black text-[9px] shrink-0 {{ $index === 0 ? 'bg-rose-50 border-rose-200 text-rose-800' : 'text-zinc-400' }}">
                                 {{ $index + 1 }}
                             </div>
                             <div class="flex-1 min-w-0 flex items-center gap-2">
