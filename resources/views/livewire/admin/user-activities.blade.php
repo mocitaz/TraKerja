@@ -93,13 +93,13 @@
                     <i class="ph-bold ph-magnifying-glass text-xs"></i>
                 </div>
                 <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari nama atau deskripsi..." 
-                       class="w-full h-8.5 pl-8.5 pr-3 bg-white border border-zinc-200 focus:border-zinc-400 rounded-lg text-xs font-semibold text-zinc-800 focus:outline-none focus:ring-0 transition-colors placeholder:text-zinc-400 shadow-3xs">
+                       class="w-full h-9 pl-9 pr-3 bg-white border border-zinc-200 focus:border-zinc-400 rounded-lg text-xs font-semibold text-zinc-800 focus:outline-none focus:ring-0 transition-colors placeholder:text-zinc-400 shadow-3xs">
             </div>
 
             <!-- Tipe Aktivitas Filter -->
             <div class="relative w-full sm:w-56">
                 <select wire:model.live="filterType" 
-                        class="w-full h-8.5 pl-3 pr-8 bg-white border border-zinc-200 focus:border-zinc-400 rounded-lg text-xs font-semibold text-zinc-850 focus:outline-none focus:ring-0 transition-colors bg-none appearance-none cursor-pointer shadow-3xs">
+                        class="w-full h-9 pl-3 pr-8 bg-white border border-zinc-200 focus:border-zinc-400 rounded-lg text-xs font-semibold text-zinc-850 focus:outline-none focus:ring-0 transition-colors bg-none appearance-none cursor-pointer shadow-3xs">
                     <option value="all">Semua Tipe Aktivitas</option>
                     @foreach($groupedTypes as $category => $types)
                         <optgroup label="{{ $category }}" class="font-sans font-bold text-[10px] text-zinc-400 bg-white">
@@ -117,7 +117,7 @@
             <!-- Status Filter -->
             <div class="relative w-full sm:w-40">
                 <select wire:model.live="filterStatus" 
-                        class="w-full h-8.5 pl-3 pr-8 bg-white border border-zinc-200 focus:border-zinc-400 rounded-lg text-xs font-semibold text-zinc-850 focus:outline-none focus:ring-0 transition-colors bg-none appearance-none cursor-pointer shadow-3xs">
+                        class="w-full h-9 pl-3 pr-8 bg-white border border-zinc-200 focus:border-zinc-400 rounded-lg text-xs font-semibold text-zinc-850 focus:outline-none focus:ring-0 transition-colors bg-none appearance-none cursor-pointer shadow-3xs">
                     <option value="all">Semua Status</option>
                     <option value="success">Success</option>
                     <option value="failed">Failed</option>
@@ -131,7 +131,7 @@
             <!-- Rows per page -->
             <div class="relative w-full sm:w-28 hidden md:block">
                 <select wire:model.live="perPage" 
-                        class="w-full h-8.5 pl-3 pr-8 bg-white border border-zinc-200 focus:border-zinc-400 rounded-lg text-xs font-semibold text-zinc-850 focus:outline-none focus:ring-0 transition-colors bg-none appearance-none cursor-pointer shadow-3xs">
+                        class="w-full h-9 pl-3 pr-8 bg-white border border-zinc-200 focus:border-zinc-400 rounded-lg text-xs font-semibold text-zinc-850 focus:outline-none focus:ring-0 transition-colors bg-none appearance-none cursor-pointer shadow-3xs">
                     <option value="15">15 Baris</option>
                     <option value="30">30 Baris</option>
                     <option value="50">50 Baris</option>
@@ -146,7 +146,7 @@
         <!-- Settings Action -->
         <div class="flex items-center gap-2 w-full lg:w-auto shrink-0">
             <button wire:click="$set('showSettingsModal', true)" 
-                    class="w-full sm:w-auto h-8.5 px-4 bg-zinc-900 text-white hover:bg-zinc-800 rounded-lg transition-colors flex items-center justify-center gap-1.5 text-xs font-bold shadow-3xs">
+                    class="w-full sm:w-auto h-9 px-4 bg-zinc-900 text-white hover:bg-zinc-800 rounded-lg transition-colors flex items-center justify-center gap-1.5 text-xs font-bold shadow-3xs">
                 <i class="ph-bold ph-gear text-xs"></i>
                 Pengaturan Log
             </button>
@@ -387,10 +387,10 @@
 
                         {{-- Footer Buttons --}}
                         <div class="pt-4 flex justify-end gap-2 border-t border-zinc-100">
-                            <button type="button" wire:click="$set('showSettingsModal', false)" class="h-8.5 px-4 border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg text-xs font-bold transition-colors flex items-center justify-center">
+                            <button type="button" wire:click="$set('showSettingsModal', false)" class="h-9 px-4 border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg text-xs font-bold transition-colors flex items-center justify-center">
                                 Batal
                             </button>
-                            <button wire:click="saveSettings" class="h-8.5 px-4 bg-zinc-900 text-white hover:bg-zinc-800 rounded-lg text-xs font-bold transition-colors flex items-center justify-center shadow-3xs">
+                            <button wire:click="saveSettings" class="h-9 px-4 bg-zinc-900 text-white hover:bg-zinc-800 rounded-lg text-xs font-bold transition-colors flex items-center justify-center shadow-3xs">
                                 Simpan Pengaturan
                             </button>
                         </div>
