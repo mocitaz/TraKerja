@@ -27,7 +27,7 @@
     {{-- Stats Grid (Notion Premium Grid) --}}
     <div class="grid grid-cols-2 xl:grid-cols-4 gap-4">
         {{-- Total Users --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 p-4 flex flex-col justify-between hover:bg-zinc-50/50 hover:border-zinc-300 transition-all duration-200 shadow-3xs">
+        <div class="bg-white rounded-xl border border-zinc-200 p-4 flex flex-col justify-between hover:bg-zinc-50/50 hover:border-zinc-300 transition-all duration-200 shadow-3xs">
             <div class="flex items-start justify-between">
                 <div>
                     <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Total Users</p>
@@ -47,7 +47,7 @@
         </div>
 
         {{-- Premium Users --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 p-4 flex flex-col justify-between hover:bg-zinc-50/50 hover:border-zinc-300 transition-all duration-200 shadow-3xs">
+        <div class="bg-white rounded-xl border border-zinc-200 p-4 flex flex-col justify-between hover:bg-zinc-50/50 hover:border-zinc-300 transition-all duration-200 shadow-3xs">
             <div class="flex items-start justify-between">
                 <div>
                     <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Premium Users</p>
@@ -67,7 +67,7 @@
         </div>
 
         {{-- Active Users --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 p-4 flex flex-col justify-between hover:bg-zinc-50/50 hover:border-zinc-300 transition-all duration-200 shadow-3xs">
+        <div class="bg-white rounded-xl border border-zinc-200 p-4 flex flex-col justify-between hover:bg-zinc-50/50 hover:border-zinc-300 transition-all duration-200 shadow-3xs">
             <div class="flex items-start justify-between">
                 <div>
                     <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Active Users</p>
@@ -87,7 +87,7 @@
         </div>
 
         {{-- CV Exports --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 p-4 flex flex-col justify-between hover:bg-zinc-50/50 hover:border-zinc-300 transition-all duration-200 shadow-3xs">
+        <div class="bg-white rounded-xl border border-zinc-200 p-4 flex flex-col justify-between hover:bg-zinc-50/50 hover:border-zinc-300 transition-all duration-200 shadow-3xs">
             <div class="flex items-start justify-between">
                 <div>
                     <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">CV Exports</p>
@@ -104,7 +104,7 @@
     {{-- Quick Stats Highlights --}}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         {{-- User Growth Insights --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 p-4 flex flex-col justify-between shadow-3xs">
+        <div class="bg-white rounded-xl border border-zinc-200 p-4 flex flex-col justify-between shadow-3xs">
             <div class="flex items-center gap-2 mb-4">
                 <i class="ph-bold ph-users-three text-zinc-400 text-sm"></i>
                 <h4 class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">User Growth</h4>
@@ -122,7 +122,7 @@
         </div>
 
         {{-- Application Metrics --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 p-4 flex flex-col justify-between shadow-3xs">
+        <div class="bg-white rounded-xl border border-zinc-200 p-4 flex flex-col justify-between shadow-3xs">
             <div class="flex items-center gap-2 mb-4">
                 <i class="ph-bold ph-briefcase text-zinc-400 text-sm"></i>
                 <h4 class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">App Metrics</h4>
@@ -141,7 +141,7 @@
         </div>
 
         {{-- Financial Performance --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 p-4 flex flex-col justify-between shadow-3xs">
+        <div class="bg-white rounded-xl border border-zinc-200 p-4 flex flex-col justify-between shadow-3xs">
             <div class="flex items-center gap-2 mb-4">
                 <i class="ph-bold ph-wallet text-zinc-400 text-sm"></i>
                 <h4 class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Financial</h4>
@@ -166,8 +166,8 @@
     </div>
 
     {{-- Hero Chart: User Growth --}}
-    <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden shadow-3xs">
-        <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+    <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-3xs">
+        <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
             <div class="flex items-center gap-2">
                 <i class="ph-bold ph-trend-up text-zinc-450 text-sm animate-pulse"></i>
                 <div>
@@ -186,8 +186,8 @@
     {{-- 2-Column Grid Charts --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- Applications Over Time --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-briefcase text-zinc-455 text-sm"></i>
                     <div>
@@ -204,8 +204,8 @@
         </div>
 
         {{-- Registrations by Day --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-user-plus text-zinc-455 text-sm"></i>
                     <div>
@@ -225,8 +225,8 @@
     {{-- 3-Column Grid Donut Charts --}}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         {{-- Premium vs Free --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-crown text-zinc-455 text-sm"></i>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans truncate">Premium Ratio</h3>
@@ -240,8 +240,8 @@
         </div>
 
         {{-- Goals Achievement --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-target text-zinc-455 text-sm"></i>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans truncate">Goals Success</h3>
@@ -255,8 +255,8 @@
         </div>
 
         {{-- Verified vs Unverified --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-seal-check text-zinc-455 text-sm"></i>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans truncate">Verification Ratio</h3>
@@ -271,8 +271,8 @@
     </div>
 
     {{-- Full Width Application Funnel --}}
-    <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-        <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+    <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+        <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
             <div class="flex items-center gap-2">
                 <i class="ph-bold ph-funnel text-zinc-455 text-sm"></i>
                 <div>
@@ -381,8 +381,8 @@
     {{-- 2-Column Grid Targeted Companies / Positions --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- Top Companies Row --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-buildings text-zinc-455 text-sm"></i>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans tracking-tight">Top Targeted Companies</h3>
@@ -404,8 +404,8 @@
         </div>
 
         {{-- Top Positions Row --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-briefcase text-zinc-455 text-sm"></i>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans tracking-tight">Most Wanted Positions</h3>
@@ -428,8 +428,8 @@
     </div>
 
     {{-- Applications By Platform --}}
-    <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-        <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+    <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+        <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
             <div class="flex items-center gap-2">
                 <i class="ph-bold ph-chart-bar text-zinc-455 text-sm"></i>
                 <div>
@@ -455,8 +455,8 @@
     {{-- XP Leaderboard + Peak Activity --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- XP Leaderboard --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-trophy text-zinc-455 text-sm"></i>
                     <div>
@@ -523,8 +523,8 @@
         </div>
 
         {{-- Peak Activity Hours --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <i class="ph-bold ph-clock text-zinc-455 text-sm"></i>
@@ -551,8 +551,8 @@
     {{-- AI Usage Stats + Support Tickets --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- AI Usage --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-robot text-zinc-455 text-sm"></i>
                     <div>
@@ -604,8 +604,8 @@
         </div>
 
         {{-- Support Ticket Resolution --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-headset text-zinc-455 text-sm"></i>
                     <div>
@@ -699,8 +699,8 @@
     {{-- Retention + Template Popularity --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- Retention Cohort --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-arrow-counter-clockwise text-zinc-455 text-sm"></i>
                     <div>
@@ -739,8 +739,8 @@
         </div>
 
         {{-- CV Template Popularity --}}
-        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-file-doc text-zinc-455 text-sm"></i>
                     <div>
