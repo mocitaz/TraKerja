@@ -352,15 +352,18 @@
                 <div class="p-3 bg-[#fafafa]/50 border-t border-zinc-200/60 flex-shrink-0">
                     <div class="flex items-center rounded-xl p-2.5 bg-white border border-zinc-200 shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-colors"
                          :class="sidebarCollapsed ? 'justify-center p-1.5' : ''">
-                        <div class="h-7 w-7 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 flex items-center justify-center text-white text-[10px] font-black relative"
-                             style="{{ getAvatarStyleLocal($user?->name ?? 'A') }}">
-                            @if($user && $user->logo)
+                        @if($user && $user->logo)
+                            <div class="h-7 w-7 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 shadow-3xs">
                                 <img src="{{ $user->avatar_url }}" 
                                      alt="Profile" 
                                      class="h-full w-full object-cover">
-                            @endif
-                            <span class="absolute pointer-events-none">{{ strtoupper(substr($user?->name ?? 'A', 0, 1)) }}</span>
-                        </div>
+                            </div>
+                        @else
+                            <div class="h-7 w-7 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 flex items-center justify-center text-white text-[10px] font-black shadow-3xs"
+                                 style="{{ getAvatarStyleLocal($user?->name ?? 'A') }}">
+                                <span class="pointer-events-none">{{ strtoupper(substr($user?->name ?? 'A', 0, 1)) }}</span>
+                            </div>
+                        @endif
                         
                         <div x-show="!sidebarCollapsed" class="ml-2.5 min-w-0 flex-1">
                             <p class="text-xs font-black text-zinc-900 truncate leading-tight">{{ $user?->name ?? 'Admin' }}</p>
@@ -421,15 +424,18 @@
                         <!-- Profile Dropdown -->
                         <div class="relative" x-data="{ open: false }">
                             <button @click="open = ! open" class="h-9 flex items-center gap-2 focus:outline-none bg-white hover:bg-zinc-50 px-3 rounded-xl border border-zinc-200/80 transition-all text-xs font-bold text-zinc-700 shadow-3xs">
-                                <div class="w-6.5 h-6.5 rounded-full overflow-hidden border border-zinc-200 shrink-0 flex items-center justify-center text-white text-[9px] font-black relative"
-                                     style="{{ getAvatarStyleLocal($user?->name ?? 'A') }}">
-                                    @if($user && $user->logo)
+                                @if($user && $user->logo)
+                                    <div class="w-6.5 h-6.5 rounded-full overflow-hidden border border-zinc-200 shrink-0 shadow-3xs">
                                         <img src="{{ $user->avatar_url }}" 
                                              alt="Profile" 
                                              class="h-full w-full object-cover">
-                                    @endif
-                                    <span class="absolute pointer-events-none">{{ strtoupper(substr($user?->name ?? 'A', 0, 1)) }}</span>
-                                </div>
+                                    </div>
+                                @else
+                                    <div class="w-6.5 h-6.5 rounded-full overflow-hidden border border-zinc-200 shrink-0 flex items-center justify-center text-white text-[9px] font-black shadow-3xs"
+                                         style="{{ getAvatarStyleLocal($user?->name ?? 'A') }}">
+                                        <span class="pointer-events-none">{{ strtoupper(substr($user?->name ?? 'A', 0, 1)) }}</span>
+                                    </div>
+                                @endif
                                 <span class="hidden sm:block truncate max-w-[110px]">{{ $user?->name ?? 'Admin' }}</span>
                                 <i class="ph ph-caret-down text-[10px] text-zinc-400 transition-transform" :class="open ? 'rotate-180' : ''"></i>
                             </button>

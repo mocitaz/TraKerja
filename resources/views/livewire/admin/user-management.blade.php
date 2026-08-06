@@ -204,16 +204,18 @@
                             <!-- User Info -->
                             <td class="px-4 py-3">
                                 <div class="flex items-center min-w-0">
-                                    <div class="flex-shrink-0 h-7 w-7 rounded-lg overflow-hidden border border-zinc-200 shadow-3xs flex items-center justify-center text-white text-[10px] font-black relative"
-                                         style="{{ getAvatarStyleLocal($user->name) }}">
-                                        @if($user->logo)
+                                    @if($user->logo)
+                                        <div class="flex-shrink-0 h-7 w-7 rounded-lg overflow-hidden border border-zinc-200 shadow-3xs">
                                             <img src="{{ $user->avatar_url }}" 
                                                  alt="{{ $user->name }}" 
-                                                 class="w-full h-full object-cover"
-                                                 onerror="this.style.display='none';">
-                                        @endif
-                                        <span class="absolute pointer-events-none">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
-                                    </div>
+                                                 class="w-full h-full object-cover">
+                                        </div>
+                                    @else
+                                        <div class="flex-shrink-0 h-7 w-7 rounded-lg overflow-hidden border border-zinc-200 shadow-3xs flex items-center justify-center text-white text-[10px] font-black"
+                                             style="{{ getAvatarStyleLocal($user->name) }}">
+                                            <span class="pointer-events-none">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                                        </div>
+                                    @endif
                                     <div class="ml-3 min-w-0 flex-1">
                                         <div class="text-xs font-semibold text-zinc-900 truncate">{{ $user->name }}</div>
                                         <div class="text-[9px] font-mono text-zinc-400 mt-0.5">ID: #{{ $user->id }}</div>
@@ -370,16 +372,18 @@
                         <!-- Mini Profile Header -->
                         @if($editingUser)
                             <div class="flex items-center gap-3 pb-4 border-b border-zinc-100">
-                                <div class="w-12 h-12 rounded-lg border border-zinc-200 flex items-center justify-center text-white font-black text-sm overflow-hidden flex-shrink-0 relative"
-                                     style="{{ getAvatarStyleLocal($editName) }}">
-                                    @if($editingUser->logo)
+                                @if($editingUser->logo)
+                                    <div class="w-12 h-12 rounded-lg border border-zinc-200 overflow-hidden flex-shrink-0 shadow-3xs">
                                         <img src="{{ $editingUser->avatar_url }}" 
                                              alt="{{ $editName ?? 'User' }}" 
-                                             class="w-full h-full object-cover"
-                                             onerror="this.style.display='none';">
-                                    @endif
-                                    <span class="absolute pointer-events-none">{{ strtoupper(substr($editName ?? 'U', 0, 1)) }}</span>
-                                </div>
+                                             class="w-full h-full object-cover">
+                                    </div>
+                                @else
+                                    <div class="w-12 h-12 rounded-lg border border-zinc-200 overflow-hidden flex-shrink-0 flex items-center justify-center text-white font-black text-sm shadow-3xs"
+                                         style="{{ getAvatarStyleLocal($editName) }}">
+                                        <span class="pointer-events-none">{{ strtoupper(substr($editName ?? 'U', 0, 1)) }}</span>
+                                    </div>
+                                @endif
                                 <div class="min-w-0">
                                     <h4 class="text-xs font-bold text-zinc-900 truncate leading-none mb-1.5">{{ $editName ?? '-' }}</h4>
                                     <p class="text-[10px] text-zinc-455 font-mono truncate leading-none">{{ $editEmail ?? '-' }}</p>
