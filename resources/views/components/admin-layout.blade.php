@@ -174,12 +174,12 @@
                 <!-- Brand Header -->
                 <div class="flex items-center h-16 px-5 border-b border-zinc-200/50 flex-shrink-0 relative">
                     <div class="flex items-center space-x-3 relative z-10 w-full" :class="sidebarCollapsed ? 'justify-center space-x-0' : ''">
-                        <div class="w-8 h-8 rounded-xl flex items-center justify-center bg-zinc-900 flex-shrink-0 shadow-sm">
+                        <div class="w-8 h-8 flex items-center justify-center flex-shrink-0">
                             <img src="{{ asset('images/icon.png') }}" 
                                  alt="TraKerja" 
-                                 class="h-5 w-5 object-contain filter invert"
+                                 class="h-6 w-6 object-contain"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <span class="text-white font-extrabold text-xs hidden" style="display: none;">T</span>
+                            <span class="text-zinc-900 font-extrabold text-xs hidden" style="display: none;">T</span>
                         </div>
                         <div x-show="!sidebarCollapsed" class="flex flex-col truncate">
                             <span class="text-xs font-black text-zinc-900 tracking-tight leading-none mb-0.5">
