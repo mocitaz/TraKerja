@@ -17,18 +17,19 @@
     ];
 @endphp
 
-<<div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-5 space-y-4 pb-10">
-    <!-- Sticky Global Sub-Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b border-zinc-150/60">
-        <div class="flex items-center gap-1.5 min-w-0">
-            <span class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Admin Portal</span>
-            <span class="text-zinc-300 text-xs">/</span>
-            <h1 class="text-xs font-mono font-bold text-zinc-800 uppercase tracking-wider">Email Blast</h1>
+<div class="space-y-6 pb-12 w-full">
+    <!-- Header Section (Sleek and Clean) -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-200">
+        <div>
+            <h1 class="text-lg font-black text-zinc-900 tracking-tight flex items-center gap-1.5">
+                Email Blast <span class="text-[9px] font-mono font-bold text-zinc-450 bg-zinc-100 border border-zinc-200 px-1.5 py-0.2 rounded">Campaigns</span>
+            </h1>
+            <p class="text-[10px] text-zinc-500 font-semibold mt-0.5">Create, target, and broadcast system email campaigns to specific user segments.</p>
         </div>
         <div>
             <a href="{{ route('admin.email-blast.history') }}" 
-               class="inline-flex items-center justify-center gap-1.5 h-8 px-3 border border-zinc-250 hover:bg-zinc-50 rounded text-xs font-semibold text-zinc-800 transition-colors bg-white shadow-none">
-                <i class="ph ph-clock-counter-clockwise text-sm"></i>
+               class="inline-flex items-center justify-center gap-1.5 h-9 px-4 border border-zinc-250 hover:bg-zinc-50 rounded-lg text-xs font-bold text-zinc-800 transition-colors bg-white shadow-3xs">
+                <i class="ph-bold ph-clock-counter-clockwise text-xs"></i>
                 Riwayat Blasting
             </a>
         </div>
@@ -68,16 +69,16 @@
         <div class="space-y-4">
             
             <!-- Campaign Type Selection -->
-            <div class="bg-white rounded border border-zinc-200/60 overflow-hidden shadow-none">
-                <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-3xs">
+                <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                     <h2 class="text-xs font-bold text-zinc-900 tracking-tight flex items-center gap-1.5">
-                        <i class="ph ph-envelope text-zinc-400 text-sm"></i>
+                        <i class="ph-bold ph-envelope text-zinc-455 text-sm"></i>
                         Pilih Tipe Kampanye
                     </h2>
                     <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide mt-0.5">Template Email yang Akan Dikirim</p>
                 </div>
                 
-                <div class="p-4">
+                <div class="p-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <!-- Welcome -->
                         <label class="group relative flex cursor-pointer rounded border border-zinc-200/80 p-3 hover:bg-[#f7f7f5]/40 transition-colors shadow-none">
@@ -372,18 +373,18 @@
             </div>
 
             <!-- Custom Content Fields (Show when "custom" is selected) -->
-            <div id="customEmailFields" class="bg-white rounded border border-zinc-200/60 overflow-hidden transition-all duration-300 hidden shadow-none">
-                <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+            <div id="customEmailFields" class="bg-white rounded-xl border border-zinc-200 overflow-hidden transition-all duration-300 hidden shadow-3xs">
+                <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                     <h2 class="text-xs font-bold text-zinc-900 tracking-tight flex items-center gap-1.5">
-                        <i class="ph ph-note-pencil text-zinc-400 text-sm"></i>
+                        <i class="ph-bold ph-note-pencil text-zinc-455 text-sm"></i>
                         Custom Campaign Composer
                     </h2>
                 </div>
-                <div class="p-4 space-y-4">
+                <div class="p-5 space-y-4">
                     <div>
                         <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Subject Email *</label>
                         <input type="text" name="custom_subject" id="custom_subject" 
-                               class="w-full px-3 h-8 bg-white border border-zinc-250 rounded text-xs text-zinc-900 focus:outline-none focus:border-zinc-400 transition-colors" 
+                               class="w-full px-3 h-9 bg-white border border-zinc-200 rounded-lg text-xs text-zinc-900 focus:outline-none focus:border-zinc-400 transition-colors shadow-3xs" 
                                placeholder="Masukkan subjek kampanye email">
                     </div>
                     
@@ -398,13 +399,13 @@
                         <div>
                             <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Teks Tombol Aksi (Opsional)</label>
                             <input type="text" name="custom_button_text" id="custom_button_text" 
-                                   class="w-full px-3 h-8 bg-white border border-zinc-250 rounded text-xs text-zinc-900 focus:outline-none focus:border-zinc-400 transition-colors" 
+                                   class="w-full px-3 h-9 bg-white border border-zinc-200 rounded-lg text-xs text-zinc-900 focus:outline-none focus:border-zinc-400 transition-colors shadow-3xs" 
                                    placeholder="Contoh: Mulai Catat Lamaran">
                         </div>
                         <div>
                             <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">URL Tujuan Tombol Aksi (Opsional)</label>
                             <input type="url" name="custom_button_url" id="custom_button_url" 
-                                   class="w-full px-3 h-8 bg-white border border-zinc-250 rounded text-xs text-zinc-900 focus:outline-none focus:border-zinc-400 transition-colors" 
+                                   class="w-full px-3 h-9 bg-white border border-zinc-200 rounded-lg text-xs text-zinc-900 focus:outline-none focus:border-zinc-400 transition-colors shadow-3xs" 
                                    placeholder="https://trakerja.com/career-tracker">
                         </div>
                     </div>
@@ -412,16 +413,16 @@
             </div>
 
             <!-- Target Audience Selection -->
-            <div class="bg-white rounded border border-zinc-200/60 overflow-hidden shadow-none">
-                <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-3xs">
+                <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                     <h2 class="text-xs font-bold text-zinc-900 tracking-tight flex items-center gap-1.5">
-                        <i class="ph ph-users text-zinc-400 text-sm"></i>
+                        <i class="ph-bold ph-users text-zinc-455 text-sm"></i>
                         Pilih Target Audience
                     </h2>
                     <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide mt-0.5">Filter Pengguna Penerima Email</p>
                 </div>
                 
-                <div class="p-4">
+                <div class="p-5">
                     <div class="grid grid-cols-2 md:grid-cols-6 gap-3">
                         @foreach([
                             'all' => ['label' => 'Semua User', 'count' => $stats['all'], 'icon' => 'ph-users'],
@@ -452,19 +453,18 @@
             <!-- Action Ribbon -->
             <div class="flex items-center gap-3">
                 <button type="button" onclick="showPreviewModal()" 
-                        class="flex-1 sm:flex-initial h-8 px-4 bg-white border border-zinc-300 hover:bg-zinc-50 text-zinc-800 rounded text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 shadow-none focus:outline-none">
+                        class="flex-1 sm:flex-initial h-9 px-4 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-850 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-1.5 shadow-3xs focus:outline-none">
                     <i class="ph ph-eye text-sm"></i>
                     Preview Email
                 </button>
                 <button type="button" onclick="showPreviewModal()" 
-                        class="flex-1 sm:flex-initial h-8 px-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 shadow-none focus:outline-none">
+                        class="flex-1 sm:flex-initial h-9 px-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-1.5 shadow-3xs focus:outline-none">
                     <i class="ph ph-paper-plane-tilt text-sm"></i>
                     Proses Blasting
                 </button>
             </div>
         </div>
     </form>
-</div>
 
 <!-- Modal: Error Alert -->
 <div id="errorModal" class="fixed inset-0 bg-zinc-950/20 backdrop-blur-[2px] hidden z-[9999] flex items-center justify-center p-4">
@@ -478,7 +478,7 @@
             
             <div class="mt-4">
                 <button type="button" onclick="hideErrorModal()" 
-                        class="w-full h-8 bg-zinc-900 text-white rounded text-xs font-semibold hover:bg-zinc-800 transition-colors shadow-none focus:outline-none">
+                        class="w-full h-9 bg-zinc-900 text-white rounded-lg text-xs font-bold hover:bg-zinc-800 transition-colors shadow-3xs focus:outline-none">
                     Mengerti, Perbaiki
                 </button>
             </div>
@@ -519,11 +519,11 @@
         
         <div class="bg-zinc-50/50 px-4 py-3 flex flex-row-reverse gap-2.5 border-t border-zinc-150/60 shrink-0">
             <button type="button" onclick="proceedToConfirm()" 
-                    class="flex-1 sm:flex-none h-8 px-4 bg-zinc-900 text-white rounded text-xs font-semibold hover:bg-zinc-800 transition-colors focus:outline-none">
+                    class="flex-1 sm:flex-none h-9 px-4 bg-zinc-900 text-white rounded-lg text-xs font-bold hover:bg-zinc-800 transition-colors focus:outline-none shadow-3xs">
                 Lanjut Konfirmasi
             </button>
             <button type="button" onclick="hidePreviewModal()" 
-                    class="flex-1 sm:flex-none h-8 px-4 bg-white border border-zinc-250 text-zinc-650 hover:bg-zinc-50 rounded text-xs font-semibold transition-colors focus:outline-none">
+                    class="flex-1 sm:flex-none h-9 px-4 bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-50 rounded-lg text-xs font-bold transition-colors focus:outline-none shadow-3xs">
                 Batal
             </button>
         </div>
@@ -564,11 +564,11 @@
             
             <div class="flex gap-2">
                 <button type="button" onclick="submitEmailBlast()" 
-                        class="flex-1 h-8 bg-zinc-900 hover:bg-zinc-800 text-white rounded text-xs font-semibold transition-colors focus:outline-none">
+                        class="flex-1 h-9 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold transition-colors focus:outline-none shadow-3xs">
                     Kirim Sekarang
                 </button>
                 <button type="button" onclick="hideConfirmModal()" 
-                        class="flex-1 h-8 bg-white border border-zinc-250 hover:bg-zinc-50 text-zinc-650 rounded text-xs font-semibold transition-colors focus:outline-none">
+                        class="flex-1 h-9 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg text-xs font-bold transition-colors focus:outline-none shadow-3xs">
                     Batal
                 </button>
             </div>
@@ -648,7 +648,7 @@
         <!-- Finish Actions -->
         <div id="progressFinishActions" class="hidden bg-zinc-50/50 px-4 py-3 border-t border-zinc-150/60 shrink-0">
             <button type="button" onclick="window.location.reload()" 
-                    class="w-full h-8 bg-zinc-900 text-white rounded text-xs font-semibold hover:bg-zinc-800 transition-colors focus:outline-none">
+                    class="w-full h-9 bg-zinc-900 text-white rounded-lg text-xs font-bold hover:bg-zinc-800 transition-colors focus:outline-none shadow-3xs">
                 Selesai & Muat Ulang Halaman
             </button>
         </div>
@@ -1086,4 +1086,5 @@
         }
     }
 </script>
+</div>
 </x-admin-layout>
