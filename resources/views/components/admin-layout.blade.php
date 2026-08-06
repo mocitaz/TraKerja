@@ -1,3 +1,40 @@
+@php
+    if (!function_exists('getAvatarStyleLocal')) {
+        function getAvatarStyleLocal($name) {
+            $char = strtoupper(substr($name ?? 'A', 0, 1));
+            $colors = [
+                'A' => ['#6366f1', '#a855f7'],
+                'B' => ['#a855f7', '#ec4899'],
+                'C' => ['#ec4899', '#f43f5e'],
+                'D' => ['#f43f5e', '#ef4444'],
+                'E' => ['#ef4444', '#f97316'],
+                'F' => ['#f97316', '#f59e0b'],
+                'G' => ['#f59e0b', '#eab308'],
+                'H' => ['#eab308', '#84cc16'],
+                'I' => ['#84cc16', '#22c55e'],
+                'J' => ['#22c55e', '#10b981'],
+                'K' => ['#10b981', '#14b8a6'],
+                'L' => ['#14b8a6', '#06b6d4'],
+                'M' => ['#06b6d4', '#0ea5e9'],
+                'N' => ['#0ea5e9', '#3b82f6'],
+                'O' => ['#3b82f6', '#6366f1'],
+                'P' => ['#6366f1', '#8b5cf6'],
+                'Q' => ['#8b5cf6', '#d946ef'],
+                'R' => ['#d946ef', '#ec4899'],
+                'S' => ['#ec4899', '#f43f5e'],
+                'T' => ['#f43f5e', '#f97316'],
+                'U' => ['#f97316', '#eab308'],
+                'V' => ['#eab308', '#22c55e'],
+                'W' => ['#22c55e', '#14b8a6'],
+                'X' => ['#14b8a6', '#0ea5e9'],
+                'Y' => ['#0ea5e9', '#6366f1'],
+                'Z' => ['#6366f1', '#ec4899'],
+            ];
+            $pair = $colors[$char] ?? ['#71717a', '#52525b'];
+            return "background: linear-gradient(135deg, {$pair[0]} 0%, {$pair[1]} 100%);";
+        }
+    }
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -314,11 +351,15 @@
                 <div class="p-3 bg-[#fafafa]/50 border-t border-zinc-200/60 flex-shrink-0">
                     <div class="flex items-center rounded-xl p-2.5 bg-white border border-zinc-200 shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-colors"
                          :class="sidebarCollapsed ? 'justify-center p-1.5' : ''">
-                        @php $user = Auth::user(); @endphp
-                        <img src="{{ $user ? $user->avatar_url : 'https://ui-avatars.com/api/?name=Admin' }}" 
-                             alt="Profile" 
-                             class="h-7 w-7 rounded-lg object-cover flex-shrink-0 border border-zinc-200 shadow-3xs"
-                             onerror="this.src='https://ui-avatars.com/api/?name=Admin'">
+                        <div class="h-7 w-7 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 flex items-center justify-center text-white text-[10px] font-black relative"
+                             style="{{ getAvatarStyleLocal($user->name ?? 'A') }}">
+                            @if($user && $user->logo)
+                                <img src="{{ $user->avatar_url }}" 
+                                     alt="Profile" 
+                                     class="h-full w-full object-cover">
+                            @endif
+                            <span class="absolute pointer-events-none">{{ strtoupper(substr($user->name ?? 'A', 0, 1)) }}</span>
+                        </div>
                         
                         <div x-show="!sidebarCollapsed" class="ml-2.5 min-w-0 flex-1">
                             <p class="text-xs font-black text-zinc-900 truncate leading-tight">{{ $user->name ?? 'Admin' }}</p>
@@ -379,10 +420,15 @@
                         <!-- Profile Dropdown -->
                         <div class="relative" x-data="{ open: false }">
                             <button @click="open = ! open" class="h-9 flex items-center gap-2 focus:outline-none bg-white hover:bg-zinc-50 px-3 rounded-xl border border-zinc-200/80 transition-all text-xs font-bold text-zinc-700 shadow-3xs">
-                                <img src="{{ $user ? $user->avatar_url : 'https://ui-avatars.com/api/?name=Admin' }}" 
-                                     alt="Profile" 
-                                     class="h-6 w-6 rounded-md object-cover shrink-0 border border-zinc-200"
-                                     onerror="this.src='https://ui-avatars.com/api/?name=Admin'">
+                                <div class="w-6.5 h-6.5 rounded-full overflow-hidden border border-zinc-200 shrink-0 flex items-center justify-center text-white text-[9px] font-black relative"
+                                     style="{{ getAvatarStyleLocal($user->name ?? 'A') }}">
+                                    @if($user && $user->logo)
+                                        <img src="{{ $user->avatar_url }}" 
+                                             alt="Profile" 
+                                             class="h-full w-full object-cover">
+                                    @endif
+                                    <span class="absolute pointer-events-none">{{ strtoupper(substr($user->name ?? 'A', 0, 1)) }}</span>
+                                </div>
                                 <span class="hidden sm:block truncate max-w-[110px]">{{ $user->name ?? 'Admin' }}</span>
                                 <i class="ph ph-caret-down text-[10px] text-zinc-400 transition-transform" :class="open ? 'rotate-180' : ''"></i>
                             </button>
