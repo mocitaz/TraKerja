@@ -10,118 +10,124 @@
         @endif
         
         <!-- Header Section (Sleek and Clean) -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-zinc-200">
             <div>
                 <h1 class="text-lg font-black text-zinc-900 tracking-tight flex items-center gap-1.5">
-                    Survey Control Panel <span class="text-[9px] font-mono font-bold text-zinc-450 bg-zinc-100 border border-zinc-200 px-1.5 py-0.2 rounded">Feedback Stats</span>
+                    Survey Dashboard <span class="text-[9px] font-mono font-bold text-zinc-450 bg-zinc-100 border border-zinc-200 px-1.5 py-0.2 rounded">Feedback Stats</span>
                 </h1>
                 <p class="text-[10px] text-zinc-500 font-semibold mt-0.5">Monitor user satisfaction metrics, service rating distributions, and toggle mandatory redirection.</p>
             </div>
+
+            <!-- Survey Toggle Control in Header (Sleek & Space-saving) -->
+            <div class="flex items-center gap-3 bg-zinc-50 border border-zinc-200 px-3 py-2 rounded-xl shadow-3xs shrink-0 self-start sm:self-center">
+                <div class="text-left pl-1">
+                    <span class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider leading-none mb-1">Mandatory Survey</span>
+                    <span class="inline-flex items-center text-[10px] font-bold uppercase tracking-wider {{ $surveyEnabled ? 'text-emerald-600' : 'text-zinc-450' }}">
+                        @if($surveyEnabled)
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span> Active (Forced)
+                        @else
+                            <span class="w-1.5 h-1.5 rounded-full bg-zinc-350 mr-1.5"></span> Inactive
+                        @endif
+                    </span>
+                </div>
+                <div class="w-px h-6 bg-zinc-250 mx-1"></div>
+                <form action="{{ route('admin.survey.toggle') }}" method="POST" class="m-0">
+                    @csrf
+                    <input type="hidden" name="enabled" value="{{ $surveyEnabled ? '0' : '1' }}">
+                    <button type="submit" 
+                            class="inline-flex items-center justify-center h-8 px-3 rounded-lg text-[10px] font-extrabold uppercase tracking-wide transition-all focus:outline-none shadow-3xs border {{ $surveyEnabled ? 'bg-zinc-900 hover:bg-zinc-800 border-zinc-950 text-white' : 'bg-white border-zinc-200 hover:bg-zinc-50 text-zinc-700' }}">
+                        {{ $surveyEnabled ? 'Nonaktifkan' : 'Aktifkan' }}
+                    </button>
+                </form>
+            </div>
         </div>
 
-        {{-- Bento Grid: Survey Toggle & Statistics --}}
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {{-- Bento Grid: 5 Uniform Stat Cards --}}
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             
-            {{-- Control Toggle (1/3 width) --}}
-            <div class="bg-white rounded-xl border border-zinc-200 p-4.5 flex flex-col justify-between shadow-3xs text-left">
-                <div>
-                    <div class="flex items-center gap-2.5 mb-3">
-                        <div class="w-7 h-7 bg-zinc-50 border border-zinc-200/60 rounded flex items-center justify-center shrink-0 text-zinc-500 shadow-3xs">
-                            <i class="ph-bold ph-toggle-left text-sm"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xs font-bold text-zinc-900 leading-none">Survey Active Status</h3>
-                            <p class="text-[8px] font-mono font-bold text-zinc-400 mt-1 uppercase tracking-wider">Control forced redirection</p>
-                        </div>
+            {{-- Overall Score --}}
+            <div class="border border-zinc-200 rounded-xl bg-white p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Kepuasan</span>
+                        <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none flex items-baseline gap-0.5 mt-1">
+                            {{ $avgQ1Overall }}
+                            <span class="text-[9px] font-normal text-zinc-450">/5</span>
+                        </h3>
                     </div>
-                    <p class="text-[11px] text-zinc-500 leading-relaxed font-sans font-medium">Saat diaktifkan, pengguna biasa yang umur akunnya sudah melebihi 3 hari akan dipaksa mengisi kuisioner kepuasan sebelum diizinkan mengakses dashboard tracker mereka.</p>
+                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                        <i class="ph-bold ph-heart text-xs"></i>
+                    </div>
                 </div>
-
-                <div class="pt-3 border-t border-zinc-100 mt-3 flex items-center justify-between">
-                    <span class="text-[10px] font-mono font-extrabold uppercase tracking-wider {{ $surveyEnabled ? 'text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-lg' : 'text-zinc-450 bg-zinc-50 border border-zinc-200 px-2 py-0.5 rounded-lg' }}">
-                        {{ $surveyEnabled ? 'Active (Forced)' : 'Inactive' }}
-                    </span>
-                    <form action="{{ route('admin.survey.toggle') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="enabled" value="{{ $surveyEnabled ? '0' : '1' }}">
-                        <button type="submit" 
-                                class="inline-flex items-center justify-center h-9 px-4 rounded-lg text-xs font-bold transition-all focus:outline-none shadow-3xs {{ $surveyEnabled ? 'bg-zinc-900 text-white hover:bg-zinc-800' : 'bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-700' }}">
-                            {{ $surveyEnabled ? 'Nonaktifkan' : 'Aktifkan' }}
-                        </button>
-                    </form>
-                </div>
+                <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">Overall Rating</p>
             </div>
 
-            {{-- Stat Cards (2/3 width) --}}
-            <div class="lg:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {{-- Overall Score --}}
-                <div class="border border-zinc-200 rounded-xl bg-white p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Kepuasan</span>
-                            <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none flex items-baseline gap-0.5 mt-1">
-                                {{ $avgQ1Overall }}
-                                <span class="text-[9px] font-normal text-zinc-450">/5</span>
-                            </h3>
-                        </div>
-                        <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
-                            <i class="ph-bold ph-heart text-xs"></i>
-                        </div>
+            {{-- Ease of use Score --}}
+            <div class="border border-zinc-200 rounded-xl bg-white p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Kemudahan</span>
+                        <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none flex items-baseline gap-0.5 mt-1">
+                            {{ $avgQ2Navigation }}
+                            <span class="text-[9px] font-normal text-zinc-450">/5</span>
+                        </h3>
                     </div>
-                    <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">Overall Rating</p>
-                </div>
-
-                {{-- Ease of use Score --}}
-                <div class="border border-zinc-200 rounded-xl bg-white p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Kemudahan</span>
-                            <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none flex items-baseline gap-0.5 mt-1">
-                                {{ $avgQ2Navigation }}
-                                <span class="text-[9px] font-normal text-zinc-450">/5</span>
-                            </h3>
-                        </div>
-                        <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
-                            <i class="ph-bold ph-navigation-arrow text-xs"></i>
-                        </div>
+                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                        <i class="ph-bold ph-navigation-arrow text-xs"></i>
                     </div>
-                    <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">Ease of Use</p>
                 </div>
-
-                {{-- AI Features Score --}}
-                <div class="border border-zinc-200 rounded-xl bg-white p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Fitur AI</span>
-                            <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none flex items-baseline gap-0.5 mt-1">
-                                {{ $avgQ5AiAnalyzer }}
-                                <span class="text-[9px] font-normal text-zinc-450">/5</span>
-                            </h3>
-                        </div>
-                        <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
-                            <i class="ph-bold ph-robot text-xs"></i>
-                        </div>
-                    </div>
-                    <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">AI Feature Help</p>
-                </div>
-
-                {{-- Total Respondents --}}
-                <div class="border border-zinc-200 rounded-xl bg-white p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Responden</span>
-                            <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none mt-1">
-                                {{ number_format($totalRespondents) }}
-                            </h3>
-                        </div>
-                        <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
-                            <i class="ph-bold ph-users text-xs"></i>
-                        </div>
-                    </div>
-                    <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">Total Responses</p>
-                </div>
+                <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">Ease of Use</p>
             </div>
 
+            {{-- Page Speed Score --}}
+            <div class="border border-zinc-200 rounded-xl bg-white p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Kecepatan</span>
+                        <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none flex items-baseline gap-0.5 mt-1">
+                            {{ $avgQ3Speed }}
+                            <span class="text-[9px] font-normal text-zinc-450">/5</span>
+                        </h3>
+                    </div>
+                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                        <i class="ph-bold ph-lightning text-xs"></i>
+                    </div>
+                </div>
+                <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">Page Speed</p>
+            </div>
+
+            {{-- AI Features Score --}}
+            <div class="border border-zinc-200 rounded-xl bg-white p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Fitur AI</span>
+                        <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none flex items-baseline gap-0.5 mt-1">
+                            {{ $avgQ5AiAnalyzer }}
+                            <span class="text-[9px] font-normal text-zinc-450">/5</span>
+                        </h3>
+                    </div>
+                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                        <i class="ph-bold ph-robot text-xs"></i>
+                    </div>
+                </div>
+                <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">AI Feature Help</p>
+            </div>
+
+            {{-- Total Respondents --}}
+            <div class="border border-zinc-200 rounded-xl bg-white p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Responden</span>
+                        <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none mt-1">
+                            {{ number_format($totalRespondents) }}
+                        </h3>
+                    </div>
+                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                        <i class="ph-bold ph-users text-xs"></i>
+                    </div>
+                </div>
+                <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">Total Responses</p>
+            </div>
         </div>
 
         {{-- 12 Parameter Summary Card --}}
