@@ -55,59 +55,70 @@
             {{-- Stat Cards (2/3 width) --}}
             <div class="lg:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {{-- Overall Score --}}
-                <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group text-left">
-                    <div class="flex items-center justify-between w-full">
-                        <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Kepuasan</span>
+                <div class="border border-zinc-200 rounded-xl bg-white p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Kepuasan</span>
+                            <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none flex items-baseline gap-0.5 mt-1">
+                                {{ $avgQ1Overall }}
+                                <span class="text-[9px] font-normal text-zinc-450">/5</span>
+                            </h3>
+                        </div>
                         <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
                             <i class="ph-bold ph-heart text-xs"></i>
                         </div>
                     </div>
-                    <div class="flex items-baseline justify-between mt-1">
-                        <p class="text-xl font-extrabold tracking-tight text-zinc-900 leading-none font-mono">{{ $avgQ1Overall }} <span class="text-[10px] font-normal text-zinc-400">/ 5</span></p>
-                        <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none">Overall</p>
-                    </div>
+                    <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">Overall Rating</p>
                 </div>
 
                 {{-- Ease of use Score --}}
-                <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group text-left">
-                    <div class="flex items-center justify-between w-full">
-                        <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Kemudahan</span>
+                <div class="border border-zinc-200 rounded-xl bg-white p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Kemudahan</span>
+                            <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none flex items-baseline gap-0.5 mt-1">
+                                {{ $avgQ2Navigation }}
+                                <span class="text-[9px] font-normal text-zinc-450">/5</span>
+                            </h3>
+                        </div>
                         <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
                             <i class="ph-bold ph-navigation-arrow text-xs"></i>
                         </div>
                     </div>
-                    <div class="flex items-baseline justify-between mt-1">
-                        <p class="text-xl font-extrabold tracking-tight text-zinc-900 leading-none font-mono">{{ $avgQ2Navigation }} <span class="text-[10px] font-normal text-zinc-400">/ 5</span></p>
-                        <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none">Ease of Use</p>
-                    </div>
+                    <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">Ease of Use</p>
                 </div>
 
                 {{-- AI Features Score --}}
-                <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group text-left">
-                    <div class="flex items-center justify-between w-full">
-                        <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Fitur AI</span>
+                <div class="border border-zinc-200 rounded-xl bg-white p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Fitur AI</span>
+                            <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none flex items-baseline gap-0.5 mt-1">
+                                {{ $avgQ5AiAnalyzer }}
+                                <span class="text-[9px] font-normal text-zinc-450">/5</span>
+                            </h3>
+                        </div>
                         <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
                             <i class="ph-bold ph-robot text-xs"></i>
                         </div>
                     </div>
-                    <div class="flex items-baseline justify-between mt-1">
-                        <p class="text-xl font-extrabold tracking-tight text-zinc-900 leading-none font-mono">{{ $avgQ5AiAnalyzer }} <span class="text-[10px] font-normal text-zinc-400">/ 5</span></p>
-                        <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none">AI Help</p>
-                    </div>
+                    <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">AI Feature Help</p>
                 </div>
 
                 {{-- Total Respondents --}}
-                <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group text-left">
-                    <div class="flex items-center justify-between w-full">
-                        <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Responden</span>
+                <div class="border border-zinc-200 rounded-xl bg-white p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Responden</span>
+                            <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none mt-1">
+                                {{ number_format($totalRespondents) }}
+                            </h3>
+                        </div>
                         <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
                             <i class="ph-bold ph-users text-xs"></i>
                         </div>
                     </div>
-                    <div class="flex items-baseline justify-between mt-1">
-                        <p class="text-xl font-extrabold tracking-tight text-zinc-900 leading-none font-mono">{{ number_format($totalRespondents) }}</p>
-                        <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none">Responses</p>
-                    </div>
+                    <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">Total Responses</p>
                 </div>
             </div>
 
