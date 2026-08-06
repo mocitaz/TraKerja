@@ -1,20 +1,20 @@
 <div class="space-y-4">
     
     {{-- Current Status Banner (Notion Cupertino) --}}
-    <div class="rounded-xl border border-zinc-200 bg-[#f7f7f5]/40 p-4.5 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-3xs text-left">
+    <div class="rounded-xl border border-zinc-200 bg-[#f7f7f5]/40 p-5 flex flex-col md:flex-row md:items-center justify-between gap-5 shadow-3xs text-left">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-white border border-zinc-200 flex items-center justify-center shrink-0 text-zinc-500 shadow-3xs">
                 <i class="ph-bold {{ $monetizationEnabled ? 'ph-crown' : 'ph-gift' }} text-lg"></i>
             </div>
             <div>
-                <div class="inline-flex items-center px-2 py-0.5 rounded-lg text-[8px] font-mono font-bold uppercase tracking-widest mb-1 border {{ $monetizationEnabled ? 'bg-zinc-900 text-white border-zinc-950' : 'bg-emerald-50 text-emerald-700 border-emerald-250' }} shadow-3xs">
+                <div class="inline-flex items-center px-2 py-0.5 rounded-lg text-[8px] font-mono font-bold uppercase tracking-widest mb-1.5 border {{ $monetizationEnabled ? 'bg-zinc-900 text-white border-zinc-950' : 'bg-emerald-50 text-emerald-700 border-emerald-250' }} shadow-3xs">
                     <span class="w-1 h-1 rounded-full {{ $monetizationEnabled ? 'bg-white' : 'bg-emerald-500' }} {{ $monetizationEnabled ? '' : 'animate-pulse' }} mr-1.5"></span>
                     Active Status
                 </div>
                 <h3 class="text-sm font-black text-zinc-900 leading-none">
                     {{ $monetizationEnabled ? 'Premium Mode' : 'Free Mode' }}
                 </h3>
-                <p class="text-[11px] text-zinc-500 mt-1 max-w-sm font-medium">
+                <p class="text-[11px] text-zinc-500 mt-1.5 max-w-sm font-medium">
                     @if($monetizationEnabled)
                         Pengguna premium mendapatkan akses penuh, sedangkan fitur premium terkunci untuk pengguna gratis.
                     @else
@@ -24,117 +24,120 @@
             </div>
         </div>
         
-        <div class="bg-white border border-zinc-200 rounded-xl p-3.5 md:w-44 shrink-0 shadow-3xs text-left">
+        <div class="md:w-52 shrink-0 text-left md:border-l border-zinc-200 md:pl-6 pt-4 md:pt-0">
             <p class="text-[8px] font-mono font-bold uppercase tracking-widest text-zinc-400 mb-0.5">Total Active Users</p>
-            <p class="text-lg font-extrabold text-zinc-950 leading-tight font-mono">{{ number_format($totalUsers) }}</p>
-            <div class="w-full bg-zinc-100 rounded-full h-1 mt-2.5 mb-1.5">
+            <div class="flex items-baseline gap-1 mt-0.5">
+                <span class="text-lg font-extrabold text-zinc-955 font-mono leading-none">{{ number_format($totalUsers) }}</span>
+                <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Members</span>
+            </div>
+            <div class="w-full bg-zinc-200/80 rounded-full h-1 mt-2.5 mb-1.5">
                 <div class="{{ $monetizationEnabled ? 'bg-zinc-950' : 'bg-emerald-500' }} h-1 rounded-full" style="width: {{ $totalUsers > 0 ? ($premiumUsers / $totalUsers * 100) : 0 }}%"></div>
             </div>
-            <p class="text-[9px] font-mono font-bold text-zinc-500 mt-1 font-bold">
+            <p class="text-[9px] font-mono font-bold text-zinc-500 font-bold leading-none">
                 {{ number_format($premiumUsers) }} premium ({{ $totalUsers > 0 ? number_format($premiumUsers / $totalUsers * 100, 1) : 0 }}%)
             </p>
         </div>
     </div>
     
     {{-- Toggle Buttons (Bento Grid Style) --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {{-- FREE MODE Button --}}
-        <button 
-            type="button"
-            wire:click="toggleMonetization(false)"
-            class="group relative flex flex-col items-start p-4.5 rounded-xl border text-left transition-all duration-200 focus:outline-none shadow-3xs {{ !$monetizationEnabled ? 'border-zinc-900 bg-[#f7f7f5]/60 ring-1 ring-zinc-900/10' : 'border-zinc-200 bg-white hover:border-zinc-350 hover:bg-[#f7f7f5]/20' }}">
-            
-            <div class="flex items-center gap-3 mb-3.5 w-full">
-                <div class="w-9 h-9 rounded-lg bg-zinc-50 border border-zinc-200 text-zinc-550 flex items-center justify-center shrink-0 shadow-3xs">
-                    <i class="ph-bold ph-gift text-base"></i>
-                </div>
-                <div class="flex-1 min-w-0">
-                    <h3 class="font-extrabold text-xs text-zinc-900 leading-none">Free Mode</h3>
-                    <p class="text-[8px] font-mono font-bold uppercase tracking-widest mt-1 {{ !$monetizationEnabled ? 'text-emerald-600' : 'text-zinc-400' }}">Growth &amp; Acquisition</p>
-                </div>
-                @if(!$monetizationEnabled)
-                    <div class="w-4.5 h-4.5 rounded-full bg-zinc-950 text-white flex items-center justify-center shrink-0 shadow-3xs">
-                        <i class="ph-bold ph-check text-[9px]"></i>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
+        {{-- FREE MODE Card --}}
+        <div class="group relative flex flex-col justify-between p-5 rounded-xl border text-left transition-all duration-200 shadow-3xs {{ !$monetizationEnabled ? 'border-zinc-900 bg-[#f7f7f5]/60 ring-1 ring-zinc-900/5' : 'border-zinc-200 bg-white hover:border-zinc-350' }}">
+            <div>
+                <div class="flex items-center gap-3 mb-4 w-full border-b border-zinc-100 pb-3">
+                    <div class="w-9 h-9 rounded-lg bg-zinc-50 border border-zinc-200 text-zinc-550 flex items-center justify-center shrink-0 shadow-3xs">
+                        <i class="ph-bold ph-gift text-base"></i>
                     </div>
-                @endif
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-extrabold text-xs text-zinc-900 leading-none">Free Mode</h3>
+                        <p class="text-[8px] font-mono font-bold uppercase tracking-widest mt-1 {{ !$monetizationEnabled ? 'text-emerald-600' : 'text-zinc-400' }}">Growth &amp; Acquisition</p>
+                    </div>
+                    @if(!$monetizationEnabled)
+                        <div class="w-4.5 h-4.5 rounded-full bg-zinc-950 text-white flex items-center justify-center shrink-0 shadow-3xs">
+                            <i class="ph-bold ph-check text-[9px]"></i>
+                        </div>
+                    @endif
+                </div>
+                
+                <ul class="space-y-2 mb-6 text-left">
+                    <li class="flex items-start gap-2 text-xs text-zinc-650 font-medium">
+                        <i class="ph-bold ph-check-circle text-emerald-600 mt-0.5 shrink-0"></i>
+                        <span>Semua fitur gratis untuk semua pengguna</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-xs text-zinc-650 font-medium">
+                        <i class="ph-bold ph-check-circle text-emerald-600 mt-0.5 shrink-0"></i>
+                        <span>Tidak perlu langganan / pembayaran</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-xs text-zinc-650 font-medium">
+                        <i class="ph-bold ph-check-circle text-emerald-600 mt-0.5 shrink-0"></i>
+                        <span>Akses tak terbatas untuk alat AI &amp; resume</span>
+                    </li>
+                </ul>
             </div>
             
-            <ul class="space-y-1.5 mb-4 flex-1 text-left">
-                <li class="flex items-center gap-1.5 text-xs text-zinc-550 font-medium">
-                    <i class="ph-bold ph-check-circle text-emerald-600"></i>
-                    <span>Semua fitur gratis untuk semua pengguna</span>
-                </li>
-                <li class="flex items-center gap-1.5 text-xs text-zinc-550 font-medium">
-                    <i class="ph-bold ph-check-circle text-emerald-600"></i>
-                    <span>Tidak perlu langganan / pembayaran</span>
-                </li>
-                <li class="flex items-center gap-1.5 text-xs text-zinc-550 font-medium">
-                    <i class="ph-bold ph-check-circle text-emerald-600"></i>
-                    <span>Akses tak terbatas untuk alat AI &amp; resume</span>
-                </li>
-            </ul>
-            
-            <div class="w-full">
+            <div class="w-full mt-auto">
                 @if(!$monetizationEnabled)
-                    <div class="w-full py-2 bg-emerald-50 text-emerald-700 text-[10px] rounded-lg border border-emerald-250 font-bold text-center uppercase tracking-wider shadow-3xs">
+                    <div class="w-full py-2.5 bg-emerald-50 text-emerald-700 text-[10px] rounded-lg border border-emerald-250 font-bold text-center uppercase tracking-wider shadow-3xs select-none">
                         Mode Aktif Saat Ini
                     </div>
                 @else
-                    <div class="w-full py-2 bg-white border border-zinc-200 text-zinc-550 text-[10px] rounded-lg font-bold text-center group-hover:bg-zinc-50 transition-colors uppercase tracking-wider shadow-3xs">
+                    <button type="button" 
+                            wire:click="toggleMonetization(false)"
+                            class="w-full py-2.5 bg-white border border-zinc-200 hover:border-zinc-350 hover:bg-zinc-50 text-zinc-550 text-[10px] rounded-lg font-bold text-center transition-all uppercase tracking-wider shadow-3xs focus:outline-none">
                         Klik untuk Mengaktifkan
-                    </div>
+                    </button>
                 @endif
             </div>
-        </button>
+        </div>
         
-        {{-- PREMIUM MODE Button --}}
-        <button 
-            type="button"
-            wire:click="toggleMonetization(true)"
-            class="group relative flex flex-col items-start p-4.5 rounded-xl border text-left transition-all duration-200 focus:outline-none shadow-3xs {{ $monetizationEnabled ? 'border-zinc-900 bg-[#f7f7f5]/60 ring-1 ring-zinc-900/10' : 'border-zinc-200 bg-white hover:border-zinc-350 hover:bg-[#f7f7f5]/20' }}">
-            
-            <div class="flex items-center gap-3 mb-3.5 w-full">
-                <div class="w-9 h-9 rounded-lg bg-zinc-50 border border-zinc-200 text-zinc-550 flex items-center justify-center shrink-0 shadow-3xs">
-                    <i class="ph-bold ph-crown text-base"></i>
-                </div>
-                <div class="flex-1 min-w-0">
-                    <h3 class="font-extrabold text-xs text-zinc-900 leading-none">Premium Mode</h3>
-                    <p class="text-[8px] font-mono font-bold uppercase tracking-widest mt-1 {{ $monetizationEnabled ? 'text-zinc-800 font-extrabold' : 'text-zinc-400' }}">Revenue &amp; Monetization</p>
-                </div>
-                @if($monetizationEnabled)
-                    <div class="w-4.5 h-4.5 rounded-full bg-zinc-950 text-white flex items-center justify-center shrink-0 shadow-3xs">
-                        <i class="ph-bold ph-check text-[9px]"></i>
+        {{-- PREMIUM MODE Card --}}
+        <div class="group relative flex flex-col justify-between p-5 rounded-xl border text-left transition-all duration-200 shadow-3xs {{ $monetizationEnabled ? 'border-zinc-900 bg-[#f7f7f5]/60 ring-1 ring-zinc-900/5' : 'border-zinc-200 bg-white hover:border-zinc-350' }}">
+            <div>
+                <div class="flex items-center gap-3 mb-4 w-full border-b border-zinc-100 pb-3">
+                    <div class="w-9 h-9 rounded-lg bg-zinc-50 border border-zinc-200 text-zinc-550 flex items-center justify-center shrink-0 shadow-3xs">
+                        <i class="ph-bold ph-crown text-base"></i>
                     </div>
-                @endif
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-extrabold text-xs text-zinc-900 leading-none">Premium Mode</h3>
+                        <p class="text-[8px] font-mono font-bold uppercase tracking-widest mt-1 {{ $monetizationEnabled ? 'text-zinc-900 font-extrabold' : 'text-zinc-400' }}">Revenue &amp; Monetization</p>
+                    </div>
+                    @if($monetizationEnabled)
+                        <div class="w-4.5 h-4.5 rounded-full bg-zinc-950 text-white flex items-center justify-center shrink-0 shadow-3xs">
+                            <i class="ph-bold ph-check text-[9px]"></i>
+                        </div>
+                    @endif
+                </div>
+                
+                <ul class="space-y-2 mb-6 text-left">
+                    <li class="flex items-start gap-2 text-xs text-zinc-650 font-medium">
+                        <i class="ph-bold ph-check-circle text-zinc-900 mt-0.5 shrink-0"></i>
+                        <span>Pengguna gratis memiliki batasan (Smart Limits)</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-xs text-zinc-650 font-medium">
+                        <i class="ph-bold ph-star text-zinc-900 mt-0.5 shrink-0"></i>
+                        <span>Pengguna premium mendapat akses penuh eksklusif</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-xs text-zinc-650 font-medium">
+                        <i class="ph-bold ph-check-circle text-zinc-900 mt-0.5 shrink-0"></i>
+                        <span>Mulai hasilkan pendapatan nyata</span>
+                    </li>
+                </ul>
             </div>
             
-            <ul class="space-y-1.5 mb-4 flex-1 text-left">
-                <li class="flex items-center gap-1.5 text-xs text-zinc-550 font-medium">
-                    <i class="ph-bold ph-check-circle text-zinc-800"></i>
-                    <span>Pengguna gratis memiliki batasan (Smart Limits)</span>
-                </li>
-                <li class="flex items-center gap-1.5 text-xs text-zinc-550 font-medium">
-                    <i class="ph-bold ph-star text-zinc-800"></i>
-                    <span>Pengguna premium mendapat akses penuh eksklusif</span>
-                </li>
-                <li class="flex items-center gap-1.5 text-xs text-zinc-550 font-medium">
-                    <i class="ph-bold ph-check-circle text-zinc-800"></i>
-                    <span>Mulai hasilkan pendapatan nyata</span>
-                </li>
-            </ul>
-            
-            <div class="w-full">
+            <div class="w-full mt-auto">
                 @if($monetizationEnabled)
-                    <div class="w-full py-2 bg-zinc-950 text-white text-[10px] rounded-lg border border-zinc-950 font-bold text-center uppercase tracking-wider shadow-3xs">
+                    <div class="w-full py-2.5 bg-zinc-950 text-white text-[10px] rounded-lg border border-zinc-950 font-bold text-center uppercase tracking-wider shadow-3xs select-none">
                         Mode Aktif Saat Ini
                     </div>
                 @else
-                    <div class="w-full py-2 bg-white border border-zinc-200 text-zinc-550 text-[10px] rounded-lg font-bold text-center group-hover:bg-zinc-50 transition-colors uppercase tracking-wider shadow-3xs">
+                    <button type="button"
+                            wire:click="toggleMonetization(true)"
+                            class="w-full py-2.5 bg-white border border-zinc-200 hover:border-zinc-350 hover:bg-zinc-50 text-zinc-550 text-[10px] rounded-lg font-bold text-center transition-all uppercase tracking-wider shadow-3xs focus:outline-none">
                         Klik untuk Mengaktifkan
-                    </div>
+                    </button>
                 @endif
             </div>
-        </button>
+        </div>
     </div>
     
     {{-- Feature Access Matrix --}}
