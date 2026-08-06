@@ -126,19 +126,13 @@
         <div class="h-screen flex overflow-hidden">
             <!-- Sidebar (Stripe/Linear Warm-Gray Minimalist Style) -->
             <aside :class="{ 
-                        'w-18': sidebarCollapsed, 
+                        'w-16': sidebarCollapsed, 
                         'w-64': !sidebarCollapsed,
                         'translate-x-0': mobileSidebarOpen,
                         '-translate-x-full': !mobileSidebarOpen 
                    }"
                    class="fixed inset-y-0 left-0 z-[100] bg-[#f9f9fb] border-r border-zinc-200/80 transform transition-all duration-200 ease-in-out lg:translate-x-0 lg:static flex-shrink-0 flex flex-col select-none">
                 
-                <!-- Collapse Arrow Toggle -->
-                <button @click="sidebarCollapsed = !sidebarCollapsed" 
-                        class="absolute -right-2.5 top-8 bg-white border border-zinc-200 text-zinc-400 hover:text-zinc-700 rounded-full w-5 h-5 hidden lg:flex items-center justify-center transition shadow-2xs z-50">
-                    <i class="ph ph-caret-left text-[9px]" :class="sidebarCollapsed ? 'rotate-180' : ''"></i>
-                </button>
-
                 <!-- Brand Header -->
                 <div class="flex items-center h-16 px-5 border-b border-zinc-200/50 flex-shrink-0 relative">
                     <div class="flex items-center space-x-3 relative z-10 w-full" :class="sidebarCollapsed ? 'justify-center space-x-0' : ''">
@@ -159,24 +153,24 @@
                         </div>
                     </div>
                     
-                    <button @click="mobileSidebarOpen = false" class="lg:hidden absolute right-2.5 p-1.5 text-zinc-400 hover:text-zinc-600 bg-zinc-100 rounded-lg transition z-20">
+                    <button @click="mobileSidebarOpen = false" class="lg:hidden absolute right-2.5 p-1.5 text-zinc-400 hover:text-zinc-650 bg-zinc-100 rounded-lg transition z-20">
                         <i class="ph ph-x text-sm"></i>
                     </button>
                 </div>
 
                 <!-- Navigation List -->
-                <nav class="flex-1 px-3 py-6 space-y-1.5 overflow-y-auto sidebar-scroll">
+                <nav class="flex-1 px-2.5 py-6 space-y-1 overflow-y-auto sidebar-scroll">
                     <!-- Section: System -->
                     <div x-show="!sidebarCollapsed" class="px-3 mb-2 mt-1">
-                        <span class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Main Menu</span>
+                        <span class="text-[9px] font-sans font-bold text-zinc-400 uppercase tracking-widest">Main Menu</span>
                     </div>
 
                     <!-- Dashboard -->
                     <a href="{{ route('admin.index') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.index') ? 'bg-white text-zinc-900 shadow-3xs border border-zinc-200/60' : 'text-zinc-500 hover:bg-zinc-200/30 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.index') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
-                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 text-zinc-450 group-hover:text-zinc-900">
-                            <i class="text-base {{ request()->routeIs('admin.index') ? 'ph-bold ph-squares-four text-zinc-800' : 'ph ph-squares-four' }}"></i>
+                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
+                            <i class="text-base {{ request()->routeIs('admin.index') ? 'ph-bold ph-squares-four text-white' : 'ph ph-squares-four text-zinc-450 group-hover:text-zinc-900' }}"></i>
                         </div>
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">Dashboard</span>
                         
@@ -187,10 +181,10 @@
 
                     <!-- User Management -->
                     <a href="{{ route('admin.users') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.users') ? 'bg-white text-zinc-900 shadow-3xs border border-zinc-200/60' : 'text-zinc-500 hover:bg-zinc-200/30 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.users') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
-                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 text-zinc-450 group-hover:text-zinc-900">
-                            <i class="text-base {{ request()->routeIs('admin.users') ? 'ph-bold ph-users-three text-zinc-800' : 'ph ph-users-three' }}"></i>
+                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
+                            <i class="text-base {{ request()->routeIs('admin.users') ? 'ph-bold ph-users-three text-white' : 'ph ph-users-three text-zinc-450 group-hover:text-zinc-900' }}"></i>
                         </div>
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">User Management</span>
                         
@@ -201,10 +195,10 @@
 
                     <!-- Activity Logs -->
                     <a href="{{ route('admin.user-activities') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.user-activities') ? 'bg-white text-zinc-900 shadow-3xs border border-zinc-200/60' : 'text-zinc-500 hover:bg-zinc-200/30 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.user-activities') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
-                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 text-zinc-450 group-hover:text-zinc-900">
-                            <i class="text-base {{ request()->routeIs('admin.user-activities') ? 'ph-bold ph-clock-counter-clockwise text-zinc-800' : 'ph ph-clock-counter-clockwise' }}"></i>
+                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
+                            <i class="text-base {{ request()->routeIs('admin.user-activities') ? 'ph-bold ph-clock-counter-clockwise text-white' : 'ph ph-clock-counter-clockwise text-zinc-450 group-hover:text-zinc-900' }}"></i>
                         </div>
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">Activity Log</span>
                         
@@ -215,10 +209,10 @@
 
                     <!-- Analytics -->
                     <a href="{{ route('admin.analytics') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.analytics') ? 'bg-white text-zinc-900 shadow-3xs border border-zinc-200/60' : 'text-zinc-500 hover:bg-zinc-200/30 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.analytics') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
-                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 text-zinc-450 group-hover:text-zinc-900">
-                            <i class="text-base {{ request()->routeIs('admin.analytics') ? 'ph-bold ph-chart-pie-slice text-zinc-800' : 'ph ph-chart-pie-slice' }}"></i>
+                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
+                            <i class="text-base {{ request()->routeIs('admin.analytics') ? 'ph-bold ph-chart-pie-slice text-white' : 'ph ph-chart-pie-slice text-zinc-450 group-hover:text-zinc-900' }}"></i>
                         </div>
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">Analytics</span>
                         
@@ -228,20 +222,20 @@
                     </a>
 
                     <!-- Divider -->
-                    <div class="py-2.5">
-                        <div class="border-t border-zinc-200/60"></div>
+                    <div class="py-2">
+                        <div class="border-t border-zinc-200/60 mx-2"></div>
                     </div>
 
                     <div x-show="!sidebarCollapsed" class="px-3 mb-2">
-                        <span class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Outreach</span>
+                        <span class="text-[9px] font-sans font-bold text-zinc-400 uppercase tracking-widest">Outreach</span>
                     </div>
 
                     <!-- Email Blast -->
                     <a href="{{ route('admin.email-blast') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.email-blast*') ? 'bg-white text-zinc-900 shadow-3xs border border-zinc-200/60' : 'text-zinc-500 hover:bg-zinc-200/30 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.email-blast*') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
-                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 text-zinc-450 group-hover:text-zinc-900">
-                            <i class="text-base {{ request()->routeIs('admin.email-blast*') ? 'ph-bold ph-paper-plane-tilt text-zinc-800' : 'ph ph-paper-plane-tilt' }}"></i>
+                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
+                            <i class="text-base {{ request()->routeIs('admin.email-blast*') ? 'ph-bold ph-paper-plane-tilt text-white' : 'ph ph-paper-plane-tilt text-zinc-450 group-hover:text-zinc-900' }}"></i>
                         </div>
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">Email Blast</span>
                         
@@ -252,10 +246,10 @@
 
                     <!-- Feedbacks -->
                     <a href="{{ route('admin.feedbacks.index') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.feedbacks*') ? 'bg-white text-zinc-900 shadow-3xs border border-zinc-200/60' : 'text-zinc-500 hover:bg-zinc-200/30 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.feedbacks*') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
-                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 text-zinc-450 group-hover:text-zinc-900">
-                            <i class="text-base {{ request()->routeIs('admin.feedbacks*') ? 'ph-bold ph-chat-circle-dots text-zinc-800' : 'ph ph-chat-circle-dots' }}"></i>
+                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
+                            <i class="text-base {{ request()->routeIs('admin.feedbacks*') ? 'ph-bold ph-chat-circle-dots text-white' : 'ph ph-chat-circle-dots text-zinc-450 group-hover:text-zinc-900' }}"></i>
                         </div>
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">User Feedback</span>
                         
@@ -266,10 +260,10 @@
 
                     <!-- User Survey -->
                     <a href="{{ route('admin.survey.index') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.survey.index') ? 'bg-white text-zinc-900 shadow-3xs border border-zinc-200/60' : 'text-zinc-500 hover:bg-zinc-200/30 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.survey.index') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
-                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 text-zinc-450 group-hover:text-zinc-900">
-                            <i class="text-base {{ request()->routeIs('admin.survey.index') ? 'ph-bold ph-heart text-zinc-800' : 'ph ph-heart' }}"></i>
+                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
+                            <i class="text-base {{ request()->routeIs('admin.survey.index') ? 'ph-bold ph-heart text-white' : 'ph ph-heart text-zinc-450 group-hover:text-zinc-900' }}"></i>
                         </div>
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">User Survey</span>
                         
@@ -280,19 +274,19 @@
 
                     <!-- Divider -->
                     <div class="py-2.5">
-                        <div class="border-t border-zinc-200/60"></div>
+                        <div class="border-t border-zinc-200/60 mx-2"></div>
                     </div>
 
                     <div x-show="!sidebarCollapsed" class="px-3 mb-2">
-                        <span class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest">System Config</span>
+                        <span class="text-[9px] font-sans font-bold text-zinc-400 uppercase tracking-widest">System Config</span>
                     </div>
 
                     <!-- Scraper Engine -->
                     <a href="{{ route('admin.scraper') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.scraper') ? 'bg-white text-zinc-900 shadow-3xs border border-zinc-200/60' : 'text-zinc-500 hover:bg-zinc-200/30 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.scraper') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-555 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
-                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 text-zinc-450 group-hover:text-zinc-900">
-                            <i class="text-base {{ request()->routeIs('admin.scraper') ? 'ph-bold ph-terminal-window text-zinc-800' : 'ph ph-terminal-window' }}"></i>
+                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
+                            <i class="text-base {{ request()->routeIs('admin.scraper') ? 'ph-bold ph-terminal-window text-white' : 'ph ph-terminal-window text-zinc-450 group-hover:text-zinc-900' }}"></i>
                         </div>
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">Scraper Engine</span>
                         
@@ -303,10 +297,10 @@
 
                     <!-- Settings -->
                     <a href="{{ route('admin.settings') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.settings') ? 'bg-white text-zinc-900 shadow-3xs border border-zinc-200/60' : 'text-zinc-500 hover:bg-zinc-200/30 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.settings') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-555 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
-                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 text-zinc-450 group-hover:text-zinc-900">
-                            <i class="text-base {{ request()->routeIs('admin.settings') ? 'ph-bold ph-gear-six text-zinc-800' : 'ph ph-gear-six' }}"></i>
+                        <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
+                            <i class="text-base {{ request()->routeIs('admin.settings') ? 'ph-bold ph-gear-six text-white' : 'ph ph-gear-six text-zinc-450 group-hover:text-zinc-900' }}"></i>
                         </div>
                         <span x-show="!sidebarCollapsed" class="ml-2.5 truncate tracking-tight">Settings</span>
                         
@@ -316,24 +310,24 @@
                     </a>
                 </nav>
                 
-                <!-- Sidebar Footer profile -->
-                <div class="p-3 border-t border-zinc-200/60 bg-[#fafafa]/50">
-                    <div class="flex items-center rounded-xl p-2 cursor-pointer hover:bg-zinc-200/40 transition-colors"
-                         :class="sidebarCollapsed ? 'justify-center' : ''">
+                <!-- Sidebar Footer profile (Floating Card Style) -->
+                <div class="p-3 bg-[#fafafa]/50 border-t border-zinc-200/60 flex-shrink-0">
+                    <div class="flex items-center rounded-xl p-2.5 bg-white border border-zinc-200 shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-colors"
+                         :class="sidebarCollapsed ? 'justify-center p-1.5' : ''">
                         @php $user = Auth::user(); @endphp
                         @if($user && $user->logo)
                             <img src="{{ $user->avatar_url }}" 
                                  alt="Profile" 
-                                 class="h-7 w-7 rounded-lg object-cover flex-shrink-0 border border-zinc-250">
+                                 class="h-7 w-7 rounded-lg object-cover flex-shrink-0 border border-zinc-200 shadow-3xs">
                         @else
-                            <div class="h-7 w-7 bg-zinc-200/60 rounded-lg flex items-center justify-center flex-shrink-0 border border-zinc-300/40 text-zinc-700 font-bold text-[10px]">
+                            <div class="h-7 w-7 bg-zinc-100 rounded-lg flex items-center justify-center flex-shrink-0 border border-zinc-255 text-zinc-700 font-bold text-[10px]">
                                 {{ substr($user->name ?? 'A', 0, 1) }}
                             </div>
                         @endif
                         
                         <div x-show="!sidebarCollapsed" class="ml-2.5 min-w-0 flex-1">
-                            <p class="text-xs font-black text-zinc-800 truncate leading-tight">{{ $user->name ?? 'Admin' }}</p>
-                            <p class="text-[8px] font-mono font-bold text-zinc-400 truncate uppercase tracking-widest leading-none mt-0.5">Super Admin</p>
+                            <p class="text-xs font-black text-zinc-900 truncate leading-tight">{{ $user->name ?? 'Admin' }}</p>
+                            <p class="text-[8px] font-mono font-bold text-zinc-400 truncate uppercase tracking-widest leading-none mt-0.8">Super Admin</p>
                         </div>
                     </div>
                 </div>
@@ -364,6 +358,12 @@
                 <!-- Notion Top bar -->
                 <header class="bg-white/90 backdrop-blur-md border-b border-zinc-200/50 h-16 flex items-center justify-between px-6 z-[50] flex-shrink-0 sticky top-0">
                     <div class="flex items-center">
+                        <!-- Toggle Sidebar Button inside Topbar (Clean and Integrated) -->
+                        <button @click="sidebarCollapsed = !sidebarCollapsed" class="hidden lg:flex w-9 h-9 rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 transition items-center justify-center mr-3.5 shadow-3xs">
+                            <i class="ph ph-sidebar-simple text-base"></i>
+                        </button>
+                        
+                        <!-- Mobile Hamburger Button -->
                         <button @click="mobileSidebarOpen = true" class="lg:hidden w-9 h-9 rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-555 hover:bg-zinc-100 transition flex items-center justify-center mr-3">
                             <i class="ph ph-list text-base"></i>
                         </button>
@@ -389,11 +389,10 @@
                             Live Engine
                         </div>
 
-                        <!-- Profile Dropdown (Fixed Overlap Bug) -->
+                        <!-- Profile Dropdown -->
                         <div class="relative" x-data="{ open: false }">
                             <button @click="open = ! open" class="h-9 flex items-center gap-2 focus:outline-none bg-white hover:bg-zinc-50 px-3 rounded-xl border border-zinc-200/80 transition-all text-xs font-bold text-zinc-700 shadow-3xs">
                                 @if($user && $user->logo)
-                                    <!-- FIXED: Changed h-5.5 w-5.5 (invalid Tailwind class that caused full image scale overflow) to h-6 w-6 (valid class) -->
                                     <img src="{{ $user->avatar_url }}" 
                                          alt="Profile" 
                                          class="h-6 w-6 rounded-md object-cover shrink-0 border border-zinc-200">
