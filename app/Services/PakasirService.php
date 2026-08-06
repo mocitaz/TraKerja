@@ -65,6 +65,10 @@ class PakasirService
             return [
                 'success' => false,
                 'error' => 'Failed to check transaction status',
+                'debug' => [
+                    'http_status' => $response->status(),
+                    'response_body' => $response->json() ?? $response->body(),
+                ]
             ];
         } catch (\Exception $e) {
             Log::error('Pakasir: Exception checking transaction status', [
@@ -74,6 +78,10 @@ class PakasirService
             return [
                 'success' => false,
                 'error' => $e->getMessage(),
+                'debug' => [
+                    'exception' => $e->getMessage(),
+                    'trace' => substr($e->getTraceAsString(), 0, 300)
+                ]
             ];
         }
     }

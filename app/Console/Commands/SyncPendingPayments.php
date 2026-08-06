@@ -81,7 +81,11 @@ class SyncPendingPayments extends Command
                         $this->line("-> No change: Payment remains in pending/waiting status.");
                     }
                 } else {
-                    $this->error("-> Failed to check status from API: " . ($statusCheck['error'] ?? 'Unknown Error'));
+                    $errorMsg = $statusCheck['error'] ?? 'Unknown Error';
+                    $this->error("-> Failed to check status from API: " . $errorMsg);
+                    if (isset($statusCheck['debug'])) {
+                        $this->line("   Debug: " . json_encode($statusCheck['debug']));
+                    }
                 }
             } catch (\Exception $e) {
                 $this->error("-> Error processing Order ID {$payment->order_id}: " . $e->getMessage());
