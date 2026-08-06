@@ -548,14 +548,15 @@ class PaymentController extends Controller
             return response()->json(['success' => false, 'message' => 'Payment not found'], 404);
         }
 
-        // Check status from Pakasir API
         $statusCheck = $this->getPakasirService()->checkTransactionStatus($orderId, $payment->amount);
-        
+
         if ($statusCheck['success']) {
-            $status = $statusCheck['data']['status'] ?? $payment->status;
+            $status = $statusCheck['data']['status'] ?? null;
             
             if ($status === 'completed' && $payment->status !== 'SUCCESS') {
                 $this->handleSuccessfulPayment($payment, $statusCheck['data']);
+                // Refresh data model pembayaran agar status terbarunya langsung terambil (SUCCESS)
+                $payment->refresh();
             }
         }
 
