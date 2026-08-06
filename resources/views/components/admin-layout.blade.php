@@ -315,15 +315,10 @@
                     <div class="flex items-center rounded-xl p-2.5 bg-white border border-zinc-200 shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-colors"
                          :class="sidebarCollapsed ? 'justify-center p-1.5' : ''">
                         @php $user = Auth::user(); @endphp
-                        @if($user && $user->logo)
-                            <img src="{{ $user->avatar_url }}" 
-                                 alt="Profile" 
-                                 class="h-7 w-7 rounded-lg object-cover flex-shrink-0 border border-zinc-200 shadow-3xs">
-                        @else
-                            <div class="h-7 w-7 bg-zinc-100 rounded-lg flex items-center justify-center flex-shrink-0 border border-zinc-255 text-zinc-700 font-bold text-[10px]">
-                                {{ substr($user->name ?? 'A', 0, 1) }}
-                            </div>
-                        @endif
+                        <img src="{{ $user ? $user->avatar_url : 'https://ui-avatars.com/api/?name=Admin' }}" 
+                             alt="Profile" 
+                             class="h-7 w-7 rounded-lg object-cover flex-shrink-0 border border-zinc-200 shadow-3xs"
+                             onerror="this.src='https://ui-avatars.com/api/?name=Admin'">
                         
                         <div x-show="!sidebarCollapsed" class="ml-2.5 min-w-0 flex-1">
                             <p class="text-xs font-black text-zinc-900 truncate leading-tight">{{ $user->name ?? 'Admin' }}</p>
@@ -384,15 +379,10 @@
                         <!-- Profile Dropdown -->
                         <div class="relative" x-data="{ open: false }">
                             <button @click="open = ! open" class="h-9 flex items-center gap-2 focus:outline-none bg-white hover:bg-zinc-50 px-3 rounded-xl border border-zinc-200/80 transition-all text-xs font-bold text-zinc-700 shadow-3xs">
-                                @if($user && $user->logo)
-                                    <img src="{{ $user->avatar_url }}" 
-                                         alt="Profile" 
-                                         class="h-6 w-6 rounded-md object-cover shrink-0 border border-zinc-200">
-                                @else
-                                    <div class="h-6 w-6 bg-zinc-100 border border-zinc-200 rounded-md flex items-center justify-center text-zinc-750 font-black text-[10px] shrink-0">
-                                        {{ substr($user->name ?? 'A', 0, 1) }}
-                                    </div>
-                                @endif
+                                <img src="{{ $user ? $user->avatar_url : 'https://ui-avatars.com/api/?name=Admin' }}" 
+                                     alt="Profile" 
+                                     class="h-6 w-6 rounded-md object-cover shrink-0 border border-zinc-200"
+                                     onerror="this.src='https://ui-avatars.com/api/?name=Admin'">
                                 <span class="hidden sm:block truncate max-w-[110px]">{{ $user->name ?? 'Admin' }}</span>
                                 <i class="ph ph-caret-down text-[10px] text-zinc-400 transition-transform" :class="open ? 'rotate-180' : ''"></i>
                             </button>
