@@ -34,6 +34,7 @@
             return "background: linear-gradient(135deg, {$pair[0]} 0%, {$pair[1]} 100%);";
         }
     }
+    $user = Auth::user();
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
