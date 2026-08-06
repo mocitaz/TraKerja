@@ -1,10 +1,11 @@
-<div class="space-y-4 w-full">
-    <!-- Sticky Global Sub-Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-200">
-        <div class="flex items-center gap-1.5 min-w-0">
-            <span class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Admin Portal</span>
-            <span class="text-zinc-300 text-xs">/</span>
-            <h1 class="text-xs font-mono font-bold text-zinc-800 uppercase tracking-wider">Analytics</h1>
+<div class="space-y-6 pb-12 w-full">
+    <!-- Header Section (Sleek and Clean) -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-200">
+        <div>
+            <h1 class="text-lg font-black text-zinc-900 tracking-tight flex items-center gap-1.5">
+                Analytics <span class="text-[9px] font-mono font-bold text-zinc-450 bg-zinc-100 border border-zinc-200 px-1.5 py-0.2 rounded">System Stats</span>
+            </h1>
+            <p class="text-[10px] text-zinc-500 font-semibold mt-0.5">Monitor system growth, applications metrics, and financial performance over time.</p>
         </div>
         
         <div class="w-full sm:w-auto flex items-center gap-2">
