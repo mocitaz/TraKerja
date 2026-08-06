@@ -1,6 +1,6 @@
 <div class="space-y-4 w-full">
     <!-- Sticky Global Sub-Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b border-zinc-150/60">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-200">
         <div class="flex items-center gap-1.5 min-w-0">
             <span class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Admin Portal</span>
             <span class="text-zinc-300 text-xs">/</span>
@@ -166,7 +166,7 @@
 
     {{-- Hero Chart: User Growth --}}
     <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden shadow-3xs">
-        <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
             <div class="flex items-center gap-2">
                 <i class="ph-bold ph-trend-up text-zinc-450 text-sm animate-pulse"></i>
                 <div>
@@ -186,7 +186,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- Applications Over Time --}}
         <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-briefcase text-zinc-455 text-sm"></i>
                     <div>
@@ -204,7 +204,7 @@
 
         {{-- Registrations by Day --}}
         <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-user-plus text-zinc-455 text-sm"></i>
                     <div>
@@ -225,7 +225,7 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         {{-- Premium vs Free --}}
         <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-crown text-zinc-455 text-sm"></i>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans truncate">Premium Ratio</h3>
@@ -240,7 +240,7 @@
 
         {{-- Goals Achievement --}}
         <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-target text-zinc-455 text-sm"></i>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans truncate">Goals Success</h3>
@@ -255,7 +255,7 @@
 
         {{-- Verified vs Unverified --}}
         <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-seal-check text-zinc-455 text-sm"></i>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans truncate">Verification Ratio</h3>
@@ -271,7 +271,7 @@
 
     {{-- Full Width Application Funnel --}}
     <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-        <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
             <div class="flex items-center gap-2">
                 <i class="ph-bold ph-funnel text-zinc-455 text-sm"></i>
                 <div>
@@ -381,7 +381,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- Top Companies Row --}}
         <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-buildings text-zinc-455 text-sm"></i>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans tracking-tight">Top Targeted Companies</h3>
@@ -404,7 +404,7 @@
 
         {{-- Top Positions Row --}}
         <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-briefcase text-zinc-455 text-sm"></i>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans tracking-tight">Most Wanted Positions</h3>
@@ -428,7 +428,7 @@
 
     {{-- Applications By Platform --}}
     <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-        <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+        <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
             <div class="flex items-center gap-2">
                 <i class="ph-bold ph-chart-bar text-zinc-455 text-sm"></i>
                 <div>
@@ -455,7 +455,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- XP Leaderboard --}}
         <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-trophy text-zinc-455 text-sm"></i>
                     <div>
@@ -523,7 +523,7 @@
 
         {{-- Peak Activity Hours --}}
         <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <i class="ph-bold ph-clock text-zinc-455 text-sm"></i>
@@ -551,7 +551,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- AI Usage --}}
         <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-robot text-zinc-455 text-sm"></i>
                     <div>
@@ -604,7 +604,7 @@
 
         {{-- Support Ticket Resolution --}}
         <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-headset text-zinc-455 text-sm"></i>
                     <div>
@@ -699,7 +699,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- Retention Cohort --}}
         <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-arrow-counter-clockwise text-zinc-455 text-sm"></i>
                     <div>
@@ -739,7 +739,7 @@
 
         {{-- CV Template Popularity --}}
         <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
-            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-file-doc text-zinc-455 text-sm"></i>
                     <div>
