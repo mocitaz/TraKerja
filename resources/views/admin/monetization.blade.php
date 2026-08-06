@@ -31,65 +31,65 @@
         {{-- Executive Summary Stats (Bento Grid) --}}
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {{-- Total Users --}}
-            <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group">
-                <div class="flex items-center justify-between w-full">
-                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Total Users</span>
-                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+            <div class="border border-zinc-200 rounded-xl bg-white p-5 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-[8px] font-mono font-bold text-zinc-450 uppercase tracking-widest block mb-1">Total Users</span>
+                        <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none mt-1">{{ number_format($totalUsers) }}</h3>
+                    </div>
+                    <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
                         <i class="ph-bold ph-users text-xs"></i>
                     </div>
                 </div>
-                <div class="flex items-baseline justify-between mt-1">
-                    <p class="text-xl font-extrabold tracking-tight text-zinc-900 leading-none font-mono">{{ number_format($totalUsers) }}</p>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none">Registered</p>
-                </div>
+                <p class="text-[9px] font-mono font-bold text-zinc-400 mt-5 uppercase tracking-widest">All members registered</p>
             </div>
 
             {{-- Total Free --}}
-            <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group">
-                <div class="flex items-center justify-between w-full">
-                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Free Users</span>
-                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+            <div class="border border-zinc-200 rounded-xl bg-white p-5 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-[8px] font-mono font-bold text-zinc-455 uppercase tracking-widest block mb-1">Free Users</span>
+                        <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none mt-1">{{ number_format($freeUsers) }}</h3>
+                    </div>
+                    <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
                         <i class="ph-bold ph-gift text-xs"></i>
                     </div>
                 </div>
-                <div class="flex items-baseline justify-between mt-1">
-                    <p class="text-xl font-extrabold tracking-tight text-zinc-900 leading-none font-mono">{{ number_format($freeUsers) }}</p>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none">Free</p>
-                </div>
+                <p class="text-[9px] font-mono font-bold text-zinc-400 mt-5 uppercase tracking-widest">Standard basic tier</p>
             </div>
 
             {{-- Premium Users --}}
-            <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group">
-                <div class="flex items-center justify-between w-full">
-                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Premium Users</span>
-                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+            <div class="border border-zinc-200 rounded-xl bg-white p-5 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-[8px] font-mono font-bold text-zinc-455 uppercase tracking-widest block mb-1">Premium Users</span>
+                        <h3 class="text-xl font-extrabold tracking-tight text-zinc-800 font-mono leading-none mt-1">{{ number_format($premiumUsers) }}</h3>
+                    </div>
+                    <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
                         <i class="ph-bold ph-crown text-xs"></i>
                     </div>
                 </div>
-                <div class="flex items-baseline justify-between mt-1">
-                    <p class="text-xl font-extrabold tracking-tight text-zinc-800 leading-none font-mono">{{ number_format($premiumUsers) }}</p>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none">Premium</p>
-                </div>
+                <p class="text-[9px] font-mono font-bold text-zinc-400 mt-5 uppercase tracking-widest">Active paid accounts</p>
             </div>
 
             {{-- Total Revenue --}}
-            <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group">
-                <div class="flex items-center justify-between w-full">
-                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Total Pendapatan</span>
-                    <div class="w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-250 text-emerald-650 flex items-center justify-center shrink-0 shadow-3xs">
+            <div class="border border-zinc-200 rounded-xl bg-white p-5 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-[8px] font-mono font-bold text-zinc-455 uppercase tracking-widest block mb-1">Total Pendapatan</span>
+                        <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none mt-1">
+                            @if($revenue >= 1000000)
+                                Rp {{ number_format($revenue / 1000000, 1) }} Jt
+                            @else
+                                Rp {{ number_format($revenue, 0, ',', '.') }}
+                            @endif
+                        </h3>
+                    </div>
+                    <div class="w-7.5 h-7.5 rounded-lg bg-emerald-50 border border-emerald-250 text-emerald-650 flex items-center justify-center shrink-0 shadow-3xs">
                         <i class="ph-bold ph-vault text-xs"></i>
                     </div>
                 </div>
-                <div class="flex items-baseline justify-between mt-1">
-                    <p class="text-xl font-extrabold tracking-tight text-zinc-900 leading-none font-mono">
-                        @if($revenue >= 1000000)
-                            Rp {{ number_format($revenue / 1000000, 1) }} Jt
-                        @else
-                            Rp {{ number_format($revenue, 0, ',', '.') }}
-                        @endif
-                    </p>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none">Revenue</p>
-                </div>
+                <p class="text-[9px] font-mono font-bold text-zinc-400 mt-5 uppercase tracking-widest">Gross revenue stats</p>
             </div>
         </div>
 
