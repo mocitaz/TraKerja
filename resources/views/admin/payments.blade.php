@@ -21,65 +21,65 @@
         {{-- Statistics Grid (Bento Grid) --}}
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {{-- Total Payments --}}
-            <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group">
-                <div class="flex items-center justify-between w-full">
-                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Total Transaksi</span>
-                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+            <div class="border border-zinc-200 rounded-xl bg-white p-5 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-[8px] font-mono font-bold text-zinc-450 uppercase tracking-widest block mb-1">Total Transaksi</span>
+                        <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none mt-1">{{ number_format($stats['total']) }}</h3>
+                    </div>
+                    <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
                         <i class="ph-bold ph-shopping-cart text-xs"></i>
                     </div>
                 </div>
-                <div class="flex items-baseline justify-between mt-1">
-                    <p class="text-xl font-extrabold tracking-tight text-zinc-900 leading-none font-mono">{{ number_format($stats['total']) }}</p>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none">Orders</p>
-                </div>
+                <p class="text-[9px] font-mono font-bold text-zinc-400 mt-5 uppercase tracking-widest">Aggregated orders</p>
             </div>
 
             {{-- Successful --}}
-            <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group">
-                <div class="flex items-center justify-between w-full">
-                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Berhasil</span>
-                    <div class="w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-250 text-emerald-650 flex items-center justify-center shrink-0 shadow-3xs">
+            <div class="border border-zinc-200 rounded-xl bg-white p-5 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-[8px] font-mono font-bold text-zinc-450 uppercase tracking-widest block mb-1">Berhasil</span>
+                        <h3 class="text-xl font-extrabold tracking-tight text-emerald-600 font-mono leading-none mt-1">{{ number_format($stats['success']) }}</h3>
+                    </div>
+                    <div class="w-7.5 h-7.5 rounded-lg bg-emerald-50 border border-emerald-250 flex items-center justify-center text-emerald-650 shrink-0 shadow-3xs">
                         <i class="ph-bold ph-check-circle text-xs"></i>
                     </div>
                 </div>
-                <div class="flex items-baseline justify-between mt-1">
-                    <p class="text-xl font-extrabold tracking-tight text-emerald-600 leading-none font-mono">{{ number_format($stats['success']) }}</p>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none">Paid</p>
-                </div>
+                <p class="text-[9px] font-mono font-bold text-zinc-400 mt-5 uppercase tracking-widest">Completed payments</p>
             </div>
 
             {{-- Pending --}}
-            <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group">
-                <div class="flex items-center justify-between w-full">
-                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Pending</span>
-                    <div class="w-7 h-7 rounded-lg bg-amber-50 border border-amber-200 text-amber-650 flex items-center justify-center shrink-0 shadow-3xs">
+            <div class="border border-zinc-200 rounded-xl bg-white p-5 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-[8px] font-mono font-bold text-zinc-450 uppercase tracking-widest block mb-1">Pending</span>
+                        <h3 class="text-xl font-extrabold tracking-tight text-amber-600 font-mono leading-none mt-1">{{ number_format($stats['pending']) }}</h3>
+                    </div>
+                    <div class="w-7.5 h-7.5 rounded-lg bg-amber-50 border border-amber-250 flex items-center justify-center text-amber-650 shrink-0 shadow-3xs">
                         <i class="ph-bold ph-clock-counter-clockwise text-xs"></i>
                     </div>
                 </div>
-                <div class="flex items-baseline justify-between mt-1">
-                    <p class="text-xl font-extrabold tracking-tight text-amber-600 leading-none font-mono">{{ number_format($stats['pending']) }}</p>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none">Unpaid</p>
-                </div>
+                <p class="text-[9px] font-mono font-bold text-zinc-400 mt-5 uppercase tracking-widest">Awaiting checkout</p>
             </div>
 
             {{-- Total Revenue --}}
-            <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group">
-                <div class="flex items-center justify-between w-full">
-                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Total Revenue</span>
-                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+            <div class="border border-zinc-200 rounded-xl bg-white p-5 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-[8px] font-mono font-bold text-zinc-455 uppercase tracking-widest block mb-1">Total Revenue</span>
+                        <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none mt-1">
+                            @if($stats['total_revenue'] >= 1000000)
+                                Rp {{ number_format($stats['total_revenue'] / 1000000, 1) }} Jt
+                            @else
+                                Rp {{ number_format($stats['total_revenue'], 0, ',', '.') }}
+                            @endif
+                        </h3>
+                    </div>
+                    <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
                         <i class="ph-bold ph-money text-xs"></i>
                     </div>
                 </div>
-                <div class="flex items-baseline justify-between mt-1">
-                    <p class="text-xl font-extrabold tracking-tight text-zinc-900 leading-none font-mono">
-                        @if($stats['total_revenue'] >= 1000000)
-                            Rp {{ number_format($stats['total_revenue'] / 1000000, 1) }} Jt
-                        @else
-                            Rp {{ number_format($stats['total_revenue'], 0, ',', '.') }}
-                        @endif
-                    </p>
-                    <p class="text-[9px] font-mono font-bold text-zinc-450 uppercase tracking-wide leading-none">Revenue</p>
-                </div>
+                <p class="text-[9px] font-mono font-bold text-zinc-450 mt-5 uppercase tracking-widest">Gross revenue stats</p>
             </div>
         </div>
 
