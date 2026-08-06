@@ -357,22 +357,24 @@
                 
                 <!-- Notion Top bar -->
                 <header class="bg-white/90 backdrop-blur-md border-b border-zinc-200/50 h-16 flex items-center justify-between px-6 z-[50] flex-shrink-0 sticky top-0">
-                    <div class="flex items-center">
+                    <div class="flex items-center space-x-3.5">
                         <!-- Toggle Sidebar Button inside Topbar (Clean and Integrated) -->
-                        <button @click="sidebarCollapsed = !sidebarCollapsed" class="hidden lg:flex w-9 h-9 rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 transition items-center justify-center mr-3.5 shadow-3xs">
-                            <i class="ph ph-sidebar-simple text-base"></i>
+                        <button @click="sidebarCollapsed = !sidebarCollapsed" 
+                                class="hidden lg:flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 transition-colors shadow-3xs">
+                            <i class="ph ph-sidebar-simple text-sm"></i>
                         </button>
                         
                         <!-- Mobile Hamburger Button -->
-                        <button @click="mobileSidebarOpen = true" class="lg:hidden w-9 h-9 rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-555 hover:bg-zinc-100 transition flex items-center justify-center mr-3">
-                            <i class="ph ph-list text-base"></i>
+                        <button @click="mobileSidebarOpen = true" 
+                                class="lg:hidden flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 text-zinc-555 hover:bg-zinc-100 transition-colors shadow-3xs">
+                            <i class="ph ph-list text-sm"></i>
                         </button>
                         
                         <!-- Path Breadcrumbs -->
-                        <div class="hidden sm:flex items-center space-x-2 text-xs text-zinc-550 font-bold">
-                            <span class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Admin Portal</span>
-                            <span class="text-zinc-300">/</span>
-                            <span class="text-[10px] font-mono font-bold text-zinc-800 uppercase tracking-widest">{{ $pageTitle }}</span>
+                        <div class="hidden sm:flex items-center space-x-1.5 text-xs text-zinc-550 font-bold">
+                            <span class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest leading-none">Admin Portal</span>
+                            <span class="text-zinc-300 leading-none">/</span>
+                            <span class="text-[9px] font-mono font-bold text-zinc-800 uppercase tracking-widest leading-none">{{ $pageTitle }}</span>
                         </div>
                         <h2 class="text-xs font-bold text-zinc-800 sm:hidden tracking-tight">{{ $pageTitle }}</h2>
                     </div>
