@@ -374,140 +374,141 @@
                         
                         <!-- Mini Profile Header -->
                         @if($editingUser)
-                            <div class="flex items-center gap-3.5 pb-4 border-b border-zinc-100">
+                            <div class="flex items-center gap-4 pb-4 border-b border-zinc-100">
                                 @if($editingUser->logo)
-                                    <div class="w-11 h-11 rounded-xl border border-zinc-200 overflow-hidden flex-shrink-0 shadow-3xs">
+                                    <div class="w-12 h-12 rounded-full border border-zinc-200 overflow-hidden flex-shrink-0 shadow-3xs">
                                         <img src="{{ $editingUser->avatar_url }}" 
                                              alt="{{ $editName ?? 'User' }}" 
                                              class="w-full h-full object-cover">
                                     </div>
                                 @else
-                                    <div class="w-11 h-11 rounded-xl border border-zinc-200 overflow-hidden flex-shrink-0 flex items-center justify-center text-white font-black text-xs shadow-3xs"
+                                    <div class="w-12 h-12 rounded-full border border-zinc-200 overflow-hidden flex-shrink-0 flex items-center justify-center text-white font-black text-sm shadow-3xs"
                                          style="{{ getAvatarStyleLocal($editName) }}">
                                         <span class="pointer-events-none">{{ strtoupper(substr($editName ?? 'U', 0, 1)) }}</span>
                                     </div>
                                 @endif
                                 <div class="min-w-0">
-                                    <h4 class="text-sm font-bold text-zinc-900 truncate leading-none mb-1.5">{{ $editName ?? '-' }}</h4>
+                                    <h4 class="text-sm font-extrabold text-zinc-900 truncate leading-tight mb-1">{{ $editName ?? '-' }}</h4>
                                     <p class="text-xs text-zinc-500 font-semibold truncate leading-none">{{ $editEmail ?? '-' }}</p>
                                 </div>
                             </div>
                         @endif
                         
-                        <!-- Simple Info Data Fields -->
-                        <div class="grid grid-cols-2 gap-3.5">
-                            <div>
-                                <label class="block text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Status Premium</label>
-                                <div class="h-8.5 px-3 bg-[#fafafa] border border-zinc-200 rounded-lg text-xs font-bold text-zinc-800 flex items-center shadow-3xs">
+                        <!-- Simple Info Data Fields (Notion Style Grid) -->
+                        <div class="grid grid-cols-2 gap-x-6 gap-y-4 py-1">
+                            <div class="flex flex-col gap-1">
+                                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider font-mono">Status Premium</span>
+                                <div class="text-xs font-bold text-zinc-800 flex items-center h-5">
                                     @if($editIsPremium)
-                                        <span class="text-amber-600 flex items-center gap-1"><i class="ph-bold ph-crown text-[10px]"></i> Premium</span>
+                                        <span class="text-amber-600 flex items-center gap-1"><i class="ph-bold ph-crown"></i> Premium</span>
                                     @else
-                                        <span class="text-zinc-500 font-semibold font-sans">Free Tier</span>
+                                        <span class="text-zinc-550 font-medium">Free Tier</span>
                                     @endif
                                 </div>
                             </div>
 
-                            <div>
-                                <label class="block text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Status Admin</label>
-                                <div class="h-8.5 px-3 bg-[#fafafa] border border-zinc-200 rounded-lg text-xs font-bold text-zinc-800 flex items-center shadow-3xs">
+                            <div class="flex flex-col gap-1">
+                                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider font-mono">Status Admin</span>
+                                <div class="text-xs font-bold text-zinc-800 flex items-center h-5">
                                     @if($editIsAdmin)
-                                        <span class="text-zinc-800 flex items-center gap-1"><i class="ph-bold ph-shield-check text-[10px]"></i> Admin</span>
+                                        <span class="text-zinc-800 flex items-center gap-1"><i class="ph-bold ph-shield-check"></i> Admin</span>
                                     @else
-                                        <span class="text-zinc-500 font-semibold font-sans">User</span>
+                                        <span class="text-zinc-550 font-medium">User</span>
                                     @endif
                                 </div>
                             </div>
 
-                            <div>
-                                <label class="block text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Total Lamaran</label>
-                                <div class="h-8.5 px-3 bg-[#fafafa] border border-zinc-200 rounded-lg text-xs text-zinc-700 font-bold flex items-center shadow-3xs">
+                            <div class="flex flex-col gap-1">
+                                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider font-mono">Total Lamaran</span>
+                                <div class="text-xs font-bold text-zinc-800 flex items-center h-5">
                                     {{ $editingUser ? $editingUser->getJobApplicationsCount() : 0 }} lamaran
                                 </div>
                             </div>
 
-                            <div>
-                                <label class="block text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Bergabung Sejak</label>
-                                <div class="h-8.5 px-3 bg-[#fafafa] border border-zinc-200 rounded-lg text-xs text-zinc-700 font-bold flex items-center shadow-3xs">
+                            <div class="flex flex-col gap-1">
+                                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider font-mono">Bergabung Sejak</span>
+                                <div class="text-xs font-bold text-zinc-800 flex items-center h-5">
                                     {{ $editingUser && $editingUser->created_at ? $editingUser->created_at->format('d M Y') : '-' }}
                                 </div>
                             </div>
                         </div>
                         
                         <!-- AI Credits Quota Admin Management -->
-                        <div class="pt-4.5 border-t border-zinc-100 space-y-4">
+                        <div class="pt-4.5 border-t border-zinc-100 space-y-3.5">
                             <div class="flex items-center justify-between">
                                 <h4 class="text-[10px] font-mono font-bold text-zinc-450 uppercase tracking-wider flex items-center gap-1.5">
                                     <i class="ph-bold ph-cpu text-xs"></i> AI Quotas Management
                                 </h4>
-                                <button type="button" wire:click="resetAllAiQuotas" class="text-[9px] font-mono font-bold text-zinc-600 hover:text-zinc-900 uppercase tracking-wider hover:underline transition-all">
+                                <button type="button" wire:click="resetAllAiQuotas" class="text-[9px] font-mono font-bold text-zinc-500 hover:text-zinc-900 uppercase tracking-wider hover:underline transition-all">
                                     Reset Ke Standar
                                 </button>
                             </div>
                             
-                            <div class="space-y-2.5">
+                            <!-- Unified Quota Cards List -->
+                            <div class="border border-zinc-200 rounded-2xl overflow-hidden bg-white shadow-3xs">
                                 <!-- Analyzer -->
-                                <div class="flex items-center justify-between p-3 bg-zinc-50 border border-zinc-200 rounded-xl shadow-3xs">
-                                    <div class="flex items-center gap-2.5 min-w-0">
-                                        <div class="w-8 h-8 rounded-lg bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 shrink-0">
+                                <div class="flex items-center justify-between p-3.5 border-b border-zinc-100">
+                                    <div class="flex items-center gap-3 min-w-0">
+                                        <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-150 flex items-center justify-center text-zinc-500 shrink-0">
                                             <i class="ph-bold ph-chart-bar text-sm"></i>
                                         </div>
                                         <div class="min-w-0">
                                             <span class="text-xs font-bold text-zinc-850 block leading-tight">Analyzer Credits</span>
-                                            <span class="text-[9px] text-zinc-400 font-bold block mt-0.5">Analisis kecocokan resume & lowongan</span>
+                                            <span class="text-[10px] text-zinc-400 font-bold block mt-0.5">Analisis kecocokan resume & lowongan</span>
                                         </div>
                                     </div>
-                                    <input type="number" wire:model="editAiCredits" class="w-16 h-8 px-2 bg-white border border-zinc-200 focus:border-zinc-400 rounded-lg text-xs font-bold text-zinc-800 text-center focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all shadow-3xs" min="0">
+                                    <input type="number" wire:model="editAiCredits" class="w-16 h-8 px-2.5 bg-zinc-50 border border-zinc-200 focus:border-zinc-400 focus:bg-white rounded-lg text-xs font-bold text-zinc-800 text-center focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all shadow-3xs" min="0">
                                 </div>
 
                                 <!-- Cover Letter -->
-                                <div class="flex items-center justify-between p-3 bg-zinc-50 border border-zinc-200 rounded-xl shadow-3xs">
-                                    <div class="flex items-center gap-2.5 min-w-0">
-                                        <div class="w-8 h-8 rounded-lg bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 shrink-0">
+                                <div class="flex items-center justify-between p-3.5 border-b border-zinc-100">
+                                    <div class="flex items-center gap-3 min-w-0">
+                                        <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-150 flex items-center justify-center text-zinc-500 shrink-0">
                                             <i class="ph-bold ph-file-text text-sm"></i>
                                         </div>
                                         <div class="min-w-0">
                                             <span class="text-xs font-bold text-zinc-850 block leading-tight">Cover Letter Credits</span>
-                                            <span class="text-[9px] text-zinc-400 font-bold block mt-0.5">Pembuatan surat lamaran kerja AI</span>
+                                            <span class="text-[10px] text-zinc-400 font-bold block mt-0.5">Pembuatan surat lamaran kerja AI</span>
                                         </div>
                                     </div>
-                                    <input type="number" wire:model="editClCredits" class="w-16 h-8 px-2 bg-white border border-zinc-200 focus:border-zinc-400 rounded-lg text-xs font-bold text-zinc-800 text-center focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all shadow-3xs" min="0">
+                                    <input type="number" wire:model="editClCredits" class="w-16 h-8 px-2.5 bg-zinc-50 border border-zinc-200 focus:border-zinc-400 focus:bg-white rounded-lg text-xs font-bold text-zinc-800 text-center focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all shadow-3xs" min="0">
                                 </div>
 
                                 <!-- AI Photo -->
-                                <div class="flex items-center justify-between p-3 bg-zinc-50 border border-zinc-200 rounded-xl shadow-3xs">
-                                    <div class="flex items-center gap-2.5 min-w-0">
-                                        <div class="w-8 h-8 rounded-lg bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 shrink-0">
+                                <div class="flex items-center justify-between p-3.5">
+                                    <div class="flex items-center gap-3 min-w-0">
+                                        <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-150 flex items-center justify-center text-zinc-500 shrink-0">
                                             <i class="ph-bold ph-camera text-sm"></i>
                                         </div>
                                         <div class="min-w-0">
                                             <span class="text-xs font-bold text-zinc-850 block leading-tight">AI Photo Credits</span>
-                                            <span class="text-[9px] text-zinc-400 font-bold block mt-0.5">Pembuatan pas foto formal studio AI</span>
+                                            <span class="text-[10px] text-zinc-400 font-bold block mt-0.5">Pembuatan pas foto formal studio AI</span>
                                         </div>
                                     </div>
-                                    <input type="number" wire:model="editPhotoCredits" class="w-16 h-8 px-2 bg-white border border-zinc-200 focus:border-zinc-400 rounded-lg text-xs font-bold text-zinc-800 text-center focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all shadow-3xs" min="0">
+                                    <input type="number" wire:model="editPhotoCredits" class="w-16 h-8 px-2.5 bg-zinc-50 border border-zinc-200 focus:border-zinc-400 focus:bg-white rounded-lg text-xs font-bold text-zinc-800 text-center focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all shadow-3xs" min="0">
                                 </div>
                             </div>
-                            
-                            @if($editingUser)
-                                <div class="flex justify-between items-center bg-zinc-50 border border-zinc-200 rounded-xl p-3 shadow-3xs">
-                                    <div class="text-[10px] text-zinc-500 font-bold">
-                                        Trial Analyzer Dipakai: 
-                                        <span class="font-extrabold text-zinc-700 font-mono">
-                                            {{ $editingUser->has_used_ai_analyzer_trial ? ($editingUser->ai_analyzer_trial_used_at ? $editingUser->ai_analyzer_trial_used_at->format('d M Y') : 'Ya') : 'Belum' }}
-                                        </span>
-                                    </div>
-                                    <button type="button" wire:click="saveAiQuotas" class="h-7.5 px-3.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-[10px] font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
-                                        Simpan Quota
-                                    </button>
-                                </div>
-                            @endif
                         </div>
 
                         <!-- Footer -->
-                        <div class="pt-2 flex justify-end gap-2 border-t border-zinc-100">
-                            <button type="button" wire:click="closeModal" class="h-8 px-4 border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
-                                Tutup
-                            </button>
+                        <div class="pt-4 flex justify-between items-center border-t border-zinc-100">
+                            <div class="text-[11px] text-zinc-500 font-semibold flex items-center gap-1.5 min-w-0">
+                                <i class="ph ph-info text-zinc-400 text-xs shrink-0"></i>
+                                <span class="truncate">
+                                    Trial Analyzer: 
+                                    <strong class="text-zinc-700">
+                                        {{ $editingUser && $editingUser->has_used_ai_analyzer_trial ? 'Dipakai' : 'Belum' }}
+                                    </strong>
+                                </span>
+                            </div>
+                            <div class="flex gap-2 shrink-0">
+                                <button type="button" wire:click="closeModal" class="h-8.5 px-4 border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
+                                    Tutup
+                                </button>
+                                <button type="button" wire:click="saveAiQuotas" class="h-8.5 px-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
+                                    Simpan Quota
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
