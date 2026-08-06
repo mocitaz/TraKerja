@@ -351,7 +351,7 @@
                 <div class="bg-white rounded-2xl border border-zinc-200/80 shadow-xl max-w-[460px] w-full max-h-[90vh] flex flex-col overflow-hidden">
                     
                     <!-- Modal Header -->
-                    <div class="bg-white px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
+                    <div class="bg-white rounded-t-2xl px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
                         <div class="flex items-center gap-2.5">
                             <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
                                 <i class="ph-bold ph-user-focus text-sm"></i>
@@ -522,7 +522,7 @@
                 <div class="bg-white rounded-2xl border border-zinc-200/80 shadow-xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden">
                     
                     <!-- Modal Header -->
-                    <div class="bg-white px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
+                    <div class="bg-white rounded-t-2xl px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
                         <div class="flex items-center gap-2.5">
                             <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
                                 <i class="ph-bold ph-user-plus text-sm"></i>
@@ -604,7 +604,7 @@
                 <div class="bg-white rounded-2xl border border-zinc-200/80 shadow-xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden">
                     
                     <!-- Modal Header -->
-                    <div class="bg-white px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
+                    <div class="bg-white rounded-t-2xl px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
                         <div class="flex items-center gap-2.5">
                             <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
                                 <i class="ph-bold ph-paper-plane-tilt text-sm"></i>
@@ -711,7 +711,7 @@
                 <div class="bg-white rounded-2xl border border-zinc-200/80 shadow-xl max-w-sm w-full relative overflow-hidden">
                     
                     <!-- Modal Header -->
-                    <div class="bg-white px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
+                    <div class="bg-white rounded-t-2xl px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
                         <div class="flex items-center gap-2.5">
                             <div class="w-7 h-7 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 shadow-3xs">
                                 <i class="ph-bold ph-crown text-sm"></i>
@@ -760,7 +760,7 @@
             <div class="bg-white rounded-2xl border border-zinc-200/80 shadow-xl max-w-sm w-full relative z-10 transition-all scale-98 opacity-0 duration-150 overflow-hidden" id="deleteUserModalContent">
                 
                 <!-- Modal Header -->
-                <div class="bg-white px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
+                <div class="bg-white rounded-t-2xl px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
                     <div class="flex items-center gap-2.5">
                         <div class="w-7 h-7 rounded-lg bg-red-50 border border-red-100 flex items-center justify-center text-red-600 shadow-3xs">
                             <i class="ph-bold ph-trash text-sm"></i>
