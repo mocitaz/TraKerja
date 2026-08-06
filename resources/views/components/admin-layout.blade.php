@@ -425,13 +425,13 @@
                         <div class="relative" x-data="{ open: false }">
                             <button @click="open = ! open" class="h-9 flex items-center gap-2 focus:outline-none bg-white hover:bg-zinc-50 px-3 rounded-xl border border-zinc-200/80 transition-all text-xs font-bold text-zinc-700 shadow-3xs">
                                 @if($user && $user->logo)
-                                    <div class="w-6.5 h-6.5 rounded-full overflow-hidden border border-zinc-200 shrink-0 shadow-3xs">
+                                    <div class="w-6 h-6 rounded-full overflow-hidden border border-zinc-200 shrink-0 shadow-3xs">
                                         <img src="{{ $user->avatar_url }}" 
                                              alt="Profile" 
                                              class="h-full w-full object-cover">
                                     </div>
                                 @else
-                                    <div class="w-6.5 h-6.5 rounded-full overflow-hidden border border-zinc-200 shrink-0 flex items-center justify-center text-white text-[9px] font-black shadow-3xs"
+                                    <div class="w-6 h-6 rounded-full overflow-hidden border border-zinc-200 shrink-0 flex items-center justify-center text-white text-[9px] font-black shadow-3xs"
                                          style="{{ getAvatarStyleLocal($user?->name ?? 'A') }}">
                                         <span class="pointer-events-none">{{ strtoupper(substr($user?->name ?? 'A', 0, 1)) }}</span>
                                     </div>

@@ -452,13 +452,13 @@
                             </div>
                             <div class="flex-1 min-w-0 flex items-center gap-2">
                                 @if($user->logo)
-                                    <div class="w-6.5 h-6.5 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 shadow-3xs">
+                                    <div class="w-7 h-7 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 shadow-3xs">
                                         <img src="{{ $user->avatar_url }}" 
                                              alt="Profile" 
                                              class="h-full w-full object-cover">
                                     </div>
                                 @else
-                                    <div class="w-6.5 h-6.5 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 flex items-center justify-center text-white text-[9px] font-black shadow-3xs"
+                                    <div class="w-7 h-7 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 flex items-center justify-center text-white text-[10px] font-black shadow-3xs"
                                          style="{{ getAvatarStyle($user->name) }}">
                                         <span class="pointer-events-none">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                                     </div>
@@ -498,13 +498,13 @@
                             </div>
                             <div class="flex-1 min-w-0 flex items-center gap-2">
                                 @if($user->logo)
-                                    <div class="w-6.5 h-6.5 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 shadow-3xs">
+                                    <div class="w-7 h-7 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 shadow-3xs">
                                         <img src="{{ $user->avatar_url }}" 
                                              alt="Profile" 
                                              class="h-full w-full object-cover">
                                     </div>
                                 @else
-                                    <div class="w-6.5 h-6.5 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 flex items-center justify-center text-white text-[9px] font-black shadow-3xs"
+                                    <div class="w-7 h-7 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 flex items-center justify-center text-white text-[10px] font-black shadow-3xs"
                                          style="{{ getAvatarStyle($user->name) }}">
                                         <span class="pointer-events-none">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                                     </div>
