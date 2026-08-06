@@ -43,10 +43,11 @@ class PakasirService
     {
         try {
             $response = Http::timeout(30)
-                ->get("{$this->baseUrl}/api/transactiondetail?ApiKey=" . urlencode($this->apiKey), [
+                ->get("{$this->baseUrl}/api/transactiondetail", [
                     'project' => $this->slug,
                     'amount' => $amount,
                     'order_id' => $orderId,
+                    'api_key' => $this->apiKey,
                 ]);
 
             if ($response->successful()) {
