@@ -1,37 +1,37 @@
 <x-admin-layout>
-    <div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-10 space-y-4" 
-         x-data="{ activeTab: '{{ request('tab', 'general') }}' }">
+    <div class="space-y-6 pb-12 w-full" x-data="{ activeTab: '{{ request('tab', 'general') }}' }">
          
-        <!-- Sticky Global Sub-Header -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b border-zinc-150/60">
-            <div class="flex items-center gap-1.5 min-w-0">
-                <span class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Admin Portal</span>
-                <span class="text-zinc-300 text-xs">/</span>
-                <h1 class="text-xs font-mono font-bold text-zinc-800 uppercase tracking-wider">System Settings</h1>
+        <!-- Header Section (Sleek and Clean) -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-200">
+            <div>
+                <h1 class="text-lg font-black text-zinc-900 tracking-tight flex items-center gap-1.5">
+                    System Settings <span class="text-[9px] font-mono font-bold text-zinc-450 bg-zinc-100 border border-zinc-200 px-1.5 py-0.2 rounded">Global Configuration</span>
+                </h1>
+                <p class="text-[10px] text-zinc-500 font-semibold mt-0.5">Manage global variables, API integrations, and database maintenance scripts.</p>
             </div>
         </div>
 
         <!-- Cupertino-Notion Tabs -->
-        <div class="flex border-b border-zinc-150/60 bg-transparent space-x-1">
+        <div class="flex border border-zinc-200 border-b-0 bg-white rounded-t-xl shadow-3xs overflow-hidden">
             <button @click="activeTab = 'general'; window.history.replaceState(null, '', '?tab=general')"
-                    :class="activeTab === 'general' ? 'border-zinc-900 text-zinc-900 font-bold' : 'border-transparent text-zinc-450 hover:text-zinc-700'"
-                    class="px-3 py-2 border-b-2 text-xs font-semibold transition-colors focus:outline-none shadow-none">
+                    :class="activeTab === 'general' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50 font-extrabold' : 'border-transparent text-zinc-400 hover:text-zinc-700'"
+                    class="px-5 py-3.5 border-b-2 text-xs font-bold transition-all focus:outline-none shadow-none">
                 General Settings
             </button>
             <button @click="activeTab = 'integration'; window.history.replaceState(null, '', '?tab=integration')"
-                    :class="activeTab === 'integration' ? 'border-zinc-900 text-zinc-900 font-bold' : 'border-transparent text-zinc-450 hover:text-zinc-700'"
-                    class="px-3 py-2 border-b-2 text-xs font-semibold transition-colors focus:outline-none shadow-none">
+                    :class="activeTab === 'integration' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50 font-extrabold' : 'border-transparent text-zinc-400 hover:text-zinc-700'"
+                    class="px-5 py-3.5 border-b-2 text-xs font-bold transition-all focus:outline-none shadow-none">
                 Integration Hub
             </button>
             <button @click="activeTab = 'database'; window.history.replaceState(null, '', '?tab=database')"
-                    :class="activeTab === 'database' ? 'border-zinc-900 text-zinc-900 font-bold' : 'border-transparent text-zinc-450 hover:text-zinc-700'"
-                    class="px-3 py-2 border-b-2 text-xs font-semibold transition-colors focus:outline-none shadow-none">
+                    :class="activeTab === 'database' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50 font-extrabold' : 'border-transparent text-zinc-400 hover:text-zinc-700'"
+                    class="px-5 py-3.5 border-b-2 text-xs font-bold transition-all focus:outline-none shadow-none">
                 Database & Storage
             </button>
         </div>
 
         <!-- Tab Contents -->
-        <div class="pt-1">
+        <div class="pt-0">
             <!-- General Settings Tab -->
             <div x-show="activeTab === 'general'" x-cloak class="space-y-4">
                 @livewire('admin.global-settings')
