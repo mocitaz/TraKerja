@@ -159,15 +159,15 @@
                 </div>
 
                 <!-- Navigation List -->
-                <nav class="flex-1 px-2.5 py-6 space-y-1 overflow-y-auto sidebar-scroll">
+                <nav class="flex-1 px-3 py-6 space-y-1.5 overflow-y-auto sidebar-scroll">
                     <!-- Section: System -->
                     <div x-show="!sidebarCollapsed" class="px-3 mb-2 mt-1">
-                        <span class="text-[9px] font-sans font-bold text-zinc-400 uppercase tracking-widest">Main Menu</span>
+                        <span class="text-[9px] font-sans font-bold text-zinc-400 uppercase tracking-widest block mb-1">Main Menu</span>
                     </div>
 
                     <!-- Dashboard -->
                     <a href="{{ route('admin.index') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.index') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.index') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
                         <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
                             <i class="text-base {{ request()->routeIs('admin.index') ? 'ph-bold ph-squares-four text-white' : 'ph ph-squares-four text-zinc-450 group-hover:text-zinc-900' }}"></i>
@@ -181,7 +181,7 @@
 
                     <!-- User Management -->
                     <a href="{{ route('admin.users') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.users') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.users') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
                         <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
                             <i class="text-base {{ request()->routeIs('admin.users') ? 'ph-bold ph-users-three text-white' : 'ph ph-users-three text-zinc-450 group-hover:text-zinc-900' }}"></i>
@@ -195,7 +195,7 @@
 
                     <!-- Activity Logs -->
                     <a href="{{ route('admin.user-activities') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.user-activities') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.user-activities') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
                         <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
                             <i class="text-base {{ request()->routeIs('admin.user-activities') ? 'ph-bold ph-clock-counter-clockwise text-white' : 'ph ph-clock-counter-clockwise text-zinc-450 group-hover:text-zinc-900' }}"></i>
@@ -209,7 +209,7 @@
 
                     <!-- Analytics -->
                     <a href="{{ route('admin.analytics') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.analytics') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.analytics') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
                         <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
                             <i class="text-base {{ request()->routeIs('admin.analytics') ? 'ph-bold ph-chart-pie-slice text-white' : 'ph ph-chart-pie-slice text-zinc-450 group-hover:text-zinc-900' }}"></i>
@@ -222,17 +222,17 @@
                     </a>
 
                     <!-- Divider -->
-                    <div class="py-2">
+                    <div class="py-3">
                         <div class="border-t border-zinc-200/60 mx-2"></div>
                     </div>
 
-                    <div x-show="!sidebarCollapsed" class="px-3 mb-2">
-                        <span class="text-[9px] font-sans font-bold text-zinc-400 uppercase tracking-widest">Outreach</span>
+                    <div x-show="!sidebarCollapsed" class="px-3 mb-2 mt-2">
+                        <span class="text-[9px] font-sans font-bold text-zinc-400 uppercase tracking-widest block mb-1">Outreach</span>
                     </div>
 
                     <!-- Email Blast -->
                     <a href="{{ route('admin.email-blast') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.email-blast*') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.email-blast*') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
                         <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
                             <i class="text-base {{ request()->routeIs('admin.email-blast*') ? 'ph-bold ph-paper-plane-tilt text-white' : 'ph ph-paper-plane-tilt text-zinc-450 group-hover:text-zinc-900' }}"></i>
@@ -246,7 +246,7 @@
 
                     <!-- Feedbacks -->
                     <a href="{{ route('admin.feedbacks.index') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.feedbacks*') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.feedbacks*') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
                         <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
                             <i class="text-base {{ request()->routeIs('admin.feedbacks*') ? 'ph-bold ph-chat-circle-dots text-white' : 'ph ph-chat-circle-dots text-zinc-450 group-hover:text-zinc-900' }}"></i>
@@ -260,7 +260,7 @@
 
                     <!-- User Survey -->
                     <a href="{{ route('admin.survey.index') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.survey.index') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.survey.index') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-550 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
                         <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
                             <i class="text-base {{ request()->routeIs('admin.survey.index') ? 'ph-bold ph-heart text-white' : 'ph ph-heart text-zinc-450 group-hover:text-zinc-900' }}"></i>
@@ -273,17 +273,17 @@
                     </a>
 
                     <!-- Divider -->
-                    <div class="py-2.5">
+                    <div class="py-3">
                         <div class="border-t border-zinc-200/60 mx-2"></div>
                     </div>
 
-                    <div x-show="!sidebarCollapsed" class="px-3 mb-2">
-                        <span class="text-[9px] font-sans font-bold text-zinc-400 uppercase tracking-widest">System Config</span>
+                    <div x-show="!sidebarCollapsed" class="px-3 mb-2 mt-2">
+                        <span class="text-[9px] font-sans font-bold text-zinc-400 uppercase tracking-widest block mb-1">System Config</span>
                     </div>
 
                     <!-- Scraper Engine -->
                     <a href="{{ route('admin.scraper') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.scraper') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-555 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.scraper') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-555 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
                         <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
                             <i class="text-base {{ request()->routeIs('admin.scraper') ? 'ph-bold ph-terminal-window text-white' : 'ph ph-terminal-window text-zinc-450 group-hover:text-zinc-900' }}"></i>
@@ -297,7 +297,7 @@
 
                     <!-- Settings -->
                     <a href="{{ route('admin.settings') }}"
-                       class="group relative flex items-center px-3 py-2.2 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.settings') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-555 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
+                       class="group relative flex items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all {{ request()->routeIs('admin.settings') ? 'bg-zinc-900 text-white shadow-3xs' : 'text-zinc-555 hover:bg-zinc-200/40 hover:text-zinc-900' }}"
                        :class="sidebarCollapsed ? 'justify-center' : ''">
                         <div class="flex items-center justify-center flex-shrink-0 relative z-10 w-4.5 group-hover:text-zinc-950">
                             <i class="text-base {{ request()->routeIs('admin.settings') ? 'ph-bold ph-gear-six text-white' : 'ph ph-gear-six text-zinc-450 group-hover:text-zinc-900' }}"></i>
