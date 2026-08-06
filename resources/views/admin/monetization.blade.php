@@ -8,79 +8,80 @@
         $revenue = \App\Models\Payment::where('status', 'SUCCESS')->sum('amount');
     @endphp
 
-    <div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-5 space-y-4 pb-10 text-left">
+    <div class="space-y-6 pb-12 w-full text-left">
         
         {{-- Success Message --}}
         @if(session('success'))
-            <div class="p-3 bg-emerald-50 border border-emerald-250 text-emerald-800 rounded flex items-center gap-2.5 shadow-none">
-                <i class="ph ph-check-circle text-base text-emerald-650 shrink-0"></i>
-                <p class="text-xs font-semibold">{{ session('success') }}</p>
+            <div class="p-3.5 bg-emerald-50 border border-emerald-250 text-emerald-800 rounded-xl flex items-center gap-2.5 shadow-3xs">
+                <i class="ph-bold ph-check-circle text-base text-emerald-650 shrink-0"></i>
+                <p class="text-xs font-bold">{{ session('success') }}</p>
             </div>
         @endif
         
-        <!-- Sticky Global Sub-Header -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b border-zinc-150/60">
-            <div class="flex items-center gap-1.5 min-w-0">
-                <span class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Admin Portal</span>
-                <span class="text-zinc-300 text-xs">/</span>
-                <h1 class="text-xs font-mono font-bold text-zinc-800 uppercase tracking-wider">Monetization Control</h1>
+        <!-- Header Section (Sleek and Clean) -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-200">
+            <div>
+                <h1 class="text-lg font-black text-zinc-900 tracking-tight flex items-center gap-1.5">
+                    Monetization Control <span class="text-[9px] font-mono font-bold text-zinc-450 bg-zinc-100 border border-zinc-200 px-1.5 py-0.2 rounded">Revenue Hub</span>
+                </h1>
+                <p class="text-[10px] text-zinc-500 font-semibold mt-0.5">Configure premium features, pricing parameters, subscription toggles, and user tiers.</p>
             </div>
         </div>
 
         {{-- Executive Summary Stats (Bento Grid) --}}
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {{-- Total Users --}}
-            <div class="border border-zinc-200/60 rounded bg-white p-4 shadow-none flex flex-col justify-between h-[82px] hover:bg-[#f7f7f5]/40 transition-colors">
+            <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group">
                 <div class="flex items-center justify-between w-full">
-                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide">Total Users</span>
-                    <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200/40 text-zinc-500 flex items-center justify-center shrink-0">
-                        <i class="ph ph-users text-xs"></i>
+                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Total Users</span>
+                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                        <i class="ph-bold ph-users text-xs"></i>
                     </div>
                 </div>
                 <div class="flex items-baseline justify-between mt-1">
-                    <p class="text-xl font-bold tracking-tight text-zinc-900 leading-none">{{ number_format($totalUsers) }}</p>
+                    <p class="text-xl font-extrabold tracking-tight text-zinc-900 leading-none font-mono">{{ number_format($totalUsers) }}</p>
                     <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none">Registered</p>
                 </div>
             </div>
 
             {{-- Total Free --}}
-            <div class="border border-zinc-200/60 rounded bg-white p-4 shadow-none flex flex-col justify-between h-[82px] hover:bg-[#f7f7f5]/40 transition-colors">
+            <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group">
                 <div class="flex items-center justify-between w-full">
-                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide">Free Users</span>
-                    <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200/40 text-zinc-500 flex items-center justify-center shrink-0">
-                        <i class="ph ph-gift text-xs"></i>
+                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Free Users</span>
+                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                        <i class="ph-bold ph-gift text-xs"></i>
                     </div>
                 </div>
                 <div class="flex items-baseline justify-between mt-1">
-                    <p class="text-xl font-bold tracking-tight text-zinc-900 leading-none">{{ number_format($freeUsers) }}</p>
+                    <p class="text-xl font-extrabold tracking-tight text-zinc-900 leading-none font-mono">{{ number_format($freeUsers) }}</p>
                     <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none">Free</p>
                 </div>
             </div>
 
             {{-- Premium Users --}}
-            <div class="border border-zinc-200/60 rounded bg-white p-4 shadow-none flex flex-col justify-between h-[82px] hover:bg-[#f7f7f5]/40 transition-colors">
+            <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group">
                 <div class="flex items-center justify-between w-full">
-                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide">Premium Users</span>
-                    <div class="w-6 h-6 rounded bg-purple-50 border border-purple-100/45 text-purple-650 flex items-center justify-center shrink-0">
-                        <i class="ph ph-crown text-xs"></i>
+                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Premium Users</span>
+                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                        <i class="ph-bold ph-crown text-xs"></i>
                     </div>
                 </div>
                 <div class="flex items-baseline justify-between mt-1">
-                    <p class="text-xl font-bold tracking-tight text-purple-600 leading-none">{{ number_format($premiumUsers) }}</p>
+                    <p class="text-xl font-extrabold tracking-tight text-zinc-800 leading-none font-mono">{{ number_format($premiumUsers) }}</p>
                     <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none">Premium</p>
                 </div>
             </div>
 
             {{-- Total Revenue --}}
-            <div class="border border-zinc-200/60 rounded bg-white p-4 shadow-none flex flex-col justify-between h-[82px] hover:bg-[#f7f7f5]/40 transition-colors">
+            <div class="border border-zinc-200 rounded-xl bg-white p-4.5 shadow-3xs flex flex-col justify-between h-[82px] hover:border-zinc-300 transition-colors group">
                 <div class="flex items-center justify-between w-full">
-                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide">Total Pendapatan</span>
-                    <div class="w-6 h-6 rounded bg-emerald-50 border border-emerald-100/45 text-emerald-650 flex items-center justify-center shrink-0">
-                        <i class="ph ph-vault text-xs"></i>
+                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Total Pendapatan</span>
+                    <div class="w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-250 text-emerald-650 flex items-center justify-center shrink-0 shadow-3xs">
+                        <i class="ph-bold ph-vault text-xs"></i>
                     </div>
                 </div>
                 <div class="flex items-baseline justify-between mt-1">
-                    <p class="text-xl font-bold tracking-tight text-zinc-900 leading-none">
+                    <p class="text-xl font-extrabold tracking-tight text-zinc-900 leading-none font-mono">
                         @if($revenue >= 1000000)
                             Rp {{ number_format($revenue / 1000000, 1) }} Jt
                         @else
@@ -93,14 +94,14 @@
         </div>
 
         {{-- Premium Pricing Configuration --}}
-        <div class="bg-white rounded border border-zinc-200/60 p-4 shadow-none">
+        <div class="bg-[#f7f7f5]/40 rounded-xl border border-zinc-200 p-5 shadow-3xs">
             <div class="flex items-center gap-3 mb-4">
-                <div class="w-8 h-8 bg-zinc-50 border border-zinc-200/40 rounded flex items-center justify-center shrink-0 text-zinc-500">
-                    <i class="ph ph-tag text-base"></i>
+                <div class="w-8 h-8 bg-zinc-50 border border-zinc-200 rounded flex items-center justify-center shrink-0 text-zinc-500 shadow-3xs">
+                    <i class="ph-bold ph-tag text-base"></i>
                 </div>
                 <div>
                     <h3 class="text-xs font-bold text-zinc-900 leading-none">Premium Pricing Configuration</h3>
-                    <p class="text-[8px] font-mono font-bold text-zinc-400 mt-1 uppercase tracking-wide">Atur harga langganan untuk akses fitur premium</p>
+                    <p class="text-[8px] font-mono font-bold text-zinc-400 mt-1 uppercase tracking-wider">Atur harga langganan untuk akses fitur premium</p>
                 </div>
             </div>
 
@@ -111,7 +112,7 @@
                 <div class="max-w-xs">
                     {{-- Price Input --}}
                     <div>
-                        <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1.5">
+                        <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest mb-1.5">
                             Harga Premium Saat Ini (IDR)
                         </label>
                         <div class="relative flex items-center">
@@ -122,25 +123,25 @@
                                 type="number" 
                                 name="premium_price"
                                 value="{{ $premiumPrice }}"
-                                class="w-full pl-8 pr-3 h-8 bg-white border border-zinc-250 rounded text-xs font-semibold text-zinc-900 focus:outline-none focus:border-zinc-400 transition-colors"
+                                class="w-full pl-8 pr-3 h-9 bg-white border border-zinc-200 rounded-lg text-xs font-semibold text-zinc-800 focus:outline-none focus:border-zinc-400 transition-colors shadow-3xs"
                                 min="0"
                                 step="1000"
                                 required>
                         </div>
                         <div class="mt-2.5 flex items-center gap-1.5">
                             <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                            <p class="text-[11px] font-semibold text-zinc-500 font-sans">Harga aktif: <span class="text-purple-650 font-bold font-mono">Rp {{ number_format($premiumPrice, 0, ',', '.') }}</span></p>
+                            <p class="text-[11px] font-semibold text-zinc-500 font-sans">Harga aktif: <span class="text-zinc-900 font-extrabold font-mono">Rp {{ number_format($premiumPrice, 0, ',', '.') }}</span></p>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex gap-2 pt-3 border-t border-zinc-150/60 mt-4">
+                <div class="flex gap-2 pt-3 border-t border-zinc-200 mt-4">
                     <button type="submit"
-                            class="h-8 px-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 focus:outline-none shadow-none">
-                        <i class="ph ph-floppy-disk text-xs"></i> Simpan Harga
+                            class="h-9 px-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-1.5 focus:outline-none shadow-3xs">
+                        <i class="ph-bold ph-floppy-disk text-xs"></i> Simpan Harga
                     </button>
                     <a href="{{ route('admin.index') }}" 
-                       class="h-8 px-4 bg-white border border-zinc-250 text-zinc-700 hover:bg-zinc-50 rounded text-xs font-semibold transition-colors flex items-center justify-center focus:outline-none shadow-none">
+                       class="h-9 px-4 bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-50 rounded-lg text-xs font-bold transition-colors flex items-center justify-center focus:outline-none shadow-3xs">
                         Batal
                     </a>
                 </div>
@@ -148,17 +149,17 @@
         </div>
 
         {{-- Monetization Control (Livewire Component) --}}
-        <div class="bg-white rounded border border-zinc-200/60 overflow-hidden shadow-none">
-            <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+        <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-3xs">
+            <div class="px-5 py-4 border-b border-zinc-100 bg-zinc-50/20">
                 <div class="flex items-center gap-2">
-                    <i class="ph ph-toggle-left text-zinc-400 text-base"></i>
+                    <i class="ph-bold ph-toggle-left text-zinc-455 text-base"></i>
                     <div>
                         <h3 class="text-xs font-bold text-zinc-900 leading-none">Monetization Control Panel</h3>
-                        <p class="text-[8px] font-mono font-bold text-zinc-400 mt-1 uppercase tracking-wide">Atur akses fitur dan mode monetisasi (Free vs Premium)</p>
+                        <p class="text-[8px] font-mono font-bold text-zinc-400 mt-1 uppercase tracking-wider">Atur akses fitur dan mode monetisasi (Free vs Premium)</p>
                     </div>
                 </div>
             </div>
-            <div class="p-4 bg-white">
+            <div class="p-5 bg-white">
                 @livewire('admin.monetization-control')
             </div>
         </div>
