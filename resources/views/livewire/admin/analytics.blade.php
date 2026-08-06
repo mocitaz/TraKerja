@@ -26,12 +26,12 @@
     {{-- Stats Grid (Notion Premium Grid) --}}
     <div class="grid grid-cols-2 xl:grid-cols-4 gap-4">
         {{-- Total Users --}}
-        <div class="bg-white rounded border border-zinc-200/60 p-4 flex flex-col justify-between hover:bg-[#f7f7f5]/40 transition-colors shadow-none">
+        <div class="bg-white rounded-2xl border border-zinc-200 p-4 flex flex-col justify-between hover:bg-zinc-50/50 hover:border-zinc-300 transition-all duration-200 shadow-3xs">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Total Users</p>
-                    <h3 class="text-base font-bold text-zinc-900 leading-tight">{{ number_format($stats['totalUsers']) }}</h3>
-                    <p class="text-[10px] text-zinc-450 mt-1.5 leading-none">
+                    <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Total Users</p>
+                    <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none">{{ number_format($stats['totalUsers']) }}</h3>
+                    <p class="text-[10px] text-zinc-500 font-semibold mt-2.5 leading-none">
                         @if($periodFilter === 'all')
                             Seluruh Data
                         @else
@@ -39,19 +39,19 @@
                         @endif
                     </p>
                 </div>
-                <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/40 flex items-center justify-center text-zinc-500 shrink-0 shadow-none">
-                    <i class="ph ph-users-three text-base"></i>
+                <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650 shrink-0 shadow-3xs">
+                    <i class="ph-bold ph-users-three text-sm"></i>
                 </div>
             </div>
         </div>
 
         {{-- Premium Users --}}
-        <div class="bg-white rounded border border-zinc-200/60 p-4 flex flex-col justify-between hover:bg-[#f7f7f5]/40 transition-colors shadow-none">
+        <div class="bg-white rounded-2xl border border-zinc-200 p-4 flex flex-col justify-between hover:bg-zinc-50/50 hover:border-zinc-300 transition-all duration-200 shadow-3xs">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Premium Users</p>
-                    <h3 class="text-base font-bold text-zinc-900 leading-tight">{{ number_format($stats['premiumUsers']) }}</h3>
-                    <p class="text-[10px] text-zinc-450 mt-1.5 leading-none">
+                    <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Premium Users</p>
+                    <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none">{{ number_format($stats['premiumUsers']) }}</h3>
+                    <p class="text-[10px] text-zinc-500 font-semibold mt-2.5 leading-none">
                         @if($periodFilter === 'all')
                             Seluruh Data
                         @else
@@ -59,19 +59,19 @@
                         @endif
                     </p>
                 </div>
-                <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/40 flex items-center justify-center text-zinc-500 shrink-0 shadow-none">
-                    <i class="ph ph-crown text-base"></i>
+                <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650 shrink-0 shadow-3xs">
+                    <i class="ph-bold ph-crown text-sm"></i>
                 </div>
             </div>
         </div>
 
         {{-- Active Users --}}
-        <div class="bg-white rounded border border-zinc-200/60 p-4 flex flex-col justify-between hover:bg-[#f7f7f5]/40 transition-colors shadow-none">
+        <div class="bg-white rounded-2xl border border-zinc-200 p-4 flex flex-col justify-between hover:bg-zinc-50/50 hover:border-zinc-300 transition-all duration-200 shadow-3xs">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Active Users</p>
-                    <h3 class="text-base font-bold text-zinc-900 leading-tight">{{ number_format($stats['activeUsers']) }}</h3>
-                    <p class="text-[10px] text-zinc-450 mt-1.5 leading-none">
+                    <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Active Users</p>
+                    <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none">{{ number_format($stats['activeUsers']) }}</h3>
+                    <p class="text-[10px] text-zinc-500 font-semibold mt-2.5 leading-none">
                         @if($periodFilter === 'all')
                             Seluruh Waktu
                         @else
@@ -79,22 +79,22 @@
                         @endif
                     </p>
                 </div>
-                <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/40 flex items-center justify-center text-zinc-500 shrink-0 shadow-none">
-                    <i class="ph ph-lightning text-base"></i>
+                <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650 shrink-0 shadow-3xs">
+                    <i class="ph-bold ph-lightning text-sm"></i>
                 </div>
             </div>
         </div>
 
         {{-- CV Exports --}}
-        <div class="bg-white rounded border border-zinc-200/60 p-4 flex flex-col justify-between hover:bg-[#f7f7f5]/40 transition-colors shadow-none">
+        <div class="bg-white rounded-2xl border border-zinc-200 p-4 flex flex-col justify-between hover:bg-zinc-50/50 hover:border-zinc-300 transition-all duration-200 shadow-3xs">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">CV Exports</p>
-                    <h3 class="text-base font-bold text-zinc-900 leading-tight">{{ number_format($stats['totalExports']) }}</h3>
-                    <p class="text-[10px] text-zinc-450 mt-1.5 leading-none">Total Downloads</p>
+                    <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">CV Exports</p>
+                    <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none">{{ number_format($stats['totalExports']) }}</h3>
+                    <p class="text-[10px] text-zinc-500 font-semibold mt-2.5 leading-none">Total Downloads</p>
                 </div>
-                <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/40 flex items-center justify-center text-zinc-500 shrink-0 shadow-none">
-                    <i class="ph ph-download-simple text-base"></i>
+                <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650 shrink-0 shadow-3xs">
+                    <i class="ph-bold ph-download-simple text-sm"></i>
                 </div>
             </div>
         </div>
@@ -103,56 +103,56 @@
     {{-- Quick Stats Highlights --}}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         {{-- User Growth Insights --}}
-        <div class="bg-white rounded border border-zinc-200/60 p-4 flex flex-col justify-between shadow-none">
+        <div class="bg-white rounded-2xl border border-zinc-200 p-4 flex flex-col justify-between shadow-3xs">
             <div class="flex items-center gap-2 mb-4">
-                <i class="ph ph-users-three text-zinc-400 text-sm"></i>
-                <h4 class="text-[8px] font-mono font-bold uppercase tracking-wide text-zinc-400">User Growth</h4>
+                <i class="ph-bold ph-users-three text-zinc-400 text-sm"></i>
+                <h4 class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">User Growth</h4>
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Today</p>
-                    <p class="text-base font-bold text-zinc-900 leading-none">{{ number_format($stats['newUsersToday']) }}</p>
+                    <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Today</p>
+                    <p class="text-xl font-extrabold text-zinc-900 leading-none font-mono">{{ number_format($stats['newUsersToday']) }}</p>
                 </div>
                 <div class="border-l border-zinc-150 pl-4">
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Week / Month</p>
-                    <p class="text-xs font-semibold text-zinc-700 leading-none mt-1">{{ number_format($stats['newUsersWeek']) }} <span class="text-zinc-300 mx-1">/</span> {{ number_format($stats['newUsersMonth']) }}</p>
+                    <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Week / Month</p>
+                    <p class="text-xs font-bold text-zinc-700 leading-none mt-1 font-mono">{{ number_format($stats['newUsersWeek']) }} <span class="text-zinc-300 mx-1">/</span> {{ number_format($stats['newUsersMonth']) }}</p>
                 </div>
             </div>
         </div>
 
         {{-- Application Metrics --}}
-        <div class="bg-white rounded border border-zinc-200/60 p-4 flex flex-col justify-between shadow-none">
+        <div class="bg-white rounded-2xl border border-zinc-200 p-4 flex flex-col justify-between shadow-3xs">
             <div class="flex items-center gap-2 mb-4">
-                <i class="ph ph-briefcase text-zinc-400 text-sm"></i>
-                <h4 class="text-[8px] font-mono font-bold uppercase tracking-wide text-zinc-400">App Metrics</h4>
+                <i class="ph-bold ph-briefcase text-zinc-400 text-sm"></i>
+                <h4 class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">App Metrics</h4>
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Total Apps</p>
-                    <p class="text-base font-bold text-zinc-900 leading-none">{{ number_format($stats['totalJobApplications'] ?? 0) }}</p>
+                    <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Total Apps</p>
+                    <p class="text-xl font-extrabold text-zinc-900 leading-none font-mono">{{ number_format($stats['totalJobApplications'] ?? 0) }}</p>
                 </div>
                 <div class="border-l border-zinc-150 pl-4">
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Goals Rate</p>
-                    <p class="text-xs font-semibold text-emerald-600 leading-none mt-1">{{ $stats['goalsAchievementRate'] ?? 0 }}%</p>
-                    <p class="text-[9px] text-zinc-400 mt-1 leading-none">{{ number_format($stats['totalGoals'] ?? 0) }} goals</p>
+                    <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Goals Rate</p>
+                    <p class="text-xs font-bold text-emerald-600 leading-none mt-1 font-mono">{{ $stats['goalsAchievementRate'] ?? 0 }}%</p>
+                    <p class="text-[10px] text-zinc-400 font-semibold mt-1 leading-none">{{ number_format($stats['totalGoals'] ?? 0) }} goals</p>
                 </div>
             </div>
         </div>
 
         {{-- Financial Performance --}}
-        <div class="bg-white rounded border border-zinc-200/60 p-4 flex flex-col justify-between shadow-none">
+        <div class="bg-white rounded-2xl border border-zinc-200 p-4 flex flex-col justify-between shadow-3xs">
             <div class="flex items-center gap-2 mb-4">
-                <i class="ph ph-wallet text-zinc-400 text-sm"></i>
-                <h4 class="text-[8px] font-mono font-bold uppercase tracking-wide text-zinc-400">Financial</h4>
+                <i class="ph-bold ph-wallet text-zinc-400 text-sm"></i>
+                <h4 class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Financial</h4>
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Revenue</p>
-                    <p class="text-base font-bold text-zinc-900 leading-none">Rp{{ number_format($stats['totalRevenue'] ?? 0, 0, ',', '.') }}</p>
+                    <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Revenue</p>
+                    <p class="text-lg font-extrabold text-zinc-900 leading-none font-mono">Rp{{ number_format($stats['totalRevenue'] ?? 0, 0, ',', '.') }}</p>
                 </div>
                 <div class="border-l border-zinc-150 pl-4">
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Avg / User</p>
-                    <p class="text-xs font-semibold text-zinc-700 leading-none mt-1">
+                    <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Avg / User</p>
+                    <p class="text-xs font-bold text-zinc-700 leading-none mt-1 font-mono">
                         @if(($stats['premiumUsers'] ?? 0) > 0)
                             Rp{{ number_format(($stats['totalRevenue'] ?? 0) / $stats['premiumUsers'], 0, ',', '.') }}
                         @else
@@ -165,13 +165,13 @@
     </div>
 
     {{-- Hero Chart: User Growth --}}
-    <div class="bg-white rounded border border-zinc-200/60 overflow-hidden shadow-none">
-        <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+    <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden shadow-3xs">
+        <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
             <div class="flex items-center gap-2">
-                <i class="ph ph-trend-up text-zinc-400 text-sm"></i>
+                <i class="ph-bold ph-trend-up text-zinc-450 text-sm animate-pulse"></i>
                 <div>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans">User Growth Trend</h3>
-                    <p class="text-[9px] text-zinc-450 mt-0.5 font-sans">Pertumbuhan pengguna dari waktu ke waktu</p>
+                    <p class="text-[10px] text-zinc-500 mt-0.5 font-sans">Pertumbuhan pengguna dari waktu ke waktu</p>
                 </div>
             </div>
         </div>
@@ -185,13 +185,13 @@
     {{-- 2-Column Grid Charts --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- Applications Over Time --}}
-        <div class="bg-white rounded border border-zinc-200/60 overflow-hidden flex flex-col shadow-none">
-            <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
-                    <i class="ph ph-briefcase text-zinc-400 text-sm"></i>
+                    <i class="ph-bold ph-briefcase text-zinc-455 text-sm"></i>
                     <div>
                         <h3 class="text-xs font-bold text-zinc-900 font-sans">Applications Timeline</h3>
-                        <p class="text-[9px] text-zinc-450 mt-0.5 font-sans">Aktivitas pelamaran kerja harian</p>
+                        <p class="text-[10px] text-zinc-500 mt-0.5 font-sans">Aktivitas pelamaran kerja harian</p>
                     </div>
                 </div>
             </div>
@@ -203,13 +203,13 @@
         </div>
 
         {{-- Registrations by Day --}}
-        <div class="bg-white rounded border border-zinc-200/60 overflow-hidden flex flex-col shadow-none">
-            <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
-                    <i class="ph ph-user-plus text-zinc-400 text-sm"></i>
+                    <i class="ph-bold ph-user-plus text-zinc-455 text-sm"></i>
                     <div>
                         <h3 class="text-xs font-bold text-zinc-900 font-sans">Registrations Timeline</h3>
-                        <p class="text-[9px] text-zinc-450 mt-0.5 font-sans">Pendaftaran pengguna harian</p>
+                        <p class="text-[10px] text-zinc-500 mt-0.5 font-sans">Pendaftaran pengguna harian</p>
                     </div>
                 </div>
             </div>
@@ -224,10 +224,10 @@
     {{-- 3-Column Grid Donut Charts --}}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         {{-- Premium vs Free --}}
-        <div class="bg-white rounded border border-zinc-200/60 overflow-hidden flex flex-col shadow-none">
-            <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
-                    <i class="ph ph-crown text-zinc-400 text-sm"></i>
+                    <i class="ph-bold ph-crown text-zinc-455 text-sm"></i>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans truncate">Premium Ratio</h3>
                 </div>
             </div>
@@ -239,10 +239,10 @@
         </div>
 
         {{-- Goals Achievement --}}
-        <div class="bg-white rounded border border-zinc-200/60 overflow-hidden flex flex-col shadow-none">
-            <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
-                    <i class="ph ph-target text-zinc-400 text-sm"></i>
+                    <i class="ph-bold ph-target text-zinc-455 text-sm"></i>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans truncate">Goals Success</h3>
                 </div>
             </div>
@@ -254,10 +254,10 @@
         </div>
 
         {{-- Verified vs Unverified --}}
-        <div class="bg-white rounded border border-zinc-200/60 overflow-hidden flex flex-col shadow-none">
-            <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
-                    <i class="ph ph-seal-check text-zinc-400 text-sm"></i>
+                    <i class="ph-bold ph-seal-check text-zinc-455 text-sm"></i>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans truncate">Verification Ratio</h3>
                 </div>
             </div>
@@ -270,13 +270,13 @@
     </div>
 
     {{-- Full Width Application Funnel --}}
-    <div class="bg-white rounded border border-zinc-200/60 overflow-hidden flex flex-col shadow-none">
-        <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+    <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+        <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
             <div class="flex items-center gap-2">
-                <i class="ph ph-funnel text-zinc-400 text-sm"></i>
+                <i class="ph-bold ph-funnel text-zinc-455 text-sm"></i>
                 <div>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans">Application Funnel</h3>
-                    <p class="text-[9px] text-zinc-450 mt-0.5 font-sans">Visualisasi alur konversi lamaran kerja dari awal sampai akhir</p>
+                    <p class="text-[10px] text-zinc-500 mt-0.5 font-sans">Visualisasi alur konversi lamaran kerja dari awal sampai akhir</p>
                 </div>
             </div>
         </div>
@@ -333,30 +333,30 @@
                             }
                         @endphp
                         
-                        <div class="bg-white p-4 rounded border {{ $isCritical ? 'border-red-200 bg-red-50/10' : 'border-zinc-200/80' }} transition-colors shadow-none text-left">
+                        <div class="bg-white p-4 rounded-xl border {{ $isCritical ? 'border-red-200 bg-red-50/10' : 'border-zinc-200/80' }} hover:border-zinc-300 hover:bg-zinc-50/20 transition-all duration-200 shadow-3xs text-left">
                             <div class="flex items-center justify-between mb-3.5">
-                                <div class="w-7 h-7 {{ $statusColors[$label] }} rounded flex items-center justify-center text-white shrink-0">
-                                    <i class="ph {{ $label === 'Applied' ? 'ph-paper-plane-tilt' : ($label === 'Interview' ? 'ph-chat-centered-dots' : ($label === 'Accepted' ? 'ph-check-circle' : ($label === 'Rejected' ? 'ph-x-circle' : 'ph-clock'))) }} text-xs"></i>
+                                <div class="w-7 h-7 {{ $statusColors[$label] }} rounded-lg flex items-center justify-center text-white shrink-0 shadow-3xs">
+                                    <i class="ph-bold {{ $label === 'Applied' ? 'ph-paper-plane-tilt' : ($label === 'Interview' ? 'ph-chat-centered-dots' : ($label === 'Accepted' ? 'ph-check-circle' : ($label === 'Rejected' ? 'ph-x-circle' : 'ph-clock'))) }} text-xs"></i>
                                 </div>
-                                <span class="text-[9px] font-mono font-bold {{ $isCritical ? 'text-red-650' : 'text-zinc-400' }} uppercase tracking-wider">{{ $label }}</span>
+                                <span class="text-[10px] font-bold {{ $isCritical ? 'text-red-650' : 'text-zinc-400' }} uppercase tracking-wider">{{ $label }}</span>
                             </div>
 
                             <div class="mb-2">
-                                <h4 class="text-base font-bold text-zinc-900 leading-none">{{ number_format($count) }}</h4>
-                                <div class="flex items-center justify-between text-[9px] font-mono font-bold mt-1">
+                                <h4 class="text-base font-extrabold text-zinc-900 leading-none font-mono">{{ number_format($count) }}</h4>
+                                <div class="flex items-center justify-between text-[10px] font-bold mt-1.5 font-mono">
                                     <span class="text-zinc-400 uppercase tracking-wide">Rate</span>
                                     <span class="{{ $isCritical ? 'text-red-650' : 'text-emerald-650' }}">{{ $conversionRate }}%</span>
                                 </div>
                             </div>
 
-                            <div class="w-full h-1 bg-zinc-100 rounded-full overflow-hidden">
+                            <div class="w-full h-1.5 bg-zinc-100 rounded-full overflow-hidden">
                                 <div class="h-full {{ $statusColors[$label] }} transition-all" style="width: {{ $conversionRate }}%"></div>
                             </div>
 
                             @if($isCritical)
                                 <div class="mt-2.5 pt-2.5 border-t border-red-100 flex items-start gap-1">
-                                    <i class="ph ph-warning text-red-500 text-xs mt-0.5"></i>
-                                    <p class="text-[9px] font-bold text-red-700 leading-tight">
+                                    <i class="ph-bold ph-warning text-red-500 text-xs mt-0.5"></i>
+                                    <p class="text-[10px] font-bold text-red-750 leading-tight">
                                         @if($label === 'Rejected')
                                             Tingkat penolakan tinggi!
                                         @else
@@ -369,8 +369,8 @@
                     @endforeach
                 </div>
             @else
-                <div class="py-10 flex flex-col items-center justify-center text-zinc-400 border border-dashed border-zinc-200 rounded bg-zinc-50/50">
-                    <i class="ph ph-folder-open text-xl mb-2 text-zinc-300"></i>
+                <div class="py-10 flex flex-col items-center justify-center text-zinc-400 border border-dashed border-zinc-200 rounded-xl bg-zinc-50/50">
+                    <i class="ph-bold ph-folder-open text-xl mb-2 text-zinc-300"></i>
                     <p class="text-xs font-bold text-zinc-800">Belum ada data funnel tersedia</p>
                 </div>
             @endif
@@ -380,46 +380,46 @@
     {{-- 2-Column Grid Targeted Companies / Positions --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- Top Companies Row --}}
-        <div class="bg-white rounded border border-zinc-200/60 overflow-hidden flex flex-col shadow-none">
-            <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
-                    <i class="ph ph-buildings text-zinc-400 text-sm"></i>
+                    <i class="ph-bold ph-buildings text-zinc-455 text-sm"></i>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans tracking-tight">Top Targeted Companies</h3>
                 </div>
             </div>
             <div class="p-4 space-y-2 flex-1 overflow-y-auto custom-scrollbar">
                 @forelse($topCompanies as $company)
-                    <div class="flex items-center justify-between p-3 rounded bg-[#f7f7f5]/40 border border-zinc-200/80 hover:bg-[#f7f7f5]/80 transition-colors">
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-[#f7f7f5]/30 border border-zinc-200/80 hover:bg-[#f7f7f5]/80 hover:border-zinc-350 transition-all">
                         <span class="text-xs font-bold text-zinc-700 truncate pr-4">{{ $company['company_name'] }}</span>
-                        <span class="px-2 py-0.5 bg-white border border-zinc-250 text-zinc-650 rounded text-[9px] font-mono font-bold shrink-0">{{ $company['count'] }} Lamaran</span>
+                        <span class="px-2 py-0.5 bg-white border border-zinc-200 text-zinc-650 rounded text-[9px] font-mono font-bold shrink-0 shadow-3xs">{{ $company['count'] }} Lamaran</span>
                     </div>
                 @empty
-                    <div class="py-10 text-center flex flex-col items-center justify-center border border-dashed border-zinc-200 rounded bg-zinc-50/50">
-                        <i class="ph ph-folder-open text-xl mb-1 text-zinc-300"></i>
-                        <p class="text-[9px] font-mono font-bold text-zinc-450 uppercase tracking-wide">Belum ada data perusahaan</p>
+                    <div class="py-10 text-center flex flex-col items-center justify-center border border-dashed border-zinc-200 rounded-xl bg-zinc-50/50">
+                        <i class="ph-bold ph-folder-open text-xl mb-1 text-zinc-300"></i>
+                        <p class="text-[10px] font-bold text-zinc-450 uppercase tracking-wide">Belum ada data perusahaan</p>
                     </div>
                 @endforelse
             </div>
         </div>
 
         {{-- Top Positions Row --}}
-        <div class="bg-white rounded border border-zinc-200/60 overflow-hidden flex flex-col shadow-none">
-            <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
-                    <i class="ph ph-briefcase text-zinc-400 text-sm"></i>
+                    <i class="ph-bold ph-briefcase text-zinc-455 text-sm"></i>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans tracking-tight">Most Wanted Positions</h3>
                 </div>
             </div>
             <div class="p-4 space-y-2 flex-1 overflow-y-auto custom-scrollbar">
                 @forelse($topPositions as $pos)
-                    <div class="flex items-center justify-between p-3 rounded bg-[#f7f7f5]/40 border border-zinc-200/80 hover:bg-[#f7f7f5]/80 transition-colors">
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-[#f7f7f5]/30 border border-zinc-200/80 hover:bg-[#f7f7f5]/80 hover:border-zinc-350 transition-all">
                         <span class="text-xs font-bold text-zinc-700 truncate pr-4">{{ $pos['position'] }}</span>
-                        <span class="px-2 py-0.5 bg-white border border-zinc-250 text-zinc-650 rounded text-[9px] font-mono font-bold shrink-0">{{ $pos['count'] }} Peminat</span>
+                        <span class="px-2 py-0.5 bg-white border border-zinc-200 text-zinc-650 rounded text-[9px] font-mono font-bold shrink-0 shadow-3xs">{{ $pos['count'] }} Peminat</span>
                     </div>
                 @empty
-                    <div class="py-10 text-center flex flex-col items-center justify-center border border-dashed border-zinc-200 rounded bg-zinc-50/50">
-                        <i class="ph ph-folder-open text-xl mb-1 text-zinc-300"></i>
-                        <p class="text-[9px] font-mono font-bold text-zinc-450 uppercase tracking-wide">Belum ada data posisi</p>
+                    <div class="py-10 text-center flex flex-col items-center justify-center border border-dashed border-zinc-200 rounded-xl bg-zinc-50/50">
+                        <i class="ph-bold ph-folder-open text-xl mb-1 text-zinc-300"></i>
+                        <p class="text-[10px] font-bold text-zinc-450 uppercase tracking-wide">Belum ada data posisi</p>
                     </div>
                 @endforelse
             </div>
@@ -427,13 +427,13 @@
     </div>
 
     {{-- Applications By Platform --}}
-    <div class="bg-white rounded border border-zinc-200/60 overflow-hidden flex flex-col shadow-none">
-        <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+    <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+        <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
             <div class="flex items-center gap-2">
-                <i class="ph ph-chart-bar text-zinc-400 text-sm"></i>
+                <i class="ph-bold ph-chart-bar text-zinc-455 text-sm"></i>
                 <div>
                     <h3 class="text-xs font-bold text-zinc-900 font-sans">Platform Popularity</h3>
-                    <p class="text-[9px] text-zinc-450 mt-0.5 font-sans">Sumber lamaran paling banyak digunakan</p>
+                    <p class="text-[10px] text-zinc-500 mt-0.5 font-sans">Sumber lamaran paling banyak digunakan</p>
                 </div>
             </div>
         </div>
@@ -443,8 +443,8 @@
                     <canvas id="jobApplicationsByPlatformChart"></canvas>
                 </div>
             @else
-                <div class="h-64 w-full flex flex-col items-center justify-center text-zinc-450 bg-zinc-50/50 rounded border border-dashed border-zinc-200">
-                    <i class="ph ph-folder-open text-2xl mb-2 text-zinc-300"></i>
+                <div class="h-64 w-full flex flex-col items-center justify-center text-zinc-450 bg-zinc-50/50 rounded-xl border border-dashed border-zinc-200">
+                    <i class="ph-bold ph-folder-open text-2xl mb-2 text-zinc-300"></i>
                     <p class="text-xs font-bold text-zinc-800">Belum ada data platform</p>
                 </div>
             @endif
@@ -454,13 +454,13 @@
     {{-- XP Leaderboard + Peak Activity --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- XP Leaderboard --}}
-        <div class="bg-white rounded border border-zinc-200/60 overflow-hidden flex flex-col shadow-none">
-            <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
-                    <i class="ph ph-trophy text-zinc-400 text-sm"></i>
+                    <i class="ph-bold ph-trophy text-zinc-455 text-sm"></i>
                     <div>
                         <h3 class="text-xs font-bold text-zinc-900 font-sans">XP Leaderboard</h3>
-                        <p class="text-[9px] text-zinc-450 mt-0.5 font-sans">Top 5 pengguna berdasarkan XP</p>
+                        <p class="text-[10px] text-zinc-500 mt-0.5 font-sans">Top 5 pengguna berdasarkan XP</p>
                     </div>
                 </div>
             </div>
@@ -472,28 +472,28 @@
                                 $maxXp = $gamificationLeaderboard[0]['xp'] > 0 ? $gamificationLeaderboard[0]['xp'] : 1;
                                 $barWidth = min(100, round(($player['xp'] / $maxXp) * 100));
                                 $rankColors = match($player['rank']) {
-                                    1 => 'bg-amber-50 text-amber-600 border border-amber-200/40',
-                                    2 => 'bg-zinc-50 text-zinc-700 border border-zinc-200/40',
-                                    3 => 'bg-orange-50 text-orange-700 border border-orange-200/40',
+                                    1 => 'bg-amber-50 text-amber-600 border border-amber-250/50',
+                                    2 => 'bg-zinc-50 text-zinc-700 border border-zinc-250/50',
+                                    3 => 'bg-orange-50 text-orange-700 border border-orange-250/50',
                                     default => 'bg-zinc-50/50 text-zinc-450 border border-zinc-100'
                                 };
                                 $barColor = match($player['rank']) {
                                     1 => 'bg-amber-400',
                                     2 => 'bg-zinc-450',
                                     3 => 'bg-orange-400',
-                                    default => 'bg-zinc-300'
+                                    default => 'bg-zinc-350'
                                 };
                             @endphp
-                             <div class="flex items-center gap-3 px-3 py-2.5 rounded bg-[#f7f7f5]/40 border border-zinc-200/80 hover:bg-[#f7f7f5]/80 transition-colors text-left">
-                                 <div class="w-6 h-6 rounded {{ $rankColors }} flex items-center justify-center text-[10px] font-mono font-bold shrink-0">
+                             <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#f7f7f5]/30 border border-zinc-200/85 hover:bg-[#f7f7f5]/80 hover:border-zinc-350 transition-all text-left">
+                                 <div class="w-6 h-6 rounded-lg {{ $rankColors }} flex items-center justify-center text-[10px] font-mono font-bold shrink-0 shadow-3xs">
                                      {{ $player['rank'] }}
                                  </div>
 
                                  @if(!empty($player['avatar_url']))
                                      <img src="{{ $player['avatar_url'] }}" alt="{{ $player['name'] }}" class="w-7 h-7 rounded-full object-cover border border-zinc-200 shrink-0">
                                  @else
-                                     <div class="w-7 h-7 rounded-full bg-zinc-100 border border-zinc-250/60 flex items-center justify-center text-zinc-400 shrink-0">
-                                         <i class="ph ph-user text-xs"></i>
+                                     <div class="w-7 h-7 rounded-full bg-zinc-100 border border-zinc-200 flex items-center justify-center text-zinc-400 shrink-0 shadow-3xs">
+                                         <i class="ph-bold ph-user text-xs"></i>
                                      </div>
                                  @endif
 
@@ -501,9 +501,9 @@
                                      <div class="flex items-center justify-between gap-2">
                                          <div class="min-w-0">
                                              <p class="text-xs font-bold text-zinc-900 truncate leading-none mb-1.5">{{ $player['name'] }}</p>
-                                             <p class="text-[9px] text-zinc-400 font-mono uppercase tracking-wider leading-none">{{ $player['title'] }} · Lvl {{ $player['level'] }}</p>
+                                             <p class="text-[10px] text-zinc-450 font-semibold leading-none">{{ $player['title'] }} · Lvl {{ $player['level'] }}</p>
                                          </div>
-                                         <span class="text-xs font-bold text-zinc-800 shrink-0">{{ number_format($player['xp']) }} <span class="text-[9px] font-mono font-bold text-zinc-450">XP</span></span>
+                                         <span class="text-xs font-extrabold text-zinc-800 shrink-0 font-mono">{{ number_format($player['xp']) }} <span class="text-[9px] font-bold text-zinc-400 font-sans">XP</span></span>
                                      </div>
                                      <div class="mt-2 w-full bg-zinc-100 rounded-full h-1 overflow-hidden">
                                          <div class="h-full {{ $barColor }} rounded-full" style="width: {{ $barWidth }}%"></div>
@@ -513,8 +513,8 @@
                         @endforeach
                     </div>
                 @else
-                    <div class="py-10 flex flex-col items-center justify-center border border-dashed border-zinc-200 rounded">
-                        <i class="ph ph-trophy text-xl text-zinc-300 mb-1"></i>
+                    <div class="py-10 flex flex-col items-center justify-center border border-dashed border-zinc-200 rounded-xl bg-zinc-50/50">
+                        <i class="ph-bold ph-trophy text-xl text-zinc-300 mb-1"></i>
                         <p class="text-xs font-bold text-zinc-850">Belum ada data leaderboard</p>
                     </div>
                 @endif
@@ -522,18 +522,18 @@
         </div>
 
         {{-- Peak Activity Hours --}}
-        <div class="bg-white rounded border border-zinc-200/60 overflow-hidden flex flex-col shadow-none">
-            <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
-                        <i class="ph ph-clock text-zinc-400 text-sm"></i>
+                        <i class="ph-bold ph-clock text-zinc-455 text-sm"></i>
                         <div>
                             <h3 class="text-xs font-bold text-zinc-900 font-sans">Peak Activity Hours</h3>
-                            <p class="text-[9px] text-zinc-450 mt-0.5 font-sans">Jam paling aktif pengguna di platform</p>
+                            <p class="text-[10px] text-zinc-500 mt-0.5 font-sans">Jam paling aktif pengguna di platform</p>
                         </div>
                     </div>
                     @if($peakActivityHours['peak_hour'] ?? false)
-                        <div class="px-2 py-0.5 bg-zinc-50 border border-zinc-250 rounded text-right shrink-0">
+                        <div class="px-2 py-0.5 bg-zinc-50 border border-zinc-200 rounded-lg text-right shrink-0 shadow-3xs">
                             <p class="text-[9px] font-mono font-bold text-zinc-700 leading-none">Peak: {{ $peakActivityHours['peak_hour'] }}</p>
                             <p class="text-[8px] font-mono text-zinc-450 mt-0.5 uppercase tracking-wide">{{ $peakActivityHours['peak_count'] }} Acts</p>
                         </div>
@@ -546,55 +546,54 @@
                 </div>
             </div>
         </div>
-    </div>
-
+    </div>>
     {{-- AI Usage Stats + Support Tickets --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- AI Usage --}}
-        <div class="bg-white rounded border border-zinc-200/60 overflow-hidden flex flex-col shadow-none">
-            <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
-                    <i class="ph ph-robot text-zinc-400 text-sm"></i>
+                    <i class="ph-bold ph-robot text-zinc-455 text-sm"></i>
                     <div>
                         <h3 class="text-xs font-bold text-zinc-900 font-sans">AI Feature Usage</h3>
-                        <p class="text-[9px] text-zinc-450 mt-0.5 font-sans">Pemakaian fitur AI platform</p>
+                        <p class="text-[10px] text-zinc-500 mt-0.5 font-sans">Pemakaian fitur AI platform</p>
                     </div>
                 </div>
             </div>
             <div class="p-4 flex-1 space-y-5">
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    <div class="p-3 bg-zinc-50 border border-zinc-200/80 rounded text-center">
-                        <p class="text-[8px] font-mono font-bold text-zinc-450 uppercase tracking-wide mb-1">Analyzer</p>
-                        <p class="text-base font-bold text-zinc-900 leading-none">{{ number_format($aiUsageStats['ai_analyzer'] ?? 0) }}</p>
-                        <p class="text-[8px] font-mono text-zinc-400 mt-1.5 uppercase tracking-wide">Scans</p>
+                    <div class="p-3 bg-zinc-50 border border-zinc-200 rounded-xl text-center shadow-3xs">
+                        <p class="text-[10px] font-bold text-zinc-450 uppercase tracking-wider mb-1">Analyzer</p>
+                        <p class="text-base font-extrabold text-zinc-900 leading-none font-mono">{{ number_format($aiUsageStats['ai_analyzer'] ?? 0) }}</p>
+                        <p class="text-[9px] font-bold text-zinc-400 mt-1.5 uppercase tracking-wide">Scans</p>
                     </div>
-                    <div class="p-3 bg-zinc-50 border border-zinc-200/80 rounded text-center">
-                        <p class="text-[8px] font-mono font-bold text-zinc-450 uppercase tracking-wide mb-1">Cover Letter</p>
-                        <p class="text-base font-bold text-zinc-900 leading-none">{{ number_format($coverLetterStats['total'] ?? 0) }}</p>
-                        <p class="text-[8px] font-mono text-zinc-400 mt-1.5 uppercase tracking-wide">Created</p>
+                    <div class="p-3 bg-zinc-50 border border-zinc-200 rounded-xl text-center shadow-3xs">
+                        <p class="text-[10px] font-bold text-zinc-450 uppercase tracking-wider mb-1">Cover Letter</p>
+                        <p class="text-base font-extrabold text-zinc-900 leading-none font-mono">{{ number_format($coverLetterStats['total'] ?? 0) }}</p>
+                        <p class="text-[9px] font-bold text-zinc-400 mt-1.5 uppercase tracking-wide">Created</p>
                     </div>
-                    <div class="p-3 bg-zinc-50 border border-zinc-200/80 rounded text-center">
-                        <p class="text-[8px] font-mono font-bold text-zinc-450 uppercase tracking-wide mb-1">AI Photo</p>
-                        <p class="text-base font-bold text-zinc-900 leading-none">{{ number_format($aiUsageStats['ai_photos'] ?? 0) }}</p>
-                        <p class="text-[8px] font-mono text-zinc-400 mt-1.5 uppercase tracking-wide">Photos</p>
+                    <div class="p-3 bg-zinc-50 border border-zinc-200 rounded-xl text-center shadow-3xs">
+                        <p class="text-[10px] font-bold text-zinc-450 uppercase tracking-wider mb-1">AI Photo</p>
+                        <p class="text-base font-extrabold text-zinc-900 leading-none font-mono">{{ number_format($aiUsageStats['ai_photos'] ?? 0) }}</p>
+                        <p class="text-[9px] font-bold text-zinc-400 mt-1.5 uppercase tracking-wide">Photos</p>
                     </div>
-                    <div class="p-3 bg-zinc-50 border border-zinc-200/80 rounded text-center">
-                        <p class="text-[8px] font-mono font-bold text-zinc-450 uppercase tracking-wide mb-1">CV Gen</p>
-                        <p class="text-base font-bold text-zinc-900 leading-none">{{ number_format($aiUsageStats['ai_cv_gen'] ?? 0) }}</p>
-                        <p class="text-[8px] font-mono text-zinc-400 mt-1.5 uppercase tracking-wide">Month</p>
+                    <div class="p-3 bg-zinc-50 border border-zinc-200 rounded-xl text-center shadow-3xs">
+                        <p class="text-[10px] font-bold text-zinc-450 uppercase tracking-wider mb-1">CV Gen</p>
+                        <p class="text-base font-extrabold text-zinc-900 leading-none font-mono">{{ number_format($aiUsageStats['ai_cv_gen'] ?? 0) }}</p>
+                        <p class="text-[9px] font-bold text-zinc-400 mt-1.5 uppercase tracking-wide">Month</p>
                     </div>
                 </div>
                 
                 {{-- Mini Trend Charts --}}
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                     <div>
-                        <p class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-2">AI Analyzer — 7 Hari</p>
+                        <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-2">AI Analyzer — 7 Hari</p>
                         <div class="h-28 w-full relative">
                             <canvas id="aiUsageTrendChart"></canvas>
                         </div>
                     </div>
                     <div>
-                        <p class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-2">AI Cover Letter — 14 Hari</p>
+                        <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-2">AI Cover Letter — 14 Hari</p>
                         <div class="h-28 w-full relative">
                             <canvas id="coverLetterTrendChart"></canvas>
                         </div>
@@ -604,34 +603,34 @@
         </div>
 
         {{-- Support Ticket Resolution --}}
-        <div class="bg-white rounded border border-zinc-200/60 overflow-hidden flex flex-col shadow-none">
-            <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
-                    <i class="ph ph-headset text-zinc-400 text-sm"></i>
+                    <i class="ph-bold ph-headset text-zinc-455 text-sm"></i>
                     <div>
                         <h3 class="text-xs font-bold text-zinc-900 font-sans">Support Ticket Resolution</h3>
-                        <p class="text-[9px] text-zinc-450 mt-0.5 font-sans">Status & performa penyelesaian tiket</p>
+                        <p class="text-[10px] text-zinc-500 mt-0.5 font-sans">Status & performa penyelesaian tiket</p>
                     </div>
                 </div>
             </div>
             <div class="p-4 flex-1 space-y-4">
                 <div class="grid grid-cols-2 gap-2">
-                    <div class="p-3 bg-zinc-50 border border-zinc-200 rounded flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded bg-zinc-200/50 text-zinc-500 flex items-center justify-center shrink-0">
-                            <i class="ph ph-ticket text-xs"></i>
+                    <div class="p-3 bg-zinc-50 border border-zinc-200 rounded-xl flex items-center gap-2.5 shadow-3xs">
+                        <div class="w-7 h-7 rounded-lg bg-zinc-200/50 text-zinc-650 flex items-center justify-center shrink-0 shadow-3xs">
+                            <i class="ph-bold ph-ticket text-xs"></i>
                         </div>
                         <div>
-                            <p class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none mb-1.5">Total Tiket</p>
-                            <p class="text-base font-bold text-zinc-900 leading-none">{{ number_format($supportTicketStats['total'] ?? 0) }}</p>
+                            <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider leading-none mb-1.5">Total Tiket</p>
+                            <p class="text-base font-extrabold text-zinc-900 leading-none font-mono">{{ number_format($supportTicketStats['total'] ?? 0) }}</p>
                         </div>
                     </div>
-                    <div class="p-3 bg-zinc-50 border border-zinc-200 rounded flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded bg-zinc-200/50 text-zinc-500 flex items-center justify-center shrink-0">
-                            <i class="ph ph-timer text-xs"></i>
+                    <div class="p-3 bg-zinc-50 border border-zinc-200 rounded-xl flex items-center gap-2.5 shadow-3xs">
+                        <div class="w-7 h-7 rounded-lg bg-zinc-200/50 text-zinc-650 flex items-center justify-center shrink-0 shadow-3xs">
+                            <i class="ph-bold ph-timer text-xs"></i>
                         </div>
                         <div>
-                            <p class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide leading-none mb-1.5">Avg Respon</p>
-                            <p class="text-base font-bold text-zinc-900 leading-none">{{ $supportTicketStats['avg_resolution_hrs'] ?? 0 }}<span class="text-[10px] text-zinc-400 ml-0.5">h</span></p>
+                            <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider leading-none mb-1.5">Avg Respon</p>
+                            <p class="text-base font-extrabold text-zinc-900 leading-none font-mono">{{ $supportTicketStats['avg_resolution_hrs'] ?? 0 }}<span class="text-[10px] text-zinc-400 ml-0.5 font-sans">h</span></p>
                         </div>
                     </div>
                 </div>
@@ -642,50 +641,50 @@
                         $tTotal = $supportTicketStats['total'] ?? 1;
                         $tTotal = max($tTotal, 1);
                     @endphp
-                    <div class="flex items-center justify-between bg-[#f7f7f5]/40 px-3 py-2 rounded border border-zinc-200/60">
+                    <div class="flex items-center justify-between bg-[#f7f7f5]/30 px-3 py-2 rounded-xl border border-zinc-200/80 hover:bg-[#f7f7f5]/80 hover:border-zinc-350 transition-all">
                         <div class="flex items-center gap-2">
-                            <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
                             <span class="text-[10px] font-bold text-zinc-600">Pending</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="w-24 sm:w-32 h-1.5 bg-zinc-100 rounded-full overflow-hidden">
                                 <div class="h-full bg-amber-400 rounded-full" style="width: {{ round(($supportTicketStats['pending'] ?? 0) / $tTotal * 100) }}%"></div>
                             </div>
-                            <span class="text-[10px] font-mono font-bold text-zinc-950 w-5 text-right">{{ $supportTicketStats['pending'] ?? 0 }}</span>
+                            <span class="text-[10px] font-bold text-zinc-950 w-5 text-right font-mono">{{ $supportTicketStats['pending'] ?? 0 }}</span>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between bg-[#f7f7f5]/40 px-3 py-2 rounded border border-zinc-200/60">
+                    <div class="flex items-center justify-between bg-[#f7f7f5]/30 px-3 py-2 rounded-xl border border-zinc-200/80 hover:bg-[#f7f7f5]/80 hover:border-zinc-350 transition-all">
                         <div class="flex items-center gap-2">
-                            <div class="w-2 h-2 rounded-full bg-blue-450"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-blue-400"></div>
                             <span class="text-[10px] font-bold text-zinc-600">Replied</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="w-24 sm:w-32 h-1.5 bg-zinc-100 rounded-full overflow-hidden">
-                                <div class="h-full bg-blue-450 rounded-full" style="width: {{ round(($supportTicketStats['replied'] ?? 0) / $tTotal * 100) }}%"></div>
+                                <div class="h-full bg-blue-400 rounded-full" style="width: {{ round(($supportTicketStats['replied'] ?? 0) / $tTotal * 100) }}%"></div>
                             </div>
-                            <span class="text-[10px] font-mono font-bold text-zinc-950 w-5 text-right">{{ $supportTicketStats['replied'] ?? 0 }}</span>
+                            <span class="text-[10px] font-bold text-zinc-950 w-5 text-right font-mono">{{ $supportTicketStats['replied'] ?? 0 }}</span>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between bg-[#f7f7f5]/40 px-3 py-2 rounded border border-zinc-200/60">
+                    <div class="flex items-center justify-between bg-[#f7f7f5]/30 px-3 py-2 rounded-xl border border-zinc-200/80 hover:bg-[#f7f7f5]/80 hover:border-zinc-350 transition-all">
                         <div class="flex items-center gap-2">
-                            <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
                             <span class="text-[10px] font-bold text-zinc-650">Resolved</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="w-24 sm:w-32 h-1.5 bg-zinc-100 rounded-full overflow-hidden">
                                 <div class="h-full bg-emerald-500 rounded-full" style="width: {{ round(($supportTicketStats['resolved'] ?? 0) / $tTotal * 100) }}%"></div>
                             </div>
-                            <span class="text-[10px] font-mono font-bold text-zinc-950 w-5 text-right">{{ $supportTicketStats['resolved'] ?? 0 }}</span>
+                            <span class="text-[10px] font-bold text-zinc-950 w-5 text-right font-mono">{{ $supportTicketStats['resolved'] ?? 0 }}</span>
                         </div>
                     </div>
                 </div>
                 
                 @if(count($supportTicketStats['by_category'] ?? []) > 0)
                     <div class="pt-3 border-t border-zinc-150">
-                        <p class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-2">By Category</p>
+                        <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-2">By Category</p>
                         <div class="flex flex-wrap gap-1.5">
                             @foreach($supportTicketStats['by_category'] as $cat)
-                                <span class="px-2 py-0.5 bg-zinc-50 border border-zinc-250 text-zinc-650 text-[9px] font-bold rounded">
+                                <span class="px-2 py-0.5 bg-zinc-50 border border-zinc-200 text-zinc-650 text-[10px] font-bold rounded-lg shadow-3xs">
                                     {{ str_replace('_', ' ', $cat['category']) }} ({{ $cat['count'] }})
                                 </span>
                             @endforeach
@@ -699,53 +698,53 @@
     {{-- Retention + Template Popularity --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- Retention Cohort --}}
-        <div class="bg-white rounded border border-zinc-200/60 overflow-hidden flex flex-col shadow-none">
-            <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
-                    <i class="ph ph-arrow-counter-clockwise text-zinc-400 text-sm"></i>
+                    <i class="ph-bold ph-arrow-counter-clockwise text-zinc-455 text-sm"></i>
                     <div>
                         <h3 class="text-xs font-bold text-zinc-900 font-sans">User Retention Cohort</h3>
-                        <p class="text-[9px] text-zinc-450 mt-0.5 font-sans">Berapa % user kembali bulan berikutnya</p>
+                        <p class="text-[10px] text-zinc-500 mt-0.5 font-sans">Berapa % user kembali bulan berikutnya</p>
                     </div>
                 </div>
             </div>
             <div class="p-4 flex-1 space-y-2">
                 @forelse($retentionCohort as $cohort)
-                    <div class="flex items-center gap-3 p-1.5 hover:bg-[#f7f7f5]/40 rounded transition-colors text-left">
-                        <div class="w-16 shrink-0 bg-zinc-50 border border-zinc-200 text-zinc-600 py-0.5 rounded text-[9px] font-mono font-bold uppercase text-center">
+                    <div class="flex items-center gap-3 p-2 hover:bg-[#f7f7f5]/80 rounded-xl border border-transparent hover:border-zinc-200 transition-all text-left">
+                        <div class="w-16 shrink-0 bg-zinc-50 border border-zinc-200 text-zinc-650 py-0.5 rounded-lg text-[9px] font-mono font-bold uppercase text-center shadow-3xs">
                             {{ $cohort['month'] }}
                         </div>
                         <div class="flex-1 min-w-0">
-                            <div class="flex items-center justify-between mb-0.5">
-                                <p class="text-[9px] text-zinc-400 font-mono">{{ $cohort['retained'] }}/{{ $cohort['total'] }} retained</p>
-                                <p class="text-[9px] font-mono font-bold {{ $cohort['rate'] >= 50 ? 'text-emerald-600' : ($cohort['rate'] >= 25 ? 'text-amber-600' : 'text-red-500') }}">{{ $cohort['rate'] }}%</p>
+                            <div class="flex items-center justify-between mb-0.5 font-mono">
+                                <p class="text-[10px] text-zinc-400 font-bold">{{ $cohort['retained'] }}/{{ $cohort['total'] }} retained</p>
+                                <p class="text-[10px] font-extrabold {{ $cohort['rate'] >= 50 ? 'text-emerald-600' : ($cohort['rate'] >= 25 ? 'text-amber-600' : 'text-red-500') }}">{{ $cohort['rate'] }}%</p>
                             </div>
-                            <div class="w-full h-1 bg-zinc-100 rounded-full overflow-hidden">
-                                @php $retColor = $cohort['rate'] >= 50 ? 'bg-emerald-400' : ($cohort['rate'] >= 25 ? 'bg-amber-400' : 'bg-red-400'); @endphp
+                            <div class="w-full h-1.5 bg-zinc-100 rounded-full overflow-hidden">
+                                @php $retColor = $cohort['rate'] >= 50 ? 'bg-emerald-450' : ($cohort['rate'] >= 25 ? 'bg-amber-450' : 'bg-red-450'); @endphp
                                 <div class="h-full {{ $retColor }} rounded-full" style="width: {{ $cohort['rate'] }}%"></div>
                             </div>
                         </div>
                     </div>
                 @empty
-                    <div class="py-10 flex flex-col items-center justify-center border border-dashed border-zinc-200 rounded">
-                        <i class="ph ph-chart-pie text-xl text-zinc-300 mb-1"></i>
-                        <p class="text-[9px] font-mono font-bold text-zinc-455 uppercase tracking-wide">Belum ada data retensi</p>
+                    <div class="py-10 flex flex-col items-center justify-center border border-dashed border-zinc-200 rounded-xl bg-zinc-50/50">
+                        <i class="ph-bold ph-chart-pie text-xl text-zinc-300 mb-1"></i>
+                        <p class="text-[10px] font-bold text-zinc-455 uppercase tracking-wide">Belum ada data retensi</p>
                     </div>
                 @endforelse
                 <div class="pt-2.5 border-t border-zinc-150 text-left">
-                    <p class="text-[9px] text-zinc-400 font-sans">* % user yang mendaftar bulan X dan kembali aktif di bulan X+1</p>
+                    <p class="text-[10px] text-zinc-450 font-sans font-semibold">* % user yang mendaftar bulan X dan kembali aktif di bulan X+1</p>
                 </div>
             </div>
         </div>
 
         {{-- CV Template Popularity --}}
-        <div class="bg-white rounded border border-zinc-200/60 overflow-hidden flex flex-col shadow-none">
-            <div class="px-4 py-3 border-b border-zinc-150/60 bg-zinc-50/20">
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col shadow-3xs">
+            <div class="px-4.5 py-3.5 border-b border-zinc-100 bg-zinc-50/30">
                 <div class="flex items-center gap-2">
-                    <i class="ph ph-file-doc text-zinc-400 text-sm"></i>
+                    <i class="ph-bold ph-file-doc text-zinc-455 text-sm"></i>
                     <div>
                         <h3 class="text-xs font-bold text-zinc-900 font-sans">CV Template Popularity</h3>
-                        <p class="text-[9px] text-zinc-450 mt-0.5 font-sans">Template mana yang paling sering dipilih</p>
+                        <p class="text-[10px] text-zinc-500 mt-0.5 font-sans">Template mana yang paling sering dipilih</p>
                     </div>
                 </div>
             </div>
@@ -755,33 +754,33 @@
                     <div class="space-y-2">
                         @foreach($cvTemplatePopularity['templates'] as $i => $tpl)
                             @php
-                                $tplColors = ['bg-rose-400','bg-orange-400','bg-amber-400','bg-emerald-400','bg-blue-400','bg-purple-400'];
-                                $tplColor = $tplColors[$i] ?? 'bg-zinc-400';
+                                $tplColors = ['bg-rose-500','bg-orange-500','bg-amber-500','bg-emerald-500','bg-blue-500','bg-purple-500'];
+                                $tplColor = $tplColors[$i] ?? 'bg-zinc-500';
                                 $tplWidth = $maxUsage > 0 ? round(($tpl['usage_count'] / $maxUsage) * 100) : 0;
                             @endphp
-                            <div class="flex items-center gap-3 p-1.5 hover:bg-[#f7f7f5]/40 rounded transition-colors text-left">
-                                <div class="w-6 h-6 rounded {{ $tplColor }} bg-opacity-10 {{ str_replace('bg-', 'text-', $tplColor) }} flex items-center justify-center shrink-0">
-                                    <i class="ph ph-file-text text-xs"></i>
+                            <div class="flex items-center gap-3 p-2 hover:bg-[#f7f7f5]/80 rounded-xl border border-transparent hover:border-zinc-200 transition-all text-left">
+                                <div class="w-6 h-6 rounded-lg {{ $tplColor }} bg-opacity-10 {{ str_replace('bg-', 'text-', $tplColor) }} flex items-center justify-center shrink-0 shadow-3xs">
+                                    <i class="ph-bold ph-file-text text-xs"></i>
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center justify-between mb-0.5">
                                         <p class="text-xs font-bold text-zinc-800 truncate capitalize">{{ str_replace(['_', '-'], ' ', $tpl['template_key']) }}</p>
-                                        <p class="text-xs font-bold text-zinc-900 shrink-0 ml-2">{{ $tpl['usage_count'] }}</p>
+                                        <p class="text-xs font-extrabold text-zinc-900 shrink-0 ml-2 font-mono">{{ $tpl['usage_count'] }}</p>
                                     </div>
-                                    <div class="w-full h-1 bg-zinc-100 rounded-full overflow-hidden">
+                                    <div class="w-full h-1.5 bg-zinc-100 rounded-full overflow-hidden">
                                         <div class="h-full {{ $tplColor }} rounded-full" style="width: {{ $tplWidth }}%"></div>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
-                    <div class="mt-4 pt-3 border-t border-zinc-150 flex items-center justify-between">
-                        <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider">Total CV Dibuat</p>
-                        <p class="text-xs font-bold text-zinc-950">{{ number_format($cvTemplatePopularity['total'] ?? 0) }}</p>
+                    <div class="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between font-sans">
+                        <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Total CV Dibuat</p>
+                        <p class="text-xs font-extrabold text-zinc-950 font-mono">{{ number_format($cvTemplatePopularity['total'] ?? 0) }}</p>
                     </div>
                 @else
-                    <div class="h-full flex flex-col items-center justify-center py-10 border border-dashed border-zinc-200 rounded">
-                        <i class="ph ph-file-doc text-xl text-zinc-300 mb-2"></i>
+                    <div class="h-full flex flex-col items-center justify-center py-10 border border-dashed border-zinc-200 rounded-xl bg-zinc-50/50">
+                        <i class="ph-bold ph-file-doc text-xl text-zinc-300 mb-2"></i>
                         <p class="text-xs font-bold text-zinc-800">Belum ada data template</p>
                     </div>
                 @endif
@@ -902,14 +901,14 @@
                         datasets: [{
                             label: 'Applications',
                             data: data.data || [],
-                            borderColor: '#9333ea', // Brand Purple
-                            backgroundColor: createGradient(ctx, 'rgba(147,51,234,0.04)', 'rgba(147,51,234,0)'),
+                            borderColor: '#3b82f6', // Premium Blue
+                            backgroundColor: createGradient(ctx, 'rgba(59,130,246,0.04)', 'rgba(59,130,246,0)'),
                             borderWidth: 1.5,
                             tension: 0.4,
                             fill: true,
                             pointRadius: 0,
                             pointHoverRadius: 4,
-                            pointHoverBackgroundColor: '#9333ea',
+                            pointHoverBackgroundColor: '#3b82f6',
                             pointHoverBorderColor: '#fff',
                             pointHoverBorderWidth: 2,
                         }]
@@ -930,14 +929,14 @@
                         datasets: [{
                             label: 'Registrations',
                             data: data.data || [],
-                            borderColor: '#7c3aed', // Brand Violet
-                            backgroundColor: createGradient(ctx, 'rgba(124,58,237,0.04)', 'rgba(124,58,237,0)'),
+                            borderColor: '#71717a', // Slate/Zinc-500
+                            backgroundColor: createGradient(ctx, 'rgba(113,113,122,0.04)', 'rgba(113,113,122,0)'),
                             borderWidth: 1.5,
                             tension: 0.4,
                             fill: true,
                             pointRadius: 0,
                             pointHoverRadius: 4,
-                            pointHoverBackgroundColor: '#7c3aed',
+                            pointHoverBackgroundColor: '#71717a',
                             pointHoverBorderColor: '#fff',
                             pointHoverBorderWidth: 2,
                         }]
@@ -956,7 +955,7 @@
                         labels: ['Premium', 'Free'],
                         datasets: [{
                             data: [data.premiumUsers || 0, data.freeUsers || 0],
-                            backgroundColor: ['#9333ea', '#f4f4f5'],
+                            backgroundColor: ['#f59e0b', '#e4e4e7'],
                             borderWidth: 1,
                             borderColor: '#ffffff'
                         }]
@@ -1041,7 +1040,7 @@
                         labels: data.labels || [],
                         datasets: [{
                             data: data.data || [],
-                            backgroundColor: '#9333ea',
+                            backgroundColor: '#3b82f6',
                             borderRadius: 2,
                             barThickness: 16
                         }]
@@ -1069,8 +1068,8 @@
                         labels: data.trend_labels || [],
                         datasets: [{
                             data: data.trend || [],
-                            borderColor: '#a855f7',
-                            backgroundColor: createGradient(ctx, 'rgba(168,85,247,0.04)', 'rgba(168,85,247,0)'),
+                            borderColor: '#0ea5e9', // Sky Blue
+                            backgroundColor: createGradient(ctx, 'rgba(14,165,233,0.04)', 'rgba(14,165,233,0)'),
                             borderWidth: 1.2,
                             tension: 0.4,
                             fill: true,
