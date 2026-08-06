@@ -37,109 +37,110 @@
 @endphp
 <div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-5 space-y-6 pb-12">
     
-    <!-- Notion-style Minimal Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-100">
-        <div class="flex items-center gap-2">
-            <span class="text-xs font-mono font-medium text-zinc-400">Admin</span>
-            <span class="text-zinc-300">/</span>
-            <h1 class="text-xs font-bold font-mono tracking-wider uppercase text-zinc-900">User Management</h1>
+    <!-- Header Section (Sleek and Clean) -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-200">
+        <div>
+            <h1 class="text-lg font-black text-zinc-900 tracking-tight flex items-center gap-1.5">
+                User Management <span class="text-[9px] font-mono font-bold text-zinc-450 bg-zinc-100 border border-zinc-200 px-1.5 py-0.2 rounded">Global Users</span>
+            </h1>
+            <p class="text-[10px] text-zinc-500 font-semibold mt-0.5">View and manage registered accounts, premium subscriptions, and operational roles.</p>
         </div>
     </div>
 
-    <!-- Notion-style Clean Stats Grid (5-Column) -->
+    <!-- Notion-style Clean Stats Grid (5-Column Premium Bento) -->
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
         <!-- Total Users -->
-        <div class="bg-white rounded border border-zinc-200/70 p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group">
+        <div class="bg-white rounded-xl border border-zinc-200 p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-[0_4px_20px_rgba(0,0,0,0.008)]">
             <div class="flex items-start justify-between">
                 <div>
-                    <span class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider block mb-1">Total Users</span>
-                    <h3 class="text-xl font-bold tracking-tight text-zinc-900">{{ number_format($stats['total']) }}</h3>
+                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Total Users</span>
+                    <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none">{{ number_format($stats['total']) }}</h3>
                 </div>
-                <div class="w-6.5 h-6.5 rounded bg-[#f7f7f5] border border-zinc-150 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-100 transition-colors">
+                <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0">
                     <i class="ph ph-users-three text-xs"></i>
                 </div>
             </div>
-            <p class="text-[10px] text-zinc-400 font-medium mt-3">All members registered</p>
+            <p class="text-[10px] text-zinc-400 font-bold mt-4">All members registered</p>
         </div>
 
         <!-- Premium Users -->
-        <div class="bg-white rounded border border-zinc-200/70 p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group">
+        <div class="bg-white rounded-xl border border-zinc-200 p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-[0_4px_20px_rgba(0,0,0,0.008)]">
             <div class="flex items-start justify-between">
                 <div>
-                    <span class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider block mb-1">Premium Users</span>
-                    <h3 class="text-xl font-bold tracking-tight text-zinc-900">{{ number_format($stats['premium']) }}</h3>
+                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Premium Users</span>
+                    <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none">{{ number_format($stats['premium']) }}</h3>
                 </div>
-                <div class="w-6.5 h-6.5 rounded bg-[#f7f7f5] border border-zinc-150 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-100 transition-colors">
+                <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0">
                     <i class="ph ph-crown text-xs"></i>
                 </div>
             </div>
-            <p class="text-[10px] text-zinc-400 font-medium mt-3">Active paid accounts</p>
+            <p class="text-[10px] text-zinc-400 font-bold mt-4">Active paid accounts</p>
         </div>
 
         <!-- Free Users -->
-        <div class="bg-white rounded border border-zinc-200/70 p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group">
+        <div class="bg-white rounded-xl border border-zinc-200 p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-[0_4px_20px_rgba(0,0,0,0.008)]">
             <div class="flex items-start justify-between">
                 <div>
-                    <span class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider block mb-1">Free Users</span>
-                    <h3 class="text-xl font-bold tracking-tight text-zinc-900">{{ number_format($stats['free']) }}</h3>
+                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Free Users</span>
+                    <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none">{{ number_format($stats['free']) }}</h3>
                 </div>
-                <div class="w-6.5 h-6.5 rounded bg-[#f7f7f5] border border-zinc-150 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-100 transition-colors">
+                <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0">
                     <i class="ph ph-user text-xs"></i>
                 </div>
             </div>
-            <p class="text-[10px] text-zinc-400 font-medium mt-3">Standard basic tier</p>
+            <p class="text-[10px] text-zinc-400 font-bold mt-4">Standard basic tier</p>
         </div>
 
         <!-- Verified Users -->
-        <div class="bg-white rounded border border-zinc-200/70 p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group">
+        <div class="bg-white rounded-xl border border-zinc-200 p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-[0_4px_20px_rgba(0,0,0,0.008)]">
             <div class="flex items-start justify-between">
                 <div>
-                    <span class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider block mb-1">Verified</span>
-                    <h3 class="text-xl font-bold tracking-tight text-zinc-900">{{ number_format($stats['verified']) }}</h3>
+                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Verified</span>
+                    <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none">{{ number_format($stats['verified']) }}</h3>
                 </div>
-                <div class="w-6.5 h-6.5 rounded bg-[#f7f7f5] border border-zinc-150 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-100 transition-colors">
+                <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0">
                     <i class="ph ph-check-circle text-xs"></i>
                 </div>
             </div>
-            <p class="text-[10px] text-zinc-400 font-medium mt-3">Email verified status</p>
+            <p class="text-[10px] text-zinc-400 font-bold mt-4">Email verified status</p>
         </div>
 
         <!-- AI Trial Used -->
-        <div class="bg-white rounded border border-zinc-200/70 p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group col-span-2 sm:col-span-1">
+        <div class="bg-white rounded-xl border border-zinc-200 p-4 hover:border-zinc-300 transition-all flex flex-col justify-between group col-span-2 sm:col-span-1 shadow-[0_4px_20px_rgba(0,0,0,0.008)]">
             <div class="flex items-start justify-between">
                 <div>
-                    <span class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider block mb-1">AI Trials Used</span>
-                    <h3 class="text-xl font-bold tracking-tight text-zinc-900">{{ number_format($stats['ai_analyzer_trial_used']) }}</h3>
+                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">AI Trials Used</span>
+                    <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none">{{ number_format($stats['ai_analyzer_trial_used']) }}</h3>
                 </div>
-                <div class="w-6.5 h-6.5 rounded bg-[#f7f7f5] border border-zinc-150 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-100 transition-colors">
+                <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0">
                     <i class="ph ph-sparkles text-xs"></i>
                 </div>
             </div>
-            <p class="text-[10px] text-zinc-400 font-medium mt-3">Resume analyses run</p>
+            <p class="text-[10px] text-zinc-400 font-bold mt-4">Resume analyses run</p>
         </div>
     </div>
 
     <!-- Filters & Actions Utilities Bar -->
-    <div class="bg-[#f7f7f5] rounded border border-zinc-200/60 p-2 flex flex-col lg:flex-row gap-2.5 items-center justify-between shadow-none">
+    <div class="bg-zinc-50 border border-zinc-200 p-2.5 rounded-xl flex flex-col lg:flex-row gap-2.5 items-center justify-between shadow-[0_2px_8px_rgba(0,0,0,0.01)]">
         <div class="flex flex-col sm:flex-row gap-2 w-full lg:w-auto flex-1">
             <!-- Search -->
             <div class="relative w-full sm:max-w-xs">
-                <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-zinc-400">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-400">
                     <i class="ph ph-magnifying-glass text-xs"></i>
                 </div>
                 <input type="text" wire:model.live="search" placeholder="Cari nama atau email..." 
-                       class="w-full h-8 pl-8 pr-3 bg-white border border-zinc-250 focus:border-zinc-400 rounded text-xs font-medium text-zinc-800 focus:outline-none focus:ring-0 transition-colors placeholder:text-zinc-450">
+                       class="w-full h-8 pl-8.5 pr-3 bg-white border border-zinc-200 focus:border-zinc-400 rounded-lg text-xs font-semibold text-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all placeholder:text-zinc-400">
             </div>
 
             <!-- Premium Filter -->
             <div class="relative w-full sm:w-36">
                 <select wire:model.live="filterPremium" 
-                        class="w-full h-8 pl-2.5 pr-8 bg-white border border-zinc-250 focus:border-zinc-400 rounded text-xs font-medium text-zinc-800 focus:outline-none focus:ring-0 transition-colors bg-none appearance-none cursor-pointer">
+                        class="w-full h-8 pl-3 pr-8 bg-white border border-zinc-200 focus:border-zinc-400 rounded-lg text-xs font-semibold text-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all bg-none appearance-none cursor-pointer">
                     <option value="all">Semua Status</option>
                     <option value="premium">Premium</option>
                     <option value="free">Free</option>
                 </select>
-                <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none text-zinc-400">
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-zinc-400">
                     <i class="ph ph-caret-down text-[10px]"></i>
                 </div>
             </div>
@@ -147,12 +148,12 @@
             <!-- AI Trial Filter -->
             <div class="relative w-full sm:w-40">
                 <select wire:model.live="filterAiAnalyzer" 
-                        class="w-full h-8 pl-2.5 pr-8 bg-white border border-zinc-250 focus:border-zinc-400 rounded text-xs font-medium text-zinc-800 focus:outline-none focus:ring-0 transition-colors bg-none appearance-none cursor-pointer">
+                        class="w-full h-8 pl-3 pr-8 bg-white border border-zinc-200 focus:border-zinc-400 rounded-lg text-xs font-semibold text-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all bg-none appearance-none cursor-pointer">
                     <option value="all">Semua AI Trial</option>
                     <option value="used">Sudah Pakai</option>
                     <option value="not_used">Belum Pakai</option>
                 </select>
-                <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none text-zinc-400">
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-zinc-400">
                     <i class="ph ph-caret-down text-[10px]"></i>
                 </div>
             </div>
@@ -160,14 +161,14 @@
             <!-- Rows per page -->
             <div class="relative w-full sm:w-28 hidden md:block">
                 <select wire:model.live="perPage" 
-                        class="w-full h-8 pl-2.5 pr-8 bg-white border border-zinc-250 focus:border-zinc-400 rounded text-xs font-medium text-zinc-800 focus:outline-none focus:ring-0 transition-colors bg-none appearance-none cursor-pointer">
+                        class="w-full h-8 pl-3 pr-8 bg-white border border-zinc-200 focus:border-zinc-400 rounded-lg text-xs font-semibold text-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all bg-none appearance-none cursor-pointer">
                     <option value="10">10 Baris</option>
                     <option value="20">20 Baris</option>
                     <option value="50">50 Baris</option>
                     <option value="100">100 Baris</option>
                     <option value="all">Semua</option>
                 </select>
-                <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none text-zinc-400">
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-zinc-400">
                     <i class="ph ph-caret-down text-[10px]"></i>
                 </div>
             </div>
@@ -176,15 +177,15 @@
         <!-- Add Admin Button -->
         <div class="w-full lg:w-auto shrink-0 flex items-center">
             <button wire:click="openCreateAdminModal" 
-                    class="w-full sm:w-auto h-8 px-4 bg-zinc-900 text-white hover:bg-zinc-800 rounded transition-colors flex items-center justify-center gap-1.5 text-xs font-semibold shadow-none">
+                    class="w-full sm:w-auto h-8 px-4 bg-zinc-900 text-white hover:bg-zinc-800 rounded-lg transition-all flex items-center justify-center gap-1.5 text-xs font-bold shadow-3xs hover:shadow-2xs">
                 <i class="ph ph-user-plus text-xs"></i>
                 Add Admin
             </button>
         </div>
     </div>
 
-    <!-- Users Table (Notion Plain Database Visual) -->
-    <div class="bg-white rounded border border-zinc-200/70 overflow-hidden flex flex-col relative min-h-[480px]">
+    <!-- Users Table (Premium Plain Database Visual) -->
+    <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden flex flex-col relative min-h-[480px] shadow-[0_4px_20px_rgba(0,0,0,0.008)]">
         <div class="overflow-x-auto custom-scrollbar flex-1">
             <table class="min-w-full divide-y divide-zinc-150">
                 <thead class="bg-[#f7f7f5]">
@@ -260,25 +261,25 @@
                             <td class="px-4 py-3 whitespace-nowrap hidden lg:table-cell text-center">
                                 <div class="flex items-center justify-center gap-1">
                                     @if($user->password)
-                                        <div class="w-5 h-5 flex items-center justify-center text-zinc-450 bg-[#f7f7f5] border border-zinc-200 rounded" title="Email/Password Login">
+                                        <div class="w-5 h-5 flex items-center justify-center text-zinc-450 bg-zinc-50 border border-zinc-150 rounded-md" title="Email/Password Login">
                                             <i class="ph ph-envelope text-xs"></i>
                                         </div>
                                     @endif
 
                                     @if($user->google_id)
-                                        <div class="w-5 h-5 flex items-center justify-center text-zinc-500 bg-[#f7f7f5] border border-zinc-200 rounded font-mono font-bold text-[9px]" title="Google OAuth">
+                                        <div class="w-5 h-5 flex items-center justify-center text-zinc-500 bg-zinc-50 border border-zinc-150 rounded-md font-mono font-bold text-[9px]" title="Google OAuth">
                                             G
                                         </div>
                                     @endif
 
                                     @if($user->linkedin_id)
-                                        <div class="w-5 h-5 flex items-center justify-center text-zinc-500 bg-[#f7f7f5] border border-zinc-200 rounded font-mono font-bold text-[9px]" title="LinkedIn OAuth">
+                                        <div class="w-5 h-5 flex items-center justify-center text-zinc-500 bg-zinc-50 border border-zinc-150 rounded-md font-mono font-bold text-[9px]" title="LinkedIn OAuth">
                                             L
                                         </div>
                                     @endif
                                     
                                     @if(!$user->password && !$user->google_id && !$user->linkedin_id)
-                                        <div class="w-5 h-5 flex items-center justify-center text-zinc-300 bg-[#f7f7f5] border border-zinc-200 rounded" title="None">
+                                        <div class="w-5 h-5 flex items-center justify-center text-zinc-300 bg-zinc-50 border border-zinc-150 rounded-md" title="None">
                                             <i class="ph ph-question text-xs"></i>
                                         </div>
                                     @endif
@@ -289,28 +290,28 @@
                                 <div class="flex items-center justify-end gap-1.5">
                                     <!-- Send Email Action -->
                                     <button wire:click="openSendEmailModal({{ $user->id }})" 
-                                            class="text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50 bg-white border border-zinc-200 p-1 rounded transition-colors" 
+                                            class="text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50 bg-white border border-zinc-200 p-1.2 rounded-lg transition-all shadow-3xs hover:shadow-2xs" 
                                             title="Send Email">
                                         <i class="ph ph-paper-plane-tilt text-xs"></i>
                                     </button>
 
                                     <!-- Premium Manual Switch Action -->
                                     <button wire:click="openPremiumConfirmModal({{ $user->id }})" 
-                                            class="p-1 rounded border transition-colors {{ $user->is_premium ? 'text-purple-750 bg-purple-50/50 border-purple-200/70' : 'text-zinc-550 bg-white hover:text-zinc-800 border-zinc-200 hover:bg-zinc-50' }}" 
+                                            class="p-1.2 rounded-lg border transition-all shadow-3xs hover:shadow-2xs {{ $user->is_premium ? 'text-purple-750 bg-purple-50/50 border-purple-200/70' : 'text-zinc-550 bg-white hover:text-zinc-800 border-zinc-200 hover:bg-zinc-50' }}" 
                                             title="Manual Premium Override">
                                         <i class="ph ph-crown text-xs"></i>
                                     </button>
 
                                     <!-- View Details Action -->
                                     <button wire:click="editUser({{ $user->id }})" 
-                                            class="text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50 bg-white border border-zinc-200 p-1 rounded transition-colors" 
+                                            class="text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50 bg-white border border-zinc-200 p-1.2 rounded-lg transition-all shadow-3xs hover:shadow-2xs" 
                                             title="View Details">
                                         <i class="ph ph-eye text-xs"></i>
                                     </button>
 
                                     <!-- Delete Action -->
                                     <button onclick="confirmDeleteUser({{ $user->id }}, '{{ addslashes($user->name) }}', '{{ addslashes($user->email) }}')"
-                                            class="text-red-650 hover:bg-red-50/50 border border-zinc-200 p-1 rounded transition-colors" 
+                                            class="text-red-650 hover:bg-red-50/50 border border-zinc-200 p-1.2 rounded-lg transition-all shadow-3xs hover:shadow-2xs" 
                                             title="Delete User">
                                         <i class="ph ph-trash text-xs"></i>
                                     </button>
@@ -333,9 +334,9 @@
         </div>
         
         <!-- Notion-style Table Pagination Footer -->
-        <div class="px-4 py-2 bg-[#f7f7f5] border-t border-zinc-200/50 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
-            <div class="text-[10px] text-zinc-450 font-medium">
-                Menampilkan <span class="font-bold text-zinc-700">{{ $users->firstItem() ?? 0 }}</span> - <span class="font-bold text-zinc-700">{{ $users->lastItem() ?? $users->count() }}</span> dari <span class="font-bold text-zinc-700">{{ $users->total() }}</span> user
+        <div class="px-4 py-3 bg-zinc-50 border-t border-zinc-200 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
+            <div class="text-[10px] text-zinc-450 font-bold">
+                Menampilkan <span class="font-extrabold text-zinc-800">{{ $users->firstItem() ?? 0 }}</span> - <span class="font-extrabold text-zinc-800">{{ $users->lastItem() ?? $users->count() }}</span> dari <span class="font-extrabold text-zinc-800">{{ $users->total() }}</span> user
             </div>
             <div class="w-full sm:w-auto notion-pagination font-mono text-[10px]">
                 {{ $users->links() }}
@@ -346,19 +347,21 @@
     <!-- Modal: View Details / Edit Quota -->
     @if($showEditModal)
         <template x-teleport="body">
-            <div class="fixed inset-0 bg-zinc-950/20 backdrop-blur-[2px] z-50 flex items-center justify-center p-4" style="z-index: 9999;">
-                <div class="bg-white rounded border border-zinc-200 shadow-sm max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden">
+            <div class="fixed inset-0 bg-zinc-955/35 backdrop-blur-[3px] z-50 flex items-center justify-center p-4" style="z-index: 9999;">
+                <div class="bg-white rounded-2xl border border-zinc-200/80 shadow-xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden">
                     
                     <!-- Modal Header -->
-                    <div class="bg-white px-6 py-4 flex justify-between items-center border-b border-zinc-150 shrink-0">
-                        <div class="flex items-center gap-2">
-                            <i class="ph ph-user-circle text-zinc-400 text-lg"></i>
+                    <div class="bg-white px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
+                                <i class="ph-bold ph-user-focus text-sm"></i>
+                            </div>
                             <div>
                                 <h3 class="text-xs font-bold text-zinc-900 font-sans">User Details</h3>
-                                <p class="text-[9px] text-zinc-400 mt-0.5">Lihat informasi pengguna</p>
+                                <p class="text-[9px] text-zinc-400 font-semibold mt-0.5">Lihat informasi detail akun pengguna</p>
                             </div>
                         </div>
-                        <button wire:click="closeModal" class="w-5 h-5 flex items-center justify-center rounded hover:bg-zinc-100 text-zinc-400 hover:text-zinc-650 transition-colors">
+                        <button wire:click="closeModal" class="w-6 h-6 flex items-center justify-center rounded-lg hover:bg-zinc-100 text-zinc-400 hover:text-zinc-650 transition-all">
                             <i class="ph ph-x text-sm"></i>
                         </button>
                     </div>
@@ -488,19 +491,21 @@
     <!-- Modal: Create New Admin -->
     @if($showCreateAdminModal)
         <template x-teleport="body">
-            <div class="fixed inset-0 bg-zinc-950/20 backdrop-blur-[2px] z-50 flex items-center justify-center p-4" style="z-index: 9999;">
-                <div class="bg-white rounded border border-zinc-200 shadow-sm max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden">
+            <div class="fixed inset-0 bg-zinc-955/35 backdrop-blur-[3px] z-50 flex items-center justify-center p-4" style="z-index: 9999;">
+                <div class="bg-white rounded-2xl border border-zinc-200/80 shadow-xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden">
                     
                     <!-- Modal Header -->
-                    <div class="bg-white px-6 py-4 flex justify-between items-center border-b border-zinc-150 shrink-0">
-                        <div class="flex items-center gap-2">
-                            <i class="ph ph-user-plus text-zinc-400 text-lg"></i>
+                    <div class="bg-white px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
+                                <i class="ph-bold ph-user-plus text-sm"></i>
+                            </div>
                             <div>
                                 <h3 class="text-xs font-bold text-zinc-900">Tambah Admin Baru</h3>
-                                <p class="text-[9px] text-zinc-400 mt-0.5">Administrator Access Setup</p>
+                                <p class="text-[9px] text-zinc-400 font-semibold mt-0.5">Administrator Access Setup</p>
                             </div>
                         </div>
-                        <button wire:click="closeCreateAdminModal" class="w-5 h-5 flex items-center justify-center rounded hover:bg-zinc-100 text-zinc-400 hover:text-zinc-650 transition-colors">
+                        <button wire:click="closeCreateAdminModal" class="w-6 h-6 flex items-center justify-center rounded-lg hover:bg-zinc-100 text-zinc-400 hover:text-zinc-650 transition-all">
                             <i class="ph ph-x text-sm"></i>
                         </button>
                     </div>
@@ -568,19 +573,21 @@
     <!-- Modal: Send Select Template Email -->
     @if($showSendEmailModal)
         <template x-teleport="body">
-            <div class="fixed inset-0 bg-zinc-950/20 backdrop-blur-[2px] z-50 flex items-center justify-center p-4" style="z-index: 9999;">
-                <div class="bg-white rounded border border-zinc-200 shadow-sm max-w-xl w-full max-h-[90vh] flex flex-col overflow-hidden">
+            <div class="fixed inset-0 bg-zinc-955/35 backdrop-blur-[3px] z-50 flex items-center justify-center p-4" style="z-index: 9999;">
+                <div class="bg-white rounded-2xl border border-zinc-200/80 shadow-xl max-w-xl w-full max-h-[90vh] flex flex-col overflow-hidden">
                     
                     <!-- Modal Header -->
-                    <div class="bg-white px-6 py-4 flex justify-between items-center border-b border-zinc-150 shrink-0">
-                        <div class="flex items-center gap-2">
-                            <i class="ph ph-paper-plane-tilt text-zinc-400 text-lg"></i>
+                    <div class="bg-white px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
+                                <i class="ph-bold ph-paper-plane-tilt text-sm"></i>
+                            </div>
                             <div>
                                 <h3 class="text-xs font-bold text-zinc-900">Kirim Email</h3>
-                                <p class="text-[9px] text-zinc-400 mt-0.5">Pilih tipe template email yang akan dikirim</p>
+                                <p class="text-[9px] text-zinc-400 font-semibold mt-0.5">Pilih tipe template email yang akan dikirim</p>
                             </div>
                         </div>
-                        <button wire:click="closeSendEmailModal" class="w-5 h-5 flex items-center justify-center rounded hover:bg-zinc-100 text-zinc-400 hover:text-zinc-650 transition-colors">
+                        <button wire:click="closeSendEmailModal" class="w-6 h-6 flex items-center justify-center rounded-lg hover:bg-zinc-100 text-zinc-400 hover:text-zinc-650 transition-all">
                             <i class="ph ph-x text-sm"></i>
                         </button>
                     </div>
