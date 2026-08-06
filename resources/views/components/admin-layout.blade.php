@@ -447,7 +447,7 @@
                                 
                                 <div class="px-4 py-2 border-b border-zinc-100 bg-zinc-50/50 mb-1.5 text-left">
                                     <p class="text-[8px] font-mono font-bold text-zinc-450 uppercase tracking-widest leading-none mb-1">Signed in as</p>
-                                    <p class="text-xs font-bold text-zinc-750 truncate leading-none">{{ $user->email ?? 'admin@example.com' }}</p>
+                                    <p class="text-xs font-bold text-zinc-755 truncate leading-none">{{ $user?->email ?? 'admin@example.com' }}</p>
                                 </div>
                                 
                                 <a href="{{ route('admin.payments') }}" class="flex items-center px-4 py-2 text-xs text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950 rounded-lg mx-1.5 transition-colors font-bold">
