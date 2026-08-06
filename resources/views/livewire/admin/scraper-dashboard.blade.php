@@ -1,31 +1,30 @@
-<div wire:poll.5s class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-5 space-y-5 pb-10">
+<div wire:poll.5s class="space-y-6 pb-12 w-full">
     
     {{-- Alert Messages --}}
     @if (session()->has('success'))
-        <div class="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg flex items-center gap-2.5 shadow-3xs animate-fade-in">
+        <div class="p-3.5 bg-emerald-50 border border-emerald-250 text-emerald-800 rounded-xl flex items-center gap-2.5 shadow-3xs animate-fade-in animate-duration-150">
             <i class="ph-bold ph-check-circle text-base text-emerald-650 shrink-0"></i>
-            <p class="text-xs font-semibold">{{ session('success') }}</p>
+            <p class="text-xs font-bold">{{ session('success') }}</p>
         </div>
     @endif
     @if (session()->has('error'))
-        <div class="p-3.5 bg-red-50 border border-red-200 text-red-800 rounded-lg flex items-center gap-2.5 shadow-3xs animate-fade-in">
-            <i class="ph-bold ph-x-circle text-base text-red-600 shrink-0"></i>
-            <p class="text-xs font-semibold">{{ session('error') }}</p>
+        <div class="p-3.5 bg-red-50 border border-red-250 text-red-800 rounded-xl flex items-center gap-2.5 shadow-3xs animate-fade-in animate-duration-150">
+            <i class="ph-bold ph-x-circle text-base text-red-650 shrink-0"></i>
+            <p class="text-xs font-bold">{{ session('error') }}</p>
         </div>
     @endif
 
-    <!-- Sticky Global Sub-Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-200/80">
-        <div class="flex items-center gap-2.5 min-w-0">
-            <span class="text-xs font-mono font-medium text-zinc-400">Admin</span>
-            <span class="text-zinc-300">/</span>
-            <span class="text-xs font-mono font-medium text-zinc-400">System</span>
-            <span class="text-zinc-300">/</span>
-            <h1 class="text-sm font-semibold tracking-tight text-zinc-900">Scraper Engine</h1>
+    <!-- Header Section (Sleek and Clean) -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-200">
+        <div>
+            <h1 class="text-lg font-black text-zinc-900 tracking-tight flex items-center gap-1.5">
+                Scraper Engine <span class="text-[9px] font-mono font-bold text-zinc-450 bg-zinc-100 border border-zinc-200 px-1.5 py-0.2 rounded">System Stats</span>
+            </h1>
+            <p class="text-[10px] text-zinc-500 font-semibold mt-0.5">Control web scraping schedules, job ingestion sources, selectors, and sandbox testing.</p>
         </div>
         <div class="flex items-center gap-2.5">
-            <span class="inline-flex items-center px-2 py-1.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse mr-1"></span>
+            <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0 shadow-3xs">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse mr-1.5"></span>
                 Engine Ready
             </span>
         </div>
@@ -34,60 +33,60 @@
     {{-- Executive Summary Stats (Bento Grid) --}}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {{-- Total Ingested --}}
-        <div class="bg-white rounded-lg p-4 border border-zinc-200/80 relative overflow-hidden shadow-3xs">
+        <div class="bg-white rounded-xl p-4.5 border border-zinc-200 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Total Ingested Jobs</p>
-                    <h3 class="text-lg font-semibold tracking-tight text-zinc-900">{{ number_format($stats['total_ingested']) }}</h3>
-                    <p class="text-[10px] text-zinc-400 mt-1">Aggregated job listings</p>
+                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Total Ingested Jobs</span>
+                    <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none mt-1">{{ number_format($stats['total_ingested']) }}</h3>
                 </div>
-                <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650 shrink-0">
-                    <i class="ph-bold ph-database text-base"></i>
+                <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                    <i class="ph-bold ph-database text-xs"></i>
                 </div>
             </div>
+            <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">Aggregated job listings</p>
         </div>
 
         {{-- Jobs Scraped Today --}}
-        <div class="bg-white rounded-lg p-4 border border-zinc-200/80 relative overflow-hidden shadow-3xs">
+        <div class="bg-white rounded-xl p-4.5 border border-zinc-200 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Scraped Today</p>
-                    <h3 class="text-lg font-semibold tracking-tight text-zinc-900">{{ number_format($stats['jobs_scraped_today']) }}</h3>
-                    <p class="text-[10px] text-zinc-400 mt-1">Ingested in last 24 hours</p>
+                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Scraped Today</span>
+                    <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none mt-1">{{ number_format($stats['jobs_scraped_today']) }}</h3>
                 </div>
-                <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650 shrink-0">
-                    <i class="ph-bold ph-calendar-check text-base"></i>
+                <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                    <i class="ph-bold ph-calendar-check text-xs"></i>
                 </div>
             </div>
+            <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">Ingested in last 24 hours</p>
         </div>
 
         {{-- Active Platforms --}}
-        <div class="bg-white rounded-lg p-4 border border-zinc-200/80 relative overflow-hidden shadow-3xs">
+        <div class="bg-white rounded-xl p-4.5 border border-zinc-200 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Active Platforms</p>
-                    <h3 class="text-lg font-semibold tracking-tight text-zinc-900">{{ $stats['active_sources'] }} / 3</h3>
-                    <p class="text-[10px] text-zinc-400 mt-1">LinkedIn, JobStreet, Kalibrr</p>
+                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Active Platforms</span>
+                    <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none mt-1">{{ $stats['active_sources'] }} / 3</h3>
                 </div>
-                <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650 shrink-0">
-                    <i class="ph-bold ph-globe text-base"></i>
+                <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                    <i class="ph-bold ph-globe text-xs"></i>
                 </div>
             </div>
+            <p class="text-[10px] text-zinc-400 font-bold mt-5 uppercase tracking-wider text-[8px] font-mono">LinkedIn, JobStreet, Kalibrr</p>
         </div>
 
         {{-- Queue & Worker Monitor --}}
-        <div class="bg-white rounded-lg p-4 border border-zinc-200/80 relative overflow-hidden shadow-3xs flex flex-col justify-between">
+        <div class="bg-white rounded-xl p-4.5 border border-zinc-200 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
             <div>
                 <div class="flex items-start justify-between border-b border-zinc-100 pb-2 mb-2">
                     <div>
-                        <p class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Queue & Worker Monitor</p>
-                        <h3 class="text-xs font-bold text-zinc-900 mt-0.5 flex items-center gap-1.5">
+                        <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Queue & Worker</span>
+                        <h3 class="text-xs font-bold text-zinc-900 mt-1 flex items-center gap-1.5 font-sans">
                             <span class="w-1.5 h-1.5 rounded-full {{ $stats['jobs_pending_in_queue'] > 0 ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500' }}"></span>
                             {{ $stats['worker_status'] }}
                         </h3>
                     </div>
-                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650 shrink-0">
-                        <i class="ph-bold ph-cpu text-sm"></i>
+                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                        <i class="ph-bold ph-cpu text-xs"></i>
                     </div>
                 </div>
                 
@@ -98,23 +97,23 @@
                                 <span class="font-mono text-zinc-550 truncate max-w-[80px]" title="queue: {{ $q['name'] }}">
                                     {{ $q['name'] }}
                                 </span>
-                                <div class="flex items-center gap-1 shrink-0">
-                                    <span class="text-blue-600 font-bold" title="Running/Active">{{ $q['active'] }} R</span>
+                                <div class="flex items-center gap-1 shrink-0 font-bold">
+                                    <span class="text-blue-600" title="Running/Active">{{ $q['active'] }} R</span>
                                     <span class="text-zinc-300">|</span>
-                                    <span class="text-amber-600 font-bold" title="Pending">{{ $q['pending'] }} P</span>
+                                    <span class="text-amber-600" title="Pending">{{ $q['pending'] }} P</span>
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 @else
                     <div class="text-center py-2 text-[9px] text-zinc-400 flex items-center justify-center gap-1">
-                        <i class="ph ph-check-circle text-emerald-500 text-[10px]"></i>
+                        <i class="ph-bold ph-check-circle text-emerald-500 text-[10px]"></i>
                         Queue empty / idle
                     </div>
                 @endif
             </div>
 
-            <div class="mt-2 pt-2 border-t border-zinc-100 flex items-center justify-between text-[9px] text-zinc-500 font-mono">
+            <div class="mt-2 pt-2 border-t border-zinc-100 flex items-center justify-between text-[9px] text-zinc-450 font-mono font-bold">
                 <span>Failed: <span class="font-bold {{ $stats['jobs_failed'] > 0 ? 'text-red-650' : 'text-zinc-650' }}">{{ $stats['jobs_failed'] }}</span></span>
                 <span>Total: <span class="font-bold text-zinc-700">{{ $stats['jobs_pending_in_queue'] }}</span></span>
             </div>
@@ -122,11 +121,11 @@
     </div>
 
     {{-- Interactive Tabs Navigation Row (4 Tabs) --}}
-    <div class="flex border-b border-zinc-200 bg-white rounded-t-lg shadow-3xs">
+    <div class="flex flex-wrap border border-zinc-200 border-b-0 bg-white rounded-t-xl shadow-3xs overflow-hidden">
         <button type="button" 
                 wire:click="$set('activeTab', 'dashboard')"
-                class="px-5 py-3.5 border-b-2 text-xs font-semibold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'dashboard' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50' : 'border-transparent text-zinc-400 hover:text-zinc-700' }}">
-            <i class="ph-bold ph-chart-line text-sm"></i> Overview & Grafik
+                class="px-5 py-3.5 border-b-2 text-xs font-bold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'dashboard' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50 font-extrabold' : 'border-transparent text-zinc-400 hover:text-zinc-750' }}">
+            <i class="ph-bold ph-chart-line text-xs"></i> Overview & Grafik
         </button>
         <button type="button" 
                 wire:click="$set('activeTab', 'control')"
