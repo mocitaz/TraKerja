@@ -1,3 +1,40 @@
+@php
+    if (!function_exists('getAvatarStyleLocal')) {
+        function getAvatarStyleLocal($name) {
+            $char = strtoupper(substr($name ?? 'A', 0, 1));
+            $colors = [
+                'A' => ['#6366f1', '#a855f7'],
+                'B' => ['#a855f7', '#ec4899'],
+                'C' => ['#ec4899', '#f43f5e'],
+                'D' => ['#f43f5e', '#ef4444'],
+                'E' => ['#ef4444', '#f97316'],
+                'F' => ['#f97316', '#f59e0b'],
+                'G' => ['#f59e0b', '#eab308'],
+                'H' => ['#eab308', '#84cc16'],
+                'I' => ['#84cc16', '#22c55e'],
+                'J' => ['#22c55e', '#10b981'],
+                'K' => ['#10b981', '#14b8a6'],
+                'L' => ['#14b8a6', '#06b6d4'],
+                'M' => ['#06b6d4', '#0ea5e9'],
+                'N' => ['#0ea5e9', '#3b82f6'],
+                'O' => ['#3b82f6', '#6366f1'],
+                'P' => ['#6366f1', '#8b5cf6'],
+                'Q' => ['#8b5cf6', '#d946ef'],
+                'R' => ['#d946ef', '#ec4899'],
+                'S' => ['#ec4899', '#f43f5e'],
+                'T' => ['#f43f5e', '#f97316'],
+                'U' => ['#f97316', '#eab308'],
+                'V' => ['#eab308', '#22c55e'],
+                'W' => ['#22c55e', '#14b8a6'],
+                'X' => ['#14b8a6', '#0ea5e9'],
+                'Y' => ['#0ea5e9', '#6366f1'],
+                'Z' => ['#6366f1', '#ec4899'],
+            ];
+            $pair = $colors[$char] ?? ['#71717a', '#52525b'];
+            return "background: linear-gradient(135deg, {$pair[0]} 0%, {$pair[1]} 100%);";
+        }
+    }
+@endphp
 <div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-5 space-y-6 pb-12">
     
     <!-- Notion-style Minimal Header -->
@@ -167,21 +204,16 @@
                             <!-- User Info -->
                             <td class="px-4 py-3">
                                 <div class="flex items-center min-w-0">
-                                    @if($user->logo)
-                                        <div class="flex-shrink-0 h-7 w-7 rounded overflow-hidden border border-zinc-200 shadow-none">
+                                    <div class="flex-shrink-0 h-7 w-7 rounded-lg overflow-hidden border border-zinc-200 shadow-3xs flex items-center justify-center text-white text-[10px] font-black relative"
+                                         style="{{ getAvatarStyleLocal($user->name) }}">
+                                        @if($user->logo)
                                             <img src="{{ $user->avatar_url }}" 
                                                  alt="{{ $user->name }}" 
                                                  class="w-full h-full object-cover"
-                                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                            <div class="w-full h-full bg-zinc-100 flex items-center justify-center" style="display: none;">
-                                                <span class="text-zinc-600 font-bold text-[10px]">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
-                                            </div>
-                                        </div>
-                                    @else
-                                        <div class="flex-shrink-0 h-7 w-7 bg-zinc-100 border border-zinc-200 rounded flex items-center justify-center text-zinc-650 text-[10px] font-bold">
-                                            {{ strtoupper(substr($user->name, 0, 1)) }}
-                                        </div>
-                                    @endif
+                                                 onerror="this.style.display='none';">
+                                        @endif
+                                        <span class="absolute pointer-events-none">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                                    </div>
                                     <div class="ml-3 min-w-0 flex-1">
                                         <div class="text-xs font-semibold text-zinc-900 truncate">{{ $user->name }}</div>
                                         <div class="text-[9px] font-mono text-zinc-400 mt-0.5">ID: #{{ $user->id }}</div>
@@ -338,11 +370,15 @@
                         <!-- Mini Profile Header -->
                         @if($editingUser)
                             <div class="flex items-center gap-3 pb-4 border-b border-zinc-100">
-                                <div class="w-12 h-12 rounded bg-zinc-100 border border-zinc-200 flex items-center justify-center text-zinc-700 font-bold text-sm overflow-hidden flex-shrink-0">
-                                    <img src="{{ $editingUser->avatar_url }}" 
-                                         alt="{{ $editName ?? 'User' }}" 
-                                         class="w-full h-full object-cover"
-                                         onerror="this.style.display='none';">
+                                <div class="w-12 h-12 rounded-lg border border-zinc-200 flex items-center justify-center text-white font-black text-sm overflow-hidden flex-shrink-0 relative"
+                                     style="{{ getAvatarStyleLocal($editName) }}">
+                                    @if($editingUser->logo)
+                                        <img src="{{ $editingUser->avatar_url }}" 
+                                             alt="{{ $editName ?? 'User' }}" 
+                                             class="w-full h-full object-cover"
+                                             onerror="this.style.display='none';">
+                                    @endif
+                                    <span class="absolute pointer-events-none">{{ strtoupper(substr($editName ?? 'U', 0, 1)) }}</span>
                                 </div>
                                 <div class="min-w-0">
                                     <h4 class="text-xs font-bold text-zinc-900 truncate leading-none mb-1.5">{{ $editName ?? '-' }}</h4>
