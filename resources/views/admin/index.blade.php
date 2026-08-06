@@ -386,11 +386,18 @@
                 <div class="divide-y divide-zinc-100 flex-1 overflow-y-auto custom-scrollbar">
                     @forelse($recentApplications as $application)
                         <div class="p-3 hover:bg-zinc-50/50 transition flex items-start gap-2.5">
-                            <!-- Gradient Avatar (Fixed Dynamic Tailwind Hex Safe Rendering) -->
-                            <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 text-white text-[10px] font-black shadow-3xs"
-                                 style="{{ getAvatarStyle($application->user->name ?? 'A') }}">
-                                {{ strtoupper(substr($application->user->name ?? 'A', 0, 1)) }}
-                            </div>
+                            @if($application->user && $application->user->logo)
+                                <div class="w-7 h-7 rounded-lg overflow-hidden border border-zinc-200 flex-shrink-0 shadow-3xs">
+                                    <img src="{{ $application->user->avatar_url }}" 
+                                         alt="Profile" 
+                                         class="h-full w-full object-cover">
+                                </div>
+                            @else
+                                <div class="w-7 h-7 rounded-lg overflow-hidden border border-zinc-200 flex-shrink-0 flex items-center justify-center text-white text-[10px] font-black shadow-3xs"
+                                     style="{{ getAvatarStyle($application->user->name ?? 'A') }}">
+                                    <span class="pointer-events-none">{{ strtoupper(substr($application->user->name ?? 'A', 0, 1)) }}</span>
+                                </div>
+                            @endif
 
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-center justify-between mb-0.5">
@@ -444,10 +451,18 @@
                                 {{ $index + 1 }}
                             </div>
                             <div class="flex-1 min-w-0 flex items-center gap-2">
-                                <div class="w-6.5 h-6.5 rounded-full flex items-center justify-center flex-shrink-0 text-white text-[9px] font-black shadow-3xs"
-                                     style="{{ getAvatarStyle($user->name) }}">
-                                    {{ strtoupper(substr($user->name, 0, 1)) }}
-                                </div>
+                                @if($user->logo)
+                                    <div class="w-6.5 h-6.5 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 shadow-3xs">
+                                        <img src="{{ $user->avatar_url }}" 
+                                             alt="Profile" 
+                                             class="h-full w-full object-cover">
+                                    </div>
+                                @else
+                                    <div class="w-6.5 h-6.5 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 flex items-center justify-center text-white text-[9px] font-black shadow-3xs"
+                                         style="{{ getAvatarStyle($user->name) }}">
+                                        <span class="pointer-events-none">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                                    </div>
+                                @endif
                                 <div class="min-w-0">
                                     <p class="text-[11px] font-bold text-zinc-900 truncate leading-tight">{{ $user->name }}</p>
                                     <p class="text-[9px] text-zinc-455 truncate mt-0.2 leading-none">{{ $user->email }}</p>
@@ -482,10 +497,18 @@
                                 {{ $index + 1 }}
                             </div>
                             <div class="flex-1 min-w-0 flex items-center gap-2">
-                                <div class="w-6.5 h-6.5 rounded-full flex items-center justify-center flex-shrink-0 text-white text-[9px] font-black shadow-3xs"
-                                     style="{{ getAvatarStyle($user->name) }}">
-                                    {{ strtoupper(substr($user->name, 0, 1)) }}
-                                </div>
+                                @if($user->logo)
+                                    <div class="w-6.5 h-6.5 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 shadow-3xs">
+                                        <img src="{{ $user->avatar_url }}" 
+                                             alt="Profile" 
+                                             class="h-full w-full object-cover">
+                                    </div>
+                                @else
+                                    <div class="w-6.5 h-6.5 rounded-full overflow-hidden border border-zinc-200 flex-shrink-0 flex items-center justify-center text-white text-[9px] font-black shadow-3xs"
+                                         style="{{ getAvatarStyle($user->name) }}">
+                                        <span class="pointer-events-none">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                                    </div>
+                                @endif
                                 <div class="min-w-0">
                                     <p class="text-[11px] font-bold text-zinc-900 truncate leading-tight">{{ $user->name }}</p>
                                     <p class="text-[9px] text-zinc-455 truncate mt-0.2 leading-none">{{ $user->email }}</p>
