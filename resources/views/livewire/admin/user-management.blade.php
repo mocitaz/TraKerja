@@ -3,32 +3,32 @@
         function getAvatarStyleLocal($name) {
             $char = strtoupper(substr($name ?? 'A', 0, 1));
             $colors = [
-                'A' => ['#6366f1', '#a855f7'],
-                'B' => ['#a855f7', '#ec4899'],
-                'C' => ['#ec4899', '#f43f5e'],
-                'D' => ['#f43f5e', '#ef4444'],
-                'E' => ['#ef4444', '#f97316'],
-                'F' => ['#f97316', '#f59e0b'],
-                'G' => ['#f59e0b', '#eab308'],
-                'H' => ['#eab308', '#84cc16'],
-                'I' => ['#84cc16', '#22c55e'],
-                'J' => ['#22c55e', '#10b981'],
-                'K' => ['#10b981', '#14b8a6'],
-                'L' => ['#14b8a6', '#06b6d4'],
-                'M' => ['#06b6d4', '#0ea5e9'],
-                'N' => ['#0ea5e9', '#3b82f6'],
-                'O' => ['#3b82f6', '#6366f1'],
-                'P' => ['#6366f1', '#8b5cf6'],
-                'Q' => ['#8b5cf6', '#d946ef'],
-                'R' => ['#d946ef', '#ec4899'],
-                'S' => ['#ec4899', '#f43f5e'],
-                'T' => ['#f43f5e', '#f97316'],
-                'U' => ['#f97316', '#eab308'],
-                'V' => ['#eab308', '#22c55e'],
-                'W' => ['#22c55e', '#14b8a6'],
-                'X' => ['#14b8a6', '#0ea5e9'],
-                'Y' => ['#0ea5e9', '#6366f1'],
-                'Z' => ['#6366f1', '#ec4899'],
+                'A' => ['#4f46e5', '#3b82f6'],
+                'B' => ['#3b82f6', '#0ea5e9'],
+                'C' => ['#0ea5e9', '#06b6d4'],
+                'D' => ['#06b6d4', '#14b8a6'],
+                'E' => ['#14b8a6', '#10b981'],
+                'F' => ['#10b981', '#22c55e'],
+                'G' => ['#22c55e', '#84cc16'],
+                'H' => ['#84cc16', '#eab308'],
+                'I' => ['#eab308', '#f97316'],
+                'J' => ['#f97316', '#ef4444'],
+                'K' => ['#ef4444', '#f43f5e'],
+                'L' => ['#f43f5e', '#0ea5e9'],
+                'M' => ['#52525b', '#27272a'],
+                'N' => ['#71717a', '#3f3f46'],
+                'O' => ['#4f46e5', '#0ea5e9'],
+                'P' => ['#14b8a6', '#22c55e'],
+                'Q' => ['#f97316', '#ef4444'],
+                'R' => ['#eab308', '#f97316'],
+                'S' => ['#0ea5e9', '#3b82f6'],
+                'T' => ['#10b981', '#14b8a6'],
+                'U' => ['#06b6d4', '#3b82f6'],
+                'V' => ['#f43f5e', '#f97316'],
+                'W' => ['#22c55e', '#0ea5e9'],
+                'X' => ['#52525b', '#71717a'],
+                'Y' => ['#4f46e5', '#14b8a6'],
+                'Z' => ['#ef4444', '#f97316'],
             ];
             $pair = $colors[$char] ?? ['#71717a', '#52525b'];
             return "background: linear-gradient(135deg, {$pair[0]} 0%, {$pair[1]} 100%);";
@@ -243,11 +243,11 @@
                             <!-- Account Tier Status -->
                             <td class="px-4 py-3 whitespace-nowrap">
                                 @if($user->is_premium)
-                                    <span class="px-1.5 py-0.5 text-[8px] font-medium rounded bg-purple-50 text-purple-800 border border-purple-150/40 inline-flex items-center">
-                                        Premium
+                                    <span class="px-1.5 py-0.5 text-[8px] font-bold rounded bg-amber-50 text-amber-700 border border-amber-200/60 inline-flex items-center gap-0.5 shadow-3xs">
+                                        <i class="ph-bold ph-crown text-[8px]"></i> Premium
                                     </span>
                                 @else
-                                    <span class="px-1.5 py-0.5 text-[8px] font-medium rounded bg-zinc-100 text-zinc-700 border border-zinc-200/50 inline-flex items-center">
+                                    <span class="px-1.5 py-0.5 text-[8px] font-semibold rounded bg-zinc-100 text-zinc-650 border border-zinc-200/50 inline-flex items-center">
                                         Free
                                     </span>
                                 @endif
@@ -297,7 +297,7 @@
 
                                     <!-- Premium Manual Switch Action -->
                                     <button wire:click="openPremiumConfirmModal({{ $user->id }})" 
-                                            class="w-7 h-7 flex items-center justify-center rounded-lg transition-all {{ $user->is_premium ? 'text-purple-600 bg-purple-50 hover:bg-purple-100' : 'text-zinc-500 hover:text-zinc-950 hover:bg-zinc-100' }}" 
+                                            class="w-7 h-7 flex items-center justify-center rounded-lg transition-all {{ $user->is_premium ? 'text-amber-600 bg-amber-50 hover:bg-amber-100' : 'text-zinc-500 hover:text-zinc-950 hover:bg-zinc-100' }}" 
                                             title="Manual Premium Override">
                                         <i class="ph-bold ph-crown text-[11px]"></i>
                                     </button>
@@ -400,9 +400,9 @@
                                 <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Status Premium</label>
                                 <div class="h-8 px-2.5 bg-[#fafafa] border border-zinc-200 rounded-lg text-xs font-bold flex items-center shadow-3xs">
                                     @if($editIsPremium)
-                                        <span class="text-purple-650 flex items-center gap-1"><i class="ph-bold ph-crown text-[10px]"></i> Premium</span>
+                                        <span class="text-amber-600 flex items-center gap-1"><i class="ph-bold ph-crown text-[10px]"></i> Premium</span>
                                     @else
-                                        <span class="text-zinc-500 font-semibold">Free Tier</span>
+                                        <span class="text-zinc-500 font-semibold font-sans">Free Tier</span>
                                     @endif
                                 </div>
                             </div>
@@ -413,7 +413,7 @@
                                     @if($editIsAdmin)
                                         <span class="text-zinc-800 flex items-center gap-1"><i class="ph-bold ph-shield-check text-[10px]"></i> Admin</span>
                                     @else
-                                        <span class="text-zinc-500 font-semibold">User</span>
+                                        <span class="text-zinc-500 font-semibold font-sans">User</span>
                                     @endif
                                 </div>
                             </div>
@@ -439,7 +439,7 @@
                                 <h4 class="text-[9px] font-mono font-bold text-zinc-450 uppercase tracking-wider flex items-center gap-1">
                                     <i class="ph-bold ph-cpu text-xs"></i> AI Quotas Management
                                 </h4>
-                                <button type="button" wire:click="resetAllAiQuotas" class="text-[8px] font-mono font-bold text-purple-600 uppercase tracking-wider hover:underline transition-all">
+                                <button type="button" wire:click="resetAllAiQuotas" class="text-[8px] font-mono font-bold text-zinc-900 hover:text-zinc-600 uppercase tracking-wider hover:underline transition-all">
                                     Reset Ke Standar
                                 </button>
                             </div>
@@ -514,40 +514,40 @@
                     <div class="p-6 overflow-y-auto custom-scrollbar">
                         <form wire:submit.prevent="createAdmin" class="space-y-4">
                             <div>
-                                <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Nama Lengkap *</label>
+                                <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Nama Lengkap *</label>
                                 <input type="text" wire:model="newAdminName" 
-                                       class="w-full h-8 px-3 bg-zinc-50 border border-zinc-250 focus:border-zinc-400 focus:bg-white rounded text-xs text-zinc-800 focus:outline-none focus:ring-0 transition-colors" placeholder="Nama lengkap admin">
+                                       class="w-full h-8 px-3 bg-zinc-50 border border-zinc-200 focus:border-zinc-400 focus:bg-white rounded-lg text-xs text-zinc-850 font-semibold focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all shadow-3xs placeholder:text-zinc-400" placeholder="Nama lengkap admin">
                                 @error('newAdminName') 
-                                    <p class="text-red-650 text-[10px] mt-1 font-semibold">{{ $message }}</p>
+                                    <p class="text-red-650 text-[10px] mt-1 font-bold">{{ $message }}</p>
                                 @enderror
                             </div>
 
                             <div>
-                                <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Alamat Email *</label>
+                                <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Alamat Email *</label>
                                 <input type="email" wire:model="newAdminEmail" 
-                                       class="w-full h-8 px-3 bg-zinc-50 border border-zinc-250 focus:border-zinc-400 focus:bg-white rounded text-xs text-zinc-800 focus:outline-none focus:ring-0 transition-colors" placeholder="admin@example.com">
+                                       class="w-full h-8 px-3 bg-zinc-50 border border-zinc-200 focus:border-zinc-400 focus:bg-white rounded-lg text-xs text-zinc-850 font-semibold focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all shadow-3xs placeholder:text-zinc-400" placeholder="admin@example.com">
                                 @error('newAdminEmail') 
-                                    <p class="text-red-650 text-[10px] mt-1 font-semibold">{{ $message }}</p>
+                                    <p class="text-red-650 text-[10px] mt-1 font-bold">{{ $message }}</p>
                                 @enderror
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Password *</label>
+                                    <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Password *</label>
                                     <input type="password" wire:model="newAdminPassword" 
-                                           class="w-full h-8 px-3 bg-zinc-50 border border-zinc-250 focus:border-zinc-400 focus:bg-white rounded text-xs text-zinc-800 focus:outline-none focus:ring-0 transition-colors" placeholder="Min. 8 karakter">
+                                           class="w-full h-8 px-3 bg-zinc-50 border border-zinc-200 focus:border-zinc-400 focus:bg-white rounded-lg text-xs text-zinc-850 font-semibold focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all shadow-3xs placeholder:text-zinc-400" placeholder="Min. 8 karakter">
                                     @error('newAdminPassword') 
-                                        <p class="text-red-650 text-[10px] mt-1 font-semibold">{{ $message }}</p>
+                                        <p class="text-red-650 text-[10px] mt-1 font-bold">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div>
-                                    <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wide mb-1">Konfirmasi Password *</label>
+                                    <label class="block text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1">Konfirmasi Password *</label>
                                     <input type="password" wire:model="newAdminPasswordConfirmation" 
-                                           class="w-full h-8 px-3 bg-zinc-50 border border-zinc-250 focus:border-zinc-400 focus:bg-white rounded text-xs text-zinc-800 focus:outline-none focus:ring-0 transition-colors" placeholder="Ulangi password">
+                                           class="w-full h-8 px-3 bg-zinc-50 border border-zinc-200 focus:border-zinc-400 focus:bg-white rounded-lg text-xs text-zinc-850 font-semibold focus:outline-none focus:ring-2 focus:ring-zinc-900/5 transition-all shadow-3xs placeholder:text-zinc-400" placeholder="Ulangi password">
                                 </div>
                             </div>
 
-                            <div class="bg-zinc-50 border border-zinc-200 rounded p-3 text-[10px] text-zinc-500 leading-relaxed flex gap-2">
+                            <div class="bg-zinc-50 border border-zinc-200 rounded-xl p-3 text-[10px] text-zinc-500 leading-relaxed flex gap-2 shadow-3xs">
                                 <i class="ph ph-info text-zinc-450 text-xs shrink-0 mt-0.5"></i>
                                 <div>
                                     <span class="font-bold text-zinc-700 block mb-0.5">Akses Administrator</span>
@@ -556,10 +556,10 @@
                             </div>
 
                             <div class="pt-4 flex justify-end gap-2 border-t border-zinc-100">
-                                <button type="button" wire:click="closeCreateAdminModal" class="h-8 px-4 border border-zinc-250 hover:bg-zinc-50 text-zinc-700 rounded text-xs font-semibold transition-colors flex items-center justify-center">
+                                <button type="button" wire:click="closeCreateAdminModal" class="h-8 px-4 border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
                                     Batal
                                 </button>
-                                <button type="submit" class="h-8 px-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded text-xs font-semibold transition-colors flex items-center justify-center">
+                                <button type="submit" class="h-8 px-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-bold shadow-3xs hover:shadow-2xs transition-all flex items-center justify-center">
                                     Buat Admin
                                 </button>
                             </div>
@@ -636,18 +636,18 @@
                             @foreach($emailGroups as $groupName => $types)
                                 <div>
                                     <h4 class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-2">{{ $groupName }}</h4>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                                         @foreach($types as $type => $info)
                                             @php $isSelected = $emailType === $type; @endphp
-                                            <label class="relative flex cursor-pointer rounded-lg border p-2.5 transition-all {{ $isSelected ? 'border-zinc-900 bg-[#fafafa] shadow-3xs' : 'border-zinc-200 bg-white hover:bg-zinc-50/50' }}">
+                                            <label class="relative flex h-14 cursor-pointer rounded-xl border p-2.5 items-center transition-all duration-150 {{ $isSelected ? 'border-zinc-950 bg-zinc-50/50 shadow-[0_0_0_1px_rgba(9,9,11,1)]' : 'border-zinc-200 bg-white hover:bg-zinc-50/50' }}">
                                                 <input type="radio" wire:model.live="emailType" value="{{ $type }}" class="sr-only">
                                                 <div class="flex items-center gap-2.5 w-full">
-                                                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs">
+                                                    <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-550 shrink-0 shadow-3xs">
                                                         <i class="ph {{ $info['icon'] }} text-xs"></i>
                                                     </div>
                                                     <div class="flex-1 min-w-0">
                                                         <p class="text-[10px] font-bold text-zinc-900 leading-none mb-1">{{ $info['label'] }}</p>
-                                                        <p class="text-[8px] text-zinc-400 font-semibold truncate leading-none">{{ $info['desc'] }}</p>
+                                                        <p class="text-[8px] text-zinc-400 font-bold truncate leading-none">{{ $info['desc'] }}</p>
                                                     </div>
                                                     <div class="w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 {{ $isSelected ? 'border-zinc-900 bg-zinc-900' : 'border-zinc-300 bg-transparent' }} transition-colors duration-150">
                                                         @if($isSelected)
@@ -686,7 +686,7 @@
                     <!-- Modal Header -->
                     <div class="bg-white px-6 py-4.5 flex justify-between items-center border-b border-zinc-100 shrink-0">
                         <div class="flex items-center gap-2.5">
-                            <div class="w-7 h-7 rounded-lg bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 shadow-3xs">
+                            <div class="w-7 h-7 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 shadow-3xs">
                                 <i class="ph-bold ph-crown text-sm"></i>
                             </div>
                             <div>
@@ -704,7 +704,7 @@
                             <span class="text-xs font-bold text-zinc-900 block truncate mb-1.5">{{ $confirmTargetUserName }}</span>
                             <span class="text-[9px] text-zinc-500 block leading-none">
                                 Status Saat Ini: 
-                                <span class="font-bold {{ $confirmTargetUserIsPremium ? 'text-purple-650' : 'text-zinc-650' }}">
+                                <span class="font-bold {{ $confirmTargetUserIsPremium ? 'text-amber-600' : 'text-zinc-600' }}">
                                     {{ $confirmTargetUserIsPremium ? 'Premium' : 'Free Tier' }}
                                 </span>
                             </span>
@@ -716,7 +716,7 @@
                                 Batal
                             </button>
                             <button wire:click="toggleManualPremium" 
-                                    class="h-8 px-4 {{ $confirmTargetUserIsPremium ? 'bg-zinc-900 hover:bg-zinc-800' : 'bg-purple-700 hover:bg-purple-800' }} text-white rounded-lg font-bold text-xs transition-all flex items-center justify-center shadow-3xs">
+                                    class="h-8 px-4 {{ $confirmTargetUserIsPremium ? 'bg-zinc-900 hover:bg-zinc-800' : 'bg-amber-600 hover:bg-amber-700' }} text-white rounded-lg font-bold text-xs transition-all flex items-center justify-center shadow-3xs">
                                 {{ $confirmTargetUserIsPremium ? 'Downgrade ke Free' : 'Upgrade ke Premium' }}
                             </button>
                         </div>
