@@ -104,19 +104,19 @@
                 <p class="text-[10px] text-zinc-500 font-semibold mt-0.5">Global operational analytics and conversion monitoring.</p>
             </div>
 
-            <!-- Header Quick Actions (Ramping) -->
-            <div class="flex flex-wrap items-center gap-1.5">
+            <!-- Header Quick Actions (Premium Ramping) -->
+            <div class="flex flex-wrap items-center gap-2">
                 <a href="{{ route('admin.email-blast') }}"
-                    class="inline-flex items-center gap-1.5 px-2.5 py-1.2 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-700 font-bold text-[10px] rounded-lg transition shadow-3xs">
-                    <i class="ph-bold ph-paper-plane-tilt text-indigo-650 text-xs"></i> Email Blast
+                    class="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-zinc-200 hover:bg-zinc-50 hover:border-zinc-300 text-zinc-700 hover:text-zinc-950 font-bold text-[10px] rounded-lg transition-all duration-200 shadow-3xs group">
+                    <i class="ph-bold ph-paper-plane-tilt text-zinc-450 group-hover:text-indigo-600 transition-colors text-xs"></i> Email Blast
                 </a>
                 <a href="{{ route('admin.users') }}"
-                    class="inline-flex items-center gap-1.5 px-2.5 py-1.2 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-700 font-bold text-[10px] rounded-lg transition shadow-3xs">
-                    <i class="ph-bold ph-users-three text-indigo-650 text-xs"></i> Users List
+                    class="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-zinc-200 hover:bg-zinc-50 hover:border-zinc-300 text-zinc-700 hover:text-zinc-950 font-bold text-[10px] rounded-lg transition-all duration-200 shadow-3xs group">
+                    <i class="ph-bold ph-users-three text-zinc-450 group-hover:text-indigo-600 transition-colors text-xs"></i> Users List
                 </a>
                 <a href="{{ route('admin.payments') }}"
-                    class="inline-flex items-center gap-1.5 px-2.5 py-1.2 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-700 font-bold text-[10px] rounded-lg transition shadow-3xs">
-                    <i class="ph-bold ph-credit-card text-indigo-650 text-xs"></i> Payments
+                    class="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-zinc-200 hover:bg-zinc-50 hover:border-zinc-300 text-zinc-700 hover:text-zinc-950 font-bold text-[10px] rounded-lg transition-all duration-200 shadow-3xs group">
+                    <i class="ph-bold ph-credit-card text-zinc-450 group-hover:text-indigo-600 transition-colors text-xs"></i> Payment
                 </a>
             </div>
         </div>
