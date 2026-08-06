@@ -111,7 +111,7 @@
 
                     {{-- Manfaat Premium Mini Grid --}}
                     <div class="p-4 bg-zinc-50 border border-zinc-200/60 rounded-lg space-y-2.5">
-                        <p class="text-[9px] font-black text-zinc-400 uppercase tracking-widest">👑 Member Privileges</p>
+                        <p class="text-[9px] font-black text-zinc-400 uppercase tracking-widest">Member Privileges</p>
                         <div class="grid grid-cols-2 gap-2 text-[10.5px] font-bold text-zinc-650">
                             <div class="flex items-center gap-1.5"><i class="ph ph-check text-emerald-600 text-xs"></i> <span>Unlimited Tracker</span></div>
                             <div class="flex items-center gap-1.5"><i class="ph ph-check text-emerald-600 text-xs"></i> <span>Full Dashboard</span></div>
