@@ -20,6 +20,6 @@ return [
     |--------------------------------------------------------------------------
     */
     
-    'premium_price' => env('PREMIUM_PRICE', 19999),
+    'premium_price' => env('PREMIUM_PRICE', 9999),
     'premium_duration_days' => env('PREMIUM_DURATION_DAYS', 36500), // Default to 100 years (lifetime)
 ];

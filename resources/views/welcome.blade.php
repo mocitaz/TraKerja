@@ -1193,7 +1193,10 @@
                             <h3 class="font-extrabold text-zinc-900 text-[10px] uppercase tracking-widest">Premium Pro</h3>
                             <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[8px] font-bold rounded border border-emerald-100 uppercase">Pro</span>
                         </div>
-                        <p class="text-3xl font-black text-zinc-950 mt-4 mb-1">Rp 19.999</p>
+                        <div class="flex items-baseline gap-2 mt-4 mb-1">
+                            <span class="text-3xl font-black text-zinc-950">Rp 9.999</span>
+                            <span class="text-xs font-semibold text-zinc-400 line-through">Rp 19.999</span>
+                        </div>
                         <p class="text-[9px] font-bold text-emerald-600 uppercase tracking-widest mb-6">One-time, lifetime access</p>
 
                         <div class="border-t border-zinc-200/70 pt-6 space-y-3.5 text-xs font-semibold text-zinc-700">

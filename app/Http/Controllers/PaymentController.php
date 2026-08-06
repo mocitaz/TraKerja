@@ -126,7 +126,7 @@ class PaymentController extends Controller
         }
 
         // Pakasir is simpler, we just need a price and duration
-        $premiumPrice = (int) \App\Models\Setting::get('premium_price', 19999);
+        $premiumPrice = (int) \App\Models\Setting::get('premium_price', 9999);
         $premiumDuration = (int) config('pakasir.premium_duration_days', 365);
 
         // Group payment channels by category for the view (Hardcoded for Pakasir common options)
@@ -208,7 +208,7 @@ class PaymentController extends Controller
             if ($packageType === 'addon_10' || $packageType === 'cl_addon_15') {
                 $amount = 14999; // Rp 14.999 for 10/15 credits
             } else {
-                $amount = (int) \App\Models\Setting::get('premium_price', 19999);
+                $amount = (int) \App\Models\Setting::get('premium_price', 9999);
             }
 
             // Create payment record

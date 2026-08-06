@@ -82,7 +82,7 @@
                                                         </tr>
                                                         @php
                                                             $basePrice  = 35000;
-                                                            $paidAmount = $payment->amount ?? 19999;
+                                                            $paidAmount = $payment->amount ?? 9999;
                                                             $discount   = $basePrice - $paidAmount;
                                                         @endphp
                                                         <tr>

@@ -148,8 +148,8 @@
                         <div class="space-y-2">
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Special Offer</p>
                             <div class="flex items-center justify-center gap-3">
-                                <span class="text-3xl sm:text-5xl font-black">Rp {{ number_format($premiumPrice, 0, ',', '.') }}</span>
-                                <span class="text-slate-500 line-through text-xs sm:text-sm">Rp 150.000</span>
+                                <span class="text-3xl sm:text-5xl font-black">Rp 9.999</span>
+                                <span class="text-slate-500 line-through text-xs sm:text-sm">Rp 19.999</span>
                             </div>
                         </div>
 

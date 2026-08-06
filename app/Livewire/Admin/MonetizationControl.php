@@ -25,7 +25,7 @@ class MonetizationControl extends Component
     public function mount()
     {
         $this->monetizationEnabled = Setting::get('monetization_enabled', false);
-        $this->premiumPrice = Setting::get('premium_price', 19999);
+        $this->premiumPrice = Setting::get('premium_price', 9999);
         $this->loadStats();
     }
     
