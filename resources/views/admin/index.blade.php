@@ -56,114 +56,114 @@
             ->get();
     @endphp
 
-    <div class="w-full mx-auto space-y-6 pb-12 text-left">
+    <div class="w-full mx-auto space-y-8 pb-16 text-left">
 
-        <!-- Header Overview & Action Links -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-zinc-200">
+        <!-- Modern Header Section -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-zinc-200/80">
             <div>
-                <h1 class="text-xl font-black text-zinc-900 tracking-tight">System Overview</h1>
-                <p class="text-[10px] text-zinc-400 font-bold uppercase tracking-wider mt-0.5">Realtime monitoring & administration</p>
+                <h1 class="text-2xl font-black text-zinc-950 tracking-tight">System Overview</h1>
+                <p class="text-xs text-zinc-400 font-semibold mt-0.5">Monitor system performance, user growth, and core activities.</p>
             </div>
 
-            <!-- Quick Links Buttons -->
+            <!-- Sleek Action Controls -->
             <div class="flex flex-wrap items-center gap-2">
                 <a href="{{ route('admin.email-blast') }}"
-                    class="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-700 font-bold text-xs rounded-lg transition">
-                    <i class="ph-bold ph-paper-plane-tilt text-zinc-400"></i> Email Blast
+                    class="inline-flex items-center gap-2 px-3.5 py-2 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-750 font-bold text-xs rounded-xl transition shadow-3xs">
+                    <i class="ph-bold ph-paper-plane-tilt text-zinc-400 text-sm"></i> Email Blast
                 </a>
                 <a href="{{ route('admin.users') }}"
-                    class="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-700 font-bold text-xs rounded-lg transition">
-                    <i class="ph-bold ph-users-three text-zinc-400"></i> Users List
+                    class="inline-flex items-center gap-2 px-3.5 py-2 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-750 font-bold text-xs rounded-xl transition shadow-3xs">
+                    <i class="ph-bold ph-users-three text-zinc-400 text-sm"></i> Users List
                 </a>
                 <a href="{{ route('admin.payments') }}"
-                    class="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-700 font-bold text-xs rounded-lg transition">
-                    <i class="ph-bold ph-credit-card text-zinc-400"></i> Payments
+                    class="inline-flex items-center gap-2 px-3.5 py-2 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-750 font-bold text-xs rounded-xl transition shadow-3xs">
+                    <i class="ph-bold ph-credit-card text-zinc-400 text-sm"></i> Payments
                 </a>
             </div>
         </div>
 
-        <!-- Premium Bento Grid Cards (4-Column) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Metric Bento Cards (High Aesthetics & Micro-Animations) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <!-- Total Users -->
-            <div class="bg-white rounded-xl border border-zinc-200 p-5 hover:border-zinc-300 transition-all flex flex-col justify-between group relative overflow-hidden">
+            <div class="bg-white rounded-2xl border border-zinc-200/80 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.03)] hover:-translate-y-1 transition duration-300 flex flex-col justify-between group relative overflow-hidden">
                 <div class="flex items-start justify-between">
                     <div>
-                        <span class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-1">Total Users</span>
-                        <h3 class="text-2xl font-black tracking-tight text-zinc-950">
+                        <span class="text-[9px] font-mono font-bold text-zinc-450 uppercase tracking-widest block mb-1">Total Users</span>
+                        <h3 class="text-3xl font-black tracking-tight text-zinc-950 font-mono">
                             {{ number_format(\App\Models\User::where('role', '!=', 'admin')->count()) }}
                         </h3>
                     </div>
-                    <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-100 transition-colors shrink-0">
-                        <i class="ph-bold ph-users text-base"></i>
+                    <div class="w-9 h-9 rounded-xl bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-100 transition-colors shrink-0">
+                        <i class="ph-bold ph-users text-lg"></i>
                     </div>
                 </div>
-                <div class="flex items-center justify-between mt-4">
-                    <span class="text-[10px] text-zinc-400 font-bold">Community Base</span>
-                    <svg class="w-14 h-5 text-indigo-400/50" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 25C15 25 20 5 35 5C50 5 55 20 70 20C85 20 90 10 100 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <div class="flex items-center justify-between mt-6">
+                    <span class="text-[10px] text-zinc-450 font-bold">Community Base</span>
+                    <svg class="w-16 h-6 text-indigo-400/40" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 25C15 25 20 5 35 5C50 5 55 20 70 20C85 20 90 10 100 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
                 </div>
             </div>
 
             <!-- Verified Users -->
-            <div class="bg-white rounded-xl border border-zinc-200 p-5 hover:border-zinc-300 transition-all flex flex-col justify-between group relative overflow-hidden">
+            <div class="bg-white rounded-2xl border border-zinc-200/80 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.03)] hover:-translate-y-1 transition duration-300 flex flex-col justify-between group relative overflow-hidden">
                 <div class="flex items-start justify-between">
                     <div>
-                        <span class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-1">Verified Users</span>
-                        <h3 class="text-2xl font-black tracking-tight text-zinc-950">
+                        <span class="text-[9px] font-mono font-bold text-zinc-450 uppercase tracking-widest block mb-1">Verified Users</span>
+                        <h3 class="text-3xl font-black tracking-tight text-zinc-950 font-mono">
                             {{ number_format(\App\Models\User::where('role', '!=', 'admin')->whereNotNull('email_verified_at')->count()) }}
                         </h3>
                     </div>
-                    <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-100 transition-colors shrink-0">
-                        <i class="ph-bold ph-seal-check text-base"></i>
+                    <div class="w-9 h-9 rounded-xl bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-100 transition-colors shrink-0">
+                        <i class="ph-bold ph-seal-check text-lg"></i>
                     </div>
                 </div>
-                <div class="flex items-center justify-between mt-4">
-                    <span class="text-[10px] text-zinc-400 font-bold">Trusted Accounts</span>
-                    <svg class="w-14 h-5 text-emerald-400/50" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 15C10 10 20 25 30 20C40 15 50 5 60 10C70 15 80 5 90 8C95 10 100 2 100 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <div class="flex items-center justify-between mt-6">
+                    <span class="text-[10px] text-zinc-450 font-bold">Trusted Accounts</span>
+                    <svg class="w-16 h-6 text-emerald-400/40" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 15C10 10 20 25 30 20C40 15 50 5 60 10C70 15 80 5 90 8C95 10 100 2 100 2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
                 </div>
             </div>
 
             <!-- Active Profiles -->
-            <div class="bg-white rounded-xl border border-zinc-200 p-5 hover:border-zinc-300 transition-all flex flex-col justify-between group relative overflow-hidden">
+            <div class="bg-white rounded-2xl border border-zinc-200/80 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.03)] hover:-translate-y-1 transition duration-300 flex flex-col justify-between group relative overflow-hidden">
                 <div class="flex items-start justify-between">
                     <div>
-                        <span class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-1">Active Profiles</span>
-                        <h3 class="text-2xl font-black tracking-tight text-zinc-950">
+                        <span class="text-[9px] font-mono font-bold text-zinc-450 uppercase tracking-widest block mb-1">Active Profiles</span>
+                        <h3 class="text-3xl font-black tracking-tight text-zinc-950 font-mono">
                             {{ number_format($activeUsers) }}
                         </h3>
                     </div>
-                    <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-100 transition-colors shrink-0">
-                        <i class="ph-bold ph-user-circle-gear text-base"></i>
+                    <div class="w-9 h-9 rounded-xl bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-100 transition-colors shrink-0">
+                        <i class="ph-bold ph-user-circle-gear text-lg"></i>
                     </div>
                 </div>
-                <div class="flex items-center justify-between mt-4">
-                    <span class="text-[10px] text-zinc-400 font-bold">CV Configured</span>
-                    <svg class="w-14 h-5 text-blue-400/50" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 28C10 28 20 20 30 18C40 15 50 25 60 22C70 18 80 8 90 5C95 3 100 2 100 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <div class="flex items-center justify-between mt-6">
+                    <span class="text-[10px] text-zinc-450 font-bold">CV Configured</span>
+                    <svg class="w-16 h-6 text-blue-400/40" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 28C10 28 20 20 30 18C40 15 50 25 60 22C70 18 80 8 90 5C95 3 100 2 100 2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
                 </div>
             </div>
 
             <!-- Total Applications -->
-            <div class="bg-white rounded-xl border border-zinc-200 p-5 hover:border-zinc-300 transition-all flex flex-col justify-between group relative overflow-hidden">
+            <div class="bg-white rounded-2xl border border-zinc-200/80 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.03)] hover:-translate-y-1 transition duration-300 flex flex-col justify-between group relative overflow-hidden">
                 <div class="flex items-start justify-between">
                     <div>
-                        <span class="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block mb-1">Applications</span>
-                        <h3 class="text-2xl font-black tracking-tight text-zinc-950">
+                        <span class="text-[9px] font-mono font-bold text-zinc-450 uppercase tracking-widest block mb-1">Applications</span>
+                        <h3 class="text-3xl font-black tracking-tight text-zinc-950 font-mono">
                             {{ number_format($totalApps) }}
                         </h3>
                     </div>
-                    <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-100 transition-colors shrink-0">
-                        <i class="ph-bold ph-briefcase text-base"></i>
+                    <div class="w-9 h-9 rounded-xl bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-100 transition-colors shrink-0">
+                        <i class="ph-bold ph-briefcase text-lg"></i>
                     </div>
                 </div>
-                <div class="flex items-center justify-between mt-4">
-                    <span class="text-[10px] text-zinc-400 font-bold">Tracker Logs</span>
-                    <svg class="w-14 h-5 text-purple-400/50" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 20C15 20 25 15 35 15C45 15 55 25 65 20C75 15 85 8 100 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <div class="flex items-center justify-between mt-6">
+                    <span class="text-[10px] text-zinc-450 font-bold">Tracker Logs</span>
+                    <svg class="w-16 h-6 text-purple-400/40" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 20C15 20 25 15 35 15C45 15 55 25 65 20C75 15 85 8 100 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
                 </div>
             </div>
@@ -173,18 +173,18 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
             <!-- Growth Overview Panel -->
-            <div class="bg-white rounded-xl border border-zinc-200 p-5 flex flex-col justify-between">
+            <div class="bg-white rounded-2xl border border-zinc-200/80 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.015)] flex flex-col justify-between">
                 <div>
-                    <div class="pb-3 border-b border-zinc-100 mb-4">
-                        <h2 class="text-xs font-black text-zinc-900 tracking-tight">Growth Overview</h2>
+                    <div class="pb-3 border-b border-zinc-100 mb-5">
+                        <h2 class="text-sm font-black text-zinc-900 tracking-tight">Growth Metrics</h2>
                     </div>
 
                     <div class="space-y-4">
                         <!-- Today Signups -->
-                        <div class="flex items-center justify-between text-xs font-bold text-zinc-650">
-                            <div class="flex items-center gap-2">
-                                <div class="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500">
-                                    <i class="ph-bold ph-user-plus text-sm"></i>
+                        <div class="flex items-center justify-between text-xs font-bold text-zinc-600">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-xl bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500">
+                                    <i class="ph-bold ph-user-plus text-base"></i>
                                 </div>
                                 <span>Today Signups</span>
                             </div>
@@ -192,29 +192,29 @@
                         </div>
 
                         <!-- Premium Pro Users -->
-                        <div class="flex items-center justify-between text-xs font-bold text-zinc-650">
-                            <div class="flex items-center gap-2">
-                                <div class="w-7 h-7 rounded-lg bg-purple-50 border border-purple-100 text-purple-650 flex items-center justify-center">
-                                    <i class="ph-bold ph-crown text-sm"></i>
+                        <div class="flex items-center justify-between text-xs font-bold text-zinc-600">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-xl bg-violet-50 border border-violet-100 text-violet-600 flex items-center justify-center">
+                                    <i class="ph-bold ph-crown text-base"></i>
                                 </div>
                                 <span>Premium Pro Users</span>
                             </div>
-                            <span class="font-mono text-purple-600 text-sm font-black">{{ number_format($proUsers) }}</span>
+                            <span class="font-mono text-violet-600 text-sm font-black">{{ number_format($proUsers) }}</span>
                         </div>
 
                         <!-- Goal Success Rate -->
-                        <div class="space-y-2 pt-3 border-t border-zinc-100">
-                            <div class="flex items-center justify-between text-xs font-bold text-zinc-650">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-7 h-7 rounded-lg bg-zinc-950 flex items-center justify-center text-white">
-                                        <i class="ph-bold ph-sparkle text-sm text-amber-300"></i>
+                        <div class="space-y-2 pt-4 border-t border-zinc-100">
+                            <div class="flex items-center justify-between text-xs font-bold text-zinc-600">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-xl bg-zinc-950 flex items-center justify-center text-white">
+                                        <i class="ph-bold ph-sparkle text-base text-amber-300"></i>
                                     </div>
                                     <span>Goal Success Rate</span>
                                 </div>
                                 @php $goalPercent = $totalGoals > 0 ? round(($achievedGoals / $totalGoals) * 100) : 0; @endphp
                                 <span class="font-mono text-zinc-950 text-sm font-black">{{ $goalPercent }}%</span>
                             </div>
-                            <!-- Minimal Progress Bar -->
+                            <!-- Progress Bar -->
                             <div class="w-full bg-zinc-100 h-2 rounded-full overflow-hidden">
                                 <div class="bg-zinc-950 h-full rounded-full transition-all" style="width: {{ $goalPercent }}%"></div>
                             </div>
@@ -222,90 +222,90 @@
                     </div>
                 </div>
 
-                <div class="pt-4 mt-4 border-t border-zinc-150 flex items-center justify-between text-[10px] font-bold text-zinc-400">
+                <div class="pt-4 mt-6 border-t border-zinc-150 flex items-center justify-between text-[10px] font-bold text-zinc-400">
                     <span>Total Goals Achieved</span>
-                    <span class="font-mono text-zinc-900 bg-zinc-50 border border-zinc-200 px-2 py-0.5 rounded">
+                    <span class="font-mono text-zinc-900 bg-zinc-50 border border-zinc-200 px-2 py-0.5 rounded-lg">
                         {{ number_format($achievedGoals) }} / {{ number_format($totalGoals) }}
                     </span>
                 </div>
             </div>
 
             <!-- Signups Line Chart -->
-            <div class="lg:col-span-2 bg-white rounded-xl border border-zinc-200 p-5 flex flex-col">
-                <div class="flex items-center justify-between pb-3 border-b border-zinc-100 mb-4">
-                    <h2 class="text-xs font-black text-zinc-900 tracking-tight">Active Growth (Last 10 Days)</h2>
-                    <span class="text-[9px] font-mono font-bold text-zinc-500 bg-zinc-100 border border-zinc-200 px-2 py-0.5 rounded-full">Signups Tracker</span>
+            <div class="lg:col-span-2 bg-white rounded-2xl border border-zinc-200/80 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.015)] flex flex-col">
+                <div class="flex items-center justify-between pb-3 border-b border-zinc-100 mb-5">
+                    <h2 class="text-sm font-black text-zinc-900 tracking-tight">Active Growth (Last 10 Days)</h2>
+                    <span class="text-[9px] font-mono font-bold text-zinc-500 bg-zinc-100 border border-zinc-200 px-2.5 py-0.5 rounded-full">Signups Tracker</span>
                 </div>
-                <div class="h-[180px] relative w-full mt-2">
+                <div class="h-[190px] relative w-full mt-2">
                     <canvas id="growthChart"></canvas>
                 </div>
             </div>
         </div>
 
-        <!-- Application Funnel Pipeline -->
-        <div class="bg-white rounded-xl border border-zinc-200 p-5">
+        <!-- Application Funnel Pipeline (Premium Cohesive Colors) -->
+        <div class="bg-white rounded-2xl border border-zinc-200/80 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.015)]">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-zinc-100 mb-5 gap-2">
                 <div>
-                    <h2 class="text-xs font-black text-zinc-900 tracking-tight">Recruitment Funnel Pipeline</h2>
-                    <p class="text-[10px] text-zinc-400 font-semibold mt-0.5">Platform user application metrics & conversion rates</p>
+                    <h2 class="text-sm font-black text-zinc-900 tracking-tight">Recruitment Funnel Pipeline</h2>
+                    <p class="text-[10px] text-zinc-450 font-bold uppercase tracking-wider mt-0.5">Platform user application metrics & conversion rates</p>
                 </div>
-                <span class="text-[10px] font-mono font-black text-emerald-800 bg-emerald-50 border border-emerald-100/60 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1 shrink-0">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <span class="text-[10px] font-mono font-black text-zinc-700 bg-zinc-50 border border-zinc-200 px-3 py-0.8 rounded-full inline-flex items-center gap-1.5 shrink-0">
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
                     {{ $overallSuccessRate }}% Success Rate
                 </span>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
                 <!-- Connected Stages Visual Layout -->
-                <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
                     <!-- Stage 1 -->
-                    <div class="bg-zinc-50 border border-zinc-200 rounded-lg p-4 flex flex-col justify-between min-h-[100px] hover:border-zinc-300 transition">
+                    <div class="bg-zinc-50/50 border border-zinc-200/80 rounded-xl p-5 flex flex-col justify-between min-h-[105px] hover:border-zinc-300 transition duration-350">
                         <div>
-                            <div class="flex items-center gap-1.5 text-zinc-400 mb-1">
+                            <div class="flex items-center gap-1.5 text-zinc-450 mb-1">
                                 <i class="ph-bold ph-paper-plane-tilt text-xs"></i>
                                 <span class="text-[9px] font-mono font-bold uppercase tracking-wider">Stage 1</span>
                             </div>
-                            <h4 class="text-xs font-bold text-zinc-800">Total Applied</h4>
+                            <h4 class="text-xs font-bold text-zinc-750">Total Applied</h4>
                         </div>
                         <div class="flex items-baseline justify-between mt-3">
-                            <span class="text-lg font-black text-zinc-950 font-mono">{{ number_format($totalApps) }}</span>
+                            <span class="text-xl font-black text-zinc-950 font-mono">{{ number_format($totalApps) }}</span>
                             <span class="text-[9px] font-mono font-bold text-zinc-400 bg-white border border-zinc-200 px-1.5 py-0.2 rounded">100% Base</span>
                         </div>
                     </div>
 
                     <!-- Stage 2 -->
-                    <div class="bg-amber-50/20 border border-amber-200/60 rounded-lg p-4 flex flex-col justify-between min-h-[100px] hover:border-amber-300 transition">
+                    <div class="bg-zinc-50/50 border border-zinc-200/80 rounded-xl p-5 flex flex-col justify-between min-h-[105px] hover:border-zinc-300 transition duration-350">
                         <div>
-                            <div class="flex items-center gap-1.5 text-amber-600 mb-1">
+                            <div class="flex items-center gap-1.5 text-zinc-450 mb-1">
                                 <i class="ph-bold ph-chats-circle text-xs"></i>
                                 <span class="text-[9px] font-mono font-bold uppercase tracking-wider">Stage 2</span>
                             </div>
-                            <h4 class="text-xs font-bold text-amber-900">Interview Stage</h4>
+                            <h4 class="text-xs font-bold text-zinc-750">Interview Stage</h4>
                         </div>
                         <div class="flex items-baseline justify-between mt-3">
-                            <span class="text-lg font-black text-amber-900 font-mono">{{ number_format($interviewApps) }}</span>
-                            <span class="text-[9px] font-mono font-black text-amber-700 bg-amber-50 border border-amber-200/50 px-1.5 py-0.2 rounded">{{ $interviewRate }}% Rate</span>
+                            <span class="text-xl font-black text-zinc-950 font-mono">{{ number_format($interviewApps) }}</span>
+                            <span class="text-[9px] font-mono font-bold text-zinc-600 bg-white border border-zinc-200 px-1.5 py-0.2 rounded">{{ $interviewRate }}% Rate</span>
                         </div>
                     </div>
 
                     <!-- Stage 3 -->
-                    <div class="bg-emerald-50/20 border border-emerald-250/60 rounded-lg p-4 flex flex-col justify-between min-h-[100px] hover:border-emerald-350 transition">
+                    <div class="bg-indigo-50/10 border border-indigo-150 rounded-xl p-5 flex flex-col justify-between min-h-[105px] hover:border-indigo-250 transition duration-350">
                         <div>
-                            <div class="flex items-center gap-1.5 text-emerald-600/80 mb-1">
+                            <div class="flex items-center gap-1.5 text-indigo-500 mb-1">
                                 <i class="ph-bold ph-handshake text-xs"></i>
-                                <span class="text-[9px] font-mono font-bold uppercase tracking-wider">Stage 3</span>
+                                <span class="text-[9px] font-mono font-bold uppercase tracking-wider text-indigo-400">Stage 3</span>
                             </div>
-                            <h4 class="text-xs font-bold text-emerald-950">Got Offer</h4>
+                            <h4 class="text-xs font-bold text-indigo-950">Got Offer</h4>
                         </div>
                         <div class="flex items-baseline justify-between mt-3">
-                            <span class="text-lg font-black text-emerald-800 font-mono">{{ number_format($offeredApps) }}</span>
-                            <span class="text-[9px] font-mono font-black text-emerald-700 bg-emerald-50 border border-emerald-200/50 px-1.5 py-0.2 rounded">{{ $offerRate }}% Rate</span>
+                            <span class="text-xl font-black text-indigo-900 font-mono">{{ number_format($offeredApps) }}</span>
+                            <span class="text-[9px] font-mono font-black text-indigo-700 bg-indigo-50 border border-indigo-150 px-1.5 py-0.2 rounded">{{ $offerRate }}% Rate</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Doughnut Metric Ring -->
-                <div class="bg-zinc-50/40 border border-zinc-200 rounded-lg p-4 flex flex-col items-center justify-center">
+                <div class="bg-zinc-50/30 border border-zinc-200/80 rounded-xl p-5 flex flex-col items-center justify-center">
                     <div class="relative w-[110px] aspect-square mb-3">
                         <canvas id="funnelDoughnutChart"></canvas>
                         <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
@@ -316,7 +316,7 @@
                     <!-- Small Legend -->
                     <div class="flex items-center justify-center gap-3">
                         <div class="flex items-center gap-1">
-                            <div class="w-1.5 h-1.5 rounded-full bg-zinc-250"></div>
+                            <div class="w-1.5 h-1.5 rounded-full bg-zinc-200"></div>
                             <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase">Apply</span>
                         </div>
                         <div class="flex items-center gap-1">
@@ -324,7 +324,7 @@
                             <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase">Intvw</span>
                         </div>
                         <div class="flex items-center gap-1">
-                            <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                            <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
                             <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase">Offer</span>
                         </div>
                     </div>
@@ -336,18 +336,18 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
             <!-- Column 1: Recent Applications -->
-            <div class="bg-white rounded-xl border border-zinc-200 flex flex-col h-[460px]">
-                <div class="px-4 py-3 border-b border-zinc-150 flex items-center justify-between">
-                    <div class="flex items-center gap-2">
+            <div class="bg-white rounded-2xl border border-zinc-200/80 flex flex-col h-[460px] shadow-[0_8px_30px_rgb(0,0,0,0.015)]">
+                <div class="px-5 py-4 border-b border-zinc-150 flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
                         <i class="ph-bold ph-clock-counter-clockwise text-zinc-450"></i>
                         <span class="text-[10px] font-mono font-bold text-zinc-450 uppercase tracking-widest">Recent Applications</span>
                     </div>
-                    <span class="text-[8px] font-mono font-bold text-zinc-500 bg-zinc-100 border border-zinc-200 px-1.5 py-0.5 rounded-full">Live</span>
+                    <span class="text-[8px] font-mono font-bold text-zinc-500 bg-zinc-100 border border-zinc-200 px-2 py-0.5 rounded-full">Live</span>
                 </div>
                 <div class="divide-y divide-zinc-100 flex-1 overflow-y-auto custom-scrollbar">
                     @forelse($recentApplications as $application)
-                        <div class="p-3.5 hover:bg-zinc-50/50 transition flex items-start gap-2.5">
-                            <div class="w-7 h-7 rounded bg-zinc-100 border border-zinc-200 flex items-center justify-center flex-shrink-0 text-zinc-700 text-xs font-black">
+                        <div class="p-4 hover:bg-zinc-50/50 transition flex items-start gap-3">
+                            <div class="w-7 h-7 rounded-lg bg-zinc-100 border border-zinc-200 flex items-center justify-center flex-shrink-0 text-zinc-700 text-xs font-black">
                                 {{ strtoupper(substr($application->user->name ?? 'A', 0, 1)) }}
                             </div>
 
@@ -360,13 +360,13 @@
                                         {{ $application->created_at->diffForHumans() }}
                                     </p>
                                 </div>
-                                <p class="text-[10px] text-zinc-500 truncate mb-1">
+                                <p class="text-[10px] text-zinc-500 truncate mb-1.5">
                                     <span class="font-bold text-zinc-800">{{ $application->company_name }}</span> &bull; {{ $application->position }}
                                 </p>
                                 
-                                <!-- Notion-style Badges -->
+                                <!-- Status Badges -->
                                 @if($application->status === 'applied')
-                                    <span class="inline-block px-1.5 py-0.2 text-[8px] font-bold rounded bg-zinc-50 text-zinc-700 border border-zinc-200/50">Applied</span>
+                                    <span class="inline-block px-1.5 py-0.2 text-[8px] font-bold rounded bg-zinc-100 text-zinc-700 border border-zinc-200/50">Applied</span>
                                 @elseif($application->status === 'interview')
                                     <span class="inline-block px-1.5 py-0.2 text-[8px] font-bold rounded bg-yellow-50 text-yellow-800 border border-yellow-250/20">Interview</span>
                                 @elseif($application->status === 'accepted')
@@ -374,7 +374,7 @@
                                 @elseif($application->status === 'rejected')
                                     <span class="inline-block px-1.5 py-0.2 text-[8px] font-bold rounded bg-rose-50 text-rose-800 border border-rose-250/20">Rejected</span>
                                 @else
-                                    <span class="inline-block px-1.5 py-0.2 text-[8px] font-bold rounded bg-zinc-50 text-zinc-600 border border-zinc-200">{{ $application->status }}</span>
+                                    <span class="inline-block px-1.5 py-0.2 text-[8px] font-bold rounded bg-zinc-50 text-zinc-650 border border-zinc-200">{{ $application->status }}</span>
                                 @endif
                             </div>
                         </div>
@@ -388,17 +388,17 @@
             </div>
 
             <!-- Column 2: Most Applied Users -->
-            <div class="bg-white rounded-xl border border-zinc-200 flex flex-col h-[460px]">
-                <div class="px-4 py-3 border-b border-zinc-150 flex items-center justify-between">
-                    <div class="flex items-center gap-2">
+            <div class="bg-white rounded-2xl border border-zinc-200/80 flex flex-col h-[460px] shadow-[0_8px_30px_rgb(0,0,0,0.015)]">
+                <div class="px-5 py-4 border-b border-zinc-150 flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
                         <i class="ph-bold ph-trophy text-zinc-450"></i>
                         <span class="text-[10px] font-mono font-bold text-zinc-450 uppercase tracking-widest">Most Active Users</span>
                     </div>
-                    <span class="text-[8px] font-mono font-bold text-zinc-500 bg-zinc-100 border border-zinc-200 px-1.5 py-0.5 rounded-full">Top 15</span>
+                    <span class="text-[8px] font-mono font-bold text-zinc-500 bg-zinc-100 border border-zinc-200 px-2 py-0.5 rounded-full">Top 15</span>
                 </div>
                 <div class="divide-y divide-zinc-100 flex-1 overflow-y-auto custom-scrollbar">
                     @forelse($topAppliedUsers as $index => $user)
-                        <div class="flex items-center gap-2.5 p-3.5 hover:bg-zinc-50/50 transition">
+                        <div class="flex items-center gap-2.5 p-4 hover:bg-zinc-50/50 transition">
                             <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center font-mono font-black text-[9px] shrink-0 {{ $index === 0 ? 'bg-amber-50 border-amber-200 text-amber-700' : ($index === 1 ? 'bg-zinc-100 text-zinc-650' : ($index === 2 ? 'bg-orange-50 border-orange-200 text-orange-700' : 'text-zinc-400')) }}">
                                 {{ $index + 1 }}
                             </div>
@@ -420,17 +420,17 @@
             </div>
 
             <!-- Column 3: Users Needing Help -->
-            <div class="bg-white rounded-xl border border-zinc-200 flex flex-col h-[460px]">
-                <div class="px-4 py-3 border-b border-zinc-150 flex items-center justify-between">
-                    <div class="flex items-center gap-2">
+            <div class="bg-white rounded-2xl border border-zinc-200/80 flex flex-col h-[460px] shadow-[0_8px_30px_rgb(0,0,0,0.015)]">
+                <div class="px-5 py-4 border-b border-zinc-150 flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
                         <i class="ph-bold ph-warning-circle text-zinc-450"></i>
                         <span class="text-[10px] font-mono font-bold text-zinc-450 uppercase tracking-widest">Help Needed</span>
                     </div>
-                    <span class="text-[8px] font-mono font-bold text-rose-700 bg-rose-50 border border-rose-200 px-1.5 py-0.5 rounded-full">Failed</span>
+                    <span class="text-[8px] font-mono font-bold text-rose-700 bg-rose-50 border border-rose-250 px-2 py-0.5 rounded-full">Failed</span>
                 </div>
                 <div class="divide-y divide-zinc-100 flex-1 overflow-y-auto custom-scrollbar">
                     @forelse($topDeclinedUsers as $index => $user)
-                        <div class="flex items-center gap-2.5 p-3.5 hover:bg-zinc-50/50 transition">
+                        <div class="flex items-center gap-2.5 p-4 hover:bg-zinc-50/50 transition">
                             <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center font-mono font-black text-[9px] shrink-0 {{ $index === 0 ? 'bg-rose-50 border-rose-200 text-rose-700' : 'text-zinc-400' }}">
                                 {{ $index + 1 }}
                             </div>
@@ -438,7 +438,7 @@
                                 <p class="text-xs font-bold text-zinc-950 truncate leading-tight">{{ $user->name }}</p>
                                 <p class="text-[10px] text-zinc-450 truncate mt-0.5 leading-none">{{ $user->email }}</p>
                             </div>
-                            <span class="text-[9px] font-mono font-bold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-full shrink-0">
+                            <span class="text-[9px] font-mono font-bold text-rose-750 bg-rose-50 border border-rose-100 px-2 py-0.5 rounded-full shrink-0">
                                 {{ number_format($user->declined_not_processed_count) }} fail
                             </span>
                         </div>
@@ -455,13 +455,18 @@
 
     </div>
 
-    <!-- Chart.js and Custom Minimalist Theme Initialization -->
+    <!-- Chart.js and Custom Premium Theme Initialization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Growth Chart (Notion theme: thin lines, monospace ticks, no fill)
+            // Growth Chart (Notion Premium: thin lines, monospace ticks, linear gradient fill)
             const ctx = document.getElementById('growthChart')?.getContext('2d');
             if (ctx) {
+                // Create vertical gradient for area fill
+                const gradient = ctx.createLinearGradient(0, 0, 0, 180);
+                gradient.addColorStop(0, 'rgba(99, 102, 241, 0.15)');
+                gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
                 new Chart(ctx, {
                     type: 'line',
                     data: {
@@ -469,15 +474,16 @@
                         datasets: [{
                             label: 'Signups',
                             data: {!! json_encode($chartData) !!},
-                            borderColor: '#18181b', // sleek dark zinc line
-                            borderWidth: 2,
+                            borderColor: '#6366f1', // Indigo signature line
+                            borderWidth: 2.5,
                             pointBackgroundColor: '#ffffff',
-                            pointBorderColor: '#18181b',
-                            pointBorderWidth: 2,
-                            pointRadius: 3,
-                            pointHoverRadius: 5,
-                            fill: false,
-                            tension: 0.3
+                            pointBorderColor: '#6366f1',
+                            pointBorderWidth: 2.5,
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            fill: true,
+                            backgroundColor: gradient,
+                            tension: 0.35
                         }]
                     },
                     options: {
@@ -500,7 +506,7 @@
                                 ticks: { font: { family: "monospace", size: 9, weight: 'bold' }, color: '#71717a' }
                             },
                             y: {
-                                grid: { color: 'rgba(228, 228, 231, 0.4)', drawBorder: false, borderDash: [3, 3] },
+                                grid: { color: 'rgba(228, 228, 231, 0.45)', drawBorder: false, borderDash: [4, 4] },
                                 ticks: { font: { family: "monospace", size: 9, weight: 'bold' }, color: '#71717a', stepSize: 5 },
                                 beginAtZero: true
                             }
@@ -509,7 +515,7 @@
                 });
             }
 
-            // Funnel Doughnut Chart (thin, elegant minimalist loop)
+            // Funnel Doughnut Chart (thin, elegant minimalist loop with indigo action color)
             const funnelCtx = document.getElementById('funnelDoughnutChart')?.getContext('2d');
             if (funnelCtx) {
                 new Chart(funnelCtx, {
@@ -522,7 +528,7 @@
                                 {{ max(0, $interviewApps - $offeredApps) }},
                                 {{ $offeredApps }}
                             ],
-                            backgroundColor: ['#e4e4e7', '#fbbf24', '#10b981'],
+                            backgroundColor: ['#e4e4e7', '#fbbf24', '#6366f1'],
                             borderWidth: 0,
                             hoverOffset: 2
                         }]
@@ -530,7 +536,7 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: true,
-                        cutout: '82%',
+                        cutout: '84%',
                         plugins: {
                             legend: { display: false },
                             tooltip: {
