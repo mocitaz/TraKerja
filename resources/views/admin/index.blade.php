@@ -55,37 +55,39 @@
             ->take(15)
             ->get();
 
-        function getGradientAvatar($name) {
+        // Menggunakan inline style hex gradient agar 100% aman ter-render di produksi (CORS & Tailwind Dynamic Class Safe)
+        function getAvatarStyle($name) {
             $char = strtoupper(substr($name ?? 'A', 0, 1));
-            $gradients = [
-                'A' => 'from-indigo-500 to-purple-500',
-                'B' => 'from-purple-500 to-pink-500',
-                'C' => 'from-pink-500 to-rose-500',
-                'D' => 'from-rose-500 to-red-500',
-                'E' => 'from-red-500 to-orange-500',
-                'F' => 'from-orange-500 to-amber-500',
-                'G' => 'from-amber-500 to-yellow-500',
-                'H' => 'from-yellow-500 to-lime-500',
-                'I' => 'from-lime-500 to-green-500',
-                'J' => 'from-green-500 to-emerald-500',
-                'K' => 'from-emerald-500 to-teal-500',
-                'L' => 'from-teal-500 to-cyan-500',
-                'M' => 'from-cyan-500 to-sky-500',
-                'N' => 'from-sky-500 to-blue-500',
-                'O' => 'from-blue-500 to-indigo-500',
-                'P' => 'from-indigo-500 to-violet-500',
-                'Q' => 'from-violet-500 to-fuchsia-500',
-                'R' => 'from-fuchsia-500 to-pink-500',
-                'S' => 'from-pink-500 to-rose-500',
-                'T' => 'from-rose-500 to-orange-500',
-                'U' => 'from-orange-500 to-yellow-500',
-                'V' => 'from-yellow-500 to-green-500',
-                'W' => 'from-green-500 to-teal-500',
-                'X' => 'from-teal-500 to-sky-500',
-                'Y' => 'from-sky-500 to-indigo-500',
-                'Z' => 'from-indigo-500 to-pink-500',
+            $colors = [
+                'A' => ['#6366f1', '#a855f7'],
+                'B' => ['#a855f7', '#ec4899'],
+                'C' => ['#ec4899', '#f43f5e'],
+                'D' => ['#f43f5e', '#ef4444'],
+                'E' => ['#ef4444', '#f97316'],
+                'F' => ['#f97316', '#f59e0b'],
+                'G' => ['#f59e0b', '#eab308'],
+                'H' => ['#eab308', '#84cc16'],
+                'I' => ['#84cc16', '#22c55e'],
+                'J' => ['#22c55e', '#10b981'],
+                'K' => ['#10b981', '#14b8a6'],
+                'L' => ['#14b8a6', '#06b6d4'],
+                'M' => ['#06b6d4', '#0ea5e9'],
+                'N' => ['#0ea5e9', '#3b82f6'],
+                'O' => ['#3b82f6', '#6366f1'],
+                'P' => ['#6366f1', '#8b5cf6'],
+                'Q' => ['#8b5cf6', '#d946ef'],
+                'R' => ['#d946ef', '#ec4899'],
+                'S' => ['#ec4899', '#f43f5e'],
+                'T' => ['#f43f5e', '#f97316'],
+                'U' => ['#f97316', '#eab308'],
+                'V' => ['#eab308', '#22c55e'],
+                'W' => ['#22c55e', '#14b8a6'],
+                'X' => ['#14b8a6', '#0ea5e9'],
+                'Y' => ['#0ea5e9', '#6366f1'],
+                'Z' => ['#6366f1', '#ec4899'],
             ];
-            return $gradients[$char] ?? 'from-zinc-500 to-zinc-700';
+            $pair = $colors[$char] ?? ['#71717a', '#52525b'];
+            return "background: linear-gradient(135deg, {$pair[0]} 0%, {$pair[1]} 100%);";
         }
     @endphp
 
@@ -117,7 +119,7 @@
             </div>
         </div>
 
-        <!-- High-Density Stats Cards (Smaller and more compact) -->
+        <!-- High-Density Stats Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <!-- Total Users -->
             <div class="bg-white rounded-xl border border-zinc-200 p-4 hover:border-zinc-300 transition duration-200 shadow-[0_4px_20px_rgba(0,0,0,0.008)] flex flex-col justify-between group relative overflow-hidden">
@@ -204,7 +206,7 @@
             </div>
         </div>
 
-        <!-- Growth & Chart Section (Ramping) -->
+        <!-- Growth & Chart Section -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
             
             <!-- Growth Overview Panel -->
@@ -265,7 +267,7 @@
                 </div>
             </div>
 
-            <!-- Signups Line Chart (Ramping h-140px) -->
+            <!-- Signups Line Chart -->
             <div class="lg:col-span-2 bg-white rounded-xl border border-zinc-200 p-4 shadow-[0_4px_20px_rgba(0,0,0,0.008)] flex flex-col">
                 <div class="flex items-center justify-between pb-2 border-b border-zinc-100 mb-3.5">
                     <h2 class="text-[10px] font-black text-zinc-800 tracking-tight uppercase">Active Growth (Last 10 Days)</h2>
@@ -277,7 +279,7 @@
             </div>
         </div>
 
-        <!-- Application Funnel Pipeline (Compact Grid) -->
+        <!-- Application Funnel Pipeline -->
         <div class="bg-white rounded-xl border border-zinc-200 p-4 shadow-[0_4px_20px_rgba(0,0,0,0.008)]">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-zinc-100 mb-4 gap-2">
                 <div>
@@ -304,7 +306,7 @@
                         </div>
                         <div class="flex items-baseline justify-between mt-2">
                             <span class="text-lg font-black text-zinc-900 font-mono leading-none">{{ number_format($totalApps) }}</span>
-                            <span class="text-[8px] font-mono font-bold text-zinc-450 bg-white border border-zinc-200 px-1 py-0.2 rounded">100% Base</span>
+                            <span class="text-[8px] font-mono font-bold text-zinc-455 bg-white border border-zinc-200 px-1 py-0.2 rounded shadow-3xs">100% Base</span>
                         </div>
                     </div>
 
@@ -319,7 +321,7 @@
                         </div>
                         <div class="flex items-baseline justify-between mt-2">
                             <span class="text-lg font-black text-amber-900 font-mono leading-none">{{ number_format($interviewApps) }}</span>
-                            <span class="text-[8px] font-mono font-bold text-amber-700 bg-white border border-amber-200 px-1 py-0.2 rounded">{{ $interviewRate }}% Rate</span>
+                            <span class="text-[8px] font-mono font-bold text-amber-700 bg-white border border-amber-200 px-1 py-0.2 rounded shadow-3xs">{{ $interviewRate }}% Rate</span>
                         </div>
                     </div>
 
@@ -334,12 +336,12 @@
                         </div>
                         <div class="flex items-baseline justify-between mt-2">
                             <span class="text-lg font-black text-emerald-855 font-mono leading-none">{{ number_format($offeredApps) }}</span>
-                            <span class="text-[8px] font-mono font-bold text-emerald-700 bg-white border border-emerald-200 px-1 py-0.2 rounded">{{ $offerRate }}% Rate</span>
+                            <span class="text-[8px] font-mono font-bold text-emerald-700 bg-white border border-emerald-200 px-1 py-0.2 rounded shadow-3xs">{{ $offerRate }}% Rate</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Doughnut Metric Ring (Smaller Canvas size) -->
+                <!-- Doughnut Metric Ring -->
                 <div class="bg-zinc-50/30 border border-zinc-200 rounded-lg p-3 flex flex-col items-center justify-center">
                     <div class="relative w-[80px] aspect-square mb-1.5">
                         <canvas id="funnelDoughnutChart"></canvas>
@@ -351,15 +353,15 @@
                     <!-- Small Legend -->
                     <div class="flex items-center justify-center gap-2">
                         <div class="flex items-center gap-0.5">
-                            <div class="w-1 h-1 rounded-full bg-zinc-200"></div>
+                            <div class="w-1.5 h-1.5 rounded-full bg-zinc-200"></div>
                             <span class="text-[7px] font-mono font-bold text-zinc-450 uppercase">Apply</span>
                         </div>
                         <div class="flex items-center gap-0.5">
-                            <div class="w-1 h-1 rounded-full bg-amber-450"></div>
+                            <div class="w-1.5 h-1.5 rounded-full bg-amber-450"></div>
                             <span class="text-[7px] font-mono font-bold text-zinc-450 uppercase">Intvw</span>
                         </div>
                         <div class="flex items-center gap-0.5">
-                            <div class="w-1 h-1 rounded-full bg-indigo-500"></div>
+                            <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
                             <span class="text-[7px] font-mono font-bold text-zinc-450 uppercase">Offer</span>
                         </div>
                     </div>
@@ -367,7 +369,7 @@
             </div>
         </div>
 
-        <!-- 3-Column Recent Activity Lists (High-Density Heights) -->
+        <!-- 3-Column Recent Activity Lists -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
             <!-- Column 1: Recent Applications -->
@@ -377,13 +379,14 @@
                         <i class="ph-bold ph-clock-counter-clockwise text-zinc-450"></i>
                         <span class="text-[9px] font-mono font-bold text-zinc-500 uppercase tracking-widest">Recent Applications</span>
                     </div>
-                    <span class="text-[8px] font-mono font-bold text-zinc-550 bg-zinc-50 border border-zinc-200 px-1.5 py-0.2 rounded">Live</span>
+                    <span class="text-[8px] font-mono font-bold text-zinc-555 bg-zinc-50 border border-zinc-200 px-1.5 py-0.2 rounded">Live</span>
                 </div>
                 <div class="divide-y divide-zinc-100 flex-1 overflow-y-auto custom-scrollbar">
                     @forelse($recentApplications as $application)
                         <div class="p-3 hover:bg-zinc-50/50 transition flex items-start gap-2.5">
-                            <!-- Gradient Avatar (Smaller) -->
-                            <div class="w-7 h-7 rounded-lg bg-gradient-to-br {{ getGradientAvatar($application->user->name ?? 'A') }} flex items-center justify-center flex-shrink-0 text-white text-[10px] font-black shadow-3xs">
+                            <!-- Gradient Avatar (Fixed Dynamic Tailwind Hex Safe Rendering) -->
+                            <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 text-white text-[10px] font-black shadow-3xs"
+                                 style="{{ getAvatarStyle($application->user->name ?? 'A') }}">
                                 {{ strtoupper(substr($application->user->name ?? 'A', 0, 1)) }}
                             </div>
 
@@ -397,20 +400,20 @@
                                     </p>
                                 </div>
                                 <p class="text-[10px] text-zinc-500 truncate mb-1.5 leading-tight">
-                                    <span class="font-bold text-zinc-750">{{ $application->company_name }}</span> &bull; {{ $application->position }}
+                                    <span class="font-bold text-zinc-755">{{ $application->company_name }}</span> &bull; {{ $application->position }}
                                 </p>
                                 
                                 <!-- Status Badges -->
                                 @if($application->status === 'applied')
-                                    <span class="inline-block px-1.5 py-0.2 text-[8px] font-bold rounded-full bg-zinc-100 text-zinc-700 border border-zinc-200/50">Applied</span>
+                                    <span class="inline-block px-2 py-0.5 text-[8px] font-bold rounded-full bg-zinc-100 text-zinc-700 border border-zinc-200/50">Applied</span>
                                 @elseif($application->status === 'interview')
-                                    <span class="inline-block px-1.5 py-0.2 text-[8px] font-bold rounded-full bg-yellow-50 text-yellow-800 border border-yellow-250/20">Interview</span>
+                                    <span class="inline-block px-2 py-0.5 text-[8px] font-bold rounded-full bg-yellow-50 text-yellow-800 border border-yellow-250/20">Interview</span>
                                 @elseif($application->status === 'accepted')
-                                    <span class="inline-block px-1.5 py-0.2 text-[8px] font-bold rounded-full bg-emerald-50 text-emerald-800 border border-emerald-250/20">Accepted</span>
+                                    <span class="inline-block px-2 py-0.5 text-[8px] font-bold rounded-full bg-emerald-50 text-emerald-800 border border-emerald-250/20">Accepted</span>
                                 @elseif($application->status === 'rejected')
-                                    <span class="inline-block px-1.5 py-0.2 text-[8px] font-bold rounded-full bg-rose-50 text-rose-800 border border-rose-250/20">Rejected</span>
+                                    <span class="inline-block px-2 py-0.5 text-[8px] font-bold rounded-full bg-rose-50 text-rose-800 border border-rose-250/20">Rejected</span>
                                 @else
-                                    <span class="inline-block px-1.5 py-0.2 text-[8px] font-bold rounded-full bg-zinc-50 text-zinc-600 border border-zinc-200">{{ $application->status }}</span>
+                                    <span class="inline-block px-2 py-0.5 text-[8px] font-bold rounded-full bg-zinc-50 text-zinc-600 border border-zinc-200">{{ $application->status }}</span>
                                 @endif
                             </div>
                         </div>
@@ -425,7 +428,7 @@
 
             <!-- Column 2: Most Active Users -->
             <div class="bg-white rounded-xl border border-zinc-200 flex flex-col h-[390px] shadow-[0_4px_20px_rgba(0,0,0,0.008)]">
-                <div class="px-4 py-3 border-b border-zinc-150 flex items-center justify-between shrink-0">
+                <div class="px-4 py-3 border-b border-zinc-155 flex items-center justify-between shrink-0">
                     <div class="flex items-center gap-2">
                         <i class="ph-bold ph-trophy text-zinc-450"></i>
                         <span class="text-[9px] font-mono font-bold text-zinc-500 uppercase tracking-widest">Most Active Users</span>
@@ -439,7 +442,8 @@
                                 {{ $index + 1 }}
                             </div>
                             <div class="flex-1 min-w-0 flex items-center gap-2">
-                                <div class="w-6.5 h-6.5 rounded-full bg-gradient-to-br {{ getGradientAvatar($user->name) }} flex items-center justify-center flex-shrink-0 text-white text-[9px] font-black shadow-3xs">
+                                <div class="w-6.5 h-6.5 rounded-full flex items-center justify-center flex-shrink-0 text-white text-[9px] font-black shadow-3xs"
+                                     style="{{ getAvatarStyle($user->name) }}">
                                     {{ strtoupper(substr($user->name, 0, 1)) }}
                                 </div>
                                 <div class="min-w-0">
@@ -465,7 +469,7 @@
                 <div class="px-4 py-3 border-b border-zinc-150 flex items-center justify-between shrink-0">
                     <div class="flex items-center gap-2">
                         <i class="ph-bold ph-warning-circle text-zinc-450"></i>
-                        <span class="text-[9px] font-mono font-bold text-zinc-500 uppercase tracking-widest">Help Needed</span>
+                        <span class="text-[9px] font-mono font-bold text-zinc-550 uppercase tracking-widest">Help Needed</span>
                     </div>
                     <span class="text-[8px] font-mono font-bold text-rose-700 bg-rose-50 border border-rose-200 px-1.5 py-0.2 rounded">Failed</span>
                 </div>
@@ -476,7 +480,8 @@
                                 {{ $index + 1 }}
                             </div>
                             <div class="flex-1 min-w-0 flex items-center gap-2">
-                                <div class="w-6.5 h-6.5 rounded-full bg-gradient-to-br {{ getGradientAvatar($user->name) }} flex items-center justify-center flex-shrink-0 text-white text-[9px] font-black shadow-3xs">
+                                <div class="w-6.5 h-6.5 rounded-full flex items-center justify-center flex-shrink-0 text-white text-[9px] font-black shadow-3xs"
+                                     style="{{ getAvatarStyle($user->name) }}">
                                     {{ strtoupper(substr($user->name, 0, 1)) }}
                                 </div>
                                 <div class="min-w-0">
