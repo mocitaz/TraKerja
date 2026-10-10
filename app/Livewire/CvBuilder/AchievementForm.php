@@ -51,7 +51,7 @@ class AchievementForm extends Component
     
     public function edit($id)
     {
-        $achievement = UserAchievement::findOrFail($id);
+        $achievement = Auth::user()->achievements()->findOrFail($id);
         
         if ($achievement->user_id !== Auth::id()) {
             abort(403);
@@ -60,9 +60,9 @@ class AchievementForm extends Component
         $this->achievementId = $achievement->id;
         $this->title = $achievement->title;
         $this->issuer = $achievement->issuer;
-        $this->issue_date = $achievement->issue_date?->format('Y-m-d');
+        $this->issue_date = $achievement->date?->format('Y-m-d');
         $this->credential_id = $achievement->credential_id ?? '';
-        $this->credential_url = $achievement->credential_url ?? '';
+        $this->credential_url = $achievement->certificate_url ?? '';
         $this->description = $achievement->description ?? '';
         $this->display_order = $achievement->display_order;
         
@@ -103,22 +103,21 @@ class AchievementForm extends Component
             return;
         }
         $data = [
-            'user_id' => Auth::id(),
             'title' => $this->title,
             'issuer' => $this->issuer,
-            'issue_date' => $this->issue_date,
+            'date' => $this->issue_date,
             'credential_id' => $this->credential_id,
-            'credential_url' => $this->credential_url,
+            'certificate_url' => $this->credential_url,
             'description' => $this->description,
             'display_order' => $this->display_order,
         ];
         
         if ($this->editMode) {
-            $achievement = UserAchievement::findOrFail($this->achievementId);
+            $achievement = Auth::user()->achievements()->findOrFail($this->achievementId);
             $achievement->update($data);
             $message = 'Achievement updated successfully!';
         } else {
-            UserAchievement::create($data);
+            Auth::user()->achievements()->create($data);
             $message = 'Achievement added successfully!';
         }
         
@@ -129,6 +128,7 @@ class AchievementForm extends Component
         ]);
         
         $this->closeModal();
+        $this->dispatch('cv-data-updated');
         $this->loadAchievements();
     }
     
@@ -148,7 +148,7 @@ class AchievementForm extends Component
     {
         if (!$this->deleteId) return;
 
-        $achievement = UserAchievement::findOrFail($this->deleteId);
+        $achievement = Auth::user()->achievements()->findOrFail($this->deleteId);
 
         if ($achievement->user_id !== Auth::id()) {
             abort(403);
@@ -165,14 +165,15 @@ class AchievementForm extends Component
             'message' => 'Achievement deleted successfully!',
         ]);
         
+        $this->dispatch('cv-data-updated');
         $this->loadAchievements();
     }
     
     public function moveUp($id)
     {
-        $achievement = UserAchievement::findOrFail($id);
+        $achievement = Auth::user()->achievements()->findOrFail($id);
         if ($achievement->display_order > 0) {
-            $swapWith = UserAchievement::where('user_id', Auth::id())
+            $swapWith = Auth::user()->achievements()
                 ->where('display_order', $achievement->display_order - 1)
                 ->first();
             
@@ -185,16 +186,17 @@ class AchievementForm extends Component
             $achievement->save();
         }
         
+        $this->dispatch('cv-data-updated');
         $this->loadAchievements();
     }
     
     public function moveDown($id)
     {
-        $achievement = UserAchievement::findOrFail($id);
+        $achievement = Auth::user()->achievements()->findOrFail($id);
         $maxOrder = $this->achievements->max('display_order');
         
         if ($achievement->display_order < $maxOrder) {
-            $swapWith = UserAchievement::where('user_id', Auth::id())
+            $swapWith = Auth::user()->achievements()
                 ->where('display_order', $achievement->display_order + 1)
                 ->first();
             
@@ -207,6 +209,7 @@ class AchievementForm extends Component
             $achievement->save();
         }
         
+        $this->dispatch('cv-data-updated');
         $this->loadAchievements();
     }
     

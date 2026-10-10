@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\PaymentSuccessMail;
 use App\Models\Payment;
 use App\Models\User;
 use App\Services\PakasirService;
@@ -10,9 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use App\Services\ActivityLogger;
 
 class PaymentController extends Controller
 {
@@ -61,12 +58,12 @@ class PaymentController extends Controller
             $packageType = 'cl_addon_15';
             $packageName = 'TraKerja Add-On Pack';
             $packageSubtitle = '15 Kredit Cover Letter + 10 Kredit AI Analyzer + 5 Kredit AI Photo';
-            $addonPrice = 14999;
+            $addonPrice = \App\Support\PaymentPackages::ADDON_PRICE;
         } else {
             $packageType = 'addon_10';
             $packageName = 'TraKerja Add-On Pack';
             $packageSubtitle = '10 Kredit AI Analyzer + 15 Kredit Cover Letter + 5 Kredit AI Photo';
-            $addonPrice = 14999;
+            $addonPrice = \App\Support\PaymentPackages::ADDON_PRICE;
         }
 
         // Group payment channels by category for the view (Hardcoded for Pakasir common options)
@@ -120,9 +117,8 @@ class PaymentController extends Controller
         $user = Auth::user();
 
         // Check if user is already premium
-        if ($user->is_premium && $user->payment_status === 'paid') {
-            return redirect()->route('profile.edit')
-                ->with('info', 'Anda sudah menjadi member Premium!');
+        if ($user->isPremium()) {
+            return redirect()->route('membership.index');
         }
 
         // Pakasir is simpler, we just need a price and duration
@@ -179,7 +175,7 @@ class PaymentController extends Controller
     public function checkout(Request $request)
     {
         $request->validate([
-            'payment_channel_code' => 'required|string',
+            'payment_channel_code' => 'required|string|in:qris,bank_transfer,bca_va,bni_va,bri_va,permata_va',
             'package_type' => 'nullable|string|in:premium,addon_10,cl_addon_15',
         ]);
 
@@ -187,9 +183,8 @@ class PaymentController extends Controller
         $packageType = $request->input('package_type', 'premium');
 
         // Check if package is premium and user is already premium
-        if ($packageType === 'premium' && $user->is_premium && $user->payment_status === 'paid') {
-            return redirect()->route('profile.edit')
-                ->with('info', 'Anda sudah menjadi member Premium!');
+        if ($packageType === 'premium' && $user->isPremium()) {
+            return redirect()->route('membership.index');
         }
 
         // Check if package is an add-on and user is NOT premium
@@ -206,7 +201,7 @@ class PaymentController extends Controller
 
             // Determine amount based on package type
             if ($packageType === 'addon_10' || $packageType === 'cl_addon_15') {
-                $amount = 14999; // Rp 14.999 for 10/15 credits
+                $amount = \App\Support\PaymentPackages::ADDON_PRICE;
             } else {
                 $amount = (int) \App\Models\Setting::get('premium_price', 9999);
             }
@@ -315,67 +310,60 @@ class PaymentController extends Controller
      */
     public function webhook(Request $request)
     {
-        Log::info('Pakasir: Webhook received', [
-            'body' => $request->all(),
+        $data = $request->validate([
+            'order_id' => 'required|string|max:255',
+            'project' => 'required|string|max:255',
+            'amount' => 'required|integer|min:1',
+            'status' => 'required|string|max:50',
         ]);
+        $orderId = $data['order_id'];
 
-        $data = $request->all();
-        $orderId = $data['order_id'] ?? null;
-        $status = $data['status'] ?? null;
-        $amount = $data['amount'] ?? null;
-        
-        // Extract Pakasir transaction ID or generate a hash of the payload to prevent duplicates
-        $transactionId = $data['transaction_id'] ?? $data['id'] ?? md5(json_encode($data));
-
-        if (!$orderId || !$status) {
-            return response()->json(['message' => 'Missing required data'], 400);
+        if ($data['project'] !== config('pakasir.slug')) {
+            return response()->json(['message' => 'Project mismatch'], 400);
         }
 
-        // Check if this webhook was already processed
-        $existingLog = \App\Models\WebhookLog::where('transaction_id', $transactionId)
-            ->where('status', 'processed')
-            ->first();
-            
-        if ($existingLog) {
-            Log::info('Pakasir: Webhook already processed', ['transaction_id' => $transactionId]);
-            return response()->json(['message' => 'Already processed'], 200);
+        $payment = Payment::where('order_id', $orderId)->first();
+        if (! $payment) {
+            return response()->json(['message' => 'Payment not found'], 404);
         }
-        
+
+        if ($payment->amount !== (int) $data['amount']) {
+            return response()->json(['message' => 'Amount mismatch'], 400);
+        }
+
+        $payload = $request->all();
+
+        // Payload IDs are untrusted; payment state guards grants after provider verification.
+        $transactionId = hash('sha256', json_encode($payload));
+
         // Create webhook log record
         $webhookLog = \App\Models\WebhookLog::create([
             'provider' => 'pakasir',
             'transaction_id' => $transactionId,
             'reference_id' => $orderId,
-            'event_type' => $data['event'] ?? 'payment_update',
-            'payload' => $data,
+            'event_type' => 'payment_update',
+            'payload' => $payload,
             'status' => 'received',
         ]);
 
-        $payment = Payment::where('order_id', $orderId)->first();
-
-        if (!$payment) {
-            $webhookLog->update(['status' => 'failed', 'notes' => 'Payment not found']);
-            return response()->json(['message' => 'Payment not found'], 404);
-        }
-
-        // Verify amount
-        if ($payment->amount != $amount) {
-            Log::warning('Pakasir: Webhook amount mismatch', [
-                'expected' => $payment->amount,
-                'received' => $amount
-            ]);
-            $webhookLog->update(['status' => 'failed', 'notes' => 'Amount mismatch']);
-            return response()->json(['message' => 'Amount mismatch'], 400);
-        }
-
         try {
+            $verification = $this->getPakasirService()->checkTransactionStatus($payment->order_id, $payment->amount);
+            if (! $verification['success']) {
+                $webhookLog->update(['status' => 'failed', 'notes' => 'Provider verification failed']);
+
+                return response()->json(['message' => 'Unable to verify payment'], 503);
+            }
+
+            $transaction = $verification['data'];
+            $status = $transaction['status'];
             if ($status === 'completed') {
-                $this->handleSuccessfulPayment($payment, $data);
+                $this->handleSuccessfulPayment($payment, $transaction);
             } elseif ($status === 'failed' || $status === 'canceled') {
-                $payment->markAsFailed();
+                $status === 'canceled' ? $payment->markAsCanceled() : $payment->markAsFailed();
             }
 
             $webhookLog->update(['status' => 'processed']);
+
             return response()->json(['message' => 'Webhook processed successfully'], 200);
         } catch (\Exception $e) {
             Log::error('Pakasir: Webhook processing failed', [
@@ -383,6 +371,7 @@ class PaymentController extends Controller
                 'order_id' => $orderId,
             ]);
             $webhookLog->update(['status' => 'failed', 'notes' => $e->getMessage()]);
+
             return response()->json(['message' => 'Processing failed'], 500);
         }
     }
@@ -392,70 +381,7 @@ class PaymentController extends Controller
      */
     private function handleSuccessfulPayment(Payment $payment, array $data): void
     {
-        DB::transaction(function () use ($payment, $data) {
-            // Re-fetch payment with write lock to prevent parallel execution race conditions
-            $lockedPayment = Payment::where('id', $payment->id)->lockForUpdate()->first();
-
-            // If payment has already been processed successfully by another thread, exit early
-            if (!$lockedPayment || $lockedPayment->status === 'SUCCESS') {
-                return;
-            }
-
-            $lockedPayment->update([
-                'webhook_data' => $data,
-                'status' => 'SUCCESS',
-                'paid_at' => now(),
-            ]);
-
-            $user = $lockedPayment->user;
-            
-            // Check the package type from notes or metadata
-            $packageType = $lockedPayment->notes ?? ($lockedPayment->metadata['package_type'] ?? 'premium');
-
-            if ($packageType === 'addon_10' || $packageType === 'cl_addon_15') {
-                // Add BOTH 10 AI credits, 15 Cover Letter credits, and 5 AI Photo credits!
-                $user->addAiCredits(10);
-                $user->addClCredits(15);
-                $user->addPhotoCredits(5);
-            } else {
-                // Default: Premium purchase
-                $premiumDuration = (int) config('pakasir.premium_duration_days', 365);
-                
-                $user->update([
-                    'is_premium' => true,
-                    'payment_status' => 'paid',
-                    'premium_until' => now()->addDays($premiumDuration),
-                    'premium_purchased_at' => now(),
-                ]);
-
-                $analyzerLimit = \App\Models\Setting::getLimit('ai_analyzer', $user);
-                $clLimit = \App\Models\Setting::getLimit('cover_letters', $user);
-                $photoLimit = \App\Models\Setting::getLimit('ai_photo', $user);
-                
-                $user->update([
-                    'ai_credits' => $analyzerLimit === 'unlimited' ? 9999 : (int) $analyzerLimit,
-                    'cl_credits' => $clLimit === 'unlimited' ? 9999 : (int) $clLimit,
-                    'photo_credits' => $photoLimit === 'unlimited' ? 9999 : (int) $photoLimit,
-                ]);
-            }
-
-            $activityType = ($packageType === 'addon_10' || $packageType === 'cl_addon_15') ? 'top_up' : 'premium_upgrade';
-            $activityDesc = ($activityType === 'top_up') ? "User melakukan Top Up Add-On" : "User upgrade ke akun Premium";
-            ActivityLogger::log(
-                $activityType,
-                $activityDesc,
-                'success',
-                ['order_id' => $lockedPayment->order_id, 'amount' => $lockedPayment->amount],
-                $user->id
-            );
-
-            // Send success email notification
-            try {
-                Mail::to($user->email)->send(new PaymentSuccessMail($lockedPayment));
-            } catch (\Exception $e) {
-                Log::error('Pakasir: Failed to send success email', ['error' => $e->getMessage()]);
-            }
-        });
+        app(\App\Services\PaymentSettlementService::class)->settle($payment, $data);
     }
 
     /**
@@ -523,12 +449,29 @@ class PaymentController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        // Calculate stats
+        $orders = Payment::where('user_id', $user->id);
+        $now = now();
+        $pending = (clone $orders)->whereIn('status', ['PENDING', 'WAITING'])
+            ->where(function ($query) use ($now) {
+                $query->where('expired_at', '>', $now)
+                    ->orWhere(function ($query) use ($now) {
+                        $query->whereNull('expired_at')->where(function ($query) use ($now) {
+                            $query->whereNull('va_expired_at')->orWhere('va_expired_at', '>', $now);
+                        });
+                    });
+            })->count();
+        $expired = (clone $orders)->whereIn('status', ['PENDING', 'WAITING'])
+            ->where(function ($query) use ($now) {
+                $query->where('expired_at', '<=', $now)
+                    ->orWhere(function ($query) use ($now) {
+                        $query->whereNull('expired_at')->where('va_expired_at', '<=', $now);
+                    });
+            })->count();
         $stats = [
-            'total' => Payment::where('user_id', $user->id)->count(),
-            'success' => Payment::where('user_id', $user->id)->where('status', 'SUCCESS')->count(),
-            'pending' => Payment::where('user_id', $user->id)->whereIn('status', ['PENDING', 'WAITING'])->count(),
-            'failed' => Payment::where('user_id', $user->id)->whereIn('status', ['FAILED', 'CANCELED'])->count(),
+            'total' => (clone $orders)->count(),
+            'success' => (clone $orders)->where('status', 'SUCCESS')->count(),
+            'pending' => $pending,
+            'failed' => (clone $orders)->whereIn('status', ['FAILED', 'CANCELED', 'EXPIRED'])->count() + $expired,
         ];
 
         return view('payment.history', compact('payments', 'stats'));
@@ -549,6 +492,14 @@ class PaymentController extends Controller
         }
 
         $statusCheck = $this->getPakasirService()->checkTransactionStatus($orderId, $payment->amount);
+
+        if (!($statusCheck['success'] ?? false)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Status pembayaran belum dapat diverifikasi. Silakan coba lagi.',
+            ], 503);
+        }
+
 
         if ($statusCheck['success']) {
             $status = $statusCheck['data']['status'] ?? null;

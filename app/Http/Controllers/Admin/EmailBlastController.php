@@ -32,7 +32,7 @@ class EmailBlastController extends Controller
      */
     public function index()
     {
-        return view('admin.email-blast');
+        return view('admin.email-blast', ['audienceCounts' => collect(['all', 'verified', 'unverified', 'premium', 'free', 'new'])->mapWithKeys(fn ($key) => [$key => $this->audienceQuery($key)->count()])->all()]);
     }
 
     /**
@@ -73,36 +73,7 @@ class EmailBlastController extends Controller
         $targetUser = $request->target_user;
 
         // Get users based on target
-        $query = User::where('role', '!=', 'admin');
-
-        switch ($targetUser) {
-            case 'verified':
-                $query->whereNotNull('email_verified_at');
-                break;
-            case 'unverified':
-                $query->whereNull('email_verified_at');
-                break;
-            case 'new':
-                // User baru: registrasi dalam 7 hari terakhir
-                $query->where('created_at', '>=', Carbon::now()->subDays(7));
-                break;
-            case 'premium':
-                $query->where(function($q) {
-                    $q->where('is_premium', true)
-                      ->orWhere('payment_status', 'paid');
-                });
-                break;
-            case 'free':
-                $query->where(function($q) {
-                    $q->where('is_premium', false)
-                      ->orWhere('payment_status', '!=', 'paid');
-                });
-                break;
-            case 'all':
-            default:
-                // All users (no filter)
-                break;
-        }
+        $query = $this->audienceQuery($targetUser);
 
         $users = $query->get(['id', 'email', 'name', 'created_at', 'email_verified_at']);
 
@@ -257,33 +228,9 @@ class EmailBlastController extends Controller
         $targetUser = $request->target_user;
 
         // Get users based on target
-        $query = User::where('role', '!=', 'admin');
-
-        switch ($targetUser) {
-            case 'verified':
-                $query->whereNotNull('email_verified_at');
-                break;
-            case 'unverified':
-                $query->whereNull('email_verified_at');
-                break;
-            case 'new':
-                $query->where('created_at', '>=', Carbon::now()->subDays(7));
-                break;
-            case 'premium':
-                $query->where(function($q) {
-                    $q->where('is_premium', true)
-                      ->orWhere('payment_status', 'paid');
-                });
-                break;
-            case 'free':
-                $query->where(function($q) {
-                    $q->where('is_premium', false)
-                      ->orWhere('payment_status', '!=', 'paid');
-                });
-                break;
-            case 'all':
-            default:
-                break;
+        $query = $this->audienceQuery($targetUser);
+        if ($request->email_type === 'verification') {
+            $query->whereNull('email_verified_at');
         }
 
         $users = $query->get(['id', 'email', 'name']);
@@ -464,8 +411,35 @@ class EmailBlastController extends Controller
      */
     public function history()
     {
-        $logs = EmailBlastLog::orderBy('created_at', 'desc')->paginate(15);
-        return view('admin.email-blast-history', compact('logs'));
+        $audience = request('audience', 'all-segments');
+        $search = mb_substr((string) request('search', ''), 0, 100);
+        $query = EmailBlastLog::query()->when($search !== '', fn ($q) => $q->where('email_type', 'like', '%'.$search.'%'));
+        if (in_array($audience, ['all', 'verified', 'unverified', 'premium', 'free', 'new'], true)) {
+            $query->where('target_audience', $audience);
+        }
+        return view('admin.email-blast-history', [
+            'logs' => $query->latest()->orderByDesc('id')->paginate(15)->withQueryString(),
+            'search' => $search, 'audience' => $audience,
+            'totalCampaigns' => EmailBlastLog::count(),
+            'totalTarget' => EmailBlastLog::sum('total_target'),
+            'totalSuccess' => EmailBlastLog::sum('success_count'),
+            'totalFailed' => EmailBlastLog::sum('failed_count'),
+        ]);
+    }
+
+    private function audienceQuery(string $target)
+    {
+        $query = User::where('role', '!=', 'admin');
+        $activePremium = User::where('is_premium', true)->where('payment_status', 'paid')
+            ->where(fn ($q) => $q->whereNull('premium_until')->orWhere('premium_until', '>', now()))->select('id');
+        return match ($target) {
+            'verified' => $query->whereNotNull('email_verified_at'),
+            'unverified' => $query->whereNull('email_verified_at'),
+            'new' => $query->where('created_at', '>=', now()->subDays(7)),
+            'premium' => $query->whereIn('id', $activePremium),
+            'free' => $query->whereNotIn('id', $activePremium),
+            default => $query,
+        };
     }
 
     /**
@@ -505,8 +479,7 @@ class EmailBlastController extends Controller
                     $mailable = new WelcomeMail($user);
                     break;
                 case 'verification':
-                    // Laravel default notification verification, can't easily preview as Mailable
-                    return response('<div style="font-family: sans-serif; padding: 20px;"><h3>Default Laravel Verification Email</h3><p>Email ini adalah email bawaan sistem (Notification). Formatnya bergantung pada template Laravel mail. </p></div>', 200)->header('Content-Type', 'text/html');
+                    return response((new \Illuminate\Auth\Notifications\VerifyEmail)->toMail($user)->render(), 200)->header('Content-Type', 'text/html');
                 case 'verification_reminder':
                     $mailable = new \App\Mail\EmailVerificationReminderMail($user);
                     break;

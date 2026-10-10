@@ -53,7 +53,7 @@ class ProjectForm extends Component
     
     public function edit($id)
     {
-        $project = UserProject::findOrFail($id);
+        $project = Auth::user()->projects()->findOrFail($id);
         
         if ($project->user_id !== Auth::id()) {
             abort(403);
@@ -109,7 +109,6 @@ class ProjectForm extends Component
             return;
         }
         $data = [
-            'user_id' => Auth::id(),
             'project_name' => $this->project_name,
             'role' => $this->role,
             'start_date' => $this->start_date,
@@ -122,11 +121,11 @@ class ProjectForm extends Component
         ];
         
         if ($this->editMode) {
-            $project = UserProject::findOrFail($this->projectId);
+            $project = Auth::user()->projects()->findOrFail($this->projectId);
             $project->update($data);
             $message = 'Project updated successfully!';
         } else {
-            UserProject::create($data);
+            Auth::user()->projects()->create($data);
             $message = 'Project added successfully!';
         }
         
@@ -137,6 +136,7 @@ class ProjectForm extends Component
         ]);
         
         $this->closeModal();
+        $this->dispatch('cv-data-updated');
         $this->loadProjects();
     }
     
@@ -156,7 +156,7 @@ class ProjectForm extends Component
     {
         if (!$this->deleteId) return;
 
-        $project = UserProject::findOrFail($this->deleteId);
+        $project = Auth::user()->projects()->findOrFail($this->deleteId);
 
         if ($project->user_id !== Auth::id()) {
             abort(403);
@@ -173,14 +173,15 @@ class ProjectForm extends Component
             'message' => 'Project deleted successfully!',
         ]);
         
+        $this->dispatch('cv-data-updated');
         $this->loadProjects();
     }
     
     public function moveUp($id)
     {
-        $project = UserProject::findOrFail($id);
+        $project = Auth::user()->projects()->findOrFail($id);
         if ($project->display_order > 0) {
-            $swapWith = UserProject::where('user_id', Auth::id())
+            $swapWith = Auth::user()->projects()
                 ->where('display_order', $project->display_order - 1)
                 ->first();
             
@@ -193,16 +194,17 @@ class ProjectForm extends Component
             $project->save();
         }
         
+        $this->dispatch('cv-data-updated');
         $this->loadProjects();
     }
     
     public function moveDown($id)
     {
-        $project = UserProject::findOrFail($id);
+        $project = Auth::user()->projects()->findOrFail($id);
         $maxOrder = $this->projects->max('display_order');
         
         if ($project->display_order < $maxOrder) {
-            $swapWith = UserProject::where('user_id', Auth::id())
+            $swapWith = Auth::user()->projects()
                 ->where('display_order', $project->display_order + 1)
                 ->first();
             
@@ -215,6 +217,7 @@ class ProjectForm extends Component
             $project->save();
         }
         
+        $this->dispatch('cv-data-updated');
         $this->loadProjects();
     }
     

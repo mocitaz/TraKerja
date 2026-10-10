@@ -74,8 +74,8 @@ class UserGoal extends Model
     {
         $today = Carbon::today('Asia/Jakarta');
         return self::where('user_id', $userId)
-            ->where('start_date', '<=', $today)
-            ->where('end_date', '>=', $today)
+            ->whereDate('start_date', '<=', $today)
+            ->whereDate('end_date', '>=', $today)
             ->first();
     }
 

@@ -19,6 +19,8 @@ class AiPhoto extends Model
 
     protected $casts = [
         'photo_analysis' => 'array',
+        'request_payload' => 'array',
+        'processing_expires_at' => 'datetime',
     ];
 
     public function user()

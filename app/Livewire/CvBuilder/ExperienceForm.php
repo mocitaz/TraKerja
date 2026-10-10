@@ -62,7 +62,7 @@ class ExperienceForm extends Component
     
     public function edit($id)
     {
-        $experience = UserExperience::findOrFail($id);
+        $experience = Auth::user()->experiences()->findOrFail($id);
         
         // Security check
         if ($experience->user_id !== Auth::id()) {
@@ -120,7 +120,6 @@ class ExperienceForm extends Component
             return;
         }
         $data = [
-            'user_id' => Auth::id(),
             'company_name' => $this->company_name,
             'position' => $this->position,
             'employment_type' => $this->employment_type,
@@ -133,11 +132,11 @@ class ExperienceForm extends Component
         ];
         
         if ($this->editMode) {
-            $experience = UserExperience::findOrFail($this->experienceId);
+            $experience = Auth::user()->experiences()->findOrFail($this->experienceId);
             $experience->update($data);
             $message = 'Experience updated successfully!';
         } else {
-            UserExperience::create($data);
+            Auth::user()->experiences()->create($data);
             $message = 'Experience added successfully!';
         }
         
@@ -148,6 +147,7 @@ class ExperienceForm extends Component
         ]);
         
         $this->closeModal();
+        $this->dispatch('cv-data-updated');
         $this->loadExperiences();
     }
     
@@ -167,7 +167,7 @@ class ExperienceForm extends Component
     {
         if (!$this->deleteId) return;
 
-        $experience = UserExperience::findOrFail($this->deleteId);
+        $experience = Auth::user()->experiences()->findOrFail($this->deleteId);
 
         // Security check
         if ($experience->user_id !== Auth::id()) {
@@ -185,14 +185,15 @@ class ExperienceForm extends Component
             'message' => 'Experience deleted successfully!',
         ]);
         
+        $this->dispatch('cv-data-updated');
         $this->loadExperiences();
     }
     
     public function moveUp($id)
     {
-        $experience = UserExperience::findOrFail($id);
+        $experience = Auth::user()->experiences()->findOrFail($id);
         if ($experience->display_order > 0) {
-            $swapWith = UserExperience::where('user_id', Auth::id())
+            $swapWith = Auth::user()->experiences()
                 ->where('display_order', $experience->display_order - 1)
                 ->first();
             
@@ -205,16 +206,17 @@ class ExperienceForm extends Component
             $experience->save();
         }
         
+        $this->dispatch('cv-data-updated');
         $this->loadExperiences();
     }
     
     public function moveDown($id)
     {
-        $experience = UserExperience::findOrFail($id);
+        $experience = Auth::user()->experiences()->findOrFail($id);
         $maxOrder = $this->experiences->max('display_order');
         
         if ($experience->display_order < $maxOrder) {
-            $swapWith = UserExperience::where('user_id', Auth::id())
+            $swapWith = Auth::user()->experiences()
                 ->where('display_order', $experience->display_order + 1)
                 ->first();
             
@@ -227,6 +229,7 @@ class ExperienceForm extends Component
             $experience->save();
         }
         
+        $this->dispatch('cv-data-updated');
         $this->loadExperiences();
     }
     

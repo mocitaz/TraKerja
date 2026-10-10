@@ -2,36 +2,24 @@
 
 namespace App\Livewire;
 
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use App\Models\JobApplication;
+use App\Support\JobApplicationStatus;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class JobKanbanBoard extends Component
 {
-    public $statusOptions = [
-        'On Process',
-        'Accepted',
-        'Rejected'
-    ];
+    use WithPagination;
+    use \App\Livewire\Concerns\DraftsApplicationFollowUp;
+    public $statusOptions = JobApplicationStatus::OPTIONS;
 
-    public $platformOptions = [
-        '9cv9', 'Cake: Cari Lowongan', 'Dealls', 'Disnakerja.com', 'Email', 'Fiverr', 'Freelancer',
-        'Glassdoor', 'Glints', 'Google Forms', 'Indeed', 'JobStreet', 'Jobseeker App', 'JobsDB',
-        'Jora', 'Kalibrr', 'Karir.com', 'Karirhub (SIAPkerja)', 'KitaLulus', 'LinkedIn', 'Loker.id',
-        'Microsoft Forms', 'NusaCrowd', 'Pintarnya.com', 'SkillAcademy', 'SkillTrade', 'Talentics',
-        'Tech in Asia', 'Urbanhire', 'Website Company', 'Other'
-    ];
+    public $platformOptions = \App\Support\PlatformCatalog::OPTIONS;
 
     public $careerLevelOptions = [
         'Intern', 'Full Time', 'Contract', 'MT', 'Freelance'
     ];
 
-    public $recruitmentStageOptions = [
-        'Applied', 'Follow Up', 'Assessment Test', 'Psychotest', 'HR - Interview',
-        'User - Interview', 'LGD', 'Presentation Round', 'Offering', 'Not Processed'
-    ];
+    public $recruitmentStageOptions = JobApplicationStatus::STAGES;
     
     public $search = '';
     public $platformFilter = '';
@@ -40,12 +28,7 @@ class JobKanbanBoard extends Component
     public $showAdvancedFilters = false;
     public $showArchived = false;
     
-    // Ghosting Follow Up Properties
-    public $showFollowUpModal = false;
-    public $followUpDraft = '';
     public $currentFollowUpJobId = null;
-    public $followUpJobId = null;
-    public $isGeneratingFollowUp = false;
     
     private $lastUpdateTime = [];
 
@@ -66,10 +49,20 @@ class JobKanbanBoard extends Component
     public function toggleArchived()
     {
         $this->showArchived = !$this->showArchived;
+        $this->resetColumns();
     }
 
-    public function updatingSearch() { }
-    public function updatingPlatformFilter() { }
+    public function updatingSearch() { $this->resetColumns(); }
+    public function updatingPlatformFilter() { $this->resetColumns(); }
+    public function updatingCareerLevelFilter() { $this->resetColumns(); }
+    public function updatingRecruitmentStageFilter() { $this->resetColumns(); }
+
+    private function resetColumns(): void
+    {
+        foreach (JobApplicationStatus::OPTIONS as $status) {
+            $this->resetPage('column_'.strtolower(str_replace(' ', '_', $status)));
+        }
+    }
 
     public function toggleAdvancedFilters()
     {
@@ -81,6 +74,8 @@ class JobKanbanBoard extends Component
         $this->search = '';
         $this->platformFilter = '';
         $this->recruitmentStageFilter = '';
+        $this->careerLevelFilter = '';
+        $this->resetColumns();
     }
 
     public function confirmDelete($jobId)
@@ -125,6 +120,9 @@ class JobKanbanBoard extends Component
 
     public function updateStatus($jobId, $newStatus)
     {
+        \Illuminate\Support\Facades\Validator::make(['newStatus' => $newStatus], [
+            'newStatus' => JobApplicationStatus::VALIDATION_RULE,
+        ])->validate();
         $job = JobApplication::where('id', $jobId)->where('user_id', auth()->id())->first();
         if ($job) {
             if ($job->application_status === $newStatus) return;
@@ -154,7 +152,7 @@ class JobKanbanBoard extends Component
 
         $archivedCount = JobApplication::where('user_id', auth()->id())->where('is_archived', true)->count();
 
-        $statuses = collect($this->statusOptions)->map(function ($status) {
+        $statuses = collect(JobApplicationStatus::OPTIONS)->map(function ($status) {
             $query = JobApplication::where('user_id', auth()->id())
                 ->where('application_status', $status)
                 ->where('is_archived', $this->showArchived);
@@ -168,14 +166,21 @@ class JobKanbanBoard extends Component
             }
 
             if ($this->platformFilter) $query->where('platform', $this->platformFilter);
+            if ($this->careerLevelFilter) $query->where('career_level', $this->careerLevelFilter);
             if ($this->recruitmentStageFilter) $query->where('recruitment_stage', $this->recruitmentStageFilter);
 
-            $jobApplications = $query->orderBy('is_pinned', 'desc')->orderBy('application_date', 'desc')->get();
+            $total = $query->count();
+            $pageName = 'column_'.strtolower(str_replace(' ', '_', $status));
+            $page = max(1, min((int) $this->getPage($pageName), max(1, (int) ceil($total / 30))));
+            $this->paginators[$pageName] = $page;
+            $jobApplications = $query->orderBy('is_pinned', 'desc')->orderBy('application_date', 'desc')->orderBy('id', 'desc')
+                ->paginate(30, ['*'], $pageName, $page, $total);
 
             return (object) [
                 'name' => $status,
                 'color_code' => $this->getStatusColor($status),
-                'jobApplications' => $jobApplications
+                'jobApplications' => $jobApplications,
+                'total' => $total,
             ];
         });
 
@@ -194,7 +199,6 @@ class JobKanbanBoard extends Component
             'Offering' => '#14B8A6', 
             'Accepted' => '#10B981', 
             'Rejected' => '#EF4444',
-            'Declined' => '#EF4444',
         ];
         return $colors[$status] ?? '#6B7280';
     }
@@ -209,65 +213,5 @@ class JobKanbanBoard extends Component
         return $colors[$stage] ?? '#6B7280';
     }
 
-    public function closeFollowUpModal()
-    {
-        $this->showFollowUpModal = false;
-        $this->followUpJobId = null;
-        $this->followUpDraft = '';
-    }
 
-    public function generateFollowUp($jobId)
-    {
-        $this->followUpJobId = $jobId;
-        $job = JobApplication::where('user_id', Auth::id())->findOrFail($jobId);
-
-        $this->isGeneratingFollowUp = true;
-
-        $prompt = "CRITICAL INSTRUCTION: DO NOT WRITE A COVER LETTER. Write a highly professional follow-up email to HR. Context: The applicant applied for this position 14 days ago and hasn't heard back. The email should politely ask for a status update. Use formal Indonesian language. Keep it concise, empathetic, and professional.";
-        
-        $context = [
-            'experiences' => [
-                [
-                    'company_name' => $job->company_name,
-                    'position' => $job->position,
-                    'description' => "Applied on " . $job->application_date->format('d M Y') . ". Application stage: " . ($job->recruitment_stage ?: $job->application_status),
-                ]
-            ]
-        ];
-
-        $aiPayload = [
-            'company_name' => $job->company_name,
-            'job_title' => $job->position,
-            'job_description' => $prompt,
-            'language' => 'id',
-            'tone' => 'professional',
-            'length' => 'short',
-            'highlight_focus' => 'Requesting status update on application',
-            'candidate_context' => $context,
-        ];
-
-        try {
-            // Force a minimum 1 second delay so the UI loading state is visible to the user
-            sleep(1);
-
-            // Using the existing Vercel AI API
-            $response = Http::timeout(60)->post('https://ai-analyzer-seven.vercel.app/generate-cl', $aiPayload);
-
-            if ($response->successful()) {
-                $responseBody = $response->json();
-                $this->followUpDraft = $responseBody['cover_letter'] ?? $responseBody['result'] ?? '';
-                // Open modal AFTER draft is ready
-                $this->showFollowUpModal = true;
-            } else {
-                $this->followUpDraft = "Sorry, failed to generate email draft. Please try again later.";
-                $this->showFollowUpModal = true;
-            }
-        } catch (\Exception $e) {
-            Log::error('AI Follow Up Error: ' . $e->getMessage());
-            $this->followUpDraft = "An error occurred while contacting the AI server.";
-            $this->showFollowUpModal = true;
-        }
-
-        $this->isGeneratingFollowUp = false;
-    }
 }

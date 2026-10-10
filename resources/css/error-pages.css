@@ -1,0 +1,51 @@
+.error-page { background: #fdfcf9; color: #34313d; }
+.error-shell { display: flex; flex-direction: column; min-height: 100dvh; width: min(1120px, 100%); padding: 28px 40px 18px; margin-inline: auto; }
+.error-brand-header { display: flex; align-items: center; justify-content: center; margin: 0 0 22px; }
+.error-brand { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; color: #34313d; font-size: 20px; font-weight: 700; letter-spacing: -.8px; text-decoration: none; }
+.error-brand img { width: 24px; height: 24px; object-fit: contain; }
+.error-page .error-stage { flex: 1; display: flex; justify-content: center; padding: 48px 0 60px; }
+.error-scene { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 56px; align-items: center; width: 100%; }
+.error-illustration { min-width: 0; }
+.error-workspace-art { display: block; width: 100%; max-width: 410px; height: auto; margin-inline: auto; animation: error-art-arrive .65s cubic-bezier(.2,.7,.3,1) both; }
+.error-art-folder { animation: error-folder-arrive .75s .1s ease-out both; }
+.error-window-light { animation: error-light 1.4s .5s ease-in-out 2; }
+.error-copy { min-width: 0; padding-bottom: 6px; }
+.error-status { display: flex; align-items: baseline; gap: 7px; font-size: 12px; color: #74667e; margin: 0 0 14px; }
+.error-page .error-code { position: static; font-size: 14px; line-height: 1.5; font-weight: 600; letter-spacing: .5px; color: #79558b; }
+.error-copy h1 { font-size: clamp(27px, 3vw, 36px); line-height: 1.25; letter-spacing: -1px; font-weight: 600; text-wrap: balance; margin: 0 0 16px; }
+.error-copy .error-description { font-size: 14px; color: #5e5768; line-height: 1.8; margin: 0; }
+.error-recovery { font-size: 12px; line-height: 1.85; color: #706777; margin: 18px 0 0; padding: 14px 0 0; border-top: 1px solid #e6e0e8; }
+.error-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: 24px; }
+.error-button { display: inline-flex; align-items: center; justify-content: center; gap: 20px; min-height: 44px; padding: 11px 18px; border: 1px solid #38264f; border-radius: 11px; font-size: 12px; font-weight: 600; text-decoration: none; transition: background .16s; }
+.error-button--primary { background: #38264f; color: #fff; }
+.error-button--primary:hover { background: #503663; }
+.error-support { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #735781; font-size: 12px; text-decoration: none; }
+.error-support:hover { text-decoration: underline; text-underline-offset: 4px; }
+.error-support-note { margin: 18px 0 0; font-size: 10px; line-height: 1.7; color: #7a7180; }
+.error-footer { border-top: 1px solid #e6e3df; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 14px; color: #7a737e; font-size: 10px; }
+.error-footer > div { display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.error-footer p { margin: 0; line-height: 1.8; }
+.error-footer nav { display: flex; gap: 18px; }
+.error-footer a { display: inline-flex; align-items: center; min-height: 44px; color: inherit; text-decoration: none; }
+.error-footer a:hover { color: #503663; }
+@keyframes error-art-arrive { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes error-folder-arrive { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+@keyframes error-light { 50% { opacity: .35; } }
+@media (max-width: 800px) { .error-shell { padding-inline: 28px; } .error-scene { gap: 28px; } .error-copy h1 { font-size: 28px; } }
+@media (max-width: 640px) {
+    .error-shell { padding: 16px 22px 12px; }
+    .error-brand { font-size: 20px; }
+    .error-page .error-stage { padding: 22px 0 32px; }
+    .error-scene { grid-template-columns: minmax(0, 1fr); gap: 18px; align-content: center; max-width: 420px; margin-inline: auto; }
+    .error-workspace-art { max-width: 250px; }
+    .error-copy { padding: 0; }
+    .error-status { margin-bottom: 9px; }
+    .error-copy h1 { font-size: 27px; letter-spacing: -.7px; margin-bottom: 12px; }
+    .error-copy .error-description { font-size: 13px; }
+    .error-recovery { margin-top: 14px; padding-top: 12px; }
+    .error-actions { margin-top: 18px; gap: 8px 18px; }
+    .error-support-note { margin-top: 12px; }
+    .error-footer { align-items: flex-start; gap: 8px; flex-wrap: wrap; }
+    .error-footer > div { flex-direction: column; gap: 2px; }
+}
+@media (prefers-reduced-motion: reduce) { .error-workspace-art, .error-art-folder, .error-window-light { animation: none; } .error-button { transition: none; } }

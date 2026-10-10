@@ -13,6 +13,7 @@ use App\Models\SupportTicket;
 use App\Models\CoverLetter;
 use App\Models\UserActivity;
 use App\Models\AiPhoto;
+use App\Support\DatabaseDateExpressions;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
@@ -52,6 +53,9 @@ class Analytics extends Component
 
     public function updatedPeriodFilter()
     {
+        if (!in_array((string) $this->periodFilter, ['all', '7', '30', '90'], true)) {
+            $this->periodFilter = 'all';
+        }
         $this->loadAnalytics();
         $this->dispatch('chartUpdated');
         $this->dispatch('$refresh');
@@ -59,7 +63,7 @@ class Analytics extends Component
 
     public function loadAnalytics()
     {
-        $cacheKey = 'admin_analytics_data_' . $this->periodFilter;
+        $cacheKey = 'admin_analytics_workspace_v2_' . $this->periodFilter;
         
         // Cache data selama 10 menit (600 detik) untuk membebani load page instan
         $data = Cache::remember($cacheKey, 600, function() {
@@ -117,7 +121,7 @@ class Analytics extends Component
     private function fetchUserGrowth()
     {
         $days = $this->periodFilter === 'all' ? 30 : (int) $this->periodFilter;
-        $startDate = Carbon::now('Asia/Jakarta')->subDays($days)->startOfDay();
+        $startDate = Carbon::now('Asia/Jakarta')->subDays($days - 1)->startOfDay();
         
         $dateRange = [];
         $totalData = [];
@@ -136,7 +140,7 @@ class Analytics extends Component
         // Ambil rekap harian dalam range tanggal filter (hanya 1 query GROUP BY)
         $registrations = User::where('role', '!=', 'admin')
             ->where('created_at', '>=', $startDate)
-            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d') as date, COUNT(*) as total, SUM(CASE WHEN is_premium = 1 THEN 1 ELSE 0 END) as premium")
+            ->selectRaw("DATE(created_at) as date, COUNT(*) as total, SUM(CASE WHEN is_premium = 1 THEN 1 ELSE 0 END) as premium")
             ->groupBy('date')
             ->get()
             ->keyBy('date');
@@ -167,7 +171,7 @@ class Analytics extends Component
 
     private function fetchActiveUsers()
     {
-        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
+        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter - 1)->startOfDay();
         
         return User::where('role', '!=', 'admin')
             ->where('created_at', '>=', $startDate)
@@ -182,13 +186,13 @@ class Analytics extends Component
     private function fetchJobApplicationsOverTime()
     {
         $days = $this->periodFilter === 'all' ? 30 : (int) $this->periodFilter;
-        $startDate = Carbon::now('Asia/Jakarta')->subDays($days)->startOfDay();
+        $startDate = Carbon::now('Asia/Jakarta')->subDays($days - 1)->startOfDay();
         $dateRange = [];
         $data = [];
         
         // Ambil statistik per hari menggunakan GROUP BY (hanya 1 query)
         $applications = JobApplication::where('created_at', '>=', $startDate)
-            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d') as date, COUNT(*) as count")
+            ->selectRaw("DATE(created_at) as date, COUNT(*) as count")
             ->groupBy('date')
             ->get()
             ->keyBy('date');
@@ -209,7 +213,7 @@ class Analytics extends Component
 
     private function fetchJobApplicationsByStatus()
     {
-        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
+        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter - 1)->startOfDay();
         
         $allJobs = JobApplication::where('created_at', '>=', $startDate)->get();
         
@@ -223,16 +227,16 @@ class Analytics extends Component
         })->count();
         
         $accepted = $allJobs->filter(function($job) {
-            return $job->application_status === 'Accepted' || $job->recruitment_stage === 'Offering';
+            return $job->application_status === 'Accepted';
         })->count();
         
         $rejected = $allJobs->filter(function($job) {
-            return $job->application_status === 'Declined' || $job->application_status === 'Rejected' || $job->recruitment_stage === 'Not Processed';
+            return $job->application_status === 'Rejected';
         })->count();
         
         $pending = $allJobs->filter(function($job) {
-            $isAccepted = $job->application_status === 'Accepted' || $job->recruitment_stage === 'Offering';
-            $isRejected = $job->application_status === 'Declined' || $job->application_status === 'Rejected' || $job->recruitment_stage === 'Not Processed';
+            $isAccepted = $job->application_status === 'Accepted';
+            $isRejected = $job->application_status === 'Rejected';
             return !$isAccepted && !$isRejected;
         })->count();
         
@@ -244,7 +248,7 @@ class Analytics extends Component
 
     private function fetchJobApplicationsByPlatform()
     {
-        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
+        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter - 1)->startOfDay();
         
         $platformData = JobApplication::where('created_at', '>=', $startDate)
             ->selectRaw('platform, COUNT(*) as count')
@@ -262,14 +266,14 @@ class Analytics extends Component
     private function fetchUserRegistrationByDay()
     {
         $days = $this->periodFilter === 'all' ? 30 : (int) $this->periodFilter;
-        $startDate = Carbon::now('Asia/Jakarta')->subDays($days)->startOfDay();
+        $startDate = Carbon::now('Asia/Jakarta')->subDays($days - 1)->startOfDay();
         $dateRange = [];
         $data = [];
         
         // Ambil group registrasi harian
         $registrations = User::where('role', '!=', 'admin')
             ->where('created_at', '>=', $startDate)
-            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d') as date, COUNT(*) as count")
+            ->selectRaw("DATE(created_at) as date, COUNT(*) as count")
             ->groupBy('date')
             ->get()
             ->keyBy('date');
@@ -291,7 +295,7 @@ class Analytics extends Component
     private function fetchPremiumVsFree()
     {
         $totalUsers = User::where('role', '!=', 'admin')->count();
-        $premiumUsers = User::where('role', '!=', 'admin')->where('is_premium', true)->count();
+        $premiumUsers = User::where('role', '!=', 'admin')->where('is_premium', true)->where('payment_status', 'paid')->where(fn ($q) => $q->whereNull('premium_until')->orWhere('premium_until', '>', now()))->count();
         $freeUsers = $totalUsers - $premiumUsers;
         
         return [
@@ -327,7 +331,7 @@ class Analytics extends Component
     {
         $query = JobApplication::query();
         if ($this->periodFilter !== 'all') {
-            $startDate = Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
+            $startDate = Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter - 1)->startOfDay();
             $query->where('created_at', '>=', $startDate);
         }
         
@@ -343,7 +347,7 @@ class Analytics extends Component
     {
         $query = JobApplication::query();
         if ($this->periodFilter !== 'all') {
-            $startDate = Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
+            $startDate = Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter - 1)->startOfDay();
             $query->where('created_at', '>=', $startDate);
         }
         
@@ -357,7 +361,7 @@ class Analytics extends Component
 
     private function fetchAiUsageStats()
     {
-        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
+        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter - 1)->startOfDay();
 
         $aiAnalyzer = AiAnalyzerResult::where('created_at', '>=', $startDate)->count();
         $aiPhotos   = AiPhoto::where('created_at', '>=', $startDate)->count();
@@ -368,7 +372,7 @@ class Analytics extends Component
         $trendLabels = [];
         
         $analyzerTrend = AiAnalyzerResult::where('created_at', '>=', Carbon::now('Asia/Jakarta')->subDays(7)->startOfDay())
-            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d') as date, COUNT(*) as count")
+            ->selectRaw("DATE(created_at) as date, COUNT(*) as count")
             ->groupBy('date')
             ->get()
             ->keyBy('date');
@@ -391,7 +395,7 @@ class Analytics extends Component
 
     private function fetchCvTemplatePopularity()
     {
-        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
+        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter - 1)->startOfDay();
 
         $templates = CvTemplate::where('created_at', '>=', $startDate)
             ->select('template_key', DB::raw('COUNT(*) as usage_count'), DB::raw('SUM(is_premium_template) as premium_count'))
@@ -411,7 +415,7 @@ class Analytics extends Component
 
     private function fetchSupportTicketStats()
     {
-        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
+        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter - 1)->startOfDay();
 
         $total    = SupportTicket::where('created_at', '>=', $startDate)->count();
         $pending  = SupportTicket::where('created_at', '>=', $startDate)->where('status', 'pending')->count();
@@ -421,7 +425,7 @@ class Analytics extends Component
         // Avg resolution time (from created_at to replied_at)
         $avgResolutionHours = SupportTicket::where('created_at', '>=', $startDate)
             ->whereNotNull('replied_at')
-            ->selectRaw('AVG(TIMESTAMPDIFF(HOUR, created_at, replied_at)) as avg_hours')
+            ->selectRaw('AVG('.DatabaseDateExpressions::wholeHoursBetween('created_at', 'replied_at').') as avg_hours')
             ->value('avg_hours');
 
         // By category
@@ -444,7 +448,7 @@ class Analytics extends Component
 
     private function fetchCoverLetterStats()
     {
-        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
+        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter - 1)->startOfDay();
 
         $total       = CoverLetter::where('created_at', '>=', $startDate)->count();
         $uniqueUsers = CoverLetter::where('created_at', '>=', $startDate)->distinct('user_id')->count('user_id');
@@ -456,7 +460,7 @@ class Analytics extends Component
         $labels = [];
         
         $clTrend = CoverLetter::where('created_at', '>=', Carbon::now('Asia/Jakarta')->subDays(14)->startOfDay())
-            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d') as date, COUNT(*) as count")
+            ->selectRaw("DATE(created_at) as date, COUNT(*) as count")
             ->groupBy('date')
             ->get()
             ->keyBy('date');
@@ -479,10 +483,10 @@ class Analytics extends Component
 
     private function fetchPeakActivityHours()
     {
-        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter);
+        $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter - 1)->startOfDay();
 
         $hourly = UserActivity::where('created_at', '>=', $startDate)
-            ->selectRaw('HOUR(created_at) as hour, COUNT(*) as count')
+            ->selectRaw(DatabaseDateExpressions::hour('created_at').' as hour, COUNT(*) as count')
             ->groupBy('hour')
             ->orderBy('hour')
             ->get();
@@ -549,7 +553,7 @@ class Analytics extends Component
         $top = User::where('role', '!=', 'admin')
             ->orderByDesc('xp')
             ->take(5)
-            ->get(['id', 'name', 'email', 'logo', 'xp', 'level', 'is_premium'])
+            ->get(['id', 'name', 'email', 'logo', 'avatar_id', 'xp', 'level', 'is_premium'])
             ->map(function ($u, $index) {
                 $levelTitles = User::LEVEL_TITLES;
                 return [
@@ -573,7 +577,7 @@ class Analytics extends Component
     {
         $isAllTime = $this->periodFilter === 'all';
         $days = $isAllTime ? 30 : (int) $this->periodFilter;
-        $startDate = $isAllTime ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays($days);
+        $startDate = $isAllTime ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays($days - 1)->startOfDay();
 
         $totalUsers = User::where('role', '!=', 'admin')->where('created_at', '>=', $startDate)->count();
         $premiumUsers = User::where('role', '!=', 'admin')->where('is_premium', true)->where('created_at', '>=', $startDate)->count();
@@ -589,7 +593,7 @@ class Analytics extends Component
             'premiumUsers' => $premiumUsers,
             'freeUsers' => $totalUsers - $premiumUsers,
             'activeUsers' => $activeUsers,
-            'totalExports' => 0,
+            'totalExports' => UserActivity::whereIn('activity_type', ['csv_export', 'cv_export'])->where('status', 'success')->where('created_at', '>=', $startDate)->count(),
             'newUsersToday' => User::where('role', '!=', 'admin')->whereDate('created_at', Carbon::today('Asia/Jakarta'))->count(),
             'newUsersWeek' => User::where('role', '!=', 'admin')->where('created_at', '>=', Carbon::now('Asia/Jakarta')->subWeek())->count(),
             'newUsersMonth' => User::where('role', '!=', 'admin')->where('created_at', '>=', Carbon::now('Asia/Jakarta')->subMonth())->count(),
@@ -605,7 +609,7 @@ class Analytics extends Component
 
     public function render()
     {
-        $cacheKey = 'admin_analytics_data_' . $this->periodFilter;
+        $cacheKey = 'admin_analytics_workspace_v2_' . $this->periodFilter;
         $data = Cache::get($cacheKey);
         
         $stats = $data ? $data['statsSummary'] : $this->fetchStatsSummary();

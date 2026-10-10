@@ -59,15 +59,20 @@ class ScraperDashboard extends Component
         'is_active' => 'required|boolean',
     ];
 
+    private function authorizeAdmin(): void
+    {
+        abort_unless(auth()->user()?->isAdmin(), 403, 'Admin access required');
+    }
+
+    public function boot(): void
+    {
+        $this->authorizeAdmin();
+    }
+
     public function mount()
     {
+        $this->authorizeAdmin();
         $this->loadSources();
-        
-        // Seed default sources if table is empty so the admin has data to work with immediately
-        if (count($this->sources) === 0) {
-            $this->seedDefaultSources();
-            $this->loadSources();
-        }
         
         if (count($this->sources) > 0) {
             $this->editSource($this->sources[0]['id']);
@@ -77,11 +82,13 @@ class ScraperDashboard extends Component
 
     public function loadSources()
     {
+        $this->authorizeAdmin();
         $this->sources = ScraperSource::all()->toArray();
     }
 
     public function editSource($id)
     {
+        $this->authorizeAdmin();
         $source = ScraperSource::find($id);
         if ($source) {
             $this->editingSourceId = $source->id;
@@ -94,6 +101,7 @@ class ScraperDashboard extends Component
 
     public function saveSourceSettings()
     {
+        $this->authorizeAdmin();
         $this->validate();
 
         $source = ScraperSource::find($this->editingSourceId);
@@ -112,12 +120,14 @@ class ScraperDashboard extends Component
 
     public function triggerManualCrawl()
     {
+        $this->authorizeAdmin();
         \App\Jobs\DiscoverLinksJob::dispatch(true);
         session()->flash('success', "Discovery pipeline scraper berhasil dipicu di background worker.");
     }
 
     public function verifyActiveListings(DeadLinkDetector $detector)
     {
+        $this->authorizeAdmin();
         if (app()->runningUnitTests()) {
             $activePostings = JobPosting::where('status', 'active')->get();
             $closedCount = 0;
@@ -144,6 +154,7 @@ class ScraperDashboard extends Component
 
     public function startQueueWorker()
     {
+        $this->authorizeAdmin();
         $command = 'php ' . base_path('artisan') . ' queue:work --queue=discovery,extraction --stop-when-empty > /dev/null 2>&1 &';
         
         if (str_starts_with(php_uname('s'), 'Windows')) {
@@ -158,6 +169,7 @@ class ScraperDashboard extends Component
 
     public function runTargetedScraping()
     {
+        $this->authorizeAdmin();
         $this->validate([
             'targetJobsCount' => 'required|integer|min:1|max:500',
             'targetSector' => 'required|string',
@@ -170,6 +182,7 @@ class ScraperDashboard extends Component
 
     public function cancelTargetedScraping()
     {
+        $this->authorizeAdmin();
         \Illuminate\Support\Facades\Cache::forget('targeted_scraping_progress');
         \App\Jobs\ScrapeJobDetailsJob::logToLiveBuffer("Targeted Ingestion: Misi dibatalkan oleh Admin.", 'warning');
         session()->flash('success', "Misi Targeted Ingestion berhasil dibatalkan.");
@@ -177,6 +190,7 @@ class ScraperDashboard extends Component
 
     public function checkProxyHealth()
     {
+        $this->authorizeAdmin();
         $this->isPingingProxies = true;
         $this->proxyStatusList = [];
         
@@ -230,6 +244,7 @@ class ScraperDashboard extends Component
 
     public function runVisualSandboxTest()
     {
+        $this->authorizeAdmin();
         $this->validate([
             'sandboxUrl' => 'required|url',
             'sandboxTitleSelector' => 'required|string',
@@ -344,6 +359,7 @@ class ScraperDashboard extends Component
 
     public function runTestSandbox(DeadLinkDetector $detector)
     {
+        $this->authorizeAdmin();
         $this->validateOnly('testUrl', [
             'testUrl' => 'required|url',
             'selectedSourceId' => 'required',
@@ -424,69 +440,24 @@ class ScraperDashboard extends Component
         $this->isTesting = false;
     }
 
-    private function seedDefaultSources()
-    {
-        ScraperSource::create([
-            'name' => 'LinkedIn Indonesia',
-            'target_domain' => 'linkedin.com',
-            'seed_url' => 'https://id.linkedin.com/jobs/search?keywords=Software%20Engineer',
-            'is_active' => true,
-            'selectors_config' => [
-                'title' => '.topcard__title',
-                'company' => '.topcard__flavor-row',
-                'body' => '.description__text'
-            ],
-            'frequency_minutes' => 360,
-            'delay_between_requests_ms' => 2000,
-            'max_concurrency' => 5,
-        ]);
-
-        ScraperSource::create([
-            'name' => 'JobStreet Indonesia',
-            'target_domain' => 'jobstreet.co.id',
-            'seed_url' => 'https://www.jobstreet.co.id/id/software-engineer-jobs',
-            'is_active' => true,
-            'selectors_config' => [
-                'title' => 'h1[data-automation="job-title"]',
-                'company' => 'span[data-automation="company-name"]',
-                'body' => 'div[data-automation="jobDescription"]'
-            ],
-            'frequency_minutes' => 720,
-            'delay_between_requests_ms' => 1500,
-            'max_concurrency' => 3,
-        ]);
-
-        ScraperSource::create([
-            'name' => 'Kalibrr Indonesia',
-            'target_domain' => 'kalibrr.com',
-            'seed_url' => 'https://www.kalibrr.com/job-board/te/software-engineer/1',
-            'is_active' => true,
-            'selectors_config' => [
-                'title' => '.k-text-headline',
-                'company' => '.k-text-subheadline',
-                'body' => '.k-job-description'
-            ],
-            'frequency_minutes' => 1440,
-            'delay_between_requests_ms' => 1000,
-            'max_concurrency' => 8,
-        ]);
-    }
-
     public array $liveLogs = [];
 
     public function clearLiveLogs()
     {
+        $this->authorizeAdmin();
         \Illuminate\Support\Facades\Cache::forget('scraper_live_logs');
         $this->liveLogs = [];
     }
 
     public function getTargetMajorsListProperty()
     {
+        $this->authorizeAdmin();
         return $this->targetSector ? \App\Helpers\CategoryHelper::getMajorsForSektor($this->targetSector) : [];
     }
 
     public function restoreReportedJob($id)
     {
+        $this->authorizeAdmin();
         $job = JobPosting::find($id);
         if ($job) {
             $job->update([
@@ -499,6 +470,7 @@ class ScraperDashboard extends Component
 
     public function closeReportedJob($id)
     {
+        $this->authorizeAdmin();
         $job = JobPosting::find($id);
         if ($job) {
             $job->update([
@@ -510,6 +482,7 @@ class ScraperDashboard extends Component
 
     public function render()
     {
+        $this->authorizeAdmin();
         $jobsPending = 0;
         $jobsProcessing = 0;
         $jobsFailed = 0;

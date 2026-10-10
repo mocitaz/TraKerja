@@ -7,6 +7,7 @@ use App\Models\SupportTicket;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 
 class AdminSupportController extends Controller
 {
@@ -15,6 +16,7 @@ class AdminSupportController extends Controller
      */
     public function index(Request $request): View
     {
+        Gate::authorize('viewAny', SupportTicket::class);
         $query = SupportTicket::with('user')->orderBy('created_at', 'desc');
 
         // Apply filters
@@ -26,7 +28,14 @@ class AdminSupportController extends Controller
             $query->where('category', $request->input('category'));
         }
 
-        $tickets = $query->paginate(15);
+        if ($request->filled('search')) {
+            $search = mb_substr((string) $request->input('search'), 0, 100);
+            $query->where(function ($query) use ($search) {
+                $query->where('subject', 'like', '%'.$search.'%')->orWhere('message', 'like', '%'.$search.'%');
+            });
+        }
+
+        $tickets = $query->orderByDesc('id')->paginate(15)->withQueryString();
 
         // Stats
         $totalFeedbacks = SupportTicket::count();
@@ -50,6 +59,7 @@ class AdminSupportController extends Controller
      */
     public function reply(Request $request, SupportTicket $ticket): RedirectResponse
     {
+        Gate::authorize('reply', $ticket);
         $request->validate([
             'admin_reply' => 'required|string|min:5|max:5000',
             'status' => 'required|string|in:pending,replied,completed,on_hold',
@@ -73,6 +83,7 @@ class AdminSupportController extends Controller
      */
     public function updateStatus(Request $request, SupportTicket $ticket): RedirectResponse
     {
+        Gate::authorize('update', $ticket);
         $request->validate([
             'status' => 'required|string|in:pending,replied,completed,on_hold',
         ]);
@@ -89,6 +100,7 @@ class AdminSupportController extends Controller
      */
     public function destroy(SupportTicket $ticket): RedirectResponse
     {
+        Gate::authorize('delete', $ticket);
         $ticket->delete();
 
         return redirect()->route('admin.feedbacks.index')->with('success_message', 'Feedback pengguna berhasil dihapus.');

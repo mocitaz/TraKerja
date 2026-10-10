@@ -1,0 +1,111 @@
+@media (max-width: 760px) {
+    .tracker-page .tracker-board-grid { gap: 12px; scroll-snap-type: x mandatory; scroll-padding-left: 2px; padding: 2px 2px 12px; }
+    .tracker-page .tracker-column { flex-basis: min(86%, 340px); border-radius: 18px; padding: 10px; }
+    .tracker-page .tracker-column-cards { max-height: none; overflow: visible; }
+    .tracker-page .tracker-column-add { width: 44px; min-height: 44px; }
+    .tracker-page .tracker-card-grip { display: none; }
+    .tracker-page .tracker-card-move select { min-height: 44px; font-size: 16px; max-width: 190px; min-width: 0; }
+    .tracker-page .tracker-column .tracker-job-card { cursor: auto; }
+    .tracker-page .tracker-column .tracker-job-card:hover { translate: none; }
+}
+
+@media (max-width: 640px) {
+    .workspace-page.tracker-page, .workspace-page.job-detail-page { padding-top: 12px; padding-left: 14px; padding-right: 14px; }
+    .tracker-page .workspace-page__header { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 12px; }
+    .workspace-page.tracker-page h1 { font-size: 24px; }
+    .tracker-page .workspace-page__header p { font-size: 12px; line-height: 1.6; }
+    .tracker-page .workspace-page__header > button { justify-self: start; min-height: 44px; padding: 10px 16px; }
+    .tracker-page .workspace-switcher button { min-height: 44px; min-width: 88px; }
+    .tracker-page .tracker-filters { gap: 10px; border-radius: 16px; }
+    .tracker-page .tracker-search { flex-basis: 100%; min-width: 0; }
+    .tracker-page .tracker-filters .tracker-search input { min-height: 46px; font-size: 16px; }
+    .tracker-page .tracker-filter-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; min-width: 0; }
+    .tracker-page .tracker-filters .tracker-filter-controls select { width: 100%; max-width: none; min-height: 46px; font-size: 16px; padding-left: 10px; }
+    .tracker-page .tracker-archive { justify-content: center; min-height: 46px; font-size: 12px; }
+    .tracker-page .tracker-archive-note { gap: 3px; font-size: 10px; line-height: 1.6; }
+    .tracker-page .tracker-archive-note a, .tracker-page .tracker-filter-summary button { min-height: 44px; }
+    .tracker-page .tracker-results { align-items: center; padding: 14px; gap: 8px; }
+    .tracker-page .tracker-results h2 { font-size: 14px; gap: 6px; }
+    .tracker-page .tracker-results p { display: none; }
+    .tracker-page .tracker-results select { min-height: 44px; max-width: 130px; font-size: 16px; }
+    .tracker-page .tracker-mobile-list { padding: 0 14px; gap: 0; }
+    .tracker-page .tracker-mobile-list .tracker-job-card { padding: 16px 0; border: 0; border-bottom: 1px solid #e5e9ee; border-radius: 0; box-shadow: none; background: transparent; }
+    .tracker-page .tracker-mobile-list .tracker-job-card:last-child { border-bottom: 0; }
+    .tracker-page .tracker-mobile-list .tracker-card-top { margin-bottom: 8px; }
+    .tracker-page .tracker-mobile-list .tracker-card-top .tracker-pill { margin-left: 0; }
+    .tracker-page .tracker-card-link h3 { font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; }
+    .tracker-page .tracker-card-link p { font-size: 12px; overflow-wrap: anywhere; }
+    .tracker-page .tracker-card-stage { flex-direction: row; flex-wrap: wrap; justify-content: space-between; gap: 6px 12px; padding-top: 8px; }
+    .tracker-page .tracker-card-footer { flex-wrap: wrap; gap: 4px 8px; padding-top: 4px; }
+    .tracker-page .tracker-card-footer .tracker-actions button { width: 44px; min-height: 44px; font-size: 17px; }
+    .tracker-page .tracker-follow-up, .tracker-page .tracker-column .tracker-follow-up { min-height: 44px; font-size: 12px; }
+    .tracker-page .tracker-card-meta { margin: 8px 0; }
+    .tracker-page .tracker-board-heading { align-items: flex-start; gap: 8px; }
+    .tracker-page .tracker-board-heading p { font-size: 11px; line-height: 1.6; }
+    .tracker-page .tracker-empty { padding: 30px 14px; }
+    .tracker-page .tracker-empty h3 { font-size: 18px; }
+    .tracker-page .tracker-pagination { padding: 12px; }
+    .tracker-page .tracker-pagination nav button, .tracker-page .tracker-column-pagination nav button { min-height: 44px; }
+
+    .job-detail-page .job-heading { padding: 18px 16px 14px; border-radius: 18px; gap: 14px; }
+    .job-detail-page .job-heading h1 { font-size: 25px; line-height: 1.3; text-wrap: wrap; }
+    .job-detail-page .job-heading-labels { margin-bottom: 12px; }
+    .job-detail-page .job-heading-meta { gap: 8px 12px; font-size: 12px; }
+    .job-detail-page .job-heading-bottom { gap: 8px; }
+    .job-detail-page .job-heading-stage { font-size: 12px; }
+    .job-detail-page .job-heading-actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); width: 100%; gap: 8px; }
+    .job-detail-page .job-heading-actions :is(.workspace-button, .job-archive-button) { width: 100%; min-height: 44px; font-size: 11px; padding: 8px; }
+    .job-detail-page .job-heading-actions > form { grid-column: 1 / -1; justify-self: end; }
+    .job-detail-page .job-heading-actions > form button { padding: 8px 12px; }
+    .job-detail-page .job-workspace-grid, .job-detail-page .job-workspace-aside { gap: 14px; }
+    .job-detail-page .job-panel { padding: 16px; }
+    .job-detail-page .job-section-heading { gap: 8px; align-items: center; flex-wrap: wrap; }
+    .job-detail-page h2 { font-size: 14px; }
+    .job-detail-page .job-text-link { min-height: 44px; font-size: 11px; }
+    .job-detail-page .job-stage-track { grid-template-columns: repeat(5, minmax(0, 1fr)); overflow: visible; padding: 14px 2px 8px; gap: 3px; }
+    .job-detail-page .job-stage-track li { font-size: 9px; line-height: 1.5; overflow-wrap: anywhere; gap: 10px; }
+    .job-detail-page .job-stage-caption { line-height: 1.6; }
+    .job-detail-page .job-overview-facts dl { gap: 12px; }
+    .job-detail-page .job-overview-facts dd { font-size: 13px; }
+    .job-detail-page .job-notes-preview p { font-size: 12px; }
+    .job-detail-page .job-notes-content { font-size: 14px; line-height: 1.8; margin-top: 12px; }
+    .job-detail-page .job-record-dates > div { gap: 12px; font-size: 12px; }
+    .job-detail-page .job-record-dates dd { overflow-wrap: anywhere; }
+    .job-detail-page .job-interview-card { padding: 16px; border-radius: 18px; }
+    .job-detail-page .job-interview-card--empty { padding: 14px 16px; }
+    .job-detail-page .job-follow-up-panel { gap: 4px; padding: 12px; margin-top: 12px; }
+    .job-detail-page .job-follow-up-panel .tracker-follow-up { min-height: 44px; }
+    .job-detail-page .job-salary-reference > summary, .job-detail-page .job-salary-method > summary { min-height: 44px; }
+
+    .job-dialog { padding: 8px; }
+    .job-dialog .job-dialog__panel { max-height: calc(100dvh - 16px); border-radius: 18px; }
+    .job-dialog .job-dialog__header { padding: 14px 16px; align-items: center; gap: 8px; }
+    .job-dialog .job-dialog__header h2 { font-size: 18px; }
+    .job-dialog .job-dialog__header p { font-size: 11px; }
+    .job-dialog .job-dialog__close { width: 44px; height: 44px; }
+    .job-dialog .job-dialog__body { padding: 16px 16px 0; min-height: 0; }
+    .job-dialog [data-job-application-form] :is(input:not([type=checkbox]), select, textarea) { font-size: 16px; min-height: 46px; min-width: 0; max-width: 100%; border-radius: 10px; }
+    .job-dialog [data-job-application-form] textarea { min-height: 90px; }
+    .job-dialog [data-job-application-form] .grid > div { min-width: 0; }
+    .job-dialog [data-job-application-form] label:has(input[type=checkbox]) { min-height: 46px; padding: 8px; }
+    .job-dialog .job-form__platform-shortcuts button, .job-dialog .platform-picker__grid > button, .job-dialog .platform-picker summary, .job-dialog [data-scrape-button] { min-height: 44px; }
+    .job-dialog .job-form__actions { margin: 0 -16px; padding: 10px 12px max(10px, env(safe-area-inset-bottom)); display: grid; grid-template-columns: 1fr; gap: 0; }
+    .job-dialog .job-form__actions > button { justify-self: start; min-height: 44px; padding: 8px; }
+    .job-dialog .job-form__actions > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 8px; }
+    .job-dialog .job-form__actions button { min-height: 44px; font-size: 12px; }
+    .job-dialog .job-form__actions button[type=submit] { min-width: 0; width: 100%; padding: 8px; }
+
+    .tracker-draft-backdrop { padding: 8px; }
+    .tracker-draft-panel { max-height: calc(100dvh - 16px); border-radius: 18px; display: flex; flex-direction: column; overflow: hidden; }
+    .tracker-draft-panel header { padding: 14px 16px; gap: 8px; flex-shrink: 0; }
+    .tracker-draft-panel h2 { font-size: 18px; }
+    .tracker-draft-panel p { font-size: 11px; }
+    .tracker-draft-body { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 16px; }
+    .tracker-draft-body textarea { font-size: 16px; line-height: 1.6; min-height: 180px; padding: 12px; }
+    .tracker-draft-panel footer { padding: 10px 16px max(10px, env(safe-area-inset-bottom)); flex-shrink: 0; }
+    .account-dialog-overlay { padding: 14px; }
+    .account-dialog-overlay .account-confirm-panel { max-height: calc(100dvh - 28px); overflow-y: auto; padding: 22px; border-radius: 18px; }
+    .account-dialog-overlay .account-confirm-panel h2 { font-size: 20px; }
+    .account-dialog-overlay .account-confirm-actions button { min-height: 44px; }
+    .account-dialog-overlay .account-dialog-close { min-width: 44px; min-height: 44px; }
+}

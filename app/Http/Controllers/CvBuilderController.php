@@ -54,12 +54,15 @@ class CvBuilderController extends Controller
         $savedConfigs = $user->cvTemplates()->latest()->get();
         
         // Check remaining exports for free tier
-        $remainingExports = $user->getRemainingExports();
+        $remainingExports = $user->getRemainingCvGenerations();
+        $user->load('profile');
+        $user->loadCount(['experiences', 'educations', 'skills', 'projects', 'organizations', 'achievements']);
         
         return view('cv-builder.generator', compact(
             'templatesCount',
             'savedConfigs',
-            'remainingExports'
+            'remainingExports',
+            'user'
         ));
     }
     
@@ -69,6 +72,7 @@ class CvBuilderController extends Controller
     public function preview(Request $request)
     {
         $user = Auth::user();
+        $user->load('profile');
         $template = $request->input('template', 'minimal');
         
         // Validate template exists
@@ -100,6 +104,13 @@ class CvBuilderController extends Controller
         $organizations = $user->organizations()->orderBy('display_order')->get();
         $achievements = $user->achievements()->orderBy('display_order')->get();
         $projects = $user->projects()->orderBy('display_order')->get();
+
+        if ($request->boolean('canvas')) {
+            $margin = in_array($request->input('margin'), ['0', '10mm', '12mm', '15mm', '20mm', '22mm', '28mm'], true) ? $request->input('margin') : null;
+            $fontSize = in_array($request->input('font_size'), ['8.5pt', '9.5pt', '10.5pt'], true) ? $request->input('font_size') : null;
+            $browserPreview = true;
+            return view("cv-templates.{$template}", compact('user', 'experiences', 'educations', 'skills', 'organizations', 'achievements', 'projects', 'margin', 'fontSize', 'browserPreview'));
+        }
         
         return view('cv-builder.preview', compact(
             'user',

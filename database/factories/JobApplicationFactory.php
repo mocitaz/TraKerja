@@ -28,8 +28,8 @@ class JobApplicationFactory extends Factory
     public function definition(): array
     {
         $platforms = ['LinkedIn', 'JobStreet', 'Kalibrr', 'Glints', 'Indeed', 'Glassdoor', 'Other'];
-        $statuses = ['On Process', 'Rejected', 'Accepted', 'Withdrawn'];
-        $stages = ['Applied', 'Phone Screening', 'Technical Interview', 'HR Interview', 'Final Interview', 'Offer'];
+        $statuses = \App\Support\JobApplicationStatus::OPTIONS;
+        $stages = \App\Support\JobApplicationStatus::STAGES;
         $careerLevels = ['Intern', 'Full Time', 'Contract', 'MT', 'Freelance'];
         $companies = ['Google', 'Microsoft', 'Amazon', 'Meta', 'Apple', 'Netflix', 'Spotify', 'Uber', 'Airbnb', 'Tesla'];
 

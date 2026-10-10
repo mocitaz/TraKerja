@@ -30,6 +30,24 @@ return [
 
     'connections' => [
 
+        'exports' => [
+            'driver' => 'database',
+            'connection' => env('DB_QUEUE_CONNECTION'),
+            'table' => env('DB_QUEUE_TABLE', 'jobs'),
+            'queue' => 'exports',
+            'retry_after' => 300,
+            'after_commit' => true,
+        ],
+
+        'ai_photos' => [
+            'driver' => 'database',
+            'connection' => env('DB_QUEUE_CONNECTION'),
+            'table' => env('DB_QUEUE_TABLE', 'jobs'),
+            'queue' => 'ai-photo',
+            'retry_after' => 360,
+            'after_commit' => true,
+        ],
+
         'sync' => [
             'driver' => 'sync',
         ],

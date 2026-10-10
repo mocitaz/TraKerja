@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Services\ActivityLogger;
+use App\Support\AvatarCatalog;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -36,7 +39,9 @@ class ProfileController extends Controller
         $user = $request->user();
         $user->fill($request->validated());
         
-        $user->auto_archive_rejected = $request->has('auto_archive_rejected') ? $request->boolean('auto_archive_rejected') : false;
+        if (!$user->isAdmin()) {
+            $user->auto_archive_rejected = $request->boolean('auto_archive_rejected');
+        }
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
@@ -158,58 +163,59 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Update profile photo
-     */
-    public function updatePhoto(Request $request): RedirectResponse|\Illuminate\Http\JsonResponse
+    public function updateAvatar(Request $request): RedirectResponse|JsonResponse
     {
-        $request->validate([
-            'logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
-
+        $validated = $request->validate(['avatar_id' => ['required', 'string', Rule::in(array_keys(AvatarCatalog::all()))]]);
         $user = $request->user();
+        $oldPhoto = $user->logo;
+        $user->update(['avatar_id' => $validated['avatar_id'], 'logo' => null]);
+        $this->deleteStoredPhoto($oldPhoto);
 
-        // Delete old photo if exists
-        if ($user->logo && \Storage::disk('public')->exists($user->logo)) {
-            \Storage::disk('public')->delete($user->logo);
-        }
+        ActivityLogger::log('profile_update', 'User memilih avatar profil', 'success', [], $user->id);
 
-        // Store new photo
-        $logoPath = $request->file('logo')->store('logos', 'public');
-        $user->update(['logo' => $logoPath]);
-
-        ActivityLogger::log(
-            'profile_update',
-            "User mengubah foto profil",
-            'success',
-            [],
-            $user->id
-        );
-
-        if ($request->expectsJson()) {
-            return response()->json(['success' => true, 'status' => 'photo-updated', 'message' => 'Profile photo updated successfully']);
-        }
-
-        return Redirect::route('profile.edit')->with('status', 'photo-updated');
+        return $request->expectsJson()
+            ? response()->json(['success' => true, 'status' => 'avatar-updated', 'logo_url' => $user->avatar_url])
+            : Redirect::route('profile.edit')->with('status', 'avatar-updated');
     }
 
-    /**
-     * Remove profile photo
-     */
-    public function removePhoto(Request $request): RedirectResponse|\Illuminate\Http\JsonResponse
+    public function updatePhoto(Request $request): RedirectResponse|JsonResponse
+    {
+        $request->validate(['logo' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048']]);
+        $user = $request->user();
+        $oldPhoto = $user->logo;
+        $path = $request->file('logo')->store('logos', 'public');
+        abort_unless($path, 500, 'Could not store profile photo.');
+        try {
+            $user->update(['logo' => $path]);
+        } catch (\Throwable $exception) {
+            Storage::disk('public')->delete($path);
+            throw $exception;
+        }
+        $this->deleteStoredPhoto($oldPhoto);
+        ActivityLogger::log('profile_update', 'User mengubah foto profil', 'success', [], $user->id);
+
+        return $request->expectsJson()
+            ? response()->json(['success' => true, 'status' => 'photo-updated', 'logo_url' => $user->avatar_url])
+            : Redirect::route('profile.edit')->with('status', 'photo-updated');
+    }
+
+    public function removePhoto(Request $request): RedirectResponse|JsonResponse
     {
         $user = $request->user();
+        $oldPhoto = $user->logo;
+        $user->update(['logo' => null]);
+        $this->deleteStoredPhoto($oldPhoto);
 
-        if ($user->logo) {
-            \Storage::disk('public')->delete($user->logo);
-            $user->update(['logo' => null]);
+        return $request->expectsJson()
+            ? response()->json(['success' => true, 'status' => 'photo-removed', 'logo_url' => $user->avatar_url])
+            : Redirect::route('profile.edit')->with('status', 'photo-removed');
+    }
+
+    private function deleteStoredPhoto(?string $path): void
+    {
+        if ($path && str_starts_with($path, 'logos/') && !str_contains($path, '..')) {
+            Storage::disk('public')->delete($path);
         }
-
-        if ($request->expectsJson()) {
-            return response()->json(['success' => true, 'status' => 'photo-removed', 'message' => 'Profile photo removed successfully']);
-        }
-
-        return Redirect::route('profile.edit')->with('status', 'photo-removed');
     }
 
     /**

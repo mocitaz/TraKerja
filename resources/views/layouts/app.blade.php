@@ -105,28 +105,21 @@
             }
         </style>
     </head>
-    <body class="font-sans antialiased bg-[#fafafa] text-slate-900"
-          x-data="{ mobileSidebarOpen: false }"
-          @keydown.escape="mobileSidebarOpen = false">
+    <body class="font-sans antialiased bg-[#fafafa] text-slate-900">
 
 
         <div class="h-screen flex overflow-hidden">
-            <!-- Sidebar -->
-            @include('layouts.sidebar')
-
-            <!-- Sidebar Overlay (Mobile) -->
-            <div x-show="mobileSidebarOpen" 
-                 x-transition.opacity.duration.300ms
-                 @click="mobileSidebarOpen = false"
-                 class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 lg:hidden" style="display: none;"></div>
-
             <!-- Main Content Area -->
-            <div class="flex-1 flex flex-col min-w-0 relative overflow-hidden">
+            <div class="workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden">
                 @include('layouts.navigation', ['header' => $header ?? null])
 
                 <!-- Page Content -->
-                <main class="flex-1 overflow-y-auto">
-                    {{ $slot }}
+                <main class="workspace-main flex-1 overflow-y-auto">
+                    <div class="workspace-main-content">
+                        @include('components.survey-invitation')
+                        {{ $slot }}
+                    </div>
+                    <x-workspace-footer />
                 </main>
 
 
@@ -135,85 +128,87 @@
 
 
         @include('components.toast-notification')
+        <x-floating-ai-link />
         @livewireScripts
         
-        {{-- Premium Confirmation Modal (Linear-Style Left-Aligned) --}}
-        <div id="confirmation-modal" class="fixed inset-0 bg-zinc-950/40 backdrop-blur-xs hidden z-[10001] flex items-center justify-center p-4 transition-all duration-300 pointer-events-none">
-            <div class="bg-white rounded-lg border border-zinc-200/60 shadow-lg max-w-[400px] w-full flex flex-col overflow-hidden transform scale-95 opacity-0 transition-all duration-300 pointer-events-auto p-5">
-                
-                <div class="flex items-start gap-4">
-                    {{-- Warning Icon Container --}}
-                    <div class="w-10 h-10 rounded-lg bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 shrink-0 shadow-4xs">
-                        <i class="ph-bold ph-trash-simple text-lg"></i>
-                    </div>
-                    
-                    {{-- Title and Message --}}
-                    <div class="flex-1 min-w-0 space-y-1.5">
-                        <h3 id="confirm-title" class="text-sm font-bold text-zinc-900 tracking-tight">Delete Application?</h3>
-                        <p id="confirm-message" class="text-xs font-medium text-zinc-500 leading-relaxed">Are you sure you want to proceed with this action? This cannot be undone.</p>
-                    </div>
-                </div>
-
-                {{-- Action Row --}}
-                <div class="flex items-center justify-end gap-2.5 mt-5 pt-4 border-t border-zinc-100">
-                    <button type="button" onclick="closeConfirmModal()" class="px-3.5 h-8 bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-650 text-xs font-bold rounded-md active:scale-97 transition-all">Cancel</button>
-                    <button type="button" id="confirm-button" class="px-4 h-8 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-md active:scale-97 transition-all shadow-sm shadow-rose-500/10">Confirm</button>
-                </div>
-            </div>
+        <div id="confirmation-modal" data-dialog-native="closeConfirmModal" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-message" tabindex="-1" class="account-dialog-overlay hidden" onclick="if (event.target === this) closeConfirmModal()">
+            <section class="account-confirm-panel">
+                <button type="button" class="account-dialog-close" onclick="closeConfirmModal()" aria-label="Close confirmation"><i class="ph ph-x" aria-hidden="true"></i></button>
+                <div class="account-confirm-visual" aria-hidden="true"><i class="ph ph-sign-out account-confirm-logout-icon"></i><i class="ph ph-warning account-confirm-action-icon"></i></div>
+                <h2 id="confirm-title">Confirm action</h2>
+                <p id="confirm-message">Review this action before continuing.</p>
+                <p id="confirm-error" role="alert" hidden></p>
+                <div class="account-confirm-actions"><button type="button" id="confirm-cancel" class="account-dialog-button" onclick="closeConfirmModal()">Stay here</button><button type="button" id="confirm-button" class="account-dialog-button account-dialog-button--primary">Confirm</button></div>
+            </section>
         </div>
 
         <script>
             var activeConfirmCallback = activeConfirmCallback || null;
+            var confirmBusy = false;
 
-            function openConfirmModal(title, message, btnText, callback) {
+            function openConfirmModal(title, message, btnText, callback, options = {}) {
+                if (confirmBusy) return;
                 const modal = document.getElementById('confirmation-modal');
-                const content = modal.querySelector('div');
-                
+                modal.dataset.variant = options.variant || 'action';
                 document.getElementById('confirm-title').innerText = title;
                 document.getElementById('confirm-message').innerText = message;
                 document.getElementById('confirm-button').innerText = btnText;
-                
+                document.getElementById('confirm-cancel').innerText = options.variant === 'logout' ? 'Stay here' : 'Cancel';
+                document.getElementById('confirm-error').hidden = true;
                 activeConfirmCallback = callback;
-                
                 modal.classList.remove('hidden');
-                modal.classList.add('flex');
-                setTimeout(() => {
-                    content.classList.remove('scale-95', 'opacity-0');
-                }, 10);
             }
 
-            function closeConfirmModal() {
+            function closeConfirmModal(force = false) {
+                if (confirmBusy && !force) return;
+                document.getElementById('confirmation-modal').classList.add('hidden');
+                activeConfirmCallback = null;
+            }
+
+            document.getElementById('confirm-button').onclick = async function() {
+                if (confirmBusy || !activeConfirmCallback) return;
+                const callback = activeConfirmCallback;
                 const modal = document.getElementById('confirmation-modal');
-                const content = modal.querySelector('div');
-                
-                content.classList.add('scale-95', 'opacity-0');
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                    modal.classList.remove('flex');
-                }, 300);
-            }
-
-            document.getElementById('confirm-button').onclick = function() {
-                if (activeConfirmCallback) activeConfirmCallback();
-                closeConfirmModal();
+                const buttons = [...modal.querySelectorAll('button')];
+                const label = this.innerText;
+                confirmBusy = true;
+                buttons.forEach(button => { button.disabled = true; });
+                this.innerText = modal.dataset.variant === 'logout' ? 'Signing out…' : 'Working…';
+                try {
+                    await callback();
+                    closeConfirmModal(true);
+                } catch (error) {
+                    const notice = document.getElementById('confirm-error');
+                    notice.innerText = 'We couldn’t complete this action. Please try again.';
+                    notice.hidden = false;
+                } finally {
+                    confirmBusy = false;
+                    buttons.forEach(button => { button.disabled = false; });
+                    this.innerText = label;
+                }
             };
 
-            function confirmLogout(formId = 'logout-form') {
+            async function confirmLogout(formId = 'logout-form') {
+                const submitLogout = async () => {
+                    const form = document.getElementById(formId) || document.getElementById('logout-form');
+                    if (!form) return;
+                    try {
+                        await window.prepareTraKerjaLogout?.();
+                    } catch (error) {
+                        console.error(error);
+                    }
+                    form.submit();
+                };
                 if (typeof window.openConfirmModal === 'function') {
                     window.openConfirmModal(
-                        'Sign Out?',
-                        'Are you sure you want to end your current session? You will need to sign in again to access your tracker.',
-                        'Sign Out Now',
-                        function() {
-                            const form = document.getElementById(formId) || document.getElementById('logout-form');
-                            if (form) form.submit();
-                        }
+                        'Sign out of TraKerja?',
+                        'You’ll need to sign in again to return to your workspace.',
+                        'Sign out',
+                        submitLogout,
+                        { variant: 'logout' }
                     );
-                } else {
-                    if (confirm('Are you sure you want to sign out?')) {
-                        const form = document.getElementById(formId) || document.getElementById('logout-form');
-                        if (form) form.submit();
-                    }
+                } else if (confirm('Are you sure you want to sign out?')) {
+                    await submitLogout();
                 }
             }
 
@@ -248,18 +243,6 @@
             });
 
 
-
-            document.addEventListener('alpine:init', () => {
-                Alpine.store('sidebar', {
-                    open: false,
-                    toggle() {
-                        this.open = !this.open;
-                    },
-                    close() {
-                        this.open = false;
-                    }
-                });
-            });
 
             // Magnetic Button Logic
             function initMagneticButtons() {
@@ -300,23 +283,11 @@
             });
 
             // Register PWA Service Worker
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('/sw.js')
-                        .then(reg => {
-                            reg.update();
-                            console.log('PWA Service Worker registered!');
-                        })
-                        .catch(err => console.log('PWA Service Worker failed:', err));
-                });
-            }
+            @include('components.service-worker-registration')
 
             // Handle Livewire Navigation
             document.addEventListener('livewire:navigated', () => {
                 initMagneticButtons();
-                if (window.Alpine && Alpine.store('sidebar')) {
-                    Alpine.store('sidebar').close();
-                }
             });
 
             document.addEventListener('DOMContentLoaded', initMagneticButtons);
@@ -328,57 +299,8 @@
                 transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
             }
         </style>
-        {{-- Telegram Community Pop-Up Modal (Notion-Style Compact) --}}
-        @if(session('show_telegram_popup'))
-        <div x-data="{ open: true }" 
-             x-show="open" 
-             class="fixed inset-0 bg-zinc-950/45 backdrop-blur-xs z-[99999] flex items-center justify-center p-4"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0">
-            <!-- Modal Body (Notion Styled) -->
-            <div @click.away="open = false" 
-                 class="bg-white rounded-xl border border-zinc-200/80 shadow-2xl max-w-[360px] w-full overflow-hidden transform transition-all p-6 text-center"
-                 x-transition:enter="transition ease-out duration-300"
-                 x-transition:enter-start="scale-95 translate-y-4"
-                 x-transition:enter-end="scale-100 translate-y-0"
-                 x-transition:leave="transition ease-in duration-200"
-                 x-transition:leave-start="scale-100 translate-y-0"
-                 x-transition:leave-end="scale-95 translate-y-4">
-                
-                <!-- Close Button -->
-                <button @click="open = false" class="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 transition">
-                    <i class="ph ph-x text-lg"></i>
-                </button>
-
-                <!-- Telegram Icon Circle -->
-                <div class="w-12 h-12 rounded-full bg-blue-50/70 flex items-center justify-center mx-auto mb-4">
-                    <i class="ph ph-telegram-logo text-blue-600 text-2xl"></i>
-                </div>
-
-                <!-- Text Content -->
-                <h3 class="text-base font-bold text-zinc-900 tracking-tight leading-tight">Welcome Back!</h3>
-                <p class="text-[11px] font-semibold text-zinc-450 mt-1 mb-5">
-                    Connect with fellow job seekers and receive real-time job vacancy alerts in our Telegram community.
-                </p>
-
-                <!-- Action Buttons -->
-                <div class="space-y-2">
-                    <a href="https://t.me/HubTrakerja" target="_blank" rel="noopener noreferrer" @click="open = false" 
-                       class="w-full py-2 bg-[#0066cc] hover:bg-[#0052a3] text-white text-xs font-bold rounded-lg transition-colors shadow-3xs flex items-center justify-center gap-1.5">
-                        <i class="ph-bold ph-paper-plane-tilt text-xs"></i>
-                        Join HubTrakerja
-                    </a>
-                    <button @click="open = false" 
-                            class="w-full py-2 bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs font-bold rounded-lg transition-colors">
-                        Go to Dashboard
-                    </button>
-                </div>
-            </div>
-        </div>
+        @if(session('show_telegram_popup') && !request()->routeIs('community.index'))
+            @include('community.popup')
         @endif
 
         @stack('modals')

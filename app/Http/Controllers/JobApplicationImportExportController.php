@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobApplication;
+use App\Support\JobApplicationStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -44,12 +45,8 @@ class JobApplicationImportExportController extends Controller
     /**
      * Valid values for enum-like fields
      */
-    private const VALID_APPLICATION_STATUS = ['On Process', 'Declined', 'Accepted'];
-    private const VALID_RECRUITMENT_STAGE = [
-        'Applied', 'Follow Up', 'Assessment Test', 'Psychotest',
-        'HR - Interview', 'User - Interview', 'LGD',
-        'Presentation Round', 'Offering', 'Not Processed'
-    ];
+    private const VALID_APPLICATION_STATUS = JobApplicationStatus::OPTIONS;
+    private const VALID_RECRUITMENT_STAGE = JobApplicationStatus::STAGES;
     private const VALID_CAREER_LEVEL = ['Intern', 'Full Time', 'Contract', 'MT', 'Freelance'];
     private const VALID_INTERVIEW_TYPE = ['Phone', 'Video', 'In-person', 'Panel'];
 
@@ -126,140 +123,20 @@ class JobApplicationImportExportController extends Controller
      */
     public function exportToCsv()
     {
-        $jobApplications = JobApplication::where('user_id', Auth::id())
-            ->orderBy('application_date', 'desc')
-            ->get();
-
-        $output = fopen('php://temp', 'r+');
-        
-        // Add BOM for UTF-8 encoding
-        fwrite($output, "\xEF\xBB\xBF");
-        
-        // Export Header Information
-        $exportInfo = [
-            ['TraKerja - Job Application Export'],
-            ['Generated on: ' . date('d F Y, H:i:s')],
-            ['User: ' . Auth::user()->name],
-            ['Total Applications: ' . $jobApplications->count()],
-            [''],
-            ['EXPORT DATA:'],
-            ['']
-        ];
-        
-        foreach ($exportInfo as $line) {
-            fputcsv($output, $line);
+        $query = JobApplication::where('user_id', Auth::id());
+        if ($query->count() > \App\Services\DataExportService::QUEUE_THRESHOLD) {
+            $export = app(\App\Services\DataExportService::class)->queue(Auth::user(), 'jobs');
+            return redirect()->route('data-exports.show', $export->id);
         }
-        
-        // Column Headers
-        $headers = [
-            'Company Name',
-            'Position',
-            'Location',
-            'Platform',
-            'Application Status',
-            'Recruitment Stage',
-            'Career Level',
-            'Application Date',
-            'Platform Link',
-            'Notes',
-            'Interview Date',
-            'Interview Type',
-            'Interview Location',
-            'Interview Notes',
-            'Created Date',
-            'Last Updated'
-        ];
-        
-        fputcsv($output, $headers);
-        
-        // Data rows with enhanced formatting
-        foreach ($jobApplications as $index => $application) {
-            $row = [
-                $this->cleanText($application->company_name ?? ''),
-                $this->cleanText($application->position ?? ''),
-                $this->cleanText($application->location ?? ''),
-                $this->cleanText($application->platform ?? ''),
-                $this->cleanText($application->application_status ?? ''),
-                $this->cleanText($application->recruitment_stage ?? ''),
-                $this->cleanText($application->career_level ?? ''),
-                $application->application_date ? $application->application_date->format('Y-m-d') : '',
-                $application->platform_link ?? '',
-                $this->cleanText($application->notes ?? ''),
-                $application->interview_date ? $application->interview_date->format('Y-m-d H:i') : '',
-                $this->cleanText($application->interview_type ?? ''),
-                $this->cleanText($application->interview_location ?? ''),
-                $this->cleanText($application->interview_notes ?? ''),
-                $application->created_at ? $application->created_at->format('Y-m-d H:i:s') : '',
-                $application->updated_at ? $application->updated_at->format('Y-m-d H:i:s') : ''
-            ];
-            
-            fputcsv($output, $row);
-        }
-        
-        // Export Summary
-        $summary = [
-            [''],
-            ['EXPORT SUMMARY:'],
-            ['Total Applications: ' . $jobApplications->count()]
-        ];
-        
-        // Status breakdown
-        $statusCounts = $jobApplications->groupBy('application_status')->map->count();
-        if ($statusCounts->isNotEmpty()) {
-            $summary[] = [''];
-            $summary[] = ['Status Breakdown:'];
-            foreach ($statusCounts as $status => $count) {
-                $summary[] = [$status . ': ' . $count . ' applications'];
+        return response()->streamDownload(function () use ($query) {
+            $output = fopen('php://output', 'wb');
+            fwrite($output, "\xEF\xBB\xBF");
+            fputcsv($output, \App\Support\JobApplicationCsv::HEADERS, ',', '"', '');
+            foreach ($query->lazyById(100) as $job) {
+                fputcsv($output, \App\Support\JobApplicationCsv::row($job), ',', '"', '');
             }
-        }
-        
-        // Platform breakdown
-        $platformCounts = $jobApplications->groupBy('platform')->map->count();
-        if ($platformCounts->isNotEmpty()) {
-            $summary[] = [''];
-            $summary[] = ['Platform Breakdown:'];
-            foreach ($platformCounts as $platform => $count) {
-                $summary[] = [$platform . ': ' . $count . ' applications'];
-            }
-        }
-        
-        // Career level breakdown
-        $careerCounts = $jobApplications->groupBy('career_level')->map->count();
-        if ($careerCounts->isNotEmpty()) {
-            $summary[] = [''];
-            $summary[] = ['Career Level Breakdown:'];
-            foreach ($careerCounts as $level => $count) {
-                $summary[] = [$level . ': ' . $count . ' applications'];
-            }
-        }
-        
-        $summary[] = [''];
-        $summary[] = ['END OF EXPORT'];
-        $summary[] = ['Generated by TraKerja - Your Job Application Tracker'];
-        $summary[] = ['Visit: https://trakerja.com for more features'];
-        
-        foreach ($summary as $line) {
-            fputcsv($output, $line);
-        }
-        
-        rewind($output);
-        $csvContent = stream_get_contents($output);
-        fclose($output);
-
-        $userName = preg_replace('/[^a-zA-Z0-9_-]/', '_', Auth::user()->name);
-        $userName = substr($userName, 0, 20);
-        $timestamp = date('Y-m-d_H-i-s');
-        $filename = "TraKerja_Export_{$userName}_{$timestamp}.csv";
-
-        $headers = [
-            'Content-Type' => 'text/csv; charset=UTF-8',
-            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
-            'Cache-Control' => 'no-cache, no-store, must-revalidate',
-            'Pragma' => 'no-cache',
-            'Expires' => '0'
-        ];
-
-        return response($csvContent, 200, $headers);
+            fclose($output);
+        }, 'TraKerja_Data_'.now()->format('Y-m-d_H-i-s').'.csv', ['Content-Type' => 'text/csv; charset=UTF-8', 'Cache-Control' => 'private, no-store']);
     }
 
     /**
@@ -273,119 +150,91 @@ class JobApplicationImportExportController extends Controller
     /**
      * Import job applications from CSV
      */
+    public function previewImport(Request $request)
+    {
+        $this->authorizeImport();
+        $parsed = $this->parseUpload($request);
+        return response()->json([
+            'valid_count' => count($parsed['rows']), 'failed_count' => count($parsed['errors']),
+            'total_count' => count($parsed['rows']) + count($parsed['errors']),
+            'rows' => array_slice($parsed['rows'], 0, 10), 'errors' => $parsed['errors'],
+            'columns' => $parsed['columns'],
+        ]);
+    }
+
     public function importFromCsv(Request $request)
     {
         $user = Auth::user();
         if (\App\Models\Setting::isMonetizationEnabled() && !$user->isPremium()) {
             return redirect()->route('payment.premium')->with('error', 'Bulk CSV import is a Premium feature.');
         }
+        $this->authorizeImport();
+        $parsed = $this->parseUpload($request);
+        $now = now();
+        \Illuminate\Support\Facades\DB::transaction(function () use ($parsed, $now) {
+            foreach (array_chunk($parsed['rows'], 500) as $chunk) {
+                $chunk = array_map(fn ($row) => $row + ['created_at' => $now, 'updated_at' => $now], $chunk);
+                JobApplication::insert($chunk);
+            }
+        });
+        $count = count($parsed['rows']);
+        $summary = ['imported_count' => $count, 'failed_count' => count($parsed['errors']), 'errors' => $parsed['errors']];
+        if (!$count) {
+            return redirect()->back()->withErrors(['csv_file' => 'No valid rows found to import.'])
+                ->with('import_summary', $summary);
+        }
+        return redirect()->back()->with('success', "Successfully imported {$count} job application(s).")
+            ->with('import_summary', $summary);
+    }
 
-        $request->validate([
-            'csv_file' => 'required|file|mimes:csv,txt|max:2048', // Max 2MB
-        ]);
+    private function authorizeImport(): void
+    {
+        abort_unless(Auth::check(), 401);
+        abort_if(Auth::user()->isAdmin(), 403, 'Admin cannot import CSV');
+        abort_if(\App\Models\Setting::isMonetizationEnabled() && !Auth::user()->isPremium(), 403, 'Bulk CSV import is a Premium feature.');
+    }
 
-        $file = $request->file('csv_file');
-        $path = $file->getRealPath();
-        
-        // Read CSV file
-        $csvData = [];
-        if (($handle = fopen($path, 'r')) !== false) {
-            // Skip BOM if present
-            $bom = fread($handle, 3);
-            if ($bom !== "\xEF\xBB\xBF") {
-                rewind($handle);
+    private function parseUpload(Request $request): array
+    {
+        $request->validate(['csv_file' => 'required|file|mimes:csv,txt|max:2048']);
+        $handle = fopen($request->file('csv_file')->getRealPath(), 'r');
+        if (!$handle) throw ValidationException::withMessages(['csv_file' => 'Failed to read CSV file.']);
+        try {
+            if (fread($handle, 3) !== "\xEF\xBB\xBF") rewind($handle);
+            $headers = fgetcsv($handle, 0, ',', '"', '');
+            if (!$headers) throw ValidationException::withMessages(['csv_file' => 'CSV file is empty.']);
+            $headers = array_map(fn ($header) => trim(str_replace('*', '', $header ?? '')), $headers);
+            $columns = $this->normalizeHeaders($headers);
+            $validation = $this->validateHeaders($columns);
+            if (!$validation['valid']) throw ValidationException::withMessages(['csv_file' => $validation['message']]);
+            if (count(array_unique($columns)) !== count($columns)) {
+                throw ValidationException::withMessages(['csv_file' => 'CSV contains duplicate columns.']);
             }
-            
-            // Read headers (first line)
-            $headers = fgetcsv($handle);
-            
-            if (!$headers) {
-                return $this->importError('CSV file is empty or invalid format.');
-            }
-            
-            // Clean headers (remove * and trim)
-            $headers = array_map(function($header) {
-                return trim(str_replace('*', '', trim($header)));
-            }, $headers);
-            
-            // Normalize header names (case insensitive, handle spaces/underscores)
-            $normalizedHeaders = $this->normalizeHeaders($headers);
-            
-            // Validate headers match template
-            $validationResult = $this->validateHeaders($normalizedHeaders);
-            if (!$validationResult['valid']) {
-                return redirect()->back()
-                    ->withErrors(['csv_file' => $validationResult['message']])
-                    ->with('download_template', true);
-            }
-            
-            // Read data rows
-            $rowNumber = 1; // Starting from 1 (header is row 0)
-            $importedCount = 0;
-            $errorRows = [];
-            $insertData = [];
-            $now = \Carbon\Carbon::now();
-            
-            while (($row = fgetcsv($handle)) !== false) {
-                $rowNumber++;
-                
-                // Skip empty rows
-                if (empty(array_filter($row))) {
+            $rows = []; $errors = []; $number = 1;
+            while (($row = fgetcsv($handle, 0, ',', '"', '')) !== false) {
+                $number++;
+                if (!array_filter($row, fn ($cell) => trim((string) $cell) !== '')) continue;
+                if (count($row) !== count($columns)) {
+                    $errors[] = ['row' => $number, 'errors' => ['Column count does not match the header.']];
                     continue;
                 }
-                
-                // Map CSV row to array using normalized headers
-                $rowData = [];
-                foreach ($normalizedHeaders as $index => $columnName) {
-                    $rowData[$columnName] = isset($row[$index]) ? trim($row[$index]) : '';
+                $data = array_combine($columns, $row);
+                if (($data['csv_encoding'] ?? '') === 'trakerja-v1') {
+                    foreach (self::ALL_COLUMNS as $column) {
+                        $value = $data[$column] ?? '';
+                        if (str_starts_with($value, "'") && (str_starts_with(substr($value, 1), "'") || preg_match('/^[\s]*[=+@-]/u', substr($value, 1)))) {
+                            $data[$column] = substr($value, 1);
+                        }
+                    }
                 }
-                
-                // Validate and import row
-                $result = $this->importRow($rowData, $rowNumber);
-                if ($result['success']) {
-                    $data = $result['data'];
-                    $data['created_at'] = $now;
-                    $data['updated_at'] = $now;
-                    $insertData[] = $data;
-                    $importedCount++;
-                } else {
-                    $errorRows[] = [
-                        'row' => $rowNumber,
-                        'errors' => $result['errors']
-                    ];
-                }
-
-                // Bulk insert in chunks of 500
-                if (count($insertData) >= 500) {
-                    JobApplication::insert($insertData);
-                    $insertData = [];
-                }
+                $result = $this->importRow($data, $number);
+                if ($result['success']) $rows[] = $result['data'];
+                else $errors[] = ['row' => $number, 'errors' => $result['errors']];
             }
-            
-            // Insert remaining rows
-            if (!empty($insertData)) {
-                JobApplication::insert($insertData);
-            }
-            
+            return ['rows' => $rows, 'errors' => $errors, 'columns' => $columns];
+        } finally {
             fclose($handle);
-            
-            if ($importedCount > 0) {
-                $message = "Successfully imported {$importedCount} job application(s).";
-                if (!empty($errorRows)) {
-                    $message .= " " . count($errorRows) . " row(s) had errors.";
-                }
-                
-                return redirect()->back()->with('success', $message);
-            } else {
-                return redirect()->back()
-                    ->withErrors(['csv_file' => 'No valid rows found to import. Please check your CSV format.'])
-                    ->with('download_template', true);
-            }
         }
-        
-        return redirect()->back()
-            ->withErrors(['csv_file' => 'Failed to read CSV file.'])
-            ->with('download_template', true);
     }
 
     /**
@@ -418,6 +267,7 @@ class JobApplicationImportExportController extends Controller
             'platform link' => 'platform_link',
             'link' => 'platform_link',
             'notes' => 'notes',
+            'csv encoding' => 'csv_encoding',
             'interview date' => 'interview_date',
             'interview_type' => 'interview_type',
             'interview type' => 'interview_type',
@@ -428,7 +278,7 @@ class JobApplicationImportExportController extends Controller
         ];
         
         foreach ($headers as $header) {
-            $normalizedKey = strtolower(trim($header));
+            $normalizedKey = strtolower(str_replace('_', ' ', trim($header)));
             // Remove special characters and normalize spaces
             $normalizedKey = preg_replace('/[^a-z0-9\s]/', '', $normalizedKey);
             $normalizedKey = preg_replace('/\s+/', ' ', trim($normalizedKey));
@@ -493,17 +343,30 @@ class JobApplicationImportExportController extends Controller
             'interview_notes' => $rowData['interview_notes'] ?? null,
         ];
         
+        $data = array_replace($data, JobApplicationStatus::normalize($data['application_status'], $data['recruitment_stage']));
+
+        $limits = Validator::make($data, [
+            'company_name' => 'string|max:255', 'position' => 'string|max:255',
+            'location' => 'string|max:255', 'platform' => 'string|max:255',
+            'platform_link' => 'nullable|url|max:255', 'interview_location' => 'nullable|string|max:255',
+            'interview_type' => 'nullable|string|max:50',
+        ]);
+        $errors = $limits->errors()->all();
+        foreach (['notes', 'interview_notes'] as $field) {
+            if (strlen($data[$field] ?? '') > 65535) $errors[] = "{$field} exceeds the database text limit.";
+        }
+
         // Validate required fields
-        if (empty($data['company_name'])) {
+        if (trim($data['company_name']) === '') {
             $errors[] = 'Company Name is required';
         }
-        if (empty($data['position'])) {
+        if (trim($data['position']) === '') {
             $errors[] = 'Position is required';
         }
-        if (empty($data['location'])) {
+        if (trim($data['location']) === '') {
             $errors[] = 'Location is required';
         }
-        if (empty($data['platform'])) {
+        if (trim($data['platform']) === '') {
             $errors[] = 'Platform is required';
         }
         if (empty($data['application_status'])) {
@@ -511,9 +374,6 @@ class JobApplicationImportExportController extends Controller
         }
         if (empty($data['recruitment_stage'])) {
             $errors[] = 'Recruitment Stage is required';
-        }
-        if (empty($data['career_level'])) {
-            $errors[] = 'Career Level is required';
         }
         if (empty($data['application_date'])) {
             $errors[] = 'Application Date is required';
@@ -567,12 +427,12 @@ class JobApplicationImportExportController extends Controller
                 'recruitment_stage' => $data['recruitment_stage'],
                 'career_level' => $data['career_level'],
                 'application_date' => $applicationDate,
-                'platform_link' => $data['platform_link'] ?: null,
-                'notes' => $data['notes'] ?: null,
+                'platform_link' => $data['platform_link'] ?? '',
+                'notes' => $data['notes'] === '' ? null : $data['notes'],
                 'interview_date' => $interviewDate,
-                'interview_type' => $data['interview_type'] ?: null,
-                'interview_location' => $data['interview_location'] ?: null,
-                'interview_notes' => $data['interview_notes'] ?: null,
+                'interview_type' => $data['interview_type'] === '' ? null : $data['interview_type'],
+                'interview_location' => $data['interview_location'] === '' ? null : $data['interview_location'],
+                'interview_notes' => $data['interview_notes'] === '' ? null : $data['interview_notes'],
                 'status' => $data['application_status'], // For backward compatibility
             ]
         ];
@@ -597,8 +457,8 @@ class JobApplicationImportExportController extends Controller
         
         foreach ($formats as $format) {
             try {
-                $date = \Carbon\Carbon::createFromFormat($format, trim($dateString));
-                if ($date) {
+                $date = \Carbon\Carbon::createFromFormat('!'.$format, trim($dateString));
+                if ($date && $date->format($format) === trim($dateString)) {
                     return $date;
                 }
             } catch (\Exception $e) {
@@ -630,8 +490,8 @@ class JobApplicationImportExportController extends Controller
         
         foreach ($formats as $format) {
             try {
-                $date = \Carbon\Carbon::createFromFormat($format, trim($dateTimeString));
-                if ($date) {
+                $date = \Carbon\Carbon::createFromFormat('!'.$format, trim($dateTimeString));
+                if ($date && $date->format($format) === trim($dateTimeString)) {
                     return $date;
                 }
             } catch (\Exception $e) {
@@ -677,4 +537,3 @@ class JobApplicationImportExportController extends Controller
             ->with('download_template', true);
     }
 }
-

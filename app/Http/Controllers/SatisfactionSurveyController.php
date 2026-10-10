@@ -11,6 +11,13 @@ use Illuminate\Http\RedirectResponse;
 
 class SatisfactionSurveyController extends Controller
 {
+    public function dismiss(Request $request): RedirectResponse
+    {
+        $request->session()->put('survey_deferred_until.'.$request->user()->id, now()->addDays(7)->timestamp);
+
+        return redirect()->route('tracker');
+    }
+
     /**
      * Show the survey form to the user.
      */
@@ -70,18 +77,18 @@ class SatisfactionSurveyController extends Controller
             'q12_cv_templates' => 'required|integer|min:1|max:5',
             'feedback' => 'nullable|string|max:1000',
         ], [
-            'q1_overall.required' => 'Mohon isi penilaian kepuasan keseluruhan.',
-            'q2_navigation.required' => 'Mohon isi penilaian kemudahan navigasi.',
-            'q3_speed.required' => 'Mohon isi penilaian performa & kecepatan.',
-            'q4_cv_builder.required' => 'Mohon isi penilaian kegunaan Resume Builder.',
-            'q5_ai_analyzer.required' => 'Mohon isi penilaian kegunaan AI Analyzer.',
-            'q6_job_tracker.required' => 'Mohon isi penilaian kegunaan Job Tracker.',
-            'q7_cover_letter.required' => 'Mohon isi penilaian kegunaan Cover Letter.',
-            'q8_interviews.required' => 'Mohon isi penilaian fitur Interviews Tracker.',
-            'q9_premium.required' => 'Mohon isi penilaian nilai ekonomis premium.',
-            'q10_recommend.required' => 'Mohon isi tingkat rekomendasi layanan.',
-            'q11_design.required' => 'Mohon isi penilaian estetika desain visual.',
-            'q12_cv_templates.required' => 'Mohon isi penilaian desain & kerapihan template CV.',
+            'q1_overall.required' => 'Choose a rating for overall satisfaction.',
+            'q2_navigation.required' => 'Choose a rating for navigation.',
+            'q3_speed.required' => 'Choose a rating for speed and performance.',
+            'q4_cv_builder.required' => 'Choose a rating for CV Builder.',
+            'q5_ai_analyzer.required' => 'Choose a rating for CV analysis.',
+            'q6_job_tracker.required' => 'Choose a rating for application tracker.',
+            'q7_cover_letter.required' => 'Choose a rating for cover letters.',
+            'q8_interviews.required' => 'Choose a rating for interview planning.',
+            'q9_premium.required' => 'Choose a rating for Premium value.',
+            'q10_recommend.required' => 'Choose a rating for recommendation likelihood.',
+            'q11_design.required' => 'Choose a rating for visual design.',
+            'q12_cv_templates.required' => 'Choose a rating for CV templates and exports.',
         ]);
 
         SatisfactionSurvey::create([
@@ -98,9 +105,9 @@ class SatisfactionSurveyController extends Controller
             'q10_recommend' => $validated['q10_recommend'],
             'q11_design' => $validated['q11_design'],
             'q12_cv_templates' => $validated['q12_cv_templates'],
-            'feedback' => $validated['feedback'],
+            'feedback' => $validated['feedback'] ?? null,
         ]);
 
-        return redirect()->route('survey.show')->with('success', 'Terima kasih atas tanggapan Anda! Masukan Anda sangat berarti bagi pengembangan TraKerja.');
+        return redirect()->route('survey.show')->with('success', 'Your feedback has been saved. Thank you for sharing.');
     }
 }

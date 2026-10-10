@@ -26,7 +26,7 @@ class UserManagement extends Component
     public $filterPremium = 'all'; // all, premium, free
     public $filterRole = 'all'; // all, admin, user
     public $filterAiAnalyzer = 'all'; // all, used, not_used
-    public $perPage = 10; // supports 10, 20, 50, 100, 'all'
+    public $perPage = 10;
     
     public $showEditModal = false;
     public $showCreateAdminModal = false;
@@ -89,49 +89,33 @@ class UserManagement extends Component
     {
         $this->resetPage();
     }
-    
-    public function getUsersQuery()
+
+    public function resetFilters(): void
     {
-        // Only show regular users (exclude admins)
-        $query = User::where('role', '!=', 'admin');
-        
-        // Search by name or email
-        if ($this->search) {
-            $query->where(function($q) {
-                $q->where('name', 'like', '%' . $this->search . '%')
-                  ->orWhere('email', 'like', '%' . $this->search . '%');
-            });
-        }
-        
-        // Filter by premium status
-        if ($this->filterPremium === 'premium') {
-            $query->where('is_premium', true);
-        } elseif ($this->filterPremium === 'free') {
-            $query->where('is_premium', false);
-        }
-        
-        // Filter by AI Analyzer usage
-        if ($this->filterAiAnalyzer === 'used') {
-            $query->where('has_used_ai_analyzer_trial', true);
-        } elseif ($this->filterAiAnalyzer === 'not_used') {
-            $query->where(function($q) {
-                $q->where('has_used_ai_analyzer_trial', false)
-                  ->orWhereNull('has_used_ai_analyzer_trial');
-            });
-        }
-        
-        return $query;
+        $this->reset(['search', 'filterPremium', 'filterAiAnalyzer']);
+        $this->resetPage();
     }
     
+    private function exportFilters(): array
+    {
+        return ['search' => $this->search, 'premium' => $this->filterPremium, 'ai_trial' => $this->filterAiAnalyzer];
+    }
+
+    public function getUsersQuery()
+    {
+        return \App\Services\UserExportQuery::build($this->exportFilters());
+    }
+
     public function editUser($userId)
     {
+        $this->resetValidation();
         $user = User::findOrFail($userId);
         
         $this->editingUserId = $user->id;
         $this->editName = $user->name;
         $this->editEmail = $user->email;
         $this->editIsPremium = $user->is_premium;
-        $this->editIsAdmin = $user->is_admin;
+        $this->editIsAdmin = $user->isAdmin();
         
         $this->editAiCredits = $user->ai_credits ?? 0;
         $this->editClCredits = $user->cl_credits ?? 0;
@@ -144,11 +128,20 @@ class UserManagement extends Component
     {
         $this->validate([
             'editName' => 'required|string|max:255',
-            'editEmail' => 'required|email|max:255',
+            'editEmail' => ['required', 'email', 'max:255', \Illuminate\Validation\Rule::unique('users', 'email')->ignore($this->editingUserId)],
         ]);
         
         $user = User::findOrFail($this->editingUserId);
-        
+        if ((bool) $this->editIsPremium !== $user->is_premium) {
+            if ($this->editIsPremium) {
+                $user->premium_purchased_at = now();
+                $user->premium_until = now()->addDays((int) config('pakasir.premium_duration_days', 365));
+            } else {
+                $user->premium_until = null;
+            }
+            $user->payment_status = $this->editIsPremium ? User::PAYMENT_STATUS_PAID : User::PAYMENT_STATUS_FREE;
+        }
+
         $user->update([
             'name' => $this->editName,
             'email' => $this->editEmail,
@@ -172,6 +165,9 @@ class UserManagement extends Component
         $user->payment_status = $user->is_premium ? 'paid' : 'free';
         if ($user->is_premium) {
             $user->premium_purchased_at = now();
+            $user->premium_until = now()->addDays((int) config('pakasir.premium_duration_days', 365));
+        } else {
+            $user->premium_until = null;
         }
         $user->save();
         
@@ -195,6 +191,7 @@ class UserManagement extends Component
 
     public function openPremiumConfirmModal($userId)
     {
+        $this->showEditModal = false;
         $user = User::findOrFail($userId);
         $this->confirmTargetUserId = $user->id;
         $this->confirmTargetUserName = $user->name;
@@ -221,6 +218,9 @@ class UserManagement extends Component
         
         if ($user->is_premium) {
             $user->premium_purchased_at = now();
+            $user->premium_until = now()->addDays((int) config('pakasir.premium_duration_days', 365));
+        } else {
+            $user->premium_until = null;
         }
         
         $user->save();
@@ -361,6 +361,7 @@ class UserManagement extends Component
     
     public function confirmDeleteUserModal($userId)
     {
+        $this->showEditModal = false;
         $user = User::findOrFail($userId);
         $this->deleteTargetUserId = $user->id;
         $this->deleteTargetUserName = $user->name;
@@ -387,6 +388,7 @@ class UserManagement extends Component
     
     public function openCreateAdminModal()
     {
+        $this->resetValidation();
         $this->showCreateAdminModal = true;
     }
     
@@ -401,7 +403,8 @@ class UserManagement extends Component
         $this->validate([
             'newAdminName' => 'required|string|max:255',
             'newAdminEmail' => 'required|email|max:255|unique:users,email',
-            'newAdminPassword' => 'required|min:8|confirmed',
+            'newAdminPassword' => 'required|min:8|same:newAdminPasswordConfirmation',
+            'newAdminPasswordConfirmation' => 'required',
         ], [
             'newAdminName.required' => 'Nama harus diisi',
             'newAdminEmail.required' => 'Email harus diisi',
@@ -409,10 +412,10 @@ class UserManagement extends Component
             'newAdminEmail.unique' => 'Email sudah terdaftar',
             'newAdminPassword.required' => 'Password harus diisi',
             'newAdminPassword.min' => 'Password minimal 8 karakter',
-            'newAdminPassword.confirmed' => 'Konfirmasi password tidak cocok',
+            'newAdminPassword.same' => 'Konfirmasi password tidak cocok',
         ]);
         
-        User::create([
+        $admin = User::create([
             'name' => $this->newAdminName,
             'email' => $this->newAdminEmail,
             'password' => bcrypt($this->newAdminPassword),
@@ -423,6 +426,9 @@ class UserManagement extends Component
             'email_verified_at' => now(),
         ]);
         
+        $admin->premium_until = now()->addDays((int) config('pakasir.premium_duration_days', 365));
+        $admin->save();
+
         $this->closeCreateAdminModal();
         
         $this->dispatch('showNotification', [
@@ -434,6 +440,8 @@ class UserManagement extends Component
     
     public function openSendEmailModal($userId)
     {
+        $this->showEditModal = false;
+        $this->resetValidation();
         $user = User::findOrFail($userId);
         
         $this->emailTargetUserId = $user->id;
@@ -453,7 +461,7 @@ class UserManagement extends Component
     public function sendEmail()
     {
         $this->validate([
-            'emailType' => 'required|in:welcome,verification,verification_reminder,ai_analyzer,job_reminder,monthly_motivation,premium_granted,product_update,hiring_season,re_engagement,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam',
+            'emailType' => 'required|in:welcome,verification,verification_reminder,ai_analyzer,job_reminder,monthly_motivation,premium_granted,product_update,new_vibe,hiring_season,re_engagement,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam',
         ]);
         
         $user = User::findOrFail($this->emailTargetUserId);
@@ -605,10 +613,7 @@ class UserManagement extends Component
     
     public function render()
     {
-        $effectivePerPage = ($this->perPage === 'all') ? 1000000 : (int) $this->perPage;
-        if ($effectivePerPage <= 0) {
-            $effectivePerPage = 10;
-        }
+        $effectivePerPage = $this->perPage = \App\Support\PageSize::resolve($this->perPage, [10, 20, 50, 100], 10);
 
         $users = $this->getUsersQuery()
             ->latest()
@@ -637,52 +642,20 @@ class UserManagement extends Component
 
     public function exportUsers()
     {
-        $users = $this->getUsersQuery()->latest()->get();
-
-        $filename = 'users_export_' . date('Y-m-d_H-i-s') . '.csv';
-
-        $headers = [
-            "Content-type"        => "text/csv",
-            "Content-Disposition" => "attachment; filename=$filename",
-            "Pragma"              => "no-cache",
-            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-            "Expires"             => "0"
-        ];
-
-        $columns = [
-            'ID', 
-            'Nama', 
-            'Email', 
-            'Status Premium', 
-            'AI Trial', 
-            'Role', 
-            'Tanggal Daftar', 
-            'Terverifikasi'
-        ];
-
-        $callback = function() use($users, $columns) {
-            $file = fopen('php://output', 'w');
-            // Add BOM for proper UTF-8 Excel support
-            fputs($file, "\xEF\xBB\xBF");
-            fputcsv($file, $columns);
-
-            foreach ($users as $user) {
-                $row = [
-                    $user->id,
-                    $user->name,
-                    $user->email,
-                    $user->is_premium ? 'Premium' : 'Free',
-                    $user->has_used_ai_analyzer_trial ? 'Sudah' : 'Belum',
-                    $user->is_admin ? 'Admin' : 'User',
-                    $user->created_at ? $user->created_at->format('d M Y H:i') : '-',
-                    $user->email_verified_at ? 'Ya' : 'Tidak'
-                ];
-                fputcsv($file, $row);
+        abort_unless(Auth::user()?->isAdmin(), 403);
+        $query = $this->getUsersQuery();
+        if ($query->count() > \App\Services\DataExportService::QUEUE_THRESHOLD) {
+            $export = app(\App\Services\DataExportService::class)->queue(Auth::user(), 'users', $this->exportFilters());
+            return $this->redirect(route('data-exports.show', $export->id));
+        }
+        return response()->streamDownload(function () use ($query) {
+            $file = fopen('php://output', 'wb');
+            fwrite($file, "\xEF\xBB\xBF");
+            fputcsv($file, \App\Services\DataExportService::USER_HEADERS, ',', '"', '');
+            foreach ($query->lazyById(100) as $user) {
+                fputcsv($file, \App\Services\DataExportService::userRow($user), ',', '"', '');
             }
-
             fclose($file);
-        };
-
-        return response()->streamDownload($callback, $filename, $headers);
+        }, 'users_export_'.now()->format('Y-m-d_H-i-s').'.csv', ['Content-Type' => 'text/csv; charset=UTF-8', 'Cache-Control' => 'private, no-store']);
     }
 }

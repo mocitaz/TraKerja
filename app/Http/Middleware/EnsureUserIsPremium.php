@@ -22,16 +22,7 @@ class EnsureUserIsPremium
 
         $user = Auth::user();
 
-        // Check if user is premium
-        if (!$user->is_premium || $user->payment_status !== 'paid') {
-            // Check if premium_until has expired (if set)
-            if ($user->premium_until && $user->premium_until->isPast()) {
-                $user->update([
-                    'is_premium' => false,
-                    'payment_status' => 'expired',
-                ]);
-            }
-
+        if (!$user->isPremium()) {
             // Redirect to payment page with message
             return redirect()->route('payment.index')
                 ->with('error', 'Fitur ini hanya tersedia untuk member Premium. Silakan upgrade akun Anda terlebih dahulu.');

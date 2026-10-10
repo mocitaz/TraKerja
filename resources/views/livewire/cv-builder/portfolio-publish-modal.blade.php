@@ -1,119 +1,30 @@
-<div x-data="{ show: @entangle('showModal') }">
+<div x-data="{}">
     <template x-teleport="body">
-        <div x-show="show"
-             x-cloak
-             class="fixed inset-0 z-[9999] bg-zinc-950/40 backdrop-blur-xs overflow-y-auto hidden"
-             :class="{ 'hidden': !show, 'flex': show }">
-            <div class="flex min-h-full items-center justify-center p-4 w-full" @click.self="show = false">
-                <div class="relative bg-white rounded-lg shadow-xl max-w-md w-full border border-zinc-200 overflow-hidden text-left" @click.stop>
-                    
-                    <!-- Modal Header: Clean White -->
-                    <div class="bg-white px-4 py-3 text-zinc-900 flex justify-between items-center border-b border-zinc-150/60 shrink-0">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/60 flex items-center justify-center shadow-3xs">
-                                <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-4 h-4 object-contain" onerror="this.src='{{ asset('favicon.png') }}'">
-                            </div>
-                            <div>
-                                <div class="flex items-center gap-1.5">
-                                    <h3 class="text-xs font-bold text-zinc-800 tracking-tight">TraKerja Sites</h3>
-                                    <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[8.5px] font-bold uppercase tracking-wider rounded border border-primary-100/60 leading-none">Portfolio</span>
-                                </div>
-                                <p class="text-zinc-400 text-[9px] font-medium mt-0.5">Career Growth Tracking</p>
-                            </div>
-                        </div>
-                        <button type="button" @click="show = false" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 transition-all text-zinc-400 hover:text-zinc-800 focus:outline-none">
-                            <i class="ph ph-x text-sm"></i>
-                        </button>
+        <div class="cv-modal-overlay" role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.showModal" aria-labelledby="site-settings-title" x-show="$wire.showModal" x-cloak @click.self="$wire.closeModal()">
+            <div class="site-settings-dialog">
+                <header class="cv-modal-header"><div><h2 id="site-settings-title">Your portfolio site</h2><p>A place for your work, experience, and story.</p></div><button type="button" class="cv-close" wire:click="closeModal" aria-label="Close portfolio settings"><i class="ph ph-x" aria-hidden="true"></i></button></header>
+                <form wire:submit="publish">
+                    <div class="site-settings-body">
+                        <div class="site-visibility"><div><span class="site-status-dot {{ $isPublished ? 'is-live' : '' }}"></span><strong>{{ $isPublished ? 'Published' : 'Private draft' }}</strong></div>@if($liveUrl)<a href="{{ $liveUrl }}" target="_blank" rel="noopener noreferrer">Open live site <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>@endif<p>{{ $isPublished ? 'Your saved CV updates appear on your live site automatically.' : 'Your site stays private until you publish it.' }}</p></div>
+                        <div class="site-address-field"><label for="portfolio-address">Your site address</label><div><span aria-hidden="true">@</span><input id="portfolio-address" type="text" wire:model.live.debounce.400ms="slug" maxlength="50" required autocomplete="off" spellcheck="false" placeholder="your-name" aria-describedby="portfolio-address-help{{ $errors->has('slug') ? ' portfolio-slug-error' : '' }}"></div><p id="portfolio-address-help">{{ $proposedUrl }}</p>@error('slug')<p id="portfolio-slug-error" class="cv-field-error" role="alert">{{ $message }}</p>@enderror</div>
+                        <fieldset class="site-theme-options"><legend>Choose your look</legend><p>Preview the theme with your saved content before publishing.</p><div>
+                            @foreach(['slate' => 'Cloud', 'dark' => 'Midnight', 'emerald' => 'Sage', 'violet' => 'Lilac'] as $key => $label)
+                                <label @class(['site-theme-option', 'is-selected' => $theme === $key])><input type="radio" name="portfolio-theme" wire:model.live="theme" value="{{ $key }}"><span class="site-theme-swatch site-theme-{{ $key }}" aria-hidden="true"><span></span><span></span><span></span></span><strong>{{ $label }}</strong></label>
+                            @endforeach
+                        </div>@error('theme')<p class="cv-field-error" role="alert">{{ $message }}</p>@enderror</fieldset>
+                        <a href="{{ route('portfolio.preview', ['theme' => in_array($theme, ['slate','dark','emerald','violet']) ? $theme : 'slate']) }}" target="_blank" rel="noopener noreferrer" class="site-preview-action">Preview your site <i class="ph ph-arrow-up-right" aria-hidden="true"></i><span>Private preview · Opens a new tab</span></a>
+                        @if(!$hasContent)<div class="site-content-guidance"><strong>Add a little about yourself first.</strong><p>A summary or one CV section is enough to start. Empty sections stay hidden.</p><a href="{{ route('cv.builder') }}" wire:navigate>Open CV Builder</a></div>@endif
+                        <div class="site-public-note"><strong>What becomes public?</strong><p>Your name, avatar, email ({{ $user->email }}), summary, links, and saved CV sections. Your phone number and tracker are not displayed.</p><p>Publishing shares the latest saved content. Changing your address makes the previous address unavailable.</p></div>
+                        @if($user->portfolio_custom_domain)<p class="site-domain-note">Saved domain: {{ $user->portfolio_custom_domain }}. Domain connection is not verified in this app; use your TraKerja address.</p>@endif
+                        @if(!$canPublish)<p class="cv-field-error">Publishing requires Premium. Private preview is available.</p><a href="{{ route('membership.index') }}" class="site-membership-link" wire:navigate>View membership</a>@endif
+                        @error('content')<p class="cv-field-error" role="alert">{{ $message }}</p>@enderror
+                        @error('access')<p class="cv-field-error" role="alert">{{ $message }}</p>@enderror
                     </div>
-
-                    <div class="p-4 sm:p-5">
-                        <div class="space-y-4">
-                            {{-- Input: URL Slug --}}
-                            <div>
-                                <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">URL Slug</label>
-                                <div class="flex items-center bg-zinc-50/50 border border-zinc-200 rounded-md overflow-hidden transition-colors focus-within:bg-white focus-within:ring-1 focus-within:ring-primary-500/20 focus-within:border-primary-500">
-                                    <span class="bg-zinc-100 border-r border-zinc-200 text-zinc-400 font-semibold text-xs px-2.5 py-1.5 select-none shrink-0">trakerja.com/@</span>
-                                    <input type="text" 
-                                           wire:model.live="slug"
-                                           class="w-full px-3 py-1.5 bg-transparent border-none text-xs font-semibold text-zinc-700 focus:ring-0 focus:outline-none placeholder-zinc-300"
-                                           placeholder="username">
-                                </div>
-                                @error('slug') <p class="text-rose-500 text-[9px] mt-1">{{ $message }}</p> @enderror
-                            </div>
-
-                            {{-- Status Card: Tidy --}}
-                            <div class="p-4 bg-zinc-50/50 border border-zinc-200 rounded-lg">
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="flex items-center gap-1.5">
-                                        <span class="w-1.5 h-1.5 rounded-full {{ $isPublished ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-300' }}"></span>
-                                        <span class="text-[9px] font-bold {{ $isPublished ? 'text-emerald-600' : 'text-zinc-400' }} uppercase tracking-wider leading-none">
-                                            {{ $isPublished ? 'Site is Live' : 'Not Published' }}
-                                        </span>
-                                    </div>
-                                    @if($isPublished)
-                                        <a href="{{ $portfolioUrl }}" target="_blank" class="text-[9px] font-bold text-primary-650 uppercase tracking-wider hover:underline flex items-center gap-1 leading-none">
-                                            <span>Preview Site</span>
-                                            <i class="ph ph-arrow-square-out text-xs"></i>
-                                        </a>
-                                    @endif
-                                </div>
-                                <p class="text-xs font-semibold text-zinc-550 bg-white px-3 py-1.5 rounded-md border border-zinc-200 truncate select-all cursor-pointer leading-none">{{ $portfolioUrl }}</p>
-                            </div>
-
-                            {{-- Theme Selector --}}
-                            <div>
-                                <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Portfolio Theme</label>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border rounded-md cursor-pointer transition-colors {{ $theme === 'slate' ? 'border-primary-400 bg-primary-50/30' : 'border-zinc-200 hover:bg-zinc-100/60' }}">
-                                        <input type="radio" wire:model.live="theme" value="slate" class="text-primary-600 focus:ring-0">
-                                        <span class="text-[10px] font-bold text-zinc-700">Minimal Slate</span>
-                                    </label>
-                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border rounded-md cursor-pointer transition-colors {{ $theme === 'dark' ? 'border-primary-400 bg-primary-50/30' : 'border-zinc-200 hover:bg-zinc-100/60' }}">
-                                        <input type="radio" wire:model.live="theme" value="dark" class="text-primary-600 focus:ring-0">
-                                        <span class="text-[10px] font-bold text-zinc-700">Obsidian Dark</span>
-                                    </label>
-                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border rounded-md cursor-pointer transition-colors {{ $theme === 'emerald' ? 'border-primary-400 bg-primary-50/30' : 'border-zinc-200 hover:bg-zinc-100/60' }}">
-                                        <input type="radio" wire:model.live="theme" value="emerald" class="text-primary-600 focus:ring-0">
-                                        <span class="text-[10px] font-bold text-zinc-700">Emerald Luxe</span>
-                                    </label>
-                                    <label class="flex items-center gap-2 p-2 bg-zinc-50 border rounded-md cursor-pointer transition-colors {{ $theme === 'violet' ? 'border-primary-400 bg-primary-50/30' : 'border-zinc-200 hover:bg-zinc-100/60' }}">
-                                        <input type="radio" wire:model.live="theme" value="violet" class="text-primary-600 focus:ring-0">
-                                        <span class="text-[10px] font-bold text-zinc-700">Royal Violet</span>
-                                    </label>
-                                </div>
-                                @error('theme') <p class="text-rose-500 text-[9px] mt-1">{{ $message }}</p> @enderror
-                            </div>
-
-                            {{-- Custom Domain --}}
-                            <div>
-                                <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Custom Domain (CNAME)</label>
-                                <input type="text"
-                                       wire:model.blur="customDomain"
-                                       placeholder="e.g. karir.domainanda.com"
-                                       class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 focus:bg-white focus:border-primary-500 outline-none @error('customDomain') border-rose-400 @enderror">
-                                <p class="text-[8.5px] text-zinc-400 mt-1">Point A/CNAME record to <span class="font-bold text-zinc-600">cname.trakerja.com</span></p>
-                                @error('customDomain') <p class="text-rose-500 text-[9px] mt-1">{{ $message }}</p> @enderror
-                            </div>
-                        </div>
-
-                        {{-- Actions: Integrated --}}
-                        <div class="mt-5 flex gap-2.5 pt-4 border-t border-zinc-150/60">
-                            @if($isPublished)
-                                <button type="button" wire:click="unpublish" class="px-3.5 h-8 bg-white text-rose-600 border border-rose-250 rounded-md text-xs font-bold hover:bg-rose-50 transition-all active:scale-97 focus:outline-none">
-                                    Unpublish
-                                </button>
-                                <button type="button" wire:click="publish" class="flex-1 h-8 bg-primary-50 text-zinc-800 border border-primary-200/60 rounded-md text-xs font-bold hover:bg-primary-100 transition-all shadow-3xs flex items-center justify-center gap-1.5 active:scale-97 focus:outline-none">
-                                    Update URL
-                                </button>
-                            @else
-                                <button type="button" wire:click="publish" class="w-full h-8 bg-primary-50 text-zinc-800 border border-primary-200/60 rounded-md text-xs font-bold hover:bg-primary-100 transition-all shadow-3xs flex items-center justify-center gap-2 active:scale-97 focus:outline-none">
-                                    <i class="ph-bold ph-rocket-launch text-sm"></i>
-                                    <span>Publish Portfolio</span>
-                                </button>
-                            @endif
-                        </div>
-                    </div>
-                </div>
+                    <footer class="site-settings-footer">
+                        @if($isPublished)<button type="button" class="site-unpublish" wire:click="unpublish" wire:loading.attr="disabled" wire:target="publish,unpublish">Unpublish</button>@else<button type="button" class="cv-button cv-button-secondary" wire:click="closeModal">Cancel</button>@endif
+                        <button type="submit" class="cv-button cv-button-primary" wire:loading.attr="disabled" wire:target="publish,unpublish" @disabled(!$hasContent || !$canPublish)><span wire:loading.remove wire:target="publish">{{ $isPublished ? 'Save site settings' : 'Publish site' }}</span><span wire:loading wire:target="publish">Saving...</span></button>
+                    </footer>
+                </form>
             </div>
         </div>
     </template>

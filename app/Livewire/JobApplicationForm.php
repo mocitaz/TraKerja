@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\JobApplication;
+use App\Support\JobApplicationStatus;
 use Livewire\Component;
 
 class JobApplicationForm extends Component
@@ -40,24 +41,9 @@ class JobApplicationForm extends Component
     public $interview_location = '';
     public $interview_notes = '';
 
-    public $applicationStatusOptions = [
-        'On Process',
-        'Declined',
-        'Accepted'
-    ];
+    public $applicationStatusOptions = JobApplicationStatus::OPTIONS;
 
-    public $recruitmentStageOptions = [
-        'Applied',
-        'Follow Up',
-        'Assessment Test',
-        'Psychotest',
-        'HR - Interview',
-        'User - Interview',
-        'LGD',
-        'Presentation Round',
-        'Offering',
-        'Not Processed'
-    ];
+    public $recruitmentStageOptions = JobApplicationStatus::STAGES;
 
     public $careerLevelOptions = [
         'Intern',
@@ -67,39 +53,7 @@ class JobApplicationForm extends Component
         'Freelance'
     ];
 
-    public $platformOptions = [
-        '9cv9',
-        'Cake: Cari Lowongan',
-        'Dealls',
-        'Disnakerja.com',
-        'Email',
-        'Fiverr',
-        'Freelancer',
-        'Glassdoor',
-        'Glints',
-        'Google Forms',
-        'Indeed',
-        'JobStreet',
-        'Jobseeker App',
-        'JobsDB',
-        'Jora',
-        'Kalibrr',
-        'Karir.com',
-        'Karirhub (SIAPkerja)',
-        'KitaLulus',
-        'LinkedIn',
-        'Loker.id',
-        'Microsoft Forms',
-        'NusaCrowd',
-        'Pintarnya.com',
-        'SkillAcademy',
-        'SkillTrade',
-        'Talentics',
-        'Tech in Asia',
-        'Urbanhire',
-        'Website Company',
-        'Other'
-    ];
+    public $platformOptions = \App\Support\PlatformCatalog::OPTIONS;
 
     public $provinces = [
         'Aceh' => [
@@ -1089,7 +1043,7 @@ class JobApplicationForm extends Component
         'platform' => 'required|string|max:255',
         'platformOther' => 'required_if:platform,Other|string|max:255',
         // Remove old status from validation; application_status replaces it
-        'application_status' => 'required|string|in:Applied,Pending,On Process,Interview,Offering,Accepted,Declined,Rejected',
+        'application_status' => JobApplicationStatus::VALIDATION_RULE,
         'recruitment_stage' => 'required|string|in:Applied,Follow Up,Assessment Test,Psychotest,HR - Interview,User - Interview,LGD,Presentation Round,Offering,Not Processed',
         'career_level' => 'nullable|string|in:Intern,Full Time,Contract,MT,Freelance',
         'platform_link' => 'nullable|url',
@@ -1200,6 +1154,17 @@ class JobApplicationForm extends Component
             'edit-job' => 'editJob',
             'editJob' => 'editJob'
         ];
+    }
+
+    public function selectPlatform(string $name): void
+    {
+        if (in_array($name, \App\Support\PlatformCatalog::OPTIONS, true)) {
+            $this->platform = $name;
+            if ($name !== 'Other') $this->platformOther = '';
+        } else {
+            $this->platform = 'Other';
+            $this->platformOther = $name;
+        }
     }
 
     public function mount($jobApplication = null)
@@ -1346,6 +1311,9 @@ class JobApplicationForm extends Component
         }
         
         try {
+            $normalized = JobApplicationStatus::normalize($this->application_status, $this->recruitment_stage);
+            $this->application_status = $normalized['application_status'];
+            $this->recruitment_stage = $normalized['recruitment_stage'];
             $this->validate();
         } catch (\Illuminate\Validation\ValidationException $e) {
             $this->dispatch('showNotification', 
@@ -1382,17 +1350,7 @@ class JobApplicationForm extends Component
             if ($this->isEditing) {
                 $originalInterviewDate = $this->jobApplication->interview_date;
                 $this->jobApplication->update($data);
-                session()->flash('message', 'Job application updated successfully!');
-                
-                // Send notification for job update
-                $this->dispatch('showNotification', 
-                    type: 'success',
-                    title: $this->application_status === 'Accepted' ? 'Congratulations' : 'Job Application Updated',
-                    message: $this->application_status === 'Accepted' 
-                        ? "Incredible! Your application for {$this->company_name} is now Accepted" 
-                        : "Successfully updated application for {$this->company_name}",
-                    duration: $this->application_status === 'Accepted' ? 6000 : 3000
-                );
+
                 
                 // Dispatch interview-updated event for calendar refresh
                 if (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && $this->interview_date) {
@@ -1422,17 +1380,7 @@ class JobApplicationForm extends Component
                 }
             } else {
                 $newJob = JobApplication::create($data);
-                session()->flash('message', 'Job application created successfully!');
-                
-                // Send notification for new job
-                $this->dispatch('showNotification', 
-                    type: $this->application_status === 'Accepted' ? 'success' : 'success',
-                    title: $this->application_status === 'Accepted' ? 'Congratulations' : 'Job Application Added',
-                    message: $this->application_status === 'Accepted' 
-                        ? "Amazing! You've just added an Accepted application for {$this->company_name}" 
-                        : "Successfully added application for {$this->company_name}",
-                    duration: $this->application_status === 'Accepted' ? 6000 : 3000
-                );
+
                 
                 // Dispatch interview-updated event for calendar refresh
                 if (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && $this->interview_date) {
@@ -1460,9 +1408,12 @@ class JobApplicationForm extends Component
         // Dispatch global events for auto-refresh
         $this->dispatch('job-saved');
         
-        // Reset form and close modal
-        $this->resetForm();
-        $this->dispatch('close-modal');
+        $this->dispatch('application-saved',
+            type: 'success',
+            title: $this->isEditing ? 'Application updated' : 'Application added',
+            message: $this->position.' at '.$this->company_name,
+            duration: 3500
+        );
     }
 
     public function updatedSelectedProvince()
@@ -1745,8 +1696,8 @@ class JobApplicationForm extends Component
         $this->resetForm();
         
         if ($defaultStage) {
-            $this->recruitment_stage = $defaultStage;
-            if (in_array($defaultStage, ['Offering', 'Accepted', 'Rejected'])) {
+            $this->recruitment_stage = in_array($defaultStage, JobApplicationStatus::STAGES, true) ? $defaultStage : 'Applied';
+            if (in_array($defaultStage, ['Accepted', 'Rejected'])) {
                 $this->application_status = $defaultStage;
             } else {
                 $this->application_status = 'On Process';

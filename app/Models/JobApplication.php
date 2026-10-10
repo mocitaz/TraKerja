@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Mail\InterviewReminderMail;
+use App\Support\JobApplicationStatus;
 
 class JobApplication extends Model
 {
@@ -37,6 +38,18 @@ class JobApplication extends Model
     {
         parent::boot();
         
+        static::saving(function ($jobApplication) {
+            $normalized = JobApplicationStatus::normalize(
+                $jobApplication->application_status ?? 'On Process',
+                $jobApplication->recruitment_stage ?? 'Applied'
+            );
+            if (!in_array($normalized['application_status'], JobApplicationStatus::OPTIONS, true)) {
+                throw new \InvalidArgumentException('Invalid application status');
+            }
+            $jobApplication->fill($normalized);
+            $jobApplication->status = $normalized['application_status'];
+        });
+
         static::creating(function ($jobApplication) {
             // Ensure location is not empty
             if (empty($jobApplication->location)) {
@@ -55,7 +68,7 @@ class JobApplication extends Model
             $originalStage = $jobApplication->getOriginal('recruitment_stage');
             $wasArchived = $jobApplication->getOriginal('is_archived') ?? false;
             
-            $shouldBeArchived = in_array($jobApplication->application_status, ['Declined', 'Rejected']) 
+            $shouldBeArchived = in_array($jobApplication->application_status, ['Rejected'])
                 || $jobApplication->recruitment_stage === 'Not Processed';
             
             if (!$shouldBeArchived && $wasArchived) {
@@ -82,7 +95,7 @@ class JobApplication extends Model
         return self::where('user_id', $userId)
             ->where('is_archived', false)
             ->where(function ($query) {
-                $query->whereIn('application_status', ['Declined', 'Rejected'])
+                $query->whereIn('application_status', ['Rejected'])
                       ->orWhere('recruitment_stage', 'Not Processed');
             })
             ->where('updated_at', '<=', now()->subDays(14))
@@ -152,12 +165,13 @@ class JobApplication extends Model
         }
         return false;
     }
-    /**
-     * Check if application is considered "ghosted" (no update for > 14 days in Applied or Interviewing status)
-     */
+    /** Eligible for a follow-up draft after 14 days since applying. */
     public function isGhosted(): bool
     {
-        return in_array($this->application_status, ['Applied', 'On Process', 'Interview']) 
-            && $this->application_date && $this->application_date->diffInDays(now()) >= 14;
+        return !$this->is_archived
+            && $this->application_status === 'On Process'
+            && !in_array($this->recruitment_stage, ['Not Processed', 'Offering'], true)
+            && $this->application_date
+            && $this->application_date->lte(today()->subDays(14));
     }
 }

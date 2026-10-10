@@ -67,7 +67,7 @@ class SkillsForm extends Component
     
     public function edit($id)
     {
-        $skill = UserSkill::findOrFail($id);
+        $skill = Auth::user()->skills()->findOrFail($id);
         
         if ($skill->user_id !== Auth::id()) {
             abort(403);
@@ -76,7 +76,7 @@ class SkillsForm extends Component
         $this->skillId = $skill->id;
         $this->skill_name = $skill->skill_name;
         $this->category = $skill->category;
-        $this->proficiency = $skill->proficiency;
+        $this->proficiency = $skill->proficiency_level;
         $this->years_of_experience = $skill->years_of_experience ?? '';
         $this->display_order = $skill->display_order;
         
@@ -112,20 +112,19 @@ class SkillsForm extends Component
             return;
         }
         $data = [
-            'user_id' => Auth::id(),
             'skill_name' => $this->skill_name,
             'category' => $this->category,
-            'proficiency' => $this->proficiency,
+            'proficiency_level' => $this->proficiency,
             'years_of_experience' => $this->years_of_experience === '' ? null : $this->years_of_experience,
             'display_order' => $this->display_order,
         ];
         
         if ($this->editMode) {
-            $skill = UserSkill::findOrFail($this->skillId);
+            $skill = Auth::user()->skills()->findOrFail($this->skillId);
             $skill->update($data);
             $message = 'Skill updated successfully!';
         } else {
-            UserSkill::create($data);
+            Auth::user()->skills()->create($data);
             $message = 'Skill added successfully!';
         }
         
@@ -136,6 +135,7 @@ class SkillsForm extends Component
         ]);
         
         $this->closeModal();
+        $this->dispatch('cv-data-updated');
         $this->loadSkills();
     }
     
@@ -155,7 +155,7 @@ class SkillsForm extends Component
     {
         if (!$this->deleteId) return;
 
-        $skill = UserSkill::findOrFail($this->deleteId);
+        $skill = Auth::user()->skills()->findOrFail($this->deleteId);
 
         if ($skill->user_id !== Auth::id()) {
             abort(403);
@@ -172,14 +172,15 @@ class SkillsForm extends Component
             'message' => 'Skill deleted successfully!',
         ]);
         
+        $this->dispatch('cv-data-updated');
         $this->loadSkills();
     }
     
     public function moveUp($id)
     {
-        $skill = UserSkill::findOrFail($id);
+        $skill = Auth::user()->skills()->findOrFail($id);
         if ($skill->display_order > 0) {
-            $swapWith = UserSkill::where('user_id', Auth::id())
+            $swapWith = Auth::user()->skills()
                 ->where('category', $skill->category)
                 ->where('display_order', $skill->display_order - 1)
                 ->first();
@@ -193,16 +194,17 @@ class SkillsForm extends Component
             $skill->save();
         }
         
+        $this->dispatch('cv-data-updated');
         $this->loadSkills();
     }
     
     public function moveDown($id)
     {
-        $skill = UserSkill::findOrFail($id);
+        $skill = Auth::user()->skills()->findOrFail($id);
         $maxOrder = $this->skills->where('category', $skill->category)->max('display_order');
         
         if ($skill->display_order < $maxOrder) {
-            $swapWith = UserSkill::where('user_id', Auth::id())
+            $swapWith = Auth::user()->skills()
                 ->where('category', $skill->category)
                 ->where('display_order', $skill->display_order + 1)
                 ->first();
@@ -216,6 +218,7 @@ class SkillsForm extends Component
             $skill->save();
         }
         
+        $this->dispatch('cv-data-updated');
         $this->loadSkills();
     }
     

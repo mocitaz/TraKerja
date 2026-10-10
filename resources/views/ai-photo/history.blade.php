@@ -33,7 +33,7 @@
     </style>
 
     <div class="bg-[#f8fafc] min-h-screen pb-20">
-        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <div class="workspace-page-frame max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8">
 
             @if($photos->isEmpty())
                 <div class="mesh-gradient-ai border border-slate-200/70 rounded-[2.5rem] p-12 text-center bento-card">

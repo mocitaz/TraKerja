@@ -1,38 +1,8 @@
 <x-app-layout>
-    <x-slot name="header">
-        <!-- Ignored layout slot, header is handled inline inside template container for premium consistency -->
-    </x-slot>
-
-    <div class="bg-[#fafafa] min-h-screen pb-16">
-        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+    <div class="dashboard-workspace">
+        <div class="dashboard-container">
             
-            <!-- Premium Notion-Inspired Page Header -->
-            <div class="flex items-start gap-2.5 border-b border-zinc-200/50 pb-4 mb-5 select-none">
-                <!-- Icon Logo -->
-                <div class="w-8 h-8 bg-zinc-100 border border-zinc-200/60 rounded-lg flex items-center justify-center text-zinc-500 shrink-0 shadow-2xs mt-0.5">
-                    <i class="ph ph-circles-four text-base"></i>
-                </div>
-                
-                <!-- Main Header Content -->
-                <div class="flex-1 min-w-0">
-                    <!-- Row 1: Title & Badge -->
-                    <div class="flex items-center gap-2">
-                        <h1 class="text-sm font-bold text-zinc-800 tracking-tight">Dashboard Overview</h1>
-                        <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[9px] font-black uppercase tracking-wider rounded border border-primary-100/60">Live</span>
-                    </div>
-                    
-                    <!-- Row 2: Tagline & Date (Flex row to align them perfectly!) -->
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-1">
-                        <p class="text-[11px] text-zinc-400">
-                            Welcome back, <span class="font-bold text-zinc-700">{{ explode(' ', Auth::user()->name)[0] }}</span>! Here is your career momentum and tracking progress.
-                        </p>
-                        <div class="flex items-center gap-1.5 text-[11px] font-medium text-zinc-550 shrink-0">
-                            <i class="ph ph-calendar-blank text-zinc-450 text-sm"></i>
-                            <span class="tracking-tight">{{ now()->timezone('Asia/Jakarta')->translatedFormat('l, d F Y') }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('dashboard.welcome')
 
             <style>
                 .custom-scrollbar::-webkit-scrollbar {
@@ -50,507 +20,106 @@
                 }
             </style>
 
-            <!-- Stats Overview Cards -->
-            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-5">
-                <!-- On Process Card -->
-                <div class="bg-white rounded-lg border border-zinc-200/60 p-3 sm:p-3.5 flex items-center justify-between transition-all hover:border-blue-400 hover:shadow-[0_4px_12px_rgba(59,130,246,0.02)] group">
-                    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-blue-50/50 rounded-md flex items-center justify-center text-blue-600 shrink-0">
-                            <i class="ph ph-spinner-gap text-sm sm:text-base animate-spin-slow"></i>
-                        </div>
-                        <div class="min-w-0">
-                            <p class="text-[8px] sm:text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">On Process</p>
-                            <p class="text-[9px] sm:text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none truncate">Active Apps</p>
-                        </div>
-                    </div>
-                    <div class="text-right shrink-0">
-                        <p class="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $onProcessCount }}</p>
-                    </div>
-                </div>
-
-                <!-- Offering/Accepted Card -->
-                <div class="bg-white rounded-lg border border-zinc-200/60 p-3 sm:p-3.5 flex items-center justify-between transition-all hover:border-emerald-400 hover:shadow-[0_4px_12px_rgba(16,185,129,0.02)] group">
-                    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-emerald-50/50 rounded-md flex items-center justify-center text-emerald-600 shrink-0">
-                            <i class="ph ph-check-circle text-sm sm:text-base"></i>
-                        </div>
-                        <div class="min-w-0">
-                            <p class="text-[8px] sm:text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">Success</p>
-                            <p class="text-[9px] sm:text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none truncate">Offers & Recs</p>
-                        </div>
-                    </div>
-                    <div class="text-right shrink-0">
-                        <p class="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $offeringAcceptedCount }}</p>
-                    </div>
-                </div>
-
-                <!-- Declined Card -->
-                <div class="bg-white rounded-lg border border-zinc-200/60 p-3 sm:p-3.5 flex items-center justify-between transition-all hover:border-rose-400 hover:shadow-[0_4px_12px_rgba(244,63,94,0.02)] group">
-                    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-rose-50/50 rounded-md flex items-center justify-center text-rose-600 shrink-0">
-                            <i class="ph ph-x-circle text-sm sm:text-base"></i>
-                        </div>
-                        <div class="min-w-0">
-                            <p class="text-[8px] sm:text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">Declined</p>
-                            <p class="text-[9px] sm:text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none truncate">Rejected</p>
-                        </div>
-                    </div>
-                    <div class="text-right shrink-0">
-                        <p class="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $declinedCount }}</p>
-                    </div>
-                </div>
-
-                <!-- Total Interviews Card -->
-                <div class="bg-white rounded-lg border border-zinc-200/60 p-3 sm:p-3.5 flex items-center justify-between transition-all hover:border-orange-400 hover:shadow-[0_4px_12px_rgba(245,158,11,0.02)] group">
-                    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-orange-50/50 rounded-md flex items-center justify-center text-orange-600 shrink-0">
-                            <i class="ph ph-calendar text-sm sm:text-base"></i>
-                        </div>
-                        <div class="min-w-0">
-                            <p class="text-[8px] sm:text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">Interviews</p>
-                            <p class="text-[9px] sm:text-[10px] text-zinc-500 font-semibold mt-0.5 leading-none truncate">Total Scheduled</p>
-                        </div>
-                    </div>
-                    <div class="text-right shrink-0">
-                        <p class="text-lg sm:text-xl font-bold text-zinc-800 tracking-tight leading-none">{{ $totalInterviewsCount }}</p>
-                    </div>
-                </div>
-            </div>
-
             <!-- Dashboard Layout Main Area -->
-            <!-- Row 1: Recent Applications & Weekly Targets (Equal Height Alignment) -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5 items-stretch">
+            <!-- Recent applications and overview -->
+            <div class="dashboard-main-layout">
+            <livewire:dashboard-next-moves />
+            <div class="dashboard-layout-row">
                 <!-- Left: Recent Applications (col-span 2) -->
-                <div class="lg:col-span-2">
-                    <div class="bg-white rounded-lg border border-zinc-200/60 p-4 h-full flex flex-col justify-between">
+                <div class="dashboard-recent">
+                    <div class="workspace-panel h-full flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center justify-between mb-4">
-                                <div>
-                                    <h3 class="text-xs font-bold text-zinc-850 tracking-tight uppercase tracking-wider">Recent Applications</h3>
-                                    <p class="text-[10px] text-zinc-400 font-medium">Your latest job submissions</p>
-                                </div>
-                                <a href="{{ route('tracker') }}" class="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-zinc-200 hover:bg-zinc-50 rounded-md text-[10px] font-semibold text-zinc-600 transition-colors">
-                                    <span>View Tracker</span>
-                                    <i class="ph ph-arrow-right text-[10px]"></i>
-                                </a>
-                            </div>
+                            <header class="dashboard-recent-header">
+                                <h3>Recent applications</h3>
+                                <a href="{{ route('tracker') }}" wire:navigate>View all <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+                            </header>
 
                             @if($recentApplications->isEmpty())
                                 <div class="flex flex-col items-center justify-center py-8 text-center bg-zinc-50/30 rounded-lg border border-dashed border-zinc-200/80">
                                     <div class="w-10 h-10 bg-zinc-100 rounded-md flex items-center justify-center text-zinc-400 mb-2.5">
                                         <i class="ph ph-briefcase text-lg"></i>
                                     </div>
-                                    <h4 class="text-xs font-bold text-zinc-700">No applications yet</h4>
-                                    <p class="text-[10px] text-zinc-400 mt-0.5 max-w-[220px]">Add your first job opportunity to start tracking your career progress!</p>
+                                    <h4 class="text-sm font-semibold text-zinc-700">No applications yet</h4>
+                                    <p class="text-xs text-ui-muted mt-1 max-w-[260px]">Add your first application or explore jobs to get started.</p>
                                     <button onclick="openJobModal()" class="mt-3 flex items-center gap-1.5 px-2.5 py-1 bg-zinc-900 hover:bg-zinc-800 text-white text-[10px] font-bold rounded-md transition-all active:scale-95">
                                         <i class="ph ph-plus text-xs"></i>
-                                        <span>Add Application</span>
+                                        <span>Add application</span>
                                     </button>
                                 </div>
                             @else
-                                {{-- Mobile List View (visible on mobile, hidden on desktop) --}}
-                                <div class="block sm:hidden space-y-2.5">
+                                <ul class="dashboard-application-cards" aria-label="Recent applications">
                                     @foreach($recentApplications as $job)
-                                        @php
-                                            $stageColors = [
-                                                'Applied' => ['bg' => '#3b82f612', 'text' => '#2563eb', 'border' => '#3b82f620'],
-                                                'HR - Interview' => ['bg' => '#f9731612', 'text' => '#ea580c', 'border' => '#f9731620'],
-                                                'User - Interview' => ['bg' => '#eab30812', 'text' => '#ca8a04', 'border' => '#eab30820'],
-                                                'Offering' => ['bg' => '#10b98112', 'text' => '#059669', 'border' => '#10b98120'],
-                                                'Rejected' => ['bg' => '#ef444412', 'text' => '#dc2626', 'border' => '#ef444420'],
-                                            ];
-                                            $stg = $stageColors[$job->recruitment_stage] ?? ['bg' => '#f4f4f5', 'text' => '#71717a', 'border' => '#e4e4e7'];
-                                            
-                                            $statusColors = [
-                                                'On Process' => ['bg' => '#3b82f612', 'text' => '#2563eb', 'border' => '#3b82f620'],
-                                                'Accepted' => ['bg' => '#10b98112', 'text' => '#059669', 'border' => '#10b98120'],
-                                                'Declined' => ['bg' => '#ef444412', 'text' => '#dc2626', 'border' => '#ef444420'],
-                                            ];
-                                            $stat = $statusColors[$job->application_status] ?? ['bg' => '#f4f4f5', 'text' => '#71717a', 'border' => '#e4e4e7'];
-                                        @endphp
-                                        <div onclick="window.location='{{ route('jobs.show', $job) }}'" 
-                                             class="bg-zinc-50/50 hover:bg-zinc-50 border border-zinc-200/50 p-3 rounded-lg flex items-center justify-between gap-3 active:scale-98 transition-all">
-                                            <div class="min-w-0 flex-1">
-                                                <div class="flex items-center gap-1.5 flex-wrap">
-                                                    <span class="text-xs font-bold text-zinc-800 truncate">{{ $job->company_name }}</span>
-                                                    <span class="text-[10px] text-zinc-300">•</span>
-                                                    <span class="text-[10px] text-zinc-500 truncate font-medium">{{ $job->position }}</span>
+                                        <li>
+                                            <a href="{{ route('jobs.show', $job) }}" wire:navigate class="dashboard-application-card" aria-label="{{ $job->position }} at {{ $job->company_name }}: application details">
+                                                <span class="dashboard-application-status">{{ $job->application_status }}</span>
+                                                <h4>{{ $job->position }}</h4>
+                                                <p class="dashboard-application-company">{{ $job->company_name }}</p>
+                                                <span class="dashboard-application-date">{{ $job->application_date ? 'Applied '.$job->application_date->format('d M Y') : 'Application date not set' }}</span>
+                                                <div class="dashboard-application-footer">
+                                                    <div>
+                                                        <span class="dashboard-application-stage-label">Current stage</span>
+                                                        <strong class="dashboard-application-stage">{{ $job->recruitment_stage ?: 'Not set' }}</strong>
+                                                    </div>
+                                                    <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
                                                 </div>
-                                                <div class="flex items-center gap-2 mt-2">
-                                                    <span class="px-1.5 py-0.2 rounded text-[8.5px] font-bold uppercase" style="background-color: {{ $stg['bg'] }}; color: {{ $stg['text'] }}; border: 1px solid {{ $stg['border'] }};">
-                                                        {{ $job->recruitment_stage }}
-                                                    </span>
-                                                    <span class="px-1.5 py-0.2 rounded text-[8.5px] font-bold uppercase" style="background-color: {{ $stat['bg'] }}; color: {{ $stat['text'] }}; border: 1px solid {{ $stat['border'] }};">
-                                                        {{ $job->application_status }}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex flex-col items-end shrink-0 gap-1">
-                                                <span class="text-[9px] font-semibold text-zinc-400">
-                                                    {{ $job->application_date ? $job->application_date->translatedFormat('d M Y') : '-' }}
-                                                </span>
-                                                <i class="ph ph-caret-right text-xs text-zinc-300"></i>
-                                            </div>
-                                        </div>
+                                            </a>
+                                        </li>
                                     @endforeach
-                                </div>
-
-                                {{-- Desktop Table View (hidden on mobile, visible on desktop) --}}
-                                <div class="hidden sm:block overflow-x-auto">
-                                    <table class="min-w-full divide-y divide-zinc-200/60">
-                                        <thead>
-                                            <tr class="text-left text-[9px] font-bold text-zinc-400 uppercase tracking-wider bg-zinc-50/50">
-                                                <th class="px-3 py-2">Company</th>
-                                                <th class="px-3 py-2">Position</th>
-                                                <th class="px-3 py-2 hidden sm:table-cell">Applied</th>
-                                                <th class="px-3 py-2 text-center">Stage</th>
-                                                <th class="px-3 py-2 text-center">Status</th>
-                                                <th class="px-3 py-2 text-right pr-4">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="divide-y divide-zinc-200/60 text-zinc-700 bg-white">
-                                            @foreach($recentApplications as $job)
-                                                <tr class="transition-colors cursor-pointer group hover:bg-zinc-50/45" onclick="window.location='{{ route('jobs.show', $job) }}'">
-                                                    {{-- Company --}}
-                                                    <td class="px-3 py-2.5 whitespace-nowrap">
-                                                        <span class="text-xs font-bold text-zinc-800 group-hover:text-primary-600 transition-colors">{{ $job->company_name }}</span>
-                                                    </td>
-                                                    {{-- Position --}}
-                                                    <td class="px-3 py-2.5 whitespace-nowrap">
-                                                        <span class="text-xs font-medium text-zinc-600">{{ $job->position }}</span>
-                                                    </td>
-                                                    {{-- Applied --}}
-                                                    <td class="px-3 py-2.5 whitespace-nowrap text-xs text-zinc-500 hidden sm:table-cell">
-                                                        {{ $job->application_date ? $job->application_date->translatedFormat('d M Y') : '-' }}
-                                                    </td>
-                                                    {{-- Stage --}}
-                                                    <td class="px-3 py-2.5 text-center whitespace-nowrap">
-                                                        @php
-                                                            $stageColors = [
-                                                                'Applied' => ['bg' => '#3b82f612', 'text' => '#2563eb', 'border' => '#3b82f620'],
-                                                                'HR - Interview' => ['bg' => '#f9731612', 'text' => '#ea580c', 'border' => '#f9731620'],
-                                                                'User - Interview' => ['bg' => '#eab30812', 'text' => '#ca8a04', 'border' => '#eab30820'],
-                                                                'Offering' => ['bg' => '#10b98112', 'text' => '#059669', 'border' => '#10b98120'],
-                                                                'Rejected' => ['bg' => '#ef444412', 'text' => '#dc2626', 'border' => '#ef444420'],
-                                                            ];
-                                                            $stg = $stageColors[$job->recruitment_stage] ?? ['bg' => '#f4f4f5', 'text' => '#71717a', 'border' => '#e4e4e7'];
-                                                        @endphp
-                                                        <span class="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase" style="background-color: {{ $stg['bg'] }}; color: {{ $stg['text'] }}; border: 1px solid {{ $stg['border'] }};">
-                                                            {{ $job->recruitment_stage }}
-                                                        </span>
-                                                    </td>
-                                                    {{-- Status --}}
-                                                    <td class="px-3 py-2.5 text-center whitespace-nowrap">
-                                                        @php
-                                                            $statusColors = [
-                                                                'On Process' => ['bg' => '#3b82f612', 'text' => '#2563eb', 'border' => '#3b82f620'],
-                                                                'Accepted' => ['bg' => '#10b98112', 'text' => '#059669', 'border' => '#10b98120'],
-                                                                'Declined' => ['bg' => '#ef444412', 'text' => '#dc2626', 'border' => '#ef444420'],
-                                                            ];
-                                                            $stat = $statusColors[$job->application_status] ?? ['bg' => '#f4f4f5', 'text' => '#71717a', 'border' => '#e4e4e7'];
-                                                        @endphp
-                                                        <span class="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase" style="background-color: {{ $stat['bg'] }}; color: {{ $stat['text'] }}; border: 1px solid {{ $stat['border'] }};">
-                                                            {{ $job->application_status }}
-                                                        </span>
-                                                    </td>
-                                                    {{-- Action --}}
-                                                    <td class="px-3 py-2.5 text-right pr-4 whitespace-nowrap">
-                                                        <i class="ph ph-caret-right text-xs text-zinc-300 group-hover:text-zinc-500 transition-colors"></i>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                                </ul>
                             @endif
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Column: Weekly Goal (col-span 1) -->
-                <div class="col-span-1">
-                    <livewire:goals-cadence-manager />
-                </div>
+                <section class="dashboard-overview" aria-labelledby="application-overview-title">
+                    @php
+                        $overviewMetrics = [
+                            ['label' => 'In progress', 'count' => $onProcessCount, 'note' => 'Active applications', 'color' => '#6bade0', 'radius' => 61],
+                            ['label' => 'Offers & accepted', 'count' => $offeringAcceptedCount, 'note' => 'Offers and positive outcomes', 'color' => '#a98bd2', 'radius' => 82],
+                            ['label' => 'Rejected', 'count' => $declinedCount, 'note' => 'Including archived applications', 'color' => '#e78766', 'radius' => 40],
+                        ];
+                    @endphp
+                    <div class="dashboard-overview-header">
+                        <h3 id="application-overview-title">Application overview</h3>
+                        <span class="dashboard-overview-total"><span>Total applications</span><strong>{{ $totalTrackedApplications }}</strong></span>
+                    </div>
+                    <div class="dashboard-overview-body">
+                        <dl class="dashboard-overview-metrics">
+                            @foreach($overviewMetrics as $metric)
+                                <div>
+                                    <dt><span style="background: {{ $metric['color'] }}" aria-hidden="true"></span>{{ $metric['label'] }}</dt>
+                                    <dd><strong>{{ $metric['count'] }}</strong><span>{{ $metric['note'] }}</span></dd>
+                                </div>
+                            @endforeach
+                        </dl>
+                        <svg class="dashboard-overview-rings" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+                            @foreach($overviewMetrics as $metric)
+                                <circle cx="100" cy="100" r="{{ $metric['radius'] }}" fill="none" stroke="#d0dce5" stroke-width="12" />
+                                @if($metric['count'] > 0 && $totalTrackedApplications > 0)
+                                    <circle cx="100" cy="100" r="{{ $metric['radius'] }}" fill="none" stroke="{{ $metric['color'] }}" stroke-width="12" stroke-linecap="round" pathLength="100" stroke-dasharray="{{ min(100, $metric['count'] / $totalTrackedApplications * 100) }} 100" transform="rotate(-90 100 100)" />
+                                @endif
+                            @endforeach
+                            <text x="100" y="98" text-anchor="middle" class="overview-ring-total">{{ $totalTrackedApplications }}</text>
+                            <text x="100" y="114" text-anchor="middle" class="overview-ring-label">tracked</text>
+                        </svg>
+                    </div>
+                    <p class="dashboard-overview-note">Each ring is measured against all applications. Offers can also be in progress.</p>
+                </section>
             </div>
 
-            <!-- Row 2: Heatmap and Quick Actions (Aligned Heights) -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5 items-stretch">
-                <!-- Left Column: Heatmap (col-span 2) -->
-                <div class="lg:col-span-2 flex flex-col">
-                    <!-- Job Search Momentum Calendar Heatmap (GitHub Style) -->
-                    <div class="bg-white rounded-lg border border-zinc-200/60 p-5 shadow-2xs font-sans h-full flex flex-col justify-between">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 select-none">
-                            <div>
-                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight uppercase tracking-wider">{{ $totalHeatmapApps }} applications submitted in the last year</h3>
-                                <p class="text-[10px] text-zinc-400 font-medium mt-0.5">Visualizing your daily application consistency over the last 12 months</p>
-                            </div>
-                            <div class="text-[9px] text-zinc-450 font-mono bg-zinc-50 border border-[#e4e4e7] px-2 py-0.5 rounded-md shrink-0">
-                                Avg: <strong class="text-zinc-800">{{ number_format($totalHeatmapApps / 365, 2) }}</strong> / day
-                            </div>
-                        </div>
+            <!-- Application activity and weekly goals -->
+            <div class="dashboard-layout-row">
+                <livewire:dashboard-activity />
 
-                        {{-- Heatmap Grid Container with Horizontal Scroll --}}
-                        <div class="overflow-x-auto select-none custom-scrollbar pb-2 pt-4">
-                            <div class="flex" style="gap: 3px; min-width: 760px; position: relative;">
-                                {{-- Days Labels on Left --}}
-                                <div class="flex flex-col justify-between select-none shrink-0 pr-2 font-sans font-medium text-zinc-400" style="height: 88px; font-size: 9px; line-height: 1;">
-                                    <span style="height: 10px; display: flex; align-items: center;">Mon</span>
-                                    <span style="height: 10px; display: flex; align-items: center;">Wed</span>
-                                    <span style="height: 10px; display: flex; align-items: center;">Fri</span>
-                                </div>
-
-                                {{-- Week Columns --}}
-                                @php
-                                    $lastMonth = '';
-                                    $lastMonthColIndex = -10;
-                                    $dayOrder = [1, 2, 3, 4, 5, 6, 0]; // Monday to Sunday
-                                    $colIndex = 0;
-                                    $weekKeys = array_keys($heatmapWeeks);
-                                @endphp
-                                @foreach($heatmapWeeks as $weekKey => $days)
-                                    @php
-                                        $firstDay = \Carbon\Carbon::parse($weekKey);
-                                        $monthName = '';
-                                        $currentMonth = $firstDay->format('M');
-                                        if ($currentMonth !== $lastMonth) {
-                                            $skipFirst = false;
-                                            if ($colIndex === 0) {
-                                                $week2Key = $weekKeys[2] ?? null;
-                                                $week2Month = $week2Key ? \Carbon\Carbon::parse($week2Key)->format('M') : $currentMonth;
-                                                if ($currentMonth !== $week2Month) {
-                                                    $skipFirst = true;
-                                                }
-                                            }
-                                            if (!$skipFirst && ($colIndex - $lastMonthColIndex) >= 3) {
-                                                $monthName = $currentMonth;
-                                                $lastMonthColIndex = $colIndex;
-                                            }
-                                            $lastMonth = $currentMonth;
-                                        }
-                                        $colIndex++;
-                                    @endphp
-                                    <div class="flex flex-col shrink-0" style="gap: 3px; position: relative;">
-                                        {{-- Month Label at top of column --}}
-                                        @if($monthName)
-                                            <span class="absolute font-sans text-zinc-500 font-medium" style="top: -18px; left: 0; font-size: 9px; white-space: nowrap;">{{ $monthName }}</span>
-                                        @endif
-                                        
-                                        @foreach($dayOrder as $dIdx)
-                                            @php
-                                                $day = $days[$dIdx] ?? null;
-                                                $count = $day ? $day['count'] : 0;
-                                                
-                                                // GitHub exact color hexes
-                                                if ($count == 0) {
-                                                    $bgColor = '#ebedf0';
-                                                } elseif ($count == 1) {
-                                                    $bgColor = '#9be9a8';
-                                                } elseif ($count == 2) {
-                                                    $bgColor = '#40c463';
-                                                } elseif ($count == 3) {
-                                                    $bgColor = '#30a14e';
-                                                } else {
-                                                    $bgColor = '#216e39';
-                                                }
-                                            @endphp
-                                            
-                                            @if($day)
-                                                <div class="group relative shrink-0">
-                                                    <div class="transition-colors cursor-pointer" style="width: 10px; height: 10px; border-radius: 2px; background-color: {{ $bgColor }};"></div>
-                                                    {{-- Tooltip overlay --}}
-                                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 hidden group-hover:block z-50 bg-zinc-900 text-white text-[9px] font-semibold py-1 px-2 rounded shadow-sm whitespace-nowrap leading-none pointer-events-none">
-                                                        {{ $count }} {{ Str::plural('application', $count) }} • {{ $day['formattedDate'] }}
-                                                    </div>
-                                                </div>
-                                            @else
-                                                {{-- Blank spacer for missing days --}}
-                                                <div style="width: 10px; height: 10px; background-color: transparent;"></div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        {{-- Legend & Footer Row --}}
-                        <div class="flex items-center justify-between text-[10px] text-zinc-400 mt-3 select-none">
-                            <a href="{{ route('tracker') }}" class="text-[10px] text-zinc-400 hover:text-zinc-650 transition-colors font-medium">
-                                Learn how we track application activity
-                            </a>
-                            
-                            <div class="flex items-center" style="gap: 3px;">
-                                <span class="mr-1">Less</span>
-                                <div style="width: 10px; height: 10px; border-radius: 2px; background-color: #ebedf0;"></div>
-                                <div style="width: 10px; height: 10px; border-radius: 2px; background-color: #9be9a8;"></div>
-                                <div style="width: 10px; height: 10px; border-radius: 2px; background-color: #40c463;"></div>
-                                <div style="width: 10px; height: 10px; border-radius: 2px; background-color: #30a14e;"></div>
-                                <div style="width: 10px; height: 10px; border-radius: 2px; background-color: #216e39;"></div>
-                                <span class="ml-1">More</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Column: Quick Actions (col-span 1) -->
-                <div class="col-span-1 flex flex-col">
-                    <!-- Quick Actions Panel -->
-                    <div class="bg-white rounded-lg border border-zinc-200/60 p-4 flex-1 flex flex-col justify-between">
-                        <div class="flex items-center justify-between mb-3.5 select-none shrink-0">
-                            <div>
-                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight uppercase tracking-wider">Quick Actions</h3>
-                                <p class="text-[9px] text-zinc-400 font-medium mt-0.5">Shortcuts to accelerate your search</p>
-                            </div>
-                            <i class="ph ph-lightning text-amber-500 text-sm"></i>
-                        </div>
-
-                        <!-- 2x2 grid on mobile, vertical stack on desktop -->
-                        <div class="grid grid-cols-2 gap-2.5 sm:grid-cols-1 sm:gap-0 sm:space-y-1 flex-1">
-                            <!-- Action 1: Add App -->
-                            <button onclick="openJobModal()" class="w-full flex flex-col sm:flex-row items-center sm:justify-between p-3 sm:p-2 bg-zinc-50/40 sm:bg-transparent border border-zinc-200/50 sm:border-transparent hover:bg-zinc-50 rounded-md group transition-all text-center sm:text-left active:scale-97 sm:active:scale-100">
-                                <div class="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5">
-                                    <div class="w-7 h-7 sm:w-auto sm:h-auto rounded-full bg-white sm:bg-transparent flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs sm:shadow-none border border-zinc-200/60 sm:border-transparent">
-                                        <i class="ph ph-plus text-zinc-500 group-hover:text-zinc-700 transition-colors text-xs sm:text-sm"></i>
-                                    </div>
-                                    <span class="text-[9.5px] sm:text-[11px] font-bold sm:font-semibold text-zinc-650 group-hover:text-zinc-900 transition-colors leading-tight">Add New App</span>
-                                </div>
-                                <i class="hidden sm:block ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
-                            </button>
-
-                            <!-- Action 2: CV Builder -->
-                            <a href="{{ route('cv.builder') }}" class="w-full flex flex-col sm:flex-row items-center sm:justify-between p-3 sm:p-2 bg-zinc-50/40 sm:bg-transparent border border-zinc-200/50 sm:border-transparent hover:bg-zinc-50 rounded-md group transition-all text-center sm:text-left active:scale-97 sm:active:scale-100">
-                                <div class="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5">
-                                    <div class="w-7 h-7 sm:w-auto sm:h-auto rounded-full bg-white sm:bg-transparent flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs sm:shadow-none border border-zinc-200/60 sm:border-transparent">
-                                        <i class="ph ph-file-text text-zinc-500 group-hover:text-zinc-700 transition-colors text-xs sm:text-sm"></i>
-                                    </div>
-                                    <span class="text-[9.5px] sm:text-[11px] font-bold sm:font-semibold text-zinc-655 group-hover:text-zinc-900 transition-colors leading-tight">CV Builder</span>
-                                </div>
-                                <i class="hidden sm:block ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
-                            </a>
-
-                            <!-- Action 3: AI Analyzer -->
-                            <a href="{{ route('ai-analyzer.index') }}" class="w-full flex flex-col sm:flex-row items-center sm:justify-between p-3 sm:p-2 bg-zinc-50/40 sm:bg-transparent border border-zinc-200/50 sm:border-transparent hover:bg-zinc-50 rounded-md group transition-all text-center sm:text-left active:scale-97 sm:active:scale-100">
-                                <div class="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5">
-                                    <div class="w-7 h-7 sm:w-auto sm:h-auto rounded-full bg-white sm:bg-transparent flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs sm:shadow-none border border-zinc-200/60 sm:border-transparent">
-                                        <i class="ph ph-sparkle text-zinc-500 group-hover:text-zinc-700 transition-colors text-xs sm:text-sm"></i>
-                                    </div>
-                                    <span class="text-[9.5px] sm:text-[11px] font-bold sm:font-semibold text-zinc-655 group-hover:text-zinc-900 transition-colors leading-tight">AI Analyzer</span>
-                                </div>
-                                <i class="hidden sm:block ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
-                            </a>
-
-                            <!-- Action 4: Cover Letter -->
-                            <a href="{{ route('cover-letters.index') }}" class="w-full flex flex-col sm:flex-row items-center sm:justify-between p-3 sm:p-2 bg-zinc-50/40 sm:bg-transparent border border-zinc-200/50 sm:border-transparent hover:bg-zinc-50 rounded-md group transition-all text-center sm:text-left active:scale-97 sm:active:scale-100">
-                                <div class="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5">
-                                    <div class="w-7 h-7 sm:w-auto sm:h-auto rounded-full bg-white sm:bg-transparent flex items-center justify-center text-zinc-500 shrink-0 shadow-3xs sm:shadow-none border border-zinc-200/60 sm:border-transparent">
-                                        <i class="ph ph-envelope-simple text-zinc-500 group-hover:text-zinc-700 transition-colors text-xs sm:text-sm"></i>
-                                    </div>
-                                    <span class="text-[9.5px] sm:text-[11px] font-bold sm:font-semibold text-zinc-655 group-hover:text-zinc-900 transition-colors leading-tight">Cover Letter</span>
-                                </div>
-                                <i class="hidden sm:block ph ph-caret-right text-[10px] text-zinc-300 group-hover:text-zinc-500 transition-transform group-hover:translate-x-0.5"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
 
-            <!-- Row 3: Upcoming Interviews (Full Width) -->
-            <div class="bg-white rounded-lg border border-zinc-200/60 p-4 mb-5">
-                <div class="flex items-center justify-between mb-4">
-                    <div>
-                        <h3 class="text-xs font-bold text-zinc-800 tracking-tight uppercase tracking-wider">Upcoming Interviews</h3>
-                        <p class="text-[10px] text-zinc-400 font-medium">Your schedule for the next interviews</p>
-                    </div>
-                    <a href="{{ route('interviews') }}" class="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-zinc-200 hover:bg-zinc-50 rounded-md text-[10px] font-semibold text-zinc-600 transition-colors">
-                        <span>View Calendar</span>
-                        <i class="ph ph-arrow-right text-[10px]"></i>
-                    </a>
-                </div>
-
-                @if($upcomingInterviews->isEmpty())
-                    <div class="flex flex-col items-center justify-center py-8 text-center bg-zinc-50/30 rounded-lg border border-dashed border-zinc-200/80 animate-none">
-                        <div class="w-10 h-10 bg-zinc-100 rounded-md flex items-center justify-center text-zinc-400 mb-2.5">
-                            <i class="ph ph-calendar text-lg"></i>
-                        </div>
-                        <h4 class="text-xs font-bold text-zinc-700">No upcoming interviews</h4>
-                        <p class="text-[10px] text-zinc-400 mt-0.5 max-w-[220px]">Take a break or apply to more jobs to schedule an interview!</p>
-                    </div>
-                @else
-                    <div class="divide-y divide-zinc-200/60">
-                        @foreach($upcomingInterviews as $interview)
-                            <div class="flex items-center gap-3.5 py-2.5 group first:pt-0 last:pb-0">
-                                <!-- Date Bubble -->
-                                <div class="shrink-0 w-8 h-8 bg-zinc-50 rounded-md border border-zinc-200/50 flex flex-col items-center justify-center text-zinc-700 font-bold leading-none shadow-2xs">
-                                    <span class="text-[11px] font-extrabold leading-none">{{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('d') }}</span>
-                                    <span class="text-[7.5px] font-black uppercase tracking-wider mt-0.5 text-zinc-500">{{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('M') }}</span>
-                                </div>
-                                
-                                <!-- Interview Details -->
-                                <div class="min-w-0 flex-1">
-                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
-                                        <h4 class="text-[11px] font-bold text-zinc-800 truncate leading-tight">
-                                            {{ $interview->recruitment_stage }} - {{ $interview->position }}
-                                        </h4>
-                                        <span class="self-start sm:self-auto text-[8.5px] sm:text-[9px] font-bold px-1.5 py-0.2 rounded bg-zinc-100 text-zinc-500 border border-zinc-200/40 leading-none">
-                                            {{ $interview->interview_type ?? 'N/A' }}
-                                        </span>
-                                    </div>
-                                    <div class="flex items-center gap-2 mt-0.5 leading-none">
-                                        <p class="text-[9px] text-zinc-500 font-medium leading-none">{{ $interview->company_name }}</p>
-                                        @if($interview->interview_location)
-                                            <span class="text-zinc-300 text-[8px] leading-none">•</span>
-                                            <div class="flex items-center gap-0.5 text-[9px] text-zinc-400 font-medium leading-none truncate">
-                                                <i class="ph ph-map-pin"></i>
-                                                <span class="truncate">{{ $interview->interview_location }}</span>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <!-- Time -->
-                                <div class="shrink-0 text-right">
-                                    <p class="text-[11px] font-bold text-zinc-800 leading-tight">
-                                        {{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('H:i') }}
-                                    </p>
-                                    <p class="text-[7.5px] text-zinc-550 font-bold uppercase tracking-wider leading-none">
-                                        {{ $interview->interview_date->timezone('Asia/Jakarta')->translatedFormat('T') }}
-                                    </p>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
+            <div class="dashboard-goals dashboard-next-goals"><livewire:goals-cadence-manager /></div>
             </div>
         </div>
     </div>
 
     @push('modals')
-    <!-- Ultra Compact Floating Modal -->
-    <div id="jobModal" class="fixed inset-0 bg-zinc-950/40 backdrop-blur-xs hidden z-[99999] flex items-center justify-center p-4 transition-all duration-300">
-        <div class="bg-white rounded-lg shadow-xl max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden border border-zinc-200 transform transition-all animate-modal-in">
-            <!-- Modal Header: Clean White -->
-            <div class="bg-white px-4 py-3 text-zinc-900 flex justify-between items-center border-b border-zinc-150/60 shrink-0">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/60 flex items-center justify-center shadow-3xs">
-                        <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-4 h-4 object-contain" onerror="this.src='{{ asset('favicon.png') }}'">
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-1.5">
-                            <h3 class="text-xs font-bold text-zinc-800 tracking-tight" id="modalTitle">New Opportunity</h3>
-                            <span id="modalBadge" class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[8.5px] font-bold uppercase tracking-wider rounded border border-primary-100/60 leading-none">Tracking</span>
-                        </div>
-                        <p class="text-zinc-400 text-[9px] font-medium mt-0.5">Career Growth Tracking</p>
-                    </div>
-                </div>
-                <button onclick="closeJobModal()" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 transition-all text-zinc-400 hover:text-zinc-800">
-                    <i class="ph ph-x text-sm"></i>
-                </button>
-            </div>
-            
-            <div class="p-4 bg-white overflow-y-auto custom-scrollbar">
-                @livewire('job-application-form')
-            </div>
-        </div>
-    </div>
+    <x-job-application-modal />
     @endpush
 
     @push('styles')
@@ -571,36 +140,5 @@
     </style>
     @endpush
 
-    <script>
-        window.addEventListener('edit-job', event => {
-            document.getElementById('modalTitle').innerText = 'Edit Opportunity';
-            document.getElementById('modalBadge').innerText = 'Edit';
-            window.openJobModal(true);
-        });
 
-        window.openJobModal = function(isEdit = false) {
-            const modal = document.getElementById('jobModal');
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            if (!isEdit) {
-                Livewire.dispatch('resetFormForNewJob');
-            }
-        };
-
-        window.closeJobModal = function() {
-            const modal = document.getElementById('jobModal');
-            modal.classList.add('hidden');
-            document.body.style.overflow = '';
-            // Reset modal title and badge
-            document.getElementById('modalTitle').innerText = 'New Opportunity';
-            document.getElementById('modalBadge').innerText = 'Tracking';
-            // Reset form when closing for fresh state on "Add"
-            Livewire.dispatch('resetFormForNewJob');
-        };
-
-        window.addEventListener('job-saved', event => {
-            window.closeJobModal();
-            window.location.reload();
-        });
-    </script>
 </x-app-layout>

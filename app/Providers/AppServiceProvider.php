@@ -37,6 +37,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        \Illuminate\Support\Facades\Gate::policy(\App\Models\SupportTicket::class, \App\Policies\SupportTicketPolicy::class);
+        \Livewire\Livewire::addPersistentMiddleware([\App\Http\Middleware\EnsureUserIsAdmin::class]);
         Carbon::setLocale(config('app.locale', 'id'));
         date_default_timezone_set(config('app.timezone', 'Asia/Jakarta'));
         

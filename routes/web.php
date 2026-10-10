@@ -108,6 +108,8 @@ Route::prefix('ai-analyzer')->middleware(['auth', 'verified'])->name('ai-analyze
 Route::prefix('ai-photo')->middleware(['auth', 'verified'])->name('ai-photo.')->group(function () {
     Route::get('/', function() { return redirect()->route('ai-studio.index', ['tab' => 'photo']); })->name('index');
     Route::post('/process', [\App\Http\Controllers\AiPhotoController::class, 'process'])->name('process');
+    Route::get('/{aiPhoto}/status', [\App\Http\Controllers\AiPhotoController::class, 'status'])->name('status');
+    Route::post('/{aiPhoto}/retry', [\App\Http\Controllers\AiPhotoController::class, 'retry'])->name('retry');
     Route::get('/history', function() { return redirect()->route('ai-studio.index', ['tab' => 'photo']); })->name('history');
     Route::get('/{aiPhoto}', [\App\Http\Controllers\AiPhotoController::class, 'show'])->name('show');
 });
@@ -122,6 +124,13 @@ Route::prefix('cover-letters')->middleware(['auth', 'verified'])->name('cover-le
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/community', function () {
+    if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
+        return redirect()->route('admin.index');
+    }
+    return view('community.index');
+})->middleware(['auth', 'verified'])->name('community.index');
+
 // Automation Tools routes
 Route::get('/automation', [AutomationController::class, 'index'])->middleware(['auth', 'verified'])->name('automation.index');
 
@@ -133,6 +142,9 @@ Route::get('/extension', function () {
 // User Routes (Not accessible by admin)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar.update');
+    Route::post('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo.update');
+    Route::delete('/profile/photo', [ProfileController::class, 'removePhoto'])->name('profile.photo.destroy');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::patch('/profile/personal', [ProfileController::class, 'updatePersonalInfo'])->name('profile.personal.update');
     Route::patch('/profile/notifications', [ProfileController::class, 'updateNotifications'])->name('profile.notifications.update');
@@ -156,6 +168,7 @@ Route::middleware('auth')->group(function () {
         })->name('cv.builder');
 
         Route::post('/import-pdf', [\App\Http\Controllers\ResumeParserController::class, 'importPdf'])->name('cv.import-pdf');
+        Route::get('/site-preview', [\App\Http\Controllers\PortfolioController::class, 'preview'])->name('portfolio.preview');
         
         Route::get('/generator', function () {
             if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
@@ -264,6 +277,8 @@ Route::middleware('auth')->group(function () {
     })->middleware(['auth', 'verified'])->name('jobs.send-interview-reminder');
     
     // CSV Import/Export routes (Only for regular users)
+    Route::get('/data-exports/{id}', [\App\Http\Controllers\DataExportController::class, 'show'])->name('data-exports.show');
+    Route::get('/data-exports/{id}/download', [\App\Http\Controllers\DataExportController::class, 'download'])->name('data-exports.download');
     Route::get('/csv/template', function () {
         if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
             abort(403, 'Admin cannot download CSV template');
@@ -282,6 +297,8 @@ Route::middleware('auth')->group(function () {
         return redirect()->route('automation.index', ['tab' => 'csv']);
     })->name('csv.import');
     
+    Route::post('/csv/import/preview', [JobApplicationImportExportController::class, 'previewImport'])->name('csv.import.preview');
+
     Route::post('/csv/import', function (Request $request) {
         if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
             abort(403, 'Admin cannot import CSV');
@@ -292,6 +309,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/jobs/scrape-url', [\App\Http\Controllers\JobScraperController::class, 'scrapeUrl'])->name('jobs.scrape-url');
     Route::post('/jobs/scrape-html', [\App\Http\Controllers\JobScraperController::class, 'scrapeHtml'])->name('jobs.scrape-html');
 
+    Route::get('/membership', [\App\Http\Controllers\MembershipController::class, 'index'])->name('membership.index');
+
     // Premium Landing Page (Standard URL)
     Route::get('/premium', function () {
         if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
@@ -299,7 +318,7 @@ Route::middleware('auth')->group(function () {
         }
         // Redirect premium users — no need to see the upgrade page
         if (Auth::user()->isPremium()) {
-            return redirect()->route('dashboard')->with('info', 'Anda sudah menjadi anggota Premium! Nikmati semua fitur tanpa batas.');
+            return redirect()->route('membership.index');
         }
         return app(PaymentController::class)->premium();
     })->name('payment.premium');
@@ -384,7 +403,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin Routes (protected by admin role)
-Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     // Admin Dashboard - Check admin role
     Route::get('/', function () {
         if (!Auth::user()->isAdmin()) {
@@ -616,6 +635,7 @@ Route::get('/test/error/{code}', function ($code) {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/survey', [\App\Http\Controllers\SatisfactionSurveyController::class, 'show'])->name('survey.show');
     Route::post('/survey', [\App\Http\Controllers\SatisfactionSurveyController::class, 'store'])->name('survey.submit');
+    Route::post('/survey/dismiss', [\App\Http\Controllers\SatisfactionSurveyController::class, 'dismiss'])->name('survey.dismiss');
 });
 
 require __DIR__.'/auth.php';

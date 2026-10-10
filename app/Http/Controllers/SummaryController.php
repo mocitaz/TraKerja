@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobApplication;
+use App\Support\DatabaseDateExpressions;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -10,128 +11,21 @@ class SummaryController extends Controller
 {
     public function index(Request $request)
     {
-        $userId = auth()->id();
-        $timeFilter = $request->get('timeFilter', 'all'); // Default to all
-
-        // Get date range based on time filter
+        $timeFilter = $request->get('timeFilter', 'all');
+        if (!in_array($timeFilter, ['all', 'weekly', 'monthly'], true)) $timeFilter = 'all';
         $dateRange = $this->getDateRange($timeFilter);
-
-        $interviews = JobApplication::where('user_id', $userId)
-            ->where(function($query) use ($dateRange) {
-                // If we have a date filter, we check if either:
-                // 1. The interview is scheduled in this period
-                // 2. OR the application was made in this period and is in interview stage
-                if ($dateRange['start']) {
-                    $query->where(function($q) use ($dateRange) {
-                        $q->whereBetween('interview_date', [$dateRange['start'], $dateRange['end']]);
-                    })->orWhere(function($q) use ($dateRange) {
-                        $q->whereBetween('application_date', [$dateRange['start'], $dateRange['end']])
-                          ->whereIn('recruitment_stage', [
-                              'HR - Interview', 'User - Interview', 'Psychotest', 
-                              'Assessment Test', 'LGD', 'Presentation Round'
-                          ]);
-                    });
-                } else {
-                    // All time: just check if it has interview date or is in interview stage
-                    $query->whereNotNull('interview_date')
-                          ->orWhereIn('recruitment_stage', [
-                              'HR - Interview', 'User - Interview', 'Psychotest', 
-                              'Assessment Test', 'LGD', 'Presentation Round'
-                          ]);
-                }
-            })
-            ->count();
-
-        $offeringAcceptedCount = JobApplication::where('user_id', $userId)
-            ->where(function($query) {
-                $query->where('application_status', 'Accepted')
-                      ->orWhere('recruitment_stage', 'Offering');
-            })
-            ->when($dateRange['start'], function ($query) use ($dateRange) {
-                return $query->where('application_date', '>=', $dateRange['start']);
-            })
-            ->count();
-
-        $applicationsCount = JobApplication::where('user_id', $userId)
-            ->when($dateRange['start'], function ($query) use ($dateRange) {
-                return $query->where('application_date', '>=', $dateRange['start']);
-            })
-            ->count(); // Include all (archived and non-archived)
-
-
-        // Timeline Activity Data (Weekly/Monthly)
-        $timelineData = $this->getTimelineData($userId, $timeFilter);
-        
-        // Conversion Funnel Data
-        $funnelData = $this->getFunnelData($userId, $dateRange);
-        
-        // Status Distribution Data
-        $statusDistribution = $this->getStatusDistribution($userId, $dateRange);
-        
-        // Platform Effectiveness Data
-        $platformEffectiveness = $this->getPlatformEffectiveness($userId, $dateRange);
-        
-        // Position Analysis Data
-        $positionAnalysis = $this->getPositionAnalysis($userId, $dateRange);
-        
-        // Career Level Analysis Data
-        $careerLevelAnalysis = $this->getCareerLevelAnalysis($userId, $dateRange);
-        
-        // Remove sample data - use real data only
-        
-        // Top Companies Data
-        $topCompanies = $this->getTopCompanies($userId, $dateRange);
-        
-        // Location Analysis Data
-        $locationAnalysis = $this->getLocationAnalysis($userId, $dateRange);
-        
-        // Daily Streak Data
-        $dailyStreak = $this->getDailyStreak($userId);
-        
-        // This Week's Progress Data
-        $weeklyProgress = $this->getWeeklyProgress($userId);
-        
-        // The Cadence Effect Data
-        $cadenceEffect = $this->getCadenceEffect($userId);
-
-        // Comparison Data (This Month vs Last Month)
-        $comparisonData = $this->getComparisonData($userId);
-        
-        // Trend Analysis Data
-        $trendData = $this->getTrendAnalysisData($userId);
-        
-        // Sankey Diagram Data (Flow from Applied to Accepted)
-        $sankeyData = $this->getSankeyData($userId, $dateRange);
-        
-        // Gantt Chart Data (Application Timeline)
-        $ganttData = $this->getGanttData($userId, $dateRange);
-        
-        // Heatmap Data (Activity per day/week)
-        $heatmapData = $this->getHeatmapData($userId);
+        $jobs = JobApplication::where('user_id', auth()->id())
+            ->whereDate('application_date', '<=', now('Asia/Jakarta')->toDateString())
+            ->when($dateRange['start'], fn ($query) => $query->whereDate('application_date', '>=', $dateRange['start']->toDateString()))
+            ->get();
+        $summary = \App\Support\ApplicationSummary::fromApplications($jobs);
 
         return view('summary.index', [
             'timeFilter' => $timeFilter,
-            'interviews' => $interviews,
-            'offeringAcceptedCount' => $offeringAcceptedCount,
-            'applicationsCount' => $applicationsCount,
-            'timelineData' => $timelineData,
-            'funnelData' => $funnelData,
-            'statusDistribution' => $statusDistribution,
-            'platformEffectiveness' => $platformEffectiveness,
-            'positionAnalysis' => $positionAnalysis,
-            'careerLevelAnalysis' => $careerLevelAnalysis,
-            'dayOfWeekActivity' => $this->getDayOfWeekActivity($userId),
-            'velocityData' => $this->getApplicationVelocity($userId),
-            'topCompanies' => $topCompanies,
-            'locationAnalysis' => $locationAnalysis,
-            'dailyStreak' => $dailyStreak,
-            'weeklyProgress' => $weeklyProgress,
-            'cadenceEffect' => $cadenceEffect,
-            'comparisonData' => $comparisonData,
-            'trendData' => $trendData,
-            'sankeyData' => $sankeyData,
-            'ganttData' => $ganttData,
-            'heatmapData' => $heatmapData,
+            'dateRange' => $dateRange,
+            'summary' => $summary,
+            'applicationsCount' => $summary['total'],
+            'timelineData' => $this->getTimelineData(auth()->id(), $timeFilter),
         ]);
     }
 
@@ -142,12 +36,12 @@ class SummaryController extends Controller
         switch ($timeFilter) {
             case 'weekly':
                 return [
-                    'start' => $now->copy()->subWeek()->startOfDay(),
+                    'start' => $now->copy()->subDays(6)->startOfDay(),
                     'end' => $now->copy()->endOfDay()
                 ];
             case 'monthly':
                 return [
-                    'start' => $now->copy()->subMonth()->startOfDay(),
+                    'start' => $now->copy()->subDays(29)->startOfDay(),
                     'end' => $now->copy()->endOfDay()
                 ];
             case 'all':
@@ -163,7 +57,8 @@ class SummaryController extends Controller
     {
         $dateRange = $this->getDateRange($timeFilter);
         $startDate = $dateRange['start'];
-        $endDate = $dateRange['end'];
+        $endDate = $dateRange['end'] ?? Carbon::now('Asia/Jakarta')->endOfDay();
+        $startDate ??= Carbon::now('Asia/Jakarta')->startOfMonth()->subMonthsNoOverflow(11);
         
         // Determine grouping and labels based on time filter
         if ($timeFilter === 'weekly') {
@@ -179,16 +74,16 @@ class SummaryController extends Controller
                 $labels[] = Carbon::now('Asia/Jakarta')->subDays($i)->format('M d');
             }
         } else {
-            $groupBy = 'DATE_FORMAT(application_date, "%Y-%m")';
+            $groupBy = DatabaseDateExpressions::month('application_date');
             $labels = [];
             for ($i = 11; $i >= 0; $i--) {
-                $labels[] = Carbon::now('Asia/Jakarta')->subMonths($i)->format('M Y');
+                $labels[] = Carbon::now('Asia/Jakarta')->startOfMonth()->subMonthsNoOverflow($i)->format('M Y');
             }
         }
         
         $applications = JobApplication::where('user_id', $userId)
             ->when($startDate, function ($query) use ($startDate, $endDate) {
-                return $query->whereBetween('application_date', [$startDate, $endDate]);
+                return $query->whereDate('application_date', '>=', $startDate->toDateString())->whereDate('application_date', '<=', $endDate->toDateString());
             })
             ->selectRaw($groupBy . ' as period, COUNT(*) as applications')
             ->groupBy('period')
@@ -200,7 +95,7 @@ class SummaryController extends Controller
         $interviews = JobApplication::where('user_id', $userId)
             ->whereNotNull('interview_date')
             ->when($startDate, function ($query) use ($startDate, $endDate) {
-                return $query->whereBetween('interview_date', [$startDate, $endDate]);
+                return $query->whereDate('interview_date', '>=', $startDate->toDateString())->whereDate('interview_date', '<=', $endDate->toDateString());
             })
             ->selectRaw($interviewGroupBy . ' as period, COUNT(*) as interviews')
             ->groupBy('period')
@@ -231,7 +126,7 @@ class SummaryController extends Controller
             }
         } else {
             for ($i = 11; $i >= 0; $i--) {
-                $period = Carbon::now('Asia/Jakarta')->subMonths($i)->format('Y-m');
+                $period = Carbon::now('Asia/Jakarta')->startOfMonth()->subMonthsNoOverflow($i)->format('Y-m');
                 $appCount = $applications->where('period', $period)->first();
                 $intCount = $interviews->where('period', $period)->first();
                 
@@ -271,17 +166,17 @@ class SummaryController extends Controller
             })->count(),
             
             'Accepted' => $allJobs->filter(function($job) {
-                return $job->application_status === 'Accepted' || $job->recruitment_stage === 'Offering';
+                return $job->application_status === 'Accepted';
             })->count(),
             
             'Rejected' => $allJobs->filter(function($job) {
-                return $job->application_status === 'Declined' || $job->recruitment_stage === 'Not Processed';
+                return $job->application_status === 'Rejected';
             })->count(),
             
             'Pending' => $allJobs->filter(function($job) {
                 // Not accepted, not rejected
-                $isAccepted = $job->application_status === 'Accepted' || $job->recruitment_stage === 'Offering';
-                $isRejected = $job->application_status === 'Declined' || $job->recruitment_stage === 'Not Processed';
+                $isAccepted = $job->application_status === 'Accepted';
+                $isRejected = $job->application_status === 'Rejected';
                 return !$isAccepted && !$isRejected;
             })->count(),
         ];
@@ -422,7 +317,7 @@ class SummaryController extends Controller
                         return $j->interview_date || in_array($j->recruitment_stage, ['HR - Interview', 'User - Interview', 'Psychotest', 'Assessment Test']);
                     })->count(),
                     'accepted' => $jobs->filter(function($j) {
-                        return $j->application_status === 'Accepted' || $j->recruitment_stage === 'Offering';
+                        return $j->application_status === 'Accepted';
                     })->count(),
                 ];
             })
@@ -778,14 +673,14 @@ class SummaryController extends Controller
                 'total' => $thisMonthData->count(),
                 'on_process' => $thisMonthData->where('application_status', 'On Process')->count(),
                 'accepted' => $thisMonthData->where('application_status', 'Accepted')->count(),
-                'declined' => $thisMonthData->where('application_status', 'Declined')->count(),
+                'declined' => $thisMonthData->where('application_status', 'Rejected')->count(),
                 'interviews' => $thisMonthData->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview'])->count(),
             ],
             'last_month' => [
                 'total' => $lastMonthData->count(),
                 'on_process' => $lastMonthData->where('application_status', 'On Process')->count(),
                 'accepted' => $lastMonthData->where('application_status', 'Accepted')->count(),
-                'declined' => $lastMonthData->where('application_status', 'Declined')->count(),
+                'declined' => $lastMonthData->where('application_status', 'Rejected')->count(),
                 'interviews' => $lastMonthData->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview'])->count(),
             ],
             'labels' => [
@@ -813,7 +708,7 @@ class SummaryController extends Controller
                 'month' => $monthStart->format('M Y'),
                 'total' => $applications->count(),
                 'accepted' => $applications->where('application_status', 'Accepted')->count(),
-                'declined' => $applications->where('application_status', 'Declined')->count(),
+                'declined' => $applications->where('application_status', 'Rejected')->count(),
                 'on_process' => $applications->where('application_status', 'On Process')->count(),
                 'interviews' => $applications->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview'])->count(),
             ];
@@ -878,7 +773,7 @@ class SummaryController extends Controller
             'Presentation Round',
             'Offering',
             'Accepted',
-            'Declined',
+            'Rejected',
             'Not Processed'
         ];
         
@@ -900,8 +795,8 @@ class SummaryController extends Controller
                 $stageCounts[$index] = $applications->count();
             } elseif ($stage === 'Accepted') {
                 $stageCounts[$index] = $applications->where('application_status', 'Accepted')->count();
-            } elseif ($stage === 'Declined') {
-                $stageCounts[$index] = $applications->where('application_status', 'Declined')->count();
+            } elseif ($stage === 'Rejected') {
+                $stageCounts[$index] = $applications->where('application_status', 'Rejected')->count();
             } elseif ($stage === 'Not Processed') {
                 $stageCounts[$index] = $applications->where('recruitment_stage', 'Not Processed')->count();
             } else {
@@ -954,7 +849,7 @@ class SummaryController extends Controller
             $color = '#3B82F6'; // Default blue
             if ($app->application_status === 'Accepted') {
                 $color = '#10B981'; // Green
-            } elseif ($app->application_status === 'Declined') {
+            } elseif ($app->application_status === 'Rejected') {
                 $color = '#EF4444'; // Red
             } elseif ($app->recruitment_stage === 'Offering') {
                 $color = '#F59E0B'; // Amber

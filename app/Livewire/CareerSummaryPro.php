@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 use Livewire\Component;
 use App\Models\JobApplication;
+use App\Support\DatabaseDateExpressions;
 use Carbon\Carbon;
 
 class CareerSummaryPro extends Component
@@ -373,10 +374,10 @@ class CareerSummaryPro extends Component
             case 'weekly':
                 return 'DATE(application_date)';
             case 'monthly':
-                return 'DATE_FORMAT(application_date, "%Y-%m")';
+                return DatabaseDateExpressions::month('application_date');
             case 'all':
             default:
-                return 'DATE_FORMAT(application_date, "%Y-%m")';
+                return DatabaseDateExpressions::month('application_date');
         }
     }
 

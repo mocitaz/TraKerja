@@ -19,6 +19,7 @@ class ExploreJobsTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        \Illuminate\Support\Facades\Queue::fake();
 
         $this->user = User::factory()->create([
             'is_premium' => false,
@@ -114,7 +115,7 @@ class ExploreJobsTest extends TestCase
             ->assertDontSee('JobStreet Listing');
     }
 
-    public function test_user_reporting_expired_increments_report_count_and_archives_at_threshold()
+    public function test_user_reporting_expired_is_deduplicated_without_archiving()
     {
         $posting = JobPosting::create([
             'scraper_source_id' => $this->source->id,
@@ -130,20 +131,19 @@ class ExploreJobsTest extends TestCase
         Livewire::actingAs($this->user)
             ->test(\App\Livewire\ExploreJobs::class)
             ->call('reportExpired', $posting->id)
-            ->assertSee('Laporan Diterima!');
+            ->assertSee('Report submitted.');
 
         $this->assertEquals(1, $posting->fresh()->report_dead_count);
         $this->assertEquals('active', $posting->fresh()->status);
 
-        // Report 2 more times to trigger the threshold (= 3)
+        // Repeated reports from the same user add no evidence.
         Livewire::actingAs($this->user)
             ->test(\App\Livewire\ExploreJobs::class)
             ->call('reportExpired', $posting->id)
             ->call('reportExpired', $posting->id);
 
-        // Should be closed/archived immediately at 3 reports
-        $this->assertEquals(3, $posting->fresh()->report_dead_count);
-        $this->assertEquals('closed', $posting->fresh()->status);
+        $this->assertEquals(1, $posting->fresh()->report_dead_count);
+        $this->assertEquals('active', $posting->fresh()->status);
     }
 
     public function test_user_can_save_scraped_job_to_job_tracker()
@@ -158,17 +158,20 @@ class ExploreJobsTest extends TestCase
             'status' => 'active',
         ]);
 
-        Livewire::actingAs($this->user)
+        $component = Livewire::actingAs($this->user)
             ->test(\App\Livewire\ExploreJobs::class)
             ->call('trackJob', $posting->id)
-            ->assertSee('Disimpan ke Tracker!');
+            ->assertHasNoErrors();
 
         $this->assertDatabaseHas('job_applications', [
             'user_id' => $this->user->id,
             'company_name' => 'RubyCorp',
             'position' => 'Ruby Programmer',
             'platform_link' => 'https://linkedin.com/jobs/view/400',
+            'application_status' => 'On Process',
+            'recruitment_stage' => 'Applied',
         ]);
+        $component->assertSee('Added to your tracker.');
     }
 
     public function test_user_can_save_scraped_job_via_confirmation_modal()
@@ -183,18 +186,21 @@ class ExploreJobsTest extends TestCase
             'status' => 'active',
         ]);
 
-        \Livewire\Livewire::actingAs($this->user)
+        $component = \Livewire\Livewire::actingAs($this->user)
             ->test(\App\Livewire\ExploreJobs::class)
             ->call('initiateTrackJob', $posting->id)
             ->assertSet('confirmingTrackJobId', $posting->id)
             ->call('confirmTrackJob')
-            ->assertSee('Disimpan ke Tracker!');
+            ->assertHasNoErrors();
 
         $this->assertDatabaseHas('job_applications', [
             'user_id' => $this->user->id,
             'company_name' => 'SwiftCorp',
             'position' => 'Swift Programmer',
+            'application_status' => 'On Process',
+            'recruitment_stage' => 'Applied',
         ]);
+        $component->assertSee('Added to your tracker.');
     }
 
     public function test_user_can_report_expired_job_via_confirmation_modal()
@@ -214,7 +220,7 @@ class ExploreJobsTest extends TestCase
             ->call('initiateReportExpired', $posting->id)
             ->assertSet('confirmingReportJobId', $posting->id)
             ->call('confirmReportExpired')
-            ->assertSee('Laporan Diterima!');
+            ->assertSee('Report submitted.');
 
         $this->assertEquals(1, $posting->fresh()->report_dead_count);
     }

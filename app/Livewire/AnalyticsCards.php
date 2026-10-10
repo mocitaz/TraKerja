@@ -38,20 +38,19 @@ class AnalyticsCards extends Component
             ->where('is_archived', false)
             ->count();
 
-        // Offering / Accepted: Hitung jumlah lamaran yang memiliki recruitment_stage = 'Offering' ATAU application_status = 'Accepted' ATAU application_status = 'Offering'
+        // Offering / Accepted: Hitung jumlah lamaran yang memiliki recruitment_stage = 'Offering' ATAU application_status = 'Accepted'
         $this->offeringAcceptedCount = JobApplication::where('user_id', $userId)
             ->where(function($query) {
                 $query->where('recruitment_stage', 'Offering')
-                      ->orWhere('application_status', 'Accepted')
-                      ->orWhere('application_status', 'Offering');
+                      ->orWhere('application_status', 'Accepted');
             })
             ->count();
 
-        // Declined: Hitung jumlah lamaran dengan application_status = 'Declined' saja
-        // CATATAN: Hanya menghitung yang benar-benar Declined, TIDAK termasuk Not Processed
+        // Rejected: Hitung jumlah lamaran dengan application_status = 'Rejected' saja
+        // CATATAN: Hanya menghitung yang benar-benar Rejected, TIDAK termasuk Not Processed
         // Not Processed adalah recruitment_stage, bukan application_status, jadi tidak dihitung di sini
         $this->declinedCount = JobApplication::where('user_id', $userId)
-            ->where('application_status', 'Declined')
+            ->where('application_status', 'Rejected')
             ->count();
 
         // Total Applications - Semua data termasuk yang di-arsip

@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\AiPhoto;
-use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use App\Services\ActivityLogger;
 
 class AiPhotoController extends Controller
 {
@@ -20,7 +16,7 @@ class AiPhotoController extends Controller
         $user = Auth::user();
         
         $stats = [
-            'total_generated' => $user->aiPhotos()->count(),
+            'total_generated' => $user->aiPhotos()->where('status', 'completed')->count(),
             'remaining_credits' => $user->getRemainingPhoto(),
         ];
 
@@ -30,90 +26,40 @@ class AiPhotoController extends Controller
     /**
      * Process the photo (remove background or enhance with AI).
      */
-    public function process(Request $request)
+    public function process(Request $request, \App\Services\AiPhotoProcessingService $service)
     {
-        $request->validate([
-            'photo' => 'required|image|max:20480', // Max 20MB
+        $validated = $request->validate([
+            'photo' => 'required|image|max:20480',
+            'request_key' => 'required|uuid',
             'type' => 'required|in:remove_bg,enhance',
-            'style' => 'nullable|string',
-            'background' => 'nullable|string',
-            'mode' => 'nullable|string|in:portrait,headshot',
-            'size' => 'nullable|string',
+            'style' => 'nullable|string|max:100',
+            'background' => 'nullable|string|max:100',
+            'mode' => 'nullable|in:portrait,headshot',
+            'size' => 'nullable|string|max:50',
         ]);
+        $payload = $validated['type'] === 'remove_bg'
+            ? ['type' => 'remove_bg', 'background' => $validated['background'] ?? 'transparan', 'size' => $validated['size'] ?? 'original']
+            : ['type' => 'enhance', 'style' => $validated['style'] ?? 'auto', 'background' => $validated['background'] ?? 'studio_plain', 'mode' => $validated['mode'] ?? 'portrait'];
+        $photo = $service->submit($request->user(), $request->file('photo'), $payload, $validated['request_key']);
+        return redirect()->route('ai-photo.show', $photo->id)->with('success', 'Permintaan foto tersimpan. Anda dapat memantau prosesnya di halaman ini.');
+    }
 
-        $user = Auth::user();
+    public function status(Request $request, int $aiPhoto)
+    {
+        $photo = $request->user()->aiPhotos()->findOrFail($aiPhoto);
+        return response()->json([
+            'status' => $photo->status,
+            'message' => $photo->error_message,
+            'credit_state' => $photo->credit_state,
+        ])->header('Cache-Control', 'private, no-store');
+    }
 
-        // Check if monetization is enabled and check credits
-        if (Setting::isMonetizationEnabled() && !$user->canAccessPhotoWithLimit()) {
-            return back()->with('error', 'Kredit Photo AI Anda telah habis. Silakan upgrade Premium atau beli Add-on untuk menambah kredit.');
-        }
-
-        $type = $request->input('type');
-        $baseUrl = config('services.photo_api.url', 'https://aiphoto.apitrakerja.online');
-
-        try {
-            $endpoint = $type === 'remove_bg' ? '/remove-bg' : '/enhance-photo-ai';
-            
-            $payload = [];
-            if ($type === 'remove_bg') {
-                $payload['background'] = $request->input('background', 'transparan');
-                $payload['size'] = $request->input('size', 'original');
-            } else {
-                $payload['style'] = $request->input('style', 'auto');
-                $payload['background'] = $request->input('background', 'studio_plain');
-                $payload['mode'] = $request->input('mode', 'portrait');
-            }
-
-            // Using timeout(300) since AI process takes time
-            $response = Http::timeout(300)->attach(
-                'photo',
-                fopen($request->file('photo')->getRealPath(), 'r'),
-                $request->file('photo')->getClientOriginalName()
-            )->post($baseUrl . $endpoint, $payload);
-
-            if (!$response->successful()) {
-                $errorMsg = $response->json('error') ?? 'Terjadi kesalahan pada server AI.';
-                return back()->with('error', 'Gagal memproses gambar: ' . $errorMsg);
-            }
-
-            $data = $response->json();
-
-            if (!isset($data['success']) || !$data['success']) {
-                $errorMsg = $data['error'] ?? 'Terjadi kesalahan pada AI processing.';
-                return back()->with('error', 'Gagal memproses gambar: ' . $errorMsg);
-            }
-
-            // Deduct credit after successful API call
-            $user->incrementPhotoCount();
-
-            // Save to database
-            $aiPhoto = AiPhoto::create([
-                'user_id' => $user->id,
-                'type' => $type,
-                'style_used' => $data['style_used'] ?? null,
-                'background_used' => $data['background'] ?? $data['background_used'] ?? null,
-                'mode' => $data['mode'] ?? null,
-                'original_photo_name' => $request->file('photo')->getClientOriginalName(),
-                'result_url' => $data['result_url'],
-                'photo_analysis' => $data['photo_analysis'] ?? null,
-            ]);
-
-            $typeLabel = $type === 'remove_bg' ? 'Hapus Latar Belakang' : 'Enhance & Ubah Latar';
-            ActivityLogger::log(
-                'ai_photo',
-                "User menggunakan AI Photo Studio untuk {$typeLabel}",
-                'success',
-                ['type' => $type, 'style' => $payload['style'] ?? 'auto'],
-                $user->id
-            );
-
-            return redirect()->route('ai-photo.show', $aiPhoto->id)
-                ->with('success', 'Foto berhasil diproses!');
-
-        } catch (\Exception $e) {
-            Log::error('AI Photo Studio Error: ' . $e->getMessage());
-            return back()->with('error', 'Gagal terhubung ke layanan AI Photo Studio. Pastikan server AI berjalan. ' . $e->getMessage());
-        }
+    public function retry(Request $request, int $aiPhoto, \App\Services\AiPhotoProcessingService $service)
+    {
+        $photo = $request->user()->aiPhotos()->findOrFail($aiPhoto);
+        $validated = $request->validate(['request_key' => 'required|uuid']);
+        $attempt = $service->retry($request->user(), $photo, $validated['request_key']);
+        return redirect()->route('ai-photo.show', $attempt->id)->with('success', 'Percobaan baru tersimpan.');
     }
 
     /**
@@ -125,7 +71,7 @@ class AiPhotoController extends Controller
             ->where('user_id', Auth::id())
             ->firstOrFail();
 
-        return view('ai-photo.show', compact('aiPhoto'));
+        return app(\App\Support\AiStudioWorkspace::class)->render(Auth::user(), 'photo', $aiPhoto);
     }
 
     /**

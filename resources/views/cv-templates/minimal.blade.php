@@ -127,6 +127,9 @@
             .container { width: 100%; }
         }
     </style>
+@if(!empty($browserPreview))
+    <style>body { padding: {{ $margin ?? '15mm' }}; } @media print { body { padding: 0; } }</style>
+    @endif
 </head>
 <body>
     <div class="container">

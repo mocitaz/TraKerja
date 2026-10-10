@@ -52,7 +52,7 @@ class OrganizationForm extends Component
     
     public function edit($id)
     {
-        $organization = UserOrganization::findOrFail($id);
+        $organization = Auth::user()->organizations()->findOrFail($id);
         
         if ($organization->user_id !== Auth::id()) {
             abort(403);
@@ -60,7 +60,7 @@ class OrganizationForm extends Component
         
         $this->organizationId = $organization->id;
         $this->organization_name = $organization->organization_name;
-        $this->position = $organization->position;
+        $this->position = $organization->role;
         $this->location = $organization->location ?? '';
         $this->start_date = $organization->start_date?->format('Y-m-d');
         $this->end_date = $organization->end_date?->format('Y-m-d');
@@ -105,9 +105,8 @@ class OrganizationForm extends Component
             return;
         }
         $data = [
-            'user_id' => Auth::id(),
             'organization_name' => $this->organization_name,
-            'position' => $this->position,
+            'role' => $this->position,
             'location' => $this->location,
             'start_date' => $this->start_date,
             'end_date' => $this->is_current ? null : $this->end_date,
@@ -117,11 +116,11 @@ class OrganizationForm extends Component
         ];
         
         if ($this->editMode) {
-            $organization = UserOrganization::findOrFail($this->organizationId);
+            $organization = Auth::user()->organizations()->findOrFail($this->organizationId);
             $organization->update($data);
             $message = 'Organization experience updated successfully!';
         } else {
-            UserOrganization::create($data);
+            Auth::user()->organizations()->create($data);
             $message = 'Organization experience added successfully!';
         }
         
@@ -132,6 +131,7 @@ class OrganizationForm extends Component
         ]);
         
         $this->closeModal();
+        $this->dispatch('cv-data-updated');
         $this->loadOrganizations();
     }
     
@@ -151,7 +151,7 @@ class OrganizationForm extends Component
     {
         if (!$this->deleteId) return;
 
-        $organization = UserOrganization::findOrFail($this->deleteId);
+        $organization = Auth::user()->organizations()->findOrFail($this->deleteId);
 
         if ($organization->user_id !== Auth::id()) {
             abort(403);
@@ -168,14 +168,15 @@ class OrganizationForm extends Component
             'message' => 'Organization deleted successfully!',
         ]);
         
+        $this->dispatch('cv-data-updated');
         $this->loadOrganizations();
     }
     
     public function moveUp($id)
     {
-        $organization = UserOrganization::findOrFail($id);
+        $organization = Auth::user()->organizations()->findOrFail($id);
         if ($organization->display_order > 0) {
-            $swapWith = UserOrganization::where('user_id', Auth::id())
+            $swapWith = Auth::user()->organizations()
                 ->where('display_order', $organization->display_order - 1)
                 ->first();
             
@@ -188,16 +189,17 @@ class OrganizationForm extends Component
             $organization->save();
         }
         
+        $this->dispatch('cv-data-updated');
         $this->loadOrganizations();
     }
     
     public function moveDown($id)
     {
-        $organization = UserOrganization::findOrFail($id);
+        $organization = Auth::user()->organizations()->findOrFail($id);
         $maxOrder = $this->organizations->max('display_order');
         
         if ($organization->display_order < $maxOrder) {
-            $swapWith = UserOrganization::where('user_id', Auth::id())
+            $swapWith = Auth::user()->organizations()
                 ->where('display_order', $organization->display_order + 1)
                 ->first();
             
@@ -210,6 +212,7 @@ class OrganizationForm extends Component
             $organization->save();
         }
         
+        $this->dispatch('cv-data-updated');
         $this->loadOrganizations();
     }
     

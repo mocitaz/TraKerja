@@ -16,7 +16,7 @@ class ExtensionController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required|string'
         ]);
 
         $user = User::where('email', $request->email)->first();
@@ -27,7 +27,15 @@ class ExtensionController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken('extension_token')->plainTextToken;
+        if (!$user->hasVerifiedEmail()) {
+            return response()->json(['message' => 'Verifikasi email Anda terlebih dahulu.'], 403);
+        }
+
+        $token = $user->createToken(
+            'extension_token',
+            ['jobs:create', 'account:read', 'token:revoke'],
+            now()->addDays(30)
+        )->plainTextToken;
 
         ActivityLogger::log(
             'extension_login',
@@ -49,7 +57,10 @@ class ExtensionController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $token = $request->user()->currentAccessToken();
+        if ($token instanceof \Laravel\Sanctum\PersonalAccessToken) {
+            $token->delete();
+        }
         return response()->json(['message' => 'Logged out successfully']);
     }
 

@@ -73,6 +73,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'email_verified_at',
         'logo',
+        'avatar_id',
         'role',
         'is_admin',
         'is_premium',
@@ -152,6 +153,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'is_premium' => 'boolean',
             'auto_archive_rejected' => 'boolean',
             'premium_purchased_at' => 'datetime',
+            'premium_until' => 'datetime',
             'registered_phase' => 'integer',
             'grandfathered_benefits' => 'array',
             'cv_exports_this_month' => 'integer',
@@ -178,6 +180,13 @@ class User extends Authenticatable implements MustVerifyEmail
     protected static function boot()
     {
         parent::boot();
+
+        static::creating(function ($user) {
+            if (empty($user->avatar_id)) {
+                $avatarIds = array_keys(\App\Support\AvatarCatalog::all());
+                $user->avatar_id = $avatarIds[random_int(0, count($avatarIds) - 1)];
+            }
+        });
 
         // Validate payment_status before saving
         static::saving(function ($user) {
@@ -208,7 +217,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 return \Illuminate\Support\Facades\Storage::url($this->logo);
             }
         }
-        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=random';
+        return \App\Support\AvatarCatalog::url(\App\Support\AvatarCatalog::resolve($this->avatar_id, (int) $this->id));
     }
 
     /**
@@ -346,7 +355,10 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function isPremium(): bool
     {
-        return $this->is_premium && $this->payment_status === self::PAYMENT_STATUS_PAID;
+        // Null expiry preserves legacy and manual indefinite memberships.
+        return $this->is_premium
+            && $this->payment_status === self::PAYMENT_STATUS_PAID
+            && ($this->premium_until === null || $this->premium_until->isFuture());
     }
 
     /**
@@ -436,7 +448,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
         
         // PREMIUM MODE: Premium users get full access
-        if ($this->is_premium && $this->payment_status === self::PAYMENT_STATUS_PAID) {
+        if ($this->isPremium()) {
             return true;
         }
         
@@ -490,7 +502,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
         
         // PREMIUM MODE: Premium users have unlimited exports
-        if ($this->is_premium && $this->payment_status === self::PAYMENT_STATUS_PAID) {
+        if ($this->isPremium()) {
             return true;
         }
         
@@ -527,7 +539,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
         
         // PREMIUM MODE: Premium users have unlimited
-        if ($this->is_premium && $this->payment_status === self::PAYMENT_STATUS_PAID) {
+        if ($this->isPremium()) {
             return 'unlimited';
         }
         
@@ -921,12 +933,9 @@ class User extends Authenticatable implements MustVerifyEmail
             return true;
         }
         
-        if ($this->photo_credits <= 0) {
-            return false;
-        }
-        
-        $this->decrement('photo_credits');
-        return true;
+        $deducted = static::whereKey($this->id)->where('photo_credits', '>', 0)->decrement('photo_credits');
+        $this->refresh();
+        return $deducted === 1;
     }
 
     /**
@@ -950,4 +959,3 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 }
-

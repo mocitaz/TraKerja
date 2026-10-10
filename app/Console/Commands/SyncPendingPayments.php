@@ -37,45 +37,12 @@ class SyncPendingPayments extends Command
                     $this->line("-> Pakasir API Status: {$apiStatus}");
 
                     if ($apiStatus === 'completed') {
-                        // Manual activation block like handleSuccessfulPayment
-                        \DB::transaction(function () use ($payment, $statusCheck) {
-                            $payment->update([
-                                'webhook_data' => $statusCheck['data'],
-                                'status' => 'SUCCESS',
-                                'paid_at' => now(),
-                            ]);
-
-                            $user = $payment->user;
-                            $packageType = $payment->notes ?? ($payment->metadata['package_type'] ?? 'premium');
-
-                            if ($packageType === 'addon_10' || $packageType === 'cl_addon_15') {
-                                $user->addAiCredits(10);
-                                $user->addClCredits(15);
-                                $user->addPhotoCredits(5);
-                            } else {
-                                $premiumDuration = (int) config('pakasir.premium_duration_days', 365);
-                                $user->update([
-                                    'is_premium' => true,
-                                    'payment_status' => 'paid',
-                                    'premium_until' => now()->addDays($premiumDuration),
-                                    'premium_purchased_at' => now(),
-                                ]);
-
-                                $analyzerLimit = \App\Models\Setting::getLimit('ai_analyzer', $user);
-                                $clLimit = \App\Models\Setting::getLimit('cover_letters', $user);
-                                $photoLimit = \App\Models\Setting::getLimit('ai_photo', $user);
-
-                                $user->update([
-                                    'ai_credits' => $analyzerLimit === 'unlimited' ? 9999 : (int) $analyzerLimit,
-                                    'cl_credits' => $clLimit === 'unlimited' ? 9999 : (int) $clLimit,
-                                    'photo_credits' => $photoLimit === 'unlimited' ? 9999 : (int) $photoLimit,
-                                ]);
-                            }
-
-                            $this->info("-> SUCCESS: Payment synchronized and credits/premium granted successfully!");
-                        });
+                        $granted = app(\App\Services\PaymentSettlementService::class)->settle($payment, $statusCheck['data']);
+                        $this->info($granted
+                            ? '-> SUCCESS: Payment synchronized and benefits granted.'
+                            : '-> SUCCESS: Payment already settled; no duplicate benefits.');
                     } elseif (in_array($apiStatus, ['failed', 'canceled'])) {
-                        $payment->update(['status' => 'FAILED']);
+                        $apiStatus === 'canceled' ? $payment->markAsCanceled() : $payment->markAsFailed();
                         $this->warn("-> FAILED: Payment updated to FAILED status.");
                     } else {
                         $this->line("-> No change: Payment remains in pending/waiting status.");

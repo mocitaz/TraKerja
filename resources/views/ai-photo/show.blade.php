@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="bg-[#fafafa] min-h-screen pb-16">
-        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <div class="workspace-page-frame max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
             
             <!-- Premium Notion-Inspired Page Header -->
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200/60 pb-5 mb-6">

@@ -2,17 +2,16 @@
 
 namespace App\Livewire;
 
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 
 use App\Models\JobApplication;
+use App\Support\JobApplicationStatus;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class JobTableList extends Component
 {
     use WithPagination;
+    use \App\Livewire\Concerns\DraftsApplicationFollowUp;
 
     /**
      * Whitelist of columns allowed for sorting.
@@ -44,54 +43,10 @@ class JobTableList extends Component
     public $showAdvancedFilters = false;
     public $showArchived = false;
 
-    // Ghosting Follow Up Properties
-    public $showFollowUpModal = false;
-    public $followUpDraft = '';
-    public $followUpJobId = null;
-    public $isGeneratingFollowUp = false;
 
-    public $statusOptions = [
-        'Applied',
-        'On Process',
-        'Interview',
-        'Offering',
-        'Accepted',
-        'Rejected'
-    ];
+    public $statusOptions = JobApplicationStatus::OPTIONS;
 
-    public $platformOptions = [
-        '9cv9',
-        'Cake: Cari Lowongan',
-        'Dealls',
-        'Disnakerja.com',
-        'Email',
-        'Fiverr',
-        'Freelancer',
-        'Glassdoor',
-        'Glints',
-        'Google Forms',
-        'Indeed',
-        'JobStreet',
-        'Jobseeker App',
-        'JobsDB',
-        'Jora',
-        'Kalibrr',
-        'Karir.com',
-        'Karirhub (SIAPkerja)',
-        'KitaLulus',
-        'LinkedIn',
-        'Loker.id',
-        'Microsoft Forms',
-        'NusaCrowd',
-        'Pintarnya.com',
-        'SkillAcademy',
-        'SkillTrade',
-        'Talentics',
-        'Tech in Asia',
-        'Urbanhire',
-        'Website Company',
-        'Other'
-    ];
+    public $platformOptions = \App\Support\PlatformCatalog::OPTIONS;
 
     public $careerLevelOptions = [
         'Intern',
@@ -101,18 +56,7 @@ class JobTableList extends Component
         'Freelance'
     ];
 
-    public $recruitmentStageOptions = [
-        'Applied',
-        'Follow Up',
-        'Assessment Test',
-        'Psychotest',
-        'HR - Interview',
-        'User - Interview',
-        'LGD',
-        'Presentation Round',
-        'Offering',
-        'Not Processed'
-    ];
+    public $recruitmentStageOptions = JobApplicationStatus::STAGES;
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -345,7 +289,6 @@ class JobTableList extends Component
             'Offering' => '#14B8A6', 
             'Accepted' => '#10B981', 
             'Rejected' => '#EF4444',
-            'Declined' => '#EF4444',
         ];
 
         return $colors[$status] ?? '#6B7280';
@@ -427,7 +370,7 @@ class JobTableList extends Component
         $jobApplications = $query->orderBy('is_pinned', 'desc') // Pinned items first
             ->orderBy($safeSortField, $safeSortDirection)
             ->orderBy('created_at', 'desc') // Tertiary sort by creation time
-            ->paginate($this->perPage);
+            ->paginate($this->perPage = \App\Support\PageSize::resolve($this->perPage, [10, 30, 50, 100], 30));
 
         return view('livewire.job-table-list', [
             'jobApplications' => $jobApplications,
@@ -435,68 +378,5 @@ class JobTableList extends Component
         ]);
     }
 
-    public function closeFollowUpModal()
-    {
-        $this->showFollowUpModal = false;
-        $this->followUpJobId = null;
-        $this->followUpDraft = '';
-    }
 
-    public function generateFollowUp($jobId)
-    {
-        $this->followUpJobId = $jobId;
-        $job = JobApplication::where('id', $jobId)->where('user_id', auth()->id())->first();
-        if (!$job) {
-            $this->closeFollowUpModal();
-            return;
-        }
-
-        $this->isGeneratingFollowUp = true;
-
-        $prompt = "CRITICAL INSTRUCTION: DO NOT WRITE A COVER LETTER. Write a highly professional follow-up email to HR. Context: The applicant applied for this position 14 days ago and hasn't heard back. The email should politely ask for a status update. Use formal Indonesian language. Keep it concise, empathetic, and professional.";
-        
-        $context = [
-            'experiences' => [
-                [
-                    'company_name' => $job->company_name,
-                    'position' => $job->position,
-                    'description' => "Applied on " . $job->application_date->format('d M Y') . ". Application stage: " . ($job->recruitment_stage ?: $job->application_status),
-                ]
-            ]
-        ];
-
-        $aiPayload = [
-            'company_name' => $job->company_name,
-            'job_title' => $job->position,
-            'job_description' => $prompt,
-            'language' => 'id',
-            'tone' => 'professional',
-            'length' => 'short',
-            'highlight_focus' => 'Requesting status update on application',
-            'candidate_context' => $context,
-        ];
-
-        try {
-            // Force a minimum 1 second delay so the UI loading state is visible to the user
-            sleep(1);
-
-            $response = Http::timeout(60)->post('https://ai-analyzer-seven.vercel.app/generate-cl', $aiPayload);
-
-            if ($response->successful()) {
-                $responseBody = $response->json();
-                $this->followUpDraft = $responseBody['cover_letter'] ?? $responseBody['result'] ?? '';
-                // Open modal AFTER draft is ready
-                $this->showFollowUpModal = true;
-            } else {
-                $this->followUpDraft = "Sorry, failed to generate email draft. Please try again later.";
-                $this->showFollowUpModal = true;
-            }
-        } catch (\Exception $e) {
-            Log::error('AI Follow Up Error: ' . $e->getMessage());
-            $this->followUpDraft = "An error occurred while contacting the AI server.";
-            $this->showFollowUpModal = true;
-        }
-
-        $this->isGeneratingFollowUp = false;
-    }
 }

@@ -11,6 +11,9 @@ class ExploreJobs extends Component
     use WithPagination;
 
     public $search = '';
+    public $sortBy = 'newest';
+    #[\Livewire\Attributes\Locked]
+    public ?int $previewJobId = null;
     public $selectedPlatform = '';
     public $selectedField = '';
     public $selectedMajor = '';
@@ -32,6 +35,7 @@ class ExploreJobs extends Component
 
     protected $queryString = [
         'search' => ['except' => ''],
+        'sortBy' => ['except' => 'newest'],
         'selectedPlatform' => ['except' => ''],
         'selectedField' => ['except' => ''],
         'selectedMajor' => ['except' => ''],
@@ -45,6 +49,31 @@ class ExploreJobs extends Component
         if (auth()->check() && (auth()->user()->isAdmin() || auth()->user()->role === 'admin')) {
             return redirect()->route('admin.index');
         }
+    }
+
+    public function updatingSortBy()
+    {
+        $this->resetPage();
+    }
+
+    public function previewJob($id)
+    {
+        $posting = JobPosting::where('status', 'active')->findOrFail($id);
+        $this->previewJobId = $posting->id;
+    }
+
+    public function closePreview()
+    {
+        $this->previewJobId = null;
+    }
+
+    public function clearFilter(string $name)
+    {
+        if (!in_array($name, ['search', 'selectedPlatform', 'selectedField', 'selectedMajor', 'selectedWorkType', 'selectedProvince', 'selectedLocation'], true)) return;
+        $this->$name = '';
+        if ($name === 'selectedProvince') $this->selectedLocation = '';
+        if ($name === 'selectedField') $this->selectedMajor = '';
+        $this->resetPage();
     }
 
     public function updatingSearch()
@@ -100,6 +129,7 @@ class ExploreJobs extends Component
 
     public function resetFilters()
     {
+        $this->sortBy = 'newest';
         $this->search = '';
         $this->selectedPlatform = '';
         $this->selectedField = '';
@@ -120,7 +150,7 @@ class ExploreJobs extends Component
 
     public function initiateReportExpired($id)
     {
-        $posting = JobPosting::find($id);
+        $posting = JobPosting::with('scraperSource')->where('status', 'active')->findOrFail($id);
         if ($posting) {
             $this->confirmingReportJobId = $id;
             $this->confirmingReportJobTitle = $posting->title;
@@ -143,33 +173,22 @@ class ExploreJobs extends Component
 
     public function reportExpired($id)
     {
-        $posting = JobPosting::find($id);
-        
-        if ($posting) {
-            $posting->increment('report_dead_count');
-            
-            if ($posting->report_dead_count >= 3) {
-                $posting->update(['status' => 'reported_dead']);
-                
-                // Spin up a high priority validation task or just handle it
-                // Dispatching background verification or archiving
-                $posting->update(['status' => 'closed']); // Archive immediately to showcase loop
-                
-                session()->flash('report_info_' . $id, 'This listing has been reported multiple times and is now archived.');
-            } else {
-                session()->flash('report_success_' . $id, 'Laporan Diterima!');
-            }
-        }
+        abort_unless(auth()->check(), 401);
+        $accepted = app(\App\Services\JobPostingReportService::class)->report(auth()->user(), (int) $id);
+        session()->flash('report_success_' . $id, $accepted
+            ? 'Report submitted. The listing will be checked.'
+            : 'Your report is already recorded, or the listing is no longer active.');
     }
 
     public function initiateTrackJob($id)
     {
-        $posting = JobPosting::find($id);
+        $posting = JobPosting::with('scraperSource')->where('status', 'active')->findOrFail($id);
         if ($posting) {
+            $this->previewJobId = null;
             $this->confirmingTrackJobId = $id;
             $this->confirmingJobTitle = $posting->title;
             $this->confirmingJobCompany = $posting->company_name;
-            $this->confirmingJobPortal = str_contains($posting->scraperSource->target_domain, 'linkedin') ? 'LinkedIn' : (str_contains($posting->scraperSource->target_domain, 'jobstreet') ? 'JobStreet' : 'Kalibrr');
+            $this->confirmingJobPortal = $posting->source_platform;
             $this->confirmingJobUrl = $posting->raw_url;
         }
     }
@@ -189,7 +208,8 @@ class ExploreJobs extends Component
 
     public function trackJob($id)
     {
-        $posting = JobPosting::find($id);
+        abort_unless(auth()->check(), 401);
+        $posting = JobPosting::with('scraperSource')->where('status', 'active')->findOrFail($id);
         
         if ($posting) {
             $exists = \App\Models\JobApplication::where('user_id', auth()->id())
@@ -198,11 +218,11 @@ class ExploreJobs extends Component
                 ->exists();
                 
             if ($exists) {
-                session()->flash('track_info_' . $id, 'Sudah ditambahkan!');
+                session()->flash('track_info_' . $id, 'Already in your tracker.');
                 return;
             }
 
-            $portalName = str_contains($posting->scraperSource->target_domain, 'linkedin') ? 'LinkedIn' : (str_contains($posting->scraperSource->target_domain, 'jobstreet') ? 'JobStreet' : 'Kalibrr');
+            $portalName = $posting->source_platform;
 
             \App\Models\JobApplication::create([
                 'user_id' => auth()->id(),
@@ -211,19 +231,19 @@ class ExploreJobs extends Component
                 'location' => $posting->location ?: 'Indonesia',
                 'platform' => $portalName,
                 'platform_link' => $posting->raw_url,
-                'application_status' => 'Applied',
+                'application_status' => 'On Process',
                 'recruitment_stage' => 'Applied',
                 'application_date' => now()->format('Y-m-d'),
-                'notes' => 'Lowongan disimpan secara otomatis dari halaman Explore Jobs.',
+                'notes' => 'Lowongan disimpan secara otomatis dari halaman Cari Lowongan.',
             ]);
 
-            session()->flash('track_success_' . $id, 'Disimpan ke Tracker!');
+            session()->flash('track_success_' . $id, 'Added to your tracker.');
         }
     }
 
     public function render()
     {
-        $query = JobPosting::where('status', 'active');
+        $query = JobPosting::with('scraperSource')->where('status', 'active');
 
         if (!empty($this->search)) {
             $query->where(function($q) {
@@ -261,7 +281,17 @@ class ExploreJobs extends Component
             $query->where('location', $this->selectedLocation);
         }
 
-        $postings = $query->orderBy('created_at', 'desc')->paginate(12);
+        $direction = $this->sortBy === 'oldest' ? 'asc' : 'desc';
+        $postings = $query->orderBy('created_at', $direction)->orderBy('id', $direction)->paginate(12);
+        $applications = \App\Models\JobApplication::where('user_id', auth()->id())
+            ->whereIn('company_name', $postings->pluck('company_name'))->get(['id', 'company_name', 'position']);
+        $savedJobs = [];
+        foreach ($postings as $posting) {
+            $saved = $applications->first(fn ($application) => $application->company_name === $posting->company_name && $application->position === $posting->title);
+            if ($saved) $savedJobs[$posting->id] = $saved->id;
+        }
+        $reportedIds = \Illuminate\Support\Facades\DB::table('job_posting_reports')->where('user_id', auth()->id())
+            ->whereIn('job_posting_id', $postings->pluck('id'))->pluck('job_posting_id')->all();
 
         $fieldsList = \App\Helpers\CategoryHelper::getSektorList();
         sort($fieldsList);
@@ -271,9 +301,15 @@ class ExploreJobs extends Component
 
         return view('livewire.explore-jobs', [
             'postings' => $postings,
+            'savedJobs' => $savedJobs,
+            'reportedIds' => $reportedIds,
+            'userSkills' => auth()->user()->skills()->pluck('skill_name')->map(fn ($skill) => mb_strtolower(trim($skill)))->all(),
+            'previewJob' => $this->previewJobId ? JobPosting::with('scraperSource')->where('status', 'active')->find($this->previewJobId) : null,
+            'platformsList' => \App\Models\ScraperSource::whereHas('jobPostings', fn ($sourceQuery) => $sourceQuery->where('status', 'active'))->orderBy('name')->get(['name', 'target_domain']),
+            'catalogCount' => JobPosting::where('status', 'active')->count(),
+            'latestCheck' => JobPosting::where('status', 'active')->max('last_validated_at'),
             'fieldsList' => $fieldsList,
             'majorsList' => $majorsList,
-            'locationStats' => \App\Helpers\LocationHelper::getLocationStatistics(),
             'provincesList' => \App\Helpers\LocationHelper::getAllProvinces(),
             'locationsList' => !empty($this->selectedProvince) 
                 ? \App\Helpers\LocationHelper::getCitiesForProvince($this->selectedProvince)

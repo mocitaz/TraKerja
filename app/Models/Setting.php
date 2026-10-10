@@ -132,7 +132,7 @@ class Setting extends Model
         }
         
         // PREMIUM MODE: Check if user is premium
-        if ($user && $user->is_premium && $user->payment_status === \App\Models\User::PAYMENT_STATUS_PAID) {
+        if ($user && $user->isPremium()) {
             return true;
         }
         
@@ -178,7 +178,7 @@ class Setting extends Model
         ];
         
         // PREMIUM MODE: Premium users get higher limits
-        if ($user && $user->is_premium && $user->payment_status === \App\Models\User::PAYMENT_STATUS_PAID) {
+        if ($user && $user->isPremium()) {
             $premiumLimits = [
                 'cv_templates' => 4,
                 'cv_generated' => 'unlimited',

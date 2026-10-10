@@ -1,0 +1,8 @@
+.workspace-main { display: flex; flex-direction: column; }
+.workspace-main-content { flex: 1 0 auto; min-width: 0; }
+.workspace-footer { width: 100%; max-width: var(--page-frame-width,1320px); margin: 0 auto; padding: 0 var(--page-gutter,40px) 24px; flex-shrink: 0; font-family: 'Plus Jakarta Sans','Inter',-apple-system,BlinkMacSystemFont,sans-serif; }
+.workspace-footer-copy { border-top: 1px solid #e6e3df; display: flex; justify-content: space-between; align-items: center; gap: 12px 24px; padding-top: 18px; color: #817a83; font-size: 10px; line-height: 1.8; }
+.workspace-footer-copy p { margin: 0; }
+body.admin-workspace { display: flex; flex-direction: column; }
+.admin-workspace > .admin-page-frame { width: 100%; flex: 1; }
+@media(max-width:640px) { .workspace-footer { padding-bottom: 20px; }.workspace-footer-copy { flex-direction: column; align-items: flex-start; gap: 4px; font-size: 10px; } }

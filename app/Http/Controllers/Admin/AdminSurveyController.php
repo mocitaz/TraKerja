@@ -26,7 +26,7 @@ class AdminSurveyController extends Controller
 
         // Calculate statistics
         $totalRespondents = SatisfactionSurvey::count();
-        
+
         $avgQ1Overall = SatisfactionSurvey::avg('q1_overall') ?: 0.0;
         $avgQ2Navigation = SatisfactionSurvey::avg('q2_navigation') ?: 0.0;
         $avgQ3Speed = SatisfactionSurvey::avg('q3_speed') ?: 0.0;
@@ -102,8 +102,8 @@ class AdminSurveyController extends Controller
         Setting::set('survey_enabled', $newState);
         Setting::clearCache();
 
-        $message = $newState 
-            ? 'User Satisfaction Survey berhasil DIAKTIFKAN! Pengguna lama (akun >= 3 hari) akan dipaksa mengisi survey setelah login.' 
+        $message = $newState
+            ? 'User Satisfaction Survey berhasil DIAKTIFKAN! Pengguna lama (akun >= 3 hari) akan menerima undangan opsional untuk mengisi survey.'
             : 'User Satisfaction Survey berhasil DINONAKTIFKAN!';
 
         return redirect()->route('admin.survey.index')->with('success', $message);

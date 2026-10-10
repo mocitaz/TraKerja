@@ -1,0 +1,38 @@
+<div class="ai-composer-wrap ai-composer-wrap--chat" x-ref="composer">
+    <div class="ai-guided-conversation" aria-label="Request details">
+        <template x-for="(turn, index) in turns" :key="turn.key">
+            <div class="ai-guided-turn"><p class="ai-guided-question" x-text="turn.question"></p><div class="ai-guided-reply"><p x-text="turn.answer"></p><button type="button" @click="editTurn(index)" :disabled="busy" aria-label="Edit this answer">Edit</button></div></div>
+        </template>
+        <p class="ai-guided-question ai-guided-question--current" aria-live="polite" x-text="question"></p>
+    </div>
+    @if($errors->any())<div role="alert" class="ai-composer-error"><strong>This request needs attention.</strong><ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
+    <div role="alert" class="ai-composer-error" x-show="error" x-cloak x-text="error"></div>
+    <form method="POST" enctype="multipart/form-data" :action="endpoints[task]" @submit="sendAnswer($event)" class="ai-chat-composer" x-ref="form">
+        @csrf
+        <input type="hidden" name="_studio_task" :value="task">
+        <input type="hidden" name="company_name" :value="values.company_name || ''">
+        <input type="hidden" name="target_company" :value="values.target_company || ''">
+        <input type="hidden" name="job_title" :value="values.job_title || ''">
+        <input type="hidden" name="job_description" :value="values.job_description || ''">
+        <input type="hidden" name="request_key" value="{{ (string) \Illuminate\Support\Str::uuid() }}">
+        <template x-if="task === 'analyzer' || task === 'photo'"><input id="studio-chat-file" x-ref="file" class="sr-only" type="file" :name="task === 'analyzer' ? 'resume' : 'photo'" :accept="task === 'analyzer' ? 'application/pdf,.pdf' : 'image/*'" @change="fileChanged($event, task === 'analyzer' ? 'pdf' : 'image')" aria-label="Attach a resume or photo"></template>
+        <div class="ai-chat-attachment" x-show="fileName" x-cloak><span aria-hidden="true">↗</span><span x-text="fileName"></span><button type="button" @click="fileName = ''; $refs.file.value = ''" :disabled="busy" aria-label="Remove attachment">×</button></div>
+        <label for="studio-chat-answer" class="sr-only">Your message</label>
+        <textarea id="studio-chat-answer" x-ref="answer" x-model="answer" :placeholder="placeholder" :maxlength="currentStep?.max || 2500" :disabled="busy || completedDetails" x-show="task !== 'photo'" rows="2" @keydown.ctrl.enter.prevent="sendAnswer({ preventDefault() {}, target: $refs.form })" @keydown.meta.enter.prevent="sendAnswer({ preventDefault() {}, target: $refs.form })"></textarea>
+        <div class="ai-chat-composer-toolbar">
+            <div class="ai-chat-composer-controls">
+                <label for="studio-chat-task" class="sr-only">Choose a task</label><select id="studio-chat-task" :value="task" @change="choose($event.target.value)" :disabled="busy">@foreach($labels as $value => $label)<option value="{{ $value }}">{{ $label }}</option>@endforeach</select>
+                <label class="ai-chat-attach" for="studio-chat-file" x-show="task === 'analyzer' || task === 'photo'" :class="{'is-disabled': busy}"><span aria-hidden="true">＋</span><span x-text="task === 'analyzer' ? 'PDF' : 'Photo'"></span></label>
+                <details class="ai-chat-settings" x-show="task !== 'analyzer'"><summary aria-label="Request settings">Settings</summary><div class="ai-chat-settings-panel">
+                    <template x-if="task === 'cover-letter'"><div><label for="studio-language">Language</label><select id="studio-language" name="language"><option value="en">English</option><option value="id">Indonesian</option></select><label for="studio-letter-tone">Tone</label><select id="studio-letter-tone" name="tone">@foreach(['professional','creative','bold','warm'] as $tone)<option value="{{ $tone }}">{{ ucfirst($tone) }}</option>@endforeach</select><label for="studio-length">Length</label><select id="studio-length" name="length"><option value="standard">Standard</option><option value="short">Short</option></select><label for="studio-focus">Highlight <span>Optional</span></label><input id="studio-focus" name="highlight_focus" maxlength="1000" placeholder="A strength or achievement"></div></template>
+                    <template x-if="task === 'outreach'"><div><label for="studio-recruiter">Recruiter <span>Optional</span></label><input id="studio-recruiter" name="recruiter_name" maxlength="100" placeholder="Hiring team"><label for="studio-channel">Channel</label><select id="studio-channel" name="channel"><option>Email</option><option>LinkedIn InMail</option><option>Direct Message</option></select><label for="studio-outreach-tone">Tone</label><select id="studio-outreach-tone" name="tone"><option>Professional</option><option>Friendly</option><option>Persuasive</option></select></div></template>
+                    <template x-if="task === 'photo'"><div><label for="studio-photo-type">Process</label><select id="studio-photo-type" name="type" x-model="photoType"><option value="enhance">Enhance portrait</option><option value="remove_bg">Remove background</option></select><label for="studio-background">Background</label><select id="studio-background" name="background"><template x-if="photoType === 'enhance'"><optgroup label="Portrait backgrounds"><option value="studio_plain">Studio plain</option><option value="studio_gradient">Studio gradient</option><option value="modern_office">Modern office</option><option value="meeting_room">Meeting room</option></optgroup></template><template x-if="photoType === 'remove_bg'"><optgroup label="Background removal"><option value="transparan">Transparent</option><option value="putih">White</option><option value="merah">Red</option><option value="biru">Blue</option></optgroup></template></select><label for="studio-style">Style</label><select id="studio-style" name="style"><option value="auto">Auto</option><option value="linkedin_pria">LinkedIn suit</option><option value="linkedin_wanita">LinkedIn blazer</option><option value="rapi_formal">Formal suit & tie</option></select><label for="studio-photo-size">Size</label><select id="studio-photo-size" name="size"><option value="original">Original ratio</option><option value="3x4">3 × 4</option><option value="4x6">4 × 6</option><option value="2x3">2 × 3</option></select><input type="hidden" name="mode" value="portrait"></div></template>
+                </div></details>
+            </div>
+            <button type="submit" class="ai-chat-send" :disabled="busy || preparing || !access[task]" :aria-label="busy ? 'Processing request' : 'Send message'"><span aria-hidden="true" x-text="busy ? '…' : '↑'">↑</span></button>
+        </div>
+    </form>
+    <div class="ai-chat-composer-meta"><span x-show="task === 'cover-letter'">Uses your saved CV profile</span><span x-show="task === 'outreach'">Message template · No credit required</span><span x-show="task === 'photo'">1 credit per photo when billing is active</span><span x-show="task === 'analyzer'">PDF · Up to 10 MB</span><span class="ai-usage">@foreach($balances as $value => $balance)<span x-show="task === @js($value)">{{ $balance === 'unlimited' ? 'Unlimited usage' : number_format($balance).' credits left · 1 per request' }}</span>@endforeach</span></div>
+    <p class="ai-credit-empty" x-show="!access[task]" x-cloak>No credits available for this task. <a href="{{ route('membership.index') }}">Manage credits ↗</a></p>
+    <p role="status" aria-live="polite" x-text="notice" class="ai-inline-feedback"></p>
+</div>

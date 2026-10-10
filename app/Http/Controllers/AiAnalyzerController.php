@@ -215,11 +215,12 @@ class AiAnalyzerController extends Controller
                     'exception' => $e,
                 ]);
                 
-                // If saving fails, we still need to show the result
-                return view('ai-analyzer.result', [
-                    'result' => $analysisResult,
-                    'job_description' => $jobDescription,
+                $unsaved = new AiAnalyzerResult([
+                    'user_id' => $user->id, 'resume_file_name' => $file->getClientOriginalName(),
+                    'analysis_result' => $analysisResult, 'job_description' => $jobDescription,
                 ]);
+                $unsaved->created_at = now();
+                return app(\App\Support\AiStudioWorkspace::class)->render($user, 'analyzer', $unsaved);
             }
 
         } catch (\Illuminate\Http\Client\ConnectionException $e) {
@@ -267,9 +268,6 @@ class AiAnalyzerController extends Controller
             abort(403, 'Unauthorized access to analysis result');
         }
 
-        return view('ai-analyzer.result', [
-            'result' => $result->analysis_result,
-            'job_description' => $result->job_description,
-        ]);
+        return app(\App\Support\AiStudioWorkspace::class)->render(Auth::user(), 'analyzer', $result);
     }
 }

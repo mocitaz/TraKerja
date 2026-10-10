@@ -65,7 +65,7 @@
     </style>
 
     <div class="bg-[#fcfcfd] min-h-screen pb-24">
-        <div class="premium-container px-4 pt-8 sm:pt-16">
+        <div class="workspace-page-frame premium-container px-4 pt-8 sm:pt-16">
             
             {{-- ── Centered Hero ────────────────────────── --}}
             <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-20 space-y-6 sm:space-y-8">

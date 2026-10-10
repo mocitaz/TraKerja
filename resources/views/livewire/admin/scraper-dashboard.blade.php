@@ -1,103 +1,94 @@
-<div wire:poll.5s class="space-y-6 pb-12 w-full">
-    
+<div wire:poll.visible.5s class="admin-operations w-full">
+
     {{-- Alert Messages --}}
     @if (session()->has('success'))
-        <div class="p-3.5 bg-emerald-50 border border-emerald-250 text-emerald-800 rounded-xl flex items-center gap-2.5 shadow-3xs animate-fade-in animate-duration-150">
+        <div class="p-3.5 bg-emerald-50 border border-emerald-250 text-emerald-800 rounded-2xl flex items-center gap-2.5  animate-fade-in animate-duration-150">
             <i class="ph-bold ph-check-circle text-base text-emerald-650 shrink-0"></i>
-            <p class="text-xs font-bold">{{ session('success') }}</p>
+            <p class="text-xs font-medium">{{ session('success') }}</p>
         </div>
     @endif
     @if (session()->has('error'))
-        <div class="p-3.5 bg-red-50 border border-red-250 text-red-800 rounded-xl flex items-center gap-2.5 shadow-3xs animate-fade-in animate-duration-150">
+        <div class="p-3.5 bg-red-50 border border-red-250 text-red-800 rounded-2xl flex items-center gap-2.5  animate-fade-in animate-duration-150">
             <i class="ph-bold ph-x-circle text-base text-red-650 shrink-0"></i>
-            <p class="text-xs font-bold">{{ session('error') }}</p>
+            <p class="text-xs font-medium">{{ session('error') }}</p>
         </div>
     @endif
-
-    <!-- Header Section (Sleek and Clean) -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-200">
+    <div class="ops-page-heading">
         <div>
-            <h1 class="text-lg font-black text-zinc-900 tracking-tight flex items-center gap-1.5">
-                Scraper Engine <span class="text-[9px] font-mono font-bold text-zinc-450 bg-zinc-100 border border-zinc-200 px-1.5 py-0.2 rounded">System Stats</span>
-            </h1>
-            <p class="text-[10px] text-zinc-500 font-semibold mt-0.5">Control web scraping schedules, job ingestion sources, selectors, and sandbox testing.</p>
+            <h1>Scraper Engine</h1>
+            <p class="text-[11px] text-zinc-500 font-semibold mt-0.5">Control web scraping schedules, job ingestion sources, selectors, and sandbox testing.</p>
         </div>
         <div class="flex items-center gap-2.5">
-            <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0 shadow-3xs">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse mr-1.5"></span>
-                Engine Ready
-            </span>
+            <span class="ops-refresh-note">Refreshes every 5 seconds while visible</span>
         </div>
     </div>
-
-    {{-- Executive Summary Stats (Bento Grid) --}}
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="ops-scraper-stats">
         {{-- Total Ingested --}}
-        <div class="bg-white rounded-xl p-5 border border-zinc-200 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+        <div class="ops-scraper-panel bg-white rounded-2xl p-5 border border-[#e7e3e9] hover:border-zinc-300 transition-all flex flex-col justify-between group  text-left">
             <div class="flex items-start justify-between">
                 <div>
-                    <span class="text-[8px] font-mono font-bold text-zinc-450 uppercase tracking-widest block mb-1">Total Ingested Jobs</span>
-                    <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none mt-1">{{ number_format($stats['total_ingested']) }}</h3>
+                    <span class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Total Ingested Jobs</span>
+                    <h3 class="text-xl font-semibold tracking-tight text-zinc-900 font-sans leading-none mt-1">{{ number_format($stats['total_ingested']) }}</h3>
                 </div>
-                <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 ">
                     <i class="ph-bold ph-database text-xs"></i>
                 </div>
             </div>
-            <p class="text-[9px] font-mono font-bold text-zinc-400 mt-5 uppercase tracking-widest">Aggregated job listings</p>
+            <p class="text-[11px] font-sans font-medium text-zinc-500 mt-5  ">Aggregated job listings</p>
         </div>
 
         {{-- Jobs Scraped Today --}}
-        <div class="bg-white rounded-xl p-5 border border-zinc-200 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+        <div class="ops-scraper-panel bg-white rounded-2xl p-5 border border-[#e7e3e9] hover:border-zinc-300 transition-all flex flex-col justify-between group  text-left">
             <div class="flex items-start justify-between">
                 <div>
-                    <span class="text-[8px] font-mono font-bold text-zinc-455 uppercase tracking-widest block mb-1">Scraped Today</span>
-                    <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none mt-1">{{ number_format($stats['jobs_scraped_today']) }}</h3>
+                    <span class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Scraped Today</span>
+                    <h3 class="text-xl font-semibold tracking-tight text-zinc-900 font-sans leading-none mt-1">{{ number_format($stats['jobs_scraped_today']) }}</h3>
                 </div>
-                <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 ">
                     <i class="ph-bold ph-calendar-check text-xs"></i>
                 </div>
             </div>
-            <p class="text-[9px] font-mono font-bold text-zinc-400 mt-5 uppercase tracking-widest">Ingested in last 24 hours</p>
+            <p class="text-[11px] font-sans font-medium text-zinc-500 mt-5  ">Ingested in last 24 hours</p>
         </div>
 
         {{-- Active Platforms --}}
-        <div class="bg-white rounded-xl p-5 border border-zinc-200 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+        <div class="ops-scraper-panel bg-white rounded-2xl p-5 border border-[#e7e3e9] hover:border-zinc-300 transition-all flex flex-col justify-between group  text-left">
             <div class="flex items-start justify-between">
                 <div>
-                    <span class="text-[8px] font-mono font-bold text-zinc-455 uppercase tracking-widest block mb-1">Active Platforms</span>
-                    <h3 class="text-xl font-extrabold tracking-tight text-zinc-900 font-mono leading-none mt-1">{{ $stats['active_sources'] }} / 3</h3>
+                    <span class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Active Platforms</span>
+                    <h3 class="text-xl font-semibold tracking-tight text-zinc-900 font-sans leading-none mt-1">{{ $stats['active_sources'] }} / {{ count($sources) }}</h3>
                 </div>
-                <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 ">
                     <i class="ph-bold ph-globe text-xs"></i>
                 </div>
             </div>
-            <p class="text-[9px] font-mono font-bold text-zinc-400 mt-5 uppercase tracking-widest">LinkedIn, JobStreet, Kalibrr</p>
+            <p class="text-[11px] font-sans font-medium text-zinc-500 mt-5  ">LinkedIn, JobStreet, Kalibrr</p>
         </div>
 
         {{-- Queue & Worker Monitor --}}
-        <div class="bg-white rounded-xl p-5 border border-zinc-200 hover:border-zinc-300 transition-all flex flex-col justify-between group shadow-3xs text-left">
+        <div class="ops-scraper-panel bg-white rounded-2xl p-5 border border-[#e7e3e9] hover:border-zinc-300 transition-all flex flex-col justify-between group  text-left">
             <div>
                 <div class="flex items-start justify-between border-b border-zinc-100 pb-2.5 mb-2.5">
                     <div>
-                        <span class="text-[8px] font-mono font-bold text-zinc-455 uppercase tracking-widest block mb-1">Queue & Worker</span>
-                        <h3 class="text-xs font-bold text-zinc-900 mt-1 flex items-center gap-1.5 font-sans">
-                            <span class="w-1.5 h-1.5 rounded-full {{ $stats['jobs_pending_in_queue'] > 0 ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500' }}"></span>
+                        <span class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Queue & Worker</span>
+                        <h3 class="text-xs font-medium text-zinc-900 mt-1 flex items-center gap-1.5 font-sans">
+                            <span class="w-1.5 h-1.5 rounded-full {{ $stats['jobs_pending_in_queue'] > 0 ? 'bg-amber-500 ' : 'bg-emerald-500' }}"></span>
                             {{ $stats['worker_status'] }}
                         </h3>
                     </div>
-                    <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 shadow-3xs">
+                    <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 ">
                         <i class="ph-bold ph-cpu text-xs"></i>
                     </div>
                 </div>
-                
+
                 @if(count($stats['queue_breakdown']) > 0)
                     <div class="space-y-1 max-h-[85px] overflow-y-auto pr-1">
                         @foreach($stats['queue_breakdown'] as $q)
-                            <div class="flex items-center justify-between text-[9px] bg-zinc-50 border border-zinc-150 rounded-lg px-2.5 py-1">
-                                <span class="font-mono text-zinc-550 truncate max-w-[80px]" title="queue: {{ $q['name'] }}">
+                            <div class="flex items-center justify-between text-[11px] bg-zinc-50 border border-zinc-150 rounded-lg px-2.5 py-1">
+                                <span class="font-sans text-zinc-550 truncate max-w-[80px]" title="queue: {{ $q['name'] }}">
                                     {{ $q['name'] }}
                                 </span>
-                                <div class="flex items-center gap-1 shrink-0 font-bold">
+                                <div class="flex items-center gap-1 shrink-0 font-medium">
                                     <span class="text-blue-600" title="Running/Active">{{ $q['active'] }} R</span>
                                     <span class="text-zinc-300">|</span>
                                     <span class="text-amber-600" title="Pending">{{ $q['pending'] }} P</span>
@@ -106,53 +97,25 @@
                         @endforeach
                     </div>
                 @else
-                    <div class="text-center py-2 text-[9px] text-zinc-400 flex items-center justify-center gap-1 font-bold">
-                        <i class="ph-bold ph-check-circle text-emerald-500 text-[10px]"></i>
+                    <div class="text-center py-2 text-[11px] text-zinc-500 flex items-center justify-center gap-1 font-medium">
+                        <i class="ph-bold ph-check-circle text-emerald-500 text-[11px]"></i>
                         Queue empty / idle
                     </div>
                 @endif
             </div>
 
-            <div class="mt-4 pt-2.5 border-t border-zinc-100 flex items-center justify-between text-[9px] text-zinc-450 font-mono font-bold">
-                <span>Failed: <span class="font-bold {{ $stats['jobs_failed'] > 0 ? 'text-red-650' : 'text-zinc-650' }}">{{ $stats['jobs_failed'] }}</span></span>
-                <span>Total: <span class="font-bold text-zinc-700">{{ $stats['jobs_pending_in_queue'] }}</span></span>
+            <div class="mt-4 pt-2.5 border-t border-zinc-100 flex items-center justify-between text-[11px] text-zinc-500 font-sans font-medium">
+                <span>Failed: <span class="font-medium {{ $stats['jobs_failed'] > 0 ? 'text-red-650' : 'text-zinc-650' }}">{{ $stats['jobs_failed'] }}</span></span>
+                <span>Total: <span class="font-medium text-zinc-700">{{ $stats['jobs_pending_in_queue'] }}</span></span>
             </div>
         </div>
     </div>
 
-    {{-- Interactive Tabs Navigation Row (4 Tabs) --}}
-    <div class="flex flex-wrap border border-zinc-200 border-b-0 bg-white rounded-t-xl shadow-3xs overflow-hidden">
-        <button type="button" 
-                wire:click="$set('activeTab', 'dashboard')"
-                class="px-5 py-3.5 border-b-2 text-xs font-bold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'dashboard' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50 font-extrabold' : 'border-transparent text-zinc-400 hover:text-zinc-750' }}">
-            <i class="ph-bold ph-chart-line text-xs"></i> Overview & Grafik
-        </button>
-        <button type="button" 
-                wire:click="$set('activeTab', 'control')"
-                class="px-5 py-3.5 border-b-2 text-xs font-semibold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'control' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50' : 'border-transparent text-zinc-400 hover:text-zinc-700' }}">
-            <i class="ph-bold ph-sliders text-sm"></i> Kontrol Engine & Worker
-        </button>
-        <button type="button" 
-                wire:click="$set('activeTab', 'target')"
-                class="px-5 py-3.5 border-b-2 text-xs font-semibold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'target' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50' : 'border-transparent text-zinc-400 hover:text-zinc-700' }}">
-            <i class="ph-bold ph-crosshair text-sm"></i> Target-Driven Ingestion
-        </button>
-        <button type="button" 
-                wire:click="$set('activeTab', 'sandbox')"
-                class="px-5 py-3.5 border-b-2 text-xs font-semibold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'sandbox' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50' : 'border-transparent text-zinc-400 hover:text-zinc-700' }}">
-            <i class="ph-bold ph-terminal-window text-sm"></i> Sandbox & CSS Selector Tester
-        </button>
-        <button type="button" 
-                wire:click="$set('activeTab', 'reports')"
-                class="px-5 py-3.5 border-b-2 text-xs font-semibold tracking-tight transition-all duration-150 focus:outline-hidden flex items-center gap-2 {{ $activeTab === 'reports' ? 'border-zinc-950 text-zinc-950 bg-zinc-50/50' : 'border-transparent text-zinc-400 hover:text-zinc-700' }}">
-            <i class="ph-bold ph-warning-octagon text-sm"></i> Laporan Loker Ditutup
-            @if(count($reportedJobs) > 0)
-                <span class="px-1.5 py-0.5 bg-rose-500 text-white text-[9px] font-black rounded-full leading-none animate-pulse">
-                    {{ count($reportedJobs) }}
-                </span>
-            @endif
-        </button>
-    </div>
+    <nav class="ops-tabs ops-scraper-tabs" aria-label="Scraper sections">
+        @foreach(['dashboard'=>'Overview','control'=>'Engine controls','target'=>'Targeted search','sandbox'=>'Selector sandbox','reports'=>'Job reports'] as $key=>$label)
+        <button type="button" wire:click="$set('activeTab', '{{ $key }}')" aria-current="{{ $activeTab === $key ? 'page' : 'false' }}" class="{{ $activeTab === $key ? 'is-active' : '' }}">{{ $label }}@if($key==='reports' && count($reportedJobs)>0) <span>{{ count($reportedJobs) }}</span>@endif</button>
+        @endforeach
+    </nav>
 
     <!-- Active Tab Workspace Container -->
     <div>
@@ -160,15 +123,15 @@
             <!-- TAB 1: OVERVIEW DASHBOARD & METRICS -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch animate-fade-in text-zinc-900">
                 <!-- Stacked Bar Performance Chart (50% width) -->
-                <div class="lg:col-span-1 bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col gap-4 shadow-3xs justify-between">
+                <div class="lg:col-span-1 bg-white border border-[#e7e3e9]/80 rounded-lg p-4 flex flex-col gap-4  justify-between">
                     <div class="flex-1 flex flex-col">
                         <div class="flex items-center gap-2 pb-3 mb-4 border-b border-zinc-100 shrink-0">
-                            <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
+                            <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                 <i class="ph-bold ph-chart-bar text-xs"></i>
                             </div>
-                            <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Metrik Grafik Performa Platform</h2>
+                            <h2 class="text-xs font-sans font-medium text-zinc-500  ">Metrik Grafik Performa Platform</h2>
                         </div>
-                        
+
                         <div class="flex-1 min-h-[300px] relative w-full" wire:ignore>
                             <canvas id="scraperPerformanceChart"></canvas>
                         </div>
@@ -176,24 +139,24 @@
                 </div>
 
                 <!-- Live Log Streamer Console (50% width) -->
-                <div class="lg:col-span-1 bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col justify-between shadow-3xs">
+                <div class="lg:col-span-1 bg-white border border-[#e7e3e9]/80 rounded-lg p-4 flex flex-col justify-between ">
                     <div class="w-full">
                         <div class="flex items-center justify-between pb-3 mb-4 border-b border-zinc-100">
                             <div class="flex items-center gap-2">
-                                <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
+                                <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                     <i class="ph-bold ph-terminal text-xs"></i>
                                 </div>
-                                <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider font-semibold">Live Logs Streamer</h2>
+                                <h2 class="text-xs font-sans font-medium text-zinc-500   font-semibold">Live Logs Streamer</h2>
                             </div>
-                            <button type="button" 
+                            <button type="button"
                                     wire:click="clearLiveLogs"
-                                    class="text-[9px] font-mono font-bold text-rose-600 hover:text-rose-800 transition-colors uppercase tracking-wider flex items-center gap-1 focus:outline-hidden">
+                                    class="text-[11px] font-sans font-medium text-rose-600 hover:text-rose-800 transition-colors   flex items-center gap-1 focus:outline-hidden">
                                 <i class="ph ph-trash text-xs"></i> Hapus Log
                             </button>
                         </div>
 
                         @if (count($liveLogs) > 0)
-                            <div class="border border-zinc-200 rounded-xl overflow-hidden shadow-2xs bg-white">
+                            <div class="border border-[#e7e3e9] rounded-2xl overflow-hidden shadow-2xs bg-white">
                                 <div class="divide-y divide-zinc-100 overflow-y-auto h-[300px] custom-scrollbar">
                                     @foreach ($liveLogs as $log)
                                         @php
@@ -217,28 +180,28 @@
                                                 </div>
                                                 <div class="min-w-0">
                                                     <p class="text-[11px] font-medium text-zinc-800 leading-tight break-words">{{ $log['message'] }}</p>
-                                                    <span class="text-[9px] font-mono text-zinc-400 block mt-0.5">{{ $log['level'] }} Event</span>
+                                                    <span class="text-[11px] font-sans text-zinc-500 block mt-0.5">{{ $log['level'] }} Event</span>
                                                 </div>
                                             </div>
-                                            <span class="text-[9px] font-mono text-zinc-400 shrink-0 mt-0.5">{{ $log['timestamp'] }}</span>
+                                            <span class="text-[11px] font-sans text-zinc-500 shrink-0 mt-0.5">{{ $log['timestamp'] }}</span>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
                         @else
-                            <div class="border border-zinc-200 border-dashed rounded-xl p-8 text-center flex flex-col items-center justify-center h-[300px] bg-zinc-50/50">
-                                <div class="w-10 h-10 rounded-full bg-zinc-100 border border-zinc-200 flex items-center justify-center text-zinc-400 mb-3 shadow-3xs">
+                            <div class="border border-[#e7e3e9] border-dashed rounded-2xl p-8 text-center flex flex-col items-center justify-center h-[300px] bg-zinc-50/50">
+                                <div class="w-10 h-10 rounded-full bg-zinc-100 border border-[#e7e3e9] flex items-center justify-center text-zinc-500 mb-3 ">
                                     <i class="ph-bold ph-bell-simple-slash text-base"></i>
                                 </div>
-                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Tidak ada aktivitas baru</h3>
-                                <p class="text-[10px] text-zinc-400 max-w-[220px] mt-1 leading-normal">Log aktivitas penarikan data akan mengalir secara live ke sini saat scraper sedang berjalan.</p>
+                                <h3 class="text-xs font-medium text-zinc-800 tracking-tight">Tidak ada aktivitas baru</h3>
+                                <p class="text-[11px] text-zinc-500 max-w-[220px] mt-1 leading-normal">Log aktivitas penarikan data akan mengalir secara live ke sini saat scraper sedang berjalan.</p>
                             </div>
                         @endif
                     </div>
-                    
-                    <div class="text-[9px] font-mono text-zinc-400 pt-3 border-t border-zinc-150 leading-tight mt-4 flex items-center justify-between">
+
+                    <div class="text-[11px] font-sans text-zinc-500 pt-3 border-t border-zinc-150 leading-tight mt-4 flex items-center justify-between">
                         <span>Polling visual terupdate secara berkala setiap 5 detik.</span>
-                        <span class="text-zinc-500 font-bold uppercase tracking-wider flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Live</span>
+                        <span class="text-zinc-500 font-medium   flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 "></span> Live</span>
                     </div>
                 </div>
             </div>
@@ -249,39 +212,39 @@
             <div class="space-y-5 animate-fade-in text-zinc-900">
                 <!-- Grid of 3 Action Controllers -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    
+
                     <!-- 1. Background Queue Worker Card -->
-                    <div class="bg-white border border-zinc-200 rounded-lg p-5 flex flex-col justify-between shadow-3xs space-y-4">
+                    <div class="bg-white border border-[#e7e3e9] rounded-lg p-5 flex flex-col justify-between  space-y-4">
                         <div>
                             <div class="flex items-center gap-2 pb-2.5 border-b border-zinc-100">
                                 <div class="w-6 h-6 rounded bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700">
                                     <i class="ph-bold ph-cpu text-xs"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xs font-bold text-zinc-900 tracking-tight">Queue Worker Trigger</h3>
-                                    <p class="text-[9px] text-zinc-400">Jalankan worker di latar belakang VM</p>
+                                    <h3 class="text-xs font-medium text-zinc-900 tracking-tight">Queue Worker Trigger</h3>
+                                    <p class="text-[11px] text-zinc-500">Jalankan worker di latar belakang VM</p>
                                 </div>
                             </div>
-                            
-                            <div class="mt-3.5 space-y-2 text-[10px] font-mono">
+
+                            <div class="mt-3.5 space-y-2 text-[11px] font-sans">
                                 <div class="flex justify-between">
                                     <span class="text-zinc-500">Status Worker:</span>
-                                    <span class="font-bold text-emerald-600 flex items-center gap-1">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    <span class="font-medium text-emerald-600 flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 "></span>
                                         {{ $stats['worker_status'] }}
                                     </span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-zinc-500">Jumlah Antrean:</span>
-                                    <span class="font-bold text-zinc-800">{{ $stats['jobs_pending_in_queue'] }} jobs</span>
+                                    <span class="font-medium text-zinc-800">{{ $stats['jobs_pending_in_queue'] }} jobs</span>
                                 </div>
                             </div>
                         </div>
 
-                        <button type="button" 
-                                wire:click="startQueueWorker" 
+                        <button type="button"
+                                wire:click="startQueueWorker"
                                 wire:loading.attr="disabled"
-                                class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-md py-2 transition-all duration-150 shadow-3xs flex items-center justify-center gap-1.5">
+                                class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-md py-2 transition-all duration-150  flex items-center justify-center gap-1.5">
                             <span wire:loading.remove wire:target="startQueueWorker" class="flex items-center gap-1.5">
                                 <i class="ph ph-play-circle text-base"></i>
                                 Jalankan Queue Worker
@@ -294,34 +257,34 @@
                     </div>
 
                     <!-- 2. Dead-Link Validator Card -->
-                    <div class="bg-white border border-zinc-200 rounded-lg p-5 flex flex-col justify-between shadow-3xs space-y-4">
+                    <div class="bg-white border border-[#e7e3e9] rounded-lg p-5 flex flex-col justify-between  space-y-4">
                         <div>
                             <div class="flex items-center gap-2 pb-2.5 border-b border-zinc-100">
-                                <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
+                                <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                     <i class="ph-bold ph-shield-warning text-xs"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xs font-bold text-zinc-900 tracking-tight">Dead-Link Synchronizer</h3>
-                                    <p class="text-[9px] text-zinc-400">Verifikasi status keaktifan URL lowongan</p>
+                                    <h3 class="text-xs font-medium text-zinc-900 tracking-tight">Dead-Link Synchronizer</h3>
+                                    <p class="text-[11px] text-zinc-500">Verifikasi status keaktifan URL lowongan</p>
                                 </div>
                             </div>
-                            
-                            <div class="mt-3.5 space-y-2 text-[10px] font-mono">
+
+                            <div class="mt-3.5 space-y-2 text-[11px] font-sans">
                                 <div class="flex justify-between">
                                     <span class="text-zinc-500">Metode Validasi:</span>
-                                    <span class="font-bold text-zinc-800">404 / Footprint Check</span>
+                                    <span class="font-medium text-zinc-800">404 / Footprint Check</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-zinc-500">Target Validasi:</span>
-                                    <span class="font-bold text-zinc-800">Loker Status 'active'</span>
+                                    <span class="font-medium text-zinc-800">Loker Status 'active'</span>
                                 </div>
                             </div>
                         </div>
 
-                        <button type="button" 
-                                wire:click="verifyActiveListings" 
+                        <button type="button"
+                                wire:click="verifyActiveListings"
                                 wire:loading.attr="disabled"
-                                class="w-full bg-white hover:bg-zinc-50 border border-zinc-250 text-zinc-700 font-semibold text-xs rounded-md py-2 transition-all duration-150 flex items-center justify-center gap-1.5 shadow-3xs">
+                                class="w-full bg-white hover:bg-zinc-50 border border-zinc-250 text-zinc-700 font-semibold text-xs rounded-md py-2 transition-all duration-150 flex items-center justify-center gap-1.5 ">
                             <span wire:loading.remove wire:target="verifyActiveListings" class="flex items-center gap-1.5">
                                 <i class="ph ph-arrows-counter-clockwise text-base"></i>
                                 Cek & Sinkronisasi Link Tutup
@@ -334,34 +297,34 @@
                     </div>
 
                     <!-- 3. Manual Scraper Ingestion Card -->
-                    <div class="bg-white border border-zinc-200 rounded-lg p-5 flex flex-col justify-between shadow-3xs space-y-4">
+                    <div class="bg-white border border-[#e7e3e9] rounded-lg p-5 flex flex-col justify-between  space-y-4">
                         <div>
                             <div class="flex items-center gap-2 pb-2.5 border-b border-zinc-100">
                                 <div class="w-6 h-6 rounded bg-zinc-900 text-white flex items-center justify-center">
-                                    <i class="ph-bold ph-play text-[10px]"></i>
+                                    <i class="ph-bold ph-play text-[11px]"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xs font-bold text-zinc-900 tracking-tight">Manual Scraper Ingestion</h3>
-                                    <p class="text-[9px] text-zinc-400">Trigger penelusuran tautan semua platform</p>
+                                    <h3 class="text-xs font-medium text-zinc-900 tracking-tight">Manual Scraper Ingestion</h3>
+                                    <p class="text-[11px] text-zinc-500">Trigger penelusuran tautan semua platform</p>
                                 </div>
                             </div>
-                            
-                            <div class="mt-3.5 space-y-2 text-[10px] font-mono">
+
+                            <div class="mt-3.5 space-y-2 text-[11px] font-sans">
                                 <div class="flex justify-between">
                                     <span class="text-zinc-500">Metode Ingesti:</span>
-                                    <span class="font-bold text-zinc-800">Multi-Keyword Discovery</span>
+                                    <span class="font-medium text-zinc-800">Multi-Keyword Discovery</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-zinc-500">Tingkat Penjelajahan:</span>
-                                    <span class="font-bold text-zinc-800">Halaman 1 (Semua Sektor)</span>
+                                    <span class="font-medium text-zinc-800">Halaman 1 (Semua Sektor)</span>
                                 </div>
                             </div>
                         </div>
 
-                        <button type="button" 
-                                wire:click="triggerManualCrawl" 
+                        <button type="button"
+                                wire:click="triggerManualCrawl"
                                 wire:loading.attr="disabled"
-                                class="w-full bg-zinc-950 hover:bg-zinc-900 text-white font-semibold text-xs rounded-md py-2 transition-all duration-150 shadow-3xs flex items-center justify-center gap-1.5">
+                                class="w-full bg-zinc-950 hover:bg-zinc-900 text-white font-semibold text-xs rounded-md py-2 transition-all duration-150  flex items-center justify-center gap-1.5">
                             <span wire:loading.remove wire:target="triggerManualCrawl" class="flex items-center gap-1.5">
                                 <i class="ph ph-lightning text-base"></i>
                                 Jalankan Scrape Manual
@@ -377,26 +340,26 @@
                 <!-- Bottom Config Block: Throttling Rules (Left) and Proxy Pool (Right) -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch">
                     <!-- Left: Throttling Rules Configuration (1/3) -->
-                    <div class="lg:col-span-1 bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col justify-between shadow-3xs">
+                    <div class="lg:col-span-1 bg-white border border-[#e7e3e9]/80 rounded-lg p-4 flex flex-col justify-between ">
                         <div>
                             <div class="flex items-center gap-2 pb-3 mb-4 border-b border-zinc-100">
-                                <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
+                                <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                     <i class="ph-bold ph-sliders text-xs"></i>
                                 </div>
-                                <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Throttling Rules</h2>
+                                <h2 class="text-xs font-sans font-medium text-zinc-500  ">Throttling Rules</h2>
                             </div>
 
                             <!-- Domain Selector Tabs -->
                             <div class="space-y-1 mb-5">
                                 @foreach ($sources as $source)
-                                    <button type="button" 
+                                    <button type="button"
                                             wire:click="editSource({{ $source['id'] }})"
-                                            class="w-full text-left px-3 py-2.5 rounded-md text-xs flex items-center justify-between border transition-all duration-150 {{ $editingSourceId === $source['id'] ? 'bg-zinc-900 border-zinc-900 text-white font-medium shadow-3xs' : 'bg-zinc-50/50 border-zinc-200/80 text-zinc-600 hover:bg-zinc-100/50 hover:text-zinc-900' }}">
+                                            class="w-full text-left px-3 py-2.5 rounded-md text-xs flex items-center justify-between border transition-all duration-150 {{ $editingSourceId === $source['id'] ? 'bg-zinc-900 border-zinc-900 text-white font-medium ' : 'bg-zinc-50/50 border-[#e7e3e9]/80 text-zinc-600 hover:bg-zinc-100/50 hover:text-zinc-900' }}">
                                         <div class="flex items-center gap-2">
-                                            <span class="w-1.5 h-1.5 rounded-full {{ $source['is_active'] ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-300' }}"></span>
+                                            <span class="w-1.5 h-1.5 rounded-full {{ $source['is_active'] ? 'bg-emerald-500 ' : 'bg-zinc-300' }}"></span>
                                             <span class="tracking-tight">{{ $source['name'] }}</span>
                                         </div>
-                                        <span class="text-[9px] font-mono opacity-80 uppercase">{{ str_replace('.com', '', str_replace('.co.id', '', $source['target_domain'])) }}</span>
+                                        <span class="text-[11px] font-sans opacity-80 ">{{ str_replace('.com', '', str_replace('.co.id', '', $source['target_domain'])) }}</span>
                                     </button>
                                 @endforeach
                             </div>
@@ -404,14 +367,14 @@
                             @if ($editingSourceId)
                                 <!-- Settings Input Form -->
                                 <form wire:submit.prevent="saveSourceSettings" class="space-y-4">
-                                    
+
                                     <!-- Toggle Switch -->
-                                    <div class="flex items-center justify-between bg-zinc-50/50 border border-zinc-200/80 rounded-md p-3">
+                                    <div class="flex items-center justify-between bg-zinc-50/50 border border-[#e7e3e9]/80 rounded-md p-3">
                                         <div>
                                             <label class="text-xs font-semibold text-zinc-900 tracking-tight">Active Crawler Status</label>
-                                            <p class="text-[10px] text-zinc-400">Run cron cycles for this target</p>
+                                            <p class="text-[11px] text-zinc-500">Run cron cycles for this target</p>
                                         </div>
-                                        <button type="button" 
+                                        <button type="button"
                                                 wire:click="$set('is_active', {{ $is_active ? 'false' : 'true' }})"
                                                 class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden {{ $is_active ? 'bg-zinc-950' : 'bg-zinc-200' }}">
                                             <span class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition duration-200 ease-in-out {{ $is_active ? 'translate-x-4' : 'translate-x-0' }}"></span>
@@ -421,10 +384,10 @@
                                     <!-- Politeness Delay -->
                                     <div>
                                         <div class="flex justify-between items-baseline mb-1">
-                                            <label class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider">Politeness Delay</label>
-                                            <span class="text-xs font-mono font-semibold text-zinc-955">{{ $delay_between_requests_ms }}ms</span>
+                                            <label class="text-[11px] font-sans font-medium text-zinc-500  ">Politeness Delay</label>
+                                            <span class="text-xs font-sans font-semibold text-zinc-955">{{ $delay_between_requests_ms }}ms</span>
                                         </div>
-                                        <input type="range" min="0" max="10000" step="250" 
+                                        <input type="range" min="0" max="10000" step="250"
                                                wire:model.live="delay_between_requests_ms"
                                                class="w-full accent-zinc-955 bg-zinc-150 h-1.5 rounded-lg cursor-pointer">
                                     </div>
@@ -432,28 +395,28 @@
                                     <!-- Concurrency Limit -->
                                     <div>
                                         <div class="flex justify-between items-baseline mb-1">
-                                            <label class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider">Concurrency Limit</label>
-                                            <span class="text-xs font-mono font-semibold text-zinc-955">{{ $max_concurrency }} parallel</span>
+                                            <label class="text-[11px] font-sans font-medium text-zinc-500  ">Concurrency Limit</label>
+                                            <span class="text-xs font-sans font-semibold text-zinc-955">{{ $max_concurrency }} parallel</span>
                                         </div>
-                                        <input type="range" min="1" max="15" step="1" 
+                                        <input type="range" min="1" max="15" step="1"
                                                wire:model.live="max_concurrency"
                                                class="w-full accent-zinc-955 bg-zinc-150 h-1.5 rounded-lg cursor-pointer">
                                     </div>
 
                                     <!-- Schedule Interval -->
                                     <div>
-                                        <label class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider block mb-1">Crawl Frequency Interval</label>
+                                        <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Crawl Frequency Interval</label>
                                         <div class="relative">
-                                            <input type="number" 
+                                            <input type="number"
                                                    wire:model="frequency_minutes"
-                                                   class="w-full text-xs bg-zinc-50/50 border border-zinc-200 rounded-md px-3 py-2 text-zinc-900 font-mono focus:bg-white focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 focus:outline-hidden"
+                                                   class="w-full text-xs bg-zinc-50/50 border border-[#e7e3e9] rounded-md px-3 py-2 text-zinc-900 font-sans focus:bg-white focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 focus:outline-hidden"
                                                    required>
-                                            <span class="absolute right-3 top-2 text-[10px] font-mono text-zinc-400">minutes</span>
+                                            <span class="absolute right-3 top-2 text-[11px] font-sans text-zinc-500">minutes</span>
                                         </div>
                                     </div>
 
-                                    <button type="submit" 
-                                            class="w-full bg-zinc-950 hover:bg-zinc-900 text-white font-medium text-xs rounded-md py-2 transition-all duration-150 shadow-3xs flex items-center justify-center gap-1.5">
+                                    <button type="submit"
+                                            class="w-full bg-zinc-950 hover:bg-zinc-900 text-white font-medium text-xs rounded-md py-2 transition-all duration-150  flex items-center justify-center gap-1.5">
                                         <i class="ph ph-check"></i>
                                         Save Config Settings
                                     </button>
@@ -463,23 +426,23 @@
                     </div>
 
                     <!-- Right: Proxy Pool Monitor (2/3 width) -->
-                    <div class="lg:col-span-2 bg-white border border-zinc-200/80 rounded-lg p-4 flex flex-col justify-between shadow-3xs">
+                    <div class="lg:col-span-2 bg-white border border-[#e7e3e9]/80 rounded-lg p-4 flex flex-col justify-between ">
                         <div>
                             <div class="flex items-center justify-between pb-3 mb-4 border-b border-zinc-100">
                                 <div class="flex items-center gap-2">
-                                    <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
+                                    <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                         <i class="ph-bold ph-shield-check text-xs"></i>
                                     </div>
                                     <div>
-                                        <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Proxy Pool Monitor</h2>
-                                        <p class="text-[9px] text-zinc-400">Status rotasi IP bypass bot-blocker</p>
+                                        <h2 class="text-xs font-sans font-medium text-zinc-500  ">Proxy Pool Monitor</h2>
+                                        <p class="text-[11px] text-zinc-500">Status rotasi IP bypass bot-blocker</p>
                                     </div>
                                 </div>
-                                
-                                <button type="button" 
-                                        wire:click="checkProxyHealth" 
+
+                                <button type="button"
+                                        wire:click="checkProxyHealth"
                                         wire:loading.attr="disabled"
-                                        class="inline-flex items-center gap-1 bg-zinc-950 hover:bg-zinc-900 text-white font-semibold text-[10px] rounded px-2.5 py-1.5 transition-all duration-150 shadow-3xs disabled:opacity-50">
+                                        class="inline-flex items-center gap-1 bg-zinc-950 hover:bg-zinc-900 text-white font-semibold text-[11px] rounded px-2.5 py-1.5 transition-all duration-150  disabled:opacity-50">
                                     <span wire:loading.remove wire:target="checkProxyHealth" class="flex items-center gap-1">
                                         <i class="ph ph-heartbeat"></i> Ping Proxy
                                     </span>
@@ -494,34 +457,34 @@
                             @if (count($proxyStatusList) > 0)
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     @foreach ($proxyStatusList as $index => $proxyItem)
-                                        <div class="border rounded-md p-3 flex flex-col justify-between space-y-2 shadow-3xs {{ $proxyItem['class'] }}">
+                                        <div class="border rounded-md p-3 flex flex-col justify-between space-y-2  {{ $proxyItem['class'] }}">
                                             <div class="flex items-center justify-between">
-                                                <span class="text-[8px] font-mono font-bold uppercase tracking-wider text-zinc-400">PROXY #{{ $index + 1 }}</span>
-                                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[7px] font-mono font-black border border-current">
+                                                <span class="text-[11px] font-sans font-medium   text-zinc-500">PROXY #{{ $index + 1 }}</span>
+                                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[7px] font-sans font-semibold border border-current">
                                                     {{ $proxyItem['status'] }}
                                                 </span>
                                             </div>
-                                            <div class="space-y-1 text-[9px] font-mono">
+                                            <div class="space-y-1 text-[11px] font-sans">
                                                 <span class="text-zinc-800 truncate block">{{ parse_url($proxyItem['address'], PHP_URL_HOST) ?? $proxyItem['address'] }}</span>
-                                                <span class="text-zinc-500 font-bold block">IP: {{ $proxyItem['ip'] }}</span>
+                                                <span class="text-zinc-500 font-medium block">IP: {{ $proxyItem['ip'] }}</span>
                                             </div>
-                                            <div class="flex justify-between border-t border-zinc-200/50 pt-1.5 text-[8px] font-mono">
+                                            <div class="flex justify-between border-t border-[#e7e3e9]/50 pt-1.5 text-[11px] font-sans">
                                                 <span>Latency:</span>
-                                                <span class="font-bold text-zinc-850">{{ $proxyItem['latency'] > 0 ? $proxyItem['latency'] . ' ms' : 'N/A' }}</span>
+                                                <span class="font-medium text-zinc-850">{{ $proxyItem['latency'] > 0 ? $proxyItem['latency'] . ' ms' : 'N/A' }}</span>
                                             </div>
                                         </div>
                                     @endforeach
                                 </div>
                             @else
                                 @if ($isPingingProxies)
-                                    <div class="flex items-center justify-center p-8 text-center border border-dashed rounded bg-zinc-50 border-zinc-200/80">
+                                    <div class="flex items-center justify-center p-8 text-center border border-dashed rounded bg-zinc-50 border-[#e7e3e9]/80">
                                         <span class="w-5 h-5 border-2 border-zinc-950 border-t-transparent rounded-full animate-spin mr-2"></span>
-                                        <p class="text-[10px] text-zinc-650">Menguji latency proxy pool...</p>
+                                        <p class="text-[11px] text-zinc-650">Menguji latency proxy pool...</p>
                                     </div>
                                 @else
-                                    <div class="flex flex-col items-center justify-center p-8 text-center border border-dashed rounded bg-zinc-50 border-zinc-200/80 border-dashed">
-                                        <p class="text-[10px] font-semibold text-zinc-500 mb-1">Status Proxy Belum Diuji</p>
-                                        <p class="text-[9px] text-zinc-400">Tekan tombol ping untuk melakukan verifikasi status IP Pool.</p>
+                                    <div class="flex flex-col items-center justify-center p-8 text-center border border-dashed rounded bg-zinc-50 border-[#e7e3e9]/80 border-dashed">
+                                        <p class="text-[11px] font-semibold text-zinc-500 mb-1">Status Proxy Belum Diuji</p>
+                                        <p class="text-[11px] text-zinc-500">Tekan tombol ping untuk melakukan verifikasi status IP Pool.</p>
                                     </div>
                                 @endif
                             @endif
@@ -535,21 +498,21 @@
             <!-- TAB 3: TARGET-DRIVEN INGESTION -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch animate-fade-in text-zinc-900">
                 <!-- Request Form Card -->
-                <div class="lg:col-span-1 bg-white border border-zinc-200/80 rounded-lg p-4 shadow-3xs flex flex-col justify-between">
+                <div class="lg:col-span-1 bg-white border border-[#e7e3e9]/80 rounded-lg p-4  flex flex-col justify-between">
                     <div>
                         <div class="flex items-center gap-2 pb-3 mb-4 border-b border-zinc-100">
-                            <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
+                            <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                 <i class="ph-bold ph-crosshair text-xs"></i>
                             </div>
-                            <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Scraping Target Goal</h2>
+                            <h2 class="text-xs font-sans font-medium text-zinc-500  ">Scraping Target Goal</h2>
                         </div>
 
                         <form wire:submit.prevent="runTargetedScraping" class="space-y-4">
                             <!-- Sector Select -->
                             <div>
-                                <label class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider block mb-1">Pilih Sektor Ekonomi</label>
-                                <select wire:model.live="targetSector" 
-                                        class="w-full text-xs bg-zinc-50/50 border border-zinc-200 rounded-md px-3 py-2 text-zinc-900 focus:bg-white focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 focus:outline-hidden"
+                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Pilih Sektor Ekonomi</label>
+                                <select wire:model.live="targetSector"
+                                        class="w-full text-xs bg-zinc-50/50 border border-[#e7e3e9] rounded-md px-3 py-2 text-zinc-900 focus:bg-white focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 focus:outline-hidden"
                                         required>
                                     <option value="">-- Pilih Sektor --</option>
                                     @foreach (\App\Helpers\CategoryHelper::getSektors() as $sektor)
@@ -560,9 +523,9 @@
 
                             <!-- Major Select -->
                             <div>
-                                <label class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider block mb-1">Pilih Rumpun Jurusan</label>
-                                <select wire:model="targetMajor" 
-                                        class="w-full text-xs bg-zinc-50/50 border border-zinc-200 rounded-md px-3 py-2 text-zinc-900 focus:bg-white focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 focus:outline-hidden"
+                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Pilih Rumpun Jurusan</label>
+                                <select wire:model="targetMajor"
+                                        class="w-full text-xs bg-zinc-50/50 border border-[#e7e3e9] rounded-md px-3 py-2 text-zinc-900 focus:bg-white focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 focus:outline-hidden"
                                         {{ empty($targetSector) ? 'disabled' : '' }}
                                         required>
                                     <option value="">-- Pilih Jurusan --</option>
@@ -574,27 +537,27 @@
 
                             <!-- Quantity Limit -->
                             <div>
-                                <label class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider block mb-1">Target Jumlah Loker Baru</label>
+                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Target Jumlah Loker Baru</label>
                                 <div class="relative">
-                                    <input type="number" 
+                                    <input type="number"
                                            wire:model="targetJobsCount"
                                            min="5" max="300"
-                                           class="w-full text-xs bg-zinc-50/50 border border-zinc-200 rounded-md px-3 py-2 text-zinc-900 font-mono focus:bg-white focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 focus:outline-hidden"
+                                           class="w-full text-xs bg-zinc-50/50 border border-[#e7e3e9] rounded-md px-3 py-2 text-zinc-900 font-sans focus:bg-white focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 focus:outline-hidden"
                                            required>
-                                    <span class="absolute right-3 top-2 text-[10px] font-mono text-zinc-400">loker baru</span>
+                                    <span class="absolute right-3 top-2 text-[11px] font-sans text-zinc-500">loker baru</span>
                                 </div>
-                                <span class="text-[9px] text-zinc-400 mt-1 block">Scraper akan berhenti secara otomatis saat database bertambah sebanyak jumlah target di atas.</span>
+                                <span class="text-[11px] text-zinc-500 mt-1 block">Scraper akan berhenti secara otomatis saat database bertambah sebanyak jumlah target di atas.</span>
                             </div>
 
-                            <button type="submit" 
-                                    class="w-full bg-zinc-950 hover:bg-zinc-900 text-white font-medium text-xs rounded-md py-2 transition-all duration-150 shadow-3xs flex items-center justify-center gap-1.5">
+                            <button type="submit"
+                                    class="w-full bg-zinc-950 hover:bg-zinc-900 text-white font-medium text-xs rounded-md py-2 transition-all duration-150  flex items-center justify-center gap-1.5">
                                 <i class="ph ph-rocket-launch"></i>
                                 Jalankan Misi Targeted Ingestion
                             </button>
                         </form>
                     </div>
 
-                    <div class="mt-6 pt-4 border-t border-zinc-150 text-[10px] text-zinc-400 space-y-1.5 font-mono leading-tight">
+                    <div class="mt-6 pt-4 border-t border-zinc-150 text-[11px] text-zinc-500 space-y-1.5 font-sans leading-tight">
                         <div class="flex items-center gap-1.5">
                             <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                             <span>Misi berjalan otomatis di background.</span>
@@ -603,32 +566,32 @@
                 </div>
 
                 <!-- Live Progress Dashboard -->
-                <div class="lg:col-span-2 bg-white border border-zinc-200/80 rounded-lg p-4 shadow-3xs flex flex-col justify-between">
+                <div class="lg:col-span-2 bg-white border border-[#e7e3e9]/80 rounded-lg p-4  flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between pb-3 mb-4 border-b border-zinc-100">
                             <div class="flex items-center gap-2">
-                                <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
+                                <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                     <i class="ph-bold ph-activity text-xs"></i>
                                 </div>
-                                <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Misi Aktif & Status Real-Time</h2>
+                                <h2 class="text-xs font-sans font-medium text-zinc-500  ">Misi Aktif & Status Real-Time</h2>
                             </div>
                         </div>
 
                         @if ($targetedProgress)
                             <div class="space-y-6">
                                 <!-- Progress Info Card -->
-                                <div class="bg-zinc-50 border border-zinc-200 rounded-lg p-5 space-y-4">
+                                <div class="bg-zinc-50 border border-[#e7e3e9] rounded-lg p-5 space-y-4">
                                     <div class="flex justify-between items-start">
                                         <div>
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-mono font-bold {{ $targetedProgress['status'] === 'RUNNING' ? 'bg-amber-50 text-amber-700 border border-amber-200 animate-pulse' : 'bg-emerald-50 text-emerald-700 border border-emerald-200' }}">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-sans font-medium {{ $targetedProgress['status'] === 'RUNNING' ? 'bg-amber-50 text-amber-700 border border-amber-200 ' : 'bg-emerald-50 text-emerald-700 border border-emerald-200' }}">
                                                 STATUS: {{ $targetedProgress['status'] }}
                                             </span>
                                             <h3 class="text-sm font-semibold text-zinc-900 mt-1.5">{{ $targetedProgress['major'] }}</h3>
-                                            <p class="text-[10px] text-zinc-450">{{ $targetedProgress['sector'] }}</p>
+                                            <p class="text-[11px] text-zinc-500">{{ $targetedProgress['sector'] }}</p>
                                         </div>
-                                        
+
                                         @if ($targetedProgress['status'] === 'RUNNING')
-                                            <button type="button" 
+                                            <button type="button"
                                                     wire:click="cancelTargetedScraping"
                                                     class="text-xs text-red-600 hover:text-red-800 font-medium px-2.5 py-1.5 border border-red-200 rounded-md hover:bg-red-50 transition-colors">
                                                 Batalkan Misi
@@ -640,22 +603,22 @@
                                     <div>
                                         <div class="flex justify-between text-xs font-semibold mb-1">
                                             <span class="text-zinc-600">Perkembangan Ingesti</span>
-                                            <span class="text-zinc-900 font-mono">{{ $targetedProgress['current'] }} / {{ $targetedProgress['target'] }} Loker Baru ({{ round(($targetedProgress['current'] / $targetedProgress['target']) * 100) }}%)</span>
+                                            <span class="text-zinc-900 font-sans">{{ $targetedProgress['current'] }} / {{ $targetedProgress['target'] }} Loker Baru ({{ round(($targetedProgress['current'] / $targetedProgress['target']) * 100) }}%)</span>
                                         </div>
                                         <div class="w-full bg-zinc-200 h-2 rounded-full overflow-hidden">
                                             <div class="bg-zinc-950 h-full rounded-full transition-all duration-300" style="width: {{ min(100, ($targetedProgress['current'] / $targetedProgress['target']) * 100) }}%"></div>
                                         </div>
                                     </div>
 
-                                    <div class="grid grid-cols-2 gap-4 text-[10px] font-mono text-zinc-450 border-t border-zinc-150 pt-3">
+                                    <div class="grid grid-cols-2 gap-4 text-[11px] font-sans text-zinc-500 border-t border-zinc-150 pt-3">
                                         <div>Mulai: {{ $targetedProgress['started_at'] }}</div>
                                         <div>Selesai: {{ $targetedProgress['completed_at'] ?? '-' }}</div>
                                     </div>
                                 </div>
 
                                 <div class="bg-zinc-50 border border-zinc-150 rounded-lg p-5">
-                                    <h4 class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-2.5">Panduan Prosedur Targeted Ingestion</h4>
-                                    <ul class="text-[10px] text-zinc-500 space-y-1.5 leading-relaxed list-disc list-inside">
+                                    <h4 class="text-[11px] font-sans font-medium text-zinc-500   mb-2.5">Panduan Prosedur Targeted Ingestion</h4>
+                                    <ul class="text-[11px] text-zinc-500 space-y-1.5 leading-relaxed list-disc list-inside">
                                         <li>Background worker akan secara khusus memprioritaskan antrean keyword relasi rumpun jurusan pilihan.</li>
                                         <li>Loker yang di-update (sudah terdaftar di DB sebelumnya) tidak dihitung dalam pertambahan kuota agar data yang masuk murni 100% baru.</li>
                                         <li>Anda dapat memantau detil lowongan baru yang masuk secara live pada box <strong>Live Log Streamer Console</strong> di halaman depan.</li>
@@ -666,7 +629,7 @@
                             <div class="bg-zinc-50 border border-zinc-150 rounded-lg p-12 text-center flex flex-col items-center justify-center border-dashed h-full min-h-[300px]">
                                 <i class="ph ph-crosshair text-zinc-300 text-4xl mb-3"></i>
                                 <p class="text-xs font-semibold text-zinc-600 mb-1">Belum Ada Misi Targeted Ingestion</p>
-                                <p class="text-[10px] text-zinc-400 max-w-sm">Tentukan Sektor Ekonomi, Rumpun Jurusan, dan kuota target loker baru pada form kiri, lalu klik jalankan untuk memicu background crawling khusus.</p>
+                                <p class="text-[11px] text-zinc-500 max-w-sm">Tentukan Sektor Ekonomi, Rumpun Jurusan, dan kuota target loker baru pada form kiri, lalu klik jalankan untuk memicu background crawling khusus.</p>
                             </div>
                         @endif
                     </div>
@@ -678,70 +641,70 @@
             <!-- TAB 4: SANDBOX & CSS SELECTOR TESTER -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch animate-fade-in text-zinc-900">
                 <!-- Selectors Configuration Card -->
-                <div class="lg:col-span-1 bg-white border border-zinc-200/80 rounded-lg p-4 shadow-3xs flex flex-col justify-between">
+                <div class="lg:col-span-1 bg-white border border-[#e7e3e9]/80 rounded-lg p-4  flex flex-col justify-between">
                     <div>
                         <div class="flex items-center gap-2 pb-3 mb-4 border-b border-zinc-100">
-                            <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
+                            <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                 <i class="ph-bold ph-terminal-window text-xs"></i>
                             </div>
-                            <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">DOM Selectors Configuration</h2>
+                            <h2 class="text-xs font-sans font-medium text-zinc-500  ">DOM Selectors Configuration</h2>
                         </div>
 
                         <form wire:submit.prevent="runVisualSandboxTest" class="space-y-4">
                             <!-- Target URL -->
                             <div>
-                                <label class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider block mb-1">Target URL Lowongan Detail</label>
-                                <input type="url" 
-                                       wire:model="sandboxUrl" 
-                                       placeholder="https://example.com/jobs/view/123" 
-                                       class="w-full text-xs bg-zinc-50/50 border border-zinc-200 rounded-md px-3 py-2 text-zinc-900 focus:bg-white focus:ring-1 focus:ring-zinc-950 focus:border-zinc-950 focus:outline-hidden"
+                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Target URL Lowongan Detail</label>
+                                <input type="url"
+                                       wire:model="sandboxUrl"
+                                       placeholder="https://example.com/jobs/view/123"
+                                       class="w-full text-xs bg-zinc-50/50 border border-[#e7e3e9] rounded-md px-3 py-2 text-zinc-900 focus:bg-white focus:ring-1 focus:ring-zinc-950 focus:border-zinc-950 focus:outline-hidden"
                                        required>
                                 @error('sandboxUrl')
-                                    <p class="text-[9px] text-red-600 mt-1">{{ $message }}</p>
+                                    <p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
 
                             <!-- Title Selector -->
                             <div>
-                                <label class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider block mb-1">Selector CSS Judul Lowongan</label>
-                                <input type="text" 
-                                       wire:model="sandboxTitleSelector" 
-                                       placeholder="h1.job-title atau .title-class" 
-                                       class="w-full text-xs bg-zinc-50/50 border border-zinc-200 rounded-md px-3 py-2 text-zinc-900 font-mono focus:bg-white focus:ring-1 focus:ring-zinc-955 focus:border-zinc-955 focus:outline-hidden"
+                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Selector CSS Judul Lowongan</label>
+                                <input type="text"
+                                       wire:model="sandboxTitleSelector"
+                                       placeholder="h1.job-title atau .title-class"
+                                       class="w-full text-xs bg-zinc-50/50 border border-[#e7e3e9] rounded-md px-3 py-2 text-zinc-900 font-sans focus:bg-white focus:ring-1 focus:ring-zinc-955 focus:border-zinc-955 focus:outline-hidden"
                                        required>
                                 @error('sandboxTitleSelector')
-                                    <p class="text-[9px] text-red-600 mt-1">{{ $message }}</p>
+                                    <p class="text-[11px] text-red-600 mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
 
                             <!-- Company Selector -->
                             <div>
-                                <label class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider block mb-1">Selector CSS Perusahaan (Opsional)</label>
-                                <input type="text" 
-                                       wire:model="sandboxCompanySelector" 
-                                       placeholder="span.company atau .company-name" 
-                                       class="w-full text-xs bg-zinc-50/50 border border-zinc-200 rounded-md px-3 py-2 text-zinc-900 font-mono focus:bg-white focus:ring-1 focus:ring-zinc-955 focus:border-zinc-955 focus:outline-hidden">
+                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Selector CSS Perusahaan (Opsional)</label>
+                                <input type="text"
+                                       wire:model="sandboxCompanySelector"
+                                       placeholder="span.company atau .company-name"
+                                       class="w-full text-xs bg-zinc-50/50 border border-[#e7e3e9] rounded-md px-3 py-2 text-zinc-900 font-sans focus:bg-white focus:ring-1 focus:ring-zinc-955 focus:border-zinc-955 focus:outline-hidden">
                             </div>
 
                             <!-- Body Selector -->
                             <div>
-                                <label class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider block mb-1">Selector CSS Deskripsi Lowongan (Opsional)</label>
-                                <input type="text" 
-                                       wire:model="sandboxBodySelector" 
-                                       placeholder="div.job-description atau #details" 
-                                       class="w-full text-xs bg-zinc-50/50 border border-zinc-200 rounded-md px-3 py-2 text-zinc-900 font-mono focus:bg-white focus:ring-1 focus:ring-zinc-955 focus:border-zinc-955 focus:outline-hidden">
+                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Selector CSS Deskripsi Lowongan (Opsional)</label>
+                                <input type="text"
+                                       wire:model="sandboxBodySelector"
+                                       placeholder="div.job-description atau #details"
+                                       class="w-full text-xs bg-zinc-50/50 border border-[#e7e3e9] rounded-md px-3 py-2 text-zinc-900 font-sans focus:bg-white focus:ring-1 focus:ring-zinc-955 focus:border-zinc-955 focus:outline-hidden">
                             </div>
 
-                            <button type="submit" 
+                            <button type="submit"
                                     wire:loading.attr="disabled"
-                                    class="w-full bg-zinc-950 hover:bg-zinc-900 disabled:bg-zinc-400 text-white font-medium text-xs rounded-md py-2 transition-all duration-150 shadow-3xs flex items-center justify-center gap-1.5">
+                                    class="w-full bg-zinc-950 hover:bg-zinc-900 disabled:bg-zinc-400 text-white font-medium text-xs rounded-md py-2 transition-all duration-150  flex items-center justify-center gap-1.5">
                                 <span wire:loading.remove wire:target="runVisualSandboxTest">Uji Coba Selektor CSS</span>
                                 <span wire:loading wire:target="runVisualSandboxTest" class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                             </button>
                         </form>
                     </div>
 
-                    <div class="mt-6 pt-4 border-t border-zinc-150 text-[10px] text-zinc-400 space-y-1.5 font-mono leading-tight">
+                    <div class="mt-6 pt-4 border-t border-zinc-150 text-[11px] text-zinc-500 space-y-1.5 font-sans leading-tight">
                         <div class="flex items-center gap-1.5">
                             <span class="w-1.5 h-1.5 rounded-full bg-zinc-300"></span>
                             <span>Mendukung rendering Puppeteer jika diaktifkan.</span>
@@ -750,64 +713,64 @@
                 </div>
 
                 <!-- Test Preview Cards & Logs Output -->
-                <div class="lg:col-span-2 bg-white border border-zinc-200/80 rounded-lg p-4 shadow-3xs flex flex-col justify-between">
+                <div class="lg:col-span-2 bg-white border border-[#e7e3e9]/80 rounded-lg p-4  flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between pb-3 mb-4 border-b border-zinc-100">
                             <div class="flex items-center gap-2">
-                                <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-650">
+                                <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                     <i class="ph-bold ph-eye text-xs"></i>
                                 </div>
-                                <h2 class="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">Hasil Ekstraksi & Pratinjau DOM</h2>
+                                <h2 class="text-xs font-sans font-medium text-zinc-500  ">Hasil Ekstraksi & Pratinjau DOM</h2>
                             </div>
                         </div>
 
                         <!-- Sandbox Console Logs -->
                         <div class="mb-5">
-                            <p class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-2">Logs Jalur Sandbox</p>
+                            <p class="text-[11px] font-sans font-medium text-zinc-500   mb-2">Logs Jalur Sandbox</p>
                             @if (count($sandboxLogs) > 0)
-                                <div class="bg-[#121214] text-[#a1a1aa] border border-zinc-800 p-4 rounded-lg font-mono text-[10px] leading-relaxed shadow-inner max-h-[150px] overflow-y-auto space-y-1.5 custom-scrollbar">
+                                <div class="bg-[#121214] text-[#a1a1aa] border border-zinc-800 p-4 rounded-lg font-sans text-[11px] leading-relaxed shadow-inner max-h-[150px] overflow-y-auto space-y-1.5 custom-scrollbar">
                                     @foreach ($sandboxLogs as $log)
                                         <div class="whitespace-pre-wrap tracking-tight">{{ $log }}</div>
                                     @endforeach
-                                    
+
                                     @if ($sandboxIsTesting)
-                                        <div class="flex items-center gap-1.5 text-zinc-550 mt-1 animate-pulse">
-                                            <span class="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-ping"></span>
+                                        <div class="flex items-center gap-1.5 text-zinc-550 mt-1 ">
+                                            <span class="w-1.5 h-1.5 bg-zinc-500 rounded-full "></span>
                                             <span>Mengekstrak DOM dengan selectors...</span>
                                         </div>
                                     @endif
                                 </div>
                             @else
                                 <div class="bg-zinc-50 border border-zinc-150 rounded-lg p-8 text-center flex flex-col items-center justify-center border-dashed">
-                                    <i class="ph ph-code text-zinc-400 text-2xl mb-2"></i>
+                                    <i class="ph ph-code text-zinc-500 text-2xl mb-2"></i>
                                     <p class="text-xs font-semibold text-zinc-650 mb-0.5">Logs pengujian kosong</p>
-                                    <p class="text-[10px] text-zinc-400 max-w-sm">Masukkan URL dan selector CSS kustom Anda di sisi kiri, lalu klik uji coba untuk melihat hasil parsing secara detail.</p>
+                                    <p class="text-[11px] text-zinc-500 max-w-sm">Masukkan URL dan selector CSS kustom Anda di sisi kiri, lalu klik uji coba untuk melihat hasil parsing secara detail.</p>
                                 </div>
                             @endif
                         </div>
 
                         <!-- Extracted Payload Preview -->
                         @if ($sandboxExtractedPayload)
-                            <div class="border border-zinc-200 rounded-lg p-4 bg-zinc-50/50 space-y-3.5 shadow-3xs">
-                                <div class="flex items-center justify-between border-b border-zinc-200 pb-2.5">
-                                    <span class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider">Payload Terurai (Extracted)</span>
-                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-mono font-black {{ $sandboxTestResultStatus === 'SUCCESS' ? 'bg-emerald-50 text-emerald-700 border border-emerald-205' : 'bg-red-50 text-red-700 border border-red-200' }}">
+                            <div class="border border-[#e7e3e9] rounded-lg p-4 bg-zinc-50/50 space-y-3.5 ">
+                                <div class="flex items-center justify-between border-b border-[#e7e3e9] pb-2.5">
+                                    <span class="text-[11px] font-sans font-medium text-zinc-500  ">Payload Terurai (Extracted)</span>
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-sans font-semibold {{ $sandboxTestResultStatus === 'SUCCESS' ? 'bg-emerald-50 text-emerald-700 border border-emerald-205' : 'bg-red-50 text-red-700 border border-red-200' }}">
                                         [{{ $sandboxTestResultStatus }}]
                                     </span>
                                 </div>
 
                                 <div class="space-y-3 text-xs tracking-tight">
                                     <div>
-                                        <span class="text-[9px] text-zinc-400 font-mono block uppercase tracking-wider mb-0.5">Judul Lowongan</span>
+                                        <span class="text-[11px] text-zinc-500 font-sans block   mb-0.5">Judul Lowongan</span>
                                         <span class="font-semibold text-zinc-900 text-sm">{{ $sandboxExtractedPayload['title'] }}</span>
                                     </div>
                                     <div>
-                                        <span class="text-[9px] text-zinc-400 font-mono block uppercase tracking-wider mb-0.5">Nama Perusahaan</span>
+                                        <span class="text-[11px] text-zinc-500 font-sans block   mb-0.5">Nama Perusahaan</span>
                                         <span class="font-semibold text-zinc-900">{{ $sandboxExtractedPayload['company'] }}</span>
                                     </div>
                                     <div>
-                                        <span class="text-[9px] text-zinc-400 font-mono block uppercase tracking-wider mb-0.5">Potongan Deskripsi Loker</span>
-                                        <div class="bg-white border border-zinc-200 rounded p-2.5 font-mono text-[9px] text-zinc-650 max-h-[100px] overflow-y-auto leading-relaxed">
+                                        <span class="text-[11px] text-zinc-500 font-sans block   mb-0.5">Potongan Deskripsi Loker</span>
+                                        <div class="bg-white border border-[#e7e3e9] rounded p-2.5 font-sans text-[11px] text-zinc-650 max-h-[100px] overflow-y-auto leading-relaxed">
                                             {{ $sandboxExtractedPayload['description'] }}
                                         </div>
                                     </div>
@@ -816,7 +779,7 @@
                         @endif
                     </div>
 
-                    <div class="mt-6 pt-4 border-t border-zinc-100 text-[10px] font-mono text-zinc-400">
+                    <div class="mt-6 pt-4 border-t border-zinc-100 text-[11px] font-sans text-zinc-500">
                         Visual selector builder bermanfaat untuk memotong bug perubahan struktur HTML pada platform loker eksternal.
                     </div>
                 </div>
@@ -828,21 +791,21 @@
             <div class="space-y-5 animate-fade-in text-zinc-900">
                 <!-- Status Notifications / Session Alert -->
                 @if (session()->has('report_action_success'))
-                    <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg p-3 text-xs font-semibold flex items-center gap-2 select-none shadow-3xs">
+                    <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg p-3 text-xs font-semibold flex items-center gap-2 select-none ">
                         <i class="ph-bold ph-check-circle text-sm text-emerald-600"></i>
                         <span>{{ session('report_action_success') }}</span>
                     </div>
                 @endif
 
-                <div class="bg-white border border-zinc-200/80 rounded-lg p-5 shadow-3xs">
+                <div class="bg-white border border-[#e7e3e9]/80 rounded-lg p-5 ">
                     <div class="flex items-center justify-between pb-3.5 border-b border-zinc-150/60 mb-5">
                         <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 rounded-lg bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-650 shadow-3xs">
+                            <div class="w-8 h-8 rounded-lg bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-650 ">
                                 <i class="ph-bold ph-warning-octagon text-base"></i>
                             </div>
                             <div>
-                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Moderasi Laporan Lowongan Ditutup</h3>
-                                <p class="text-zinc-400 text-[9px] font-medium mt-0.5">Daftar lowongan kerja yang dilaporkan sudah ditutup oleh pengguna di halaman pencarian.</p>
+                                <h3 class="text-xs font-medium text-zinc-800 tracking-tight">Moderasi Laporan Lowongan Ditutup</h3>
+                                <p class="text-zinc-500 text-[11px] font-medium mt-0.5">Daftar lowongan kerja yang dilaporkan sudah ditutup oleh pengguna di halaman pencarian.</p>
                             </div>
                         </div>
                     </div>
@@ -851,7 +814,7 @@
                         <div class="overflow-x-auto">
                             <table class="w-full text-[11px] text-zinc-650 border-collapse">
                                 <thead>
-                                    <tr class="bg-zinc-50 border-b border-zinc-200 text-left font-mono font-bold text-zinc-400 uppercase tracking-wider text-[9px]">
+                                    <tr class="bg-zinc-50 border-b border-[#e7e3e9] text-left font-sans font-medium text-zinc-500   text-[11px]">
                                         <th class="py-2.5 px-3">Detail Lowongan</th>
                                         <th class="py-2.5 px-3">Platform</th>
                                         <th class="py-2.5 px-3 text-center">Jumlah Laporan</th>
@@ -863,10 +826,10 @@
                                     @foreach($reportedJobs as $job)
                                         <tr class="hover:bg-zinc-50/30 transition-colors duration-150">
                                             <td class="py-3 px-3">
-                                                <div class="font-bold text-zinc-800">{{ $job->title }}</div>
-                                                <div class="text-[10px] text-zinc-400 font-medium mt-0.5">{{ $job->company_name }} &bull; {{ $job->location ?: 'Indonesia' }}</div>
+                                                <div class="font-medium text-zinc-800">{{ $job->title }}</div>
+                                                <div class="text-[11px] text-zinc-500 font-medium mt-0.5">{{ $job->company_name }} &bull; {{ $job->location ?: 'Indonesia' }}</div>
                                             </td>
-                                            <td class="py-3 px-3 font-mono font-bold text-[10px]">
+                                            <td class="py-3 px-3 font-sans font-medium text-[11px]">
                                                 @php
                                                     $portalName = str_contains($job->scraperSource->target_domain, 'linkedin') ? 'LinkedIn' : (str_contains($job->scraperSource->target_domain, 'jobstreet') ? 'JobStreet' : 'Kalibrr');
                                                     $badgeStyle = 'bg-blue-50 text-blue-700 border border-blue-200';
@@ -876,19 +839,19 @@
                                                         $badgeStyle = 'bg-emerald-50 text-emerald-700 border border-emerald-250';
                                                     }
                                                 @endphp
-                                                <span class="px-1.5 py-0.5 rounded text-[8.5px] uppercase font-bold {{ $badgeStyle }} shrink-0">
+                                                <span class="px-1.5 py-0.5 rounded text-[8.5px]  font-medium {{ $badgeStyle }} shrink-0">
                                                     {{ $portalName }}
                                                 </span>
                                             </td>
                                             <td class="py-3 px-3 text-center">
-                                                <div class="inline-flex items-center gap-1 px-2 py-0.5 bg-rose-50 border border-rose-150 rounded text-rose-700 font-mono font-bold text-[10px]">
-                                                    <i class="ph-bold ph-warning text-[10px]"></i>
+                                                <div class="inline-flex items-center gap-1 px-2 py-0.5 bg-rose-50 border border-rose-150 rounded text-rose-700 font-sans font-medium text-[11px]">
+                                                    <i class="ph-bold ph-warning text-[11px]"></i>
                                                     {{ $job->report_dead_count }}x Dilaporkan
                                                 </div>
                                             </td>
-                                            <td class="py-3 px-3 font-mono font-bold text-[9px] uppercase">
+                                            <td class="py-3 px-3 font-sans font-medium text-[11px] ">
                                                 @if($job->status === 'closed')
-                                                    <span class="text-zinc-400 bg-zinc-100 border border-zinc-200 px-1.5 py-0.5 rounded">Closed/Archived</span>
+                                                    <span class="text-zinc-500 bg-zinc-100 border border-[#e7e3e9] px-1.5 py-0.5 rounded">Closed/Archived</span>
                                                 @elseif($job->status === 'reported_dead')
                                                     <span class="text-red-700 bg-red-50 border border-red-200 px-1.5 py-0.5 rounded">Reported Dead</span>
                                                 @else
@@ -898,23 +861,23 @@
                                             <td class="py-3 px-3 text-right">
                                                 <div class="flex items-center justify-end gap-2.5">
                                                     <!-- Check original link -->
-                                                    <a href="{{ $job->raw_url }}" 
-                                                       target="_blank" 
-                                                       class="text-[9.5px] font-bold text-zinc-500 hover:text-zinc-800 transition-colors uppercase tracking-wider flex items-center gap-0.5">
+                                                    <a href="{{ $job->raw_url }}"
+                                                       target="_blank"
+                                                       class="text-[9.5px] font-medium text-zinc-500 hover:text-zinc-800 transition-colors   flex items-center gap-0.5">
                                                         <i class="ph ph-arrow-square-out text-xs"></i> Cek Link
                                                     </a>
                                                     <span class="text-zinc-200">|</span>
                                                     <!-- Restore / Re-activate -->
-                                                    <button type="button" 
-                                                            wire:click="restoreReportedJob({{ $job->id }})" 
-                                                            class="text-[9.5px] font-bold text-emerald-600 hover:text-emerald-800 transition-colors uppercase tracking-wider flex items-center gap-0.5">
+                                                    <button type="button"
+                                                            wire:click="restoreReportedJob({{ $job->id }})"
+                                                            class="text-[9.5px] font-medium text-emerald-600 hover:text-emerald-800 transition-colors   flex items-center gap-0.5">
                                                         <i class="ph ph-check text-xs"></i> Pulihkan
                                                     </button>
                                                     <span class="text-zinc-200">|</span>
                                                     <!-- Close permanently -->
-                                                    <button type="button" 
-                                                            wire:click="closeReportedJob({{ $job->id }})" 
-                                                            class="text-[9.5px] font-bold text-rose-600 hover:text-rose-800 transition-colors uppercase tracking-wider flex items-center gap-0.5">
+                                                    <button type="button"
+                                                            wire:click="closeReportedJob({{ $job->id }})"
+                                                            class="text-[9.5px] font-medium text-rose-600 hover:text-rose-800 transition-colors   flex items-center gap-0.5">
                                                         <i class="ph ph-archive text-xs"></i> Arsipkan
                                                     </button>
                                                 </div>
@@ -925,12 +888,12 @@
                             </table>
                         </div>
                     @else
-                        <div class="border border-dashed border-zinc-200 rounded-xl p-12 text-center flex flex-col items-center justify-center bg-zinc-50/30 select-none">
-                            <div class="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-500 mb-3 shadow-3xs">
+                        <div class="border border-dashed border-[#e7e3e9] rounded-2xl p-12 text-center flex flex-col items-center justify-center bg-zinc-50/30 select-none">
+                            <div class="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-500 mb-3 ">
                                 <i class="ph-bold ph-shield-check text-base"></i>
                             </div>
-                            <h3 class="text-xs font-bold text-zinc-800 tracking-tight">Semua Bersih</h3>
-                            <p class="text-[10px] text-zinc-400 max-w-[280px] mt-1 leading-normal">Tidak ada laporan aktif dari pengguna saat ini. Semua lowongan dalam status operasional normal.</p>
+                            <h3 class="text-xs font-medium text-zinc-800 tracking-tight">Semua Bersih</h3>
+                            <p class="text-[11px] text-zinc-500 max-w-[280px] mt-1 leading-normal">Tidak ada laporan aktif dari pengguna saat ini. Semua lowongan dalam status operasional normal.</p>
                         </div>
                     @endif
                 </div>
@@ -957,14 +920,14 @@
                             {
                                 label: 'Sukses',
                                 data: successData,
-                                backgroundColor: '#10b981', // emerald-500
+                                backgroundColor: '#729c94', // emerald-500
                                 borderRadius: 4,
                                 maxBarThickness: 24,
                             },
                             {
                                 label: 'Gagal / Diblokir',
                                 data: failData,
-                                backgroundColor: '#f43f5e', // rose-500
+                                backgroundColor: '#c58299', // rose-500
                                 borderRadius: 4,
                                 maxBarThickness: 24,
                             }

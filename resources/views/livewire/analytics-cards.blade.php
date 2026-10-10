@@ -33,14 +33,14 @@
         </div>
     </div>
 
-    <!-- Compact Declined -->
+    <!-- Compact Rejected -->
     <div class="bg-white border border-slate-200/60 rounded-2xl p-4 flex items-center justify-between hover:border-rose-600/50 transition-all group">
         <div class="flex items-center gap-4">
             <div class="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </div>
             <div class="flex flex-col">
-                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Declined</span>
+                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Rejected</span>
                 <span wire:loading.remove class="text-xl font-black text-slate-900 leading-none">{{ $declinedCount }}</span>
                 <div wire:loading class="h-5 w-10 rounded bg-slate-100 skeleton"></div>
             </div>

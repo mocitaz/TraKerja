@@ -1,74 +1,90 @@
-const CACHE_NAME = 'trakerja-cache-v1';
-const ASSETS_TO_CACHE = [
-  '/',
-  '/images/icon.png',
-  '/offline.html'
-];
+const CACHE_NAME = 'trakerja-public-v2';
+const PUBLIC_ASSETS = ['/offline.html', '/images/icon.png'];
+let cacheGeneration = 0;
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
-  );
+async function purgeCaches(keepCurrent = false) {
+  const names = await caches.keys();
+  await Promise.all(names.filter(name => name.startsWith('trakerja-') && (!keepCurrent || name !== CACHE_NAME)).map(name => caches.delete(name)));
+}
+
+async function cachePublicAssets(generation = cacheGeneration) {
+  const cache = await caches.open(CACHE_NAME);
+  await Promise.all(PUBLIC_ASSETS.map(async path => {
+    const url = new URL(path, self.location.origin);
+    try {
+      const response = await fetch(url.href, { credentials: 'omit', cache: 'reload' });
+      if (generation === cacheGeneration && safeToCache(response, url)) {
+        await cache.put(path, response.clone());
+      }
+    } catch {
+        // A missing public fallback must never prevent the private cache purge.
+    }
+  }));
+}
+
+self.addEventListener('install', event => {
+  event.waitUntil(cachePublicAssets());
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
-  );
-  self.clients.claim();
+self.addEventListener('activate', event => {
+  event.waitUntil(purgeCaches(true).then(() => self.clients.claim()));
 });
 
-self.addEventListener('fetch', (event) => {
-  // 1. Only intercept GET requests belonging to our own origin (excludes cross-origin scripts like Cloudflare, Google Analytics, etc.)
-  if (
-    event.request.method !== 'GET' ||
-    !event.request.url.startsWith(self.location.origin) ||
-    event.request.url.includes('/livewire/') ||
-    event.request.url.includes('chrome-extension')
-  ) {
+self.addEventListener('message', event => {
+  if (event.data?.type === 'PURGE_TRAKERJA_CACHES') {
+    const generation = ++cacheGeneration;
+    event.waitUntil(purgeCaches().then(() => cachePublicAssets(generation)));
+  }
+});
+
+function isPublicAsset(url) {
+  return PUBLIC_ASSETS.includes(url.pathname)
+    || /^\/build\/assets\/[\w.-]+[.-][A-Za-z0-9_-]{8,}\.(css|js|woff2?|png|jpe?g|svg|webp|ico)$/.test(url.pathname);
+}
+
+function safeToCache(response, url) {
+  const type = (response.headers.get('Content-Type') || '').split(';')[0].trim().toLowerCase();
+  const extension = url.pathname.split('.').pop();
+  const allowedTypes = {
+    html: ['text/html'], css: ['text/css'], js: ['text/javascript', 'application/javascript'],
+    png: ['image/png'], jpg: ['image/jpeg'], jpeg: ['image/jpeg'], svg: ['image/svg+xml'],
+    webp: ['image/webp'], ico: ['image/x-icon', 'image/vnd.microsoft.icon'],
+    woff: ['font/woff', 'application/font-woff'], woff2: ['font/woff2']
+  };
+  return response.ok && response.type === 'basic' && !response.redirected
+    && !/(?:private|no-store)/i.test(response.headers.get('Cache-Control') || '')
+    && (allowedTypes[extension] || []).includes(type);
+}
+
+function offlineError() {
+  return new Response('Network connection lost.', { status: 503, headers: { 'Content-Type': 'text/plain' } });
+}
+
+self.addEventListener('fetch', event => {
+  const request = event.request;
+  const url = new URL(request.url);
+  if (request.method !== 'GET' || url.origin !== self.location.origin) return;
+
+  if (isPublicAsset(url)) {
+    const generation = cacheGeneration;
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
+      try {
+        const response = await fetch(request);
+        if (generation === cacheGeneration && safeToCache(response, url)) await cache.put(request, response.clone());
+        return response;
+      } catch {
+        return (await cache.match(request)) || offlineError();
+      }
+    })());
     return;
   }
 
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        // If the request succeeds, clone it and store it in the cache
-        if (response.status === 200 && response.type === 'basic') {
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-        }
-        return response;
-      })
-      .catch(() => {
-        // If network fails, try to serve from cache
-        return caches.match(event.request).then((cachedResponse) => {
-          if (cachedResponse) {
-            return cachedResponse;
-          }
-          // If not in cache and requesting HTML page, fallback to offline.html
-          if (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html')) {
-            return caches.match('/offline.html');
-          }
-          // Return a valid error response for assets to prevent Service Worker TypeError
-          return new Response('Network connection lost.', {
-            status: 503,
-            statusText: 'Service Unavailable',
-            headers: new Headers({ 'Content-Type': 'text/plain' })
-          });
-        });
-      })
-  );
+  if (request.mode === 'navigate') {
+    event.respondWith(fetch(request).catch(async () => {
+      const cache = await caches.open(CACHE_NAME);
+      return (await cache.match('/offline.html')) || offlineError();
+    }));
+  }
 });

@@ -1,0 +1,46 @@
+.dashboard-welcome { --welcome-x: 0; --welcome-y: 0; position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 360px; align-items: center; gap: 32px; margin: 0 0 18px; min-height: 190px; }
+.dashboard-welcome-copy time { display: block; font-size: 12px; color: #545761; margin-bottom: 9px; }
+.dashboard-welcome-copy h1 { font-size: 26px; font-weight: 600; line-height: 1.3; letter-spacing: -.9px; }
+.dashboard-welcome-copy p { font-size: 12px; line-height: 1.6; color: #545761; margin: 8px 0 14px; }
+.dashboard-welcome-copy .dashboard-primary-button { width: fit-content; min-height: 40px; padding: 9px 16px; font-size: 12px; }
+.welcome-scene { position: relative; height: 222px; isolation: isolate; }
+.welcome-orbit { position: absolute; width: 230px; height: 172px; border: 1px solid #fff9; border-radius: 50%; left: 65px; top: 20px; transform: rotate(-20deg); background: radial-gradient(ellipse, #f5e7f580, transparent 72%); }
+.welcome-companion-position { position: absolute; top: 43px; left: 123px; z-index: 2; transform: translate(calc(var(--welcome-x) * 5px), calc(var(--welcome-y) * 4px)); transition: transform .25s ease-out; }
+.welcome-companion { position: relative; display: block; width: 112px; height: 112px; border-radius: 50%; animation: welcome-drift 6s ease-in-out infinite; cursor: pointer; }
+.welcome-companion svg { width: 100%; height: 100%; border-radius: 50%; border: 4px solid #ffffffb3; box-shadow: 0 10px 24px #66507114; transition: transform .25s; }
+.welcome-companion:hover svg, .welcome-companion[aria-expanded="true"] svg { transform: rotate(-5deg) scale(1.04); }
+.welcome-hello { position: absolute; bottom: -13px; left: 8px; white-space: nowrap; border: 1px solid white; border-radius: 20px; padding: 6px 12px; background: #ffffffed; font-size: 11px; color: #51435f; box-shadow: 0 3px 12px #51435f0a; }
+.welcome-eyes { transform-box: fill-box; transform-origin: center; animation: welcome-blink 7s linear infinite; }
+.welcome-float { position: absolute; display: flex; align-items: center; gap: 9px; color: #51435f; font-size: 11px; font-weight: 500; border: 1px solid #ffffffd9; border-radius: 16px; background: #f3eff9cc; box-shadow: 0 6px 20px #53496908; backdrop-filter: blur(10px); animation: welcome-drift 7s ease-in-out infinite; transition: box-shadow .2s, background .2s; }
+.welcome-float:hover { background: #fff; box-shadow: 0 8px 24px #53496918; }
+.welcome-float svg { width: 35px; height: 40px; flex-shrink: 0; }
+.welcome-float-cv { left: 12px; top: 25px; padding: 12px 16px; flex-direction: column; gap: 4px; rotate: -9deg; animation-delay: -2s; }
+.welcome-float-calendar { right: 0; top: 36px; padding: 12px; flex-direction: column; gap: 4px; rotate: 8deg; background: #fceef3cf; animation-delay: -4s; }
+.welcome-float-jobs { left: 12px; bottom: 8px; padding: 11px 14px; background: #e7f2facf; rotate: -3deg; animation-delay: -1s; }
+.welcome-float-jobs i { font-size: 19px; }
+.welcome-motion-toggle { position: absolute; right: 3px; bottom: 0; display: flex; align-items: center; gap: 5px; min-height: 34px; font-size: 10px; color: #545761; padding: 5px 9px; border-radius: 20px; }
+.welcome-motion-toggle:hover { background: #ffffff80; }
+.welcome-motion-toggle:disabled { cursor: default; }
+.welcome-companion-note { position: absolute; z-index: 20; right: 0; top: 185px; width: min(280px, 100%); border: 1px solid #fff; padding: 14px; border-radius: 16px; background: #fffffff5; box-shadow: 0 15px 40px #3542531a; }
+.welcome-companion-note > div { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; }
+.welcome-companion-note button { display: grid; place-items: center; flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; background: #f4f2f7; }
+.welcome-companion-note p { font-size: 11px; line-height: 1.6; color: #545761; margin: 8px 0 10px; }
+.welcome-companion-note > a { display: flex; align-items: center; justify-content: space-between; min-height: 32px; font-size: 11px; font-weight: 600; color: #65477c; }
+.dashboard-welcome a:focus-visible, .dashboard-welcome button:focus-visible { outline: 2px solid #9c4c85; outline-offset: 5px; }
+.welcome-paused .welcome-companion, .welcome-paused .welcome-float, .welcome-paused .welcome-eyes { animation-play-state: paused; }
+@keyframes welcome-drift { 0%, 100% { translate: 0 0; } 50% { translate: 0 -7px; } }
+@keyframes welcome-blink { 0%, 43%, 46%, 100% { scale: 1 1; } 44%, 45% { scale: 1 .12; } }
+@media (max-width: 900px) { .dashboard-welcome { grid-template-columns: minmax(0, 1fr) 300px; gap: 12px; } .welcome-scene { transform: scale(.86); transform-origin: right center; width: 350px; margin-left: -50px; } }
+@media (max-width: 640px) { .dashboard-welcome { grid-template-columns: 1fr; gap: 8px; } .dashboard-welcome-copy { padding-top: 8px; } .welcome-scene { transform: none; width: min(360px, 100%); margin: 0 auto; height: 215px; } .welcome-companion-note { top: auto; bottom: -40px; right: 0; } .welcome-motion-toggle { min-height: 44px; } .welcome-float-calendar { right: 4px; } }
+@media (prefers-reduced-motion: reduce) { .welcome-companion, .welcome-float, .welcome-eyes { animation: none; } .welcome-companion-position, .welcome-companion svg, .welcome-float { transition: none; } }
+
+.welcome-float-cv { transform: translate(calc(var(--welcome-x) * -7px), calc(var(--welcome-y) * -5px)); }
+.welcome-float-calendar { transform: translate(calc(var(--welcome-x) * 8px), calc(var(--welcome-y) * 5px)); }
+.welcome-float-jobs { transform: translate(calc(var(--welcome-x) * -4px), calc(var(--welcome-y) * 3px)); }
+@media (max-width: 640px) { .welcome-companion-position { left: calc(50% - 56px); } .welcome-float-cv { left: 0; } .welcome-float-calendar { max-width: 110px; text-align: center; } }
+
+@media (min-width: 901px) { .welcome-scene { height: 190px; transform: scale(.86); transform-origin: right center; } }
+
+@media (pointer: coarse) { .dashboard-welcome-copy .dashboard-primary-button { min-height: 44px; } }
+
+@media (pointer: coarse) { .welcome-companion-note > a, .welcome-companion-note button { min-height: 44px; } .welcome-companion-note button { width: 44px; } }

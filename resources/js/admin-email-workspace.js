@@ -1,0 +1,59 @@
+window.emailBlastWorkspace = function (routes) {
+    return {
+        audience: 'all', emailType: 'welcome', custom: { subject: '', content: '', buttonText: '', buttonUrl: '' },
+        modal: null, device: 'desktop', loading: false, previewReady: false, error: '', users: [], payload: null,
+        sending: false, processed: 0, successCount: 0, failures: [], deliveryStatus: '', logError: '',
+        audienceLabel() { return { all: 'All members', verified: 'Verified members', unverified: 'Unverified members', premium: 'Active premium members', free: 'Free members', new: 'New members' }[this.audience]; },
+        templateLabel() { return this.$refs.composer.querySelector('[name=email_type]')?.selectedOptions[0]?.textContent || ''; },
+        async request(url, payload, html = false, timeout = 30000) {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), timeout);
+            try {
+                const response = await fetch(url, { method: 'POST', signal: controller.signal, headers: { 'Content-Type': 'application/json', 'Accept': html ? 'text/html' : 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, 'X-Requested-With': 'XMLHttpRequest' }, body: JSON.stringify(payload) });
+                if (!response.ok) {
+                    let message = 'The request could not be completed. Please check the form and try again.';
+                    try { const data = await response.json(); message = Object.values(data.errors || {}).flat()[0] || data.message || data.error || message; } catch {}
+                    throw new Error(message);
+                }
+                return html ? await response.text() : await response.json();
+            } finally { clearTimeout(timer); }
+        },
+        async preview() {
+            if (this.loading || this.sending || !this.$refs.composer.reportValidity()) return;
+            this.error = '';
+            if (this.emailType === 'custom' && Boolean(this.custom.buttonText.trim()) !== Boolean(this.custom.buttonUrl.trim())) {
+                this.error = 'Add both button text and a destination URL, or leave both empty.'; return;
+            }
+            this.loading = true; this.previewReady = false; this.modal = 'preview'; this.users = [];
+            this.payload = { email_type: this.emailType, target_user: this.audience, custom_subject: this.custom.subject, custom_content: this.custom.content, custom_button_text: this.custom.buttonText || null, custom_button_url: this.custom.buttonUrl || null };
+            try {
+                const [html, audience] = await Promise.all([this.request(routes.previewUrl, this.payload, true), this.request(routes.initUrl, this.payload)]);
+                this.$refs.previewFrame.srcdoc = html;
+                this.users = audience.users;
+                this.previewReady = true;
+            } catch (error) { this.error = error.name === 'AbortError' ? 'Preview timed out. Close this dialog and try again.' : error.message; }
+            finally { this.loading = false; }
+        },
+        async send() {
+            if (this.sending || this.modal !== 'confirm' || !this.previewReady || !this.users.length) return;
+            this.sending = true; this.modal = 'progress'; this.error = ''; this.logError = ''; this.processed = 0; this.successCount = 0; this.failures = [];
+            for (const user of this.users) {
+                this.deliveryStatus = `Sending to ${user.name} · ${user.email}`;
+                try {
+                    const result = await this.request(routes.sendUrl, { ...this.payload, user_id: user.id }, false, 60000);
+                    if (!result.success) throw new Error(result.error || 'Delivery was not confirmed.');
+                    this.successCount++;
+                } catch (error) {
+                    this.failures.push({ email: user.email, name: user.name, error: error.name === 'AbortError' || error instanceof TypeError ? 'Delivery could not be confirmed. Review before sending again.' : error.message });
+                }
+                this.processed++;
+                if (this.processed < this.users.length) await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+            this.deliveryStatus = `${this.successCount} sent · ${this.failures.length} failed or unconfirmed.`;
+            try {
+                await this.request(routes.logUrl, { email_type: this.payload.email_type, target_audience: this.payload.target_user, total_target: this.users.length, success_count: this.successCount, failed_count: this.failures.length, failed_details: this.failures });
+            } catch { this.logError = 'Delivery finished, but the history could not be saved. Keep these counts before closing.'; }
+            finally { this.sending = false; }
+        },
+    };
+};

@@ -1,0 +1,44 @@
+:root {
+    --page-frame-width: 1320px;
+    --page-gutter: 40px;
+}
+.workspace-shell :is(.workspace-page__container, .dashboard-container, .profile-container, .cover-letter-container, .workspace-page-frame),
+.workspace-shell .cv-workspace .workspace-container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: var(--page-frame-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--page-gutter);
+    padding-right: var(--page-gutter);
+}
+.workspace-shell .workspace-navigation {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: calc(var(--page-frame-width) + 32px);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--page-gutter);
+    padding-right: var(--page-gutter);
+}
+.workspace-shell :is(.workspace-topbar, .workspace-mobile-menu) {
+    width: 100%;
+    max-width: none;
+}
+.utility-page .utility-shell,
+.portfolio-page .portfolio-shell {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: var(--page-frame-width);
+    padding-left: var(--page-gutter);
+    padding-right: var(--page-gutter);
+}
+@media (max-width: 1100px) {
+    :root { --page-gutter: 24px; }
+}
+@media (max-width: 640px) {
+    :root { --page-gutter: 16px; }
+}
+@media print {
+    .legal-page .utility-shell { max-width: none; padding-left: 0; padding-right: 0; }
+}

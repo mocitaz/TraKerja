@@ -1,0 +1,224 @@
+{
+  "9cv9": {
+    "site": "https://9cv9.com",
+    "source": "https://9cv9.com/favicon.svg",
+    "file": "9cv9.svg"
+  },
+  "Cake: Cari Lowongan": {
+    "site": "https://www.cake.me",
+    "source": "https://www.cake.me/favicons/apple-touch-icon.png",
+    "file": "cake.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Dealls": {
+    "site": "https://dealls.com",
+    "source": "https://dealls.com/favicon-192.png",
+    "file": "dealls.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Disnakerja.com": {
+    "site": "https://disnakerja.com",
+    "source": "https://i0.wp.com/disnakerja.com/wp-content/uploads/2025/03/cropped-Fav-Icon-180x180.png",
+    "file": "disnakerja.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Fiverr": {
+    "site": "https://www.fiverr.com",
+    "source": "https://fiverr-res.cloudinary.com/npm-assets/layout-service/favicon-32x32.487dee1.png",
+    "file": "fiverr.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  "Freelancer": {
+    "site": "https://www.freelancer.com",
+    "source": "https://www.f-cdn.com/assets/main/en/assets/app-icons/apple-touch-icon.png",
+    "file": "freelancer.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Glassdoor": {
+    "site": "https://www.glassdoor.com",
+    "source": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://glassdoor.com&size=128",
+    "file": "glassdoor.png",
+    "size": [
+      48,
+      48
+    ]
+  },
+  "Glints": {
+    "site": "https://glints.com",
+    "source": "https://glints.com/apple-touch-icon.png",
+    "file": "glints.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Google Forms": {
+    "site": "https://docs.google.com/forms",
+    "source": "https://www.gstatic.com/images/branding/productlogos/forms_2026q3/v1/web/192px.svg",
+    "file": "google-forms.svg"
+  },
+  "Indeed": {
+    "site": "https://www.indeed.com",
+    "source": "https://www.indeed.com/apple-touch-icon.png",
+    "file": "indeed.png",
+    "size": [
+      57,
+      57
+    ]
+  },
+  "JobStreet": {
+    "site": "https://id.jobstreet.com",
+    "source": "https://id.jobstreet.com/apple-touch-icon.png",
+    "file": "jobstreet.png",
+    "size": [
+      114,
+      114
+    ]
+  },
+  "Jobseeker App": {
+    "site": "https://www.jobseeker.app",
+    "source": "https://www.jobseeker.app/favicon.ico",
+    "file": "jobseeker.png",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "JobsDB": {
+    "site": "https://hk.jobsdb.com",
+    "source": "https://hk.jobsdb.com/static/shared-web/apple-touch-icon-1d8fca2006ebd1534df69aa6420aa3a4.png",
+    "file": "jobsdb.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Jora": {
+    "site": "https://id.jora.com",
+    "source": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://jora.com&size=128",
+    "file": "jora.png",
+    "size": [
+      120,
+      120
+    ]
+  },
+  "Kalibrr": {
+    "site": "https://www.kalibrr.com",
+    "source": "https://www.kalibrr.com/favicon.ico",
+    "file": "kalibrr.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Karir.com": {
+    "site": "https://www.karir.com",
+    "source": "https://www.karir.com/favicon.ico",
+    "file": "karir.png",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "Karirhub (SIAPkerja)": {
+    "site": "https://karirhub.kemnaker.go.id",
+    "source": "https://karirhub.kemnaker.go.id/favicon.ico",
+    "file": "karirhub.png",
+    "size": [
+      28,
+      28
+    ]
+  },
+  "KitaLulus": {
+    "site": "https://www.kitalulus.com",
+    "source": "https://www.kitalulus.com/kitalulus-favicon.png",
+    "file": "kitalulus.png",
+    "size": [
+      48,
+      48
+    ]
+  },
+  "LinkedIn": {
+    "site": "https://www.linkedin.com",
+    "source": "https://static.licdn.com/aero-v1/sc/h/al2o9zrvru7aqj8e1x2rzsrca",
+    "file": "linkedin.png",
+    "size": [
+      64,
+      64
+    ]
+  },
+  "Loker.id": {
+    "site": "https://www.loker.id",
+    "source": "https://www.loker.id/assets/favicon.png",
+    "file": "loker.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Microsoft Forms": {
+    "site": "https://forms.office.com",
+    "source": "https://forms.cloud.microsoft/cdn/images/favicon.ico",
+    "file": "microsoft-forms.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  "Pintarnya.com": {
+    "site": "https://pintarnya.com",
+    "source": "https://pintarnya.com/favicon.ico",
+    "file": "pintarnya.png",
+    "size": [
+      48,
+      48
+    ]
+  },
+  "SkillAcademy": {
+    "site": "https://skillacademy.com",
+    "source": "https://skillacademy-demo.s3-ap-southeast-1.amazonaws.com/favicon.ico",
+    "file": "skillacademy.png",
+    "size": [
+      48,
+      48
+    ]
+  },
+  "Talentics": {
+    "site": "https://www.talentics.id",
+    "source": "https://www.talentics.id/images/favicon/favicon-180x180.png",
+    "file": "talentics.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Tech in Asia": {
+    "site": "https://www.techinasia.com",
+    "source": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://techinasia.com&size=128",
+    "file": "tech-in-asia.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Urbanhire": {
+    "site": "https://www.urbanhire.com",
+    "file": null,
+    "status": "needs_verified_asset"
+  }
+}

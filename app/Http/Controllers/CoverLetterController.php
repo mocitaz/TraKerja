@@ -148,144 +148,56 @@ class CoverLetterController extends Controller
         ]);
 
         try {
-            // 4. Send POST request to Vercel API
-            $response = Http::timeout(60) // 1 minute timeout
-                ->post(self::VERCEL_API_URL, $aiPayload);
-
-            if ($response->successful()) {
-                $responseBody = $response->json();
-
-                // Deduct credit only on successful generation
-                if (\App\Models\Setting::isMonetizationEnabled()) {
-                    $user->incrementCoverLetterCount();
-                }
-
-                $generatedContent = $responseBody['cover_letter'] ?? $responseBody['result'] ?? '';
-
-                // Save to DB
-                $coverLetter = \App\Models\CoverLetter::create([
-                    'user_id' => $user->id,
-                    'company_name' => $aiPayload['company_name'],
-                    'job_title' => $aiPayload['job_title'],
-                    'job_description' => $aiPayload['job_description'],
-                    'language' => $aiPayload['language'],
-                    'tone' => $aiPayload['tone'],
-                    'content' => $generatedContent,
-                ]);
-
-                ActivityLogger::log(
-                    'cover_letter',
-                    "User menggunakan AI untuk membuat Cover Letter untuk {$aiPayload['company_name']} ({$aiPayload['job_title']})",
-                    'success',
-                    ['company' => $aiPayload['company_name'], 'role' => $aiPayload['job_title']],
-                    $user->id
-                );
-
-                return response()->json([
-                    'success' => true,
-                    'cover_letter' => $generatedContent,
-                    'id' => $coverLetter->id,
-                    'payload_debug' => app()->environment('local') ? $aiPayload : null
-
-                ]);
-            }
-
-            // Logging failure response
-            \Log::error('AI Cover Letter Generation API Failed', [
-                'status' => $response->status(),
-                'body' => $response->body()
-            ]);
-
-            // Fallback generation logic to prevent UI crashing while backend team sets up API
-            $fallbackLetter = $this->generateLocalFallback($aiPayload);
-            return response()->json([
-                'success' => true,
-                'cover_letter' => $fallbackLetter,
-                'is_fallback' => true,
-                'payload_debug' => $aiPayload
-            ]);
-
-        } catch (\Exception $e) {
-            \Log::error('AI Cover Letter API Exception: ' . $e->getMessage(), [
-                'exception' => $e
-            ]);
-
-            // Return local fallback on exception as well, alongside debugging data
-            $fallbackLetter = $this->generateLocalFallback($aiPayload);
-            return response()->json([
-                'success' => true,
-                'cover_letter' => $fallbackLetter,
-                'is_fallback' => true,
-                'payload_debug' => $aiPayload
-            ]);
+            $response = Http::timeout(60)->post(self::VERCEL_API_URL, $aiPayload);
+        } catch (\Illuminate\Http\Client\ConnectionException $e) {
+            return $this->fallbackResponse($aiPayload);
         }
+        $generatedContent = $response->json('cover_letter') ?? $response->json('result');
+        if (!$response->successful() || !is_string($generatedContent) || trim($generatedContent) === '') {
+            return $this->fallbackResponse($aiPayload);
+        }
+        $coverLetter = \Illuminate\Support\Facades\DB::transaction(function () use ($user, $aiPayload, $generatedContent) {
+            $locked = \App\Models\User::whereKey($user->id)->lockForUpdate()->firstOrFail();
+            if (\App\Models\Setting::isMonetizationEnabled() && !$locked->canAccessCoverLetterWithLimit()) {
+                abort(403, 'Cover letter credits are no longer available.');
+            }
+            $letter = \App\Models\CoverLetter::create([
+                'user_id' => $locked->id, 'company_name' => $aiPayload['company_name'],
+                'job_title' => $aiPayload['job_title'], 'job_description' => $aiPayload['job_description'],
+                'language' => $aiPayload['language'], 'tone' => $aiPayload['tone'], 'content' => $generatedContent,
+            ]);
+            if (\App\Models\Setting::isMonetizationEnabled()) $locked->incrementCoverLetterCount();
+            return $letter;
+        });
+        try {
+            ActivityLogger::log('cover_letter', 'User generated a cover letter', 'success', ['company' => $aiPayload['company_name'], 'role' => $aiPayload['job_title']], $user->id);
+        } catch (\Throwable $exception) {
+            report($exception);
+        }
+        return response()->json(['success' => true, 'cover_letter' => $generatedContent, 'id' => $coverLetter->id]);
+    }
+
+    private function fallbackResponse(array $payload): JsonResponse
+    {
+        return response()->json(['success' => true, 'cover_letter' => $this->generateLocalFallback($payload), 'is_fallback' => true]);
     }
 
     /**
-     * Generate a high-fidelity local fallback cover letter matching the candidate's exact DB context.
-     * This acts as an impressive offline mock and guides the AI model team on formatting.
+     * Create an unsaved template from the supplied role and actual profile skills.
      */
     private function generateLocalFallback(array $payload): string
     {
         $candidate = $payload['candidate_context'];
-        $company = $payload['company_name'];
-        $role = $payload['job_title'];
-        $tone = $payload['tone'];
-        $lang = $payload['language'];
-        $focus = $payload['highlight_focus'];
-
-        // Core dynamic sentences
-        $skillsList = count($candidate['skills']) > 0
-            ? implode(', ', array_slice(array_column($candidate['skills'], 'skill_name'), 0, 4))
-            : 'various engineering principles and agile team practices';
-
-        $latestExp = count($candidate['experiences']) > 0
-            ? $candidate['experiences'][0]['position'] . ' at ' . $candidate['experiences'][0]['company_name']
-            : 'experienced developer';
-
-        if ($lang === 'id') {
-            $letter = "Kepada Yth.\nTim Rekrutmen " . $company . "\n\n";
-
-            if ($tone === 'creative') {
-                $letter .= "Saya menulis surat ini dengan antusiasme yang tinggi untuk mengekspresikan ketertarikan saya pada posisi " . $role . " di " . $company . ". Melalui latar belakang saya sebagai " . $latestExp . ", saya sangat bersemangat untuk membawa energi segar dan dedikasi saya ke dalam tim Anda.\n\n";
-                $letter .= "Keahlian saya mencakup " . $skillsList . ". Saya selalu berupaya menciptakan solusi kreatif yang melampaui ekspektasi konvensional. " . ($focus ? "Saya sangat senang memiliki kesempatan untuk memfokuskan kontribusi saya pada " . $focus . "." : "") . "\n\n";
-                $letter .= "Saya mengagumi kultur inovatif di " . $company . " dan yakin kontribusi saya akan mempercepat pertumbuhan produk Anda. Terima kasih atas waktu dan pertimbangannya. Saya sangat menantikan kesempatan berdiskusi lebih lanjut.\n\n";
-            } else if ($tone === 'bold') {
-                $letter .= "Sebagai seorang profesional yang berorientasi pada pencapaian, saya sangat tertarik untuk melamar posisi " . $role . " di " . $company . ". Membawa rekam jejak yang solid sebagai " . $latestExp . ", fokus utama saya adalah menghasilkan metrik performa yang berdampak langsung bagi perusahaan Anda.\n\n";
-                $letter .= "Melalui penguasaan " . $skillsList . ", saya terlatih untuk mengoptimalkan alur kerja dan memecahkan tantangan teknis yang rumit. " . ($focus ? "Mengacu pada preferensi Anda, saya siap memberikan fokus mendalam pada " . $focus . " untuk hasil maksimal." : "") . "\n\n";
-                $letter .= "Saya percaya " . $company . " membutuhkan individu yang tidak hanya menyelesaikan pekerjaan, tetapi mendorong inovasi agresif. Saya siap membuktikannya dalam sesi wawancara.\n\n";
-            } else { // Professional
-                $letter .= "Melalui surat ini, saya bermaksud untuk mengajukan diri sebagai kandidat untuk posisi " . $role . " yang saat ini tersedia di " . $company . ". Berdasarkan pengalaman kerja saya sebagai " . $latestExp . ", saya meyakini kualifikasi saya relevan dengan kebutuhan bisnis Anda.\n\n";
-                $letter .= "Saya memiliki keahlian teknis dalam " . $skillsList . " yang didukung oleh rekam jejak penyelesaian proyek secara akuntabel. " . ($focus ? "Saya juga akan memberikan perhatian khusus pada " . $focus . " sesuai kebutuhan taktis perusahaan." : "") . "\n\n";
-                $letter .= "Besar harapan saya untuk mendapatkan kesempatan wawancara langsung guna memaparkan bagaimana kompetensi saya dapat bersinergi dengan visi jangka panjang " . $company . ". Terima kasih atas waktu dan perhatian Bapak/Ibu.";
-            }
-
-            $letter .= "\n\nHormat saya,\n" . $candidate['candidate_name'];
-        } else { // English default
-            $letter = "Dear Hiring Committee,\n\n";
-
-            if ($tone === 'creative') {
-                $letter .= "I am absolutely thrilled to submit my application for the " . $role . " position at " . $company . ". As a passion-driven professional with experience as a " . $latestExp . ", I am eager to combine my creative insights with your high-growth initiatives.\n\n";
-                $letter .= "My core toolbox spans " . $skillsList . ", enabling me to build seamless interactive products and unique user solutions. " . ($focus ? "Furthermore, I am particularly excited about the chance to highlight my dedication to " . $focus . "." : "") . "\n\n";
-                $letter .= "I admire " . $company . "'s forward-thinking brand and would love the opportunity to fuel your mission. Thank you for your valuable time and consideration. I look forward to connecting soon!\n\n";
-            } else if ($tone === 'bold') {
-                $letter .= "I am writing to express my strong interest in the " . $role . " role at " . $company . ". Backed by a solid career driving achievements as a " . $latestExp . ", I specialize in building metrics-driven systems that generate immediate value.\n\n";
-                $letter .= "With expertise in " . $skillsList . ", I focus on transforming technical requirements into scalable, clean architectures. " . ($focus ? "I am especially prepared to apply my strengths toward " . $focus . " to accelerate your team's tactical goals." : "") . "\n\n";
-                $letter .= "I look forward to discussing how my results-oriented mindset can benefit the growth of " . $company . " in our upcoming interview.\n\n";
-            } else if ($tone === 'warm') {
-                $letter .= "I wanted to personally reach out regarding the " . $role . " opening at " . $company . ". Having spent valuable time honing my skills as a " . $latestExp . ", I would love to bring my supportive nature and dedication to your incredible team.\n\n";
-                $letter .= "I genuinely love working with " . $skillsList . " to solve human problems. " . ($focus ? "I would be delighted to focus my energy on " . $focus . " to support your ongoing team targets." : "") . "\n\n";
-                $letter .= "It would mean a lot to chat and share more about my background. Thank you so much for reading this! Warmly,\n" . $candidate['candidate_name'];
-                return $letter;
-            } else { // Professional standard
-                $letter .= "I am writing to express my formal interest in the " . $role . " position at " . $company . ". With a strong foundation established during my tenure as a " . $latestExp . ", I am confident in my ability to make a meaningful contribution to your organization.\n\n";
-                $letter .= "My background includes hands-on experience in " . $skillsList . ", combined with a dedicated focus on quality delivery. " . ($focus ? "I plan to leverage my experience in " . $focus . " to support your company's strategic targets." : "") . "\n\n";
-                $letter .= "Thank you for reviewing my application. I welcome the opportunity to discuss my qualifications with you in an interview.";
-            }
-
-            $letter .= "\n\nSincerely,\n" . $candidate['candidate_name'];
+        $skills = implode(', ', array_slice(array_column($candidate['skills'], 'skill_name'), 0, 4));
+        if ($payload['language'] === 'id') {
+            $letter = "Kepada Tim Rekrutmen {$payload['company_name']},\n\nSaya tertarik untuk melamar posisi {$payload['job_title']}.";
+            if ($skills !== '') $letter .= " Keahlian yang tercatat dalam profil saya mencakup {$skills}.";
+            $letter .= "\n\nSaya berharap dapat mendiskusikan kebutuhan posisi ini dan latar belakang saya lebih lanjut. Terima kasih atas waktu dan pertimbangannya.\n\nHormat saya,\n".$candidate['candidate_name'];
+        } else {
+            $letter = "Dear Hiring Team at {$payload['company_name']},\n\nI am interested in applying for the {$payload['job_title']} position.";
+            if ($skills !== '') $letter .= " My saved profile lists experience with {$skills}.";
+            $letter .= "\n\nI would welcome the opportunity to discuss the role requirements and my background. Thank you for your time and consideration.\n\nSincerely,\n".$candidate['candidate_name'];
         }
-
         return $letter;
     }
     /**
@@ -298,7 +210,7 @@ class CoverLetterController extends Controller
             abort(403, 'Unauthorized access to cover letter');
         }
 
-        return view('cover-letters.show', compact('coverLetter'));
+        return app(\App\Support\AiStudioWorkspace::class)->render(Auth::user(), 'cover-letter', $coverLetter);
     }
 
     /**

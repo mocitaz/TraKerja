@@ -50,7 +50,7 @@ class PaymentController extends Controller
             $query->whereDate('created_at', '<=', $request->date_to);
         }
 
-        $payments = $query->orderBy('created_at', 'desc')->paginate(20);
+        $payments = $query->orderBy('created_at', 'desc')->paginate(20)->withQueryString();
 
         // Statistics
         $stats = [
@@ -112,7 +112,7 @@ class PaymentController extends Controller
             $response = $this->yukkService->cancelVATransaction($payment->yukk_transaction_code);
 
             if ($response['success']) {
-                $payment->update(['status' => 'CANCELED']);
+                $payment->markAsCanceled();
                 
                 Log::info('Payment canceled by admin', [
                     'payment_id' => $payment->id,
@@ -149,6 +149,17 @@ class PaymentController extends Controller
     public function export(Request $request)
     {
         $query = Payment::with('user');
+
+        if ($request->filled('search')) {
+            $search = mb_substr((string) $request->input('search'), 0, 100);
+            $query->where(function ($query) use ($search) {
+                $query->where('order_id', 'like', '%'.$search.'%')
+                    ->orWhere('yukk_transaction_code', 'like', '%'.$search.'%')
+                    ->orWhereHas('user', function ($query) use ($search) {
+                        $query->where('name', 'like', '%'.$search.'%')->orWhere('email', 'like', '%'.$search.'%');
+                    });
+            });
+        }
 
         // Apply same filters as index
         if ($request->filled('status')) {

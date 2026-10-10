@@ -1,0 +1,4 @@
+explore_created_status=Applied kanban_has_status=false
+same_user_three_reports_count=3 status=closed
+export_first_row_is_valid_import_header=false
+COMPLETE: fixture-only workflow proofs; no external requests.

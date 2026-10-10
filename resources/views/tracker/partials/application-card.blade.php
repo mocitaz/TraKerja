@@ -1,0 +1,12 @@
+@php($tone = match($job->application_status) { 'Accepted' => 'accepted', 'Rejected' => 'rejected', default => 'process' })
+<article class="tracker-job-card {{ $job->is_pinned ? 'is-pinned' : '' }}" wire:key="{{ $mode }}-application-{{ $job->id }}" @if($mode === 'board') draggable="true" @dragstart="startDrag($event, {{ $job->id }})" @dragend="finishDrag()" @endif>
+    <div class="tracker-card-top">@if($mode !== 'board')<span class="tracker-pill tracker-pill--{{ $tone }}">{{ $job->application_status }}</span>@else<span class="tracker-card-stage-pill">{{ $job->recruitment_stage ?: 'Applied' }}</span>@endif@if($job->is_pinned)<i class="ph-fill ph-push-pin tracker-pinned-mark" aria-label="Pinned"></i>@endif @if($mode === 'board')<i class="ph ph-dots-six-vertical tracker-card-grip" aria-hidden="true"></i>@endif</div>
+    <a href="{{ route('jobs.show', $job) }}" wire:navigate class="tracker-card-link"><h3>{{ $job->position }}</h3><p>{{ $job->company_name }}</p></a>
+    <p class="tracker-card-location"><i class="ph ph-map-pin" aria-hidden="true"></i>{{ $job->location ?: 'Location not specified' }}</p>
+    <div class="tracker-card-meta"><x-platform-brand :name="$job->platform" class="platform-brand--compact" />@if($job->career_level)<span>{{ $job->career_level }}</span>@endif</div>
+    @if($mode !== 'board')<div class="tracker-card-stage"><span>Current stage</span><strong>{{ $job->recruitment_stage ?: 'Applied' }}</strong></div>@endif
+    @if($job->interview_date)<p class="tracker-interview-note"><i class="ph ph-calendar" aria-hidden="true"></i>{{ $job->interview_date->timezone('Asia/Jakarta')->format('d M, H:i') }} WIB</p>@endif
+    @if($job->isGhosted())@include('tracker.partials.follow-up-button')@endif
+    @if($mode === 'board')<label class="tracker-card-move"><span>Move to</span><select aria-label="Move {{ $job->position }} at {{ $job->company_name }} to status" wire:change="updateStatus({{ $job->id }}, $event.target.value)" wire:loading.attr="disabled" wire:target="updateStatus">@foreach($statusOptions as $option)<option value="{{ $option }}" @selected($job->application_status === $option)>{{ $option }}</option>@endforeach</select></label>@endif
+    <footer class="tracker-card-footer"><time datetime="{{ $job->application_date?->toDateString() }}">Applied {{ $job->application_date?->format('d M Y') ?: '—' }}</time>@include('tracker.partials.actions')</footer>
+</article>

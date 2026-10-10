@@ -1,151 +1,18 @@
-<div class="w-full">
-    <!-- Controls Bar: Compact & Premium -->
-    <div class="flex flex-col md:flex-row items-center justify-between gap-3 mb-5">
-        <!-- Left: Month Navigation -->
-        <div class="flex items-center justify-between md:justify-start gap-1 bg-white border border-zinc-200/60 p-1 rounded-md shadow-3xs w-full md:w-auto">
-            <button wire:click="previousMonth" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 text-zinc-600 transition-colors focus:outline-none">
-                <i class="ph ph-caret-left"></i>
-            </button>
-            <h2 class="text-xs font-bold text-zinc-800 min-w-[120px] text-center tracking-tight">{{ $monthName }}</h2>
-            <button wire:click="nextMonth" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 text-zinc-600 transition-colors focus:outline-none">
-                <i class="ph ph-caret-right"></i>
-            </button>
-            <div class="w-px h-4 bg-zinc-200 mx-1"></div>
-            <button wire:click="goToToday" class="px-3.5 py-1.5 text-[9px] font-bold text-primary-600 hover:bg-zinc-50 rounded transition-colors uppercase tracking-wider focus:outline-none">
-                Today
-            </button>
-        </div>
-
-        <!-- Right: View Toggle & Filter -->
-        <div class="flex items-center gap-2.5 w-full md:w-auto">
-            <!-- View Mode Switcher -->
-            <div class="flex p-0.5 bg-zinc-100 rounded-md shrink-0 shadow-3xs flex-1 md:flex-initial">
-                <button wire:click="$set('viewMode', 'month')" 
-                    class="flex-1 md:flex-none px-3.5 py-1.5 text-xs font-semibold rounded-md {{ $viewMode === 'month' ? 'bg-primary-50 text-zinc-800 border border-primary-200/60 shadow-3xs font-bold' : 'text-zinc-500 hover:text-zinc-800 border border-transparent' }} transition-all focus:outline-none">
-                    Month
-                </button>
-                <button wire:click="$set('viewMode', 'list')" 
-                    class="flex-1 md:flex-none px-3.5 py-1.5 text-xs font-semibold rounded-md {{ $viewMode === 'list' ? 'bg-primary-50 text-zinc-800 border border-primary-200/60 shadow-3xs font-bold' : 'text-zinc-500 hover:text-zinc-800 border border-transparent' }} transition-all focus:outline-none">
-                    List
-                </button>
-            </div>
-
-            <!-- Filter Type -->
-            <div class="relative min-w-[160px] flex-1 md:flex-initial">
-                <select wire:model.live="filterType" 
-                        class="w-full pl-9 pr-8 py-1.5 bg-white border border-zinc-200 rounded-md text-xs font-semibold text-zinc-600 focus:outline-none focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-colors cursor-pointer appearance-none">
-                    <option value="all">All Interviews</option>
-                    <option value="HR - Interview">HR Interview</option>
-                    <option value="User - Interview">User Interview</option>
-                </select>
-                <div class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none">
-                    <i class="ph ph-funnel text-xs"></i>
-                </div>
-                <div class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none">
-                    <i class="ph ph-caret-down text-[10px]"></i>
-                </div>
-            </div>
-        </div>
+<div class="interview-workspace">
+    <section class="interview-metrics" aria-label="Schedule totals for the selected month"><div><span>Scheduled this month</span><strong>{{ $monthTotal }}</strong></div><div><span>Upcoming this month</span><strong>{{ $upcomingTotal }}</strong></div><div><span>Days with a schedule</span><strong>{{ $scheduledDays }}</strong></div><p>{{ $monthName }} · WIB<br>Active applications · current stage filter</p></section>
+    <div class="interview-layout {{ $viewMode === 'list' ? 'interview-layout--agenda' : '' }}">
+        <section class="interview-calendar-card interview-enter" aria-labelledby="interview-month-title">
+            <div class="interview-toolbar"><div class="interview-month-nav"><button type="button" wire:click="previousMonth" aria-label="Previous month"><i class="ph ph-caret-left" aria-hidden="true"></i></button><h2 id="interview-month-title" aria-live="polite">{{ $monthName }}</h2><button type="button" wire:click="nextMonth" aria-label="Next month"><i class="ph ph-caret-right" aria-hidden="true"></i></button><button type="button" wire:click="goToToday" class="interview-today">Today</button></div><div class="interview-view-switch" role="group" aria-label="Schedule view"><button type="button" wire:click="$set('viewMode', 'month')" aria-pressed="{{ $viewMode === 'month' ? 'true' : 'false' }}" class="{{ $viewMode === 'month' ? 'is-active' : '' }}">Calendar</button><button type="button" wire:click="$set('viewMode', 'list')" aria-pressed="{{ $viewMode === 'list' ? 'true' : 'false' }}" class="{{ $viewMode === 'list' ? 'is-active' : '' }}">Agenda</button></div></div>
+            <div class="interview-calendar-subheading"><p>{{ $viewMode === 'list' ? 'Every schedule in this month, in date order.' : 'Choose a date to see its full schedule.' }}</p><div><label for="interview-stage-filter" class="sr-only">Filter by selection stage</label><select id="interview-stage-filter" wire:model.live="filterType"><option value="all">All selection stages</option>@foreach(\App\Livewire\InterviewCalendar::STAGES as $stage)<option value="{{ $stage }}">{{ $stage }}</option>@endforeach</select></div></div>
+            @if($viewMode === 'month')
+                <div class="interview-calendar-scroll" tabindex="0" aria-label="Monthly calendar, scroll horizontally on smaller screens"><div class="interview-weekdays" aria-hidden="true">@foreach(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as $weekday)<span>{{ $weekday }}</span>@endforeach</div><div class="interview-days">@foreach($calendarDays as $day)@php($dateKey = $day['date']->format('Y-m-d'))<div class="interview-day {{ !$day['isCurrentMonth'] ? 'is-other-month' : '' }} {{ $day['isToday'] ? 'is-today' : '' }} {{ $selectedDate === $dateKey ? 'is-selected' : '' }}" wire:key="interview-day-{{ $dateKey }}"><button type="button" wire:click="selectDate('{{ $dateKey }}')" class="interview-day-number" aria-label="{{ $day['date']->format('l, d F Y') }}{{ $day['isCurrentMonth'] ? ', '.$day['count'].' schedules' : ', view this date' }}" aria-pressed="{{ $selectedDate === $dateKey ? 'true' : 'false' }}" @if($day['isToday']) aria-current="date" @endif>{{ $day['date']->format('j') }}</button><div class="interview-day-events">@foreach($day['interviews'] as $event)@php($eventTone = match($event->recruitment_stage) { 'HR - Interview' => 'blue', 'User - Interview' => 'lavender', default => 'peach' })<button type="button" wire:click="viewInterviewDetails({{ $event->id }})" class="interview-calendar-event interview-tone--{{ $eventTone }}" aria-label="{{ $event->interview_date->format('H:i') }} WIB, {{ $event->company_name }}, {{ $event->position }}"><span>{{ $event->interview_date->format('H:i') }}</span><strong>{{ $event->company_name }}</strong></button>@endforeach @if($day['count'] > 2)<button type="button" wire:click="selectDate('{{ $dateKey }}')" class="interview-more-events">+{{ $day['count'] - 2 }} more</button>@endif</div></div>@endforeach</div></div>
+                <div class="interview-calendar-legend"><span><i class="interview-legend-dot interview-dot--blue" aria-hidden="true"></i>HR Interview</span><span><i class="interview-legend-dot interview-dot--lavender" aria-hidden="true"></i>User Interview</span><span><i class="interview-legend-dot interview-dot--peach" aria-hidden="true"></i>Other selection rounds</span></div>
+            @else
+                <div class="interview-agenda-list">@forelse($agenda as $event)@include('interviews.partials.schedule-row', ['compact' => false])@empty<div class="interview-empty"><h3>No schedules this month.</h3><p>Choose another month or add an interview date to an application.</p><a href="{{ route('tracker') }}" wire:navigate class="job-text-link">Open applications</a></div>@endforelse</div>@if($agenda->hasPages())<div class="interview-pagination">{{ $agenda->links() }}</div>@endif
+            @endif
+        </section>
+        @if($viewMode === 'month')<aside class="interview-day-agenda workspace-card--glass interview-enter" aria-labelledby="interview-agenda-title"><div class="interview-agenda-heading"><div><p class="workspace-eyebrow">{{ $selectedDate ? 'Selected day' : 'Coming up' }}</p><h2 id="interview-agenda-title">{{ $selectedDate ? \Carbon\Carbon::parse($selectedDate)->format('D, d M') : 'Next conversations' }}</h2><p>{{ $selectedDate ? $daySchedule->count().' schedules · WIB' : 'Upcoming in '.$monthName.' · WIB' }}</p></div>@if($selectedDate)<button type="button" wire:click="resetSelectedDate" aria-label="Clear selected date"><i class="ph ph-x" aria-hidden="true"></i></button>@endif</div><div class="interview-side-list">@forelse($daySchedule as $event)@include('interviews.partials.schedule-row', ['compact' => true])@empty<div class="interview-empty"><h3>{{ $selectedDate ? 'A clear day.' : ($monthTotal ? 'No more upcoming schedules.' : 'No schedules this month.') }}</h3><p>{{ $selectedDate ? 'Nothing recorded for this date. Select another day or add a schedule in your tracker.' : 'Schedules appear here when you add interview details to your applications.' }}</p></div>@endforelse</div><a href="{{ route('tracker') }}" wire:navigate class="interview-plan-link">Plan in your tracker <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></aside>@endif
     </div>
-
-    @if($viewMode === 'month')
-        <!-- Calendar View: Grid Modern (Responsive Scroll) -->
-        <div class="overflow-x-auto custom-scrollbar border border-zinc-200/60 rounded-lg shadow-3xs bg-white">
-            <div class="min-w-[600px] bg-white">
-                <!-- Day Headers -->
-                <div class="grid grid-cols-7 bg-zinc-50/50 border-b border-zinc-200/60">
-                    @foreach(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as $day)
-                        <div class="px-2 py-2 text-center text-[9px] font-bold text-zinc-500 uppercase tracking-widest">
-                            {{ $day }}
-                        </div>
-                    @endforeach
-                </div>
-
-                <!-- Calendar Grid -->
-                <div class="grid grid-cols-7 divide-x divide-y divide-zinc-200/50 -mt-px -ml-px">
-                    @foreach($calendarDays as $day)
-                        <div class="min-h-[80px] p-1.5 border-b border-zinc-100/50 transition-colors {{ $day['isCurrentMonth'] ? 'bg-white' : 'bg-zinc-50/15 opacity-50' }} {{ $day['isToday'] ? 'bg-primary-50/15' : '' }} group">
-                            <!-- Date Number -->
-                            <div class="flex justify-between items-start mb-1">
-                                <span class="inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold rounded 
-                                    {{ $day['isToday'] ? 'bg-primary-600 text-white shadow-3xs' : ($day['isCurrentMonth'] ? 'text-zinc-800' : 'text-zinc-400') }}">
-                                    {{ $day['date']->format('j') }}
-                                </span>
-                            </div>
-
-                            <!-- Interviews on this day -->
-                            <div class="space-y-1">
-                                @foreach($day['interviews'] as $interview)
-                                    <button wire:click="viewInterviewDetails({{ $interview['id'] }})" 
-                                             class="w-full text-left px-1.5 py-0.5 rounded text-[8.5px] font-bold border transition-colors focus:outline-none
-                                                    {{ in_array($interview['recruitment_stage'], ['HR - Interview', 'Psychotest']) ? 'bg-blue-50/70 text-blue-700 border-blue-100 hover:bg-blue-100/50' : '' }}
-                                                    {{ in_array($interview['recruitment_stage'], ['User - Interview', 'Presentation Round']) ? 'bg-emerald-50/70 text-emerald-700 border-emerald-100 hover:bg-emerald-100/50' : '' }}
-                                                    {{ in_array($interview['recruitment_stage'], ['Assessment Test', 'LGD']) ? 'bg-purple-50/70 text-purple-700 border-purple-100 hover:bg-purple-100/50' : '' }}">
-                                        <div class="truncate font-bold tracking-tight">{{ $interview['company_name'] }}</div>
-                                        <div class="mt-0.5 opacity-70 flex items-center gap-0.5 text-[7.5px] font-bold">
-                                            <i class="ph ph-clock"></i>
-                                            {{ \Carbon\Carbon::parse($interview['interview_date'])->timezone('Asia/Jakarta')->format('H:i') }}
-                                        </div>
-                                    </button>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    @else
-        <!-- List View: Modern Stack -->
-        <div class="space-y-2.5">
-            @forelse($this->allInterviewsList as $interview)
-                <div wire:click="viewInterviewDetails({{ $interview->id }})" 
-                     class="bg-white p-3 rounded-lg border border-zinc-200/60 hover:border-zinc-350 hover:shadow-3xs transition-colors cursor-pointer group flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded flex items-center justify-center shrink-0 border
-                             {{ $interview->recruitment_stage === 'HR - Interview' ? 'bg-blue-50 text-blue-600 border-blue-100' : 'bg-emerald-50 text-emerald-600 border-emerald-100' }}">
-                            <i class="ph {{ $interview->recruitment_stage === 'HR - Interview' ? 'ph-users' : 'ph-user-focus' }} text-base"></i>
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2 mb-0.5">
-                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">{{ $interview->company_name }}</h3>
-                                <span class="px-1.5 py-0.2 rounded text-[8.5px] font-bold border
-                                             {{ in_array($interview->recruitment_stage, ['HR - Interview', 'Psychotest']) ? 'bg-blue-50 text-blue-700 border-blue-100/50' : '' }}
-                                             {{ in_array($interview->recruitment_stage, ['User - Interview', 'Presentation Round']) ? 'bg-emerald-50 text-emerald-700 border-emerald-100/50' : '' }}
-                                             {{ in_array($interview->recruitment_stage, ['Assessment Test', 'LGD']) ? 'bg-purple-50 text-purple-700 border-purple-100/50' : '' }}">
-                                    {{ $interview->recruitment_stage }}
-                                </span>
-                            </div>
-                            <p class="text-[11px] text-zinc-500 font-medium leading-none">{{ $interview->position }}</p>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-wrap items-center gap-3">
-                        <div class="flex flex-col md:items-end">
-                            <span class="text-[8px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Schedule</span>
-                            <span class="text-[11px] font-semibold text-zinc-700 leading-none">{{ $interview->interview_date->format('D, d M • H:i') }}</span>
-                        </div>
-                        <div class="flex items-center gap-1">
-                            <a href="{{ \App\Services\CalendarEventService::googleCalendarUrl($interview->position . ' Interview at ' . $interview->company_name, $interview->interview_date) }}" target="_blank" onclick="event.stopPropagation();" class="px-2 py-1 bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-700 rounded text-[9.5px] font-bold flex items-center gap-1 shadow-3xs" title="Add to Google Calendar">
-                                <i class="ph-bold ph-calendar text-xs text-emerald-600"></i>
-                                <span>Google Cal</span>
-                            </a>
-                            <a href="{{ \App\Services\CalendarEventService::outlookCalendarUrl($interview->position . ' Interview at ' . $interview->company_name, $interview->interview_date) }}" target="_blank" onclick="event.stopPropagation();" class="px-2 py-1 bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-700 rounded text-[9.5px] font-bold flex items-center gap-1 shadow-3xs" title="Add to Outlook Calendar">
-                                <i class="ph-bold ph-envelope-simple text-xs text-blue-600"></i>
-                                <span>Outlook</span>
-                            </a>
-                        </div>
-                        <i class="ph ph-arrow-right text-zinc-400 group-hover:text-zinc-700 group-hover:translate-x-0.5 transition-transform ml-1"></i>
-                    </div>
-                </div>
-            @empty
-                <div class="bg-white border border-zinc-200/60 rounded-xl p-12 text-center flex flex-col items-center justify-center border-dashed shadow-3xs">
-                    <div class="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center mb-3.5 text-primary-600 border border-primary-100/60 shadow-3xs select-none">
-                        <i class="ph ph-calendar-blank text-2xl"></i>
-                    </div>
-                    <h3 class="text-xs font-extrabold text-zinc-800 mb-1">No Interviews Scheduled</h3>
-                    <p class="text-[10px] text-zinc-500 font-semibold max-w-[280px] leading-relaxed">Your interview schedules will automatically appear here once added in the Job Tracker.</p>
-                </div>
-            @endforelse
-        </div>
-    @endif
+    <footer class="interview-workspace-footer"><p>All times are shown in WIB (UTC+7). Archived applications are excluded.</p><a href="{{ route('tracker') }}" wire:navigate class="job-text-link">Update a schedule <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></footer>
+    @include('interviews.partials.details-modal')
 </div>

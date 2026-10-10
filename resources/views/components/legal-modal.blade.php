@@ -1,5 +1,5 @@
 <!-- Terms of Service Modal -->
-<div id="termsModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 overflow-y-auto">
+<div id="termsModal" data-dialog-native="closeTermsModal" role="dialog" aria-modal="true" aria-label="Terms of service" tabindex="-1" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 overflow-y-auto">
     <div class="flex items-center justify-center min-h-screen p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden border border-gray-100">
                    <!-- Modal Header -->
@@ -97,7 +97,7 @@
 </div>
 
 <!-- Privacy Policy Modal -->
-<div id="privacyModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 overflow-y-auto">
+<div id="privacyModal" data-dialog-native="closePrivacyModal" role="dialog" aria-modal="true" aria-label="Privacy policy" tabindex="-1" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 overflow-y-auto">
     <div class="flex items-center justify-center min-h-screen p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden border border-gray-100">
                    <!-- Modal Header -->
@@ -204,7 +204,7 @@ function openTermsModal() {
     if (modal) {
         console.log('Terms modal found, opening...');
         modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
+
         console.log('Terms modal opened successfully');
         startTermsReadingProgress();
     } else {
@@ -220,7 +220,7 @@ function closeTermsModal() {
     if (modal) {
         console.log('Terms modal found, closing...');
         modal.classList.add('hidden');
-        document.body.style.overflow = 'auto';
+
         console.log('Terms modal closed successfully');
     } else {
         console.error('Terms modal not found');
@@ -236,7 +236,7 @@ function openPrivacyModal() {
     if (modal) {
         console.log('Privacy modal found, opening...');
         modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
+
         console.log('Privacy modal opened successfully');
         startPrivacyReadingProgress();
     } else {
@@ -252,7 +252,7 @@ function closePrivacyModal() {
     if (modal) {
         console.log('Privacy modal found, closing...');
         modal.classList.add('hidden');
-        document.body.style.overflow = 'auto';
+
         console.log('Privacy modal closed successfully');
     } else {
         console.error('Privacy modal not found');

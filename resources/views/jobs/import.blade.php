@@ -79,7 +79,7 @@
             }, 50);
         }
     }">
-        <div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 {{ !$hasAccess ? '' : 'pt-8' }}">
+        <div class="workspace-page-frame max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 {{ !$hasAccess ? '' : 'pt-8' }}">
 
             @if(!$hasAccess)
                 <div class="max-w-xl mx-auto">
@@ -278,8 +278,8 @@
                                     </thead>
                                     <tbody>
                                         @foreach([
-                                            ['Google','Senior Designer','Remote','LinkedIn','Applied','2024-05-10'],
-                                            ['Airbnb','Product Engineer','Bali','Direct','Interview','2024-05-12'],
+                                            ['Google','Senior Designer','Remote','LinkedIn','On Process','2024-05-10'],
+                                            ['Airbnb','Product Engineer','Bali','Direct','On Process','2024-05-12'],
                                             ['Grab','Backend Lead','Jakarta','JobStreet','Offered','2024-05-15']
                                         ] as $i => $row)
                                         <tr class="hover:bg-primary-50/30 transition-colors group">
@@ -328,7 +328,7 @@
                         <div class="space-y-4 relative z-10">
                             @foreach([
                                 ['Date Integrity', 'Must follow YYYY-MM-DD standard'],
-                                ['Status Match', 'Applied, Interview, Offered, Rejected'],
+                                ['Status Match', 'On Process, Accepted, Rejected'],
                                 ['Link Security', 'HTTPS required for platform links'],
                                 ['Unique Check', 'Prevents duplicate company/date entries']
                             ] as [$title, $desc])

@@ -121,6 +121,9 @@
             .section-title { border-bottom-color: #000000 !important; }
         }
     </style>
+@if(!empty($browserPreview))
+    <style>body { padding: {{ $margin ?? '15mm 20mm' }}; } @media print { body { padding: 0; } }</style>
+    @endif
 </head>
 <body>
     <div class="container">

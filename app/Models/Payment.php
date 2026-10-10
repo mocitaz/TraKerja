@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Payment extends Model
 {
@@ -47,6 +48,21 @@ class Payment extends Model
         'metadata' => 'array',
         'webhook_data' => 'array',
     ];
+
+    public function save(array $options = [])
+    {
+        if (!$this->exists || !$this->isDirty('status')) {
+            return parent::save($options);
+        }
+
+        return DB::transaction(function () use ($options) {
+            $current = self::withTrashed()->whereKey($this->id)->lockForUpdate()->firstOrFail();
+            if ($current->isSuccess() && $this->status !== 'SUCCESS') {
+                throw new \LogicException('Settled payments cannot change status; refunds require a separate workflow.');
+            }
+            return parent::save($options);
+        });
+    }
 
     /**
      * Get the user that owns the payment
@@ -109,7 +125,7 @@ class Payment extends Model
      */
     public function markAsWaiting(): void
     {
-        $this->update(['status' => 'WAITING']);
+        $this->transitionStatus('WAITING');
     }
 
     /**
@@ -117,10 +133,7 @@ class Payment extends Model
      */
     public function markAsSuccess(): void
     {
-        $this->update([
-            'status' => 'SUCCESS',
-            'paid_at' => now(),
-        ]);
+        $this->transitionStatus('SUCCESS');
     }
 
     /**
@@ -128,7 +141,7 @@ class Payment extends Model
      */
     public function markAsFailed(): void
     {
-        $this->update(['status' => 'FAILED']);
+        $this->transitionStatus('FAILED');
     }
 
     /**
@@ -136,7 +149,7 @@ class Payment extends Model
      */
     public function markAsCanceled(): void
     {
-        $this->update(['status' => 'CANCELED']);
+        $this->transitionStatus('CANCELED');
     }
 
     /**
@@ -144,7 +157,20 @@ class Payment extends Model
      */
     public function markAsExpired(): void
     {
-        $this->update(['status' => 'EXPIRED']);
+        $this->transitionStatus('EXPIRED');
+    }
+
+    private function transitionStatus(string $status): void
+    {
+        DB::transaction(function () use ($status) {
+            $locked = self::whereKey($this->id)->lockForUpdate()->firstOrFail();
+            if (!$locked->isSuccess()) {
+                $locked->update($status === 'SUCCESS'
+                    ? ['status' => $status, 'paid_at' => now()]
+                    : ['status' => $status]);
+            }
+            $this->setRawAttributes($locked->getAttributes(), true);
+        });
     }
 
     /**

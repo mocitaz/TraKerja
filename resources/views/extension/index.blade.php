@@ -18,7 +18,7 @@
         </div>
     </x-slot>
 
-    <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 space-y-12">
+    <div class="workspace-page-frame max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 space-y-12">
         
         <!-- PREMIUM HERO SECTION -->
         <div class="relative bg-slate-900 rounded-[2.5rem] md:rounded-[3rem] border border-slate-800 shadow-2xl overflow-hidden">

@@ -1,6 +1,12 @@
 @extends('errors.error_layout')
 
 @section('code', '404')
-@section('title', 'Tidak Ditemukan')
-@section('icon', 'ph-ghost')
-@section('description', 'Halaman yang Anda cari telah dipindahkan, dihapus, atau tidak pernah ada di server kami. Silakan kembali ke Beranda.')
+@section('title')
+We couldn’t find this page
+@endsection
+@section('description')
+The link may be outdated, or the page may no longer be available.
+@endsection
+@section('recovery')
+Check the address, or return home to find your workspace.
+@endsection

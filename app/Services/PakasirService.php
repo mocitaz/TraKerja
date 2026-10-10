@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class PakasirService
 {
@@ -51,9 +52,26 @@ class PakasirService
                 ]);
 
             if ($response->successful()) {
+                $transaction = $response->json('transaction');
+                if (! is_array($transaction) || Validator::make($transaction, [
+                    'project' => 'required|string',
+                    'order_id' => 'required|string',
+                    'amount' => 'required|integer|min:1',
+                    'status' => 'required|string',
+                ])->fails()
+                    || $transaction['project'] !== $this->slug
+                    || $transaction['order_id'] !== $orderId
+                    || (int) $transaction['amount'] !== $amount) {
+                    Log::warning('Pakasir: Transaction detail does not match stored order', [
+                        'order_id' => $orderId,
+                    ]);
+
+                    return ['success' => false, 'error' => 'Invalid transaction detail'];
+                }
+
                 return [
                     'success' => true,
-                    'data' => $response->json()['transaction'] ?? [],
+                    'data' => $transaction,
                 ];
             }
 

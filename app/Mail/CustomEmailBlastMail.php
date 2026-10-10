@@ -18,7 +18,7 @@ class CustomEmailBlastMail extends Mailable
      */
     public function __construct(
         public User $user,
-        public string $subject,
+        public string $customSubject,
         public string $emailContent,
         public ?string $buttonText = null,
         public ?string $buttonUrl = null
@@ -30,7 +30,7 @@ class CustomEmailBlastMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->subject,
+            subject: $this->customSubject,
         );
     }
 
@@ -43,6 +43,7 @@ class CustomEmailBlastMail extends Mailable
             view: 'emails.custom-email-blast',
             with: [
                 'user' => $this->user,
+                'subject' => $this->customSubject,
                 'emailContent' => $this->emailContent,
                 'buttonText' => $this->buttonText,
                 'buttonUrl' => $this->buttonUrl,

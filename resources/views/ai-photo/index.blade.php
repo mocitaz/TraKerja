@@ -36,7 +36,7 @@
     </style>
 
     <div class="bg-[#f8fafc] min-h-screen pb-20">
-        <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <div class="workspace-page-frame max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-8">
 
             <div class="flex items-center justify-end mb-4">
                 <a href="{{ route('ai-photo.history') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl font-bold text-[10px] text-slate-600 uppercase tracking-widest shadow-sm hover:bg-slate-50 hover:text-slate-900 transition-all">
@@ -59,6 +59,8 @@
 
                     <form action="{{ route('ai-photo.process') }}" method="POST" enctype="multipart/form-data" id="photoForm" x-data="{ type: 'remove_bg', mode: 'portrait' }">
                         @csrf
+                            <input type="hidden" name="request_key" value="{{ \Illuminate\Support\Str::uuid() }}">
+                            <p class="px-5 py-2 text-sm text-zinc-600">Permintaan masuk antrean setelah upload. Pantau status dari riwayat; {{ \App\Models\Setting::isMonetizationEnabled() ? '1 kredit dipesan dan dikembalikan jika proses gagal.' : 'proses tidak memakai kredit saat layanan gratis aktif.' }}</p>
 
                         {{-- ── Step 1: Upload ─── --}}
                         <div class="mesh-gradient-ai border border-slate-200/70 rounded-[2.5rem] shadow-sm overflow-hidden mb-6 bento-step-card">
@@ -314,7 +316,7 @@
                     {{-- ── Credits Status Card ── --}}
                     @php 
                         $user = Auth::user();
-                        $isPremium = $user->is_premium;
+                        $isPremium = $user->isPremium();
                         $remainingUses = $stats['remaining_credits'] ?? 0;
                     @endphp
                     
@@ -483,86 +485,10 @@
             }
         }
 
-        // ── Submit ────────────────────────────────────────────────
-        const loadingMessages = [
-            "Menganalisis struktur wajah Anda...",
-            "Menyesuaikan pencahayaan studio...",
-            "Menerapkan gaya busana profesional...",
-            "Meningkatkan resolusi dan ketajaman...",
-            "Menambahkan sentuhan akhir AI...",
-            "Sedikit lagi selesai..."
-        ];
-
-        const overlay = document.getElementById('ai-loading-overlay');
-        if (overlay) {
-            document.body.appendChild(overlay);
-        }
-
         document.getElementById('photoForm').addEventListener('submit', function () {
-            const btn = document.getElementById('submit-btn');
-            btn.disabled = true;
-            btn.classList.add('opacity-70', 'cursor-not-allowed');
-            document.getElementById('submit-text').textContent = 'Memproses...';
-            document.getElementById('submit-icon').classList.add('hidden');
-            document.getElementById('loading-spinner').classList.remove('hidden');
-
-            const card = document.getElementById('ai-loading-card');
-            const msgEl = document.getElementById('loading-message');
-            
-            overlay.classList.remove('hidden');
-            overlay.classList.add('flex');
-            // Trigger reflow
-            void overlay.offsetWidth;
-            overlay.classList.remove('opacity-0');
-            card.classList.remove('scale-95');
-
-            let msgIndex = 0;
-            setInterval(() => {
-                msgEl.style.opacity = '0';
-                setTimeout(() => {
-                    msgIndex = (msgIndex + 1) % loadingMessages.length;
-                    msgEl.textContent = loadingMessages[msgIndex];
-                    msgEl.style.opacity = '1';
-                }, 300);
-            }, 6000);
+            document.getElementById('submit-btn').disabled = true;
+            document.getElementById('submit-text').textContent = 'Mengunggah ke antrean...';
         });
     </script>
 
-    <!-- Full Screen Premium AI Loading Overlay -->
-    <div id="ai-loading-overlay" class="fixed inset-0 z-[99999] hidden items-center justify-center bg-slate-900/80 backdrop-blur-md transition-opacity duration-500 opacity-0" style="position: fixed !important;">
-        <div class="flex flex-col items-center justify-center text-center transform scale-95 transition-transform duration-500 w-full max-w-md px-4" id="ai-loading-card">
-            
-            <!-- TraKerja Circular Progress -->
-            <div class="relative flex items-center justify-center mb-8">
-                <svg class="w-32 h-32 transform -rotate-90">
-                    <circle cx="64" cy="64" r="60" stroke="currentColor" stroke-width="2" fill="transparent" class="text-white/20" />
-                    <circle cx="64" cy="64" r="60" stroke="currentColor" stroke-width="2" fill="transparent" class="text-primary-400 animate-[progress-ring_1.5s_ease-in-out_infinite]" stroke-dasharray="377" stroke-dashoffset="377" stroke-linecap="round" />
-                </svg>
-                
-                <div class="absolute w-20 h-20 bg-white rounded-full shadow-[0_0_40px_rgba(255,255,255,0.2)] flex items-center justify-center transition-transform duration-500 hover:scale-105">
-                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-10 h-10 object-contain animate-pulse">
-                </div>
-            </div>
-
-            <!-- AI Status Text -->
-            <div class="mb-6">
-                <h2 class="text-2xl font-black text-white tracking-tight animate-pulse mb-2">Memproses...</h2>
-                <p id="loading-message" class="text-sm font-medium text-white/80 transition-opacity duration-300">Menghubungkan ke server AI...</p>
-            </div>
-
-            <!-- Warning Not to Refresh -->
-            <div class="flex items-center justify-center gap-2 text-white bg-rose-500/20 px-6 py-3 rounded-2xl border border-rose-500/30 backdrop-blur-sm shadow-lg">
-                <i class="ph-fill ph-warning-circle text-xl text-rose-400 animate-pulse"></i>
-                <p class="text-[11px] font-black uppercase tracking-widest text-rose-100">Jangan Tutup Browser</p>
-            </div>
-            
-            <style>
-                @keyframes progress-ring {
-                    0% { stroke-dashoffset: 377; transform: rotate(0deg); transform-origin: 50% 50%; }
-                    50% { stroke-dashoffset: 100; transform: rotate(180deg); transform-origin: 50% 50%; }
-                    100% { stroke-dashoffset: 377; transform: rotate(360deg); transform-origin: 50% 50%; }
-                }
-            </style>
-        </div>
-    </div>
 </x-app-layout>

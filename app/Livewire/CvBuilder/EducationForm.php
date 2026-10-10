@@ -61,7 +61,7 @@ class EducationForm extends Component
 
     public function loadEducations()
     {
-        $this->educations = UserEducation::where('user_id', Auth::id())
+        $this->educations = Auth::user()->educations()
             ->orderBy('display_order')
             ->get();
     }
@@ -97,7 +97,7 @@ class EducationForm extends Component
 
     public function edit($id)
     {
-        $education = UserEducation::where('user_id', Auth::id())->findOrFail($id);
+        $education = Auth::user()->educations()->findOrFail($id);
         
         $this->editMode = true;
         $this->editingId = $education->id;
@@ -148,7 +148,6 @@ class EducationForm extends Component
         }
 
         $data = [
-            'user_id' => Auth::id(),
             'institution_name' => $this->institution_name,
             'degree' => $this->degree,
             'major' => $this->major,
@@ -161,17 +160,18 @@ class EducationForm extends Component
         ];
 
         if ($this->editingId) {
-            $education = UserEducation::where('user_id', Auth::id())->findOrFail($this->editingId);
+            $education = Auth::user()->educations()->findOrFail($this->editingId);
             $education->update($data);
             session()->flash('message', 'Education updated successfully.');
         } else {
-            $maxOrder = UserEducation::where('user_id', Auth::id())->max('display_order') ?? 0;
+            $maxOrder = Auth::user()->educations()->max('display_order') ?? 0;
             $data['display_order'] = $maxOrder + 1;
-            UserEducation::create($data);
+            Auth::user()->educations()->create($data);
             session()->flash('message', 'Education added successfully.');
         }
 
         $this->closeModal();
+        $this->dispatch('cv-data-updated');
         $this->loadEducations();
     }
 
@@ -191,7 +191,7 @@ class EducationForm extends Component
     {
         if (!$this->deleteId) return;
 
-        UserEducation::where('user_id', Auth::id())->findOrFail($this->deleteId)->delete();
+        Auth::user()->educations()->findOrFail($this->deleteId)->delete();
 
         $this->deleteId = null;
         $this->showDeleteConfirm = false;
@@ -202,13 +202,14 @@ class EducationForm extends Component
             'message' => 'Education deleted successfully!',
         ]);
         
+        $this->dispatch('cv-data-updated');
         $this->loadEducations();
     }
 
     public function moveUp($id)
     {
-        $education = UserEducation::where('user_id', Auth::id())->findOrFail($id);
-        $previous = UserEducation::where('user_id', Auth::id())
+        $education = Auth::user()->educations()->findOrFail($id);
+        $previous = Auth::user()->educations()
             ->where('display_order', '<', $education->display_order)
             ->orderBy('display_order', 'desc')
             ->first();
@@ -221,13 +222,14 @@ class EducationForm extends Component
             $previous->save();
         }
 
+        $this->dispatch('cv-data-updated');
         $this->loadEducations();
     }
 
     public function moveDown($id)
     {
-        $education = UserEducation::where('user_id', Auth::id())->findOrFail($id);
-        $next = UserEducation::where('user_id', Auth::id())
+        $education = Auth::user()->educations()->findOrFail($id);
+        $next = Auth::user()->educations()
             ->where('display_order', '>', $education->display_order)
             ->orderBy('display_order', 'asc')
             ->first();
@@ -240,6 +242,7 @@ class EducationForm extends Component
             $next->save();
         }
 
+        $this->dispatch('cv-data-updated');
         $this->loadEducations();
     }
 

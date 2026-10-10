@@ -19,6 +19,8 @@ class DashboardController extends Controller
             ->where('is_archived', false)
             ->count();
 
+        $totalTrackedApplications = JobApplication::where('user_id', $userId)->count();
+
         $onProcessCount = JobApplication::where('user_id', $userId)
             ->where('application_status', 'On Process')
             ->where('is_archived', false)
@@ -34,7 +36,7 @@ class DashboardController extends Controller
 
         // Declined counts (include archived jobs since declined jobs usually get archived)
         $declinedCount = JobApplication::where('user_id', $userId)
-            ->where('application_status', 'Declined')
+            ->where('application_status', 'Rejected')
             ->count();
 
         $totalInterviewsCount = JobApplication::where('user_id', $userId)
@@ -45,19 +47,42 @@ class DashboardController extends Controller
             ->where('is_archived', false)
             ->count();
 
-        // 2. Recent applications list (latest 5)
+        // 2. Recent applications (latest 3)
         $recentApplications = JobApplication::where('user_id', $userId)
             ->orderBy('application_date', 'desc')
-            ->limit(5)
+            ->orderByDesc('id')
+            ->limit(3)
             ->get();
 
         // 3. Upcoming interviews list (future interview dates)
         $upcomingInterviews = JobApplication::where('user_id', $userId)
+            ->where('is_archived', false)
+            ->where('application_status', 'On Process')
             ->whereNotNull('interview_date')
             ->where('interview_date', '>=', Carbon::now())
             ->orderBy('interview_date', 'asc')
-            ->limit(5)
+            ->orderBy('id')
+            ->limit(3)
             ->get();
+
+        $followUpQuery = JobApplication::where('user_id', $userId)
+            ->where('is_archived', false)
+            ->where('application_status', 'On Process')
+            ->where(function ($query) {
+                $query->whereNull('recruitment_stage')->orWhereNotIn('recruitment_stage', ['Not Processed', 'Offering']);
+            })
+            ->whereDate('application_date', '<=', today()->subDays(14));
+        $followUpCount = (clone $followUpQuery)->count();
+        $nextFollowUp = $followUpQuery->orderBy('application_date')->orderBy('id')->first();
+
+        $user = auth()->user()->load('profile');
+        $profile = $user->profile;
+        $cvEssentials = [
+            'Contact details' => filled($profile?->full_name) && filled($profile?->phone_number) && filled($profile?->domicile),
+            'Summary' => filled($profile?->bio),
+            'Experience or education' => $user->experiences()->exists() || $user->educations()->exists(),
+            'Skills' => $user->skills()->exists(),
+        ];
 
         $careerLevelBreakdown = JobApplication::where('user_id', $userId)
             ->where('is_archived', false)
@@ -99,8 +124,12 @@ class DashboardController extends Controller
 
         return view('dashboard', [
             'totalApplications' => $totalApplications,
+            'totalTrackedApplications' => $totalTrackedApplications,
             'recentApplications' => $recentApplications,
             'upcomingInterviews' => $upcomingInterviews,
+            'nextFollowUp' => $nextFollowUp,
+            'followUpCount' => $followUpCount,
+            'cvEssentials' => $cvEssentials,
             'onProcessCount' => $onProcessCount,
             'offeringAcceptedCount' => $offeringAcceptedCount,
             'declinedCount' => $declinedCount,

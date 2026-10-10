@@ -20,7 +20,7 @@ class ArchiveOldDeclinedJobs extends Command
      *
      * @var string
      */
-    protected $description = 'Archive old job applications with Declined status or Not Processed stage';
+    protected $description = 'Archive old job applications with Rejected status or Not Processed stage';
 
     /**
      * Execute the console command.
@@ -41,7 +41,7 @@ class ArchiveOldDeclinedJobs extends Command
         // and belong to opted-in users and are at least 14 days old
         $jobsToArchive = JobApplication::whereIn('user_id', $usersWithAutoArchive)
             ->where(function ($query) {
-                $query->whereIn('application_status', ['Declined', 'Rejected'])
+                $query->whereIn('application_status', ['Rejected'])
                       ->orWhere('recruitment_stage', 'Not Processed');
             })
             ->where('is_archived', false)

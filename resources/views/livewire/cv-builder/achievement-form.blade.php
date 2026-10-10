@@ -1,4 +1,4 @@
-<div class="space-y-5">
+<div class="cv-entry-form space-y-5">
     <!-- Header -->
     <div class="flex flex-col md:flex-row items-center justify-between gap-4">
         <div class="flex items-center gap-2.5">
@@ -6,13 +6,13 @@
                 <i class="ph ph-trophy text-base"></i>
             </div>
             <div>
-                <h3 class="text-xs font-bold text-zinc-800 tracking-tight uppercase tracking-wider">Achievements</h3>
-                <p class="text-[10px] text-zinc-400 font-medium leading-none mt-0.5">Certificates, awards, and recognition</p>
+                <h3 class="text-[13px] font-bold text-zinc-800 tracking-tight uppercase tracking-wider">Achievements</h3>
+                <p class="text-[11px] text-zinc-400 font-medium leading-none mt-0.5">Certificates, awards, and recognition</p>
             </div>
         </div>
-        <button wire:click="openModal" 
-                class="w-full md:w-auto px-4 py-1.5 bg-primary-50 text-zinc-800 border border-primary-200/60 rounded-md font-bold text-[10px] uppercase tracking-wider hover:bg-primary-100 transition-colors shadow-3xs flex items-center justify-center gap-1.5 focus:outline-none shrink-0">
-            <i class="ph ph-plus text-xs"></i>
+        <button wire:click="openModal"
+                class="w-full md:w-auto px-4 py-1.5 bg-primary-50 text-zinc-800 border border-primary-200/60 rounded-md font-bold text-[11px] uppercase tracking-wider hover:bg-primary-100 transition-colors shadow-3xs flex items-center justify-center gap-1.5 focus:outline-none shrink-0">
+            <i class="ph ph-plus text-[13px]"></i>
             Add Achievement
         </button>
     </div>
@@ -27,20 +27,20 @@
                             <i class="ph ph-medal text-base"></i>
                         </div>
                         <div class="min-w-0">
-                            <h4 class="text-xs font-bold text-zinc-800 tracking-tight truncate leading-none mb-1">{{ $achievement->title }}</h4>
+                            <h4 class="text-[13px] font-bold text-zinc-800 tracking-tight truncate leading-none mb-1">{{ $achievement->title }}</h4>
                             <p class="text-[11px] font-semibold text-zinc-500 mb-1 leading-none">{{ $achievement->issuer }}</p>
-                            <span class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mt-1.5 block leading-none">
+                            <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest mt-1.5 block leading-none">
                                 {{ $achievement->issue_date?->format('d M Y') }}
                             </span>
                         </div>
                     </div>
 
                     <!-- Actions -->
-                    <div class="flex items-center gap-2 md:opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button wire:click="edit({{ $achievement->id }})" class="w-7 h-7 flex items-center justify-center bg-zinc-50 border border-zinc-200 text-zinc-600 rounded-md hover:bg-zinc-155 transition-colors focus:outline-none">
+                    <div class="flex items-center gap-2 md:opacity-100 group-hover:opacity-100 transition-opacity">
+                        <button aria-label="Edit entry" wire:click="edit({{ $achievement->id }})" class="w-7 h-7 flex items-center justify-center bg-zinc-50 border border-zinc-200 text-zinc-600 rounded-md hover:bg-zinc-155 transition-colors focus:outline-none">
                             <i class="ph ph-pencil-simple"></i>
                         </button>
-                        <button wire:click="confirmDelete({{ $achievement->id }})" class="w-7 h-7 flex items-center justify-center bg-rose-50 border border-rose-100/50 text-rose-600 rounded-md hover:bg-rose-600 hover:text-white hover:border-rose-600 transition-colors focus:outline-none">
+                        <button aria-label="Delete entry" wire:click="confirmDelete({{ $achievement->id }})" class="w-7 h-7 flex items-center justify-center bg-rose-50 border border-rose-100/50 text-rose-600 rounded-md hover:bg-rose-600 hover:text-white hover:border-rose-600 transition-colors focus:outline-none">
                             <i class="ph ph-trash"></i>
                         </button>
                     </div>
@@ -53,31 +53,29 @@
                 <i class="ph ph-trophy text-xl"></i>
             </div>
             <p class="text-[11px] font-bold text-zinc-500 mb-3">No achievements added yet</p>
-            <button wire:click="openModal" class="text-[9px] font-black text-primary-600 /* [BRAND_PRIMARY] */ uppercase tracking-widest hover:text-primary-700">
+            <button wire:click="openModal" class="text-[11px] font-black text-primary-600 /* [BRAND_PRIMARY] */ uppercase tracking-widest hover:text-primary-700">
                 ADD YOUR FIRST ACHIEVEMENT
             </button>
         </div>
     @endif
 
     @teleport('body')
-    <div class="fixed inset-0 z-[9999] bg-zinc-950/40 backdrop-blur-xs overflow-y-auto {{ !$showModal ? 'hidden' : '' }}">
+    <div x-data role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.showModal" data-dialog-close="$wire.closeModal()" aria-label="Edit CV achievement" class="cv-entry-dialog fixed inset-0 z-[9999] bg-zinc-950/40 backdrop-blur-xs overflow-y-auto {{ !$showModal ? 'hidden' : '' }}">
         <div class="flex min-h-full items-center justify-center p-4" wire:click.self="closeModal">
             <div class="relative bg-white rounded-lg shadow-xl max-w-md w-full border border-zinc-200 overflow-hidden text-left" @click.stop>
                 <!-- Modal Header: Clean White -->
                 <div class="bg-white px-4 py-3 text-zinc-900 flex justify-between items-center border-b border-zinc-150/60 shrink-0">
                     <div class="flex items-center gap-2.5">
-                        <div class="w-8 h-8 rounded-lg bg-zinc-50 border border-zinc-200/60 flex items-center justify-center shadow-3xs">
-                            <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-4 h-4 object-contain" onerror="this.src='{{ asset('favicon.png') }}'">
-                        </div>
+
                         <div>
                             <div class="flex items-center gap-1.5">
-                                <h3 class="text-xs font-bold text-zinc-800 tracking-tight">{{ $editMode ? 'Edit Achievement' : 'Add Achievement' }}</h3>
-                                <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[8.5px] font-bold uppercase tracking-wider rounded border border-primary-100/60 leading-none">Achievements</span>
+                                <h3 class="text-[13px] font-bold text-zinc-800 tracking-tight">{{ $editMode ? 'Edit Achievement' : 'Add Achievement' }}</h3>
+                                <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[11px] font-bold uppercase tracking-wider rounded border border-primary-100/60 leading-none">Achievements</span>
                             </div>
-                            <p class="text-zinc-400 text-[9px] font-medium mt-0.5">Career Growth Tracking</p>
+                            <p class="text-zinc-400 text-[11px] font-medium mt-0.5">Edit your CV content</p>
                         </div>
                     </div>
-                    <button type="button" wire:click="closeModal" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 transition-all text-zinc-400 hover:text-zinc-800 focus:outline-none">
+                    <button type="button" aria-label="Close entry form" wire:click="closeModal" class="w-7 h-7 flex items-center justify-center rounded hover:bg-zinc-50 transition-all text-zinc-400 hover:text-zinc-800 focus:outline-none">
                         <i class="ph ph-x text-sm"></i>
                     </button>
                 </div>
@@ -86,38 +84,38 @@
                 <form wire:submit.prevent="save" class="p-4 sm:p-5">
                     <div class="space-y-3.5">
                         <div>
-                            <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Achievement Title</label>
+                            <label class="block text-[11px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Achievement Title</label>
                             <div class="relative">
-                                <input type="text" wire:model="title" class="w-full pl-9 pr-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-xs text-zinc-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-colors" placeholder="e.g. Employee of the Month, Hackathon Winner">
+                                <input type="text" wire:model="title" class="w-full pl-9 pr-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-[13px] text-zinc-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-colors" placeholder="e.g. Employee of the Month, Hackathon Winner">
                                 <i class="ph ph-medal absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-sm"></i>
                             </div>
-                            @error('title') <p class="text-rose-500 text-[9px] mt-1">{{ $message }}</p> @enderror
+                            @error('title') <p class="text-rose-500 text-[11px] mt-1">{{ $message }}</p> @enderror
                         </div>
                         <div>
-                            <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Issuer / Organization</label>
+                            <label class="block text-[11px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Issuer / Organization</label>
                             <div class="relative">
-                                <input type="text" wire:model="issuer" class="w-full pl-9 pr-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-xs text-zinc-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-colors" placeholder="e.g. Google, XYZ University">
+                                <input type="text" wire:model="issuer" class="w-full pl-9 pr-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-[13px] text-zinc-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-colors" placeholder="e.g. Google, XYZ University">
                                 <i class="ph ph-buildings absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-sm"></i>
                             </div>
-                            @error('issuer') <p class="text-rose-500 text-[9px] mt-1">{{ $message }}</p> @enderror
+                            @error('issuer') <p class="text-rose-500 text-[11px] mt-1">{{ $message }}</p> @enderror
                         </div>
                         <div>
-                            <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Date Received</label>
-                            <input type="date" wire:model="issue_date" class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-xs text-zinc-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-colors">
-                            @error('issue_date') <p class="text-rose-500 text-[9px] mt-1">{{ $message }}</p> @enderror
+                            <label class="block text-[11px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Date Received</label>
+                            <input type="date" wire:model="issue_date" class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-[13px] text-zinc-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-colors">
+                            @error('issue_date') <p class="text-rose-500 text-[11px] mt-1">{{ $message }}</p> @enderror
                         </div>
                         <div>
-                            <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Description (Optional)</label>
-                            <textarea wire:model="description" rows="3" class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-xs text-zinc-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-colors leading-relaxed" placeholder="Tell us more about this achievement..."></textarea>
+                            <label class="block text-[11px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Description (Optional)</label>
+                            <textarea wire:model="description" rows="3" class="w-full px-3 py-1.5 bg-zinc-50/50 border border-zinc-200 rounded-md text-[13px] text-zinc-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-colors leading-relaxed" placeholder="Tell us more about this achievement..."></textarea>
                         </div>
                     </div>
 
                     <!-- Footer -->
                     <div class="flex justify-end gap-2 mt-4 pt-4 border-t border-zinc-150/60">
-                        <button type="button" wire:click="closeModal" class="px-3.5 py-1.5 text-xs font-bold text-zinc-600 bg-zinc-100 hover:bg-zinc-200 rounded-md transition-colors focus:outline-none">Cancel</button>
-                        <button type="submit" class="px-3.5 py-1.5 text-xs font-bold bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 rounded-md transition-colors shadow-3xs focus:outline-none flex items-center justify-center gap-1.5 active:scale-97">
+                        <button type="button" wire:click="closeModal" class="px-3.5 py-1.5 text-[13px] font-bold text-zinc-600 bg-zinc-100 hover:bg-zinc-200 rounded-md transition-colors focus:outline-none">Cancel</button>
+                        <button type="submit" class="px-3.5 py-1.5 text-[13px] font-bold bg-primary-50 text-zinc-800 border border-primary-200/60 hover:bg-primary-100 rounded-md transition-colors shadow-3xs focus:outline-none flex items-center justify-center gap-1.5 active:scale-97">
                             <span wire:loading.remove wire:target="save">{{ $editMode ? 'Update' : 'Save Achievement' }}</span>
-                            <span wire:loading wire:target="save" class="flex items-center gap-1"><i class="ph ph-spinner animate-spin text-xs"></i> Saving...</span>
+                            <span wire:loading wire:target="save" class="flex items-center gap-1"><i class="ph ph-spinner animate-spin text-[13px]"></i> Saving...</span>
                         </button>
                     </div>
                 </form>
@@ -127,7 +125,7 @@
     @endteleport
     {{-- Inline Delete Confirmation Modal --}}
     @teleport('body')
-    <div class="fixed inset-0 z-[10000] bg-zinc-950/50 backdrop-blur-xs flex items-center justify-center p-4 {{ !$showDeleteConfirm ? 'hidden' : '' }}">
+    <div x-data role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.showDeleteConfirm" data-dialog-close="$wire.cancelDelete()" aria-label="Delete CV achievement" class="cv-entry-dialog fixed inset-0 z-[10000] bg-zinc-950/50 backdrop-blur-xs flex items-center justify-center p-4 {{ !$showDeleteConfirm ? 'hidden' : '' }}">
         <div class="bg-white rounded-xl shadow-xl max-w-sm w-full border border-zinc-200 overflow-hidden" @click.stop>
             <div class="p-5">
                 <div class="flex items-center gap-3 mb-3">
@@ -135,19 +133,19 @@
                         <i class="ph ph-trash text-rose-600 text-base"></i>
                     </div>
                     <div>
-                        <h4 class="text-xs font-bold text-zinc-800">Confirm Delete?</h4>
-                        <p class="text-[10px] text-zinc-400 mt-0.5">This action cannot be undone.</p>
+                        <h4 class="text-[13px] font-bold text-zinc-800">Confirm Delete?</h4>
+                        <p class="text-[11px] text-zinc-400 mt-0.5">This action cannot be undone.</p>
                     </div>
                 </div>
                 <p class="text-[11px] text-zinc-600 font-medium leading-relaxed mb-4">
                     Are you sure you want to delete this record?
                 </p>
                 <div class="flex justify-end gap-2 pt-3 border-t border-zinc-100">
-                    <button type="button" wire:click="cancelDelete" class="px-3.5 py-1.5 text-[10px] font-bold text-zinc-600 bg-zinc-100 hover:bg-zinc-200 rounded-md transition-colors focus:outline-none">
+                    <button type="button" wire:click="cancelDelete" class="px-3.5 py-1.5 text-[11px] font-bold text-zinc-600 bg-zinc-100 hover:bg-zinc-200 rounded-md transition-colors focus:outline-none">
                         Cancel
                     </button>
-                    <button type="button" wire:click="delete" class="px-3.5 py-1.5 text-[10px] font-bold bg-rose-600 text-white hover:bg-rose-700 rounded-md transition-colors shadow-sm focus:outline-none flex items-center gap-1.5 active:scale-97">
-                        <i class="ph ph-trash text-xs"></i>
+                    <button type="button" wire:click="delete" class="px-3.5 py-1.5 text-[11px] font-bold bg-rose-600 text-white hover:bg-rose-700 rounded-md transition-colors shadow-sm focus:outline-none flex items-center gap-1.5 active:scale-97">
+                        <i class="ph ph-trash text-[13px]"></i>
                         Delete
                     </button>
                 </div>

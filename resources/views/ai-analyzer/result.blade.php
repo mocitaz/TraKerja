@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="bg-zinc-50/50 min-h-screen pb-32 font-sans">
-        <div class="max-w-[850px] mx-auto px-4 sm:px-6 lg:px-8 pt-5 space-y-6">
+        <div class="workspace-page-frame max-w-[850px] mx-auto px-4 sm:px-6 lg:px-8 pt-5 space-y-6">
             
             {{-- Premium Header --}}
             <div class="flex items-center justify-between pb-3 border-b border-zinc-200/80">

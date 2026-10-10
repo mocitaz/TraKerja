@@ -96,6 +96,7 @@ class GoalsCadenceManager extends Component
 
     public function openGoalModal()
     {
+        $this->resetValidation();
         $this->showGoalModal = true;
     }
 
@@ -110,14 +111,15 @@ class GoalsCadenceManager extends Component
     public function setWeeklyGoals()
     {
         $this->validate([
+            'goalPeriod' => 'required|in:weekly,monthly',
             'targetAppliedWeekly' => 'required|integer|min:1',
             'targetFollowupWeekly' => 'required|integer|min:0',
             'startDate' => 'required|date',
             'endDate' => 'required|date|after:startDate',
         ], [
-            'targetAppliedWeekly.required' => 'Weekly application target is required',
+            'targetAppliedWeekly.required' => 'Application target is required',
             'targetAppliedWeekly.min' => 'Minimum application target is 1',
-            'targetFollowupWeekly.required' => 'Weekly follow-up target is required',
+            'targetFollowupWeekly.required' => 'Follow-up target is required',
             'targetFollowupWeekly.min' => 'Minimum follow-up target is 0',
             'startDate.required' => 'Start date is required',
             'endDate.required' => 'End date is required',
@@ -128,8 +130,8 @@ class GoalsCadenceManager extends Component
 
         // Check if there's already a goal for this week
         $existingGoal = UserGoal::where('user_id', $userId)
-            ->where('start_date', $this->startDate)
-            ->where('end_date', $this->endDate)
+            ->whereDate('start_date', $this->startDate)
+            ->whereDate('end_date', $this->endDate)
             ->first();
 
         if ($existingGoal) {
@@ -138,7 +140,7 @@ class GoalsCadenceManager extends Component
                 'target_applied_weekly' => $this->targetAppliedWeekly,
                 'target_followup_weekly' => $this->targetFollowupWeekly,
             ]);
-            $message = 'Weekly goals updated successfully!';
+            $message = ucfirst($this->goalPeriod).' goals updated successfully!';
         } else {
             // Create new goal
             UserGoal::create([
@@ -149,7 +151,7 @@ class GoalsCadenceManager extends Component
                 'target_followup_weekly' => $this->targetFollowupWeekly,
                 'is_achieved' => false,
             ]);
-            $message = 'Weekly goals saved successfully!';
+            $message = ucfirst($this->goalPeriod).' goals saved successfully!';
         }
 
         session()->flash('message', $message);
@@ -173,8 +175,8 @@ class GoalsCadenceManager extends Component
         if (!$userId)
             return 0;
 
-        $startOfWeek = $this->startDate ? Carbon::parse($this->startDate) : Carbon::now('Asia/Jakarta')->startOfWeek();
-        $endOfWeek = $this->endDate ? Carbon::parse($this->endDate) : Carbon::now('Asia/Jakarta')->endOfWeek();
+        $startOfWeek = $this->startDate ? Carbon::parse($this->startDate)->startOfDay() : Carbon::now('Asia/Jakarta')->startOfWeek()->startOfDay();
+        $endOfWeek = $this->endDate ? Carbon::parse($this->endDate)->endOfDay() : Carbon::now('Asia/Jakarta')->endOfWeek()->endOfDay();
 
         return JobApplication::where('user_id', $userId)
             ->whereBetween('application_date', [$startOfWeek, $endOfWeek])
@@ -190,8 +192,8 @@ class GoalsCadenceManager extends Component
         if (!$userId)
             return 0;
 
-        $startOfWeek = $this->startDate ? Carbon::parse($this->startDate) : Carbon::now('Asia/Jakarta')->startOfWeek();
-        $endOfWeek = $this->endDate ? Carbon::parse($this->endDate) : Carbon::now('Asia/Jakarta')->endOfWeek();
+        $startOfWeek = $this->startDate ? Carbon::parse($this->startDate)->startOfDay() : Carbon::now('Asia/Jakarta')->startOfWeek()->startOfDay();
+        $endOfWeek = $this->endDate ? Carbon::parse($this->endDate)->endOfDay() : Carbon::now('Asia/Jakarta')->endOfWeek()->endOfDay();
 
         return JobApplication::where('user_id', $userId)
             ->whereBetween('application_date', [$startOfWeek, $endOfWeek])
@@ -208,8 +210,8 @@ class GoalsCadenceManager extends Component
         if (!$userId)
             return 0;
 
-        $startOfWeek = $this->startDate ? Carbon::parse($this->startDate) : Carbon::now('Asia/Jakarta')->startOfWeek();
-        $endOfWeek = $this->endDate ? Carbon::parse($this->endDate) : Carbon::now('Asia/Jakarta')->endOfWeek();
+        $startOfWeek = $this->startDate ? Carbon::parse($this->startDate)->startOfDay() : Carbon::now('Asia/Jakarta')->startOfWeek()->startOfDay();
+        $endOfWeek = $this->endDate ? Carbon::parse($this->endDate)->endOfDay() : Carbon::now('Asia/Jakarta')->endOfWeek()->endOfDay();
 
         return JobApplication::where('user_id', $userId)
             ->whereBetween('application_date', [$startOfWeek, $endOfWeek])

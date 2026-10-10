@@ -163,6 +163,9 @@
             .sidebar { background-color: #f8fafc !important; }
         }
     </style>
+@if(!empty($browserPreview))
+    <style>body { padding: {{ $margin ?? '0' }}; } @media print { body { padding: 0; } }</style>
+    @endif
 </head>
 <body>
     <div class="main-wrapper">

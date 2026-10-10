@@ -20,6 +20,7 @@ class UserActivities extends Component
     
     public $showSettingsModal = false;
     public $pruneDays = 90;
+    public ?int $selectedActivityId = null;
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -47,6 +48,28 @@ class UserActivities extends Component
         $this->resetPage();
     }
     
+    public function resetFilters()
+    {
+        $this->reset('search', 'filterType', 'filterStatus');
+        $this->resetPage();
+    }
+
+    public function updatingPerPage()
+    {
+        $this->resetPage();
+    }
+
+    public function showActivity(int $id)
+    {
+        UserActivity::findOrFail($id);
+        $this->selectedActivityId = $id;
+    }
+
+    public function closeActivity()
+    {
+        $this->selectedActivityId = null;
+    }
+
     public function loadSettings()
     {
         $setting = Setting::where('key', 'activity_log_prune_days')->first();
@@ -56,7 +79,7 @@ class UserActivities extends Component
     public function saveSettings()
     {
         $this->validate([
-            'pruneDays' => 'required|integer|min:1',
+            'pruneDays' => 'required|integer|min:1|max:3650',
         ]);
         
         Setting::updateOrCreate(
@@ -75,6 +98,7 @@ class UserActivities extends Component
     
     public function cleanNow()
     {
+        $this->validate(['pruneDays' => 'required|integer|min:1|max:3650']);
         $deletedCount = UserActivity::where('created_at', '<', now()->subDays($this->pruneDays))->delete();
         
         $this->showSettingsModal = false;
@@ -121,7 +145,7 @@ class UserActivities extends Component
             $query->where('status', $this->filterStatus);
         }
 
-        $activities = $query->latest()->paginate($this->perPage);
+        $activities = $query->latest()->orderByDesc('id')->paginate(in_array((int) $this->perPage, [15, 30, 50, 100], true) ? (int) $this->perPage : 15);
         
         $rawTypes = UserActivity::select('activity_type')
             ->distinct()
@@ -130,14 +154,14 @@ class UserActivities extends Component
             ->toArray();
 
         $categories = [
-            'Autentikasi & Akun' => ['login', 'logout', 'register', 'profile_update', 'password_change', 'account_delete'],
-            'Manajemen Lamaran' => ['job_add', 'job_edit', 'job_delete', 'interview_schedule', 'csv_export'],
+            'Accounts & authentication' => ['login', 'logout', 'register', 'profile_update', 'password_change', 'account_delete'],
+            'Applications' => ['job_add', 'job_edit', 'job_delete', 'interview_schedule', 'csv_export'],
             'CV Builder' => ['cv_data_update', 'cv_export'],
-            'Fitur AI' => ['ai_analyzer', 'ai_analyzer_usage', 'cover_letter', 'ai_photo'],
-            'Target & Goals' => ['goal_set', 'goal_update'],
+            'AI workspace' => ['ai_analyzer', 'ai_analyzer_usage', 'cover_letter', 'ai_photo'],
+            'Weekly goals' => ['goal_set', 'goal_update'],
             'Chrome Extension' => ['extension_login', 'extension_job_save'],
-            'Pembayaran & Langganan' => ['top_up', 'premium_upgrade'],
-            'Bantuan & Feedback' => ['support_ticket', 'feedback_submit'],
+            'Payments & membership' => ['top_up', 'premium_upgrade'],
+            'Support & feedback' => ['support_ticket', 'feedback_submit'],
         ];
 
         $groupedTypes = [];
@@ -158,12 +182,13 @@ class UserActivities extends Component
         }
         
         if (!empty($uncategorized)) {
-            $groupedTypes['Lainnya'] = $uncategorized;
+            $groupedTypes['Other events'] = $uncategorized;
         }
 
         return view('livewire.admin.user-activities', [
             'activities' => $activities,
             'groupedTypes' => $groupedTypes,
+            'selectedActivity' => $this->selectedActivityId ? UserActivity::with('user')->find($this->selectedActivityId) : null,
         ]);
     }
 }

@@ -163,6 +163,9 @@
             .section-content { border-left-color: #f1f5f9 !important; }
         }
     </style>
+@if(!empty($browserPreview))
+    <style>body { padding: {{ $margin ?? '20mm' }}; } @media print { body { padding: 0; } }</style>
+    @endif
 </head>
 <body>
     <div class="container">

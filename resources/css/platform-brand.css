@@ -1,0 +1,36 @@
+.platform-brand { display: inline-flex; align-items: center; gap: 9px; min-width: 0; vertical-align: middle; }
+.platform-brand__mark { display: inline-grid; place-items: center; flex: 0 0 32px; width: 32px; height: 32px; background: transparent; border: 0; border-radius: 0; color: #766188; }
+.platform-brand__mark img { width: 23px; height: 23px; object-fit: contain; }
+.platform-brand__mark > i { font-size: 18px; }
+.platform-brand__mark > span { font-size: 11px; font-weight: 600; }
+.platform-brand__name { color: #574b63; font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+.platform-brand--compact { gap: 6px; }
+.platform-brand--compact .platform-brand__mark { width: 24px; height: 24px; flex-basis: 24px; }
+.platform-brand--compact .platform-brand__mark img { width: 18px; height: 18px; }
+.platform-brand--compact .platform-brand__mark > i { font-size: 15px; }
+.platform-brand--compact .platform-brand__name { font-size: 11px; }
+.platform-brand--table .platform-brand__name { font-weight: 500; }
+.tracker-card-meta > .platform-brand { background: transparent; padding: 0; color: inherit; }
+.job-properties dd > .platform-brand { justify-content: flex-end; }
+.job-hero-meta > .platform-brand { gap: 7px; }
+.platform-select-field { position: relative; }
+.platform-select-field > .platform-brand { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+.platform-select-field .platform-brand__mark { width: 28px; height: 28px; flex-basis: 28px; border: 0; background: transparent; }
+.job-form .platform-select-field > select { padding-left: 47px !important; }
+.platform-picker { margin-top: 8px; }
+.platform-picker summary { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; cursor: pointer; list-style: none; color: #79548f; font-size: 11px; }
+.platform-picker summary::-webkit-details-marker { display: none; }
+.platform-picker[open] summary > i { transform: rotate(180deg); }
+.platform-picker__body { background: #fbf9fd; border: 1px solid #e6dfed; border-radius: 15px; padding: 12px; margin-top: 3px; }
+.job-form .platform-picker__body > input { min-height: 40px; padding-left: 12px !important; font-size: 12px; background: #fff; }
+.platform-picker__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; max-height: 248px; overflow-y: auto; overscroll-behavior: contain; margin-top: 10px; scrollbar-width: thin; }
+.platform-picker__grid > button { display: flex; align-items: center; justify-content: space-between; gap: 6px; text-align: left; padding: 8px; min-height: 52px; border: 1px solid transparent; border-radius: 11px; background: #fff; transition: border-color .15s, background .15s; }
+.platform-picker__grid > button:hover { border-color: #d9c5e7; background: #f6effb; }
+.platform-picker__grid > button.is-selected { background: #eee4f6; border-color: #c6aad9; }
+.platform-picker__grid > button > i { visibility: hidden; color: #7d4b97; }
+.platform-picker__grid > button.is-selected > i { visibility: visible; }
+.platform-picker__grid .platform-brand__name { font-size: 11px; }
+.platform-picker__empty { font-size: 12px; line-height: 1.7; color: #776a83; padding: 14px 4px 4px; }
+.platform-picker :is(button, summary, input):focus-visible { outline: 2px solid #9562b4; outline-offset: 2px; }
+@media (max-width: 640px) { .platform-picker__grid { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) { .platform-picker * { transition: none; } }

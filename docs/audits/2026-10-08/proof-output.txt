@@ -1,0 +1,14 @@
+ticket_other_user_status=completed
+skill_owner_after_save=1 attacker=1 proficiency=Intermediate
+unsigned_webhook_completed http=200 payment=SUCCESS credits=10
+unsigned_webhook_failed http=200 payment=FAILED credits=10
+unsigned_webhook_completed http=200 payment=SUCCESS credits=20
+payment_provider_requests=0
+scraper_private_target_sent_to_fake=true http=200
+contact_index_error=Class "App\Http\Controllers\ContactMessage" not found
+expired_premium_isPremium=true
+premium_until_fillable=false
+/admin/feedbacks middleware=["Illuminate\\Cookie\\Middleware\\EncryptCookies","Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse","Illuminate\\Session\\Middleware\\StartSession","Illuminate\\View\\Middleware\\ShareErrorsFromSession","Illuminate\\Foundation\\Http\\Middleware\\ValidateCsrfToken","Illuminate\\Auth\\Middleware\\Authenticate","Illuminate\\Routing\\Middleware\\SubstituteBindings","App\\Http\\Middleware\\SoftMaintenanceMode","App\\Http\\Middleware\\UpdateLastActivity","App\\Http\\Middleware\\CheckSurveyRedirect","App\\Http\\Middleware\\EnsureEmailIsVerifiedExceptAdmin"]
+/admin/scraper middleware=["Illuminate\\Cookie\\Middleware\\EncryptCookies","Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse","Illuminate\\Session\\Middleware\\StartSession","Illuminate\\View\\Middleware\\ShareErrorsFromSession","Illuminate\\Foundation\\Http\\Middleware\\ValidateCsrfToken","Illuminate\\Auth\\Middleware\\Authenticate","Illuminate\\Routing\\Middleware\\SubstituteBindings","App\\Http\\Middleware\\SoftMaintenanceMode","App\\Http\\Middleware\\UpdateLastActivity","App\\Http\\Middleware\\CheckSurveyRedirect","App\\Http\\Middleware\\EnsureEmailIsVerifiedExceptAdmin"]
+/api/extension/login middleware=["Illuminate\\Routing\\Middleware\\SubstituteBindings"]
+COMPLETE: synthetic memory database, fake HTTP and mail; controller-level proofs, not full browser tests.
