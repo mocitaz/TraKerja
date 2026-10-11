@@ -35,6 +35,8 @@
 @import './trakerja-ai-brand.css';
 @import './admin-workspace.css';
 @import './admin-users.css';
+@import './admin-feedbacks.css';
+@import './admin-survey.css';
 @import './dashboard-mobile.css';
 @import './applications-mobile.css';
 @import './floating-ai-link.css';

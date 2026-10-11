@@ -1,17 +1,346 @@
 <x-admin-layout>
-@php
-    $metrics = [
-        'Overall satisfaction'=>$avgQ1Overall,'Navigation'=>$avgQ2Navigation,'Page performance'=>$avgQ3Speed,'CV Builder'=>$avgQ4CvBuilder,'AI analysis'=>$avgQ5AiAnalyzer,'Application tracker'=>$avgQ6JobTracker,'Cover letters'=>$avgQ7CoverLetter,'Interview scheduling'=>$avgQ8Interviews,'Premium value'=>$avgQ9Premium,'Likelihood to recommend'=>$avgQ10Recommend,'Visual design'=>$avgQ11Design,'CV templates'=>$avgQ12CvTemplates,
-    ];
-@endphp
-<div class="admin-operations">
-    <header class="ops-page-heading"><div><h1>User survey</h1><p>See what works for members and where the experience needs attention.</p></div><form class="ops-survey-toggle" method="POST" action="{{ route('admin.survey.toggle') }}">@csrf<input type="hidden" name="enabled" value="{{ $surveyEnabled ? 0 : 1 }}"><span>Optional invitations<strong>{{ $surveyEnabled ? 'Enabled' : 'Disabled' }}</strong></span><button type="submit" class="ops-button ops-button--quiet">{{ $surveyEnabled ? 'Disable' : 'Enable' }}</button></form></header>
-    @if(session('success'))<div class="ops-notice" role="status">{{ session('success') }}</div>@endif
-    <div class="ops-metric-strip"><div><span>Responses</span><strong class="admin-number--blue">{{ number_format($totalRespondents) }}</strong><small>All submitted surveys</small></div><div><span>Overall satisfaction</span><strong class="admin-number--pink">{{ $totalRespondents ? $avgQ1Overall : '—' }}<em>/ 5</em></strong><small>Average member rating</small></div><div><span>Ease of navigation</span><strong class="admin-number--purple">{{ $totalRespondents ? $avgQ2Navigation : '—' }}<em>/ 5</em></strong><small>Finding the right feature</small></div><div><span>Visual design</span><strong class="admin-number--orange">{{ $totalRespondents ? $avgQ11Design : '—' }}<em>/ 5</em></strong><small>Look and feel of TraKerja</small></div></div>
-    <div class="ops-survey-grid">
-        <section class="ops-panel"><header class="ops-section-heading"><h2>Experience by feature</h2><p>Average scores from all responses · 1–5 scale</p></header><div class="ops-score-grid">@foreach($metrics as $label=>$value)<div class="ops-score" tabindex="0" title="{{ $label }}: {{ $totalRespondents ? $value.' out of 5' : 'No responses yet' }}"><div><span>{{ $label }}</span><strong>{{ $totalRespondents ? $value : '—' }}</strong></div><div class="ops-score-track"><span style="width:{{ min(100,max(0,(float)$value/5*100)) }}%"></span></div></div>@endforeach</div></section>
-        <section class="ops-panel ops-panel--glass"><header class="ops-section-heading"><h2>Overall ratings</h2><p>How members rated their experience</p></header><div class="ops-rating-list">@for($score=5;$score>=1;$score--)@php($count=$distributions[$score]??0)<div title="{{ $count }} responses rated {{ $score }} out of 5"><span>{{ $score }} / 5</span><div class="ops-score-track"><span style="width:{{ $totalRespondents ? $count/$totalRespondents*100 : 0 }}%"></span></div><strong>{{ $count }}</strong></div>@endfor</div><p class="ops-footnote">{{ $totalRespondents ? 'Each response is counted once in this distribution.' : 'Ratings will appear after the first survey is submitted.' }}</p></section>
+    @php
+        $features = [
+            ['label' => 'Overall Satisfaction',     'field' => 'avgQ1Overall',     'val' => $avgQ1Overall,     'icon' => 'sparkle'],
+            ['label' => 'Ease of Navigation',        'field' => 'avgQ2Navigation',  'val' => $avgQ2Navigation,  'icon' => 'compass'],
+            ['label' => 'Page Speed & Performance',  'field' => 'avgQ3Speed',       'val' => $avgQ3Speed,       'icon' => 'lightning'],
+            ['label' => 'ATS CV Builder',            'field' => 'avgQ4CvBuilder',   'val' => $avgQ4CvBuilder,   'icon' => 'file-text'],
+            ['label' => 'AI Resume Analyzer',        'field' => 'avgQ5AiAnalyzer',  'val' => $avgQ5AiAnalyzer,  'icon' => 'robot'],
+            ['label' => 'Application Tracker',       'field' => 'avgQ6JobTracker',  'val' => $avgQ6JobTracker,  'icon' => 'kanban'],
+            ['label' => 'Cover Letter Generator',    'field' => 'avgQ7CoverLetter', 'val' => $avgQ7CoverLetter, 'icon' => 'envelope-simple'],
+            ['label' => 'Interview Scheduling',      'field' => 'avgQ8Interviews',  'val' => $avgQ8Interviews,  'icon' => 'calendar-check'],
+            ['label' => 'Premium Membership Value',  'field' => 'avgQ9Premium',     'val' => $avgQ9Premium,     'icon' => 'crown'],
+            ['label' => 'Likelihood to recommend',   'field' => 'avgQ10Recommend',  'val' => $avgQ10Recommend,  'icon' => 'thumbs-up'],
+            ['label' => 'Visual UI Design',          'field' => 'avgQ11Design',     'val' => $avgQ11Design,     'icon' => 'paint-brush-broad'],
+            ['label' => 'CV Templates Quality',      'field' => 'avgQ12CvTemplates','val' => $avgQ12CvTemplates,'icon' => 'layout'],
+        ];
+
+        $positiveCount = ($distributions[5] ?? 0) + ($distributions[4] ?? 0);
+        $positiveRate = $totalRespondents > 0 ? round(($positiveCount / $totalRespondents) * 100) : 0;
+    @endphp
+
+    <div class="admin-operations admin-survey-workspace">
+
+        {{-- ==========================================================================
+             PAGE HEADER (Harmonized with User Management & Summary)
+             ========================================================================== --}}
+        <section class="as-welcome">
+            <div>
+                <span class="as-eyebrow">Voice of Customer</span>
+                <h1>User Satisfaction Survey</h1>
+                <p>Monitor member sentiment, track 12-point feature satisfaction metrics, and inspect qualitative feedback.</p>
+            </div>
+
+            {{-- Survey Status Switcher --}}
+            <div class="as-header-actions">
+                <form method="POST" action="{{ route('admin.survey.toggle') }}" class="as-toggle-form">
+                    @csrf
+                    <input type="hidden" name="enabled" value="{{ $surveyEnabled ? 0 : 1 }}">
+                    <div class="as-toggle-status {{ $surveyEnabled ? 'is-active' : 'is-inactive' }}">
+                        <span class="as-toggle-dot"></span>
+                        <div class="as-toggle-copy">
+                            <strong>{{ $surveyEnabled ? 'Survey Active' : 'Survey Paused' }}</strong>
+                            <span>{{ $surveyEnabled ? 'Prompts shown to 3+ day accounts' : 'Invitations currently paused' }}</span>
+                        </div>
+                    </div>
+                    <button type="submit" class="as-btn {{ $surveyEnabled ? 'as-btn--quiet' : 'as-btn--primary' }}">
+                        <i class="ph ph-{{ $surveyEnabled ? 'pause' : 'play' }}" aria-hidden="true"></i>
+                        {{ $surveyEnabled ? 'Pause Survey' : 'Enable Survey' }}
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        {{-- ==========================================================================
+             ALERT NOTICES
+             ========================================================================== --}}
+        @if(session('success'))
+            <div class="as-notice" role="status">
+                <i class="ph ph-check-circle" aria-hidden="true"></i>
+                <span>{{ session('success') }}</span>
+            </div>
+        @endif
+
+        {{-- ==========================================================================
+             OVERVIEW METRIC STRIP (Executive Scorecard)
+             ========================================================================== --}}
+        <section class="as-metric-strip" aria-label="Survey executive telemetry">
+            {{-- Total Responses --}}
+            <div class="as-metric-card as-metric-card--total">
+                <div class="as-metric-head">
+                    <span class="as-metric-label">
+                        <i class="ph ph-users" aria-hidden="true"></i>
+                        Total Responses
+                    </span>
+                </div>
+                <strong>{{ number_format($totalRespondents) }}</strong>
+                <small>Submitted by registered members</small>
+            </div>
+
+            {{-- Overall CSAT --}}
+            <div class="as-metric-card as-metric-card--csat">
+                <div class="as-metric-head">
+                    <span class="as-metric-label">
+                        <i class="ph ph-star-fill text-amber-500" aria-hidden="true"></i>
+                        Overall Satisfaction
+                    </span>
+                </div>
+                <strong>{{ $totalRespondents ? $avgQ1Overall : '—' }}<em>/ 5.0</em></strong>
+                <small>Platform-wide CSAT benchmark</small>
+            </div>
+
+            {{-- Ease of Navigation --}}
+            <div class="as-metric-card as-metric-card--nav">
+                <div class="as-metric-head">
+                    <span class="as-metric-label">
+                        <i class="ph ph-compass" aria-hidden="true"></i>
+                        Ease of Navigation
+                    </span>
+                </div>
+                <strong>{{ $totalRespondents ? $avgQ2Navigation : '—' }}<em>/ 5.0</em></strong>
+                <small>Finding features & intuitive UX</small>
+            </div>
+
+            {{-- Visual Design --}}
+            <div class="as-metric-card as-metric-card--design">
+                <div class="as-metric-head">
+                    <span class="as-metric-label">
+                        <i class="ph ph-paint-brush-broad" aria-hidden="true"></i>
+                        Visual UI Design
+                    </span>
+                </div>
+                <strong>{{ $totalRespondents ? $avgQ11Design : '—' }}<em>/ 5.0</em></strong>
+                <small>Look and feel of TraKerja</small>
+            </div>
+        </section>
+
+        {{-- ==========================================================================
+             ANALYTICAL 2-COLUMN GRID (Features vs Distribution)
+             ========================================================================== --}}
+        <div class="as-analytics-grid">
+
+            {{-- Feature Experience Scores (12 Metrics) --}}
+            <section class="as-panel" aria-labelledby="features-breakdown-heading">
+                <div class="as-panel-heading">
+                    <div>
+                        <h2 id="features-breakdown-heading">
+                            Experience by Feature <span>12 Metrics</span>
+                        </h2>
+                        <p>Average score from 1.0 to 5.0 across each platform module</p>
+                    </div>
+                </div>
+
+                <div class="as-scores-grid">
+                    @foreach($features as $item)
+                        @php
+                            $scoreFloat = (float) $item['val'];
+                            $pct = $totalRespondents > 0 ? min(100, max(0, ($scoreFloat / 5) * 100)) : 0;
+                        @endphp
+                        <div class="as-score-item" title="{{ $item['label'] }}: {{ $totalRespondents ? $item['val'] . ' out of 5.0' : 'No data yet' }}">
+                            <div class="as-score-meta">
+                                <span class="as-score-title">
+                                    <i class="ph ph-{{ $item['icon'] }}" aria-hidden="true"></i>
+                                    {{ $item['label'] }}
+                                </span>
+                                <span class="as-score-val">
+                                    {{ $totalRespondents ? $item['val'] : '—' }}
+                                    <em>/ 5.0</em>
+                                </span>
+                            </div>
+                            <div class="as-track" role="progressbar" aria-valuenow="{{ $scoreFloat }}" aria-valuemin="1" aria-valuemax="5">
+                                <span class="as-fill" style="width: {{ $pct }}%;"></span>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </section>
+
+            {{-- Overall Rating Distribution (1–5 Stars) --}}
+            <section class="as-panel" aria-labelledby="distribution-heading">
+                <div class="as-panel-heading">
+                    <div>
+                        <h2 id="distribution-heading">
+                            Overall CSAT Distribution
+                        </h2>
+                        <p>How members rated platform experience on Q1</p>
+                    </div>
+                </div>
+
+                <div class="as-dist-content">
+                    @for($score = 5; $score >= 1; $score--)
+                        @php
+                            $cnt = $distributions[$score] ?? 0;
+                            $distPct = $totalRespondents > 0 ? round(($cnt / $totalRespondents) * 100) : 0;
+                        @endphp
+                        <div class="as-dist-row" title="{{ $cnt }} respondent(s) rated {{ $score }} out of 5 ({{ $distPct }}%)">
+                            <span class="as-dist-stars">
+                                {{ $score }} <i class="ph-fill ph-star" aria-hidden="true"></i>
+                            </span>
+                            <div class="as-dist-track" role="progressbar" aria-valuenow="{{ $distPct }}" aria-valuemin="0" aria-valuemax="100">
+                                <span class="as-dist-fill" style="width: {{ $distPct }}%;"></span>
+                            </div>
+                            <span class="as-dist-count">{{ $cnt }} <small class="text-xs text-gray-400">({{ $distPct }}%)</small></span>
+                        </div>
+                    @endfor
+
+                    {{-- Positive Sentiment Summary --}}
+                    <div class="as-sentiment-card">
+                        <div class="as-sentiment-icon">
+                            <i class="ph-fill ph-heart" aria-hidden="true"></i>
+                        </div>
+                        <div class="as-sentiment-copy">
+                            <strong>{{ $positiveRate }}% Positive Sentiment</strong>
+                            <span>{{ number_format($positiveCount) }} of {{ number_format($totalRespondents) }} respondents gave 4 or 5 stars on overall experience.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        {{-- ==========================================================================
+             MEMBER RESPONSES DIRECTORY & FEEDBACK TABLE
+             ========================================================================== --}}
+        <section class="as-panel" aria-labelledby="responses-table-heading">
+            <div class="as-panel-heading">
+                <div>
+                    <h2 id="responses-table-heading">
+                        Member Survey Responses <span>{{ number_format($responses->total()) }}</span>
+                    </h2>
+                    <p>Open any response to view the full 12-question scorecard and written comments</p>
+                </div>
+            </div>
+
+            <div class="as-table-scroll" tabindex="0" aria-label="Member Survey Responses Table">
+                <table class="as-table">
+                    <colgroup>
+                        <col style="width: 25%;">
+                        <col style="width: 14%;">
+                        <col style="width: 33%;">
+                        <col style="width: 15%;">
+                        <col style="width: 13%;">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th scope="col">Member</th>
+                            <th scope="col">Overall Score</th>
+                            <th scope="col">Written Feedback</th>
+                            <th scope="col">Submitted</th>
+                            <th scope="col">Scorecard</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($responses as $response)
+                            <tr x-data="{ openScorecard: false }" wire:key="survey-res-{{ $response->id }}">
+                                {{-- Member Info --}}
+                                <td>
+                                    <div class="as-member-cell">
+                                        <img src="{{ $response->user?->avatar_url ?? \App\Support\AvatarCatalog::url('amber') }}" 
+                                             alt="" 
+                                             class="as-avatar" 
+                                             loading="lazy">
+                                        <div>
+                                            <div class="as-member-name">{{ $response->user?->name ?? 'Deleted member' }}</div>
+                                            <div class="as-member-email">{{ $response->user?->email ?? 'No email on record' }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                {{-- Overall Score Badge --}}
+                                <td>
+                                    <span class="as-rating-badge">
+                                        <i class="ph-fill ph-star" aria-hidden="true"></i>
+                                        {{ number_format($response->q1_overall, 1) }}
+                                        <small>/ 5.0</small>
+                                    </span>
+                                </td>
+
+                                {{-- Written Feedback --}}
+                                <td>
+                                    @if($response->feedback)
+                                        <div class="as-feedback-quote" title="{{ $response->feedback }}">
+                                            “{{ $response->feedback }}”
+                                        </div>
+                                    @else
+                                        <span class="as-feedback-empty">No written feedback provided</span>
+                                    @endif
+                                </td>
+
+                                {{-- Submitted Date --}}
+                                <td>
+                                    <time datetime="{{ $response->created_at->toIso8601String() }}">
+                                        <strong>{{ $response->created_at->format('d M Y') }}</strong>
+                                        <div class="text-xs text-gray-500">{{ $response->created_at->format('H:i') }} WIB</div>
+                                    </time>
+                                </td>
+
+                                {{-- Action / Toggle Scorecard --}}
+                                <td>
+                                    <button type="button" 
+                                            class="as-btn as-btn--quiet as-btn--sm" 
+                                            @click="openScorecard = !openScorecard">
+                                        <span x-text="openScorecard ? 'Close' : 'View all 12'"></span>
+                                        <i class="ph ph-caret-down transition-transform duration-200" :class="{ 'rotate-180': openScorecard }" aria-hidden="true"></i>
+                                    </button>
+
+                                    {{-- Expandable Scorecard Modal/Drawer --}}
+                                    <template x-if="openScorecard">
+                                        <div class="as-scorecard-box" x-cloak>
+                                            <div class="as-scorecard-heading">
+                                                <h4>12-Question Breakdown · {{ $response->user?->name ?? 'Member' }}</h4>
+                                                <span class="text-xs text-gray-500">{{ $response->created_at->format('d M Y, H:i') }} WIB</span>
+                                            </div>
+
+                                            <div class="as-scorecard-grid">
+                                                <div class="as-scorecard-item"><span>1. Overall:</span> <strong>{{ $response->q1_overall ?? '—' }} / 5</strong></div>
+                                                <div class="as-scorecard-item"><span>2. Navigation:</span> <strong>{{ $response->q2_navigation ?? '—' }} / 5</strong></div>
+                                                <div class="as-scorecard-item"><span>3. Speed:</span> <strong>{{ $response->q3_speed ?? '—' }} / 5</strong></div>
+                                                <div class="as-scorecard-item"><span>4. CV Builder:</span> <strong>{{ $response->q4_cv_builder ?? '—' }} / 5</strong></div>
+                                                <div class="as-scorecard-item"><span>5. AI Analyzer:</span> <strong>{{ $response->q5_ai_analyzer ?? '—' }} / 5</strong></div>
+                                                <div class="as-scorecard-item"><span>6. Tracker:</span> <strong>{{ $response->q6_job_tracker ?? '—' }} / 5</strong></div>
+                                                <div class="as-scorecard-item"><span>7. Cover Letter:</span> <strong>{{ $response->q7_cover_letter ?? '—' }} / 5</strong></div>
+                                                <div class="as-scorecard-item"><span>8. Interviews:</span> <strong>{{ $response->q8_interviews ?? '—' }} / 5</strong></div>
+                                                <div class="as-scorecard-item"><span>9. Premium Value:</span> <strong>{{ $response->q9_premium ?? '—' }} / 5</strong></div>
+                                                <div class="as-scorecard-item"><span>10. Likelihood to recommend:</span> <strong>{{ $response->q10_recommend ?? '—' }} / 5</strong></div>
+                                                <div class="as-scorecard-item"><span>11. Visual Design:</span> <strong>{{ $response->q11_design ?? '—' }} / 5</strong></div>
+                                                <div class="as-scorecard-item"><span>12. CV Templates:</span> <strong>{{ $response->q12_cv_templates ?? '—' }} / 5</strong></div>
+                                            </div>
+
+                                            @if($response->feedback)
+                                                <div class="as-scorecard-text">
+                                                    <strong>Written Feedback:</strong>
+                                                    <p class="mt-1 text-gray-700 italic">“{{ $response->feedback }}”</p>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </template>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5">
+                                    <div class="as-empty">
+                                        <div class="as-empty-icon">
+                                            <i class="ph ph-clipboard-text" aria-hidden="true"></i>
+                                        </div>
+                                        <h3>No survey responses yet</h3>
+                                        <p>When members complete their satisfaction survey, their scorecards and feedback will appear here in real time.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            {{-- Panel Footer --}}
+            <div class="as-panel-footer">
+                <span>Showing {{ $responses->firstItem() ?? 0 }} to {{ $responses->lastItem() ?? 0 }} of {{ number_format($responses->total()) }} responses</span>
+                <div>
+                    {{ $responses->links() }}
+                </div>
+            </div>
+        </section>
+
     </div>
-    <section class="ops-panel"><header class="ops-section-heading"><h2>Member responses</h2><p>Open a response to read all twelve ratings and the member’s feedback.</p></header><div class="ops-table-scroll"><table class="ops-table"><thead><tr><th>Member</th><th>Overall rating</th><th>Feedback</th><th>Submitted</th><th>Details</th></tr></thead><tbody>@forelse($responses as $response)<tr><td><strong>{{ $response->user?->name ?? 'Deleted member' }}</strong><small>{{ $response->user?->email }}</small></td><td><span class="ops-rating-number">{{ $response->q1_overall }} <small>/ 5</small></span></td><td><p class="ops-truncate">{{ $response->feedback ?: 'No written feedback' }}</p></td><td><time>{{ $response->created_at->format('d M Y') }}<small>{{ $response->created_at->format('H:i') }} WIB</small></time></td><td><details class="ops-response"><summary>Read response</summary><div><h3>{{ $response->user?->name ?? 'Deleted member' }}</h3><dl>@foreach(array_keys($metrics) as $index=>$label)@php($field=['q1_overall','q2_navigation','q3_speed','q4_cv_builder','q5_ai_analyzer','q6_job_tracker','q7_cover_letter','q8_interviews','q9_premium','q10_recommend','q11_design','q12_cv_templates'][$index])<div><dt>{{ $label }}</dt><dd>{{ $response->$field ?? '—' }} / 5</dd></div>@endforeach</dl><p>{{ $response->feedback ?: 'No written feedback.' }}</p></div></details></td></tr>@empty<tr><td colspan="5"><div class="ops-empty"><h3>No survey responses yet</h3><p>When members complete their survey, their ratings and feedback will appear here.</p></div></td></tr>@endforelse</tbody></table></div><footer class="ops-panel-footer"><span>{{ $responses->total() }} responses</span>{{ $responses->links() }}</footer></section>
-</div>
 </x-admin-layout>
