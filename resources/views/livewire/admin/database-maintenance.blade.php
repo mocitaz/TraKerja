@@ -1,92 +1,102 @@
-<div class="space-y-4">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 text-left">
+<div class="space-y-5">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 text-left">
+
         {{-- Database Backup Card --}}
-        <div class="ops-legacy-panel bg-white rounded-2xl border border-[#e7e3e9] overflow-hidden flex flex-col h-full ">
-            <div class="p-5 flex-1">
-                <div class="flex items-start justify-between mb-4">
-                    <div class="w-8 h-8 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center shrink-0 ">
-                        <i class="ph-bold ph-cloud-arrow-down text-zinc-500 text-base"></i>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-[11px] font-sans font-medium text-zinc-500   block">Last Backup</span>
-                        <p class="text-[11px] font-sans font-medium text-zinc-800">Today, 08:30 AM</p>
-                    </div>
-                </div>
+        <div class="ast-panel">
+            <div class="ast-panel-heading">
+                <h3>
+                    <i class="ph ph-cloud-arrow-down" aria-hidden="true"></i>
+                    Manual Database Backup
+                </h3>
+                <span class="text-xs text-gray-500 font-medium">Daily snapshots active</span>
+            </div>
 
-                <h4 class="text-xs font-medium text-zinc-900 mb-1 leading-none">Manual Database Backup</h4>
-                <p class="text-xs text-zinc-500 leading-relaxed mb-4 mt-2">
-                    Unduh salinan lengkap database TraKerja dalam format .SQL. Sangat disarankan untuk melakukan backup sebelum melakukan perubahan besar pada sistem.
+            <div class="ast-panel-body justify-between">
+                <p class="text-xs text-gray-500 leading-relaxed">
+                    Download a full SQL dump of the TraKerja production database. It is strongly recommended to export a backup before performing major system upgrades or migrations.
                 </p>
 
-                <div class="flex items-center gap-3 mb-4 p-3.5 bg-zinc-50 rounded-2xl border border-[#e7e3e9] ">
-                    <div class="flex-1">
-                        <p class="text-[11px] font-sans font-medium text-zinc-500  ">Database Size</p>
-                        <p class="text-xs font-sans font-medium text-zinc-900 mt-0.5">{{ $dbSize }}</p>
+                <div class="grid grid-cols-2 gap-3 p-3.5 bg-gray-50 rounded-xl border border-gray-200">
+                    <div>
+                        <span class="text-xs text-gray-500 font-medium block">Database Size</span>
+                        <strong class="text-sm text-gray-800 font-semibold mt-0.5 block">{{ $dbSize }}</strong>
                     </div>
-                    <div class="h-9 w-px bg-zinc-250"></div>
-                    <div class="flex-1 pl-3">
-                        <p class="text-[11px] font-sans font-medium text-zinc-500  ">Last Backup</p>
-                        <p class="text-xs font-medium text-zinc-700 mt-0.5">Today, 08:30 AM</p>
+                    <div class="border-l border-gray-200 pl-3">
+                        <span class="text-xs text-gray-500 font-medium block">Last Backup</span>
+                        <strong class="text-sm text-gray-800 font-semibold mt-0.5 block">Automated Daily</strong>
                     </div>
                 </div>
 
-                <a href="{{ route('admin.database.download') }}"
-                   class="inline-flex items-center justify-center gap-2 w-full h-9 bg-zinc-900 text-white rounded-lg hover:bg-zinc-800 transition-colors font-medium text-xs focus:outline-none ">
-                    <i class="ph-bold ph-download-simple text-sm"></i>
-                    Download SQL Backup (.sql)
-                </a>
+                <div class="pt-2">
+                    <a href="{{ route('admin.database.download') }}" class="ast-btn ast-btn--primary w-full justify-center">
+                        <i class="ph ph-download-simple" aria-hidden="true"></i>
+                        Download SQL Backup (.sql)
+                    </a>
+                </div>
             </div>
-            <div class="px-5 py-3.5 bg-zinc-50/50 border-t border-zinc-100 flex items-center gap-1.5 text-[11px] font-sans font-medium text-zinc-500  ">
-                <i class="ph-bold ph-shield-check text-xs text-zinc-500"></i>
-                ENCRYPTED AND SECURE TRANSFER
+
+            <div class="px-5 py-3 bg-gray-50/60 border-t border-gray-100 flex items-center gap-2 text-xs text-gray-500">
+                <i class="ph-bold ph-shield-check text-emerald-600" aria-hidden="true"></i>
+                <span>Encrypted & secure database export tunnel</span>
             </div>
         </div>
 
-        {{-- Storage Cleaning Card --}}
-        <div class="ops-legacy-panel bg-white rounded-2xl border border-[#e7e3e9] overflow-hidden flex flex-col h-full ">
-            <div class="p-5 flex-1">
-                <div class="flex items-start justify-between mb-4">
-                    <div class="w-8 h-8 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center shrink-0 ">
-                        <i class="ph-bold ph-broom text-zinc-500 text-base"></i>
-                    </div>
-                    @if($unusedFilesCount > 0)
-                        <div class="">
-                            <span class="px-2 py-0.5 bg-amber-50 text-amber-700 text-[11px] font-sans font-medium rounded-lg border border-amber-250  ">Action Needed</span>
-                        </div>
-                    @endif
-                </div>
+        {{-- Storage Maintenance Card --}}
+        <div class="ast-panel">
+            <div class="ast-panel-heading">
+                <h3>
+                    <i class="ph ph-broom" aria-hidden="true"></i>
+                    Storage Maintenance & Cleanup
+                </h3>
+                @if($unusedFilesCount > 0)
+                    <span class="px-2 py-0.5 bg-amber-50 border border-amber-200 text-amber-700 text-xs font-semibold rounded-lg">
+                        Action Needed
+                    </span>
+                @else
+                    <span class="px-2 py-0.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold rounded-lg">
+                        Optimized
+                    </span>
+                @endif
+            </div>
 
-                <h4 class="text-xs font-medium text-zinc-900 mb-1 leading-none">Storage Maintenance</h4>
-                <p class="text-xs text-zinc-500 leading-relaxed mb-4 mt-2">
-                    Bersihkan file sementara, PDF CV yang tidak tertaut, dan cache aplikasi untuk mengoptimalkan ruang penyimpanan server Anda.
+            <div class="ast-panel-body justify-between">
+                <p class="text-xs text-gray-500 leading-relaxed">
+                    Purge orphaned files, unlinked CV PDF exports, and temporary image uploads to optimize server disk space and reduce storage footprint.
                 </p>
 
-                <div class="flex items-center gap-3 mb-4 p-3.5 bg-zinc-50 rounded-2xl border border-[#e7e3e9] ">
-                    <div class="flex-1">
-                        <p class="text-[11px] font-sans font-medium text-zinc-500  ">Unused Files</p>
-                        <p class="text-xs font-medium text-zinc-900 mt-0.5">{{ $unusedFilesCount }} Files Found</p>
+                <div class="grid grid-cols-2 gap-3 p-3.5 bg-gray-50 rounded-xl border border-gray-200">
+                    <div>
+                        <span class="text-xs text-gray-500 font-medium block">Orphaned Files</span>
+                        <strong class="text-sm {{ $unusedFilesCount > 0 ? 'text-amber-600' : 'text-emerald-600' }} font-semibold mt-0.5 block">
+                            {{ $unusedFilesCount }} Files Found
+                        </strong>
                     </div>
-                    <div class="h-9 w-px bg-zinc-250"></div>
-                    <div class="flex-1 pl-3">
-                        <p class="text-[11px] font-sans font-medium text-zinc-500  ">Server Path</p>
-                        <p class="text-xs font-sans font-medium text-zinc-700 truncate mt-0.5">/storage/app/public</p>
+                    <div class="border-l border-gray-200 pl-3">
+                        <span class="text-xs text-gray-500 font-medium block">Public Storage</span>
+                        <strong class="text-sm text-gray-800 font-semibold mt-0.5 block truncate">/storage/public</strong>
                     </div>
                 </div>
 
-                <button type="button" wire:click="cleanStorage" wire:loading.attr="disabled"
-                        class="inline-flex items-center justify-center gap-2 w-full h-9 rounded-lg transition-colors font-medium text-xs focus:outline-none  disabled:opacity-50 {{ $unusedFilesCount > 0 ? 'bg-zinc-900 text-white hover:bg-zinc-800' : 'border border-[#e7e3e9] bg-white hover:bg-zinc-50 text-zinc-700' }}">
-                    <i class="ph-bold ph-sparkles text-sm" wire:loading.remove wire:target="cleanStorage"></i>
-                    <i class="ph-bold ph-spinner animate-spin text-sm" wire:loading wire:target="cleanStorage"></i>
-                    {{ $unusedFilesCount > 0 ? 'Clean Unused Files' : 'System Optimized' }}
-                </button>
+                <div class="pt-2">
+                    <button type="button" 
+                            wire:click="cleanStorage" 
+                            wire:loading.attr="disabled"
+                            class="ast-btn {{ $unusedFilesCount > 0 ? 'ast-btn--primary' : 'ast-btn--quiet' }} w-full justify-center">
+                        <i class="ph ph-sparkles" wire:loading.remove wire:target="cleanStorage" aria-hidden="true"></i>
+                        <i class="ph ph-spinner ph-spin" wire:loading wire:target="cleanStorage" aria-hidden="true"></i>
+                        {{ $unusedFilesCount > 0 ? 'Clean Unused Files' : 'System Optimized' }}
+                    </button>
+                </div>
             </div>
-            <div class="px-5 py-3.5 bg-zinc-50/50 border-t border-zinc-100 flex items-center justify-between text-[11px] font-sans font-medium text-zinc-500  ">
-                <span>Cache: Clear</span>
-                <span class="w-1 h-1 bg-zinc-300 rounded-full"></span>
+
+            <div class="px-5 py-3 bg-gray-50/60 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                <span>App Cache: Clear</span>
+                <span>•</span>
                 <span>Logs: Rotated</span>
-                <span class="w-1 h-1 bg-zinc-300 rounded-full"></span>
-                <span>PDF: Managed</span>
+                <span>•</span>
+                <span>PDF Storage: Managed</span>
             </div>
         </div>
+
     </div>
 </div>

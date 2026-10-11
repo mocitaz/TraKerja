@@ -1,119 +1,104 @@
-<div wire:poll.visible.5s class="admin-operations w-full">
+<div wire:poll.visible.5s class="admin-operations admin-scraper-workspace w-full">
 
     {{-- Alert Messages --}}
     @if (session()->has('success'))
-        <div class="p-3.5 bg-emerald-50 border border-emerald-250 text-emerald-800 rounded-2xl flex items-center gap-2.5  animate-fade-in animate-duration-150">
-            <i class="ph-bold ph-check-circle text-base text-emerald-650 shrink-0"></i>
-            <p class="text-xs font-medium">{{ session('success') }}</p>
+        <div class="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl flex items-center gap-2.5 text-xs">
+            <i class="ph-bold ph-check-circle text-base text-emerald-600 shrink-0"></i>
+            <p class="font-medium">{{ session('success') }}</p>
         </div>
     @endif
     @if (session()->has('error'))
-        <div class="p-3.5 bg-red-50 border border-red-250 text-red-800 rounded-2xl flex items-center gap-2.5  animate-fade-in animate-duration-150">
+        <div class="p-3.5 bg-red-50 border border-red-200 text-red-800 rounded-xl flex items-center gap-2.5 text-xs">
             <i class="ph-bold ph-x-circle text-base text-red-650 shrink-0"></i>
-            <p class="text-xs font-medium">{{ session('error') }}</p>
+            <p class="font-medium">{{ session('error') }}</p>
         </div>
     @endif
-    <div class="ops-page-heading">
+
+    {{-- Header --}}
+    <div class="ascr-welcome">
         <div>
+            <span class="ascr-eyebrow">Data Pipeline & Harvesting</span>
             <h1>Scraper Engine</h1>
-            <p class="text-[11px] text-zinc-500 font-semibold mt-0.5">Control web scraping schedules, job ingestion sources, selectors, and sandbox testing.</p>
+            <p>Control web scraping schedules, job ingestion sources, selectors, and sandbox testing.</p>
         </div>
-        <div class="flex items-center gap-2.5">
-            <span class="ops-refresh-note">Refreshes every 5 seconds while visible</span>
+        <div class="ascr-header-actions">
+            <span class="ascr-refresh-badge">
+                <span class="ascr-refresh-dot"></span>
+                Refreshes every 5s while visible
+            </span>
         </div>
     </div>
-    <div class="ops-scraper-stats">
+
+    {{-- Metric Overview Strip --}}
+    <div class="ascr-metric-strip">
         {{-- Total Ingested --}}
-        <div class="ops-scraper-panel bg-white rounded-2xl p-5 border border-[#e7e3e9] hover:border-zinc-300 transition-all flex flex-col justify-between group  text-left">
-            <div class="flex items-start justify-between">
-                <div>
-                    <span class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Total Ingested Jobs</span>
-                    <h3 class="text-xl font-semibold tracking-tight text-zinc-900 font-sans leading-none mt-1">{{ number_format($stats['total_ingested']) }}</h3>
-                </div>
-                <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 ">
-                    <i class="ph-bold ph-database text-xs"></i>
-                </div>
+        <div class="ascr-metric-card ascr-metric-card--total">
+            <div class="ascr-metric-head">
+                <span class="ascr-metric-label">
+                    <i class="ph ph-database" aria-hidden="true"></i>
+                    Total Ingested Jobs
+                </span>
             </div>
-            <p class="text-[11px] font-sans font-medium text-zinc-500 mt-5  ">Aggregated job listings</p>
+            <strong>{{ number_format($stats['total_ingested']) }}</strong>
+            <small>Aggregated job listings across platforms</small>
         </div>
 
-        {{-- Jobs Scraped Today --}}
-        <div class="ops-scraper-panel bg-white rounded-2xl p-5 border border-[#e7e3e9] hover:border-zinc-300 transition-all flex flex-col justify-between group  text-left">
-            <div class="flex items-start justify-between">
-                <div>
-                    <span class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Scraped Today</span>
-                    <h3 class="text-xl font-semibold tracking-tight text-zinc-900 font-sans leading-none mt-1">{{ number_format($stats['jobs_scraped_today']) }}</h3>
-                </div>
-                <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 ">
-                    <i class="ph-bold ph-calendar-check text-xs"></i>
-                </div>
+        {{-- Scraped Today --}}
+        <div class="ascr-metric-card ascr-metric-card--today">
+            <div class="ascr-metric-head">
+                <span class="ascr-metric-label">
+                    <i class="ph ph-calendar-check" aria-hidden="true"></i>
+                    Scraped Today
+                </span>
             </div>
-            <p class="text-[11px] font-sans font-medium text-zinc-500 mt-5  ">Ingested in last 24 hours</p>
+            <strong>{{ number_format($stats['jobs_scraped_today']) }}</strong>
+            <small>Ingested in the last 24 hours</small>
         </div>
 
         {{-- Active Platforms --}}
-        <div class="ops-scraper-panel bg-white rounded-2xl p-5 border border-[#e7e3e9] hover:border-zinc-300 transition-all flex flex-col justify-between group  text-left">
-            <div class="flex items-start justify-between">
-                <div>
-                    <span class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Active Platforms</span>
-                    <h3 class="text-xl font-semibold tracking-tight text-zinc-900 font-sans leading-none mt-1">{{ $stats['active_sources'] }} / {{ count($sources) }}</h3>
-                </div>
-                <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 ">
-                    <i class="ph-bold ph-globe text-xs"></i>
-                </div>
+        <div class="ascr-metric-card ascr-metric-card--platforms">
+            <div class="ascr-metric-head">
+                <span class="ascr-metric-label">
+                    <i class="ph ph-globe" aria-hidden="true"></i>
+                    Active Platforms
+                </span>
             </div>
-            <p class="text-[11px] font-sans font-medium text-zinc-500 mt-5  ">LinkedIn, JobStreet, Kalibrr</p>
+            <strong>{{ $stats['active_sources'] }} / {{ count($sources) }}</strong>
+            <small>LinkedIn, JobStreet, Kalibrr & others</small>
         </div>
 
-        {{-- Queue & Worker Monitor --}}
-        <div class="ops-scraper-panel bg-white rounded-2xl p-5 border border-[#e7e3e9] hover:border-zinc-300 transition-all flex flex-col justify-between group  text-left">
-            <div>
-                <div class="flex items-start justify-between border-b border-zinc-100 pb-2.5 mb-2.5">
-                    <div>
-                        <span class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Queue & Worker</span>
-                        <h3 class="text-xs font-medium text-zinc-900 mt-1 flex items-center gap-1.5 font-sans">
-                            <span class="w-1.5 h-1.5 rounded-full {{ $stats['jobs_pending_in_queue'] > 0 ? 'bg-amber-500 ' : 'bg-emerald-500' }}"></span>
-                            {{ $stats['worker_status'] }}
-                        </h3>
-                    </div>
-                    <div class="w-7.5 h-7.5 rounded-lg bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-500 group-hover:bg-zinc-950 group-hover:text-white transition duration-200 shrink-0 ">
-                        <i class="ph-bold ph-cpu text-xs"></i>
-                    </div>
-                </div>
-
-                @if(count($stats['queue_breakdown']) > 0)
-                    <div class="space-y-1 max-h-[85px] overflow-y-auto pr-1">
-                        @foreach($stats['queue_breakdown'] as $q)
-                            <div class="flex items-center justify-between text-[11px] bg-zinc-50 border border-zinc-150 rounded-lg px-2.5 py-1">
-                                <span class="font-sans text-zinc-550 truncate max-w-[80px]" title="queue: {{ $q['name'] }}">
-                                    {{ $q['name'] }}
-                                </span>
-                                <div class="flex items-center gap-1 shrink-0 font-medium">
-                                    <span class="text-blue-600" title="Running/Active">{{ $q['active'] }} R</span>
-                                    <span class="text-zinc-300">|</span>
-                                    <span class="text-amber-600" title="Pending">{{ $q['pending'] }} P</span>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                @else
-                    <div class="text-center py-2 text-[11px] text-zinc-500 flex items-center justify-center gap-1 font-medium">
-                        <i class="ph-bold ph-check-circle text-emerald-500 text-[11px]"></i>
-                        Queue empty / idle
-                    </div>
-                @endif
+        {{-- Queue & Worker --}}
+        <div class="ascr-metric-card ascr-metric-card--worker">
+            <div class="ascr-metric-head">
+                <span class="ascr-metric-label">
+                    <i class="ph ph-cpu" aria-hidden="true"></i>
+                    Queue & Worker
+                </span>
             </div>
-
-            <div class="mt-4 pt-2.5 border-t border-zinc-100 flex items-center justify-between text-[11px] text-zinc-500 font-sans font-medium">
-                <span>Failed: <span class="font-medium {{ $stats['jobs_failed'] > 0 ? 'text-red-650' : 'text-zinc-650' }}">{{ $stats['jobs_failed'] }}</span></span>
-                <span>Total: <span class="font-medium text-zinc-700">{{ $stats['jobs_pending_in_queue'] }}</span></span>
-            </div>
+            <strong>{{ $stats['worker_status'] }}</strong>
+            <small>{{ $stats['jobs_pending_in_queue'] }} pending jobs · {{ $stats['jobs_failed'] }} failed</small>
         </div>
     </div>
 
-    <nav class="ops-tabs ops-scraper-tabs" aria-label="Scraper sections">
+    {{-- Tabs Navigation --}}
+    <nav class="ascr-tabs ops-tabs ops-scraper-tabs" aria-label="Scraper sections">
         @foreach(['dashboard'=>'Overview','control'=>'Engine controls','target'=>'Targeted search','sandbox'=>'Selector sandbox','reports'=>'Job reports'] as $key=>$label)
-        <button type="button" wire:click="$set('activeTab', '{{ $key }}')" aria-current="{{ $activeTab === $key ? 'page' : 'false' }}" class="{{ $activeTab === $key ? 'is-active' : '' }}">{{ $label }}@if($key==='reports' && count($reportedJobs)>0) <span>{{ count($reportedJobs) }}</span>@endif</button>
+            <button type="button" 
+                    wire:click="$set('activeTab', '{{ $key }}')" 
+                    aria-current="{{ $activeTab === $key ? 'page' : 'false' }}" 
+                    class="ascr-tab {{ $activeTab === $key ? 'is-active' : '' }}">
+                @switch($key)
+                    @case('dashboard') <i class="ph ph-chart-bar" aria-hidden="true"></i> @break
+                    @case('control') <i class="ph ph-sliders" aria-hidden="true"></i> @break
+                    @case('target') <i class="ph ph-crosshair" aria-hidden="true"></i> @break
+                    @case('sandbox') <i class="ph ph-code" aria-hidden="true"></i> @break
+                    @case('reports') <i class="ph ph-flag" aria-hidden="true"></i> @break
+                @endswitch
+                <span>{{ $label }}</span>
+                @if($key === 'reports' && count($reportedJobs) > 0)
+                    <span class="ascr-tab-badge">{{ count($reportedJobs) }}</span>
+                @endif
+            </button>
         @endforeach
     </nav>
 

@@ -37,6 +37,8 @@
 @import './admin-users.css';
 @import './admin-feedbacks.css';
 @import './admin-survey.css';
+@import './admin-settings.css';
+@import './admin-scraper.css';
 @import './dashboard-mobile.css';
 @import './applications-mobile.css';
 @import './floating-ai-link.css';

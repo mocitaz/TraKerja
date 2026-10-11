@@ -1,0 +1,380 @@
+/* ==========================================================================
+   Admin Scraper Workspace Styles
+   Harmonized with Admin Users, Tracker, and /summary Design System
+   ========================================================================== */
+
+.admin-operations.admin-scraper-workspace,
+.admin-scraper-workspace {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 18px;
+    animation: ascr-fade-in 0.25s ease-out both;
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #37303f;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+@keyframes ascr-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header & Welcome */
+.ascr-welcome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0 0 4px;
+}
+
+.ascr-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #887494;
+}
+
+.ascr-welcome h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    line-height: 1.25;
+    color: #35264f;
+    margin: 3px 0 5px;
+}
+
+.ascr-welcome p {
+    font-size: 12px;
+    color: #767082;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.ascr-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.ascr-refresh-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 550;
+    color: #725e84;
+    background: #f4eff8;
+    border: 1px solid #e5dbe9;
+    padding: 6px 12px;
+    border-radius: 999px;
+}
+
+.ascr-refresh-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+/* Metric Strip (4 Cards) */
+.ascr-metric-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    padding: 18px 20px;
+    background: linear-gradient(120deg, #edf0f3, #e9e8ee);
+    border: 1px solid #cfd3db;
+    border-radius: 20px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.ascr-metric-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 20px;
+    border-right: 1px solid #ced1d9;
+}
+
+.ascr-metric-card:first-child {
+    padding-left: 0;
+}
+
+.ascr-metric-card:last-child {
+    padding-right: 0;
+    border-right: none;
+}
+
+.ascr-metric-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.ascr-metric-label {
+    font-size: 12px;
+    font-weight: 550;
+    color: #55525c;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ascr-metric-label i {
+    font-size: 14px;
+    color: #7751a0;
+}
+
+.ascr-metric-card strong {
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    font-variant-numeric: tabular-nums;
+    margin: 4px 0 2px;
+    color: #35264f;
+}
+
+.ascr-metric-card small {
+    font-size: 11px;
+    color: #767082;
+}
+
+/* Specific Accent Colors */
+.ascr-metric-card--total strong { color: #2563eb; }
+.ascr-metric-card--today strong { color: #059669; }
+.ascr-metric-card--platforms strong { color: #7c3aed; }
+.ascr-metric-card--worker strong { color: #b45309; }
+
+/* Tabs Bar */
+.ascr-tabs {
+    display: inline-flex;
+    gap: 4px;
+    padding: 4px;
+    background: #f1edf5;
+    border: 1px solid #e2d9ea;
+    border-radius: 14px;
+    width: fit-content;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.ascr-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 550;
+    color: #695e75;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.ascr-tab:hover {
+    color: #35264f;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.ascr-tab.is-active {
+    background: #ffffff;
+    color: #35264f;
+    font-weight: 650;
+    box-shadow: 0 2px 4px rgba(52, 49, 59, 0.06);
+}
+
+.ascr-tab-badge {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #b91c1c;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 1px 6px;
+    border-radius: 999px;
+}
+
+/* Content Panels */
+.ascr-panel {
+    background: #ffffff;
+    border: 1px solid #d7dce2;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(52, 49, 59, 0.03);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.ascr-panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    gap: 12px;
+    border-bottom: 1px solid #edf0f4;
+    background: #fafbfc;
+}
+
+.ascr-panel-heading h2,
+.ascr-panel-heading h3 {
+    font-size: 14.5px;
+    line-height: 1.4;
+    font-weight: 650;
+    color: #35264f;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.ascr-panel-heading h2 i,
+.ascr-panel-heading h3 i {
+    font-size: 17px;
+    color: #7751a0;
+}
+
+.ascr-panel-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Buttons */
+.ascr-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 38px;
+    border: 1px solid #dfe3eb;
+    background: #ffffff;
+    padding: 8px 16px;
+    border-radius: 11px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    color: #5b5568;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(52, 49, 59, 0.03);
+    transition: all 0.15s ease;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.ascr-btn:hover {
+    border-color: #c7b4df;
+    background: #faf7fc;
+    color: #5d3979;
+}
+
+.ascr-btn--primary {
+    background: #2579ca;
+    border-color: #2579ca;
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(37, 121, 202, 0.2);
+}
+
+.ascr-btn--primary:hover {
+    background: #1e65ab;
+    border-color: #1e65ab;
+    color: #ffffff;
+}
+
+.ascr-btn--quiet {
+    background: #faf7fc;
+    border-color: #e2d8ea;
+    color: #724e86;
+}
+
+.ascr-btn--quiet:hover {
+    background: #f1e7f6;
+    color: #4f2a64;
+}
+
+.ascr-btn--danger {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #dc2626;
+}
+
+.ascr-btn--danger:hover {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.ascr-btn--sm {
+    min-height: 32px;
+    padding: 5px 12px;
+    font-size: 11px;
+    border-radius: 8px;
+}
+
+/* Console logs & terminal box */
+.ascr-console {
+    background: #1c1824;
+    border: 1px solid #2e263a;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.ascr-console-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    background: #251f30;
+    border-bottom: 1px solid #332b40;
+    font-size: 11px;
+    color: #a797be;
+}
+
+.ascr-console-body {
+    padding: 12px;
+    height: 280px;
+    overflow-y: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11.5px;
+    line-height: 1.6;
+    color: #d1d5db;
+}
+
+@media (max-width: 900px) {
+    .ascr-metric-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px 0;
+    }
+    .ascr-metric-card:nth-child(2) {
+        border-right: none;
+    }
+    .ascr-metric-card:nth-child(3) {
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 640px) {
+    .ascr-welcome {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .ascr-tabs {
+        width: 100%;
+        overflow-x: auto;
+    }
+    .ascr-metric-strip {
+        grid-template-columns: 1fr;
+        gap: 14px 0;
+    }
+    .ascr-metric-card {
+        border-right: none !important;
+        padding: 0 !important;
+    }
+}
