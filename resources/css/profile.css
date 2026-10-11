@@ -101,6 +101,20 @@
     margin: 0;
     overflow-wrap: anywhere;
 }
+.profile-identity-name-row {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    max-width: 100%;
+}
+.profile-blue-check-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #0284c7;
+    flex-shrink: 0;
+}
 .profile-identity-email {
     font-size: 11.5px;
     color: #626573;
@@ -125,6 +139,22 @@
     font-size: 10.5px;
     font-weight: 550;
     border-radius: 999px;
+    transition: all 0.15s ease;
+}
+.profile-plan--free {
+    background: #f8fafc;
+    color: #475569;
+    border-color: #e2e8f0;
+}
+.profile-plan--premium {
+    background: #fefce8;
+    color: #854d0e;
+    border-color: #fef08a;
+}
+.profile-plan--admin {
+    background: #f5f3ff;
+    color: #6d28d9;
+    border-color: #ddd6fe;
 }
 .profile-identity-card > button {
     width: 100%;
@@ -139,6 +169,7 @@
 .profile-account-facts > div {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 12px;
     text-align: left;
     font-size: 11px;
@@ -153,6 +184,85 @@
     overflow-wrap: anywhere;
     font-weight: 600;
     color: #30313b;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.profile-fact-auth {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.profile-auth-logo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.profile-auth-logo-btn:hover {
+    transform: translateY(-1px);
+    border-color: #cbd5e1;
+    background: #ffffff;
+}
+.profile-verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #0284c7;
+    font-weight: 600;
+}
+.profile-unverified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+.profile-mono-id {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: #475569;
+    background: #f1f5f9;
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+}
+.profile-live-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+}
+.profile-live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.profile-live-status--active .profile-live-dot {
+    background: #10b981;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+.profile-live-status--recent .profile-live-dot {
+    background: #10b981;
+}
+.profile-live-status--idle .profile-live-dot {
+    background: #94a3b8;
+}
+.profile-live-dot--pulse {
+    animation: live-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes live-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.9); }
 }
 .profile-identity-note {
     color: #717382;
