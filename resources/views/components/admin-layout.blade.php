@@ -32,7 +32,12 @@
     <a href="#admin-main" class="admin-skip-link">Skip to content</a>
     <header class="workspace-navigation admin-navigation" x-data="{ profileOpen: false, mobileOpen: false }">
         <nav class="workspace-topbar" aria-label="Admin navigation">
-            <a href="{{ route('admin.index') }}" class="workspace-brand" aria-label="TraKerja admin home"><img src="{{ asset('images/icon.png') }}" alt="" width="21" height="21"><span>TraKerja</span><span class="admin-brand-badge">Admin</span></a>
+            <a href="{{ route('admin.index') }}" class="workspace-brand admin-brand" aria-label="TraKerja admin home">
+                <img src="{{ asset('images/icon.png') }}" alt="" width="21" height="21">
+                <span class="admin-brand-title">TraKerja</span>
+                <span class="admin-brand-divider" aria-hidden="true">|</span>
+                <span class="admin-brand-text">Admin</span>
+            </a>
             <div class="workspace-desktop-links">
                 @foreach($mainLinks as [$route, $label])
                     <a href="{{ route($route) }}" class="workspace-nav-link" @if(request()->routeIs($route)) aria-current="page" @endif>{{ $label }}</a>
