@@ -58,7 +58,7 @@
                                 <a href="{{ route($route) }}" class="workspace-menu-link" @if(request()->routeIs($route)) aria-current="page" @endif><span class="workspace-menu-icon"><i class="ph ph-{{ $icon }}" aria-hidden="true"></i></span><span>{{ $label }}</span><i class="ph ph-caret-right workspace-menu-chevron" aria-hidden="true"></i></a>
                             @endforeach
                         </div>
-                        <div class="admin-profile-footer"><a href="{{ route('dashboard') }}" class="workspace-menu-link"><i class="ph ph-arrow-square-out" aria-hidden="true"></i><span>User workspace</span></a><a href="{{ route('profile.edit') }}" class="workspace-menu-link"><i class="ph ph-user-circle" aria-hidden="true"></i><span>Profile settings</span></a><button type="button" class="workspace-menu-link admin-signout" @click="profileOpen = false" onclick="openLogoutModal()"><i class="ph ph-sign-out" aria-hidden="true"></i><span>Sign out</span></button></div>
+                        <div class="admin-profile-footer"><a href="{{ route('dashboard') }}" class="workspace-menu-link"><i class="ph ph-arrow-square-out" aria-hidden="true"></i><span>User workspace</span></a><a href="{{ route('profile.edit') }}" class="workspace-menu-link"><i class="ph ph-user-circle" aria-hidden="true"></i><span>Profile settings</span></a><form method="POST" action="{{ route('logout') }}" id="admin-logout-form" class="hidden">@csrf</form><button type="button" class="workspace-menu-link admin-signout" @click="profileOpen = false" onclick="confirmLogout('admin-logout-form')"><i class="ph ph-sign-out" aria-hidden="true"></i><span>Sign out</span></button></div>
                     </div>
                 </div>
             </div>
@@ -74,67 +74,101 @@
     </main>
     <x-workspace-footer />
     @stack('scripts')
-        <div id="logoutModal" data-dialog-native="closeLogoutModal" role="dialog" aria-modal="true" aria-label="Confirm logout" tabindex="-1" class="fixed inset-0 bg-zinc-950/20 backdrop-blur-[1px] hidden z-[100] flex items-center justify-center p-4">
-            <div class="bg-white rounded-xl max-w-xs w-full transform transition-all duration-150 scale-98 border border-zinc-200 shadow-md" id="logoutModalContent">
-                <div class="p-5 text-center">
-                    <h3 class="text-sm font-bold text-zinc-900">Sign Out</h3>
-                    <p class="text-xs text-zinc-500 mt-1 leading-relaxed">Yakin anda mau keluar dari akun?</p>
-                    
-                    <div class="mt-5 flex gap-2">
-                        <a href="{{ route('logout.force') }}" onclick="prepareLogout()"
-                           class="flex-1 h-8 flex items-center justify-center bg-red-650 hover:bg-red-700 text-white rounded-lg text-xs font-semibold transition-colors focus:outline-none shadow-none text-center">
-                            Ya, Logout
-                        </a>
-                        <button type="button" onclick="closeLogoutModal()" 
-                                class="flex-1 h-8 flex items-center justify-center bg-white border border-zinc-250 text-zinc-650 hover:bg-zinc-50 rounded-lg text-xs font-semibold transition-colors focus:outline-none shadow-none">
-                            Batal
-                        </button>
-                    </div>
-                </div>
+    <div id="confirmation-modal" data-dialog-native="closeConfirmModal" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-message" tabindex="-1" class="account-dialog-overlay hidden" onclick="if (event.target === this) closeConfirmModal()">
+        <section class="account-confirm-panel">
+            <button type="button" class="account-dialog-close" onclick="closeConfirmModal()" aria-label="Close confirmation"><i class="ph ph-x" aria-hidden="true"></i></button>
+            <div class="account-confirm-visual" aria-hidden="true"><i class="ph ph-sign-out account-confirm-logout-icon"></i><i class="ph ph-warning account-confirm-action-icon"></i></div>
+            <h2 id="confirm-title">Confirm action</h2>
+            <p id="confirm-message">Review this action before continuing.</p>
+            <p id="confirm-error" role="alert" hidden></p>
+            <div class="account-confirm-actions">
+                <button type="button" id="confirm-cancel" class="account-dialog-button" onclick="closeConfirmModal()">Stay here</button>
+                <button type="button" id="confirm-button" class="account-dialog-button account-dialog-button--primary">Confirm</button>
             </div>
-        </div>
+        </section>
+    </div>
 
-        <script>
-            // Logout Modal Helpers
-            function openLogoutModal() {
-                const modal = document.getElementById('logoutModal');
-                const modalContent = document.getElementById('logoutModalContent');
-                
-                modal.classList.remove('hidden');
-                document.body.classList.add('overflow-hidden');
-                
-                setTimeout(() => {
-                    modalContent.classList.remove('scale-98');
-                    modalContent.classList.add('scale-100');
-                }, 10);
+    <script>
+        var activeConfirmCallback = activeConfirmCallback || null;
+        var confirmBusy = false;
+
+        function openConfirmModal(title, message, btnText, callback, options = {}) {
+            if (confirmBusy) return;
+            const modal = document.getElementById('confirmation-modal');
+            if (!modal) return;
+            modal.dataset.variant = options.variant || 'action';
+            document.getElementById('confirm-title').innerText = title;
+            document.getElementById('confirm-message').innerText = message;
+            document.getElementById('confirm-button').innerText = btnText;
+            document.getElementById('confirm-cancel').innerText = options.variant === 'logout' ? 'Stay here' : 'Cancel';
+            document.getElementById('confirm-error').hidden = true;
+            activeConfirmCallback = callback;
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeConfirmModal(force = false) {
+            if (confirmBusy && !force) return;
+            const modal = document.getElementById('confirmation-modal');
+            if (modal) modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+            activeConfirmCallback = null;
+        }
+
+        document.getElementById('confirm-button').onclick = async function() {
+            if (confirmBusy || !activeConfirmCallback) return;
+            const callback = activeConfirmCallback;
+            const modal = document.getElementById('confirmation-modal');
+            const buttons = [...modal.querySelectorAll('button')];
+            const label = this.innerText;
+            confirmBusy = true;
+            buttons.forEach(button => { button.disabled = true; });
+            this.innerText = modal.dataset.variant === 'logout' ? 'Signing out…' : 'Working…';
+            try {
+                await callback();
+                closeConfirmModal(true);
+            } catch (error) {
+                const notice = document.getElementById('confirm-error');
+                notice.innerText = 'We couldn’t complete this action. Please try again.';
+                notice.hidden = false;
+            } finally {
+                confirmBusy = false;
+                buttons.forEach(button => { button.disabled = false; });
+                this.innerText = label;
             }
+        };
 
-            function closeLogoutModal() {
-                const modal = document.getElementById('logoutModal');
-                const modalContent = document.getElementById('logoutModalContent');
-                
-                modalContent.classList.remove('scale-100');
-                modalContent.classList.add('scale-98');
-                
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                    document.body.classList.remove('overflow-hidden');
-                }, 150);
-            }
-
-            document.getElementById('logoutModal')?.addEventListener('click', function(e) {
-                if (e.target.id === 'logoutModal') {
-                    closeLogoutModal();
+        async function confirmLogout(formId = 'admin-logout-form') {
+            const submitLogout = async () => {
+                const form = document.getElementById(formId) || document.getElementById('admin-logout-form');
+                if (!form) return;
+                try {
+                    await window.prepareTraKerjaLogout?.();
+                } catch (error) {
+                    console.error(error);
                 }
-            });
-
-            function prepareLogout() {
-                try { closeLogoutModal(); } catch (_) {}
-                const originalConfirm = window.confirm;
-                window.confirm = function() { return false; };
-                setTimeout(function() { window.confirm = originalConfirm; }, 8000);
+                form.submit();
+            };
+            if (typeof window.openConfirmModal === 'function') {
+                window.openConfirmModal(
+                    'Sign out of TraKerja?',
+                    'You’ll need to sign in again to return to your workspace.',
+                    'Sign out',
+                    submitLogout,
+                    { variant: 'logout' }
+                );
+            } else if (confirm('Are you sure you want to sign out?')) {
+                await submitLogout();
             }
-        </script>
+        }
+
+        function openLogoutModal() {
+            confirmLogout('admin-logout-form');
+        }
+        function closeLogoutModal() {
+            closeConfirmModal();
+        }
+    </script>
         
     @include('components.toast-notification')
     @livewireScripts
