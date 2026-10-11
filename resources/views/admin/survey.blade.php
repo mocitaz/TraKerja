@@ -167,21 +167,23 @@
                 </div>
 
                 <div class="as-dist-content">
-                    @for($score = 5; $score >= 1; $score--)
-                        @php
-                            $cnt = $distributions[$score] ?? 0;
-                            $distPct = $totalRespondents > 0 ? round(($cnt / $totalRespondents) * 100) : 0;
-                        @endphp
-                        <div class="as-dist-row" title="{{ $cnt }} respondent(s) rated {{ $score }} out of 5 ({{ $distPct }}%)">
-                            <span class="as-dist-stars">
-                                {{ $score }} <i class="ph-fill ph-star" aria-hidden="true"></i>
-                            </span>
-                            <div class="as-dist-track" role="progressbar" aria-valuenow="{{ $distPct }}" aria-valuemin="0" aria-valuemax="100">
-                                <span class="as-dist-fill" style="width: {{ $distPct }}%;"></span>
+                    <div class="as-dist-rows">
+                        @for($score = 5; $score >= 1; $score--)
+                            @php
+                                $cnt = $distributions[$score] ?? 0;
+                                $distPct = $totalRespondents > 0 ? round(($cnt / $totalRespondents) * 100) : 0;
+                            @endphp
+                            <div class="as-dist-row" title="{{ $cnt }} respondent(s) rated {{ $score }} out of 5 ({{ $distPct }}%)">
+                                <span class="as-dist-stars">
+                                    {{ $score }} <i class="ph-fill ph-star" aria-hidden="true"></i>
+                                </span>
+                                <div class="as-dist-track" role="progressbar" aria-valuenow="{{ $distPct }}" aria-valuemin="0" aria-valuemax="100">
+                                    <span class="as-dist-fill" style="width: {{ $distPct }}%;"></span>
+                                </div>
+                                <span class="as-dist-count">{{ $cnt }} <small class="text-xs text-gray-400">({{ $distPct }}%)</small></span>
                             </div>
-                            <span class="as-dist-count">{{ $cnt }} <small class="text-xs text-gray-400">({{ $distPct }}%)</small></span>
-                        </div>
-                    @endfor
+                        @endfor
+                    </div>
 
                     {{-- Positive Sentiment Summary --}}
                     <div class="as-sentiment-card">
