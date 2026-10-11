@@ -51,7 +51,7 @@
 
 .admin-brand-divider {
     font-size: 13px;
-    color: #b5a9c0;
+    color: #9ca3af;
     font-weight: 300;
     margin: 0 1px;
     user-select: none;
@@ -60,16 +60,15 @@
 }
 
 .admin-brand-text {
-    font-size: 9.5px;
-    font-weight: 800;
-    color: #7751a0;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    background: #f0ebf7;
-    padding: 2px 6px;
-    border-radius: 5px;
-    line-height: 1.2;
-    border: 1px solid #e5daf0;
+    font-size: 11px;
+    font-weight: 600;
+    color: #30313b;
+    letter-spacing: -0.2px;
+    line-height: 1;
+    background: none;
+    padding: 0;
+    border: none;
+    border-radius: 0;
 }
 
 .admin-page-frame {
