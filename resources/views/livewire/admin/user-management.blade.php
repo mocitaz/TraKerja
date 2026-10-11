@@ -102,23 +102,6 @@
                                     <div class="au-member-info">
                                         <strong class="au-member-name">{{ $user->name }}</strong>
                                         <span class="au-member-email">{{ $user->email }}</span>
-                                        <div class="au-member-tags">
-                                            @if($user->hasVerifiedEmail())
-                                                <span class="au-tag au-tag--verified" title="Email address verified">
-                                                    <i class="ph ph-check-circle"></i> Verified
-                                                </span>
-                                            @endif
-                                            @if($user->google_id)
-                                                <span class="au-tag au-tag--google" title="Signed in with Google">
-                                                    <i class="ph ph-google-logo"></i> Google
-                                                </span>
-                                            @endif
-                                            @if($user->linkedin_id)
-                                                <span class="au-tag au-tag--linkedin" title="Signed in with LinkedIn">
-                                                    <i class="ph ph-linkedin-logo"></i> LinkedIn
-                                                </span>
-                                            @endif
-                                        </div>
                                     </div>
                                 </div>
                             </td>

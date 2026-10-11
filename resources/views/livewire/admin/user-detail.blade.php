@@ -93,124 +93,216 @@
     <section id="tab-account" x-show="activeTab === 'account'" class="workspace-stack">
         <div class="workspace-page__grid automation-balanced-grid">
             {{-- Left Column: Account Form --}}
-            <div class="workspace-card">
+            <div class="workspace-card au-form-card">
                 <div class="workspace-card__heading">
-                    <h2>Account & Access Credentials</h2>
-                    <p>Modify member profile identity, primary email, and system roles.</p>
+                    <div class="au-heading-wrap">
+                        <div class="au-heading-icon">
+                            <i class="ph-bold ph-identification-card"></i>
+                        </div>
+                        <div>
+                            <h2>Account Credentials & Access Roles</h2>
+                            <p>Modify member profile identity, primary authentication email, and tier permissions.</p>
+                        </div>
+                    </div>
                 </div>
 
-                <form wire:submit="updateUser" class="au-form">
-                    <label for="detail-user-name">
-                        Full Name
-                        <input id="detail-user-name" type="text" wire:model="name" required placeholder="Member full name…">
-                        @error('name')<span class="au-field-error">{{ $message }}</span>@enderror
-                    </label>
+                <form wire:submit="updateUser" class="au-detail-form">
+                    {{-- Basic Identity Fields (2-Column Grid) --}}
+                    <div class="au-input-grid">
+                        <div class="au-field">
+                            <label for="detail-user-name" class="au-field-label">Full Name</label>
+                            <div class="au-input-wrapper">
+                                <i class="ph ph-user au-input-icon" aria-hidden="true"></i>
+                                <input id="detail-user-name" type="text" wire:model="name" required placeholder="Member full name…" class="au-input">
+                            </div>
+                            @error('name')<span class="au-field-error">{{ $message }}</span>@enderror
+                        </div>
 
-                    <label for="detail-user-email">
-                        Email Address
-                        <input id="detail-user-email" type="email" wire:model="email" required placeholder="member@email.com">
-                        @error('email')<span class="au-field-error">{{ $message }}</span>@enderror
-                    </label>
-
-                    <div class="au-checkbox-row" style="margin-top: 6px;">
-                        <label class="au-checkbox-label">
-                            <input type="checkbox" wire:model="is_premium">
-                            <span>Premium Membership Access</span>
-                        </label>
-                        <label class="au-checkbox-label">
-                            <input type="checkbox" wire:model="is_admin">
-                            <span>Administrator Role</span>
-                        </label>
+                        <div class="au-field">
+                            <label for="detail-user-email" class="au-field-label">Email Address</label>
+                            <div class="au-input-wrapper">
+                                <i class="ph ph-envelope au-input-icon" aria-hidden="true"></i>
+                                <input id="detail-user-email" type="email" wire:model="email" required placeholder="member@email.com" class="au-input">
+                            </div>
+                            @error('email')<span class="au-field-error">{{ $message }}</span>@enderror
+                        </div>
                     </div>
 
-                    <p class="au-form-hint">
-                        <i class="ph ph-info"></i> Modifying membership tier will automatically update feature access and reset usage limits.
-                    </p>
+                    {{-- Role & Membership Cards Grid --}}
+                    <div class="au-form-section-block">
+                        <span class="au-field-label">Membership Tier & System Clearance</span>
+                        <div class="au-role-cards-grid">
+                            {{-- Premium Membership Toggle Card --}}
+                            <label class="au-role-card {{ $is_premium ? 'is-active is-premium' : '' }}">
+                                <input type="checkbox" wire:model.live="is_premium" class="sr-only">
+                                <div class="au-role-card-header">
+                                    <div class="au-role-card-icon au-role-card-icon--crown">
+                                        <i class="ph-fill ph-crown"></i>
+                                    </div>
+                                    <div class="au-role-card-toggle">
+                                        <span class="au-toggle-track {{ $is_premium ? 'is-checked' : '' }}">
+                                            <span class="au-toggle-thumb"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <strong class="au-role-card-title">Premium Access</strong>
+                                <p class="au-role-card-desc">Maximized AI feature quotas, full ATS resume audits, and unlimited job tracking privileges.</p>
+                            </label>
 
-                    <div class="au-form-actions" style="margin-top: 14px;">
+                            {{-- Administrator Privilege Toggle Card --}}
+                            <label class="au-role-card {{ $is_admin ? 'is-active is-admin' : '' }}">
+                                <input type="checkbox" wire:model.live="is_admin" class="sr-only">
+                                <div class="au-role-card-header">
+                                    <div class="au-role-card-icon au-role-card-icon--shield">
+                                        <i class="ph-fill ph-shield-check"></i>
+                                    </div>
+                                    <div class="au-role-card-toggle">
+                                        <span class="au-toggle-track {{ $is_admin ? 'is-checked' : '' }}">
+                                            <span class="au-toggle-thumb"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <strong class="au-role-card-title">Administrator Privilege</strong>
+                                <p class="au-role-card-desc">Executive access to the admin dashboard, user management directory, and platform telemetry.</p>
+                            </label>
+                        </div>
+                    </div>
+
+                    {{-- Policy Notice Box --}}
+                    <div class="au-tier-notice">
+                        <i class="ph-bold ph-info" aria-hidden="true"></i>
+                        <div>
+                            <strong>Automatic Entitlement Policy</strong>
+                            <p>Updating membership tier recalculates feature availability and quota limits across candidate tools in real-time.</p>
+                        </div>
+                    </div>
+
+                    {{-- Form Footer Actions --}}
+                    <div class="au-form-footer">
                         <button type="submit" class="au-button au-button--primary" wire:loading.attr="disabled" wire:target="updateUser">
-                            <span wire:loading.remove wire:target="updateUser">Save Account Information</span>
-                            <span wire:loading wire:target="updateUser">Saving…</span>
+                            <span wire:loading.remove wire:target="updateUser">
+                                <i class="ph-bold ph-check" aria-hidden="true"></i> Save Account Information
+                            </span>
+                            <span wire:loading wire:target="updateUser">
+                                <i class="ph ph-spinner ph-spin" aria-hidden="true"></i> Saving…
+                            </span>
                         </button>
                     </div>
                 </form>
             </div>
 
             {{-- Right Column: Member Identity & Quick Summary --}}
-            <aside class="workspace-card workspace-card--glass automation-side-panel">
-                <section class="automation-side-section">
-                    <h2>Account Identity</h2>
-                    
-                    <div class="au-identity-profile">
-                        <div class="au-identity-avatar-wrap">
-                            <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="au-identity-avatar" loading="lazy">
-                        </div>
-                        <div class="au-identity-info">
-                            <strong>{{ $user->name }}</strong>
-                            <p>{{ $user->email }}</p>
-                        </div>
+            <aside class="workspace-card workspace-card--glass au-identity-card">
+                {{-- Profile Hero Block --}}
+                <div class="au-id-hero">
+                    <div class="au-id-avatar-box">
+                        <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="au-id-avatar" loading="lazy">
+                        @if($user->hasVerifiedEmail())
+                            <span class="au-id-verified-badge" title="Email verified">
+                                <i class="ph-bold ph-check" aria-hidden="true"></i>
+                            </span>
+                        @endif
                     </div>
+                    <div class="au-id-hero-text">
+                        <h3>{{ $user->name }}</h3>
+                        <p>{{ $user->email }}</p>
+                    </div>
+                    <div class="au-id-badges-row">
+                        <span class="au-plan-badge {{ $user->isPremium() ? 'au-plan-badge--premium' : 'au-plan-badge--free' }}">
+                            <i class="ph {{ $user->isPremium() ? 'ph-crown' : 'ph-user' }}"></i>
+                            {{ $user->isPremium() ? 'Premium Tier' : 'Free Tier' }}
+                        </span>
+                        @if($user->isAdmin())
+                            <span class="au-plan-badge au-plan-badge--premium">
+                                <i class="ph ph-shield-check"></i> Admin
+                            </span>
+                        @endif
+                    </div>
+                </div>
 
-                    <div class="au-identity-meta-list">
-                        <div class="au-meta-row">
-                            <span>Verification</span>
+                {{-- Key Telemetry Metrics Grid --}}
+                <div class="au-id-kpis">
+                    <div class="au-kpi-item">
+                        <span>Applications</span>
+                        <strong>{{ number_format($totalApplications) }}</strong>
+                    </div>
+                    <div class="au-kpi-item">
+                        <span>AI Credits</span>
+                        <strong>{{ number_format($user->ai_credits) }}</strong>
+                    </div>
+                    <div class="au-kpi-item">
+                        <span>Member For</span>
+                        <strong>{{ max(1, $user->created_at->diffInDays(now())) }} <small>days</small></strong>
+                    </div>
+                    <div class="au-kpi-item">
+                        <span>Status</span>
+                        <strong class="{{ $user->last_activity_at && $user->last_activity_at->diffInMinutes(now()) < 15 ? 'text-emerald-600' : 'text-zinc-600' }}">
+                            {{ $user->last_activity_at && $user->last_activity_at->diffInMinutes(now()) < 15 ? 'Active now' : ($user->last_activity_at ? 'Active' : 'Idle') }}
+                        </strong>
+                    </div>
+                </div>
+
+                {{-- Metadata List --}}
+                <div class="au-id-meta-section">
+                    <div class="au-id-meta-row">
+                        <span class="au-meta-lbl"><i class="ph ph-calendar-blank"></i> Joined Date</span>
+                        <span class="au-meta-val">{{ $user->created_at->format('d M Y') }}</span>
+                    </div>
+                    <div class="au-id-meta-row">
+                        <span class="au-meta-lbl"><i class="ph ph-check-circle"></i> Verification</span>
+                        <span class="au-meta-val">
                             @if($user->hasVerifiedEmail())
-                                <span class="au-tag au-tag--verified">
-                                    <i class="ph-bold ph-check-circle"></i> Email Verified
+                                <span class="text-emerald-600 font-semibold inline-flex items-center gap-1">
+                                    <i class="ph-bold ph-check"></i> Verified
                                 </span>
                             @else
-                                <span class="au-tag" style="background: #fff1f2; color: #be123c; border: 1px solid #ffe4e6;">
-                                    <i class="ph-bold ph-warning-circle"></i> Unverified
+                                <span class="text-amber-600 font-medium inline-flex items-center gap-1">
+                                    <i class="ph ph-clock"></i> Unverified
                                 </span>
                             @endif
-                        </div>
+                        </span>
+                    </div>
+                    <div class="au-id-meta-row">
+                        <span class="au-meta-lbl"><i class="ph ph-key"></i> Auth Method</span>
+                        <span class="au-meta-val">
+                            @if($user->google_id)
+                                <span class="inline-flex items-center gap-1 text-[#4285F4] font-medium">
+                                    <i class="ph-bold ph-google-logo"></i> Google
+                                </span>
+                            @elseif($user->linkedin_id)
+                                <span class="inline-flex items-center gap-1 text-[#0A66C2] font-medium">
+                                    <i class="ph-bold ph-linkedin-logo"></i> LinkedIn
+                                </span>
+                            @else
+                                <span class="text-zinc-600 font-medium">Email & Password</span>
+                            @endif
+                        </span>
+                    </div>
+                    <div class="au-id-meta-row">
+                        <span class="au-meta-lbl"><i class="ph ph-pulse"></i> Last Telemetry</span>
+                        <span class="au-meta-val">
+                            @if($user->last_activity_at)
+                                {{ $user->last_activity_at->diffForHumans() }}
+                            @else
+                                No recorded activity
+                            @endif
+                        </span>
+                    </div>
+                </div>
 
-                        <div class="au-meta-row">
-                            <span>Joined Date</span>
-                            <strong>{{ $user->created_at->format('d M Y') }}</strong>
-                        </div>
-
-                        <div class="au-meta-row">
-                            <span>OAuth Login</span>
-                            <div class="flex items-center gap-1.5">
-                                @if($user->google_id)
-                                    <span class="au-tag au-tag--google">
-                                        <i class="ph ph-google-logo"></i> Google
-                                    </span>
-                                @endif
-                                @if($user->linkedin_id)
-                                    <span class="au-tag au-tag--linkedin">
-                                        <i class="ph ph-linkedin-logo"></i> LinkedIn
-                                    </span>
-                                @endif
-                                @if(!$user->google_id && !$user->linkedin_id)
-                                    <span class="text-zinc-500 text-xs">Standard Password</span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="au-meta-row">
-                            <span>Activity Status</span>
-                            <span class="au-hero-activity">
-                                @if($user->last_activity_at && $user->last_activity_at->diffInMinutes(now()) < 15)
-                                    <span class="au-dot au-dot--active"></span> Active now
-                                @elseif($user->last_activity_at)
-                                    <span class="au-dot au-dot--recent"></span> Active {{ $user->last_activity_at->diffForHumans() }}
-                                @else
-                                    <span class="au-dot au-dot--idle"></span> No activity recorded
-                                @endif
-                            </span>
+                {{-- Danger Zone Card --}}
+                <div class="au-danger-box">
+                    <div class="au-danger-box-head">
+                        <i class="ph ph-warning-circle text-rose-500"></i>
+                        <div>
+                            <h4>Danger Zone</h4>
+                            <p>Irreversible administrative action: purges all application data and records.</p>
                         </div>
                     </div>
-                </section>
-
-                <section class="automation-side-section" style="border-top: 1px solid #edf0f4; padding-top: 16px;">
-                    <h2>Danger Zone</h2>
-                    <p style="font-size: 11px; color: #887494; margin-bottom: 12px;">Irreversible administrative actions for this user.</p>
-                    <button type="button" wire:click="confirmDelete" class="au-button au-button--danger" style="width: 100%;">
+                    <button type="button" wire:click="confirmDelete" class="au-button au-button--danger-outline" style="width: 100%;">
                         <i class="ph ph-trash"></i> Permanently Delete Account
                     </button>
-                </section>
+                </div>
             </aside>
         </div>
     </section>
