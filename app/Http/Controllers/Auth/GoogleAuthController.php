@@ -65,7 +65,7 @@ class GoogleAuthController extends Controller
 
             // Redirect sesuai role
             if ($user->isAdmin()) {
-                return redirect()->intended(route('admin.index'));
+                return redirect()->intended(route('admin.index'))->with('show_admin_welcome_popup', true);
             }
 
             return redirect()->intended(route('dashboard'))->with('show_telegram_popup', true);

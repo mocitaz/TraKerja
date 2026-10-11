@@ -108,7 +108,7 @@
 }
 
 /* ==========================================================================
-   Hero Welcome Header (Matched to dashboard.welcome - Clean, no container box)
+   Hero Welcome Header (Matched 1:1 with user dashboard-welcome.css)
    ========================================================================== */
 .admin-hero-welcome {
     display: block;
@@ -120,66 +120,39 @@
     margin: 0;
 }
 
+.admin-hero-welcome .dashboard-welcome-copy,
 .admin-hero-copy {
     min-width: 0;
     max-width: 800px;
+    padding-top: 0;
 }
 
-.admin-hero-date {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+.admin-hero-welcome .dashboard-welcome-copy time,
+.admin-hero-copy time {
+    display: block;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 400;
     color: #545761;
-    margin-bottom: 8px;
+    margin-bottom: 9px;
+    line-height: 1.4;
 }
 
-.admin-hero-title-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-bottom: 8px;
-}
-
-.admin-hero-title-row h1 {
+.admin-hero-welcome .dashboard-welcome-copy h1,
+.admin-hero-copy h1 {
     font-size: 26px;
     font-weight: 600;
     line-height: 1.3;
     letter-spacing: -0.9px;
-    color: #1e1b2e;
-    margin: 0 !important;
+    color: #30313b;
+    margin: 0;
 }
 
-.admin-welcome-trigger-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    background: #ffffff;
-    border: 1px solid #e3d9ec;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 650;
-    color: #513267;
-    cursor: pointer;
-    box-shadow: 0 1px 3px rgba(53, 38, 79, 0.04);
-    transition: all 0.15s ease;
-}
-
-.admin-welcome-trigger-pill:hover {
-    background: #fbf9fd;
-    border-color: #bda6d4;
-    box-shadow: 0 3px 10px rgba(53, 38, 79, 0.08);
-    transform: translateY(-1px);
-}
-
+.admin-hero-welcome .dashboard-welcome-copy p,
 .admin-hero-copy p {
     font-size: 12px;
     line-height: 1.6;
     color: #545761;
-    margin: 0;
+    margin: 8px 0 14px;
 }
 
 /* ==========================================================================
@@ -995,8 +968,22 @@
 }
 
 @media (max-width: 768px) {
+    .admin-hero-welcome .dashboard-welcome-copy h1,
     .admin-hero-copy h1 {
-        font-size: 22px;
+        font-size: 23px;
+        letter-spacing: -0.7px;
+    }
+
+    .admin-hero-welcome .dashboard-welcome-copy time,
+    .admin-hero-copy time {
+        font-size: 11px;
+        margin-bottom: 7px;
+    }
+
+    .admin-hero-welcome .dashboard-welcome-copy p,
+    .admin-hero-copy p {
+        font-size: 13px;
+        margin: 7px 0 12px;
     }
 
     .admin-growth-chart {

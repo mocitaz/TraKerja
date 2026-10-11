@@ -38,7 +38,7 @@ class AuthenticatedSessionController extends Controller
 
             // Admin users skip email verification
             if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
-                return redirect()->intended(route('admin.index', absolute: false));
+                return redirect()->intended(route('admin.index', absolute: false))->with('show_admin_welcome_popup', true);
             }
 
             // For non-admin users, check email verification

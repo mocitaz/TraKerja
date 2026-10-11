@@ -67,7 +67,7 @@
     @endphp
 
     <div class="admin-dashboard" x-data="{ 
-        welcomeModalOpen: true,
+        welcomeModalOpen: {{ session('show_admin_welcome_popup') ? 'true' : 'false' }},
         closeModal() {
             this.welcomeModalOpen = false;
         },
@@ -142,19 +142,13 @@
         </template>
 
         {{-- ==========================================================================
-             HERO WELCOME BANNER (In-Page, matches dashboard.welcome without box container)
+             HERO WELCOME BANNER (Exact 1:1 match with user dashboard.welcome)
              ========================================================================== --}}
         <section class="admin-hero-welcome" aria-labelledby="admin-hero-greeting">
-            <div class="admin-hero-copy">
-                <time datetime="{{ now()->timezone('Asia/Jakarta')->toDateString() }}" class="admin-hero-date">
-                    {{ now()->timezone('Asia/Jakarta')->locale('en')->translatedFormat('l, F j, Y') }}
-                </time>
-                <h1 id="admin-hero-greeting">
-                    Good to see you, {{ explode(' ', Auth::user()->name)[0] }}.
-                </h1>
-                <p>
-                    Platform telemetry, member growth momentum, and candidate application pulse at a glance.
-                </p>
+            <div class="dashboard-welcome-copy admin-hero-copy">
+                <time datetime="{{ now()->timezone('Asia/Jakarta')->toDateString() }}">{{ now()->timezone('Asia/Jakarta')->locale('en')->translatedFormat('l, F j, Y') }}</time>
+                <h1 id="admin-hero-greeting">Good to see you, {{ explode(' ', Auth::user()->name)[0] }}.</h1>
+                <p>Platform telemetry, member growth momentum, and candidate application pulse at a glance.</p>
             </div>
         </section>
 
