@@ -51,6 +51,12 @@ class Analytics extends Component
         $this->loadAnalytics();
     }
 
+    public function setPeriod(string $period): void
+    {
+        $this->periodFilter = in_array($period, ['all', '7', '30', '90'], true) ? $period : 'all';
+        $this->updatedPeriodFilter();
+    }
+
     public function updatedPeriodFilter()
     {
         if (!in_array((string) $this->periodFilter, ['all', '7', '30', '90'], true)) {
