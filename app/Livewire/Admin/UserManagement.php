@@ -184,8 +184,8 @@ class UserManagement extends Component
         
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Status Diperbarui',
-            'message' => 'Status premium ' . $user->name . ' berhasil diubah.',
+            'title' => 'Status Updated',
+            'message' => 'Premium status for ' . $user->name . ' updated successfully.',
         ]);
     }
 
@@ -212,8 +212,8 @@ class UserManagement extends Component
         // Toggle is_premium
         $user->is_premium = !$user->is_premium;
         
-        // Jika jadi premium, set status ke paid (Manual Override)
-        // Jika jadi free, set status ke free
+        // If premium, set status to paid (Manual Override)
+        // If free, set status to free
         $user->payment_status = $user->is_premium ? User::PAYMENT_STATUS_PAID : User::PAYMENT_STATUS_FREE;
         
         if ($user->is_premium) {
@@ -246,8 +246,8 @@ class UserManagement extends Component
 
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Manual Override Sukses!',
-            'message' => 'User ' . $user->name . ' sekarang berstatus ' . ($user->is_premium ? 'PREMIUM' : 'FREE'),
+            'title' => 'Manual Override Success',
+            'message' => 'User ' . $user->name . ' is now ' . ($user->is_premium ? 'PREMIUM' : 'FREE'),
         ]);
     }
     
@@ -278,8 +278,8 @@ class UserManagement extends Component
         
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Kuota Diperbarui',
-            'message' => 'Kuota AI berhasil diubah secara manual.',
+            'title' => 'Quotas Updated',
+            'message' => 'AI feature quotas updated successfully.',
         ]);
     }
     
@@ -314,8 +314,8 @@ class UserManagement extends Component
         
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Quota Di-reset',
-            'message' => 'Semua Kuota AI untuk ' . $user->name . ' telah dikembalikan ke standar.',
+            'title' => 'Quotas Reset',
+            'message' => 'All AI quotas for ' . $user->name . ' have been reset to plan defaults.',
         ]);
     }
     
@@ -406,13 +406,13 @@ class UserManagement extends Component
             'newAdminPassword' => 'required|min:8|same:newAdminPasswordConfirmation',
             'newAdminPasswordConfirmation' => 'required',
         ], [
-            'newAdminName.required' => 'Nama harus diisi',
-            'newAdminEmail.required' => 'Email harus diisi',
-            'newAdminEmail.email' => 'Format email tidak valid',
-            'newAdminEmail.unique' => 'Email sudah terdaftar',
-            'newAdminPassword.required' => 'Password harus diisi',
-            'newAdminPassword.min' => 'Password minimal 8 karakter',
-            'newAdminPassword.same' => 'Konfirmasi password tidak cocok',
+            'newAdminName.required' => 'Full name is required',
+            'newAdminEmail.required' => 'Email address is required',
+            'newAdminEmail.email' => 'Invalid email address format',
+            'newAdminEmail.unique' => 'Email is already registered',
+            'newAdminPassword.required' => 'Password is required',
+            'newAdminPassword.min' => 'Password must be at least 8 characters',
+            'newAdminPassword.same' => 'Password confirmation does not match',
         ]);
         
         $admin = User::create([

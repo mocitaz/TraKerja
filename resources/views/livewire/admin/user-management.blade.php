@@ -4,66 +4,18 @@
         <div>
             <span class="admin-eyebrow">People & access</span>
             <h1>User Management</h1>
-            <p>Kelola data member, pantau progres lamaran, aktivitas login, dan hak akses dalam satu tempat.</p>
+            <p>Review and manage members, track job applications, login activity, and permissions in one workspace.</p>
         </div>
         <div class="au-header-actions">
             <button type="button" wire:click="exportUsers" wire:loading.attr="disabled" wire:target="exportUsers" class="au-button">
                 <i class="ph ph-download-simple" aria-hidden="true"></i>
                 <span wire:loading.remove wire:target="exportUsers">Export CSV</span>
-                <span wire:loading wire:target="exportUsers">Menyiapkan…</span>
+                <span wire:loading wire:target="exportUsers">Preparing…</span>
             </button>
             <button type="button" wire:click="openCreateAdminModal" class="au-button au-button--primary">
                 <i class="ph ph-user-plus" aria-hidden="true"></i>
-                Tambah Admin
+                Add Administrator
             </button>
-        </div>
-    </section>
-
-    <!-- KPI Metric Summary Cards -->
-    <section class="au-kpi-grid" aria-label="Member metrics overview">
-        <div class="au-kpi-card">
-            <div class="au-kpi-header">
-                <span>Total Member</span>
-                <div class="au-kpi-icon au-kpi-icon--blue"><i class="ph ph-users"></i></div>
-            </div>
-            <strong>{{ number_format($stats['total']) }}</strong>
-            <small>Pengguna terdaftar non-admin</small>
-        </div>
-
-        <div class="au-kpi-card">
-            <div class="au-kpi-header">
-                <span>Premium Member</span>
-                <div class="au-kpi-icon au-kpi-icon--amber"><i class="ph ph-crown"></i></div>
-            </div>
-            <strong>{{ number_format($stats['premium']) }}</strong>
-            <small>{{ $stats['total'] > 0 ? round(($stats['premium'] / $stats['total']) * 100, 1) : 0 }}% rasio konversi premium</small>
-        </div>
-
-        <div class="au-kpi-card">
-            <div class="au-kpi-header">
-                <span>Free Member</span>
-                <div class="au-kpi-icon au-kpi-icon--slate"><i class="ph ph-user"></i></div>
-            </div>
-            <strong>{{ number_format($stats['free']) }}</strong>
-            <small>Pengguna paket standar</small>
-        </div>
-
-        <div class="au-kpi-card">
-            <div class="au-kpi-header">
-                <span>Total Lamaran</span>
-                <div class="au-kpi-icon au-kpi-icon--indigo"><i class="ph ph-paper-plane-tilt"></i></div>
-            </div>
-            <strong>{{ number_format($stats['total_applications']) }}</strong>
-            <small>Lamaran tercatat di platform</small>
-        </div>
-
-        <div class="au-kpi-card">
-            <div class="au-kpi-header">
-                <span>Email Terverifikasi</span>
-                <div class="au-kpi-icon au-kpi-icon--emerald"><i class="ph ph-seal-check"></i></div>
-            </div>
-            <strong>{{ number_format($stats['verified']) }}</strong>
-            <small>{{ $stats['total'] > 0 ? round(($stats['verified'] / $stats['total']) * 100, 1) : 0 }}% akun valid terverifikasi</small>
         </div>
     </section>
 
@@ -72,63 +24,70 @@
         <div class="au-directory-heading">
             <div>
                 <h2 id="member-directory-heading">
-                    Direktori Member <span>{{ number_format($users->total()) }}</span>
+                    Members Directory <span>{{ number_format($users->total()) }}</span>
                 </h2>
-                <p>Daftar seluruh akun member TraKerja beserta rincian lamaran dan status aktif</p>
+                <p>All registered TraKerja user accounts with application and activity logs</p>
             </div>
             <span class="au-loading" wire:loading wire:target="search,filterPremium,filterAiAnalyzer,perPage,gotoPage,nextPage,previousPage">
-                <i class="ph ph-spinner ph-spin"></i> Memperbarui data…
+                <i class="ph ph-spinner ph-spin"></i> Updating data…
             </span>
         </div>
 
         <!-- Filters Toolbar -->
         <div class="au-filters">
             <label class="au-search">
-                <span class="sr-only">Cari member</span>
+                <span class="sr-only">Search members</span>
                 <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
-                <input type="search" wire:model.live.debounce.300ms="search" placeholder="Cari nama atau email member…">
+                <input type="search" wire:model.live.debounce.300ms="search" placeholder="Search members by name, email, or ID…">
             </label>
             <label>
-                <span class="sr-only">Filter Paket</span>
+                <span class="sr-only">Plan filter</span>
                 <select wire:model.live="filterPremium">
-                    <option value="all">Semua Paket</option>
-                    <option value="premium">Member Premium</option>
-                    <option value="free">Member Free</option>
+                    <option value="all">All Plans</option>
+                    <option value="premium">Premium Members</option>
+                    <option value="free">Free Members</option>
                 </select>
             </label>
             <label>
-                <span class="sr-only">Filter Trial AI</span>
+                <span class="sr-only">AI trial filter</span>
                 <select wire:model.live="filterAiAnalyzer">
-                    <option value="all">Semua Status AI</option>
-                    <option value="used">Trial AI Terpakai</option>
-                    <option value="not_used">Trial AI Belum Terpakai</option>
+                    <option value="all">All AI Status</option>
+                    <option value="used">AI Trial Used</option>
+                    <option value="not_used">AI Trial Unused</option>
                 </select>
             </label>
             <label class="au-page-size">
-                <span class="sr-only">Jumlah Baris</span>
+                <span class="sr-only">Rows per page</span>
                 <select wire:model.live="perPage">
                     @foreach([10, 20, 50, 100] as $size)
-                        <option value="{{ $size }}">{{ $size }} baris</option>
+                        <option value="{{ $size }}">{{ $size }} rows</option>
                     @endforeach
                 </select>
             </label>
             @if($search !== '' || $filterPremium !== 'all' || $filterAiAnalyzer !== 'all')
                 <button type="button" wire:click="resetFilters" class="au-clear">
-                    Reset filter <i class="ph ph-x" aria-hidden="true"></i>
+                    Reset filters <i class="ph ph-x" aria-hidden="true"></i>
                 </button>
             @endif
         </div>
 
         <!-- Table -->
-        <div class="au-table-scroll" tabindex="0" aria-label="Tabel Direktori Member">
+        <div class="au-table-scroll" tabindex="0" aria-label="Members Directory Table">
             <table class="au-table">
+                <colgroup>
+                    <col style="width: 28%;">
+                    <col style="width: 15%;">
+                    <col style="width: 23%;">
+                    <col style="width: 18%;">
+                    <col style="width: 16%;">
+                </colgroup>
                 <thead>
                     <tr>
                         <th scope="col">Member</th>
-                        <th scope="col">Paket Membership</th>
-                        <th scope="col">Aktivitas Lamaran</th>
-                        <th scope="col">Aktivitas Terakhir</th>
-                        <th scope="col">Kelola Akses</th>
+                        <th scope="col">Membership Plan</th>
+                        <th scope="col">Job Applications</th>
+                        <th scope="col">Last Active</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -145,17 +104,17 @@
                                         <span class="au-member-email">{{ $user->email }}</span>
                                         <div class="au-member-tags">
                                             @if($user->hasVerifiedEmail())
-                                                <span class="au-tag au-tag--verified" title="Email terverifikasi">
-                                                    <i class="ph ph-check-circle"></i> Terverifikasi
+                                                <span class="au-tag au-tag--verified" title="Email address verified">
+                                                    <i class="ph ph-check-circle"></i> Verified
                                                 </span>
                                             @endif
                                             @if($user->google_id)
-                                                <span class="au-tag au-tag--google" title="Login via Google">
+                                                <span class="au-tag au-tag--google" title="Signed in with Google">
                                                     <i class="ph ph-google-logo"></i> Google
                                                 </span>
                                             @endif
                                             @if($user->linkedin_id)
-                                                <span class="au-tag au-tag--linkedin" title="Login via LinkedIn">
+                                                <span class="au-tag au-tag--linkedin" title="Signed in with LinkedIn">
                                                     <i class="ph ph-linkedin-logo"></i> LinkedIn
                                                 </span>
                                             @endif
@@ -172,16 +131,16 @@
                                             <i class="ph ph-crown-simple"></i> Premium
                                         </span>
                                         @if($user->premium_until)
-                                            <span class="au-plan-sub">Aktif s/d {{ $user->premium_until->format('d M Y') }}</span>
+                                            <span class="au-plan-sub">Until {{ $user->premium_until->format('d M Y') }}</span>
                                         @else
-                                            <span class="au-plan-sub">Akses aktif</span>
+                                            <span class="au-plan-sub">Active access</span>
                                         @endif
                                     @else
                                         <span class="au-plan-badge au-plan-badge--free">
                                             <i class="ph ph-user"></i> Free
                                         </span>
                                         @if($user->has_used_ai_analyzer_trial)
-                                            <span class="au-plan-sub">Trial AI aktif</span>
+                                            <span class="au-plan-sub">AI trial used</span>
                                         @endif
                                     @endif
                                 </div>
@@ -190,11 +149,11 @@
                             <!-- Column 3: Applications Activity (Applied & Declined) -->
                             <td>
                                 <div class="au-app-stats">
-                                    <span class="au-chip au-chip--applied" title="Total lamaran dikirim">
+                                    <span class="au-chip au-chip--applied" title="Total jobs applied">
                                         <i class="ph ph-paper-plane-tilt"></i>
                                         <strong>{{ number_format($user->applied_count) }}</strong> applied
                                     </span>
-                                    <span class="au-chip {{ $user->declined_count > 0 ? 'au-chip--declined' : 'au-chip--empty' }}" title="Total lamaran ditolak">
+                                    <span class="au-chip {{ $user->declined_count > 0 ? 'au-chip--declined' : 'au-chip--empty' }}" title="Total applications declined">
                                         <i class="ph ph-x-circle"></i>
                                         <strong>{{ number_format($user->declined_count) }}</strong> declined
                                     </span>
@@ -204,24 +163,30 @@
                             <!-- Column 4: Last Activity / Login -->
                             <td>
                                 <div class="au-activity">
-                                    @if($user->last_activity_at && $user->last_activity_at->diffInHours(now()) < 24)
+                                    @if($user->last_activity_at && $user->last_activity_at->diffInMinutes(now()) < 15)
                                         <div class="au-activity-top">
                                             <span class="au-dot au-dot--active"></span>
-                                            <strong>Aktif</strong>
+                                            <strong>Active now</strong>
                                         </div>
-                                        <small>{{ $user->last_activity_at->diffForHumans() }}</small>
+                                        <small>Just now</small>
+                                    @elseif($user->last_activity_at && $user->last_activity_at->diffInHours(now()) < 24)
+                                        <div class="au-activity-top">
+                                            <span class="au-dot au-dot--recent"></span>
+                                            <span>{{ $user->last_activity_at->diffForHumans() }}</span>
+                                        </div>
+                                        <small>{{ $user->last_activity_at->format('H:i') }}</small>
                                     @elseif($user->last_activity_at)
                                         <div class="au-activity-top">
                                             <span class="au-dot au-dot--recent"></span>
                                             <span>{{ $user->last_activity_at->diffForHumans() }}</span>
                                         </div>
-                                        <small>{{ $user->last_activity_at->format('d M Y, H:i') }}</small>
+                                        <small>{{ $user->last_activity_at->format('d M Y') }}</small>
                                     @else
                                         <div class="au-activity-top">
                                             <span class="au-dot au-dot--idle"></span>
-                                            <span style="color: #94a3b8;">Belum login</span>
+                                            <span style="color: #94a3b8;">No login recorded</span>
                                         </div>
-                                        <small>Dibuat {{ $user->created_at->format('d M Y') }}</small>
+                                        <small>Joined {{ $user->created_at->format('d M Y') }}</small>
                                     @endif
                                 </div>
                             </td>
@@ -229,12 +194,12 @@
                             <!-- Column 5: Manage Access Actions -->
                             <td>
                                 <div class="au-row-actions" x-data="{ open: false, left: 0, top: 0 }">
-                                    <button type="button" wire:click="editUser({{ $user->id }})" class="au-manage" aria-label="Kelola {{ $user->name }}">
-                                        Kelola <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+                                    <button type="button" wire:click="editUser({{ $user->id }})" class="au-manage" aria-label="Manage {{ $user->name }}">
+                                        Manage <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
                                     </button>
                                     <button type="button" class="au-more" x-ref="more"
                                         @click="const rect = $el.getBoundingClientRect(); left = Math.max(12, Math.min(rect.right - 220, window.innerWidth - 232)); top = Math.max(12, Math.min(rect.bottom + 8, window.innerHeight - 200)); open = !open; if(open) $nextTick(() => $refs.firstAction.focus())"
-                                        :aria-expanded="open.toString()" aria-controls="member-actions-{{ $user->id }}" aria-label="Menu aksi {{ $user->name }}">
+                                        :aria-expanded="open.toString()" aria-controls="member-actions-{{ $user->id }}" aria-label="Action menu for {{ $user->name }}">
                                         <i class="ph ph-dots-three" aria-hidden="true"></i>
                                     </button>
 
@@ -243,19 +208,19 @@
                                         <div id="member-actions-{{ $user->id }}" class="au-action-menu" x-cloak x-show="open"
                                             x-transition.opacity.duration.120ms :style="`left: ${left}px; top: ${top}px`"
                                             @click.outside="open = false" @keydown.escape.stop="open = false; $refs.more.focus()"
-                                            @scroll.window="open = false" @resize.window="open = false" role="region" aria-label="Aksi cepat untuk {{ $user->name }}">
+                                            @scroll.window="open = false" @resize.window="open = false" role="region" aria-label="Quick actions for {{ $user->name }}">
                                             <p>{{ $user->name }}</p>
                                             <button type="button" x-ref="firstAction" @click="open = false" wire:click="openPremiumConfirmModal({{ $user->id }})">
                                                 <i class="ph ph-crown" aria-hidden="true"></i>
-                                                {{ $user->is_premium ? 'Hapus Akses Premium' : 'Berikan Akses Premium' }}
+                                                {{ $user->is_premium ? 'Revoke Premium Access' : 'Grant Premium Access' }}
                                             </button>
                                             <button type="button" @click="open = false" wire:click="openSendEmailModal({{ $user->id }})">
                                                 <i class="ph ph-paper-plane-tilt" aria-hidden="true"></i>
-                                                Kirim Email
+                                                Send Email
                                             </button>
                                             <button type="button" @click="open = false" wire:click="confirmDeleteUserModal({{ $user->id }})" class="au-danger">
                                                 <i class="ph ph-trash" aria-hidden="true"></i>
-                                                Hapus Akun
+                                                Delete Account
                                             </button>
                                         </div>
                                     </template>
@@ -267,11 +232,11 @@
                             <td colspan="5">
                                 <div class="au-empty">
                                     <div class="au-empty-icon"><i class="ph ph-users"></i></div>
-                                    <h3>Tidak ada member ditemukan</h3>
-                                    <p>{{ $search !== '' || $filterPremium !== 'all' || $filterAiAnalyzer !== 'all' ? 'Coba ubah kata kunci pencarian atau setel ulang filter Anda.' : 'Member yang baru mendaftar akan tampil di sini.' }}</p>
+                                    <h3>No members found</h3>
+                                    <p>{{ $search !== '' || $filterPremium !== 'all' || $filterAiAnalyzer !== 'all' ? 'Try adjusting your search query or reset your active filters.' : 'New members will appear here once they register.' }}</p>
                                     @if($search !== '' || $filterPremium !== 'all' || $filterAiAnalyzer !== 'all')
                                         <button type="button" wire:click="resetFilters" class="au-button" style="margin-top: 14px;">
-                                            Reset Semua Filter
+                                            Reset All Filters
                                         </button>
                                     @endif
                                 </div>
@@ -284,7 +249,7 @@
 
         <!-- Footer -->
         <footer class="au-directory-footer">
-            <span>Menampilkan <strong>{{ $users->firstItem() ?? 0 }}–{{ $users->lastItem() ?? 0 }}</strong> dari total {{ number_format($users->total()) }} member</span>
+            <span>Showing <strong>{{ $users->firstItem() ?? 0 }}–{{ $users->lastItem() ?? 0 }}</strong> of {{ number_format($users->total()) }} members</span>
             <div>{{ $users->links() }}</div>
         </footer>
     </section>
@@ -298,10 +263,10 @@
                 <section class="au-dialog">
                     <header class="au-dialog-heading">
                         <div>
-                            <h2 id="showEditModal-title">Kelola Akun Member</h2>
-                            <p>Rincian profil, hak akses membership, dan kuota kredit AI.</p>
+                            <h2 id="showEditModal-title">Manage Member Account</h2>
+                            <p>Profile details, membership privileges, and AI credit quotas.</p>
                         </div>
-                        <button type="button" wire:click="closeModal" class="au-dialog-close" aria-label="Tutup dialog">
+                        <button type="button" wire:click="closeModal" class="au-dialog-close" aria-label="Close dialog">
                             <i class="ph ph-x" aria-hidden="true"></i>
                         </button>
                     </header>
@@ -328,52 +293,52 @@
                             <!-- Account Details Grid -->
                             <dl class="au-account-details">
                                 <div class="au-detail-tile">
-                                    <dt>Bergabung</dt>
+                                    <dt>Joined</dt>
                                     <dd>{{ $editingUser->created_at->format('d M Y') }}</dd>
                                 </div>
                                 <div class="au-detail-tile">
-                                    <dt>Status Email</dt>
-                                    <dd>{{ $editingUser->hasVerifiedEmail() ? 'Terverifikasi' : 'Belum Verifikasi' }}</dd>
+                                    <dt>Email Verification</dt>
+                                    <dd>{{ $editingUser->hasVerifiedEmail() ? 'Verified' : 'Unverified' }}</dd>
                                 </div>
                                 <div class="au-detail-tile">
-                                    <dt>Masa Aktif Premium</dt>
-                                    <dd>{{ $editingUser->premium_until?->format('d M Y') ?? ($editingUser->isPremium() ? 'Aktif Permanen' : '—') }}</dd>
+                                    <dt>Premium Duration</dt>
+                                    <dd>{{ $editingUser->premium_until?->format('d M Y') ?? ($editingUser->isPremium() ? 'Lifetime Active' : '—') }}</dd>
                                 </div>
                                 <div class="au-detail-tile">
-                                    <dt>Metode Sign-in</dt>
-                                    <dd>{{ collect([$editingUser->password ? 'Email' : null, $editingUser->google_id ? 'Google' : null, $editingUser->linkedin_id ? 'LinkedIn' : null])->filter()->implode(' · ') ?: 'Standar' }}</dd>
+                                    <dt>Sign-in Methods</dt>
+                                    <dd>{{ collect([$editingUser->password ? 'Email' : null, $editingUser->google_id ? 'Google' : null, $editingUser->linkedin_id ? 'LinkedIn' : null])->filter()->implode(' · ') ?: 'Standard' }}</dd>
                                 </div>
                             </dl>
                         @endif
 
                         <!-- Form 1: Profile & Access -->
                         <form wire:submit="updateUser" class="au-form au-form-section">
-                            <h3>Informasi Akun & Akses</h3>
+                            <h3>Account & Access Information</h3>
                             <label for="edit-member-name">
-                                Nama Lengkap
-                                <input id="edit-member-name" type="text" wire:model="editName" required placeholder="Nama lengkap member…">
+                                Full Name
+                                <input id="edit-member-name" type="text" wire:model="editName" required placeholder="Member full name…">
                                 @error('editName')<span class="au-field-error">{{ $message }}</span>@enderror
                             </label>
                             <label for="edit-member-email">
-                                Alamat Email
-                                <input id="edit-member-email" type="email" wire:model="editEmail" required placeholder="nama@email.com">
+                                Email Address
+                                <input id="edit-member-email" type="email" wire:model="editEmail" required placeholder="member@email.com">
                                 @error('editEmail')<span class="au-field-error">{{ $message }}</span>@enderror
                             </label>
                             <div class="au-checkbox-row">
                                 <label class="au-checkbox-label">
                                     <input type="checkbox" wire:model="editIsPremium">
-                                    Akses Member Premium
+                                    Premium Member Access
                                 </label>
                                 <label class="au-checkbox-label">
                                     <input type="checkbox" wire:model="editIsAdmin">
                                     Administrator
                                 </label>
                             </div>
-                            <p class="au-form-hint">Mengubah status premium akan otomatis memperbarui masa berlaku membership dan status pembayaran user.</p>
+                            <p class="au-form-hint">Updating premium status will automatically recalculate membership duration and billing state.</p>
                             <div class="au-form-actions">
                                 <button type="submit" class="au-button au-button--primary" wire:loading.attr="disabled" wire:target="updateUser">
-                                    <span wire:loading.remove wire:target="updateUser">Simpan Perubahan Akun</span>
-                                    <span wire:loading wire:target="updateUser">Menyimpan…</span>
+                                    <span wire:loading.remove wire:target="updateUser">Save Account Changes</span>
+                                    <span wire:loading wire:target="updateUser">Saving…</span>
                                 </button>
                             </div>
                         </form>
@@ -381,9 +346,9 @@
                         <!-- Form 2: AI Quota Credits -->
                         <form wire:submit="saveAiQuotas" class="au-form au-form-section" style="margin-top: 18px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                <h3>Alokasi Kuota AI Credits</h3>
-                                <button type="button" class="au-clear" style="padding: 4px 8px;" wire:click="resetAllAiQuotas" wire:confirm="Reset kredit member ini ke default sesuai paket membership mereka?">
-                                    <i class="ph ph-arrow-counter-clockwise"></i> Reset ke Default
+                                <h3>AI Feature Quota Credits</h3>
+                                <button type="button" class="au-clear" style="padding: 4px 8px;" wire:click="resetAllAiQuotas" wire:confirm="Reset AI credits for this member to their plan defaults?">
+                                    <i class="ph ph-arrow-counter-clockwise"></i> Reset to Default
                                 </button>
                             </div>
                             <div class="au-quota-grid">
@@ -409,31 +374,31 @@
                                     </label>
                                 </div>
                             </div>
-                            <p class="au-form-hint">Status Trial AI Analyzer: <strong>{{ $editingUser?->has_used_ai_analyzer_trial ? 'Sudah Digunakan' : 'Belum Digunakan' }}</strong>.</p>
+                            <p class="au-form-hint">AI Analyzer Free Trial Status: <strong>{{ $editingUser?->has_used_ai_analyzer_trial ? 'Used' : 'Not Used' }}</strong>.</p>
                             <div class="au-form-actions">
                                 <button type="submit" class="au-button au-button--primary" wire:loading.attr="disabled" wire:target="saveAiQuotas">
-                                    <span wire:loading.remove wire:target="saveAiQuotas">Simpan Kuota AI</span>
-                                    <span wire:loading wire:target="saveAiQuotas">Menyimpan…</span>
+                                    <span wire:loading.remove wire:target="saveAiQuotas">Save AI Quotas</span>
+                                    <span wire:loading wire:target="saveAiQuotas">Saving…</span>
                                 </button>
                             </div>
                         </form>
 
                         <!-- Account Quick Actions -->
                         @if($editingUser)
-                            <section class="au-account-actions" aria-label="Tindakan Akun Cepat">
-                                <h3>Tindakan Cepat</h3>
+                            <section class="au-account-actions" aria-label="Account Quick Actions">
+                                <h3>Quick Actions</h3>
                                 <div class="au-account-action-buttons">
                                     <button type="button" wire:click="openPremiumConfirmModal({{ $editingUser->id }})" class="au-button">
                                         <i class="ph ph-crown"></i>
-                                        {{ $editingUser->is_premium ? 'Hapus Premium' : 'Berikan Premium' }}
+                                        {{ $editingUser->is_premium ? 'Revoke Premium' : 'Grant Premium' }}
                                     </button>
                                     <button type="button" wire:click="openSendEmailModal({{ $editingUser->id }})" class="au-button">
                                         <i class="ph ph-paper-plane-tilt"></i>
-                                        Kirim Email
+                                        Send Email
                                     </button>
                                     <button type="button" wire:click="confirmDeleteUserModal({{ $editingUser->id }})" class="au-account-delete">
                                         <i class="ph ph-trash"></i>
-                                        Hapus Akun
+                                        Delete Account
                                     </button>
                                 </div>
                             </section>
@@ -453,41 +418,41 @@
                 <section class="au-dialog">
                     <header class="au-dialog-heading">
                         <div>
-                            <h2 id="showCreateAdminModal-title">Tambah Administrator Baru</h2>
-                            <p>Buat akun admin baru dengan hak akses ke seluruh dashboard manajemen TraKerja.</p>
+                            <h2 id="showCreateAdminModal-title">Add Administrator</h2>
+                            <p>Create a new administrator account with full platform management privileges.</p>
                         </div>
-                        <button type="button" wire:click="closeCreateAdminModal" class="au-dialog-close" aria-label="Tutup dialog">
+                        <button type="button" wire:click="closeCreateAdminModal" class="au-dialog-close" aria-label="Close dialog">
                             <i class="ph ph-x" aria-hidden="true"></i>
                         </button>
                     </header>
                     <div class="au-dialog-body">
                         <form wire:submit="createAdmin" class="au-form">
                             <label for="admin-name">
-                                Nama Lengkap
-                                <input id="admin-name" type="text" wire:model="newAdminName" required placeholder="Nama administrator…">
+                                Full Name
+                                <input id="admin-name" type="text" wire:model="newAdminName" required placeholder="Administrator full name…">
                                 @error('newAdminName')<span class="au-field-error">{{ $message }}</span>@enderror
                             </label>
                             <label for="admin-email">
-                                Alamat Email
+                                Email Address
                                 <input id="admin-email" type="email" wire:model="newAdminEmail" required placeholder="admin@trakerja.com">
                                 @error('newAdminEmail')<span class="au-field-error">{{ $message }}</span>@enderror
                             </label>
                             <label for="admin-password">
-                                Kata Sandi
-                                <input id="admin-password" type="password" wire:model="newAdminPassword" required minlength="8" autocomplete="new-password" placeholder="Minimal 8 karakter…">
+                                Password
+                                <input id="admin-password" type="password" wire:model="newAdminPassword" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters…">
                                 @error('newAdminPassword')<span class="au-field-error">{{ $message }}</span>@enderror
                             </label>
                             <label for="admin-password-confirmation">
-                                Konfirmasi Kata Sandi
-                                <input id="admin-password-confirmation" type="password" wire:model="newAdminPasswordConfirmation" required minlength="8" autocomplete="new-password" placeholder="Ulangi kata sandi…">
+                                Confirm Password
+                                <input id="admin-password-confirmation" type="password" wire:model="newAdminPasswordConfirmation" required minlength="8" autocomplete="new-password" placeholder="Re-type password…">
                                 @error('newAdminPasswordConfirmation')<span class="au-field-error">{{ $message }}</span>@enderror
                             </label>
 
                             <div class="au-dialog-actions">
-                                <button type="button" wire:click="closeCreateAdminModal" class="au-button">Batal</button>
+                                <button type="button" wire:click="closeCreateAdminModal" class="au-button">Cancel</button>
                                 <button type="submit" wire:loading.attr="disabled" wire:target="createAdmin" class="au-button au-button--primary">
-                                    <span wire:loading.remove wire:target="createAdmin">Buat Akun Admin</span>
-                                    <span wire:loading wire:target="createAdmin">Membuat Akun…</span>
+                                    <span wire:loading.remove wire:target="createAdmin">Create Administrator</span>
+                                    <span wire:loading wire:target="createAdmin">Creating…</span>
                                 </button>
                             </div>
                         </form>
@@ -506,10 +471,10 @@
                 <section class="au-dialog au-dialog--small">
                     <header class="au-dialog-heading">
                         <div>
-                            <h2 id="showSendEmailModal-title">Kirim Email ke Member</h2>
-                            <p>Pilih template email otomatis yang ingin dikirimkan langsung ke inbox user.</p>
+                            <h2 id="showSendEmailModal-title">Send Email to Member</h2>
+                            <p>Choose an automated email template to dispatch directly to the user's inbox.</p>
                         </div>
-                        <button type="button" wire:click="closeSendEmailModal" class="au-dialog-close" aria-label="Tutup dialog">
+                        <button type="button" wire:click="closeSendEmailModal" class="au-dialog-close" aria-label="Close dialog">
                             <i class="ph ph-x" aria-hidden="true"></i>
                         </button>
                     </header>
@@ -520,39 +485,39 @@
                         </div>
                         <form wire:submit="sendEmail" class="au-form">
                             <label for="member-email-type">
-                                Template Pesan
+                                Message Template
                                 <select id="member-email-type" wire:model.live="emailType">
                                     @foreach([
-                                        'welcome'=>'Welcome Email (Sambutan)',
-                                        'verification'=>'Verifikasi Email Akun',
-                                        'verification_reminder'=>'Pengingat Verifikasi Email',
-                                        'job_reminder'=>'Pengingat Lamaran Kerja',
-                                        'monthly_motivation'=>'Motivasi Bulanan Karier',
-                                        're_engagement'=>'Re-engagement (Ajak Kembali)',
-                                        'product_update'=>'Update Fitur TraKerja',
-                                        'new_vibe'=>'Pengumuman Suasana Baru',
-                                        'ai_analyzer'=>'Pengumuman AI Analyzer',
-                                        'ai_photo'=>'Pengumuman AI Photo Studio',
-                                        'follow_up_feature'=>'Pengumuman Fitur Follow-up',
-                                        'premium_granted'=>'Notifikasi Akses Premium Diberikan',
+                                        'welcome'=>'Welcome Email',
+                                        'verification'=>'Account Email Verification',
+                                        'verification_reminder'=>'Email Verification Reminder',
+                                        'job_reminder'=>'Job Application Reminder',
+                                        'monthly_motivation'=>'Monthly Career Motivation',
+                                        're_engagement'=>'Re-engagement Notice',
+                                        'product_update'=>'TraKerja Feature Update',
+                                        'new_vibe'=>'Platform Experience Announcement',
+                                        'ai_analyzer'=>'AI CV Analyzer Announcement',
+                                        'ai_photo'=>'AI Photo Studio Announcement',
+                                        'follow_up_feature'=>'Application Follow-up Alert',
+                                        'premium_granted'=>'Premium Access Notification',
                                         'hiring_season'=>'Hiring Season Alert',
-                                        'kemerdekaan_ri'=>'Hari Kemerdekaan RI',
-                                        'pahlawan'=>'Hari Pahlawan',
-                                        'hari_ibu'=>'Hari Ibu',
-                                        'natal'=>'Hari Raya Natal',
-                                        'tahun_baru_islam'=>'Tahun Baru Islam'
+                                        'kemerdekaan_ri'=>'Independence Day Special',
+                                        'pahlawan'=>'National Heroes Day',
+                                        'hari_ibu'=>'Mother\'s Day Greeting',
+                                        'natal'=>'Christmas Greeting',
+                                        'tahun_baru_islam'=>'Islamic New Year Greeting'
                                     ] as $type => $label)
                                         <option value="{{ $type }}">{{ $label }}</option>
                                     @endforeach
                                 </select>
                                 @error('emailType')<span class="au-field-error">{{ $message }}</span>@enderror
                             </label>
-                            <p class="au-form-hint">Email akan dikirimkan secara instan melalui mailer sistem TraKerja ke alamat tujuan di atas.</p>
+                            <p class="au-form-hint">Email will be delivered immediately via the TraKerja mail system to the recipient above.</p>
                             <div class="au-dialog-actions">
-                                <button type="button" wire:click="closeSendEmailModal" class="au-button">Batal</button>
+                                <button type="button" wire:click="closeSendEmailModal" class="au-button">Cancel</button>
                                 <button type="submit" wire:loading.attr="disabled" wire:target="sendEmail" class="au-button au-button--primary">
-                                    <span wire:loading.remove wire:target="sendEmail">Kirim Sekarang</span>
-                                    <span wire:loading wire:target="sendEmail">Mengirim…</span>
+                                    <span wire:loading.remove wire:target="sendEmail">Send Email Now</span>
+                                    <span wire:loading wire:target="sendEmail">Sending…</span>
                                 </button>
                             </div>
                         </form>
@@ -572,11 +537,11 @@
                     <header class="au-dialog-heading">
                         <div>
                             <h2 id="showPremiumConfirmModal-title">
-                                {{ $confirmTargetUserIsPremium ? 'Hapus Akses Premium?' : 'Berikan Akses Premium?' }}
+                                {{ $confirmTargetUserIsPremium ? 'Revoke Premium Access?' : 'Grant Premium Access?' }}
                             </h2>
-                            <p>Konfirmasi perubahan hak istimewa akun member ini.</p>
+                            <p>Confirm the membership tier change for this user account.</p>
                         </div>
-                        <button type="button" wire:click="closePremiumConfirmModal" class="au-dialog-close" aria-label="Tutup dialog">
+                        <button type="button" wire:click="closePremiumConfirmModal" class="au-dialog-close" aria-label="Close dialog">
                             <i class="ph ph-x" aria-hidden="true"></i>
                         </button>
                     </header>
@@ -585,15 +550,15 @@
                             <strong>{{ $confirmTargetUserName }}</strong>
                             <span>
                                 {{ $confirmTargetUserIsPremium 
-                                    ? 'Akses premium akan dinonaktifkan. Kuota kredit dan fitur eksklusif akan dikembalikan ke standar paket gratis.' 
-                                    : 'Akses premium akan diaktifkan selama ' . config('pakasir.premium_duration_days', 365) . ' hari dan seluruh kuota fitur AI akan dimaksimalkan.' }}
+                                    ? 'Premium access will be deactivated. Exclusive AI features and priority quotas will return to standard free tier.' 
+                                    : 'Premium access will be activated for ' . config('pakasir.premium_duration_days', 365) . ' days with maximized AI feature quotas.' }}
                             </span>
                         </div>
                         <div class="au-dialog-actions">
-                            <button type="button" wire:click="closePremiumConfirmModal" class="au-button">Batal</button>
+                            <button type="button" wire:click="closePremiumConfirmModal" class="au-button">Cancel</button>
                             <button type="button" wire:click="toggleManualPremium" wire:loading.attr="disabled" wire:target="toggleManualPremium" class="au-button au-button--primary">
-                                <span wire:loading.remove wire:target="toggleManualPremium">{{ $confirmTargetUserIsPremium ? 'Ya, Hapus Premium' : 'Ya, Berikan Premium' }}</span>
-                                <span wire:loading wire:target="toggleManualPremium">Memproses…</span>
+                                <span wire:loading.remove wire:target="toggleManualPremium">{{ $confirmTargetUserIsPremium ? 'Yes, Revoke Premium' : 'Yes, Grant Premium' }}</span>
+                                <span wire:loading wire:target="toggleManualPremium">Processing…</span>
                             </button>
                         </div>
                     </div>
@@ -611,23 +576,23 @@
                 <section class="au-dialog au-dialog--small">
                     <header class="au-dialog-heading">
                         <div>
-                            <h2 id="showDeleteConfirmModal-title" style="color: #ef4444;">Hapus Akun Member Ini?</h2>
-                            <p>Tindakan ini bersifat permanen dan tidak dapat dibatalkan.</p>
+                            <h2 id="showDeleteConfirmModal-title" style="color: #ef4444;">Permanently Delete Account?</h2>
+                            <p>This action is irreversible and will delete all user data permanently.</p>
                         </div>
-                        <button type="button" wire:click="closeDeleteConfirmModal" class="au-dialog-close" aria-label="Tutup dialog">
+                        <button type="button" wire:click="closeDeleteConfirmModal" class="au-dialog-close" aria-label="Close dialog">
                             <i class="ph ph-x" aria-hidden="true"></i>
                         </button>
                     </header>
                     <div class="au-dialog-body">
                         <div class="au-recipient au-recipient--danger">
                             <strong>{{ $deleteTargetUserName }}</strong>
-                            <span>Seluruh data akun, lamaran kerja yang tersimpan, riwayat aktivitas, dan data profil akan dihapus secara permanen dari basis data.</span>
+                            <span>All account data, tracked job applications, activity records, and resumes will be permanently purged from the database.</span>
                         </div>
                         <div class="au-dialog-actions">
-                            <button type="button" wire:click="closeDeleteConfirmModal" class="au-button">Batal, Simpan Akun</button>
+                            <button type="button" wire:click="closeDeleteConfirmModal" class="au-button">Cancel, Keep Account</button>
                             <button type="button" wire:click="performDelete" wire:loading.attr="disabled" wire:target="performDelete" class="au-button au-button--danger">
-                                <span wire:loading.remove wire:target="performDelete">Hapus Permanen</span>
-                                <span wire:loading wire:target="performDelete">Menghapus…</span>
+                                <span wire:loading.remove wire:target="performDelete">Permanently Delete</span>
+                                <span wire:loading wire:target="performDelete">Deleting…</span>
                             </button>
                         </div>
                     </div>

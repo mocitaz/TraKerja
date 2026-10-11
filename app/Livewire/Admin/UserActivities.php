@@ -91,8 +91,8 @@ class UserActivities extends Component
         
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Pengaturan Tersimpan',
-            'message' => 'Lama penyimpanan log aktivitas berhasil diperbarui.',
+            'title' => 'Settings Saved',
+            'message' => 'Activity log retention period updated successfully.',
         ]);
     }
     
@@ -105,8 +105,8 @@ class UserActivities extends Component
         
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Pembersihan Berhasil',
-            'message' => number_format($deletedCount) . ' log aktivitas usang (>' . $this->pruneDays . ' hari) telah dihapus.',
+            'title' => 'Cleanup Successful',
+            'message' => number_format($deletedCount) . ' obsolete activity logs (>' . $this->pruneDays . ' days) deleted.',
         ]);
     }
 
@@ -119,8 +119,8 @@ class UserActivities extends Component
         
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Semua Log Dihapus',
-            'message' => number_format($deletedCount) . ' log aktivitas telah dihapus permanen.',
+            'title' => 'All Logs Purged',
+            'message' => number_format($deletedCount) . ' activity logs permanently deleted.',
         ]);
     }
 

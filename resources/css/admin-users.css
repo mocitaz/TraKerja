@@ -1,5 +1,6 @@
 /* ==========================================================================
-   Admin Users Workspace - TraKerja Modern Design System
+   Admin Users Workspace - Matched Exactly to http://127.0.0.1:8000/tracker
+   (Table density, sizes, typography, borders, zebra rows & purple accents)
    ========================================================================== */
 
 @keyframes au-fade-in {
@@ -14,18 +15,51 @@
 
 @keyframes au-pulse {
     0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.3); }
+    50% { opacity: 0.4; transform: scale(1.3); }
 }
 
 .admin-users-workspace {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 16px;
     animation: au-fade-in 0.25s ease-out both;
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #37303f;
 }
 
-/* Header & Welcome */
+/* Header & Welcome (matches workspace-page__header) */
+.admin-users-workspace .admin-welcome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0 0 4px;
+}
+
+.admin-users-workspace .admin-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #887494;
+}
+
+.admin-users-workspace .admin-welcome h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    line-height: 1.25;
+    color: #35264f;
+    margin: 3px 0 5px;
+}
+
+.admin-users-workspace .admin-welcome p {
+    font-size: 12px;
+    color: #767082;
+    margin: 0;
+    line-height: 1.5;
+}
+
 .au-header-actions {
     display: flex;
     align-items: center;
@@ -33,28 +67,29 @@
     flex-shrink: 0;
 }
 
+/* Base Buttons (matches .workspace-button) */
 .au-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    min-height: 42px;
-    border: 1px solid #e2e8f0;
+    min-height: 40px;
+    border: 1px solid #dfe3eb;
     background: #ffffff;
-    padding: 9px 16px;
+    padding: 8px 15px;
     border-radius: 12px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
-    color: #334155;
+    color: #5b5568;
     cursor: pointer;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 1px 2px rgba(52, 49, 59, 0.03);
     transition: all 0.15s ease;
 }
 
 .au-button:hover {
-    border-color: #cbd5e1;
-    background: #f8fafc;
-    color: #0f172a;
+    border-color: #c7b4df;
+    background: #faf7fc;
+    color: #5d3979;
 }
 
 .au-button:active {
@@ -66,6 +101,7 @@
     cursor: not-allowed;
 }
 
+/* Action button: Brand Action Blue */
 .au-button--primary {
     background: #2579ca;
     border-color: #2579ca;
@@ -92,316 +128,277 @@
     color: #ffffff;
 }
 
-/* KPI Stats Section */
-.au-kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 14px;
-}
-
-.au-kpi-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 18px;
-    padding: 16px 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-    transition: transform 0.15s, box-shadow 0.15s;
-}
-
-.au-kpi-card:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-}
-
-.au-kpi-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.au-kpi-header span {
-    font-size: 11.5px;
-    font-weight: 600;
-    color: #64748b;
-    letter-spacing: -0.1px;
-}
-
-.au-kpi-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 9px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-}
-
-.au-kpi-icon--blue { background: #eff6ff; color: #2563eb; }
-.au-kpi-icon--amber { background: #fef3c7; color: #d97706; }
-.au-kpi-icon--slate { background: #f1f5f9; color: #475569; }
-.au-kpi-icon--indigo { background: #eef2ff; color: #4f46e5; }
-.au-kpi-icon--emerald { background: #ecfdf5; color: #059669; }
-
-.au-kpi-card strong {
-    font-size: 26px;
-    font-weight: 700;
-    color: #0f172a;
-    letter-spacing: -0.6px;
-    line-height: 1.1;
-    font-variant-numeric: tabular-nums;
-}
-
-.au-kpi-card small {
-    font-size: 11px;
-    color: #94a3b8;
-    line-height: 1.4;
-}
-
-/* Member Directory Container */
+/* ==========================================================================
+   Directory Panel Container (matches .tracker-list-panel from tracker-density)
+   ========================================================================== */
 .au-directory {
     background: #ffffff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #d7dce2;
     border-radius: 20px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 2px 8px rgba(52, 49, 59, 0.03);
     overflow: hidden;
 }
 
+/* Panel Header (matches .tracker-results) */
 .au-directory-heading {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 22px 24px 16px;
-    border-bottom: 1px solid #f1f5f9;
+    padding: 15px 18px;
+    gap: 12px;
+    border-bottom: 1px solid #edf0f4;
 }
 
 .au-directory-heading h2 {
-    font-size: 17px;
-    font-weight: 700;
-    color: #0f172a;
-    letter-spacing: -0.3px;
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 600;
+    color: #37303f;
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: 10px;
     margin: 0;
 }
 
 .au-directory-heading h2 span {
     font-size: 11px;
-    font-weight: 600;
-    background: #f1f5f9;
-    color: #475569;
-    padding: 3px 8px;
-    border-radius: 7px;
+    font-weight: 550;
+    color: #776487;
+    background: #f0ebf7;
+    border-radius: 8px;
+    padding: 4px 8px;
     letter-spacing: 0;
 }
 
 .au-directory-heading p {
-    font-size: 12px;
-    color: #64748b;
-    margin-top: 4px;
+    font-size: 11px;
+    color: #767082;
+    margin: 3px 0 0;
 }
 
 .au-loading {
-    font-size: 12px;
-    color: #2579ca;
+    font-size: 11px;
+    color: #78528e;
+    background: #f6effb;
+    padding: 6px 12px;
+    border-radius: 8px;
     font-weight: 500;
     display: inline-flex;
     align-items: center;
     gap: 6px;
 }
 
-/* Filters Toolbar */
+/* ==========================================================================
+   Filters Toolbar (matches .tracker-filters from tracker-density)
+   ========================================================================== */
 .au-filters {
-    padding: 16px 24px;
+    padding: 13px 18px;
     display: flex;
-    gap: 10px;
+    gap: 10px 12px;
     flex-wrap: wrap;
     align-items: center;
-    background: #fafbfc;
-    border-bottom: 1px solid #f1f5f9;
+    background: #ffffff;
+    border-bottom: 1px solid #edf0f4;
 }
 
 .au-search {
     position: relative;
-    flex: 1;
-    min-width: 240px;
+    flex: 1 1 240px;
+    min-width: 220px;
 }
 
 .au-search i {
     position: absolute;
-    left: 13px;
+    left: 14px;
     top: 50%;
     transform: translateY(-50%);
     font-size: 16px;
-    color: #94a3b8;
+    color: #878292;
     pointer-events: none;
 }
 
 .au-filters input,
 .au-filters select {
-    width: 100%;
-    height: 40px;
-    border: 1px solid #e2e8f0;
-    border-radius: 11px;
-    background: #ffffff;
-    color: #334155;
-    font-size: 12px;
-    font-weight: 500;
-    padding: 0 12px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    min-height: 40px;
+    border: 1px solid #dfe3eb;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #5b5568;
+    font-size: 11px;
+    box-shadow: none;
     transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .au-filters input {
-    padding-left: 36px;
+    width: 100%;
+    padding: 8px 14px 8px 38px;
+    font-size: 12px;
+    color: #3d3747;
 }
 
 .au-filters input::placeholder {
-    color: #94a3b8;
+    color: #787581;
+}
+
+.au-filters select {
+    padding: 8px 30px 8px 12px;
 }
 
 .au-filters input:focus,
 .au-filters select:focus {
-    border-color: #2579ca;
+    border-color: #ad8ac8;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(37, 121, 202, 0.12);
+    box-shadow: 0 0 0 2px rgba(160, 120, 187, 0.2);
 }
 
 .au-filters label:not(.au-search) {
-    min-width: 140px;
+    min-width: 130px;
 }
 
 .au-page-size {
-    min-width: 110px !important;
+    min-width: 100px !important;
 }
 
 .au-clear {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 12px;
+    min-height: 36px;
+    font-size: 11px;
     font-weight: 600;
-    color: #64748b;
-    background: #f1f5f9;
-    border: 1px solid #e2e8f0;
+    color: #805296;
+    background: #faf7fc;
+    border: 1px solid #e2d8ea;
     border-radius: 9px;
-    padding: 8px 12px;
+    padding: 6px 12px;
     cursor: pointer;
     transition: all 0.15s;
 }
 
 .au-clear:hover {
-    background: #e2e8f0;
-    color: #0f172a;
+    background: #f1e9f6;
+    color: #5d3979;
 }
 
-/* Table Design */
+/* ==========================================================================
+   Table Design (matches .tracker-desktop-table from tracker-density)
+   ========================================================================== */
 .au-table-scroll {
     overflow-x: auto;
+    max-height: min(70vh, 720px);
     scrollbar-width: thin;
-    min-height: 380px;
+    scrollbar-color: #c6b7cf #f6f8fa;
 }
 
 .au-table {
     width: 100%;
+    min-width: 1020px;
     border-collapse: collapse;
+    table-layout: fixed;
     text-align: left;
-    font-size: 13px;
-    min-width: 960px;
 }
 
-.au-table thead {
-    background: #f8fafc;
-}
+.au-table colgroup col:nth-child(1) { width: 28%; }
+.au-table colgroup col:nth-child(2) { width: 15%; }
+.au-table colgroup col:nth-child(3) { width: 23%; }
+.au-table colgroup col:nth-child(4) { width: 18%; }
+.au-table colgroup col:nth-child(5) { width: 16%; }
 
 .au-table th {
-    padding: 12px 18px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    color: #514b59;
     font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: #64748b;
-    border-bottom: 1px solid #e2e8f0;
+    font-weight: 600;
+    border-bottom: 1px solid #dce0e5;
+    text-transform: none;
+    letter-spacing: 0;
     white-space: nowrap;
 }
 
-.au-table th:first-child,
-.au-table td:first-child {
-    padding-left: 24px;
+.au-table :is(th, td):not(:last-child) {
+    border-right: 1px solid #edf0f3;
 }
 
-.au-table th:last-child,
-.au-table td:last-child {
-    padding-right: 24px;
+.au-table :is(th, td):first-child {
+    padding-left: 18px;
+}
+
+.au-table :is(th, td):last-child {
+    padding-right: 18px;
     text-align: right;
 }
 
-.au-table tbody tr {
-    border-bottom: 1px solid #f1f5f9;
-    transition: background-color 0.15s;
-}
-
-.au-table tbody tr:hover {
-    background-color: #f8fafc;
-}
-
-.au-table tbody tr:last-child {
-    border-bottom: 0;
-}
-
 .au-table td {
-    padding: 15px 18px;
+    padding: 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    border-top: 1px solid #e5e9ee;
     vertical-align: middle;
+    color: #565363;
 }
 
-/* Column 1: Member Info */
+/* Zebra striping & Hover matches tracker */
+.au-table tbody tr {
+    background: #ffffff;
+    transition: background 0.15s;
+}
+
+.au-table tbody tr:nth-child(even) {
+    background: #f4f6f8;
+}
+
+.au-table tbody tr:hover,
+.au-table tbody tr:focus-within {
+    background: #eceff3;
+}
+
+/* Column 1: Member Info (matches .tracker-opportunity) */
 .au-member {
     display: flex;
     align-items: center;
-    gap: 13px;
-    min-width: 250px;
+    gap: 10px;
 }
 
 .au-avatar-wrapper {
-    position: relative;
     flex-shrink: 0;
 }
 
 .au-avatar-img {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
     object-fit: cover;
-    background: #f1f5f9;
-    border: 2px solid #ffffff;
-    box-shadow: 0 0 0 1px #e2e8f0;
+    background: #eee8f8;
+    border: 1px solid #e1d8ea;
     display: block;
 }
 
 .au-member-info {
     display: flex;
     flex-direction: column;
-    gap: 2px;
     min-width: 0;
 }
 
 .au-member-name {
     font-size: 13px;
-    font-weight: 700;
-    color: #0f172a;
-    line-height: 1.3;
+    font-weight: 600;
+    color: #34313e;
+    line-height: 1.4;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .au-member-email {
-    font-size: 12px;
-    color: #64748b;
-    line-height: 1.3;
+    font-size: 11px;
+    line-height: 1.4;
+    margin-top: 2px;
+    color: #5c5668;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -410,7 +407,7 @@
 .au-member-tags {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     margin-top: 3px;
 }
 
@@ -419,10 +416,10 @@
     align-items: center;
     gap: 3px;
     font-size: 10px;
-    font-weight: 600;
-    padding: 1.5px 6px;
+    line-height: 1.4;
+    padding: 2px 6px;
     border-radius: 5px;
-    line-height: 1.3;
+    font-weight: 550;
 }
 
 .au-tag--verified {
@@ -432,72 +429,71 @@
 }
 
 .au-tag--google {
-    background: #eff6ff;
-    color: #2563eb;
-    border: 1px solid #dbeafe;
+    background: #f5f0f8;
+    color: #6c4782;
+    border: 1px solid #e8deec;
 }
 
 .au-tag--linkedin {
-    background: #f0fdf4;
-    color: #16a34a;
-    border: 1px solid #dcfce7;
+    background: #f2f7f4;
+    color: #2b7a4b;
+    border: 1px solid #d8ebd9;
 }
 
-/* Column 2: Plan Badge */
+/* Column 2: Plan Badge (matches .tracker-pill) */
 .au-plan-container {
     display: flex;
     flex-direction: column;
     gap: 3px;
-    min-width: 130px;
 }
 
 .au-plan-badge {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 4px 9px;
-    border-radius: 7px;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 550;
+    border-radius: 999px;
+    padding: 4px 8px;
+    white-space: nowrap;
+    line-height: 1.5;
     width: fit-content;
 }
 
 .au-plan-badge--premium {
-    background: #fef3c7;
-    color: #b45309;
-    border: 1px solid #fde68a;
+    background: #ede6f8;
+    color: #795194;
 }
 
 .au-plan-badge--free {
-    background: #f1f5f9;
-    color: #475569;
-    border: 1px solid #e2e8f0;
+    background: #f1f2f6;
+    color: #565363;
 }
 
 .au-plan-sub {
-    font-size: 10.5px;
-    color: #94a3b8;
-    line-height: 1.3;
+    font-size: 10px;
+    color: #67616f;
+    line-height: 1.4;
 }
 
 /* Column 3: Applications Stats */
 .au-app-stats {
     display: flex;
     align-items: center;
-    gap: 7px;
-    min-width: 190px;
+    gap: 6px;
     flex-wrap: wrap;
 }
 
 .au-chip {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    font-size: 11.5px;
+    gap: 4px;
+    font-size: 11px;
     font-weight: 500;
-    padding: 4px 9px;
-    border-radius: 8px;
+    padding: 3px 8px;
+    border-radius: 7px;
     white-space: nowrap;
+    line-height: 1.4;
 }
 
 .au-chip strong {
@@ -505,21 +501,30 @@
 }
 
 .au-chip--applied {
-    background: #eff6ff;
-    color: #1d4ed8;
-    border: 1px solid #dbeafe;
+    background: #f5edf8;
+    color: #6b3f7f;
+    border: 1px solid #e7d8ee;
+}
+
+.au-chip--applied i {
+    color: #834fa0;
+    font-size: 12px;
 }
 
 .au-chip--declined {
-    background: #fff1f2;
-    color: #be123c;
-    border: 1px solid #ffe4e6;
+    background: #fbe8e1;
+    color: #a35f47;
+    border: 1px solid #f6d8cd;
+}
+
+.au-chip--declined i {
+    font-size: 12px;
 }
 
 .au-chip--empty {
-    background: #f8fafc;
-    color: #94a3b8;
-    border: 1px solid #e2e8f0;
+    background: #f7f6f8;
+    color: #928b99;
+    border: 1px solid #eae6ee;
 }
 
 /* Column 4: Activity Status */
@@ -527,21 +532,20 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
-    min-width: 130px;
 }
 
 .au-activity-top {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    color: #1e293b;
+    color: #43394d;
 }
 
 .au-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     display: inline-block;
     flex-shrink: 0;
@@ -554,161 +558,131 @@
 }
 
 .au-dot--recent {
-    background: #3b82f6;
+    background: #8c6baa;
 }
 
 .au-dot--idle {
-    background: #cbd5e1;
+    background: #c3b9cb;
 }
 
 .au-activity small {
-    font-size: 10.5px;
-    color: #94a3b8;
+    font-size: 10px;
+    color: #67616f;
 }
 
-/* Column 5: Row Actions */
+/* Column 5: Row Actions (matches .tracker-actions) */
 .au-row-actions {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     justify-content: flex-end;
 }
 
 .au-manage {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    min-height: 35px;
-    padding: 6px 12px;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
+    gap: 5px;
+    min-height: 30px;
+    padding: 0 10px;
+    border: 1px solid #dfe3eb;
+    border-radius: 8px;
     background: #ffffff;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    color: #334155;
+    color: #5b5568;
     cursor: pointer;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    box-shadow: none;
     transition: all 0.15s ease;
 }
 
 .au-manage:hover {
-    border-color: #2579ca;
-    background: #f0f7fd;
-    color: #1e65ab;
+    border-color: #c7b4df;
+    background: #eee8f6;
+    color: #74508c;
 }
 
 .au-more {
+    width: 30px;
+    min-height: 30px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 35px;
-    height: 35px;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
+    border: 1px solid #dfe3eb;
+    border-radius: 8px;
     background: #ffffff;
-    color: #64748b;
-    font-size: 18px;
+    color: #6e6379;
+    font-size: 15px;
     cursor: pointer;
     transition: all 0.15s ease;
 }
 
-.au-more:hover,
-.au-more[aria-expanded="true"] {
-    background: #f1f5f9;
-    color: #0f172a;
-    border-color: #cbd5e1;
+.au-more:hover {
+    background: #eee8f6;
+    color: #74508c;
+    border-color: #c7b4df;
 }
 
-/* Floating Action Dropdown Menu */
+/* Dropdown Menu */
 .au-action-menu {
     position: fixed;
     z-index: 9999;
-    width: 220px;
-    padding: 6px;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
+    width: 210px;
     background: #ffffff;
-    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.15);
-    font-family: inherit;
-    animation: au-scale-in 0.12s ease-out;
+    border: 1px solid #d7dce2;
+    border-radius: 12px;
+    padding: 5px;
+    box-shadow: 0 8px 24px rgba(32, 23, 47, 0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
-.au-action-menu > p {
-    margin: 4px 8px 6px;
-    padding-bottom: 7px;
-    border-bottom: 1px solid #f1f5f9;
+.au-action-menu p {
     font-size: 11px;
     font-weight: 600;
-    color: #94a3b8;
-    white-space: nowrap;
+    color: #776e82;
+    padding: 6px 9px 4px;
+    margin: 0;
+    border-bottom: 1px solid #edf0f4;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .au-action-menu button {
-    width: 100%;
     display: flex;
     align-items: center;
-    gap: 9px;
-    min-height: 36px;
-    padding: 8px 10px;
-    border: 0;
-    border-radius: 8px;
+    gap: 8px;
+    width: 100%;
+    padding: 7px 9px;
+    border-radius: 7px;
+    border: none;
     background: transparent;
-    text-align: left;
-    color: #334155;
-    font-size: 12px;
-    font-weight: 500;
+    font-size: 11.5px;
+    font-weight: 550;
+    color: #4b4156;
     cursor: pointer;
-    transition: background 0.15s;
+    text-align: left;
+    transition: background 0.12s, color 0.12s;
 }
 
 .au-action-menu button:hover {
-    background: #f8fafc;
-    color: #0f172a;
+    background: #f5eff8;
+    color: #5d3979;
 }
 
-.au-action-menu button i {
-    font-size: 16px;
-    color: #64748b;
+.au-action-menu button.au-danger {
+    color: #be123c;
 }
 
-.au-action-menu .au-danger {
-    color: #ef4444;
-    border-top: 1px solid #f8fafc;
-    margin-top: 4px;
+.au-action-menu button.au-danger:hover {
+    background: #fbe8e1;
+    color: #a35f47;
 }
 
-.au-action-menu .au-danger:hover {
-    background: #fef2f2;
-    color: #dc2626;
-}
-
-.au-action-menu .au-danger i {
-    color: #ef4444;
-}
-
-/* Footer Pagination */
-.au-directory-footer {
-    border-top: 1px solid #f1f5f9;
-    padding: 16px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    font-size: 12px;
-    color: #64748b;
-    background: #fafbfc;
-}
-
-.au-directory-footer strong {
-    font-weight: 700;
-    color: #0f172a;
-}
-
-/* Empty State */
+/* Empty State (matches .tracker-empty) */
 .au-empty {
-    padding: 80px 20px;
+    padding: 50px 20px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -717,33 +691,52 @@
 }
 
 .au-empty-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 18px;
-    background: #f1f5f9;
-    color: #94a3b8;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #f0ebf7;
+    color: #795194;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
-    margin-bottom: 14px;
+    font-size: 22px;
+    margin-bottom: 12px;
 }
 
 .au-empty h3 {
     font-size: 16px;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 4px;
+    font-weight: 600;
+    color: #37303f;
+    margin: 0 0 5px;
 }
 
 .au-empty p {
-    font-size: 13px;
-    color: #64748b;
-    max-width: 320px;
+    font-size: 12px;
+    color: #767082;
+    margin: 0;
+    max-width: 360px;
+    line-height: 1.5;
+}
+
+/* Footer & Pagination (matches .tracker-pagination) */
+.au-directory-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 18px;
+    border-top: 1px solid #edf0f4;
+    background: #ffffff;
+    flex-wrap: wrap;
+}
+
+.au-directory-footer span {
+    font-size: 11px;
+    color: #767082;
 }
 
 /* ==========================================================================
-   Modern TraKerja Dialog / Modal System (.au-dialog)
+   Modals (matches .job-dialog / .tracker-draft-backdrop)
    ========================================================================== */
 
 .au-dialog-overlay {
@@ -753,324 +746,275 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
-    background: rgba(15, 23, 42, 0.45);
+    padding: 24px;
+    background: rgb(35 29 49 / 35%);
     backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    animation: au-fade-in 0.18s ease-out;
+    overflow-y: auto;
+    animation: au-fade-in 0.18s ease-out both;
 }
 
 .au-dialog {
     width: 100%;
-    max-width: 580px;
-    max-height: min(90dvh, 850px);
+    max-width: 620px;
+    max-height: min(780px, calc(100dvh - 48px));
     display: flex;
     flex-direction: column;
-    border-radius: 22px;
     background: #ffffff;
-    border: 1px solid rgba(226, 232, 240, 0.9);
-    box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.25);
+    border: 1px solid rgb(255 255 255 / 85%);
+    border-radius: 24px;
+    box-shadow: 0 24px 90px rgb(32 24 53 / 20%);
+    animation: au-scale-in 0.18s ease-out both;
     overflow: hidden;
-    animation: au-scale-in 0.18s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .au-dialog--small {
-    max-width: 440px;
+    max-width: 460px;
 }
 
 .au-dialog-heading {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
+    justify-content: space-between;
     gap: 16px;
-    padding: 22px 24px;
-    border-bottom: 1px solid #f1f5f9;
-    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    padding: 20px 24px 17px;
+    border-bottom: 1px solid #eef0f4;
+    background: #ffffff;
     flex-shrink: 0;
 }
 
 .au-dialog-heading h2 {
-    font-size: 18px;
-    font-weight: 700;
-    color: #0f172a;
-    letter-spacing: -0.4px;
+    font-size: 19px;
+    font-weight: 650;
+    color: #37303f;
+    letter-spacing: -0.5px;
     margin: 0;
+    line-height: 1.3;
 }
 
 .au-dialog-heading p {
     font-size: 12px;
-    color: #64748b;
+    color: #6b6c79;
+    margin: 4px 0 0;
     line-height: 1.5;
-    margin-top: 4px;
 }
 
 .au-dialog-close {
     width: 34px;
     height: 34px;
+    display: grid;
+    place-items: center;
     border-radius: 50%;
-    background: #f1f5f9;
-    border: 1px solid #e2e8f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #64748b;
-    font-size: 16px;
+    background: #f3f4f7;
+    color: #636471;
+    border: none;
     cursor: pointer;
+    font-size: 17px;
     flex-shrink: 0;
-    transition: all 0.15s ease;
+    transition: background 0.15s ease;
 }
 
 .au-dialog-close:hover {
-    background: #e2e8f0;
-    color: #0f172a;
+    background: #eae6f5;
+    color: #513267;
 }
 
 .au-dialog-body {
-    padding: 24px;
+    padding: 18px 24px 22px;
     overflow-y: auto;
     overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #d7d2df transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-/* User Card in Modal */
+/* Person Banner in Modal */
 .au-dialog-person {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 16px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    margin-bottom: 20px;
+    gap: 12px;
+    padding: 12px 14px;
+    background: #faf8fb;
+    border: 1px solid #ede7f2;
+    border-radius: 14px;
 }
 
 .au-dialog-person img {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
     object-fit: cover;
-    background: #ffffff;
-    border: 2px solid #ffffff;
-    box-shadow: 0 0 0 1px #cbd5e1;
-    flex-shrink: 0;
+    border: 1px solid #e3d9ec;
 }
 
-.au-dialog-person div {
+.au-dialog-person > div:first-of-type {
     flex: 1;
     min-width: 0;
 }
 
 .au-dialog-person strong {
-    font-size: 14px;
-    font-weight: 700;
-    color: #0f172a;
     display: block;
+    font-size: 13.5px;
+    font-weight: 650;
+    color: #34313e;
 }
 
 .au-dialog-person span {
-    font-size: 12px;
-    color: #64748b;
     display: block;
-    margin-top: 2px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 11.5px;
+    color: #6b6c79;
+    margin-top: 1px;
 }
 
 /* Account Details Grid */
 .au-account-details {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    margin-bottom: 22px;
+    gap: 9px;
+    margin: 0;
 }
 
 .au-detail-tile {
-    padding: 10px 14px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
+    background: #fbf9fc;
+    border: 1px solid #edf0f4;
+    border-radius: 10px;
+    padding: 9px 12px;
 }
 
 .au-detail-tile dt {
     font-size: 10.5px;
     font-weight: 600;
+    color: #7b7487;
     text-transform: uppercase;
-    color: #94a3b8;
-    margin-bottom: 3px;
     letter-spacing: 0.3px;
 }
 
 .au-detail-tile dd {
     font-size: 12.5px;
-    font-weight: 600;
-    color: #1e293b;
-    margin: 0;
+    font-weight: 650;
+    color: #34313e;
+    margin: 2px 0 0;
 }
 
-/* Forms inside Modal */
+/* Forms in Dialogs */
 .au-form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
 }
 
 .au-form-section {
-    padding-bottom: 18px;
-    border-bottom: 1px solid #f1f5f9;
+    padding-top: 14px;
+    border-top: 1px solid #eef0f4;
 }
 
-.au-form-section:last-child {
-    border-bottom: 0;
-    padding-bottom: 0;
-}
-
-.au-form h3 {
-    font-size: 13.5px;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 12px;
+.au-form-section h3 {
+    font-size: 13px;
+    font-weight: 650;
+    color: #433652;
+    margin: 0 0 8px;
 }
 
 .au-form label {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    font-size: 12px;
+    gap: 4px;
+    font-size: 11.5px;
     font-weight: 600;
-    color: #334155;
-    margin-bottom: 10px;
+    color: #555461;
 }
 
 .au-form input:not([type="checkbox"]),
 .au-form select {
-    width: 100%;
-    min-height: 42px;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    background: #f8fafc;
-    padding: 8px 14px;
-    font-size: 13px;
-    font-weight: 500;
-    color: #0f172a;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
-    transition: all 0.15s;
+    height: 38px;
+    border: 1px solid #e2e3ea;
+    border-radius: 10px;
+    background: #f9fafc;
+    color: #34313e;
+    font-size: 12.5px;
+    padding: 0 12px;
+    font-family: inherit;
+    transition: all 0.15s ease;
 }
 
 .au-form input:focus,
 .au-form select:focus {
-    border-color: #2579ca;
+    border-color: #ad8ac8;
     background: #ffffff;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(37, 121, 202, 0.15);
-}
-
-.au-checkbox-row {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 4px;
-}
-
-.au-checkbox-label {
-    display: inline-flex !important;
-    flex-direction: row !important;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    font-size: 13px !important;
-    font-weight: 500 !important;
-    color: #334155 !important;
-    margin-bottom: 0 !important;
-}
-
-.au-checkbox-label input {
-    width: 17px;
-    height: 17px;
-    border-radius: 5px;
-    border: 1.5px solid #cbd5e1;
-    color: #2579ca;
-    cursor: pointer;
+    box-shadow: 0 0 0 2px rgba(160, 120, 187, 0.2);
 }
 
 .au-form-hint {
     font-size: 11px;
-    color: #64748b;
+    color: #777381;
+    margin: 2px 0 0;
     line-height: 1.5;
-    margin-top: 4px;
 }
 
 .au-field-error {
     font-size: 11px;
     color: #ef4444;
-    font-weight: 500;
+    font-weight: 600;
+}
+
+.au-checkbox-row {
+    display: flex;
+    gap: 16px;
+    padding: 4px 0;
+}
+
+.au-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #433652;
+    cursor: pointer;
+}
+
+.au-checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    accent-color: #2579ca;
 }
 
 .au-quota-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
-    margin-bottom: 6px;
+    gap: 9px;
 }
 
 .au-quota-tile {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 10px;
-}
-
-.au-quota-tile label {
-    margin-bottom: 0;
-    gap: 4px;
-}
-
-.au-form-actions,
-.au-dialog-actions {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 12px;
-}
-
-.au-dialog-actions {
-    padding-top: 18px;
-    border-top: 1px solid #f1f5f9;
+    background: #fbf9fc;
+    border: 1px solid #edf0f4;
+    border-radius: 10px;
+    padding: 9px;
 }
 
 .au-recipient {
-    border: 1px solid #e2e8f0;
-    background: #f8fafc;
-    border-radius: 14px;
-    padding: 16px;
-    margin-bottom: 18px;
+    padding: 11px 13px;
+    background: #f7f2fa;
+    border: 1px solid #e9dff1;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
 .au-recipient strong {
-    font-size: 13.5px;
-    font-weight: 700;
-    color: #0f172a;
-    display: block;
+    font-size: 12.5px;
+    color: #35264f;
 }
 
 .au-recipient span {
-    font-size: 12px;
-    color: #64748b;
-    display: block;
-    margin-top: 4px;
-    line-height: 1.5;
-}
-
-.au-recipient--danger {
-    background: #fef2f2;
-    border-color: #fee2e2;
-}
-
-.au-recipient--danger strong {
-    color: #991b1b;
-}
-
-.au-recipient--danger span {
-    color: #b91c1c;
+    font-size: 11.5px;
+    color: #796b86;
+    line-height: 1.4;
 }
 
 .au-recipient--warning {
@@ -1086,98 +1030,80 @@
     color: #b45309;
 }
 
-/* Account Actions Section inside Edit Modal */
+.au-recipient--danger {
+    background: #fef2f2;
+    border-color: #fee2e2;
+}
+
+.au-recipient--danger strong {
+    color: #991b1b;
+}
+
+.au-recipient--danger span {
+    color: #b91c1c;
+}
+
+.au-dialog-actions,
+.au-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+}
+
 .au-account-actions {
-    padding-top: 18px;
-    border-top: 1px solid #f1f5f9;
-    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #eef0f4;
 }
 
 .au-account-actions h3 {
     font-size: 13px;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 12px;
+    font-weight: 650;
+    color: #433652;
+    margin: 0 0 8px;
 }
 
 .au-account-action-buttons {
     display: flex;
-    align-items: center;
-    gap: 9px;
     flex-wrap: wrap;
+    gap: 7px;
 }
 
 .au-account-delete {
-    color: #ef4444;
-    background: #fef2f2;
-    border: 1px solid #fee2e2;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 36px;
+    padding: 6px 12px;
     border-radius: 10px;
-    padding: 8px 14px;
     font-size: 12px;
     font-weight: 600;
+    background: #fff1f2;
+    color: #be123c;
+    border: 1px solid #ffe4e6;
     cursor: pointer;
-    margin-left: auto;
-    transition: all 0.15s;
+    transition: all 0.15s ease;
 }
 
 .au-account-delete:hover {
-    background: #fee2e2;
-    color: #dc2626;
+    background: #ffe4e6;
+    color: #9f1239;
 }
 
-/* Responsive Breakpoints */
-@media (max-width: 1100px) {
-    .au-kpi-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-}
-
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    .au-kpi-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    .au-dialog-overlay {
+        padding: 10px;
     }
-    .au-header-actions {
-        width: 100%;
-    }
-    .au-header-actions .au-button {
-        flex: 1;
-    }
-    .au-filters {
-        padding: 14px 16px;
-    }
-    .au-search {
-        flex-basis: 100%;
-    }
-    .au-filters label:not(.au-search) {
-        flex: 1;
-    }
-    .au-directory-heading {
-        padding: 18px 16px 14px;
-    }
-    .au-directory-footer {
-        padding: 14px 16px;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .au-quota-grid {
-        grid-template-columns: 1fr;
+    .au-dialog {
+        border-radius: 20px;
+        max-height: calc(100dvh - 20px);
     }
     .au-account-details {
         grid-template-columns: 1fr;
     }
-    .au-dialog {
-        border-radius: 18px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .admin-users-workspace,
-    .au-dialog,
-    .au-dialog-overlay,
-    .au-action-menu {
-        animation: none !important;
-    }
-    .au-dot--active {
-        animation: none !important;
+    .au-quota-grid {
+        grid-template-columns: 1fr;
     }
 }
