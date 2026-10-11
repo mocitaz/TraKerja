@@ -55,7 +55,7 @@ class EmailBlastController extends Controller
     public function send(Request $request)
     {
         $validationRules = [
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam,maintenance_completed,new_vibe',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam,maintenance_completed,new_vibe,brand_transformation',
             'target_user' => 'required|in:all,verified,premium,free,new,unverified',
         ];
 
@@ -119,6 +119,9 @@ class EmailBlastController extends Controller
                         break;
                     case 'new_vibe':
                         Mail::to($user->email)->send(new \App\Mail\NewVibeMail($user));
+                        break;
+                    case 'brand_transformation':
+                        Mail::to($user->email)->send(new \App\Mail\BrandTransformationMail($user));
                         break;
                     case 'hiring_season':
                         Mail::to($user->email)->send(new HiringSeasonAlertMail($user));
@@ -212,7 +215,7 @@ class EmailBlastController extends Controller
     public function initProgress(Request $request)
     {
         $validationRules = [
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam,maintenance_completed,new_vibe',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam,maintenance_completed,new_vibe,brand_transformation',
             'target_user' => 'required|in:all,verified,premium,free,new,unverified',
         ];
 
@@ -256,7 +259,7 @@ class EmailBlastController extends Controller
     {
         $validationRules = [
             'user_id' => 'required|exists:users,id',
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam,maintenance_completed,new_vibe',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam,maintenance_completed,new_vibe,brand_transformation',
         ];
 
         if ($request->email_type === 'custom') {
@@ -298,6 +301,9 @@ class EmailBlastController extends Controller
                     break;
                 case 'new_vibe':
                     Mail::to($user->email)->send(new \App\Mail\NewVibeMail($user));
+                    break;
+                case 'brand_transformation':
+                    Mail::to($user->email)->send(new \App\Mail\BrandTransformationMail($user));
                     break;
                 case 'hiring_season':
                     Mail::to($user->email)->send(new HiringSeasonAlertMail($user));
@@ -448,7 +454,7 @@ class EmailBlastController extends Controller
     public function preview(Request $request)
     {
         $validationRules = [
-            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam,maintenance_completed,new_vibe',
+            'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam,maintenance_completed,new_vibe,brand_transformation',
         ];
 
         if ($request->email_type === 'custom') {
@@ -488,6 +494,9 @@ class EmailBlastController extends Controller
                     break;
                 case 'new_vibe':
                     $mailable = new \App\Mail\NewVibeMail($user);
+                    break;
+                case 'brand_transformation':
+                    $mailable = new \App\Mail\BrandTransformationMail($user);
                     break;
                 case 'hiring_season':
                     $mailable = new HiringSeasonAlertMail($user);

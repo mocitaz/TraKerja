@@ -5,6 +5,7 @@
     <title>{{ $user->name }} | Portfolio</title>
     @if($preview)<meta name="robots" content="noindex,nofollow">@endif
     <meta name="description" content="{{ \Illuminate\Support\Str::limit(strip_tags($user->profile?->bio ?? $user->profile?->headline ?? 'Portfolio of '.$user->name), 160) }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}?v=2">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css'])
 </head>

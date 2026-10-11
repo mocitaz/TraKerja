@@ -32,7 +32,7 @@
                             <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:28px;">
                                 <tr>
                                     <td>
-                                        <p style="margin:0 0 16px 0; font-size:10px; font-weight:700; color:#7c3aed; letter-spacing:0.1em; text-transform:uppercase; font-family: monospace;">
+                                        <p style="margin:0 0 16px 0; font-size:11px; font-weight:700; color:#7b5ea7; letter-spacing:0.06em; text-transform:uppercase; background-color:#fcf9fe; display:inline-block; padding:3px 8px; border-radius:6px; border:1px solid #f2e7f7;">
                                             Daftar Perubahan Utama
                                         </p>
 
@@ -77,13 +77,12 @@
                                 </tr>
                             </table>
 
-                            <!-- CTA Button (Notion Solid Style) -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:20px;">
+                    <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:20px;">
                                 <tr>
                                     <td align="left">
                                         <a href="{{ config('app.url') }}/tracker"
-                                           style="display:inline-block; padding:10px 20px; background-color:#18181b; color:#ffffff; text-decoration:none; border-radius:6px; font-size:12px; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em;">
-                                            Coba Workspace Baru
+                                           style="display:inline-block; padding:12px 28px; background-color:#7b5ea7; color:#ffffff; text-decoration:none; border-radius:999px; font-size:13px; font-weight:600; letter-spacing:0.02em; box-shadow:0 3px 12px rgba(123,94,167,0.22);">
+                                            Coba Workspace Baru ✨
                                         </a>
                                     </td>
                                 </tr>

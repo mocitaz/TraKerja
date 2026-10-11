@@ -46,9 +46,8 @@ export function cvReview(template, previewUrl, checkUrl) {
         template, previewUrl, spacing: 'standard', fontSize: '9.5pt', loading: true,
         checkOpen: false, checking: false, checkError: '', result: null,
         get margin() {
-            if (this.template === 'professional') return '0';
-            const sizes = this.template === 'creative' ? { compact: '12mm', standard: '20mm', spacious: '28mm' } : { compact: '10mm', standard: '15mm', spacious: '22mm' };
-            return sizes[this.spacing];
+            const sizes = { compact: '10mm', standard: '15mm', spacious: '20mm' };
+            return sizes[this.spacing] || '15mm';
         },
         async runCheck() {
             if (this.checking) return;

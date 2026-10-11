@@ -7,3 +7,9 @@
 body:has(.floating-ai-prompt) .action-toast-stack { bottom: calc(82px + env(safe-area-inset-bottom)); }
 @media (max-width: 640px) { body:has(.floating-ai-prompt) .action-toast-stack { bottom: calc(136px + env(safe-area-inset-bottom)); } }
 @media (prefers-reduced-motion: reduce) { .floating-ai-prompt a { transition: none; } }
+
+/* Never show floating AI prompt inside AI studio/tools or admin */
+body:has(.ai-portal) .floating-ai-prompt,
+body:has(.admin-page-frame) .floating-ai-prompt {
+    display: none !important;
+}

@@ -118,12 +118,12 @@ if (!function_exists('format_cv_text')) {
         }
 
         // Step 2: Render each line
-        $html = '<div style="font-family: \'Plus Jakarta Sans\', sans-serif; word-break: break-word;">';
+        $html = '<div style="word-break: break-word;">';
         
         foreach ($lines as $line) {
             $trimmed = trim($line);
             if ($trimmed === "") {
-                $html .= '<div style="height:14px;"></div>';
+                $html .= '<div style="height:10px;"></div>';
                 continue;
             }
 
@@ -132,22 +132,26 @@ if (!function_exists('format_cv_text')) {
             $formatted = preg_replace('/\*\*([^*]+)\*\*/', '<strong style="font-weight:800;color:#0f172a;">$1</strong>', e($trimmed));
             
             // *[estimasi]* -> Badge
-            $formatted = preg_replace('/\*\[estimasi\]\*/', '<span style="display:inline-flex;padding:1px 6px;background-color:#fff1f2;color:#e11d48;border-radius:4px;font-size:0.75em;font-weight:700;margin-left:4px;text-transform:uppercase;">Estimasi</span>', $formatted);
+            $formatted = preg_replace('/\*\[estimasi\]\*/', '<span style="display:inline-block;padding:1px 5px;background-color:#fff1f2;color:#e11d48;border-radius:4px;font-size:0.75em;font-weight:700;margin-left:4px;text-transform:uppercase;">Estimasi</span>', $formatted);
 
             // Classify & Wrap
             if (preg_match('/^\*\*[^*]+\*\*$/', $trimmed)) {
                 // Header
-                $html .= "<p style=\"font-weight:800;color:#0f172a;margin:12px 0 4px 0;font-size:1em;line-height:1.4;letter-spacing:-0.01em;\">{$formatted}</p>";
+                $html .= "<p style=\"font-weight:800;color:#0f172a;margin:10px 0 3px 0;font-size:1em;line-height:1.4;\">{$formatted}</p>";
             } elseif (preg_match('/^[^a-zA-Z0-9\s]*[•\-\*\x{2022}\x{2023}\x{25E6}\x{2043}\x{2219}]\s*/u', $trimmed)) {
                 // Bullet (Supports common bullet chars including UTF-8 variants, aggressively cleaning leading non-chars)
                 $content = preg_replace('/^[^a-zA-Z0-9\s]*[•\-\*\x{2022}\x{2023}\x{25E6}\x{2043}\x{2219}]\s*/u', '', $formatted);
-                $html .= "<div style=\"display:flex;align-items:flex-start;gap:10px;margin-bottom:6px;\">
-                    <span style=\"margin-top:8px;flex-shrink:0;width:5px;height:5px;background-color:#64748b;border-radius:50%;\"></span>
-                    <p style=\"margin:0;color:#334155;line-height:1.6;font-size:0.95em;\">{$content}</p>
-                </div>";
+                $html .= "<table style=\"width:100%;border-collapse:collapse;margin:0 0 3px 0;padding:0;border:0;\">
+                    <tr>
+                        <td style=\"width:14px;vertical-align:top;padding:0;line-height:1.45;color:#475569;font-size:11pt;text-align:left;border:0;\">&#8226;</td>
+                        <td style=\"vertical-align:top;padding:0;border:0;line-height:1.45;\">
+                            <p style=\"margin:0;color:#334155;line-height:1.45;font-size:0.95em;\">{$content}</p>
+                        </td>
+                    </tr>
+                </table>";
             } else {
                 // Plain Text
-                $html .= "<p style=\"color:#475569;line-height:1.6;font-size:0.95em;margin:0 0 8px 0;\">{$formatted}</p>";
+                $html .= "<p style=\"color:#475569;line-height:1.5;font-size:0.95em;margin:0 0 6px 0;\">{$formatted}</p>";
             }
         }
 

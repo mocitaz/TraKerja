@@ -36,7 +36,7 @@
                             <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:28px;">
                                 <tr>
                                     <td style="border-top:1px solid #e4e4e7; padding-top:24px;">
-                                        <p style="margin:0 0 24px 0; font-size:11px; font-weight:700; color:#7c3aed; letter-spacing:0.1em; text-transform:uppercase;">
+                                        <p style="margin:0 0 24px 0; font-size:11px; font-weight:700; color:#7b5ea7; letter-spacing:0.06em; text-transform:uppercase; background-color:#fcf9fe; display:inline-block; padding:3px 8px; border-radius:6px; border:1px solid #f2e7f7;">
                                             Langkah Awal Penggunaan
                                         </p>
 
@@ -46,7 +46,7 @@
                                                     <table role="presentation" style="width:100%; border-collapse:collapse;">
                                                         <tr>
                                                             <td width="36" style="vertical-align:top; padding-top:1px;">
-                                                                <div style="width:26px; height:26px; border-radius:6px; background-color:#6d28d9; text-align:center; line-height:26px; font-size:11px; font-weight:700; color:#ffffff;">1</div>
+                                                                <div style="width:26px; height:26px; border-radius:6px; background-color:#7b5ea7; text-align:center; line-height:26px; font-size:11px; font-weight:700; color:#ffffff;">1</div>
                                                             </td>
                                                             <td style="padding-left:14px; vertical-align:top;">
                                                                 <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">Lengkapi Profil dan Buat CV</p>
@@ -61,7 +61,7 @@
                                                     <table role="presentation" style="width:100%; border-collapse:collapse;">
                                                         <tr>
                                                             <td width="36" style="vertical-align:top; padding-top:1px;">
-                                                                <div style="width:26px; height:26px; border-radius:6px; background-color:#6d28d9; text-align:center; line-height:26px; font-size:11px; font-weight:700; color:#ffffff;">2</div>
+                                                                <div style="width:26px; height:26px; border-radius:6px; background-color:#7b5ea7; text-align:center; line-height:26px; font-size:11px; font-weight:700; color:#ffffff;">2</div>
                                                             </td>
                                                             <td style="padding-left:14px; vertical-align:top;">
                                                                 <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">Catat Lamaran Pertama Anda</p>
@@ -76,7 +76,7 @@
                                                     <table role="presentation" style="width:100%; border-collapse:collapse;">
                                                         <tr>
                                                             <td width="36" style="vertical-align:top; padding-top:1px;">
-                                                                <div style="width:26px; height:26px; border-radius:6px; background-color:#6d28d9; text-align:center; line-height:26px; font-size:11px; font-weight:700; color:#ffffff;">3</div>
+                                                                <div style="width:26px; height:26px; border-radius:6px; background-color:#7b5ea7; text-align:center; line-height:26px; font-size:11px; font-weight:700; color:#ffffff;">3</div>
                                                             </td>
                                                             <td style="padding-left:14px; vertical-align:top;">
                                                                 <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">Aktifkan Pengingat Tindak Lanjut</p>
@@ -89,7 +89,7 @@
                                         </table>
 
                                         <!-- Platform Capabilities -->
-                                        <p style="margin:0 0 20px 0; font-size:11px; font-weight:700; color:#7c3aed; letter-spacing:0.1em; text-transform:uppercase;">
+                                        <p style="margin:0 0 20px 0; font-size:11px; font-weight:700; color:#7b5ea7; letter-spacing:0.06em; text-transform:uppercase; background-color:#fcf9fe; display:inline-block; padding:3px 8px; border-radius:6px; border:1px solid #f2e7f7;">
                                             Kemampuan Platform
                                         </p>
 
@@ -119,11 +119,11 @@
                                 <tr>
                                     <td>
                                         <a href="{{ config('app.url') }}/dashboard"
-                                           style="display:inline-block; padding:12px 22px; background-color:#6d28d9; color:#ffffff; text-decoration:none; border-radius:6px; font-size:14px; font-weight:600; margin-right:10px; margin-bottom:8px;">
+                                           style="display:inline-block; padding:12px 24px; background-color:#7b5ea7; color:#ffffff; text-decoration:none; border-radius:999px; font-size:13px; font-weight:600; margin-right:10px; margin-bottom:8px; box-shadow:0 3px 12px rgba(123,94,167,0.22);">
                                             Buka Dashboard
                                         </a>
                                         <a href="{{ config('app.url') }}/tracker"
-                                           style="display:inline-block; padding:12px 22px; background-color:#ffffff; color:#18181b; text-decoration:none; border-radius:6px; font-size:14px; font-weight:600; border:1px solid #d4d4d8; margin-bottom:8px;">
+                                           style="display:inline-block; padding:12px 24px; background-color:#ffffff; color:#0f172a; text-decoration:none; border-radius:999px; font-size:13px; font-weight:600; border:1px solid #cbd5e1; margin-bottom:8px;">
                                             Mulai Catat Lamaran
                                         </a>
                                     </td>

@@ -23,8 +23,8 @@
 .workspace-button--quiet:hover { background: #e8e7f2; border-color: #d6cee5; }
 .workspace-button--danger { background: #faeef1; color: #a02745; border: 1px solid #efd5dd; }
 .workspace-button--danger:hover { background: #f4e0e7; }
-.workspace-page button:disabled { opacity: .55; cursor: wait; }
-.workspace-page :is(a, button, summary, input, select, textarea, [tabindex]):focus-visible { outline: 2px solid #9364b6; outline-offset: 4px; }
+.workspace-page :is(a, button, summary, input, select, textarea, [tabindex]):focus-visible { outline: 2px solid #2579ca; outline-offset: 3px; }
+.workspace-page .ai-chat-composer textarea:focus-visible { outline: none !important; }
 .workspace-page [x-cloak] { display: none !important; }
 .workspace-switcher { display: inline-flex; gap: 4px; padding: 5px; margin-bottom: 26px; border-radius: 999px; background: #edf3f7; border: 1px solid #ffffffb3; }
 .workspace-switcher button { min-height: 44px; padding: 10px 22px; border-radius: 999px; color: #565766; font-size: 12px; font-weight: 550; transition: background .15s; }
@@ -78,120 +78,799 @@
 .workspace-message > p { white-space: pre-line; overflow-wrap: anywhere; margin-top: 14px; }
 .workspace-empty { text-align: center; padding: 60px 30px; }
 .workspace-empty > p { max-width: 400px; margin-left: auto; margin-right: auto; }
-.automation-hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 48px; align-items: center; padding: 40px; }
-.automation-hero h2 { font-size: clamp(28px, 3.2vw, 42px); letter-spacing: -1.4px; line-height: 1.25; margin: 20px 0 14px; }
-.automation-hero > div > p { max-width: 460px; margin-bottom: 20px; }
-.automation-hero > div > .workspace-hint { margin-top: 12px; margin-bottom: 0; }
-.automation-preview { background: #e8e4f6; border: 1px solid #f6f3ff; border-radius: 23px; padding: 25px; box-shadow: 0 12px 26px #3729510a; }
-.automation-preview__top { display: flex; gap: 12px; align-items: center; justify-content: space-between; font-size: 11px; padding-bottom: 18px; margin-bottom: 24px; border-bottom: 1px solid #cdc2e354; }
-.automation-preview h3 { font-size: 24px; letter-spacing: -.6px; font-weight: 550; }
-.automation-preview > p { margin: 7px 0 20px !important; }
-.automation-preview__field { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 14px 0; border-top: 1px solid #cdc2e354; font-size: 11px; }
-.automation-preview__field > span { color: #6f637c; }
-.automation-preview__field > strong { font-weight: 550; text-align: right; }
-.automation-preview__action { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px; padding: 13px; border-radius: 12px; background: #ffffff91; color: #564066; font-size: 12px; font-weight: 550; }
-.automation-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; padding: 25px 0; }
-.automation-metrics strong { display: block; font-size: 36px; font-weight: 550; line-height: 1.3; letter-spacing: -1px; }
-.automation-metrics span { display: block; font-size: 11px; line-height: 1.6; color: #646674; margin-top: 5px; }
-.workspace-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-.workspace-chips > span { background: #ffffff80; border: 1px solid #ffffff9c; border-radius: 999px; padding: 8px 12px; font-size: 11px; }
-.automation-stepper { display: flex; gap: 22px; padding: 0 0 22px; font-size: 11px; color: #7b7386; }
-.automation-stepper > span { display: flex; align-items: center; gap: 8px; }
-.automation-stepper strong { font-weight: 500; }
-.automation-stepper > .is-current { color: #543071; }
-.automation-upload { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 45px 20px; border: 1.5px dashed #c9bdd9; border-radius: 21px; background: #faf8fe; transition: background .15s, border-color .15s; }
-.automation-upload:hover, .automation-upload.is-dragging { background: #f0e8fa; border-color: #9f75bb; }
-.automation-upload > strong { font-size: 17px; font-weight: 550; }
-.automation-upload > span:last-child { font-size: 11px; color: #70677e; overflow-wrap: anywhere; }
-.automation-upload__icon { width: 50px; height: 50px; display: grid; place-items: center; border-radius: 16px; background: #ebe2f5; color: #795395; font-size: 23px; }
-.automation-file { display: flex; gap: 16px; align-items: center; justify-content: space-between; padding-bottom: 18px; }
-.automation-file strong { font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
-.automation-file p { font-size: 11px; margin-top: 4px; }
-.automation-validation { display: flex; gap: 22px; flex-wrap: wrap; padding: 16px; margin-bottom: 20px; background: #f2eef8; border-radius: 13px; font-size: 12px; color: #655172; }
-.automation-downloads { display: grid; gap: 12px; margin: 22px 0; }
-.workspace-checklist { display: grid; gap: 13px; margin: 22px 0; font-size: 12px; line-height: 1.6; color: #5b5466; padding-left: 18px; list-style: disc; }
-.workspace-table-scroll { overflow-x: auto; max-width: 100%; border: 1px solid #e8e5ed; border-radius: 14px; }
-.workspace-table { width: 100%; min-width: 650px; border-collapse: collapse; font-size: 11px; }
-.workspace-table :is(th, td) { padding: 14px 12px; text-align: left; border-bottom: 1px solid #ece9f1; }
-.workspace-table th { font-weight: 550; background: #f8f6fb; color: #736980; }
-.workspace-table td { max-width: 200px; overflow-wrap: anywhere; color: #54505e; }
-.workspace-table tr:last-child td { border-bottom: 0; }
-.workspace-table tbody tr:hover { background: #faf8fd; }
-.automation-errors { margin-top: 12px; }
-@media (max-width: 1100px) { .workspace-page__container { padding: 0 32px; } .workspace-card { padding: 24px; } .automation-hero { gap: 28px; padding: 30px; } }
-@media (max-width: 850px) { .workspace-page__grid { grid-template-columns: 1fr; } .workspace-page__grid > aside { grid-template-columns: 1fr 1fr; } .automation-hero { grid-template-columns: 1fr 1fr; gap: 24px; } .automation-preview { padding: 20px; } }
+@media (max-width: 1100px) { .workspace-page__container { padding: 0 32px; } .workspace-card { padding: 24px; } }
+@media (max-width: 850px) { .workspace-page__grid { grid-template-columns: 1fr; } .workspace-page__grid > aside { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 640px) {
     .workspace-page { padding-top: 12px; } .workspace-page__container { padding: 0 18px; }
     .workspace-page__header { align-items: flex-start; flex-direction: column; gap: 16px; margin: 10px 0 20px; }
-    .workspace-card { padding: 22px; border-radius: 23px; } .workspace-page h2 { font-size: 19px; }
-    .workspace-switcher { width: 100%; } .workspace-switcher button { flex: 1; padding: 10px 12px; }
-    .workspace-page__grid > aside { grid-template-columns: 1fr; } .automation-hero { grid-template-columns: 1fr; padding: 24px; }
-    .automation-hero h2 { font-size: 32px; } .automation-file { align-items: flex-start; flex-direction: column; }
+    .workspace-card { padding: 20px; border-radius: 20px; } .workspace-page h2 { font-size: 18px; }
+    .workspace-switcher { width: 100%; } .workspace-switcher button { flex: 1; padding: 8px 12px; }
+    .workspace-page__grid > aside { grid-template-columns: 1fr; }
     .workspace-ticket summary, .workspace-ticket__body { padding: 20px; }
     .workspace-section-heading { align-items: flex-start; flex-direction: column; }
     .workspace-form__footer .workspace-button { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .workspace-page * { transition: none !important; } }
 
-.automation-page .workspace-page__header { margin-bottom: 22px; }
-.automation-page h1 { font-size: 30px; letter-spacing: -.9px; }
-.automation-page h2 { font-size: 19px; }
-.automation-page .workspace-switcher { margin-bottom: 22px; }
-.automation-page .workspace-stack { gap: 20px; }
-.automation-page .workspace-card { padding: 26px; border-radius: 24px; }
-.automation-page .workspace-card__heading { margin-bottom: 20px; }
-.automation-page .workspace-card__heading p { font-size: 12px; }
-.automation-overview { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 20px; align-items: stretch; }
-.automation-page .automation-intro { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
-.automation-page .automation-intro h2 { font-size: 31px; line-height: 1.22; letter-spacing: -.9px; margin: 16px 0 12px; }
-.automation-intro > p { max-width: 390px; margin: 0; }
-.automation-page .automation-intro > .workspace-button { margin-top: 22px; }
-.automation-page .automation-intro > .workspace-hint { margin-top: 12px; }
-.automation-page .automation-preview { box-shadow: inset 0 1px 0 #fff; background: linear-gradient(135deg, #eeeafaad, #ffffff61); }
-.automation-page .automation-preview__top { padding-bottom: 14px; margin-bottom: 18px; }
-.automation-page .automation-preview h3 { font-size: 22px; }
-.automation-page .automation-preview > .workspace-eyebrow { margin: 0 0 5px !important; }
-.automation-page .automation-preview > p:not(.workspace-eyebrow) { margin: 5px 0 14px !important; font-size: 12px; }
-.automation-page .automation-preview__field { padding: 11px 0; }
-.automation-page .automation-preview__action { margin-top: 8px; padding: 11px; }
-.automation-page .automation-balanced-grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); align-items: stretch; gap: 20px; }
-.automation-page .automation-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 22px; margin-top: 0; }
-.automation-page .automation-steps li { gap: 12px; }
-.automation-page .automation-steps li > span { background: #f1edf8; border: 1px solid #e6dff0; width: 32px; height: 32px; border-radius: 10px; }
-.automation-page .automation-steps h3 { font-size: 12px; }
-.automation-page .automation-steps p { font-size: 11px; line-height: 1.7; }
-.automation-page .automation-side-panel { display: flex; flex-direction: column; gap: 22px; }
-.automation-side-section + .automation-side-section { border-top: 1px solid #cbd3df80; padding-top: 22px; }
-.automation-side-section > p { margin-top: 8px; font-size: 12px; }
-.automation-page .automation-side-section h2 { font-size: 19px; letter-spacing: -.5px; }
-.automation-page .automation-side-section > .workspace-button { margin-top: 14px; }
-.automation-page .automation-metrics { padding: 16px 0; gap: 14px; }
-.automation-page .automation-metrics strong { font-size: 28px; }
-.automation-page .workspace-chips { margin-top: 12px; gap: 6px; }
-.automation-page .workspace-chips > span { font-size: 10px; padding: 6px 10px; }
-.automation-page .automation-side-section .workspace-hint { font-size: 10px; }
-.automation-page .automation-import-panel { display: flex; flex-direction: column; }
-.automation-upload-stage { flex: 1; display: flex; flex-direction: column; }
-.automation-page .automation-upload { flex: 1; min-height: 220px; justify-content: center; padding: 30px 18px; border-radius: 18px; }
-.automation-page .automation-upload-stage > .workspace-hint { margin-top: 14px; }
-.automation-page .automation-stepper { padding-bottom: 18px; margin-bottom: 18px; border-bottom: 1px solid #ece9f1; gap: 24px; }
-.automation-page .automation-stepper > span { background: #f4f2f7; padding: 8px 12px; border-radius: 10px; }
-.automation-page .automation-stepper > .is-current { background: #ede5f7; }
-.automation-page .automation-downloads { gap: 10px; margin: 18px 0 12px; }
-.automation-page .workspace-checklist { gap: 10px; margin: 14px 0; font-size: 11px; }
-.automation-page .workspace-form__footer { margin-top: 18px; }
-@media (max-width: 900px) {
-    .automation-page .automation-balanced-grid { grid-template-columns: 1fr; }
-    .automation-page .automation-side-panel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .automation-page .automation-side-section + .automation-side-section { border-top: 0; border-left: 1px solid #cbd3df80; padding-top: 0; padding-left: 22px; }
+/* ==========================================================================
+   Automation Page Design System (Harmonized with Dashboard & Tracker)
+   ========================================================================== */
+
+.workspace-page.automation-page {
+    padding-top: 24px;
 }
+
+.automation-page .workspace-page__header {
+    margin-bottom: 16px;
+    align-items: center;
+}
+
+.automation-page h1 {
+    font-size: 26px;
+    line-height: 1.25;
+    letter-spacing: -.8px;
+    font-weight: 600;
+}
+
+.automation-page .workspace-page__header p {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #626573;
+    margin-top: 4px;
+}
+
+.automation-page .workspace-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    color: #725387;
+    margin-bottom: 4px;
+    letter-spacing: .02em;
+}
+
+.automation-page .workspace-page__header .workspace-button {
+    font-size: 12px;
+    min-height: 38px;
+    padding: 8px 16px;
+    border-radius: 999px;
+}
+
+/* Switcher / Tabs */
+.automation-page .workspace-switcher {
+    margin-bottom: 16px;
+    padding: 4px;
+    background: #e8e6eb;
+    border: 1px solid #dcd8e1;
+    box-shadow: inset 0 1px 0 #ffffff80;
+    border-radius: 999px;
+    display: inline-flex;
+    gap: 4px;
+}
+
+.automation-page .workspace-switcher button {
+    min-height: 36px;
+    min-width: 100px;
+    padding: 7px 18px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 550;
+    color: #565766;
+    transition: background .15s, color .15s;
+}
+
+.automation-page .workspace-switcher button:hover {
+    background: #e0dce6;
+    color: #30313b;
+}
+
+.automation-page .workspace-switcher button.is-active {
+    background: #2d204e;
+    color: #fff;
+    box-shadow: 0 1px 3px rgba(45, 32, 78, 0.2);
+}
+
+/* Layout Stacks & Symmetrical 2-Column Grids (50% / 50%) */
+.automation-page .workspace-stack {
+    gap: 16px;
+}
+
+.automation-overview {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: stretch;
+}
+
+.automation-page .automation-balanced-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: stretch;
+}
+
+/* Standardized Cards */
+.automation-page .workspace-card {
+    padding: 20px;
+    border-radius: 20px;
+    background: #fff;
+    border: 1px solid #dedbd6;
+    box-shadow: 0 3px 12px rgba(75, 65, 54, 0.04);
+}
+
+.automation-page .workspace-card--glass {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.5));
+    backdrop-filter: blur(16px) saturate(110%);
+    -webkit-backdrop-filter: blur(16px) saturate(110%);
+    border: 1.5px solid rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: inset 0 1px 0 #fff, 0 6px 18px rgba(73, 92, 112, 0.035);
+}
+
+/* Card Headings */
+.automation-page .workspace-card__heading {
+    margin-bottom: 14px;
+}
+
+.automation-page .workspace-card__heading h2 {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -.4px;
+    color: #30313b;
+    margin: 0;
+}
+
+.automation-page .workspace-card__heading p {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #626573;
+    margin-top: 3px;
+}
+
+/* Intro Card (Left Row 1) */
+.automation-page .automation-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.automation-page .automation-intro .workspace-status {
+    font-size: 10px;
+    font-weight: 550;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: #f0edf7;
+    color: #645277;
+    letter-spacing: .02em;
+}
+
+.automation-page .automation-intro h2 {
+    font-size: 18px;
+    line-height: 1.35;
+    letter-spacing: -.5px;
+    font-weight: 600;
+    color: #30313b;
+    margin: 10px 0 6px;
+}
+
+.automation-intro > p {
+    font-size: 12px;
+    line-height: 1.55;
+    color: #626573;
+    max-width: 440px;
+    margin: 0;
+}
+
+.automation-page .automation-intro > .workspace-button {
+    margin-top: 14px;
+    min-height: 38px;
+    padding: 8px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.automation-page .automation-intro > .workspace-hint {
+    font-size: 11px;
+    line-height: 1.5;
+    color: #6f6d7a;
+    margin-top: 8px;
+}
+
+/* Preview Card (Right Row 1) - Dashboard Blue Palette */
+.automation-page .automation-preview {
+    padding: 18px 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(135deg, #e4eff8, #d0e3f3);
+    border: 1.5px solid #ffffffd9;
+    box-shadow: inset 0 1px 0 #ffffffcc, 0 4px 16px rgba(45, 80, 115, 0.05);
+}
+
+.automation-page .automation-preview__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 550;
+    color: #35536e;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(188, 209, 228, 0.65);
+}
+
+.automation-page .automation-preview__top .workspace-status {
+    font-size: 10px;
+    padding: 2px 7px;
+    background: #ffffffcc;
+    border: 1px solid #bfd5e8;
+    border-radius: 999px;
+    color: #1e456b;
+}
+
+.automation-page .automation-preview > .workspace-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    color: #2b5b88;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    margin: 0 0 2px !important;
+}
+
+.automation-page .automation-preview h3 {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -.3px;
+    color: #1e3a58;
+    margin: 0;
+    line-height: 1.35;
+}
+
+.automation-page .automation-preview > p:not(.workspace-eyebrow) {
+    font-size: 11px;
+    line-height: 1.45;
+    color: #3b5a77;
+    margin: 2px 0 10px !important;
+}
+
+.automation-page .automation-preview__field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 0;
+    border-top: 1px solid rgba(188, 209, 228, 0.65);
+    font-size: 11px;
+}
+
+.automation-page .automation-preview__field > span {
+    color: #4b6b88;
+}
+
+.automation-page .automation-preview__field > strong {
+    font-weight: 550;
+    color: #1e3a58;
+    text-align: right;
+}
+
+.automation-page .automation-preview__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: #ffffffd9;
+    border: 1px solid #bfd6ea;
+    color: #1e456b;
+    font-size: 11px;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(32, 84, 135, 0.08);
+}
+
+/* Setup Steps (Left Row 2) - Dashboard Blue Palette */
+.automation-page .automation-setup {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #eaf2f8, #d4e5f4);
+    border: 1.5px solid #ffffffd9;
+    box-shadow: inset 0 1px 0 #ffffffcc, 0 4px 16px rgba(45, 80, 115, 0.05);
+}
+
+.automation-page .automation-setup .workspace-card__heading h2 {
+    color: #1e3a58;
+}
+
+.automation-page .automation-setup .workspace-card__heading p {
+    color: #3b5a77;
+}
+
+.automation-page .automation-steps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 16px;
+    margin-top: 0;
+}
+
+.automation-page .automation-steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.automation-page .automation-steps li > span {
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    background: #ffffffd9;
+    border: 1px solid #bed6ea;
+    color: #1b4975;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.automation-page .automation-steps h3 {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1e3a58;
+    margin: 0;
+    line-height: 1.35;
+}
+
+.automation-page .automation-steps p {
+    font-size: 11px;
+    line-height: 1.5;
+    color: #3b5a77;
+    margin-top: 2px;
+}
+
+.automation-page .automation-steps code {
+    background: #ffffffc9;
+    border: 1px solid #bed6ea;
+    color: #1b4975;
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-size: 10px;
+    overflow-wrap: anywhere;
+}
+
+/* Side Panel (Right Row 2 & CSV Tab) - Dashboard Orange Palette */
+.automation-page .automation-side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: linear-gradient(135deg, #faece5, #f5ddd2);
+    border: 1.5px solid #ffffffd9;
+    box-shadow: inset 0 1px 0 #ffffffcc, 0 4px 16px rgba(120, 65, 45, 0.05);
+}
+
+.automation-page .automation-side-section h2 {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -.3px;
+    color: #5d3420;
+    margin: 0;
+}
+
+.automation-page .automation-side-section > p {
+    font-size: 11px;
+    line-height: 1.5;
+    color: #7a5441;
+    margin-top: 4px;
+}
+
+.automation-page .automation-side-section + .automation-side-section {
+    border-top: 1px solid rgba(225, 195, 180, 0.7);
+    padding-top: 14px;
+}
+
+.automation-page .automation-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 10px 0 6px;
+}
+
+.automation-page .automation-metrics strong {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -.5px;
+    color: #5d3420;
+    display: block;
+}
+
+.automation-page .automation-metrics span {
+    font-size: 11px;
+    line-height: 1.4;
+    color: #7a5441;
+    margin-top: 2px;
+    display: block;
+}
+
+.automation-page .workspace-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 8px;
+}
+
+.automation-page .workspace-chips > span {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: #ffffffc9;
+    border: 1px solid #ebd0c3;
+    color: #6a3d24;
+}
+
+.automation-page .automation-side-section .workspace-hint {
+    font-size: 10px;
+    line-height: 1.4;
+    color: #8c6451;
+    margin-top: 6px;
+}
+
+.automation-page .automation-side-panel .automation-downloads {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 12px 0 10px;
+}
+
+.automation-page .automation-side-panel .automation-downloads .workspace-button {
+    min-height: 38px;
+    padding: 8px 14px;
+    font-size: 12px;
+    border-radius: 999px;
+}
+
+.automation-page .automation-side-panel .automation-downloads .workspace-button--primary {
+    background: #c45d35;
+    border: 1px solid #b24f28;
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(178, 79, 40, 0.2);
+}
+
+.automation-page .automation-side-panel .automation-downloads .workspace-button--primary:hover {
+    background: #b04f28;
+    border-color: #9d421d;
+}
+
+.automation-page .automation-side-panel .automation-downloads .workspace-button--quiet {
+    background: #ffffffc9;
+    border: 1px solid #ebd0c3;
+    color: #6a3d24;
+}
+
+.automation-page .automation-side-panel .automation-downloads .workspace-button--quiet:hover {
+    background: #fff;
+    border-color: #dfbfb0;
+    color: #552d17;
+}
+
+.automation-page .automation-side-panel .workspace-checklist {
+    color: #6a3d24;
+}
+
+/* CSV Tab: Import Panel - Dashboard Blue Palette */
+.automation-page .automation-import-panel {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #eaf2f8, #d4e5f4);
+    border: 1.5px solid #ffffffd9;
+    box-shadow: inset 0 1px 0 #ffffffcc, 0 4px 16px rgba(45, 80, 115, 0.05);
+}
+
+.automation-page .automation-import-panel .workspace-card__heading h2 {
+    color: #1e3a58;
+}
+
+.automation-page .automation-import-panel .workspace-card__heading p {
+    color: #3b5a77;
+}
+
+.automation-page .automation-stepper {
+    display: flex;
+    gap: 10px;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid rgba(188, 209, 228, 0.65);
+    font-size: 11px;
+    color: #436482;
+}
+
+.automation-page .automation-stepper > span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: #ffffff99;
+    border: 1px solid #bed6ea;
+    font-size: 11px;
+    color: #3b5a77;
+}
+
+.automation-page .automation-stepper strong {
+    font-weight: 500;
+}
+
+.automation-page .automation-stepper > .is-current {
+    background: #ffffff;
+    border-color: #9cbfe0;
+    color: #164670;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(22, 70, 112, 0.08);
+}
+
+.automation-page .automation-upload-stage {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.automation-page .automation-upload {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    padding: 24px 16px;
+    border: 1.5px dashed #9cbfe0;
+    border-radius: 16px;
+    background: #ffffff99;
+    gap: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: background .15s, border-color .15s;
+}
+
+.automation-page .automation-upload:hover,
+.automation-page .automation-upload.is-dragging {
+    background: #ffffff;
+    border-color: #2579ca;
+}
+
+.automation-page .automation-upload__icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid #bed6ea;
+    color: #1e456b;
+    font-size: 18px;
+    display: grid;
+    place-items: center;
+}
+
+.automation-page .automation-upload > strong {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e3a58;
+}
+
+.automation-page .automation-upload > span:last-child {
+    font-size: 11px;
+    color: #436482;
+    overflow-wrap: anywhere;
+}
+
+.automation-page .automation-upload-stage > .workspace-hint {
+    margin-top: 10px;
+    font-size: 11px;
+    color: #3b5a77;
+}
+
+/* CSV Tab: Review Stage */
+.automation-page .automation-file {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 12px;
+}
+
+.automation-page .automation-file strong {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1e3a58;
+    overflow-wrap: anywhere;
+}
+
+.automation-page .automation-file p {
+    font-size: 11px;
+    color: #3b5a77;
+    margin-top: 2px;
+}
+
+.automation-page .automation-file .workspace-button {
+    min-height: 34px;
+    padding: 6px 12px;
+    font-size: 11px;
+    background: #ffffffd9;
+    border: 1px solid #bed6ea;
+    color: #1e456b;
+}
+
+.automation-page .automation-validation {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    background: #ffffffcc;
+    border: 1px solid #bed6ea;
+    border-radius: 10px;
+    font-size: 11px;
+    color: #1e456b;
+}
+
+.automation-page .workspace-table-scroll {
+    overflow-x: auto;
+    max-width: 100%;
+    border: 1px solid #bed6ea;
+    background: #fff;
+    border-radius: 12px;
+    max-height: 260px;
+}
+
+.automation-page .workspace-table {
+    width: 100%;
+    min-width: 580px;
+    border-collapse: collapse;
+    font-size: 11px;
+}
+
+.automation-page .workspace-table :is(th, td) {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid #dce8f3;
+}
+
+.automation-page .workspace-table th {
+    font-weight: 600;
+    font-size: 10px;
+    background: #eaf2f8;
+    color: #234b70;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.automation-page .workspace-table td {
+    max-width: 180px;
+    overflow-wrap: anywhere;
+    color: #2b4560;
+}
+
+.automation-page .workspace-table tr:last-child td {
+    border-bottom: 0;
+}
+
+.automation-page .workspace-table tbody tr:hover {
+    background: #f4f8fc;
+}
+
+.automation-page .automation-errors summary {
+    font-size: 11px;
+    min-height: 32px;
+    padding: 6px 0;
+    cursor: pointer;
+    font-weight: 600;
+    color: #1e3a58;
+}
+
+.automation-page .workspace-form__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-top: 1px solid rgba(188, 209, 228, 0.65);
+    padding-top: 14px;
+    margin-top: 12px;
+}
+
+.automation-page .workspace-form__footer .workspace-hint {
+    color: #3b5a77;
+}
+
+.automation-page .workspace-form__footer .workspace-button {
+    min-height: 38px;
+    padding: 8px 18px;
+    font-size: 12px;
+    border-radius: 999px;
+}
+
+.automation-page .workspace-checklist {
+    display: grid;
+    gap: 7px;
+    margin: 10px 0;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #5b5466;
+    padding-left: 18px;
+    list-style: disc;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .automation-overview {
+        grid-template-columns: 1fr;
+    }
+    .automation-page .automation-balanced-grid {
+        grid-template-columns: 1fr;
+    }
+    .automation-page .automation-side-panel {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+    .automation-page .automation-side-section + .automation-side-section {
+        border-top: 0;
+        border-left: 1px solid rgba(225, 195, 180, 0.7);
+        padding-top: 0;
+        padding-left: 16px;
+    }
+}
+
 @media (max-width: 640px) {
-    .automation-overview { grid-template-columns: 1fr; }
-    .automation-page .workspace-card { padding: 22px; }
-    .automation-page .automation-intro h2 { font-size: 28px; }
-    .automation-page .automation-steps { grid-template-columns: 1fr; gap: 18px; }
-    .automation-page .automation-side-panel { display: flex; }
-    .automation-page .automation-side-section + .automation-side-section { border-left: 0; border-top: 1px solid #cbd3df80; padding-left: 0; padding-top: 20px; }
-    .automation-page .automation-stepper { gap: 10px; }
-    .automation-page .automation-stepper > span { flex: 1; font-size: 10px; padding: 9px; }
+    .automation-page.workspace-page {
+        padding-top: 16px;
+    }
+    .automation-page .workspace-page__header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 14px;
+    }
+    .automation-page h1 {
+        font-size: 23px;
+        letter-spacing: -.6px;
+    }
+    .automation-page .workspace-card {
+        padding: 16px;
+        border-radius: 18px;
+    }
+    .automation-page .automation-intro h2 {
+        font-size: 17px;
+    }
+    .automation-page .automation-steps {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .automation-page .automation-side-panel {
+        display: flex;
+        flex-direction: column;
+    }
+    .automation-page .automation-side-section + .automation-side-section {
+        border-left: 0;
+        border-top: 1px solid rgba(225, 195, 180, 0.7);
+        padding-left: 0;
+        padding-top: 14px;
+    }
+    .automation-page .automation-stepper {
+        gap: 6px;
+    }
+    .automation-page .automation-stepper > span {
+        flex: 1;
+        font-size: 10px;
+        padding: 6px 8px;
+    }
+    .automation-page .workspace-form__footer .workspace-button {
+        width: 100%;
+    }
 }

@@ -1,33 +1,39 @@
-.cover-letter-container { max-width: 1300px; padding: 0 42px; margin: 0 auto; }
-.cover-letter-header { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin: 10px 0 26px; }
-.cover-letter-header > div > p:last-child { margin-top: 7px; font-size: 12px; }
-.cover-letter-layout { display: grid; grid-template-columns: minmax(0, 1fr) 310px; gap: 24px; align-items: start; }
-.cover-letter-paper { padding: 32px 38px; background: #fff; border-radius: 26px; min-width: 0; }
-.cover-letter-paper > header { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; padding-bottom: 24px; border-bottom: 1px solid #ececf1; }
-.cover-letter-paper > header span { font-size: 11px; color: #636574; }
-.cover-letter-workspace .cover-letter-paper h2 { font-size: 22px; margin-top: 8px; }
-.cover-letter-paper > header p { font-size: 13px; margin-top: 7px; }
-.cover-letter-draft { padding: 6px 10px; background: #f1eef8; border-radius: 7px; }
-.cover-letter-body { padding: 30px 0; font-size: 14px; line-height: 1.95; white-space: pre-wrap; overflow-wrap: anywhere; color: #3f424e; }
-.cover-letter-paper > footer { border-top: 1px solid #ececf1; padding-top: 18px; font-size: 11px; color: #636574; }
-.cover-letter-sidebar { display: grid; gap: 18px; min-width: 0; }
-.cover-letter-actions, .cover-letter-context { padding: 24px; border-radius: 22px; border: 1px solid #fff; background: #ffffff80; }
-.cover-letter-workspace .cover-letter-sidebar h2 { font-size: 16px; }
-.cover-letter-workspace .cover-letter-actions > p { font-size: 12px; margin-top: 8px; }
-.cover-letter-actions > button { width: 100%; margin-top: 20px; }
+.cover-letter-container { max-width: 1120px; width: min(1120px, 100%); padding: 0 var(--page-gutter, 40px); margin: 0 auto; box-sizing: border-box; }
+.cover-letter-header { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin: 8px 0 20px; }
+.cover-letter-header h1 { font-size: 26px; font-weight: 600; line-height: 1.25; letter-spacing: -.8px; color: #1e1e24; margin: 0; }
+.cover-letter-header p { font-size: 12px; line-height: 1.5; color: #626573; margin-top: 4px; }
+.cover-letter-header .workspace-eyebrow { font-size: 11px; font-weight: 600; color: #725387; margin-bottom: 4px; letter-spacing: .02em; }
+.cover-letter-header .cv-button { min-height: 38px; padding: 8px 16px; font-size: 12px; font-weight: 600; border-radius: 999px; }
+.cover-letter-layout { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 20px; align-items: start; }
+.cover-letter-paper { padding: 28px 32px; background: #fff; border: 1px solid #e5e2db; border-radius: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.02); min-width: 0; }
+.cover-letter-paper > header { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; padding-bottom: 20px; border-bottom: 1px solid #eeebe4; }
+.cover-letter-paper > header span { font-size: 11px; color: #787570; }
+.cover-letter-workspace .cover-letter-paper h2 { font-size: 20px; font-weight: 600; letter-spacing: -.4px; margin-top: 6px; color: #1e1e24; }
+.cover-letter-paper > header p { font-size: 12.5px; margin-top: 4px; color: #54514c; }
+.cover-letter-draft { padding: 4px 9px; background: #f2ecf8; border: 1px solid #e6dcf0; color: #68487e; border-radius: 999px; font-size: 10.5px; font-weight: 600; }
+.cover-letter-body { padding: 22px 0; font-size: 13px; line-height: 1.85; white-space: pre-wrap; overflow-wrap: anywhere; color: #2e2c34; }
+.cover-letter-paper > footer { border-top: 1px solid #eeebe4; padding-top: 14px; font-size: 11px; color: #787570; }
+.cover-letter-sidebar { display: grid; gap: 16px; min-width: 0; }
+.cover-letter-actions, .cover-letter-context { padding: 20px; border-radius: 18px; border: 1px solid #e5e2db; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+.cover-letter-workspace .cover-letter-sidebar h2 { font-size: 15px; font-weight: 600; color: #1e1e24; }
+.cover-letter-workspace .cover-letter-actions > p { font-size: 11.5px; line-height: 1.5; color: #626573; margin-top: 6px; }
+.cover-letter-actions > button { width: 100%; margin-top: 16px; }
 .cover-letter-actions > div { display: grid; gap: 8px; margin-top: 10px; }
-.cover-letter-actions .cv-button-secondary { background: #ffffff90; }
-.cover-letter-context dl { display: grid; gap: 14px; margin-top: 20px; }
-.cover-letter-context dt { font-size: 10px; color: #636574; margin-bottom: 5px; }
-.cover-letter-context dd { font-size: 12px; line-height: 1.7; overflow-wrap: anywhere; }
-.cover-letter-review-note { padding: 22px; background: #e8e1f3; border-radius: 20px; }
-.cover-letter-workspace .cover-letter-review-note h3 { font-size: 13px; }
-.cover-letter-workspace .cover-letter-review-note p { margin-top: 9px; font-size: 12px; }
-.cover-letter-review-note a { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 11px; font-weight: 600; color: #62457d; }
-.cover-letter-select { font-size: 11px; color: #62457d; text-decoration: underline; min-height: 40px; }
-.cover-letter-workspace .cover-letter-action-status { font-size: 11px; }
+.cover-letter-actions .cv-button-primary { background: #2579ca; color: #fff; border: 1px solid #2579ca; min-height: 38px; border-radius: 999px; font-size: 12px; font-weight: 600; transition: background .15s; }
+.cover-letter-actions .cv-button-primary:hover { background: #1e65ab; border-color: #1e65ab; }
+.cover-letter-actions .cv-button-secondary { min-height: 38px; border-radius: 999px; font-size: 12px; font-weight: 600; background: #f4f2ee; border: 1px solid #e5e2da; color: #43403a; transition: background .15s; }
+.cover-letter-actions .cv-button-secondary:hover { background: #ebe8e2; }
+.cover-letter-context dl { display: grid; gap: 12px; margin-top: 16px; }
+.cover-letter-context dt { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; color: #787570; margin-bottom: 3px; }
+.cover-letter-context dd { font-size: 12px; line-height: 1.6; color: #2e2c34; overflow-wrap: anywhere; }
+.cover-letter-review-note { padding: 18px; background: #f6f1fb; border: 1px solid #ebe2f5; border-radius: 16px; }
+.cover-letter-workspace .cover-letter-review-note h3 { font-size: 13px; font-weight: 600; color: #352a44; }
+.cover-letter-workspace .cover-letter-review-note p { margin-top: 6px; font-size: 11.5px; line-height: 1.5; color: #625870; }
+.cover-letter-review-note a { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 11px; font-weight: 600; color: #62457d; }
+.cover-letter-select { font-size: 11px; color: #62457d; text-decoration: underline; min-height: 36px; margin-top: 8px; }
+.cover-letter-workspace .cover-letter-action-status { font-size: 11px; color: #2579ca; }
 .cover-letter-workspace button:disabled { opacity: .55; cursor: wait; }
-.cover-letter-workspace a:focus-visible, .cover-letter-workspace button:focus-visible, .cover-letter-body:focus-visible { outline: 2px solid #8b4d77; outline-offset: 4px; }
-@media (max-width: 900px) { .cover-letter-container { padding: 0 24px; } .cover-letter-layout { grid-template-columns: 1fr; } .cover-letter-sidebar { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cover-letter-review-note { grid-column: 1 / -1; } }
-@media (max-width: 600px) { .cover-letter-container { padding: 0 16px; } .cover-letter-header { flex-direction: column; align-items: flex-start; } .cover-letter-paper { padding: 24px; border-radius: 22px; } .cover-letter-sidebar { grid-template-columns: 1fr; } }
+.cover-letter-workspace a:focus-visible, .cover-letter-workspace button:focus-visible, .cover-letter-body:focus-visible { outline: 2px solid #2579ca; outline-offset: 4px; }
+@media (max-width: 900px) { .cover-letter-layout { grid-template-columns: 1fr; } .cover-letter-sidebar { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cover-letter-review-note { grid-column: 1 / -1; } }
+@media (max-width: 600px) { .cover-letter-header { flex-direction: column; align-items: flex-start; } .cover-letter-paper { padding: 20px; border-radius: 18px; } .cover-letter-sidebar { grid-template-columns: 1fr; } }
 @media print { body:has(.cover-letter-workspace) * { visibility: hidden; } body:has(.cover-letter-workspace) .cover-letter-body { visibility: visible; position: absolute; inset: 0 auto auto 0; width: 100%; padding: 0; background: #fff; color: #111; font-size: 11pt; line-height: 1.6; } @page { margin: 18mm; } }

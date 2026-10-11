@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="workspace-page" x-data="{ activeTab: '{{ session('success_message') && !$errors->any() ? 'history' : 'submit' }}' }">
+    <div class="workspace-page support-page" x-data="{ activeTab: '{{ session('success_message') && !$errors->any() ? 'history' : 'submit' }}' }">
         <div class="workspace-page__container">
             <header class="workspace-page__header">
                 <div><p class="workspace-eyebrow">Here to help</p><h1>Support</h1><p>Get help, share feedback, and follow your requests.</p></div>

@@ -41,7 +41,7 @@
             @endif
             <div class="profile-layout">
                 <aside class="profile-identity-card">
-                    <div class="profile-avatar-frame"><img src="{{ $user->avatar_url }}" alt="{{ $user->name }}'s profile image" width="112" height="112"></div>
+                    <div class="profile-avatar-frame"><img src="{{ $user->avatar_url }}" alt="{{ $user->name }}'s profile image" width="88" height="88"></div>
                     <h2>{{ $user->name }}</h2>
                     <p class="profile-identity-email">{{ $user->email }}</p>
                     @if(!$isAdmin && $profile?->headline)<p class="profile-headline">{{ $profile->headline }}</p>@endif
@@ -84,10 +84,10 @@
                         <header class="profile-section-header"><div><h2 id="profile-avatar-heading">Your profile image</h2><p>Choose an illustrated avatar or use a photo of your own.</p></div></header>
                         <form method="post" action="{{ route('profile.avatar.update') }}">
                             @csrf @method('patch')
-                            <div class="profile-avatar-preview"><img :src="@js(asset('images/avatars')).replace(/\/$/, '') + '/' + avatarChoice + '.svg'" alt="Selected avatar preview" width="88" height="88"><div><h3>Choose an avatar</h3><p>Pick the illustration you want to use.</p><span>Choosing an avatar replaces your uploaded photo.</span></div></div>
+                            <div class="profile-avatar-preview"><img :src="@js(asset('images/avatars')).replace(/\/$/, '') + '/' + avatarChoice + '.svg'" alt="Selected avatar preview" width="54" height="54"><div><h3>Choose an avatar</h3><p>Pick the illustration you want to use.</p><span>Choosing an avatar replaces your uploaded photo.</span></div></div>
                             <fieldset class="profile-avatar-options"><legend class="sr-only">Available avatars</legend>
                                 @foreach(\App\Support\AvatarCatalog::all() as $id => $label)
-                                    <label class="profile-avatar-option" :class="{ 'is-selected': avatarChoice === '{{ $id }}' }"><input type="radio" name="avatar_id" value="{{ $id }}" x-model="avatarChoice" @checked($avatarChoice === $id)><img src="{{ \App\Support\AvatarCatalog::url($id) }}" alt="" width="72" height="72"><span class="sr-only">{{ $label }}</span><i class="ph-fill ph-check-circle" x-show="avatarChoice === '{{ $id }}'" aria-hidden="true"></i></label>
+                                    <label class="profile-avatar-option" :class="{ 'is-selected': avatarChoice === '{{ $id }}' }"><input type="radio" name="avatar_id" value="{{ $id }}" x-model="avatarChoice" @checked($avatarChoice === $id)><img src="{{ \App\Support\AvatarCatalog::url($id) }}" alt="" width="48" height="48"><span class="sr-only">{{ $label }}</span><i class="ph-fill ph-check-circle" x-show="avatarChoice === '{{ $id }}'" aria-hidden="true"></i></label>
                                 @endforeach
                             </fieldset>
                             @error('avatar_id')<p class="profile-field-error">{{ $message }}</p>@enderror

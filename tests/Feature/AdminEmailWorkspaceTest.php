@@ -20,6 +20,7 @@ class AdminEmailWorkspaceTest extends TestCase
         $this->get(route('admin.email-blast'))->assertOk();
         $this->post(route('admin.email-blast.preview'), ['email_type'=>'custom','custom_subject'=>'Workspace update','custom_content'=>'A new chapter.'])->assertOk()->assertSee('A new chapter.');
         $this->post(route('admin.email-blast.preview'), ['email_type'=>'verification'])->assertOk();
+        $this->post(route('admin.email-blast.preview'), ['email_type'=>'brand_transformation'])->assertOk()->assertSee('Pembaruan Antarmuka TraKerja');
         Mail::assertNothingSent(); Notification::assertNothingSent();
         $this->assertDatabaseCount('email_blast_logs', 0);
     }

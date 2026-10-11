@@ -190,6 +190,14 @@ class CvBuilderController extends Controller
                 'margin' => $margin,
                 'fontSize' => $fontSize,
             ]);
+
+            $pdf->setPaper('a4', 'portrait');
+            $pdf->setOptions([
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'defaultFont' => ($template === 'elegant') ? 'serif' : 'sans-serif',
+                'dpi' => 150,
+            ]);
         } catch (\Exception $e) {
             Log::error("Error generating PDF: " . $e->getMessage(), [
                 'user_id' => $user->id,

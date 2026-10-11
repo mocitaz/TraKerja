@@ -1,25 +1,25 @@
 <x-app-layout>
     <div class="bg-zinc-50/50 min-h-screen pb-32 font-sans">
-        <div class="workspace-page-frame max-w-[850px] mx-auto px-4 sm:px-6 lg:px-8 pt-5 space-y-6">
+        <div class="workspace-page-frame max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8 pt-5 space-y-6">
             
             {{-- Premium Header --}}
-            <div class="flex items-center justify-between pb-3 border-b border-zinc-200/80">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 bg-purple-50 rounded border border-purple-150 flex items-center justify-center text-purple-650 shrink-0">
-                        <i class="ph ph-sparkle text-base"></i>
+            <div class="flex items-center justify-between pb-4 border-b border-zinc-200/80">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-purple-50 rounded-xl border border-purple-150 flex items-center justify-center text-purple-650 shrink-0">
+                        <i class="ph ph-sparkle text-lg"></i>
                     </div>
                     <div>
-                        <div class="flex items-center gap-1.5">
-                            <h1 class="text-xs font-bold text-zinc-900 tracking-tight">AI Analyzer Log</h1>
-                            <span class="px-1.5 py-0.5 bg-purple-50 text-purple-700 text-[8px] font-mono font-bold uppercase tracking-wider rounded border border-purple-150">Active Thread</span>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight">AI Analyzer Log</h1>
+                            <span class="px-2 py-0.5 bg-purple-50 text-purple-700 text-[10px] font-semibold uppercase tracking-wider rounded-md border border-purple-150">Active Thread</span>
                         </div>
-                        <p class="text-[10px] text-zinc-400">Conversational resume critique & optimization roadmap</p>
+                        <p class="text-xs text-zinc-500 mt-0.5">Conversational resume critique & optimization roadmap</p>
                     </div>
                 </div>
 
                 <div>
                     <a href="{{ route('ai-analyzer.index') }}" 
-                       class="px-2.5 py-1.5 bg-white border border-zinc-250 text-zinc-700 hover:bg-zinc-50 text-[10px] font-bold uppercase tracking-wider rounded-md transition-colors flex items-center gap-1">
+                       class="px-3.5 py-1.5 bg-white border border-zinc-250 text-zinc-700 hover:bg-zinc-50 text-xs font-semibold rounded-full transition-colors flex items-center gap-1.5 shadow-xs min-h-[36px]">
                         <i class="ph ph-arrow-left text-xs"></i>
                         <span>Studio</span>
                     </a>

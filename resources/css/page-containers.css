@@ -2,7 +2,7 @@
     --page-frame-width: 1320px;
     --page-gutter: 40px;
 }
-.workspace-shell :is(.workspace-page__container, .dashboard-container, .profile-container, .cover-letter-container, .workspace-page-frame),
+.workspace-shell :is(.workspace-page__container, .dashboard-container, .profile-container, .workspace-page-frame),
 .workspace-shell .cv-workspace .workspace-container {
     box-sizing: border-box;
     width: 100%;
@@ -32,6 +32,23 @@
     max-width: var(--page-frame-width);
     padding-left: var(--page-gutter);
     padding-right: var(--page-gutter);
+}
+.legal-page .utility-shell,
+.legal-shell {
+    max-width: 1120px;
+    width: min(1120px, 100%);
+}
+.workspace-shell .cover-letter-workspace .cover-letter-container,
+.cover-letter-container {
+    max-width: 1120px;
+    width: min(1120px, 100%);
+    margin-inline: auto;
+}
+.workspace-shell .payment-workspace.workspace-page-frame,
+.payment-workspace {
+    max-width: 1080px;
+    width: min(1080px, 100%);
+    margin-inline: auto;
 }
 @media (max-width: 1100px) {
     :root { --page-gutter: 24px; }

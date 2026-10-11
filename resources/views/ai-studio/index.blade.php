@@ -9,17 +9,74 @@
         <div class="workspace-page__container">
             <div class="ai-portal-grid">
                 <aside class="ai-history" aria-label="Conversation history">
-                    <div class="ai-history-top"><a href="{{ route('ai-studio.index') }}" class="ai-new-chat">New request <span aria-hidden="true">＋</span></a><button type="button" class="ai-history-toggle" @click="historyOpen = !historyOpen" :aria-expanded="historyOpen.toString()" aria-controls="ai-history-list">History</button></div>
-                    <div id="ai-history-list" class="ai-history-list" :class="{'is-open': historyOpen}"><h2>Recent conversations</h2>
-                        @forelse($history as $item)
-                            <a href="{{ $item['url'] }}" @if($selected && $task === $item['task'] && $selected->id === $item['id']) aria-current="page" @endif><span class="ai-history-kind">{{ $labels[$item['task']] }}</span><strong>{{ $item['title'] ?: 'Untitled request' }}</strong><time datetime="{{ $item['date']->toIso8601String() }}">{{ $item['date']->timezone('Asia/Jakarta')->format('d M, H:i') }}</time></a>
-                        @empty
-                            <p class="ai-history-empty">Your saved results will appear here after your first request.</p>
-                        @endforelse
-                        @if($history->hasPages())<nav class="ai-history-pagination" aria-label="History pages">@if($history->previousPageUrl())<a href="{{ $history->previousPageUrl() }}">← Newer</a>@endif<span>{{ $history->currentPage() }} / {{ $history->lastPage() }}</span>@if($history->nextPageUrl())<a href="{{ $history->nextPageUrl() }}">Older →</a>@endif</nav>@endif
+                    <div class="ai-history-top">
+                        <a href="{{ route('ai-studio.index') }}" class="ai-new-chat">
+                            <i class="ph ph-plus" aria-hidden="true"></i>
+                            <span>New request</span>
+                        </a>
+                        <button type="button" class="ai-history-toggle" @click="historyOpen = !historyOpen" :aria-expanded="historyOpen.toString()" aria-controls="ai-history-list">
+                            <i class="ph ph-clock-counter-clockwise" aria-hidden="true"></i>
+                            <span>History</span>
+                        </button>
                     </div>
-                    <a class="ai-profile-context" href="{{ route('cv.builder') }}"><span>Make it personal</span><strong>Update your CV profile ↗</strong><p>Cover letters use the information you’ve added.</p></a>
-                    <a href="{{ route('membership.index') }}" class="ai-plan-link">{{ $metered ? 'Credits & membership' : 'Unlimited usage' }} <span aria-hidden="true">↗</span></a>
+
+                    <div id="ai-history-list" class="ai-history-list" :class="{'is-open': historyOpen}">
+                        <h2 class="ai-history-heading">Recent conversations</h2>
+                        <div class="ai-history-items">
+                            @forelse($history as $item)
+                                <a href="{{ $item['url'] }}" 
+                                   class="ai-history-item"
+                                   @if($selected && $task === $item['task'] && $selected->id === $item['id']) aria-current="page" @endif>
+                                    <strong class="ai-history-item-title">{{ $item['title'] ?: 'Untitled request' }}</strong>
+                                    <span class="ai-history-item-sub">
+                                        <span class="ai-history-kind">{{ $labels[$item['task']] }}</span>
+                                        <span class="ai-history-dot" aria-hidden="true">·</span>
+                                        <time datetime="{{ $item['date']->toIso8601String() }}">{{ $item['date']->timezone('Asia/Jakarta')->format('d M, H:i') }}</time>
+                                    </span>
+                                </a>
+                            @empty
+                                <p class="ai-history-empty">Your saved results will appear here after your first request.</p>
+                            @endforelse
+                        </div>
+                        @if($history->hasPages())
+                            <nav class="ai-history-pagination" aria-label="History pages">
+                                @if($history->previousPageUrl())
+                                    <a href="{{ $history->previousPageUrl() }}" class="ai-history-page-btn">← Newer</a>
+                                @endif
+                                <span class="ai-history-page-indicator">{{ $history->currentPage() }} / {{ $history->lastPage() }}</span>
+                                @if($history->nextPageUrl())
+                                    <a href="{{ $history->nextPageUrl() }}" class="ai-history-page-btn">Older →</a>
+                                @endif
+                            </nav>
+                        @endif
+                    </div>
+
+                    <div class="ai-history-bottom">
+                        <a class="ai-profile-context" href="{{ route('cv.builder') }}">
+                            <div class="ai-profile-context-header">
+                                <span>Make it personal</span>
+                                <strong>Update your CV profile ↗</strong>
+                            </div>
+                            <p>Cover letters use the information you’ve added.</p>
+                        </a>
+
+                        <a href="{{ route('membership.index') }}" class="ai-plan-link">
+                            <span>{{ $metered ? 'Credits & membership' : 'Unlimited usage' }}</span>
+                            <span aria-hidden="true">↗</span>
+                        </a>
+
+                        @php($currentUser = $studioUser ?? auth()->user())
+                        @if($currentUser)
+                            <a href="{{ route('profile.edit') }}" class="ai-user-profile" aria-label="Account profile">
+                                <img src="{{ $currentUser->avatar_url }}" alt="" class="ai-user-avatar">
+                                <div class="ai-user-info">
+                                    <strong class="ai-user-name">{{ $currentUser->name }}</strong>
+                                    <span class="ai-user-sub">Profile &amp; Settings</span>
+                                </div>
+                                <i class="ph ph-caret-right ai-user-arrow" aria-hidden="true"></i>
+                            </a>
+                        @endif
+                    </div>
                 </aside>
                 <section class="ai-chat" aria-label="Career conversation">
                     <header class="ai-chat-header"><div class="ai-chat-identity"><x-trakerja-ai-mark /><h1>TraKerja AI</h1></div><a class="ai-chat-membership" href="{{ route('membership.index') }}">{{ $metered ? 'Credits' : 'Unlimited' }} ↗</a></header>

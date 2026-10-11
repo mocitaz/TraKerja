@@ -23,7 +23,7 @@
     @endif
     <form class="pay-checkout-grid" method="POST" action="{{ route('payment.checkout') }}" x-data="paymentCheckout(@js(old('payment_channel_code', '')))" @submit="submit($event)">
         @csrf
-        <input type="hidden" name="package_type" value="{{ $packageType }}">
+        <input type="hidden" name="package_type" value="{{ $packageType ?? 'premium' }}">
         <div class="pay-main">
             <section class="pay-panel pay-offer">
                 <div class="pay-offer-heading"><span class="pay-tag">{{ $isAddon ? 'ADD-ON' : 'PREMIUM MEMBERSHIP' }}</span><span class="pay-tag pay-tag--quiet">One-time payment</span></div>
@@ -52,7 +52,7 @@
             </section>
         </div>
         <aside class="pay-panel pay-summary">
-            <h2>Order summary</h2><div class="pay-summary-product"><strong>{{ $isAddon ? 'Credit pack' : 'TraKerja Premium' }}</strong><span>{{ $isAddon ? 'Added credits · one purchase' : number_format($days).' days of membership' }}</span></div>
+            <h2>Order summary</h2><div class="pay-summary-product"><strong>{{ $isAddon ? 'Credit pack' : 'TraKerja Premium' }}</strong><span>{{ $isAddon ? 'Added credits · one purchase' : ($days >= 3650 ? 'Lifetime' : number_format($days).' days of membership') }}</span></div>
             <dl class="pay-facts"><div><dt>Account</dt><dd>{{ auth()->user()->email }}</dd></div><div><dt>Payment</dt><dd x-text="method === 'qris' ? 'QRIS' : (method ? 'Bank transfer' : 'Select a method')">Select a method</dd></div></dl>
             @if($isAddon)<ul class="pay-bundle">@foreach($credits as $key => $quantity)<li>{{ \App\Support\PaymentPresentation::benefit($key, $quantity) }}</li>@endforeach</ul>@endif
             <div class="pay-total"><span>Total</span><strong>Rp {{ number_format($price, 0, ',', '.') }}</strong></div>

@@ -1,24 +1,24 @@
 <x-app-layout>
     <div class="bg-[#fafafa] min-h-screen pb-16">
-        <div class="workspace-page-frame max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <div class="workspace-page-frame max-w-[1120px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
             
-            <!-- Premium Notion-Inspired Page Header -->
+            <!-- Premium Page Header -->
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200/60 pb-5 mb-6">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-gradient-to-tr from-primary-50 to-primary-100/50 rounded-xl flex items-center justify-center text-primary-600 shrink-0 border border-primary-100/50 shadow-inner">
+                    <div class="w-10 h-10 bg-gradient-to-tr from-primary-50 to-primary-100/50 rounded-xl flex items-center justify-center text-primary-600 shrink-0 border border-primary-100/50 shadow-xs">
                         <i class="ph ph-camera text-lg"></i>
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <h1 class="text-base font-bold text-slate-800 tracking-tight">Photo Result</h1>
-                            <span class="px-2 py-0.5 bg-primary-50 text-primary-600 text-[9px] font-black uppercase tracking-wider rounded-md border border-primary-100/60">AI Studio</span>
+                            <h1 class="text-2xl font-semibold text-slate-900 tracking-tight">Photo Result</h1>
+                            <span class="px-2 py-0.5 bg-primary-50 text-primary-600 text-[10px] font-semibold uppercase tracking-wider rounded-md border border-primary-100/60">AI Studio</span>
                         </div>
-                        <p class="text-xs text-slate-455 mt-0.5">Your professionally enhanced photo is ready.</p>
+                        <p class="text-xs text-slate-500 mt-1">Your professionally enhanced photo is ready.</p>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <a href="{{ route('ai-photo.index') }}" class="px-3.5 py-1.5 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 text-xs font-semibold rounded-lg shadow-sm transition-colors flex items-center gap-1.5">
+                    <a href="{{ route('ai-photo.index') }}" class="px-3.5 py-1.5 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 text-xs font-semibold rounded-full shadow-xs transition-colors flex items-center gap-1.5 min-h-[36px]">
                         <i class="ph ph-arrow-left text-sm"></i>
                         <span>Back to Studio</span>
                     </a>
@@ -29,18 +29,18 @@
                 
                 {{-- ── Left Content (Image Display) (7 Cols) ── --}}
                 <div class="lg:col-span-7 space-y-6">
-                    <div class="bg-white border border-slate-200/70 rounded-xl p-5 shadow-sm flex flex-col items-center">
+                    <div class="bg-white border border-slate-200/70 rounded-2xl p-5 shadow-xs flex flex-col items-center">
                         {{-- Image Display --}}
-                        <div class="relative w-full rounded-lg overflow-hidden bg-[#fcfcfc] border border-slate-150 flex items-center justify-center min-h-[400px]">
+                        <div class="relative w-full rounded-xl overflow-hidden bg-[#fcfcfc] border border-slate-150 flex items-center justify-center min-h-[400px]">
                             {{-- Dot pattern for transparent images --}}
                             <div class="absolute inset-0 opacity-[0.03]" 
                                  style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 20px 20px;">
                             </div>
-                            <img src="{{ $aiPhoto->result_url }}" alt="AI Photo Result" class="relative z-10 max-w-full h-auto max-h-[600px] object-contain transition-transform duration-300 group-hover:scale-101">
+                            <img src="{{ $aiPhoto->result_url }}" alt="AI Photo Result" class="relative z-10 max-w-full h-auto max-h-[560px] object-contain transition-transform duration-300 group-hover:scale-101">
                             
                             {{-- Badge Overlay --}}
                             <div class="absolute top-4 right-4 z-20 pointer-events-none">
-                                <span class="inline-flex items-center gap-1 px-3 py-1 bg-white border border-slate-200 rounded-lg text-[9px] font-bold {{ $aiPhoto->type === 'enhance' ? 'text-fuchsia-600' : 'text-sky-600' }} uppercase tracking-wider shadow-sm">
+                                <span class="inline-flex items-center gap-1 px-3 py-1 bg-white border border-slate-200 rounded-lg text-[9px] font-bold {{ $aiPhoto->type === 'enhance' ? 'text-fuchsia-600' : 'text-sky-600' }} uppercase tracking-wider shadow-xs">
                                     <i class="ph {{ $aiPhoto->type === 'enhance' ? 'ph-magic-wand' : 'ph-eraser' }} text-xs"></i>
                                     {{ str_replace('_', ' ', $aiPhoto->type) }}
                                 </span>
@@ -49,11 +49,11 @@
                         
                         {{-- Action Buttons --}}
                         <div class="flex flex-col sm:flex-row gap-3 w-full mt-5">
-                            <a href="{{ $aiPhoto->result_url }}" download class="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg font-semibold text-xs hover:bg-slate-800 transition-colors shadow-sm">
+                            <a href="{{ $aiPhoto->result_url }}" download class="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-[#2579ca] hover:bg-[#1e65ab] text-white rounded-full font-semibold text-xs transition-colors shadow-xs min-h-[38px]">
                                 <i class="ph ph-download-simple text-sm"></i>
                                 <span>Unduh Resolusi Tinggi</span>
                             </a>
-                            <a href="{{ $aiPhoto->result_url }}" target="_blank" class="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg font-semibold text-xs hover:bg-slate-50 transition-colors shadow-sm">
+                            <a href="{{ $aiPhoto->result_url }}" target="_blank" class="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-full font-semibold text-xs hover:bg-slate-50 transition-colors shadow-xs min-h-[38px]">
                                 <i class="ph ph-arrow-up-right text-sm"></i>
                                 <span>Buka di Tab Baru</span>
                             </a>

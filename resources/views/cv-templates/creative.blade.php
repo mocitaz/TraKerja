@@ -3,11 +3,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>{{ $user->name }} - CV</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         @page {
-            size: A4;
-            margin: {{ !empty($margin) ? $margin : '20mm' }};
+            size: A4 portrait;
+            margin: {{ !empty($margin) ? $margin : '15mm' }};
         }
         * {
             margin: 0;
@@ -16,179 +15,265 @@
         }
         
         body {
-            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-            font-size: {{ !empty($fontSize) ? $fontSize : '9pt' }};
-            line-height: 1.6;
-            color: #334155;
-            background: white;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: {{ !empty($fontSize) ? $fontSize : '9.5pt' }};
+            line-height: 1.45;
+            color: #1e293b;
+            background: #ffffff;
             -webkit-font-smoothing: antialiased;
         }
         
         .container {
             width: 100%;
+            margin: 0;
+            padding: 0;
         }
         
         /* Header */
         .header {
-            margin-bottom: 40px;
+            margin-bottom: 16px;
         }
         
         .name {
             font-size: 24pt;
-            font-weight: 800;
+            font-weight: bold;
             color: #0f172a;
-            letter-spacing: -1px;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
             margin-bottom: 4px;
         }
         
         .job-title {
-            font-size: 11pt;
-            font-weight: 600;
-            color: #64748b;
+            font-size: 10.5pt;
+            font-weight: bold;
+            color: #4f46e5;
             text-transform: uppercase;
             letter-spacing: 2px;
-        }
-        
-        .contact-bar {
-            display: flex;
-            gap: 20px;
-            margin-top: 15px;
-            font-size: 8pt;
-            color: #94a3b8;
-            font-weight: 600;
+            margin-bottom: 6px;
         }
 
-        /* Section Layout */
-        .section {
-            display: flex;
-            margin-bottom: 30px;
-            break-inside: avoid;
+        .header-accent {
+            width: 44px;
+            height: 3px;
+            background-color: #4f46e5;
+            margin-bottom: 8px;
         }
         
-        .section-label {
-            width: 45mm;
-            flex-shrink: 0;
-            font-size: 8pt;
-            font-weight: 800;
+        .contact-row {
+            font-size: 8.5pt;
+            color: #64748b;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .contact-separator {
+            color: #cbd5e1;
+            padding: 0 5px;
+        }
+
+        /* Sections */
+        .section {
+            margin-top: 13px;
+            margin-bottom: 3px;
+        }
+
+        .section-header-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 8px;
+            border-bottom: 1.5px solid #e0e7ff;
+            page-break-after: avoid;
+            break-after: avoid;
+        }
+
+        .section-header-table td {
+            padding: 0 0 3px 0;
+            border: 0;
+            vertical-align: middle;
+        }
+
+        .section-dot-cell {
+            width: 14px;
+            vertical-align: middle;
+        }
+
+        .section-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #4f46e5;
+            border-radius: 1px;
+        }
+
+        .section-title {
+            font-size: 9.5pt;
+            font-weight: bold;
+            color: #0f172a;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            color: #0f172a;
-            padding-top: 4px;
-        }
-        
-        .section-content {
-            flex-grow: 1;
-            border-left: 1px solid #f1f5f9;
-            padding-left: 25px;
         }
 
         /* Entries */
         .entry {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
         
-        .entry-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 4px;
+        .entry-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 0 2px 0;
+            padding: 0;
+            border: 0;
+        }
+
+        .entry-table td {
+            padding: 0;
+            border: 0;
+            vertical-align: baseline;
         }
         
         .entry-title {
-            font-size: 10pt;
-            font-weight: 700;
+            font-size: 9.5pt;
+            font-weight: bold;
             color: #0f172a;
+            text-align: left;
         }
         
         .entry-date {
-            font-size: 8pt;
-            font-weight: 600;
-            color: #94a3b8;
+            font-size: 8.5pt;
+            font-weight: bold;
+            color: #4f46e5;
+            text-align: right;
+            white-space: nowrap;
         }
         
         .entry-subtitle {
             font-size: 9pt;
-            font-weight: 600;
-            color: #6366f1;
-            margin-bottom: 6px;
+            font-weight: normal;
+            font-style: italic;
+            color: #334155;
+            margin-bottom: 2px;
+        }
+
+        .entry-location {
+            font-size: 8.5pt;
+            color: #64748b;
+            font-style: italic;
+            text-align: right;
+            white-space: nowrap;
         }
         
-        .description {
+        .entry-description {
             font-size: 9pt;
-            color: #475569;
+            color: #334155;
+            line-height: 1.45;
+            margin-top: 2px;
             text-align: justify;
         }
 
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-cols: repeat(2, 1fr);
-            gap: 15px;
-        }
-        
-        .skill-group-title {
-            font-size: 7.5pt;
-            font-weight: 800;
-            color: #94a3b8;
-            text-transform: uppercase;
+        /* Skills Pills */
+        .skills-category-group {
             margin-bottom: 6px;
         }
-        
-        .skill-list {
+
+        .skills-category-title {
             font-size: 8.5pt;
-            color: #475569;
-            font-weight: 500;
+            font-weight: bold;
+            color: #0f172a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
         }
 
-        /* Recognition List */
-        .rec-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 9pt;
-        }
-        
-        .rec-name {
-            font-weight: 600;
-            color: #334155;
-        }
-        
-        .rec-date {
-            color: #94a3b8;
+        .skill-pill {
+            display: inline-block;
+            padding: 2px 7px;
+            background-color: #eef2ff;
+            color: #3730a3;
+            border: 1px solid #c7d2fe;
+            border-radius: 3px;
             font-size: 8pt;
+            font-weight: bold;
+            margin: 0 3px 3px 0;
         }
 
         @media print {
-            body { -webkit-print-color-adjust: exact; }
-            .section-content { border-left-color: #f1f5f9 !important; }
+            @page {
+                size: A4 portrait;
+                margin: {{ !empty($margin) ? $margin : '15mm' }};
+            }
+            html, body {
+                margin: 0 !important;
+                padding: 0 !important;
+                background: #ffffff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .section-header-table {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+            .entry {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
         }
     </style>
-@if(!empty($browserPreview))
-    <style>body { padding: {{ $margin ?? '20mm' }}; } @media print { body { padding: 0; } }</style>
+    @if(!empty($browserPreview))
+    <style>
+        html {
+            background-color: #f1f5f9;
+            padding: 20px 0;
+        }
+        body {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto !important;
+            padding: {{ !empty($margin) ? $margin : '15mm' }} !important;
+            background: #ffffff !important;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12);
+            box-sizing: border-box;
+        }
+        @media print {
+            html { background: #ffffff; padding: 0; }
+            body { width: 100% !important; margin: 0 !important; padding: 0 !important; box-shadow: none !important; }
+        }
+    </style>
     @endif
 </head>
 <body>
     <div class="container">
         <!-- Header -->
-        <header class="header">
-            <h1 class="name">{{ $user->name }}</h1>
-            <div class="job-title">{{ $experiences->first()?->position ?? 'Professional' }}</div>
-            
-            <div class="contact-bar">
-                @if($user->email) <span>{{ $user->email }}</span> @endif
-                @if($user->profile && $user->profile->phone_number) <span>&bull; {{ $user->profile->phone_number }}</span> @endif
-                @if($user->profile && $user->profile->domicile) <span>&bull; {{ $user->profile->domicile }}</span> @endif
+        <div class="header">
+            <div class="name">{{ $user->name }}</div>
+            <div class="job-title">{{ $experiences->first()?->position ?? 'Creative Professional' }}</div>
+            <div class="header-accent"></div>
+            <div class="contact-row">
+                @php
+                    $contact = [];
+                    if($user->profile && $user->profile->phone_number) $contact[] = $user->profile->phone_number;
+                    if($user->email) $contact[] = $user->email;
+                    if($user->profile && $user->profile->domicile) $contact[] = $user->profile->domicile;
+                    if($user->profile && $user->profile->portfolio_url) $contact[] = 'Portfolio';
+                    if($user->profile && $user->profile->linkedin_url) $contact[] = 'LinkedIn';
+                @endphp
+                {!! implode('<span class="contact-separator">&#8226;</span>', $contact) !!}
             </div>
-        </header>
+        </div>
 
         <!-- Summary -->
         @if($user->profile && $user->profile->bio)
-        <div class="section">
-            <div class="section-label">Executive Profile</div>
-            <div class="section-content">
-                <div class="description">
-                    {!! format_cv_text($user->profile->bio) !!}
-                </div>
+        <div class="section" style="margin-top: 0;">
+            <table class="section-header-table">
+                <tr>
+                    <td class="section-dot-cell"><span class="section-dot"></span></td>
+                    <td class="section-title">Profile Summary</td>
+                </tr>
+            </table>
+            <div class="entry-description">
+                {!! format_cv_text($user->profile->bio) !!}
             </div>
         </div>
         @endif
@@ -196,105 +281,188 @@
         <!-- Experience -->
         @if($experiences->count() > 0)
         <div class="section">
-            <div class="section-label">Professional History</div>
-            <div class="section-content">
-                @foreach($experiences as $exp)
-                <div class="entry">
-                    <div class="entry-header">
-                        <h3 class="entry-title">{{ $exp->company_name }}</h3>
-                        <span class="entry-date">{{ format_date_range($exp->start_date, $exp->end_date, $exp->is_current) }}</span>
-                    </div>
-                    <div class="entry-subtitle">{{ $exp->position }}</div>
-                    @if($exp->description)
-                    <div class="description">
-                        {!! format_cv_text($exp->description) !!}
-                    </div>
-                    @endif
+            <table class="section-header-table">
+                <tr>
+                    <td class="section-dot-cell"><span class="section-dot"></span></td>
+                    <td class="section-title">Work Experience</td>
+                </tr>
+            </table>
+            @foreach($experiences as $exp)
+            <div class="entry">
+                <table class="entry-table">
+                    <tr>
+                        <td class="entry-title">{{ $exp->company_name }}</td>
+                        <td class="entry-date">{{ format_date_range($exp->start_date, $exp->end_date, $exp->is_current) }}</td>
+                    </tr>
+                </table>
+                <table class="entry-table">
+                    <tr>
+                        <td class="entry-subtitle">{{ $exp->position }}</td>
+                        <td class="entry-location">{{ $exp->location }}</td>
+                    </tr>
+                </table>
+                @if($exp->description)
+                <div class="entry-description">
+                    {!! format_cv_text($exp->description) !!}
                 </div>
-                @endforeach
+                @endif
             </div>
+            @endforeach
         </div>
         @endif
 
-        <!-- Projects -->
+        <!-- Key Projects -->
         @if($projects->count() > 0)
         <div class="section">
-            <div class="section-label">Selected Projects</div>
-            <div class="section-content">
-                @foreach($projects as $project)
-                <div class="entry" style="margin-bottom: 15px;">
-                    <div class="entry-header">
-                        <h3 class="entry-title">{{ $project->project_name }}</h3>
-                        <span class="entry-date">{{ format_date_range($project->start_date, $project->end_date, $project->is_ongoing) }}</span>
+            <table class="section-header-table">
+                <tr>
+                    <td class="section-dot-cell"><span class="section-dot"></span></td>
+                    <td class="section-title">Featured Projects</td>
+                </tr>
+            </table>
+            @foreach($projects as $project)
+            <div class="entry">
+                <table class="entry-table">
+                    <tr>
+                        <td class="entry-title">{{ $project->project_name }}</td>
+                        <td class="entry-date">{{ format_date_range($project->start_date, $project->end_date, $project->is_ongoing) }}</td>
+                    </tr>
+                </table>
+                <table class="entry-table">
+                    <tr>
+                        <td class="entry-subtitle">{{ $project->role }}</td>
+                        @if($project->project_url)
+                            <td class="entry-location">{{ $project->project_url }}</td>
+                        @endif
+                    </tr>
+                </table>
+                @if($project->technologies && is_array($project->technologies))
+                    <div style="margin: 2px 0;">
+                        @foreach($project->technologies as $tech)
+                            <span class="skill-pill" style="background-color: #f1f5f9; color: #475569; border-color: #e2e8f0;">{{ trim($tech) }}</span>
+                        @endforeach
                     </div>
-                    @if($project->description)
-                    <div class="description">
-                        {!! format_cv_text($project->description) !!}
-                    </div>
-                    @endif
+                @endif
+                @if($project->description)
+                <div class="entry-description">
+                    {!! format_cv_text($project->description) !!}
                 </div>
-                @endforeach
+                @endif
             </div>
+            @endforeach
         </div>
         @endif
 
-        <!-- Skills -->
+        <!-- Skills / Capabilities -->
         @if($skills->count() > 0)
         <div class="section">
-            <div class="section-label">Core Capabilities</div>
-            <div class="section-content">
-                <div class="skills-grid">
-                    @foreach($skills->groupBy('category') as $category => $categorySkills)
-                    <div>
-                        <h4 class="skill-group-title">{{ $category }}</h4>
-                        <p class="skill-list">{{ $categorySkills->pluck('skill_name')->join(', ') }}</p>
-                    </div>
+            <table class="section-header-table">
+                <tr>
+                    <td class="section-dot-cell"><span class="section-dot"></span></td>
+                    <td class="section-title">Skills & Capabilities</td>
+                </tr>
+            </table>
+            @foreach($skills->groupBy('category') as $category => $categorySkills)
+            <div class="skills-category-group">
+                <div class="skills-category-title">{{ $category }}</div>
+                <div>
+                    @foreach($categorySkills as $skill)
+                        <span class="skill-pill">{{ $skill->skill_name }}</span>
                     @endforeach
                 </div>
             </div>
+            @endforeach
         </div>
         @endif
 
         <!-- Education -->
         @if($educations->count() > 0)
         <div class="section">
-            <div class="section-label">Academic Background</div>
-            <div class="section-content">
-                @foreach($educations as $edu)
-                <div class="rec-item">
-                    <div>
-                        <span class="rec-name">{{ $edu->institution_name }}</span>
-                        <span style="color: #64748b; margin-left: 5px;">&mdash; {{ $edu->degree }}</span>
-                    </div>
-                    <span class="rec-date">{{ $edu->start_date?->format('Y') }} - {{ $edu->is_current ? 'Present' : $edu->end_date?->format('Y') }}</span>
+            <table class="section-header-table">
+                <tr>
+                    <td class="section-dot-cell"><span class="section-dot"></span></td>
+                    <td class="section-title">Education</td>
+                </tr>
+            </table>
+            @foreach($educations as $edu)
+            <div class="entry">
+                <table class="entry-table">
+                    <tr>
+                        <td class="entry-title">{{ $edu->institution_name }}</td>
+                        <td class="entry-date">{{ format_date_range($edu->start_date, $edu->end_date, $edu->is_current) }}</td>
+                    </tr>
+                </table>
+                <table class="entry-table">
+                    <tr>
+                        <td class="entry-subtitle">{{ $edu->degree }}{{ $edu->major ? ' in ' . $edu->major : '' }}</td>
+                        <td class="entry-location">{{ $edu->location }}</td>
+                    </tr>
+                </table>
+                @if($edu->gpa)
+                <div class="entry-description" style="color: #4b5563; font-size: 8.5pt;">
+                    GPA: {{ $edu->gpa }}
                 </div>
-                @endforeach
+                @endif
             </div>
+            @endforeach
         </div>
         @endif
 
-        <!-- Recognition -->
-        @if($achievements->count() > 0 || $organizations->count() > 0)
+        <!-- Organizations -->
+        @if($organizations->count() > 0)
         <div class="section">
-            <div class="section-label">Recognition & Activity</div>
-            <div class="section-content">
-                @foreach($achievements as $ach)
-                <div class="rec-item">
-                    <span class="rec-name">{{ $ach->title }}</span>
-                    <span class="rec-date">{{ $ach->issue_date?->format('Y') }}</span>
+            <table class="section-header-table">
+                <tr>
+                    <td class="section-dot-cell"><span class="section-dot"></span></td>
+                    <td class="section-title">Leadership & Organizations</td>
+                </tr>
+            </table>
+            @foreach($organizations as $org)
+            <div class="entry">
+                <table class="entry-table">
+                    <tr>
+                        <td class="entry-title">{{ $org->organization_name }}</td>
+                        <td class="entry-date">{{ format_date_range($org->start_date, $org->end_date, $org->is_current) }}</td>
+                    </tr>
+                </table>
+                <div class="entry-subtitle">{{ $org->position }}</div>
+                @if($org->description)
+                <div class="entry-description">
+                    {!! format_cv_text($org->description) !!}
                 </div>
-                @endforeach
-                @foreach($organizations as $org)
-                <div class="rec-item">
-                    <span class="rec-name">{{ $org->organization_name }}</span>
-                    <span class="rec-date">{{ $org->position }}</span>
-                </div>
-                @endforeach
+                @endif
             </div>
+            @endforeach
+        </div>
+        @endif
+
+        <!-- Achievements -->
+        @if($achievements->count() > 0)
+        <div class="section">
+            <table class="section-header-table">
+                <tr>
+                    <td class="section-dot-cell"><span class="section-dot"></span></td>
+                    <td class="section-title">Certifications & Honors</td>
+                </tr>
+            </table>
+            @foreach($achievements as $achievement)
+            <div class="entry">
+                <table class="entry-table">
+                    <tr>
+                        <td class="entry-title">{{ $achievement->title }}</td>
+                        <td class="entry-date">{{ $achievement->issue_date?->format('M Y') }}</td>
+                    </tr>
+                </table>
+                <div class="entry-subtitle">{{ $achievement->issuer }}</div>
+                @if($achievement->description)
+                <div class="entry-description">
+                    {!! format_cv_text($achievement->description) !!}
+                </div>
+                @endif
+            </div>
+            @endforeach
         </div>
         @endif
     </div>
 </body>
 </html>
-
-
