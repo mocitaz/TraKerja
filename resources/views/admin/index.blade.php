@@ -78,187 +78,81 @@
     }">
 
         {{-- ==========================================================================
-             ADMIN WELCOME MODAL POPUP (matches community.popup & user login modal)
+             ADMIN WELCOME MODAL POPUP (Exact 1:1 match with user community welcome modal)
              ========================================================================== --}}
-        <div class="admin-welcome-overlay" 
+        <div class="community-overlay" 
              x-show="welcomeModalOpen" 
              x-cloak 
              @click.self="closeModal()" 
              @keydown.escape.window="closeModal()"
-             x-transition:enter="admin-fade-enter" 
+             x-transition:enter="community-fade" 
              x-transition:enter-start="opacity-0" 
              x-transition:enter-end="opacity-100"
-             x-transition:leave="admin-fade-leave" 
+             x-transition:leave="community-fade" 
              x-transition:leave-start="opacity-100" 
-             x-transition:leave-end="opacity-0"
-             role="dialog" 
-             aria-modal="true" 
-             aria-labelledby="admin-modal-title">
-            
-            <div class="admin-welcome-modal">
-                <button type="button" 
-                        class="admin-modal-close" 
-                        @click="closeModal()" 
-                        aria-label="Close executive briefing">
-                    <i class="ph ph-x"></i>
+             x-transition:leave-end="opacity-0">
+            <section class="community-welcome" role="dialog" aria-modal="true" aria-labelledby="admin-modal-title" tabindex="-1">
+                <button type="button" class="community-close" @click="closeModal()" aria-label="Close welcome message">
+                    <i class="ph ph-x" aria-hidden="true"></i>
                 </button>
-
-                <div class="admin-welcome-modal__copy">
-                    <span class="admin-eyebrow">
-                        <i class="ph-bold ph-shield-check text-[#7751a0]"></i> Executive Access
-                    </span>
-                    <h2 id="admin-modal-title">
-                        Welcome back, {{ explode(' ', Auth::user()->name)[0] }}<span class="community-heading-dot">.</span>
-                    </h2>
-                    <p class="admin-welcome-intro">
-                        Your command center is connected and ready.
-                    </p>
-                    <p class="admin-welcome-desc">
-                        Here is your platform operational pulse and live telemetry briefing for today:
-                    </p>
-
-                    <div class="admin-briefing-checklist">
-                        <div class="admin-briefing-item">
-                            <i class="ph-fill ph-user-plus text-[#8e4476]"></i>
-                            <span><strong>+{{ number_format($newUsersToday) }}</strong> new members registered today</span>
-                        </div>
-                        <div class="admin-briefing-item">
-                            <i class="ph-fill ph-chat-circle-dots text-[#7751a0]"></i>
-                            <span><strong>{{ number_format($pendingTickets) }}</strong> pending support tickets in queue</span>
-                        </div>
-                        <div class="admin-briefing-item">
-                            <i class="ph-fill ph-credit-card text-[#ad573f]"></i>
-                            <span><strong>{{ number_format($pendingPayments) }}</strong> transactions awaiting payment verification</span>
-                        </div>
-                        <div class="admin-briefing-item">
-                            <i class="ph-fill ph-briefcase text-[#34749b]"></i>
-                            <span><strong>{{ number_format($totalApps) }}</strong> total career applications tracked</span>
-                        </div>
-                    </div>
-
-                    <div class="admin-modal-actions">
-                        <button type="button" 
-                                class="admin-action-primary" 
-                                @click="closeModal()">
+                <div class="community-copy">
+                    <h2 id="admin-modal-title">Welcome back<span class="community-heading-dot">.</span></h2>
+                    <p class="community-intro">Platform control and live telemetry<br class="community-desktop-break"> ready for your workspace.</p>
+                    <p class="community-description">Review real-time member registrations, application tracker flows, and live platform signals directly from your command center.</p>
+                    <div class="community-actions">
+                        <button type="button" class="community-join" @click="closeModal()">
                             <span>Open Dashboard</span>
-                            <i class="ph ph-arrow-right"></i>
+                            <i class="ph ph-arrow-right" aria-hidden="true"></i>
                         </button>
-                        <a href="{{ route('admin.analytics') }}" class="admin-action-secondary">
-                            <i class="ph-bold ph-chart-line-up"></i>
+                        <a class="community-dashboard" href="{{ route('admin.analytics') }}" wire:navigate>
                             <span>Explore Analytics</span>
-                        </a>
-                        <a href="{{ route('admin.users') }}" class="admin-action-secondary">
-                            <i class="ph-bold ph-users"></i>
-                            <span>Manage Users</span>
+                            <span aria-hidden="true">→</span>
                         </a>
                     </div>
-
-                    <p class="admin-modal-footnote">
-                        <i class="ph-fill ph-shield-check"></i>
-                        Live data verified · All security credentials active.
-                    </p>
+                    <p class="community-footnote">TraKerja Control Architecture · All telemetry connected in real-time.</p>
                 </div>
-
-                <div class="admin-welcome-modal__art" aria-hidden="true">
-                    <div class="admin-art-caption">TraKerja Control Architecture · Connected</div>
-                    
-                    <svg class="admin-art-connections" viewBox="0 0 380 380" fill="none">
-                        <path d="M45 280C20 180 90 80 200 90C300 100 350 200 300 300" 
-                              stroke="#cfbfe0" stroke-width="1.6" stroke-dasharray="5 7"/>
-                        <path d="M90 260C140 340 250 340 290 270" 
-                              stroke="#b4cce2" stroke-width="1.6" stroke-dasharray="5 7"/>
+                <div class="community-art" aria-hidden="true">
+                    <div class="community-art-caption">TraKerja Control Terminal</div>
+                    <svg class="community-connections" viewBox="0 0 400 400" fill="none">
+                        <path d="M65 310C32 224 110 100 222 111C320 120 360 213 316 314" stroke="#bd91af" stroke-width="1.5" stroke-dasharray="5 8"/>
+                        <path d="M103 284C151 360 269 358 309 290" stroke="#bd91af" stroke-width="1.5" stroke-dasharray="5 8"/>
                     </svg>
-
-                    <div class="admin-art-avatar admin-avatar--peach">
-                        <img src="{{ asset('images/avatars/peach.svg') }}" alt="" width="112" height="112">
+                    <div class="community-avatar community-avatar--peach"><img src="{{ asset('images/avatars/peach.svg') }}" alt="" width="120" height="120"></div>
+                    <div class="community-avatar community-avatar--lilac"><img src="{{ asset('images/avatars/lilac.svg') }}" alt="" width="94" height="94"></div>
+                    <div class="community-avatar community-avatar--sky"><img src="{{ asset('images/avatars/sky.svg') }}" alt="" width="100" height="100"></div>
+                    <div class="community-speech community-speech--hello">Hey, welcome in! <span>✦</span></div>
+                    <div class="community-speech community-speech--share"><span class="community-speech-dot"></span>Control active. Real-time telemetry.</div>
+                    <div class="community-plane">
+                        <svg viewBox="0 0 90 90" fill="none">
+                            <path d="M12 38L77 15L57 77L39 52L12 38Z" fill="#fffafc" stroke="#994577" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M39 52L77 15L30 45" stroke="#994577" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M39 52L38 70L48 63" stroke="#994577" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M7 61L19 58M14 75L28 69" stroke="#b65b90" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
                     </div>
-                    <div class="admin-art-avatar admin-avatar--lilac">
-                        <img src="{{ asset('images/avatars/lilac.svg') }}" alt="" width="88" height="88">
-                    </div>
-                    <div class="admin-art-avatar admin-avatar--sky">
-                        <img src="{{ asset('images/avatars/sky.svg') }}" alt="" width="96" height="96">
-                    </div>
-
-                    <div class="admin-art-speech">
-                        <span class="admin-speech-dot"></span>
-                        <span>Engine Operational ✦</span>
-                    </div>
-
-                    <div class="admin-art-float admin-float-conversions">
-                        <strong>{{ $overallSuccessRate }}% Success</strong>
-                        <small>{{ number_format($offeredApps) }} offers logged</small>
-                    </div>
-
-                    <div class="admin-art-float admin-float-membership">
-                        <i class="ph-fill ph-sparkle text-amber-500"></i>
-                        <div>
-                            <strong>{{ number_format($proUsers) }} Premium</strong>
-                            <small>Active entitlement</small>
-                        </div>
-                    </div>
-
-                    <span class="admin-art-spark admin-spark-one">✧</span>
-                    <span class="admin-art-spark admin-spark-two">✦</span>
-
-                    <div class="admin-art-footer">
+                    <span class="community-spark community-spark--one">✧</span><span class="community-spark community-spark--two">✦</span>
+                    <div class="community-art-footer">
                         <span>Platform intelligence.</span>
                         <strong>All connected in real-time.</strong>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
 
         {{-- ==========================================================================
-             HERO WELCOME BANNER (In-Page, matches dashboard.welcome)
+             HERO WELCOME BANNER (In-Page, matches dashboard.welcome without box container)
              ========================================================================== --}}
         <section class="admin-hero-welcome" aria-labelledby="admin-hero-greeting">
             <div class="admin-hero-copy">
                 <time datetime="{{ now()->timezone('Asia/Jakarta')->toDateString() }}" class="admin-hero-date">
-                    <i class="ph-bold ph-calendar-blank"></i>
-                    {{ now()->timezone('Asia/Jakarta')->locale('en')->translatedFormat('l, F j, Y') }} · WIB
+                    {{ now()->timezone('Asia/Jakarta')->locale('en')->translatedFormat('l, F j, Y') }}
                 </time>
                 <h1 id="admin-hero-greeting">
-                    Good to see you, {{ explode(' ', Auth::user()->name)[0] }}<span class="text-[#7751a0]">.</span>
+                    Good to see you, {{ explode(' ', Auth::user()->name)[0] }}.
                 </h1>
                 <p>
                     Platform telemetry, member growth momentum, and candidate application pulse at a glance.
                 </p>
-                <div class="admin-hero-actions">
-                    <a href="{{ route('admin.analytics') }}" class="admin-hero-btn admin-hero-btn--primary">
-                        <span>Explore Analytics</span>
-                        <i class="ph ph-arrow-up-right"></i>
-                    </a>
-                    <a href="{{ route('admin.users') }}" class="admin-hero-btn admin-hero-btn--secondary">
-                        <i class="ph ph-users"></i>
-                        <span>User Directory</span>
-                    </a>
-                    <button type="button" 
-                            @click="openModal()" 
-                            class="admin-hero-btn admin-hero-btn--briefing">
-                        <i class="ph-fill ph-sparkle text-amber-500"></i>
-                        <span>Executive Briefing</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="admin-hero-scene" aria-hidden="true">
-                <div class="admin-hero-companion">
-                    <img src="{{ asset('images/avatars/sky.svg') }}" alt="" class="admin-companion-avatar" width="94" height="94">
-                    <div class="admin-companion-speech">
-                        <span class="admin-speech-live-dot"></span>
-                        <span>Control node active ✦</span>
-                    </div>
-                </div>
-                <div class="admin-hero-floats">
-                    <a href="{{ route('admin.feedbacks.index') }}" class="admin-hero-float">
-                        <i class="ph-fill ph-chat-circle-dots text-[#7751a0]"></i>
-                        <span><strong>{{ $pendingTickets }}</strong> Pending Tickets</span>
-                    </a>
-                    <a href="{{ route('admin.payments') }}" class="admin-hero-float">
-                        <i class="ph-fill ph-credit-card text-[#ad573f]"></i>
-                        <span><strong>{{ $pendingPayments }}</strong> Pending Payments</span>
-                    </a>
-                </div>
             </div>
         </section>
 
@@ -377,8 +271,8 @@
                 </div>
             </section>
 
-            {{-- Application Pipeline Pulse --}}
-            <section class="admin-panel admin-glass">
+            {{-- Application Pipeline Pulse (Styled with Dashboard "Prepare for your interview" Palette #d0e3f3) --}}
+            <section class="admin-panel admin-pulse-interview">
                 <div class="admin-panel-heading">
                     <div>
                         <h2>Application Pipeline Pulse</h2>
@@ -433,7 +327,7 @@
              LOWER GRID: RECENT APPLICATIONS & LEADERBOARD (Matched to /tracker density)
              ========================================================================== --}}
         <div class="admin-lower-grid">
-            {{-- Left: Recent Applications Table (Density & Styling matched to /tracker) --}}
+            {{-- Left: Recent Applications Table (Full width layout matched to /tracker) --}}
             <section class="admin-panel admin-recent">
                 <div class="admin-panel-heading">
                     <div>
@@ -447,19 +341,19 @@
                 </div>
 
                 <div class="au-table-container">
-                    <table class="au-tracker-table">
+                    <table class="au-tracker-table admin-recent-table">
                         <thead>
                             <tr>
-                                <th>Applicant</th>
-                                <th>Opportunity</th>
-                                <th>Status</th>
-                                <th>Logged</th>
+                                <th class="col-applicant">Applicant</th>
+                                <th class="col-opportunity">Opportunity</th>
+                                <th class="col-status text-center">Status</th>
+                                <th class="col-logged text-right">Logged</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($recentApplications->take(8) as $application)
+                            @forelse($recentApplications->take(10) as $application)
                                 <tr>
-                                    <td>
+                                    <td class="col-applicant">
                                         <div class="admin-person">
                                             <div class="admin-avatar-mark">
                                                 @if(!empty($application->user?->avatar_url))
@@ -474,13 +368,13 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td class="col-opportunity">
                                         <div class="admin-opportunity">
                                             <strong>{{ $application->position }}</strong>
                                             <small>{{ $application->company_name }}</small>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td class="col-status text-center">
                                         @php
                                             $status = $application->application_status ?? 'On Process';
                                             $chipTone = match($status) {
@@ -493,7 +387,7 @@
                                             {{ $status }}
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="col-logged text-right">
                                         <time datetime="{{ $application->created_at->toIso8601String() }}" 
                                               title="{{ $application->created_at->format('d M Y H:i') }}"
                                               class="admin-table-time">
@@ -529,7 +423,7 @@
                     </div>
 
                     <ol class="admin-ranking-list">
-                        @forelse($topAppliedUsers as $index => $person)
+                        @forelse($topAppliedUsers->take(5) as $index => $person)
                             <li>
                                 <div class="admin-rank-badge admin-rank-badge--{{ $index < 3 ? $index + 1 : 'default' }}">
                                     @if($index === 0)
@@ -545,7 +439,7 @@
                                         <span>{{ strtoupper(substr($person->name, 0, 1)) }}</span>
                                     @endif
                                 </div>
-                                <div>
+                                <div class="admin-rank-user">
                                     <strong>{{ $person->name }}</strong>
                                     <small>{{ $person->email }}</small>
                                 </div>
@@ -572,7 +466,7 @@
                     </div>
 
                     <ol class="admin-ranking-list">
-                        @forelse($topRejectedUsers as $index => $person)
+                        @forelse($topRejectedUsers->take(5) as $index => $person)
                             <li>
                                 <div class="admin-rank-badge admin-rank-badge--alert">
                                     {{ $index + 1 }}
@@ -584,7 +478,7 @@
                                         <span>{{ strtoupper(substr($person->name, 0, 1)) }}</span>
                                     @endif
                                 </div>
-                                <div>
+                                <div class="admin-rank-user">
                                     <strong>{{ $person->name }}</strong>
                                     <small>{{ $person->email }}</small>
                                 </div>

@@ -259,6 +259,100 @@
     </section>
 
     <!-- =====================================================================
+         MODAL 1: Manage Account ($showEditModal)
+         ===================================================================== -->
+    @if($showEditModal)
+        <template x-teleport="body">
+            <div x-data role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.showEditModal" data-dialog-close="$wire.closeModal()" aria-labelledby="showEditModal-title" class="au-dialog-overlay">
+                <section class="au-dialog">
+                    <header class="au-dialog-heading">
+                        <div>
+                            <h2 id="showEditModal-title">Manage account</h2>
+                            <p>Profile details, membership privileges, and AI credit quotas.</p>
+                        </div>
+                        <button type="button" wire:click="closeModal" class="au-dialog-close" aria-label="Close dialog">
+                            <i class="ph ph-x" aria-hidden="true"></i>
+                        </button>
+                    </header>
+                    <div class="au-dialog-body">
+                        @php($editingUser = $editingUserId ? \App\Models\User::find($editingUserId) : null)
+                        @if($editingUser)
+                            <div class="au-dialog-person">
+                                <img src="{{ $editingUser->avatar_url }}" alt="{{ $editingUser->name }}">
+                                <div>
+                                    <strong>{{ $editingUser->name }}</strong>
+                                    <span>{{ $editingUser->email }}</span>
+                                </div>
+                                <div style="display: flex; gap: 6px;">
+                                    <span class="au-plan-badge {{ $editingUser->isAdmin() ? 'au-plan-badge--premium' : 'au-plan-badge--free' }}">
+                                        {{ $editingUser->isAdmin() ? 'Admin' : 'Member' }}
+                                    </span>
+                                    <span class="au-plan-badge {{ $editingUser->isPremium() ? 'au-plan-badge--premium' : 'au-plan-badge--free' }}">
+                                        {{ $editingUser->isPremium() ? 'Premium' : 'Free' }}
+                                    </span>
+                                </div>
+                            </div>
+                        @endif
+
+                        <form wire:submit="updateUser" class="au-form au-form-section">
+                            <h3>Account & Access Information</h3>
+                            <label for="edit-member-name">
+                                Full Name
+                                <input id="edit-member-name" type="text" wire:model="editName" required placeholder="Member full name…">
+                                @error('editName')<span class="au-field-error">{{ $message }}</span>@enderror
+                            </label>
+                            <label for="edit-member-email">
+                                Email Address
+                                <input id="edit-member-email" type="email" wire:model="editEmail" required placeholder="member@email.com">
+                                @error('editEmail')<span class="au-field-error">{{ $message }}</span>@enderror
+                            </label>
+                            <div class="au-form-actions">
+                                <button type="submit" class="au-button au-button--primary" wire:loading.attr="disabled" wire:target="updateUser">
+                                    <span wire:loading.remove wire:target="updateUser">Save Account Changes</span>
+                                    <span wire:loading wire:target="updateUser">Saving…</span>
+                                </button>
+                            </div>
+                        </form>
+
+                        <form wire:submit="saveAiQuotas" class="au-form au-form-section" style="margin-top: 18px;">
+                            <h3>AI Feature Quota Credits</h3>
+                            <div class="au-quota-grid">
+                                <div class="au-quota-tile">
+                                    <label for="credit-editAiCredits">
+                                        Analyze CV
+                                        <input id="credit-editAiCredits" type="number" wire:model="editAiCredits" min="0" step="1" required>
+                                        @error('editAiCredits')<span class="au-field-error">{{ $message }}</span>@enderror
+                                    </label>
+                                </div>
+                                <div class="au-quota-tile">
+                                    <label for="credit-editClCredits">
+                                        Cover Letter
+                                        <input id="credit-editClCredits" type="number" wire:model="editClCredits" min="0" step="1" required>
+                                        @error('editClCredits')<span class="au-field-error">{{ $message }}</span>@enderror
+                                    </label>
+                                </div>
+                                <div class="au-quota-tile">
+                                    <label for="credit-editPhotoCredits">
+                                        AI Photo Studio
+                                        <input id="credit-editPhotoCredits" type="number" wire:model="editPhotoCredits" min="0" step="1" required>
+                                        @error('editPhotoCredits')<span class="au-field-error">{{ $message }}</span>@enderror
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="au-form-actions">
+                                <button type="submit" class="au-button au-button--primary" wire:loading.attr="disabled" wire:target="saveAiQuotas">
+                                    <span wire:loading.remove wire:target="saveAiQuotas">Save AI Quotas</span>
+                                    <span wire:loading wire:target="saveAiQuotas">Saving…</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </template>
+    @endif
+
+    <!-- =====================================================================
          MODAL 2: Add Administrator ($showCreateAdminModal)
          ===================================================================== -->
     @if($showCreateAdminModal)
@@ -386,7 +480,7 @@
                     <header class="au-dialog-heading">
                         <div>
                             <h2 id="showPremiumConfirmModal-title">
-                                {{ $confirmTargetUserIsPremium ? 'Revoke Premium Access?' : 'Grant Premium Access?' }}
+                                {{ $confirmTargetUserIsPremium ? 'Revoke premium access?' : 'Grant premium access?' }}
                             </h2>
                             <p>Confirm the membership tier change for this user account.</p>
                         </div>
@@ -425,7 +519,7 @@
                 <section class="au-dialog au-dialog--small">
                     <header class="au-dialog-heading">
                         <div>
-                            <h2 id="showDeleteConfirmModal-title" style="color: #ef4444;">Permanently Delete Account?</h2>
+                            <h2 id="showDeleteConfirmModal-title" style="color: #ef4444;">Delete this account?</h2>
                             <p>This action is irreversible and will delete all user data permanently.</p>
                         </div>
                         <button type="button" wire:click="closeDeleteConfirmModal" class="au-dialog-close" aria-label="Close dialog">
