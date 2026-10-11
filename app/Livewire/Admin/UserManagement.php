@@ -616,6 +616,15 @@ class UserManagement extends Component
         $effectivePerPage = $this->perPage = \App\Support\PageSize::resolve($this->perPage, [10, 20, 50, 100], 10);
 
         $users = $this->getUsersQuery()
+            ->withCount([
+                'jobApplications as applied_count',
+                'jobApplications as declined_count' => function ($query) {
+                    $query->where(function ($q) {
+                        $q->where('application_status', 'Rejected')
+                          ->orWhere('status', 'Rejected');
+                    });
+                },
+            ])
             ->latest()
             ->paginate($effectivePerPage);
         
@@ -632,6 +641,7 @@ class UserManagement extends Component
             'ai_analyzer_trial_used' => User::where('role', '!=', 'admin')
                 ->where('has_used_ai_analyzer_trial', true)
                 ->count(),
+            'total_applications' => \App\Models\JobApplication::count(),
         ];
         
         return view('livewire.admin.user-management', [

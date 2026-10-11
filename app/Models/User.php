@@ -170,6 +170,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_notifications_enabled' => 'boolean',
             'notify_goal_reminders' => 'boolean',
             'notify_interview_reminders' => 'boolean',
+            'last_activity_at' => 'datetime',
             'notify_goal_achieved' => 'boolean',
         ];
     }
