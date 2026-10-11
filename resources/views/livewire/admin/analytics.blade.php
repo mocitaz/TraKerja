@@ -75,10 +75,6 @@
             <div class="summary-insights-title">
                 <h2>Platform Highlights</h2>
             </div>
-            <span class="summary-insights-badge">
-                <span class="summary-live-dot"></span>
-                <span>Live signals</span>
-            </span>
         </div>
         <div class="summary-insights-grid">
             <article>
