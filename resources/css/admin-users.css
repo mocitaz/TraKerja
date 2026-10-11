@@ -1277,83 +1277,258 @@
 }
 
 /* 2-Column Layout Grid */
-.au-detail-grid {
+/* ==========================================================================
+   User Detail Page (.au-detail-page) - Tab-based Architecture
+   Matched to https://trakerja.com/automation?tab=csv & Symmetrical Grids
+   ========================================================================== */
+.au-detail-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: au-fade-in 0.25s ease-out both;
+}
+
+.au-detail-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.au-detail-heading-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 4px 0 6px;
+}
+
+.au-detail-heading-row h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #35264f;
+    letter-spacing: -0.8px;
+    margin: 0;
+    line-height: 1.25;
+}
+
+.au-tab-count {
+    margin-left: 6px;
+    padding: 2px 7px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.workspace-switcher button.is-active .au-tab-count {
+    background: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+}
+
+.au-detail-page .automation-balanced-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-    gap: 16px;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 20px;
     align-items: start;
 }
 
-.au-detail-column {
+.au-detail-page .workspace-card {
+    background: #ffffff;
+    border: 1px solid #dfe3eb;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(52, 49, 59, 0.02);
+}
+
+.au-detail-page .workspace-card--glass {
+    background: linear-gradient(135deg, #ffffff 0%, #f9f8fb 100%);
+}
+
+.au-detail-page .workspace-card__heading {
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #edf0f3;
+}
+
+.au-detail-page .workspace-card__heading h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #35264f;
+    letter-spacing: -0.4px;
+    margin: 0 0 4px;
+}
+
+.au-detail-page .workspace-card__heading p {
+    font-size: 11px;
+    color: #767082;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Quota Grid */
+.au-quota-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.au-quota-tile {
+    background: #fbf9fc;
+    border: 1px solid #eee5f3;
+    border-radius: 14px;
+    padding: 14px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-}
-
-/* Detail Card */
-.au-detail-card {
-    background: #ffffff;
-    border: 1px solid #d7dce2;
-    border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(52, 49, 59, 0.03);
-    overflow: hidden;
-}
-
-.au-detail-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 18px;
-    gap: 12px;
-    border-bottom: 1px solid #edf0f4;
-}
-
-.au-detail-card-header h2 {
-    font-size: 15px;
-    line-height: 1.4;
-    font-weight: 650;
-    color: #35264f;
-    display: flex;
-    align-items: center;
     gap: 8px;
-    margin: 0;
+    transition: all 0.15s ease;
 }
 
-.au-detail-card-header h2 span {
-    font-size: 10.5px;
-    font-weight: 600;
-    color: #776487;
-    background: #f0ebf7;
-    border-radius: 6px;
-    padding: 2px 6px;
+.au-quota-tile:hover {
+    background: #ffffff;
+    border-color: #d8cde4;
+    box-shadow: 0 2px 8px rgba(53, 38, 79, 0.04);
 }
 
-.au-detail-card-header p {
+.au-quota-tile-header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: #35264f;
+}
+
+.au-quota-tile-header strong {
+    font-weight: 700;
+}
+
+.au-quota-tile label {
+    font-size: 11px;
+    color: #696572;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.au-quota-tile input {
+    font-size: 16px;
+    font-weight: 700;
+    color: #35264f;
+    padding: 8px 12px;
+    border: 1px solid #e0d7e6;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.au-quota-tile small {
+    font-size: 10px;
+    color: #8b8394;
+    line-height: 1.4;
+}
+
+/* Member Identity in Side Panel */
+.au-identity-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #edf0f3;
+}
+
+.au-identity-avatar-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(53, 38, 79, 0.08);
+    flex-shrink: 0;
+}
+
+.au-identity-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.au-identity-info strong {
+    font-size: 14px;
+    font-weight: 700;
+    color: #35264f;
+    display: block;
+}
+
+.au-identity-info p {
     font-size: 11px;
     color: #767082;
     margin: 2px 0 0;
 }
 
-.au-detail-card .au-form {
-    padding: 18px;
+.au-identity-meta-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.au-detail-card .au-account-details {
-    padding: 16px 18px;
+.au-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 11px;
+    padding: 4px 0;
+}
+
+.au-meta-row > span:first-child {
+    color: #767082;
+}
+
+.au-meta-row strong {
+    color: #35264f;
+}
+
+/* Application Metrics Summary in Side Panel */
+.au-stat-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.au-stat-box {
+    background: #ffffff;
+    border: 1px solid #edf0f3;
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.au-stat-box span {
+    font-size: 10px;
+    font-weight: 600;
+    color: #767082;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.au-stat-box strong {
+    font-size: 20px;
+    font-weight: 700;
+    color: #35264f;
+    letter-spacing: -0.4px;
 }
 
 @media (max-width: 992px) {
-    .au-detail-grid {
+    .au-detail-page .automation-balanced-grid {
         grid-template-columns: 1fr;
     }
-    .au-hero-metrics {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .au-hero-stat:nth-child(even) {
-        border-right: 0;
-    }
-    .au-hero-stat:nth-child(n+3) {
-        border-top: 1px solid #edf0f4;
+    .au-quota-grid {
+        grid-template-columns: 1fr;
     }
 }
+
 
