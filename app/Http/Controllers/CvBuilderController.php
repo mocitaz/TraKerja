@@ -174,8 +174,9 @@ class CvBuilderController extends Controller
         $achievements = $user->achievements()->orderBy('display_order')->get();
         $projects = $user->projects()->orderBy('display_order')->get();
         
-        $margin = $request->input('margin');
-        $fontSize = $request->input('font_size');
+        $defaultMargin = '15mm';
+        $margin = in_array($request->input('margin'), ['0', '10mm', '12mm', '15mm', '20mm', '22mm', '28mm'], true) ? $request->input('margin') : $defaultMargin;
+        $fontSize = in_array($request->input('font_size'), ['8.5pt', '9.5pt', '10.5pt'], true) ? $request->input('font_size') : '9.5pt';
 
         try {
             // Generate PDF using DomPDF
@@ -195,8 +196,9 @@ class CvBuilderController extends Controller
             $pdf->setOptions([
                 'isHtml5ParserEnabled' => true,
                 'isRemoteEnabled' => true,
-                'defaultFont' => ($template === 'elegant') ? 'serif' : 'sans-serif',
-                'dpi' => 150,
+                'defaultFont' => ($template === 'elegant') ? 'DejaVu Serif' : 'DejaVu Sans',
+                'dpi' => 96,
+                'defaultMediaType' => 'print',
             ]);
         } catch (\Exception $e) {
             Log::error("Error generating PDF: " . $e->getMessage(), [

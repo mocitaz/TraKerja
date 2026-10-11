@@ -15,9 +15,9 @@
         }
         
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: "DejaVu Sans", "Helvetica Neue", Arial, sans-serif;
             font-size: {{ !empty($fontSize) ? $fontSize : '9.5pt' }};
-            line-height: 1.45;
+            line-height: 1.38;
             color: #1e293b;
             background: #ffffff;
             -webkit-font-smoothing: antialiased;
@@ -33,40 +33,40 @@
         .header-table {
             width: 100%;
             border-collapse: collapse;
-            border-bottom: 2px solid #0f172a;
-            padding-bottom: 10px;
-            margin-bottom: 14px;
+            border-bottom: 1.5px solid #0f172a;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
         }
 
         .header-table td {
-            padding: 0;
+            padding: 0 0 6px 0;
             vertical-align: bottom;
             border: 0;
         }
 
         .name {
-            font-size: 22pt;
+            font-size: 20pt;
             font-weight: bold;
             color: #0f172a;
             letter-spacing: -0.5px;
             line-height: 1.1;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .job-title {
-            font-size: 10pt;
+            font-size: 0.95em;
             font-weight: bold;
             color: #1e40af;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 4px;
+            letter-spacing: 1.2px;
+            margin-bottom: 2px;
         }
 
         .contact-info {
             text-align: right;
-            font-size: 8.5pt;
+            font-size: 0.88em;
             color: #475569;
-            line-height: 1.4;
+            line-height: 1.35;
         }
 
         .contact-item {
@@ -75,36 +75,36 @@
         
         /* Sections */
         .section {
-            margin-top: 13px;
-            margin-bottom: 3px;
+            margin-top: 9px;
+            margin-bottom: 0px;
         }
 
         .section-title-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             page-break-after: avoid;
             break-after: avoid;
         }
 
         .section-title-table td {
-            padding: 0 0 3px 0;
+            padding: 0 0 2px 0;
             border: 0;
-            border-bottom: 1.5px solid #0f172a;
+            border-bottom: 1.2px solid #0f172a;
             vertical-align: bottom;
         }
 
         .section-title {
-            font-size: 9.5pt;
+            font-size: 0.95em;
             font-weight: bold;
             color: #0f172a;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.2px;
         }
 
         /* Entry styles */
         .entry {
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             page-break-inside: avoid;
             break-inside: avoid;
         }
@@ -112,7 +112,7 @@
         .entry-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 0 0 2px 0;
+            margin: 0 0 1px 0;
             padding: 0;
             border: 0;
         }
@@ -125,40 +125,44 @@
 
         .entry-title {
             font-weight: bold;
-            font-size: 9.5pt;
+            font-size: 1em;
             color: #0f172a;
             text-align: left;
+            width: 72%;
         }
 
         .entry-date {
-            font-size: 8.5pt;
+            font-size: 0.9em;
             color: #1e40af;
             font-weight: bold;
             text-align: right;
             white-space: nowrap;
+            width: 28%;
         }
 
         .entry-subtitle {
-            font-size: 9pt;
+            font-size: 0.95em;
             font-weight: normal;
             font-style: italic;
             color: #334155;
             text-align: left;
+            width: 72%;
         }
 
         .entry-location {
-            font-size: 8.5pt;
+            font-size: 0.9em;
             color: #64748b;
             font-style: italic;
             text-align: right;
             white-space: nowrap;
+            width: 28%;
         }
 
         .entry-description {
-            font-size: 9pt;
+            font-size: 0.95em;
             color: #334155;
-            line-height: 1.45;
-            margin-top: 2px;
+            line-height: 1.38;
+            margin-top: 1px;
             text-align: justify;
         }
 
@@ -171,19 +175,19 @@
         }
 
         .skills-table td {
-            padding: 2px 0;
+            padding: 1.5px 0;
             border: 0;
             vertical-align: top;
-            font-size: 9pt;
-            line-height: 1.45;
+            font-size: 0.95em;
+            line-height: 1.38;
         }
 
         .skills-category {
-            width: 130px;
+            width: 110px;
             font-weight: bold;
             color: #0f172a;
             white-space: nowrap;
-            padding-right: 10px;
+            padding-right: 8px;
         }
 
         .skills-list {

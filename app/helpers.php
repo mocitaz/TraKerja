@@ -119,40 +119,54 @@ if (!function_exists('format_cv_text')) {
 
         // Step 2: Render each line
         $html = '<div style="word-break: break-word;">';
+        $inList = false;
         
         foreach ($lines as $line) {
             $trimmed = trim($line);
             if ($trimmed === "") {
-                $html .= '<div style="height:10px;"></div>';
+                if ($inList) {
+                    $html .= '</ul>';
+                    $inList = false;
+                }
+                $html .= '<div style="height:3px;"></div>';
                 continue;
             }
 
             // Parse Inline Markdown
             // **bold** -> <strong>
-            $formatted = preg_replace('/\*\*([^*]+)\*\*/', '<strong style="font-weight:800;color:#0f172a;">$1</strong>', e($trimmed));
+            $formatted = preg_replace('/\*\*([^*]+)\*\*/', '<strong style="font-weight:700;color:#0f172a;">$1</strong>', e($trimmed));
             
             // *[estimasi]* -> Badge
-            $formatted = preg_replace('/\*\[estimasi\]\*/', '<span style="display:inline-block;padding:1px 5px;background-color:#fff1f2;color:#e11d48;border-radius:4px;font-size:0.75em;font-weight:700;margin-left:4px;text-transform:uppercase;">Estimasi</span>', $formatted);
+            $formatted = preg_replace('/\*\[estimasi\]\*/', '<span style="display:inline-block;padding:1px 4px;background-color:#fff1f2;color:#e11d48;border-radius:3px;font-size:0.75em;font-weight:700;margin-left:4px;text-transform:uppercase;">Estimasi</span>', $formatted);
 
             // Classify & Wrap
             if (preg_match('/^\*\*[^*]+\*\*$/', $trimmed)) {
                 // Header
-                $html .= "<p style=\"font-weight:800;color:#0f172a;margin:10px 0 3px 0;font-size:1em;line-height:1.4;\">{$formatted}</p>";
+                if ($inList) {
+                    $html .= '</ul>';
+                    $inList = false;
+                }
+                $html .= "<p style=\"font-weight:700;color:#0f172a;margin:6px 0 2px 0;font-size:0.95em;line-height:1.35;\">{$formatted}</p>";
             } elseif (preg_match('/^[^a-zA-Z0-9\s]*[•\-\*\x{2022}\x{2023}\x{25E6}\x{2043}\x{2219}]\s*/u', $trimmed)) {
                 // Bullet (Supports common bullet chars including UTF-8 variants, aggressively cleaning leading non-chars)
                 $content = preg_replace('/^[^a-zA-Z0-9\s]*[•\-\*\x{2022}\x{2023}\x{25E6}\x{2043}\x{2219}]\s*/u', '', $formatted);
-                $html .= "<table style=\"width:100%;border-collapse:collapse;margin:0 0 3px 0;padding:0;border:0;\">
-                    <tr>
-                        <td style=\"width:14px;vertical-align:top;padding:0;line-height:1.45;color:#475569;font-size:11pt;text-align:left;border:0;\">&#8226;</td>
-                        <td style=\"vertical-align:top;padding:0;border:0;line-height:1.45;\">
-                            <p style=\"margin:0;color:#334155;line-height:1.45;font-size:0.95em;\">{$content}</p>
-                        </td>
-                    </tr>
-                </table>";
+                if (!$inList) {
+                    $html .= '<ul style="margin:2px 0 3px 0;padding:0 0 0 14px;list-style-type:disc;">';
+                    $inList = true;
+                }
+                $html .= "<li style=\"margin:0 0 2px 0;padding:0;line-height:1.38;color:#334155;font-size:0.95em;\">{$content}</li>";
             } else {
                 // Plain Text
-                $html .= "<p style=\"color:#475569;line-height:1.5;font-size:0.95em;margin:0 0 6px 0;\">{$formatted}</p>";
+                if ($inList) {
+                    $html .= '</ul>';
+                    $inList = false;
+                }
+                $html .= "<p style=\"color:#475569;line-height:1.42;font-size:0.95em;margin:0 0 4px 0;\">{$formatted}</p>";
             }
+        }
+
+        if ($inList) {
+            $html .= '</ul>';
         }
 
         $html .= '</div>';

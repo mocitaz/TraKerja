@@ -6,7 +6,7 @@
     <style>
         @page {
             size: A4 portrait;
-            margin: {{ !empty($margin) ? $margin : '15mm 20mm' }};
+            margin: {{ !empty($margin) ? $margin : '15mm' }};
         }
         * {
             margin: 0;
@@ -15,9 +15,9 @@
         }
         
         body {
-            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-family: "DejaVu Serif", Georgia, "Times New Roman", serif;
             font-size: {{ !empty($fontSize) ? $fontSize : '9.5pt' }};
-            line-height: 1.45;
+            line-height: 1.38;
             color: #111827;
             background: #ffffff;
             -webkit-font-smoothing: antialiased;
@@ -32,13 +32,13 @@
         /* Header - Perfectly Centered */
         .header {
             text-align: center;
-            margin-bottom: 16px;
+            margin-bottom: 11px;
         }
         
         .header .name {
-            font-size: 22pt;
+            font-size: 20pt;
             font-weight: bold;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: #000000;
@@ -46,40 +46,40 @@
         }
 
         .header .headline {
-            font-size: 9.5pt;
+            font-size: 0.95em;
             font-style: italic;
             letter-spacing: 1px;
             color: #4b5563;
-            margin-bottom: 6px;
+            margin-bottom: 3px;
         }
         
         .header .contact-row {
-            font-size: 8.5pt;
+            font-size: 0.88em;
             color: #374151;
             letter-spacing: 0.5px;
-            line-height: 1.4;
+            line-height: 1.35;
         }
 
         .header .contact-separator {
             color: #9ca3af;
-            padding: 0 5px;
+            padding: 0 4px;
         }
 
         /* Section Header - Full Width Line */
         .section {
-            margin-top: 13px;
-            margin-bottom: 3px;
+            margin-top: 9px;
+            margin-bottom: 0px;
         }
 
         .section-title {
-            font-size: 9.5pt;
+            font-size: 0.95em;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: #000000;
             border-bottom: 0.8pt solid #000000;
             padding-bottom: 2px;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             width: 100%;
             page-break-after: avoid;
             break-after: avoid;
@@ -87,7 +87,7 @@
         
         /* Entry Styling */
         .entry {
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             width: 100%;
             page-break-inside: avoid;
             break-inside: avoid;
@@ -96,7 +96,7 @@
         .entry-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 0 0 2px 0;
+            margin: 0 0 1px 0;
             padding: 0;
             border: 0;
         }
@@ -109,39 +109,43 @@
         
         .entry-title {
             font-weight: bold;
-            font-size: 9.5pt;
+            font-size: 1em;
             color: #000000;
             text-align: left;
+            width: 72%;
         }
         
         .entry-date {
             font-weight: bold;
-            font-size: 8.5pt;
+            font-size: 0.9em;
             color: #374151;
             text-align: right;
             white-space: nowrap;
+            width: 28%;
         }
         
         .entry-subtitle {
             font-style: italic;
-            font-size: 9pt;
+            font-size: 0.95em;
             color: #374151;
             text-align: left;
+            width: 72%;
         }
 
         .entry-location {
             font-style: italic;
-            font-size: 8.5pt;
-            color: #6b7280;
+            font-size: 0.9em;
+            color: #64748b;
             text-align: right;
             white-space: nowrap;
+            width: 28%;
         }
 
         .entry-description {
-            font-size: 9pt;
+            font-size: 0.95em;
             color: #1f2937;
-            line-height: 1.45;
-            margin-top: 2px;
+            line-height: 1.38;
+            margin-top: 1px;
             text-align: justify;
         }
 
@@ -153,19 +157,19 @@
         }
 
         .skills-table td {
-            padding: 2px 0;
+            padding: 1.5px 0;
             border: 0;
             vertical-align: top;
-            font-size: 9pt;
-            line-height: 1.45;
+            font-size: 0.95em;
+            line-height: 1.38;
         }
 
         .skills-category {
-            width: 130px;
+            width: 110px;
             font-weight: bold;
             color: #000000;
             white-space: nowrap;
-            padding-right: 10px;
+            padding-right: 8px;
         }
 
         .skills-list {
@@ -207,7 +211,7 @@
             width: 210mm;
             min-height: 297mm;
             margin: 0 auto !important;
-            padding: {{ !empty($margin) ? $margin : '15mm 20mm' }} !important;
+            padding: {{ !empty($margin) ? $margin : '15mm' }} !important;
             background: #ffffff !important;
             box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12);
             box-sizing: border-box;

@@ -15,9 +15,9 @@
         }
         
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: "DejaVu Sans", "Helvetica Neue", Arial, sans-serif;
             font-size: {{ !empty($fontSize) ? $fontSize : '9.5pt' }};
-            line-height: 1.45;
+            line-height: 1.38;
             color: #1e293b;
             background: #ffffff;
             -webkit-font-smoothing: antialiased;
@@ -31,63 +31,63 @@
         
         /* Header */
         .header {
-            margin-bottom: 16px;
+            margin-bottom: 11px;
         }
         
         .name {
-            font-size: 24pt;
+            font-size: 21pt;
             font-weight: bold;
             color: #0f172a;
             letter-spacing: -0.5px;
             line-height: 1.1;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
         
         .job-title {
-            font-size: 10.5pt;
+            font-size: 0.95em;
             font-weight: bold;
             color: #4f46e5;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 6px;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
         }
 
         .header-accent {
-            width: 44px;
-            height: 3px;
+            width: 36px;
+            height: 2.5px;
             background-color: #4f46e5;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         .contact-row {
-            font-size: 8.5pt;
+            font-size: 0.88em;
             color: #64748b;
             font-weight: 500;
-            line-height: 1.4;
+            line-height: 1.35;
         }
 
         .contact-separator {
             color: #cbd5e1;
-            padding: 0 5px;
+            padding: 0 4px;
         }
 
         /* Sections */
         .section {
-            margin-top: 13px;
-            margin-bottom: 3px;
+            margin-top: 9px;
+            margin-bottom: 0px;
         }
 
         .section-header-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 8px;
-            border-bottom: 1.5px solid #e0e7ff;
+            margin-bottom: 5px;
+            border-bottom: 1.2px solid #e0e7ff;
             page-break-after: avoid;
             break-after: avoid;
         }
 
         .section-header-table td {
-            padding: 0 0 3px 0;
+            padding: 0 0 2px 0;
             border: 0;
             vertical-align: middle;
         }
@@ -106,16 +106,16 @@
         }
 
         .section-title {
-            font-size: 9.5pt;
+            font-size: 0.95em;
             font-weight: bold;
             color: #0f172a;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.2px;
         }
 
         /* Entries */
         .entry {
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             page-break-inside: avoid;
             break-inside: avoid;
         }
@@ -123,7 +123,7 @@
         .entry-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 0 0 2px 0;
+            margin: 0 0 1px 0;
             padding: 0;
             border: 0;
         }
@@ -135,51 +135,55 @@
         }
         
         .entry-title {
-            font-size: 9.5pt;
+            font-size: 1em;
             font-weight: bold;
             color: #0f172a;
             text-align: left;
+            width: 72%;
         }
         
         .entry-date {
-            font-size: 8.5pt;
+            font-size: 0.9em;
             font-weight: bold;
             color: #4f46e5;
             text-align: right;
             white-space: nowrap;
+            width: 28%;
         }
         
         .entry-subtitle {
-            font-size: 9pt;
+            font-size: 0.95em;
             font-weight: normal;
             font-style: italic;
             color: #334155;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
+            width: 72%;
         }
 
         .entry-location {
-            font-size: 8.5pt;
+            font-size: 0.9em;
             color: #64748b;
             font-style: italic;
             text-align: right;
             white-space: nowrap;
+            width: 28%;
         }
         
         .entry-description {
-            font-size: 9pt;
+            font-size: 0.95em;
             color: #334155;
-            line-height: 1.45;
-            margin-top: 2px;
+            line-height: 1.38;
+            margin-top: 1px;
             text-align: justify;
         }
 
         /* Skills Pills */
         .skills-category-group {
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
         .skills-category-title {
-            font-size: 8.5pt;
+            font-size: 0.9em;
             font-weight: bold;
             color: #0f172a;
             text-transform: uppercase;
@@ -189,12 +193,10 @@
 
         .skill-pill {
             display: inline-block;
-            padding: 2px 7px;
+            padding: 1.5px 6px;
             background-color: #eef2ff;
             color: #3730a3;
-            border: 1px solid #c7d2fe;
-            border-radius: 3px;
-            font-size: 8pt;
+            font-size: 0.82em;
             font-weight: bold;
             margin: 0 3px 3px 0;
         }

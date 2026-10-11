@@ -195,15 +195,25 @@
     <!-- Modal Dialogs -->
     <template x-teleport="body">
         <div x-show="modal" x-cloak x-dialog="modal" data-dialog-close="!sending && (modal = null)" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="blast-dialog-title" class="au-dialog-overlay">
-            <section class="au-dialog eb-dialog" :class="{ 'eb-dialog--preview': modal === 'preview' }">
+            <section class="au-dialog eb-dialog" :class="{ 'eb-dialog--preview': modal === 'preview', 'eb-dialog--progress': modal === 'progress' }">
                 <header class="au-dialog-heading">
                     <div>
                         <h2 id="blast-dialog-title" x-text="modal === 'preview' ? 'Preview email' : modal === 'confirm' ? 'Confirm campaign delivery' : 'Campaign delivery progress'"></h2>
-                        <p x-text="modal === 'preview' ? 'Rendered with your admin account data for desktop & mobile testing.' : modal === 'confirm' ? 'Check the final recipient count and template before starting transmission.' : 'Keep this window open until all emails are delivered.'"></p>
+                        <p x-text="modal === 'preview' ? 'Rendered with your admin account data for desktop & mobile testing.' : modal === 'confirm' ? 'Check the final recipient count and template before starting transmission.' : (sending ? (paused ? 'Pengiriman dijeda sementara. Tekan tombol Lanjutkan untuk meneruskan.' : 'Keep this window open until all emails are delivered.') : 'Semua proses pengiriman email telah selesai.')"></p>
                     </div>
-                    <button type="button" @click="modal = null" :disabled="sending" class="au-dialog-close" aria-label="Close dialog">
-                        <i class="ph ph-x" aria-hidden="true"></i>
-                    </button>
+                    <div class="eb-dialog-head-actions">
+                        <template x-if="modal === 'progress'">
+                            <span class="eb-progress-pill" :class="{ 'is-paused': paused, 'is-done': !sending }">
+                                <span class="eb-pulse-dot" x-show="sending && !paused"></span>
+                                <i class="ph ph-pause-circle" x-show="paused" aria-hidden="true"></i>
+                                <i class="ph ph-check-circle" x-show="!sending" aria-hidden="true"></i>
+                                <span x-text="!sending ? 'Selesai' : (paused ? 'Dijeda' : progressPercent() + '%')"></span>
+                            </span>
+                        </template>
+                        <button type="button" @click="modal = null" :disabled="sending" class="au-dialog-close" aria-label="Close dialog">
+                            <i class="ph ph-x" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </header>
 
                 <!-- Modal View 1: Preview -->
@@ -277,29 +287,127 @@
                 </div>
 
                 <!-- Modal View 3: Progress & Delivery -->
-                <div x-show="modal === 'progress'" class="au-dialog-body">
-                    <div class="eb-delivery-summary">
-                        <span class="eb-delivery-eyebrow" x-text="sending ? 'Sending emails…' : 'Delivery complete'"></span>
-                        <strong class="eb-delivery-progress-num" x-text="processed + ' / ' + users.length"></strong>
-                        <div class="ai-bar-track">
-                            <span :style="'width:' + (users.length ? (processed / users.length * 100) : 0) + '%'"></span>
+                <div x-show="modal === 'progress'" class="au-dialog-body eb-progress-body">
+                    <!-- Progress Hero Card -->
+                    <div class="eb-delivery-hero">
+                        <div class="eb-hero-top">
+                            <div class="eb-hero-eyebrow">
+                                <span class="eb-status-tag" :class="{ 'is-paused': paused, 'is-completed': !sending }">
+                                    <span class="eb-live-indicator" x-show="sending && !paused"></span>
+                                    <span x-text="sending ? (paused ? 'PENGIRIMAN DIJEDA' : 'SENDING CAMPAIGN') : (cancelled ? 'PENGIRIMAN DIHENTIKAN' : 'DELIVERY COMPLETED')"></span>
+                                </span>
+                                <span class="eb-eta-tag" x-show="sending">
+                                    <i class="ph ph-clock" aria-hidden="true"></i>
+                                    <span x-text="etaText()"></span>
+                                </span>
+                            </div>
+                            <div class="eb-hero-counter">
+                                <span class="eb-counter-current" x-text="processed.toLocaleString('id-ID')"></span>
+                                <span class="eb-counter-sep">/</span>
+                                <span class="eb-counter-total" x-text="users.length.toLocaleString('id-ID')"></span>
+                                <span class="eb-counter-unit">emails</span>
+                            </div>
+                        </div>
+
+                        <!-- Animated Progress Bar -->
+                        <div class="eb-prog-track" role="progressbar" :aria-valuenow="progressPercent()" aria-valuemin="0" aria-valuemax="100">
+                            <div class="eb-prog-fill" :class="{ 'is-animating': sending && !paused }" :style="'width:' + progressPercent() + '%'">
+                                <div class="eb-prog-shimmer" x-show="sending && !paused"></div>
+                            </div>
+                        </div>
+                        <div class="eb-prog-subline">
+                            <span class="eb-pct-text" x-text="progressPercent() + '% selesai'"></span>
+                            <span class="eb-rate-text" x-text="elapsedSeconds > 0 ? (processed / Math.max(1, elapsedSeconds)).toFixed(1) + ' email/dtk' : 'Menghubungkan server…'"></span>
                         </div>
                     </div>
-                    <div class="eb-delivery-counts">
-                        <div class="eb-count-box eb-count-box--success">
-                            <span>Successfully sent</span>
-                            <strong x-text="successCount"></strong>
+
+                    <!-- 3-Column Symmetrical Metrics Grid -->
+                    <div class="eb-delivery-grid">
+                        <div class="eb-pmetric-card eb-pmetric--success">
+                            <div class="eb-pmetric-icon">
+                                <i class="ph ph-check-circle" aria-hidden="true"></i>
+                            </div>
+                            <div class="eb-pmetric-info">
+                                <span class="eb-pmetric-label">Successfully Sent</span>
+                                <strong class="eb-pmetric-val" x-text="successCount.toLocaleString('id-ID')"></strong>
+                            </div>
                         </div>
-                        <div class="eb-count-box eb-count-box--failed">
-                            <span>Failed / unconfirmed</span>
-                            <strong x-text="failures.length"></strong>
+                        <div class="eb-pmetric-card eb-pmetric--failed">
+                            <div class="eb-pmetric-icon">
+                                <i class="ph ph-warning-circle" aria-hidden="true"></i>
+                            </div>
+                            <div class="eb-pmetric-info">
+                                <span class="eb-pmetric-label">Failed / Bounced</span>
+                                <strong class="eb-pmetric-val" x-text="failures.length.toLocaleString('id-ID')"></strong>
+                            </div>
+                        </div>
+                        <div class="eb-pmetric-card eb-pmetric--queue">
+                            <div class="eb-pmetric-icon">
+                                <i class="ph ph-hourglass-simple" aria-hidden="true"></i>
+                            </div>
+                            <div class="eb-pmetric-info">
+                                <span class="eb-pmetric-label">In Queue</span>
+                                <strong class="eb-pmetric-val" x-text="Math.max(0, users.length - processed).toLocaleString('id-ID')"></strong>
+                            </div>
                         </div>
                     </div>
-                    <p class="eb-delivery-current" role="status" x-text="deliveryStatus"></p>
+
+                    <!-- Active Transmitting Recipient Card (When Sending) -->
+                    <div class="eb-active-box" x-show="sending && currentUser">
+                        <div class="eb-active-avatar">
+                            <span class="eb-avatar-radar" x-show="!paused"></span>
+                            <i class="ph ph-paper-plane-tilt" aria-hidden="true"></i>
+                        </div>
+                        <div class="eb-active-details">
+                            <div class="eb-active-name-row">
+                                <strong class="eb-active-name" x-text="currentUser?.name || 'Menyiapkan...'"></strong>
+                                <span class="eb-transmitting-badge" :class="{ 'is-paused': paused }">
+                                    <span class="eb-pulse-dot" x-show="!paused"></span>
+                                    <span x-text="paused ? 'Dijeda' : 'Transmitting…'"></span>
+                                </span>
+                            </div>
+                            <span class="eb-active-email" x-text="currentUser?.email"></span>
+                        </div>
+                    </div>
+
+                    <!-- Live Stream Transmission Feed -->
+                    <div class="eb-feed-wrapper" x-show="recentLogs.length">
+                        <div class="eb-feed-header">
+                            <span>
+                                <i class="ph ph-activity" aria-hidden="true"></i>
+                                Aktivitas Pengiriman Terkini
+                            </span>
+                            <span class="eb-feed-count" x-text="recentLogs.length + ' log terakhir'"></span>
+                        </div>
+                        <div class="eb-feed-list" role="log" aria-live="polite">
+                            <template x-for="(log, idx) in recentLogs" :key="idx + '-' + log.email + '-' + log.time">
+                                <div class="eb-feed-item" :class="log.success ? 'is-success' : 'is-error'">
+                                    <div class="eb-feed-status">
+                                        <i class="ph ph-check" x-show="log.success" aria-hidden="true"></i>
+                                        <i class="ph ph-x" x-show="!log.success" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="eb-feed-info">
+                                        <div class="eb-feed-main">
+                                            <strong class="eb-feed-name" x-text="log.name"></strong>
+                                            <span class="eb-feed-email" x-text="log.email"></span>
+                                        </div>
+                                        <span class="eb-feed-error" x-show="!log.success && log.error" x-text="log.error"></span>
+                                    </div>
+                                    <span class="eb-feed-time" x-text="log.time"></span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Log Error Notice if any -->
                     <p class="eb-inline-error" x-show="logError" x-text="logError"></p>
 
+                    <!-- Failures Collapsible Drawer -->
                     <details class="ai-data eb-failures-drawer" x-show="failures.length">
-                        <summary>View failed deliveries (<span x-text="failures.length"></span>)</summary>
+                        <summary>
+                            <i class="ph ph-warning" aria-hidden="true"></i>
+                            <span>Lihat rincian gagal terkirim (<span x-text="failures.length"></span>)</span>
+                        </summary>
                         <div class="eb-recipient-list">
                             <template x-for="(failure, index) in failures" :key="index">
                                 <div class="eb-recipient-item eb-recipient-item--failed">
@@ -310,9 +418,39 @@
                         </div>
                     </details>
 
-                    <div x-show="!sending" class="au-dialog-actions">
-                        <a href="{{ route('admin.email-blast.history') }}" class="au-button">View history</a>
-                        <button type="button" @click="modal = null" class="au-button au-button--primary">Done</button>
+                    <!-- Completion Celebration Banner (When !sending) -->
+                    <div class="eb-complete-banner" x-show="!sending" :class="{ 'is-cancelled': cancelled }">
+                        <div class="eb-complete-icon">
+                            <i class="ph" :class="cancelled ? 'ph-prohibit' : (failures.length === 0 ? 'ph-seal-check' : 'ph-check-circle')"></i>
+                        </div>
+                        <div class="eb-complete-content">
+                            <strong x-text="cancelled ? 'Pengiriman Dihentikan' : (failures.length === 0 ? 'Semua Email Berhasil Terkirim!' : 'Pengiriman Selesai dengan Sebagian Gagal')"></strong>
+                            <p x-text="deliveryStatus"></p>
+                        </div>
+                    </div>
+
+                    <!-- In-Progress Control Action Bar (While Sending) -->
+                    <div x-show="sending" class="eb-delivery-actions">
+                        <button type="button" @click="togglePause()" class="au-button" :class="paused ? 'au-button--primary' : 'au-button--secondary'">
+                            <i class="ph" :class="paused ? 'ph-play' : 'ph-pause'" aria-hidden="true"></i>
+                            <span x-text="paused ? 'Lanjutkan Pengiriman' : 'Jeda Sementara'"></span>
+                        </button>
+                        <button type="button" @click="cancelSend()" :disabled="cancelled" class="au-button au-button--danger">
+                            <i class="ph ph-stop" aria-hidden="true"></i>
+                            <span x-text="cancelled ? 'Menghentikan…' : 'Hentikan Campaign'"></span>
+                        </button>
+                    </div>
+
+                    <!-- Final Action Bar (When Done) -->
+                    <div x-show="!sending" class="au-dialog-actions eb-dialog-actions--done">
+                        <a href="{{ route('admin.email-blast.history') }}" class="au-button">
+                            <i class="ph ph-clock-counter-clockwise" aria-hidden="true"></i>
+                            <span>Lihat Riwayat</span>
+                        </a>
+                        <button type="button" @click="modal = null" class="au-button au-button--primary">
+                            <i class="ph ph-check" aria-hidden="true"></i>
+                            <span>Selesai</span>
+                        </button>
                     </div>
                 </div>
 

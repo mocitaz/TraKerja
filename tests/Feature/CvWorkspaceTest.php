@@ -71,4 +71,22 @@ class CvWorkspaceTest extends TestCase
         $this->get(route('cv-builder.preview.get', ['canvas' => 1, 'margin' => 'INVALID_CSS', 'font_size' => 'INVALID_CSS']))->assertOk()->assertDontSee('INVALID_CSS');
         $this->assertSame(0, $user->fresh()->cv_generated_this_month);
     }
+
+    public function test_export_generates_pdf_download_with_clean_filename(): void
+    {
+        $user = User::factory()->create(['name' => 'Budi Santoso', 'is_premium' => true]);
+        $user->skills()->create(['skill_name' => 'PHP', 'category' => 'Technical', 'proficiency_level' => 'Expert']);
+        $this->actingAs($user);
+
+        foreach (['minimal', 'professional', 'creative', 'elegant'] as $template) {
+            $response = $this->post(route('cv-builder.export'), [
+                'template' => $template,
+                'margin' => '15mm',
+                'font_size' => '9.5pt',
+            ]);
+            $response->assertOk();
+            $response->assertHeader('content-type', 'application/pdf');
+            $this->assertStringContainsString('CV_BUDI_SANTOSO.pdf', $response->headers->get('content-disposition'));
+        }
+    }
 }
