@@ -177,3 +177,37 @@ if (!function_exists('format_cv_text')) {
     }
 }
 
+if (!function_exists('get_cv_photo_src')) {
+    /**
+     * Get user profile photo suitable for both web and DomPDF (base64 for local files)
+     */
+    function get_cv_photo_src($user): ?string
+    {
+        if (!$user || empty($user->logo)) {
+            return null;
+        }
+
+        $logo = $user->logo;
+
+        if (str_starts_with($logo, 'http://') || str_starts_with($logo, 'https://')) {
+            return $logo;
+        }
+
+        $localPath = storage_path('app/public/' . $logo);
+        if (file_exists($localPath)) {
+            $mime = mime_content_type($localPath) ?: 'image/jpeg';
+            $data = base64_encode(file_get_contents($localPath));
+            return "data:{$mime};base64,{$data}";
+        }
+
+        $pubPath = public_path('storage/' . $logo);
+        if (file_exists($pubPath)) {
+            $mime = mime_content_type($pubPath) ?: 'image/jpeg';
+            $data = base64_encode(file_get_contents($pubPath));
+            return "data:{$mime};base64,{$data}";
+        }
+
+        return asset('storage/' . $logo);
+    }
+}
+

@@ -33,14 +33,45 @@
         
         /* Header */
         .header {
-            margin-bottom: 11px;
+            margin-bottom: 12px;
+        }
+
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+            border: 0;
+        }
+
+        .header-table td {
+            padding: 0;
+            border: 0;
+            vertical-align: middle;
+        }
+
+        .header-photo-cell {
+            width: 80px;
+            vertical-align: middle;
+            padding-right: 14px;
+        }
+
+        .header-photo {
+            width: 74px;
+            height: 74px;
+            border-radius: 8px;
+            border: 1.5px solid #cbd5e1;
+            display: block;
+        }
+
+        .header-content-cell {
+            vertical-align: middle;
         }
         
         .name {
             font-size: 21pt;
             font-weight: bold;
             color: #0f172a;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.3px;
             line-height: 1.1;
             margin-bottom: 2px;
         }
@@ -50,15 +81,15 @@
             font-weight: bold;
             color: #4f46e5;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 4px;
+            letter-spacing: 1.2px;
+            margin-bottom: 3px;
         }
 
         .header-accent {
-            width: 36px;
+            width: 32px;
             height: 2.5px;
             background-color: #4f46e5;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
         
         .contact-row {
@@ -179,28 +210,35 @@
             text-align: left;
         }
 
-        /* Skills Pills */
-        .skills-category-group {
-            margin-bottom: 5px;
+        /* Skills Table (Clean ATS format without badge pills) */
+        .skills-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2px;
+            border: 0;
         }
 
-        .skills-category-title {
-            font-size: 0.9em;
+        .skills-table td {
+            padding: 1.5px 0;
+            border: 0;
+            vertical-align: top;
+            font-size: 0.95em;
+            line-height: 1.38;
+        }
+
+        .skills-category {
+            width: 18%;
             font-weight: bold;
             color: #0f172a;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 3px;
+            white-space: nowrap;
+            padding-right: 8px;
+            text-align: left;
         }
 
-        .skill-pill {
-            display: inline-block;
-            padding: 1.5px 6px;
-            background-color: #eef2ff;
-            color: #3730a3;
-            font-size: 0.82em;
-            font-weight: bold;
-            margin: 0 3px 3px 0;
+        .skills-list {
+            width: 82%;
+            color: #334155;
+            text-align: left;
         }
 
         @media print {
@@ -247,23 +285,43 @@
 </head>
 <body>
     <div class="container">
+        @php
+            $photoUrl = get_cv_photo_src($user);
+            $contact = [];
+            if($user->profile && $user->profile->phone_number) $contact[] = $user->profile->phone_number;
+            if($user->email) $contact[] = $user->email;
+            if($user->profile && $user->profile->domicile) $contact[] = $user->profile->domicile;
+            if($user->profile && $user->profile->portfolio_url) $contact[] = 'Portfolio';
+            if($user->profile && $user->profile->linkedin_url) $contact[] = 'LinkedIn';
+        @endphp
+
         <!-- Header -->
+        @if($photoUrl)
+        <table class="header-table">
+            <tr>
+                <td class="header-photo-cell">
+                    <img src="{{ $photoUrl }}" class="header-photo" alt="{{ $user->name }}"/>
+                </td>
+                <td class="header-content-cell">
+                    <div class="name">{{ $user->name }}</div>
+                    <div class="job-title">{{ $experiences->first()?->position ?? 'Creative Professional' }}</div>
+                    <div class="header-accent"></div>
+                    <div class="contact-row">
+                        {!! implode('<span class="contact-separator">&#8226;</span>', $contact) !!}
+                    </div>
+                </td>
+            </tr>
+        </table>
+        @else
         <div class="header">
             <div class="name">{{ $user->name }}</div>
             <div class="job-title">{{ $experiences->first()?->position ?? 'Creative Professional' }}</div>
             <div class="header-accent"></div>
             <div class="contact-row">
-                @php
-                    $contact = [];
-                    if($user->profile && $user->profile->phone_number) $contact[] = $user->profile->phone_number;
-                    if($user->email) $contact[] = $user->email;
-                    if($user->profile && $user->profile->domicile) $contact[] = $user->profile->domicile;
-                    if($user->profile && $user->profile->portfolio_url) $contact[] = 'Portfolio';
-                    if($user->profile && $user->profile->linkedin_url) $contact[] = 'LinkedIn';
-                @endphp
                 {!! implode('<span class="contact-separator">&#8226;</span>', $contact) !!}
             </div>
         </div>
+        @endif
 
         <!-- Summary -->
         @if($user->profile && $user->profile->bio)
@@ -311,7 +369,7 @@
         </div>
         @endif
 
-        <!-- Key Projects -->
+        <!-- Projects -->
         @if($projects->count() > 0)
         <div class="section">
             <table class="section-header-table">
@@ -325,24 +383,13 @@
                 <table class="entry-table">
                     <tr>
                         <td class="entry-title">{{ $project->project_name }}</td>
-                        <td class="entry-date">{{ format_date_range($project->start_date, $project->end_date, $project->is_ongoing) }}</td>
+                        <td class="entry-date">{{ format_date_range($project->start_date, $project->end_date, $project->is_current) }}</td>
                     </tr>
                     <tr>
                         <td class="entry-subtitle">{{ $project->role }}</td>
-                        @if($project->project_url)
-                            <td class="entry-location">{{ $project->project_url }}</td>
-                        @else
-                            <td class="entry-location"></td>
-                        @endif
+                        <td class="entry-location">{{ $project->project_url ? 'Project Link' : '' }}</td>
                     </tr>
                 </table>
-                @if($project->technologies && is_array($project->technologies))
-                    <div style="margin: 2px 0;">
-                        @foreach($project->technologies as $tech)
-                            <span class="skill-pill" style="background-color: #f1f5f9; color: #475569; border-color: #e2e8f0;">{{ trim($tech) }}</span>
-                        @endforeach
-                    </div>
-                @endif
                 @if($project->description)
                 <div class="entry-description">
                     {!! format_cv_text($project->description) !!}
@@ -353,7 +400,7 @@
         </div>
         @endif
 
-        <!-- Skills / Capabilities -->
+        <!-- Skills / Capabilities (Clean ATS text without pills) -->
         @if($skills->count() > 0)
         <div class="section">
             <table class="section-header-table">
@@ -362,16 +409,14 @@
                     <td class="section-title">Skills & Capabilities</td>
                 </tr>
             </table>
-            @foreach($skills->groupBy('category') as $category => $categorySkills)
-            <div class="skills-category-group">
-                <div class="skills-category-title">{{ $category }}</div>
-                <div>
-                    @foreach($categorySkills as $skill)
-                        <span class="skill-pill">{{ $skill->skill_name }}</span>
-                    @endforeach
-                </div>
-            </div>
-            @endforeach
+            <table class="skills-table">
+                @foreach($skills->groupBy('category') as $category => $categorySkills)
+                <tr>
+                    <td class="skills-category">{{ $category ?: 'Technical' }}:</td>
+                    <td class="skills-list">{{ $categorySkills->pluck('skill_name')->implode(', ') }}</td>
+                </tr>
+                @endforeach
+            </table>
         </div>
         @endif
 
@@ -451,7 +496,7 @@
                 <table class="entry-table">
                     <tr>
                         <td class="entry-title">{{ $achievement->title }}</td>
-                        <td class="entry-date">{{ $achievement->issue_date?->format('M Y') }}</td>
+                        <td class="entry-date">{{ $achievement->date ? \Carbon\Carbon::parse($achievement->date)->format('M Y') : '' }}</td>
                     </tr>
                     <tr>
                         <td class="entry-subtitle">{{ $achievement->issuer }}</td>
