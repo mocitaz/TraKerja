@@ -35,7 +35,7 @@
         $offerRate = $interviewApps > 0 ? round(($offeredApps / $interviewApps) * 100) : 0;
         $overallSuccessRate = $totalApps > 0 ? round(($offeredApps / $totalApps) * 100) : 0;
 
-        $recentApplications = \App\Models\JobApplication::with('user')->latest()->take(15)->get();
+        $recentApplications = \App\Models\JobApplication::with('user')->latest()->take(20)->get();
 
         $topAppliedUsers = \App\Models\User::where('role', '!=', 'admin')
             ->withCount('jobApplications')
@@ -344,7 +344,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($recentApplications->take(8) as $application)
+                            @forelse($recentApplications as $application)
                                 <tr>
                                     <td class="col-applicant">
                                         <div class="admin-person">
