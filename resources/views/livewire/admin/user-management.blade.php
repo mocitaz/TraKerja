@@ -194,9 +194,9 @@
                             <!-- Column 5: Manage Access Actions -->
                             <td>
                                 <div class="au-row-actions" x-data="{ open: false, left: 0, top: 0 }">
-                                    <button type="button" wire:click="editUser({{ $user->id }})" class="au-manage" aria-label="Manage {{ $user->name }}">
+                                    <a href="{{ route('admin.users.show', $user) }}" class="au-manage" aria-label="Manage {{ $user->name }}" wire:navigate>
                                         Manage <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
-                                    </button>
+                                    </a>
                                     <button type="button" class="au-more" x-ref="more"
                                         @click="const rect = $el.getBoundingClientRect(); left = Math.max(12, Math.min(rect.right - 220, window.innerWidth - 232)); top = Math.max(12, Math.min(rect.bottom + 8, window.innerHeight - 200)); open = !open; if(open) $nextTick(() => $refs.firstAction.focus())"
                                         :aria-expanded="open.toString()" aria-controls="member-actions-{{ $user->id }}" aria-label="Action menu for {{ $user->name }}">
@@ -210,7 +210,11 @@
                                             @click.outside="open = false" @keydown.escape.stop="open = false; $refs.more.focus()"
                                             @scroll.window="open = false" @resize.window="open = false" role="region" aria-label="Quick actions for {{ $user->name }}">
                                             <p>{{ $user->name }}</p>
-                                            <button type="button" x-ref="firstAction" @click="open = false" wire:click="openPremiumConfirmModal({{ $user->id }})">
+                                            <a href="{{ route('admin.users.show', $user) }}" wire:navigate x-ref="firstAction" class="au-action-menu-link">
+                                                <i class="ph ph-user-circle" aria-hidden="true"></i>
+                                                View & Manage Profile
+                                            </a>
+                                            <button type="button" @click="open = false" wire:click="openPremiumConfirmModal({{ $user->id }})">
                                                 <i class="ph ph-crown" aria-hidden="true"></i>
                                                 {{ $user->is_premium ? 'Revoke Premium Access' : 'Grant Premium Access' }}
                                             </button>
@@ -253,161 +257,6 @@
             <div>{{ $users->links() }}</div>
         </footer>
     </section>
-
-    <!-- =====================================================================
-         MODAL 1: Manage Account ($showEditModal)
-         ===================================================================== -->
-    @if($showEditModal)
-        <template x-teleport="body">
-            <div x-data role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.showEditModal" data-dialog-close="$wire.closeModal()" aria-labelledby="showEditModal-title" class="au-dialog-overlay">
-                <section class="au-dialog">
-                    <header class="au-dialog-heading">
-                        <div>
-                            <h2 id="showEditModal-title">Manage Member Account</h2>
-                            <p>Profile details, membership privileges, and AI credit quotas.</p>
-                        </div>
-                        <button type="button" wire:click="closeModal" class="au-dialog-close" aria-label="Close dialog">
-                            <i class="ph ph-x" aria-hidden="true"></i>
-                        </button>
-                    </header>
-                    <div class="au-dialog-body">
-                        @php($editingUser = $editingUserId ? \App\Models\User::find($editingUserId) : null)
-                        @if($editingUser)
-                            <!-- Profile Banner Card -->
-                            <div class="au-dialog-person">
-                                <img src="{{ $editingUser->avatar_url }}" alt="{{ $editingUser->name }}">
-                                <div>
-                                    <strong>{{ $editingUser->name }}</strong>
-                                    <span>{{ $editingUser->email }}</span>
-                                </div>
-                                <div style="display: flex; gap: 6px;">
-                                    <span class="au-plan-badge {{ $editingUser->isAdmin() ? 'au-plan-badge--premium' : 'au-plan-badge--free' }}">
-                                        {{ $editingUser->isAdmin() ? 'Admin' : 'Member' }}
-                                    </span>
-                                    <span class="au-plan-badge {{ $editingUser->isPremium() ? 'au-plan-badge--premium' : 'au-plan-badge--free' }}">
-                                        {{ $editingUser->isPremium() ? 'Premium' : 'Free' }}
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- Account Details Grid -->
-                            <dl class="au-account-details">
-                                <div class="au-detail-tile">
-                                    <dt>Joined</dt>
-                                    <dd>{{ $editingUser->created_at->format('d M Y') }}</dd>
-                                </div>
-                                <div class="au-detail-tile">
-                                    <dt>Email Verification</dt>
-                                    <dd>{{ $editingUser->hasVerifiedEmail() ? 'Verified' : 'Unverified' }}</dd>
-                                </div>
-                                <div class="au-detail-tile">
-                                    <dt>Premium Duration</dt>
-                                    <dd>{{ $editingUser->premium_until?->format('d M Y') ?? ($editingUser->isPremium() ? 'Lifetime Active' : '—') }}</dd>
-                                </div>
-                                <div class="au-detail-tile">
-                                    <dt>Sign-in Methods</dt>
-                                    <dd>{{ collect([$editingUser->password ? 'Email' : null, $editingUser->google_id ? 'Google' : null, $editingUser->linkedin_id ? 'LinkedIn' : null])->filter()->implode(' · ') ?: 'Standard' }}</dd>
-                                </div>
-                            </dl>
-                        @endif
-
-                        <!-- Form 1: Profile & Access -->
-                        <form wire:submit="updateUser" class="au-form au-form-section">
-                            <h3>Account & Access Information</h3>
-                            <label for="edit-member-name">
-                                Full Name
-                                <input id="edit-member-name" type="text" wire:model="editName" required placeholder="Member full name…">
-                                @error('editName')<span class="au-field-error">{{ $message }}</span>@enderror
-                            </label>
-                            <label for="edit-member-email">
-                                Email Address
-                                <input id="edit-member-email" type="email" wire:model="editEmail" required placeholder="member@email.com">
-                                @error('editEmail')<span class="au-field-error">{{ $message }}</span>@enderror
-                            </label>
-                            <div class="au-checkbox-row">
-                                <label class="au-checkbox-label">
-                                    <input type="checkbox" wire:model="editIsPremium">
-                                    Premium Member Access
-                                </label>
-                                <label class="au-checkbox-label">
-                                    <input type="checkbox" wire:model="editIsAdmin">
-                                    Administrator
-                                </label>
-                            </div>
-                            <p class="au-form-hint">Updating premium status will automatically recalculate membership duration and billing state.</p>
-                            <div class="au-form-actions">
-                                <button type="submit" class="au-button au-button--primary" wire:loading.attr="disabled" wire:target="updateUser">
-                                    <span wire:loading.remove wire:target="updateUser">Save Account Changes</span>
-                                    <span wire:loading wire:target="updateUser">Saving…</span>
-                                </button>
-                            </div>
-                        </form>
-
-                        <!-- Form 2: AI Quota Credits -->
-                        <form wire:submit="saveAiQuotas" class="au-form au-form-section" style="margin-top: 18px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                <h3>AI Feature Quota Credits</h3>
-                                <button type="button" class="au-clear" style="padding: 4px 8px;" wire:click="resetAllAiQuotas" wire:confirm="Reset AI credits for this member to their plan defaults?">
-                                    <i class="ph ph-arrow-counter-clockwise"></i> Reset to Default
-                                </button>
-                            </div>
-                            <div class="au-quota-grid">
-                                <div class="au-quota-tile">
-                                    <label for="credit-editAiCredits">
-                                        Analyze CV
-                                        <input id="credit-editAiCredits" type="number" wire:model="editAiCredits" min="0" step="1" required>
-                                        @error('editAiCredits')<span class="au-field-error">{{ $message }}</span>@enderror
-                                    </label>
-                                </div>
-                                <div class="au-quota-tile">
-                                    <label for="credit-editClCredits">
-                                        Cover Letter
-                                        <input id="credit-editClCredits" type="number" wire:model="editClCredits" min="0" step="1" required>
-                                        @error('editClCredits')<span class="au-field-error">{{ $message }}</span>@enderror
-                                    </label>
-                                </div>
-                                <div class="au-quota-tile">
-                                    <label for="credit-editPhotoCredits">
-                                        AI Photo Studio
-                                        <input id="credit-editPhotoCredits" type="number" wire:model="editPhotoCredits" min="0" step="1" required>
-                                        @error('editPhotoCredits')<span class="au-field-error">{{ $message }}</span>@enderror
-                                    </label>
-                                </div>
-                            </div>
-                            <p class="au-form-hint">AI Analyzer Free Trial Status: <strong>{{ $editingUser?->has_used_ai_analyzer_trial ? 'Used' : 'Not Used' }}</strong>.</p>
-                            <div class="au-form-actions">
-                                <button type="submit" class="au-button au-button--primary" wire:loading.attr="disabled" wire:target="saveAiQuotas">
-                                    <span wire:loading.remove wire:target="saveAiQuotas">Save AI Quotas</span>
-                                    <span wire:loading wire:target="saveAiQuotas">Saving…</span>
-                                </button>
-                            </div>
-                        </form>
-
-                        <!-- Account Quick Actions -->
-                        @if($editingUser)
-                            <section class="au-account-actions" aria-label="Account Quick Actions">
-                                <h3>Quick Actions</h3>
-                                <div class="au-account-action-buttons">
-                                    <button type="button" wire:click="openPremiumConfirmModal({{ $editingUser->id }})" class="au-button">
-                                        <i class="ph ph-crown"></i>
-                                        {{ $editingUser->is_premium ? 'Revoke Premium' : 'Grant Premium' }}
-                                    </button>
-                                    <button type="button" wire:click="openSendEmailModal({{ $editingUser->id }})" class="au-button">
-                                        <i class="ph ph-paper-plane-tilt"></i>
-                                        Send Email
-                                    </button>
-                                    <button type="button" wire:click="confirmDeleteUserModal({{ $editingUser->id }})" class="au-account-delete">
-                                        <i class="ph ph-trash"></i>
-                                        Delete Account
-                                    </button>
-                                </div>
-                            </section>
-                        @endif
-                    </div>
-                </section>
-            </div>
-        </template>
-    @endif
 
     <!-- =====================================================================
          MODAL 2: Add Administrator ($showCreateAdminModal)

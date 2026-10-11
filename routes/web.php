@@ -452,6 +452,14 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         return view('admin.users');
     })->name('users');
 
+    // User details & management
+    Route::get('/users/{user}', function (\App\Models\User $user) {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized - Admin access required');
+        }
+        return view('admin.user-detail', ['user' => $user]);
+    })->name('users.show');
+
     // User Activities Log
     Route::get('/user-activities', function () {
         if (!Auth::user()->isAdmin()) {

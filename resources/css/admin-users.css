@@ -1107,3 +1107,253 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ==========================================================================
+   User Detail Page Styles (Dedicated Page System)
+   ========================================================================== */
+
+.au-detail-page {
+    gap: 16px;
+}
+
+.au-detail-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.au-detail-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.au-action-menu-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 7px 9px;
+    border-radius: 7px;
+    font-size: 11.5px;
+    font-weight: 550;
+    color: #4b4156;
+    text-decoration: none;
+    transition: background 0.12s, color 0.12s;
+}
+
+.au-action-menu-link:hover {
+    background: #f5eff8;
+    color: #5d3979;
+}
+
+/* Hero Summary Card */
+.au-hero-card {
+    background: #ffffff;
+    border: 1px solid #d7dce2;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(52, 49, 59, 0.03);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.au-hero-main {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.au-hero-avatar-wrap {
+    flex-shrink: 0;
+}
+
+.au-hero-avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    object-fit: cover;
+    background: #eee8f8;
+    border: 1px solid #dfd4e8;
+}
+
+.au-hero-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.au-hero-title-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex-wrap: wrap;
+}
+
+.au-hero-title-row h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #35264f;
+    letter-spacing: -0.4px;
+    margin: 0;
+    line-height: 1.25;
+}
+
+.au-hero-id {
+    font-size: 11px;
+    font-weight: 600;
+    color: #8c7e96;
+    background: #f8f6fa;
+    border: 1px solid #eee7f3;
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-variant-numeric: tabular-nums;
+}
+
+.au-hero-email {
+    font-size: 12.5px;
+    color: #67616f;
+    margin: 0;
+}
+
+.au-hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 5px;
+    font-size: 11px;
+    color: #767082;
+}
+
+.au-hero-activity {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 550;
+    color: #43394d;
+}
+
+/* Quick Metrics Row in Hero */
+.au-hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    border-top: 1px solid #edf0f4;
+    background: #faf8fb;
+}
+
+.au-hero-stat {
+    padding: 12px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-right: 1px solid #edf0f4;
+}
+
+.au-hero-stat:last-child {
+    border-right: 0;
+}
+
+.au-hero-stat small {
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: #8c7e96;
+}
+
+.au-hero-stat strong {
+    font-size: 18px;
+    font-weight: 700;
+    color: #34313e;
+    letter-spacing: -0.3px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* 2-Column Layout Grid */
+.au-detail-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+
+.au-detail-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Detail Card */
+.au-detail-card {
+    background: #ffffff;
+    border: 1px solid #d7dce2;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(52, 49, 59, 0.03);
+    overflow: hidden;
+}
+
+.au-detail-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 18px;
+    gap: 12px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.au-detail-card-header h2 {
+    font-size: 15px;
+    line-height: 1.4;
+    font-weight: 650;
+    color: #35264f;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.au-detail-card-header h2 span {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #776487;
+    background: #f0ebf7;
+    border-radius: 6px;
+    padding: 2px 6px;
+}
+
+.au-detail-card-header p {
+    font-size: 11px;
+    color: #767082;
+    margin: 2px 0 0;
+}
+
+.au-detail-card .au-form {
+    padding: 18px;
+}
+
+.au-detail-card .au-account-details {
+    padding: 16px 18px;
+}
+
+@media (max-width: 992px) {
+    .au-detail-grid {
+        grid-template-columns: 1fr;
+    }
+    .au-hero-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .au-hero-stat:nth-child(even) {
+        border-right: 0;
+    }
+    .au-hero-stat:nth-child(n+3) {
+        border-top: 1px solid #edf0f4;
+    }
+}
+
