@@ -8,10 +8,12 @@
             size: A4 portrait;
             margin: {{ !empty($margin) ? $margin : '15mm' }};
         }
-        * {
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+        h1, h2, h3, h4, h5, h6, p, ul, ol, li, table, td, th {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
         
         body {
@@ -193,18 +195,12 @@
                 size: A4 portrait;
                 margin: {{ !empty($margin) ? $margin : '15mm' }};
             }
-            html, body {
-                margin: 0 !important;
-                padding: 0 !important;
-                width: 100% !important;
+            body {
                 background: #ffffff !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            .container {
-                width: 100% !important;
-            }
-            .section-title {
+            .section-title-table {
                 page-break-after: avoid !important;
                 break-after: avoid !important;
             }
