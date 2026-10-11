@@ -259,15 +259,6 @@
                     <!-- Right Controls -->
                     <div class="flex items-center gap-4">
                         
-                        <!-- System Operational Node -->
-                        <div class="flex items-center gap-2 px-3 py-1 bg-zinc-900/30 border border-zinc-800/80 rounded-lg text-[10px] font-bold text-zinc-400">
-                            <span class="relative flex h-1.5 w-1.5">
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                            </span>
-                            Engine Operational
-                        </div>
-
                         <!-- User Profile Dropdown -->
                         <div class="relative" x-data="{ userMenu: false }">
                             <button type="button" @click="userMenu = !userMenu" class="flex items-center gap-2 font-bold text-xs text-zinc-300 hover:text-white transition">

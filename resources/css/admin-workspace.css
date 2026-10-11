@@ -51,25 +51,24 @@
 
 .admin-brand-divider {
     font-size: 13px;
-    color: #b5a9c0;
-    font-weight: 300;
+    color: #18181b;
+    font-weight: 400;
     margin: 0 1px;
     user-select: none;
     line-height: 1;
-    opacity: 0.85;
 }
 
 .admin-brand-text {
-    font-size: 9.5px;
-    font-weight: 800;
-    color: #7751a0;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    background: #f0ebf7;
-    padding: 2px 6px;
-    border-radius: 5px;
-    line-height: 1.2;
-    border: 1px solid #e5daf0;
+    font-size: 11px;
+    font-weight: 700;
+    color: #18181b;
+    letter-spacing: -0.2px;
+    text-transform: lowercase;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    line-height: 1;
+    border: none;
 }
 
 .admin-page-frame {
@@ -628,8 +627,18 @@
 
 .admin-recent .au-table-container {
     flex: 1;
-    display: flex;
-    flex-direction: column;
+    min-height: 0;
+    max-height: 520px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.admin-recent-table thead th {
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    z-index: 2;
+    box-shadow: 0 1px 0 #edf0f3;
 }
 
 .admin-recent-table {
@@ -1009,317 +1018,3 @@
     }
 }
 
-/* ==========================================================================
-   Executive Welcome Briefing Modal (Matches TraKerja Job-Dialog Standard)
-   ========================================================================== */
-.admin-modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    background: rgb(35 29 49 / 40%);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    overflow-y: auto;
-}
-
-.admin-modal-panel {
-    width: 100%;
-    max-width: 620px;
-    max-height: min(780px, calc(100dvh - 48px));
-    display: flex;
-    flex-direction: column;
-    background: #ffffff;
-    border: 1px solid rgb(255 255 255 / 85%);
-    border-radius: 24px;
-    box-shadow: 0 24px 90px rgb(32 24 53 / 22%);
-    animation: admin-dialog-enter 0.18s ease-out both;
-    overflow: hidden;
-}
-
-@keyframes admin-dialog-enter {
-    from {
-        opacity: 0;
-        transform: scale(0.97) translateY(8px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-.admin-modal-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 20px 24px 16px;
-    border-bottom: 1px solid #eef0f4;
-    background: #ffffff;
-    flex-shrink: 0;
-}
-
-.admin-modal-heading {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.admin-modal-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    background: #f0ebf7;
-    color: #7751a0;
-    display: grid;
-    place-items: center;
-    font-size: 20px;
-    flex-shrink: 0;
-}
-
-.admin-modal-heading h2 {
-    font-size: 18px;
-    font-weight: 700;
-    color: #35264f;
-    letter-spacing: -0.4px;
-    margin: 0;
-    line-height: 1.3;
-}
-
-.admin-modal-heading p {
-    font-size: 11.5px;
-    color: #767082;
-    margin: 2px 0 0;
-    line-height: 1.4;
-}
-
-.admin-modal-close {
-    width: 34px;
-    height: 34px;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background: #f3f4f7;
-    color: #636471;
-    border: none;
-    cursor: pointer;
-    font-size: 17px;
-    flex-shrink: 0;
-    transition: background 0.15s ease, color 0.15s ease;
-}
-
-.admin-modal-close:hover {
-    background: #eae6f5;
-    color: #513267;
-}
-
-.admin-modal-body {
-    padding: 20px 24px;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.admin-modal-banner {
-    padding: 16px 18px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, #fbf9fd 0%, #f4eff9 100%);
-    border: 1px solid #ebdff5;
-}
-
-.admin-modal-greeting {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.admin-modal-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 10px;
-    font-weight: 700;
-    color: #7751a0;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    background: #ffffff;
-    padding: 3px 8px;
-    border-radius: 6px;
-    border: 1px solid #e5daf0;
-    width: fit-content;
-}
-
-.admin-modal-greeting h3 {
-    font-size: 17px;
-    font-weight: 700;
-    color: #35264f;
-    letter-spacing: -0.3px;
-    margin: 0;
-}
-
-.admin-modal-greeting p {
-    font-size: 12px;
-    color: #695e74;
-    line-height: 1.5;
-    margin: 0;
-}
-
-.admin-modal-kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-}
-
-.admin-modal-kpi-tile {
-    background: #ffffff;
-    border: 1px solid #edf0f3;
-    border-radius: 14px;
-    padding: 12px 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    transition: all 0.15s ease;
-}
-
-.admin-modal-kpi-tile:hover {
-    border-color: #d8cde4;
-    box-shadow: 0 2px 8px rgba(53, 38, 79, 0.04);
-}
-
-.admin-modal-kpi-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 4px;
-}
-
-.admin-modal-kpi-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    display: grid;
-    place-items: center;
-    font-size: 14px;
-}
-
-.admin-modal-kpi-icon--purple { background: #f0ebf7; color: #7751a0; }
-.admin-modal-kpi-icon--amber  { background: #fef3c7; color: #b45309; }
-.admin-modal-kpi-icon--blue   { background: #eff6ff; color: #2563eb; }
-.admin-modal-kpi-icon--emerald{ background: #ecfdf5; color: #059669; }
-
-.admin-modal-kpi-tag {
-    font-size: 10px;
-    font-weight: 600;
-    color: #767082;
-    background: #f7f6f9;
-    padding: 2px 6px;
-    border-radius: 6px;
-}
-
-.admin-modal-kpi-tile strong {
-    font-size: 19px;
-    font-weight: 700;
-    color: #35264f;
-    letter-spacing: -0.4px;
-    line-height: 1.2;
-}
-
-.admin-modal-kpi-tile span {
-    font-size: 11px;
-    color: #767082;
-}
-
-.admin-modal-shortcuts {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-}
-
-.admin-modal-shortcut-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 14px;
-    background: #fbf9fd;
-    border: 1px solid #eee5f3;
-    border-radius: 12px;
-    text-decoration: none;
-    color: #35264f;
-    transition: all 0.15s ease;
-}
-
-.admin-modal-shortcut-btn:hover {
-    background: #ffffff;
-    border-color: #cbb9df;
-    box-shadow: 0 4px 12px rgba(53, 38, 79, 0.05);
-    transform: translateY(-1px);
-}
-
-.admin-modal-shortcut-btn > i:first-child {
-    font-size: 20px;
-    color: #7751a0;
-    flex-shrink: 0;
-}
-
-.admin-modal-shortcut-btn div {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    flex: 1;
-}
-
-.admin-modal-shortcut-btn strong {
-    font-size: 12px;
-    font-weight: 700;
-    color: #35264f;
-}
-
-.admin-modal-shortcut-btn small {
-    font-size: 10.5px;
-    color: #887494;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.admin-shortcut-arrow {
-    font-size: 14px;
-    color: #a494af;
-    flex-shrink: 0;
-    transition: transform 0.15s ease;
-}
-
-.admin-modal-shortcut-btn:hover .admin-shortcut-arrow {
-    transform: translate(2px, -2px);
-    color: #7751a0;
-}
-
-.admin-modal-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 24px;
-    border-top: 1px solid #eef0f4;
-    background: #fcfbfe;
-}
-
-.admin-modal-footer-note {
-    font-size: 11px;
-    color: #695e74;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.admin-fade-enter {
-    transition: opacity 0.2s ease-out;
-}
-
-.admin-fade-leave {
-    transition: opacity 0.15s ease-in;
-}
