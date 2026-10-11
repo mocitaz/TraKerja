@@ -61,11 +61,8 @@
             <p>
                 <i class="ph ph-clock-countdown"></i> Cached up to 10 min for instant query speed · Timestamps in WIB (Asia/Jakarta)
             </p>
-            <div class="summary-footer-meta">
-                <span wire:loading.remove wire:target="periodFilter, setPeriod" class="summary-status-pill">
-                    <span class="summary-status-dot"></span> Telemetry live
-                </span>
-                <span wire:loading wire:target="periodFilter, setPeriod" class="summary-updating-pill">
+            <div class="summary-footer-meta" wire:loading wire:target="periodFilter, setPeriod">
+                <span class="summary-updating-pill">
                     <i class="ph ph-spinner ph-spin"></i> Updating metrics…
                 </span>
             </div>
@@ -78,7 +75,10 @@
             <div class="summary-insights-title">
                 <h2>Platform Highlights</h2>
             </div>
-            <span class="summary-insights-badge">Live signals</span>
+            <span class="summary-insights-badge">
+                <span class="summary-live-dot"></span>
+                <span>Live signals</span>
+            </span>
         </div>
         <div class="summary-insights-grid">
             <article>
@@ -283,8 +283,8 @@
          x-transition.opacity.duration.150ms 
          class="ai-section">
         
-        {{-- AI Workspace Feature Telemetry Strip (Orange Theme matching Campaign summary) --}}
-        <section class="ai-panel ai-panel--orange">
+        {{-- AI Workspace Feature Telemetry Strip (Lavender/Purple Theme matching Continue your CV #e5e0f5) --}}
+        <section class="ai-panel ai-panel--purple">
             <header class="ai-panel-heading">
                 <div>
                     <h2>AI Intelligence & Generation Telemetry</h2>

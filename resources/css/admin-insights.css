@@ -253,6 +253,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    min-width: 0;
 }
 
 .summary-insights-title h2 {
@@ -264,15 +265,28 @@
 }
 
 .summary-insights-badge {
+    margin-left: auto;
+    flex-shrink: 0;
     display: inline-flex;
     align-items: center;
-    padding: 6px 12px;
+    gap: 6px;
+    padding: 6px 14px;
     background: #ffffff70;
     color: #50535e;
     font-size: 11px;
     font-weight: 500;
     border-radius: 99px;
     border: 1px solid rgba(255, 255, 255, 0.6);
+    white-space: nowrap;
+}
+
+.summary-live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+    display: inline-block;
 }
 
 .summary-insights-grid {
@@ -440,8 +454,94 @@
 }
 
 /* ==========================================================================
-   AI Feature Usage Telemetry Grid
+   AI Feature Usage Telemetry Grid (Lavender/Purple matching Continue your CV #e5e0f5)
    ========================================================================== */
+.ai-panel--purple {
+    background: #e5e0f5;
+    border: 1px solid #ffffffc7;
+    border-radius: 20px;
+    box-shadow: 0 1px 3px rgba(60, 40, 80, 0.03);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.ai-panel--purple:hover {
+    box-shadow: 0 8px 24px rgba(75, 45, 100, 0.07);
+}
+
+.ai-panel--purple .ai-panel-heading {
+    border-bottom: 1px solid #d3cce5;
+    padding: 20px 24px 16px;
+}
+
+.ai-panel--purple .ai-panel-heading h2 {
+    color: #30313b;
+    font-size: 18px;
+    font-weight: 650;
+    letter-spacing: -0.4px;
+}
+
+.ai-panel--purple .ai-panel-heading p {
+    color: #50535e;
+    font-size: 11px;
+    margin: 4px 0 0;
+}
+
+.ai-panel--purple .ai-count {
+    background: #ffffff70;
+    color: #51435f;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 99px;
+}
+
+.ai-panel--purple .ai-usage-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    padding: 20px 24px;
+}
+
+.ai-panel--purple .ai-usage-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 18px 20px;
+    background: #ffffff70;
+    border: 1px solid #ffffffc7;
+    border-radius: 16px;
+    transition: all 0.2s ease;
+    min-height: 96px;
+}
+
+.ai-panel--purple .ai-usage-card:hover {
+    background: #ffffff;
+    border-color: #ffffff;
+    box-shadow: 0 6px 18px rgba(75, 45, 100, 0.08);
+    transform: translateY(-2px);
+}
+
+.ai-panel--purple .ai-usage-card span {
+    font-size: 11px;
+    font-weight: 600;
+    color: #5a4b69;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+}
+
+.ai-panel--purple .ai-usage-card strong {
+    font-size: 26px;
+    font-weight: 700;
+    color: #35264f;
+    letter-spacing: -0.6px;
+    line-height: 1.2;
+    display: block;
+    font-variant-numeric: tabular-nums;
+}
+
 .ai-panel--orange {
     background: #f5ddd2;
     border: 1px solid #ffffffc7;
@@ -1128,6 +1228,7 @@
     }
 
     .ai-usage-metrics,
+    .ai-panel--purple .ai-usage-metrics,
     .ai-panel--orange .ai-usage-metrics {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -1145,6 +1246,7 @@
 
 @media (max-width: 480px) {
     .ai-usage-metrics,
+    .ai-panel--purple .ai-usage-metrics,
     .ai-panel--orange .ai-usage-metrics {
         grid-template-columns: 1fr;
     }
