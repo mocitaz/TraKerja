@@ -231,9 +231,9 @@
                             <th scope="col">Scorecard</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @forelse($responses as $response)
-                            <tr x-data="{ openScorecard: false }" wire:key="survey-res-{{ $response->id }}">
+                    @forelse($responses as $response)
+                        <tbody x-data="{ openScorecard: false }" wire:key="survey-res-{{ $response->id }}" class="as-response-group">
+                            <tr class="as-row-main" :class="{ 'is-expanded': openScorecard }">
                                 {{-- Member Info --}}
                                 <td>
                                     <div class="as-member-cell">
@@ -284,41 +284,55 @@
                                         <span x-text="openScorecard ? 'Close' : 'View all 12'"></span>
                                         <i class="ph ph-caret-down transition-transform duration-200" :class="{ 'rotate-180': openScorecard }" aria-hidden="true"></i>
                                     </button>
-
-                                    {{-- Expandable Scorecard Modal/Drawer --}}
-                                    <template x-if="openScorecard">
-                                        <div class="as-scorecard-box" x-cloak>
-                                            <div class="as-scorecard-heading">
-                                                <h4>12-Question Breakdown · {{ $response->user?->name ?? 'Member' }}</h4>
-                                                <span class="text-xs text-gray-500">{{ $response->created_at->format('d M Y, H:i') }} WIB</span>
-                                            </div>
-
-                                            <div class="as-scorecard-grid">
-                                                <div class="as-scorecard-item"><span>1. Overall:</span> <strong>{{ $response->q1_overall ?? '—' }} / 5</strong></div>
-                                                <div class="as-scorecard-item"><span>2. Navigation:</span> <strong>{{ $response->q2_navigation ?? '—' }} / 5</strong></div>
-                                                <div class="as-scorecard-item"><span>3. Speed:</span> <strong>{{ $response->q3_speed ?? '—' }} / 5</strong></div>
-                                                <div class="as-scorecard-item"><span>4. CV Builder:</span> <strong>{{ $response->q4_cv_builder ?? '—' }} / 5</strong></div>
-                                                <div class="as-scorecard-item"><span>5. AI Analyzer:</span> <strong>{{ $response->q5_ai_analyzer ?? '—' }} / 5</strong></div>
-                                                <div class="as-scorecard-item"><span>6. Tracker:</span> <strong>{{ $response->q6_job_tracker ?? '—' }} / 5</strong></div>
-                                                <div class="as-scorecard-item"><span>7. Cover Letter:</span> <strong>{{ $response->q7_cover_letter ?? '—' }} / 5</strong></div>
-                                                <div class="as-scorecard-item"><span>8. Interviews:</span> <strong>{{ $response->q8_interviews ?? '—' }} / 5</strong></div>
-                                                <div class="as-scorecard-item"><span>9. Premium Value:</span> <strong>{{ $response->q9_premium ?? '—' }} / 5</strong></div>
-                                                <div class="as-scorecard-item"><span>10. Likelihood to recommend:</span> <strong>{{ $response->q10_recommend ?? '—' }} / 5</strong></div>
-                                                <div class="as-scorecard-item"><span>11. Visual Design:</span> <strong>{{ $response->q11_design ?? '—' }} / 5</strong></div>
-                                                <div class="as-scorecard-item"><span>12. CV Templates:</span> <strong>{{ $response->q12_cv_templates ?? '—' }} / 5</strong></div>
-                                            </div>
-
-                                            @if($response->feedback)
-                                                <div class="as-scorecard-text">
-                                                    <strong>Written Feedback:</strong>
-                                                    <p class="mt-1 text-gray-700 italic">“{{ $response->feedback }}”</p>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </template>
                                 </td>
                             </tr>
-                        @empty
+
+                            {{-- Expandable Scorecard Row across full 5 columns --}}
+                            <tr x-show="openScorecard" x-cloak class="as-scorecard-row">
+                                <td colspan="5" class="as-scorecard-cell">
+                                    <div class="as-scorecard-box">
+                                        <div class="as-scorecard-heading">
+                                            <div class="as-scorecard-heading-left">
+                                                <h4>12-Question Breakdown</h4>
+                                                <span class="as-scorecard-member">· {{ $response->user?->name ?? 'Member' }}</span>
+                                            </div>
+                                            <div class="as-scorecard-heading-right">
+                                                <span class="as-scorecard-time">{{ $response->created_at->format('d M Y, H:i') }} WIB</span>
+                                                <span class="as-rating-badge">
+                                                    <i class="ph-fill ph-star" aria-hidden="true"></i>
+                                                    {{ number_format($response->q1_overall, 1) }}
+                                                    <small>/ 5.0</small>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="as-scorecard-grid">
+                                            <div class="as-scorecard-item"><span>1. Overall:</span> <strong>{{ $response->q1_overall ?? '—' }} / 5</strong></div>
+                                            <div class="as-scorecard-item"><span>2. Navigation:</span> <strong>{{ $response->q2_navigation ?? '—' }} / 5</strong></div>
+                                            <div class="as-scorecard-item"><span>3. Speed:</span> <strong>{{ $response->q3_speed ?? '—' }} / 5</strong></div>
+                                            <div class="as-scorecard-item"><span>4. CV Builder:</span> <strong>{{ $response->q4_cv_builder ?? '—' }} / 5</strong></div>
+                                            <div class="as-scorecard-item"><span>5. AI Analyzer:</span> <strong>{{ $response->q5_ai_analyzer ?? '—' }} / 5</strong></div>
+                                            <div class="as-scorecard-item"><span>6. Tracker:</span> <strong>{{ $response->q6_job_tracker ?? '—' }} / 5</strong></div>
+                                            <div class="as-scorecard-item"><span>7. Cover Letter:</span> <strong>{{ $response->q7_cover_letter ?? '—' }} / 5</strong></div>
+                                            <div class="as-scorecard-item"><span>8. Interviews:</span> <strong>{{ $response->q8_interviews ?? '—' }} / 5</strong></div>
+                                            <div class="as-scorecard-item"><span>9. Premium Value:</span> <strong>{{ $response->q9_premium ?? '—' }} / 5</strong></div>
+                                            <div class="as-scorecard-item"><span>10. Likelihood to recommend:</span> <strong>{{ $response->q10_recommend ?? '—' }} / 5</strong></div>
+                                            <div class="as-scorecard-item"><span>11. Visual Design:</span> <strong>{{ $response->q11_design ?? '—' }} / 5</strong></div>
+                                            <div class="as-scorecard-item"><span>12. CV Templates:</span> <strong>{{ $response->q12_cv_templates ?? '—' }} / 5</strong></div>
+                                        </div>
+
+                                        @if($response->feedback)
+                                            <div class="as-scorecard-text">
+                                                <strong>Written Feedback:</strong>
+                                                <p>“{{ $response->feedback }}”</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    @empty
+                        <tbody>
                             <tr>
                                 <td colspan="5">
                                     <div class="as-empty">
@@ -330,8 +344,8 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforelse
-                    </tbody>
+                        </tbody>
+                    @endforelse
                 </table>
             </div>
 
