@@ -143,30 +143,33 @@ if (!function_exists('format_cv_text')) {
             if (preg_match('/^\*\*[^*]+\*\*$/', $trimmed)) {
                 // Header
                 if ($inList) {
-                    $html .= '</ul>';
+                    $html .= '</table>';
                     $inList = false;
                 }
-                $html .= "<p style=\"font-weight:700;color:#0f172a;margin:6px 0 2px 0;font-size:0.95em;line-height:1.35;\">{$formatted}</p>";
+                $html .= "<p style=\"font-weight:700;color:#0f172a;margin:5px 0 2px 0;font-size:0.95em;line-height:1.35;\">{$formatted}</p>";
             } elseif (preg_match('/^[^a-zA-Z0-9\s]*[•\-\*\x{2022}\x{2023}\x{25E6}\x{2043}\x{2219}]\s*/u', $trimmed)) {
                 // Bullet (Supports common bullet chars including UTF-8 variants, aggressively cleaning leading non-chars)
                 $content = preg_replace('/^[^a-zA-Z0-9\s]*[•\-\*\x{2022}\x{2023}\x{25E6}\x{2043}\x{2219}]\s*/u', '', $formatted);
                 if (!$inList) {
-                    $html .= '<ul style="margin:2px 0 3px 0;padding:0 0 0 14px;list-style-type:disc;">';
+                    $html .= '<table class="cv-bullet-table" style="width:100%;border-collapse:collapse;margin:1px 0 2px 0;padding:0;border:0;">';
                     $inList = true;
                 }
-                $html .= "<li style=\"margin:0 0 2px 0;padding:0;line-height:1.38;color:#334155;font-size:0.95em;\">{$content}</li>";
+                $html .= '<tr>'
+                    . '<td style="width:12px;vertical-align:top;padding:1px 0 1px 0;border:0;line-height:1.35;color:#475569;font-size:8pt;text-align:left;">&#8226;</td>'
+                    . '<td style="vertical-align:top;padding:1px 0 1px 0;border:0;line-height:1.35;color:#334155;font-size:0.95em;text-align:left;">' . $content . '</td>'
+                    . '</tr>';
             } else {
                 // Plain Text
                 if ($inList) {
-                    $html .= '</ul>';
+                    $html .= '</table>';
                     $inList = false;
                 }
-                $html .= "<p style=\"color:#475569;line-height:1.42;font-size:0.95em;margin:0 0 4px 0;\">{$formatted}</p>";
+                $html .= "<p style=\"color:#334155;line-height:1.38;font-size:0.95em;margin:0 0 3px 0;\">{$formatted}</p>";
             }
         }
 
         if ($inList) {
-            $html .= '</ul>';
+            $html .= '</table>';
         }
 
         $html .= '</div>';

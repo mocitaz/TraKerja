@@ -67,26 +67,34 @@
         
         /* Sections */
         .section {
-            margin-top: 9px;
+            margin-top: 8px;
             margin-bottom: 0px;
         }
         
-        .section-title {
+        .section-title-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 4px;
+            page-break-after: avoid;
+            break-after: avoid;
+        }
+
+        .section-title-table td {
+            padding: 0 0 2px 0;
+            border: 0;
+            border-bottom: 1.2px solid #0f172a;
             font-size: 9.5pt;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: #0f172a;
-            border-bottom: 1.2px solid #0f172a;
-            padding-bottom: 2px;
-            margin-bottom: 5px;
-            page-break-after: avoid;
-            break-after: avoid;
+            vertical-align: bottom;
+            text-align: left;
         }
         
         /* Entry styles */
         .entry {
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             page-break-inside: avoid;
             break-inside: avoid;
         }
@@ -129,6 +137,7 @@
             color: #334155;
             text-align: left;
             width: 72%;
+            padding-top: 0.5px;
         }
         
         .entry-location {
@@ -138,6 +147,7 @@
             text-align: right;
             white-space: nowrap;
             width: 28%;
+            padding-top: 0.5px;
         }
         
         .entry-description {
@@ -145,7 +155,7 @@
             line-height: 1.38;
             color: #334155;
             margin-top: 1px;
-            text-align: justify;
+            text-align: left;
         }
         
         .skills-table {
@@ -164,15 +174,18 @@
         }
 
         .skills-category {
-            width: 110px;
+            width: 18%;
             font-weight: bold;
             color: #0f172a;
             white-space: nowrap;
             padding-right: 8px;
+            text-align: left;
         }
 
         .skills-list {
+            width: 82%;
             color: #334155;
+            text-align: left;
         }
 
         @media print {
@@ -247,7 +260,9 @@
         <!-- Summary -->
         @if($user->profile && $user->profile->bio)
         <div class="section" style="margin-top: 0;">
-            <div class="section-title">Professional Summary</div>
+            <table class="section-title-table">
+                <tr><td>Professional Summary</td></tr>
+            </table>
             <div class="entry-description">
                 {!! format_cv_text($user->profile->bio) !!}
             </div>
@@ -257,7 +272,9 @@
         <!-- Experience -->
         @if($experiences->count() > 0)
         <div class="section">
-            <div class="section-title">Professional Experience</div>
+            <table class="section-title-table">
+                <tr><td>Professional Experience</td></tr>
+            </table>
             @foreach($experiences as $exp)
             <div class="entry">
                 <table class="entry-table">
@@ -265,8 +282,6 @@
                         <td class="entry-title">{{ $exp->company_name }}</td>
                         <td class="entry-date">{{ format_date_range($exp->start_date, $exp->end_date, $exp->is_current) }}</td>
                     </tr>
-                </table>
-                <table class="entry-table">
                     <tr>
                         <td class="entry-subtitle">{{ $exp->position }}</td>
                         <td class="entry-location">{{ $exp->location }}</td>
@@ -285,7 +300,9 @@
         <!-- Education -->
         @if($educations->count() > 0)
         <div class="section">
-            <div class="section-title">Education</div>
+            <table class="section-title-table">
+                <tr><td>Education</td></tr>
+            </table>
             @foreach($educations as $edu)
             <div class="entry">
                 <table class="entry-table">
@@ -293,8 +310,6 @@
                         <td class="entry-title">{{ $edu->institution_name }}</td>
                         <td class="entry-date">{{ format_date_range($edu->start_date, $edu->end_date, $edu->is_current) }}</td>
                     </tr>
-                </table>
-                <table class="entry-table">
                     <tr>
                         <td class="entry-subtitle">{{ $edu->degree }}{{ $edu->major ? ' in ' . $edu->major : '' }}</td>
                         <td class="entry-location">{{ $edu->location }}</td>
@@ -313,7 +328,9 @@
         <!-- Projects -->
         @if($projects->count() > 0)
         <div class="section">
-            <div class="section-title">Key Projects</div>
+            <table class="section-title-table">
+                <tr><td>Key Projects</td></tr>
+            </table>
             @foreach($projects as $project)
             <div class="entry">
                 <table class="entry-table">
@@ -321,12 +338,12 @@
                         <td class="entry-title">{{ $project->project_name }}</td>
                         <td class="entry-date">{{ format_date_range($project->start_date, $project->end_date, $project->is_ongoing) }}</td>
                     </tr>
-                </table>
-                <table class="entry-table">
                     <tr>
                         <td class="entry-subtitle">{{ $project->role }}</td>
                         @if($project->project_url)
                             <td class="entry-location">{{ $project->project_url }}</td>
+                        @else
+                            <td class="entry-location"></td>
                         @endif
                     </tr>
                 </table>
@@ -348,7 +365,9 @@
         <!-- Organizations -->
         @if($organizations->count() > 0)
         <div class="section">
-            <div class="section-title">Leadership & Organizations</div>
+            <table class="section-title-table">
+                <tr><td>Leadership & Organizations</td></tr>
+            </table>
             @foreach($organizations as $org)
             <div class="entry">
                 <table class="entry-table">
@@ -356,8 +375,11 @@
                         <td class="entry-title">{{ $org->organization_name }}</td>
                         <td class="entry-date">{{ format_date_range($org->start_date, $org->end_date, $org->is_current) }}</td>
                     </tr>
+                    <tr>
+                        <td class="entry-subtitle">{{ $org->position }}</td>
+                        <td class="entry-location"></td>
+                    </tr>
                 </table>
-                <div class="entry-subtitle">{{ $org->position }}</div>
                 @if($org->description)
                 <div class="entry-description">
                     {!! format_cv_text($org->description) !!}
@@ -371,7 +393,9 @@
         <!-- Achievements -->
         @if($achievements->count() > 0)
         <div class="section">
-            <div class="section-title">Certifications & Honors</div>
+            <table class="section-title-table">
+                <tr><td>Certifications & Honors</td></tr>
+            </table>
             @foreach($achievements as $achievement)
             <div class="entry">
                 <table class="entry-table">
@@ -379,8 +403,11 @@
                         <td class="entry-title">{{ $achievement->title }}</td>
                         <td class="entry-date">{{ $achievement->issue_date?->format('M Y') }}</td>
                     </tr>
+                    <tr>
+                        <td class="entry-subtitle">{{ $achievement->issuer }}</td>
+                        <td class="entry-location"></td>
+                    </tr>
                 </table>
-                <div class="entry-subtitle">{{ $achievement->issuer }}</div>
                 @if($achievement->description)
                 <div class="entry-description">
                     {!! format_cv_text($achievement->description) !!}
@@ -394,7 +421,9 @@
         <!-- Skills -->
         @if($skills->count() > 0)
         <div class="section">
-            <div class="section-title">Skills & Expertise</div>
+            <table class="section-title-table">
+                <tr><td>Skills & Expertise</td></tr>
+            </table>
             <table class="skills-table">
                 @foreach($skills->groupBy('category') as $category => $categorySkills)
                 <tr>

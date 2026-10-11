@@ -163,7 +163,7 @@
             color: #334155;
             line-height: 1.38;
             margin-top: 1px;
-            text-align: justify;
+            text-align: left;
         }
 
         /* Skills table */
@@ -183,15 +183,18 @@
         }
 
         .skills-category {
-            width: 110px;
+            width: 18%;
             font-weight: bold;
             color: #0f172a;
             white-space: nowrap;
             padding-right: 8px;
+            text-align: left;
         }
 
         .skills-list {
+            width: 82%;
             color: #334155;
+            text-align: left;
         }
 
         @media print {
@@ -293,8 +296,6 @@
                         <td class="entry-title">{{ $exp->company_name }}</td>
                         <td class="entry-date">{{ format_date_range($exp->start_date, $exp->end_date, $exp->is_current) }}</td>
                     </tr>
-                </table>
-                <table class="entry-table">
                     <tr>
                         <td class="entry-subtitle">{{ $exp->position }}</td>
                         <td class="entry-location">{{ $exp->location }}</td>
@@ -325,12 +326,12 @@
                         <td class="entry-title">{{ $project->project_name }}</td>
                         <td class="entry-date">{{ format_date_range($project->start_date, $project->end_date, $project->is_ongoing) }}</td>
                     </tr>
-                </table>
-                <table class="entry-table">
                     <tr>
                         <td class="entry-subtitle">{{ $project->role }}</td>
                         @if($project->project_url)
                             <td class="entry-location">{{ $project->project_url }}</td>
+                        @else
+                            <td class="entry-location"></td>
                         @endif
                     </tr>
                 </table>
@@ -364,8 +365,6 @@
                         <td class="entry-title">{{ $edu->institution_name }}</td>
                         <td class="entry-date">{{ format_date_range($edu->start_date, $edu->end_date, $edu->is_current) }}</td>
                     </tr>
-                </table>
-                <table class="entry-table">
                     <tr>
                         <td class="entry-subtitle">{{ $edu->degree }}{{ $edu->major ? ' in ' . $edu->major : '' }}</td>
                         <td class="entry-location">{{ $edu->location }}</td>
@@ -415,8 +414,11 @@
                         <td class="entry-title">{{ $org->organization_name }}</td>
                         <td class="entry-date">{{ format_date_range($org->start_date, $org->end_date, $org->is_current) }}</td>
                     </tr>
+                    <tr>
+                        <td class="entry-subtitle">{{ $org->position }}</td>
+                        <td class="entry-location"></td>
+                    </tr>
                 </table>
-                <div class="entry-subtitle">{{ $org->position }}</div>
                 @if($org->description)
                 <div class="entry-description">
                     {!! format_cv_text($org->description) !!}
@@ -442,8 +444,11 @@
                         <td class="entry-title">{{ $achievement->title }}</td>
                         <td class="entry-date">{{ $achievement->issue_date?->format('M Y') }}</td>
                     </tr>
+                    <tr>
+                        <td class="entry-subtitle">{{ $achievement->issuer }}</td>
+                        <td class="entry-location"></td>
+                    </tr>
                 </table>
-                <div class="entry-subtitle">{{ $achievement->issuer }}</div>
                 @if($achievement->description)
                 <div class="entry-description">
                     {!! format_cv_text($achievement->description) !!}
