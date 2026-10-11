@@ -225,14 +225,19 @@
 }
 
 /* ==========================================================================
-   Platform Highlights Glass Box (.summary-insights from /summary)
+   Platform Highlights Orange Box (matches Campaign summary & /summary)
    ========================================================================== */
 .summary-insights {
-    background: #ffffff;
-    border: 1px solid #d7dce2;
+    background: #f5ddd2;
+    border: 1px solid #ffffffc7;
     border-radius: 20px;
-    padding: 20px 24px;
-    box-shadow: 0 2px 8px rgba(52, 49, 59, 0.03);
+    padding: 22px 24px;
+    box-shadow: 0 1px 3px rgba(60, 40, 80, 0.03);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.summary-insights:hover {
+    box-shadow: 0 8px 24px rgba(80, 50, 40, 0.06);
 }
 
 .summary-insights-header {
@@ -241,7 +246,7 @@
     justify-content: space-between;
     gap: 12px;
     padding-bottom: 14px;
-    border-bottom: 1px solid #edf0f3;
+    border-bottom: 1px solid #dfbfae;
 }
 
 .summary-insights-title {
@@ -251,9 +256,9 @@
 }
 
 .summary-insights-title h2 {
-    font-size: 16px;
-    font-weight: 700;
-    color: #35264f;
+    font-size: 18px;
+    font-weight: 650;
+    color: #30313b;
     letter-spacing: -0.4px;
     margin: 0;
 }
@@ -261,12 +266,13 @@
 .summary-insights-badge {
     display: inline-flex;
     align-items: center;
-    padding: 4px 10px;
-    background: #f0ebf7;
-    color: #7751a0;
+    padding: 6px 12px;
+    background: #ffffff70;
+    color: #50535e;
     font-size: 11px;
-    font-weight: 600;
-    border-radius: 999px;
+    font-weight: 500;
+    border-radius: 99px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .summary-insights-grid {
@@ -281,34 +287,37 @@
 }
 
 .summary-insights-grid article + article {
-    border-left: 1px solid #edf0f3;
+    border-left: 1px solid #dfbfae;
     padding-left: 24px;
 }
 
 .summary-insights-grid article > span {
     font-size: 11px;
-    font-weight: 500;
-    color: #696572;
+    font-weight: 600;
+    color: #50535e;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
 }
 
 .summary-insights-grid article strong {
     display: block;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
-    color: #35264f;
-    letter-spacing: -0.5px;
+    color: #30313b;
+    letter-spacing: -0.6px;
     margin: 4px 0 5px;
+    font-variant-numeric: tabular-nums;
 }
 
 .summary-insights-grid article strong small {
     font-size: 13px;
     font-weight: 500;
-    color: #767082;
+    color: #686373;
 }
 
 .summary-insights-grid article p {
-    font-size: 11px;
-    color: #696572;
+    font-size: 11.5px;
+    color: #50535e;
     line-height: 1.5;
     margin: 0;
 }
@@ -433,6 +442,92 @@
 /* ==========================================================================
    AI Feature Usage Telemetry Grid
    ========================================================================== */
+.ai-panel--orange {
+    background: #f5ddd2;
+    border: 1px solid #ffffffc7;
+    border-radius: 20px;
+    box-shadow: 0 1px 3px rgba(60, 40, 80, 0.03);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.ai-panel--orange:hover {
+    box-shadow: 0 8px 24px rgba(80, 50, 40, 0.06);
+}
+
+.ai-panel--orange .ai-panel-heading {
+    border-bottom: 1px solid #dfbfae;
+    padding: 20px 24px 16px;
+}
+
+.ai-panel--orange .ai-panel-heading h2 {
+    color: #30313b;
+    font-size: 18px;
+    font-weight: 650;
+    letter-spacing: -0.4px;
+}
+
+.ai-panel--orange .ai-panel-heading p {
+    color: #50535e;
+    font-size: 11px;
+    margin: 4px 0 0;
+}
+
+.ai-panel--orange .ai-count {
+    background: #ffffff70;
+    color: #50535e;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 99px;
+}
+
+.ai-panel--orange .ai-usage-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    padding: 20px 24px;
+}
+
+.ai-panel--orange .ai-usage-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 18px 20px;
+    background: #ffffff70;
+    border: 1px solid #ffffffc7;
+    border-radius: 16px;
+    transition: all 0.2s ease;
+    min-height: 96px;
+}
+
+.ai-panel--orange .ai-usage-card:hover {
+    background: #ffffff;
+    border-color: #ffffff;
+    box-shadow: 0 6px 18px rgba(80, 50, 40, 0.06);
+    transform: translateY(-2px);
+}
+
+.ai-panel--orange .ai-usage-card span {
+    font-size: 11px;
+    font-weight: 600;
+    color: #50535e;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+}
+
+.ai-panel--orange .ai-usage-card strong {
+    font-size: 26px;
+    font-weight: 700;
+    color: #30313b;
+    letter-spacing: -0.6px;
+    line-height: 1.2;
+    display: block;
+    font-variant-numeric: tabular-nums;
+}
+
 .ai-usage-metrics {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1002,7 +1097,7 @@
 
     .summary-insights-grid article + article {
         border-left: none;
-        border-top: 1px solid #edf0f3;
+        border-top: 1px solid #dfbfae;
         padding-left: 0;
         padding-top: 16px;
     }
@@ -1032,7 +1127,8 @@
         grid-template-columns: 1fr;
     }
 
-    .ai-usage-metrics {
+    .ai-usage-metrics,
+    .ai-panel--orange .ai-usage-metrics {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
@@ -1048,7 +1144,8 @@
 }
 
 @media (max-width: 480px) {
-    .ai-usage-metrics {
+    .ai-usage-metrics,
+    .ai-panel--orange .ai-usage-metrics {
         grid-template-columns: 1fr;
     }
 }

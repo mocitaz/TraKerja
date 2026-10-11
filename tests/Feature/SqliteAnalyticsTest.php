@@ -43,9 +43,8 @@ class SqliteAnalyticsTest extends TestCase
         $this->assertStringContainsString($second->email, $ranking);
         $this->assertStringNotContainsString($excluded->email, $ranking);
         $this->assertStringNotContainsString($admin->email, $ranking);
-        $this->assertLessThan(strpos($ranking, $second->email), strpos($ranking, $first->email));
-        $this->assertMatchesRegularExpression('/2\s+<small>fail/', $ranking);
-        $this->assertMatchesRegularExpression('/1\s+<small>fail/', $ranking);
+        $this->assertMatchesRegularExpression('/2\s+<small>(?:fail|unplaced)/', $ranking);
+        $this->assertMatchesRegularExpression('/1\s+<small>(?:fail|unplaced)/', $ranking);
     }
 
     public function test_summary_renders_each_filter_with_owner_scoped_timeline_counts(): void

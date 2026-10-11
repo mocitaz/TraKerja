@@ -2,9 +2,7 @@
     {{-- Header with Summary Periods Segmented Control --}}
     <section class="admin-welcome">
         <div>
-            <span class="admin-eyebrow">
-                <i class="ph-bold ph-chart-polar"></i> Platform Intelligence
-            </span>
+            <span class="admin-eyebrow">Platform Intelligence</span>
             <h1>Analytics</h1>
             <p>Deep-dive into platform performance, growth momentum, and user engagements.</p>
         </div>
@@ -74,11 +72,10 @@
         </footer>
     </section>
 
-    {{-- Platform Highlights Glass Box (matches /summary .summary-insights) --}}
-    <section class="summary-insights workspace-card--glass">
+    {{-- Platform Highlights (matches Campaign summary orange card) --}}
+    <section class="summary-insights">
         <div class="summary-insights-header">
             <div class="summary-insights-title">
-                <i class="ph-fill ph-sparkle text-[#8e4476]"></i>
                 <h2>Platform Highlights</h2>
             </div>
             <span class="summary-insights-badge">Live signals</span>
@@ -286,8 +283,8 @@
          x-transition.opacity.duration.150ms 
          class="ai-section">
         
-        {{-- AI Workspace Feature Telemetry Strip --}}
-        <section class="ai-panel ai-panel--glass">
+        {{-- AI Workspace Feature Telemetry Strip (Orange Theme matching Campaign summary) --}}
+        <section class="ai-panel ai-panel--orange">
             <header class="ai-panel-heading">
                 <div>
                     <h2>AI Intelligence & Generation Telemetry</h2>
@@ -297,40 +294,20 @@
             </header>
             <div class="ai-usage-metrics">
                 <div class="ai-usage-card">
-                    <div class="ai-usage-card__icon text-[#8e4476]">
-                        <i class="ph-bold ph-sparkle"></i>
-                    </div>
-                    <div>
-                        <span>CV Analyses</span>
-                        <strong>{{ number_format($aiUsageStats['ai_analyzer']) }}</strong>
-                    </div>
+                    <span>CV Analyses</span>
+                    <strong>{{ number_format($aiUsageStats['ai_analyzer']) }}</strong>
                 </div>
                 <div class="ai-usage-card">
-                    <div class="ai-usage-card__icon text-[#34749b]">
-                        <i class="ph-bold ph-camera"></i>
-                    </div>
-                    <div>
-                        <span>Photo Requests</span>
-                        <strong>{{ number_format($aiUsageStats['ai_photos']) }}</strong>
-                    </div>
+                    <span>Photo Requests</span>
+                    <strong>{{ number_format($aiUsageStats['ai_photos']) }}</strong>
                 </div>
                 <div class="ai-usage-card">
-                    <div class="ai-usage-card__icon text-[#7751a0]">
-                        <i class="ph-bold ph-envelope-simple-open"></i>
-                    </div>
-                    <div>
-                        <span>Cover Letters</span>
-                        <strong>{{ number_format($coverLetterStats['total']) }}</strong>
-                    </div>
+                    <span>Cover Letters</span>
+                    <strong>{{ number_format($coverLetterStats['total']) }}</strong>
                 </div>
                 <div class="ai-usage-card">
-                    <div class="ai-usage-card__icon text-[#ad573f]">
-                        <i class="ph-bold ph-file-text"></i>
-                    </div>
-                    <div>
-                        <span>CV Generations (Month)</span>
-                        <strong>{{ number_format($aiUsageStats['ai_cv_gen']) }}</strong>
-                    </div>
+                    <span>CV Generations (Month)</span>
+                    <strong>{{ number_format($aiUsageStats['ai_cv_gen']) }}</strong>
                 </div>
             </div>
         </section>
