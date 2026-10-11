@@ -69,11 +69,6 @@ class LinkedInAuthController extends Controller
                 $user->update(['linkedin_id' => $linkedInUser->getId()]);
             }
 
-            // Update avatar jika belum punya logo
-            if (!$user->logo && $linkedInUser->getAvatar()) {
-                $user->update(['logo' => $linkedInUser->getAvatar()]);
-            }
-
             // Paksa verifikasi email (email LinkedIn sudah terverifikasi)
             if (!$user->hasVerifiedEmail()) {
                 $user->markEmailAsVerified();

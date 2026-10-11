@@ -88,4 +88,37 @@ class ProfileAvatarTest extends TestCase
             $this->assertSame('svg', $svg->getName());
         }
     }
+
+    public function test_google_oauth_login_does_not_overwrite_user_chosen_avatar(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'candidate@example.com',
+            'avatar_id' => 'amber',
+            'logo' => null,
+            'google_id' => null,
+        ]);
+
+        $googleUser = \Mockery::mock(\Laravel\Socialite\Two\User::class);
+        $googleUser->shouldReceive('getId')->andReturn('google-12345');
+        $googleUser->shouldReceive('getEmail')->andReturn('candidate@example.com');
+        $googleUser->shouldReceive('getAvatar')->andReturn('https://lh3.googleusercontent.com/a/photo.jpg');
+
+        $provider = \Mockery::mock(\Laravel\Socialite\Two\GoogleProvider::class);
+        $provider->shouldReceive('user')->andReturn($googleUser);
+
+        \Laravel\Socialite\Facades\Socialite::shouldReceive('driver')
+            ->with('google')
+            ->andReturn($provider);
+
+        $response = $this->get(route('auth.google.callback'));
+
+        $response->assertRedirect(route('dashboard'));
+        $this->assertAuthenticatedAs($user);
+        $fresh = $user->fresh();
+        $this->assertSame('google-12345', $fresh->google_id);
+        $this->assertNull($fresh->logo);
+        $this->assertSame('amber', $fresh->avatar_id);
+        $this->assertStringEndsWith('/images/avatars/amber.svg', $fresh->avatar_url);
+    }
 }
+

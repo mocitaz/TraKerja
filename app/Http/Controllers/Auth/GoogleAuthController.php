@@ -51,11 +51,6 @@ class GoogleAuthController extends Controller
                 $user->update(['google_id' => $googleUser->getId()]);
             }
 
-            // Update avatar jika belum punya logo
-            if (!$user->logo && $googleUser->getAvatar()) {
-                $user->update(['logo' => $googleUser->getAvatar()]);
-            }
-
             // Paksa verifikasi email untuk user Google (email Google sudah terverifikasi)
             if (!$user->hasVerifiedEmail()) {
                 $user->markEmailAsVerified();
