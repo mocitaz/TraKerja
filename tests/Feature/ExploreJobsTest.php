@@ -32,6 +32,43 @@ class ExploreJobsTest extends TestCase
             'seed_url' => 'https://linkedin.com/jobs',
             'selectors_config' => ['title' => '.job-title'],
         ]);
+        \App\Models\Setting::set('explore_maintenance', false);
+    }
+
+    public function test_explore_page_shows_maintenance_teaser_when_enabled()
+    {
+        \App\Models\Setting::set('explore_maintenance', true);
+
+        $response = $this->actingAs($this->user)->get('/explore');
+        $response->assertStatus(200);
+        $response->assertSee('Something massive is cooking');
+        $response->assertSee('Cooking fresh company drops!');
+        $response->assertSee('AI Match V2');
+        $response->assertSee('Live Verified');
+        $response->assertSee('Direct Drops');
+        $response->assertSee('Your main workspace is 100% active');
+        $response->assertSee('Back to Dashboard');
+        $response->assertSee('Open Job Tracker');
+    }
+
+    public function test_explore_maintenance_teaser_is_shown_for_both_free_and_premium_users()
+    {
+        \App\Models\Setting::set('explore_maintenance', true);
+
+        $premiumUser = User::factory()->create([
+            'is_premium' => true,
+            'payment_status' => User::PAYMENT_STATUS_PAID,
+        ]);
+
+        // Free user sees maintenance teaser
+        $freeResponse = $this->actingAs($this->user)->get('/explore');
+        $freeResponse->assertStatus(200);
+        $freeResponse->assertSee('Something massive is cooking');
+
+        // Premium user also sees maintenance teaser
+        $premiumResponse = $this->actingAs($premiumUser)->get('/explore');
+        $premiumResponse->assertStatus(200);
+        $premiumResponse->assertSee('Something massive is cooking');
     }
 
     public function test_explore_page_is_accessible_for_logged_in_users()

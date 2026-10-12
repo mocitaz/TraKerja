@@ -243,6 +243,10 @@ class ExploreJobs extends Component
 
     public function render()
     {
+        if (\App\Models\Setting::get('explore_maintenance', true)) {
+            return view('explore.maintenance')->layout('layouts.app');
+        }
+
         $query = JobPosting::with('scraperSource')->where('status', 'active');
 
         if (!empty($this->search)) {
