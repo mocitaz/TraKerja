@@ -575,9 +575,42 @@
         letter-spacing: -.5px;
     }
     .membership-page .next-move-card {
-        padding: 16px;
-        border-radius: 18px;
-        min-height: auto;
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 18px 16px !important;
+        border-radius: 18px !important;
+        min-height: auto !important;
+    }
+    .membership-page .next-move-card > * {
+        display: revert !important;
+    }
+    .membership-page .membership-account-grid {
+        display: grid !important;
+    }
+    .membership-page .membership-account-card {
+        padding: 18px 16px !important;
+    }
+    .membership-page .next-move-card-top {
+        display: flex !important;
+    }
+    .membership-page .next-move-content {
+        display: flex !important;
+    }
+    .membership-page .next-move-action {
+        display: flex !important;
+    }
+    .membership-page .membership-credit-grid,
+    .membership-page .membership-pack-grid {
+        gap: 8px;
+    }
+    .membership-page .membership-credit-box {
+        padding: 10px 6px;
+    }
+    .membership-page .membership-credit-label {
+        font-size: 10px;
+    }
+    .membership-page .membership-credit-val {
+        font-size: 18px;
     }
     .membership-page .next-move-checklist {
         grid-template-columns: 1fr;
