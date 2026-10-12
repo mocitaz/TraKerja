@@ -43,14 +43,7 @@ class VerifyEmailController extends Controller
             } catch (\Exception $e) {
                 \Log::error('Failed to send welcome email after verification: ' . $e->getMessage());
             }
-            
-            // Send admin notification about email verification
-            try {
-                $adminEmail = config('services.admin.email', 'infoteknalogi@gmail.com');
-                Mail::to($adminEmail)->send(new UserEmailVerifiedMail($user));
-            } catch (\Exception $e) {
-                \Log::error('Failed to send admin notification about email verification: ' . $e->getMessage());
-            }
+
             
             // Auto-login user after verification
             Auth::login($user);

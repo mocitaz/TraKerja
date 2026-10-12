@@ -108,14 +108,12 @@ class RegisteredUserController extends Controller
             \Log::error('Registered event error: ' . $e->getMessage());
         }
 
-        // Send admin notification asynchronously after HTTP response is sent to user
+        // Send admin notification to Telegram channel asynchronously
         dispatch(function () use ($user) {
             try {
-                $adminEmail = config('services.admin.email', 'infoteknalogi@gmail.com');
-                Mail::to($adminEmail)->send(new NewUserRegistrationMail($user));
-                \Log::info('Admin notification email sent after response');
-            } catch (\Exception $e) {
-                \Log::error('Failed to send admin notification: ' . $e->getMessage());
+                app(\App\Services\TelegramService::class)->sendNewUser($user, 'Email Register');
+            } catch (\Throwable $e) {
+                \Log::error('Failed to send Telegram new user notification: ' . $e->getMessage());
             }
         })->afterResponse();
 

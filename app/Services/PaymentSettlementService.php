@@ -83,6 +83,12 @@ class PaymentSettlementService
                 } catch (\Exception $e) {
                     Log::error('Pakasir: Failed to send success email', ['error' => $e->getMessage()]);
                 }
+
+                try {
+                    app(\App\Services\TelegramService::class)->sendPaymentSuccess($locked, $user, $isAddon);
+                } catch (\Throwable $e) {
+                    Log::error('Pakasir: Failed to send Telegram alert', ['error' => $e->getMessage()]);
+                }
             });
 
             return true;

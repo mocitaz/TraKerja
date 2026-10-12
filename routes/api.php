@@ -18,3 +18,6 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     })->middleware(EnsureVerifiedExtensionToken::class.':account:read');
 });
+
+// Telegram Interactive Two-Way Bot Webhook
+Route::post('/telegram/webhook', [\App\Http\Controllers\TelegramWebhookController::class, 'handle']);

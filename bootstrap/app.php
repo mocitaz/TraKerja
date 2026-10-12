@@ -37,5 +37,27 @@ return Application::configure(basePath: dirname(__DIR__))
         // $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->report(function (\Throwable $e) {
+            // Skip non-critical HTTP client errors
+            if (
+                $e instanceof \Illuminate\Validation\ValidationException ||
+                $e instanceof \Illuminate\Auth\AuthenticationException ||
+                $e instanceof \Illuminate\Auth\Access\AuthorizationException ||
+                $e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException ||
+                $e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException ||
+                $e instanceof \Illuminate\Session\TokenMismatchException
+            ) {
+                return;
+            }
+
+            if ($e instanceof \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface && $e->getStatusCode() < 500) {
+                return;
+            }
+
+            try {
+                app(\App\Services\TelegramService::class)->reportException($e);
+            } catch (\Throwable) {
+                // Safeguard against recursive reporting failure
+            }
+        });
     })->create();

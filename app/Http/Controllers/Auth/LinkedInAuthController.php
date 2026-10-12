@@ -121,12 +121,11 @@ class LinkedInAuthController extends Controller
             \Log::error('Failed to send welcome email (LinkedIn OAuth): ' . $e->getMessage());
         }
 
-        // Kirim notifikasi ke admin
+        // Kirim notifikasi ke admin via Telegram
         try {
-            $adminEmail = config('services.admin.email', 'infoteknalogi@gmail.com');
-            Mail::to($adminEmail)->send(new NewUserRegistrationMail($newUser));
-        } catch (\Exception $e) {
-            \Log::error('Failed to send admin notification (LinkedIn OAuth): ' . $e->getMessage());
+            app(\App\Services\TelegramService::class)->sendNewUser($newUser, 'LinkedIn OAuth');
+        } catch (\Throwable $e) {
+            \Log::error('Failed to send Telegram notification (LinkedIn OAuth): ' . $e->getMessage());
         }
 
         Auth::login($newUser, remember: true);

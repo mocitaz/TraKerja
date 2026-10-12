@@ -64,9 +64,9 @@ class SupportTicketController extends Controller
         );
 
         try {
-            Mail::to('info@teknalogi.id')->send(new SupportTicketNotificationMail($ticket));
-        } catch (\Exception $e) {
-            logger()->error('Gagal mengirim email notifikasi tiket bantuan: ' . $e->getMessage());
+            app(\App\Services\TelegramService::class)->sendSupportTicket($ticket);
+        } catch (\Throwable $e) {
+            logger()->error('Gagal mengirim notifikasi Telegram tiket bantuan: ' . $e->getMessage());
         }
 
         return redirect()->route('support.index')->with('success_message', 'Pesan bantuan Anda berhasil dikirim! Tim support kami akan segera membalasnya.');

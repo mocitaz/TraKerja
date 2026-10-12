@@ -43,3 +43,21 @@ Schedule::command('jobs:run-scraper')
     ->hourly()
     ->timezone('Asia/Jakarta')
     ->description('Run active job scraper sources dynamically based on their configured frequency');
+
+// Telegram Admin Channel: Daily Morning Briefing (10:00 WIB)
+Schedule::command('report:telegram-daily morning')
+    ->dailyAt('10:00')
+    ->timezone('Asia/Jakarta')
+    ->description('Send morning daily recap report to Telegram admin channel');
+
+// Telegram Admin Channel: Daily Evening Wrap-up (21:00 WIB)
+Schedule::command('report:telegram-daily evening')
+    ->dailyAt('21:00')
+    ->timezone('Asia/Jakarta')
+    ->description('Send evening daily recap report to Telegram admin channel');
+
+// Telegram Admin Channel: Server Health & Disk Usage Check
+Schedule::command('report:server-health')
+    ->dailyAt('08:00')
+    ->timezone('Asia/Jakarta')
+    ->description('Monitor server disk health and alert to Telegram channel');

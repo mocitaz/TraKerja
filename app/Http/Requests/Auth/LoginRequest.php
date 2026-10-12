@@ -122,7 +122,16 @@ class LoginRequest extends FormRequest
                 'seconds_remaining' => $seconds
             ]);
 
-        throw ValidationException::withMessages([
+            try {
+                app(\App\Services\TelegramService::class)->sendSecurityAlert('BRUTE FORCE LOGIN DETECTED', [
+                    'Target Account' => $this->input('email'),
+                    'IP Address'     => $this->ip(),
+                    'Failed Trials'  => "{$maxAttempts} attempts",
+                    'Action'         => "Throttled for {$seconds}s",
+                ]);
+            } catch (\Throwable) {}
+
+            throw ValidationException::withMessages([
             'email' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),

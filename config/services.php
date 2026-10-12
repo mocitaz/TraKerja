@@ -60,5 +60,11 @@ return [
         'email' => env('ADMIN_EMAIL', 'infoteknalogi@gmail.com'),
     ],
 
+    'telegram' => [
+        'bot_token' => env('TELEGRAM_BOT_TOKEN'),
+        'channel_id' => env('TELEGRAM_CHANNEL_ID'),
+        'enabled' => env('TELEGRAM_NOTIF_ENABLED', false),
+    ],
+
 ];
 
