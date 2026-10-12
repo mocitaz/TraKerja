@@ -432,14 +432,21 @@ class TelegramService
         switch ($command) {
             case '/start':
             case '/help':
-                $reply = "🤖 <b>TraKerja Admin Assistant</b>\n\n"
+                $reply = "🤖 <b>TraKerja Admin Assistant & AI Copilot</b>\n\n"
                        . "Halo <b>{$sender}</b>, berikut daftar perintah yang tersedia:\n\n"
+                       . "🧠 <b>AI COPILOT:</b>\n"
+                       . "• <code>/ask [pertanyaan]</code> — Tanya apa saja ke AI Copilot seputar data & bisnis TraKerja\n\n"
+                       . "📊 <b>OPERASIONAL:</b>\n"
                        . "• <code>/stats</code> — Ringkasan metrik live platform\n"
-                       . "• <code>/user [email]</code> — Cari profil & status user\n"
+                       . "• <code>/user [email/ID]</code> — Cari profil & tracking lengkap user\n"
                        . "• <code>/pending</code> — Daftar tiket bantuan belum dibalas\n"
-                       . "• <code>/recap</code> — Kirim rekap harian sekarang\n"
-                       . "• <code>/health</code> — Cek status disk & server";
+                       . "• <code>/recap</code> — Kirim rekap harian sekarang ke channel\n"
+                       . "• <code>/health</code> — Cek status disk & kapasitas server";
                 return $this->sendMessage($reply, null, $chatId);
+
+            case '/ask':
+                $answer = app(\App\Services\AiCopilotService::class)->ask($argument, $sender);
+                return $this->sendMessage($answer, null, $chatId);
 
             case '/stats':
                 $totalUsers = User::count();

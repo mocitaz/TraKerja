@@ -66,5 +66,13 @@ return [
         'enabled' => env('TELEGRAM_NOTIF_ENABLED', false),
     ],
 
+    'gemini' => [
+        'key' => env('GEMINI_API_KEY'),
+    ],
+
+    'openai' => [
+        'key' => env('OPENAI_API_KEY'),
+    ],
+
 ];
 
