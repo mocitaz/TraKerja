@@ -468,6 +468,19 @@
     border: 1px solid #d8ebd9;
 }
 
+.au-table :is(th, td).text-center,
+.au-table th.text-center,
+.au-table td.text-center,
+.au-table :is(th, td):last-child.text-center {
+    text-align: center !important;
+}
+
+.au-table :is(th, td).text-left,
+.au-table th.text-left,
+.au-table td.text-left {
+    text-align: left !important;
+}
+
 .au-table :is(th, td):nth-child(2),
 .au-table :is(th, td):nth-child(3),
 .au-table :is(th, td):nth-child(4) {

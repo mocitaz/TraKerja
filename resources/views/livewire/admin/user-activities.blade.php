@@ -83,10 +83,10 @@
                 <thead>
                     <tr>
                         <th scope="col">Person</th>
-                        <th scope="col">Event & Action</th>
-                        <th scope="col">Recorded At</th>
-                        <th scope="col">Status</th>
-                        <th scope="col" style="text-align: right;">Details</th>
+                        <th scope="col" class="text-center" style="text-align: center;">Event & Action</th>
+                        <th scope="col" style="text-align: left;">Recorded At</th>
+                        <th scope="col" class="text-center" style="text-align: center;">Status</th>
+                        <th scope="col" class="text-center" style="text-align: center;">Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -112,39 +112,45 @@
                             <!-- Column 1: Person -->
                             <td>
                                 <div class="au-member">
-                                    <div class="au-avatar-wrapper">
-                                        @if($activity->user)
+                                    @if($activity->user)
+                                        <a href="{{ route('admin.users.show', $activity->user) }}" wire:navigate class="au-avatar-wrapper au-member-avatar-link" title="View {{ $activity->user->name }} profile">
                                             <img src="{{ $activity->user->avatar_url }}" alt="{{ $activity->user->name }}" class="au-avatar-img" loading="lazy">
-                                        @else
+                                        </a>
+                                        <div class="au-member-info">
+                                            <a href="{{ route('admin.users.show', $activity->user) }}" wire:navigate class="au-member-name au-member-name-link" title="View {{ $activity->user->name }} profile">
+                                                {{ $activity->user->name }}
+                                            </a>
+                                            <span class="au-member-email">{{ $activity->user->email }}</span>
+                                        </div>
+                                    @else
+                                        <div class="au-avatar-wrapper">
                                             <div class="au-avatar-img" style="display: grid; place-items: center; color: #887494; font-weight: 700; font-size: 13px;">
                                                 <i class="ph ph-shield-check"></i>
                                             </div>
-                                        @endif
-                                    </div>
-                                    <div class="au-member-info">
-                                        <strong class="au-member-name">{{ $activity->user?->name ?? 'System / Guest' }}</strong>
-                                        <span class="au-member-email">{{ $activity->user?->email ?? 'No linked account' }}</span>
-                                    </div>
+                                        </div>
+                                        <div class="au-member-info">
+                                            <strong class="au-member-name">System / Guest</strong>
+                                            <span class="au-member-email">No linked account</span>
+                                        </div>
+                                    @endif
                                 </div>
                             </td>
 
                             <!-- Column 2: Event & Description -->
-                            <td>
-                                <div style="display: flex; flex-direction: column; gap: 3px;">
-                                    <div style="display: flex; align-items: center; gap: 6px;">
-                                        <span class="au-chip au-chip--applied" style="font-size: 10px; padding: 2px 7px;">
-                                            <i class="ph {{ $eventIcon }}"></i>
-                                            {{ ucwords(str_replace('_', ' ', $activity->activity_type)) }}
-                                        </span>
-                                    </div>
-                                    <p style="margin: 2px 0 0; font-size: 11px; line-height: 1.4; color: #5c5668; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                            <td class="text-center" style="text-align: center; vertical-align: middle;">
+                                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 4px; min-height: 40px;">
+                                    <span class="au-chip au-chip--applied" style="font-size: 10px; padding: 2.5px 8px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; margin: 0 auto;">
+                                        <i class="ph {{ $eventIcon }}"></i>
+                                        {{ ucwords(str_replace('_', ' ', $activity->activity_type)) }}
+                                    </span>
+                                    <p style="margin: 0; font-size: 11.5px; line-height: 1.4; color: #5c5668; text-align: center; max-width: 380px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                                         {{ $activity->description }}
                                     </p>
                                 </div>
                             </td>
 
                             <!-- Column 3: Recorded At -->
-                            <td>
+                            <td style="text-align: left; vertical-align: middle;">
                                 <div style="display: flex; flex-direction: column; gap: 2px;">
                                     <span style="font-size: 11px; font-weight: 600; color: #34313e; font-variant-numeric: tabular-nums;">
                                         {{ $activity->created_at->diffForHumans() }}
@@ -156,29 +162,31 @@
                             </td>
 
                             <!-- Column 4: Status -->
-                            <td>
-                                @if($statusTone === 'success')
-                                    <span class="au-plan-badge" style="background: #ecfdf5; color: #065f46; border: 1px solid #d1fae5;">
-                                        <i class="ph ph-check-circle"></i> Success
-                                    </span>
-                                @elseif($statusTone === 'failed')
-                                    <span class="au-plan-badge" style="background: #fbe8e1; color: #a35f47; border: 1px solid #f6d8cd;">
-                                        <i class="ph ph-x-circle"></i> Failed
-                                    </span>
-                                @elseif($statusTone === 'pending')
-                                    <span class="au-plan-badge" style="background: #fef3c7; color: #b45309; border: 1px solid #fde68a;">
-                                        <i class="ph ph-clock"></i> Pending
-                                    </span>
-                                @else
-                                    <span class="au-plan-badge au-plan-badge--free">
-                                        {{ ucfirst($activity->status ?? 'Logged') }}
-                                    </span>
-                                @endif
+                            <td class="text-center" style="text-align: center; vertical-align: middle;">
+                                <div style="display: flex; justify-content: center; align-items: center;">
+                                    @if($statusTone === 'success')
+                                        <span class="au-plan-badge" style="background: #ecfdf5; color: #065f46; border: 1px solid #d1fae5; margin: 0;">
+                                            <i class="ph ph-check-circle"></i> Success
+                                        </span>
+                                    @elseif($statusTone === 'failed')
+                                        <span class="au-plan-badge" style="background: #fbe8e1; color: #a35f47; border: 1px solid #f6d8cd; margin: 0;">
+                                            <i class="ph ph-x-circle"></i> Failed
+                                        </span>
+                                    @elseif($statusTone === 'pending')
+                                        <span class="au-plan-badge" style="background: #fef3c7; color: #b45309; border: 1px solid #fde68a; margin: 0;">
+                                            <i class="ph ph-clock"></i> Pending
+                                        </span>
+                                    @else
+                                        <span class="au-plan-badge au-plan-badge--free" style="margin: 0;">
+                                            {{ ucfirst($activity->status ?? 'Logged') }}
+                                        </span>
+                                    @endif
+                                </div>
                             </td>
 
                             <!-- Column 5: Details Action -->
-                            <td>
-                                <div style="display: flex; justify-content: flex-end;">
+                            <td class="text-center" style="text-align: center; vertical-align: middle;">
+                                <div style="display: flex; justify-content: center; align-items: center;">
                                     <button type="button" class="au-manage" wire:click="showActivity({{ $activity->id }})" aria-label="View {{ str_replace('_',' ',$activity->activity_type) }} details">
                                         Details <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
                                     </button>
@@ -208,7 +216,7 @@
         <!-- Footer -->
         <footer class="au-directory-footer">
             <span>Showing <strong>{{ $activities->firstItem() ?? 0 }}–{{ $activities->lastItem() ?? 0 }}</strong> of {{ number_format($activities->total()) }} events</span>
-            <div>{{ $activities->links() }}</div>
+            <div class="au-pagination-wrap">{{ $activities->links() }}</div>
         </footer>
     </section>
 

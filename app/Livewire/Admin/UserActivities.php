@@ -145,7 +145,7 @@ class UserActivities extends Component
             $query->where('status', $this->filterStatus);
         }
 
-        $activities = $query->latest()->orderByDesc('id')->paginate(in_array((int) $this->perPage, [15, 30, 50, 100], true) ? (int) $this->perPage : 15);
+        $activities = $query->latest()->orderByDesc('id')->paginate(in_array((int) $this->perPage, [15, 30, 50, 100], true) ? (int) $this->perPage : 15)->onEachSide(1);
         
         $rawTypes = UserActivity::select('activity_type')
             ->distinct()
