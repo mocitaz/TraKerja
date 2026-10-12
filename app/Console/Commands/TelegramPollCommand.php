@@ -51,8 +51,9 @@ class TelegramPollCommand extends Command
                     $updates = $response->json('result', []);
                     foreach ($updates as $update) {
                         $offset = $update['update_id'] + 1;
-                        $text = $update['message']['text'] ?? '(non-text)';
-                        $from = $update['message']['from']['first_name'] ?? 'Unknown';
+                        $msg = $update['message'] ?? $update['channel_post'] ?? [];
+                        $text = $msg['text'] ?? '(non-text)';
+                        $from = $msg['from']['first_name'] ?? $msg['chat']['title'] ?? 'Unknown';
                         $this->line("<info>[INCOMING]</info> from {$from}: {$text}");
 
                         $telegram->handleIncomingUpdate($update);

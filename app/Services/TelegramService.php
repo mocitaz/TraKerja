@@ -410,14 +410,14 @@ class TelegramService
      */
     public function handleIncomingUpdate(array $update): bool
     {
-        $message = $update['message'] ?? null;
+        $message = $update['message'] ?? $update['channel_post'] ?? null;
         if (! $message || empty($message['text'])) {
             return false;
         }
 
         $chatId = (string) ($message['chat']['id'] ?? '');
         $text = trim($message['text']);
-        $sender = $message['from']['first_name'] ?? 'Admin';
+        $sender = $message['from']['first_name'] ?? $message['chat']['title'] ?? 'Admin';
 
         // Parse command and arguments
         $parts = explode(' ', $text, 2);
