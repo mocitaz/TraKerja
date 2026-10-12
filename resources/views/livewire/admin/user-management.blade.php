@@ -86,7 +86,7 @@
                         <th scope="col">Member</th>
                         <th scope="col" class="text-center">Membership Plan</th>
                         <th scope="col" class="text-center">Job Applications</th>
-                        <th scope="col">Last Active</th>
+                        <th scope="col">Joined Date</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -143,34 +143,11 @@
                                 </div>
                             </td>
 
-                            <!-- Column 4: Last Activity / Login -->
+                            <!-- Column 4: Joined Date -->
                             <td>
-                                <div class="au-activity">
-                                    @if($user->last_activity_at && $user->last_activity_at->diffInMinutes(now()) < 15)
-                                        <div class="au-activity-top">
-                                            <span class="au-dot au-dot--active"></span>
-                                            <strong>Active now</strong>
-                                        </div>
-                                        <small>Just now</small>
-                                    @elseif($user->last_activity_at && $user->last_activity_at->diffInHours(now()) < 24)
-                                        <div class="au-activity-top">
-                                            <span class="au-dot au-dot--recent"></span>
-                                            <span>{{ $user->last_activity_at->diffForHumans() }}</span>
-                                        </div>
-                                        <small>{{ $user->last_activity_at->format('H:i') }}</small>
-                                    @elseif($user->last_activity_at)
-                                        <div class="au-activity-top">
-                                            <span class="au-dot au-dot--recent"></span>
-                                            <span>{{ $user->last_activity_at->diffForHumans() }}</span>
-                                        </div>
-                                        <small>{{ $user->last_activity_at->format('d M Y') }}</small>
-                                    @else
-                                        <div class="au-activity-top">
-                                            <span class="au-dot au-dot--idle"></span>
-                                            <span style="color: #94a3b8;">No login recorded</span>
-                                        </div>
-                                        <small>Joined {{ $user->created_at->format('d M Y') }}</small>
-                                    @endif
+                                <div class="au-joined">
+                                    <strong class="au-joined-date">{{ $user->created_at->format('d M Y') }}</strong>
+                                    <small class="au-joined-sub">{{ $user->created_at->format('H:i') }} WIB</small>
                                 </div>
                             </td>
 
