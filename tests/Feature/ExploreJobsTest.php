@@ -47,7 +47,12 @@ class ExploreJobsTest extends TestCase
         $response->assertSee('New paths. Shared together.');
         $response->assertSee('Different journeys.');
         $response->assertSee('One community.');
-        $response->assertSee('Your main workspace is 100% active');
+        $response->assertSee('amber.svg');
+        $response->assertSee('sage.svg');
+        $response->assertSee('indigo.svg');
+        $response->assertDontSee('Your main workspace is 100% active');
+        $response->assertDontSee('NEXT-GEN EXPLORE');
+        $response->assertSee('Stay tuned. Dropping sooner than you think.');
         $response->assertSee('Back to Dashboard');
         $response->assertSee('Open Job Tracker');
     }

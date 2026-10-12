@@ -193,44 +193,6 @@
     min-width: 0;
 }
 
-.explore-status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 13px;
-    background: #f4ecf9;
-    border: 1px solid #e7d8f3;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    color: #7751a0;
-    margin-bottom: 16px;
-}
-
-.explore-status-pill i {
-    font-size: 13px;
-    color: #9333ea;
-}
-
-.explore-status-ping {
-    position: relative;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #9333ea;
-    display: inline-block;
-}
-
-.explore-status-ping::after {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    border-radius: 50%;
-    border: 2px solid #9333ea;
-    animation: explore-radar-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
 .explore-maintenance-copy h1 {
     font-size: clamp(28px, 3vw, 38px);
     line-height: 1.18;
@@ -260,114 +222,59 @@
     margin: 14px 0 0;
 }
 
-.explore-callout-box {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 13px 16px;
-    background: #faf8fc;
-    border: 1px solid #ebe4f3;
-    border-radius: 14px;
-    margin-top: 18px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.explore-callout-icon {
-    color: #10b981;
-    font-size: 18px;
-    line-height: 1;
-    margin-top: 2px;
-    flex-shrink: 0;
-}
-
-.explore-callout-text {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-}
-
-.explore-callout-text strong {
-    color: #1f1a28;
-    font-weight: 600;
-    font-size: 12px;
-}
-
-.explore-callout-text span {
-    color: #6a6275;
-    font-size: 11.5px;
-    line-height: 1.5;
-}
-
-.explore-cta-actions {
+.explore-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 24px;
-    width: 100%;
+    align-items: center;
+    gap: 12px 22px;
+    margin-top: 26px;
 }
 
-.explore-btn-primary {
+.explore-action-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    min-height: 46px;
-    padding: 11px 20px;
-    border-radius: 12px;
-    font-size: 12.5px;
-    font-weight: 600;
-    background: #2563eb;
-    color: #ffffff;
-    text-decoration: none;
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.22);
-    transition: background .18s, transform .18s, box-shadow .18s;
-}
-
-.explore-btn-primary:hover {
-    background: #1d4ed8;
-    color: #ffffff;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
-}
-
-.explore-btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    min-height: 46px;
+    gap: 20px;
+    min-height: 44px;
     padding: 11px 18px;
-    border-radius: 12px;
-    font-size: 12.5px;
+    border: 1px solid #38264f;
+    border-radius: 11px;
+    font-size: 12px;
     font-weight: 600;
-    background: #f5f2f8;
-    color: #574668;
+    color: #ffffff;
+    background: #38264f;
     text-decoration: none;
-    border: 1px solid #ebdff2;
-    transition: background .18s, color .18s, transform .18s;
+    transition: background .16s, transform .16s;
 }
 
-.explore-btn-secondary:hover {
-    background: #ece4f3;
-    color: #2d1d3f;
-    transform: translateY(-1px);
+.explore-action-primary:hover {
+    background: #503663;
+    color: #ffffff;
+}
+
+.explore-action-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    color: #735781;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color .16s;
+}
+
+.explore-action-secondary:hover {
+    color: #38264f;
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
 
 .explore-footnote {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
     font-size: 11px;
-    line-height: 1.5;
+    line-height: 1.6;
     color: #766e82;
-    margin: 18px 0 0;
-}
-
-.explore-footnote i {
-    color: #7751a0;
-    font-size: 14px;
-    flex-shrink: 0;
+    margin: 22px 0 0;
 }
 /* Right Column: Community Welcome Art Compatibility */
 .explore-maintenance-card .community-art {
@@ -427,11 +334,8 @@
     .explore-desc {
         font-size: 12.5px;
     }
-    .explore-cta-actions {
-        flex-direction: column;
-    }
-    .explore-cta-actions a {
-        width: 100%;
-        justify-content: center;
+    .explore-actions {
+        margin-top: 20px;
+        gap: 10px 18px;
     }
 }
