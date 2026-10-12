@@ -48,134 +48,18 @@
                 </p>
             </div>
 
-            {{-- Right Column: Curated Job Feed Stack (Sleek Linear/Stripe Style) --}}
-            <div class="explore-maintenance-art" aria-hidden="true">
-                <div class="explore-art-caption">The next-gen discovery feed · In active build</div>
-
-                {{-- Dynamic Flowing Connections SVG Background --}}
-                <svg class="explore-art-orbits" viewBox="0 0 380 380" fill="none">
-                    <path d="M40 280C15 170 95 65 210 75C310 85 365 190 315 295" stroke="#b4cce2" stroke-width="1.6" stroke-dasharray="5 7" class="explore-orbit-arc" />
-                    <path d="M75 250C130 340 250 345 305 265" stroke="#cfbfe0" stroke-width="1.6" stroke-dasharray="5 7" class="explore-orbit-inner" />
-                </svg>
-
-                {{-- 3D Layered Job Card Stack --}}
-                <div class="explore-feed-stack">
-                    {{-- Background Card 2 (Bottom Peek) --}}
-                    <div class="explore-feed-card explore-feed-card--back" aria-hidden="true">
-                        <div class="explore-card-mini-head">
-                            <span class="explore-co-badge explore-co-badge--emerald">GT</span>
-                            <span class="explore-card-mini-title">Product Lead · GoTo Group</span>
-                            <span class="explore-card-mini-tag">IDR 26M – 35M</span>
-                        </div>
-                    </div>
-
-                    {{-- Background Card 1 (Middle Peek) --}}
-                    <div class="explore-feed-card explore-feed-card--mid" aria-hidden="true">
-                        <div class="explore-card-mini-head">
-                            <span class="explore-co-badge explore-co-badge--purple">TV</span>
-                            <span class="explore-card-mini-title">Staff Backend Engineer · Traveloka</span>
-                            <span class="explore-card-mini-tag">Remote</span>
-                        </div>
-                    </div>
-
-                    {{-- Foreground Hero Card (Front) --}}
-                    <div class="explore-feed-card explore-feed-card--front">
-                        <div class="explore-card-glow"></div>
-                        <div class="explore-card-top">
-                            <div class="explore-co-identity">
-                                <div class="explore-co-logo">
-                                    <i class="ph-fill ph-buildings" aria-hidden="true"></i>
-                                </div>
-                                <div class="explore-co-info">
-                                    <div class="explore-co-name">
-                                        <strong>Tech Unicorn</strong>
-                                        <i class="ph-fill ph-seal-check" title="Verified Employer" aria-hidden="true"></i>
-                                    </div>
-                                    <span>Jakarta · Hybrid</span>
-                                </div>
-                            </div>
-                            <div class="explore-card-live-pill">
-                                <span class="explore-live-dot"></span>
-                                <span>Fresh Drop</span>
-                            </div>
-                        </div>
-
-                        <div class="explore-card-role">
-                            Senior Frontend Engineer
-                        </div>
-
-                        <div class="explore-card-tags">
-                            <span class="explore-tag explore-tag--salary">
-                                <i class="ph-fill ph-money" aria-hidden="true"></i>
-                                IDR 22M – 32M / mo
-                            </span>
-                            <span class="explore-tag explore-tag--dept">
-                                <i class="ph ph-laptop" aria-hidden="true"></i>
-                                Engineering
-                            </span>
-                        </div>
-
-                        <div class="explore-card-footer-strip">
-                            <div class="explore-verified-status">
-                                <i class="ph-fill ph-shield-check" aria-hidden="true"></i>
-                                <span>100% verified opening · Direct hiring lane</span>
-                            </div>
-                            <span class="explore-ping-time">Just now</span>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Floating Badges around the Card Stack (Sleek Linear/Stripe style) --}}
-                {{-- Badge 1: Top Left Speech Bubble --}}
-                <div class="explore-float-badge explore-float--speech">
-                    <span class="explore-speech-dot"></span>
-                    <span>Curating top company drops!</span>
-                    <i class="ph-fill ph-sparkle explore-speech-spark" aria-hidden="true"></i>
-                </div>
-
-                {{-- Badge 2: Right Top Pill --}}
-                <div class="explore-float-badge explore-float--match">
-                    <div class="explore-badge-icon explore-badge-icon--blue">
-                        <i class="ph-fill ph-shield-check" aria-hidden="true"></i>
-                    </div>
-                    <div class="explore-badge-info">
-                        <strong>Live Verified</strong>
-                        <small>Zero ghost postings</small>
-                    </div>
-                </div>
-
-                {{-- Badge 3: Left Bottom Pill --}}
-                <div class="explore-float-badge explore-float--verified">
-                    <div class="explore-badge-icon explore-badge-icon--emerald">
-                        <i class="ph-fill ph-currency-circle-dollar" aria-hidden="true"></i>
-                    </div>
-                    <div class="explore-badge-info">
-                        <strong>Upfront Salary</strong>
-                        <small>Transparent ranges</small>
-                    </div>
-                </div>
-
-                {{-- Badge 4: Right Bottom Pill --}}
-                <div class="explore-float-badge explore-float--pipeline">
-                    <div class="explore-badge-icon explore-badge-icon--purple">
-                        <i class="ph-fill ph-paper-plane-tilt" aria-hidden="true"></i>
-                    </div>
-                    <div class="explore-badge-info">
-                        <strong>Direct Recruiter</strong>
-                        <small>Skip third-party spam</small>
-                    </div>
-                </div>
-
-                {{-- Decorative Sparks (like in welcome.blade.php) --}}
-                <span class="explore-spark explore-spark--one">✦</span>
-                <span class="explore-spark explore-spark--two">✧</span>
-                <span class="explore-spark explore-spark--three">✦</span>
-
-                {{-- Bottom Caption --}}
-                <div class="explore-art-footer">
-                    <span>Less scrolling. More interviewing.</span>
-                    <strong>Engineered for real offers.</strong>
-                </div>
+            {{-- Right Column: Copied directly from Welcome Back (community-art) --}}
+            <div class="community-art" aria-hidden="true">
+                <div class="community-art-caption">A place to find your people.</div>
+                <svg class="community-connections" viewBox="0 0 400 400" fill="none"><path d="M65 310C32 224 110 100 222 111C320 120 360 213 316 314" stroke="#bd91af" stroke-width="1.5" stroke-dasharray="5 8"/><path d="M103 284C151 360 269 358 309 290" stroke="#bd91af" stroke-width="1.5" stroke-dasharray="5 8"/></svg>
+                <div class="community-avatar community-avatar--peach"><img src="{{ asset('images/avatars/peach.svg') }}" alt="" width="120" height="120"></div>
+                <div class="community-avatar community-avatar--lilac"><img src="{{ asset('images/avatars/lilac.svg') }}" alt="" width="94" height="94"></div>
+                <div class="community-avatar community-avatar--sky"><img src="{{ asset('images/avatars/sky.svg') }}" alt="" width="100" height="100"></div>
+                <div class="community-speech community-speech--hello">Hey, welcome in! <span>✦</span></div>
+                <div class="community-speech community-speech--share"><span class="community-speech-dot"></span>New paths. Shared together.</div>
+                <div class="community-plane"><svg viewBox="0 0 90 90" fill="none"><path d="M12 38L77 15L57 77L39 52L12 38Z" fill="#fffafc" stroke="#994577" stroke-width="2" stroke-linejoin="round"/><path d="M39 52L77 15L30 45" stroke="#994577" stroke-width="2" stroke-linejoin="round"/><path d="M39 52L38 70L48 63" stroke="#994577" stroke-width="2" stroke-linejoin="round"/><path d="M7 61L19 58M14 75L28 69" stroke="#b65b90" stroke-width="2" stroke-linecap="round"/></svg></div>
+                <span class="community-spark community-spark--one">✧</span><span class="community-spark community-spark--two">✦</span>
+                <div class="community-art-footer"><span>Different journeys.</span><strong>One community.</strong></div>
             </div>
         </section>
     </div>
