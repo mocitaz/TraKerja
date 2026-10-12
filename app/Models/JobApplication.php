@@ -34,11 +34,32 @@ class JobApplication extends Model
         'archived_at',
     ];
 
+    protected $attributes = [
+        'platform_link' => '',
+        'notes' => '',
+    ];
+
     protected static function boot()
     {
         parent::boot();
         
         static::saving(function ($jobApplication) {
+            if ($jobApplication->interview_date === '') {
+                $jobApplication->interview_date = null;
+            }
+            if ($jobApplication->interview_type === '') {
+                $jobApplication->interview_type = null;
+            }
+            if ($jobApplication->interview_location === '') {
+                $jobApplication->interview_location = null;
+            }
+            if ($jobApplication->interview_notes === '') {
+                $jobApplication->interview_notes = null;
+            }
+            if ($jobApplication->platform_link === null) {
+                $jobApplication->platform_link = '';
+            }
+
             $normalized = JobApplicationStatus::normalize(
                 $jobApplication->application_status ?? 'On Process',
                 $jobApplication->recruitment_stage ?? 'Applied'

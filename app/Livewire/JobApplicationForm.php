@@ -1325,6 +1325,19 @@ class JobApplicationForm extends Component
             throw $e;
         }
 
+        $interviewDate = (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && !empty(trim((string)$this->interview_date)))
+            ? $this->interview_date
+            : null;
+        $interviewType = (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && !empty(trim((string)$this->interview_type)))
+            ? $this->interview_type
+            : null;
+        $interviewLocation = (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && !empty(trim((string)$this->interview_location)))
+            ? $this->interview_location
+            : null;
+        $interviewNotes = (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && !empty(trim((string)$this->interview_notes)))
+            ? $this->interview_notes
+            : null;
+
         $data = [
             'user_id' => Auth::id(),
             'company_name' => $this->company_name,
@@ -1335,15 +1348,15 @@ class JobApplicationForm extends Component
             'status' => $this->status,
             'application_status' => $this->application_status,
             'recruitment_stage' => $this->recruitment_stage,
-            'career_level' => $this->career_level,
-            'platform_link' => $this->platform_link,
+            'career_level' => !empty($this->career_level) ? $this->career_level : 'Full Time',
+            'platform_link' => $this->platform_link ?? '',
             'application_date' => $this->application_date,
-            'notes' => $this->notes,
-            // Interview details (only save if recruitment_stage is HR or User Interview)
-            'interview_date' => (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview'])) ? $this->interview_date : null,
-            'interview_type' => (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview'])) ? $this->interview_type : null,
-            'interview_location' => (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview'])) ? $this->interview_location : null,
-            'interview_notes' => (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview'])) ? $this->interview_notes : null,
+            'notes' => $this->notes ?? '',
+            // Interview details (safely nullified when empty to prevent SQL 1292 datetime errors)
+            'interview_date' => $interviewDate,
+            'interview_type' => $interviewType,
+            'interview_location' => $interviewLocation,
+            'interview_notes' => $interviewNotes,
         ];
 
         try {
@@ -1351,9 +1364,8 @@ class JobApplicationForm extends Component
                 $originalInterviewDate = $this->jobApplication->interview_date;
                 $this->jobApplication->update($data);
 
-                
-                // Dispatch interview-updated event for calendar refresh
-                if (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && $this->interview_date) {
+                // Dispatch interview-updated event for calendar refresh (only if active & scheduled)
+                if (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && !empty($this->interview_date) && $this->application_status !== 'Rejected') {
                     $this->dispatch('interview-updated');
                     
                     // Check if interview was newly scheduled or rescheduled
@@ -1381,9 +1393,8 @@ class JobApplicationForm extends Component
             } else {
                 $newJob = JobApplication::create($data);
 
-                
-                // Dispatch interview-updated event for calendar refresh
-                if (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && $this->interview_date) {
+                // Dispatch interview-updated event for calendar refresh (only if active & scheduled)
+                if (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && !empty($this->interview_date) && $this->application_status !== 'Rejected') {
                     $this->dispatch('interview-updated');
                     $this->sendInterviewScheduledEmail($newJob);
                 }
@@ -1393,7 +1404,11 @@ class JobApplicationForm extends Component
                 }
             }
         } catch (\Exception $e) {
-            Log::error('Failed to save job application', ['error' => $e->getMessage()]);
+            Log::error('Failed to save job application', [
+                'error' => $e->getMessage(),
+                'stage' => $this->recruitment_stage,
+                'status' => $this->application_status,
+            ]);
             
             $this->dispatch('showNotification', 
                 type: 'error',

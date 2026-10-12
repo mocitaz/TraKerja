@@ -208,4 +208,28 @@ class JobApplicationStatusContractTest extends TestCase
         $migration->up();
         $this->assertEquals($after, DB::table('job_applications')->find($job->id));
     }
+
+    public function test_form_can_save_rejected_status_at_hr_interview_stage(): void
+    {
+        $user = User::factory()->create();
+        $form = Livewire::actingAs($user)->test(JobApplicationForm::class)
+            ->set('company_name', 'Interview Corp')
+            ->set('position', 'Product Manager')
+            ->set('platform', 'LinkedIn')
+            ->set('application_date', now()->format('Y-m-d'))
+            ->set('isRemote', true)
+            ->set('recruitment_stage', 'HR - Interview')
+            ->set('application_status', 'Rejected')
+            ->set('interview_date', ''); // Left blank as rejection happened
+
+        $form->call('save')->assertHasNoErrors();
+
+        $this->assertDatabaseHas('job_applications', [
+            'user_id' => $user->id,
+            'company_name' => 'Interview Corp',
+            'recruitment_stage' => 'HR - Interview',
+            'application_status' => 'Rejected',
+            'interview_date' => null,
+        ]);
+    }
 }
