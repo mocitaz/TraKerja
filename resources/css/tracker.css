@@ -26,11 +26,21 @@
 .tracker-results p { font-size: 12px; margin-top: 5px; }
 .tracker-desktop-table { overflow-x: auto; }
 .tracker-desktop-table table { width: 100%; min-width: 970px; border-collapse: collapse; }
-.tracker-desktop-table th { padding: 15px 22px; text-align: left; font-size: 10px; color: #807487; background: #faf8fd; font-weight: 550; white-space: nowrap; }
+.tracker-desktop-table th { padding: 15px 22px; text-align: left; font-size: 10px; color: #807487; background: #faf8fd; font-weight: 550; white-space: nowrap; vertical-align: middle; }
 .tracker-desktop-table th:first-child { padding-left: 26px; }
+.tracker-desktop-table :is(th, td):not(:first-child),
+.tracker-desktop-table :is(th, td).tracker-col-mid-center { text-align: center; vertical-align: middle; }
 .tracker-desktop-table th button { display: inline-flex; align-items: center; gap: 9px; min-height: 32px; }
+.tracker-desktop-table th:not(:first-child) button,
+.tracker-desktop-table th.tracker-col-mid-center button { margin-inline: auto; justify-content: center; }
 .tracker-desktop-table td { padding: 20px 22px; border-top: 1px solid #eef0f4; font-size: 12px; color: #565363; vertical-align: middle; }
-.tracker-desktop-table td:first-child { width: 36%; padding-left: 26px; }
+.tracker-desktop-table td:first-child { width: 36%; padding-left: 26px; text-align: left; }
+.tracker-desktop-table td:not(:first-child) .platform-brand,
+.tracker-desktop-table td.tracker-col-mid-center .platform-brand { justify-content: center; margin-inline: auto; }
+.tracker-desktop-table td:not(:first-child) .tracker-actions,
+.tracker-desktop-table td.tracker-col-mid-center .tracker-actions { justify-content: center; margin-inline: auto; }
+.tracker-desktop-table td:not(:first-child) .tracker-follow-up,
+.tracker-desktop-table td.tracker-col-mid-center .tracker-follow-up { margin-inline: auto; justify-content: center; }
 .tracker-desktop-table tbody tr { transition: background .15s; }
 .tracker-desktop-table tbody tr:hover { background: #fcfaff; }
 .tracker-opportunity { display: flex; align-items: center; gap: 14px; }

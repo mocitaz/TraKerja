@@ -27,10 +27,16 @@
 .tracker-col-interview { width: 13%; }
 .tracker-col-actions { width: 10%; }
 .tracker-page .tracker-desktop-table th { position: sticky; top: 0; z-index: 2; padding: 8px 12px; background: #f8f9fa; color: #514b59; font-size: 11px; border-bottom: 1px solid #dce0e5; }
+.tracker-page .tracker-desktop-table :is(th, td) { vertical-align: middle; }
 .tracker-page .tracker-desktop-table :is(th, td):not(:last-child) { border-right: 1px solid #edf0f3; }
 .tracker-page .tracker-desktop-table td { padding: 12px; font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; border-top-color: #e5e9ee; }
-.tracker-page .tracker-desktop-table :is(th, td):first-child { width: auto; padding-left: 18px; }
+.tracker-page .tracker-desktop-table :is(th, td):first-child { width: auto; padding-left: 18px; text-align: left; }
+.tracker-page .tracker-desktop-table :is(th, td):not(:first-child),
+.tracker-page .tracker-desktop-table :is(th, td).tracker-col-mid-center,
+.tracker-col-mid-center { text-align: center; vertical-align: middle; }
 .tracker-page .tracker-desktop-table th button { min-height: 28px; gap: 7px; }
+.tracker-page .tracker-desktop-table th:not(:first-child) button,
+.tracker-page .tracker-desktop-table th.tracker-col-mid-center button { margin-inline: auto; justify-content: center; }
 .tracker-page .tracker-desktop-table th[aria-sort]:not([aria-sort="none"]) { color: #684882; }
 .tracker-page .tracker-desktop-table tbody tr { background: #fff; }
 .tracker-page .tracker-desktop-table tbody tr:nth-child(even) { background: #f4f6f8; }
@@ -42,6 +48,8 @@
 .tracker-page .tracker-opportunity p { font-size: 11px; line-height: 1.4; margin-top: 3px; color: #5c5668; }
 .tracker-page .tracker-opportunity > div > span { font-size: 10px; line-height: 1.4; color: #67616f; }
 .tracker-page .tracker-desktop-table .platform-brand { gap: 6px; }
+.tracker-page .tracker-desktop-table td:not(:first-child) .platform-brand,
+.tracker-page .tracker-desktop-table td.tracker-col-mid-center .platform-brand { justify-content: center; margin-inline: auto; }
 .tracker-page .tracker-desktop-table .platform-brand__mark { width: 20px; height: 24px; flex-basis: 20px; }
 .tracker-page .tracker-desktop-table .platform-brand__mark img { width: 18px; height: 18px; }
 .tracker-page .tracker-desktop-table .platform-brand__name { font-size: 11px; color: #565060; }
@@ -51,9 +59,12 @@
 .tracker-page .tracker-date { font-size: 11px; font-variant-numeric: tabular-nums; }
 .tracker-page .tracker-unscheduled { color: #73707c; }
 .tracker-page .tracker-follow-up { font-size: 10px; min-height: 28px; margin-top: 4px; }
+.tracker-page .tracker-desktop-table td:not(:first-child) .tracker-follow-up,
+.tracker-page .tracker-desktop-table td.tracker-col-mid-center .tracker-follow-up { margin-inline: auto; justify-content: center; }
 .tracker-page .tracker-actions { gap: 1px; }
+.tracker-page .tracker-desktop-table .tracker-actions { justify-content: center; margin-inline: auto; }
 .tracker-page .tracker-actions button { width: 30px; min-height: 34px; border-radius: 8px; font-size: 15px; color: #6e6379; }
-.tracker-page .tracker-actions-heading { text-align: right; }
+.tracker-page .tracker-actions-heading { text-align: center; }
 .tracker-page :is(.tracker-desktop-table button, .tracker-opportunity a, .tracker-archive):focus-visible { outline: 2px solid #9c4c85; outline-offset: 2px; }
 .tracker-page .tracker-pagination { padding: 12px 18px; }
 .tracker-page .tracker-column { padding: 12px; border-radius: 20px; }
