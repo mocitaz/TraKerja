@@ -2,8 +2,11 @@
     <div class="workspace-page membership-page">
         <div class="workspace-page__container">
             <header class="workspace-page__header">
-                <div><p class="workspace-eyebrow">Your TraKerja account</p><h1>Membership &amp; Credits</h1><p>Your plan, your balance, and every purchase in one place.</p></div>
-                <a href="{{ route('support.index') }}" wire:navigate class="workspace-button workspace-button--quiet">Billing help <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+                <div>
+                    <p class="workspace-eyebrow">Your TraKerja account</p>
+                    <h1>Membership &amp; Credits</h1>
+                    <p>Your plan, your balance, and every purchase in one place.</p>
+                </div>
             </header>
 
             @if(!$monetizationEnabled)
