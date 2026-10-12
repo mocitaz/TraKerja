@@ -12,7 +12,8 @@
     padding-left: var(--page-gutter);
     padding-right: var(--page-gutter);
 }
-.workspace-shell .workspace-navigation {
+:is(.workspace-shell, .welcome-page, body) .workspace-navigation,
+.workspace-navigation {
     box-sizing: border-box;
     width: 100%;
     max-width: calc(var(--page-frame-width) + 32px);
@@ -21,7 +22,8 @@
     padding-left: var(--page-gutter);
     padding-right: var(--page-gutter);
 }
-.workspace-shell :is(.workspace-topbar, .workspace-mobile-menu) {
+:is(.workspace-shell, .welcome-page, body) :is(.workspace-topbar, .workspace-mobile-menu),
+:is(.workspace-topbar, .workspace-mobile-menu) {
     width: 100%;
     max-width: none;
 }

@@ -131,10 +131,10 @@
     </style>
 </head>
 
-<body class="antialiased" style="background-color: #fdfcf9; color: #30313b;">
+<body class="antialiased workspace-shell welcome-page" style="background-color: #fdfcf9; color: #30313b;">
 
     {{-- ============ NAVIGATION (MATCHING USER WORKSPACE TOPBAR) ============ --}}
-    <header id="workspace-navigation" class="workspace-navigation fixed top-0 left-0 right-0 z-50 pointer-events-none"
+    <header id="workspace-navigation" class="workspace-navigation fixed top-0 inset-x-0 z-50 pointer-events-none"
         x-data="{ mobileOpen: false }">
         <nav class="workspace-topbar pointer-events-auto" aria-label="Main navigation">
             <a href="{{ url('/') }}" class="workspace-brand" aria-label="TraKerja home">
