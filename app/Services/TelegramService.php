@@ -278,7 +278,7 @@ class TelegramService
 
         $totalUsers = User::count();
         $newUsers = User::where('created_at', '>=', $since)->count();
-        $activeUsers = User::where('last_activity', '>=', $since)->count();
+        $activeUsers = User::where('last_activity_at', '>=', $since)->count();
         $newApplications = JobApplication::where('created_at', '>=', $since)->count();
         $pendingTickets = SupportTicket::where('status', 'pending')->count();
         $resolvedTickets = SupportTicket::where('replied_at', '>=', $since)->count();
