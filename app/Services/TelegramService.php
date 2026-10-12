@@ -460,30 +460,90 @@ class TelegramService
 
             case '/user':
                 if (empty($argument)) {
-                    return $this->sendMessage("⚠️ Format: <code>/user email@domain.com</code>", null, $chatId);
+                    return $this->sendMessage("⚠️ Format: <code>/user email@domain.com</code> atau <code>/user 123</code> (User ID)", null, $chatId);
                 }
 
-                $user = User::where('email', $argument)->first();
+                $user = User::where('email', $argument)
+                    ->orWhere('id', is_numeric($argument) ? (int) $argument : null)
+                    ->first();
+
                 if (! $user) {
-                    return $this->sendMessage("❌ User dengan email <code>{$argument}</code> tidak ditemukan.", null, $chatId);
+                    $escapedArg = htmlspecialchars($argument, ENT_QUOTES, 'UTF-8');
+                    return $this->sendMessage("❌ User dengan kata kunci <code>{$escapedArg}</code> tidak ditemukan.", null, $chatId);
                 }
 
-                $userName = htmlspecialchars($user->name, ENT_QUOTES, 'UTF-8');
-                $userEmail = htmlspecialchars($user->email, ENT_QUOTES, 'UTF-8');
-                $isPrem = $user->isPremium() ? 'Premium Pro' : 'Free Member';
-                $isVerif = $user->hasVerifiedEmail() ? 'Verified' : 'Unverified';
-                $regDate = $user->created_at ? $user->created_at->format('d M Y') : '-';
-                $appCount = $user->jobApplications()->count();
+                $userName = htmlspecialchars($user->name ?? 'User', ENT_QUOTES, 'UTF-8');
+                $userEmail = htmlspecialchars($user->email ?? '-', ENT_QUOTES, 'UTF-8');
+                $role = $user->isAdmin() ? 'Admin 🛡️' : 'Job Seeker 💼';
+                $isPrem = $user->isPremium() ? 'Premium Pro 👑' : 'Free Member 🌱';
+                $isVerif = $user->hasVerifiedEmail() ? 'Verified ✅' : 'Unverified ⚠️';
 
-                $reply = "👤 <b>USER PROFILE</b>\n\n"
-                       . "• <b>ID:</b> #{$user->id}\n"
+                // Auth Provider
+                $authProvider = 'Email Password';
+                if (! empty($user->google_id)) {
+                    $authProvider = 'Google OAuth';
+                } elseif (! empty($user->linkedin_id)) {
+                    $authProvider = 'LinkedIn OAuth';
+                }
+
+                // Dates
+                $joinedAt = $user->created_at ? $user->created_at->timezone('Asia/Jakarta')->translatedFormat('d M Y') . ' (' . $user->created_at->diffForHumans() . ')' : '-';
+                $lastActive = $user->last_activity_at 
+                    ? $user->last_activity_at->timezone('Asia/Jakarta')->translatedFormat('d M Y, H:i') . ' WIB'
+                    : ($user->created_at ? $user->created_at->timezone('Asia/Jakarta')->translatedFormat('d M Y, H:i') . ' WIB' : '-');
+
+                // Job Applications stats
+                $totalApps = $user->jobApplications()->count();
+                $onProcess = $user->jobApplications()->where('status', 'On Process')->count();
+                $accepted = $user->jobApplications()->where('status', 'Accepted')->count();
+                $rejected = $user->jobApplications()->where('status', 'Rejected')->count();
+                $latestJob = $user->jobApplications()->latest()->first();
+                $latestJobStr = $latestJob 
+                    ? htmlspecialchars($latestJob->position . ' @ ' . $latestJob->company_name, ENT_QUOTES, 'UTF-8') . ' (' . $latestJob->created_at->format('d M') . ')'
+                    : 'Belum ada lamaran';
+
+                // Payments / Billing
+                $totalSpent = $user->payments()->where('status', 'SUCCESS')->sum('amount');
+                $totalTransactions = $user->payments()->where('status', 'SUCCESS')->count();
+                $billingStr = $totalSpent > 0 
+                    ? 'Rp ' . number_format((int) $totalSpent, 0, ',', '.') . " ({$totalTransactions} transaksi)"
+                    : 'Rp 0';
+
+                // AI Credits & Gamification
+                $aiCredits = $user->ai_credits ?? 0;
+                $clCredits = $user->cl_credits ?? 0;
+                $photoCredits = $user->photo_credits ?? 0;
+                $level = $user->level ?? 1;
+                $xp = number_format((int) ($user->xp ?? 0), 0, ',', '.');
+
+                // Portfolio status
+                $portfolioStr = $user->is_portfolio_published && ! empty($user->portfolio_slug)
+                    ? 'Published (' . htmlspecialchars($user->portfolio_slug, ENT_QUOTES, 'UTF-8') . ')'
+                    : 'Draft / Belum Aktif';
+
+                $reply = "👤 <b>USER PROFILE • #{$user->id}</b>\n\n"
                        . "• <b>Name:</b> {$userName}\n"
                        . "• <b>Email:</b> <code>{$userEmail}</code>\n"
-                       . "• <b>Status:</b> {$isPrem} ({$isVerif})\n"
-                       . "• <b>Applications:</b> {$appCount}\n"
-                       . "• <b>Joined:</b> {$regDate}";
+                       . "• <b>Role:</b> {$role}\n"
+                       . "• <b>Method:</b> {$authProvider}\n"
+                       . "• <b>Status:</b> {$isPrem} | {$isVerif}\n"
+                       . "• <b>Joined:</b> {$joinedAt}\n"
+                       . "• <b>Last Active:</b> {$lastActive}\n\n"
+                       . "📊 <b>JOB TRACKING</b>\n"
+                       . "• <b>Total Applications:</b> <b>{$totalApps}</b>\n"
+                       . "• <b>Status:</b> {$onProcess} Proses • {$accepted} Diterima • {$rejected} Ditolak\n"
+                       . "• <b>Latest Job:</b> {$latestJobStr}\n\n"
+                       . "💳 <b>BILLING & ASSETS</b>\n"
+                       . "• <b>Total Spent:</b> {$billingStr}\n"
+                       . "• <b>AI Credits:</b> {$aiCredits} Analyzer • {$clCredits} Cover Letter • {$photoCredits} Photo\n"
+                       . "• <b>Gamification:</b> Level {$level} ({$xp} XP)\n"
+                       . "• <b>Portfolio:</b> {$portfolioStr}";
 
-                return $this->sendMessage($reply, null, $chatId);
+                $keyboard = [
+                    [['text' => 'Manage in Admin Panel', 'url' => url('/admin/users?search=' . urlencode($user->email))]]
+                ];
+
+                return $this->sendMessage($reply, $keyboard, $chatId);
 
             case '/pending':
                 $pending = SupportTicket::where('status', 'pending')
