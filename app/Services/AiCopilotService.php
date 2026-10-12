@@ -172,7 +172,7 @@ class AiCopilotService
                       . "Anda HANYA boleh menjawab pertanyaan yang berkaitan dengan TraKerja, karir, pencarian kerja, rekrutmen, teknologi HR, operasional platform, data pengguna, strategi bisnis, atau fitur TraKerja. Jika user menanyakan topik yang sama sekali tidak berhubungan (misal: resep masakan, ramalan zodiak, fisika kuantum), tolak dengan sopan: 'Maaf, sebagai AI Copilot TraKerja, saya hanya melayani pertanyaan seputar platform, data operasional, dan karir TraKerja.'\n\n"
                       . "DATA REAL-TIME PLATFORM SAAT INI:\n" . json_encode($context, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key={$this->geminiKey}";
+        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key={$this->geminiKey}";
 
         $payload = [
             'system_instruction' => [
@@ -190,10 +190,26 @@ class AiCopilotService
             ],
         ];
 
-        $res = Http::timeout(15)->post($url, $payload);
+        $res = Http::timeout(8)->post($url, $payload);
+        if (! $res->successful()) {
+            $fallbackUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key={$this->geminiKey}";
+            $res = Http::timeout(8)->post($fallbackUrl, $payload);
+        }
+
         if ($res->successful()) {
-            $text = $res->json('candidates.0.content.parts.0.text');
+            $parts = $res->json('candidates.0.content.parts') ?? [];
+            $text = '';
+            foreach ($parts as $part) {
+                if (isset($part['text'])) {
+                    $text .= $part['text'];
+                }
+            }
+
             if (! empty($text)) {
+                // Convert Markdown formatting to Telegram HTML formatting
+                $text = preg_replace('/\*\*(.*?)\*\*/', '<b>$1</b>', $text);
+                $text = preg_replace('/\*([^\*]+)\*/', '<i>$1</i>', $text);
+                $text = preg_replace('/^#+\s*(.*?)$/m', '<b>$1</b>', $text);
                 return "🧠 <b>AI COPILOT</b>\n\n" . trim($text);
             }
         }
