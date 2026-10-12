@@ -10,7 +10,7 @@
     <meta name="author" content="PT. Teknalogi Transformasi Digital">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ url('/') }}">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#fdfcf9">
 
     <!-- OpenGraph -->
     <meta property="og:type" content="website">
@@ -34,26 +34,26 @@
     @livewireStyles
 
     <style>
-        /* Notion Colors */
+        /* Notion & Workspace Colors */
         :root {
-            --notion-bg: #FFFFFF;
-            --notion-text: #1A1A1A;
-            --notion-text-muted: #5F5F5F;
-            --notion-border: #E3E2E0;
-            --notion-yellow: #FFF9E6;
-            --notion-yellow-border: #FBE49C;
-            --notion-blue: #EBF3FA;
-            --notion-blue-border: #BCD9ED;
-            --notion-red: #FDEBEC;
-            --notion-red-border: #FACACA;
-            --notion-green: #EDF3EC;
-            --notion-green-border: #D1E4D1;
+            --notion-bg: #fdfcf9;
+            --notion-text: #30313b;
+            --notion-text-muted: #545761;
+            --notion-border: #dedbd6;
+            --notion-yellow: #fdf6e7;
+            --notion-yellow-border: #fae3b3;
+            --notion-blue: #eef5fb;
+            --notion-blue-border: #cbe0f4;
+            --notion-red: #fdeded;
+            --notion-red-border: #f8caca;
+            --notion-green: #eef8f2;
+            --notion-green-border: #c5ebd2;
         }
 
         body {
             background-color: var(--notion-bg);
             color: var(--notion-text);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -71,13 +71,13 @@
         /* Bento Grid Card */
         .bento-card {
             border: 1px solid var(--notion-border);
-            border-radius: 12px;
-            background: #FFFFFF;
+            border-radius: 14px;
+            background: #ffffff;
             transition: all 0.2s ease;
         }
         .bento-card:hover {
-            border-color: rgba(26, 26, 26, 0.2);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border-color: rgba(48, 49, 59, 0.22);
+            box-shadow: 0 6px 22px rgba(87, 71, 53, 0.05);
         }
 
         /* Status Pill */
@@ -91,9 +91,9 @@
             font-weight: 600;
             border: 1px solid transparent;
         }
-        .notion-pill.applied { background: var(--notion-blue); border-color: var(--notion-blue-border); color: #215984; }
-        .notion-pill.interview { background: var(--notion-yellow); border-color: var(--notion-yellow-border); color: #8F6B00; }
-        .notion-pill.offer { background: var(--notion-green); border-color: var(--notion-green-border); color: #2E6B3C; }
+        .notion-pill.applied { background: var(--notion-blue); border-color: var(--notion-blue-border); color: #1e65ab; }
+        .notion-pill.interview { background: var(--notion-yellow); border-color: var(--notion-yellow-border); color: #975c20; }
+        .notion-pill.offer { background: var(--notion-green); border-color: var(--notion-green-border); color: #1e7845; }
 
         /* Smooth reveal animation */
         .reveal {
@@ -107,60 +107,79 @@
         }
     </style>
 </head>
-<body class="antialiased bg-white">
+<body class="antialiased" style="background-color: #fdfcf9; color: #30313b;">
 
+    {{-- ============ NAVIGATION (MATCHING USER WORKSPACE TOPBAR) ============ --}}
+    <header id="workspace-navigation" class="workspace-navigation fixed top-0 left-0 right-0 z-50 pointer-events-none" x-data="{ mobileOpen: false }">
+        <nav class="workspace-topbar pointer-events-auto" aria-label="Main navigation">
+            <a href="{{ url('/') }}" class="workspace-brand" aria-label="TraKerja home">
+                <img src="{{ asset('images/icon.png') }}" alt="" width="28" height="28">
+                <span>TraKerja</span>
+            </a>
 
-
-    {{-- ============ NAVIGATION ============ --}}
-    <nav class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-zinc-200/60 z-50">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="flex items-center justify-between h-14">
-                <a href="{{ url('/') }}" class="flex items-center gap-2 text-xs font-bold text-zinc-800 tracking-tight select-none">
-                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="w-5 h-5 object-contain" onerror="this.style.display='none';">
-                    <span>TraKerja</span>
-                </a>
-
-                <div class="hidden md:flex items-center gap-1 text-xs font-semibold text-zinc-500">
-                    <a href="#fitur" class="px-3 py-1.5 rounded hover:bg-zinc-100 hover:text-zinc-900 transition-colors">Features</a>
-                    <a href="#pricing" class="px-3 py-1.5 rounded hover:bg-zinc-100 hover:text-zinc-900 transition-colors">Pricing</a>
-                    <a href="#testimonials" class="px-3 py-1.5 rounded hover:bg-zinc-100 hover:text-zinc-900 transition-colors">Testimonials</a>
-                    <a href="#faq" class="px-3 py-1.5 rounded hover:bg-zinc-100 hover:text-zinc-900 transition-colors">FAQ</a>
-                </div>
-
-                <div class="flex items-center gap-2">
-                    @auth
-                        <a href="{{ url('/tracker') }}" class="px-3.5 py-1.5 bg-[#0066cc] text-white rounded-lg text-xs font-bold hover:bg-[#0052a3] transition">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="px-3 py-1.5 text-zinc-600 rounded-lg text-xs font-bold hover:bg-zinc-100 transition">Log in</a>
-                        <a href="{{ route('register') }}" class="px-3.5 py-1.5 bg-[#0066cc] text-white rounded-lg text-xs font-bold hover:bg-[#0052a3] transition shadow-xs">Get Started</a>
-                    @endauth
-                </div>
+            <div class="workspace-desktop-links">
+                <a href="#fitur" class="workspace-nav-link">Features</a>
+                <a href="#pricing" class="workspace-nav-link">Pricing</a>
+                <a href="#testimonials" class="workspace-nav-link">Testimonials</a>
+                <a href="#faq" class="workspace-nav-link">FAQ</a>
             </div>
-        </div>
-    </nav>
+
+            <div class="workspace-account-actions">
+                <button type="button" x-ref="mobileButton" @click="mobileOpen = !mobileOpen" aria-controls="workspace-mobile-menu" aria-expanded="false" :aria-expanded="mobileOpen.toString()" class="workspace-mobile-toggle">
+                    <i class="ph" :class="mobileOpen ? 'ph-x' : 'ph-list'" aria-hidden="true"></i><span>Menu</span>
+                </button>
+
+                @auth
+                    <a href="{{ url('/dashboard') }}" class="workspace-nav-link" style="color: #fff; background: #35264f; font-weight: 600;">
+                        <span>Dashboard</span>
+                    </a>
+                @else
+                    <a href="{{ route('login') }}" class="workspace-nav-link hidden sm:inline-flex">
+                        Log in
+                    </a>
+                    <a href="{{ route('register') }}" class="workspace-nav-link" style="color: #fff; background: #35264f; font-weight: 600;">
+                        Get Started
+                    </a>
+                @endauth
+            </div>
+        </nav>
+
+        <nav id="workspace-mobile-menu" x-cloak x-show="mobileOpen" x-transition.opacity.duration.150ms class="workspace-mobile-menu pointer-events-auto" aria-label="Mobile navigation" @click.outside="mobileOpen = false" @keydown.escape.stop="mobileOpen = false; $refs.mobileButton.focus()">
+            <a href="#fitur" @click="mobileOpen = false" class="workspace-nav-link">Features</a>
+            <a href="#pricing" @click="mobileOpen = false" class="workspace-nav-link">Pricing</a>
+            <a href="#testimonials" @click="mobileOpen = false" class="workspace-nav-link">Testimonials</a>
+            <a href="#faq" @click="mobileOpen = false" class="workspace-nav-link">FAQ</a>
+            @auth
+                <a href="{{ url('/dashboard') }}" @click="mobileOpen = false" class="workspace-nav-link col-span-2 text-center" style="color: #fff; background: #35264f; font-weight: 600;">Dashboard</a>
+            @else
+                <a href="{{ route('login') }}" @click="mobileOpen = false" class="workspace-nav-link text-center">Log in</a>
+                <a href="{{ route('register') }}" @click="mobileOpen = false" class="workspace-nav-link text-center" style="color: #fff; background: #35264f; font-weight: 600;">Get Started</a>
+            @endauth
+        </nav>
+    </header>
 
     {{-- ============ HERO ============ --}}
-    <section class="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden border-b border-zinc-100 bg-white">
+    <section class="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden border-b border-[#dedbd6]/80 bg-[#fdfcf9]">
         <div class="max-w-5xl mx-auto px-4 text-center">
             
             <!-- Notion-style line-art branding icons -->
             <div class="flex justify-center -space-x-3 mb-8">
                 <!-- User/Detect (Blue circle) -->
-                <div class="w-11 h-11 rounded-full border-2 border-[#0066cc] bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-30">
+                <div class="w-11 h-11 rounded-full border-2 border-[#2579ca] bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-30">
                     <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px;">
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
                 </div>
-                <!-- Portfolio/Briefcase (White circle, black border) -->
-                <div class="w-11 h-11 rounded-full border-2 border-zinc-950 bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-20">
+                <!-- Portfolio/Briefcase (White circle, dark border) -->
+                <div class="w-11 h-11 rounded-full border-2 border-[#30313b] bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-20">
                     <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px;">
                         <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                         <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
                     </svg>
                 </div>
                 <!-- Target (Red circle) -->
-                <div class="w-11 h-11 rounded-full border-2 border-red-500 bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-10">
+                <div class="w-11 h-11 rounded-full border-2 border-rose-500 bg-white flex items-center justify-center shadow-3xs shrink-0 select-none z-10">
                     <svg class="w-5.5 h-5.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px;">
                         <circle cx="12" cy="12" r="10"></circle>
                         <circle cx="12" cy="12" r="6"></circle>
@@ -175,48 +194,48 @@
                 </div>
             </div>
 
-            <h1 class="notion-h1 text-5xl sm:text-7xl text-zinc-950 mb-8 leading-[1.1] tracking-tight reveal">
-                Where job seekers & careers <br class="hidden sm:inline">
-                <span class="inline-block mt-5 px-6 py-2.5 bg-amber-50 rounded-full border border-amber-200 text-zinc-900 select-none shadow-3xs">
+            <h1 class="notion-h1 text-5xl sm:text-7xl text-[#1a191e] mb-8 leading-[1.1] tracking-tight reveal">
+                Where job seekers &amp; careers <br class="hidden sm:inline">
+                <span class="inline-block mt-5 px-6 py-2.5 bg-[#faecd4]/60 rounded-full border border-[#f2d29e] text-[#30313b] select-none shadow-3xs">
                     Grow together.
                 </span>
             </h1>
 
-            <p class="text-base sm:text-lg text-zinc-500 max-w-2xl mx-auto mb-10 font-medium leading-relaxed reveal">
+            <p class="text-base sm:text-lg text-[#545761] max-w-2xl mx-auto mb-10 font-medium leading-relaxed reveal">
                 A unified, minimalist workspace to manage your entire job application pipeline, build ATS-optimized resumes, and accelerate your career using AI.
             </p>
 
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-12 reveal">
                 @auth
-                    <a href="{{ url('/tracker') }}" class="px-6 py-3 bg-[#0066cc] hover:bg-[#0052a3] text-white rounded-lg text-base font-bold transition shadow-xs w-full sm:w-auto">Open Dashboard</a>
+                    <a href="{{ url('/dashboard') }}" class="px-6 py-3 bg-[#35264f] hover:bg-[#251a3a] text-white rounded-xl text-base font-bold transition shadow-sm w-full sm:w-auto">Open Dashboard</a>
                 @else
-                    <a href="{{ route('register') }}" class="px-6 py-3 bg-[#0066cc] hover:bg-[#0052a3] text-white rounded-lg text-base font-bold transition shadow-xs w-full sm:w-auto">Get TraKerja Free</a>
-                    <a href="#fitur" class="px-6 py-3 bg-blue-50/40 text-[#0066cc] border border-blue-100/70 rounded-lg text-base font-bold hover:bg-blue-50/80 transition w-full sm:w-auto">Explore Features</a>
+                    <a href="{{ route('register') }}" class="px-6 py-3 bg-[#35264f] hover:bg-[#251a3a] text-white rounded-xl text-base font-bold transition shadow-sm w-full sm:w-auto">Get TraKerja Free</a>
+                    <a href="#fitur" class="px-6 py-3 bg-white/80 text-[#30313b] border border-[#dedbd6] rounded-xl text-base font-bold hover:bg-white transition shadow-3xs w-full sm:w-auto">Explore Features</a>
                 @endauth
             </div>
 
-            <p class="text-xs text-zinc-400 font-bold uppercase tracking-wider reveal">
-                ⚡️ 100% Free to Start • No Credit Card Required
+            <p class="text-xs text-[#70737d] font-bold uppercase tracking-wider reveal">
+                100% Free to Start • No Credit Card Required
             </p>
         </div>
 
         <!-- Dashboard mockup container -->
         <div class="relative max-w-4xl mx-auto mt-14 px-4 reveal">
-            <div class="bento-card overflow-hidden shadow-xl border-zinc-200/80 bg-zinc-50/50 p-2">
-                <div class="border border-zinc-200/70 rounded-lg overflow-hidden bg-white shadow-2xs">
+            <div class="bento-card overflow-hidden shadow-xl border-[#dedbd6] bg-[#f8f6f1] p-2">
+                <div class="border border-[#dedbd6] rounded-lg overflow-hidden bg-white shadow-2xs">
                     <!-- Browser-like window header -->
-                    <div class="bg-zinc-50 border-b border-zinc-200 px-4 py-2.5 flex items-center gap-2">
+                    <div class="bg-[#f0ede6] border-b border-[#dedbd6] px-4 py-2.5 flex items-center gap-2">
                         <div class="flex gap-1.5">
                             <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
                             <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
                         </div>
-                        <div class="mx-auto bg-white border border-zinc-200/60 rounded-md text-[10px] text-zinc-400 font-bold px-12 py-0.5 select-none truncate max-w-xs md:max-w-md">
+                        <div class="mx-auto bg-white/80 border border-[#dedbd6] rounded-md text-[10px] text-zinc-500 font-bold px-12 py-0.5 select-none truncate max-w-xs md:max-w-md">
                             trakerja.com/dashboard
                         </div>
                     </div>
                     <!-- Simulated Premium Notion-Style Dashboard Layout -->
-                    <div class="w-full bg-[#fafafa] text-zinc-800 text-[10px] font-medium p-4 select-none relative overflow-hidden min-h-[380px]">
+                    <div class="w-full bg-[#fdfcf9] text-zinc-800 text-[10px] font-medium p-4 select-none relative overflow-hidden min-h-[380px]">
                         
                         <!-- Premium Notion-Inspired Page Header -->
                         <div class="flex items-start gap-2 border-b border-zinc-200/50 pb-3 mb-4">
@@ -623,13 +642,12 @@
                 </div>
             </div>
         </div>
-    </section>
-
-    {{-- ============ FEATURES GRID ============ --}}
-    <section id="fitur" class="py-20 sm:py-24 bg-zinc-50/50 border-b border-zinc-100">
+    </    {{-- ============ FEATURES GRID ============ --}}
+    <section id="fitur" class="py-20 sm:py-24 bg-[#f8f6f0]/60 border-b border-[#dedbd6]/80">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="max-w-xl mb-12 reveal">
-                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 mt-3">Everything you need to win your dream career.</h2>
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#545761]">Fitur Unggulan</span>
+                <h2 class="notion-h1 text-3xl sm:text-4xl text-[#1a191e] mt-2">Everything you need to win your dream career.</h2>
             </div>
 
             <!-- Notion-style Interactive Feature Grid (Left selectors, Right browser visual mockup) -->
@@ -638,13 +656,13 @@
                 <div class="lg:col-span-4 flex flex-col justify-between space-y-2">
                     <div>
                         <span class="text-[9px] font-black text-zinc-400 uppercase tracking-widest">Custom Tools</span>
-                        <h3 class="text-lg font-extrabold text-zinc-900 tracking-tight mt-1 mb-5">Automate and track your career growth.</h3>
+                        <h3 class="text-lg font-extrabold text-[#1a191e] tracking-tight mt-1 mb-5">Automate and track your career growth.</h3>
                     </div>
                     
                     <div class="space-y-1 flex-1">
                         <!-- Kanban Board Selector -->
-                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/80 bg-zinc-50/50 hover:bg-zinc-50/90 cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-1" onclick="switchFeature(1)">
-                            <div class="w-9 h-9 rounded-full border border-zinc-950 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
+                        <div class="feature-selector-item p-3.5 rounded-xl border border-[#dedbd6] bg-white shadow-3xs hover:bg-white cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-1" onclick="switchFeature(1)">
+                            <div class="w-9 h-9 rounded-full border border-[#30313b] bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
                                 <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                                     <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                                     <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
@@ -652,13 +670,13 @@
                             </div>
                             <div class="min-w-0">
                                 <h4 class="font-extrabold text-zinc-800 text-xs leading-tight">Kanban Board Tracker</h4>
-                                <p class="text-[10px] text-zinc-450 mt-0.5 leading-normal">Monitor all application statuses in one centralized board.</p>
+                                <p class="text-[10px] text-[#545761] mt-0.5 leading-normal">Monitor all application statuses in one centralized board.</p>
                             </div>
                         </div>
 
                         <!-- AI CV Analyzer Selector -->
-                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/10 bg-transparent hover:bg-zinc-50/50 cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-2" onclick="switchFeature(2)">
-                            <div class="w-9 h-9 rounded-full border border-blue-600 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
+                        <div class="feature-selector-item p-3.5 rounded-xl border border-transparent bg-transparent hover:bg-white/60 cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-2" onclick="switchFeature(2)">
+                            <div class="w-9 h-9 rounded-full border border-purple-600 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
                                 <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                                     <circle cx="12" cy="12" r="3"></circle>
                                     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -671,7 +689,7 @@
                         </div>
 
                         <!-- AI Cover Letter Selector -->
-                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/10 bg-transparent hover:bg-zinc-50/50 cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-3" onclick="switchFeature(3)">
+                        <div class="feature-selector-item p-3.5 rounded-xl border border-transparent bg-transparent hover:bg-white/60 cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-3" onclick="switchFeature(3)">
                             <div class="w-9 h-9 rounded-full border border-red-500 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
                                 <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -688,7 +706,7 @@
                         </div>
 
                         <!-- Career Analytics Selector -->
-                        <div class="feature-selector-item p-3.5 rounded-xl border border-zinc-200/10 bg-transparent hover:bg-zinc-50/50 cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-4" onclick="switchFeature(4)">
+                        <div class="feature-selector-item p-3.5 rounded-xl border border-transparent bg-transparent hover:bg-white/60 cursor-pointer transition flex items-start gap-3.5 select-none" id="feat-item-4" onclick="switchFeature(4)">
                             <div class="w-9 h-9 rounded-full border border-amber-500 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
                                 <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                                     <path d="M3 3v18h18"></path>
@@ -705,16 +723,16 @@
 
                 <!-- Right Column (The visual preview card showing mockup matching active state) -->
                 <div class="lg:col-span-8 flex flex-col justify-center">
-                    <div class="w-full bg-[#f8fafc] border border-zinc-200 rounded-xl p-4 md:p-6 shadow-2xs relative min-h-[300px] overflow-hidden flex flex-col justify-between">
+                    <div class="w-full bg-[#fdfcf9] border border-[#dedbd6] rounded-xl p-4 md:p-6 shadow-sm relative min-h-[300px] overflow-hidden flex flex-col justify-between">
                         
                         <!-- Panel: Kanban Tracker Mock -->
                         <div id="feature-pane-1" class="feature-pane space-y-4 h-full flex flex-col justify-between">
-                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60 select-none shrink-0">
+                            <div class="flex items-center justify-between pb-2 border-b border-[#dedbd6]/80 select-none shrink-0">
                                 <div class="flex items-center gap-2">
-                                    <div class="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                                    <div class="w-1.5 h-1.5 bg-[#35264f] rounded-full"></div>
                                     <span class="font-extrabold text-zinc-800 text-[10px] uppercase tracking-wider">Kanban Board Tracker</span>
                                 </div>
-                                <span class="text-[8.5px] text-zinc-400 font-bold flex items-center gap-1">
+                                <span class="text-[8.5px] text-zinc-500 font-bold flex items-center gap-1">
                                     <i class="ph ph-hand-grabbing text-xs"></i> Drag & Drop Cards
                                 </span>
                             </div>
@@ -723,34 +741,34 @@
                             <div class="overflow-x-auto -mx-4 px-4 scrollbar-thin">
                                 <div class="grid grid-cols-3 gap-4 select-none items-stretch flex-1 mt-2.5 min-w-[640px] md:min-w-0">
                                 <!-- Col 1: WISHLIST -->
-                                <div class="flex flex-col bg-zinc-50/40 rounded-lg p-2.5 border border-zinc-200/50 justify-between min-h-[220px]">
+                                <div class="flex flex-col bg-[#f8f6f0]/70 rounded-lg p-2.5 border border-[#dedbd6] justify-between min-h-[220px]">
                                     <div>
                                         <div class="flex items-center justify-between mb-2.5 px-0.5">
                                             <div class="flex items-center gap-1.5">
                                                 <div class="w-1.5 h-1.5 rounded-full bg-zinc-400"></div>
-                                                <h3 class="text-[9px] font-bold text-zinc-650 uppercase tracking-widest">WISHLIST</h3>
+                                                <h3 class="text-[9px] font-bold text-zinc-700 uppercase tracking-widest">WISHLIST</h3>
                                             </div>
-                                            <span class="text-[8px] font-bold bg-white text-zinc-400 px-1.5 py-0.2 rounded border border-zinc-200/60 shadow-3xs">2</span>
+                                            <span class="text-[8px] font-bold bg-white text-zinc-500 px-1.5 py-0.2 rounded border border-[#dedbd6] shadow-3xs">2</span>
                                         </div>
                                         
                                         <div class="space-y-2">
                                             <!-- Shopee Card -->
-                                            <div class="group bg-white rounded-md p-2.5 border border-zinc-200 shadow-3xs hover:border-zinc-300 transition-all cursor-grab">
+                                            <div class="group bg-white rounded-md p-2.5 border border-[#dedbd6] shadow-3xs hover:border-zinc-400 transition-all cursor-grab">
                                                 <div class="flex items-start justify-between gap-2 mb-2">
                                                     <div class="flex items-center gap-2 min-w-0">
-                                                        <div class="w-6.5 h-6.5 rounded bg-zinc-50 border border-zinc-200/50 flex items-center justify-center text-zinc-500 font-bold text-[9px] shrink-0 shadow-3xs">S</div>
+                                                        <div class="w-6.5 h-6.5 rounded bg-[#f8f6f0] border border-[#dedbd6] flex items-center justify-center text-zinc-600 font-bold text-[9px] shrink-0 shadow-3xs">S</div>
                                                         <div class="min-w-0">
                                                             <h4 class="text-[10px] font-bold text-zinc-800 leading-tight truncate">Shopee</h4>
                                                             <p class="text-[8.5px] font-semibold text-zinc-500 mt-0.5 truncate">Product Manager</p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="flex items-center justify-between pt-2 border-t border-zinc-150/80">
+                                                <div class="flex items-center justify-between pt-2 border-t border-[#dedbd6]/70">
                                                     <div class="flex items-center gap-1">
-                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-zinc-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-pencil-simple"></i></span>
-                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-rose-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-trash"></i></span>
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-zinc-600 border border-[#dedbd6] rounded text-[9px]"><i class="ph ph-pencil-simple"></i></span>
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-rose-600 border border-[#dedbd6] rounded text-[9px]"><i class="ph ph-trash"></i></span>
                                                     </div>
-                                                    <div class="flex items-center gap-1 px-1.5 py-0.5 bg-zinc-50 rounded border border-zinc-200 text-[8px] text-zinc-500 font-bold">
+                                                    <div class="flex items-center gap-1 px-1.5 py-0.5 bg-[#f8f6f0] rounded border border-[#dedbd6] text-[8px] text-zinc-600 font-bold">
                                                         <i class="ph ph-calendar"></i>
                                                         <span>10 Jul</span>
                                                     </div>
@@ -758,22 +776,22 @@
                                             </div>
 
                                             <!-- Gojek Card -->
-                                            <div class="group bg-white rounded-md p-2.5 border border-zinc-200 shadow-3xs hover:border-zinc-300 transition-all cursor-grab">
+                                            <div class="group bg-white rounded-md p-2.5 border border-[#dedbd6] shadow-3xs hover:border-zinc-400 transition-all cursor-grab">
                                                 <div class="flex items-start justify-between gap-2 mb-2">
                                                     <div class="flex items-center gap-2 min-w-0">
-                                                        <div class="w-6.5 h-6.5 rounded bg-zinc-50 border border-zinc-200/50 flex items-center justify-center text-zinc-500 font-bold text-[9px] shrink-0 shadow-3xs">G</div>
+                                                        <div class="w-6.5 h-6.5 rounded bg-[#f8f6f0] border border-[#dedbd6] flex items-center justify-center text-zinc-600 font-bold text-[9px] shrink-0 shadow-3xs">G</div>
                                                         <div class="min-w-0">
                                                             <h4 class="text-[10px] font-bold text-zinc-800 leading-tight truncate">Gojek</h4>
                                                             <p class="text-[8.5px] font-semibold text-zinc-500 mt-0.5 truncate">UX Researcher</p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="flex items-center justify-between pt-2 border-t border-zinc-150/80">
+                                                <div class="flex items-center justify-between pt-2 border-t border-[#dedbd6]/70">
                                                     <div class="flex items-center gap-1">
-                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-zinc-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-pencil-simple"></i></span>
-                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-rose-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-trash"></i></span>
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-zinc-600 border border-[#dedbd6] rounded text-[9px]"><i class="ph ph-pencil-simple"></i></span>
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-rose-600 border border-[#dedbd6] rounded text-[9px]"><i class="ph ph-trash"></i></span>
                                                     </div>
-                                                    <div class="flex items-center gap-1 px-1.5 py-0.5 bg-zinc-50 rounded border border-zinc-200 text-[8px] text-zinc-500 font-bold">
+                                                    <div class="flex items-center gap-1 px-1.5 py-0.5 bg-[#f8f6f0] rounded border border-[#dedbd6] text-[8px] text-zinc-600 font-bold">
                                                         <i class="ph ph-calendar"></i>
                                                         <span>09 Jul</span>
                                                     </div>
@@ -784,34 +802,34 @@
                                 </div>
 
                                 <!-- Col 2: APPLIED -->
-                                <div class="flex flex-col bg-zinc-50/40 rounded-lg p-2.5 border border-zinc-200/50 justify-between min-h-[220px]">
+                                <div class="flex flex-col bg-[#f8f6f0]/70 rounded-lg p-2.5 border border-[#dedbd6] justify-between min-h-[220px]">
                                     <div>
                                         <div class="flex items-center justify-between mb-2.5 px-0.5">
                                             <div class="flex items-center gap-1.5">
                                                 <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-                                                <h3 class="text-[9px] font-bold text-zinc-650 uppercase tracking-widest">APPLIED</h3>
+                                                <h3 class="text-[9px] font-bold text-zinc-700 uppercase tracking-widest">APPLIED</h3>
                                             </div>
-                                            <span class="text-[8px] font-bold bg-white text-zinc-400 px-1.5 py-0.2 rounded border border-zinc-200/60 shadow-3xs">1</span>
+                                            <span class="text-[8px] font-bold bg-white text-zinc-500 px-1.5 py-0.2 rounded border border-[#dedbd6] shadow-3xs">1</span>
                                         </div>
                                         
                                         <div class="space-y-2">
                                             <!-- Tokopedia Card -->
-                                            <div class="group bg-white rounded-md p-2.5 border border-zinc-200 shadow-3xs hover:border-zinc-300 transition-all cursor-grab border-l-2 border-l-blue-500">
+                                            <div class="group bg-white rounded-md p-2.5 border border-[#dedbd6] shadow-3xs hover:border-zinc-400 transition-all cursor-grab border-l-2 border-l-blue-500">
                                                 <div class="flex items-start justify-between gap-2 mb-2">
                                                     <div class="flex items-center gap-2 min-w-0">
-                                                        <div class="w-6.5 h-6.5 rounded bg-zinc-50 border border-zinc-200/50 flex items-center justify-center text-zinc-500 font-bold text-[9px] shrink-0 shadow-3xs">T</div>
+                                                        <div class="w-6.5 h-6.5 rounded bg-[#f8f6f0] border border-[#dedbd6] flex items-center justify-center text-zinc-600 font-bold text-[9px] shrink-0 shadow-3xs">T</div>
                                                         <div class="min-w-0">
                                                             <h4 class="text-[10px] font-bold text-zinc-800 leading-tight truncate">Tokopedia</h4>
                                                             <p class="text-[8.5px] font-semibold text-zinc-500 mt-0.5 truncate">Frontend Engineer</p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="flex items-center justify-between pt-2 border-t border-zinc-150/80">
+                                                <div class="flex items-center justify-between pt-2 border-t border-[#dedbd6]/70">
                                                     <div class="flex items-center gap-1">
-                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-zinc-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-pencil-simple"></i></span>
-                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-rose-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-trash"></i></span>
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-zinc-600 border border-[#dedbd6] rounded text-[9px]"><i class="ph ph-pencil-simple"></i></span>
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-rose-600 border border-[#dedbd6] rounded text-[9px]"><i class="ph ph-trash"></i></span>
                                                     </div>
-                                                    <div class="flex items-center gap-1 px-1.5 py-0.5 bg-zinc-50 rounded border border-zinc-200 text-[8px] text-zinc-500 font-bold">
+                                                    <div class="flex items-center gap-1 px-1.5 py-0.5 bg-[#f8f6f0] rounded border border-[#dedbd6] text-[8px] text-zinc-600 font-bold">
                                                         <i class="ph ph-calendar"></i>
                                                         <span>08 Jul</span>
                                                     </div>
@@ -825,34 +843,34 @@
                                 </div>
 
                                 <!-- Col 3: INTERVIEW -->
-                                <div class="flex flex-col bg-zinc-50/40 rounded-lg p-2.5 border border-zinc-200/50 justify-between min-h-[220px]">
+                                <div class="flex flex-col bg-[#f8f6f0]/70 rounded-lg p-2.5 border border-[#dedbd6] justify-between min-h-[220px]">
                                     <div>
                                         <div class="flex items-center justify-between mb-2.5 px-0.5">
                                             <div class="flex items-center gap-1.5">
                                                 <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
-                                                <h3 class="text-[9px] font-bold text-zinc-650 uppercase tracking-widest">INTERVIEW</h3>
+                                                <h3 class="text-[9px] font-bold text-zinc-700 uppercase tracking-widest">INTERVIEW</h3>
                                             </div>
-                                            <span class="text-[8px] font-bold bg-white text-zinc-400 px-1.5 py-0.2 rounded border border-zinc-200/60 shadow-3xs">1</span>
+                                            <span class="text-[8px] font-bold bg-white text-zinc-500 px-1.5 py-0.2 rounded border border-[#dedbd6] shadow-3xs">1</span>
                                         </div>
                                         
                                         <div class="space-y-2">
                                             <!-- Traveloka Card -->
-                                            <div class="group bg-white rounded-md p-2.5 border border-zinc-200 shadow-3xs hover:border-zinc-300 transition-all cursor-grab border-l-2 border-l-amber-500">
+                                            <div class="group bg-white rounded-md p-2.5 border border-[#dedbd6] shadow-3xs hover:border-zinc-400 transition-all cursor-grab border-l-2 border-l-amber-500">
                                                 <div class="flex items-start justify-between gap-2 mb-2">
                                                     <div class="flex items-center gap-2 min-w-0">
-                                                        <div class="w-6.5 h-6.5 rounded bg-zinc-50 border border-zinc-200/50 flex items-center justify-center text-zinc-500 font-bold text-[9px] shrink-0 shadow-3xs">T</div>
+                                                        <div class="w-6.5 h-6.5 rounded bg-[#f8f6f0] border border-[#dedbd6] flex items-center justify-center text-zinc-600 font-bold text-[9px] shrink-0 shadow-3xs">T</div>
                                                         <div class="min-w-0">
                                                             <h4 class="text-[10px] font-bold text-zinc-800 leading-tight truncate">Traveloka</h4>
                                                             <p class="text-[8.5px] font-semibold text-zinc-500 mt-0.5 truncate">UI Designer</p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="flex items-center justify-between pt-2 border-t border-zinc-150/80">
+                                                <div class="flex items-center justify-between pt-2 border-t border-[#dedbd6]/70">
                                                     <div class="flex items-center gap-1">
-                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-zinc-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-pencil-simple"></i></span>
-                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-rose-600 border border-zinc-200 rounded text-[9px]"><i class="ph ph-trash"></i></span>
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-zinc-600 border border-[#dedbd6] rounded text-[9px]"><i class="ph ph-pencil-simple"></i></span>
+                                                        <span class="w-4 h-4 flex items-center justify-center text-zinc-400 hover:text-rose-600 border border-[#dedbd6] rounded text-[9px]"><i class="ph ph-trash"></i></span>
                                                     </div>
-                                                    <div class="flex items-center gap-1 px-1.5 py-0.5 bg-zinc-50 rounded border border-zinc-200 text-[8px] text-zinc-500 font-bold">
+                                                    <div class="flex items-center gap-1 px-1.5 py-0.5 bg-[#f8f6f0] rounded border border-[#dedbd6] text-[8px] text-zinc-600 font-bold">
                                                         <i class="ph ph-calendar"></i>
                                                         <span>07 Jul</span>
                                                     </div>
@@ -863,39 +881,38 @@
                                             </div>
                                         </div>
                                     </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Panel: AI CV Analyzer -->
                         <div id="feature-pane-2" class="feature-pane hidden space-y-4 h-full flex flex-col justify-between">
-                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60 select-none shrink-0">
+                            <div class="flex items-center justify-between pb-2 border-b border-[#dedbd6]/80 select-none shrink-0">
                                 <div class="flex items-center gap-2">
-                                    <div class="w-1.5 h-1.5 bg-purple-500 rounded-full"></div>
+                                    <div class="w-1.5 h-1.5 bg-[#35264f] rounded-full"></div>
                                     <span class="font-extrabold text-zinc-800 text-[10px] uppercase tracking-wider">AI CV Analyzer (ATS Audit)</span>
                                 </div>
-                                <span class="px-1.5 py-0.5 bg-purple-50 text-purple-700 text-[7px] font-extrabold rounded border border-purple-100/60 uppercase">Active Thread</span>
+                                <span class="px-1.5 py-0.5 bg-purple-50 text-[#35264f] text-[7.5px] font-extrabold rounded border border-purple-100 uppercase">Active Thread</span>
                             </div>
                             
                             <!-- Conversational Response Box resembling ai-analyzer/result.blade.php -->
-                            <div class="bg-white border border-zinc-200 rounded-lg p-3.5 shadow-3xs flex-1 mt-2.5 space-y-3 flex flex-col justify-between">
-                                <div class="flex items-center gap-2 text-[8px] text-zinc-400 font-mono">
-                                    <span class="font-bold text-purple-650 flex items-center gap-1"><i class="ph ph-sparkle text-xs"></i> TraKerja AI</span>
+                            <div class="bg-white border border-[#dedbd6] rounded-lg p-3.5 shadow-3xs flex-1 mt-2.5 space-y-3 flex flex-col justify-between">
+                                <div class="flex items-center gap-2 text-[8px] text-zinc-500 font-mono">
+                                    <span class="font-bold text-[#35264f] flex items-center gap-1"><i class="ph ph-sparkle text-xs"></i> TraKerja AI</span>
                                     <span>•</span>
                                     <span>Just Now</span>
                                 </div>
                                 
-                                <p class="text-[9px] text-zinc-550 leading-relaxed">Berikut adalah ringkasan skor dan executive summary kecocokan profil Anda:</p>
+                                <p class="text-[9px] text-zinc-600 leading-relaxed">Berikut adalah ringkasan skor dan executive summary kecocokan profil Anda:</p>
                                 
                                 <!-- Executive Summary Bento Layout -->
-                                <div class="grid grid-cols-4 gap-3 bg-zinc-50/50 p-2 border border-zinc-150 rounded-lg">
+                                <div class="grid grid-cols-4 gap-3 bg-[#f8f6f0]/70 p-2.5 border border-[#dedbd6] rounded-lg">
                                     <!-- Score Circle -->
-                                    <div class="col-span-1 bg-white border border-zinc-200 rounded-md p-1.5 flex flex-col items-center justify-center select-none">
+                                    <div class="col-span-1 bg-white border border-[#dedbd6] rounded-md p-1.5 flex flex-col items-center justify-center select-none shadow-3xs">
                                         <div class="relative w-10 h-10 mb-1">
                                             <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                                                 <circle class="text-zinc-100" stroke-width="10" stroke="currentColor" fill="none" r="40" cx="50" cy="50" />
-                                                <circle class="text-zinc-900" stroke-width="10" stroke-dasharray="251.2" stroke-dashoffset="37.68" stroke-linecap="round" stroke="currentColor" fill="none" r="40" cx="50" cy="50" />
+                                                <circle class="text-[#35264f]" stroke-width="10" stroke-dasharray="251.2" stroke-dashoffset="37.68" stroke-linecap="round" stroke="currentColor" fill="none" r="40" cx="50" cy="50" />
                                             </svg>
                                             <div class="absolute inset-0 flex flex-col items-center justify-center">
                                                 <span class="text-[9px] font-black text-zinc-900 leading-none">85<span class="text-[6px] font-bold text-zinc-500">%</span></span>
@@ -905,12 +922,12 @@
                                     </div>
 
                                     <!-- Executive Summary Text -->
-                                    <div class="col-span-3 bg-zinc-900 text-white rounded-md p-2 flex flex-col justify-center">
+                                    <div class="col-span-3 bg-[#35264f] text-white rounded-md p-2.5 flex flex-col justify-center shadow-3xs">
                                         <div class="flex items-center gap-1 mb-1">
-                                            <i class="ph ph-lightning text-amber-400 text-[10px]"></i>
-                                            <span class="text-[6px] font-bold text-zinc-400 uppercase tracking-wider">Executive Summary</span>
+                                            <i class="ph ph-lightning text-amber-300 text-[10px]"></i>
+                                            <span class="text-[6px] font-bold text-purple-200 uppercase tracking-wider">Executive Summary</span>
                                         </div>
-                                        <p class="text-[8px] font-medium text-zinc-200 leading-normal italic">
+                                        <p class="text-[8px] font-medium text-purple-50 leading-normal italic">
                                             "Your technical background is impressive. Focus on quantifying your impact with metrics..."
                                         </p>
                                     </div>
@@ -920,24 +937,24 @@
 
                         <!-- Panel: AI Cover Letter -->
                         <div id="feature-pane-3" class="feature-pane hidden space-y-4 h-full flex flex-col justify-between">
-                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60 select-none shrink-0">
+                            <div class="flex items-center justify-between pb-2 border-b border-[#dedbd6]/80 select-none shrink-0">
                                 <div class="flex items-center gap-2">
                                     <div class="w-1.5 h-1.5 bg-amber-500 rounded-full"></div>
                                     <span class="font-extrabold text-zinc-800 text-[10px] uppercase tracking-wider">AI Cover Letter Builder</span>
                                 </div>
-                                <span class="text-[8px] text-zinc-400 font-semibold">Generated in 1.4s</span>
+                                <span class="text-[8px] text-zinc-500 font-semibold">Generated in 1.4s</span>
                             </div>
                             
-                            <div class="bg-white border border-zinc-200 rounded-lg p-3.5 shadow-3xs flex-1 mt-2.5 flex flex-col justify-between">
-                                <div class="border-b border-zinc-150/60 pb-2 mb-2 flex items-center justify-between">
+                            <div class="bg-white border border-[#dedbd6] rounded-lg p-3.5 shadow-3xs flex-1 mt-2.5 flex flex-col justify-between">
+                                <div class="border-b border-[#dedbd6]/70 pb-2 mb-2 flex items-center justify-between">
                                     <div>
                                         <h4 class="text-[10px] font-bold text-zinc-800 leading-none">Cover Letter - Gojek</h4>
-                                        <p class="text-[8px] text-zinc-450 mt-1 font-semibold flex items-center gap-1"><i class="ph ph-buildings"></i> PT GoTo Gojek Tokopedia</p>
+                                        <p class="text-[8px] text-zinc-500 mt-1 font-semibold flex items-center gap-1"><i class="ph ph-buildings"></i> PT GoTo Gojek Tokopedia</p>
                                     </div>
-                                    <span class="px-1.5 py-0.2 bg-zinc-50 border border-zinc-200 rounded text-[7.5px] font-bold text-zinc-500">Professional Tone</span>
+                                    <span class="px-1.5 py-0.2 bg-[#f8f6f0] border border-[#dedbd6] rounded text-[7.5px] font-bold text-zinc-600">Professional Tone</span>
                                 </div>
-                                <div class="bg-zinc-50/50 border border-zinc-200 rounded p-2.5 select-text font-serif text-[7.5px] leading-relaxed text-zinc-650 max-h-[105px] overflow-y-auto">
-                                    <p class="font-bold font-sans text-zinc-800 mb-1">Kepada Yth. Tim Rekrutmen Gojek Indonesia,</p>
+                                <div class="bg-[#f8f6f0]/50 border border-[#dedbd6] rounded p-2.5 select-text font-serif text-[7.5px] leading-relaxed text-zinc-700 max-h-[105px] overflow-y-auto">
+                                    <p class="font-bold font-sans text-zinc-900 mb-1">Kepada Yth. Tim Rekrutmen Gojek Indonesia,</p>
                                     <p class="mb-1">Saya sangat antusias untuk mengajukan lamaran sebagai Frontend Engineer. Dengan latar belakang saya di bidang pengembangan antarmuka web minimalis...</p>
                                     <p>Saya terbiasa berkolaborasi erat dengan tim produk menggunakan React dan TailwindCSS guna mewujudkan fungsionalitas UI yang konsisten dan responsif...</p>
                                 </div>
@@ -946,35 +963,35 @@
 
                         <!-- Panel: Career Analytics -->
                         <div id="feature-pane-4" class="feature-pane hidden space-y-3.5 h-full flex flex-col justify-between">
-                            <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60 select-none shrink-0">
+                            <div class="flex items-center justify-between pb-2 border-b border-[#dedbd6]/80 select-none shrink-0">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-5 h-5 bg-zinc-100 border border-zinc-200/60 rounded flex items-center justify-center text-zinc-500 shrink-0">
+                                    <div class="w-5 h-5 bg-[#f8f6f0] border border-[#dedbd6] rounded flex items-center justify-center text-zinc-600 shrink-0">
                                         <i class="ph ph-chart-line-up text-xs"></i>
                                     </div>
                                     <div>
                                         <span class="font-extrabold text-zinc-800 text-[10px] uppercase tracking-wider">Analytics Summary</span>
                                     </div>
                                 </div>
-                                <span class="px-1.5 py-0.5 bg-primary-50 text-zinc-800 text-[8px] font-bold rounded border border-primary-100/60 uppercase">Overview</span>
+                                <span class="px-1.5 py-0.5 bg-purple-50 text-[#35264f] text-[8px] font-bold rounded border border-purple-100 uppercase">Overview</span>
                             </div>
                             
                             <!-- Main Layout split matching summary/index.blade.php -->
                             <div class="flex-1 mt-2 select-none overflow-y-auto max-h-[190px] space-y-3 pr-1">
                                 <!-- Top Stats Cards -->
                                 <div class="grid grid-cols-3 gap-2">
-                                    <div class="bg-white rounded border border-zinc-200/60 p-2 flex items-center justify-between shadow-3xs">
+                                    <div class="bg-white rounded border border-[#dedbd6] p-2 flex items-center justify-between shadow-3xs">
                                         <div class="min-w-0">
                                             <p class="text-[7px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">Active Apps</p>
                                             <p class="text-[12px] font-black text-zinc-800 mt-1">12</p>
                                         </div>
                                     </div>
-                                    <div class="bg-white rounded border border-zinc-200/60 p-2 flex items-center justify-between shadow-3xs">
+                                    <div class="bg-white rounded border border-[#dedbd6] p-2 flex items-center justify-between shadow-3xs">
                                         <div class="min-w-0">
                                             <p class="text-[7px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">Offers</p>
                                             <p class="text-[12px] font-black text-zinc-800 mt-1">3</p>
                                         </div>
                                     </div>
-                                    <div class="bg-white rounded border border-zinc-200/60 p-2 flex items-center justify-between shadow-3xs">
+                                    <div class="bg-white rounded border border-[#dedbd6] p-2 flex items-center justify-between shadow-3xs">
                                         <div class="min-w-0">
                                             <p class="text-[7px] font-bold text-zinc-400 uppercase tracking-widest leading-none truncate">Interviews</p>
                                             <p class="text-[12px] font-black text-zinc-800 mt-1">6</p>
@@ -984,15 +1001,15 @@
 
                                 <!-- Highlights Row (Streak & Weekly Goal) -->
                                 <div class="grid grid-cols-2 gap-2">
-                                    <div class="bg-white border border-zinc-200/60 rounded p-2 flex items-center gap-2 shadow-3xs">
-                                        <div class="w-6 h-6 bg-orange-50/50 rounded flex items-center justify-center text-orange-600 shrink-0"><i class="ph ph-fire text-xs"></i></div>
+                                    <div class="bg-white border border-[#dedbd6] rounded p-2 flex items-center gap-2 shadow-3xs">
+                                        <div class="w-6 h-6 bg-amber-50 rounded flex items-center justify-center text-amber-600 shrink-0"><i class="ph ph-fire text-xs"></i></div>
                                         <div class="flex flex-col">
                                             <span class="text-[6.5px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-0.5">Daily Streak</span>
                                             <span class="text-[10px] font-bold text-zinc-800 leading-none">5 <span class="text-[6.5px] font-bold text-zinc-400">/ Best 14</span></span>
                                         </div>
                                     </div>
-                                    <div class="bg-white border border-zinc-200/60 rounded p-2 flex items-center gap-2 shadow-3xs">
-                                        <div class="w-6 h-6 bg-primary-50/50 rounded flex items-center justify-center text-primary-650 shrink-0"><i class="ph ph-target text-xs"></i></div>
+                                    <div class="bg-white border border-[#dedbd6] rounded p-2 flex items-center gap-2 shadow-3xs">
+                                        <div class="w-6 h-6 bg-purple-50 rounded flex items-center justify-center text-[#35264f] shrink-0"><i class="ph ph-target text-xs"></i></div>
                                         <div class="flex flex-col">
                                             <span class="text-[6.5px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-0.5">Weekly Goal</span>
                                             <span class="text-[10px] font-bold text-zinc-800 leading-none">4 <span class="text-[6.5px] font-bold text-zinc-400">/ 10</span></span>
@@ -1001,7 +1018,7 @@
                                 </div>
 
                                 <!-- Simulated Timeline Chart Area -->
-                                <div class="bg-white border border-zinc-200/60 rounded p-2 shadow-3xs">
+                                <div class="bg-white border border-[#dedbd6] rounded p-2 shadow-3xs">
                                     <div class="flex justify-between items-center mb-2">
                                         <span class="text-[7.5px] font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1"><i class="ph ph-chart-line text-[10px]"></i> Timeline Activity</span>
                                         <span class="text-[6.5px] text-zinc-400 font-semibold">weekly trend</span>
@@ -1010,13 +1027,13 @@
                                     <div class="h-14 flex items-end justify-between px-1 relative">
                                         <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 30" preserveAspectRatio="none">
                                             <!-- Chart Line -->
-                                            <path d="M 5,25 Q 25,5 45,18 T 85,10 T 100,5" fill="none" stroke="#4f46e5" stroke-width="1.5"></path>
-                                            <path d="M 5,25 Q 25,5 45,18 T 85,10 T 100,5 L 100,30 L 5,30 Z" fill="rgba(79, 70, 229, 0.04)"></path>
+                                            <path d="M 5,25 Q 25,5 45,18 T 85,10 T 100,5" fill="none" stroke="#35264f" stroke-width="1.5"></path>
+                                            <path d="M 5,25 Q 25,5 45,18 T 85,10 T 100,5 L 100,30 L 5,30 Z" fill="rgba(53, 38, 79, 0.05)"></path>
                                             
                                             <path d="M 5,28 Q 30,15 55,25 T 85,22 T 100,18" fill="none" stroke="#10b981" stroke-width="1.5"></path>
                                             <path d="M 5,28 Q 30,15 55,25 T 85,22 T 100,18 L 100,30 L 5,30 Z" fill="rgba(16, 185, 129, 0.02)"></path>
                                         </svg>
-                                        <div class="w-full flex justify-between text-[6.5px] text-zinc-400 font-bold mt-auto pt-14 border-t border-zinc-100 z-10 select-none">
+                                        <div class="w-full flex justify-between text-[6.5px] text-zinc-400 font-bold mt-auto pt-14 border-t border-[#dedbd6]/50 z-10 select-none">
                                             <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span>
                                         </div>
                                     </div>
@@ -1030,7 +1047,7 @@
     </section>
 
     {{-- ============ HOW IT WORKS (Notion interactive switcher) ============ --}}
-    <section class="py-20 sm:py-24 bg-white border-b border-zinc-100">
+    <section class="py-20 sm:py-24 bg-[#fdfcf9] border-b border-[#dedbd6]/80">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-14 reveal">
                 <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900">Start in 3 simple steps.</h2>
@@ -1039,23 +1056,23 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                 <!-- Selectors -->
                 <div class="lg:col-span-5 space-y-4 reveal">
-                    <div class="how-it-works-item bento-card overflow-hidden cursor-pointer border border-zinc-200/80 bg-zinc-50/50 hover:bg-zinc-50 transition-all duration-350" id="hiw-item-1" onclick="toggleHowItWorks(1)">
+                    <div class="how-it-works-item bento-card overflow-hidden cursor-pointer border border-[#dedbd6] bg-[#f8f6f0]/70 hover:bg-[#f8f6f0] transition-all duration-350" id="hiw-item-1" onclick="toggleHowItWorks(1)">
                         <div class="p-5 flex items-start gap-4">
                             <!-- Notion Settings/Gear icon -->
                             <div class="w-9 h-9 rounded-full border border-blue-600 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
                                 <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                                     <circle cx="12" cy="12" r="3"></circle>
-                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83-2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                                 </svg>
                             </div>
                             <div>
                                 <h3 class="font-extrabold text-zinc-900 text-xs tracking-tight">Register & Set Career Profile</h3>
-                                <p class="text-[10px] font-semibold text-zinc-500 mt-1 leading-relaxed">Fill out your profile once. This information is automatically used to customize application documents.</p>
+                                <p class="text-[10px] font-semibold text-zinc-600 mt-1 leading-relaxed">Fill out your profile once. This information is automatically used to customize application documents.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="how-it-works-item bento-card overflow-hidden cursor-pointer border border-zinc-200/40 bg-white hover:bg-zinc-50 transition-all duration-350" id="hiw-item-2" onclick="toggleHowItWorks(2)">
+                    <div class="how-it-works-item bento-card overflow-hidden cursor-pointer border border-[#dedbd6]/50 bg-white/80 hover:bg-[#f8f6f0]/50 transition-all duration-350" id="hiw-item-2" onclick="toggleHowItWorks(2)">
                         <div class="p-5 flex items-start gap-4">
                             <!-- Notion Calendar icon -->
                             <div class="w-9 h-9 rounded-full border border-red-500 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
@@ -1068,12 +1085,12 @@
                             </div>
                             <div>
                                 <h3 class="font-bold text-zinc-700 text-xs tracking-tight">Track Job Applications</h3>
-                                <p class="text-[10px] font-semibold text-zinc-400 mt-1 leading-relaxed">Add applications manually or via PDF upload. Monitor interview status and job offers easily.</p>
+                                <p class="text-[10px] font-semibold text-zinc-500 mt-1 leading-relaxed">Add applications manually or via PDF upload. Monitor interview status and job offers easily.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="how-it-works-item bento-card overflow-hidden cursor-pointer border border-zinc-200/40 bg-white hover:bg-zinc-50 transition-all duration-350" id="hiw-item-3" onclick="toggleHowItWorks(3)">
+                    <div class="how-it-works-item bento-card overflow-hidden cursor-pointer border border-[#dedbd6]/50 bg-white/80 hover:bg-[#f8f6f0]/50 transition-all duration-350" id="hiw-item-3" onclick="toggleHowItWorks(3)">
                         <div class="p-5 flex items-start gap-4">
                             <!-- Notion Shield/Verified check icon -->
                             <div class="w-9 h-9 rounded-full border border-amber-500 bg-white flex items-center justify-center shrink-0 shadow-3xs text-zinc-900">
@@ -1084,7 +1101,7 @@
                             </div>
                             <div>
                                 <h3 class="font-bold text-zinc-700 text-xs tracking-tight">Optimize & Win Your Dream Job</h3>
-                                <p class="text-[10px] font-semibold text-zinc-400 mt-1 leading-relaxed">Use career analytics, AI CV Analyzer, and Cover Letter Generator to accelerate your path.</p>
+                                <p class="text-[10px] font-semibold text-zinc-500 mt-1 leading-relaxed">Use career analytics, AI CV Analyzer, and Cover Letter Generator to accelerate your path.</p>
                             </div>
                         </div>
                     </div>
@@ -1094,18 +1111,18 @@
                 <div class="lg:col-span-7 relative flex flex-col items-center justify-center reveal py-4">
                     <div class="relative w-full max-w-[580px] mx-auto pl-4 lg:pl-10">
                         <!-- MacBook Screen/Lid Frame -->
-                        <div class="relative rounded-t-2xl border-4 border-zinc-950 bg-zinc-950 p-[5px] shadow-2xl aspect-[16/10] overflow-hidden">
+                        <div class="relative rounded-t-2xl border-4 border-zinc-900 bg-zinc-900 p-[5px] shadow-2xl aspect-[16/10] overflow-hidden">
                             <!-- Internal Screen Container -->
-                            <div class="relative w-full h-full rounded-t-xl overflow-hidden bg-white border border-zinc-900">
+                            <div class="relative w-full h-full rounded-t-xl overflow-hidden bg-[#fdfcf9] border border-zinc-900">
                                 <img id="how-it-works-img-1" src="{{ asset('images/sslogin.png') }}" alt="Register & setup profile" class="how-it-works-image absolute inset-0 w-full h-full object-cover object-top rounded-t-xl transition-opacity duration-300" style="opacity:1;">
                                 <img id="how-it-works-img-2" src="{{ asset('images/sstrack.png') }}" alt="Manage applications" class="how-it-works-image absolute inset-0 w-full h-full object-cover object-top rounded-t-xl transition-opacity duration-300 hidden opacity-0">
                                 <img id="how-it-works-img-3" src="{{ asset('images/ssoptimasi.png') }}" alt="Analyze & optimize" class="how-it-works-image absolute inset-0 w-full h-full object-cover object-top rounded-t-xl transition-opacity duration-300 hidden opacity-0">
                             </div>
                         </div>
                         <!-- MacBook Base/Keyboard Lip -->
-                        <div class="relative -mt-0.5 w-[114%] -ml-[7%] h-3 bg-zinc-300 border-t border-zinc-200 rounded-b-xl shadow-xl flex items-center justify-center z-10">
+                        <div class="relative -mt-0.5 w-[114%] -ml-[7%] h-3 bg-[#dedbd6] border-t border-[#c9c6c0] rounded-b-xl shadow-xl flex items-center justify-center z-10">
                             <!-- Display Opening Notch -->
-                            <div class="w-16 h-1.5 bg-zinc-450 rounded-b-md -mt-1 shadow-inner"></div>
+                            <div class="w-16 h-1.5 bg-[#aba7a0] rounded-b-md -mt-1 shadow-inner"></div>
                         </div>
                         <!-- MacBook Shadow/Base feet -->
                         <div class="w-[84%] mx-auto h-2 bg-zinc-950/20 rounded-full blur-sm"></div>
@@ -1116,28 +1133,28 @@
     </section>
 
     {{-- ============ TELEGRAM COMMUNITY SECTION ============ --}}
-    <section class="py-24 bg-white border-b border-zinc-100 relative select-none">
+    <section class="py-24 bg-[#f8f6f0]/60 border-b border-[#dedbd6]/80 relative select-none">
         <div class="max-w-3xl mx-auto px-4 text-center reveal">
             <!-- Telegram Notion Icon Badge (Clean Borderless Circular) -->
-            <div class="w-14 h-14 rounded-full bg-blue-50/70 flex items-center justify-center mx-auto mb-6">
-                <i class="ph ph-telegram-logo text-blue-600 text-3xl"></i>
+            <div class="w-14 h-14 rounded-full bg-[#2383e2]/10 flex items-center justify-center mx-auto mb-6">
+                <i class="ph ph-telegram-logo text-[#2383e2] text-3xl"></i>
             </div>
             
-            <h2 class="text-3xl sm:text-4xl font-black text-zinc-950 tracking-tight mt-4 mb-4 leading-tight">
+            <h2 class="text-3xl sm:text-4xl font-black text-zinc-900 tracking-tight mt-4 mb-4 leading-tight">
                 Join Our Job Seeker Community
             </h2>
             
-            <p class="text-xs sm:text-sm font-semibold text-zinc-400 mb-8 leading-relaxed max-w-xl mx-auto">
+            <p class="text-xs sm:text-sm font-semibold text-zinc-500 mb-8 leading-relaxed max-w-xl mx-auto">
                 Stay ahead with real-time job alerts, daily vacancy updates, CV reviews with peers, and share strategic career insights with thousands of active candidates instantly.
             </p>
             
             <!-- Mock Community Members Avatars & Info -->
             <div class="flex flex-col items-center justify-center gap-3 mb-8">
                 <div class="flex items-center -space-x-2">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100&q=80" alt="Community Member" class="w-7 h-7 rounded-full border-2 border-white object-cover shadow-3xs z-30">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=80" alt="Community Member" class="w-7 h-7 rounded-full border-2 border-white object-cover shadow-3xs z-20">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&h=100&q=80" alt="Community Member" class="w-7 h-7 rounded-full border-2 border-white object-cover shadow-3xs z-10">
-                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&h=100&q=80" alt="Community Member" class="w-7 h-7 rounded-full border-2 border-white object-cover shadow-3xs z-0">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100&q=80" alt="Community Member" class="w-7 h-7 rounded-full border-2 border-[#f8f6f0] object-cover shadow-3xs z-30">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=80" alt="Community Member" class="w-7 h-7 rounded-full border-2 border-[#f8f6f0] object-cover shadow-3xs z-20">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&h=100&q=80" alt="Community Member" class="w-7 h-7 rounded-full border-2 border-[#f8f6f0] object-cover shadow-3xs z-10">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&h=100&q=80" alt="Community Member" class="w-7 h-7 rounded-full border-2 border-[#f8f6f0] object-cover shadow-3xs z-0">
                 </div>
                 <p class="text-[9.5px] font-black text-zinc-400 uppercase tracking-widest">
                     ⚡️ Active discussions happening daily
@@ -1146,7 +1163,7 @@
             
             <div class="inline-flex">
                 <a href="https://t.me/HubTrakerja" target="_blank" rel="noopener noreferrer" 
-                   class="px-8 py-3.5 bg-[#0066cc] hover:bg-[#0052a3] text-white text-xs font-bold rounded-lg transition-colors shadow-3xs hover:shadow-2xs text-center flex items-center justify-center gap-2">
+                   class="px-8 py-3.5 bg-[#2383e2] hover:bg-[#1c72cb] text-white text-xs font-bold rounded-lg transition-colors shadow-3xs hover:shadow-2xs text-center flex items-center justify-center gap-2">
                     <i class="ph-bold ph-paper-plane-tilt text-sm"></i>
                     Connect to t.me/HubTrakerja
                 </a>
@@ -1155,7 +1172,7 @@
     </section>
 
     {{-- ============ PRICING ============ --}}
-    <section class="py-20 sm:py-24 bg-zinc-50/50 border-b border-zinc-100" id="pricing">
+    <section class="py-20 sm:py-24 bg-[#fdfcf9] border-b border-[#dedbd6]/80" id="pricing">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-14 reveal">
                 <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 mt-3">Simple pricing. No hidden fees.</h2>
@@ -1165,29 +1182,29 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch reveal">
                 
                 <!-- Free Tier -->
-                <div class="bento-card p-6 flex flex-col justify-between transition-all bg-white hover:border-zinc-300">
+                <div class="bento-card p-6 flex flex-col justify-between transition-all bg-white hover:border-zinc-400 border border-[#dedbd6] shadow-3xs">
                     <div>
                         <div class="flex items-center justify-between">
                             <h3 class="font-extrabold text-zinc-400 text-[10px] uppercase tracking-widest">Free Standard</h3>
-                            <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-[8px] font-bold rounded uppercase">Free</span>
+                            <span class="px-2 py-0.5 bg-[#f8f6f0] text-zinc-600 border border-[#dedbd6] text-[8px] font-bold rounded uppercase">Free</span>
                         </div>
                         <p class="text-3xl font-black text-zinc-950 mt-4 mb-1">Free</p>
                         <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-6">Lifetime Access</p>
                         
-                        <div class="border-t border-zinc-200/70 pt-6 space-y-3.5 text-xs font-semibold text-zinc-650">
-                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>Up to 25 job trackers</span></div>
-                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>2 standard ATS templates</span></div>
-                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>1 free AI Resume credit</span></div>
-                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>3 Cover Letter credits</span></div>
+                        <div class="border-t border-[#dedbd6]/80 pt-6 space-y-3.5 text-xs font-semibold text-zinc-700">
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-600 text-sm font-bold"></i> <span>Up to 25 job trackers</span></div>
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-600 text-sm font-bold"></i> <span>2 standard ATS templates</span></div>
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-600 text-sm font-bold"></i> <span>1 free AI Resume credit</span></div>
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-600 text-sm font-bold"></i> <span>3 Cover Letter credits</span></div>
                         </div>
                     </div>
 
-                    <a href="{{ route('register') }}" class="w-full mt-8 py-2.5 bg-zinc-50 hover:bg-zinc-100 text-zinc-800 border border-zinc-250 rounded-lg text-xs font-bold transition text-center shadow-3xs">Get Started Free</a>
+                    <a href="{{ route('register') }}" class="w-full mt-8 py-2.5 bg-[#f8f6f0] hover:bg-[#ede9e1] text-zinc-800 border border-[#dedbd6] rounded-lg text-xs font-bold transition text-center shadow-3xs">Get Started Free</a>
                 </div>
 
                 <!-- Premium Tier -->
-                <div class="bento-card p-6 flex flex-col justify-between relative border-zinc-350 shadow-xs hover:border-zinc-900/40 transition-all bg-[#fafafa]">
-                    <span class="absolute -top-3 left-6 bg-zinc-900 text-white text-[8px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider select-none">Best Value</span>
+                <div class="bento-card p-6 flex flex-col justify-between relative border-2 border-[#35264f] shadow-sm hover:shadow-md transition-all bg-[#faf8f4]">
+                    <span class="absolute -top-3 left-6 bg-[#35264f] text-white text-[8px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider select-none shadow-3xs">Best Value</span>
                     <div>
                         <div class="flex items-center justify-between mt-1">
                             <h3 class="font-extrabold text-zinc-900 text-[10px] uppercase tracking-widest">Premium Pro</h3>
@@ -1199,7 +1216,7 @@
                         </div>
                         <p class="text-[9px] font-bold text-emerald-600 uppercase tracking-widest mb-6">One-time, lifetime access</p>
 
-                        <div class="border-t border-zinc-200/70 pt-6 space-y-3.5 text-xs font-semibold text-zinc-700">
+                        <div class="border-t border-[#dedbd6]/80 pt-6 space-y-3.5 text-xs font-semibold text-zinc-800">
                             <div class="flex items-center gap-2 font-bold"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>Unlimited job trackers</span></div>
                             <div class="flex items-center gap-2 font-bold"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>50+ premium templates</span></div>
                             <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>Bulk job importer (.csv)</span></div>
@@ -1207,11 +1224,11 @@
                         </div>
                     </div>
 
-                    <a href="{{ route('payment.index') }}" class="w-full mt-8 py-2.5 bg-[#0066cc] hover:bg-[#0052a3] text-white rounded-lg text-xs font-bold transition text-center shadow-sm">Upgrade to Premium Pro</a>
+                    <a href="{{ route('payment.index') }}" class="w-full mt-8 py-2.5 bg-[#35264f] hover:bg-[#281c3e] text-white rounded-lg text-xs font-bold transition text-center shadow-sm">Upgrade to Premium Pro</a>
                 </div>
 
                 <!-- Add-On Pack -->
-                <div class="bento-card p-6 flex flex-col justify-between transition-all bg-white hover:border-zinc-300 border-zinc-200">
+                <div class="bento-card p-6 flex flex-col justify-between transition-all bg-white hover:border-zinc-400 border border-[#dedbd6] shadow-3xs">
                     <div>
                         <div class="flex items-center justify-between">
                             <h3 class="font-extrabold text-zinc-400 text-[10px] uppercase tracking-widest">Top Up Add-On</h3>
@@ -1220,22 +1237,22 @@
                         <p class="text-3xl font-black text-zinc-950 mt-4 mb-1">Rp 14.999</p>
                         <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-6">Kredit Langsung Aktif</p>
                         
-                        <div class="border-t border-zinc-200/70 pt-6 space-y-3.5 text-xs font-semibold text-zinc-650">
-                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>10 Kredit AI Analyzer</span></div>
-                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>15 Kredit Cover Letter</span></div>
-                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>5 Kredit AI Photo Studio</span></div>
-                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>Kredit Permanen (No Expired)</span></div>
+                        <div class="border-t border-[#dedbd6]/80 pt-6 space-y-3.5 text-xs font-semibold text-zinc-700">
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-600 text-sm font-bold"></i> <span>10 Kredit AI Analyzer</span></div>
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-600 text-sm font-bold"></i> <span>15 Kredit Cover Letter</span></div>
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-600 text-sm font-bold"></i> <span>5 Kredit AI Photo Studio</span></div>
+                            <div class="flex items-center gap-2"><i class="ph ph-check text-emerald-600 text-sm font-bold"></i> <span>Kredit Permanen (No Expired)</span></div>
                         </div>
                     </div>
 
-                    <a href="{{ route('payment.topup') }}" class="w-full mt-8 py-2.5 bg-white hover:bg-zinc-50 text-zinc-700 border border-zinc-250 rounded-lg text-xs font-bold transition text-center shadow-3xs">Buy Add-On Pack</a>
+                    <a href="{{ route('payment.topup') }}" class="w-full mt-8 py-2.5 bg-[#f8f6f0] hover:bg-[#ede9e1] text-zinc-800 border border-[#dedbd6] rounded-lg text-xs font-bold transition text-center shadow-3xs">Buy Add-On Pack</a>
                 </div>
             </div>
         </div>
     </section>
 
     {{-- ============ TESTIMONIALS ============ --}}
-    <section class="py-20 sm:py-24 bg-white border-b border-zinc-100" id="testimonials">
+    <section class="py-20 sm:py-24 bg-[#f8f6f0]/60 border-b border-[#dedbd6]/80" id="testimonials">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="mb-12 reveal">
                 <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-950 font-black tracking-tight">Trusted by candidates who land.</h2>
@@ -1322,16 +1339,16 @@
 
                 <!-- Carousel Indicators (Mobile Only) -->
                 <div class="flex md:hidden items-center justify-center gap-2 mt-6">
-                    <button class="w-2.5 h-2.5 rounded-full bg-zinc-900 transition-colors" id="test-dot-1" onclick="scrollTestimonial(0)"></button>
-                    <button class="w-2.5 h-2.5 rounded-full bg-zinc-200 transition-colors" id="test-dot-2" onclick="scrollTestimonial(1)"></button>
-                    <button class="w-2.5 h-2.5 rounded-full bg-zinc-200 transition-colors" id="test-dot-3" onclick="scrollTestimonial(2)"></button>
+                    <button class="w-2.5 h-2.5 rounded-full bg-[#35264f] transition-colors" id="test-dot-1" onclick="scrollTestimonial(0)"></button>
+                    <button class="w-2.5 h-2.5 rounded-full bg-[#dedbd6] transition-colors" id="test-dot-2" onclick="scrollTestimonial(1)"></button>
+                    <button class="w-2.5 h-2.5 rounded-full bg-[#dedbd6] transition-colors" id="test-dot-3" onclick="scrollTestimonial(2)"></button>
                 </div>
             </div>
         </div>
     </section>
 
     {{-- ============ FAQ ============ --}}
-    <section class="py-20 sm:py-24 bg-zinc-50/50 border-b border-zinc-100" id="faq">
+    <section class="py-20 sm:py-24 bg-[#fdfcf9] border-b border-[#dedbd6]/80" id="faq">
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
             <h2 class="text-center notion-h1 text-2xl sm:text-3xl text-zinc-900 mb-10 reveal">Frequently Asked Questions</h2>
             
@@ -1365,7 +1382,7 @@
                     ];
                 @endphp
                 @foreach ($faqs as $faq)
-                    <div class="bento-card bg-[#fafafa] hover:bg-white border border-zinc-200 transition-all rounded-lg overflow-hidden">
+                    <div class="bento-card bg-white hover:bg-[#fcfbf9] border border-[#dedbd6] transition-all rounded-lg overflow-hidden shadow-3xs">
                         <button class="w-full text-left p-4 flex justify-between items-center group focus:outline-none" onclick="toggleFaq(this)">
                             <span class="text-xs font-bold text-zinc-800 group-hover:text-zinc-950 transition flex items-center gap-2">
                                 <i class="ph ph-question text-zinc-400 text-sm"></i>
@@ -1375,7 +1392,7 @@
                                 <i class="ph ph-caret-down text-sm font-bold"></i>
                             </span>
                         </button>
-                        <div class="faq-answer hidden px-4 pb-4 text-[10.5px] font-semibold text-zinc-500 leading-relaxed border-t border-zinc-100 pt-3 bg-white">
+                        <div class="faq-answer hidden px-4 pb-4 text-[10.5px] font-semibold text-zinc-600 leading-relaxed border-t border-[#dedbd6]/60 pt-3 bg-white">
                             {{ $faq[1] }}
                         </div>
                     </div>
@@ -1385,21 +1402,21 @@
     </section>
 
     {{-- ============ CTA BANNER ============ --}}
-    <section class="py-28 bg-white border-b border-zinc-100 select-none">
+    <section class="py-28 bg-[#f8f6f0]/60 border-b border-[#dedbd6]/80 select-none">
         <div class="max-w-2xl mx-auto px-4 text-center reveal">
-            <h2 class="text-4xl sm:text-5xl font-black text-zinc-950 tracking-tight leading-none mb-4">Get started today.</h2>
-            <p class="text-sm sm:text-base font-semibold text-zinc-400 mb-8 leading-relaxed max-w-lg mx-auto">Build ATS-friendly CVs, track applications, and optimize your path with AI.</p>
+            <h2 class="text-4xl sm:text-5xl font-black text-zinc-900 tracking-tight leading-none mb-4">Get started today.</h2>
+            <p class="text-sm sm:text-base font-semibold text-zinc-500 mb-8 leading-relaxed max-w-lg mx-auto">Build ATS-friendly CVs, track applications, and optimize your path with AI.</p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <a href="{{ route('register') }}" class="w-full sm:w-auto px-6 py-3 bg-[#0066cc] hover:bg-[#0052a3] text-white text-xs sm:text-sm font-bold rounded-lg transition-colors shadow-sm text-center">Get TraKerja free</a>
-                <a href="#fitur" class="w-full sm:w-auto px-6 py-3 bg-white border border-zinc-250 text-zinc-700 hover:bg-zinc-50 text-xs sm:text-sm font-bold rounded-lg transition-colors shadow-3xs text-center">Explore features</a>
+                <a href="{{ route('register') }}" class="w-full sm:w-auto px-6 py-3 bg-[#35264f] hover:bg-[#281c3e] text-white text-xs sm:text-sm font-bold rounded-lg transition-colors shadow-sm text-center">Get TraKerja free</a>
+                <a href="#fitur" class="w-full sm:w-auto px-6 py-3 bg-white border border-[#dedbd6] text-zinc-700 hover:bg-[#f8f6f0] text-xs sm:text-sm font-bold rounded-lg transition-colors shadow-3xs text-center">Explore features</a>
             </div>
         </div>
     </section>
 
     {{-- ============ FOOTER ============ --}}
-    <footer class="bg-zinc-50/60 border-t border-zinc-200/50 py-16 text-[11px] font-semibold text-zinc-500">
+    <footer class="bg-[#f4f2ec] border-t border-[#dedbd6] py-16 text-[11px] font-semibold text-zinc-600">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
-            <div class="grid grid-cols-2 md:grid-cols-12 gap-x-8 gap-y-10 pb-12 border-b border-zinc-200/50">
+            <div class="grid grid-cols-2 md:grid-cols-12 gap-x-8 gap-y-10 pb-12 border-b border-[#dedbd6]">
                 
                 <!-- Brand Column -->
                 <div class="col-span-2 md:col-span-4 space-y-4">
@@ -1512,15 +1529,15 @@
                 const h3 = item.querySelector('h3');
                 const p = item.querySelector('p');
                 if (currentIdx === step) {
-                    item.classList.remove('border-zinc-200/40', 'bg-white');
-                    item.classList.add('border-zinc-200/80', 'bg-zinc-50/50');
+                    item.classList.remove('border-[#dedbd6]/50', 'bg-white/80');
+                    item.classList.add('border-[#dedbd6]', 'bg-[#f8f6f0]/70');
                     if (h3) h3.className = 'font-extrabold text-zinc-900 text-xs tracking-tight';
-                    if (p) p.className = 'text-[10px] font-semibold text-zinc-500 mt-1 leading-relaxed';
+                    if (p) p.className = 'text-[10px] font-semibold text-zinc-600 mt-1 leading-relaxed';
                 } else {
-                    item.classList.remove('border-zinc-200/80', 'bg-zinc-50/50');
-                    item.classList.add('border-zinc-200/40', 'bg-white');
+                    item.classList.remove('border-[#dedbd6]', 'bg-[#f8f6f0]/70');
+                    item.classList.add('border-[#dedbd6]/50', 'bg-white/80');
                     if (h3) h3.className = 'font-bold text-zinc-700 text-xs tracking-tight';
-                    if (p) p.className = 'text-[10px] font-semibold text-zinc-400 mt-1 leading-relaxed';
+                    if (p) p.className = 'text-[10px] font-semibold text-zinc-500 mt-1 leading-relaxed';
                 }
             });
 
@@ -1547,11 +1564,11 @@
                 const p = item.querySelector('p');
                 if (currentIdx === step) {
                     item.classList.remove('border-zinc-200/10', 'bg-transparent');
-                    item.classList.add('border-zinc-200/80', 'bg-zinc-50/50');
+                    item.classList.add('border-[#dedbd6]', 'bg-white');
                     if (h4) h4.className = 'font-extrabold text-zinc-800 text-xs leading-tight';
-                    if (p) p.className = 'text-[10px] text-zinc-450 mt-0.5 leading-normal hidden md:block';
+                    if (p) p.className = 'text-[10px] text-zinc-500 mt-0.5 leading-normal hidden md:block';
                 } else {
-                    item.classList.remove('border-zinc-200/80', 'bg-zinc-50/50');
+                    item.classList.remove('border-[#dedbd6]', 'bg-white');
                     item.classList.add('border-zinc-200/10', 'bg-transparent');
                     if (h4) h4.className = 'font-bold text-zinc-650 text-xs leading-tight';
                     if (p) p.className = 'text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block';
@@ -1593,11 +1610,11 @@
                         const dot = document.getElementById(`test-dot-${i}`);
                         if (dot) {
                             if (i === (index + 1)) {
-                                dot.classList.remove('bg-zinc-200');
-                                dot.classList.add('bg-zinc-900');
+                                dot.classList.remove('bg-[#dedbd6]');
+                                dot.classList.add('bg-[#35264f]');
                             } else {
-                                dot.classList.remove('bg-zinc-900');
-                                dot.classList.add('bg-zinc-200');
+                                dot.classList.remove('bg-[#35264f]');
+                                dot.classList.add('bg-[#dedbd6]');
                             }
                         }
                     }
@@ -1609,11 +1626,11 @@
             if (nav) {
                 window.addEventListener('scroll', () => {
                     if (window.scrollY > 15) {
-                        nav.classList.add('shadow-[0_2px_20px_-10px_rgba(0,0,0,0.05)]', 'border-zinc-200/80');
-                        nav.classList.remove('border-zinc-200/60');
+                        nav.classList.add('shadow-[0_2px_20px_-10px_rgba(0,0,0,0.05)]', 'border-[#dedbd6]');
+                        nav.classList.remove('border-[#dedbd6]/60');
                     } else {
-                        nav.classList.remove('shadow-[0_2px_20px_-10px_rgba(0,0,0,0.05)]', 'border-zinc-200/80');
-                        nav.classList.add('border-zinc-200/60');
+                        nav.classList.remove('shadow-[0_2px_20px_-10px_rgba(0,0,0,0.05)]', 'border-[#dedbd6]');
+                        nav.classList.add('border-[#dedbd6]/60');
                     }
                 });
             }
@@ -1639,11 +1656,11 @@
                     const p = item.querySelector('p');
                     if (currentIdx === step) {
                         item.classList.remove('border-zinc-200/10', 'bg-transparent');
-                        item.classList.add('border-zinc-200/80', 'bg-zinc-50/50');
+                        item.classList.add('border-[#dedbd6]', 'bg-white');
                         if (h4) h4.className = 'font-extrabold text-zinc-800 text-xs leading-tight';
-                        if (p) p.className = 'text-[10px] text-zinc-450 mt-0.5 leading-normal hidden md:block';
+                        if (p) p.className = 'text-[10px] text-zinc-500 mt-0.5 leading-normal hidden md:block';
                     } else {
-                        item.classList.remove('border-zinc-200/80', 'bg-zinc-50/50');
+                        item.classList.remove('border-[#dedbd6]', 'bg-white');
                         item.classList.add('border-zinc-200/10', 'bg-transparent');
                         if (h4) h4.className = 'font-bold text-zinc-650 text-xs leading-tight';
                         if (p) p.className = 'text-[10px] text-zinc-400 mt-0.5 leading-normal hidden md:block';
