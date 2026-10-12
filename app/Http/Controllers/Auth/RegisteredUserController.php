@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\WelcomeMail;
-use App\Mail\NewUserRegistrationMail;
 use App\Models\User;
 use App\Models\Setting;
 use Illuminate\Auth\Events\Registered;
