@@ -26,7 +26,7 @@ class BrandTransformationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Kenalan sama TraKerja New Look: Hunting kerja makin sat-set dan nyaman!',
+            subject: 'Ada yang Baru Nyapa Kamu di Dashboard 👋',
         );
     }
 

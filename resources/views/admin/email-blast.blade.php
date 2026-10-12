@@ -11,7 +11,7 @@
 
     $templates = [
         'Product announcements' => [
-            'brand_transformation' => 'TraKerja New Look (Pembaruan Antarmuka)',
+            'brand_transformation' => 'Suasana Baru TraKerja (Teman Perjuangan Karier)',
             'product_update' => 'Product update',
             'new_vibe' => 'New workspace',
             'ai_analyzer' => 'AI analyzer',

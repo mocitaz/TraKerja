@@ -1,6 +1,6 @@
 window.emailBlastWorkspace = function (routes) {
     const templateLabels = {
-        brand_transformation: 'TraKerja New Look (Pembaruan Antarmuka)',
+        brand_transformation: 'Suasana Baru TraKerja (Teman Perjuangan Karier)',
         product_update: 'Product update',
         new_vibe: 'New workspace',
         ai_analyzer: 'AI analyzer',
@@ -39,7 +39,7 @@ window.emailBlastWorkspace = function (routes) {
         templateLabel() { return templateLabels[this.emailType] || this.$refs.composer?.querySelector('[name=email_type]')?.selectedOptions[0]?.textContent || this.emailType; },
         templateDescription() {
             const descriptions = {
-                brand_transformation: 'Kenalan sama tampilan baru TraKerja yang lebih fresh, adem, dan sat-set buat nemenin cari kerja.',
+                brand_transformation: 'Sapaan hangat dan pengenalan suasana baru TraKerja yang lebih ramah, adem, dan nemenin cari kerja.',
                 product_update: 'Rangkuman pembaruan fitur platform terbaru TraKerja.',
                 new_vibe: 'Pemberitahuan pembaruan workspace dan papan pelacakan lamaran.',
                 ai_analyzer: 'Pengumuman fasilitas uji coba gratis AI ATS Resume Scanner.',
