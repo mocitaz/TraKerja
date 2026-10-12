@@ -84,7 +84,7 @@
                     <tr>
                         <th scope="col">Person</th>
                         <th scope="col" class="text-center" style="text-align: center;">Event & Action</th>
-                        <th scope="col" style="text-align: left;">Recorded At</th>
+                        <th scope="col" class="text-center" style="text-align: center;">Recorded At</th>
                         <th scope="col" class="text-center" style="text-align: center;">Status</th>
                         <th scope="col" class="text-center" style="text-align: center;">Details</th>
                     </tr>
@@ -136,22 +136,22 @@
                                 </div>
                             </td>
 
-                            <!-- Column 2: Event & Description -->
+                            <!-- Column 2: Event & Description (Inline / Sebaris) -->
                             <td class="text-center" style="text-align: center; vertical-align: middle;">
-                                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 4px; min-height: 40px;">
-                                    <span class="au-chip au-chip--applied" style="font-size: 10px; padding: 2.5px 8px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; margin: 0 auto;">
+                                <div style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; max-width: 100%;">
+                                    <span class="au-chip au-chip--applied" style="font-size: 10px; padding: 2.5px 8px; display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0;">
                                         <i class="ph {{ $eventIcon }}"></i>
                                         {{ ucwords(str_replace('_', ' ', $activity->activity_type)) }}
                                     </span>
-                                    <p style="margin: 0; font-size: 11.5px; line-height: 1.4; color: #5c5668; text-align: center; max-width: 380px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                    <span style="font-size: 11.5px; line-height: 1.4; color: #5c5668; text-align: left; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                                         {{ $activity->description }}
-                                    </p>
+                                    </span>
                                 </div>
                             </td>
 
-                            <!-- Column 3: Recorded At -->
-                            <td style="text-align: left; vertical-align: middle;">
-                                <div style="display: flex; flex-direction: column; gap: 2px;">
+                            <!-- Column 3: Recorded At (Center) -->
+                            <td class="text-center" style="text-align: center; vertical-align: middle;">
+                                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 2px;">
                                     <span style="font-size: 11px; font-weight: 600; color: #34313e; font-variant-numeric: tabular-nums;">
                                         {{ $activity->created_at->diffForHumans() }}
                                     </span>
