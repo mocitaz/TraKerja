@@ -84,8 +84,8 @@
                 <thead>
                     <tr>
                         <th scope="col">Member</th>
-                        <th scope="col">Membership Plan</th>
-                        <th scope="col">Job Applications</th>
+                        <th scope="col" class="text-center">Membership Plan</th>
+                        <th scope="col" class="text-center">Job Applications</th>
                         <th scope="col">Last Active</th>
                         <th scope="col">Actions</th>
                     </tr>
@@ -107,7 +107,7 @@
                             </td>
 
                             <!-- Column 2: Plan & Status -->
-                            <td>
+                            <td class="text-center">
                                 <div class="au-plan-container">
                                     @if($user->isPremium())
                                         <span class="au-plan-badge au-plan-badge--premium">
@@ -130,7 +130,7 @@
                             </td>
 
                             <!-- Column 3: Applications Activity (Applied & Declined) -->
-                            <td>
+                            <td class="text-center">
                                 <div class="au-app-stats">
                                     <span class="au-chip au-chip--applied" title="Total jobs applied">
                                         <i class="ph ph-paper-plane-tilt"></i>

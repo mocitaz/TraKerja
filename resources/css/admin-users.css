@@ -440,16 +440,25 @@
     border: 1px solid #d8ebd9;
 }
 
+.au-table :is(th, td):nth-child(2),
+.au-table :is(th, td):nth-child(3) {
+    text-align: center;
+}
+
 /* Column 2: Plan Badge (matches .tracker-pill) */
 .au-plan-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     gap: 3px;
 }
 
 .au-plan-badge {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
     font-size: 10px;
     font-weight: 550;
@@ -458,6 +467,7 @@
     white-space: nowrap;
     line-height: 1.5;
     width: fit-content;
+    margin-inline: auto;
 }
 
 .au-plan-badge--premium {
@@ -474,14 +484,17 @@
     font-size: 10px;
     color: #67616f;
     line-height: 1.4;
+    text-align: center;
 }
 
 /* Column 3: Applications Stats */
 .au-app-stats {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     flex-wrap: wrap;
+    text-align: center;
 }
 
 .au-chip {
