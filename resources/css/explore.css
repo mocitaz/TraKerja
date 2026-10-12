@@ -424,59 +424,277 @@ svg.explore-art-orbits {
     animation: explore-dash-flow 26s linear infinite;
 }
 
-.explore-art-center {
+/* 3D Layered Job Card Stack (Linear / Stripe Style) */
+.explore-feed-stack {
     position: absolute;
     left: 50%;
-    top: 48%;
+    top: 49%;
     transform: translate(-50%, -50%);
     z-index: 3;
-    width: 112px;
-    height: 112px;
-    display: grid;
-    place-items: center;
+    width: 90%;
+    max-width: 310px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    perspective: 1000px;
 }
 
-.explore-center-glow {
-    position: absolute;
-    inset: -24px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(147, 51, 234, 0.16) 0%, rgba(147, 51, 234, 0) 70%);
-    pointer-events: none;
+.explore-feed-card {
+    position: relative;
+    border-radius: 18px;
+    box-sizing: border-box;
+    transition: transform .35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .35s ease;
 }
 
-.explore-center-pulse {
-    position: absolute;
-    inset: -8px;
-    border-radius: 50%;
-    border: 2px solid rgba(147, 51, 234, 0.45);
-    animation: explore-radar-ping 2.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+/* Background Card 2 (Deepest Peek) */
+.explore-feed-card--back {
+    width: 82%;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(220, 228, 240, 0.7);
+    padding: 8px 12px;
+    margin-bottom: -18px;
+    transform: translateY(18px) scale(0.92);
+    z-index: 1;
+    filter: blur(0.4px);
+    opacity: 0.75;
 }
 
-.explore-center-avatar {
-    width: 104px;
-    height: 104px;
-    border-radius: 50%;
-    border: 5px solid #ffffffdf;
-    box-shadow: 0 10px 28px rgba(70, 80, 110, 0.12);
-    overflow: hidden;
-    background: #fff;
+/* Background Card 1 (Middle Peek) */
+.explore-feed-card--mid {
+    width: 90%;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(220, 228, 240, 0.9);
+    padding: 9px 14px;
+    margin-bottom: -14px;
+    transform: translateY(10px) scale(0.96);
+    z-index: 2;
+    box-shadow: 0 4px 14px rgba(45, 32, 78, 0.04);
+}
+
+.explore-card-mini-head {
     display: flex;
     align-items: center;
-    justify-content: center;
-    animation: explore-float-avatar 5s ease-in-out infinite;
-    transition: transform .35s ease;
+    gap: 8px;
+    font-size: 10px;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-.explore-center-avatar img {
-    display: block;
+.explore-co-badge {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    font-size: 9px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.explore-co-badge--emerald {
+    background: #10b981;
+}
+
+.explore-co-badge--purple {
+    background: #8b5cf6;
+}
+
+.explore-card-mini-title {
+    font-weight: 600;
+    color: #334155;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.explore-card-mini-tag {
+    margin-left: auto;
+    font-size: 9px;
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #64748b;
+    font-weight: 550;
+}
+
+/* Foreground Hero Card */
+.explore-feed-card--front {
     width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
+    background: #ffffff;
+    border: 1px solid #e3e8f2;
+    border-radius: 20px;
+    padding: 16px 18px;
+    z-index: 3;
+    box-shadow: 0 18px 40px -10px rgba(45, 32, 78, 0.12), 0 4px 12px rgba(45, 32, 78, 0.04);
+    animation: explore-float-card 5.2s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
 }
 
-.explore-maintenance-art:hover .explore-center-avatar {
-    transform: translateY(-4px) rotate(2deg) scale(1.03);
+.explore-maintenance-art:hover .explore-feed-card--front {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 22px 48px -10px rgba(45, 32, 78, 0.16), 0 6px 16px rgba(45, 32, 78, 0.06);
+}
+
+.explore-card-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2.5px;
+    background: linear-gradient(90deg, #3b82f6, #a855f7, #ec4899);
+}
+
+.explore-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.explore-co-identity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.explore-co-logo {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #eff6ff 0%, #ede9fe 100%);
+    border: 1px solid #e0e7ff;
+    display: grid;
+    place-items: center;
+    color: #4f46e5;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.explore-co-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.25;
+}
+
+.explore-co-name {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.explore-co-name strong {
+    font-size: 12px;
+    font-weight: 650;
+    color: #1e293b;
+}
+
+.explore-co-name i {
+    color: #10b981;
+    font-size: 13px;
+}
+
+.explore-co-info span {
+    font-size: 10px;
+    color: #64748b;
+}
+
+.explore-card-live-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 999px;
+    font-size: 9.5px;
+    font-weight: 650;
+    color: #15803d;
+}
+
+.explore-live-dot {
+    width: 5.5px;
+    height: 5.5px;
+    border-radius: 50%;
+    background: #16a34a;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+    animation: explore-ping-dot 1.8s ease-in-out infinite;
+}
+
+.explore-card-role {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.3px;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.explore-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.explore-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 9px;
+    border-radius: 7px;
+    font-size: 10.5px;
+    font-weight: 600;
+}
+
+.explore-tag--salary {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #d1fae5;
+}
+
+.explore-tag--salary i {
+    font-size: 12px;
+}
+
+.explore-tag--dept {
+    background: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+}
+
+.explore-tag--dept i {
+    font-size: 12px;
+}
+
+.explore-card-footer-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid #f1f5f9;
+    font-size: 10px;
+    color: #64748b;
+}
+
+.explore-verified-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.explore-verified-status i {
+    color: #10b981;
+    font-size: 12px;
+}
+
+.explore-ping-time {
+    font-size: 9.5px;
+    color: #94a3b8;
+    font-weight: 500;
 }
 
 /* Floating Badges */
@@ -497,15 +715,15 @@ svg.explore-art-orbits {
 
 /* Float 1: Speech Bubble */
 .explore-float--speech {
-    top: 66px;
-    left: 16px;
-    padding: 9px 13px;
+    top: 50px;
+    left: 14px;
+    padding: 8px 12px;
     font-size: 11px;
     font-weight: 550;
     color: #334155;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
     white-space: nowrap;
     animation: explore-speech-bob 4.5s ease-in-out infinite;
 }
@@ -523,10 +741,10 @@ svg.explore-art-orbits {
     font-size: 12px;
 }
 
-/* Float 2: AI Match */
+/* Float 2: Live Verified */
 .explore-float--match {
-    top: 92px;
-    right: 14px;
+    top: 72px;
+    right: 12px;
     padding: 7px 12px 7px 8px;
     display: flex;
     align-items: center;
@@ -534,10 +752,10 @@ svg.explore-art-orbits {
     animation: explore-pill-float-a 4.8s ease-in-out infinite;
 }
 
-/* Float 3: Live Verified */
+/* Float 3: Upfront Salary */
 .explore-float--verified {
-    bottom: 86px;
-    left: 16px;
+    bottom: 74px;
+    left: 14px;
     padding: 7px 12px 7px 8px;
     display: flex;
     align-items: center;
@@ -545,10 +763,10 @@ svg.explore-art-orbits {
     animation: explore-pill-float-b 5.2s ease-in-out infinite;
 }
 
-/* Float 4: Direct Drops */
+/* Float 4: Direct Recruiter */
 .explore-float--pipeline {
-    bottom: 74px;
-    right: 14px;
+    bottom: 64px;
+    right: 12px;
     padding: 7px 12px 7px 8px;
     display: flex;
     align-items: center;
@@ -660,9 +878,14 @@ svg.explore-art-orbits {
     100% { transform: scale(1.55); opacity: 0; }
 }
 
-@keyframes explore-float-avatar {
+@keyframes explore-float-card {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes explore-ping-dot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.7; }
 }
 
 @keyframes explore-speech-bob {
@@ -705,7 +928,7 @@ svg.explore-art-orbits {
     }
     .explore-maintenance-art {
         margin: 0 16px 16px;
-        min-height: 400px;
+        min-height: 420px;
         border-radius: 20px;
     }
 }
@@ -739,48 +962,61 @@ svg.explore-art-orbits {
     }
     .explore-maintenance-art {
         margin: 0 12px 14px;
-        min-height: 350px;
+        min-height: 380px;
         padding: 20px 10px 16px;
     }
-    .explore-art-center {
-        width: 92px;
-        height: 92px;
+    .explore-feed-stack {
+        max-width: 275px;
+        top: 50%;
     }
-    .explore-center-avatar {
-        width: 84px;
-        height: 84px;
+    .explore-feed-card--front {
+        padding: 12px 14px;
+        border-radius: 16px;
+    }
+    .explore-card-role {
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+    .explore-tag {
+        font-size: 9.5px;
+        padding: 3px 7px;
+    }
+    .explore-co-logo {
+        width: 28px;
+        height: 28px;
+        font-size: 15px;
     }
     .explore-float--speech {
-        top: 48px;
-        left: 8px;
-        font-size: 10px;
-        padding: 7px 10px;
+        top: 36px;
+        left: 6px;
+        font-size: 9.5px;
+        padding: 6px 10px;
     }
     .explore-float--match {
-        top: 76px;
-        right: 8px;
+        top: 56px;
+        right: 6px;
     }
     .explore-float--verified {
-        bottom: 70px;
-        left: 8px;
+        bottom: 56px;
+        left: 6px;
     }
     .explore-float--pipeline {
-        bottom: 60px;
-        right: 8px;
+        bottom: 48px;
+        right: 6px;
     }
     .explore-float-badge {
-        padding: 6px 9px 6px 7px;
+        padding: 5px 8px;
     }
     .explore-badge-icon {
-        width: 26px;
-        height: 26px;
-        font-size: 13px;
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
     }
     .explore-badge-info strong {
-        font-size: 10.5px;
+        font-size: 10px;
     }
     .explore-badge-info small {
-        font-size: 8.5px;
+        font-size: 8px;
     }
     .explore-art-footer strong {
         font-size: 13.5px;
@@ -791,8 +1027,8 @@ svg.explore-art-orbits {
     .explore-orbit-outer,
     .explore-orbit-inner,
     .explore-orbit-arc,
-    .explore-center-pulse,
-    .explore-center-avatar,
+    .explore-feed-card--front,
+    .explore-live-dot,
     .explore-float-badge,
     .explore-spark {
         animation: none !important;

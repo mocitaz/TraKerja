@@ -42,10 +42,12 @@ class ExploreJobsTest extends TestCase
         $response = $this->actingAs($this->user)->get('/explore');
         $response->assertStatus(200);
         $response->assertSee('Something massive is cooking');
-        $response->assertSee('Cooking fresh company drops!');
-        $response->assertSee('AI Match V2');
+        $response->assertSee('Curating top company drops!');
         $response->assertSee('Live Verified');
-        $response->assertSee('Direct Drops');
+        $response->assertSee('Upfront Salary');
+        $response->assertSee('Direct Recruiter');
+        $response->assertSee('Senior Frontend Engineer');
+        $response->assertSee('Tech Unicorn');
         $response->assertSee('Your main workspace is 100% active');
         $response->assertSee('Back to Dashboard');
         $response->assertSee('Open Job Tracker');
