@@ -626,7 +626,8 @@ class UserManagement extends Component
                 },
             ])
             ->latest()
-            ->paginate($effectivePerPage);
+            ->paginate($effectivePerPage)
+            ->onEachSide(1);
         
         // Stats only for regular users (exclude admins)
         $stats = [

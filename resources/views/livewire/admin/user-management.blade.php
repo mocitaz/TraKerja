@@ -86,7 +86,7 @@
                         <th scope="col">Member</th>
                         <th scope="col" class="text-center">Membership Plan</th>
                         <th scope="col" class="text-center">Job Applications</th>
-                        <th scope="col">Joined Date</th>
+                        <th scope="col" class="text-center">Joined Date</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -96,11 +96,13 @@
                             <!-- Column 1: Member Info -->
                             <td>
                                 <div class="au-member">
-                                    <div class="au-avatar-wrapper">
+                                    <a href="{{ route('admin.users.show', $user) }}" wire:navigate class="au-avatar-wrapper au-member-avatar-link" title="View {{ $user->name }} profile">
                                         <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="au-avatar-img" loading="lazy">
-                                    </div>
+                                    </a>
                                     <div class="au-member-info">
-                                        <strong class="au-member-name">{{ $user->name }}</strong>
+                                        <a href="{{ route('admin.users.show', $user) }}" wire:navigate class="au-member-name au-member-name-link" title="View {{ $user->name }} profile">
+                                            {{ $user->name }}
+                                        </a>
                                         <span class="au-member-email">{{ $user->email }}</span>
                                     </div>
                                 </div>
@@ -144,8 +146,8 @@
                             </td>
 
                             <!-- Column 4: Joined Date -->
-                            <td>
-                                <div class="au-joined">
+                            <td class="text-center">
+                                <div class="au-joined au-joined--center">
                                     <strong class="au-joined-date">{{ $user->created_at->format('d M Y') }}</strong>
                                     <small class="au-joined-sub">{{ $user->created_at->format('H:i') }} WIB</small>
                                 </div>
@@ -214,7 +216,7 @@
         <!-- Footer -->
         <footer class="au-directory-footer">
             <span>Showing <strong>{{ $users->firstItem() ?? 0 }}–{{ $users->lastItem() ?? 0 }}</strong> of {{ number_format($users->total()) }} members</span>
-            <div>{{ $users->links() }}</div>
+            <div class="au-pagination-wrap">{{ $users->links() }}</div>
         </footer>
     </section>
 
