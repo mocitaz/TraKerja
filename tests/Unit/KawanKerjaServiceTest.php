@@ -109,4 +109,16 @@ class KawanKerjaServiceTest extends TestCase
         $this->assertTrue($result['success']);
         $this->assertStringContainsString('fallback model', $result['reply']);
     }
+
+    public function test_system_prompt_instructs_action_cards_for_navigation(): void
+    {
+        $service = app(KawanKerjaService::class);
+        $reflection = new \ReflectionClass($service);
+        $method = $reflection->getMethod('buildSystemPrompt');
+        $method->setAccessible(true);
+
+        $prompt = $method->invoke($service, ['user_name' => 'Luthfi']);
+
+        $this->assertStringContainsString('[action:', $prompt);
+    }
 }

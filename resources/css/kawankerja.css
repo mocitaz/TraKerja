@@ -500,6 +500,78 @@
     height: 8px;
 }
 
+/* Action Cards */
+.kawankerja-action-wrap {
+    margin: 8px 0;
+}
+
+.kawankerja-action-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    background: #ffffff;
+    border: 1px solid #e7e2f5;
+    border-radius: 10px;
+    text-decoration: none !important;
+    color: #1e1b4b;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 1px 3px rgba(100, 76, 135, 0.05);
+}
+
+.kawankerja-action-card:hover {
+    background: #fcfbfe;
+    border-color: #644c87;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(100, 76, 135, 0.12);
+}
+
+.kawankerja-action-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(100, 76, 135, 0.1);
+    color: #644c87;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.kawankerja-action-text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.kawankerja-action-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #18181b;
+    line-height: 1.3;
+}
+
+.kawankerja-action-sub {
+    font-size: 11px;
+    color: #71717a;
+    line-height: 1.3;
+}
+
+.kawankerja-action-arrow {
+    font-size: 13px;
+    color: #a1a1aa;
+    transition: transform 0.15s ease, color 0.15s ease;
+    flex-shrink: 0;
+}
+
+.kawankerja-action-card:hover .kawankerja-action-arrow {
+    color: #644c87;
+    transform: translate(2px, -2px);
+}
+
+
 /* Typing Indicator */
 .kawankerja-bubble--typing {
     padding: 10px 14px;

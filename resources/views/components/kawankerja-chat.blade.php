@@ -158,6 +158,14 @@
             historyUrl: '{{ route('kawankerja.history') }}',
             clearUrl: '{{ route('kawankerja.clear') }}',
             csrfToken: '{{ csrf_token() }}',
+            actionRoutes: {
+                'tracker': { url: '{{ route('tracker') }}', icon: 'ph-kanban' },
+                'interviews': { url: '{{ route('interviews') }}', icon: 'ph-calendar' },
+                'ai-studio': { url: '{{ route('ai-studio.index') }}', icon: 'ph-sparkle' },
+                'cv-builder': { url: '{{ route('cv.builder') }}', icon: 'ph-file-text' },
+                'explore': { url: '{{ route('jobs.explore') }}', icon: 'ph-compass' },
+                'profile': { url: '{{ route('profile.edit') }}', icon: 'ph-user' },
+            },
 
             async init() {
                 const openHandler = (e) => {
@@ -308,13 +316,21 @@
                 // Numbered lists: 1. Item
                 esc = esc.replace(/(?:^|\n)(\d+)\.[ \t]+([^\n]+)/g, '<div class="kawankerja-bullet"><span class="kawankerja-bullet-num">$1.</span><span class="kawankerja-bullet-text">$2</span></div>');
 
+                // Action cards: [action:key|Title|Subtitle]
+                esc = esc.replace(/\[action:([a-z-]+)\|([^|\]]+)\|?([^\]]*)\]/g, (match, key, title, sub) => {
+                    const routeInfo = this.actionRoutes[key] || { url: '#', icon: 'ph-arrow-up-right' };
+                    const subText = sub ? sub.trim() : '';
+                    const subHtml = subText ? `<small class="kawankerja-action-sub">${subText}</small>` : '';
+                    return `\n<div class="kawankerja-action-wrap"><a href="${routeInfo.url}" class="kawankerja-action-card" wire:navigate><div class="kawankerja-action-icon"><i class="ph ${routeInfo.icon}" aria-hidden="true"></i></div><div class="kawankerja-action-text"><strong class="kawankerja-action-title">${title.trim()}</strong>${subHtml}</div><i class="ph ph-arrow-up-right kawankerja-action-arrow" aria-hidden="true"></i></a></div>\n`;
+                });
+
                 // Paragraph spacing
                 esc = esc.replace(/\n{2,}/g, '<div class="kawankerja-gap"></div>');
                 esc = esc.replace(/\n/g, '<br>');
 
                 // Clean up excess <br> around block containers
-                esc = esc.replace(/<br>\s*(<(?:blockquote|div class="kawankerja-(?:gap|bullet)|h[34]|pre))/g, '$1');
-                esc = esc.replace(/(<\/(?:blockquote|h[34]|pre)>|<div class="kawankerja-gap"><\/div>)\s*<br>/g, '$1');
+                esc = esc.replace(/<br>\s*(<(?:blockquote|div class="kawankerja-(?:gap|bullet|action-wrap)|h[34]|pre))/g, '$1');
+                esc = esc.replace(/(<\/(?:blockquote|h[34]|pre)>|<div class="kawankerja-gap"><\/div>|<\/div>)\s*<br>/g, '$1');
 
                 return esc.trim();
             }

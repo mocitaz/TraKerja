@@ -105,4 +105,15 @@ class KawanKerjaChatTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('kawankerja-copy-btn');
     }
+
+    public function test_chat_view_includes_action_card_routes_and_deep_navigation_support(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('dashboard'));
+
+        $response->assertStatus(200);
+        $response->assertSee('actionRoutes');
+        $response->assertSee('kawankerja-action-card');
+    }
 }
