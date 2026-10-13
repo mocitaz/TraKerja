@@ -21,6 +21,30 @@
             <button type="button" x-ref="mobileButton" @click="mobileOpen = !mobileOpen; profileOpen = false" aria-controls="workspace-mobile-menu" aria-expanded="false" :aria-expanded="mobileOpen.toString()" class="workspace-mobile-toggle">
                 <i class="ph" :class="mobileOpen ? 'ph-x' : 'ph-list'" aria-hidden="true"></i><span>Menu</span>
             </button>
+            <!-- Theme Toggle Button -->
+            <div x-data="{
+                isDark: document.documentElement.classList.contains('dark'),
+                toggle() {
+                    this.isDark = !this.isDark;
+                    if (this.isDark) {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    }
+                    window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: this.isDark } }));
+                }
+            }" class="flex items-center">
+                <button type="button" 
+                        @click="toggle()" 
+                        class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-amber-300 dark:hover:text-amber-200 dark:bg-[#1e1f20] dark:hover:bg-[#282a2c] dark:border dark:border-white/10 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                        :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+                        :title="isDark ? 'Aktifkan mode terang' : 'Aktifkan mode gelap'">
+                    <i x-show="!isDark" class="ph ph-moon text-lg transition-transform duration-200 hover:scale-110" aria-hidden="true"></i>
+                    <i x-show="isDark" x-cloak class="ph ph-sun text-lg transition-transform duration-200 hover:scale-110" aria-hidden="true"></i>
+                </button>
+            </div>
             <div class="relative" @click.outside="profileOpen = false" @keydown.escape.stop="profileOpen = false; $refs.profileButton.focus()">
                 <button type="button" x-ref="profileButton" @click="profileOpen = !profileOpen; mobileOpen = false" aria-label="Account menu for {{ $user->name }}" aria-controls="workspace-profile" aria-expanded="false" :aria-expanded="profileOpen.toString()" class="workspace-profile-trigger">
                     <img src="{{ $user->avatar_url }}" alt="" class="workspace-avatar">
