@@ -37,3 +37,77 @@
 @media (max-width: 900px) { .cover-letter-layout { grid-template-columns: 1fr; } .cover-letter-sidebar { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cover-letter-review-note { grid-column: 1 / -1; } }
 @media (max-width: 600px) { .cover-letter-header { flex-direction: column; align-items: flex-start; } .cover-letter-paper { padding: 20px; border-radius: 18px; } .cover-letter-sidebar { grid-template-columns: 1fr; } }
 @media print { body:has(.cover-letter-workspace) * { visibility: hidden; } body:has(.cover-letter-workspace) .cover-letter-body { visibility: visible; position: absolute; inset: 0 auto auto 0; width: 100%; padding: 0; background: #fff; color: #111; font-size: 11pt; line-height: 1.6; } @page { margin: 18mm; } }
+
+/* ==========================================================================
+   Gemini Dark Mode Styles for Cover Letter Workspace
+   ========================================================================== */
+.dark .cover-letter-header h1 {
+    color: #f0f4f9;
+}
+.dark .cover-letter-header p {
+    color: #94a3b8;
+}
+.dark .cover-letter-paper {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    color: #f0f4f9;
+}
+.dark .cover-letter-paper > header {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+.dark .cover-letter-workspace .cover-letter-paper h2 {
+    color: #f0f4f9;
+}
+.dark .cover-letter-paper > header p {
+    color: #94a3b8;
+}
+.dark .cover-letter-draft {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #d8b4fe;
+}
+.dark .cover-letter-body {
+    color: #cbd5e1;
+}
+.dark .cover-letter-paper > footer {
+    border-top-color: rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+}
+.dark .cover-letter-actions,
+.dark .cover-letter-context {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .cover-letter-workspace .cover-letter-sidebar h2 {
+    color: #f0f4f9;
+}
+.dark .cover-letter-actions .cv-button-secondary {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .cover-letter-actions .cv-button-secondary:hover {
+    background: #333538;
+}
+.dark .cover-letter-context dt {
+    color: #94a3b8;
+}
+.dark .cover-letter-context dd {
+    color: #cbd5e1;
+}
+.dark .cover-letter-review-note {
+    background: #231c30;
+    border-color: rgba(168, 85, 247, 0.25);
+}
+.dark .cover-letter-workspace .cover-letter-review-note h3 {
+    color: #f0f4f9;
+}
+.dark .cover-letter-workspace .cover-letter-review-note p {
+    color: #cbd5e1;
+}
+.dark .cover-letter-review-note a {
+    color: #d8b4fe;
+}
+

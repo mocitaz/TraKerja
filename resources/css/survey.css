@@ -6,3 +6,91 @@
 @media(prefers-reduced-motion:reduce){.survey-complete{animation:none}.survey-progress-track>span,.survey-button,.survey-steps>button,.survey-rating label>span{transition:none}}
 .survey-invitation-frame{padding-top:19px}.survey-invitation{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px 23px;background:#f7eff7;border:1px solid #fff;border-radius:18px;font-family:'Plus Jakarta Sans',sans-serif;color:#5d4569}.survey-invitation strong{font-size:13px;font-weight:600}.survey-invitation p{font-size:11px;line-height:1.8;color:#76667e;margin:4px 0 0}.survey-invitation-actions{display:flex;gap:10px;align-items:center}.survey-invitation .survey-button{font-size:11px;min-height:44px}.survey-invitation :is(a,button):focus-visible{outline:3px solid #ac7aa8;outline-offset:3px}
 @media(max-width:650px){.survey-invitation{align-items:flex-start;flex-direction:column;gap:14px;padding:18px 20px}.survey-invitation-actions{flex-wrap:wrap;gap:9px}.survey-invitation .survey-button{padding:10px 13px;font-size:10px}}
+
+/* ==========================================================================
+   Gemini Dark Mode Styles for Satisfaction Survey
+   ========================================================================== */
+.dark .survey-page { color: #f0f4f9; }
+.dark .survey-heading h1 { color: #f0f4f9; }
+.dark .survey-heading p { color: #94a3b8; }
+.dark .survey-back { color: #94a3b8; }
+.dark .survey-back:hover { color: #f0f4f9; }
+.dark .survey-guide {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .survey-guide h2 { color: #f0f4f9; }
+.dark .survey-guide > p { color: #94a3b8; }
+.dark .survey-progress { border-top-color: rgba(255, 255, 255, 0.08); }
+.dark .survey-progress-track { background: #282a2c; }
+.dark .survey-progress strong { color: #d8b4fe; }
+.dark .survey-guide .survey-guide-note { color: #94a3b8; }
+.dark .survey-form {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+.dark .survey-steps { border-bottom-color: rgba(255, 255, 255, 0.08); }
+.dark .survey-steps > button {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+}
+.dark .survey-steps > button:hover {
+    background: #282a2c;
+    color: #f0f4f9;
+}
+.dark .survey-steps > button.is-active {
+    background: #3b2d54;
+    border-color: rgba(168, 85, 247, 0.35);
+    color: #d8b4fe;
+}
+.dark .survey-section-heading h2 { color: #f0f4f9; }
+.dark .survey-section-heading p { color: #94a3b8; }
+.dark .survey-question {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+.dark .survey-question legend { color: #f0f4f9; }
+.dark .survey-question > p { color: #94a3b8; }
+.dark .survey-rating label > span {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .survey-rating label:hover > span {
+    background: #333538;
+}
+.dark .survey-rating input:checked + span {
+    background: #3b2d54;
+    border-color: #a855f7;
+    color: #d8b4fe;
+}
+.dark .survey-scale { color: #94a3b8; }
+.dark .survey-feedback { border-top-color: rgba(255, 255, 255, 0.08); }
+.dark .survey-feedback textarea {
+    background: #131314;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f0f4f9;
+}
+.dark .survey-button {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .survey-button:hover { background: #333538; }
+.dark .survey-form-footer { border-top-color: rgba(255, 255, 255, 0.08); }
+.dark .survey-complete {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .survey-invitation {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .survey-invitation p { color: #94a3b8; }
+

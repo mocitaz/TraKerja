@@ -848,3 +848,108 @@
         box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.18);
     }
 }
+
+/* ==========================================================================
+   Gemini Dark Mode Styles for KawanKerja AI Assistant
+   ========================================================================== */
+.dark .kawankerja-launcher {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f0f4f9;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+.dark .kawankerja-launcher:hover {
+    background: #282a2c;
+    border-color: rgba(168, 85, 247, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+.dark .kawankerja-launcher-label strong {
+    color: #f0f4f9;
+}
+.dark .kawankerja-launcher-label small {
+    color: #c4b5fd;
+}
+.dark .kawankerja-online-dot {
+    border-color: #1e1f20;
+}
+.dark .kawankerja-window {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+    color: #f0f4f9;
+}
+.dark .kawankerja-header {
+    background: #18191a;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+.dark .kawankerja-header-text h3 {
+    color: #f0f4f9;
+}
+.dark .kawankerja-header-text p {
+    color: #94a3b8;
+}
+.dark .kawankerja-header-btn {
+    color: #94a3b8;
+}
+.dark .kawankerja-header-btn:hover {
+    background: #282a2c;
+    color: #f0f4f9;
+}
+.dark .kawankerja-messages {
+    background: #1e1f20;
+}
+.dark .kawankerja-welcome-card {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+.dark .kawankerja-welcome-card h4 {
+    color: #f0f4f9;
+}
+.dark .kawankerja-welcome-card p {
+    color: #94a3b8;
+}
+.dark .kawankerja-bubble-assistant {
+    background: #282a2c;
+    color: #f0f4f9;
+    border-color: rgba(255, 255, 255, 0.06);
+}
+.dark .kawankerja-bubble-user {
+    background: #3b2d54;
+    color: #f0f4f9;
+}
+.dark .kawankerja-suggestion-pill {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+.dark .kawankerja-suggestion-pill:hover {
+    background: #333538;
+    color: #f0f4f9;
+    border-color: rgba(168, 85, 247, 0.35);
+}
+.dark .kawankerja-composer {
+    background: #18191a;
+    border-top-color: rgba(255, 255, 255, 0.08);
+}
+.dark .kawankerja-input-wrapper {
+    background: #131314;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+.dark .kawankerja-textarea {
+    color: #f0f4f9;
+}
+.dark .kawankerja-textarea::placeholder {
+    color: #64748b;
+}
+.dark .kawankerja-send-btn {
+    background: #5b427d;
+    color: #fff;
+}
+.dark .kawankerja-send-btn:hover:not(:disabled) {
+    background: #6e4f99;
+}
+.dark .kawankerja-send-btn:disabled {
+    background: #282a2c;
+    color: #64748b;
+}
+

@@ -47,3 +47,91 @@
     .goal-dialog-footer { padding: 16px 20px; }
 }
 @media (prefers-reduced-motion: reduce) { .goal-dialog { animation: none; } .goal-period-switch button { transition: none; } }
+
+/* ==========================================================================
+   Gemini Dark Mode Styles for Career Goal Dialog
+   Benchmarked against Dashboard Next Move Design System
+   ========================================================================== */
+.dark .goal-dialog {
+    background: #1e1f20;
+    color: #f0f4f9;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+}
+.dark .goal-dialog-header h2 {
+    color: #f0f4f9;
+}
+.dark .goal-dialog-header p {
+    color: #94a3b8;
+}
+.dark .goal-dialog-close {
+    background: #282a2c;
+    color: #94a3b8;
+}
+.dark .goal-dialog-close:hover {
+    background: #333538;
+    color: #f0f4f9;
+}
+.dark .goal-period-label {
+    color: #cbd5e1;
+}
+.dark .goal-period-label span:last-child {
+    color: #94a3b8;
+}
+.dark .goal-period-switch {
+    background: #18191a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.dark .goal-period-switch button {
+    color: #94a3b8;
+}
+.dark .goal-period-switch button:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+.dark .goal-period-switch button.is-selected {
+    background: #3b2d54;
+    color: #d8b4fe;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+.dark .goal-period-dates {
+    color: #cbd5e1;
+}
+.dark .goal-period-dates span {
+    color: #94a3b8;
+}
+.dark .goal-target-applications {
+    background: linear-gradient(135deg, #221c2e 0%, #2a2238 100%);
+    border: 1px solid rgba(168, 85, 247, 0.22);
+}
+.dark .goal-target-followups {
+    background: linear-gradient(135deg, #2b1f1a 0%, #352520 100%);
+    border: 1px solid rgba(249, 115, 22, 0.22);
+}
+.dark .goal-target-field label {
+    color: #f0f4f9;
+}
+.dark .goal-target-field > p {
+    color: #cbd5e1;
+}
+.dark .goal-target-input input {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #f0f4f9;
+}
+.dark .goal-target-input span {
+    color: #94a3b8;
+}
+.dark .goal-dialog-hint {
+    color: #94a3b8;
+}
+.dark .goal-dialog-footer {
+    border-top-color: rgba(255, 255, 255, 0.08);
+}
+.dark .goal-dialog-cancel {
+    background: #282a2c;
+    color: #f0f4f9;
+}
+.dark .goal-dialog-cancel:hover {
+    background: #333538;
+}
+

@@ -9,3 +9,71 @@
 @media(max-width:380px){.community-copy,.community-overlay .community-copy{padding:26px 20px}.community-art,.community-overlay .community-art{min-height:215px;height:215px}.community-avatar--peach{left:10%;top:67px}.community-avatar--lilac{right:11%;top:88px}.community-avatar--sky{bottom:23px;left:38%}.community-speech--share{right:7%;bottom:18px}.community-spark--two{top:172px}.community-spark--one{top:160px}.community-art-caption{font-size:9px}}
 @media(max-height:640px) and (min-width:641px){.community-overlay{align-items:flex-start}.community-overlay .community-welcome{max-height:none}.community-overlay .community-art{min-height:400px}}
 @media(prefers-reduced-motion:reduce){.community-overlay .community-welcome{animation:none}.community-fade,.community-join,.community-dashboard,.community-avatar,.community-plane,.community-close{transition:none}.community-art:hover .community-avatar--peach,.community-art:hover .community-avatar--lilac,.community-art:hover .community-avatar--sky,.community-art:hover .community-plane,.community-join:hover{transform:none}}
+
+/* Dark Mode - Gemini Obsidian Style */
+.dark .community-welcome {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4) !important;
+}
+.dark .community-copy h1,
+.dark .community-copy h2 {
+    color: #f0f4f9 !important;
+}
+.dark .community-intro {
+    color: #f0f4f9 !important;
+}
+.dark .community-description {
+    color: #94a3b8 !important;
+}
+.dark .community-dashboard {
+    background: #282a2c !important;
+    color: #f0f4f9 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .community-dashboard:hover {
+    background: #323537 !important;
+    color: #ffffff !important;
+}
+.dark .community-footnote,
+.dark .community-page-back {
+    color: #94a3b8 !important;
+}
+.dark .community-page-back:hover {
+    color: #f0f4f9 !important;
+}
+.dark .community-art {
+    background: #1a1523 !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+.dark .community-art-caption {
+    color: #c084fc !important;
+}
+.dark .community-avatar {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+.dark .community-speech {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+.dark .community-speech--hello > span {
+    color: #f472b6 !important;
+}
+.dark .community-art-footer {
+    color: #94a3b8 !important;
+}
+.dark .community-art-footer strong {
+    color: #f0f4f9 !important;
+}
+.dark .community-close {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #f0f4f9 !important;
+}
+.dark .community-close:hover {
+    background: #323537 !important;
+}
+

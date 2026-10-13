@@ -39,3 +39,40 @@ html.dark ::-webkit-scrollbar-thumb {
 html.dark ::-webkit-scrollbar-thumb:hover {
     background: #3b3d40;
 }
+
+/* Landing / Welcome Page Dark Mode */
+.dark .welcome-page h1,
+.dark .welcome-page h2,
+.dark .welcome-page h3,
+.dark .welcome-page h4,
+.dark .welcome-page .notion-h1 {
+    color: #f0f4f9 !important;
+}
+.dark .welcome-page .bento-card,
+.dark .welcome-page .pricing-card,
+.dark .welcome-page .testimonial-card,
+.dark .welcome-page [class*="bento-"],
+.dark .welcome-page .how-it-works-item {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .welcome-page .how-it-works-item:hover {
+    background: #282a2c !important;
+}
+.dark .welcome-page .faq-item {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .welcome-page .text-zinc-900,
+.dark .welcome-page .text-zinc-950,
+.dark .welcome-page .text-zinc-800,
+.dark .welcome-page .text-zinc-700 {
+    color: #f0f4f9 !important;
+}
+.dark .welcome-page .text-zinc-500,
+.dark .welcome-page .text-zinc-600,
+.dark .welcome-page .text-zinc-400 {
+    color: #94a3b8 !important;
+}
+

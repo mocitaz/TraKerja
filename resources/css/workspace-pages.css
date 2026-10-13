@@ -874,3 +874,219 @@
         width: 100%;
     }
 }
+
+/* ==========================================================================
+   Gemini Dark Mode Styles for Workspace Pages & Automation
+   ========================================================================== */
+.dark .workspace-page {
+    background: transparent;
+    color: #f0f4f9;
+}
+.dark .workspace-page h1,
+.dark .workspace-page h2,
+.dark .workspace-page h3 {
+    color: #f0f4f9;
+}
+.dark .workspace-page p {
+    color: #94a3b8;
+}
+.dark .workspace-page .workspace-eyebrow {
+    color: #c084fc;
+}
+.dark .workspace-card {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    color: #f0f4f9;
+}
+.dark .workspace-card--glass {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+.dark .workspace-card--lavender {
+    background: #231c30;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+.dark .workspace-button--quiet {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .workspace-button--quiet:hover {
+    background: #333538;
+    border-color: rgba(255, 255, 255, 0.15);
+}
+.dark .workspace-button--danger {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+}
+.dark .workspace-button--danger:hover {
+    background: rgba(239, 68, 68, 0.25);
+}
+.dark .workspace-switcher {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+.dark .workspace-switcher button {
+    color: #94a3b8;
+}
+.dark .workspace-switcher button:hover {
+    background: #282a2c;
+    color: #f0f4f9;
+}
+.dark .workspace-switcher button.is-active {
+    background: #3b2d54;
+    color: #d8b4fe;
+}
+.dark .workspace-notice {
+    background: #221c2e;
+    border-color: rgba(168, 85, 247, 0.3);
+    color: #e2d9f3;
+}
+.dark .workspace-form label {
+    color: #cbd5e1;
+}
+.dark .workspace-form label span {
+    color: #94a3b8;
+}
+.dark .workspace-form :is(input, textarea, select) {
+    background: #131314;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f0f4f9;
+}
+.dark .workspace-form :is(input, textarea, select):focus {
+    background: #1e1f20;
+    border-color: #a855f7;
+}
+.dark .workspace-form :is(input, textarea)::placeholder {
+    color: #64748b;
+}
+.dark .workspace-page .workspace-hint {
+    color: #94a3b8;
+}
+.dark .workspace-steps li > span {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #d8b4fe;
+}
+.dark .workspace-steps code {
+    background: #282a2c;
+    color: #f0f4f9;
+}
+.dark .workspace-ticket {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    color: #f0f4f9;
+}
+.dark .workspace-ticket summary:hover {
+    background: #282a2c;
+}
+
+/* Automation Page Specifics */
+.dark .automation-page .automation-intro {
+    background: linear-gradient(135deg, #101e2e 0%, #162438 100%);
+    border-color: rgba(59, 130, 246, 0.22);
+}
+.dark .automation-page .automation-intro .workspace-status {
+    background: rgba(255, 255, 255, 0.08);
+    color: #93c5fd;
+}
+.dark .automation-page .automation-preview {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+.dark .automation-page .automation-preview__top .workspace-status {
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+.dark .automation-page .automation-preview__field > span {
+    color: #94a3b8;
+}
+.dark .automation-page .automation-preview__field > strong {
+    color: #f0f4f9;
+}
+.dark .automation-page .automation-preview__action {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #c4b5fd;
+}
+.dark .automation-page .automation-setup {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+.dark .automation-page .automation-side-panel {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+.dark .automation-page .automation-metrics strong {
+    color: #f0f4f9;
+}
+.dark .automation-page .automation-metrics span {
+    color: #94a3b8;
+}
+.dark .automation-page .workspace-chips > span {
+    background: #282a2c;
+    color: #cbd5e1;
+}
+.dark .automation-page .automation-import-panel {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+.dark .automation-page .automation-stepper {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+.dark .automation-page .automation-stepper > span {
+    color: #94a3b8;
+}
+.dark .automation-page .automation-stepper > .is-current {
+    background: #3b2d54;
+    color: #d8b4fe;
+}
+.dark .automation-page .automation-upload {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f0f4f9;
+}
+.dark .automation-page .automation-upload:hover,
+.dark .automation-page .automation-upload.is-dragging {
+    background: #202224;
+    border-color: rgba(168, 85, 247, 0.4);
+}
+.dark .automation-page .automation-upload__icon {
+    background: #282a2c;
+    color: #d8b4fe;
+}
+.dark .automation-page .automation-upload > span:last-child {
+    color: #94a3b8;
+}
+.dark .automation-page .automation-file {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .automation-page .automation-validation span {
+    background: #282a2c;
+    color: #cbd5e1;
+}
+.dark .automation-page .workspace-table-scroll {
+    border-color: rgba(255, 255, 255, 0.08);
+}
+.dark .automation-page .workspace-table {
+    color: #f0f4f9;
+}
+.dark .automation-page .workspace-table th {
+    background: #18191a;
+    color: #94a3b8;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+.dark .automation-page .workspace-table td {
+    color: #cbd5e1;
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+.dark .automation-page .workspace-table tbody tr:hover {
+    background: #282a2c;
+}
+

@@ -1,7 +1,7 @@
 <x-guest-layout>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <div class="min-h-screen bg-[#fdfcf9] font-sans antialiased text-[#30313b] flex flex-col justify-center items-center py-12 px-4 selection:bg-[#2383e2]/10">
+    <div class="min-h-screen bg-[#fdfcf9] dark:bg-[#131314] font-sans antialiased text-[#30313b] dark:text-[#f0f4f9] flex flex-col justify-center items-center py-12 px-4 selection:bg-[#2383e2]/10 transition-colors duration-200">
         
         <!-- Main Form Column (No Card Container) -->
         <div class="w-full max-w-[340px] flex flex-col items-center">
@@ -9,10 +9,10 @@
             <!-- Logo Section -->
             <div class="flex flex-col items-center text-center mb-4">
                 <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-9 h-9 object-contain mb-1.5">
-                <h1 class="text-[18px] sm:text-[19px] font-bold text-[#30313b] tracking-tight leading-tight">
+                <h1 class="text-[18px] sm:text-[19px] font-bold text-[#30313b] dark:text-[#f0f4f9] tracking-tight leading-tight">
                     Confirm password.
                 </h1>
-                <p class="text-xs text-slate-500 font-normal mt-1">Please confirm your password before continuing</p>
+                <p class="text-xs text-slate-500 dark:text-[#94a3b8] font-normal mt-1">Please confirm your password before continuing</p>
             </div>
 
             <!-- Form -->
@@ -21,9 +21,9 @@
 
                 <!-- Password Field -->
                 <div>
-                    <label for="password" class="block text-xs font-semibold text-slate-600 mb-1.5">Password</label>
+                    <label for="password" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">Password</label>
                     <input id="password" name="password" type="password" autocomplete="current-password" required
-                           class="w-full px-3.5 py-2 bg-white border border-slate-200/90 rounded-md text-[13px] font-normal text-[#30313b] placeholder-slate-400 focus:border-[#2383e2] focus:bg-white focus:ring-1 focus:ring-[#2383e2]/20 shadow-3xs outline-none transition-colors @error('password') border-rose-300 bg-rose-50/20 @enderror"
+                           class="w-full px-3.5 py-2 bg-white dark:bg-[#1e1f20] border border-slate-200/90 dark:border-white/10 rounded-md text-[13px] font-normal text-[#30313b] dark:text-[#f0f4f9] placeholder-slate-400 dark:placeholder-slate-500 focus:border-[#2383e2] focus:bg-white dark:focus:bg-[#1e1f20] focus:ring-1 focus:ring-[#2383e2]/20 shadow-3xs outline-none transition-colors @error('password') border-rose-300 bg-rose-50/20 dark:bg-rose-950/20 @enderror"
                            placeholder="Enter your password">
                     @error('password')
                         <p class="mt-1 text-[11px] text-rose-500 font-semibold">{{ $message }}</p>
@@ -37,13 +37,13 @@
             </form>
 
             <!-- Workspace Footer Disclaimer -->
-            <div class="w-full text-center space-y-2 pt-4 mt-5 border-t border-slate-200/60">
-                <p class="text-[10px] text-slate-400 leading-normal">
-                    By continuing, you acknowledge that you understand and agree to the <a href="{{ route('legal.terms') }}" class="text-slate-500 hover:text-zinc-800 font-semibold underline underline-offset-2">Terms & Conditions</a> and <a href="{{ route('legal.privacy') }}" class="text-slate-500 hover:text-zinc-800 font-semibold underline underline-offset-2">Privacy Policy</a>.
+            <div class="w-full text-center space-y-2 pt-4 mt-5 border-t border-slate-200/60 dark:border-white/10">
+                <p class="text-[10px] text-slate-400 dark:text-slate-400 leading-normal">
+                    By continuing, you acknowledge that you understand and agree to the <a href="{{ route('legal.terms') }}" class="text-slate-500 dark:text-slate-300 hover:text-zinc-800 dark:hover:text-white font-semibold underline underline-offset-2">Terms & Conditions</a> and <a href="{{ route('legal.privacy') }}" class="text-slate-500 dark:text-slate-300 hover:text-zinc-800 dark:hover:text-white font-semibold underline underline-offset-2">Privacy Policy</a>.
                 </p>
-                <div class="flex items-center justify-center gap-1.5 text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                <div class="flex items-center justify-center gap-1.5 text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                     <span>Powered by</span>
-                    <span class="text-slate-600">PT. Teknalogi Transformasi Digital</span>
+                    <span class="text-slate-600 dark:text-slate-400">PT. Teknalogi Transformasi Digital</span>
                 </div>
             </div>
 

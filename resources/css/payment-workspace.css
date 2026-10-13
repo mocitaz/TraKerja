@@ -1170,3 +1170,90 @@
         transform: none;
     }
 }
+
+/* ==========================================================================
+   Gemini Dark Mode Styles for Payment & Checkout Workspace
+   ========================================================================== */
+.dark .payment-workspace {
+    color: #f0f4f9;
+}
+.dark .pay-heading h1 {
+    color: #f0f4f9;
+}
+.dark .pay-heading p {
+    color: #94a3b8;
+}
+.dark .pay-back {
+    color: #94a3b8;
+}
+.dark .pay-back:hover {
+    color: #f0f4f9;
+}
+.dark .pay-link {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .pay-link:hover {
+    background: #282a2c;
+    color: #f0f4f9;
+}
+.dark .pay-panel {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    color: #f0f4f9;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+.dark .pay-panel h2,
+.dark .pay-panel h3,
+.dark .pay-panel h4 {
+    color: #f0f4f9;
+}
+.dark .pay-panel p {
+    color: #94a3b8;
+}
+.dark .pay-summary-box {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+.dark .pay-method {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .pay-method:hover {
+    background: #282a2c;
+}
+.dark .pay-method.is-selected {
+    border-color: #a855f7;
+    background: #231c30;
+}
+.dark .pay-credit-grid > div {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .pay-credit-grid strong {
+    color: #f0f4f9;
+}
+.dark .pay-credit-grid span {
+    color: #94a3b8;
+}
+.dark .pay-table {
+    color: #f0f4f9;
+}
+.dark .pay-table th {
+    background: #18191a;
+    color: #94a3b8;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+.dark .pay-table td {
+    color: #cbd5e1;
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+.dark .pay-state {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    color: #f0f4f9;
+}
+

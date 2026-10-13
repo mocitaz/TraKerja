@@ -1657,4 +1657,43 @@
 .dark .cv-preview-container {
     background: #131314 !important;
 }
+.dark .cv-template-sidebar {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .cv-workspace .cv-template-heading h2 {
+    color: #f0f4f9 !important;
+}
+.dark .cv-workspace .cv-template-heading p {
+    color: #94a3b8 !important;
+}
+.dark .cv-template-label {
+    color: #f0f4f9 !important;
+}
+.dark .cv-template-desc {
+    color: #94a3b8 !important;
+}
+.dark .cv-review-toolbar {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .cv-review-setting label {
+    color: #94a3b8 !important;
+}
+.dark .cv-import-dropzone {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+.dark .cv-import-dropzone strong {
+    color: #f0f4f9 !important;
+}
+.dark .cv-import-dropzone span {
+    color: #94a3b8 !important;
+}
+.dark .cv-import-dropzone input::file-selector-button {
+    background: #282a2c !important;
+    color: #f0f4f9 !important;
+}
+
 

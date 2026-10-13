@@ -48,7 +48,7 @@ $dialogId = 'modal-' . $name;
 
     <div
         x-show="show"
-        class="relative bg-white rounded-2xl overflow-hidden shadow-2xl transform transition-all w-full {{ $maxWidth }} sm:mx-auto mx-4"
+        class="relative bg-white dark:bg-[#1e1f20] border border-transparent dark:border-white/10 text-slate-800 dark:text-[#f0f4f9] rounded-2xl overflow-hidden shadow-2xl transform transition-all w-full {{ $maxWidth }} sm:mx-auto mx-4"
         x-transition:enter="ease-out duration-300"
         x-transition:enter-start="opacity-0 scale-95"
         x-transition:enter-end="opacity-100 scale-100"

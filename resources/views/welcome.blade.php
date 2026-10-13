@@ -286,7 +286,7 @@
     </header>
 
     {{-- ============ HERO ============ --}}
-    <section class="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden border-b border-[#dedbd6]/80 bg-[#fdfcf9]">
+    <section class="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden border-b border-[#dedbd6]/80 dark:border-white/10 bg-[#fdfcf9] dark:bg-[#131314]">
         <div class="max-w-5xl mx-auto px-4 text-center">
 
             <!-- Notion-style line-art branding icons -->
@@ -856,7 +856,7 @@
     
 
     {{-- ============ HOW IT WORKS (Notion interactive switcher) ============ --}}
-    <section id="how-it-works" class="py-20 sm:py-24 bg-[#f8f6f0]/60 border-b border-[#dedbd6]/80">
+    <section id="how-it-works" class="py-20 sm:py-24 bg-[#f8f6f0]/60 dark:bg-[#18191a] border-b border-[#dedbd6]/80 dark:border-white/10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-14 reveal">
                 <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900">Start in 3 simple steps.</h2>
@@ -972,7 +972,7 @@
     </section>
 
     {{-- ============ TELEGRAM COMMUNITY SECTION ============ --}}
-    <section class="py-24 bg-[#fdfcf9] border-b border-[#dedbd6]/80 relative select-none">
+    <section class="py-24 bg-[#fdfcf9] dark:bg-[#131314] border-b border-[#dedbd6]/80 dark:border-white/10 relative select-none">
         <div class="max-w-3xl mx-auto px-4 text-center reveal">
             <!-- Telegram Notion Icon Badge (Clean Borderless Circular) -->
             <div class="w-14 h-14 rounded-full bg-[#2383e2]/10 flex items-center justify-center mx-auto mb-6">
@@ -1020,7 +1020,7 @@
     </section>
 
     {{-- ============ PRICING ============ --}}
-    <section class="py-20 sm:py-24 bg-[#f8f6f0]/60 border-b border-[#dedbd6]/80" id="pricing">
+    <section class="py-20 sm:py-24 bg-[#f8f6f0]/60 dark:bg-[#18191a] border-b border-[#dedbd6]/80 dark:border-white/10" id="pricing">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-14 reveal">
                 <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 mt-3">Simple pricing. No hidden fees.</h2>
@@ -1143,7 +1143,7 @@
     </section>
 
     {{-- ============ TESTIMONIALS ============ --}}
-    <section class="py-20 sm:py-24 bg-[#fdfcf9] border-b border-[#dedbd6]/80" id="testimonials">
+    <section class="py-20 sm:py-24 bg-[#fdfcf9] dark:bg-[#131314] border-b border-[#dedbd6]/80 dark:border-white/10" id="testimonials">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="mb-12 reveal">
                 <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-950 font-black tracking-tight">Trusted by candidates
@@ -1263,7 +1263,7 @@
     </section>
 
     {{-- ============ FAQ ============ --}}
-    <section class="py-20 sm:py-24 bg-[#f8f6f0]/60 border-b border-[#dedbd6]/80" id="faq">
+    <section class="py-20 sm:py-24 bg-[#f8f6f0]/60 dark:bg-[#18191a] border-b border-[#dedbd6]/80 dark:border-white/10" id="faq">
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
             <h2 class="text-center notion-h1 text-2xl sm:text-3xl text-zinc-900 mb-10 reveal">Frequently Asked Questions
             </h2>
@@ -1322,7 +1322,7 @@
     </section>
 
     {{-- ============ CTA BANNER ============ --}}
-    <section class="py-28 bg-[#fdfcf9] border-b border-[#dedbd6]/80 select-none">
+    <section class="py-28 bg-[#fdfcf9] dark:bg-[#131314] border-b border-[#dedbd6]/80 dark:border-white/10 select-none">
         <div class="max-w-2xl mx-auto px-4 text-center reveal">
             <h2 class="text-4xl sm:text-5xl font-black text-zinc-900 tracking-tight leading-none mb-4">Get started
                 today.</h2>
@@ -1340,7 +1340,7 @@
     </section>
 
     {{-- ============ FOOTER ============ --}}
-    <footer class="bg-[#f4f2ec] border-t border-[#dedbd6] py-16 text-[11px] font-semibold text-zinc-600">
+    <footer class="bg-[#f4f2ec] dark:bg-[#131314] border-t border-[#dedbd6] dark:border-white/10 py-16 text-[11px] font-semibold text-zinc-600 dark:text-[#94a3b8]">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="grid grid-cols-2 md:grid-cols-12 gap-x-8 gap-y-10 pb-12 border-b border-[#dedbd6]">
 

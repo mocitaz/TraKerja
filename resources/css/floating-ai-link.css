@@ -13,3 +13,16 @@ body:has(.ai-portal) .floating-ai-prompt,
 body:has(.admin-page-frame) .floating-ai-prompt {
     display: none !important;
 }
+
+/* Gemini Dark Mode Styles */
+.dark .floating-ai-prompt a {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #f0f4f9 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+.dark .floating-ai-prompt a:hover {
+    background: #282a2c !important;
+    border-color: rgba(168, 85, 247, 0.35) !important;
+}
+

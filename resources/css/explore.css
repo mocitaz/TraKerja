@@ -339,3 +339,215 @@
         gap: 10px 18px;
     }
 }
+
+/* ==========================================================================
+   Gemini Dark Mode Styles for Explore Jobs
+   Benchmarked against Dashboard Design System
+   ========================================================================== */
+.dark .explore-page h1,
+.dark .explore-page h2,
+.dark .explore-page h3 {
+    color: #f0f4f9;
+}
+.dark .explore-page p {
+    color: #94a3b8;
+}
+
+/* Search & Filter Panel */
+.dark .explore-search-panel {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+.dark .explore-catalog-count {
+    background: #282a2c;
+    color: #cbd5e1;
+}
+.dark .explore-page :is(.explore-search-field, .explore-filter-field) label {
+    color: #cbd5e1;
+}
+.dark .explore-page .explore-search-field input,
+.dark .explore-page .explore-filter-field select {
+    background: #131314;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f0f4f9;
+}
+.dark .explore-page .explore-search-field input::placeholder {
+    color: #64748b;
+}
+.dark .explore-search-field > div > i {
+    color: #94a3b8;
+}
+.dark .explore-filter-toggle {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #d8b4fe;
+}
+.dark .explore-filter-toggle:hover {
+    background: #333538;
+}
+.dark .explore-search-secondary {
+    border-top-color: rgba(255, 255, 255, 0.08);
+}
+.dark .explore-filter-chips button {
+    background: #282a2c;
+    color: #d8b4fe;
+}
+.dark .explore-filter-chips button:hover {
+    background: #333538;
+}
+.dark .explore-filter-chips .explore-reset {
+    color: #94a3b8;
+}
+.dark .explore-source-note {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+.dark .explore-source-note strong {
+    color: #f0f4f9;
+}
+.dark .explore-source-note summary > span {
+    color: #94a3b8;
+}
+.dark .explore-sort label {
+    color: #94a3b8;
+}
+.dark .explore-sort select {
+    background-color: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+/* Job Cards - Obsidian Surface with Subtle Jewel Tint Headers */
+.dark .explore-job-card {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+.dark .explore-job-card:hover {
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+.dark .explore-job-header--blue {
+    background: linear-gradient(135deg, rgba(29, 78, 216, 0.15) 0%, rgba(30, 31, 32, 0.95) 100%);
+}
+.dark .explore-job-header--lavender {
+    background: linear-gradient(135deg, rgba(109, 40, 217, 0.15) 0%, rgba(30, 31, 32, 0.95) 100%);
+}
+.dark .explore-job-header--peach {
+    background: linear-gradient(135deg, rgba(180, 83, 9, 0.13) 0%, rgba(30, 31, 32, 0.95) 100%);
+}
+.dark .explore-job-source > span {
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+.dark .explore-job-header h3 button {
+    color: #f0f4f9;
+}
+.dark .explore-job-header h3 button:hover {
+    color: #c4b5fd;
+}
+.dark .explore-job-header p.explore-job-company {
+    color: #e2e8f0;
+}
+.dark .explore-job-location {
+    color: #94a3b8 !important;
+}
+.dark .explore-job-categories span {
+    color: #94a3b8;
+}
+.dark .explore-job-description {
+    color: #94a3b8 !important;
+}
+.dark .explore-job-skills span {
+    background: #282a2c;
+    color: #94a3b8;
+}
+.dark .explore-job-skills span.is-matched {
+    background: rgba(217, 70, 239, 0.16);
+    color: #f472b6;
+}
+.dark .explore-skill-note {
+    color: #c084fc !important;
+}
+.dark .explore-source-details {
+    color: #94a3b8;
+}
+.dark .explore-source-details > div {
+    background: #282a2c;
+    color: #cbd5e1;
+}
+.dark .explore-save-button {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #d8b4fe;
+}
+.dark .explore-save-button:hover {
+    background: #333538;
+}
+.dark .explore-save-button.is-saved {
+    background: rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.25);
+    color: #d8b4fe;
+}
+.dark .explore-open-button {
+    background: #4338ca;
+    border-color: #4338ca;
+    color: #fff;
+}
+.dark .explore-open-button:hover {
+    background: #3730a3;
+}
+.dark .explore-job-bottom {
+    border-top-color: rgba(255, 255, 255, 0.07);
+}
+.dark .explore-job-bottom button {
+    color: #c4b5fd;
+}
+.dark .explore-job-bottom .explore-report-button,
+.dark .explore-job-bottom > span {
+    color: #94a3b8;
+}
+.dark .explore-job-bottom button:hover {
+    color: #e9d5ff;
+}
+.dark .explore-footer p {
+    color: #94a3b8;
+}
+
+/* Modal Dialogs in Explore */
+.dark .explore-dialog {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+    color: #f0f4f9;
+}
+.dark .explore-dialog-close {
+    background: #282a2c;
+    color: #94a3b8;
+}
+.dark .explore-dialog-close:hover {
+    background: #333538;
+    color: #f0f4f9;
+}
+.dark .explore-dialog-role {
+    background: #282a2c;
+    color: #f0f4f9;
+}
+.dark .explore-dialog-note {
+    background: rgba(255, 255, 255, 0.04);
+    color: #94a3b8;
+}
+.dark .explore-preview-company {
+    color: #e2e8f0;
+}
+.dark .explore-preview-meta span {
+    color: #94a3b8;
+}
+.dark .explore-preview-description {
+    color: #94a3b8;
+}
+.dark .explore-dialog-footer {
+    border-top-color: rgba(255, 255, 255, 0.08);
+}
+

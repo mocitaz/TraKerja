@@ -631,3 +631,154 @@
         translate: none;
     }
 }
+
+/* ==========================================================================
+   Gemini Dark Mode Styles for Membership & Credits
+   Benchmarked directly against Dashboard Next Move Design System
+   ========================================================================== */
+.dark .membership-page h1 {
+    color: #f0f4f9;
+}
+.dark .membership-page .workspace-page__header p {
+    color: #94a3b8;
+}
+.dark .membership-page .workspace-eyebrow {
+    color: #c084fc;
+}
+
+/* Free Access Banner */
+.dark .membership-free-access {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+.dark .membership-free-access strong {
+    color: #f0f4f9;
+}
+.dark .membership-free-access p {
+    color: #94a3b8;
+}
+
+/* Cards - Soothing jewel tones matching Dashboard */
+.dark .membership-page .next-move-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+.dark .membership-page .next-move-interview {
+    background: linear-gradient(135deg, #101e2e 0%, #162438 100%) !important;
+    border: 1px solid rgba(59, 130, 246, 0.22) !important;
+}
+.dark .membership-page .next-move-followup {
+    background: linear-gradient(135deg, #2b1f1a 0%, #352520 100%) !important;
+    border: 1px solid rgba(249, 115, 22, 0.22) !important;
+}
+.dark .membership-page .next-move-cv {
+    background: linear-gradient(135deg, #221c2e 0%, #2a2238 100%) !important;
+    border: 1px solid rgba(168, 85, 247, 0.22) !important;
+}
+.dark .membership-page .membership-card-history {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Card Elements */
+.dark .membership-page .next-move-card h3 {
+    color: #f0f4f9;
+}
+.dark .membership-page .next-move-description {
+    color: #94a3b8;
+}
+.dark .membership-page .next-move-card-top {
+    color: #cbd5e1;
+}
+.dark .membership-page .next-move-card-top > span {
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+.dark .membership-page .next-move-card-top > i {
+    color: #94a3b8;
+}
+.dark .membership-page .next-move-card-top > a {
+    color: #cbd5e1;
+}
+.dark .membership-page .membership-account-col--balance {
+    border-left-color: rgba(255, 255, 255, 0.1);
+}
+.dark .membership-page .membership-history-count {
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
+/* Credit Boxes */
+.dark .membership-page .membership-credit-box {
+    background: rgba(255, 255, 255, 0.06);
+}
+.dark .membership-page .membership-credit-box:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+.dark .membership-page .membership-credit-label {
+    color: #94a3b8;
+}
+.dark .membership-page .membership-credit-val {
+    color: #f0f4f9;
+}
+.dark .membership-page .membership-credit-unit {
+    color: #94a3b8;
+}
+
+/* Action Button */
+.dark .membership-page .next-move-action {
+    background: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .membership-page .next-move-action:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+/* Checklist & Appointment */
+.dark .membership-page .next-move-checklist li {
+    color: #cbd5e1;
+}
+.dark .membership-page .next-move-checklist .is-added i {
+    color: #60a5fa;
+}
+.dark .membership-page .next-move-appointment > time {
+    background: rgba(255, 255, 255, 0.06);
+}
+.dark .membership-page .next-move-appointment > time strong {
+    color: #f0f4f9;
+}
+.dark .membership-page .next-move-appointment > time span {
+    color: #94a3b8;
+}
+.dark .membership-page .next-move-appointment > div strong {
+    color: #f0f4f9;
+}
+.dark .membership-page .next-move-appointment > div span {
+    color: #94a3b8;
+}
+.dark .membership-page .next-move-footnote {
+    color: #94a3b8;
+}
+
+/* Payment History rows */
+.dark .membership-page .membership-order-row {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.06);
+}
+.dark .membership-page .membership-order-row:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+.dark .membership-page .membership-order-row strong {
+    color: #f0f4f9;
+}
+.dark .membership-page .membership-order-row span {
+    color: #94a3b8;
+}
+.dark .membership-page .membership-empty-history {
+    background: rgba(255, 255, 255, 0.04);
+    color: #94a3b8;
+}
+.dark .membership-footer p {
+    color: #94a3b8;
+}
+

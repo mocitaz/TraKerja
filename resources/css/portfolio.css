@@ -116,3 +116,59 @@
 @media (max-width: 540px) { .portfolio-shell { padding: 14px 16px 0; } .portfolio-wordmark { font-size: 12px; } .portfolio-topbar .portfolio-contact-button { padding: 10px 12px; font-size: 11px; } .portfolio-intro { flex-direction: column-reverse; align-items: flex-start; padding-top: 34px; gap: 26px; } .portfolio-intro h1 { letter-spacing: -1px; } .portfolio-portrait { width: 106px; height: 116px; } .portfolio-project-grid, .portfolio-background-grid, .portfolio-skill-groups { grid-template-columns: 1fr; } .portfolio-project, .portfolio-skills, .portfolio-background-card { padding: 24px; border-radius: 20px; } .portfolio-section h2 { font-size: 24px; } .portfolio-section { margin-bottom: 34px; } .portfolio-timeline { padding: 6px 24px; } .portfolio-outro { flex-direction: column; align-items: flex-start; gap: 22px; } .portfolio-preview-bar { align-items: flex-start; } .portfolio-preview-bar span { display: block; margin: 5px 0 0; } .site-theme-options > div { grid-template-columns: repeat(2, minmax(0, 1fr)); } .site-settings-body { padding: 20px; } .site-visibility > a { float: none; display: block; margin-top: 10px; } }
 @media (prefers-reduced-motion: reduce) { .portfolio-intro { animation: none; } .portfolio-project { transition: none; } }
 @media (prefers-reduced-motion: no-preference) { .portfolio-page { scroll-behavior: smooth; } }
+
+/* Dark Mode - Gemini Obsidian Style for Portfolio Settings Dialog */
+.dark .site-settings-dialog {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5) !important;
+}
+.dark .site-visibility {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .site-visibility p {
+    color: #94a3b8 !important;
+}
+.dark .site-address-field > div {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    background: #1e1f20 !important;
+}
+.dark .site-address-field > div > span {
+    background: #282a2c !important;
+    color: #94a3b8 !important;
+}
+.dark .site-address-field input {
+    background: #1e1f20 !important;
+    color: #f0f4f9 !important;
+}
+.dark .site-address-field > p,
+.dark .site-theme-options > p,
+.dark .site-public-note p,
+.dark .site-content-guidance p,
+.dark .site-domain-note {
+    color: #94a3b8 !important;
+}
+.dark .site-theme-option {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    background: #282a2c !important;
+}
+.dark .site-theme-option.is-selected {
+    border-color: #c084fc !important;
+    background: #362244 !important;
+}
+.dark .site-preview-action {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #c084fc !important;
+}
+.dark .site-content-guidance {
+    background: #2a1f18 !important;
+    border: 1px solid rgba(249, 115, 22, 0.2) !important;
+}
+.dark .site-settings-footer {
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+

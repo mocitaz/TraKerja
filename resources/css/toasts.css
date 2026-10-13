@@ -51,3 +51,39 @@
 @keyframes action-toast-countdown { to { transform: scaleX(0); } }
 @media (max-width: 640px) { .action-toast-stack { right: max(12px, env(safe-area-inset-right)); bottom: max(12px, env(safe-area-inset-bottom)); width: calc(100vw - 24px); } .action-toast__close { width: 40px; height: 40px; margin: -4px -4px -4px 0; } }
 @media (prefers-reduced-motion: reduce) { .action-toast, .action-toast.is-leaving { animation: none; } .action-toast__progress { animation: none; display: none; } .action-toast__close { transition: none; } }
+
+/* ==========================================================================
+   Gemini Dark Mode Styles for Toasts
+   ========================================================================== */
+.dark .action-toast {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f0f4f9;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.dark .action-toast__title {
+    color: #f0f4f9;
+}
+.dark .action-toast__message {
+    color: #94a3b8;
+}
+.dark .action-toast__close {
+    color: #94a3b8;
+}
+.dark .action-toast__close:hover {
+    background: #282a2c;
+    color: #f0f4f9;
+}
+.dark .action-toast--success {
+    --toast-accent: #34d399;
+    --toast-tint: rgba(16, 185, 129, 0.15);
+}
+.dark .action-toast--error {
+    --toast-accent: #f87171;
+    --toast-tint: rgba(239, 68, 68, 0.15);
+}
+.dark .action-toast--warning {
+    --toast-accent: #fbbf24;
+    --toast-tint: rgba(245, 158, 11, 0.15);
+}
+
