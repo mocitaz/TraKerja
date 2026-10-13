@@ -40,7 +40,10 @@
                 </div>
                 <div class="kawankerja-header-text">
                     <h3>HireMate</h3>
-                    <p>TraKerja Career Assistant</p>
+                    <p>
+                        <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="kawankerja-header-logo" onerror="this.style.display='none';">
+                        <span>TraKerja Career Assistant</span>
+                    </p>
                 </div>
             </div>
             <div class="kawankerja-header-actions">
