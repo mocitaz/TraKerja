@@ -153,12 +153,40 @@
     border-bottom-color: rgba(255, 255, 255, 0.07) !important;
     border-top-color: rgba(255, 255, 255, 0.07) !important;
 }
+.dark .activity-day-dialog header span { color: #c084fc !important; }
+.dark .activity-day-dialog header p { color: #94a3b8 !important; }
 .dark .activity-day-dialog header button {
     background: #282a2c !important;
     color: #f0f4f9 !important;
+}
+.dark .activity-day-dialog header button:hover {
+    background: #333538 !important;
 }
 .dark .activity-day-list strong { color: #f0f4f9 !important; }
 .dark .activity-day-list span,
 .dark .activity-day-list small { color: #94a3b8 !important; }
 .dark .activity-day-list > a:hover { background: #282a2c !important; }
+.dark .activity-day-dialog > footer > button {
+    background: #282a2c !important;
+    color: #f0f4f9 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .activity-day-dialog > footer > button:hover {
+    background: #333538 !important;
+}
+.dark .activity-day-empty h3 { color: #f0f4f9 !important; }
+.dark .activity-day-empty p { color: #94a3b8 !important; }
+.dark .next-move-confirm-dialog p { color: #94a3b8 !important; }
+.dark .next-move-confirm-dialog button {
+    background: #282a2c !important;
+    color: #f0f4f9 !important;
+}
+.dark .next-move-confirm-dialog button.is-primary {
+    background: #2579ca !important;
+    color: #fff !important;
+}
+.dark .next-move-confirm-dialog button.is-primary:hover {
+    background: #1e65ab !important;
+}
+
 

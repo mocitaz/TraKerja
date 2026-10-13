@@ -498,3 +498,202 @@
     color: #f0f4f9;
 }
 
+/* ==========================================================================
+   Dark Mode - Dashboard Application Activity Heatmap
+   ========================================================================== */
+
+.dark .dashboard-workspace .dashboard-activity-panel {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .dashboard-activity-header h3 {
+    color: #f0f4f9 !important;
+}
+
+.dark .dashboard-activity-header p {
+    color: #94a3b8 !important;
+}
+
+.dark .dashboard-activity-average {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+
+.dark .dashboard-activity-average span {
+    color: #94a3b8 !important;
+}
+
+.dark .dashboard-activity-average strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .activity-range {
+    color: #94a3b8 !important;
+}
+
+.dark .dashboard-workspace .activity-range button {
+    background: #282a2c !important;
+    color: #94a3b8 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .dashboard-workspace .activity-range button:hover {
+    background: #333538 !important;
+    color: #f0f4f9 !important;
+}
+
+.dark .dashboard-workspace .activity-range button.is-active {
+    background: #3b2d54 !important;
+    color: #d8b4fe !important;
+    border-color: rgba(192, 132, 252, 0.4) !important;
+}
+
+.dark .dashboard-heatmap-days,
+.dark .dashboard-heatmap-days span,
+.dark .dashboard-heatmap-month {
+    color: #94a3b8 !important;
+}
+
+.dark .dashboard-heatmap-cell {
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.dark .dashboard-activity-footer {
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .dashboard-activity-footer a {
+    color: #c084fc !important;
+}
+
+.dark .dashboard-activity-footer a:hover {
+    color: #e9d5ff !important;
+}
+
+.dark .dashboard-heatmap-legend {
+    color: #94a3b8 !important;
+}
+
+.dark .dashboard-activity-tooltip {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: #f0f4f9 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+}
+
+.dark .dashboard-activity-tooltip::after {
+    background: #1e1f20 !important;
+    border-right-color: rgba(255, 255, 255, 0.12) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.dark .dashboard-activity-tooltip-date {
+    color: #f0f4f9 !important;
+}
+
+.dark .dashboard-activity-tooltip-count {
+    color: #94a3b8 !important;
+}
+
+.dark .dashboard-activity-tooltip-count strong {
+    color: #f0f4f9 !important;
+}
+
+/* ==========================================================================
+   Dark Mode - Weekly Goals & Cadence Manager
+   ========================================================================== */
+
+.dark .weekly-goals-panel,
+.dark .dashboard-workspace .dashboard-next-goals .weekly-goals-panel {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .weekly-goals-header h3 {
+    color: #f0f4f9 !important;
+}
+
+.dark .weekly-goals-header p {
+    color: #94a3b8 !important;
+}
+
+.dark .weekly-goals-settings {
+    background: #282a2c !important;
+    color: #f0f4f9 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .weekly-goals-settings:hover {
+    background: #333538 !important;
+    color: #ffffff !important;
+}
+
+.dark .weekly-goal-metric {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.07) !important;
+    color: #f0f4f9 !important;
+}
+
+.dark .weekly-goal-metric:hover {
+    background: #333538 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.dark .weekly-goal-ring circle.weekly-goal-ring-bg,
+.dark .weekly-goal-ring circle[stroke="#e5e4eb"] {
+    stroke: rgba(255, 255, 255, 0.12) !important;
+}
+
+.dark .weekly-goal-ring > strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .weekly-goal-detail strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .weekly-goal-detail > span {
+    color: #94a3b8 !important;
+}
+
+.dark .weekly-goals-footer {
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .weekly-goal-streak strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .weekly-goal-streak div > span {
+    color: #94a3b8 !important;
+}
+
+.dark .weekly-goal-streak-icon {
+    background: #282a2c !important;
+    color: #94a3b8 !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+.dark .weekly-goal-streak.is-active .weekly-goal-streak-icon {
+    background: rgba(245, 158, 11, 0.15) !important;
+    color: #fbbf24 !important;
+    border-color: rgba(245, 158, 11, 0.25) !important;
+}
+
+.dark .weekly-goals-edit {
+    background: #3c2460 !important;
+    color: #e9d5ff !important;
+    border: 1px solid rgba(192, 132, 252, 0.3) !important;
+}
+
+.dark .weekly-goals-edit:hover {
+    background: #502e82 !important;
+    color: #ffffff !important;
+}
+
+

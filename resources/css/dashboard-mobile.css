@@ -163,3 +163,11 @@
 @media (hover: none) and (max-width: 900px) {
     .dashboard-application-card:hover, .next-move-card:hover { translate: none; box-shadow: none; }
 }
+
+.dark .activity-mobile-calendar header h4 { color: #f0f4f9; }
+.dark .activity-weekday { color: #94a3b8; }
+.dark .activity-mobile-calendar > p { color: #94a3b8; }
+.dark .activity-month-day:disabled > span { background: #282a2c; }
+.dark .dashboard-workspace .activity-mobile-calendar header button { color: #f0f4f9; }
+.dark .activity-mobile-calendar header button:active { background: #282a2c; }
+

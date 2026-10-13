@@ -24,7 +24,7 @@
             <button type="button" wire:click="openGoalModal" wire:loading.attr="disabled" wire:target="openGoalModal" class="weekly-goal-metric" style="--goal-accent: {{ $metric['color'] }};" aria-label="{{ $metric['label'] }}: {{ $metric['actual'] }}{{ $activeGoal ? ' of '.$metric['target'] : ', target not set' }}. Configure targets" aria-haspopup="dialog">
                 <span class="weekly-goal-ring">
                     <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-                        <circle cx="32" cy="32" r="27" fill="none" stroke="#e5e4eb" stroke-width="4" />
+                        <circle class="weekly-goal-ring-bg" cx="32" cy="32" r="27" fill="none" stroke="#e5e4eb" stroke-width="4" />
                         @if($metric['progress'] > 0)
                             <circle class="weekly-goal-arc" cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="{{ $metric['progress'] }} 100" transform="rotate(-90 32 32)" />
                         @endif

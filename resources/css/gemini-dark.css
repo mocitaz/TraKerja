@@ -6,6 +6,11 @@
     --gemini-border: #e2e8f0;
     --gemini-text-primary: #0f172a;
     --gemini-text-muted: #64748b;
+    --heatmap-c0: #e9eef0;
+    --heatmap-c1: #f5d0fe;
+    --heatmap-c2: #e879f9;
+    --heatmap-c3: #c026d3;
+    --heatmap-c4: #86198f;
 }
 
 html.dark {
@@ -15,6 +20,11 @@ html.dark {
     --gemini-border: rgba(255, 255, 255, 0.07);
     --gemini-text-primary: #f0f4f9;
     --gemini-text-muted: #94a3b8;
+    --heatmap-c0: #282a2c;
+    --heatmap-c1: #581c87;
+    --heatmap-c2: #7e22ce;
+    --heatmap-c3: #a855f7;
+    --heatmap-c4: #c084fc;
     color-scheme: dark;
 }
 
@@ -40,39 +50,4 @@ html.dark ::-webkit-scrollbar-thumb:hover {
     background: #3b3d40;
 }
 
-/* Landing / Welcome Page Dark Mode */
-.dark .welcome-page h1,
-.dark .welcome-page h2,
-.dark .welcome-page h3,
-.dark .welcome-page h4,
-.dark .welcome-page .notion-h1 {
-    color: #f0f4f9 !important;
-}
-.dark .welcome-page .bento-card,
-.dark .welcome-page .pricing-card,
-.dark .welcome-page .testimonial-card,
-.dark .welcome-page [class*="bento-"],
-.dark .welcome-page .how-it-works-item {
-    background: #1e1f20 !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
-    color: #f0f4f9 !important;
-}
-.dark .welcome-page .how-it-works-item:hover {
-    background: #282a2c !important;
-}
-.dark .welcome-page .faq-item {
-    background: #1e1f20 !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
-}
-.dark .welcome-page .text-zinc-900,
-.dark .welcome-page .text-zinc-950,
-.dark .welcome-page .text-zinc-800,
-.dark .welcome-page .text-zinc-700 {
-    color: #f0f4f9 !important;
-}
-.dark .welcome-page .text-zinc-500,
-.dark .welcome-page .text-zinc-600,
-.dark .welcome-page .text-zinc-400 {
-    color: #94a3b8 !important;
-}
 

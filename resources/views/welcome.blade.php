@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="{{ request()->cookie('theme') === 'dark' ? 'dark' : '' }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -36,55 +36,8 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- Anti-FOUC & Theme Initialization Script -->
     <script>
-        (function() {
-            function enforceTheme() {
-                try {
-                    var theme = localStorage.getItem('theme');
-                    var supportDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    var isDark = theme === 'dark' || (!theme && supportDark);
-                    if (isDark) {
-                        if (!document.documentElement.classList.contains('dark')) {
-                            document.documentElement.classList.add('dark');
-                        }
-                        if (!document.cookie.includes('theme=dark')) {
-                            document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
-                        }
-                    } else {
-                        if (document.documentElement.classList.contains('dark')) {
-                            document.documentElement.classList.remove('dark');
-                        }
-                        if (!document.cookie.includes('theme=light')) {
-                            document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
-                        }
-                    }
-                } catch (e) {}
-            }
-
-            enforceTheme();
-
-            document.addEventListener('livewire:navigating', enforceTheme);
-            document.addEventListener('livewire:navigated', enforceTheme);
-
-            if (window.MutationObserver) {
-                var observer = new MutationObserver(function(mutations) {
-                    for (var i = 0; i < mutations.length; i++) {
-                        if (mutations[i].attributeName === 'class') {
-                            var theme = localStorage.getItem('theme');
-                            var supportDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                            var isDark = theme === 'dark' || (!theme && supportDark);
-                            if (isDark && !document.documentElement.classList.contains('dark')) {
-                                document.documentElement.classList.add('dark');
-                            } else if (!isDark && document.documentElement.classList.contains('dark')) {
-                                document.documentElement.classList.remove('dark');
-                            }
-                        }
-                    }
-                });
-                observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-            }
-        })();
+        document.documentElement.classList.remove('dark');
     </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -105,21 +58,6 @@
             --notion-red-border: #f8caca;
             --notion-green: #eef8f2;
             --notion-green-border: #c5ebd2;
-        }
-
-        html.dark {
-            --notion-bg: #131314;
-            --notion-text: #f0f4f9;
-            --notion-text-muted: #94a3b8;
-            --notion-border: rgba(255, 255, 255, 0.08);
-            --notion-yellow: #1e1f20;
-            --notion-yellow-border: rgba(255, 255, 255, 0.1);
-            --notion-blue: #1e1f20;
-            --notion-blue-border: rgba(255, 255, 255, 0.1);
-            --notion-red: #1e1f20;
-            --notion-red-border: rgba(255, 255, 255, 0.1);
-            --notion-green: #1e1f20;
-            --notion-green-border: rgba(255, 255, 255, 0.1);
         }
 
         body {
@@ -197,8 +135,7 @@
     </style>
 </head>
 
-<body class="antialiased workspace-shell welcome-page bg-[#fdfcf9] dark:bg-[#131314] text-[#30313b] dark:text-[#f0f4f9] transition-colors duration-200">
-    <div class="gemini-ambient-glow" aria-hidden="true"></div>
+<body class="antialiased workspace-shell welcome-page" style="background-color: #fdfcf9; color: #30313b;">
 
     {{-- ============ NAVIGATION (MATCHING USER WORKSPACE TOPBAR) ============ --}}
     <header id="workspace-navigation" class="workspace-navigation fixed top-0 inset-x-0 z-50 pointer-events-none"
@@ -217,32 +154,6 @@
             </div>
 
             <div class="workspace-account-actions">
-                <!-- Theme Toggle Button -->
-                <div x-data="{
-                    isDark: localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches),
-                    toggle() {
-                        this.isDark = !this.isDark;
-                        var theme = this.isDark ? 'dark' : 'light';
-                        if (this.isDark) {
-                            document.documentElement.classList.add('dark');
-                        } else {
-                            document.documentElement.classList.remove('dark');
-                        }
-                        localStorage.setItem('theme', theme);
-                        document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
-                        window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: this.isDark } }));
-                    }
-                }" @theme-changed.window="isDark = $event.detail.isDark" x-on:livewire:navigated.window="isDark = document.documentElement.classList.contains('dark')" class="flex items-center">
-                    <button type="button" 
-                            @click="toggle()" 
-                            class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-amber-300 dark:hover:text-amber-200 dark:bg-[#1e1f20] dark:hover:bg-[#282a2c] dark:border dark:border-white/10 shadow-sm focus:outline-none"
-                            :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-                            :title="isDark ? 'Aktifkan mode terang' : 'Aktifkan mode gelap'">
-                        <i x-show="!isDark" class="ph ph-moon text-lg transition-transform duration-200 hover:scale-110" aria-hidden="true"></i>
-                        <i x-show="isDark" x-cloak class="ph ph-sun text-lg transition-transform duration-200 hover:scale-110" aria-hidden="true"></i>
-                    </button>
-                </div>
-
                 <button type="button" x-ref="mobileButton" @click="mobileOpen = !mobileOpen"
                     aria-controls="workspace-mobile-menu" aria-expanded="false" :aria-expanded="mobileOpen.toString()"
                     class="workspace-mobile-toggle">
@@ -286,7 +197,7 @@
     </header>
 
     {{-- ============ HERO ============ --}}
-    <section class="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden border-b border-[#dedbd6]/80 dark:border-white/10 bg-[#fdfcf9] dark:bg-[#131314]">
+    <section class="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden border-b border-[#dedbd6]/80 bg-[#fdfcf9]">
         <div class="max-w-5xl mx-auto px-4 text-center">
 
             <!-- Notion-style line-art branding icons -->
@@ -856,7 +767,7 @@
     
 
     {{-- ============ HOW IT WORKS (Notion interactive switcher) ============ --}}
-    <section id="how-it-works" class="py-20 sm:py-24 bg-[#f8f6f0]/60 dark:bg-[#18191a] border-b border-[#dedbd6]/80 dark:border-white/10">
+    <section id="how-it-works" class="py-20 sm:py-24 bg-[#f8f6f0]/60 border-b border-[#dedbd6]/80">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-14 reveal">
                 <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900">Start in 3 simple steps.</h2>
@@ -972,7 +883,7 @@
     </section>
 
     {{-- ============ TELEGRAM COMMUNITY SECTION ============ --}}
-    <section class="py-24 bg-[#fdfcf9] dark:bg-[#131314] border-b border-[#dedbd6]/80 dark:border-white/10 relative select-none">
+    <section class="py-24 bg-[#fdfcf9] border-b border-[#dedbd6]/80 relative select-none">
         <div class="max-w-3xl mx-auto px-4 text-center reveal">
             <!-- Telegram Notion Icon Badge (Clean Borderless Circular) -->
             <div class="w-14 h-14 rounded-full bg-[#2383e2]/10 flex items-center justify-center mx-auto mb-6">
@@ -1020,7 +931,7 @@
     </section>
 
     {{-- ============ PRICING ============ --}}
-    <section class="py-20 sm:py-24 bg-[#f8f6f0]/60 dark:bg-[#18191a] border-b border-[#dedbd6]/80 dark:border-white/10" id="pricing">
+    <section class="py-20 sm:py-24 bg-[#f8f6f0]/60 border-b border-[#dedbd6]/80" id="pricing">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-14 reveal">
                 <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 mt-3">Simple pricing. No hidden fees.</h2>
@@ -1143,7 +1054,7 @@
     </section>
 
     {{-- ============ TESTIMONIALS ============ --}}
-    <section class="py-20 sm:py-24 bg-[#fdfcf9] dark:bg-[#131314] border-b border-[#dedbd6]/80 dark:border-white/10" id="testimonials">
+    <section class="py-20 sm:py-24 bg-[#fdfcf9] border-b border-[#dedbd6]/80" id="testimonials">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="mb-12 reveal">
                 <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-950 font-black tracking-tight">Trusted by candidates
@@ -1263,7 +1174,7 @@
     </section>
 
     {{-- ============ FAQ ============ --}}
-    <section class="py-20 sm:py-24 bg-[#f8f6f0]/60 dark:bg-[#18191a] border-b border-[#dedbd6]/80 dark:border-white/10" id="faq">
+    <section class="py-20 sm:py-24 bg-[#f8f6f0]/60 border-b border-[#dedbd6]/80" id="faq">
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
             <h2 class="text-center notion-h1 text-2xl sm:text-3xl text-zinc-900 mb-10 reveal">Frequently Asked Questions
             </h2>
@@ -1322,7 +1233,7 @@
     </section>
 
     {{-- ============ CTA BANNER ============ --}}
-    <section class="py-28 bg-[#fdfcf9] dark:bg-[#131314] border-b border-[#dedbd6]/80 dark:border-white/10 select-none">
+    <section class="py-28 bg-[#fdfcf9] border-b border-[#dedbd6]/80 select-none">
         <div class="max-w-2xl mx-auto px-4 text-center reveal">
             <h2 class="text-4xl sm:text-5xl font-black text-zinc-900 tracking-tight leading-none mb-4">Get started
                 today.</h2>
@@ -1340,7 +1251,7 @@
     </section>
 
     {{-- ============ FOOTER ============ --}}
-    <footer class="bg-[#f4f2ec] dark:bg-[#131314] border-t border-[#dedbd6] dark:border-white/10 py-16 text-[11px] font-semibold text-zinc-600 dark:text-[#94a3b8]">
+    <footer class="bg-[#f4f2ec] border-t border-[#dedbd6] py-16 text-[11px] font-semibold text-zinc-600">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="grid grid-cols-2 md:grid-cols-12 gap-x-8 gap-y-10 pb-12 border-b border-[#dedbd6]">
 

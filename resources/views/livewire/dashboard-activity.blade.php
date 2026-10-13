@@ -35,7 +35,7 @@
             $lastMonth = '';
             $lastMonthColIndex = -10;
             $dayOrder = [1, 2, 3, 4, 5, 6, 0];
-            $heatmapColors = ['#e9eef0', '#f5d0fe', '#e879f9', '#c026d3', '#86198f'];
+            $heatmapColors = ['var(--heatmap-c0)', 'var(--heatmap-c1)', 'var(--heatmap-c2)', 'var(--heatmap-c3)', 'var(--heatmap-c4)'];
         @endphp
         <div class="dashboard-heatmap-scroll custom-scrollbar" tabindex="0" role="region" aria-label="Daily application activity over the last {{ $months }} months">
             <div class="dashboard-heatmap" style="--heatmap-weeks: {{ count($heatmapWeeks) }};">
