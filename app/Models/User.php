@@ -262,6 +262,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get the user saved resumes.
+     */
+    public function resumes(): HasMany
+    {
+        return $this->hasMany(UserResume::class);
+    }
+
+    /**
      * Get the user educations.
      */
     public function educations(): HasMany

@@ -24,10 +24,12 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $activities = $user->activities()->latest()->take(10)->get();
+        $resumes = $user->resumes()->orderByDesc('is_primary')->latest()->get();
 
         return view('profile.edit', [
             'user' => $user,
             'activities' => $activities,
+            'resumes' => $resumes,
         ]);
     }
 

@@ -9,6 +9,8 @@
             $errors->updatePassword->any(), $errors->userDeletion->any(), session('status') === 'password-updated' => 'security',
             $errors->has('avatar_id'), $errors->has('logo'), in_array(session('status'), ['avatar-updated', 'photo-updated', 'photo-removed']) => 'about',
             session('status') === 'notifications-updated', session('error') === 'upgrade-required' => 'notifications',
+            $errors->has('resume_file'), in_array(session('status'), ['resume-uploaded', 'resume-updated', 'resume-primary-updated', 'resume-deleted']) => 'resumes',
+            request('tab') === 'resumes' => 'resumes',
             default => 'about',
         };
         $statusMessages = [
@@ -16,10 +18,14 @@
             'avatar-updated' => 'Your new avatar is ready.', 'photo-updated' => 'Profile photo updated.',
             'photo-removed' => 'Photo removed. Your avatar is back.', 'password-updated' => 'Password updated.',
             'notifications-updated' => 'Notification preferences saved.', 'verification-link-sent' => 'Verification email sent.',
+            'resume-uploaded' => 'Resume uploaded to your vault.',
+            'resume-updated' => 'Resume title updated.',
+            'resume-primary-updated' => 'Primary resume updated.',
+            'resume-deleted' => 'Resume removed from your vault.',
         ];
         $tabs = $isAdmin
             ? ['about' => 'Account', 'security' => 'Security', 'activity' => 'Activity']
-            : ['about' => 'Account', 'security' => 'Security', 'notifications' => 'Notifications', 'activity' => 'Activity'];
+            : ['about' => 'Account', 'resumes' => 'My Resumes', 'security' => 'Security', 'notifications' => 'Notifications', 'activity' => 'Activity'];
         if (!isset($tabs[$initialTab])) $initialTab = 'about';
     @endphp
     <div class="profile-workspace" x-data="{
@@ -50,6 +56,7 @@
                     <dl class="profile-account-facts">
                         <div><dt>{{ $isAdmin ? 'Account created' : 'Member since' }}</dt><dd>{{ $user->created_at->format('M Y') }}</dd></div>
                         <div><dt>Email status</dt><dd>{{ $user->hasVerifiedEmail() ? 'Verified' : 'Not verified' }}</dd></div>
+                        @if(!$isAdmin && isset($resumes))<div><dt>Saved resumes</dt><dd>{{ $resumes->count() }} {{ \Illuminate\Support\Str::plural('file', $resumes->count()) }}</dd></div>@endif
                         @if(!$isAdmin && $profile?->domicile)<div><dt>Location</dt><dd>{{ $profile->domicile }}</dd></div>@endif
                     </dl>
                     @if($isAdmin)<div class="profile-admin-access"><strong>Administrator access</strong><p>Manage members, platform settings, and operational tools from the admin workspace.</p></div>@endif
@@ -105,6 +112,153 @@
                         </div>
                     </section>
                     </div>
+                    @unless($isAdmin)
+                    <div id="profile-panel-resumes" role="tabpanel" aria-labelledby="profile-tab-resumes" x-show="tab === 'resumes'" @if($initialTab !== 'resumes') x-cloak @endif class="profile-panel-stack">
+                        <!-- Upload Resume Section -->
+                        <section class="profile-panel">
+                            <header class="profile-section-header">
+                                <div>
+                                    <h2>Save a resume</h2>
+                                    <p>Store different versions of your CV (Tech, Corporate, English, or archives). PDF, DOC, or DOCX up to 10 MB.</p>
+                                </div>
+                            </header>
+
+                            <form method="post" action="{{ route('user-resumes.store') }}" enctype="multipart/form-data" x-data="{ selectedFile: null }">
+                                @csrf
+                                <div class="profile-field-grid">
+                                    <div class="profile-field">
+                                        <label for="resume-title">Resume label or target role <small class="text-zinc-400 font-normal">(Optional)</small></label>
+                                        <input type="text" id="resume-title" name="title" class="profile-input" placeholder="e.g. CV Frontend Engineer (English), CV BUMN" maxlength="150" value="{{ old('title') }}">
+                                        <span class="profile-field-hint">Helps you distinguish between different versions or dates.</span>
+                                    </div>
+                                    <div class="profile-field">
+                                        <label for="resume-file-input">Choose file <span class="text-rose-500">*</span></label>
+                                        <label for="resume-file-input" class="profile-file-input">
+                                            <i class="ph ph-upload-simple" aria-hidden="true"></i>
+                                            <span x-text="selectedFile ? selectedFile : 'Select PDF, DOC, or DOCX file'">Select PDF, DOC, or DOCX file</span>
+                                            <input id="resume-file-input" type="file" name="resume_file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required @change="selectedFile = $event.target.files[0]?.name || null">
+                                        </label>
+                                        @error('resume_file')
+                                            <p class="profile-field-error">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="mt-4">
+                                    <label class="profile-preference-row" for="resume-make-primary">
+                                        <span>
+                                            <strong>Set as primary resume</strong>
+                                            <small>Mark this file as your default/go-to resume.</small>
+                                        </span>
+                                        <input class="profile-switch" id="resume-make-primary" name="is_primary" type="checkbox" value="1" @checked(old('is_primary', isset($resumes) && $resumes->isEmpty()))>
+                                    </label>
+                                </div>
+
+                                <div class="profile-form-footer">
+                                    <span>Files are stored privately in your personal vault.</span>
+                                    <button type="submit" class="profile-primary">
+                                        <i class="ph ph-cloud-arrow-up text-base mr-1" aria-hidden="true"></i>
+                                        <span>Upload to vault</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <!-- Saved Resumes List Section -->
+                        <section class="profile-panel">
+                            <header class="profile-section-header">
+                                <div>
+                                    <h2>Your saved resumes ({{ isset($resumes) ? $resumes->count() : 0 }})</h2>
+                                    <p>Your library of uploaded CV files. Preview, download, rename, or set your primary version.</p>
+                                </div>
+                            </header>
+
+                            @if(!isset($resumes) || $resumes->isEmpty())
+                                <div class="profile-empty py-10 text-center flex flex-col items-center justify-center">
+                                    <div class="w-12 h-12 rounded-2xl bg-zinc-100 flex items-center justify-center text-zinc-400 mb-3">
+                                        <i class="ph ph-files text-2xl" aria-hidden="true"></i>
+                                    </div>
+                                    <p class="font-semibold text-zinc-700 text-sm mb-1">No resumes saved yet</p>
+                                    <p class="text-xs text-zinc-500 max-w-sm">Use the form above to upload your first CV. You can save multiple versions for different roles or dates.</p>
+                                </div>
+                            @else
+                                <div class="profile-resume-grid">
+                                    @foreach($resumes as $resume)
+                                        <div class="profile-resume-card {{ $resume->is_primary ? 'is-primary' : '' }}" x-data="{ editing: false, newTitle: '{{ addslashes($resume->title) }}' }">
+                                            <div class="profile-resume-meta">
+                                                <div class="profile-resume-icon-badge {{ $resume->is_pdf ? 'profile-resume-icon-badge--pdf' : 'profile-resume-icon-badge--doc' }}">
+                                                    <span>{{ $resume->extension }}</span>
+                                                </div>
+                                                <div class="profile-resume-details">
+                                                    <div class="profile-resume-title-row">
+                                                        <!-- Normal Title Display -->
+                                                        <h3 x-show="!editing" class="profile-resume-title">{{ $resume->title }}</h3>
+
+                                                        <!-- Inline Rename Form -->
+                                                        <form x-show="editing" x-cloak method="post" action="{{ route('user-resumes.update', $resume) }}" class="flex items-center gap-1.5" @submit="editing = false">
+                                                            @csrf
+                                                            @method('patch')
+                                                            <input type="text" name="title" x-model="newTitle" class="text-xs px-2 py-1 border border-zinc-300 rounded font-semibold text-zinc-800 focus:outline-none focus:border-zinc-900" required maxlength="150">
+                                                            <button type="submit" class="p-1 text-emerald-600 hover:text-emerald-700" title="Save name"><i class="ph ph-check text-sm"></i></button>
+                                                            <button type="button" @click="editing = false; newTitle = '{{ addslashes($resume->title) }}'" class="p-1 text-zinc-400 hover:text-zinc-600" title="Cancel"><i class="ph ph-x text-sm"></i></button>
+                                                        </form>
+
+                                                        @if($resume->is_primary)
+                                                            <span class="profile-resume-primary-tag">
+                                                                <i class="ph-fill ph-star" aria-hidden="true"></i>
+                                                                <span>Primary</span>
+                                                            </span>
+                                                        @endif
+                                                    </div>
+                                                    <p class="profile-resume-subtitle">
+                                                        <span>{{ $resume->file_name }}</span>
+                                                        <span class="profile-resume-dot">•</span>
+                                                        <span>{{ $resume->formatted_size }}</span>
+                                                        <span class="profile-resume-dot">•</span>
+                                                        <span>{{ $resume->created_at->format('d M Y') }}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="profile-resume-actions">
+                                                @if($resume->is_pdf)
+                                                    <a href="{{ route('user-resumes.preview', $resume) }}" target="_blank" rel="noopener noreferrer" class="profile-icon-action" title="Preview PDF in new tab" aria-label="Preview resume">
+                                                        <i class="ph ph-eye" aria-hidden="true"></i>
+                                                    </a>
+                                                @endif
+
+                                                <a href="{{ route('user-resumes.download', $resume) }}" class="profile-icon-action" title="Download file" aria-label="Download resume">
+                                                    <i class="ph ph-download-simple" aria-hidden="true"></i>
+                                                </a>
+
+                                                <button type="button" @click="editing = !editing" class="profile-icon-action" title="Rename label" aria-label="Rename resume">
+                                                    <i class="ph ph-pencil-simple" aria-hidden="true"></i>
+                                                </button>
+
+                                                @unless($resume->is_primary)
+                                                    <form method="post" action="{{ route('user-resumes.primary', $resume) }}" class="inline">
+                                                        @csrf
+                                                        <button type="submit" class="profile-icon-action profile-icon-action--primary-toggle" title="Set as primary resume" aria-label="Set as primary">
+                                                            <i class="ph ph-star" aria-hidden="true"></i>
+                                                        </button>
+                                                    </form>
+                                                @endunless
+
+                                                <form method="post" action="{{ route('user-resumes.destroy', $resume) }}" class="inline" onsubmit="return confirm('Are you sure you want to delete this resume from your vault?');">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="profile-icon-action profile-icon-action--danger" title="Delete resume" aria-label="Delete resume">
+                                                        <i class="ph ph-trash" aria-hidden="true"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </section>
+                    </div>
+                    @endunless
                     <div id="profile-panel-security" role="tabpanel" aria-labelledby="profile-tab-security" x-show="tab === 'security'" @if($initialTab !== 'security') x-cloak @endif class="profile-panel-stack">
                         <section class="profile-panel"><header class="profile-section-header"><div><h2>Password & security</h2><p>Keep access to your account secure.</p></div></header>@include('profile.partials.update-password-form')</section>
                         <section class="profile-panel profile-danger"><h2>Delete account</h2><p>This permanently removes your account and its associated data. Save any files you need before continuing.</p><button type="button" @click="$dispatch('open-modal', 'confirm-user-deletion')" class="profile-danger-button" aria-haspopup="dialog">Delete my account</button></section>
