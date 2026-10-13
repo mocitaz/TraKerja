@@ -58,21 +58,27 @@
         <!-- Message Body -->
         <div class="kawankerja-messages" x-ref="msgContainer">
             <div class="kawankerja-welcome" x-show="messages.length === 0">
-                <h4 class="kawankerja-welcome-heading">Halo, {{ auth()->user()->name }}!</h4>
-                <p>Ada yang bisa Kawan bantu seputar persiapan interview, review jawaban STAR, atau draf pesan ke HR hari ini?</p>
+                <div class="kawankerja-welcome-intro">
+                    <h4 class="kawankerja-welcome-heading">Halo, {{ auth()->user()->name }}</h4>
+                    <p class="kawankerja-welcome-sub">Pilih topik persiapan karier atau ketik pertanyaan langsung di bawah.</p>
+                </div>
 
                 <div class="kawankerja-chips">
-                    <button type="button" class="kawankerja-chip" @click="input = 'Bantu simulasi interview untuk lamaran terbaru saya dong'; send()">
-                        🎯 Simulasi interview lamaran terbaru
+                    <button type="button" class="kawankerja-chip" @click="input = 'Bantu simulasi interview untuk lamaran terbaru saya'; send()">
+                        <span>Simulasi interview lamaran terbaru</span>
+                        <i class="ph ph-arrow-right" aria-hidden="true"></i>
                     </button>
                     <button type="button" class="kawankerja-chip" @click="input = 'Bagaimana status pipeline lamaran saya saat ini dan apa langkah terbaik berikutnya?'; send()">
-                        📊 Cek status pipeline lamaran saya
+                        <span>Cek status pipeline lamaran</span>
+                        <i class="ph ph-arrow-right" aria-hidden="true"></i>
                     </button>
                     <button type="button" class="kawankerja-chip" @click="input = 'Fitur apa saja di TraKerja yang bisa bantu persiapan kerja saya lebih cepat?'; send()">
-                        ⚡ Panduan fitur & alur sukses TraKerja
+                        <span>Panduan alur dan fitur TraKerja</span>
+                        <i class="ph ph-arrow-right" aria-hidden="true"></i>
                     </button>
-                    <button type="button" class="kawankerja-chip" @click="input = 'Tolong buatkan draf pesan WhatsApp follow-up sopan ke HR setelah interview'; send()">
-                        ✉️ Draf pesan follow-up HR
+                    <button type="button" class="kawankerja-chip" @click="input = 'Tolong buatkan draf pesan follow-up sopan ke HR setelah interview'; send()">
+                        <span>Draf pesan follow-up ke HR</span>
+                        <i class="ph ph-arrow-right" aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
