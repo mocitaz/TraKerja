@@ -35,11 +35,8 @@
                     <span class="kawankerja-status-indicator"></span>
                 </div>
                 <div class="kawankerja-header-text">
-                    <div class="kawankerja-header-title">
-                        <h3>KawanKerja</h3>
-                        <span class="kawankerja-ai-pill">AI Coach</span>
-                    </div>
-                    <p>Siap simulasi interview & karier</p>
+                    <h3>KawanKerja</h3>
+                    <p>Asisten Karier TraKerja</p>
                 </div>
             </div>
             <div class="kawankerja-header-actions">
@@ -61,29 +58,21 @@
         <!-- Message Body -->
         <div class="kawankerja-messages" x-ref="msgContainer">
             <div class="kawankerja-welcome" x-show="messages.length === 0">
-                <span class="kawankerja-welcome-badge">
-                    <i class="ph-fill ph-sparkle" aria-hidden="true"></i>
-                    <span>Executive AI Career Companion</span>
-                </span>
-                <h4 class="kawankerja-welcome-heading">Halo, {{ auth()->user()->name }}! 👋</h4>
-                <p>Butuh latihan simulasi interview langsung dari data lamaranmu, review jawaban STAR, atau draft pesan HR?</p>
+                <h4 class="kawankerja-welcome-heading">Halo, {{ auth()->user()->name }}!</h4>
+                <p>Ada yang bisa Kawan bantu seputar persiapan interview, review jawaban STAR, atau draf pesan ke HR hari ini?</p>
 
                 <div class="kawankerja-chips">
                     <button type="button" class="kawankerja-chip" @click="input = 'Bantu simulasi interview untuk lamaran terbaru saya dong'; send()">
-                        <span class="kawankerja-chip-icon">🎯</span>
-                        <span>Simulasi interview lamaran terbaru</span>
+                        🎯 Simulasi interview lamaran terbaru
                     </button>
                     <button type="button" class="kawankerja-chip" @click="input = 'Bagaimana cara menjawab pertanyaan interview tentang kelemahan diri?'; send()">
-                        <span class="kawankerja-chip-icon">⭐</span>
-                        <span>Cara jawab pertanyaan kelemahan diri</span>
+                        ⭐ Cara jawab pertanyaan kelemahan diri
                     </button>
                     <button type="button" class="kawankerja-chip" @click="input = 'Tolong buatkan draf pesan WhatsApp follow-up sopan ke HR setelah interview'; send()">
-                        <span class="kawankerja-chip-icon">✉️</span>
-                        <span>Draf follow-up HR pasca interview</span>
+                        ✉️ Draf pesan follow-up HR
                     </button>
                     <button type="button" class="kawankerja-chip" @click="input = 'Tips negosiasi gaji saat tahap offering agar tetap profesional'; send()">
-                        <span class="kawankerja-chip-icon">💡</span>
-                        <span>Tips negosiasi gaji saat offering</span>
+                        💡 Tips negosiasi gaji saat offering
                     </button>
                 </div>
             </div>
@@ -229,7 +218,7 @@
                 if (!raw) return '';
                 let text = raw.trim();
 
-                // Strip dangling markdown asterisks across line breaks (e.g. **\n> or > ... \n*)
+                // Strip dangling markdown asterisks across line breaks
                 text = text.replace(/^\s*\*+\s*$/gm, '');
 
                 let esc = text
@@ -240,64 +229,25 @@
                 // Bold: **content**
                 esc = esc.replace(/\*\*(.+?)\*\*/gs, '<strong>$1</strong>');
 
-                // Simulation / Target Header: 🎯 **...** or 🎯 ...
-                esc = esc.replace(/(?:^|\n)🎯\s*(?:<strong>)?(.*?)(?:<\/strong>)?(?=\n|$)/g, function(match, title) {
-                    return '<div class="kawankerja-target-banner">' +
-                        '<span class="kawankerja-target-icon">🎯</span>' +
-                        '<span class="kawankerja-target-title">' + title.trim() + '</span>' +
-                    '</div>';
-                });
-
-                // Signature Section Badges: 💡, ✅, ⚠️, 💎
-                esc = esc.replace(/(?:^|\n)(💡|✅|⚠️|💎)\s*(?:<strong>)?(.*?)(?:<\/strong>)?(?=\n|$)/g, function(match, icon, title) {
-                    let typeClass = 'default';
-                    if (icon === '💡') typeClass = 'amber';
-                    if (icon === '✅') typeClass = 'emerald';
-                    if (icon === '⚠️') typeClass = 'orange';
-                    if (icon === '💎') typeClass = 'indigo';
-
-                    return '<div class="kawankerja-section-pill kawankerja-section-pill--' + typeClass + '">' +
-                        '<span class="kawankerja-section-pill__icon">' + icon + '</span>' +
-                        '<span class="kawankerja-section-pill__title">' + title.trim() + '</span>' +
-                    '</div>';
-                });
-
-                // Interview Question / Simulation Blockquote: lines starting with &gt;
-                esc = esc.replace(/(?:^|\n)&gt;\s*([\s\S]*?)(?=(?:\n\s*\n|\n[^\s&]|$))/g, function(match, quote) {
-                    let clean = quote.trim();
-                    // Strip leading/trailing asterisks or underscores that could italicize the whole box
-                    clean = clean.replace(/^[\*_]+\s*/, '').replace(/\s*[\*_]+$/, '');
-                    // Strip enclosing quotes to prevent awkward duplicate quotation marks
-                    clean = clean.replace(/^["“”]\s*/, '').replace(/\s*["“”]$/, '');
-
-                    return '<div class="kawankerja-question-card">' +
-                        '<div class="kawankerja-question-card__header">' +
-                            '<span class="kawankerja-question-card__badge">' +
-                                '<i class="ph-fill ph-chat-circle-dots"></i>' +
-                                '<span>Pertanyaan Wawancara</span>' +
-                            '</span>' +
-                        '</div>' +
-                        '<div class="kawankerja-question-card__body">“' + clean + '”</div>' +
-                    '</div>';
-                });
-
-                // Bullet points (• or -)
-                esc = esc.replace(/(?:^|\n)[-•]\s+(.*?)(?=\n|$)/g, function(match, bulletText) {
-                    return '<div class="kawankerja-bullet">' +
-                        '<span class="kawankerja-bullet-dot"></span>' +
-                        '<span class="kawankerja-bullet-text">' + bulletText.trim() + '</span>' +
-                    '</div>';
-                });
-
                 // Italic: *content*
                 esc = esc.replace(/(?<!\*)\*([^\*\n]+?)\*(?!\*)/g, '<em>$1</em>');
 
-                // Cleanup accidental extra breaks next to custom card blocks
-                esc = esc.replace(/<\/div>\s*<br\s*\/?>/gi, '</div>');
-                esc = esc.replace(/<br\s*\/?>\s*<div/gi, '<div');
+                // Clean blockquotes: lines starting with &gt;
+                esc = esc.replace(/(?:^|\n)&gt;\s*([\s\S]*?)(?=(?:\n\s*\n|\n[^\s&]|$))/g, function(match, quote) {
+                    let clean = quote.trim();
+                    clean = clean.replace(/^[\*_]+\s*/, '').replace(/\s*[\*_]+$/, '');
+                    return '<blockquote class="kawankerja-quote">' + clean + '</blockquote>';
+                });
+
+                // Bullet points (• or -)
+                esc = esc.replace(/(?:^|\n)[-•]\s+(.*?)(?=\n|$)/g, '<div class="kawankerja-bullet"><span class="kawankerja-bullet-dot">•</span><span class="kawankerja-bullet-text">$1</span></div>');
+
+                // Cleanup whitespace around blockquotes
+                esc = esc.replace(/<\/blockquote>\s*<br\s*\/?>/gi, '</blockquote>');
+                esc = esc.replace(/<br\s*\/?>\s*<blockquote/gi, '<blockquote');
 
                 // Paragraph spacing
-                esc = esc.replace(/\n{2,}/g, '<div class="kawankerja-spacer"></div>');
+                esc = esc.replace(/\n{2,}/g, '<div class="kawankerja-gap"></div>');
                 esc = esc.replace(/\n/g, '<br>');
 
                 return esc;
