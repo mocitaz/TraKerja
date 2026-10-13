@@ -1,111 +1,5 @@
 @if(auth()->check() && !auth()->user()->isAdmin())
-<div class="kawankerja-widget"
-     x-data="{
-         open: false,
-         loading: false,
-         input: '',
-         messages: [],
-         async init() {
-             window.addEventListener('open-kawankerja', (e) => {
-                 this.open = true;
-                 if (e.detail?.prompt) {
-                     this.input = e.detail.prompt;
-                     this.$nextTick(() => this.send());
-                 }
-             });
-             try {
-                 const res = await fetch('{{ route('kawankerja.history') }}');
-                 if (res.ok) {
-                     const data = await res.json();
-                     this.messages = data.history || [];
-                 }
-             } catch (_) {}
-         },
-         async send() {
-             const text = this.input.trim();
-             if (!text || this.loading) return;
-             this.input = '';
-             this.messages.push({ role: 'user', content: text });
-             this.loading = true;
-             this.scrollToBottom();
-
-             try {
-                 const res = await fetch('{{ route('kawankerja.chat') }}', {
-                     method: 'POST',
-                     headers: {
-                         'Content-Type': 'application/json',
-                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                         'Accept': 'application/json',
-                     },
-                     body: JSON.stringify({ message: text })
-                 });
-                 const data = await res.json();
-                 if (data.success && data.reply) {
-                     this.messages.push({ role: 'model', content: data.reply });
-                 } else {
-                     this.messages.push({ role: 'model', content: data.reply || 'Maaf, terjadi kesalahan saat menghubungi server.' });
-                 }
-             } catch (e) {
-                 this.messages.push({ role: 'model', content: 'Gagal terhubung ke KawanKerja. Periksa koneksi internet Anda.' });
-             } finally {
-                 this.loading = false;
-                 this.scrollToBottom();
-             }
-         },
-         async clearChat() {
-             if (!confirm('Hapus riwayat obrolan dengan KawanKerja?')) return;
-             try {
-                 await fetch('{{ route('kawankerja.clear') }}', {
-                     method: 'POST',
-                     headers: {
-                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                         'Accept': 'application/json',
-                     }
-                 });
-                 this.messages = [];
-             } catch (_) {}
-         },
-         scrollToBottom() {
-             this.$nextTick(() => {
-                 const el = this.$refs.msgContainer;
-                 if (el) el.scrollTop = el.scrollHeight;
-             });
-         },
-         formatText(raw) {
-             if (!raw) return '';
-             let text = raw.trim();
-
-             // Strip dangling markdown asterisks across line breaks (e.g. **\n> or > ... \n*)
-             text = text.replace(/^\s*\*+\s*$/gm, '');
-
-             let esc = text
-                 .replace(/&/g, '&amp;')
-                 .replace(/</g, '&lt;')
-                 .replace(/>/g, '&gt;');
-
-             // Bold: **content**
-             esc = esc.replace(/\*\*(.+?)\*\*/gs, '<strong>$1</strong>');
-
-             // Italic: *content*
-             esc = esc.replace(/(?<!\*)\*([^\*\n]+?)\*(?!\*)/g, '<em>$1</em>');
-
-             // Blockquotes: &gt; quote text
-             esc = esc.replace(/(?:^|\n)&gt;\s*([\s\S]*?)(?=\n\n|\n[^\s&]|$)/g, function(match, quote) {
-                 return '<blockquote class="kawankerja-quote">' + quote.trim() + '</blockquote>';
-             });
-
-             // Bullet points (• or -)
-             esc = esc.replace(/(?:^|\n)[-•]\s+(.*?)(?=\n|$)/g, '<div class="kawankerja-bullet"><span class="kawankerja-bullet-dot">•</span><span>$1</span></div>');
-
-             // Paragraph spacing
-             esc = esc.replace(/\n{2,}/g, '<div class="kawankerja-gap"></div>');
-             esc = esc.replace(/\n/g, '<br>');
-
-             return esc;
-         }
-     }"
-     x-cloak>
-
+<div class="kawankerja-widget" x-data="kawankerjaChat()" x-cloak>
     <!-- Floating Launcher Pill -->
     <button type="button"
             class="kawankerja-launcher"
@@ -221,4 +115,134 @@
         </footer>
     </div>
 </div>
+
+<script>
+    function kawankerjaChat() {
+        return {
+            open: false,
+            loading: false,
+            input: '',
+            messages: [],
+            chatUrl: '{{ route('kawankerja.chat') }}',
+            historyUrl: '{{ route('kawankerja.history') }}',
+            clearUrl: '{{ route('kawankerja.clear') }}',
+            csrfToken: '{{ csrf_token() }}',
+
+            async init() {
+                window.addEventListener('open-kawankerja', (e) => {
+                    this.open = true;
+                    if (e.detail?.prompt) {
+                        this.input = e.detail.prompt;
+                        this.$nextTick(() => this.send());
+                    }
+                });
+
+                try {
+                    const res = await fetch(this.historyUrl, {
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        this.messages = data.history || [];
+                    }
+                } catch (_) {}
+            },
+
+            async send() {
+                const text = this.input.trim();
+                if (!text || this.loading) return;
+
+                this.input = '';
+                this.messages.push({ role: 'user', content: text });
+                this.loading = true;
+                this.scrollToBottom();
+
+                try {
+                    const res = await fetch(this.chatUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': this.csrfToken,
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({ message: text })
+                    });
+                    const data = await res.json();
+                    if (data.success && data.reply) {
+                        this.messages.push({ role: 'model', content: data.reply });
+                    } else {
+                        this.messages.push({ role: 'model', content: data.reply || 'Maaf, terjadi kesalahan saat menghubungi server.' });
+                    }
+                } catch (e) {
+                    this.messages.push({ role: 'model', content: 'Gagal terhubung ke KawanKerja. Periksa koneksi internet Anda.' });
+                } finally {
+                    this.loading = false;
+                    this.scrollToBottom();
+                }
+            },
+
+            async clearChat() {
+                if (!confirm('Hapus riwayat obrolan dengan KawanKerja?')) return;
+                try {
+                    await fetch(this.clearUrl, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': this.csrfToken,
+                            'Accept': 'application/json',
+                        }
+                    });
+                    this.messages = [];
+                } catch (_) {}
+            },
+
+            scrollToBottom() {
+                this.$nextTick(() => {
+                    const el = this.$refs.msgContainer;
+                    if (el) el.scrollTop = el.scrollHeight;
+                });
+            },
+
+            formatText(raw) {
+                if (!raw) return '';
+                let text = raw.trim();
+
+                // Strip dangling markdown asterisks across line breaks (e.g. **\n> or > ... \n*)
+                text = text.replace(/^\s*\*+\s*$/gm, '');
+
+                let esc = text
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+
+                // Bold: **content**
+                esc = esc.replace(/\*\*(.+?)\*\*/gs, '<strong>$1</strong>');
+
+                // Italic: *content*
+                esc = esc.replace(/(?<!\*)\*([^\*\n]+?)\*(?!\*)/g, '<em>$1</em>');
+
+                // Blockquotes: lines starting with &gt;
+                esc = esc.replace(/(?:^|\n)&gt;\s*([\s\S]*?)(?=\n\n|\n[^\s&]|$)/g, function(match, quote) {
+                    return '<blockquote class="kawankerja-quote">' + quote.trim() + '</blockquote>';
+                });
+
+                // Bullet points (• or -)
+                esc = esc.replace(/(?:^|\n)[-•]\s+(.*?)(?=\n|$)/g, '<div class="kawankerja-bullet"><span class="kawankerja-bullet-dot">•</span><span>$1</span></div>');
+
+                // Paragraph spacing
+                esc = esc.replace(/\n{2,}/g, '<div class="kawankerja-gap"></div>');
+                esc = esc.replace(/\n/g, '<br>');
+
+                return esc;
+            }
+        };
+    }
+
+    if (window.Alpine) {
+        window.Alpine.data('kawankerjaChat', kawankerjaChat);
+    } else {
+        document.addEventListener('alpine:init', () => {
+            window.Alpine.data('kawankerjaChat', kawankerjaChat);
+        });
+    }
+</script>
 @endif
