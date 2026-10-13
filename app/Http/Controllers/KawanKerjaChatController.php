@@ -63,6 +63,7 @@ class KawanKerjaChatController extends Controller
         $history = $request->session()->get('kawankerja_history', []);
 
         return response()->stream(function () use ($validated, $user, $history, $request) {
+            @set_time_limit(120);
             if (function_exists('apache_setenv')) {
                 @apache_setenv('no-gzip', '1');
             }

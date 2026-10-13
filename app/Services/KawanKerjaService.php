@@ -63,7 +63,7 @@ class KawanKerjaService
             'contents' => $contents,
             'generationConfig' => [
                 'temperature' => 0.4,
-                'maxOutputTokens' => 2048,
+                'maxOutputTokens' => 3072,
             ],
         ];
 
@@ -385,7 +385,7 @@ PROMPT;
             'contents' => $contents,
             'generationConfig' => [
                 'temperature' => 0.4,
-                'maxOutputTokens' => 2048,
+                'maxOutputTokens' => 3072,
             ],
         ];
 
@@ -415,7 +415,7 @@ PROMPT;
             
             $accumulated = '';
             $response = Http::withOptions(['stream' => true])
-                ->timeout(35)
+                ->timeout(60)
                 ->post($url, $payload);
 
             if (!$response->successful()) {
@@ -428,8 +428,12 @@ PROMPT;
 
             while (!$body->eof()) {
                 $chunkData = $body->read(4096);
-                if ($chunkData === '') {
-                    break;
+                if ($chunkData === '' || $chunkData === false) {
+                    if ($body->eof()) {
+                        break;
+                    }
+                    usleep(25000); // 25ms pause to allow next network packet to arrive
+                    continue;
                 }
                 $buffer .= $chunkData;
 
@@ -440,7 +444,7 @@ PROMPT;
                     if (str_starts_with($line, 'data: ')) {
                         $jsonStr = substr($line, 6);
                         if ($jsonStr === '[DONE]') {
-                            break;
+                            break 2;
                         }
                         $decoded = json_decode($jsonStr, true);
                         if (isset($decoded['candidates'][0]['content']['parts'][0]['text'])) {
@@ -467,7 +471,7 @@ PROMPT;
                 }
             }
 
-            // Fallback parsing if response body was not line-buffered SSE (e.g. In mocks)
+            // Fallback parsing if response body was not line-buffered SSE (e.g. in mocks)
             if ($accumulated === '') {
                 $data = $response->json();
                 $parts = $data['candidates'][0]['content']['parts'] ?? [];
