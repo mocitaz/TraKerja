@@ -44,3 +44,102 @@
 @media (pointer: coarse) { .dashboard-welcome-copy .dashboard-primary-button { min-height: 44px; } }
 
 @media (pointer: coarse) { .welcome-companion-note > a, .welcome-companion-note button { min-height: 44px; } .welcome-companion-note button { width: 44px; } }
+
+/* Gemini Dark Mode - Dashboard Welcome Styles */
+.dark .dashboard-welcome-copy time {
+    color: #94a3b8;
+}
+
+.dark .dashboard-welcome-copy h1 {
+    color: #f0f4f9;
+}
+
+.dark .dashboard-welcome-copy p {
+    color: #94a3b8;
+}
+
+.dark .welcome-orbit {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: radial-gradient(ellipse, rgba(168, 85, 247, 0.15), transparent 72%);
+}
+
+.dark .welcome-hello {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f0f4f9;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+}
+
+.dark .welcome-float {
+    background: rgba(30, 31, 32, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dark .welcome-float:hover {
+    background: #282a2c;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.dark .welcome-float-calendar {
+    background: rgba(45, 30, 42, 0.85);
+}
+
+.dark .welcome-float-jobs {
+    background: rgba(30, 40, 52, 0.85);
+}
+
+.dark .welcome-float svg rect[fill="white"] {
+    fill: #1e1f20;
+}
+
+.dark .welcome-float svg {
+    color: #cbd5e1;
+}
+
+.dark .welcome-motion-toggle {
+    color: #94a3b8;
+}
+
+.dark .welcome-motion-toggle:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #f0f4f9;
+}
+
+.dark .welcome-companion-note {
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+    color: #f0f4f9;
+}
+
+.dark .welcome-companion-note > div {
+    color: #f0f4f9;
+}
+
+.dark .welcome-companion-note button {
+    background: #282a2c;
+    color: #cbd5e1;
+}
+
+.dark .welcome-companion-note button:hover {
+    background: #333538;
+    color: #fff;
+}
+
+.dark .welcome-companion-note p {
+    color: #94a3b8;
+}
+
+.dark .welcome-companion-note p strong {
+    color: #f0f4f9;
+}
+
+.dark .welcome-companion-note > a {
+    color: #c084fc;
+}
+
+.dark .welcome-companion-note > a:hover {
+    color: #d8b4fe;
+}

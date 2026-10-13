@@ -31,89 +31,11 @@
 - Consumes: Tailwind v3 compiler
 - Produces: CSS utility classes with `dark:` prefix and `.gemini-ambient-glow` class
 
-- [ ] **Step 1: Update tailwind.config.js with darkMode: 'class'**
-Add `darkMode: 'class'` to `tailwind.config.js` and extend colors with obsidian palette:
-```javascript
-export default {
-  darkMode: 'class',
-  content: [
-    "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
-    "./storage/framework/views/*.php",
-    "./resources/views/**/*.blade.php",
-    "./resources/js/**/*.js"
-  ],
-  theme: {
-    extend: {
-      colors: {
-        gemini: {
-          canvas: "#131314",
-          surface: "#1e1f20",
-          elevated: "#282a2c",
-          border: "rgba(255, 255, 255, 0.07)",
-          text: "#f0f4f9",
-          muted: "#94a3b8",
-        },
-        // ... existing colors
-```
-
-- [ ] **Step 2: Create resources/css/gemini-dark.css**
-Define semantic dark variables, scrollbar styling, and the Gemini ambient radial aura:
-```css
-/* Gemini Dark Mode Tokens & Ambient Backdrop */
-:root {
-    --gemini-canvas: #fafafa;
-    --gemini-surface: #ffffff;
-    --gemini-elevated: #f1f5f9;
-    --gemini-border: #e2e8f0;
-    --gemini-text-primary: #0f172a;
-    --gemini-text-muted: #64748b;
-}
-
-html.dark {
-    --gemini-canvas: #131314;
-    --gemini-surface: #1e1f20;
-    --gemini-elevated: #282a2c;
-    --gemini-border: rgba(255, 255, 255, 0.07);
-    --gemini-text-primary: #f0f4f9;
-    --gemini-text-muted: #94a3b8;
-    color-scheme: dark;
-}
-
-/* Gemini Ambient Aurora Glow */
-.dark .gemini-ambient-glow {
-    position: fixed;
-    top: -150px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1000px;
-    height: 650px;
-    background: radial-gradient(ellipse at center, rgba(30, 58, 138, 0.16) 0%, rgba(88, 28, 135, 0.12) 40%, transparent 75%);
-    filter: blur(90px);
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* Dark Scrollbar */
-html.dark ::-webkit-scrollbar-thumb {
-    background: #282a2c;
-}
-html.dark ::-webkit-scrollbar-thumb:hover {
-    background: #3b3d40;
-}
-```
-
-- [ ] **Step 3: Import gemini-dark.css in resources/css/app.css**
-Add `@import './gemini-dark.css';` at line 48 before `@tailwind base;`.
-
-- [ ] **Step 4: Verify build compilation**
-Run: `npm run build`
-Expected: Output built without CSS parsing errors.
-
-- [ ] **Step 5: Commit**
-```bash
-git add tailwind.config.js resources/css/gemini-dark.css resources/css/app.css
-git commit -m "feat(theme): configure tailwind darkMode and gemini dark tokens"
-```
+- [x] **Step 1: Update tailwind.config.js with darkMode: 'class'**
+- [x] **Step 2: Create resources/css/gemini-dark.css**
+- [x] **Step 3: Import gemini-dark.css in resources/css/app.css**
+- [x] **Step 4: Verify build compilation**
+- [x] **Step 5: Commit**
 
 ---
 
@@ -126,44 +48,10 @@ git commit -m "feat(theme): configure tailwind darkMode and gemini dark tokens"
 - Consumes: `localStorage.theme` and `gemini-dark.css`
 - Produces: Seamless anti-FOUC dark initialization and background glow element
 
-- [ ] **Step 1: Add inline anti-FOUC script to <head>**
-In `resources/views/layouts/app.blade.php`, insert inside `<head>` right before CSS links:
-```html
-<script>
-    (function() {
-        try {
-            var theme = localStorage.getItem('theme');
-            var supportDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (theme === 'dark' || (!theme && supportDark)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        } catch (e) {}
-    })();
-</script>
-```
-
-- [ ] **Step 2: Update <body> and workspace container classes**
-Update `body` in `resources/views/layouts/app.blade.php`:
-Change:
-```html
-<body class="font-sans antialiased bg-[#fafafa] text-slate-900">
-```
-To:
-```html
-<body class="font-sans antialiased bg-[#fafafa] dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200">
-    <div class="gemini-ambient-glow" aria-hidden="true"></div>
-```
-
-- [ ] **Step 3: Verify no visual regression in browser**
-Inspect `http://127.0.0.1:8000/dashboard` in browser and confirm light mode remains unchanged, and adding class `dark` manually via DevTools toggles background to `#131314`.
-
-- [ ] **Step 4: Commit**
-```bash
-git add resources/views/layouts/app.blade.php
-git commit -m "feat(theme): add anti-FOUC script and gemini ambient glow to layout"
-```
+- [x] **Step 1: Add inline anti-FOUC script to <head>**
+- [x] **Step 2: Update <body> and workspace container classes**
+- [x] **Step 3: Verify no visual regression in browser**
+- [x] **Step 4: Commit**
 
 ---
 
@@ -176,47 +64,9 @@ git commit -m "feat(theme): add anti-FOUC script and gemini ambient glow to layo
 - Consumes: Alpine.js & `localStorage`
 - Produces: Reactive toggle button triggering `theme-changed` DOM event
 
-- [ ] **Step 1: Add toggle button next to profile menu in navigation.blade.php**
-In `resources/views/layouts/navigation.blade.php` inside `<div class="workspace-account-actions">`:
-```html
-<!-- Theme Toggle Button -->
-<div x-data="{
-    isDark: document.documentElement.classList.contains('dark'),
-    toggle() {
-        this.isDark = !this.isDark;
-        if (this.isDark) {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-        }
-        window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: this.isDark } }));
-    }
-}" class="flex items-center">
-    <button type="button" 
-            @click="toggle()" 
-            class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-amber-300 dark:hover:text-amber-200 dark:bg-[#1e1f20] dark:hover:bg-[#282a2c] dark:border dark:border-white/10 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20"
-            :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-            :title="isDark ? 'Aktifkan mode terang' : 'Aktifkan mode gelap'">
-        <i x-show="!isDark" class="ph ph-moon text-lg transition-transform duration-200 hover:scale-110" aria-hidden="true"></i>
-        <i x-show="isDark" x-cloak class="ph ph-sun text-lg transition-transform duration-200 hover:scale-110" aria-hidden="true"></i>
-    </button>
-</div>
-```
-
-- [ ] **Step 2: Test toggle functionality in browser**
-Click the Sun/Moon toggle button.
-Confirm:
-1. `document.documentElement` gains and loses the `dark` class instantly.
-2. Value in `localStorage.getItem('theme')` toggles between `'dark'` and `'light'`.
-3. Refreshing the browser preserves the dark mode without flashing.
-
-- [ ] **Step 3: Commit**
-```bash
-git add resources/views/layouts/navigation.blade.php
-git commit -m "feat(theme): add 1-click theme toggle pill to navigation header"
-```
+- [x] **Step 1: Add toggle button next to profile menu in navigation.blade.php**
+- [x] **Step 2: Test toggle functionality in browser**
+- [x] **Step 3: Commit**
 
 ---
 
@@ -231,67 +81,10 @@ git commit -m "feat(theme): add 1-click theme toggle pill to navigation header"
 - Consumes: `.dark` class on root
 - Produces: Sleek `#1e1f20` / `#282a2c` matte surfaces for navigation bars, menus, and footers
 
-- [ ] **Step 1: Add dark rules to workspace.css**
-Add styles for `.dark .workspace-topbar`, `.dark .workspace-nav-link`, `.dark .workspace-brand`, `.dark .workspace-dropdown`, and `.dark .workspace-menu-link`:
-```css
-.dark .workspace-topbar {
-    background: rgba(19, 19, 20, 0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-}
-.dark .workspace-brand span {
-    color: #f0f4f9;
-}
-.dark .workspace-nav-link {
-    color: #94a3b8;
-}
-.dark .workspace-nav-link:hover {
-    color: #f0f4f9;
-    background: #1e1f20;
-}
-.dark .workspace-nav-link[aria-current="page"] {
-    color: #f0f4f9;
-    background: #1e1f20;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-.dark .workspace-profile-trigger {
-    border-color: rgba(255, 255, 255, 0.07);
-    background: #1e1f20;
-}
-.dark .workspace-profile-trigger:hover {
-    background: #282a2c;
-}
-.dark .workspace-account-copy strong {
-    color: #f0f4f9;
-}
-.dark .workspace-account-copy span {
-    color: #94a3b8;
-}
-.dark .workspace-dropdown {
-    background: #1e1f20;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-}
-.dark .workspace-menu-link {
-    color: #cbd5e1;
-}
-.dark .workspace-menu-link:hover {
-    background: #282a2c;
-    color: #f0f4f9;
-}
-```
-
-- [ ] **Step 2: Add dark rules to workspace-footer.css and dialogs**
-Ensure footer and confirmation modal dialogs use `#1e1f20` with subtle border and crisp `#f0f4f9` text.
-
-- [ ] **Step 3: Verify navigation bar and profile dropdown appearance**
-Open profile dropdown in dark mode. Confirm smooth borders, solid elevated surface, and legible text.
-
-- [ ] **Step 4: Commit**
-```bash
-git add resources/css/workspace.css resources/css/account-dialogs.css resources/css/workspace-footer.css
-git commit -m "feat(theme): style navigation topbar, dropdown, and footer for dark mode"
-```
+- [x] **Step 1: Add dark rules to workspace.css**
+- [x] **Step 2: Add dark rules to workspace-footer.css and dialogs**
+- [x] **Step 3: Verify navigation bar and profile dropdown appearance**
+- [x] **Step 4: Commit**
 
 ---
 
@@ -307,44 +100,11 @@ git commit -m "feat(theme): style navigation topbar, dropdown, and footer for da
 - Consumes: `.dark` class
 - Produces: Matte `#1e1f20` Kanban columns & draggable cards with elevated hover states
 
-- [ ] **Step 1: Add dark rules for Kanban board & columns in tracker.css**
-```css
-.dark .tracker-column,
-.dark .kanban-column {
-    background: rgba(30, 31, 32, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-}
-.dark .tracker-card,
-.dark .job-card {
-    background: #1e1f20;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    color: #f0f4f9;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-.dark .tracker-card:hover,
-.dark .job-card:hover {
-    background: #282a2c;
-    border-color: rgba(255, 255, 255, 0.12);
-}
-.dark .tracker-card-title {
-    color: #f0f4f9;
-}
-.dark .tracker-card-company {
-    color: #94a3b8;
-}
-```
+- [x] **Step 1: Add dark rules for Kanban board & columns in tracker.css**
+- [x] **Step 2: Add dark rules for Dashboard Panels & Metrics**
+- [x] **Step 3: Verify Kanban Tracker page**
+- [x] **Step 4: Commit**
 
-- [ ] **Step 2: Add dark rules for Dashboard Panels & Metrics**
-Style metric summary cards, welcome hero cards, and action buttons in `dashboard-welcome.css` and `dashboard-panels.css`.
-
-- [ ] **Step 3: Verify Kanban Tracker page**
-Visit `/tracker` in dark mode. Test dragging cards, inspecting badges, and clicking lowongan cards.
-
-- [ ] **Step 4: Commit**
-```bash
-git add resources/css/tracker.css resources/css/tracker-density.css resources/css/dashboard-welcome.css resources/css/dashboard-panels.css
-git commit -m "feat(theme): add dark mode styling for kanban tracker and dashboard panels"
-```
 
 ---
 

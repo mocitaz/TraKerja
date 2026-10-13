@@ -124,3 +124,311 @@
 .tracker-page .tracker-archive > span { background: #eae9e7; color: #514f54; }
 
 .tracker-page .tracker-results, .tracker-page .tracker-pagination { border-color: #e5e9ee; }
+
+/* Gemini Dark Mode - Tracker Density Overrides */
+.dark.tracker-page .tracker-filters,
+.dark .tracker-page .tracker-filters {
+    background-color: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.dark.tracker-page .tracker-filters :is(.tracker-search input, .tracker-filter-controls select, .tracker-archive),
+.dark .tracker-page .tracker-filters :is(.tracker-search input, .tracker-filter-controls select, .tracker-archive) {
+    background-color: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark.tracker-page .tracker-search input::placeholder,
+.dark .tracker-page .tracker-search input::placeholder {
+    color: #64748b;
+}
+
+.dark.tracker-page .tracker-search > i,
+.dark .tracker-page .tracker-search > i {
+    color: #94a3b8;
+}
+
+.dark.tracker-page .tracker-filters :is(.tracker-filter-controls select, .tracker-archive):hover,
+.dark .tracker-page .tracker-filters :is(.tracker-filter-controls select, .tracker-archive):hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    background-color: #333538;
+}
+
+.dark.tracker-page .tracker-filters .tracker-archive.is-active,
+.dark .tracker-page .tracker-filters .tracker-archive.is-active {
+    background: #3b2d54;
+    border-color: rgba(168, 85, 247, 0.35);
+    color: #d8b4fe;
+}
+
+.dark.tracker-page .tracker-archive > span,
+.dark .tracker-page .tracker-archive > span {
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
+.dark.tracker-page .tracker-archive-note,
+.dark .tracker-page .tracker-archive-note {
+    color: #94a3b8;
+}
+
+.dark.tracker-page .tracker-archive-note a,
+.dark .tracker-page .tracker-archive-note a {
+    color: #c084fc;
+}
+
+.dark.tracker-page .tracker-list-panel,
+.dark .tracker-page .tracker-list-panel {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.dark.tracker-page .tracker-results,
+.dark .tracker-page .tracker-results,
+.dark.tracker-page .tracker-pagination,
+.dark .tracker-page .tracker-pagination {
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark.tracker-page .tracker-results h2,
+.dark .tracker-page .tracker-results h2 {
+    color: #f0f4f9;
+}
+
+.dark.tracker-page .tracker-results p,
+.dark .tracker-page .tracker-results p {
+    color: #94a3b8;
+}
+
+.dark.tracker-page .tracker-desktop-table th,
+.dark .tracker-page .tracker-desktop-table th {
+    background: #18191a;
+    color: #94a3b8;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.dark.tracker-page .tracker-desktop-table :is(th, td):not(:last-child),
+.dark .tracker-page .tracker-desktop-table :is(th, td):not(:last-child) {
+    border-right-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark.tracker-page .tracker-desktop-table td,
+.dark .tracker-page .tracker-desktop-table td {
+    border-top-color: rgba(255, 255, 255, 0.06);
+    color: #cbd5e1;
+}
+
+.dark.tracker-page .tracker-desktop-table tbody tr,
+.dark .tracker-page .tracker-desktop-table tbody tr {
+    background: #1e1f20;
+}
+
+.dark.tracker-page .tracker-desktop-table tbody tr:nth-child(even),
+.dark .tracker-page .tracker-desktop-table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.015);
+}
+
+.dark.tracker-page .tracker-desktop-table tbody tr:hover,
+.dark.tracker-page .tracker-desktop-table tbody tr:focus-within,
+.dark .tracker-page .tracker-desktop-table tbody tr:hover,
+.dark .tracker-page .tracker-desktop-table tbody tr:focus-within {
+    background: #282a2c;
+}
+
+.dark.tracker-page .tracker-opportunity a,
+.dark .tracker-page .tracker-opportunity a {
+    color: #f0f4f9;
+}
+
+.dark.tracker-page .tracker-opportunity p,
+.dark .tracker-page .tracker-opportunity p {
+    color: #94a3b8;
+}
+
+.dark.tracker-page .tracker-opportunity > div > span,
+.dark .tracker-page .tracker-opportunity > div > span {
+    color: #64748b;
+}
+
+.dark.tracker-page .tracker-desktop-table .platform-brand__name,
+.dark .tracker-page .tracker-desktop-table .platform-brand__name {
+    color: #cbd5e1;
+}
+
+.dark.tracker-page .tracker-stage-name,
+.dark .tracker-page .tracker-stage-name {
+    color: #cbd5e1;
+}
+
+.dark.tracker-page .tracker-unscheduled,
+.dark .tracker-page .tracker-unscheduled {
+    color: #64748b;
+}
+
+.dark.tracker-page .tracker-secondary,
+.dark .tracker-page .tracker-secondary {
+    color: #94a3b8;
+}
+
+.dark.tracker-page .tracker-actions button,
+.dark .tracker-page .tracker-actions button {
+    color: #94a3b8;
+}
+
+.dark.tracker-page .tracker-actions button:hover,
+.dark .tracker-page .tracker-actions button:hover {
+    background: #282a2c;
+    color: #f0f4f9;
+}
+
+.dark.tracker-page .tracker-viewbar .workspace-switcher,
+.dark .tracker-page .tracker-viewbar .workspace-switcher {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Kanban Columns in Density */
+.dark.tracker-page .tracker-column,
+.dark .tracker-page .tracker-column {
+    background: rgba(30, 31, 32, 0.7);
+    border-color: rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.dark.tracker-page .tracker-column--accepted,
+.dark .tracker-page .tracker-column--accepted {
+    background: rgba(35, 30, 48, 0.7);
+}
+
+.dark.tracker-page .tracker-column--rejected,
+.dark .tracker-page .tracker-column--rejected {
+    background: rgba(45, 30, 30, 0.7);
+}
+
+.dark.tracker-page .tracker-column.is-drag-over,
+.dark .tracker-page .tracker-column.is-drag-over {
+    background: #2a2436;
+    outline: 2px dashed #a855f7;
+}
+
+.dark.tracker-page .tracker-column-header,
+.dark .tracker-page .tracker-column-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark.tracker-page .tracker-column-header h2,
+.dark .tracker-page .tracker-column-header h2 {
+    color: #f0f4f9;
+}
+
+.dark.tracker-page .tracker-column-add,
+.dark .tracker-page .tracker-column-add {
+    background: #282a2c;
+    color: #94a3b8;
+}
+
+.dark.tracker-page .tracker-column-add:hover,
+.dark .tracker-page .tracker-column-add:hover {
+    background: #333538;
+    color: #f0f4f9;
+}
+
+.dark.tracker-page .tracker-column .tracker-job-card,
+.dark .tracker-page .tracker-column .tracker-job-card {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+.dark.tracker-page .tracker-column .tracker-job-card:hover,
+.dark.tracker-page .tracker-column .tracker-job-card:focus-within,
+.dark .tracker-page .tracker-column .tracker-job-card:hover,
+.dark .tracker-page .tracker-column .tracker-job-card:focus-within {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.dark.tracker-page .tracker-column .tracker-job-card.is-pinned,
+.dark .tracker-page .tracker-column .tracker-job-card.is-pinned {
+    border-color: rgba(168, 85, 247, 0.4);
+}
+
+.dark.tracker-page .tracker-card-stage-pill,
+.dark .tracker-page .tracker-card-stage-pill {
+    background: #282a2c;
+    color: #d8b4fe;
+}
+
+.dark.tracker-page .tracker-card-grip,
+.dark .tracker-page .tracker-card-grip {
+    color: #64748b;
+}
+
+.dark.tracker-page .tracker-card-link h3,
+.dark .tracker-page .tracker-card-link h3 {
+    color: #f0f4f9;
+}
+
+.dark.tracker-page .tracker-card-link:hover h3,
+.dark .tracker-page .tracker-card-link:hover h3 {
+    color: #c084fc;
+}
+
+.dark.tracker-page .tracker-card-link p,
+.dark .tracker-page .tracker-card-link p {
+    color: #94a3b8;
+}
+
+.dark.tracker-page .tracker-card-location,
+.dark .tracker-page .tracker-card-location {
+    color: #94a3b8;
+}
+
+.dark.tracker-page .tracker-card-meta > span,
+.dark .tracker-page .tracker-card-meta > span {
+    background: #282a2c;
+    color: #cbd5e1;
+}
+
+.dark.tracker-page .tracker-column .tracker-interview-note,
+.dark .tracker-page .tracker-column .tracker-interview-note {
+    background: rgba(168, 85, 247, 0.12);
+    color: #d8b4fe;
+}
+
+.dark.tracker-page .tracker-card-move,
+.dark .tracker-page .tracker-card-move {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    color: #94a3b8;
+}
+
+.dark.tracker-page .tracker-card-move select,
+.dark .tracker-page .tracker-card-move select {
+    background-color: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark.tracker-page .tracker-card-footer time,
+.dark .tracker-page .tracker-card-footer time {
+    color: #94a3b8;
+}
+
+.dark.tracker-page .tracker-column-empty,
+.dark .tracker-page .tracker-column-empty {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark.tracker-page .tracker-column-empty p,
+.dark .tracker-page .tracker-column-empty p {
+    color: #f0f4f9;
+}
+
+.dark.tracker-page .tracker-column-empty span,
+.dark .tracker-page .tracker-column-empty span {
+    color: #94a3b8;
+}

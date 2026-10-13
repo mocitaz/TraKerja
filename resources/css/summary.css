@@ -769,3 +769,372 @@
 .summary-overview--split .summary-stats-footer { margin-top: 0; padding: 0 3px; border: 0; }
 @media (max-width: 1100px) { .summary-stat-group > .summary-stat { grid-template-columns: minmax(0, 1fr); } .summary-stat-group .summary-stat > strong { grid-row: 2; } }
 @media (max-width: 640px) { .summary-page .summary-overview--split { grid-template-columns: minmax(0, 1fr); gap: 12px; } .summary-stat-group { padding: 16px; } .summary-stat-group > .summary-stat { padding-right: 12px; } .summary-stat-group > .summary-stat + .summary-stat { padding-left: 12px; } }
+
+/* Gemini Dark Mode - Summary Styles */
+.dark.summary-page h1,
+.dark .summary-page h1,
+.dark.summary-page h2,
+.dark .summary-page h2 {
+    color: #f0f4f9;
+}
+
+.dark .summary-page .workspace-page__header p {
+    color: #94a3b8;
+}
+
+.dark .summary-page .workspace-card,
+.dark .summary-page .summary-insights,
+.dark .summary-page .summary-overview {
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.dark .summary-page .summary-chart-grid > .workspace-card {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .summary-periods {
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.dark .summary-periods a {
+    color: #94a3b8;
+}
+
+.dark .summary-periods a:hover {
+    background: #282a2c;
+    color: #f0f4f9;
+}
+
+.dark .summary-periods a.is-active {
+    background: #3b2d54;
+    color: #d8b4fe;
+}
+
+.dark .summary-scope p {
+    color: #f0f4f9;
+}
+
+.dark .summary-scope > span {
+    color: #94a3b8;
+}
+
+.dark .summary-page .summary-overview {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dark .summary-overview > .summary-stat {
+    border-right-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .summary-stat > span {
+    color: #94a3b8;
+}
+
+.dark .summary-stat > strong {
+    color: #f0f4f9;
+}
+
+.dark .summary-page .summary-stat > p {
+    color: #64748b;
+}
+
+.dark .summary-stat--total > strong {
+    color: #f472b6;
+}
+
+.dark .summary-stat--progress > strong {
+    color: #38bdf8;
+}
+
+.dark .summary-stat--offers > strong {
+    color: #c084fc;
+}
+
+.dark .summary-stat--rejected > strong {
+    color: #fb923c;
+}
+
+.dark .summary-stat-group {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dark .summary-stat-group--outcomes {
+    background: rgba(35, 30, 48, 0.7);
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .summary-stat-group > .summary-stat + .summary-stat {
+    border-left-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .summary-stat-group--outcomes > .summary-stat + .summary-stat {
+    border-left-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .summary-page .summary-stats-footer {
+    border-top-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .summary-page .summary-stats-footer p {
+    color: #94a3b8;
+}
+
+.dark .summary-stats-footer a {
+    color: #94a3b8;
+}
+
+.dark .summary-stats-footer a:hover {
+    color: #f0f4f9;
+}
+
+.dark .summary-activity-total {
+    background: #282a2c;
+    color: #f0f4f9;
+}
+
+.dark .summary-chart-legend {
+    color: #94a3b8;
+}
+
+.dark .summary-chart-readout {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
+.dark .summary-chart-readout strong {
+    color: #f0f4f9;
+}
+
+.dark .summary-chart-readout.is-active {
+    background: #3b2d54;
+    border-color: rgba(168, 85, 247, 0.35);
+}
+
+.dark .summary-gridline {
+    stroke: rgba(255, 255, 255, 0.07);
+}
+
+.dark .summary-axis-text {
+    fill: #94a3b8;
+}
+
+.dark .summary-chart-footer {
+    border-top-color: rgba(255, 255, 255, 0.07);
+    color: #94a3b8;
+}
+
+.dark .summary-data-table summary {
+    color: #c084fc;
+}
+
+.dark .summary-data-table > div {
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .summary-data-table thead {
+    background: #282a2c;
+}
+
+.dark .summary-data-table :is(th,td) {
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+    color: #cbd5e1;
+}
+
+.dark .summary-donut strong {
+    color: #f0f4f9;
+}
+
+.dark .summary-donut span {
+    color: #94a3b8;
+}
+
+.dark .summary-status-legend > div {
+    color: #f0f4f9;
+}
+
+.dark .summary-status-legend > div.is-active {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .summary-status-legend dd span {
+    color: #94a3b8;
+}
+
+.dark .summary-outcomes .workspace-hint {
+    border-top-color: rgba(255, 255, 255, 0.07);
+    color: #94a3b8;
+}
+
+.dark .summary-page .summary-insights {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .summary-insights article + article {
+    border-left-color: rgba(255, 255, 255, 0.07);
+    border-top-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .summary-insights article > span {
+    color: #94a3b8;
+}
+
+.dark .summary-insights strong {
+    color: #f0f4f9;
+}
+
+.dark .summary-insights small {
+    color: #94a3b8;
+}
+
+.dark .summary-insights p {
+    color: #cbd5e1;
+}
+
+.dark .summary-analysis-count {
+    background: #282a2c;
+    color: #cbd5e1;
+}
+
+.dark .summary-analysis-tabs {
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .summary-analysis-tabs button {
+    color: #94a3b8;
+}
+
+.dark .summary-analysis-tabs button:hover {
+    background: #282a2c;
+    color: #f0f4f9;
+}
+
+.dark .summary-analysis-tabs button.is-active {
+    background: #3b2d54;
+    color: #d8b4fe;
+}
+
+.dark .summary-ranking-labels {
+    color: #94a3b8;
+}
+
+.dark .summary-ranking-row {
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .summary-ranking-identity > strong {
+    color: #f0f4f9;
+}
+
+.dark .summary-ranking-identity p {
+    color: #94a3b8;
+}
+
+.dark .summary-ranking-volume strong {
+    color: #f0f4f9;
+}
+
+.dark .summary-ranking-volume small {
+    color: #94a3b8;
+}
+
+.dark .summary-mini-track {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.dark .summary-show-more {
+    color: #c084fc;
+}
+
+/* Stage Chart */
+.dark .summary-stage-gridline {
+    stroke: rgba(255, 255, 255, 0.06);
+}
+
+.dark .summary-stage-axis {
+    fill: #94a3b8;
+}
+
+.dark .summary-stage-column.is-selected .summary-stage-column-hit {
+    fill: rgba(255, 255, 255, 0.05);
+}
+
+.dark .summary-stage-bar.is-empty {
+    fill: rgba(255, 255, 255, 0.08);
+}
+
+.dark .summary-stage-value {
+    fill: #cbd5e1;
+}
+
+.dark .summary-stage-label {
+    fill: #94a3b8;
+}
+
+.dark .summary-stage-tooltip rect {
+    fill: #282a2c;
+}
+
+.dark .summary-stage-tooltip text {
+    fill: #f0f4f9;
+}
+
+/* Gated Summary Premium Showcase */
+.dark .summary-page .summary-premium {
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+}
+
+.dark .summary-premium h2 {
+    color: #f0f4f9;
+}
+
+.dark .summary-premium-intro {
+    color: #cbd5e1;
+}
+
+.dark .summary-premium-desc {
+    color: #94a3b8;
+}
+
+.dark .summary-action-secondary {
+    background: #282a2c;
+    color: #cbd5e1;
+}
+
+.dark .summary-action-secondary:hover {
+    background: #333538;
+    color: #f0f4f9;
+}
+
+.dark .summary-premium-footnote {
+    color: #94a3b8;
+}
+
+.dark .summary-premium-art {
+    background: linear-gradient(155deg, #18191a 0%, #222026 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .summary-art-speech {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark .summary-art-caption {
+    color: #94a3b8;
+}

@@ -114,3 +114,220 @@
 @media (prefers-reduced-motion: reduce) {
     .job-dialog, .job-dialog.is-closing, .job-dialog.is-closing .job-dialog__panel { animation: none; }
 }
+
+/* Gemini Dark Mode - Job Dialog Styles */
+.dark.job-dialog,
+.dark .job-dialog {
+    background: rgba(0, 0, 0, 0.65);
+    color: #f0f4f9;
+}
+
+.dark.job-dialog .job-dialog__panel,
+.dark .job-dialog .job-dialog__panel {
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 90px rgba(0, 0, 0, 0.5);
+}
+
+.dark.job-dialog .job-dialog__header,
+.dark .job-dialog .job-dialog__header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.dark.job-dialog .job-dialog__header h2,
+.dark .job-dialog .job-dialog__header h2 {
+    color: #f0f4f9;
+}
+
+.dark.job-dialog .job-dialog__header p,
+.dark .job-dialog .job-dialog__header p {
+    color: #94a3b8;
+}
+
+.dark.job-dialog .job-dialog__close,
+.dark .job-dialog .job-dialog__close {
+    background: #282a2c;
+    color: #cbd5e1;
+}
+
+.dark.job-dialog .job-dialog__close:hover,
+.dark .job-dialog .job-dialog__close:hover {
+    background: #383a3d;
+    color: #fff;
+}
+
+.dark.job-dialog .job-dialog__body,
+.dark .job-dialog .job-dialog__body {
+    scrollbar-color: #383a3d transparent;
+}
+
+.dark.job-dialog .job-form__section h3,
+.dark .job-dialog .job-form__section h3 {
+    color: #f0f4f9;
+}
+
+.dark.job-dialog .job-form__section--progress,
+.dark .job-dialog .job-form__section--progress {
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.dark.job-dialog [data-job-application-form] label:not(.sr-only),
+.dark .job-dialog [data-job-application-form] label:not(.sr-only) {
+    color: #cbd5e1;
+}
+
+.dark.job-dialog [data-job-application-form] :is(input:not([type=checkbox]), select, textarea),
+.dark .job-dialog [data-job-application-form] :is(input:not([type=checkbox]), select, textarea) {
+    background-color: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark.job-dialog [data-job-application-form] select option,
+.dark .job-dialog [data-job-application-form] select option {
+    background-color: #282a2c;
+    color: #f0f4f9;
+}
+
+.dark.job-dialog [data-job-application-form] textarea,
+.dark .job-dialog [data-job-application-form] textarea {
+    color: #f0f4f9;
+}
+
+.dark.job-dialog [data-job-application-form] :is(input, textarea)::placeholder,
+.dark .job-dialog [data-job-application-form] :is(input, textarea)::placeholder {
+    color: #64748b;
+}
+
+.dark.job-dialog [data-job-application-form] :is(input, select, textarea):focus,
+.dark .job-dialog [data-job-application-form] :is(input, select, textarea):focus {
+    border-color: rgba(56, 189, 248, 0.5);
+    background-color: #1e1f20;
+}
+
+.dark.job-dialog [data-job-application-form] select:disabled,
+.dark .job-dialog [data-job-application-form] select:disabled {
+    background-color: #202123;
+    color: #64748b;
+}
+
+.dark.job-dialog [data-job-application-form] label:has(input[type=checkbox]),
+.dark .job-dialog [data-job-application-form] label:has(input[type=checkbox]) {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
+.dark.job-dialog [data-job-application-form] label:has(input:checked),
+.dark .job-dialog [data-job-application-form] label:has(input:checked) {
+    border-color: rgba(56, 189, 248, 0.35);
+    background: rgba(56, 189, 248, 0.12);
+    color: #f0f4f9;
+}
+
+.dark.job-dialog [data-job-application-form] label:has(input:checked) span,
+.dark .job-dialog [data-job-application-form] label:has(input:checked) span {
+    color: #f0f4f9;
+}
+
+.dark.job-dialog [data-scrape-button],
+.dark .job-dialog [data-scrape-button] {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #38bdf8;
+}
+
+.dark.job-dialog [data-scrape-button]:hover,
+.dark .job-dialog [data-scrape-button]:hover {
+    background: #333538;
+}
+
+.dark.job-dialog .job-form__hint,
+.dark .job-dialog .job-form__hint {
+    color: #94a3b8;
+}
+
+.dark.job-dialog .job-form__actions,
+.dark .job-dialog .job-form__actions {
+    background: rgba(30, 31, 32, 0.96);
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.dark.job-dialog .job-form__actions button[type=button],
+.dark .job-dialog .job-form__actions button[type=button] {
+    color: #cbd5e1;
+}
+
+.dark.job-dialog .job-form__actions button[type=button]:hover,
+.dark .job-dialog .job-form__actions button[type=button]:hover {
+    background: #282a2c;
+    color: #f0f4f9;
+}
+
+.dark.job-dialog .job-form__actions button[type=submit],
+.dark .job-dialog .job-form__actions button[type=submit] {
+    background: #2579ca;
+    border-color: #2579ca;
+    color: #fff;
+}
+
+.dark.job-dialog .job-form__actions button[type=submit]:hover,
+.dark .job-dialog .job-form__actions button[type=submit]:hover {
+    background: #1e65ab;
+    border-color: #1e65ab;
+}
+
+.dark.job-dialog .job-form__platform-shortcuts button,
+.dark .job-dialog .job-form__platform-shortcuts button {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
+.dark.job-dialog .job-form__platform-shortcuts button:hover,
+.dark .job-dialog .job-form__platform-shortcuts button:hover {
+    background: #333538;
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.dark.job-dialog .platform-picker summary,
+.dark .job-dialog .platform-picker summary {
+    color: #cbd5e1;
+}
+
+.dark.job-dialog .platform-picker__body,
+.dark .job-dialog .platform-picker__body {
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark.job-dialog .platform-picker input[type="search"],
+.dark .job-dialog .platform-picker input[type="search"] {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark.job-dialog .platform-picker__grid > button,
+.dark .job-dialog .platform-picker__grid > button {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #f0f4f9;
+}
+
+.dark.job-dialog .platform-picker__grid > button:hover,
+.dark .job-dialog .platform-picker__grid > button:hover {
+    background: #333538;
+}
+
+.dark.job-dialog .platform-picker__grid > button.is-selected,
+.dark .job-dialog .platform-picker__grid > button.is-selected {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: rgba(56, 189, 248, 0.4);
+    color: #38bdf8;
+}
+
+.dark.job-dialog .platform-picker__empty,
+.dark .job-dialog .platform-picker__empty {
+    color: #94a3b8;
+}
