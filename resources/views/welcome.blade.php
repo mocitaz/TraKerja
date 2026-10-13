@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="{{ request()->cookie('theme') === 'dark' ? 'dark' : '' }}">
 
 <head>
     <meta charset="utf-8">
@@ -36,18 +36,54 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- Anti-FOUC Script -->
+    <!-- Anti-FOUC & Theme Initialization Script -->
     <script>
         (function() {
-            try {
-                var theme = localStorage.getItem('theme');
-                var supportDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (theme === 'dark' || (!theme && supportDark)) {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
-            } catch (e) {}
+            function enforceTheme() {
+                try {
+                    var theme = localStorage.getItem('theme');
+                    var supportDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    var isDark = theme === 'dark' || (!theme && supportDark);
+                    if (isDark) {
+                        if (!document.documentElement.classList.contains('dark')) {
+                            document.documentElement.classList.add('dark');
+                        }
+                        if (!document.cookie.includes('theme=dark')) {
+                            document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
+                        }
+                    } else {
+                        if (document.documentElement.classList.contains('dark')) {
+                            document.documentElement.classList.remove('dark');
+                        }
+                        if (!document.cookie.includes('theme=light')) {
+                            document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            enforceTheme();
+
+            document.addEventListener('livewire:navigating', enforceTheme);
+            document.addEventListener('livewire:navigated', enforceTheme);
+
+            if (window.MutationObserver) {
+                var observer = new MutationObserver(function(mutations) {
+                    for (var i = 0; i < mutations.length; i++) {
+                        if (mutations[i].attributeName === 'class') {
+                            var theme = localStorage.getItem('theme');
+                            var supportDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                            var isDark = theme === 'dark' || (!theme && supportDark);
+                            if (isDark && !document.documentElement.classList.contains('dark')) {
+                                document.documentElement.classList.add('dark');
+                            } else if (!isDark && document.documentElement.classList.contains('dark')) {
+                                document.documentElement.classList.remove('dark');
+                            }
+                        }
+                    }
+                });
+                observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+            }
         })();
     </script>
 
@@ -183,19 +219,20 @@
             <div class="workspace-account-actions">
                 <!-- Theme Toggle Button -->
                 <div x-data="{
-                    isDark: document.documentElement.classList.contains('dark'),
+                    isDark: localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches),
                     toggle() {
                         this.isDark = !this.isDark;
+                        var theme = this.isDark ? 'dark' : 'light';
                         if (this.isDark) {
                             document.documentElement.classList.add('dark');
-                            localStorage.setItem('theme', 'dark');
                         } else {
                             document.documentElement.classList.remove('dark');
-                            localStorage.setItem('theme', 'light');
                         }
+                        localStorage.setItem('theme', theme);
+                        document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
                         window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: this.isDark } }));
                     }
-                }" @theme-changed.window="isDark = $event.detail.isDark" class="flex items-center">
+                }" @theme-changed.window="isDark = $event.detail.isDark" x-on:livewire:navigated.window="isDark = document.documentElement.classList.contains('dark')" class="flex items-center">
                     <button type="button" 
                             @click="toggle()" 
                             class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-amber-300 dark:hover:text-amber-200 dark:bg-[#1e1f20] dark:hover:bg-[#282a2c] dark:border dark:border-white/10 shadow-sm focus:outline-none"

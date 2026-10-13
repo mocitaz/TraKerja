@@ -23,19 +23,20 @@
             </button>
             <!-- Theme Toggle Button -->
             <div x-data="{
-                isDark: document.documentElement.classList.contains('dark'),
+                isDark: localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches),
                 toggle() {
                     this.isDark = !this.isDark;
+                    var theme = this.isDark ? 'dark' : 'light';
                     if (this.isDark) {
                         document.documentElement.classList.add('dark');
-                        localStorage.setItem('theme', 'dark');
                     } else {
                         document.documentElement.classList.remove('dark');
-                        localStorage.setItem('theme', 'light');
                     }
+                    localStorage.setItem('theme', theme);
+                    document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
                     window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: this.isDark } }));
                 }
-            }" @theme-changed.window="isDark = $event.detail.isDark" class="flex items-center">
+            }" @theme-changed.window="isDark = $event.detail.isDark" x-on:livewire:navigated.window="isDark = document.documentElement.classList.contains('dark')" class="flex items-center">
                 <button type="button" 
                         @click="toggle()" 
                         class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-amber-300 dark:hover:text-amber-200 dark:bg-[#1e1f20] dark:hover:bg-[#282a2c] dark:border dark:border-white/10 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20"

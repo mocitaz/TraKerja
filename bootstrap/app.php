@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
         // Percaya pada semua proxy (termasuk Cloudflare) agar IP asli user terbaca
         $middleware->trustProxies(at: '*');
 
+        $middleware->encryptCookies(except: [
+            'theme',
+        ]);
+
         $middleware->validateCsrfTokens(except: [
             'payment/webhook',
         ]);

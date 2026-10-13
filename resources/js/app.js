@@ -1,4 +1,5 @@
 import './bootstrap';
+import './theme';
 import './ai-photo-status';
 
 // Alpine.js is already loaded by Livewire, so we don't need to import it again
