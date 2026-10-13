@@ -128,7 +128,7 @@
 
 
         @include('components.toast-notification')
-        <x-floating-ai-link />
+        <x-kawankerja-chat />
         @livewireScripts
         
         <div id="confirmation-modal" data-dialog-native="closeConfirmModal" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-message" tabindex="-1" class="account-dialog-overlay hidden" onclick="if (event.target === this) closeConfirmModal()">
