@@ -1,7 +1,7 @@
 <section wire:poll.visible.30s id="dashboard-next-move" class="dashboard-next-move" x-data="{ motionPaused: false, activeMove: null }" @next-move-updated="activeMove = null" :class="{ 'ai-motion-paused': motionPaused }" @dashboard-motion.window="motionPaused = $event.detail.paused" aria-labelledby="next-move-title">
     <header class="next-move-header">
         <div><h2 id="next-move-title">Your next move</h2><p>A few useful steps for where you are today.</p></div>
-        <button type="button" @click="window.dispatchEvent(new CustomEvent('open-kawankerja', { detail: { prompt: 'Tolong bantu persiapan langkah karier dan interview saya' } }))" class="dashboard-ai-link cursor-pointer" aria-label="Konsultasi dengan KawanKerja" title="Tanya KawanKerja"><img src="{{ asset('images/kawankerja.png') }}" class="w-5 h-5 rounded-full object-cover inline-block" alt=""><span>Tanya KawanKerja</span><i class="ph-fill ph-chat-circle-dots ml-1" aria-hidden="true"></i></button>
+        <a href="{{ route('ai-studio.index') }}" wire:navigate class="dashboard-ai-link" aria-label="Prepare with TraKerja AI" title="TraKerja AI"><x-trakerja-ai-mark class="ai-notice-mark" /><span>Prepare with AI</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
     </header>
     @if($notice)<div class="next-move-feedback" role="status"><i class="ph ph-check-circle" aria-hidden="true"></i><span>{{ $notice }}</span>@if($undoActionId)<button type="button" wire:click="undo" wire:loading.attr="disabled">Undo</button>@endif</div>@endif
     @if($deferredCount)<p class="next-move-deferred">{{ $deferredCount }} {{ Str::plural('action',$deferredCount) }} set aside until tomorrow.</p>@endif
