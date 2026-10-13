@@ -91,12 +91,18 @@ class KawanKerjaService
      */
     public function buildUserContext(User $user): array
     {
+        $profile = null;
         try {
             $profile = $user->profile;
+        } catch (Throwable $e) {}
 
+        $skills = [];
+        try {
             $skills = $user->skills()->pluck('skill_name')->take(12)->toArray();
+        } catch (Throwable $e) {}
 
-            // Top past experiences
+        $experiences = [];
+        try {
             $experiences = $user->experiences()
                 ->latest('start_date')
                 ->take(3)
@@ -107,17 +113,33 @@ class KawanKerjaService
                     'summary' => $exp->description ? \Illuminate\Support\Str::limit($exp->description, 120) : null,
                 ])
                 ->toArray();
+        } catch (Throwable $e) {}
 
-            // Applications breakdown
-            $appsQuery = JobApplication::where('user_id', $user->id)->where('is_archived', false);
+        $totalTracked = 0;
+        $totalActive = 0;
+        $onProcessCount = 0;
+        $interviewCount = 0;
+        $offeringCount = 0;
+        $upcomingInterviews = [];
+        $activeApps = [];
+
+        try {
+            $appsQuery = JobApplication::where('user_id', $user->id);
+            $totalTracked = (clone $appsQuery)->count();
+
+            $activeQuery = (clone $appsQuery)->where(function ($q) {
+                $q->where('is_archived', false)->orWhereNull('is_archived');
+            });
             
-            $totalActive = (clone $appsQuery)->count();
-            $onProcessCount = (clone $appsQuery)->where('application_status', 'On Process')->count();
-            $interviewCount = (clone $appsQuery)->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview', 'LGD', 'Presentation Round'])->count();
-            $offeringCount = (clone $appsQuery)->where('recruitment_stage', 'Offering')->count();
+            $totalActive = (clone $activeQuery)->count();
+            $onProcessCount = (clone $activeQuery)->where('application_status', 'On Process')->count();
+            $interviewCount = (clone $activeQuery)->whereIn('recruitment_stage', [
+                'HR - Interview', 'User - Interview', 'Psychotest', 'Assessment Test', 'LGD', 'Presentation Round'
+            ])->count();
+            $offeringCount = (clone $activeQuery)->where('recruitment_stage', 'Offering')->count();
 
             // Upcoming interview (future or within last 2 days)
-            $upcomingInterviews = (clone $appsQuery)
+            $upcomingInterviews = (clone $activeQuery)
                 ->whereNotNull('interview_date')
                 ->where('interview_date', '>=', now()->subDays(1))
                 ->orderBy('interview_date')
@@ -132,9 +154,10 @@ class KawanKerjaService
                 ])
                 ->toArray();
 
-            $activeApps = (clone $appsQuery)
+            // First grab priority applications (On Process or Interview stage)
+            $activeApps = (clone $activeQuery)
                 ->orderByDesc('updated_at')
-                ->limit(5)
+                ->limit(6)
                 ->get(['company_name', 'position', 'location', 'application_status', 'recruitment_stage', 'interview_date', 'notes'])
                 ->map(function ($app) {
                     return [
@@ -147,50 +170,70 @@ class KawanKerjaService
                 })
                 ->toArray();
 
-            $primaryResume = UserResume::where('user_id', $user->id)
-                ->where('is_primary', true)
-                ->value('title');
+            // If activeApps has fewer than 6 but user has more tracked applications, fill with recent overall applications
+            if (count($activeApps) < 6 && $totalTracked > count($activeApps)) {
+                $recentApps = (clone $appsQuery)
+                    ->orderByDesc('updated_at')
+                    ->limit(6)
+                    ->get(['company_name', 'position', 'location', 'application_status', 'recruitment_stage', 'interview_date', 'notes'])
+                    ->map(function ($app) {
+                        return [
+                            'company' => $app->company_name,
+                            'position' => $app->position,
+                            'status' => $app->application_status,
+                            'stage' => $app->recruitment_stage,
+                            'interview_date' => $app->interview_date?->format('d M Y H:i') ?? null,
+                        ];
+                    })
+                    ->toArray();
 
-            $totalResumes = UserResume::where('user_id', $user->id)->count();
-
-            return [
-                'user_name' => $user->name,
-                'headline' => $profile?->headline,
-                'domicile' => $profile?->domicile,
-                'skills' => $skills,
-                'experiences' => $experiences,
-                'pipeline_summary' => [
-                    'total_active' => $totalActive,
-                    'on_process' => $onProcessCount,
-                    'in_interview_stages' => $interviewCount,
-                    'offering_received' => $offeringCount,
-                ],
-                'upcoming_interviews' => $upcomingInterviews,
-                'active_applications' => $activeApps,
-                'primary_resume' => $primaryResume,
-                'saved_resumes_count' => $totalResumes,
-            ];
+                $seen = [];
+                $merged = [];
+                foreach (array_merge($activeApps, $recentApps) as $app) {
+                    $key = $app['company'] . '|' . $app['position'];
+                    if (!isset($seen[$key])) {
+                        $seen[$key] = true;
+                        $merged[] = $app;
+                    }
+                    if (count($merged) >= 6) {
+                        break;
+                    }
+                }
+                $activeApps = $merged;
+            }
         } catch (Throwable $e) {
-            Log::warning("KawanKerja buildUserContext error: " . $e->getMessage());
-
-            return [
-                'user_name' => $user->name,
-                'headline' => null,
-                'domicile' => null,
-                'skills' => [],
-                'experiences' => [],
-                'pipeline_summary' => [
-                    'total_active' => 0,
-                    'on_process' => 0,
-                    'in_interview_stages' => 0,
-                    'offering_received' => 0,
-                ],
-                'upcoming_interviews' => [],
-                'active_applications' => [],
-                'primary_resume' => null,
-                'saved_resumes_count' => 0,
-            ];
+            Log::warning("KawanKerja JobApplications context error: " . $e->getMessage());
         }
+
+        $primaryResume = null;
+        $totalResumes = 0;
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('user_resumes')) {
+                $primaryResume = UserResume::where('user_id', $user->id)
+                    ->where('is_primary', true)
+                    ->value('title');
+                $totalResumes = UserResume::where('user_id', $user->id)->count();
+            }
+        } catch (Throwable $e) {}
+
+        return [
+            'user_name' => $user->name,
+            'headline' => $profile?->headline,
+            'domicile' => $profile?->domicile,
+            'skills' => $skills,
+            'experiences' => $experiences,
+            'pipeline_summary' => [
+                'total_applications' => $totalTracked,
+                'total_active' => $totalActive,
+                'on_process' => $onProcessCount,
+                'in_interview_stages' => $interviewCount,
+                'offering_received' => $offeringCount,
+            ],
+            'upcoming_interviews' => $upcomingInterviews,
+            'active_applications' => $activeApps,
+            'primary_resume' => $primaryResume,
+            'saved_resumes_count' => $totalResumes,
+        ];
     }
 
     protected function buildSystemPrompt(array $context): string
@@ -241,8 +284,12 @@ Overall: [Rata-rata]/10 | [Predikat: misal Solid & Persuasif / Butuh Metrik Fina
      • Portal Loker ➔ `[action:explore|Eksplorasi Loker & UMK|Cari lowongan terverifikasi & standar gaji]`
      • Profil & Resume ➔ `[action:profile|Buka Profil & Vault|Kelola portofolio & multi-versi CV]`
 
-5. **JIKA PENGGUNA BERTANYA PROGRESS / PIPELINE**:
-   - Baca data `pipeline_summary` dan `upcoming_interviews` di bawah, rangkum dengan jelas (jumlah lamaran aktif, jadwal terdekat), lalu sarankan aksi taktis berikutnya.
+5. **JIKA PENGGUNA BERTANYA PROGRESS / PIPELINE ATAU MEMINTA SARAN/REKOMENDASI LOKER DARI LAMARANNYA**:
+   - Periksa `pipeline_summary` (khususnya `total_applications` dan `total_active`) serta daftar `active_applications`.
+   - JIKA `total_applications` > 0:
+     DILARANG KERAS mengatakan data pipeline atau lamaran pengguna kosong!
+     Sebutkan data konkret pengguna (contoh: "Dari total {total_applications} lamaran yang tercatat di TraKerja..."), lalu ambil contoh posisi dan nama perusahaan nyata yang ada di `active_applications` pengguna untuk diulas dan dijadikan bahan persiapan matang.
+   - JIKA dan HANYA JIKA `total_applications` bernilai 0: baru sampaikan secara sopan bahwa belum ada data lamaran di sistem dan tawarkan eksplorasi loker baru.
 
 6. **JIKA PENGGUNA MEMINTA DRAF PESAN / FOLLOW-UP / EMAIL KE HR**:
    - DILARANG KERAS menggunakan tanda `>` atau blockquote di baris pesan! Tampilkan sebagai teks bersih yang rapi dan siap disalin (copy-paste).
