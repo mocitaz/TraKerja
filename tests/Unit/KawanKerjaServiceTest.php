@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\JobApplication;
 use App\Models\User;
+use App\Models\UserExperience;
 use App\Models\UserResume;
 use App\Models\UserSkill;
 use App\Services\KawanKerjaService;
@@ -22,6 +23,13 @@ class KawanKerjaServiceTest extends TestCase
             'user_id' => $user->id,
             'skill_name' => 'Laravel',
             'category' => 'Backend',
+        ]);
+        UserExperience::create([
+            'user_id' => $user->id,
+            'company_name' => 'Gojek',
+            'position' => 'Senior Backend Engineer',
+            'description' => 'Built high-scale microservices',
+            'start_date' => now()->subYears(2),
         ]);
         JobApplication::create([
             'user_id' => $user->id,
@@ -48,6 +56,9 @@ class KawanKerjaServiceTest extends TestCase
 
         $this->assertSame('Budi Santoso', $context['user_name']);
         $this->assertContains('Laravel', $context['skills']);
+        $this->assertCount(1, $context['experiences']);
+        $this->assertSame('Senior Backend Engineer', $context['experiences'][0]['title']);
+        $this->assertSame('Gojek', $context['experiences'][0]['company']);
         $this->assertCount(1, $context['active_applications']);
         $this->assertSame('Tokopedia', $context['active_applications'][0]['company']);
         $this->assertSame('CV Backend Tech', $context['primary_resume']);

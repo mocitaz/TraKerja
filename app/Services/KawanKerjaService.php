@@ -91,84 +91,106 @@ class KawanKerjaService
      */
     public function buildUserContext(User $user): array
     {
-        $profile = $user->profile;
+        try {
+            $profile = $user->profile;
 
-        $skills = $user->skills()->pluck('skill_name')->take(12)->toArray();
+            $skills = $user->skills()->pluck('skill_name')->take(12)->toArray();
 
-        // Top past experiences
-        $experiences = $user->experiences()
-            ->latest('start_date')
-            ->take(3)
-            ->get(['job_title', 'company_name', 'description'])
-            ->map(fn($exp) => [
-                'title' => $exp->job_title,
-                'company' => $exp->company_name,
-                'summary' => $exp->description ? \Illuminate\Support\Str::limit($exp->description, 120) : null,
-            ])
-            ->toArray();
+            // Top past experiences
+            $experiences = $user->experiences()
+                ->latest('start_date')
+                ->take(3)
+                ->get(['position', 'company_name', 'description'])
+                ->map(fn($exp) => [
+                    'title' => $exp->position,
+                    'company' => $exp->company_name,
+                    'summary' => $exp->description ? \Illuminate\Support\Str::limit($exp->description, 120) : null,
+                ])
+                ->toArray();
 
-        // Applications breakdown
-        $appsQuery = JobApplication::where('user_id', $user->id)->where('is_archived', false);
-        
-        $totalActive = (clone $appsQuery)->count();
-        $onProcessCount = (clone $appsQuery)->where('application_status', 'On Process')->count();
-        $interviewCount = (clone $appsQuery)->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview', 'LGD', 'Presentation Round'])->count();
-        $offeringCount = (clone $appsQuery)->where('recruitment_stage', 'Offering')->count();
+            // Applications breakdown
+            $appsQuery = JobApplication::where('user_id', $user->id)->where('is_archived', false);
+            
+            $totalActive = (clone $appsQuery)->count();
+            $onProcessCount = (clone $appsQuery)->where('application_status', 'On Process')->count();
+            $interviewCount = (clone $appsQuery)->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview', 'LGD', 'Presentation Round'])->count();
+            $offeringCount = (clone $appsQuery)->where('recruitment_stage', 'Offering')->count();
 
-        // Upcoming interview (future or within last 2 days)
-        $upcomingInterviews = (clone $appsQuery)
-            ->whereNotNull('interview_date')
-            ->where('interview_date', '>=', now()->subDays(1))
-            ->orderBy('interview_date')
-            ->take(3)
-            ->get(['company_name', 'position', 'interview_date', 'recruitment_stage', 'interview_type'])
-            ->map(fn($app) => [
-                'company' => $app->company_name,
-                'position' => $app->position,
-                'date' => $app->interview_date?->format('d M Y H:i'),
-                'stage' => $app->recruitment_stage,
-                'type' => $app->interview_type ?? 'Online/Offline',
-            ])
-            ->toArray();
-
-        $activeApps = (clone $appsQuery)
-            ->orderByDesc('updated_at')
-            ->limit(5)
-            ->get(['company_name', 'position', 'location', 'application_status', 'recruitment_stage', 'interview_date', 'notes'])
-            ->map(function ($app) {
-                return [
+            // Upcoming interview (future or within last 2 days)
+            $upcomingInterviews = (clone $appsQuery)
+                ->whereNotNull('interview_date')
+                ->where('interview_date', '>=', now()->subDays(1))
+                ->orderBy('interview_date')
+                ->take(3)
+                ->get(['company_name', 'position', 'interview_date', 'recruitment_stage', 'interview_type'])
+                ->map(fn($app) => [
                     'company' => $app->company_name,
                     'position' => $app->position,
-                    'status' => $app->application_status,
+                    'date' => $app->interview_date?->format('d M Y H:i'),
                     'stage' => $app->recruitment_stage,
-                    'interview_date' => $app->interview_date?->format('d M Y H:i') ?? null,
-                ];
-            })
-            ->toArray();
+                    'type' => $app->interview_type ?? 'Online/Offline',
+                ])
+                ->toArray();
 
-        $primaryResume = UserResume::where('user_id', $user->id)
-            ->where('is_primary', true)
-            ->value('title');
+            $activeApps = (clone $appsQuery)
+                ->orderByDesc('updated_at')
+                ->limit(5)
+                ->get(['company_name', 'position', 'location', 'application_status', 'recruitment_stage', 'interview_date', 'notes'])
+                ->map(function ($app) {
+                    return [
+                        'company' => $app->company_name,
+                        'position' => $app->position,
+                        'status' => $app->application_status,
+                        'stage' => $app->recruitment_stage,
+                        'interview_date' => $app->interview_date?->format('d M Y H:i') ?? null,
+                    ];
+                })
+                ->toArray();
 
-        $totalResumes = UserResume::where('user_id', $user->id)->count();
+            $primaryResume = UserResume::where('user_id', $user->id)
+                ->where('is_primary', true)
+                ->value('title');
 
-        return [
-            'user_name' => $user->name,
-            'headline' => $profile?->headline,
-            'domicile' => $profile?->domicile,
-            'skills' => $skills,
-            'experiences' => $experiences,
-            'pipeline_summary' => [
-                'total_active' => $totalActive,
-                'on_process' => $onProcessCount,
-                'in_interview_stages' => $interviewCount,
-                'offering_received' => $offeringCount,
-            ],
-            'upcoming_interviews' => $upcomingInterviews,
-            'active_applications' => $activeApps,
-            'primary_resume' => $primaryResume,
-            'saved_resumes_count' => $totalResumes,
-        ];
+            $totalResumes = UserResume::where('user_id', $user->id)->count();
+
+            return [
+                'user_name' => $user->name,
+                'headline' => $profile?->headline,
+                'domicile' => $profile?->domicile,
+                'skills' => $skills,
+                'experiences' => $experiences,
+                'pipeline_summary' => [
+                    'total_active' => $totalActive,
+                    'on_process' => $onProcessCount,
+                    'in_interview_stages' => $interviewCount,
+                    'offering_received' => $offeringCount,
+                ],
+                'upcoming_interviews' => $upcomingInterviews,
+                'active_applications' => $activeApps,
+                'primary_resume' => $primaryResume,
+                'saved_resumes_count' => $totalResumes,
+            ];
+        } catch (Throwable $e) {
+            Log::warning("KawanKerja buildUserContext error: " . $e->getMessage());
+
+            return [
+                'user_name' => $user->name,
+                'headline' => null,
+                'domicile' => null,
+                'skills' => [],
+                'experiences' => [],
+                'pipeline_summary' => [
+                    'total_active' => 0,
+                    'on_process' => 0,
+                    'in_interview_stages' => 0,
+                    'offering_received' => 0,
+                ],
+                'upcoming_interviews' => [],
+                'active_applications' => [],
+                'primary_resume' => null,
+                'saved_resumes_count' => 0,
+            ];
+        }
     }
 
     protected function buildSystemPrompt(array $context): string
