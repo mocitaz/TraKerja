@@ -157,6 +157,21 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile-photo/upload', [LogoController::class, 'upload'])->name('profile-photo.upload');
     Route::delete('/profile-photo/delete', [LogoController::class, 'delete'])->name('profile-photo.delete');
     Route::get('/profile-photo/get', [LogoController::class, 'getLogo'])->name('profile-photo.get');
+
+    // User Resume Vault routes
+    Route::post('/profile/resumes', [\App\Http\Controllers\UserResumeController::class, 'store'])->name('user-resumes.store');
+    Route::get('/profile/resumes/{resume}/download', [\App\Http\Controllers\UserResumeController::class, 'download'])->name('user-resumes.download');
+    Route::get('/profile/resumes/{resume}/preview', [\App\Http\Controllers\UserResumeController::class, 'preview'])->name('user-resumes.preview');
+    Route::patch('/profile/resumes/{resume}', [\App\Http\Controllers\UserResumeController::class, 'update'])->name('user-resumes.update');
+    Route::post('/profile/resumes/{resume}/primary', [\App\Http\Controllers\UserResumeController::class, 'setPrimary'])->name('user-resumes.primary');
+    Route::delete('/profile/resumes/{resume}', [\App\Http\Controllers\UserResumeController::class, 'destroy'])->name('user-resumes.destroy');
+
+    // KawanKerja AI Assistant routes
+    Route::prefix('kawankerja')->name('kawankerja.')->group(function () {
+        Route::post('/chat', [\App\Http\Controllers\KawanKerjaChatController::class, 'chat'])->name('chat');
+        Route::get('/history', [\App\Http\Controllers\KawanKerjaChatController::class, 'history'])->name('history');
+        Route::post('/clear', [\App\Http\Controllers\KawanKerjaChatController::class, 'clear'])->name('clear');
+    });
     
     // CV Builder routes (Only for regular users)
     Route::prefix('cv')->group(function () {
