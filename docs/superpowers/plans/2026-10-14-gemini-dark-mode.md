@@ -113,22 +113,7 @@
 **Files:**
 - Verify: Full visual check on `/dashboard`, `/tracker`, `/summary`, and `/extension`
 
-- [ ] **Step 1: Verify all key views in dark mode**
-Visit each core route in browser:
-- `http://127.0.0.1:8000/dashboard`
-- `http://127.0.0.1:8000/tracker`
-- `http://127.0.0.1:8000/summary`
-- `http://127.0.0.1:8000/extension`
-
-- [ ] **Step 2: Verify zero FOUC on page refresh**
-Hard refresh with Cmd+Shift+R while in dark mode. Confirm no white flash occurs.
-
-- [ ] **Step 3: Run production build check**
-Run: `npm run build`
-Expected: Production build compiles cleanly with all CSS assets.
-
-- [ ] **Step 4: Commit final polish if needed**
-```bash
-git add -A
-git commit -m "chore: finalize gemini dark mode integration"
-```
+- [x] **Step 1: Verify all key views in dark mode**
+- [x] **Step 2: Verify zero FOUC on page refresh**
+- [x] **Step 3: Run production build check**
+- [x] **Step 4: Commit final polish if needed**
