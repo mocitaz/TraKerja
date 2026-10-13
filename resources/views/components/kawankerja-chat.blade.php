@@ -228,13 +228,36 @@
                 if (!raw) return '';
                 let text = raw.trim();
 
-                // Strip dangling markdown asterisks across line breaks
+                // Strip dangling markdown asterisks on their own lines
                 text = text.replace(/^\s*\*+\s*$/gm, '');
 
+                // Escape HTML
                 let esc = text
                     .replace(/&/g, '&amp;')
                     .replace(/</g, '&lt;')
                     .replace(/>/g, '&gt;');
+
+                // Code blocks: ``` ... ```
+                esc = esc.replace(/```(?:[a-zA-Z0-9_-]+)?\n?([\s\S]*?)```/g, function(match, code) {
+                    return '<pre class="kawankerja-code"><code>' + code.trim() + '</code></pre>';
+                });
+
+                // Inline code: `code`
+                esc = esc.replace(/`([^`\n]+)`/g, '<code class="kawankerja-inline-code">$1</code>');
+
+                // Blockquotes: consecutive lines starting with &gt;
+                esc = esc.replace(/(?:^|\n)((?:[ \t]*&gt;[^\n]*(?:\n|$))+)/g, function(match, bqBlock) {
+                    const rawLines = bqBlock.split('\n');
+                    const lines = rawLines.filter((l, idx) => !(idx === rawLines.length - 1 && l === ''));
+                    const cleanLines = lines.map(line => line.replace(/^[ \t]*&gt;[ \t]?/, ''));
+                    const content = cleanLines.join('\n').trim();
+                    if (!content) return '';
+                    return '\n<blockquote class="kawankerja-quote">' + content + '</blockquote>\n';
+                });
+
+                // Headers: ### Title or ## Title
+                esc = esc.replace(/(?:^|\n)###[ \t]+([^\n]+)/g, '<h4 class="kawankerja-h4">$1</h4>');
+                esc = esc.replace(/(?:^|\n)##[ \t]+([^\n]+)/g, '<h3 class="kawankerja-h3">$1</h3>');
 
                 // Bold: **content**
                 esc = esc.replace(/\*\*(.+?)\*\*/gs, '<strong>$1</strong>');
@@ -242,25 +265,21 @@
                 // Italic: *content*
                 esc = esc.replace(/(?<!\*)\*([^\*\n]+?)\*(?!\*)/g, '<em>$1</em>');
 
-                // Clean blockquotes: lines starting with &gt;
-                esc = esc.replace(/(?:^|\n)&gt;\s*([\s\S]*?)(?=(?:\n\s*\n|\n[^\s&]|$))/g, function(match, quote) {
-                    let clean = quote.trim();
-                    clean = clean.replace(/^[\*_]+\s*/, '').replace(/\s*[\*_]+$/, '');
-                    return '<blockquote class="kawankerja-quote">' + clean + '</blockquote>';
-                });
+                // Bullet points: - or • or *
+                esc = esc.replace(/(?:^|\n)[-•*][ \t]+([^\n]+)/g, '<div class="kawankerja-bullet"><span class="kawankerja-bullet-dot">•</span><span class="kawankerja-bullet-text">$1</span></div>');
 
-                // Bullet points (• or -)
-                esc = esc.replace(/(?:^|\n)[-•]\s+(.*?)(?=\n|$)/g, '<div class="kawankerja-bullet"><span class="kawankerja-bullet-dot">•</span><span class="kawankerja-bullet-text">$1</span></div>');
-
-                // Cleanup whitespace around blockquotes
-                esc = esc.replace(/<\/blockquote>\s*<br\s*\/?>/gi, '</blockquote>');
-                esc = esc.replace(/<br\s*\/?>\s*<blockquote/gi, '<blockquote');
+                // Numbered lists: 1. Item
+                esc = esc.replace(/(?:^|\n)(\d+)\.[ \t]+([^\n]+)/g, '<div class="kawankerja-bullet"><span class="kawankerja-bullet-num">$1.</span><span class="kawankerja-bullet-text">$2</span></div>');
 
                 // Paragraph spacing
                 esc = esc.replace(/\n{2,}/g, '<div class="kawankerja-gap"></div>');
                 esc = esc.replace(/\n/g, '<br>');
 
-                return esc;
+                // Clean up excess <br> around block containers
+                esc = esc.replace(/<br>\s*(<(?:blockquote|div class="kawankerja-(?:gap|bullet)|h[34]|pre))/g, '$1');
+                esc = esc.replace(/(<\/(?:blockquote|h[34]|pre)>|<div class="kawankerja-gap"><\/div>)\s*<br>/g, '$1');
+
+                return esc.trim();
             }
         };
     }
