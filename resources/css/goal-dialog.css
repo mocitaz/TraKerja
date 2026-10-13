@@ -50,88 +50,227 @@
 
 /* ==========================================================================
    Gemini Dark Mode Styles for Career Goal Dialog
-   Benchmarked against Dashboard Next Move Design System
+   Deep Obsidian #131314 Canvas, #1e1f20 Surface, #282a2c Elevated
    ========================================================================== */
-.dark .goal-dialog {
-    background: #1e1f20;
-    color: #f0f4f9;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+
+.dark .goal-dialog-overlay {
+    background: rgba(0, 0, 0, 0.75) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
 }
+
+.dark .goal-dialog {
+    background: #1e1f20 !important;
+    color: #f0f4f9 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark .goal-dialog-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    padding-bottom: 20px;
+}
+
 .dark .goal-dialog-header h2 {
     color: #f0f4f9;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
+
 .dark .goal-dialog-header p {
     color: #94a3b8;
+    font-size: 13px;
+    margin-top: 4px;
 }
+
 .dark .goal-dialog-close {
     background: #282a2c;
     color: #94a3b8;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.2s ease;
 }
+
 .dark .goal-dialog-close:hover {
     background: #333538;
     color: #f0f4f9;
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: rotate(90deg);
 }
+
 .dark .goal-period-label {
-    color: #cbd5e1;
+    color: #f0f4f9;
+    font-weight: 600;
 }
+
 .dark .goal-period-label span:last-child {
+    background: #282a2c;
     color: #94a3b8;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
+
 .dark .goal-period-switch {
     background: #18191a;
     border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 4px;
 }
+
 .dark .goal-period-switch button {
     color: #94a3b8;
+    font-weight: 500;
+    border-radius: 10px;
 }
+
 .dark .goal-period-switch button:hover {
-    background: rgba(255, 255, 255, 0.06);
+    color: #f0f4f9;
+    background: rgba(255, 255, 255, 0.05);
 }
+
 .dark .goal-period-switch button.is-selected {
-    background: #3b2d54;
-    color: #d8b4fe;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background: #3b2d54 !important;
+    color: #e9d5ff !important;
+    font-weight: 600 !important;
+    border: 1px solid rgba(192, 132, 252, 0.35) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
 }
+
 .dark .goal-period-dates {
     color: #cbd5e1;
+    font-size: 12px;
 }
+
 .dark .goal-period-dates span {
+    background: rgba(255, 255, 255, 0.06);
     color: #94a3b8;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 10.5px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
+
+/* Applications Target Card */
 .dark .goal-target-applications {
-    background: linear-gradient(135deg, #221c2e 0%, #2a2238 100%);
-    border: 1px solid rgba(168, 85, 247, 0.22);
+    background: linear-gradient(145deg, rgba(168, 85, 247, 0.12) 0%, rgba(30, 31, 32, 0.95) 100%) !important;
+    border: 1px solid rgba(168, 85, 247, 0.28) !important;
+    box-shadow: 0 4px 18px rgba(168, 85, 247, 0.07) !important;
+    border-radius: 18px;
 }
+
+/* Follow-ups Target Card */
 .dark .goal-target-followups {
-    background: linear-gradient(135deg, #2b1f1a 0%, #352520 100%);
-    border: 1px solid rgba(249, 115, 22, 0.22);
+    background: linear-gradient(145deg, rgba(45, 212, 191, 0.1) 0%, rgba(30, 31, 32, 0.95) 100%) !important;
+    border: 1px solid rgba(45, 212, 191, 0.25) !important;
+    box-shadow: 0 4px 18px rgba(45, 212, 191, 0.07) !important;
+    border-radius: 18px;
 }
+
 .dark .goal-target-field label {
-    color: #f0f4f9;
+    color: #f0f4f9 !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.2px;
 }
+
 .dark .goal-target-field > p {
-    color: #cbd5e1;
+    color: #94a3b8 !important;
+    font-size: 11px !important;
+    margin-top: 4px !important;
+    line-height: 1.5 !important;
 }
+
 .dark .goal-target-input input {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: #f0f4f9;
+    background: #18191a !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 12px !important;
+    color: #f0f4f9 !important;
+    font-size: 26px !important;
+    font-weight: 700 !important;
+    padding: 8px 14px !important;
+    height: 52px !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35) !important;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s !important;
 }
+
+.dark .goal-target-applications .goal-target-input input:focus {
+    border-color: #c084fc !important;
+    box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.25), inset 0 2px 4px rgba(0, 0, 0, 0.35) !important;
+    outline: none !important;
+    background: #1f1d24 !important;
+}
+
+.dark .goal-target-followups .goal-target-input input:focus {
+    border-color: #2dd4bf !important;
+    box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.25), inset 0 2px 4px rgba(0, 0, 0, 0.35) !important;
+    outline: none !important;
+    background: #1b2221 !important;
+}
+
 .dark .goal-target-input span {
-    color: #94a3b8;
+    color: #94a3b8 !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
 }
+
 .dark .goal-dialog-hint {
-    color: #94a3b8;
+    color: #94a3b8 !important;
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 12px !important;
+    padding: 12px 14px !important;
+    font-size: 12px !important;
+    line-height: 1.6 !important;
+    margin-top: 20px !important;
 }
+
+.dark .goal-dialog .goal-field-error {
+    color: #f87171 !important;
+    font-size: 11.5px !important;
+}
+
 .dark .goal-dialog-footer {
-    border-top-color: rgba(255, 255, 255, 0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding-top: 20px !important;
+    gap: 12px !important;
 }
+
 .dark .goal-dialog-cancel {
-    background: #282a2c;
-    color: #f0f4f9;
+    background: #282a2c !important;
+    color: #cbd5e1 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
 }
+
 .dark .goal-dialog-cancel:hover {
-    background: #333538;
+    background: #333538 !important;
+    color: #f0f4f9 !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
 }
+
+.dark .goal-dialog-save {
+    background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35) !important;
+    transition: all 0.2s ease !important;
+}
+
+.dark .goal-dialog-save:hover {
+    background: linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%) !important;
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5) !important;
+    transform: translateY(-1px);
+}
+
+.dark .goal-dialog-save:active {
+    transform: translateY(0);
+}
+
 
