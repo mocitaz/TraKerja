@@ -133,4 +133,21 @@ class KawanKerjaServiceTest extends TestCase
 
         $this->assertStringContainsString('[star_scorecard]', $prompt);
     }
+
+    public function test_it_returns_unavailable_message_when_models_fail_or_quota_runs_out(): void
+    {
+        config(['services.gemini.key' => 'fake-test-key']);
+
+        Http::fake([
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent*' => Http::response(['error' => 'quota exceeded'], 429),
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent*' => Http::response(['error' => 'quota exceeded'], 429),
+        ]);
+
+        $user = User::factory()->create();
+        $service = new KawanKerjaService();
+        $result = $service->chat('Halo', $user);
+
+        $this->assertFalse($result['success']);
+        $this->assertStringContainsString('sedang tidak tersedia', $result['reply']);
+    }
 }

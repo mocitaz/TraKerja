@@ -15,6 +15,8 @@ class KawanKerjaService
     protected string $primaryModel;
     protected string $fallbackModel;
 
+    public const UNAVAILABLE_MESSAGE = 'Maaf, layanan HireMate sedang tidak tersedia saat ini.';
+
     public function __construct()
     {
         $this->apiKey = config('services.gemini.key', env('GEMINI_API_KEY'));
@@ -30,7 +32,7 @@ class KawanKerjaService
         if (empty($this->apiKey)) {
             return [
                 'success' => false,
-                'reply' => 'Maaf, layanan KawanKerja sedang belum terkonfigurasi API Key Gemini. Hubungi administrator.',
+                'reply' => self::UNAVAILABLE_MESSAGE,
             ];
         }
 
@@ -80,7 +82,7 @@ class KawanKerjaService
         // 3. Fallback generic error message
         return [
             'success' => false,
-            'reply' => 'Maaf, KawanKerja sedang ramai atau mengalami kendala koneksi ke server AI. Silakan coba tanyakan kembali sebentar ya!',
+            'reply' => self::UNAVAILABLE_MESSAGE,
         ];
     }
 
@@ -280,11 +282,10 @@ PROMPT;
     public function chatStream(string $message, User $user, array $history, callable $onChunk): array
     {
         if (empty($this->apiKey)) {
-            $fallback = 'Halo! Saya HireMate, AI Career Coach Anda. Saat ini API key Gemini belum terkonfigurasi di server.';
-            $onChunk($fallback);
+            $onChunk(self::UNAVAILABLE_MESSAGE);
             return [
                 'success' => false,
-                'reply' => $fallback,
+                'reply' => self::UNAVAILABLE_MESSAGE,
             ];
         }
 
@@ -331,11 +332,10 @@ PROMPT;
             return ['success' => true, 'reply' => $response];
         }
 
-        $err = 'Maaf, HireMate sedang ramai atau mengalami kendala koneksi ke server AI. Silakan coba tanyakan kembali sebentar ya!';
-        $onChunk($err);
+        $onChunk(self::UNAVAILABLE_MESSAGE);
         return [
             'success' => false,
-            'reply' => $err,
+            'reply' => self::UNAVAILABLE_MESSAGE,
         ];
     }
 

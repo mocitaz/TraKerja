@@ -267,7 +267,7 @@
                             body: JSON.stringify({ message: text })
                         });
                         const data = await res.json();
-                        const replyText = (data.success && data.reply) ? data.reply : (data.reply || 'Sorry, an error occurred while contacting the server.');
+                        const replyText = (data.success && data.reply) ? data.reply : (data.reply || 'Maaf, layanan HireMate sedang tidak tersedia saat ini.');
                         if (!assistantMsg) {
                             assistantMsg = { role: 'model', content: replyText };
                             this.messages.push(assistantMsg);
@@ -275,7 +275,7 @@
                             assistantMsg.content = replyText;
                         }
                     } catch (e) {
-                        const errMsg = 'Failed to connect to HireMate. Please check your internet connection.';
+                        const errMsg = 'Maaf, layanan HireMate sedang tidak tersedia saat ini.';
                         if (!assistantMsg) {
                             assistantMsg = { role: 'model', content: errMsg };
                             this.messages.push(assistantMsg);
