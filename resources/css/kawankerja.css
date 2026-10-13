@@ -16,11 +16,11 @@
     align-items: center;
     gap: 10px;
     height: 48px;
-    padding: 6px 16px 6px 6px;
+    padding: 5px 16px 5px 6px;
     background: #ffffff;
-    border: 1px solid #e4e4e7;
+    border: 1px solid #eae5f2;
     border-radius: 9999px;
-    box-shadow: 0 4px 18px -2px rgba(24, 24, 27, 0.08), 0 2px 4px -1px rgba(24, 24, 27, 0.04);
+    box-shadow: 0 4px 18px -2px rgba(67, 50, 90, 0.10), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     color: #18181b;
     font-size: 13px;
     cursor: pointer;
@@ -30,62 +30,73 @@
 
 .kawankerja-launcher:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px -4px rgba(24, 24, 27, 0.12);
-    border-color: #d4d4d8;
+    box-shadow: 0 8px 24px -4px rgba(100, 76, 135, 0.18), 0 3px 6px -1px rgba(0, 0, 0, 0.04);
+    border-color: #cfc5e4;
+}
+
+.kawankerja-launcher:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 12px -2px rgba(100, 76, 135, 0.14);
+}
+
+.kawankerja-launcher-avatar-wrap {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
 }
 
 .kawankerja-launcher-avatar {
-    position: relative;
     width: 36px;
     height: 36px;
     border-radius: 9999px;
     overflow: hidden;
-    background: #f4f4f5;
+    background: #fdf2e9;
     flex-shrink: 0;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 
 .kawankerja-launcher-avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 .kawankerja-online-dot {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 9px;
-    height: 9px;
+    bottom: 0px;
+    right: 0px;
+    width: 10px;
+    height: 10px;
     border-radius: 9999px;
     background: #10b981;
     border: 2px solid #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    z-index: 2;
 }
 
 .kawankerja-launcher-label {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    line-height: 1.2;
+    justify-content: center;
+    line-height: 1.25;
 }
 
-/* Launcher Label */
 .kawankerja-launcher-label strong {
-    font-size: 13px;
+    font-size: 13.5px;
     font-weight: 700;
-    color: #18181b;
+    color: #1c1524;
+    letter-spacing: -0.01em;
 }
 
 .kawankerja-launcher-label small {
     font-size: 11px;
     font-weight: 600;
     color: #644c87;
-}
-
-/* Launcher Hover */
-.kawankerja-launcher:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px -4px rgba(100, 76, 135, 0.15);
-    border-color: #cfc5e4;
+    letter-spacing: 0.01em;
+    margin-top: 1px;
 }
 
 /* ==========================================================================
@@ -124,31 +135,41 @@
     gap: 10px;
 }
 
-.kawankerja-header-avatar {
+.kawankerja-header-avatar-wrap {
     position: relative;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+}
+
+.kawankerja-header-avatar {
     width: 34px;
     height: 34px;
     border-radius: 9999px;
     overflow: hidden;
-    background: #e5e0f5;
+    background: #fdf2e9;
     flex-shrink: 0;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 
 .kawankerja-header-avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 .kawankerja-status-indicator {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 8px;
-    height: 8px;
+    bottom: 0px;
+    right: 0px;
+    width: 9px;
+    height: 9px;
     border-radius: 9999px;
     background: #10b981;
     border: 2px solid #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    z-index: 2;
 }
 
 .kawankerja-header-text h3 {

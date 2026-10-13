@@ -6,8 +6,10 @@
             @click="open = !open; if(open) scrollToBottom()"
             aria-label="Buka KawanKerja AI Assistant"
             :aria-expanded="open.toString()">
-        <div class="kawankerja-launcher-avatar">
-            <img src="{{ asset('images/kawankerja.png') }}" alt="KawanKerja Avatar">
+        <div class="kawankerja-launcher-avatar-wrap">
+            <div class="kawankerja-launcher-avatar">
+                <img src="{{ asset('images/kawankerja.png') }}" alt="KawanKerja Avatar">
+            </div>
             <span class="kawankerja-online-dot"></span>
         </div>
         <div class="kawankerja-launcher-label">
@@ -30,8 +32,10 @@
         <!-- Header -->
         <header class="kawankerja-header">
             <div class="kawankerja-header-info">
-                <div class="kawankerja-header-avatar">
-                    <img src="{{ asset('images/kawankerja.png') }}" alt="KawanKerja Avatar">
+                <div class="kawankerja-header-avatar-wrap">
+                    <div class="kawankerja-header-avatar">
+                        <img src="{{ asset('images/kawankerja.png') }}" alt="KawanKerja Avatar">
+                    </div>
                     <span class="kawankerja-status-indicator"></span>
                 </div>
                 <div class="kawankerja-header-text">
