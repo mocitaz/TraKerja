@@ -267,4 +267,141 @@ PROMPT;
 
         return null;
     }
+
+    /**
+     * Stream a chat response from Gemini using SSE (Server-Sent Events).
+     *
+     * @param string $message
+     * @param User $user
+     * @param array $history
+     * @param callable $onChunk Called with each string chunk as it arrives: fn(string $chunk) => void
+     * @return array ['success' => bool, 'reply' => string]
+     */
+    public function chatStream(string $message, User $user, array $history, callable $onChunk): array
+    {
+        if (empty($this->apiKey)) {
+            $fallback = 'Halo! Saya HireMate, AI Career Coach Anda. Saat ini API key Gemini belum terkonfigurasi di server.';
+            $onChunk($fallback);
+            return [
+                'success' => false,
+                'reply' => $fallback,
+            ];
+        }
+
+        $context = $this->buildUserContext($user);
+        $systemPrompt = $this->buildSystemPrompt($context);
+
+        // Format conversation history for Gemini API
+        $contents = [];
+        foreach ($history as $item) {
+            if (!empty($item['role']) && !empty($item['content'])) {
+                $contents[] = [
+                    'role' => $item['role'] === 'user' ? 'user' : 'model',
+                    'parts' => [['text' => $item['content']]],
+                ];
+            }
+        }
+
+        // Append current message
+        $contents[] = [
+            'role' => 'user',
+            'parts' => [['text' => $message]],
+        ];
+
+        $payload = [
+            'system_instruction' => [
+                'parts' => [['text' => $systemPrompt]],
+            ],
+            'contents' => $contents,
+            'generationConfig' => [
+                'temperature' => 0.4,
+                'maxOutputTokens' => 1000,
+            ],
+        ];
+
+        // 1. Try Primary Model
+        $response = $this->executeStreamRequest($this->primaryModel, $payload, $onChunk);
+        if ($response !== null) {
+            return ['success' => true, 'reply' => $response];
+        }
+
+        // 2. Try Fallback Model
+        $response = $this->executeStreamRequest($this->fallbackModel, $payload, $onChunk);
+        if ($response !== null) {
+            return ['success' => true, 'reply' => $response];
+        }
+
+        $err = 'Maaf, HireMate sedang ramai atau mengalami kendala koneksi ke server AI. Silakan coba tanyakan kembali sebentar ya!';
+        $onChunk($err);
+        return [
+            'success' => false,
+            'reply' => $err,
+        ];
+    }
+
+    protected function executeStreamRequest(string $model, array $payload, callable $onChunk): ?string
+    {
+        try {
+            $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:streamGenerateContent?alt=sse&key={$this->apiKey}";
+            
+            $accumulated = '';
+            $response = Http::withOptions(['stream' => true])
+                ->timeout(25)
+                ->post($url, $payload);
+
+            if (!$response->successful()) {
+                Log::warning("Gemini stream model {$model} error status {$response->status()}: " . $response->body());
+                return null;
+            }
+
+            $body = $response->toPsrResponse()->getBody();
+            $buffer = '';
+
+            while (!$body->eof()) {
+                $chunkData = $body->read(1024);
+                if ($chunkData === '') {
+                    break;
+                }
+                $buffer .= $chunkData;
+
+                while (($newlinePos = strpos($buffer, "\n")) !== false) {
+                    $line = trim(substr($buffer, 0, $newlinePos));
+                    $buffer = substr($buffer, $newlinePos + 1);
+
+                    if (str_starts_with($line, 'data: ')) {
+                        $jsonStr = substr($line, 6);
+                        if ($jsonStr === '[DONE]') {
+                            break;
+                        }
+                        $decoded = json_decode($jsonStr, true);
+                        if (isset($decoded['candidates'][0]['content']['parts'][0]['text'])) {
+                            $chunkText = $decoded['candidates'][0]['content']['parts'][0]['text'];
+                            if ($chunkText !== '') {
+                                $accumulated .= $chunkText;
+                                $onChunk($chunkText);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Fallback parsing if response body was not line-buffered SSE (e.g. In mocks)
+            if ($accumulated === '') {
+                $data = $response->json();
+                $parts = $data['candidates'][0]['content']['parts'] ?? [];
+                foreach ($parts as $part) {
+                    if (isset($part['text']) && $part['text'] !== '') {
+                        $accumulated .= $part['text'];
+                        $onChunk($part['text']);
+                    }
+                }
+            }
+
+            $clean = trim($accumulated);
+            return !empty($clean) ? $clean : null;
+        } catch (Throwable $e) {
+            Log::warning("Gemini stream model {$model} exception: " . $e->getMessage());
+            return null;
+        }
+    }
 }

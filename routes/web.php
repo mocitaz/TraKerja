@@ -169,6 +169,7 @@ Route::middleware('auth')->group(function () {
     // KawanKerja AI Assistant routes
     Route::prefix('kawankerja')->name('kawankerja.')->group(function () {
         Route::post('/chat', [\App\Http\Controllers\KawanKerjaChatController::class, 'chat'])->name('chat');
+        Route::post('/stream', [\App\Http\Controllers\KawanKerjaChatController::class, 'stream'])->name('stream');
         Route::get('/history', [\App\Http\Controllers\KawanKerjaChatController::class, 'history'])->name('history');
         Route::post('/clear', [\App\Http\Controllers\KawanKerjaChatController::class, 'clear'])->name('clear');
     });

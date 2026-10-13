@@ -97,7 +97,7 @@
                     </template>
                     <div :class="msg.role === 'user' ? 'kawankerja-bubble kawankerja-bubble--user' : 'kawankerja-bubble kawankerja-bubble--bot'">
                         <div class="kawankerja-bubble-content" x-html="formatText(msg.content)"></div>
-                        <div class="kawankerja-bubble-footer" x-show="msg.role !== 'user'">
+                        <div class="kawankerja-bubble-footer" x-show="msg.role !== 'user' && msg.content && msg.content.trim().length > 0">
                             <button type="button"
                                     class="kawankerja-copy-btn"
                                     @click="copyMessage(msg.content, $el)"
@@ -154,6 +154,7 @@
             loading: false,
             input: '',
             messages: [],
+            streamUrl: '{{ route('kawankerja.stream') }}',
             chatUrl: '{{ route('kawankerja.chat') }}',
             historyUrl: '{{ route('kawankerja.history') }}',
             clearUrl: '{{ route('kawankerja.clear') }}',
@@ -198,28 +199,94 @@
                 this.loading = true;
                 this.scrollToBottom();
 
+                let assistantMsg = null;
+                let streamedSuccessfully = false;
+
                 try {
-                    const res = await fetch(this.chatUrl, {
+                    const response = await fetch(this.streamUrl, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': this.csrfToken,
-                            'Accept': 'application/json',
+                            'Accept': 'text/event-stream',
                         },
                         body: JSON.stringify({ message: text })
                     });
-                    const data = await res.json();
-                    if (data.success && data.reply) {
-                        this.messages.push({ role: 'model', content: data.reply });
-                    } else {
-                        this.messages.push({ role: 'model', content: data.reply || 'Sorry, an error occurred while contacting the server.' });
+
+                    if (response.ok && response.body && response.headers.get('content-type')?.includes('text/event-stream')) {
+                        const reader = response.body.getReader();
+                        const decoder = new TextDecoder('utf-8');
+                        let buffer = '';
+
+                        while (true) {
+                            const { done, value } = await reader.read();
+                            if (done) break;
+
+                            buffer += decoder.decode(value, { stream: true });
+                            const lines = buffer.split('\n');
+                            buffer = lines.pop();
+
+                            for (const line of lines) {
+                                const trimmed = line.trim();
+                                if (!trimmed || !trimmed.startsWith('data: ')) continue;
+                                const dataStr = trimmed.substring(6);
+                                if (dataStr === '[DONE]') {
+                                    streamedSuccessfully = true;
+                                    break;
+                                }
+                                try {
+                                    const parsed = JSON.parse(dataStr);
+                                    if (parsed.chunk) {
+                                        if (!assistantMsg) {
+                                            assistantMsg = { role: 'model', content: '' };
+                                            this.messages.push(assistantMsg);
+                                            this.loading = false;
+                                        }
+                                        assistantMsg.content += parsed.chunk;
+                                        streamedSuccessfully = true;
+                                        this.scrollToBottom();
+                                    }
+                                } catch (_) {}
+                            }
+                        }
                     }
                 } catch (e) {
-                    this.messages.push({ role: 'model', content: 'Failed to connect to HireMate. Please check your internet connection.' });
-                } finally {
-                    this.loading = false;
-                    this.scrollToBottom();
+                    console.warn('HireMate stream encountered an issue, checking fallback...', e);
                 }
+
+                // If streaming produced no content or failed, fallback to synchronous chatUrl
+                if (!streamedSuccessfully || !assistantMsg || !assistantMsg.content.trim()) {
+                    try {
+                        const res = await fetch(this.chatUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': this.csrfToken,
+                                'Accept': 'application/json',
+                            },
+                            body: JSON.stringify({ message: text })
+                        });
+                        const data = await res.json();
+                        const replyText = (data.success && data.reply) ? data.reply : (data.reply || 'Sorry, an error occurred while contacting the server.');
+                        if (!assistantMsg) {
+                            assistantMsg = { role: 'model', content: replyText };
+                            this.messages.push(assistantMsg);
+                        } else {
+                            assistantMsg.content = replyText;
+                        }
+                    } catch (e) {
+                        const errMsg = 'Failed to connect to HireMate. Please check your internet connection.';
+                        if (!assistantMsg) {
+                            assistantMsg = { role: 'model', content: errMsg };
+                            this.messages.push(assistantMsg);
+                        } else {
+                            assistantMsg.content = errMsg;
+                        }
+                    }
+                }
+
+                this.loading = false;
+                this.scrollToBottom();
             },
 
             async clearChat() {
