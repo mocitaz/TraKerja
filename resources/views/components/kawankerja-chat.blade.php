@@ -4,16 +4,16 @@
     <button type="button"
             class="kawankerja-launcher"
             @click="open = !open; if(open) scrollToBottom()"
-            aria-label="Buka KawanKerja AI Assistant"
+            aria-label="Open HireMate AI Assistant"
             :aria-expanded="open.toString()">
         <div class="kawankerja-launcher-avatar-wrap">
             <div class="kawankerja-launcher-avatar">
-                <img src="{{ asset('images/kawankerja.png') }}" alt="KawanKerja Avatar">
+                <img src="{{ asset('images/kawankerja.png') }}" alt="HireMate Avatar">
             </div>
             <span class="kawankerja-online-dot"></span>
         </div>
         <div class="kawankerja-launcher-label">
-            <strong>KawanKerja</strong>
+            <strong>HireMate</strong>
             <small>AI Career Coach</small>
         </div>
     </button>
@@ -34,26 +34,26 @@
             <div class="kawankerja-header-info">
                 <div class="kawankerja-header-avatar-wrap">
                     <div class="kawankerja-header-avatar">
-                        <img src="{{ asset('images/kawankerja.png') }}" alt="KawanKerja Avatar">
+                        <img src="{{ asset('images/kawankerja.png') }}" alt="HireMate Avatar">
                     </div>
                     <span class="kawankerja-status-indicator"></span>
                 </div>
                 <div class="kawankerja-header-text">
-                    <h3>KawanKerja</h3>
-                    <p>Asisten Karier TraKerja</p>
+                    <h3>HireMate</h3>
+                    <p>TraKerja Career Assistant</p>
                 </div>
             </div>
             <div class="kawankerja-header-actions">
                 <button type="button"
                         class="kawankerja-header-btn"
                         @click="clearChat()"
-                        title="Hapus percakapan">
+                        title="Clear chat history">
                     <i class="ph ph-trash" aria-hidden="true"></i>
                 </button>
                 <button type="button"
                         class="kawankerja-header-btn"
                         @click="open = false"
-                        title="Tutup">
+                        title="Close">
                     <i class="ph ph-x" aria-hidden="true"></i>
                 </button>
             </div>
@@ -63,25 +63,25 @@
         <div class="kawankerja-messages" x-ref="msgContainer">
             <div class="kawankerja-welcome" x-show="messages.length === 0">
                 <div class="kawankerja-welcome-intro">
-                    <h4 class="kawankerja-welcome-heading">Halo, {{ auth()->user()->name }}</h4>
-                    <p class="kawankerja-welcome-sub">Pilih topik persiapan karier atau ketik pertanyaan langsung di bawah.</p>
+                    <h4 class="kawankerja-welcome-heading">Hi, {{ auth()->user()->name }}</h4>
+                    <p class="kawankerja-welcome-sub">Choose a career prep topic below or ask anything directly.</p>
                 </div>
 
                 <div class="kawankerja-chips">
-                    <button type="button" class="kawankerja-chip" @click="input = 'Bantu simulasi interview untuk lamaran terbaru saya'; send()">
-                        <span>Simulasi interview lamaran terbaru</span>
+                    <button type="button" class="kawankerja-chip" @click="input = 'Help me practice an interview for my latest application'; send()">
+                        <span>Practice latest interview</span>
                         <i class="ph ph-arrow-right" aria-hidden="true"></i>
                     </button>
-                    <button type="button" class="kawankerja-chip" @click="input = 'Bagaimana status pipeline lamaran saya saat ini dan apa langkah terbaik berikutnya?'; send()">
-                        <span>Cek status pipeline lamaran</span>
+                    <button type="button" class="kawankerja-chip" @click="input = 'What is the status of my application pipeline and what are the best next steps?'; send()">
+                        <span>Check application pipeline</span>
                         <i class="ph ph-arrow-right" aria-hidden="true"></i>
                     </button>
-                    <button type="button" class="kawankerja-chip" @click="input = 'Fitur apa saja di TraKerja yang bisa bantu persiapan kerja saya lebih cepat?'; send()">
-                        <span>Panduan alur dan fitur TraKerja</span>
+                    <button type="button" class="kawankerja-chip" @click="input = 'What TraKerja features can help accelerate my job search?'; send()">
+                        <span>TraKerja workflow & features</span>
                         <i class="ph ph-arrow-right" aria-hidden="true"></i>
                     </button>
-                    <button type="button" class="kawankerja-chip" @click="input = 'Tolong buatkan draf pesan follow-up sopan ke HR setelah interview'; send()">
-                        <span>Draf pesan follow-up ke HR</span>
+                    <button type="button" class="kawankerja-chip" @click="input = 'Please draft a polite post-interview follow-up message to HR'; send()">
+                        <span>Draft follow-up message to HR</span>
                         <i class="ph ph-arrow-right" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -92,7 +92,7 @@
                 <div :class="msg.role === 'user' ? 'kawankerja-row kawankerja-row--user' : 'kawankerja-row kawankerja-row--bot'">
                     <template x-if="msg.role !== 'user'">
                         <div class="kawankerja-row-avatar">
-                            <img src="{{ asset('images/kawankerja.png') }}" alt="KawanKerja">
+                            <img src="{{ asset('images/kawankerja.png') }}" alt="HireMate">
                         </div>
                     </template>
                     <div :class="msg.role === 'user' ? 'kawankerja-bubble kawankerja-bubble--user' : 'kawankerja-bubble kawankerja-bubble--bot'">
@@ -104,7 +104,7 @@
             <!-- Loading Indicator -->
             <div class="kawankerja-row kawankerja-row--bot" x-show="loading">
                 <div class="kawankerja-row-avatar">
-                    <img src="{{ asset('images/kawankerja.png') }}" alt="KawanKerja">
+                    <img src="{{ asset('images/kawankerja.png') }}" alt="HireMate">
                 </div>
                 <div class="kawankerja-bubble kawankerja-bubble--bot kawankerja-bubble--typing">
                     <div class="kawankerja-typing-dots">
@@ -121,7 +121,7 @@
             <div class="kawankerja-input-row">
                 <textarea class="kawankerja-textarea"
                           rows="1"
-                          placeholder="Ketik pesan untuk KawanKerja..."
+                          placeholder="Ask HireMate anything..."
                           x-model="input"
                           @keydown.enter="if (!$event.shiftKey) { $event.preventDefault(); send(); }"
                           :disabled="loading"></textarea>
@@ -129,11 +129,11 @@
                         class="kawankerja-send-btn"
                         @click="send()"
                         :disabled="!input.trim() || loading"
-                        aria-label="Kirim pesan">
+                        aria-label="Send message">
                     <i class="ph-fill ph-paper-plane-tilt" aria-hidden="true"></i>
                 </button>
             </div>
-            <div class="kawankerja-input-hint">Enter untuk kirim · Shift+Enter baris baru</div>
+            <div class="kawankerja-input-hint">Enter to send · Shift+Enter for new line</div>
         </footer>
     </div>
 </div>
@@ -151,13 +151,15 @@
             csrfToken: '{{ csrf_token() }}',
 
             async init() {
-                window.addEventListener('open-kawankerja', (e) => {
+                const openHandler = (e) => {
                     this.open = true;
                     if (e.detail?.prompt) {
                         this.input = e.detail.prompt;
                         this.$nextTick(() => this.send());
                     }
-                });
+                };
+                window.addEventListener('open-hiremate', openHandler);
+                window.addEventListener('open-kawankerja', openHandler);
 
                 try {
                     const res = await fetch(this.historyUrl, {
@@ -193,10 +195,10 @@
                     if (data.success && data.reply) {
                         this.messages.push({ role: 'model', content: data.reply });
                     } else {
-                        this.messages.push({ role: 'model', content: data.reply || 'Maaf, terjadi kesalahan saat menghubungi server.' });
+                        this.messages.push({ role: 'model', content: data.reply || 'Sorry, an error occurred while contacting the server.' });
                     }
                 } catch (e) {
-                    this.messages.push({ role: 'model', content: 'Gagal terhubung ke KawanKerja. Periksa koneksi internet Anda.' });
+                    this.messages.push({ role: 'model', content: 'Failed to connect to HireMate. Please check your internet connection.' });
                 } finally {
                     this.loading = false;
                     this.scrollToBottom();
@@ -204,7 +206,7 @@
             },
 
             async clearChat() {
-                if (!confirm('Hapus riwayat obrolan dengan KawanKerja?')) return;
+                if (!confirm('Clear chat history with HireMate?')) return;
                 try {
                     await fetch(this.clearUrl, {
                         method: 'POST',
