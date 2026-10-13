@@ -73,14 +73,34 @@
          },
          formatText(raw) {
              if (!raw) return '';
-             let esc = raw
+             let text = raw.trim();
+
+             // Strip dangling markdown asterisks across line breaks (e.g. **\n> or > ... \n*)
+             text = text.replace(/^\s*\*+\s*$/gm, '');
+
+             let esc = text
                  .replace(/&/g, '&amp;')
                  .replace(/</g, '&lt;')
                  .replace(/>/g, '&gt;');
-             esc = esc.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-             esc = esc.replace(/\*([^\*]+)\*/g, '<em>$1</em>');
-             esc = esc.replace(/\n\n/g, '<br><br>');
+
+             // Bold: **content**
+             esc = esc.replace(/\*\*(.+?)\*\*/gs, '<strong>$1</strong>');
+
+             // Italic: *content*
+             esc = esc.replace(/(?<!\*)\*([^\*\n]+?)\*(?!\*)/g, '<em>$1</em>');
+
+             // Blockquotes: &gt; quote text
+             esc = esc.replace(/(?:^|\n)&gt;\s*([\s\S]*?)(?=\n\n|\n[^\s&]|$)/g, function(match, quote) {
+                 return '<blockquote class="kawankerja-quote">' + quote.trim() + '</blockquote>';
+             });
+
+             // Bullet points (• or -)
+             esc = esc.replace(/(?:^|\n)[-•]\s+(.*?)(?=\n|$)/g, '<div class="kawankerja-bullet"><span class="kawankerja-bullet-dot">•</span><span>$1</span></div>');
+
+             // Paragraph spacing
+             esc = esc.replace(/\n{2,}/g, '<div class="kawankerja-gap"></div>');
              esc = esc.replace(/\n/g, '<br>');
+
              return esc;
          }
      }"

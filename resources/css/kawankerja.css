@@ -275,6 +275,35 @@
     color: #09090b;
 }
 
+.kawankerja-quote {
+    margin: 8px 0;
+    padding: 8px 12px;
+    background: #ffffff;
+    border-left: 3px solid #18181b;
+    border-radius: 4px 8px 8px 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #18181b;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.kawankerja-bullet {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 3px 0;
+}
+
+.kawankerja-bullet-dot {
+    color: #71717a;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.kawankerja-gap {
+    height: 8px;
+}
+
 /* Typing Indicator */
 .kawankerja-typing {
     display: inline-flex;
