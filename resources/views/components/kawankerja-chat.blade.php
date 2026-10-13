@@ -97,6 +97,15 @@
                     </template>
                     <div :class="msg.role === 'user' ? 'kawankerja-bubble kawankerja-bubble--user' : 'kawankerja-bubble kawankerja-bubble--bot'">
                         <div class="kawankerja-bubble-content" x-html="formatText(msg.content)"></div>
+                        <div class="kawankerja-bubble-footer" x-show="msg.role !== 'user'">
+                            <button type="button"
+                                    class="kawankerja-copy-btn"
+                                    @click="copyMessage(msg.content, $el)"
+                                    title="Copy message">
+                                <i class="ph ph-copy" aria-hidden="true"></i>
+                                <span>Copy</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </template>
@@ -224,6 +233,32 @@
                     const el = this.$refs.msgContainer;
                     if (el) el.scrollTop = el.scrollHeight;
                 });
+            },
+
+            cleanTextForCopy(raw) {
+                if (!raw) return '';
+                return raw
+                    .replace(/\[action:[^\]]+\]/g, '')
+                    .replace(/\[\/?star_scorecard\]/g, '')
+                    .trim();
+            },
+
+            async copyMessage(raw, btnEl) {
+                const text = this.cleanTextForCopy(raw);
+                if (!text) return;
+                try {
+                    await navigator.clipboard.writeText(text);
+                    const icon = btnEl.querySelector('i');
+                    const label = btnEl.querySelector('span');
+                    if (icon) icon.className = 'ph-bold ph-check text-emerald-600';
+                    if (label) label.textContent = 'Copied!';
+                    btnEl.classList.add('is-copied');
+                    setTimeout(() => {
+                        if (icon) icon.className = 'ph ph-copy';
+                        if (label) label.textContent = 'Copy';
+                        btnEl.classList.remove('is-copied');
+                    }, 2000);
+                } catch (_) {}
             },
 
             formatText(raw) {

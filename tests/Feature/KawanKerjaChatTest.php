@@ -95,4 +95,14 @@ class KawanKerjaChatTest extends TestCase
         ]);
         $resOver->assertUnprocessable();
     }
+
+    public function test_assistant_bubble_includes_copy_action_attributes(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('dashboard'));
+
+        $response->assertStatus(200);
+        $response->assertSee('kawankerja-copy-btn');
+    }
 }

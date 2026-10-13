@@ -374,6 +374,42 @@
     color: #09090b;
 }
 
+.kawankerja-bubble-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 6px;
+    padding-top: 4px;
+    border-top: 1px solid #f4f0f8;
+}
+
+.kawankerja-copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #8b7d9f;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.kawankerja-copy-btn i {
+    font-size: 12px;
+}
+
+.kawankerja-copy-btn:hover {
+    color: #644c87;
+    background: #f5f2fa;
+}
+
+.kawankerja-copy-btn.is-copied {
+    color: #059669;
+}
+
 /* ==========================================================================
    5. Clean Quote (NO stripes, matching lavender tint)
    ========================================================================== */
