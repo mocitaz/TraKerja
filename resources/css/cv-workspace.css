@@ -1610,3 +1610,51 @@
         transition: none !important;
     }
 }
+
+/* Dark Mode - Gemini Obsidian Style */
+.dark .cv-workspace h1 { color: #f0f4f9 !important; }
+.dark .cv-workspace .workspace-page-header > div > p:last-child { color: #94a3b8 !important; }
+.dark .cv-workspace .workspace-eyebrow { color: #c084fc !important; }
+.dark .cv-card,
+.dark .cv-panel,
+.dark .cv-section-card,
+.dark .cv-accordion-item,
+.dark .cv-entry-dialog,
+.dark .cv-preview-dialog,
+.dark .cv-import-dialog {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+.dark .cv-workspace input,
+.dark .cv-workspace textarea,
+.dark .cv-workspace select {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .cv-workspace label {
+    color: #94a3b8 !important;
+}
+.dark .cv-modal-header,
+.dark .cv-modal-footer {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    background: #1e1f20 !important;
+}
+.dark .cv-button-secondary {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .cv-button-secondary:hover {
+    background: #333538 !important;
+}
+.dark .cv-template-option {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    background: #1e1f20 !important;
+}
+.dark .cv-preview-container {
+    background: #131314 !important;
+}
+

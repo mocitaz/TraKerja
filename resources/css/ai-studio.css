@@ -478,3 +478,63 @@
 .ai-portal .ai-chat-identity h1 { font-size: 13px; font-weight: 600; line-height: 1.4; letter-spacing: -.2px; margin: 0; color: #1e1e24; }
 
 .ai-chat-membership { display: inline-flex; align-items: center; min-height: 32px; padding: 4px 10px; border-radius: 999px; font-size: 10.5px; font-weight: 500; color: #644577; background: #f3edf8; border: 1px solid #e7ddf2; }
+
+/* Dark Mode - Gemini Obsidian Style */
+.dark .ai-history,
+.dark .ai-portal-main,
+.dark .ai-chat-card {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+.dark .ai-new-chat {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .ai-new-chat:hover {
+    background: #333538 !important;
+}
+.dark .ai-new-chat i {
+    color: #94a3b8 !important;
+}
+.dark .ai-chat-composer {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .ai-chat-composer textarea {
+    color: #f0f4f9 !important;
+}
+.dark .ai-chat-composer textarea::placeholder {
+    color: #64748b !important;
+}
+.dark .ai-chat-attach,
+.dark .ai-chat-settings summary {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .ai-chat-settings-panel {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+}
+.dark .ai-chat-settings-panel label {
+    color: #94a3b8 !important;
+}
+.dark .ai-chat-settings-panel :is(input, select) {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .ai-chat-identity h1 {
+    color: #f0f4f9 !important;
+}
+.dark .ai-chat-membership {
+    background: #251b34 !important;
+    border-color: rgba(168, 85, 247, 0.2) !important;
+    color: #d8b4fe !important;
+}
+

@@ -1657,3 +1657,47 @@
         justify-content: flex-end;
     }
 }
+
+/* Dark Mode - Gemini Obsidian Style */
+.dark .profile-workspace { color: #f0f4f9 !important; }
+.dark .profile-page-header h1 { color: #f0f4f9 !important; }
+.dark .profile-page-header > div > p:last-child { color: #94a3b8 !important; }
+.dark .profile-eyebrow { color: #c084fc !important; }
+.dark .profile-card,
+.dark .profile-panel,
+.dark .profile-section,
+.dark .profile-resume-card,
+.dark .profile-security-card {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+.dark .profile-nav-tab {
+    color: #94a3b8 !important;
+}
+.dark .profile-nav-tab.is-active {
+    color: #f0f4f9 !important;
+    background: #282a2c !important;
+}
+.dark .profile-workspace input,
+.dark .profile-workspace textarea,
+.dark .profile-workspace select {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .profile-workspace label {
+    color: #94a3b8 !important;
+}
+.dark .profile-resume-upload-card {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: #94a3b8 !important;
+}
+.dark .profile-back {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+

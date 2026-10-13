@@ -1171,3 +1171,67 @@
         transition: none !important;
     }
 }
+
+/* Dark Mode - Gemini Obsidian Style */
+.dark .interviews-page h1 { color: #f0f4f9 !important; }
+.dark .interviews-page .workspace-page__header p { color: #94a3b8 !important; }
+.dark .interviews-page .workspace-eyebrow { color: #c084fc !important; }
+.dark .interview-metrics {
+    background: linear-gradient(145deg, #15202e 0%, #1a2332 100%) !important;
+    border-color: rgba(59, 130, 246, 0.22) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+.dark .interview-metrics > div {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .interview-metrics > div:hover {
+    background: #282a2c !important;
+}
+.dark .interview-metrics span { color: #93c5fd !important; }
+.dark .interview-metrics strong { color: #f0f4f9 !important; }
+.dark .interview-metrics p { color: #94a3b8 !important; }
+.dark .interview-calendar-card,
+.dark .interview-agenda-card,
+.dark .interview-dialog,
+.dark .interview-item-card {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+.dark .interview-calendar-header,
+.dark .interview-agenda-header {
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .interview-calendar-day {
+    border-color: rgba(255, 255, 255, 0.06) !important;
+    color: #f0f4f9 !important;
+}
+.dark .interview-calendar-day.is-outside {
+    color: #64748b !important;
+    background: rgba(0, 0, 0, 0.15) !important;
+}
+.dark .interview-calendar-day.is-today {
+    background: rgba(168, 85, 247, 0.15) !important;
+}
+.dark .interview-empty-state {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.07) !important;
+    color: #94a3b8 !important;
+}
+.dark .interview-dialog input,
+.dark .interview-dialog select,
+.dark .interview-dialog textarea {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .interview-dialog > header,
+.dark .interview-dialog > footer {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    background: #1e1f20 !important;
+}
+.dark .interview-workspace-footer p { color: #64748b !important; }
+

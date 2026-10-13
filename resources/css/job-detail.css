@@ -263,3 +263,50 @@
     .job-office-illustration, .job-office-documents { animation: none; }
     .job-detail-page * { transition: none !important; scroll-behavior: auto; }
 }
+
+/* Dark Mode - Gemini Obsidian Style */
+.dark .job-detail-page .job-heading {
+    background: linear-gradient(145deg, #20172c 0%, #251b34 100%) !important;
+    border-color: rgba(168, 85, 247, 0.22) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+.dark .job-detail-page .job-heading h1 { color: #f0f4f9 !important; }
+.dark .job-detail-page .job-heading-company { color: #94a3b8 !important; }
+.dark .job-heading .job-heading-meta { color: #94a3b8 !important; }
+.dark .job-heading .job-heading-meta > span:last-child { border-left-color: rgba(255, 255, 255, 0.08) !important; }
+.dark .job-heading-bottom { border-top-color: rgba(255, 255, 255, 0.08) !important; }
+.dark .job-heading-stage > span { color: #94a3b8 !important; }
+.dark .job-heading-stage > strong { color: #d8b4fe !important; }
+.dark .job-pinned { background: rgba(255, 255, 255, 0.08) !important; border-color: rgba(255, 255, 255, 0.1) !important; color: #f0f4f9 !important; }
+.dark .job-heading .job-heading-actions .workspace-button--quiet { background: rgba(255, 255, 255, 0.08) !important; border-color: rgba(255, 255, 255, 0.08) !important; color: #f0f4f9 !important; }
+.dark .job-heading .job-heading-actions .workspace-button--quiet:hover { background: rgba(255, 255, 255, 0.15) !important; }
+.dark .job-archive-button { background: rgba(255, 255, 255, 0.08) !important; border-color: rgba(255, 255, 255, 0.08) !important; color: #f0f4f9 !important; }
+.dark .job-archive-button:hover { background: rgba(255, 255, 255, 0.15) !important; }
+.dark .job-back { color: #94a3b8 !important; }
+.dark .job-back:hover { color: #f0f4f9 !important; }
+.dark .job-detail-page .job-workspace-main {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+.dark .job-detail-page .job-workspace-tabs {
+    background: #131314 !important;
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .job-detail-page .job-workspace-tabs button { color: #94a3b8 !important; }
+.dark .job-detail-page .job-workspace-tabs button.is-active {
+    color: #f0f4f9 !important;
+    background: #1e1f20 !important;
+}
+.dark .job-detail-page :is(.job-overview-facts, .job-notes-preview, .job-interview-notes, .job-record-dates > div, .job-delete-row) {
+    border-color: rgba(255, 255, 255, 0.07) !important;
+}
+.dark .job-detail-page :is(.job-section-heading p, .job-overview-facts dt, .job-notes-preview > p, .job-stage-caption) {
+    color: #94a3b8 !important;
+}
+.dark .job-detail-page dd { color: #f0f4f9 !important; }
+.dark .job-detail-page .job-stage-track li::before { background: #282a2c !important; }
+.dark .job-detail-page .job-stage-track li { color: #94a3b8 !important; }
+.dark .job-detail-page .job-stage-track li.is-current { color: #d8b4fe !important; }
+.dark .job-archived-notice { background: #2a1b38 !important; color: #d8b4fe !important; }
+
