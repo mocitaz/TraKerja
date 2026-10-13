@@ -214,24 +214,9 @@
                         ? data.reply
                         : (data.reply || 'Maaf, layanan HireMate sedang tidak tersedia saat ini.');
 
-                    // Create assistant message and stream it smoothly word-by-word
-                    const assistantMsg = { role: 'model', content: '' };
-                    this.messages.push(assistantMsg);
                     this.loading = false;
-
-                    const tokens = fullText.split(/(\s+)/);
-                    let idx = 0;
-                    const interval = setInterval(() => {
-                        if (idx < tokens.length) {
-                            assistantMsg.content += (tokens[idx] || '') + (tokens[idx + 1] || '') + (tokens[idx + 2] || '');
-                            idx += 3;
-                            this.scrollToBottom();
-                        } else {
-                            assistantMsg.content = fullText;
-                            clearInterval(interval);
-                            this.scrollToBottom();
-                        }
-                    }, 20);
+                    this.messages.push({ role: 'model', content: fullText });
+                    this.scrollToBottom();
                 } catch (e) {
                     this.loading = false;
                     this.messages.push({
