@@ -30,6 +30,21 @@
         <!-- Confetti Library -->
         <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
+        <!-- Theme Initialization (Anti-FOUC) -->
+        <script>
+            (function() {
+                try {
+                    var theme = localStorage.getItem('theme');
+                    var supportDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    if (theme === 'dark' || (!theme && supportDark)) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                } catch (e) {}
+            })();
+        </script>
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
@@ -105,7 +120,8 @@
             }
         </style>
     </head>
-    <body class="font-sans antialiased bg-[#fafafa] text-slate-900">
+    <body class="font-sans antialiased bg-[#fafafa] dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200">
+        <div class="gemini-ambient-glow" aria-hidden="true"></div>
 
 
         <div class="h-screen flex overflow-hidden">
