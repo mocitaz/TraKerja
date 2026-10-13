@@ -50,4 +50,218 @@ html.dark ::-webkit-scrollbar-thumb:hover {
     background: #3b3d40;
 }
 
+/* ==========================================================================
+   Gemini Dark Mode Styles for Landing / Welcome Page
+   Canvas #131314, Surface #1e1f20, Elevated #282a2c, Borders rgba(255,255,255,0.08)
+   ========================================================================== */
+
+.dark .welcome-page {
+    background-color: #131314 !important;
+    color: #f0f4f9 !important;
+}
+
+.dark .welcome-page section {
+    background-color: #131314 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .welcome-page section#how-it-works,
+.dark .welcome-page section#pricing,
+.dark .welcome-page section#faq {
+    background-color: #18191a !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .welcome-page h1,
+.dark .welcome-page h2,
+.dark .welcome-page h3,
+.dark .welcome-page h4,
+.dark .welcome-page .notion-h1 {
+    color: #f0f4f9 !important;
+}
+
+.dark .welcome-page p {
+    color: #94a3b8;
+}
+
+.dark .welcome-page .text-zinc-900,
+.dark .welcome-page .text-zinc-950,
+.dark .welcome-page .text-zinc-800,
+.dark .welcome-page .text-zinc-700,
+.dark .welcome-page .text-\[\#1a191e\],
+.dark .welcome-page .text-\[\#30313b\] {
+    color: #f0f4f9 !important;
+}
+
+.dark .welcome-page .text-zinc-400,
+.dark .welcome-page .text-zinc-500,
+.dark .welcome-page .text-zinc-600,
+.dark .welcome-page .text-\[\#545761\],
+.dark .welcome-page .text-\[\#70737d\] {
+    color: #94a3b8 !important;
+}
+
+/* Hero Branding Icons */
+.dark .welcome-page .rounded-full.border-2.bg-white {
+    background-color: #1e1f20 !important;
+}
+.dark .welcome-page .rounded-full.border-2.bg-white svg {
+    color: #f0f4f9 !important;
+}
+
+/* Hero Badge */
+.dark .welcome-page .notion-h1 span {
+    background: rgba(250, 236, 212, 0.08) !important;
+    border-color: rgba(242, 210, 158, 0.22) !important;
+    color: #fde68a !important;
+}
+
+/* Hero Secondary Button */
+.dark .welcome-page a[href="#how-it-works"] {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #f0f4f9 !important;
+}
+.dark .welcome-page a[href="#how-it-works"]:hover {
+    background: #333538 !important;
+}
+
+/* Hero Dashboard Mockup Container */
+.dark .welcome-page .bento-card {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+.dark .welcome-page .bento-card:hover {
+    border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+.dark .welcome-page .bento-card .border {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .welcome-page .bg-\[\#f0ede6\] {
+    background-color: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .welcome-page .bg-white\/80 {
+    background-color: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .welcome-page .bg-\[\#fdfcf9\],
+.dark .welcome-page .bg-white {
+    background-color: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .welcome-page .bg-zinc-100,
+.dark .welcome-page .bg-zinc-50 {
+    background-color: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* How It Works Items */
+.dark .welcome-page .how-it-works-item {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .welcome-page .how-it-works-item:hover {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.dark .welcome-page .how-it-works-item .rounded-full.bg-white {
+    background-color: #282a2c !important;
+}
+
+/* Macbook Mockup */
+.dark .welcome-page .border-zinc-900 {
+    border-color: #282a2c !important;
+}
+.dark .welcome-page .bg-zinc-900 {
+    background-color: #1e1f20 !important;
+}
+.dark .welcome-page .bg-\[\#dedbd6\] {
+    background-color: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .welcome-page .bg-\[\#aba7a0\] {
+    background-color: #3b3d40 !important;
+}
+
+/* Pricing Cards */
+.dark .welcome-page .pricing-card {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .welcome-page .bg-\[\#faf8f4\] {
+    background-color: #1e1f20 !important;
+}
+
+.dark .welcome-page .bg-\[\#f8f6f0\] {
+    background-color: #282a2c !important;
+    color: #f0f4f9 !important;
+}
+
+.dark .welcome-page .bg-\[\#f8f6f0\]:hover {
+    background-color: #333538 !important;
+}
+
+/* Testimonials */
+.dark .welcome-page .testimonial-card {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .welcome-page .testimonial-card:hover {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+/* FAQ */
+.dark .welcome-page .faq-item {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .welcome-page .faq-item:hover {
+    background: #282a2c !important;
+}
+
+.dark .welcome-page .faq-answer {
+    color: #94a3b8 !important;
+}
+
+/* CTA */
+.dark .welcome-page .border-\[\#dedbd6\] {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Footer */
+.dark .welcome-page footer {
+    background-color: #131314 !important;
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+}
+
+.dark .welcome-page footer .border-b,
+.dark .welcome-page footer .border-t {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .welcome-page footer a {
+    color: #94a3b8 !important;
+}
+
+.dark .welcome-page footer a:hover {
+    color: #f0f4f9 !important;
+}
+
+
 
