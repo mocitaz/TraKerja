@@ -65,14 +65,14 @@
                     <button type="button" class="kawankerja-chip" @click="input = 'Bantu simulasi interview untuk lamaran terbaru saya dong'; send()">
                         🎯 Simulasi interview lamaran terbaru
                     </button>
-                    <button type="button" class="kawankerja-chip" @click="input = 'Bagaimana cara menjawab pertanyaan interview tentang kelemahan diri?'; send()">
-                        ⭐ Cara jawab pertanyaan kelemahan diri
+                    <button type="button" class="kawankerja-chip" @click="input = 'Bagaimana status pipeline lamaran saya saat ini dan apa langkah terbaik berikutnya?'; send()">
+                        📊 Cek status pipeline lamaran saya
+                    </button>
+                    <button type="button" class="kawankerja-chip" @click="input = 'Fitur apa saja di TraKerja yang bisa bantu persiapan kerja saya lebih cepat?'; send()">
+                        ⚡ Panduan fitur & alur sukses TraKerja
                     </button>
                     <button type="button" class="kawankerja-chip" @click="input = 'Tolong buatkan draf pesan WhatsApp follow-up sopan ke HR setelah interview'; send()">
                         ✉️ Draf pesan follow-up HR
-                    </button>
-                    <button type="button" class="kawankerja-chip" @click="input = 'Tips negosiasi gaji saat tahap offering agar tetap profesional'; send()">
-                        💡 Tips negosiasi gaji saat offering
                     </button>
                 </div>
             </div>

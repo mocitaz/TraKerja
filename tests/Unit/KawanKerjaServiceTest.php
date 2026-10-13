@@ -51,6 +51,10 @@ class KawanKerjaServiceTest extends TestCase
         $this->assertCount(1, $context['active_applications']);
         $this->assertSame('Tokopedia', $context['active_applications'][0]['company']);
         $this->assertSame('CV Backend Tech', $context['primary_resume']);
+        $this->assertSame(1, $context['pipeline_summary']['total_active']);
+        $this->assertSame(1, $context['pipeline_summary']['in_interview_stages']);
+        $this->assertCount(1, $context['upcoming_interviews']);
+        $this->assertSame('Tokopedia', $context['upcoming_interviews'][0]['company']);
     }
 
     public function test_it_calls_gemini_api_and_returns_clean_response(): void
