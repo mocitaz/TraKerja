@@ -199,108 +199,47 @@
                 this.loading = true;
                 this.scrollToBottom();
 
-                let assistantMsg = null;
-                let streamedSuccessfully = false;
-
                 try {
-                    const response = await fetch(this.streamUrl, {
+                    const res = await fetch(this.chatUrl, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': this.csrfToken,
-                            'Accept': 'text/event-stream',
+                            'Accept': 'application/json',
                         },
                         body: JSON.stringify({ message: text })
                     });
+                    const data = await res.json();
+                    const fullText = (data.success && data.reply)
+                        ? data.reply
+                        : (data.reply || 'Maaf, layanan HireMate sedang tidak tersedia saat ini.');
 
-                    if (response.ok && response.body && response.headers.get('content-type')?.includes('text/event-stream')) {
-                        const reader = response.body.getReader();
-                        const decoder = new TextDecoder('utf-8');
-                        let buffer = '';
+                    // Create assistant message and stream it smoothly word-by-word
+                    const assistantMsg = { role: 'model', content: '' };
+                    this.messages.push(assistantMsg);
+                    this.loading = false;
 
-                        let streamFinished = false;
-                        while (!streamFinished) {
-                            const { done, value } = await reader.read();
-                            if (done) break;
-
-                            buffer += decoder.decode(value, { stream: true });
-                            const lines = buffer.split('\n');
-                            buffer = lines.pop() || '';
-
-                            for (const line of lines) {
-                                const trimmed = line.trim();
-                                if (!trimmed || !trimmed.startsWith('data: ')) continue;
-                                const dataStr = trimmed.substring(6);
-                                if (dataStr === '[DONE]') {
-                                    streamedSuccessfully = true;
-                                    streamFinished = true;
-                                    break;
-                                }
-                                try {
-                                    const parsed = JSON.parse(dataStr);
-                                    if (parsed.chunk) {
-                                        if (!assistantMsg) {
-                                            assistantMsg = { role: 'model', content: '' };
-                                            this.messages.push(assistantMsg);
-                                            this.loading = false;
-                                        }
-                                        assistantMsg.content += parsed.chunk;
-                                        streamedSuccessfully = true;
-                                        this.scrollToBottom();
-                                    }
-                                } catch (_) {}
-                            }
+                    const tokens = fullText.split(/(\s+)/);
+                    let idx = 0;
+                    const interval = setInterval(() => {
+                        if (idx < tokens.length) {
+                            assistantMsg.content += (tokens[idx] || '') + (tokens[idx + 1] || '') + (tokens[idx + 2] || '');
+                            idx += 3;
+                            this.scrollToBottom();
+                        } else {
+                            assistantMsg.content = fullText;
+                            clearInterval(interval);
+                            this.scrollToBottom();
                         }
-
-                        if (buffer && buffer.trim().startsWith('data: ')) {
-                            const dataStr = buffer.trim().substring(6);
-                            if (dataStr !== '[DONE]') {
-                                try {
-                                    const parsed = JSON.parse(dataStr);
-                                    if (parsed.chunk && assistantMsg) {
-                                        assistantMsg.content += parsed.chunk;
-                                    }
-                                } catch (_) {}
-                            }
-                        }
-                    }
+                    }, 20);
                 } catch (e) {
-                    console.warn('HireMate stream encountered an issue, checking fallback...', e);
+                    this.loading = false;
+                    this.messages.push({
+                        role: 'model',
+                        content: 'Maaf, layanan HireMate sedang tidak tersedia saat ini.'
+                    });
+                    this.scrollToBottom();
                 }
-
-                // If streaming produced no content or failed, fallback to synchronous chatUrl
-                if (!streamedSuccessfully || !assistantMsg || !assistantMsg.content.trim()) {
-                    try {
-                        const res = await fetch(this.chatUrl, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': this.csrfToken,
-                                'Accept': 'application/json',
-                            },
-                            body: JSON.stringify({ message: text })
-                        });
-                        const data = await res.json();
-                        const replyText = (data.success && data.reply) ? data.reply : (data.reply || 'Maaf, layanan HireMate sedang tidak tersedia saat ini.');
-                        if (!assistantMsg) {
-                            assistantMsg = { role: 'model', content: replyText };
-                            this.messages.push(assistantMsg);
-                        } else {
-                            assistantMsg.content = replyText;
-                        }
-                    } catch (e) {
-                        const errMsg = 'Maaf, layanan HireMate sedang tidak tersedia saat ini.';
-                        if (!assistantMsg) {
-                            assistantMsg = { role: 'model', content: errMsg };
-                            this.messages.push(assistantMsg);
-                        } else {
-                            assistantMsg.content = errMsg;
-                        }
-                    }
-                }
-
-                this.loading = false;
-                this.scrollToBottom();
             },
 
             async clearChat() {
