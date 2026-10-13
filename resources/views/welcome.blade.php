@@ -36,6 +36,21 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
+    <!-- Anti-FOUC Script -->
+    <script>
+        (function() {
+            try {
+                var theme = localStorage.getItem('theme');
+                var supportDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (theme === 'dark' || (!theme && supportDark)) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 
@@ -54,6 +69,21 @@
             --notion-red-border: #f8caca;
             --notion-green: #eef8f2;
             --notion-green-border: #c5ebd2;
+        }
+
+        html.dark {
+            --notion-bg: #131314;
+            --notion-text: #f0f4f9;
+            --notion-text-muted: #94a3b8;
+            --notion-border: rgba(255, 255, 255, 0.08);
+            --notion-yellow: #1e1f20;
+            --notion-yellow-border: rgba(255, 255, 255, 0.1);
+            --notion-blue: #1e1f20;
+            --notion-blue-border: rgba(255, 255, 255, 0.1);
+            --notion-red: #1e1f20;
+            --notion-red-border: rgba(255, 255, 255, 0.1);
+            --notion-green: #1e1f20;
+            --notion-green-border: rgba(255, 255, 255, 0.1);
         }
 
         body {
@@ -131,7 +161,8 @@
     </style>
 </head>
 
-<body class="antialiased workspace-shell welcome-page" style="background-color: #fdfcf9; color: #30313b;">
+<body class="antialiased workspace-shell welcome-page bg-[#fdfcf9] dark:bg-[#131314] text-[#30313b] dark:text-[#f0f4f9] transition-colors duration-200">
+    <div class="gemini-ambient-glow" aria-hidden="true"></div>
 
     {{-- ============ NAVIGATION (MATCHING USER WORKSPACE TOPBAR) ============ --}}
     <header id="workspace-navigation" class="workspace-navigation fixed top-0 inset-x-0 z-50 pointer-events-none"
@@ -150,6 +181,31 @@
             </div>
 
             <div class="workspace-account-actions">
+                <!-- Theme Toggle Button -->
+                <div x-data="{
+                    isDark: document.documentElement.classList.contains('dark'),
+                    toggle() {
+                        this.isDark = !this.isDark;
+                        if (this.isDark) {
+                            document.documentElement.classList.add('dark');
+                            localStorage.setItem('theme', 'dark');
+                        } else {
+                            document.documentElement.classList.remove('dark');
+                            localStorage.setItem('theme', 'light');
+                        }
+                        window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: this.isDark } }));
+                    }
+                }" @theme-changed.window="isDark = $event.detail.isDark" class="flex items-center">
+                    <button type="button" 
+                            @click="toggle()" 
+                            class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-amber-300 dark:hover:text-amber-200 dark:bg-[#1e1f20] dark:hover:bg-[#282a2c] dark:border dark:border-white/10 shadow-sm focus:outline-none"
+                            :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+                            :title="isDark ? 'Aktifkan mode terang' : 'Aktifkan mode gelap'">
+                        <i x-show="!isDark" class="ph ph-moon text-lg transition-transform duration-200 hover:scale-110" aria-hidden="true"></i>
+                        <i x-show="isDark" x-cloak class="ph ph-sun text-lg transition-transform duration-200 hover:scale-110" aria-hidden="true"></i>
+                    </button>
+                </div>
+
                 <button type="button" x-ref="mobileButton" @click="mobileOpen = !mobileOpen"
                     aria-controls="workspace-mobile-menu" aria-expanded="false" :aria-expanded="mobileOpen.toString()"
                     class="workspace-mobile-toggle">

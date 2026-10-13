@@ -22,11 +22,27 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600|inter:300,400,500,600,700,800,900|plus-jakarta-sans:400,500,600,700,800&display=swap" rel="stylesheet" />
 
+        <!-- Anti-FOUC Script -->
+        <script>
+            (function() {
+                try {
+                    var theme = localStorage.getItem('theme');
+                    var supportDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    if (theme === 'dark' || (!theme && supportDark)) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                } catch (e) {}
+            })();
+        </script>
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
     </head>
-    <body class="font-sans text-gray-900 antialiased">
+    <body class="font-sans text-gray-900 dark:text-[#f0f4f9] bg-[#fafafa] dark:bg-[#131314] antialiased transition-colors duration-200">
+        <div class="gemini-ambient-glow" aria-hidden="true"></div>
     <div class="min-h-screen flex flex-col">
         {{ $slot ?? '' }}
         @yield('content')
