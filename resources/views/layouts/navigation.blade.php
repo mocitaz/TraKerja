@@ -35,7 +35,7 @@
                     }
                     window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: this.isDark } }));
                 }
-            }" class="flex items-center">
+            }" @theme-changed.window="isDark = $event.detail.isDark" class="flex items-center">
                 <button type="button" 
                         @click="toggle()" 
                         class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-amber-300 dark:hover:text-amber-200 dark:bg-[#1e1f20] dark:hover:bg-[#282a2c] dark:border dark:border-white/10 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20"

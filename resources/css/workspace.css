@@ -287,3 +287,214 @@
     border: 1px solid #dedbd6;
     box-shadow: 0 5px 18px rgba(75, 65, 54, 0.045), 0 1px 3px rgba(75, 65, 54, 0.025);
 }
+
+/* ==========================================================================
+   Dark Mode - Workspace Navigation & Topbar
+   ========================================================================== */
+
+.dark {
+    --workspace-background: #131314;
+}
+
+.dark .workspace-shell {
+    background: #131314;
+}
+
+.dark .workspace-navigation {
+    color: #f0f4f9;
+}
+
+.dark .workspace-topbar {
+    background: rgba(19, 19, 20, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    color: #f0f4f9;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.dark .workspace-brand {
+    color: #f0f4f9;
+}
+
+.dark .workspace-brand span {
+    color: #f0f4f9;
+}
+
+.dark .workspace-nav-link {
+    color: #94a3b8;
+}
+
+.dark .workspace-nav-link:hover {
+    color: #f0f4f9;
+    background: #1e1f20;
+}
+
+.dark .workspace-nav-link[aria-current="page"] {
+    color: #f0f4f9;
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .workspace-mobile-toggle {
+    color: #cbd5e1;
+}
+
+.dark .workspace-mobile-toggle:hover {
+    color: #f0f4f9;
+    background: #1e1f20;
+}
+
+.dark .workspace-profile-trigger {
+    border-color: rgba(255, 255, 255, 0.07);
+    background: transparent;
+}
+
+.dark .workspace-profile-trigger:hover {
+    background: #1e1f20;
+}
+
+.dark .workspace-account-copy strong {
+    color: #f0f4f9;
+}
+
+.dark .workspace-account-copy span,
+.dark .workspace-account-copy > span {
+    color: #94a3b8;
+}
+
+.dark .workspace-profile-chevron {
+    color: #94a3b8;
+}
+
+.dark .workspace-dropdown {
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.dark .workspace-profile-menu {
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
+}
+
+.dark .workspace-profile-summary {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark .workspace-profile-identity-heading strong {
+    color: #f0f4f9;
+}
+
+.dark .workspace-profile-identity > span {
+    color: #94a3b8;
+}
+
+.dark .workspace-profile-identity .workspace-account-badge {
+    background: #282a2c;
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .workspace-rewards {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark .workspace-rewards .gamification-level {
+    background: #1e1f20;
+    color: #f0f4f9;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark .workspace-rewards .gamification-summary button {
+    background: #1e1f20;
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark .workspace-rewards .gamification-summary button:hover {
+    background: #333538;
+    color: #f0f4f9;
+}
+
+.dark .workspace-rewards .gamification-progress > span {
+    color: #94a3b8;
+}
+
+.dark .gamification-progress-track {
+    background: #333538;
+}
+
+.dark .workspace-menu-link {
+    color: #cbd5e1;
+}
+
+.dark .workspace-menu-link:hover,
+.dark .workspace-menu-link[aria-current="page"] {
+    background: #282a2c;
+    color: #f0f4f9;
+}
+
+.dark .workspace-menu-icon {
+    background: #282a2c;
+    color: #cbd5e1;
+}
+
+.dark .workspace-profile-menu .workspace-menu-link:hover .workspace-menu-icon {
+    background: #333538;
+    color: #f0f4f9;
+}
+
+.dark .workspace-profile-menu .workspace-menu-chevron {
+    color: #64748b;
+}
+
+.dark .workspace-profile-menu .workspace-menu-link:hover .workspace-menu-chevron {
+    color: #94a3b8;
+}
+
+.dark .workspace-logout {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .workspace-logout button,
+.dark .workspace-profile-menu .workspace-logout button {
+    color: #f87171;
+}
+
+.dark .workspace-profile-menu .workspace-logout .workspace-menu-icon {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+}
+
+.dark .workspace-profile-menu .workspace-logout button:hover {
+    background: rgba(239, 68, 68, 0.12);
+    color: #fca5a5;
+}
+
+.dark .workspace-profile-menu .workspace-logout button:hover .workspace-menu-icon {
+    background: rgba(239, 68, 68, 0.25);
+    color: #fca5a5;
+}
+
+.dark .workspace-mobile-menu {
+    background: rgba(30, 31, 32, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.dark .workspace-bottom-navigation {
+    background: rgba(19, 19, 20, 0.92);
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.dark .workspace-bottom-navigation a {
+    color: #94a3b8;
+}
+
+.dark .workspace-bottom-navigation a:hover,
+.dark .workspace-bottom-navigation [aria-current="page"] {
+    color: #f0f4f9;
+}
+
