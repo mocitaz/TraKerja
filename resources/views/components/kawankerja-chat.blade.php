@@ -12,7 +12,7 @@
         </div>
         <div class="kawankerja-launcher-label">
             <strong>KawanKerja</strong>
-            <small>Tanya AI</small>
+            <small>AI Career Coach</small>
         </div>
     </button>
 
@@ -32,10 +32,14 @@
             <div class="kawankerja-header-info">
                 <div class="kawankerja-header-avatar">
                     <img src="{{ asset('images/kawankerja.png') }}" alt="KawanKerja Avatar">
+                    <span class="kawankerja-status-indicator"></span>
                 </div>
                 <div class="kawankerja-header-text">
-                    <h3>KawanKerja</h3>
-                    <p>Asisten Karier TraKerja</p>
+                    <div class="kawankerja-header-title">
+                        <h3>KawanKerja</h3>
+                        <span class="kawankerja-ai-pill">AI Coach</span>
+                    </div>
+                    <p>Siap simulasi interview & karier</p>
                 </div>
             </div>
             <div class="kawankerja-header-actions">
@@ -43,13 +47,13 @@
                         class="kawankerja-header-btn"
                         @click="clearChat()"
                         title="Hapus percakapan">
-                    <i class="ph ph-trash text-sm" aria-hidden="true"></i>
+                    <i class="ph ph-trash" aria-hidden="true"></i>
                 </button>
                 <button type="button"
                         class="kawankerja-header-btn"
                         @click="open = false"
                         title="Tutup">
-                    <i class="ph ph-x text-sm" aria-hidden="true"></i>
+                    <i class="ph ph-x" aria-hidden="true"></i>
                 </button>
             </div>
         </header>
@@ -59,38 +63,57 @@
             <div class="kawankerja-welcome" x-show="messages.length === 0">
                 <span class="kawankerja-welcome-badge">
                     <i class="ph-fill ph-sparkle" aria-hidden="true"></i>
-                    <span>Gemini AI Career Companion</span>
+                    <span>Executive AI Career Companion</span>
                 </span>
-                <p>Halo, <strong>{{ auth()->user()->name }}</strong>! Butuh persiapan interview, review jawaban STAR, atau draft pesan HR hari ini?</p>
+                <h4 class="kawankerja-welcome-heading">Halo, {{ auth()->user()->name }}! 👋</h4>
+                <p>Butuh latihan simulasi interview langsung dari data lamaranmu, review jawaban STAR, atau draft pesan HR?</p>
 
                 <div class="kawankerja-chips">
                     <button type="button" class="kawankerja-chip" @click="input = 'Bantu simulasi interview untuk lamaran terbaru saya dong'; send()">
-                        🎯 Simulasi interview lamaran terbaru
+                        <span class="kawankerja-chip-icon">🎯</span>
+                        <span>Simulasi interview lamaran terbaru</span>
                     </button>
                     <button type="button" class="kawankerja-chip" @click="input = 'Bagaimana cara menjawab pertanyaan interview tentang kelemahan diri?'; send()">
-                        ⭐ Cara jawab pertanyaan kelemahan diri
+                        <span class="kawankerja-chip-icon">⭐</span>
+                        <span>Cara jawab pertanyaan kelemahan diri</span>
                     </button>
-                    <button type="button" class="kawankerja-chip" @click="input = 'Tolong buatkan draf chat WhatsApp follow-up sopan ke HR'; send()">
-                        ✉️ Draf pesan follow-up HR
+                    <button type="button" class="kawankerja-chip" @click="input = 'Tolong buatkan draf pesan WhatsApp follow-up sopan ke HR setelah interview'; send()">
+                        <span class="kawankerja-chip-icon">✉️</span>
+                        <span>Draf follow-up HR pasca interview</span>
                     </button>
-                    <button type="button" class="kawankerja-chip" @click="input = 'Tips negosiasi gaji saat tahap offering agar tetap sopan'; send()">
-                        💡 Tips negosiasi gaji saat offering
+                    <button type="button" class="kawankerja-chip" @click="input = 'Tips negosiasi gaji saat tahap offering agar tetap profesional'; send()">
+                        <span class="kawankerja-chip-icon">💡</span>
+                        <span>Tips negosiasi gaji saat offering</span>
                     </button>
                 </div>
             </div>
 
             <!-- Chat History -->
             <template x-for="(msg, index) in messages" :key="index">
-                <div :class="msg.role === 'user' ? 'kawankerja-msg kawankerja-msg--user' : 'kawankerja-msg kawankerja-msg--bot'">
-                    <div x-html="formatText(msg.content)"></div>
+                <div :class="msg.role === 'user' ? 'kawankerja-row kawankerja-row--user' : 'kawankerja-row kawankerja-row--bot'">
+                    <template x-if="msg.role !== 'user'">
+                        <div class="kawankerja-row-avatar">
+                            <img src="{{ asset('images/kawankerja.png') }}" alt="KawanKerja">
+                        </div>
+                    </template>
+                    <div :class="msg.role === 'user' ? 'kawankerja-bubble kawankerja-bubble--user' : 'kawankerja-bubble kawankerja-bubble--bot'">
+                        <div class="kawankerja-bubble-content" x-html="formatText(msg.content)"></div>
+                    </div>
                 </div>
             </template>
 
             <!-- Loading Indicator -->
-            <div class="kawankerja-typing" x-show="loading">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="kawankerja-row kawankerja-row--bot" x-show="loading">
+                <div class="kawankerja-row-avatar">
+                    <img src="{{ asset('images/kawankerja.png') }}" alt="KawanKerja">
+                </div>
+                <div class="kawankerja-bubble kawankerja-bubble--bot kawankerja-bubble--typing">
+                    <div class="kawankerja-typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -99,7 +122,7 @@
             <div class="kawankerja-input-row">
                 <textarea class="kawankerja-textarea"
                           rows="1"
-                          placeholder="Ketik pertanyaan untuk KawanKerja..."
+                          placeholder="Ketik pesan untuk KawanKerja..."
                           x-model="input"
                           @keydown.enter="if (!$event.shiftKey) { $event.preventDefault(); send(); }"
                           :disabled="loading"></textarea>
@@ -217,19 +240,64 @@
                 // Bold: **content**
                 esc = esc.replace(/\*\*(.+?)\*\*/gs, '<strong>$1</strong>');
 
-                // Italic: *content*
-                esc = esc.replace(/(?<!\*)\*([^\*\n]+?)\*(?!\*)/g, '<em>$1</em>');
+                // Simulation / Target Header: 🎯 **...** or 🎯 ...
+                esc = esc.replace(/(?:^|\n)🎯\s*(?:<strong>)?(.*?)(?:<\/strong>)?(?=\n|$)/g, function(match, title) {
+                    return '<div class="kawankerja-target-banner">' +
+                        '<span class="kawankerja-target-icon">🎯</span>' +
+                        '<span class="kawankerja-target-title">' + title.trim() + '</span>' +
+                    '</div>';
+                });
 
-                // Blockquotes: lines starting with &gt;
-                esc = esc.replace(/(?:^|\n)&gt;\s*([\s\S]*?)(?=\n\n|\n[^\s&]|$)/g, function(match, quote) {
-                    return '<blockquote class="kawankerja-quote">' + quote.trim() + '</blockquote>';
+                // Signature Section Badges: 💡, ✅, ⚠️, 💎
+                esc = esc.replace(/(?:^|\n)(💡|✅|⚠️|💎)\s*(?:<strong>)?(.*?)(?:<\/strong>)?(?=\n|$)/g, function(match, icon, title) {
+                    let typeClass = 'default';
+                    if (icon === '💡') typeClass = 'amber';
+                    if (icon === '✅') typeClass = 'emerald';
+                    if (icon === '⚠️') typeClass = 'orange';
+                    if (icon === '💎') typeClass = 'indigo';
+
+                    return '<div class="kawankerja-section-pill kawankerja-section-pill--' + typeClass + '">' +
+                        '<span class="kawankerja-section-pill__icon">' + icon + '</span>' +
+                        '<span class="kawankerja-section-pill__title">' + title.trim() + '</span>' +
+                    '</div>';
+                });
+
+                // Interview Question / Simulation Blockquote: lines starting with &gt;
+                esc = esc.replace(/(?:^|\n)&gt;\s*([\s\S]*?)(?=(?:\n\s*\n|\n[^\s&]|$))/g, function(match, quote) {
+                    let clean = quote.trim();
+                    // Strip leading/trailing asterisks or underscores that could italicize the whole box
+                    clean = clean.replace(/^[\*_]+\s*/, '').replace(/\s*[\*_]+$/, '');
+                    // Strip enclosing quotes to prevent awkward duplicate quotation marks
+                    clean = clean.replace(/^["“”]\s*/, '').replace(/\s*["“”]$/, '');
+
+                    return '<div class="kawankerja-question-card">' +
+                        '<div class="kawankerja-question-card__header">' +
+                            '<span class="kawankerja-question-card__badge">' +
+                                '<i class="ph-fill ph-chat-circle-dots"></i>' +
+                                '<span>Pertanyaan Wawancara</span>' +
+                            '</span>' +
+                        '</div>' +
+                        '<div class="kawankerja-question-card__body">“' + clean + '”</div>' +
+                    '</div>';
                 });
 
                 // Bullet points (• or -)
-                esc = esc.replace(/(?:^|\n)[-•]\s+(.*?)(?=\n|$)/g, '<div class="kawankerja-bullet"><span class="kawankerja-bullet-dot">•</span><span>$1</span></div>');
+                esc = esc.replace(/(?:^|\n)[-•]\s+(.*?)(?=\n|$)/g, function(match, bulletText) {
+                    return '<div class="kawankerja-bullet">' +
+                        '<span class="kawankerja-bullet-dot"></span>' +
+                        '<span class="kawankerja-bullet-text">' + bulletText.trim() + '</span>' +
+                    '</div>';
+                });
+
+                // Italic: *content*
+                esc = esc.replace(/(?<!\*)\*([^\*\n]+?)\*(?!\*)/g, '<em>$1</em>');
+
+                // Cleanup accidental extra breaks next to custom card blocks
+                esc = esc.replace(/<\/div>\s*<br\s*\/?>/gi, '</div>');
+                esc = esc.replace(/<br\s*\/?>\s*<div/gi, '<div');
 
                 // Paragraph spacing
-                esc = esc.replace(/\n{2,}/g, '<div class="kawankerja-gap"></div>');
+                esc = esc.replace(/\n{2,}/g, '<div class="kawankerja-spacer"></div>');
                 esc = esc.replace(/\n/g, '<br>');
 
                 return esc;
