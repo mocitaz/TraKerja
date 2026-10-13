@@ -517,18 +517,23 @@
     box-shadow: 0 0 0 2px rgba(100, 76, 135, 0.12);
 }
 
-.kawankerja-textarea {
+.kawankerja-textarea,
+.kawankerja-textarea:focus,
+.kawankerja-textarea:focus-visible {
     flex: 1;
-    border: none;
-    background: transparent;
+    border: none !important;
+    background: transparent !important;
     font-size: 13px;
     line-height: 1.4;
     color: #18181b;
     resize: none;
     max-height: 85px;
     padding: 4px 0;
-    outline: none;
+    outline: none !important;
+    box-shadow: none !important;
     font-family: inherit;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .kawankerja-textarea::placeholder {
@@ -548,6 +553,12 @@
     cursor: pointer;
     flex-shrink: 0;
     transition: all 0.15s ease;
+}
+
+.kawankerja-send-btn:focus,
+.kawankerja-send-btn:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(100, 76, 135, 0.3) !important;
 }
 
 .kawankerja-send-btn:hover:not(:disabled) {
