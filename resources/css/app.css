@@ -45,6 +45,7 @@
 @import './applications-mobile.css';
 @import './floating-ai-link.css';
 @import './kawankerja.css';
+@import './gemini-dark.css';
 
 @tailwind base;
 @tailwind components;

@@ -2,6 +2,7 @@ import forms from "@tailwindcss/forms";
 
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
     "./storage/framework/views/*.php",
@@ -24,6 +25,14 @@ export default {
         mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"]
       },
       colors: {
+        gemini: {
+          canvas: "#131314",
+          surface: "#1e1f20",
+          elevated: "#282a2c",
+          border: "rgba(255, 255, 255, 0.07)",
+          text: "#f0f4f9",
+          muted: "#94a3b8",
+        },
         ui: { strong: "#27272a", muted: "#52525b", disabled: "#52525b" },
         zinc: {"150": "#ececee", "155": "#ebebed", "250": "#dcdce0", "350": "#bbbbc1", "450": "#898992", "455": "#878790", "550": "#62626b", "555": "#606069", "650": "#494951", "655": "#48484f", "750": "#333338", "755": "#323237", "805": "#262629", "850": "#202023", "855": "#1f1f22", "955": "#09090b"},
         amber: {"55": "#fffae7", "150": "#feeda9", "250": "#fddd6c", "350": "#fcc939", "450": "#f8af18", "555": "#e68908", "650": "#c76508", "850": "#853b0f", "955": "#451a03"},

@@ -1,0 +1,41 @@
+/* Gemini Dark Mode Tokens & Ambient Backdrop */
+:root {
+    --gemini-canvas: #fafafa;
+    --gemini-surface: #ffffff;
+    --gemini-elevated: #f1f5f9;
+    --gemini-border: #e2e8f0;
+    --gemini-text-primary: #0f172a;
+    --gemini-text-muted: #64748b;
+}
+
+html.dark {
+    --gemini-canvas: #131314;
+    --gemini-surface: #1e1f20;
+    --gemini-elevated: #282a2c;
+    --gemini-border: rgba(255, 255, 255, 0.07);
+    --gemini-text-primary: #f0f4f9;
+    --gemini-text-muted: #94a3b8;
+    color-scheme: dark;
+}
+
+/* Gemini Ambient Aurora Glow */
+.dark .gemini-ambient-glow {
+    position: fixed;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1000px;
+    height: 650px;
+    background: radial-gradient(ellipse at center, rgba(30, 58, 138, 0.16) 0%, rgba(88, 28, 135, 0.12) 40%, transparent 75%);
+    filter: blur(90px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Dark Scrollbar */
+html.dark ::-webkit-scrollbar-thumb {
+    background: #282a2c;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+    background: #3b3d40;
+}
