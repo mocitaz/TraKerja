@@ -182,11 +182,12 @@
                 }" @theme-changed.window="isDark = $event.detail.isDark" class="flex items-center">
                     <button type="button" 
                             @click="toggle()" 
-                            class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-amber-300 dark:hover:text-amber-200 dark:bg-[#1e1f20] dark:hover:bg-[#282a2c] dark:border dark:border-white/10 shadow-sm focus:outline-none"
-                            :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-                            :title="isDark ? 'Aktifkan mode terang' : 'Aktifkan mode gelap'">
-                        <i x-show="!isDark" class="ph ph-moon text-lg transition-transform duration-200 hover:scale-110" aria-hidden="true"></i>
-                        <i x-show="isDark" x-cloak class="ph ph-sun text-lg transition-transform duration-200 hover:scale-110" aria-hidden="true"></i>
+                            class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 focus:outline-none"
+                            :class="isDark ? 'bg-[#1e1f20] hover:bg-[#282a2c] text-purple-300 hover:text-purple-200 border border-white/10 shadow-sm' : 'bg-white hover:bg-amber-50/70 text-amber-500 hover:text-amber-600 border border-[#dedbd6] shadow-3xs'"
+                            :aria-label="isDark ? 'Mode gelap aktif, klik untuk beralih ke mode terang' : 'Mode terang aktif, klik untuk beralih ke mode gelap'"
+                            :title="isDark ? 'Mode Gelap aktif (klik untuk ganti ke Mode Terang)' : 'Mode Terang aktif (klik untuk ganti ke Mode Gelap)'">
+                        <i x-show="!isDark" class="ph-bold ph-sun text-lg transition-transform duration-200 hover:rotate-45" aria-hidden="true"></i>
+                        <i x-show="isDark" x-cloak class="ph-bold ph-moon text-lg transition-transform duration-200 hover:-rotate-12" aria-hidden="true"></i>
                     </button>
                 </div>
 
