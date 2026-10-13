@@ -62,7 +62,7 @@ class KawanKerjaServiceTest extends TestCase
         config(['services.gemini.key' => 'fake-test-key']);
 
         Http::fake([
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent*' => Http::response([
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent*' => Http::response([
                 'candidates' => [
                     [
                         'content' => [
@@ -88,13 +88,13 @@ class KawanKerjaServiceTest extends TestCase
         config(['services.gemini.key' => 'fake-test-key']);
 
         Http::fake([
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent*' => Http::response(['error' => 'quota exceeded'], 429),
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent*' => Http::response([
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent*' => Http::response(['error' => 'quota exceeded'], 429),
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent*' => Http::response([
                 'candidates' => [
                     [
                         'content' => [
                             'parts' => [
-                                ['text' => 'Jawaban dari fallback model 3.8 flash.']
+                                ['text' => 'Jawaban dari fallback model 3.1 flash lite preview.']
                             ]
                         ]
                     ]
@@ -139,8 +139,8 @@ class KawanKerjaServiceTest extends TestCase
         config(['services.gemini.key' => 'fake-test-key']);
 
         Http::fake([
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent*' => Http::response(['error' => 'quota exceeded'], 429),
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent*' => Http::response(['error' => 'quota exceeded'], 429),
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent*' => Http::response(['error' => 'quota exceeded'], 429),
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent*' => Http::response(['error' => 'quota exceeded'], 429),
         ]);
 
         $user = User::factory()->create();

@@ -20,8 +20,8 @@ class KawanKerjaService
     public function __construct()
     {
         $this->apiKey = config('services.gemini.key', env('GEMINI_API_KEY'));
-        $this->primaryModel = env('GEMINI_MODEL', 'gemini-3.5-flash-lite');
-        $this->fallbackModel = 'gemini-3.8-flash';
+        $this->primaryModel = env('GEMINI_MODEL', 'gemini-3.1-flash-lite');
+        $this->fallbackModel = 'gemini-3.1-flash-lite-preview';
     }
 
     /**
@@ -63,7 +63,7 @@ class KawanKerjaService
             'contents' => $contents,
             'generationConfig' => [
                 'temperature' => 0.4,
-                'maxOutputTokens' => 1000,
+                'maxOutputTokens' => 2048,
             ],
         ];
 
@@ -247,7 +247,7 @@ PROMPT;
     {
         try {
             $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$this->apiKey}";
-            $res = Http::timeout(12)->post($url, $payload);
+            $res = Http::timeout(20)->post($url, $payload);
 
             if ($res->successful()) {
                 $parts = $res->json('candidates.0.content.parts') ?? [];
@@ -316,7 +316,7 @@ PROMPT;
             'contents' => $contents,
             'generationConfig' => [
                 'temperature' => 0.4,
-                'maxOutputTokens' => 1000,
+                'maxOutputTokens' => 2048,
             ],
         ];
 
@@ -346,7 +346,7 @@ PROMPT;
             
             $accumulated = '';
             $response = Http::withOptions(['stream' => true])
-                ->timeout(25)
+                ->timeout(35)
                 ->post($url, $payload);
 
             if (!$response->successful()) {
@@ -358,7 +358,7 @@ PROMPT;
             $buffer = '';
 
             while (!$body->eof()) {
-                $chunkData = $body->read(1024);
+                $chunkData = $body->read(4096);
                 if ($chunkData === '') {
                     break;
                 }
@@ -381,6 +381,19 @@ PROMPT;
                                 $onChunk($chunkText);
                             }
                         }
+                    }
+                }
+            }
+
+            // Flush any remaining data left in buffer
+            if (trim($buffer) !== '' && str_starts_with(trim($buffer), 'data: ')) {
+                $jsonStr = substr(trim($buffer), 6);
+                $decoded = json_decode($jsonStr, true);
+                if (isset($decoded['candidates'][0]['content']['parts'][0]['text'])) {
+                    $chunkText = $decoded['candidates'][0]['content']['parts'][0]['text'];
+                    if ($chunkText !== '') {
+                        $accumulated .= $chunkText;
+                        $onChunk($chunkText);
                     }
                 }
             }

@@ -218,13 +218,14 @@
                         const decoder = new TextDecoder('utf-8');
                         let buffer = '';
 
-                        while (true) {
+                        let streamFinished = false;
+                        while (!streamFinished) {
                             const { done, value } = await reader.read();
                             if (done) break;
 
                             buffer += decoder.decode(value, { stream: true });
                             const lines = buffer.split('\n');
-                            buffer = lines.pop();
+                            buffer = lines.pop() || '';
 
                             for (const line of lines) {
                                 const trimmed = line.trim();
@@ -232,6 +233,7 @@
                                 const dataStr = trimmed.substring(6);
                                 if (dataStr === '[DONE]') {
                                     streamedSuccessfully = true;
+                                    streamFinished = true;
                                     break;
                                 }
                                 try {
@@ -245,6 +247,18 @@
                                         assistantMsg.content += parsed.chunk;
                                         streamedSuccessfully = true;
                                         this.scrollToBottom();
+                                    }
+                                } catch (_) {}
+                            }
+                        }
+
+                        if (buffer && buffer.trim().startsWith('data: ')) {
+                            const dataStr = buffer.trim().substring(6);
+                            if (dataStr !== '[DONE]') {
+                                try {
+                                    const parsed = JSON.parse(dataStr);
+                                    if (parsed.chunk && assistantMsg) {
+                                        assistantMsg.content += parsed.chunk;
                                     }
                                 } catch (_) {}
                             }
@@ -313,8 +327,13 @@
             cleanTextForCopy(raw) {
                 if (!raw) return '';
                 return raw
+                    .replace(/\[action:[a-z-]+\|([^|\]]+)\|?([^\]]*)\]/g, (m, title, sub) => {
+                        const s = sub ? ` (${sub.trim()})` : '';
+                        return `\n👉 ${title.trim()}${s}\n`;
+                    })
                     .replace(/\[action:[^\]]+\]/g, '')
                     .replace(/\[\/?star_scorecard\]/g, '')
+                    .replace(/\n{3,}/g, '\n\n')
                     .trim();
             },
 
