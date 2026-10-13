@@ -20,8 +20,8 @@ class KawanKerjaService
     public function __construct()
     {
         $this->apiKey = config('services.gemini.key', env('GEMINI_API_KEY'));
-        $this->primaryModel = env('GEMINI_MODEL', 'gemini-3.1-flash-lite');
-        $this->fallbackModel = 'gemini-3.1-flash-lite-preview';
+        $this->primaryModel = env('GEMINI_MODEL', 'gemini-flash-lite-latest');
+        $this->fallbackModel = 'gemini-3.1-flash-lite';
     }
 
     /**

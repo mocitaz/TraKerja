@@ -68,6 +68,11 @@ class KawanKerjaChatController extends Controller
             }
             @ini_set('zlib.output_compression', 'Off');
             @ini_set('output_buffering', 'Off');
+            @ini_set('implicit_flush', '1');
+
+            while (ob_get_level() > 0) {
+                @ob_end_flush();
+            }
 
             $fullReply = '';
 
@@ -78,10 +83,7 @@ class KawanKerjaChatController extends Controller
                 function (string $chunk) use (&$fullReply) {
                     $fullReply .= $chunk;
                     echo "data: " . json_encode(['chunk' => $chunk]) . "\n\n";
-                    if (ob_get_level() > 0) {
-                        ob_flush();
-                    }
-                    flush();
+                    @flush();
                 }
             );
 
