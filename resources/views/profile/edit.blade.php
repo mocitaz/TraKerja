@@ -138,6 +138,7 @@
                                             <span x-text="selectedFile ? selectedFile : 'Select PDF, DOC, or DOCX file'">Select PDF, DOC, or DOCX file</span>
                                             <input id="resume-file-input" type="file" name="resume_file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required @change="selectedFile = $event.target.files[0]?.name || null">
                                         </label>
+                                        <span class="profile-field-hint">PDF, DOC, or DOCX up to 10 MB.</span>
                                         @error('resume_file')
                                             <p class="profile-field-error">{{ $message }}</p>
                                         @enderror
