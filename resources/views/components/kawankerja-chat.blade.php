@@ -324,12 +324,57 @@
                     return `\n<div class="kawankerja-action-wrap"><a href="${routeInfo.url}" class="kawankerja-action-card" wire:navigate><div class="kawankerja-action-icon"><i class="ph ${routeInfo.icon}" aria-hidden="true"></i></div><div class="kawankerja-action-text"><strong class="kawankerja-action-title">${title.trim()}</strong>${subHtml}</div><i class="ph ph-arrow-up-right kawankerja-action-arrow" aria-hidden="true"></i></a></div>\n`;
                 });
 
+                // STAR Scorecard: [star_scorecard]...[/star_scorecard]
+                esc = esc.replace(/\[star_scorecard\]([\s\S]*?)\[\/star_scorecard\]/g, (match, inner) => {
+                    const lines = inner.trim().split('\n');
+                    let overallBadge = '';
+                    let itemsHtml = '';
+
+                    lines.forEach(line => {
+                        const trimmedLine = line.trim();
+                        if (!trimmedLine) return;
+                        const parts = trimmedLine.split('|');
+                        if (parts.length < 2) return;
+                        const left = parts[0].trim();
+                        const note = parts.slice(1).join('|').trim();
+                        const colonIdx = left.indexOf(':');
+                        if (colonIdx === -1) return;
+                        const label = left.substring(0, colonIdx).trim();
+                        const scoreStr = left.substring(colonIdx + 1).trim();
+                        const numMatch = scoreStr.match(/([0-9]+(?:\.[0-9]+)?)/);
+                        const scoreNum = numMatch ? parseFloat(numMatch[1]) : 7.0;
+                        const pct = Math.min(100, Math.max(10, Math.round(scoreNum * 10)));
+
+                        if (label.toLowerCase().includes('overall')) {
+                            overallBadge = `<div class="kawankerja-star-overall"><span class="kawankerja-star-overall-pill">${scoreStr}</span><span class="kawankerja-star-overall-note">${note}</span></div>`;
+                        } else {
+                            const letter = label.charAt(0).toUpperCase();
+                            itemsHtml += `
+                                <div class="kawankerja-star-item">
+                                    <div class="kawankerja-star-item-head">
+                                        <div class="kawankerja-star-item-label">
+                                            <span class="kawankerja-star-letter">${letter}</span>
+                                            <strong>${label}</strong>
+                                        </div>
+                                        <span class="kawankerja-star-score">${scoreStr}</span>
+                                    </div>
+                                    <div class="kawankerja-star-track">
+                                        <div class="kawankerja-star-fill" style="width: ${pct}%"></div>
+                                    </div>
+                                    <div class="kawankerja-star-note">${note}</div>
+                                </div>`;
+                        }
+                    });
+
+                    return `\n<div class="kawankerja-star-card"><div class="kawankerja-star-head"><div class="kawankerja-star-title"><i class="ph ph-target" aria-hidden="true"></i> STAR Assessment</div>${overallBadge}</div><div class="kawankerja-star-items">${itemsHtml}</div></div>\n`;
+                });
+
                 // Paragraph spacing
                 esc = esc.replace(/\n{2,}/g, '<div class="kawankerja-gap"></div>');
                 esc = esc.replace(/\n/g, '<br>');
 
                 // Clean up excess <br> around block containers
-                esc = esc.replace(/<br>\s*(<(?:blockquote|div class="kawankerja-(?:gap|bullet|action-wrap)|h[34]|pre))/g, '$1');
+                esc = esc.replace(/<br>\s*(<(?:blockquote|div class="kawankerja-(?:gap|bullet|action-wrap|star-card)|h[34]|pre))/g, '$1');
                 esc = esc.replace(/(<\/(?:blockquote|h[34]|pre)>|<div class="kawankerja-gap"><\/div>|<\/div>)\s*<br>/g, '$1');
 
                 return esc.trim();

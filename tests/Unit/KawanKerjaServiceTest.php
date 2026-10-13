@@ -121,4 +121,16 @@ class KawanKerjaServiceTest extends TestCase
 
         $this->assertStringContainsString('[action:', $prompt);
     }
+
+    public function test_system_prompt_instructs_star_scorecard_syntax(): void
+    {
+        $service = app(KawanKerjaService::class);
+        $reflection = new \ReflectionClass($service);
+        $method = $reflection->getMethod('buildSystemPrompt');
+        $method->setAccessible(true);
+
+        $prompt = $method->invoke($service, ['user_name' => 'Luthfi']);
+
+        $this->assertStringContainsString('[star_scorecard]', $prompt);
+    }
 }

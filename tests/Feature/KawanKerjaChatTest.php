@@ -116,4 +116,14 @@ class KawanKerjaChatTest extends TestCase
         $response->assertSee('actionRoutes');
         $response->assertSee('kawankerja-action-card');
     }
+
+    public function test_chat_view_includes_star_scorecard_support(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('dashboard'));
+
+        $response->assertStatus(200);
+        $response->assertSee('kawankerja-star-card');
+    }
 }

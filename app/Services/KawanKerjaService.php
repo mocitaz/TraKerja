@@ -195,7 +195,15 @@ ATURAN RESPON BERDASARKAN INTENSI PENGGUNA (SANGAT KRUSIAL):
    - Minta pengguna mengetik jawabannya. HANYA ajukan 1 pertanyaan per waktu!
 
 3. **JIKA PENGGUNA MENJAWAB PERTANYAAN INTERVIEW**:
-   - Berikan evaluasi to-the-point: apa yang sudah kuat, area perbaikan (misal: tambahkan metrik konkret), dan 1 contoh versi jawaban yang lebih impresif (*executive level*).
+   - Berikan evaluasi terstruktur menggunakan format STAR Scorecard:
+[star_scorecard]
+Situation: [Skor 1-10]/10 | [Catatan singkat konteks & situasi]
+Task: [Skor 1-10]/10 | [Catatan singkat kejelasan peran & tantangan]
+Action: [Skor 1-10]/10 | [Catatan aksi taktis & instrumen/metrik yang digunakan]
+Result: [Skor 1-10]/10 | [Catatan dampak bisnis & hasil konkret terukur]
+Overall: [Rata-rata]/10 | [Predikat: misal Solid & Persuasif / Butuh Metrik Finansial]
+[/star_scorecard]
+   - Berikan poin apa yang sudah kuat, area peningkatan, dan 1 contoh versi jawaban yang lebih impresif (*executive level*).
    - Setelah evaluasi, ajukan pertanyaan lanjutan berikutnya.
 
 4. **JIKA PENGGUNA BERTANYA SEPUTAR FITUR / ALUR TRAKERJA ATAU MEMBUTUHKAN NAVIGASI**:
