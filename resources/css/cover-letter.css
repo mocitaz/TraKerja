@@ -41,11 +41,26 @@
 /* ==========================================================================
    Gemini Dark Mode Styles for Cover Letter Workspace
    ========================================================================== */
+.dark .cover-letter-workspace {
+    background-color: #131314 !important;
+    color: #f0f4f9;
+}
 .dark .cover-letter-header h1 {
     color: #f0f4f9;
 }
 .dark .cover-letter-header p {
     color: #94a3b8;
+}
+.dark .cover-letter-header .workspace-eyebrow {
+    color: #c084fc !important;
+}
+.dark .cover-letter-header .cv-button-secondary {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .cover-letter-header .cv-button-secondary:hover {
+    background: #333538 !important;
 }
 .dark .cover-letter-paper {
     background: #1e1f20;
@@ -55,6 +70,9 @@
 }
 .dark .cover-letter-paper > header {
     border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+.dark .cover-letter-paper > header span {
+    color: #94a3b8;
 }
 .dark .cover-letter-workspace .cover-letter-paper h2 {
     color: #f0f4f9;
@@ -74,6 +92,9 @@
     border-top-color: rgba(255, 255, 255, 0.08);
     color: #94a3b8;
 }
+.dark .cover-letter-paper > footer span {
+    color: #94a3b8;
+}
 .dark .cover-letter-actions,
 .dark .cover-letter-context {
     background: #1e1f20;
@@ -83,6 +104,9 @@
 .dark .cover-letter-workspace .cover-letter-sidebar h2 {
     color: #f0f4f9;
 }
+.dark .cover-letter-workspace .cover-letter-actions > p {
+    color: #94a3b8;
+}
 .dark .cover-letter-actions .cv-button-secondary {
     background: #282a2c;
     border-color: rgba(255, 255, 255, 0.08);
@@ -90,6 +114,15 @@
 }
 .dark .cover-letter-actions .cv-button-secondary:hover {
     background: #333538;
+}
+.dark .cover-letter-actions .cv-button-primary {
+    background: #a855f7 !important;
+    border-color: #a855f7 !important;
+    color: #ffffff !important;
+}
+.dark .cover-letter-actions .cv-button-primary:hover {
+    background: #9333ea !important;
+    border-color: #9333ea !important;
 }
 .dark .cover-letter-context dt {
     color: #94a3b8;
@@ -109,5 +142,11 @@
 }
 .dark .cover-letter-review-note a {
     color: #d8b4fe;
+}
+.dark .cover-letter-select {
+    color: #c084fc;
+}
+.dark .cover-letter-workspace .cover-letter-action-status {
+    color: #c084fc;
 }
 
