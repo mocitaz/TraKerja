@@ -850,7 +850,7 @@
 }
 
 /* ==========================================================================
-   Gemini Dark Mode Styles for KawanKerja AI Assistant
+   Gemini Dark Mode Styles for HireMate AI Assistant
    ========================================================================== */
 .dark .kawankerja-launcher {
     background: #1e1f20;
@@ -858,98 +858,347 @@
     color: #f0f4f9;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
+
 .dark .kawankerja-launcher:hover {
     background: #282a2c;
     border-color: rgba(168, 85, 247, 0.4);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
+
+.dark .kawankerja-launcher-avatar {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
 .dark .kawankerja-launcher-label strong {
     color: #f0f4f9;
 }
+
 .dark .kawankerja-launcher-label small {
     color: #c4b5fd;
 }
+
 .dark .kawankerja-online-dot {
     border-color: #1e1f20;
 }
+
+/* Chat Window */
 .dark .kawankerja-window {
     background: #1e1f20;
     border-color: rgba(255, 255, 255, 0.08);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
     color: #f0f4f9;
 }
+
+/* Header */
 .dark .kawankerja-header {
     background: #18191a;
     border-bottom-color: rgba(255, 255, 255, 0.08);
 }
+
+.dark .kawankerja-header-avatar {
+    background: #282a2c;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.dark .kawankerja-status-indicator {
+    border-color: #18191a;
+}
+
 .dark .kawankerja-header-text h3 {
     color: #f0f4f9;
 }
+
 .dark .kawankerja-header-text p {
     color: #94a3b8;
 }
+
 .dark .kawankerja-header-btn {
     color: #94a3b8;
 }
+
 .dark .kawankerja-header-btn:hover {
     background: #282a2c;
     color: #f0f4f9;
 }
+
+/* Messages Canvas */
 .dark .kawankerja-messages {
     background: #1e1f20;
 }
-.dark .kawankerja-welcome-card {
-    background: #18191a;
-    border-color: rgba(255, 255, 255, 0.07);
+
+.dark .kawankerja-messages::-webkit-scrollbar-thumb {
+    background: #333538;
 }
-.dark .kawankerja-welcome-card h4 {
+
+/* Welcome Section */
+.dark .kawankerja-welcome-heading {
     color: #f0f4f9;
 }
-.dark .kawankerja-welcome-card p {
+
+.dark .kawankerja-welcome-sub {
     color: #94a3b8;
 }
-.dark .kawankerja-bubble-assistant {
+
+.dark .kawankerja-chip {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.dark .kawankerja-chip i {
+    color: #94a3b8;
+}
+
+.dark .kawankerja-chip:hover {
+    background: #333538;
+    border-color: rgba(168, 85, 247, 0.4);
+    color: #ffffff;
+}
+
+.dark .kawankerja-chip:hover i {
+    color: #c4b5fd;
+    transform: translateX(2px);
+}
+
+/* Chat Rows & Avatars */
+.dark .kawankerja-row-avatar {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Message Bubbles */
+.dark .kawankerja-bubble--user {
+    background: #3b265c;
+    color: #f0f4f9;
+    border-color: rgba(168, 85, 247, 0.35);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dark .kawankerja-bubble--bot {
     background: #282a2c;
     color: #f0f4f9;
-    border-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
-.dark .kawankerja-bubble-user {
-    background: #3b2d54;
+
+.dark .kawankerja-bubble-content {
     color: #f0f4f9;
 }
-.dark .kawankerja-suggestion-pill {
-    background: #282a2c;
+
+.dark .kawankerja-bubble-content strong {
+    color: #ffffff;
+}
+
+.dark .kawankerja-bubble-content a {
+    color: #c4b5fd;
+}
+
+.dark .kawankerja-bubble-footer {
+    border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .kawankerja-copy-btn {
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.dark .kawankerja-copy-btn:hover {
+    color: #f0f4f9;
+    background: rgba(255, 255, 255, 0.09);
+}
+
+.dark .kawankerja-copy-btn.is-copied {
+    color: #34d399;
+}
+
+/* Rich Content Inside Bubbles */
+.dark .kawankerja-quote {
+    background: #18191a;
     border-color: rgba(255, 255, 255, 0.08);
     color: #cbd5e1;
 }
-.dark .kawankerja-suggestion-pill:hover {
-    background: #333538;
+
+.dark .kawankerja-quote strong {
     color: #f0f4f9;
-    border-color: rgba(168, 85, 247, 0.35);
 }
-.dark .kawankerja-composer {
+
+.dark .kawankerja-bullet {
+    color: #cbd5e1;
+}
+
+.dark .kawankerja-bullet-dot {
+    color: #c4b5fd;
+}
+
+.dark .kawankerja-bullet-num {
+    color: #c4b5fd;
+}
+
+.dark .kawankerja-h3 {
+    color: #f0f4f9;
+}
+
+.dark .kawankerja-h4 {
+    color: #f0f4f9;
+}
+
+.dark .kawankerja-code {
+    background: #131314;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #e2e8f0;
+}
+
+.dark .kawankerja-inline-code {
+    background: rgba(255, 255, 255, 0.08);
+    color: #c4b5fd;
+}
+
+/* Action Cards */
+.dark .kawankerja-action-card {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dark .kawankerja-action-card:hover {
+    background: #282a2c;
+    border-color: rgba(168, 85, 247, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark .kawankerja-action-icon {
+    background: rgba(168, 85, 247, 0.15);
+    color: #c4b5fd;
+}
+
+.dark .kawankerja-action-title {
+    color: #f0f4f9;
+}
+
+.dark .kawankerja-action-sub {
+    color: #94a3b8;
+}
+
+.dark .kawankerja-action-arrow {
+    color: #94a3b8;
+}
+
+.dark .kawankerja-action-card:hover .kawankerja-action-arrow {
+    color: #c4b5fd;
+}
+
+/* STAR Scorecard */
+.dark .kawankerja-star-card {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dark .kawankerja-star-head {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .kawankerja-star-title {
+    color: #f0f4f9;
+}
+
+.dark .kawankerja-star-title i {
+    color: #c4b5fd;
+}
+
+.dark .kawankerja-star-overall {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .kawankerja-star-overall-pill {
+    color: #c4b5fd;
+}
+
+.dark .kawankerja-star-overall-note {
+    color: #cbd5e1;
+}
+
+.dark .kawankerja-star-item {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark .kawankerja-star-letter {
+    background: #6d28d9;
+    color: #ffffff;
+}
+
+.dark .kawankerja-star-item-label strong {
+    color: #f0f4f9;
+}
+
+.dark .kawankerja-star-score {
+    color: #c4b5fd;
+}
+
+.dark .kawankerja-star-track {
+    background: #282a2c;
+}
+
+.dark .kawankerja-star-fill {
+    background: linear-gradient(90deg, #a855f7 0%, #7c3aed 100%);
+}
+
+.dark .kawankerja-star-note {
+    color: #94a3b8;
+}
+
+/* Typing Dots */
+.dark .kawankerja-typing-dots span {
+    background: #c4b5fd;
+}
+
+/* Footer & Input Area */
+.dark .kawankerja-footer {
     background: #18191a;
     border-top-color: rgba(255, 255, 255, 0.08);
 }
-.dark .kawankerja-input-wrapper {
-    background: #131314;
+
+.dark .kawankerja-input-row {
+    background: #282a2c;
     border-color: rgba(255, 255, 255, 0.1);
 }
-.dark .kawankerja-textarea {
-    color: #f0f4f9;
+
+.dark .kawankerja-input-row:focus-within {
+    background: #282a2c;
+    border-color: rgba(168, 85, 247, 0.5);
+    box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2);
 }
+
+.dark .kawankerja-textarea,
+.dark .kawankerja-textarea:focus,
+.dark .kawankerja-textarea:focus-visible {
+    color: #f0f4f9 !important;
+}
+
 .dark .kawankerja-textarea::placeholder {
     color: #64748b;
 }
+
 .dark .kawankerja-send-btn {
-    background: #5b427d;
-    color: #fff;
+    background: #7c3aed;
+    color: #ffffff;
 }
+
 .dark .kawankerja-send-btn:hover:not(:disabled) {
-    background: #6e4f99;
+    background: #6d28d9;
 }
+
 .dark .kawankerja-send-btn:disabled {
     background: #282a2c;
+    color: #475569;
+}
+
+.dark .kawankerja-input-hint {
     color: #64748b;
 }
 
