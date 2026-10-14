@@ -861,7 +861,7 @@
 
 .dark .kawankerja-launcher:hover {
     background: #282a2c;
-    border-color: rgba(59, 130, 246, 0.4);
+    border-color: rgba(168, 85, 247, 0.4);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
@@ -875,7 +875,7 @@
 }
 
 .dark .kawankerja-launcher-label small {
-    color: #60a5fa;
+    color: #a78bfa;
 }
 
 .dark .kawankerja-online-dot {
@@ -953,12 +953,12 @@
 
 .dark .kawankerja-chip:hover {
     background: #333538;
-    border-color: rgba(59, 130, 246, 0.4);
+    border-color: rgba(168, 85, 247, 0.35);
     color: #ffffff;
 }
 
 .dark .kawankerja-chip:hover i {
-    color: #60a5fa;
+    color: #a78bfa;
     transform: translateX(2px);
 }
 
@@ -970,10 +970,10 @@
 
 /* Message Bubbles */
 .dark .kawankerja-bubble--user {
-    background: #1e3a5f;
-    color: #f0f4f9;
-    border-color: rgba(59, 130, 246, 0.45);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    background: #2e1d47;
+    color: #f3e8ff;
+    border-color: rgba(168, 85, 247, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .dark .kawankerja-bubble--bot {
@@ -992,7 +992,7 @@
 }
 
 .dark .kawankerja-bubble-content a {
-    color: #60a5fa;
+    color: #c084fc;
 }
 
 .dark .kawankerja-bubble-footer {
@@ -1029,11 +1029,11 @@
 }
 
 .dark .kawankerja-bullet-dot {
-    color: #60a5fa;
+    color: #a78bfa;
 }
 
 .dark .kawankerja-bullet-num {
-    color: #60a5fa;
+    color: #a78bfa;
 }
 
 .dark .kawankerja-h3 {
@@ -1051,8 +1051,8 @@
 }
 
 .dark .kawankerja-inline-code {
-    background: rgba(255, 255, 255, 0.08);
-    color: #93c5fd;
+    background: rgba(168, 85, 247, 0.15);
+    color: #d8b4fe;
 }
 
 /* Action Cards */
@@ -1065,13 +1065,13 @@
 
 .dark .kawankerja-action-card:hover {
     background: #282a2c;
-    border-color: rgba(59, 130, 246, 0.4);
+    border-color: rgba(168, 85, 247, 0.35);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .dark .kawankerja-action-icon {
-    background: rgba(37, 121, 202, 0.15);
-    color: #60a5fa;
+    background: rgba(168, 85, 247, 0.15);
+    color: #c084fc;
 }
 
 .dark .kawankerja-action-title {
@@ -1087,7 +1087,7 @@
 }
 
 .dark .kawankerja-action-card:hover .kawankerja-action-arrow {
-    color: #60a5fa;
+    color: #c084fc;
 }
 
 /* STAR Scorecard */
@@ -1106,7 +1106,7 @@
 }
 
 .dark .kawankerja-star-title i {
-    color: #60a5fa;
+    color: #a78bfa;
 }
 
 .dark .kawankerja-star-overall {
@@ -1115,7 +1115,7 @@
 }
 
 .dark .kawankerja-star-overall-pill {
-    color: #60a5fa;
+    color: #a78bfa;
 }
 
 .dark .kawankerja-star-overall-note {
@@ -1128,7 +1128,7 @@
 }
 
 .dark .kawankerja-star-letter {
-    background: #2579ca;
+    background: #7c3aed;
     color: #ffffff;
 }
 
@@ -1137,7 +1137,7 @@
 }
 
 .dark .kawankerja-star-score {
-    color: #60a5fa;
+    color: #a78bfa;
 }
 
 .dark .kawankerja-star-track {
@@ -1145,7 +1145,7 @@
 }
 
 .dark .kawankerja-star-fill {
-    background: linear-gradient(90deg, #3b82f6 0%, #2579ca 100%);
+    background: linear-gradient(90deg, #a855f7 0%, #7c3aed 100%);
 }
 
 .dark .kawankerja-star-note {
@@ -1154,7 +1154,7 @@
 
 /* Typing Dots */
 .dark .kawankerja-typing-dots span {
-    background: #60a5fa;
+    background: #a78bfa;
 }
 
 /* Footer & Input Area */
@@ -1170,8 +1170,8 @@
 
 .dark .kawankerja-input-row:focus-within {
     background: #282a2c;
-    border-color: rgba(59, 130, 246, 0.5);
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    border-color: rgba(168, 85, 247, 0.45);
+    box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.18);
 }
 
 .dark .kawankerja-textarea,
@@ -1185,17 +1185,20 @@
 }
 
 .dark .kawankerja-send-btn {
-    background: #2579ca;
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
     color: #ffffff;
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);
 }
 
 .dark .kawankerja-send-btn:hover:not(:disabled) {
-    background: #1d6bb8;
+    background: linear-gradient(135deg, #9333ea 0%, #6d28d9 100%);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.45);
 }
 
 .dark .kawankerja-send-btn:disabled {
     background: #282a2c;
     color: #475569;
+    box-shadow: none;
 }
 
 .dark .kawankerja-input-hint {
