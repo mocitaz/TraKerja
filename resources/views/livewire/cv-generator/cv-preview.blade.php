@@ -10,7 +10,7 @@
             
             <!-- Modal Container -->
             <div class="flex min-h-screen items-center justify-center p-4">
-                <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col">
+                <div class="relative bg-white dark:bg-[#1e1f20] dark:border dark:border-white/10 rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col">
                     
                     <!-- Modal Header -->
                     <div class="sticky top-0 z-10 bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4 rounded-t-2xl">
@@ -37,7 +37,7 @@
                     </div>
 
                     <!-- Preview Content (Scrollable) -->
-                    <div class="flex-1 overflow-y-auto p-8 bg-gray-50">
+                    <div class="flex-1 overflow-y-auto p-8 bg-gray-50 dark:bg-[#131314]">
                         <div class="max-w-4xl mx-auto bg-white shadow-lg" style="min-height: 1000px;">
                             <!-- CV Content - Matches PDF Export Exactly -->
                             <div class="p-12" style="font-family: Arial, sans-serif; font-size: 10pt; line-height: 1.4; color: #000;">
@@ -184,9 +184,9 @@
                     </div>
 
                     <!-- Modal Footer (Sticky) -->
-                    <div class="sticky bottom-0 bg-white border-t border-gray-200 px-6 py-4 rounded-b-2xl flex items-center justify-between gap-4">
-                        <div class="text-sm text-gray-600">
-                            <p class="flex items-center gap-2 text-emerald-600">
+                    <div class="sticky bottom-0 bg-white dark:bg-[#1e1f20] border-t border-gray-200 dark:border-white/10 px-6 py-4 rounded-b-2xl flex items-center justify-between gap-4">
+                        <div class="text-sm text-gray-600 dark:text-zinc-400">
+                            <p class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                 </svg>
@@ -196,7 +196,7 @@
                         <div class="flex gap-3">
                             <button type="button"
                                     @click="closing = true; $wire.closeModal()"
-                                    class="px-6 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium">
+                                    class="px-6 py-2.5 bg-white dark:bg-[#282a2c] border border-gray-300 dark:border-white/10 text-gray-700 dark:text-[#f0f4f9] rounded-lg hover:bg-gray-50 hover:dark:bg-[#333538] transition font-medium">
                                 Close
                             </button>
                             <form action="{{ route('cv-builder.export') }}" method="POST" class="inline">

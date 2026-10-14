@@ -433,6 +433,7 @@
 .dark .site-address-field input {
     background: #131314 !important;
     color: #f0f4f9 !important;
+    color-scheme: dark;
 }
 .dark .site-address-field > p,
 .dark .site-theme-options > p,

@@ -1765,6 +1765,7 @@
     background: #131314 !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     color: #f0f4f9 !important;
+    color-scheme: dark;
 }
 .dark .cv-detail-field input:focus,
 .dark .cv-detail-field textarea:focus,
@@ -1821,6 +1822,11 @@
 .dark .cv-entry-form > div:first-child button:hover {
     background: #333538 !important;
 }
+.dark .cv-entry-form > div:first-child .w-8.h-8 {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
 .dark .cv-entry-form .bg-white {
     background: #282a2c !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -1833,6 +1839,51 @@
     background: #1e1f20 !important;
     border-color: rgba(255, 255, 255, 0.08) !important;
     color: #94a3b8 !important;
+}
+.dark .cv-entry-form .w-9.h-9 {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+}
+.dark .cv-entry-form .group:hover .w-9.h-9 {
+    background: #282a2c !important;
+    color: #f0f4f9 !important;
+}
+.dark .cv-entry-form .bg-primary-50 {
+    background: rgba(168, 85, 247, 0.15) !important;
+    color: #d8b4fe !important;
+    border: 1px solid rgba(168, 85, 247, 0.3) !important;
+}
+.dark .cv-entry-form .bg-emerald-50 {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #6ee7b7 !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+.dark .cv-entry-form .border-zinc-100 {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+}
+.dark .cv-entry-form .group:hover .border-zinc-100 {
+    background: #282a2c !important;
+    color: #d8b4fe !important;
+    border-color: rgba(168, 85, 247, 0.3) !important;
+}
+.dark .cv-entry-form .bg-zinc-100 {
+    background: #18191a !important;
+}
+.dark .cv-entry-form .flex.bg-zinc-50 {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .cv-entry-form button[aria-label="Move entry up"],
+.dark .cv-entry-form button[aria-label="Move entry down"] {
+    color: #94a3b8 !important;
+}
+.dark .cv-entry-form button[aria-label="Move entry up"]:hover,
+.dark .cv-entry-form button[aria-label="Move entry down"]:hover {
+    background: #282a2c !important;
+    color: #f0f4f9 !important;
 }
 .dark .cv-entry-form h4,
 .dark .cv-entry-form h3,
@@ -1852,6 +1903,12 @@
     background: #282a2c !important;
     border-color: rgba(255, 255, 255, 0.08) !important;
     color: #94a3b8 !important;
+}
+.dark .cv-entry-form .border-dashed button {
+    color: #c084fc !important;
+}
+.dark .cv-entry-form .border-dashed button:hover {
+    color: #d8b4fe !important;
 }
 .dark .cv-entry-form button[aria-label="Edit entry"] {
     background: #1e1f20 !important;
@@ -1910,6 +1967,7 @@
     background: #131314 !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     color: #f0f4f9 !important;
+    color-scheme: dark;
 }
 .dark .cv-entry-dialog :is(input, select, textarea):focus {
     background: #1e1f20 !important;
@@ -1977,6 +2035,9 @@
 .dark .cv-template-option {
     background: #282a2c !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .cv-template-option input[type="radio"] {
+    accent-color: #a855f7 !important;
 }
 .dark .cv-template-option.is-selected {
     background: #333538 !important;
@@ -2154,7 +2215,15 @@
     color: #f0f4f9 !important;
 }
 .dark .cv-check-results article header span {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 2px 8px !important;
+    border-radius: 9999px !important;
+    font-size: 11px !important;
     color: #94a3b8 !important;
+}
+.dark .cv-import-body .cv-import-success {
+    color: #6ee7b7 !important;
 }
 .dark .cv-check-results article p,
 .dark .cv-check-results li {
