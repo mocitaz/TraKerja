@@ -44,23 +44,41 @@
     color: #f0f4f9 !important;
 }
 .dark .community-art {
-    background: #1a1523 !important;
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    background: #141517 !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+.dark .community-connections path {
+    stroke: rgba(255, 255, 255, 0.12) !important;
 }
 .dark .community-art-caption {
-    color: #c084fc !important;
+    color: #94a3b8 !important;
 }
 .dark .community-avatar {
-    border-color: rgba(255, 255, 255, 0.15) !important;
+    border-color: #282a2c !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45) !important;
 }
 .dark .community-speech {
-    background: #1e1f20 !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
+    background: #232527 !important;
+    border: 1px solid rgba(255, 255, 255, 0.09) !important;
     color: #f0f4f9 !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
 }
 .dark .community-speech--hello > span {
     color: #f472b6 !important;
+}
+.dark .community-speech-dot {
+    background: #c084fc !important;
+}
+.dark .community-plane svg path:first-child {
+    fill: #232527 !important;
+    stroke: rgba(255, 255, 255, 0.25) !important;
+}
+.dark .community-plane svg path:not(:first-child) {
+    stroke: #c084fc !important;
+}
+.dark .community-spark {
+    color: #94a3b8 !important;
+    opacity: 0.7;
 }
 .dark .community-art-footer {
     color: #94a3b8 !important;
