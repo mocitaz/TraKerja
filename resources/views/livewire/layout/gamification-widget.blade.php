@@ -45,7 +45,7 @@
                     <section class="rewards-overview" aria-label="Your current level">
                         <div><span class="rewards-level-label">Level {{ $currentLvl }}</span><h3>{{ Auth::user()->level_title }}</h3><p>{{ $currentLvl >= $maxLevel ? 'Highest level unlocked' : number_format(max(0, $nextThreshold - $currentXp)).' XP to Level '.($currentLvl + 1) }}</p></div>
                         <div class="rewards-ring" role="progressbar" aria-label="Progress to next career level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ round($percentage) }}">
-                            <svg viewBox="0 0 104 104" aria-hidden="true"><circle cx="52" cy="52" r="45" fill="none" stroke="#e5d9e9" stroke-width="6"/><circle cx="52" cy="52" r="45" fill="none" stroke="#b65c99" stroke-width="6" stroke-linecap="round" stroke-dasharray="282.743" stroke-dashoffset="{{ 282.743 * (1 - $percentage / 100) }}" transform="rotate(-90 52 52)"/></svg>
+                            <svg viewBox="0 0 104 104" aria-hidden="true"><circle cx="52" cy="52" r="45" fill="none" class="rewards-ring-track" stroke-width="6"/><circle cx="52" cy="52" r="45" fill="none" class="rewards-ring-fill" stroke-width="6" stroke-linecap="round" stroke-dasharray="282.743" stroke-dashoffset="{{ 282.743 * (1 - $percentage / 100) }}" transform="rotate(-90 52 52)"/></svg>
                             <div><strong>{{ number_format($currentXp) }}</strong><span>total XP</span></div>
                         </div>
                     </section>

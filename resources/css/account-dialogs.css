@@ -1,24 +1,602 @@
-.account-dialog-overlay{position:fixed;inset:0;z-index:10001;display:flex;align-items:center;justify-content:center;padding:24px;background:#28314466;backdrop-filter:blur(5px);overflow-y:auto}.account-dialog-overlay.hidden{display:none}.account-dialog-fade{transition:opacity .2s ease}.rewards-dialog,.account-confirm-panel{font-family:'Plus Jakarta Sans',sans-serif;background:#fff;color:#30313c;border:1px solid #fff;border-radius:26px;box-shadow:0 24px 70px #23304524;animation:account-dialog-arrive .2s ease-out both}.rewards-dialog{width:100%;max-width:560px;max-height:calc(100dvh - 48px);display:flex;flex-direction:column;overflow:hidden;text-align:left}.account-dialog-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:28px 28px 21px}.account-dialog-heading h2{font-size:22px;font-weight:600;letter-spacing:-.7px;margin:0;line-height:1.4}.account-dialog-heading p{font-size:12px;color:#676674;line-height:1.7;margin:6px 0 0}.account-dialog-close{display:grid;place-items:center;width:36px;height:36px;flex-shrink:0;background:#f5f3f7;color:#676070;font-size:17px;border:1px solid transparent;border-radius:50%;cursor:pointer;transition:background .15s}.account-dialog-close:hover{background:#ebe5f1}.rewards-body{padding:0 28px;overflow-y:auto;min-height:0}.rewards-overview{background:#f3edf7;border:1px solid #eadff0;border-radius:19px;padding:24px;display:flex;justify-content:space-between;align-items:center;gap:22px}.rewards-level-label{display:inline-block;background:#fff;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:500;color:#805779}.rewards-overview h3{font-size:20px;font-weight:500;letter-spacing:-.6px;line-height:1.35;margin:11px 0 9px}.rewards-overview p{font-size:11px;color:#76556e;margin:0;line-height:1.7}.rewards-ring{position:relative;width:110px;height:110px;flex-shrink:0}.rewards-ring svg{width:100%;height:100%}.rewards-ring>div{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}.rewards-ring strong{font-size:24px;letter-spacing:-.6px;font-weight:600;line-height:1}.rewards-ring span{font-size:10px;color:#776477}.rewards-path{padding:24px 0;border-bottom:1px solid #ece9f0}.rewards-path h3,.rewards-earning h3{font-size:13px;font-weight:600;letter-spacing:-.1px;margin:0}.rewards-path ol{list-style:none;padding:0;margin:19px 0 0;display:flex;justify-content:space-between;gap:9px;position:relative}.rewards-path ol:before{content:'';position:absolute;top:17px;left:22px;right:22px;height:1px;background:#e0d9e7}.rewards-path li{display:flex;flex-direction:column;align-items:center;gap:10px;position:relative;flex:1}.rewards-milestone{width:36px;height:36px;display:grid;place-items:center;border:1px solid #e0d9e7;border-radius:50%;background:#fff;color:#746b7c;font-size:11px;font-weight:600}.rewards-threshold{font-size:10px;color:#746b7c;white-space:nowrap}.is-unlocked .rewards-milestone{background:#f7edf4;border-color:#ead5e4;color:#a15a8b}.is-current .rewards-milestone{background:#745182;border-color:#745182;color:#fff;box-shadow:0 0 0 4px #f1e9f6}.is-current .rewards-threshold{color:#765080;font-weight:600}.rewards-earning{padding:24px 0 6px}.rewards-earning>p{font-size:11px;color:#676674;margin:8px 0 15px;line-height:1.8}.rewards-earn-row{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:14px 0;border-top:1px solid #eeeaf2}.rewards-earn-row strong{display:block;font-size:12px;font-weight:500}.rewards-earn-row div>span{display:block;font-size:10px;color:#676674;margin-top:5px;line-height:1.7}.rewards-earn-row>span{font-size:11px;font-weight:500;white-space:nowrap;background:#f6f0f8;border-radius:7px;padding:7px 10px;color:#7c527d}.rewards-footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 28px 24px}.rewards-footer p{font-size:10px;color:#676674;margin:0;line-height:1.7}.account-dialog-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:10px 18px;border-radius:11px;border:1px solid #e2e8f0;background:#fff;color:#475569;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s ease;user-select:none}.account-dialog-button:hover{background:#f8fafc;border-color:#cbd5e1;color:#0f172a}.account-dialog-button:active{transform:scale(.985)}.account-dialog-button--primary{background:#2579ca;border-color:#2579ca;color:#fff}.account-dialog-button--primary:hover{background:#1e65ab;border-color:#1e65ab}.account-dialog-button:disabled,.account-dialog-close:disabled{opacity:.6;cursor:wait;transform:none}.account-confirm-panel{position:relative;width:100%;max-width:380px;padding:28px 24px 24px;background:#fff;color:#1e293b;border:1px solid rgba(226,232,240,.9);border-radius:22px;box-shadow:0 20px 45px -10px rgba(15,23,42,.16),0 0 1px 1px rgba(0,0,0,.04);text-align:left}.account-confirm-panel>.account-dialog-close{position:absolute;top:18px;right:18px;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:#f1f5f9;color:#64748b;font-size:15px;border:1px solid transparent;cursor:pointer;transition:all .15s ease}.account-confirm-panel>.account-dialog-close:hover{background:#e2e8f0;color:#0f172a}.account-confirm-visual{width:48px;height:48px;border-radius:14px;background:#fef2f2;color:#dc2626;border:1px solid #fee2e2;display:grid;place-items:center;font-size:22px;margin:0 0 20px;transition:all .15s ease}.account-confirm-logout-icon{display:none}.account-confirm-action-icon{display:block}.account-dialog-overlay[data-variant="logout"] .account-confirm-visual{background:#fef2f2;color:#dc2626;border:1px solid #fee2e2}.account-dialog-overlay[data-variant="logout"] .account-confirm-logout-icon{display:block}.account-dialog-overlay[data-variant="logout"] .account-confirm-action-icon{display:none}.account-dialog-overlay[data-variant="action"] .account-confirm-visual{background:#fef2f2;color:#dc2626;border:1px solid #fee2e2}.account-confirm-panel h2{font-size:20px;font-weight:700;letter-spacing:-.4px;line-height:1.3;color:#0f172a;margin:0 0 8px}.account-confirm-panel p{font-size:13px;line-height:1.55;color:#64748b;margin:0}.account-confirm-panel #confirm-error{background:#fef2f2;border:1px solid #fecaca;padding:10px 12px;border-radius:10px;color:#b91c1c;font-size:11.5px;margin-top:14px}.account-confirm-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}.account-dialog-overlay[data-variant="logout"] #confirm-button,.account-dialog-overlay[data-variant="action"] #confirm-button{background:#dc2626;border-color:#dc2626;color:#fff;box-shadow:0 1px 2px rgba(220,38,38,.18),0 2px 6px rgba(220,38,38,.14)}.account-dialog-overlay[data-variant="logout"] #confirm-button:hover,.account-dialog-overlay[data-variant="action"] #confirm-button:hover{background:#b91c1c;border-color:#b91c1c;box-shadow:0 2px 8px rgba(185,28,28,.25)}.account-dialog-overlay[data-variant="logout"] #confirm-button:active,.account-dialog-overlay[data-variant="action"] #confirm-button:active{transform:scale(.985)}.account-dialog-overlay :is(button,a):focus-visible{outline:2px solid #ef4444;outline-offset:2px}.account-dialog-overlay #confirm-cancel:focus-visible{outline:2px solid #94a3b8;outline-offset:2px}
-@keyframes account-dialog-arrive{from{opacity:0;transform:translateY(7px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-@media(max-width:600px){.account-dialog-overlay{padding:16px}.rewards-dialog{max-height:calc(100dvh - 32px);border-radius:23px}.account-dialog-heading{padding:23px 22px 18px}.account-dialog-heading h2{font-size:20px}.rewards-body{padding:0 22px}.rewards-overview{padding:19px;gap:16px}.rewards-overview h3{font-size:18px}.rewards-ring{width:94px;height:94px}.rewards-ring strong{font-size:21px}.rewards-footer{padding:16px 22px 22px}.rewards-path ol{gap:4px}.rewards-threshold{font-size:9px}.rewards-earn-row{gap:10px}.rewards-earn-row>span{padding:6px 8px;font-size:10px}.account-confirm-panel{padding:24px 20px 20px;border-radius:20px}.account-confirm-panel h2{font-size:19px}}
-@media(max-width:360px){.rewards-body{padding:0 17px}.rewards-overview{padding:16px;gap:10px}.rewards-overview h3{font-size:16px}.rewards-ring{width:82px;height:82px}.rewards-ring strong{font-size:19px}.rewards-footer p{max-width:130px}}
-@media(prefers-reduced-motion:reduce){.rewards-dialog,.account-confirm-panel{animation:none}.account-dialog-fade,.account-dialog-button,.account-dialog-close{transition:none}}
+/* ==========================================================================
+   Account Dialogs & Confirmation Modals (Light & Dark Mode)
+   ========================================================================== */
 
-.account-dialog-overlay[data-variant="archive"] .account-confirm-panel { max-width: 340px; padding: 22px; border-radius: 18px; }
-.account-dialog-overlay[data-variant="archive"] .account-confirm-visual { display: none; }
-.account-dialog-overlay[data-variant="archive"] .account-dialog-close { top: 12px; right: 12px; width: 32px; height: 32px; }
-.account-dialog-overlay[data-variant="archive"] .account-confirm-panel h2 { padding-right: 30px; font-size: 18px; letter-spacing: -.35px; margin-bottom: 8px; }
-.account-dialog-overlay[data-variant="archive"] .account-confirm-panel p { font-size: 11px; line-height: 1.7; }
-.account-dialog-overlay[data-variant="archive"] .account-confirm-actions { margin-top: 18px; gap: 8px; }
-.account-dialog-overlay[data-variant="archive"] .account-dialog-button { min-height: 40px; padding: 9px 14px; font-size: 11px; border-radius: 9px; }
-@media (pointer: coarse) { .account-dialog-overlay[data-variant="archive"] :is(.account-dialog-button, .account-dialog-close) { min-height: 44px; min-width: 44px; } }
+.account-dialog-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(5px);
+    overflow-y: auto;
+}
+
+.account-dialog-overlay.hidden {
+    display: none;
+}
+
+.account-dialog-fade {
+    transition: opacity 0.2s ease;
+}
+
+@keyframes account-dialog-arrive {
+    from {
+        opacity: 0;
+        transform: translateY(6px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
 
 /* ==========================================================================
-   Dark Mode - Account Dialogs & Confirmation Modals
+   TraKerja Rewards Dialog (Redesigned & Compact)
+   ========================================================================== */
+
+.rewards-dialog {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    width: 100%;
+    max-width: 440px;
+    max-height: calc(100dvh - 36px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    text-align: left;
+    background: #ffffff;
+    color: #18181b;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.16), 0 0 1px 1px rgba(0, 0, 0, 0.04);
+    animation: account-dialog-arrive 0.2s ease-out both;
+}
+
+/* Header */
+.account-dialog-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 20px 12px;
+}
+
+.account-dialog-heading h2 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    margin: 0;
+    line-height: 1.25;
+    color: #18181b;
+}
+
+.account-dialog-heading p {
+    font-size: 11.5px;
+    color: #71717a;
+    line-height: 1.4;
+    margin: 3px 0 0;
+}
+
+.account-dialog-close {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    background: #f4f4f5;
+    color: #71717a;
+    font-size: 15px;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.account-dialog-close:hover {
+    background: #e4e4e7;
+    color: #18181b;
+}
+
+/* Body */
+.rewards-body {
+    padding: 0 20px;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.rewards-body::-webkit-scrollbar {
+    width: 4px;
+}
+
+.rewards-body::-webkit-scrollbar-thumb {
+    background: #e4e4e7;
+    border-radius: 9999px;
+}
+
+/* Overview Banner (Level & Circular Ring) */
+.rewards-overview {
+    background: #faf7fd;
+    border: 1px solid #ebdff5;
+    border-radius: 14px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.rewards-level-label {
+    display: inline-block;
+    background: #ffffff;
+    padding: 2.5px 7px;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #7c3aed;
+    border: 1px solid #ebdff5;
+    line-height: 1.2;
+}
+
+.rewards-overview h3 {
+    font-size: 15.5px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+    margin: 5px 0 2px;
+    color: #18181b;
+}
+
+.rewards-overview p {
+    font-size: 11px;
+    color: #71717a;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Progress Ring */
+.rewards-ring {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    flex-shrink: 0;
+}
+
+.rewards-ring svg {
+    width: 100%;
+    height: 100%;
+}
+
+.rewards-ring-track {
+    stroke: #ebdff5;
+}
+
+.rewards-ring-fill {
+    stroke: #8b5cf6;
+    transition: stroke-dashoffset 0.4s ease;
+}
+
+.rewards-ring > div {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+}
+
+.rewards-ring strong {
+    font-size: 17px;
+    letter-spacing: -0.5px;
+    font-weight: 700;
+    line-height: 1;
+    color: #18181b;
+}
+
+.rewards-ring span {
+    font-size: 8.5px;
+    font-weight: 600;
+    color: #71717a;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* Level Journey Path */
+.rewards-path {
+    padding: 12px 0 10px;
+    border-bottom: 1px solid #f1edf5;
+}
+
+.rewards-path h3,
+.rewards-earning h3 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: -0.1px;
+    margin: 0;
+    color: #18181b;
+}
+
+.rewards-path ol {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+    position: relative;
+}
+
+.rewards-path ol:before {
+    content: '';
+    position: absolute;
+    top: 13px;
+    left: 16px;
+    right: 16px;
+    height: 2px;
+    background: #e9e2f0;
+}
+
+.rewards-path li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    flex: 1;
+}
+
+.rewards-milestone {
+    width: 26px;
+    height: 26px;
+    display: grid;
+    place-items: center;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #94a3b8;
+    font-size: 9.5px;
+    font-weight: 700;
+    transition: all 0.15s ease;
+    z-index: 1;
+}
+
+.rewards-threshold {
+    font-size: 9px;
+    color: #94a3b8;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.is-unlocked .rewards-milestone {
+    background: #f5f0fa;
+    border-color: #dfcee9;
+    color: #7c3aed;
+}
+
+.is-current .rewards-milestone {
+    background: #7c3aed;
+    border-color: #7c3aed;
+    color: #ffffff;
+    box-shadow: 0 0 0 3px #f3e8ff;
+}
+
+.is-current .rewards-threshold {
+    color: #7c3aed;
+    font-weight: 700;
+}
+
+/* Earning List */
+.rewards-earning {
+    padding: 10px 0 2px;
+}
+
+.rewards-earning > p {
+    font-size: 10.5px;
+    color: #71717a;
+    margin: 2px 0 8px;
+    line-height: 1.4;
+}
+
+.rewards-earn-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    padding: 6px 6px;
+    border-top: 1px solid #f1edf5;
+    border-radius: 6px;
+    transition: background 0.15s ease;
+}
+
+.rewards-earn-row:first-of-type {
+    border-top: 1px solid #f1edf5;
+}
+
+.rewards-earn-row:hover {
+    background: #faf7fd;
+}
+
+.rewards-earn-row strong {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #18181b;
+}
+
+.rewards-earn-row div > span {
+    display: block;
+    font-size: 9.5px;
+    color: #71717a;
+    margin-top: 1px;
+    line-height: 1.35;
+}
+
+.rewards-earn-row > span {
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+    background: #f3e8ff;
+    border-radius: 6px;
+    padding: 2.5px 7px;
+    color: #7c3aed;
+}
+
+/* Footer */
+.rewards-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 20px 14px;
+    border-top: 1px solid #f1edf5;
+}
+
+.rewards-footer p {
+    font-size: 10px;
+    color: #71717a;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   Account Buttons & Confirmation Panels
+   ========================================================================== */
+
+.account-dialog-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 32px;
+    padding: 6px 15px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.account-dialog-button:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #0f172a;
+}
+
+.account-dialog-button:active {
+    transform: scale(0.98);
+}
+
+.account-dialog-button--primary {
+    background: #2579ca;
+    border-color: #2579ca;
+    color: #ffffff;
+}
+
+.account-dialog-button--primary:hover {
+    background: #1e65ab;
+    border-color: #1e65ab;
+}
+
+.account-dialog-button:disabled,
+.account-dialog-close:disabled {
+    opacity: 0.6;
+    cursor: wait;
+    transform: none;
+}
+
+/* Confirmation Panel (Logout, Delete, etc.) */
+.account-confirm-panel {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    padding: 28px 24px 24px;
+    background: #ffffff;
+    color: #1e293b;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 22px;
+    box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.16), 0 0 1px 1px rgba(0, 0, 0, 0.04);
+    text-align: left;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    animation: account-dialog-arrive 0.2s ease-out both;
+}
+
+.account-confirm-panel > .account-dialog-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: 15px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.account-confirm-panel > .account-dialog-close:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+.account-confirm-visual {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fee2e2;
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+    margin: 0 0 20px;
+    transition: all 0.15s ease;
+}
+
+.account-confirm-logout-icon {
+    display: none;
+}
+
+.account-confirm-action-icon {
+    display: block;
+}
+
+.account-dialog-overlay[data-variant="logout"] .account-confirm-visual,
+.account-dialog-overlay[data-variant="action"] .account-confirm-visual {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fee2e2;
+}
+
+.account-dialog-overlay[data-variant="logout"] .account-confirm-logout-icon {
+    display: block;
+}
+
+.account-dialog-overlay[data-variant="logout"] .account-confirm-action-icon {
+    display: none;
+}
+
+.account-confirm-panel h2 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    line-height: 1.3;
+    color: #0f172a;
+    margin: 0 0 8px;
+}
+
+.account-confirm-panel p {
+    font-size: 13px;
+    line-height: 1.55;
+    color: #64748b;
+    margin: 0;
+}
+
+.account-confirm-panel #confirm-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: #b91c1c;
+    font-size: 11.5px;
+    margin-top: 14px;
+}
+
+.account-confirm-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.account-dialog-overlay[data-variant="logout"] #confirm-button,
+.account-dialog-overlay[data-variant="action"] #confirm-button {
+    background: #dc2626;
+    border-color: #dc2626;
+    color: #ffffff;
+    box-shadow: 0 1px 2px rgba(220, 38, 38, 0.18), 0 2px 6px rgba(220, 38, 38, 0.14);
+}
+
+.account-dialog-overlay[data-variant="logout"] #confirm-button:hover,
+.account-dialog-overlay[data-variant="action"] #confirm-button:hover {
+    background: #b91c1c;
+    border-color: #b91c1c;
+    box-shadow: 0 2px 8px rgba(185, 28, 28, 0.25);
+}
+
+.account-dialog-overlay[data-variant="logout"] #confirm-button:active,
+.account-dialog-overlay[data-variant="action"] #confirm-button:active {
+    transform: scale(0.985);
+}
+
+.account-dialog-overlay :is(button, a):focus-visible {
+    outline: 2px solid #ef4444;
+    outline-offset: 2px;
+}
+
+.account-dialog-overlay #confirm-cancel:focus-visible {
+    outline: 2px solid #94a3b8;
+    outline-offset: 2px;
+}
+
+/* Archive variant */
+.account-dialog-overlay[data-variant="archive"] .account-confirm-panel {
+    max-width: 340px;
+    padding: 22px;
+    border-radius: 18px;
+}
+.account-dialog-overlay[data-variant="archive"] .account-confirm-visual {
+    display: none;
+}
+.account-dialog-overlay[data-variant="archive"] .account-dialog-close {
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+}
+.account-dialog-overlay[data-variant="archive"] .account-confirm-panel h2 {
+    padding-right: 30px;
+    font-size: 18px;
+    letter-spacing: -0.35px;
+    margin-bottom: 8px;
+}
+.account-dialog-overlay[data-variant="archive"] .account-confirm-panel p {
+    font-size: 11px;
+    line-height: 1.7;
+}
+.account-dialog-overlay[data-variant="archive"] .account-confirm-actions {
+    margin-top: 18px;
+    gap: 8px;
+}
+.account-dialog-overlay[data-variant="archive"] .account-dialog-button {
+    min-height: 40px;
+    padding: 9px 14px;
+    font-size: 11px;
+    border-radius: 9px;
+}
+@media (pointer: coarse) {
+    .account-dialog-overlay[data-variant="archive"] :is(.account-dialog-button, .account-dialog-close) {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* ==========================================================================
+   Dark Mode - Account Dialogs & Rewards
    ========================================================================== */
 
 .dark .account-dialog-overlay {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.75);
 }
 
 .dark .rewards-dialog,
@@ -26,7 +604,7 @@
     background: #1e1f20;
     color: #f0f4f9;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
 }
 
 .dark .account-dialog-heading h2,
@@ -52,6 +630,115 @@
     color: #f0f4f9;
 }
 
+.dark .rewards-body::-webkit-scrollbar-thumb {
+    background: #333538;
+}
+
+/* Rewards Overview Dark */
+.dark .rewards-overview {
+    background: #252628;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .rewards-level-label {
+    background: #1e1f20;
+    color: #c084fc;
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+.dark .rewards-overview h3 {
+    color: #f0f4f9;
+}
+
+.dark .rewards-overview p,
+.dark .rewards-earning > p,
+.dark .rewards-earn-row div > span,
+.dark .rewards-footer p {
+    color: #94a3b8;
+}
+
+.dark .rewards-ring-track {
+    stroke: rgba(255, 255, 255, 0.08);
+}
+
+.dark .rewards-ring-fill {
+    stroke: #a78bfa;
+}
+
+.dark .rewards-ring strong {
+    color: #f0f4f9;
+}
+
+.dark .rewards-ring span {
+    color: #94a3b8;
+}
+
+/* Rewards Journey Dark */
+.dark .rewards-path {
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .rewards-path h3,
+.dark .rewards-earning h3 {
+    color: #f0f4f9;
+}
+
+.dark .rewards-path ol:before {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.dark .rewards-milestone {
+    background: #232527;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #64748b;
+}
+
+.dark .rewards-threshold {
+    color: #94a3b8;
+}
+
+.dark .is-unlocked .rewards-milestone {
+    background: #2a2035;
+    border-color: rgba(168, 85, 247, 0.4);
+    color: #c084fc;
+}
+
+.dark .is-current .rewards-milestone {
+    background: #8b5cf6;
+    border-color: #8b5cf6;
+    color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
+}
+
+.dark .is-current .rewards-threshold {
+    color: #a78bfa;
+    font-weight: 700;
+}
+
+/* Rewards Earning Dark */
+.dark .rewards-earn-row {
+    border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark .rewards-earn-row:hover {
+    background: #282a2c;
+}
+
+.dark .rewards-earn-row strong {
+    color: #f0f4f9;
+}
+
+.dark .rewards-earn-row > span {
+    background: rgba(168, 85, 247, 0.15);
+    color: #c084fc;
+    border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+.dark .rewards-footer {
+    border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Account Buttons Dark */
 .dark .account-dialog-button {
     background: #282a2c;
     border-color: rgba(255, 255, 255, 0.08);
@@ -62,6 +749,17 @@
     background: #333538;
     border-color: rgba(255, 255, 255, 0.15);
     color: #f0f4f9;
+}
+
+.dark .account-dialog-button--primary {
+    background: #2579ca;
+    border-color: #2579ca;
+    color: #ffffff;
+}
+
+.dark .account-dialog-button--primary:hover {
+    background: #1e65ab;
+    border-color: #1e65ab;
 }
 
 .dark .account-confirm-visual {
@@ -76,47 +774,96 @@
     color: #fca5a5;
 }
 
-.dark .rewards-overview {
-    background: #282a2c;
-    border-color: rgba(255, 255, 255, 0.06);
+/* ==========================================================================
+   Responsive Overrides
+   ========================================================================== */
+
+@media (max-width: 600px) {
+    .account-dialog-overlay {
+        padding: 12px;
+    }
+    .rewards-dialog {
+        max-height: calc(100dvh - 24px);
+        border-radius: 18px;
+    }
+    .account-dialog-heading {
+        padding: 14px 16px 10px;
+    }
+    .account-dialog-heading h2 {
+        font-size: 16px;
+    }
+    .rewards-body {
+        padding: 0 16px;
+    }
+    .rewards-overview {
+        padding: 10px 12px;
+        gap: 10px;
+    }
+    .rewards-overview h3 {
+        font-size: 14px;
+    }
+    .rewards-ring {
+        width: 62px;
+        height: 62px;
+    }
+    .rewards-ring strong {
+        font-size: 15px;
+    }
+    .rewards-footer {
+        padding: 8px 16px 12px;
+    }
+    .rewards-path ol {
+        gap: 3px;
+    }
+    .rewards-milestone {
+        width: 24px;
+        height: 24px;
+        font-size: 9px;
+    }
+    .rewards-threshold {
+        font-size: 8.5px;
+    }
+    .rewards-earn-row {
+        gap: 8px;
+        padding: 5px 4px;
+    }
+    .account-confirm-panel {
+        padding: 24px 20px 20px;
+        border-radius: 20px;
+    }
+    .account-confirm-panel h2 {
+        font-size: 19px;
+    }
 }
 
-.dark .rewards-level-label {
-    background: #1e1f20;
-    color: #cbd5e1;
+@media (max-width: 360px) {
+    .rewards-body {
+        padding: 0 12px;
+    }
+    .rewards-overview {
+        padding: 8px 10px;
+        gap: 8px;
+    }
+    .rewards-ring {
+        width: 56px;
+        height: 56px;
+    }
+    .rewards-ring strong {
+        font-size: 13px;
+    }
+    .rewards-footer p {
+        max-width: 120px;
+    }
 }
 
-.dark .rewards-overview p,
-.dark .rewards-earning > p,
-.dark .rewards-earn-row div > span,
-.dark .rewards-footer p {
-    color: #94a3b8;
+@media (prefers-reduced-motion: reduce) {
+    .rewards-dialog,
+    .account-confirm-panel {
+        animation: none;
+    }
+    .account-dialog-fade,
+    .account-dialog-button,
+    .account-dialog-close {
+        transition: none;
+    }
 }
-
-.dark .rewards-path {
-    border-bottom-color: rgba(255, 255, 255, 0.07);
-}
-
-.dark .rewards-path ol:before {
-    background: rgba(255, 255, 255, 0.07);
-}
-
-.dark .rewards-milestone {
-    background: #282a2c;
-    border-color: rgba(255, 255, 255, 0.1);
-    color: #cbd5e1;
-}
-
-.dark .rewards-threshold {
-    color: #94a3b8;
-}
-
-.dark .rewards-earn-row {
-    border-top-color: rgba(255, 255, 255, 0.07);
-}
-
-.dark .rewards-earn-row > span {
-    background: #282a2c;
-    color: #cbd5e1;
-}
-
