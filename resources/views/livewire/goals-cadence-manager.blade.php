@@ -69,13 +69,18 @@
                                 <button type="button" wire:click="$set('goalPeriod', '{{ $period }}')" aria-pressed="{{ $goalPeriod === $period ? 'true' : 'false' }}" class="{{ $goalPeriod === $period ? 'is-selected' : '' }}" wire:loading.attr="disabled" wire:target="goalPeriod,setWeeklyGoals">{{ $label }}</button>
                             @endforeach
                         </div>
-                        <p class="goal-period-dates" aria-live="polite">{{ \Carbon\Carbon::parse($startDate)->format('M j') }} &ndash; {{ \Carbon\Carbon::parse($endDate)->format('M j, Y') }}<span>Current {{ $goalPeriod === 'monthly' ? 'month' : 'week' }}</span></p>
+                        <p class="goal-period-dates" aria-live="polite"><span><i class="ph ph-calendar-blank" aria-hidden="true"></i> {{ \Carbon\Carbon::parse($startDate)->format('M j') }} &ndash; {{ \Carbon\Carbon::parse($endDate)->format('M j, Y') }}</span><span>Current {{ $goalPeriod === 'monthly' ? 'month' : 'week' }}</span></p>
                         @error('goalPeriod') <p class="goal-field-error" role="alert">{{ $message }}</p> @enderror
 
                         <div class="goal-target-grid">
                             <div class="goal-target-field goal-target-applications">
-                                <label for="goal-applications-target">Applications</label>
-                                <p id="goal-applications-help">How many will you apply to?</p>
+                                <div class="goal-target-header">
+                                    <div class="goal-target-icon goal-target-icon--app"><i class="ph-bold ph-paper-plane-tilt"></i></div>
+                                    <div>
+                                        <label for="goal-applications-target">Applications</label>
+                                        <p id="goal-applications-help">How many will you apply to?</p>
+                                    </div>
+                                </div>
                                 <div class="goal-target-input">
                                     <input id="goal-applications-target" type="number" min="1" step="1" required wire:model="targetAppliedWeekly" aria-describedby="goal-applications-help{{ $errors->has('targetAppliedWeekly') ? ' goal-applications-error' : '' }}" aria-invalid="{{ $errors->has('targetAppliedWeekly') ? 'true' : 'false' }}">
                                     <span>/ {{ $goalPeriod === 'monthly' ? 'month' : 'week' }}</span>
@@ -83,8 +88,13 @@
                                 @error('targetAppliedWeekly') <p id="goal-applications-error" class="goal-field-error" role="alert">{{ $message }}</p> @enderror
                             </div>
                             <div class="goal-target-field goal-target-followups">
-                                <label for="goal-followups-target">Follow-ups</label>
-                                <p id="goal-followups-help">Use 0 to leave this target off.</p>
+                                <div class="goal-target-header">
+                                    <div class="goal-target-icon goal-target-icon--follow"><i class="ph-bold ph-arrows-clockwise"></i></div>
+                                    <div>
+                                        <label for="goal-followups-target">Follow-ups</label>
+                                        <p id="goal-followups-help">Use 0 to leave this target off.</p>
+                                    </div>
+                                </div>
                                 <div class="goal-target-input">
                                     <input id="goal-followups-target" type="number" min="0" step="1" required wire:model="targetFollowupWeekly" aria-describedby="goal-followups-help{{ $errors->has('targetFollowupWeekly') ? ' goal-followups-error' : '' }}" aria-invalid="{{ $errors->has('targetFollowupWeekly') ? 'true' : 'false' }}">
                                     <span>/ {{ $goalPeriod === 'monthly' ? 'month' : 'week' }}</span>
@@ -92,7 +102,10 @@
                                 @error('targetFollowupWeekly') <p id="goal-followups-error" class="goal-field-error" role="alert">{{ $message }}</p> @enderror
                             </div>
                         </div>
-                        <p class="goal-dialog-hint">You can adjust your targets anytime. Saving updates the goals for this period.</p>
+                        <div class="goal-dialog-hint">
+                            <i class="ph ph-info" aria-hidden="true"></i>
+                            <span>You can adjust your targets anytime. Saving updates the goals for this period.</span>
+                        </div>
                         @error('startDate') <p class="goal-field-error" role="alert">{{ $message }}</p> @enderror
                         @error('endDate') <p class="goal-field-error" role="alert">{{ $message }}</p> @enderror
                     </div>
