@@ -11,11 +11,17 @@
 @media(prefers-reduced-motion:reduce){.community-overlay .community-welcome{animation:none}.community-fade,.community-join,.community-dashboard,.community-avatar,.community-plane,.community-close{transition:none}.community-art:hover .community-avatar--peach,.community-art:hover .community-avatar--lilac,.community-art:hover .community-avatar--sky,.community-art:hover .community-plane,.community-join:hover{transform:none}}
 
 /* Dark Mode - Gemini Obsidian Style */
+.dark .community-overlay {
+    background: rgba(0, 0, 0, 0.75) !important;
+}
 .dark .community-welcome {
     background: #1e1f20 !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
     color: #f0f4f9 !important;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6) !important;
+}
+.dark .community-heading-dot {
+    color: #c084fc !important;
 }
 .dark .community-copy h1,
 .dark .community-copy h2 {
