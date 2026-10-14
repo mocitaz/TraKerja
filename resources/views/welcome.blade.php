@@ -39,10 +39,10 @@
     <script>
         (function() {
             try {
-                if (!localStorage.getItem('trakerja_theme_force_light_v5')) {
+                if (!localStorage.getItem('trakerja_theme_force_light_v6')) {
                     localStorage.setItem('theme', 'light');
                     document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
-                    localStorage.setItem('trakerja_theme_force_light_v5', '1');
+                    localStorage.setItem('trakerja_theme_force_light_v6', '1');
                 }
                 var theme = localStorage.getItem('theme');
                 if (theme === 'dark') {

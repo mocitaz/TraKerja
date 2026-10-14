@@ -11,6 +11,21 @@
     --heatmap-c2: #e879f9;
     --heatmap-c3: #c026d3;
     --heatmap-c4: #86198f;
+    color-scheme: light;
+}
+
+/* Hard light mode safeguard: guarantee 100% bright ivory background when dark is absent */
+html:not(.dark) {
+    color-scheme: light;
+}
+
+html:not(.dark) body {
+    background-color: #fdfcf9 !important;
+    color: #1a191e !important;
+}
+
+html:not(.dark) .gemini-ambient-glow {
+    display: none !important;
 }
 
 html.dark {

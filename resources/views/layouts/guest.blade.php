@@ -22,14 +22,17 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600|inter:300,400,500,600,700,800,900|plus-jakarta-sans:400,500,600,700,800&display=swap" rel="stylesheet" />
 
+        <!-- Phosphor Icons -->
+        <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
         <!-- Anti-FOUC & Theme Initialization Script -->
         <script>
             (function() {
                 try {
-                    if (!localStorage.getItem('trakerja_theme_force_light_v5')) {
+                    if (!localStorage.getItem('trakerja_theme_force_light_v6')) {
                         localStorage.setItem('theme', 'light');
                         document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
-                        localStorage.setItem('trakerja_theme_force_light_v5', '1');
+                        localStorage.setItem('trakerja_theme_force_light_v6', '1');
                     }
                     var theme = localStorage.getItem('theme');
                     if (theme === 'dark') {
@@ -84,27 +87,12 @@
                  @theme-changed.window="isDark = $event.detail.isDark">
                 <button type="button"
                     @click="toggle()"
-                    class="inline-flex items-center justify-center w-8 h-8 rounded-full border transition-all duration-200 cursor-pointer shadow-3xs border-[#dedbd6] bg-white text-amber-500 hover:bg-[#faf8f5] dark:border-white/10 dark:bg-[#1e1f20] dark:text-purple-300 dark:hover:bg-[#282a2c]"
-                    title="Toggle light/dark mode"
-                    aria-label="Toggle dark mode">
-                    <template x-if="!isDark">
-                        <svg class="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="4"></circle>
-                            <path d="M12 2v2"></path>
-                            <path d="M12 20v2"></path>
-                            <path d="m4.93 4.93 1.41 1.41"></path>
-                            <path d="m17.66 17.66 1.41 1.41"></path>
-                            <path d="M2 12h2"></path>
-                            <path d="M20 12h2"></path>
-                            <path d="m6.34 17.66-1.41 1.41"></path>
-                            <path d="m19.07 4.93-1.41 1.41"></path>
-                        </svg>
-                    </template>
-                    <template x-if="isDark">
-                        <svg class="w-4 h-4 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-                        </svg>
-                    </template>
+                    class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer focus:outline-none"
+                    :class="isDark ? 'bg-[#1e1f20] hover:bg-[#282a2c] text-purple-300 hover:text-purple-200 border border-white/10 shadow-sm' : 'bg-white hover:bg-amber-50/70 text-amber-500 hover:text-amber-600 border border-[#dedbd6] shadow-3xs'"
+                    :title="isDark ? 'Mode Gelap aktif (klik untuk ganti ke Mode Terang)' : 'Mode Terang aktif (klik untuk ganti ke Mode Gelap)'"
+                    :aria-label="isDark ? 'Mode gelap aktif, klik untuk beralih ke mode terang' : 'Mode terang aktif, klik untuk beralih ke mode gelap'">
+                    <i x-show="!isDark" class="ph-bold ph-sun text-lg transition-transform duration-200 hover:rotate-45" aria-hidden="true"></i>
+                    <i x-show="isDark" x-cloak class="ph-bold ph-moon text-lg transition-transform duration-200 hover:-rotate-12" aria-hidden="true"></i>
                 </button>
             </div>
         </header>
