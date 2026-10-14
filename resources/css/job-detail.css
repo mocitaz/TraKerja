@@ -309,4 +309,177 @@
 .dark .job-detail-page .job-stage-track li { color: #94a3b8 !important; }
 .dark .job-detail-page .job-stage-track li.is-current { color: #d8b4fe !important; }
 .dark .job-archived-notice { background: #2a1b38 !important; color: #d8b4fe !important; }
+.dark .job-detail-page .job-section-heading h2 { color: #f0f4f9 !important; }
+
+/* Dark Mode - Interview Card (Deep Blue Theme matching Dashboard Prepare for your interview) */
+.dark .job-detail-page .job-interview-card {
+    background: linear-gradient(145deg, #15202e 0%, #1a2332 100%) !important;
+    border-color: rgba(59, 130, 246, 0.22) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+.dark .job-interview-card .job-section-heading h2 {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-interview-card .job-text-link {
+    color: #93c5fd !important;
+}
+
+.dark .job-interview-card .job-text-link:hover {
+    color: #bfdbfe !important;
+}
+
+.dark .job-interview-date {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+}
+
+.dark .job-interview-date > strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-interview-date > span {
+    color: #93c5fd !important;
+}
+
+.dark .job-interview-when p {
+    color: #94a3b8 !important;
+}
+
+.dark .job-interview-when > div:last-child > strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-interview-when small {
+    color: #94a3b8 !important;
+}
+
+.dark .job-interview-when > div:last-child > span {
+    color: #94a3b8 !important;
+}
+
+.dark .job-interview-location {
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .job-interview-location > span {
+    color: #94a3b8 !important;
+}
+
+.dark .job-interview-location p {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-detail-page .job-interview-empty {
+    color: #94a3b8 !important;
+}
+
+.dark .job-detail-page .job-interview-card--empty .job-interview-empty {
+    color: #94a3b8 !important;
+}
+
+.dark .job-reminder-form {
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .job-detail-page .job-reminder-form p {
+    color: #93c5fd !important;
+}
+
+/* Dark Mode - Company Research Card (Deep Purple Theme matching Dashboard Gemini Tone) */
+.dark .job-detail-page .job-research-card {
+    background: linear-gradient(145deg, #20172c 0%, #251b34 100%) !important;
+    border-color: rgba(168, 85, 247, 0.22) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+.dark .job-detail-page .job-research-card h2 {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-detail-page .job-research-card > p {
+    color: #94a3b8 !important;
+}
+
+.dark .job-detail-page .job-research-links > a {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+}
+
+.dark .job-detail-page .job-research-links > a:hover {
+    background: rgba(255, 255, 255, 0.16) !important;
+    border-color: rgba(168, 85, 247, 0.4) !important;
+}
+
+.dark .job-detail-page .job-salary-reference {
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .job-detail-page .job-salary-reference > summary {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-detail-page .job-salary-reference > summary small {
+    color: #94a3b8 !important;
+}
+
+.dark .job-detail-page .job-salary-reference > summary > i {
+    color: #c4b5fd !important;
+}
+
+.dark .job-detail-page .job-salary-region {
+    color: #c4b5fd !important;
+}
+
+.dark .job-salary-values dt {
+    color: #94a3b8 !important;
+}
+
+.dark .job-salary-values dd {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-salary-values > div:first-child dd {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-salary-values dd > span {
+    color: #94a3b8 !important;
+}
+
+.dark .job-detail-page .job-salary-disclaimer {
+    color: #94a3b8 !important;
+}
+
+.dark .job-salary-method {
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .job-detail-page .job-salary-method > summary {
+    color: #cbd5e1 !important;
+}
+
+.dark .job-detail-page .job-salary-method > summary > i {
+    color: #c4b5fd !important;
+}
+
+.dark .job-detail-page .job-salary-method p {
+    color: #94a3b8 !important;
+}
+
+/* Job Detail Footer */
+.dark .job-detail-footer p {
+    color: #94a3b8 !important;
+}
+
+.dark .job-detail-footer .job-text-link {
+    color: #c4b5fd !important;
+}
+
+.dark .job-detail-footer .job-text-link:hover {
+    color: #e9d5ff !important;
+}
 
