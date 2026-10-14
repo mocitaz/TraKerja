@@ -119,6 +119,9 @@
     justify-content: space-between;
     gap: 12px;
 }
+.pay-offer-heading:has(> :only-child) {
+    justify-content: flex-end;
+}
 .pay-tag {
     font-size: 10px;
     font-weight: 600;
@@ -1224,9 +1227,14 @@
 .dark .pay-method:hover {
     background: #282a2c;
 }
-.dark .pay-method.is-selected {
-    border-color: #a855f7;
-    background: #231c30;
+.dark .pay-method.is-selected,
+.dark .pay-method:has(input:checked) {
+    border-color: #3b82f6 !important;
+    background: rgba(37, 121, 202, 0.12) !important;
+}
+.dark .pay-method:has(input:focus-visible) {
+    outline: 2px solid rgba(59, 130, 246, 0.6) !important;
+    outline-offset: 2px !important;
 }
 .dark .pay-credit-grid > div {
     background: #18191a;
@@ -1287,9 +1295,9 @@
     color: #94a3b8 !important;
 }
 .dark .pay-tag {
-    background: #282a2c !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    color: #c084fc !important;
+    background: rgba(37, 121, 202, 0.14) !important;
+    border: 1px solid rgba(59, 130, 246, 0.3) !important;
+    color: #60a5fa !important;
 }
 .dark .pay-tag--quiet {
     background: #232527 !important;
@@ -1300,8 +1308,9 @@
     color: #cbd5e1 !important;
 }
 .dark .pay-features div > span {
-    background: #282a2c !important;
-    color: #c084fc !important;
+    background: transparent !important;
+    color: #38bdf8 !important;
+    font-weight: 700 !important;
 }
 .dark .pay-starting {
     background: #18191a !important;
@@ -1312,6 +1321,8 @@
     color: #94a3b8 !important;
 }
 .dark .pay-starting div span {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
     color: #f0f4f9 !important;
 }
 .dark .pay-methods legend {
@@ -1322,7 +1333,13 @@
 }
 .dark .pay-method-mark {
     background: #282a2c !important;
-    color: #c084fc !important;
+    color: #94a3b8 !important;
+    border-radius: 8px;
+}
+.dark .pay-method:has(input:checked) .pay-method-mark,
+.dark .pay-method.is-selected .pay-method-mark {
+    background: rgba(37, 121, 202, 0.2) !important;
+    color: #60a5fa !important;
 }
 .dark .pay-method strong {
     color: #f0f4f9 !important;
@@ -1331,12 +1348,13 @@
     color: #94a3b8 !important;
 }
 .dark .pay-radio {
-    border-color: rgba(255, 255, 255, 0.2) !important;
-    background: #131314 !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+    background: #1e1f20 !important;
 }
+.dark .pay-method:has(input:checked) .pay-radio,
 .dark .pay-method.is-selected .pay-radio {
-    border-color: #c084fc !important;
-    background: #c084fc !important;
+    border: 4.5px solid #3b82f6 !important;
+    background: #ffffff !important;
 }
 .dark .pay-bundle li {
     color: #cbd5e1 !important;
@@ -1366,7 +1384,14 @@
     color: #f0f4f9 !important;
 }
 .dark .pay-mono {
-    color: #c084fc !important;
+    color: #60a5fa !important;
+}
+.dark .pay-summary-help {
+    color: #94a3b8 !important;
+}
+.dark .pay-summary-help:hover {
+    color: #38bdf8 !important;
+    text-decoration: underline !important;
 }
 .dark .pay-total {
     border-top-color: rgba(255, 255, 255, 0.08) !important;
@@ -1412,8 +1437,8 @@
     border-color: rgba(239, 68, 68, 0.25) !important;
 }
 .dark .pay-state-icon {
-    background: #282a2c !important;
-    color: #c084fc !important;
+    background: rgba(37, 121, 202, 0.15) !important;
+    color: #60a5fa !important;
 }
 .dark .pay-state--success .pay-state-icon {
     background: rgba(16, 185, 129, 0.2) !important;
@@ -1433,9 +1458,9 @@
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 .dark .pay-timeline .is-done > span {
-    background: #c084fc !important;
-    color: #131314 !important;
-    border-color: #c084fc !important;
+    background: #2579ca !important;
+    color: #ffffff !important;
+    border-color: #2579ca !important;
 }
 .dark .pay-timeline strong {
     color: #f0f4f9 !important;
@@ -1571,7 +1596,7 @@
 }
 .dark .pay-order-link:hover {
     background: #333538 !important;
-    color: #c084fc !important;
+    color: #60a5fa !important;
 }
 .dark .pay-empty {
     background: #1e1f20 !important;
@@ -1597,7 +1622,7 @@
 .dark .pay-coming-icon {
     background: #282a2c !important;
     border-color: rgba(255, 255, 255, 0.08) !important;
-    color: #c084fc !important;
+    color: #60a5fa !important;
 }
 .dark .pay-coming-hero-copy h2 {
     color: #f0f4f9 !important;
@@ -1613,7 +1638,7 @@
     border-color: rgba(255, 255, 255, 0.08) !important;
 }
 .dark .pay-progress-bar {
-    background: linear-gradient(90deg, #9333ea, #c084fc) !important;
+    background: linear-gradient(90deg, #2579ca, #60a5fa) !important;
 }
 .dark .pay-coming-hero-stats {
     border-top-color: rgba(255, 255, 255, 0.08) !important;
@@ -1639,7 +1664,7 @@
 }
 .dark .pay-coming-feature-icon {
     background: #282a2c !important;
-    color: #c084fc !important;
+    color: #60a5fa !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
 }
@@ -1660,9 +1685,9 @@
     color: #34d399 !important;
 }
 .dark .pay-roadmap-step.is-active .pay-roadmap-dot {
-    background: #c084fc !important;
-    border-color: #c084fc !important;
-    color: #131314 !important;
+    background: #2579ca !important;
+    border-color: #60a5fa !important;
+    color: #ffffff !important;
 }
 .dark .pay-roadmap-info strong {
     color: #f0f4f9 !important;
@@ -1676,7 +1701,7 @@
 }
 .dark .pay-coming-notify-icon {
     background: #282a2c !important;
-    color: #c084fc !important;
+    color: #60a5fa !important;
 }
 .dark .pay-coming-notify-copy strong {
     color: #f0f4f9 !important;

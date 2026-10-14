@@ -26,7 +26,7 @@
         <input type="hidden" name="package_type" value="{{ $packageType ?? 'premium' }}">
         <div class="pay-main">
             <section class="pay-panel pay-offer">
-                <div class="pay-offer-heading"><span class="pay-tag">{{ $isAddon ? 'ADD-ON' : 'PREMIUM MEMBERSHIP' }}</span><span class="pay-tag pay-tag--quiet">One-time payment</span></div>
+                <div class="pay-offer-heading">@if($isAddon)<span class="pay-tag">ADD-ON</span>@endif<span class="pay-tag pay-tag--quiet">One-time payment</span></div>
                 <h2>{{ $isAddon ? 'Credit pack' : 'TraKerja Premium' }}</h2>
                 <p>{{ $isAddon ? 'Added to your existing balances after payment is verified.' : 'Track your applications and prepare with your CV and AI tools.' }}</p>
                 @if($isAddon)
