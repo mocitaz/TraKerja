@@ -1176,65 +1176,32 @@
 .dark .interviews-page h1 { color: #f0f4f9 !important; }
 .dark .interviews-page .workspace-page__header p { color: #94a3b8 !important; }
 .dark .interviews-page .workspace-eyebrow { color: #c084fc !important; }
+
+/* Metrics Banner */
 .dark .interview-metrics {
-    background: linear-gradient(145deg, #15202e 0%, #1a2332 100%) !important;
-    border-color: rgba(59, 130, 246, 0.22) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
 }
 .dark .interview-metrics > div {
-    background: #1e1f20 !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 .dark .interview-metrics > div:hover {
-    background: #282a2c !important;
+    background: #333538 !important;
 }
-.dark .interview-metrics span { color: #93c5fd !important; }
+.dark .interview-metrics span { color: #94a3b8 !important; }
 .dark .interview-metrics strong { color: #f0f4f9 !important; }
 .dark .interview-metrics p { color: #94a3b8 !important; }
-.dark .interview-calendar-card,
-.dark .interview-agenda-card,
-.dark .interview-dialog,
-.dark .interview-item-card {
-    background: #1e1f20 !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
-    color: #f0f4f9 !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
-}
-.dark .interview-calendar-header,
-.dark .interview-agenda-header {
-    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
-    color: #f0f4f9 !important;
-}
-.dark .interview-calendar-day {
-    border-color: rgba(255, 255, 255, 0.06) !important;
-    color: #f0f4f9 !important;
-}
-.dark .interview-calendar-day.is-outside {
-    color: #64748b !important;
-    background: rgba(0, 0, 0, 0.15) !important;
-}
-.dark .interview-calendar-day.is-today {
-    background: rgba(168, 85, 247, 0.15) !important;
-}
-.dark .interview-empty-state {
-    background: #1e1f20 !important;
-    border-color: rgba(255, 255, 255, 0.07) !important;
-    color: #94a3b8 !important;
-}
-.dark .interview-dialog input,
-.dark .interview-dialog select,
-.dark .interview-dialog textarea {
-    background: #282a2c !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
-    color: #f0f4f9 !important;
-}
-.dark .interview-dialog > header,
-.dark .interview-dialog > footer {
-    border-color: rgba(255, 255, 255, 0.08) !important;
-    background: #1e1f20 !important;
-}
-.dark .interview-workspace-footer p { color: #64748b !important; }
 
+/* Calendar Card & Toolbar */
+.dark .interview-calendar-card,
+.dark .interview-day-agenda {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
 .dark .interview-month-nav h2 {
     color: #f0f4f9 !important;
 }
@@ -1247,7 +1214,12 @@
 }
 .dark .interview-month-nav .interview-today {
     background: #282a2c !important;
-    color: #c4b5fd !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #d8b4fe !important;
+}
+.dark .interview-month-nav .interview-today:hover {
+    background: #333538 !important;
+    color: #f0f4f9 !important;
 }
 .dark .interview-view-switch {
     background: #18191a !important;
@@ -1261,27 +1233,289 @@
     color: #f0f4f9 !important;
 }
 .dark .interview-view-switch button.is-active {
-    background: #3b2d54 !important;
-    color: #d8b4fe !important;
-}
-.dark .interviews-page .interview-calendar-subheading select {
-    background-color: #282a2c !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
     color: #f0f4f9 !important;
 }
-.dark .interview-weekdays {
-    background: #18191a !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+
+/* Subheading Filter */
+.dark .interview-calendar-subheading p {
     color: #94a3b8 !important;
 }
-.dark .interview-day-pill {
+.dark .interviews-page .interview-calendar-subheading select {
+    background-color: #131314 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #f0f4f9 !important;
+    color-scheme: dark;
+}
+.dark .interviews-page .interview-calendar-subheading select:focus {
+    border-color: rgba(255, 255, 255, 0.25) !important;
+    background-color: #1e1f20 !important;
+}
+
+/* Calendar Weekdays */
+.dark .interview-weekdays {
+    background: #18191a !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .interview-weekdays span {
+    color: #94a3b8 !important;
+}
+
+/* Calendar Days Grid */
+.dark .interview-day {
+    background: #1e1f20 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .interview-day:hover {
+    background: #232527 !important;
+}
+.dark .interview-day.is-other-month {
+    background: #131314 !important;
+}
+.dark .interview-day.is-today {
+    background: rgba(168, 85, 247, 0.08) !important;
+}
+.dark .interview-day.is-selected {
+    background: rgba(168, 85, 247, 0.16) !important;
+    box-shadow: inset 0 0 0 1.5px rgba(168, 85, 247, 0.7) !important;
+}
+.dark .interview-day-number {
+    color: #cbd5e1 !important;
+}
+.dark .interview-day-number:hover {
     background: #282a2c !important;
     color: #f0f4f9 !important;
+}
+.dark .interview-day.is-other-month .interview-day-number {
+    color: #64748b !important;
+}
+.dark .interview-day.is-today .interview-day-number {
+    background: #a855f7 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+/* Event Pills Inside Calendar Grid */
+.dark .interview-calendar-event {
+    filter: brightness(1);
+}
+.dark .interview-calendar-event:hover {
+    filter: brightness(1.2) !important;
+}
+.dark .interview-tone--blue {
+    background: rgba(37, 99, 235, 0.2) !important;
+    color: #93c5fd !important;
+    border: 1px solid rgba(59, 130, 246, 0.3) !important;
+}
+.dark .interview-tone--lavender {
+    background: rgba(168, 85, 247, 0.2) !important;
+    color: #d8b4fe !important;
+    border: 1px solid rgba(168, 85, 247, 0.3) !important;
+}
+.dark .interview-tone--peach {
+    background: rgba(249, 115, 22, 0.2) !important;
+    color: #fdba74 !important;
+    border: 1px solid rgba(249, 115, 22, 0.3) !important;
+}
+.dark .interview-more-events {
+    color: #c084fc !important;
+}
+.dark .interview-more-events:hover {
+    color: #d8b4fe !important;
+}
+
+/* Calendar Legend */
+.dark .interview-calendar-legend {
+    background: #1e1f20 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .interview-calendar-legend > span {
+    color: #94a3b8 !important;
+}
+
+/* Right Side Card: Selected Day / Upcoming Agenda */
+.dark .interview-agenda-heading h2 {
+    color: #f0f4f9 !important;
+}
+.dark .interview-agenda-heading p:not(.workspace-eyebrow) {
+    color: #94a3b8 !important;
+}
+.dark .interview-agenda-heading > button {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+}
+.dark .interview-agenda-heading > button:hover {
+    background: #333538 !important;
+    color: #f0f4f9 !important;
+}
+
+/* Schedule Row */
+.dark .interview-schedule-row {
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .interview-row-date,
+.dark .is-compact .interview-row-date {
+    background: #282a2c !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
-.dark .interview-time-pill {
+.dark .interview-row-date strong {
+    color: #f0f4f9 !important;
+}
+.dark .interview-row-date span {
+    color: #94a3b8 !important;
+}
+.dark .interview-row-copy strong {
+    color: #f0f4f9 !important;
+}
+.dark .interview-row-copy span {
+    color: #94a3b8 !important;
+}
+.dark .interview-row-copy p {
+    color: #c084fc !important;
+}
+.dark .interview-row-copy button:hover strong {
+    color: #d8b4fe !important;
+}
+.dark .interview-row-time strong {
+    color: #f0f4f9 !important;
+}
+.dark .interview-row-time span,
+.dark .interview-row-time small {
+    color: #94a3b8 !important;
+}
+.dark .interview-row-details {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+}
+.dark .interview-row-details:hover {
+    background: #333538 !important;
+    color: #f0f4f9 !important;
+}
+
+/* Plan in tracker action */
+.dark .interview-plan-link {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .interview-plan-link:hover {
+    background: #333538 !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
+    color: #f0f4f9 !important;
+}
+
+/* Agenda View & Empty States */
+.dark .interview-empty h3 {
+    color: #f0f4f9 !important;
+}
+.dark .interview-empty p {
+    color: #94a3b8 !important;
+}
+.dark .interview-empty a {
+    color: #c084fc !important;
+}
+.dark .interview-pagination {
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Modal Details Dialog */
+.dark .interview-dialog-backdrop {
+    background: rgba(0, 0, 0, 0.7) !important;
+}
+.dark .interview-dialog {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6) !important;
+}
+.dark .interview-dialog > header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background: #1e1f20 !important;
+}
+.dark .interview-dialog header button {
+    background: #282a2c !important;
+    color: #94a3b8 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .interview-dialog header button:hover {
+    background: #333538 !important;
+    color: #f0f4f9 !important;
+}
+.dark .interview-dialog-body {
+    background: #1e1f20 !important;
+}
+.dark .interview-dialog-stage {
+    background: rgba(168, 85, 247, 0.18) !important;
+    color: #d8b4fe !important;
+    border: 1px solid rgba(168, 85, 247, 0.3) !important;
+}
+.dark .interview-dialog-status {
+    background: #282a2c !important;
+    color: #94a3b8 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .interview-dialog-body h2 {
+    color: #f0f4f9 !important;
+}
+.dark .interview-dialog-body > p {
+    color: #94a3b8 !important;
+}
+.dark .interview-dialog-schedule {
+    background: #131314 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .interview-dialog-schedule span {
+    color: #94a3b8 !important;
+}
+.dark .interview-dialog-schedule strong {
+    color: #f0f4f9 !important;
+}
+.dark .interview-dialog-body .interview-dialog-hint {
+    color: #fbbf24 !important;
+}
+.dark .interview-dialog-body h3 {
+    color: #f0f4f9 !important;
+}
+.dark .interview-dialog-location,
+.dark .interview-dialog-notes,
+.dark .interview-calendar-export {
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .interview-dialog-location p,
+.dark .interview-dialog-notes p {
     color: #cbd5e1 !important;
-    background: rgba(255, 255, 255, 0.06) !important;
+}
+.dark .interview-calendar-export a {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #d8b4fe !important;
+}
+.dark .interview-calendar-export a:hover {
+    background: #333538 !important;
+    color: #f0f4f9 !important;
+}
+.dark .interview-calendar-export p {
+    color: #94a3b8 !important;
+}
+.dark .interview-dialog > footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background: #1e1f20 !important;
+}
+.dark .interview-dialog > footer .workspace-button--quiet {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .interview-dialog > footer .workspace-button--quiet:hover {
+    background: #333538 !important;
+}
+.dark .interview-workspace-footer p {
+    color: #64748b !important;
 }
 
 
