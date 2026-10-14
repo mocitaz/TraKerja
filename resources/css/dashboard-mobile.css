@@ -171,3 +171,20 @@
 .dark .dashboard-workspace .activity-mobile-calendar header button { color: #f0f4f9; }
 .dark .activity-mobile-calendar header button:active { background: #282a2c; }
 
+.dark .dashboard-workspace .next-move-card.mobile-is-expanded,
+.dark .dashboard-workspace .next-move-card.mobile-is-expanded.next-move-interview,
+.dark .dashboard-workspace .next-move-card.mobile-is-expanded.next-move-followup,
+.dark .dashboard-workspace .next-move-card.mobile-is-expanded.next-move-cv {
+    background: #1e1f20 !important;
+}
+.dark .dashboard-workspace .next-move-card .next-move-mobile-summary {
+    border-top-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .dashboard-workspace .next-move-mobile-summary strong { color: #f0f4f9; }
+.dark .dashboard-workspace .next-move-mobile-summary small { color: #94a3b8; }
+.dark .dashboard-workspace .next-move-mobile-summary > i { color: #94a3b8; }
+.dark .dashboard-workspace .next-move-mobile-summary:active { background: #282a2c; }
+.dark .dashboard-workspace .next-move-card.mobile-is-expanded > .next-move-mobile-collapse { color: #94a3b8; }
+
+
