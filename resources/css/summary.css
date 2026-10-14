@@ -784,7 +784,7 @@
 
 .dark .summary-page .workspace-card,
 .dark .summary-page .summary-insights,
-.dark .summary-page .summary-overview {
+.dark .summary-page .summary-overview:not(.summary-overview--split) {
     background: #1e1f20;
     border: 1px solid rgba(255, 255, 255, 0.07);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
@@ -811,8 +811,9 @@
 }
 
 .dark .summary-periods a.is-active {
-    background: #3b2d54;
-    color: #d8b4fe;
+    background: #282a2c;
+    color: #f0f4f9;
+    font-weight: 600;
 }
 
 .dark .summary-scope p {
@@ -823,10 +824,17 @@
     color: #94a3b8;
 }
 
-.dark .summary-page .summary-overview {
+.dark .summary-page .summary-overview:not(.summary-overview--split) {
     background: #1e1f20;
     border-color: rgba(255, 255, 255, 0.07);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dark .summary-page .summary-overview--split {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
 }
 
 .dark .summary-overview > .summary-stat {
@@ -842,7 +850,7 @@
 }
 
 .dark .summary-page .summary-stat > p {
-    color: #64748b;
+    color: #94a3b8 !important;
 }
 
 .dark .summary-stat--total > strong {
@@ -861,23 +869,30 @@
     color: #fb923c;
 }
 
-.dark .summary-stat-group {
-    background: #1e1f20;
-    border-color: rgba(255, 255, 255, 0.07);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
+.dark .summary-stat-group,
 .dark .summary-stat-group--outcomes {
-    background: rgba(35, 30, 48, 0.7);
-    border-color: rgba(255, 255, 255, 0.07);
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
 }
 
-.dark .summary-stat-group > .summary-stat + .summary-stat {
-    border-left-color: rgba(255, 255, 255, 0.07);
+.dark .summary-stat-group:hover,
+.dark .summary-stat-group--outcomes:hover {
+    background: #232426 !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
 }
 
+.dark .summary-stat-group > .summary-stat + .summary-stat,
 .dark .summary-stat-group--outcomes > .summary-stat + .summary-stat {
-    border-left-color: rgba(255, 255, 255, 0.07);
+    border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .summary-overview--split .summary-stats-footer {
+    border: 0 !important;
+    border-top: 0 !important;
+    background: transparent !important;
+    margin-top: 0 !important;
+    padding: 0 3px !important;
 }
 
 .dark .summary-page .summary-stats-footer {
