@@ -7,10 +7,32 @@
     <title>@yield('code') · @yield('title') · TraKerja</title>
     <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}?v=2">
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700" rel="stylesheet">
+    <!-- Anti-FOUC & Theme Initialization Script -->
+    <script>
+        (function() {
+            try {
+                if (!localStorage.getItem('trakerja_theme_force_light_v6')) {
+                    localStorage.setItem('theme', 'light');
+                    document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
+                    localStorage.setItem('trakerja_theme_force_light_v6', '1');
+                }
+                var theme = localStorage.getItem('theme');
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                    document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
+                }
+            } catch (e) {}
+        })();
+    </script>
+
     @vite('resources/css/app.css')
 </head>
-<body class="utility-page error-page">
+<body class="utility-page error-page bg-[#fdfcf9] dark:bg-[#131314] text-[#34313d] dark:text-[#f0f4f9] transition-colors duration-200 relative">
+    <div class="gemini-ambient-glow" aria-hidden="true"></div>
     <div class="error-shell">
         <main class="error-stage">
             <section class="error-scene" aria-labelledby="error-title">

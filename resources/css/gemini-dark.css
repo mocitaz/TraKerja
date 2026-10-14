@@ -28,6 +28,10 @@ html:not(.dark) .gemini-ambient-glow {
     display: none !important;
 }
 
+[x-cloak] {
+    display: none !important;
+}
+
 html.dark {
     --gemini-canvas: #131314;
     --gemini-surface: #1e1f20;
