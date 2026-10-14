@@ -232,9 +232,28 @@ html.dark ::-webkit-scrollbar-thumb:hover {
 
 .dark .welcome-page .faq-item:hover {
     background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+.dark .welcome-page .faq-item .faq-question-text,
+.dark .welcome-page .faq-item button span {
+    color: #f0f4f9 !important;
+}
+
+.dark .welcome-page .faq-item:hover .faq-question-text,
+.dark .welcome-page .faq-item button:hover span {
+    color: #ffffff !important;
+}
+
+.dark .welcome-page .faq-item .faq-item-icon,
+.dark .welcome-page .faq-item .faq-icon,
+.dark .welcome-page .faq-item i.ph {
+    color: #94a3b8 !important;
 }
 
 .dark .welcome-page .faq-answer {
+    background: #1e1f20 !important;
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
     color: #94a3b8 !important;
 }
 

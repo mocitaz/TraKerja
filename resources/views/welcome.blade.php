@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="{{ request()->cookie('theme') === 'dark' ? 'dark' : '' }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -39,9 +39,9 @@
     <script>
         (function() {
             var theme = localStorage.getItem('theme');
-            var cookieTheme = document.cookie.match(/(?:^|;\s*)theme=([^;]*)/);
-            var isDark = theme === 'dark' || (cookieTheme && cookieTheme[1] === 'dark') || (!theme && !cookieTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
-            if (isDark) {
+            // If the user explicitly activated 'dark', enable dark mode.
+            // Otherwise, keep the landing page in its clean, original light mode!
+            if (theme === 'dark') {
                 document.documentElement.classList.add('dark');
             } else {
                 document.documentElement.classList.remove('dark');
@@ -67,6 +67,21 @@
             --notion-red-border: #f8caca;
             --notion-green: #eef8f2;
             --notion-green-border: #c5ebd2;
+        }
+
+        html.dark {
+            --notion-bg: #131314;
+            --notion-text: #f0f4f9;
+            --notion-text-muted: #94a3b8;
+            --notion-border: rgba(255, 255, 255, 0.08);
+            --notion-yellow: #2a2415;
+            --notion-yellow-border: #4a3b1a;
+            --notion-blue: #152238;
+            --notion-blue-border: #1e3a5f;
+            --notion-red: #2d1818;
+            --notion-red-border: #522222;
+            --notion-green: #14281e;
+            --notion-green-border: #1e4a32;
         }
 
         body {
@@ -98,6 +113,69 @@
         .bento-card:hover {
             border-color: rgba(48, 49, 59, 0.22);
             box-shadow: 0 6px 22px rgba(87, 71, 53, 0.05);
+        }
+
+        html.dark .bento-card {
+            background: #1e1f20 !important;
+            border-color: rgba(255, 255, 255, 0.08) !important;
+            color: #f0f4f9 !important;
+        }
+
+        html.dark .bento-card:hover {
+            background: #282a2c !important;
+            border-color: rgba(255, 255, 255, 0.14) !important;
+        }
+
+        /* FAQ Specific High-Contrast Styling */
+        .faq-item {
+            background-color: #ffffff;
+            border-color: #dedbd6;
+        }
+
+        .faq-item .faq-question-text {
+            color: #30313b !important;
+        }
+
+        .faq-item:hover .faq-question-text {
+            color: #1a191e !important;
+        }
+
+        .faq-item .faq-item-icon {
+            color: #71717a !important;
+        }
+
+        .faq-answer {
+            color: #545761 !important;
+            background-color: #ffffff;
+            border-top-color: #dedbd6;
+        }
+
+        html.dark .faq-item {
+            background-color: #1e1f20 !important;
+            border-color: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        html.dark .faq-item:hover {
+            background-color: #282a2c !important;
+            border-color: rgba(255, 255, 255, 0.14) !important;
+        }
+
+        html.dark .faq-item .faq-question-text {
+            color: #f0f4f9 !important;
+        }
+
+        html.dark .faq-item:hover .faq-question-text {
+            color: #ffffff !important;
+        }
+
+        html.dark .faq-item .faq-item-icon {
+            color: #94a3b8 !important;
+        }
+
+        html.dark .faq-answer {
+            color: #94a3b8 !important;
+            background-color: #1e1f20 !important;
+            border-top-color: rgba(255, 255, 255, 0.08) !important;
         }
 
         /* Status Pill */
@@ -804,10 +882,10 @@
     
 
     {{-- ============ HOW IT WORKS (Notion interactive switcher) ============ --}}
-    <section id="how-it-works" class="py-20 sm:py-24 bg-[#fdfcf9] border-b border-[#dedbd6]/80">
+    <section id="how-it-works" class="py-20 sm:py-24 bg-[#fdfcf9] dark:bg-[#131314] border-b border-[#dedbd6]/80 dark:border-white/10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-14 reveal">
-                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900">Start in 3 simple steps.</h2>
+                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 dark:text-[#f0f4f9]">Start in 3 simple steps.</h2>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -968,10 +1046,10 @@
     </section>
 
     {{-- ============ PRICING ============ --}}
-    <section class="py-20 sm:py-24 bg-[#fdfcf9] border-b border-[#dedbd6]/80" id="pricing">
+    <section class="py-20 sm:py-24 bg-[#fdfcf9] dark:bg-[#18191a] border-b border-[#dedbd6]/80 dark:border-white/10" id="pricing">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-14 reveal">
-                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 mt-3">Simple pricing. No hidden fees.</h2>
+                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 dark:text-[#f0f4f9] mt-3">Simple pricing. No hidden fees.</h2>
             </div>
 
             <!-- Pricing Grid (3 columns) -->
@@ -1019,30 +1097,30 @@
                         Value</span>
                     <div>
                         <div class="flex items-center justify-between mt-1">
-                            <h3 class="font-extrabold text-zinc-900 text-[10px] uppercase tracking-widest">Premium Pro
+                            <h3 class="font-extrabold text-zinc-900 dark:text-[#f0f4f9] text-[10px] uppercase tracking-widest">Premium Pro
                             </h3>
                             <span
-                                class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[8px] font-bold rounded border border-emerald-100 uppercase">Pro</span>
+                                class="px-2 py-0.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 text-[8px] font-bold rounded border border-emerald-100 dark:border-emerald-500/30 uppercase">Pro</span>
                         </div>
                         <div class="flex items-baseline gap-2 mt-4 mb-1">
-                            <span class="text-3xl font-black text-zinc-950">Rp 9.999</span>
-                            <span class="text-xs font-semibold text-zinc-400 line-through">Rp 19.999</span>
+                            <span class="text-3xl font-black text-zinc-950 dark:text-[#f0f4f9]">Rp 9.999</span>
+                            <span class="text-xs font-semibold text-zinc-400 dark:text-zinc-500 line-through">Rp 19.999</span>
                         </div>
-                        <p class="text-[9px] font-bold text-emerald-600 uppercase tracking-widest mb-6">One-time,
+                        <p class="text-[9px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-6">One-time,
                             lifetime access</p>
 
-                        <div class="border-t border-[#dedbd6]/80 pt-6 space-y-3.5 text-xs font-semibold text-zinc-800">
+                        <div class="border-t border-[#dedbd6]/80 dark:border-white/10 pt-6 space-y-3.5 text-xs font-semibold text-zinc-800 dark:text-[#f0f4f9]">
                             <div class="flex items-center gap-2 font-bold"><i
-                                    class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>Unlimited job
+                                    class="ph ph-check text-emerald-500 dark:text-emerald-400 text-sm font-bold"></i> <span>Unlimited job
                                     trackers</span></div>
                             <div class="flex items-center gap-2 font-bold"><i
-                                    class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>50+ premium
+                                    class="ph ph-check text-emerald-500 dark:text-emerald-400 text-sm font-bold"></i> <span>50+ premium
                                     templates</span></div>
                             <div class="flex items-center gap-2"><i
-                                    class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>Bulk job importer
+                                    class="ph ph-check text-emerald-500 dark:text-emerald-400 text-sm font-bold"></i> <span>Bulk job importer
                                     (.csv)</span></div>
                             <div class="flex items-center gap-2"><i
-                                    class="ph ph-check text-emerald-500 text-sm font-bold"></i> <span>Full advanced
+                                    class="ph ph-check text-emerald-500 dark:text-emerald-400 text-sm font-bold"></i> <span>Full advanced
                                     dashboard</span></div>
                         </div>
                     </div>
@@ -1091,10 +1169,10 @@
     </section>
 
     {{-- ============ TESTIMONIALS ============ --}}
-    <section class="py-20 sm:py-24 bg-[#fdfcf9] border-b border-[#dedbd6]/80" id="testimonials">
+    <section class="py-20 sm:py-24 bg-[#fdfcf9] dark:bg-[#131314] border-b border-[#dedbd6]/80 dark:border-white/10" id="testimonials">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="mb-12 reveal">
-                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-950 font-black tracking-tight">Trusted by candidates
+                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-950 dark:text-[#f0f4f9] font-black tracking-tight">Trusted by candidates
                     who land.</h2>
             </div>
 
@@ -1211,9 +1289,9 @@
     </section>
 
     {{-- ============ FAQ ============ --}}
-    <section class="py-20 sm:py-24 bg-[#fdfcf9] border-b border-[#dedbd6]/80" id="faq">
+    <section class="py-20 sm:py-24 bg-[#fdfcf9] dark:bg-[#18191a] border-b border-[#dedbd6]/80 dark:border-white/10" id="faq">
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
-            <h2 class="text-center notion-h1 text-2xl sm:text-3xl text-zinc-900 mb-10 reveal">Frequently Asked Questions
+            <h2 class="text-center notion-h1 text-2xl sm:text-3xl text-zinc-900 dark:text-[#f0f4f9] mb-10 reveal">Frequently Asked Questions
             </h2>
 
             <div class="space-y-3.5 reveal">
@@ -1248,19 +1326,19 @@
                 @foreach ($faqs as $faq)
                     <div
                         class="bento-card faq-item bg-white dark:bg-[#1e1f20] hover:bg-[#faf8f5] dark:hover:bg-[#282a2c] border border-[#dedbd6] dark:border-white/10 transition-all rounded-xl overflow-hidden shadow-3xs">
-                        <button class="w-full text-left p-4 flex justify-between items-center group focus:outline-none"
+                        <button class="w-full text-left p-4 sm:p-4.5 flex justify-between items-center group focus:outline-none"
                             onclick="toggleFaq(this)">
                             <span
-                                class="text-xs font-bold text-zinc-800 dark:text-[#f0f4f9] group-hover:text-zinc-950 dark:group-hover:text-white transition flex items-center gap-2">
-                                <i class="ph ph-question text-zinc-400 dark:text-[#94a3b8] text-sm"></i>
+                                class="faq-question-text text-xs sm:text-[13px] font-bold text-zinc-900 dark:text-[#f0f4f9] group-hover:text-zinc-950 dark:group-hover:text-white transition flex items-center gap-2.5">
+                                <i class="ph ph-question faq-item-icon text-zinc-500 dark:text-[#94a3b8] text-sm shrink-0"></i>
                                 {{ $faq[0] }}
                             </span>
-                            <span class="faq-icon transition-transform duration-200 text-zinc-400 dark:text-[#94a3b8] shrink-0 ml-4">
+                            <span class="faq-icon faq-item-icon transition-transform duration-200 text-zinc-500 dark:text-[#94a3b8] shrink-0 ml-4">
                                 <i class="ph ph-caret-down text-sm font-bold"></i>
                             </span>
                         </button>
                         <div
-                            class="faq-answer hidden px-4 pb-4 text-[11px] font-medium text-zinc-600 dark:text-[#94a3b8] leading-relaxed border-t border-[#dedbd6]/60 dark:border-white/10 pt-3 bg-white dark:bg-[#1e1f20]">
+                            class="faq-answer hidden px-4 pb-4 sm:px-4.5 sm:pb-4.5 text-[11px] sm:text-xs font-medium text-zinc-600 dark:text-[#94a3b8] leading-relaxed border-t border-[#dedbd6]/80 dark:border-white/10 pt-3 bg-white dark:bg-[#1e1f20]">
                             {{ $faq[1] }}
                         </div>
                     </div>
@@ -1270,11 +1348,11 @@
     </section>
 
     {{-- ============ CTA BANNER ============ --}}
-    <section class="py-28 bg-[#fdfcf9] border-b border-[#dedbd6]/80 select-none">
+    <section class="py-28 bg-[#fdfcf9] dark:bg-[#131314] border-b border-[#dedbd6]/80 dark:border-white/10 select-none">
         <div class="max-w-2xl mx-auto px-4 text-center reveal">
-            <h2 class="text-4xl sm:text-5xl font-black text-zinc-900 tracking-tight leading-none mb-4">Get started
+            <h2 class="text-4xl sm:text-5xl font-black text-zinc-900 dark:text-[#f0f4f9] tracking-tight leading-none mb-4">Get started
                 today.</h2>
-            <p class="text-sm sm:text-base font-semibold text-zinc-500 mb-8 leading-relaxed max-w-lg mx-auto">Build
+            <p class="text-sm sm:text-base font-semibold text-zinc-500 dark:text-[#94a3b8] mb-8 leading-relaxed max-w-lg mx-auto">Build
                 ATS-friendly CVs, track applications, and optimize your path with AI.</p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <a href="{{ route('register') }}"
@@ -1288,17 +1366,17 @@
     </section>
 
     {{-- ============ FOOTER ============ --}}
-    <footer class="bg-[#f4f2ec] border-t border-[#dedbd6] py-16 text-[11px] font-semibold text-zinc-600">
+    <footer class="bg-[#f4f2ec] dark:bg-[#131314] border-t border-[#dedbd6] dark:border-white/10 py-16 text-[11px] font-semibold text-zinc-600 dark:text-[#94a3b8]">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
-            <div class="grid grid-cols-2 md:grid-cols-12 gap-x-8 gap-y-10 pb-12 border-b border-[#dedbd6]">
+            <div class="grid grid-cols-2 md:grid-cols-12 gap-x-8 gap-y-10 pb-12 border-b border-[#dedbd6] dark:border-white/10">
 
                 <!-- Brand Column -->
                 <div class="col-span-2 md:col-span-4 space-y-4">
-                    <div class="flex items-center gap-2 text-xs font-bold text-zinc-800 tracking-tight select-none">
+                    <div class="flex items-center gap-2 text-xs font-bold text-zinc-800 dark:text-[#f0f4f9] tracking-tight select-none">
                         <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="w-5 h-5 object-contain">
                         <span>TraKerja</span>
                     </div>
-                    <p class="text-zinc-400 font-medium leading-relaxed max-w-xs">
+                    <p class="text-zinc-400 dark:text-zinc-500 font-medium leading-relaxed max-w-xs">
                         A unified, minimalist workspace to manage your entire job application pipeline, build
                         ATS-friendly CVs, and accelerate your career using AI.
                     </p>
@@ -1308,9 +1386,9 @@
                 <div class="col-span-1 md:col-span-2 space-y-3">
                     <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Product</h4>
                     <ul class="space-y-2">
-                        <li><a href="#how-it-works" class="hover:text-zinc-800 transition-colors">How it Works</a></li>
-                        <li><a href="#pricing" class="hover:text-zinc-800 transition-colors">Pricing Plans</a></li>
-                        <li><a href="#testimonials" class="hover:text-zinc-800 transition-colors">Testimonials</a></li>
+                        <li><a href="#how-it-works" class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">How it Works</a></li>
+                        <li><a href="#pricing" class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">Pricing Plans</a></li>
+                        <li><a href="#testimonials" class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">Testimonials</a></li>
                     </ul>
                 </div>
 
@@ -1318,11 +1396,11 @@
                 <div class="col-span-1 md:col-span-3 space-y-3">
                     <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Legal & Info</h4>
                     <ul class="space-y-2">
-                        <li><a href="{{ route('legal.privacy') }}" class="hover:text-zinc-800 transition-colors">Privacy
+                        <li><a href="{{ route('legal.privacy') }}" class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">Privacy
                                 Policy</a></li>
-                        <li><a href="{{ route('legal.terms') }}" class="hover:text-zinc-800 transition-colors">Terms of
+                        <li><a href="{{ route('legal.terms') }}" class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">Terms of
                                 Service</a></li>
-                        <li><span class="text-zinc-400 font-medium leading-relaxed">PT Teknalogi Transformasi
+                        <li><span class="text-zinc-400 dark:text-zinc-500 font-medium leading-relaxed">PT Teknalogi Transformasi
                                 Digital</span></li>
                     </ul>
                 </div>
@@ -1332,14 +1410,14 @@
                     <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Contact & Socials</h4>
                     <ul class="space-y-2.5">
                         <li class="flex items-center gap-2">
-                            <i class="ph ph-envelope text-zinc-700 text-xs"></i>
+                            <i class="ph ph-envelope text-zinc-700 dark:text-zinc-400 text-xs"></i>
                             <a href="mailto:trakerja@teknalogi.id"
-                                class="hover:text-zinc-800 transition-colors">trakerja@teknalogi.id</a>
+                                class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">trakerja@teknalogi.id</a>
                         </li>
                         <li class="flex items-center gap-2">
-                            <i class="ph ph-instagram-logo text-zinc-700 text-xs"></i>
+                            <i class="ph ph-instagram-logo text-zinc-700 dark:text-zinc-400 text-xs"></i>
                             <a href="https://instagram.com/jointrakerja" target="_blank" rel="noopener noreferrer"
-                                class="hover:text-zinc-800 transition-colors">@jointrakerja</a>
+                                class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">@jointrakerja</a>
                         </li>
                         <li class="flex items-center gap-2">
                             <i class="ph ph-telegram-logo text-zinc-700 text-xs"></i>
