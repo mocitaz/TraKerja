@@ -937,13 +937,16 @@
     color: #f0f4f9;
 }
 .dark .workspace-switcher button.is-active {
-    background: #3b2d54;
-    color: #d8b4fe;
+    background: #333538;
+    color: #f0f4f9;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 .dark .workspace-notice {
-    background: #221c2e;
-    border-color: rgba(168, 85, 247, 0.3);
-    color: #e2d9f3;
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f0f4f9;
 }
 .dark .workspace-form label {
     color: #cbd5e1;
@@ -968,11 +971,13 @@
 }
 .dark .workspace-steps li > span {
     background: #282a2c;
-    border-color: rgba(255, 255, 255, 0.08);
-    color: #d8b4fe;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+    font-weight: 600;
 }
 .dark .workspace-steps code {
     background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     color: #f0f4f9;
 }
 .dark .workspace-ticket {
@@ -984,22 +989,52 @@
     background: #282a2c;
 }
 
-/* Automation Page Specifics */
+/* Automation Page Specifics - Pure Gemini Obsidian */
 .dark .automation-page .automation-intro {
-    background: linear-gradient(135deg, #101e2e 0%, #162438 100%);
-    border-color: rgba(59, 130, 246, 0.22);
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 .dark .automation-page .automation-intro .workspace-status {
-    background: rgba(255, 255, 255, 0.08);
-    color: #93c5fd;
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
 }
+.dark .automation-page .automation-intro h2 {
+    color: #f0f4f9;
+}
+.dark .automation-page .automation-intro > p {
+    color: #94a3b8;
+}
+.dark .automation-page .automation-intro .workspace-hint {
+    color: #94a3b8;
+}
+
 .dark .automation-page .automation-preview {
-    background: #1e1f20;
-    border-color: rgba(255, 255, 255, 0.08);
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+.dark .automation-page .automation-preview__top {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
 }
 .dark .automation-page .automation-preview__top .workspace-status {
-    background: rgba(255, 255, 255, 0.08);
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     color: #cbd5e1;
+}
+.dark .automation-page .automation-preview > .workspace-eyebrow {
+    color: #94a3b8;
+}
+.dark .automation-page .automation-preview h3 {
+    color: #f0f4f9;
+}
+.dark .automation-page .automation-preview > p:not(.workspace-eyebrow) {
+    color: #94a3b8;
+}
+.dark .automation-page .automation-preview__field {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 .dark .automation-page .automation-preview__field > span {
     color: #94a3b8;
@@ -1009,16 +1044,63 @@
 }
 .dark .automation-page .automation-preview__action {
     background: #282a2c;
-    border-color: rgba(255, 255, 255, 0.08);
-    color: #c4b5fd;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
 }
+
 .dark .automation-page .automation-setup {
-    background: #1e1f20;
-    border-color: rgba(255, 255, 255, 0.07);
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
+.dark .automation-page .automation-setup .workspace-card__heading h2 {
+    color: #f0f4f9;
+}
+.dark .automation-page .automation-setup .workspace-card__heading p {
+    color: #94a3b8;
+}
+.dark .automation-page .automation-steps li > span {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+    font-weight: 600;
+}
+.dark .automation-page .automation-steps h3 {
+    color: #f0f4f9;
+}
+.dark .automation-page .automation-steps p {
+    color: #94a3b8;
+}
+.dark .automation-page .automation-steps code {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
 .dark .automation-page .automation-side-panel {
-    background: #1e1f20;
-    border-color: rgba(255, 255, 255, 0.07);
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+.dark .automation-page .automation-side-section h2 {
+    color: #f0f4f9;
+}
+.dark .automation-page .automation-side-section > p {
+    color: #94a3b8;
+}
+.dark .automation-page .automation-side-section + .automation-side-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+@media (max-width: 900px) {
+    .dark .automation-page .automation-side-section + .automation-side-section {
+        border-left: 1px solid rgba(255, 255, 255, 0.08);
+    }
+}
+.dark .automation-page .automation-metrics > div {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 10px 12px;
 }
 .dark .automation-page .automation-metrics strong {
     color: #f0f4f9;
@@ -1028,65 +1110,127 @@
 }
 .dark .automation-page .workspace-chips > span {
     background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     color: #cbd5e1;
 }
+.dark .automation-page .automation-side-section .workspace-hint {
+    color: #94a3b8;
+}
+.dark .automation-page .automation-side-panel .automation-downloads .workspace-button--quiet {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .automation-page .automation-side-panel .automation-downloads .workspace-button--quiet:hover {
+    background: #333538;
+    border-color: rgba(255, 255, 255, 0.15);
+}
+.dark .automation-page .automation-side-panel .workspace-checklist {
+    color: #94a3b8;
+}
+
 .dark .automation-page .automation-import-panel {
-    background: #1e1f20;
-    border-color: rgba(255, 255, 255, 0.07);
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+.dark .automation-page .automation-import-panel .workspace-card__heading h2 {
+    color: #f0f4f9;
+}
+.dark .automation-page .automation-import-panel .workspace-card__heading p {
+    color: #94a3b8;
 }
 .dark .automation-page .automation-stepper {
-    background: #18191a;
-    border-color: rgba(255, 255, 255, 0.08);
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 .dark .automation-page .automation-stepper > span {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     color: #94a3b8;
 }
 .dark .automation-page .automation-stepper > .is-current {
-    background: #3b2d54;
-    color: #d8b4fe;
+    background: #333538 !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+    color: #f0f4f9 !important;
+    font-weight: 600;
 }
 .dark .automation-page .automation-upload {
-    background: #18191a;
-    border-color: rgba(255, 255, 255, 0.1);
+    background: #282a2c;
+    border: 1.5px dashed rgba(255, 255, 255, 0.15);
     color: #f0f4f9;
 }
 .dark .automation-page .automation-upload:hover,
 .dark .automation-page .automation-upload.is-dragging {
-    background: #202224;
-    border-color: rgba(168, 85, 247, 0.4);
+    background: #333538;
+    border-color: rgba(255, 255, 255, 0.3);
 }
 .dark .automation-page .automation-upload__icon {
-    background: #282a2c;
-    color: #d8b4fe;
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .automation-page .automation-upload > strong {
+    color: #f0f4f9;
 }
 .dark .automation-page .automation-upload > span:last-child {
     color: #94a3b8;
 }
+.dark .automation-page .automation-upload-stage > .workspace-hint {
+    color: #94a3b8;
+}
 .dark .automation-page .automation-file {
-    background: #18191a;
-    border-color: rgba(255, 255, 255, 0.08);
+    background: #282a2c;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     color: #f0f4f9;
 }
-.dark .automation-page .automation-validation span {
+.dark .automation-page .automation-file strong {
+    color: #f0f4f9;
+}
+.dark .automation-page .automation-file p {
+    color: #94a3b8;
+}
+.dark .automation-page .automation-validation {
     background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     color: #cbd5e1;
 }
+.dark .automation-page .automation-validation span {
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
 .dark .automation-page .workspace-table-scroll {
-    border-color: rgba(255, 255, 255, 0.08);
+    background: #18191a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 .dark .automation-page .workspace-table {
     color: #f0f4f9;
 }
 .dark .automation-page .workspace-table th {
-    background: #18191a;
+    background: #1e1f20;
     color: #94a3b8;
-    border-bottom-color: rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 .dark .automation-page .workspace-table td {
     color: #cbd5e1;
-    border-bottom-color: rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 .dark .automation-page .workspace-table tbody tr:hover {
     background: #282a2c;
+}
+.dark .automation-page .automation-errors summary {
+    color: #fca5a5;
+}
+.dark .automation-page .workspace-form__footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.dark .automation-page .workspace-form__footer .workspace-hint {
+    color: #94a3b8;
+}
+.dark .automation-page .workspace-empty {
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
 }
 

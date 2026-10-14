@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="workspace-page automation-page" x-data="{ activeTab: '{{ session('import_summary') || $errors->has('csv_file') ? 'csv' : $activeTab }}', selectTab(tab) { this.activeTab = tab; const url = new URL(window.location); url.searchParams.set('tab', tab); window.history.replaceState({}, '', url); } }">
         <div class="workspace-page__container">
-            <header class="workspace-page__header"><div><p class="workspace-eyebrow">Workspace tools</p><h1>Automation & data</h1><p>Save opportunities faster and keep your application data organized.</p></div><a href="{{ route('tracker') }}" wire:navigate class="workspace-button workspace-button--quiet">View applications <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></header>
+            <header class="workspace-page__header"><div><h1>Automation & data</h1><p>Save opportunities faster and keep your application data organized.</p></div><a href="{{ route('tracker') }}" wire:navigate class="workspace-button workspace-button--quiet">View applications <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></header>
             <div class="workspace-switcher" aria-label="Automation sections">
                 <button type="button" @click="selectTab('extension')" :aria-pressed="activeTab === 'extension'" :class="{ 'is-active': activeTab === 'extension' }" aria-controls="automation-extension">Chrome extension</button>
                 <button type="button" @click="selectTab('csv')" :aria-pressed="activeTab === 'csv'" :class="{ 'is-active': activeTab === 'csv' }" aria-controls="automation-csv">Import & export</button>
