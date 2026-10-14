@@ -29,11 +29,80 @@
         })();
     </script>
 
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
     @vite('resources/css/app.css')
+
+    <script>
+        function updateErrorToggleUI(isDark) {
+            var btn = document.getElementById('error-theme-toggle-btn');
+            if (!btn) return;
+            if (isDark) {
+                btn.setAttribute('title', 'Mode Gelap aktif (klik untuk ganti ke Mode Terang)');
+                btn.setAttribute('aria-label', 'Mode gelap aktif, klik untuk beralih ke mode terang');
+            } else {
+                btn.setAttribute('title', 'Mode Terang aktif (klik untuk ganti ke Mode Gelap)');
+                btn.setAttribute('aria-label', 'Mode terang aktif, klik untuk beralih ke mode gelap');
+            }
+        }
+
+        function toggleErrorTheme() {
+            var isDark = document.documentElement.classList.contains('dark');
+            var nextDark = !isDark;
+            var nextTheme = nextDark ? 'dark' : 'light';
+
+            if (nextDark) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            try {
+                localStorage.setItem('theme', nextTheme);
+            } catch (e) {}
+            document.cookie = 'theme=' + nextTheme + '; path=/; max-age=31536000; SameSite=Lax';
+
+            if (typeof window.setTheme === 'function') {
+                window.setTheme(nextTheme);
+            } else {
+                window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: nextDark } }));
+            }
+
+            updateErrorToggleUI(nextDark);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var isDark = document.documentElement.classList.contains('dark');
+            updateErrorToggleUI(isDark);
+        });
+        window.addEventListener('theme-changed', function(e) {
+            if (e.detail && typeof e.detail.isDark === 'boolean') {
+                updateErrorToggleUI(e.detail.isDark);
+            }
+        });
+    </script>
 </head>
 <body class="utility-page error-page bg-[#fdfcf9] dark:bg-[#131314] text-[#34313d] dark:text-[#f0f4f9] transition-colors duration-200 relative">
     <div class="gemini-ambient-glow" aria-hidden="true"></div>
     <div class="error-shell">
+        <header class="error-brand-header">
+            <a class="error-brand" href="{{ url('/') }}" aria-label="TraKerja home">
+                <img src="{{ asset('images/icon.png') }}" alt="" width="28" height="28">
+                <span>TraKerja</span>
+            </a>
+            <div class="error-header-actions">
+                <button type="button"
+                    id="error-theme-toggle-btn"
+                    onclick="toggleErrorTheme()"
+                    class="legal-theme-toggle-btn"
+                    title="Beralih tema (Dark/Light)"
+                    aria-label="Beralih mode gelap atau terang">
+                    <i class="ph-bold ph-sun legal-icon-sun" aria-hidden="true"></i>
+                    <i class="ph-bold ph-moon legal-icon-moon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </header>
         <main class="error-stage">
             <section class="error-scene" aria-labelledby="error-title">
                 <div class="error-illustration" aria-hidden="true">
@@ -58,9 +127,6 @@
                 </div>
             </section>
         </main>
-        <header class="error-brand-header">
-            <a class="error-brand" href="{{ url('/') }}" aria-label="TraKerja home"><img src="{{ asset('images/icon.png') }}" alt="" width="28" height="28"><span>TraKerja</span></a>
-        </header>
         <footer class="error-footer">
             <div><p>© {{ now()->year }} TraKerja. All rights reserved.</p><p>PT Teknalogi Transformasi Digital</p></div>
             <nav aria-label="Legal"><a href="{{ url('/privacy-policy') }}">Privacy</a><a href="{{ url('/terms-of-service') }}">Terms</a></nav>

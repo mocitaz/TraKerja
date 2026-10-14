@@ -1,6 +1,7 @@
 .error-page { background: #fdfcf9; color: #34313d; }
 .error-shell { display: flex; flex-direction: column; min-height: 100dvh; width: min(1120px, 100%); padding: 28px 40px 18px; margin-inline: auto; }
-.error-brand-header { display: flex; align-items: center; justify-content: center; margin: 0 0 22px; }
+.error-brand-header { display: flex; align-items: center; justify-content: space-between; margin: 0 0 22px; width: 100%; }
+.error-header-actions { display: inline-flex; align-items: center; gap: 12px; }
 .error-brand { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; color: #34313d; font-size: 20px; font-weight: 700; letter-spacing: -.8px; text-decoration: none; }
 .error-brand img { width: 24px; height: 24px; object-fit: contain; }
 .error-page .error-stage { flex: 1; display: flex; justify-content: center; padding: 48px 0 60px; }
@@ -49,3 +50,189 @@
     .error-footer > div { flex-direction: column; gap: 2px; }
 }
 @media (prefers-reduced-motion: reduce) { .error-workspace-art, .error-art-folder, .error-window-light { animation: none; } .error-button { transition: none; } }
+
+/* ==========================================================================
+   Gemini Deep Obsidian Dark Mode for Error Pages
+   ========================================================================== */
+html.dark .error-page {
+    background: #131314 !important;
+    color: #f0f4f9 !important;
+}
+
+html.dark .error-brand {
+    color: #f0f4f9 !important;
+}
+
+html.dark .error-status {
+    color: #94a3b8 !important;
+}
+
+html.dark .error-page .error-code {
+    color: #c084fc !important;
+    font-weight: 700 !important;
+}
+
+html.dark .error-copy h1 {
+    color: #f0f4f9 !important;
+}
+
+html.dark .error-copy .error-description {
+    color: #cbd5e1 !important;
+}
+
+html.dark .error-recovery {
+    color: #94a3b8 !important;
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark .error-button--primary {
+    background: #282a2c !important;
+    color: #f0f4f9 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+html.dark .error-button--primary:hover {
+    background: #333538 !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+html.dark .error-support {
+    color: #c084fc !important;
+}
+
+html.dark .error-support:hover {
+    color: #d8b4fe !important;
+}
+
+html.dark .error-support-note {
+    color: #64748b !important;
+}
+
+html.dark .error-footer {
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+}
+
+html.dark .error-footer a:hover {
+    color: #f0f4f9 !important;
+}
+
+/* Error Illustration Dark Obsidian Palette */
+html.dark .error-art-shadow {
+    fill: rgba(255, 255, 255, 0.03) !important;
+}
+
+html.dark .error-art-wall-top {
+    fill: #1e1f20 !important;
+    stroke: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark .error-art-wall-right {
+    fill: #18191a !important;
+    stroke: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark .error-art-wall-back {
+    fill: #1c1d1f !important;
+    stroke: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark .error-art-wall-line {
+    stroke: rgba(255, 255, 255, 0.06) !important;
+}
+
+html.dark .error-art-window-frame {
+    fill: #161b26 !important;
+    stroke: rgba(147, 197, 253, 0.2) !important;
+}
+
+html.dark .error-art-window-cross {
+    stroke: rgba(255, 255, 255, 0.12) !important;
+}
+
+html.dark .error-window-light {
+    fill: #93c5fd !important;
+    opacity: 0.25 !important;
+}
+
+html.dark .error-art-board {
+    fill: #282a2c !important;
+    stroke: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark .error-art-board-lines {
+    stroke: #c084fc !important;
+}
+
+html.dark .error-art-table-legs {
+    stroke: #475569 !important;
+}
+
+html.dark .error-art-laptop-body {
+    fill: #1e1f20 !important;
+    stroke: rgba(255, 255, 255, 0.18) !important;
+}
+
+html.dark .error-art-laptop-screen {
+    fill: #131314 !important;
+}
+
+html.dark .error-art-laptop-stand {
+    stroke: #64748b !important;
+}
+
+html.dark .error-art-chair-legs {
+    stroke: #475569 !important;
+}
+
+html.dark .error-art-chair-seat {
+    fill: #2a1f33 !important;
+    stroke: #a855f7 !important;
+}
+
+html.dark .error-art-chair-cushion {
+    stroke: #c084fc !important;
+}
+
+html.dark .error-art-folder-back {
+    fill: #2e1a3a !important;
+    stroke: #c084fc !important;
+}
+
+html.dark .error-art-folder-paper {
+    fill: #1e1f20 !important;
+    stroke: rgba(255, 255, 255, 0.12) !important;
+}
+
+html.dark .error-art-folder-lines {
+    stroke: #94a3b8 !important;
+}
+
+html.dark .error-art-folder-front {
+    fill: #3b204c !important;
+    stroke: #c084fc !important;
+}
+
+html.dark .error-art-folder-tab {
+    fill: #581c87 !important;
+}
+
+html.dark .error-art-plant-stem {
+    stroke: #059669 !important;
+}
+
+html.dark .error-art-plant-leaves {
+    fill: #0d2818 !important;
+    stroke: #34d399 !important;
+}
+
+html.dark .error-art-plant-pot {
+    fill: #192620 !important;
+    stroke: #34d399 !important;
+}
+
+html.dark .error-art-floor-line {
+    stroke: rgba(255, 255, 255, 0.08) !important;
+}

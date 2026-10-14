@@ -1257,3 +1257,414 @@
     color: #f0f4f9;
 }
 
+/* Product Offer Card & Feature List (/premium, /payment/top-up) */
+.dark .pay-offer {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-offer h2 {
+    color: #f0f4f9 !important;
+}
+.dark .pay-offer > p {
+    color: #94a3b8 !important;
+}
+.dark .pay-tag {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #c084fc !important;
+}
+.dark .pay-tag--quiet {
+    background: #232527 !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    color: #94a3b8 !important;
+}
+.dark .pay-features div {
+    color: #cbd5e1 !important;
+}
+.dark .pay-features div > span {
+    background: #282a2c !important;
+    color: #c084fc !important;
+}
+.dark .pay-starting {
+    background: #18191a !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #cbd5e1 !important;
+}
+.dark .pay-starting > span {
+    color: #94a3b8 !important;
+}
+.dark .pay-starting div span {
+    color: #f0f4f9 !important;
+}
+.dark .pay-methods legend {
+    color: #f0f4f9 !important;
+}
+.dark .pay-methods > p {
+    color: #94a3b8 !important;
+}
+.dark .pay-method-mark {
+    background: #282a2c !important;
+    color: #c084fc !important;
+}
+.dark .pay-method strong {
+    color: #f0f4f9 !important;
+}
+.dark .pay-method small {
+    color: #94a3b8 !important;
+}
+.dark .pay-radio {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    background: #131314 !important;
+}
+.dark .pay-method.is-selected .pay-radio {
+    border-color: #c084fc !important;
+    background: #c084fc !important;
+}
+.dark .pay-bundle li {
+    color: #cbd5e1 !important;
+}
+
+/* Order Summary Sidebar (/premium, /payment/top-up) */
+.dark .pay-summary {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-summary h2 {
+    color: #f0f4f9 !important;
+}
+.dark .pay-summary-product {
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-summary-product strong {
+    color: #f0f4f9 !important;
+}
+.dark .pay-summary-product span {
+    color: #94a3b8 !important;
+}
+.dark .pay-facts dt {
+    color: #94a3b8 !important;
+}
+.dark .pay-facts dd {
+    color: #f0f4f9 !important;
+}
+.dark .pay-mono {
+    color: #c084fc !important;
+}
+.dark .pay-total {
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-total > span {
+    color: #94a3b8 !important;
+}
+.dark .pay-total strong {
+    color: #f0f4f9 !important;
+}
+.dark .pay-small {
+    color: #94a3b8 !important;
+}
+.dark .pay-button {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .pay-button:hover {
+    background: #333538 !important;
+}
+.dark .pay-button--primary {
+    background: #2579ca !important;
+    border-color: #2579ca !important;
+    color: #ffffff !important;
+}
+.dark .pay-button--primary:hover {
+    background: #1e65ab !important;
+}
+
+/* Status Cards & Receipt (/payment/waiting, /payment/success, /payment/failed) */
+.dark .pay-state--waiting {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-state--success {
+    background: #15221b !important;
+    border-color: rgba(16, 185, 129, 0.25) !important;
+}
+.dark .pay-state--failed,
+.dark .pay-state--expired {
+    background: #241818 !important;
+    border-color: rgba(239, 68, 68, 0.25) !important;
+}
+.dark .pay-state-icon {
+    background: #282a2c !important;
+    color: #c084fc !important;
+}
+.dark .pay-state--success .pay-state-icon {
+    background: rgba(16, 185, 129, 0.2) !important;
+    color: #34d399 !important;
+}
+.dark .pay-state--failed .pay-state-icon,
+.dark .pay-state--expired .pay-state-icon {
+    background: rgba(239, 68, 68, 0.2) !important;
+    color: #f87171 !important;
+}
+.dark .pay-timeline li:not(:last-child):before {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+.dark .pay-timeline li > span {
+    background: #282a2c !important;
+    color: #94a3b8 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+.dark .pay-timeline .is-done > span {
+    background: #c084fc !important;
+    color: #131314 !important;
+    border-color: #c084fc !important;
+}
+.dark .pay-timeline strong {
+    color: #f0f4f9 !important;
+}
+.dark .pay-timeline small {
+    color: #94a3b8 !important;
+}
+.dark .pay-check-status {
+    background: #18191a !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #cbd5e1 !important;
+}
+.dark .pay-live-dot {
+    background: #34d399 !important;
+    box-shadow: 0 0 6px rgba(52, 211, 153, 0.6) !important;
+}
+.dark .pay-receipt {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-receipt h2,
+.dark .pay-receipt h3 {
+    color: #f0f4f9 !important;
+}
+.dark .pay-receipt-total {
+    color: #f0f4f9 !important;
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-receipt-help {
+    background: #18191a !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-receipt-help strong {
+    color: #f0f4f9 !important;
+}
+.dark .pay-receipt-help p {
+    color: #94a3b8 !important;
+}
+.dark .pay-va {
+    background: #18191a !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-va > span {
+    color: #94a3b8 !important;
+}
+.dark .pay-va strong {
+    color: #f0f4f9 !important;
+}
+.dark .pay-granted {
+    background: #15221b !important;
+    border-color: rgba(16, 185, 129, 0.25) !important;
+}
+.dark .pay-granted h4 {
+    color: #34d399 !important;
+}
+.dark .pay-granted li {
+    color: #cbd5e1 !important;
+}
+.dark .pay-granted li > span {
+    color: #34d399 !important;
+}
+
+/* Badges across payment status and history */
+.dark .pay-badge {
+    background: #282a2c !important;
+    color: #94a3b8 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-badge--success {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #34d399 !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+.dark .pay-badge--pending,
+.dark .pay-badge--waiting {
+    background: rgba(245, 158, 11, 0.15) !important;
+    color: #fbbf24 !important;
+    border: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+.dark .pay-badge--failed,
+.dark .pay-badge--expired,
+.dark .pay-badge--canceled {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #f87171 !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Payment History Page (/payment/history) */
+.dark .pay-history-stats > div {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+.dark .pay-history-stats span {
+    color: #94a3b8 !important;
+}
+.dark .pay-history-stats strong {
+    color: #f0f4f9 !important;
+}
+.dark .pay-history-stats > div:nth-child(2) {
+    background: #17221d !important;
+    border-color: rgba(16, 185, 129, 0.25) !important;
+}
+.dark .pay-history-stats > div:nth-child(2) strong {
+    color: #34d399 !important;
+}
+.dark .pay-history-panel {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-section-heading h2 {
+    color: #f0f4f9 !important;
+}
+.dark .pay-section-heading span {
+    color: #94a3b8 !important;
+}
+.dark .pay-table tbody tr:hover td {
+    background: #282a2c !important;
+}
+.dark .pay-table td strong {
+    color: #f0f4f9 !important;
+}
+.dark .pay-table td small {
+    color: #94a3b8 !important;
+}
+.dark .pay-amount {
+    color: #f0f4f9 !important;
+}
+.dark .pay-order-link {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .pay-order-link:hover {
+    background: #333538 !important;
+    color: #c084fc !important;
+}
+.dark .pay-empty {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-empty h3 {
+    color: #f0f4f9 !important;
+}
+.dark .pay-empty p {
+    color: #94a3b8 !important;
+}
+.dark .pay-history-footer {
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+}
+
+/* Payment Coming Soon (/payment/coming-soon) */
+.dark .pay-coming-hero {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+.dark .pay-coming-icon {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #c084fc !important;
+}
+.dark .pay-coming-hero-copy h2 {
+    color: #f0f4f9 !important;
+}
+.dark .pay-coming-hero-copy p {
+    color: #94a3b8 !important;
+}
+.dark .pay-progress-label {
+    color: #94a3b8 !important;
+}
+.dark .pay-progress-track {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-progress-bar {
+    background: linear-gradient(90deg, #9333ea, #c084fc) !important;
+}
+.dark .pay-coming-hero-stats {
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-coming-hero-stat strong {
+    color: #f0f4f9 !important;
+}
+.dark .pay-coming-hero-stat span {
+    color: #94a3b8 !important;
+}
+.dark .pay-coming-hero-sep {
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-coming-feature {
+    background: #18191a !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-coming-feature strong {
+    color: #f0f4f9 !important;
+}
+.dark .pay-coming-feature span {
+    color: #94a3b8 !important;
+}
+.dark .pay-coming-feature-icon {
+    background: #282a2c !important;
+    color: #c084fc !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+.dark .pay-coming-roadmap {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-roadmap-step:not(:last-child):before {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+.dark .pay-roadmap-dot {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #94a3b8 !important;
+}
+.dark .pay-roadmap-step.is-done .pay-roadmap-dot {
+    background: rgba(16, 185, 129, 0.2) !important;
+    border-color: rgba(16, 185, 129, 0.4) !important;
+    color: #34d399 !important;
+}
+.dark .pay-roadmap-step.is-active .pay-roadmap-dot {
+    background: #c084fc !important;
+    border-color: #c084fc !important;
+    color: #131314 !important;
+}
+.dark .pay-roadmap-info strong {
+    color: #f0f4f9 !important;
+}
+.dark .pay-roadmap-info p {
+    color: #94a3b8 !important;
+}
+.dark .pay-coming-notify {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pay-coming-notify-icon {
+    background: #282a2c !important;
+    color: #c084fc !important;
+}
+.dark .pay-coming-notify-copy strong {
+    color: #f0f4f9 !important;
+}
+.dark .pay-coming-notify-copy p {
+    color: #94a3b8 !important;
+}
+
+
