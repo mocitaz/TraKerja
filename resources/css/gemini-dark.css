@@ -290,5 +290,94 @@ html.dark ::-webkit-scrollbar-thumb:hover {
     color: #f0f4f9 !important;
 }
 
+/* ==========================================================================
+   Gemini Dark Mode: Global Pagination Overrides
+   Replaces default Tailwind bluish-slate (gray-800 / border-gray-600)
+   with pure Obsidian surfaces (#1e1f20 / #282a2c) and neutral borders
+   ========================================================================== */
+.dark nav[role="navigation"] {
+    box-shadow: none !important;
+}
+
+.dark nav[role="navigation"] p,
+.dark nav[role="navigation"] p.text-sm {
+    color: #94a3b8 !important;
+}
+
+.dark nav[role="navigation"] p span.font-medium,
+.dark nav[role="navigation"] p .font-medium {
+    color: #f0f4f9 !important;
+    font-weight: 600 !important;
+}
+
+.dark nav[role="navigation"] span.relative.z-0 {
+    background-color: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark nav[role="navigation"] button,
+.dark nav[role="navigation"] a,
+.dark nav[role="navigation"] span.relative.inline-flex {
+    background-color: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease !important;
+}
+
+.dark nav[role="navigation"] svg {
+    color: #94a3b8 !important;
+}
+
+.dark nav[role="navigation"] button:hover,
+.dark nav[role="navigation"] a:hover {
+    background-color: #282a2c !important;
+    color: #f0f4f9 !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.dark nav[role="navigation"] button:hover svg,
+.dark nav[role="navigation"] a:hover svg {
+    color: #f0f4f9 !important;
+}
+
+.dark nav[role="navigation"] span[aria-current="page"] span,
+.dark nav[role="navigation"] span[aria-current="page"] {
+    background-color: #2e3033 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+.dark nav[role="navigation"] span[aria-disabled="true"] span,
+.dark nav[role="navigation"] span[aria-disabled="true"] {
+    background-color: #1a1a1c !important;
+    color: #55575a !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    cursor: not-allowed !important;
+}
+
+.dark nav[role="navigation"] span[aria-disabled="true"] svg {
+    color: #55575a !important;
+}
+
+.dark nav[role="navigation"] .sm\:hidden span,
+.dark nav[role="navigation"] .sm\:hidden button,
+.dark nav[role="navigation"] .sm\:hidden a {
+    background-color: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+}
+
+.dark nav[role="navigation"] .sm\:hidden button:hover,
+.dark nav[role="navigation"] .sm\:hidden a:hover {
+    background-color: #282a2c !important;
+    color: #f0f4f9 !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+
 
 

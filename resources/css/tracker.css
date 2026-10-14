@@ -259,7 +259,7 @@
 }
 
 .dark .tracker-desktop-table tr:nth-child(3n+2) .tracker-company-mark {
-    background: #1e293b;
+    background: #282a2c;
     color: #38bdf8;
 }
 
@@ -281,7 +281,7 @@
 }
 
 .dark .tracker-opportunity > div > span {
-    color: #64748b;
+    color: #94a3b8;
 }
 
 .dark .tracker-pinned-mark {
@@ -353,6 +353,111 @@
 
 .dark .tracker-pagination {
     border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.dark .tracker-pagination nav,
+.dark .tracker-column-pagination nav {
+    box-shadow: none;
+}
+
+.dark .tracker-pagination nav p,
+.dark .tracker-pagination nav p.text-sm {
+    color: #94a3b8 !important;
+}
+
+.dark .tracker-pagination nav p span.font-medium,
+.dark .tracker-pagination nav p .font-medium {
+    color: #f0f4f9 !important;
+    font-weight: 600 !important;
+}
+
+.dark .tracker-pagination nav span.relative.z-0,
+.dark .tracker-column-pagination nav span.relative.z-0 {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark .tracker-pagination nav button,
+.dark .tracker-pagination nav a,
+.dark .tracker-pagination nav span.relative.inline-flex,
+.dark .tracker-column-pagination nav button,
+.dark .tracker-column-pagination nav a,
+.dark .tracker-column-pagination nav span.relative.inline-flex {
+    background-color: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease !important;
+}
+
+.dark .tracker-pagination nav svg,
+.dark .tracker-column-pagination nav svg {
+    color: #94a3b8 !important;
+}
+
+.dark .tracker-pagination nav button:hover,
+.dark .tracker-pagination nav a:hover,
+.dark .tracker-column-pagination nav button:hover,
+.dark .tracker-column-pagination nav a:hover {
+    background-color: #282a2c !important;
+    color: #f0f4f9 !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.dark .tracker-pagination nav button:hover svg,
+.dark .tracker-pagination nav a:hover svg,
+.dark .tracker-column-pagination nav button:hover svg,
+.dark .tracker-column-pagination nav a:hover svg {
+    color: #f0f4f9 !important;
+}
+
+.dark .tracker-pagination nav span[aria-current="page"] span,
+.dark .tracker-pagination nav span[aria-current="page"],
+.dark .tracker-column-pagination nav span[aria-current="page"] span,
+.dark .tracker-column-pagination nav span[aria-current="page"] {
+    background-color: #2e3033 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+.dark .tracker-pagination nav span[aria-disabled="true"] span,
+.dark .tracker-pagination nav span[aria-disabled="true"],
+.dark .tracker-column-pagination nav span[aria-disabled="true"] span,
+.dark .tracker-column-pagination nav span[aria-disabled="true"] {
+    background-color: #1a1a1c !important;
+    color: #55575a !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    cursor: not-allowed !important;
+}
+
+.dark .tracker-pagination nav span[aria-disabled="true"] svg,
+.dark .tracker-column-pagination nav span[aria-disabled="true"] svg {
+    color: #55575a !important;
+}
+
+.dark .tracker-pagination nav .sm\:hidden span,
+.dark .tracker-pagination nav .sm\:hidden button,
+.dark .tracker-pagination nav .sm\:hidden a,
+.dark .tracker-column-pagination nav .sm\:hidden span,
+.dark .tracker-column-pagination nav .sm\:hidden button,
+.dark .tracker-column-pagination nav .sm\:hidden a {
+    background-color: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+}
+
+.dark .tracker-pagination nav .sm\:hidden button:hover,
+.dark .tracker-pagination nav .sm\:hidden a:hover,
+.dark .tracker-column-pagination nav .sm\:hidden button:hover,
+.dark .tracker-column-pagination nav .sm\:hidden a:hover {
+    background-color: #282a2c !important;
+    color: #f0f4f9 !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
 }
 
 .dark .tracker-empty h3 {
