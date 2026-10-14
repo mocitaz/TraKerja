@@ -7,6 +7,13 @@
     <meta name="description" content="{{ \Illuminate\Support\Str::limit(strip_tags($user->profile?->bio ?? $user->profile?->headline ?? 'Portfolio of '.$user->name), 160) }}">
     <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}?v=2">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
     @vite(['resources/css/app.css'])
 </head>
 @php
