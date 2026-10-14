@@ -102,6 +102,10 @@
     color: #94a3b8;
 }
 
+.dark .summary-explorer-donut svg > circle:first-child {
+    stroke: #282a2c !important;
+}
+
 .dark .summary-explorer-donut strong {
     color: #f0f4f9;
 }
@@ -111,7 +115,7 @@
 }
 
 .dark .summary-explorer-donut small {
-    color: #64748b;
+    color: #94a3b8;
 }
 
 .dark .summary-page .summary-explorer-note {
@@ -136,15 +140,16 @@
 }
 
 .dark .summary-chart-legend button {
-    background: #282a2c;
-    border-color: rgba(255, 255, 255, 0.08);
-    color: #cbd5e1;
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
 }
 
 .dark .summary-chart-legend button[aria-pressed="true"] {
-    background: #3b2d54;
-    border-color: rgba(168, 85, 247, 0.35);
-    color: #d8b4fe;
+    background: #333538 !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
+    color: #f0f4f9 !important;
+    font-weight: 600 !important;
 }
 
 .dark .summary-chart-legend small {
@@ -152,7 +157,7 @@
 }
 
 .dark .summary-chart-readout {
-    border-top-color: rgba(255, 255, 255, 0.07);
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .dark .summary-chart-readout > strong {
@@ -173,7 +178,7 @@
 
 .dark .summary-chart-data td,
 .dark .summary-chart-data th {
-    border-bottom-color: rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
     color: #cbd5e1;
 }
 
@@ -182,32 +187,42 @@
 }
 
 .dark .summary-map-toolbar button {
-    background: #282a2c;
-    border-color: rgba(255, 255, 255, 0.08);
-    color: #cbd5e1;
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #cbd5e1 !important;
+}
+
+.dark .summary-map-toolbar button:hover {
+    background: #333538 !important;
+    color: #f0f4f9 !important;
 }
 
 .dark .summary-map-toolbar button[aria-pressed="true"] {
-    background: #3b2d54;
-    color: #d8b4fe;
-    border-color: rgba(168, 85, 247, 0.35);
+    background: #333538 !important;
+    color: #f0f4f9 !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
+    font-weight: 600 !important;
 }
 
 .dark .summary-indonesia-map {
-    background: radial-gradient(ellipse at 40% 40%, #1e1f20, #131314);
-    border-color: rgba(255, 255, 255, 0.08);
+    background: #141517 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 .dark .summary-map-land {
-    fill: #2d3138;
-    stroke: rgba(255, 255, 255, 0.15);
+    fill: #282a2c;
+    stroke: rgba(255, 255, 255, 0.12);
+}
+
+.dark .summary-map-city {
+    stroke: #141517 !important;
 }
 
 .dark .summary-map-readout {
     background: rgba(30, 31, 32, 0.95);
-    border-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     color: #f0f4f9;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
 }
 
 .dark .summary-map-readout strong {
@@ -219,14 +234,25 @@
 }
 
 .dark .summary-map-places button {
-    background: #282a2c;
-    border-color: rgba(255, 255, 255, 0.08);
-    color: #cbd5e1;
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #cbd5e1 !important;
+}
+
+.dark .summary-map-places button:hover {
+    background: #333538 !important;
+    color: #f0f4f9 !important;
 }
 
 .dark .summary-map-places button[aria-pressed="true"] {
-    background: #3b2d54;
-    border-color: rgba(168, 85, 247, 0.35);
+    background: #333538 !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
+    color: #f0f4f9 !important;
+    font-weight: 600 !important;
+}
+
+.dark .summary-map-places button strong {
+    color: #c084fc !important;
 }
 
 .dark .summary-map-unmapped {
@@ -237,10 +263,19 @@
     color: #94a3b8;
 }
 
+.dark .summary-map-scale > i {
+    background: linear-gradient(90deg, #383a3d, #c084fc) !important;
+}
+
 .dark .summary-map-scale > button {
-    background: #282a2c;
-    border-color: rgba(255, 255, 255, 0.08);
-    color: #cbd5e1;
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #cbd5e1 !important;
+}
+
+.dark .summary-map-scale > button:hover {
+    background: #333538 !important;
+    color: #f0f4f9 !important;
 }
 
 .dark .summary-explorer-bars .summary-bar-tooltip {
@@ -249,71 +284,17 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.dark .summary-explorer-visual {
-    background: #18191a;
-    border-color: rgba(255, 255, 255, 0.07);
+.dark .summary-explorer-bars > button:hover {
+    background: #232426;
 }
-.dark .summary-explorer-visual > header h3 {
-    color: #f0f4f9;
-}
-.dark .summary-explorer-visual > header > span {
-    color: #94a3b8;
-}
-.dark .summary-explorer-donut strong {
-    color: #f0f4f9;
-}
-.dark .summary-explorer-donut span {
-    color: #94a3b8;
-}
-.dark .summary-indonesia-map {
-    background: #18191a;
-    border-color: rgba(255, 255, 255, 0.07);
-}
-.dark .summary-chart-legend button {
-    background: #282a2c;
-    border-color: rgba(255, 255, 255, 0.08);
-    color: #f0f4f9;
-}
-.dark .summary-chart-legend button small {
-    color: #94a3b8;
-}
-.dark .summary-chart-legend button[aria-pressed="true"] {
-    background: #3b2d54;
-    border-color: rgba(168, 85, 247, 0.35);
-    color: #d8b4fe;
-}
-.dark .summary-chart-readout {
-    border-top-color: rgba(255, 255, 255, 0.07);
-}
-.dark .summary-chart-readout > strong {
-    color: #f0f4f9;
-}
-.dark .summary-chart-readout span {
-    color: #94a3b8;
-}
-.dark .summary-chart-readout b {
-    color: #f0f4f9;
-}
-.dark .summary-map-toolbar button {
-    background: #282a2c;
-    border-color: rgba(255, 255, 255, 0.08);
-    color: #f0f4f9;
-}
-.dark .summary-map-toolbar button[aria-pressed="true"] {
-    background: #3b2d54;
-    color: #d8b4fe;
-    border-color: rgba(168, 85, 247, 0.35);
-}
+
 .dark .summary-explorer-bars > button.is-selected {
     background: #282a2c;
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.14);
     color: #f0f4f9;
 }
+
 .dark .summary-explorer-bars i {
-    background: #282a2c;
-}
-.dark .summary-chart-data td,
-.dark .summary-chart-data th {
-    border-bottom-color: rgba(255, 255, 255, 0.07);
+    background: rgba(255, 255, 255, 0.06);
 }
 

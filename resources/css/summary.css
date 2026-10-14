@@ -931,8 +931,16 @@
 }
 
 .dark .summary-chart-readout.is-active {
-    background: #3b2d54;
-    border-color: rgba(168, 85, 247, 0.35);
+    background: #333538 !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+.dark .summary-series--applications {
+    stroke: #f472b6 !important;
+}
+
+.dark .summary-series--interviews {
+    stroke: #38bdf8 !important;
 }
 
 .dark .summary-gridline {
@@ -963,6 +971,22 @@
 .dark .summary-data-table :is(th,td) {
     border-bottom-color: rgba(255, 255, 255, 0.07);
     color: #cbd5e1;
+}
+
+.dark .summary-donut svg > circle:first-child {
+    stroke: #282a2c !important;
+}
+
+.dark .summary-ring--blue {
+    stroke: #38bdf8 !important;
+}
+
+.dark .summary-ring--lavender {
+    stroke: #c084fc !important;
+}
+
+.dark .summary-ring--peach {
+    stroke: #fb923c !important;
 }
 
 .dark .summary-donut strong {
@@ -1036,8 +1060,10 @@
 }
 
 .dark .summary-analysis-tabs button.is-active {
-    background: #3b2d54;
-    color: #d8b4fe;
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    color: #f0f4f9 !important;
+    font-weight: 600 !important;
 }
 
 .dark .summary-ranking-labels {
@@ -1068,6 +1094,10 @@
     background: rgba(255, 255, 255, 0.06);
 }
 
+.dark .summary-mini-track > span {
+    background: #c084fc !important;
+}
+
 .dark .summary-show-more {
     color: #c084fc;
 }
@@ -1085,8 +1115,16 @@
     fill: rgba(255, 255, 255, 0.05);
 }
 
+.dark .summary-stage-bar {
+    fill: #a855f7 !important;
+}
+
+.dark .summary-stage-column.is-selected .summary-stage-bar:not(.is-empty) {
+    fill: #c084fc !important;
+}
+
 .dark .summary-stage-bar.is-empty {
-    fill: rgba(255, 255, 255, 0.08);
+    fill: rgba(255, 255, 255, 0.08) !important;
 }
 
 .dark .summary-stage-value {
@@ -1098,11 +1136,51 @@
 }
 
 .dark .summary-stage-tooltip rect {
-    fill: #282a2c;
+    fill: #282a2c !important;
+    stroke: rgba(255, 255, 255, 0.12) !important;
 }
 
 .dark .summary-stage-tooltip text {
-    fill: #f0f4f9;
+    fill: #94a3b8 !important;
+}
+
+.dark .summary-stage-tooltip .summary-stage-tooltip-name {
+    fill: #f0f4f9 !important;
+}
+
+/* Headings, Hints, Empty States & Links */
+.dark .summary-page .workspace-section-heading h2,
+.dark .summary-insights h2,
+.dark .summary-chart-empty h3,
+.dark .summary-analysis-empty h3 {
+    color: #f0f4f9 !important;
+}
+
+.dark .summary-chart-empty p,
+.dark .summary-analysis-empty p,
+.dark .summary-footer p {
+    color: #94a3b8 !important;
+}
+
+.dark .summary-page .workspace-hint {
+    color: #94a3b8 !important;
+    border-top-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+.dark .summary-page .job-text-link {
+    color: #cbd5e1 !important;
+}
+
+.dark .summary-page .job-text-link:hover {
+    color: #f0f4f9 !important;
+}
+
+.dark .summary-status-legend dt button {
+    color: #f0f4f9 !important;
+}
+
+.dark .summary-status-legend dd strong {
+    color: #f0f4f9 !important;
 }
 
 /* Gated Summary Premium Showcase */
@@ -1140,8 +1218,8 @@
 }
 
 .dark .summary-premium-art {
-    background: linear-gradient(155deg, #18191a 0%, #222026 100%);
-    border-color: rgba(255, 255, 255, 0.08);
+    background: #141517 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 .dark .summary-art-speech {
@@ -1152,4 +1230,53 @@
 
 .dark .summary-art-caption {
     color: #94a3b8;
+}
+
+.dark .summary-art-float {
+    background: rgba(30, 31, 32, 0.92) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark .summary-art-float:hover {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark .summary-float-ring-wrap svg circle:first-child {
+    stroke: #282a2c !important;
+}
+
+.dark .summary-float-ring-text strong,
+.dark .summary-source-info strong,
+.dark .summary-bars-info strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .summary-float-ring-text small,
+.dark .summary-source-info span,
+.dark .summary-bars-info small {
+    color: #94a3b8 !important;
+}
+
+.dark .summary-source-icon {
+    background: #282a2c !important;
+    color: #38bdf8 !important;
+}
+
+.dark .summary-spark-bar {
+    background: rgba(255, 255, 255, 0.15) !important;
+}
+
+.dark .summary-spark-bar--highlight {
+    background: #38bdf8 !important;
+}
+
+.dark .summary-orbit-path--one {
+    stroke: rgba(255, 255, 255, 0.12) !important;
+}
+
+.dark .summary-orbit-path--two {
+    stroke: rgba(255, 255, 255, 0.08) !important;
 }
