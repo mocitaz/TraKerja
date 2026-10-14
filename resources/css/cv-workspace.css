@@ -1632,6 +1632,15 @@
 .dark .cv-workspace .workspace-eyebrow {
     color: #94a3b8 !important;
 }
+.dark .cv-page-error {
+    background: rgba(239, 68, 68, 0.15) !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+    color: #fca5a5 !important;
+}
+.dark .cv-workspace .cv-field-error,
+.dark .cv-field-error {
+    color: #fca5a5 !important;
+}
 
 /* Workflow Journey Banner */
 .dark .cv-journey {
@@ -1640,11 +1649,14 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
 }
 .dark .cv-journey li {
+    background: transparent !important;
+    border: 1px solid transparent !important;
     color: #94a3b8 !important;
 }
 .dark .cv-journey li strong {
     color: #f0f4f9 !important;
 }
+.dark .cv-workspace .cv-journey p,
 .dark .cv-journey li p {
     color: #94a3b8 !important;
 }
@@ -1653,18 +1665,44 @@
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     color: #94a3b8 !important;
 }
+.dark .cv-journey li:hover,
+.dark .cv-journey li:not(.is-current):hover {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+.dark .cv-journey li:hover span,
+.dark .cv-journey li:not(.is-current):hover span {
+    background: #333538 !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
+    color: #f0f4f9 !important;
+}
+.dark .cv-journey li:hover strong,
+.dark .cv-journey li:not(.is-current):hover strong {
+    color: #f0f4f9 !important;
+}
+.dark .cv-workspace .cv-journey li:hover p,
+.dark .cv-workspace .cv-journey li:not(.is-current):hover p {
+    color: #cbd5e1 !important;
+}
 .dark .cv-journey li.is-current {
     background: #282a2c !important;
-    border-color: rgba(255, 255, 255, 0.14) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    box-shadow: none !important;
+}
+.dark .cv-journey li.is-current:hover {
+    background: #333538 !important;
+    border-color: rgba(255, 255, 255, 0.22) !important;
 }
 .dark .cv-journey li.is-current span {
     background: #333538 !important;
-    border-color: rgba(255, 255, 255, 0.18) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
     color: #f0f4f9 !important;
+    box-shadow: none !important;
 }
 .dark .cv-journey li.is-current strong {
     color: #f0f4f9 !important;
 }
+.dark .cv-workspace .cv-journey .is-current p,
 .dark .cv-journey li.is-current p {
     color: #94a3b8 !important;
 }
@@ -2038,6 +2076,10 @@
 }
 .dark .cv-template-option input[type="radio"] {
     accent-color: #a855f7 !important;
+}
+.dark .cv-template-option:hover {
+    background: #333538 !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
 }
 .dark .cv-template-option.is-selected {
     background: #333538 !important;
