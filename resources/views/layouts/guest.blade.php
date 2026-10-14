@@ -55,16 +55,7 @@
         <div class="gemini-ambient-glow" aria-hidden="true"></div>
 
         <!-- Top Navigation Controls -->
-        <header class="w-full pointer-events-none fixed top-0 inset-x-0 z-50 p-4 sm:p-6 flex items-center justify-between">
-            <!-- Back to Home Button -->
-            <a href="{{ url('/') }}" class="pointer-events-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#dedbd6] dark:border-white/10 bg-white/80 dark:bg-[#1e1f20]/80 backdrop-blur text-xs font-semibold text-zinc-600 dark:text-[#94a3b8] hover:text-[#5b3d8c] dark:hover:text-[#f0f4f9] hover:border-zinc-400 dark:hover:border-white/20 transition-all shadow-3xs hover:shadow-2xs">
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
-                <span>TraKerja</span>
-            </a>
-
+        <header class="w-full pointer-events-none fixed top-0 inset-x-0 z-50 p-4 sm:p-6 flex items-center justify-end">
             <!-- Theme Toggle Pill -->
             <div class="pointer-events-auto"
                  x-data="{
