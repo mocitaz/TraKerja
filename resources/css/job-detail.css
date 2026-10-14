@@ -311,6 +311,123 @@
 .dark .job-archived-notice { background: #2a1b38 !important; color: #d8b4fe !important; }
 .dark .job-detail-page .job-section-heading h2 { color: #f0f4f9 !important; }
 
+/* Dark Mode - Application Record, Auto-Archive & Notes */
+.dark .job-record-badge {
+    background: #282a2c !important;
+    color: #d8b4fe !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .job-archive-policy {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+}
+
+.dark .job-archive-policy strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-archive-policy p {
+    color: #94a3b8 !important;
+}
+
+.dark .job-record-dates dt {
+    color: #94a3b8 !important;
+}
+
+.dark .job-record-dates dd {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-delete-row h3 {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-delete-row p {
+    color: #94a3b8 !important;
+}
+
+.dark .job-delete-link {
+    color: #f87171 !important;
+}
+
+.dark .job-delete-link:hover {
+    color: #fca5a5 !important;
+}
+
+.dark .job-notes-content {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-notes-empty {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .job-notes-empty p {
+    color: #94a3b8 !important;
+}
+
+.dark .job-interview-notes h3 {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-interview-notes p {
+    color: #94a3b8 !important;
+}
+
+.dark .job-follow-up-panel {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .job-follow-up-panel h3 {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-detail-page .job-follow-up-panel p {
+    color: #94a3b8 !important;
+}
+
+.dark .job-follow-up-panel .tracker-follow-up {
+    background: #333538 !important;
+    color: #f472b6 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .job-detail-page .job-text-link {
+    color: #cbd5e1 !important;
+}
+
+.dark .job-detail-page .job-text-link:hover {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-overview-facts h2 {
+    color: #f0f4f9 !important;
+}
+
+.dark .job-missing-source {
+    color: #94a3b8 !important;
+}
+
+.dark .job-tab-dot {
+    background: #c084fc !important;
+}
+
+.dark .job-stage-dot {
+    background: #383a3d !important;
+    border-color: #1e1f20 !important;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15) !important;
+}
+
+.dark .job-stage-track .is-current .job-stage-dot {
+    background: #c084fc !important;
+    box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.25) !important;
+}
+
+
 /* Dark Mode - Interview Card (Obsidian Surface matching Dashboard) */
 .dark .job-detail-page .job-interview-card {
     background: #1e1f20 !important;
