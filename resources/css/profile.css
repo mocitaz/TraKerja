@@ -22,7 +22,7 @@
     margin: 0 0 20px;
 }
 .profile-eyebrow {
-    color: #725387;
+    color: #626573;
     font-size: 11px;
     font-weight: 600;
     line-height: 1.5;
@@ -1662,7 +1662,7 @@
 .dark .profile-workspace { color: #f0f4f9 !important; }
 .dark .profile-page-header h1 { color: #f0f4f9 !important; }
 .dark .profile-page-header > div > p:last-child { color: #94a3b8 !important; }
-.dark .profile-eyebrow { color: #c084fc !important; }
+.dark .profile-eyebrow { color: #94a3b8 !important; }
 .dark .profile-back {
     background: #282a2c !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;

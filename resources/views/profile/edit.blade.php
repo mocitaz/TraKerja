@@ -39,7 +39,7 @@
     }">
         <div class="profile-container">
             <header class="profile-page-header">
-                <div><p class="profile-eyebrow">{{ $isAdmin ? 'Admin account' : 'Your account' }}</p><h1>{{ $isAdmin ? 'Admin profile' : 'Profile settings' }}</h1><p>{{ $isAdmin ? 'Manage your identity, profile image, and account security.' : 'Manage your profile, preferences, and account security.' }}</p></div>
+                <div><h1>{{ $isAdmin ? 'Admin profile' : 'Profile settings' }}</h1><p>{{ $isAdmin ? 'Manage your identity, profile image, and account security.' : 'Manage your profile, preferences, and account security.' }}</p></div>
                 <a href="{{ route($isAdmin ? 'admin.index' : 'dashboard') }}" class="profile-back"><i class="ph ph-arrow-left" aria-hidden="true"></i>{{ $isAdmin ? 'Back to admin dashboard' : 'Back to home' }}</a>
             </header>
             @if(isset($statusMessages[session('status')]))
