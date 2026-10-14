@@ -1,58 +1,61 @@
 <x-guest-layout>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <div class="min-h-screen bg-[#fdfcf9] dark:bg-[#131314] font-sans antialiased text-[#1a191e] dark:text-[#f0f4f9] flex flex-col justify-center items-center py-12 px-4 selection:bg-[#35264f]/15 transition-colors duration-200">
+    <div class="min-h-screen bg-[#fdfcf9] dark:bg-[#131314] font-sans antialiased text-[#1a191e] dark:text-[#f0f4f9] flex flex-col justify-center items-center py-12 px-4 selection:bg-[#5b3d8c]/15 transition-colors duration-200">
         
-        <!-- Main Form Column (No Card Container) -->
-        <div class="w-full max-w-[340px] flex flex-col items-center">
+        <!-- Main Form Column -->
+        <div class="w-full max-w-[380px] flex flex-col items-center">
             
             <!-- Logo Section -->
-            <div class="flex flex-col items-center text-center mb-5">
+            <div class="flex flex-col items-center text-center mb-6">
                 <a href="{{ url('/') }}" class="inline-block transition-transform hover:scale-105">
-                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-10 h-10 object-contain mb-2">
+                    <img src="{{ asset('images/icon.png') }}" alt="TraKerja" class="w-11 h-11 object-contain mb-2.5">
                 </a>
-                <h1 class="text-[19px] font-bold text-[#1a191e] dark:text-[#f0f4f9] tracking-tight leading-tight">
+                <h1 class="text-xl font-black text-zinc-900 dark:text-[#f0f4f9] tracking-tight leading-tight">
                     Forgot your password?
                 </h1>
-                <p class="text-xs text-zinc-500 dark:text-[#94a3b8] font-normal mt-1">Enter your email to receive a recovery link</p>
+                <p class="text-xs text-zinc-500 dark:text-[#94a3b8] font-medium mt-1">Enter your email to receive a recovery link</p>
             </div>
 
-            <!-- Session Status Alert -->
-            @if (session('status'))
-                <div class="w-full mb-3.5 p-3 bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-200/90 dark:border-emerald-500/30 rounded-lg text-emerald-950 dark:text-emerald-300 text-xs font-semibold text-left">
-                    <x-auth-session-status :status="session('status')" />
-                </div>
-            @endif
+            <!-- Elevated Card Container -->
+            <div class="w-full bg-white dark:bg-[#1e1f20] border border-[#dedbd6] dark:border-white/10 rounded-2xl p-6 sm:p-7 shadow-xs">
+                <!-- Session Status Alert -->
+                @if (session('status'))
+                    <div class="w-full mb-4 p-3 bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-200/90 dark:border-emerald-500/30 rounded-lg text-emerald-950 dark:text-emerald-300 text-xs font-semibold text-left">
+                        <x-auth-session-status :status="session('status')" />
+                    </div>
+                @endif
 
-            <!-- Form -->
-            <form method="POST" action="{{ route('password.email') }}" class="w-full space-y-3.5 text-left">
-                @csrf
+                <!-- Form -->
+                <form method="POST" action="{{ route('password.email') }}" class="w-full space-y-3.5 text-left">
+                    @csrf
 
-                <!-- Email Field -->
-                <div>
-                    <label for="email" class="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5">Email</label>
-                    <input id="email" name="email" type="email" autocomplete="email" required value="{{ old('email') }}"
-                           class="w-full px-3.5 py-2.5 bg-white dark:bg-[#1e1f20] border border-[#dedbd6] dark:border-white/10 rounded-lg text-[13px] font-normal text-[#1a191e] dark:text-[#f0f4f9] placeholder-zinc-400 dark:placeholder-zinc-500 focus:border-[#35264f] dark:focus:border-purple-400 focus:bg-white dark:focus:bg-[#1e1f20] focus:ring-1 focus:ring-[#35264f]/20 dark:focus:ring-purple-400/20 shadow-3xs outline-none transition-colors @error('email') border-rose-300 bg-rose-50/20 dark:bg-rose-950/20 @enderror"
-                           placeholder="Enter your email address...">
-                    @error('email')
-                        <p class="mt-1 text-[11px] text-rose-500 font-semibold">{{ $message }}</p>
-                    @enderror
-                </div>
+                    <!-- Email Field -->
+                    <div>
+                        <label for="email" class="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5">Email</label>
+                        <input id="email" name="email" type="email" autocomplete="email" required value="{{ old('email') }}"
+                               class="w-full px-3.5 py-2.5 bg-white dark:bg-[#282a2c] border border-[#dedbd6] dark:border-white/10 rounded-lg text-[13px] font-normal text-[#1a191e] dark:text-[#f0f4f9] placeholder-zinc-400 dark:placeholder-zinc-500 focus:border-[#5b3d8c] dark:focus:border-purple-400 focus:bg-white dark:focus:bg-[#282a2c] focus:ring-1 focus:ring-[#5b3d8c]/20 dark:focus:ring-purple-400/20 shadow-3xs outline-none transition-colors @error('email') border-rose-300 bg-rose-50/20 dark:bg-rose-950/20 @enderror"
+                               placeholder="Enter your email address...">
+                        @error('email')
+                            <p class="mt-1 text-[11px] text-rose-500 font-semibold">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-                <!-- Submit Button -->
-                <button type="submit" class="w-full py-2.5 bg-[#35264f] hover:bg-[#281c3e] active:bg-[#1f1530] text-white rounded-lg text-xs font-bold transition-all shadow-3xs flex items-center justify-center gap-2 active:scale-98 focus:outline-none mt-2 cursor-pointer">
-                    <i class="ph-bold ph-paper-plane-tilt text-base"></i>
-                    <span>Send Reset Link</span>
-                </button>
-            </form>
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full py-2.5 bg-[#5b3d8c] hover:bg-[#4a3173] active:bg-[#3d2760] text-white rounded-lg text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 active:scale-98 focus:outline-none mt-2 cursor-pointer">
+                        <i class="ph-bold ph-paper-plane-tilt text-base"></i>
+                        <span>Send Reset Link</span>
+                    </button>
+                </form>
+            </div>
 
             <!-- Back Link -->
-            <div class="text-xs font-normal text-zinc-500 dark:text-[#94a3b8] mt-4">
-                <span>Remember your password?</span> <a href="{{ route('login') }}" class="text-[#35264f] dark:text-purple-400 font-bold hover:underline">Back to login</a>
+            <div class="text-xs font-normal text-zinc-500 dark:text-[#94a3b8] mt-5">
+                <span>Remember your password?</span> <a href="{{ route('login') }}" class="text-[#5b3d8c] dark:text-purple-400 font-bold hover:underline">Back to login</a>
             </div>
 
             <!-- Workspace Footer Disclaimer -->
-            <div class="w-full text-center space-y-2 pt-4 mt-5 border-t border-[#dedbd6]/70 dark:border-white/10">
+            <div class="w-full text-center space-y-2 pt-4 mt-4 border-t border-[#dedbd6]/70 dark:border-white/10">
                 <p class="text-[10px] text-zinc-400 dark:text-zinc-500 leading-normal">
                     By continuing, you acknowledge that you understand and agree to the <a href="{{ route('legal.terms') }}" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white font-semibold underline underline-offset-2">Terms & Conditions</a> and <a href="{{ route('legal.privacy') }}" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white font-semibold underline underline-offset-2">Privacy Policy</a>.
                 </p>

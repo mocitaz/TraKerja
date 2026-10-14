@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="{{ request()->cookie('theme') === 'dark' ? 'dark' : '' }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,12 +26,18 @@
         <script>
             (function() {
                 try {
+                    if (!localStorage.getItem('trakerja_theme_force_light_v5')) {
+                        localStorage.setItem('theme', 'light');
+                        document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
+                        localStorage.setItem('trakerja_theme_force_light_v5', '1');
+                    }
                     var theme = localStorage.getItem('theme');
                     if (theme === 'dark') {
                         document.documentElement.classList.add('dark');
                         document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
                     } else {
                         document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
                         document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
                     }
                 } catch (e) {}
@@ -42,13 +48,13 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
     </head>
-    <body class="font-sans text-[#1a191e] dark:text-[#f0f4f9] bg-[#fdfcf9] dark:bg-[#131314] antialiased transition-colors duration-200 relative selection:bg-[#35264f]/15">
+    <body class="font-sans text-[#1a191e] dark:text-[#f0f4f9] bg-[#fdfcf9] dark:bg-[#131314] antialiased transition-colors duration-200 relative selection:bg-[#5b3d8c]/15">
         <div class="gemini-ambient-glow" aria-hidden="true"></div>
 
         <!-- Top Navigation Controls -->
         <header class="w-full pointer-events-none fixed top-0 inset-x-0 z-50 p-4 sm:p-6 flex items-center justify-between">
             <!-- Back to Home Button -->
-            <a href="{{ url('/') }}" class="pointer-events-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#dedbd6] dark:border-white/10 bg-white/80 dark:bg-[#1e1f20]/80 backdrop-blur text-xs font-semibold text-zinc-600 dark:text-[#94a3b8] hover:text-[#35264f] dark:hover:text-[#f0f4f9] hover:border-zinc-400 dark:hover:border-white/20 transition-all shadow-3xs hover:shadow-2xs">
+            <a href="{{ url('/') }}" class="pointer-events-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#dedbd6] dark:border-white/10 bg-white/80 dark:bg-[#1e1f20]/80 backdrop-blur text-xs font-semibold text-zinc-600 dark:text-[#94a3b8] hover:text-[#5b3d8c] dark:hover:text-[#f0f4f9] hover:border-zinc-400 dark:hover:border-white/20 transition-all shadow-3xs hover:shadow-2xs">
                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="19" y1="12" x2="5" y2="12"></line>
                     <polyline points="12 19 5 12 12 5"></polyline>

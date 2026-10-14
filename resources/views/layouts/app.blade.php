@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="{{ request()->cookie('theme') === 'dark' ? 'dark' : '' }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,12 +34,18 @@
         <script>
             (function() {
                 try {
+                    if (!localStorage.getItem('trakerja_theme_force_light_v5')) {
+                        localStorage.setItem('theme', 'light');
+                        document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
+                        localStorage.setItem('trakerja_theme_force_light_v5', '1');
+                    }
                     var theme = localStorage.getItem('theme');
                     if (theme === 'dark') {
                         document.documentElement.classList.add('dark');
                         document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
                     } else {
                         document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
                         document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
                     }
                 } catch (e) {}

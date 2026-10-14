@@ -38,16 +38,22 @@
 
     <script>
         (function() {
-            var theme = localStorage.getItem('theme');
-            // If the user explicitly activated 'dark', enable dark mode.
-            // Otherwise, keep the landing page in its clean, original light mode!
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-                document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
-            } else {
-                document.documentElement.classList.remove('dark');
-                document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
-            }
+            try {
+                if (!localStorage.getItem('trakerja_theme_force_light_v5')) {
+                    localStorage.setItem('theme', 'light');
+                    document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
+                    localStorage.setItem('trakerja_theme_force_light_v5', '1');
+                }
+                var theme = localStorage.getItem('theme');
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                    document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
+                }
+            } catch (e) {}
         })();
     </script>
 
@@ -281,7 +287,7 @@
 
                 @auth
                     <a href="{{ url('/dashboard') }}" class="workspace-nav-link"
-                        style="color: #fff; background: #35264f; font-weight: 600;">
+                        style="color: #fff; background: #5b3d8c; font-weight: 600;">
                         <span>Dashboard</span>
                     </a>
                 @else
@@ -289,7 +295,7 @@
                         Log in
                     </a>
                     <a href="{{ route('register') }}" class="workspace-nav-link"
-                        style="color: #fff; background: #35264f; font-weight: 600;">
+                        style="color: #fff; background: #5b3d8c; font-weight: 600;">
                         Get Started
                     </a>
                 @endauth
@@ -306,11 +312,11 @@
             @auth
                 <a href="{{ url('/dashboard') }}" @click="mobileOpen = false"
                     class="workspace-nav-link col-span-2 text-center"
-                    style="color: #fff; background: #35264f; font-weight: 600;">Dashboard</a>
+                    style="color: #fff; background: #5b3d8c; font-weight: 600;">Dashboard</a>
             @else
                 <a href="{{ route('login') }}" @click="mobileOpen = false" class="workspace-nav-link text-center">Log in</a>
                 <a href="{{ route('register') }}" @click="mobileOpen = false" class="workspace-nav-link text-center"
-                    style="color: #fff; background: #35264f; font-weight: 600;">Get Started</a>
+                    style="color: #fff; background: #5b3d8c; font-weight: 600;">Get Started</a>
             @endauth
         </nav>
     </header>
@@ -381,14 +387,14 @@
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-12 reveal">
                 @auth
                     <a href="{{ url('/dashboard') }}"
-                        class="px-6 py-3 bg-[#35264f] hover:bg-[#251a3a] text-white rounded-xl text-base font-bold transition shadow-sm w-full sm:w-auto">Open
+                        class="px-6 py-3 bg-[#5b3d8c] hover:bg-[#4a3173] active:bg-[#3d2760] text-white rounded-xl text-base font-bold transition shadow-sm w-full sm:w-auto">Open
                         Dashboard</a>
                 @else
                     <a href="{{ route('register') }}"
-                        class="px-6 py-3 bg-[#35264f] hover:bg-[#251a3a] text-white rounded-xl text-base font-bold transition shadow-sm w-full sm:w-auto">Get
+                        class="px-6 py-3 bg-[#5b3d8c] hover:bg-[#4a3173] active:bg-[#3d2760] text-white rounded-xl text-base font-bold transition shadow-sm w-full sm:w-auto">Get
                         TraKerja Free</a>
                     <a href="#how-it-works"
-                        class="px-6 py-3 bg-white/80 text-[#30313b] border border-[#dedbd6] rounded-xl text-base font-bold hover:bg-white transition shadow-3xs w-full sm:w-auto">How
+                        class="px-6 py-3 bg-white text-[#30313b] border border-[#dedbd6] hover:border-zinc-400 rounded-xl text-base font-bold hover:bg-[#faf8f5] transition shadow-3xs w-full sm:w-auto">How
                         It Works</a>
                 @endauth
             </div>
@@ -895,7 +901,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                 <!-- Selectors -->
                 <div class="lg:col-span-5 space-y-4 reveal">
-                    <div class="how-it-works-item bento-card overflow-hidden cursor-pointer border-2 border-[#35264f] dark:border-purple-400/60 bg-white dark:bg-[#1e1f20] shadow-xs transition-all duration-350 rounded-xl"
+                    <div class="how-it-works-item bento-card overflow-hidden cursor-pointer border-2 border-[#5b3d8c] dark:border-purple-400/60 bg-white dark:bg-[#1e1f20] shadow-xs transition-all duration-350 rounded-xl"
                         id="hiw-item-1" onclick="toggleHowItWorks(1)">
                         <div class="p-5 flex items-start gap-4">
                             <!-- Notion Settings/Gear icon -->
@@ -971,10 +977,10 @@
                     <div class="relative w-full max-w-[580px] mx-auto pl-4 lg:pl-10">
                         <!-- MacBook Screen/Lid Frame -->
                         <div
-                            class="relative rounded-t-2xl border-4 border-zinc-900 bg-zinc-900 p-[5px] shadow-2xl aspect-[16/10] overflow-hidden">
+                            class="relative rounded-t-2xl border-4 border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-[#1e1f20] p-[5px] shadow-lg aspect-[16/10] overflow-hidden">
                             <!-- Internal Screen Container -->
                             <div
-                                class="relative w-full h-full rounded-t-xl overflow-hidden bg-[#fdfcf9] border border-zinc-900">
+                                class="relative w-full h-full rounded-t-xl overflow-hidden bg-[#fdfcf9] dark:bg-[#131314] border border-zinc-200 dark:border-zinc-700/60">
                                 <img id="how-it-works-img-1" src="{{ asset('images/sslogin.png') }}"
                                     alt="Register & setup profile"
                                     class="how-it-works-image absolute inset-0 w-full h-full object-cover object-top rounded-t-xl transition-opacity duration-300"
@@ -989,12 +995,12 @@
                         </div>
                         <!-- MacBook Base/Keyboard Lip -->
                         <div
-                            class="relative -mt-0.5 w-[114%] -ml-[7%] h-3 bg-[#dedbd6] border-t border-[#c9c6c0] rounded-b-xl shadow-xl flex items-center justify-center z-10">
+                            class="relative -mt-0.5 w-[114%] -ml-[7%] h-3 bg-[#e4e2dd] dark:bg-[#282a2c] border-t border-[#d5d2cc] dark:border-white/10 rounded-b-xl shadow-md flex items-center justify-center z-10">
                             <!-- Display Opening Notch -->
-                            <div class="w-16 h-1.5 bg-[#aba7a0] rounded-b-md -mt-1 shadow-inner"></div>
+                            <div class="w-16 h-1.5 bg-[#c2bfb8] dark:bg-[#3b3d40] rounded-b-md -mt-1 shadow-inner"></div>
                         </div>
                         <!-- MacBook Shadow/Base feet -->
-                        <div class="w-[84%] mx-auto h-2 bg-zinc-950/20 rounded-full blur-sm"></div>
+                        <div class="w-[84%] mx-auto h-2 bg-zinc-950/10 dark:bg-black/30 rounded-full blur-sm"></div>
                     </div>
                 </div>
             </div>
@@ -1095,9 +1101,9 @@
 
                 <!-- Premium Tier -->
                 <div
-                    class="bento-card p-6 flex flex-col justify-between relative border-2 border-[#35264f] dark:border-purple-400/60 shadow-sm hover:shadow-md transition-all bg-white dark:bg-[#1e1f20] rounded-xl">
+                    class="bento-card p-6 flex flex-col justify-between relative border-2 border-[#5b3d8c] dark:border-purple-400/60 shadow-sm hover:shadow-md transition-all bg-white dark:bg-[#1e1f20] rounded-xl">
                     <span
-                        class="absolute -top-3 left-6 bg-[#35264f] dark:bg-purple-600 text-white text-[8px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider select-none shadow-3xs">Best
+                        class="absolute -top-3 left-6 bg-[#5b3d8c] dark:bg-purple-600 text-white text-[8px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider select-none shadow-3xs">Best
                         Value</span>
                     <div>
                         <div class="flex items-center justify-between mt-1">
@@ -1130,7 +1136,7 @@
                     </div>
 
                     <a href="{{ route('payment.index') }}"
-                        class="w-full mt-8 py-2.5 bg-[#35264f] hover:bg-[#281c3e] text-white rounded-lg text-xs font-bold transition text-center shadow-sm">Upgrade
+                        class="w-full mt-8 py-2.5 bg-[#5b3d8c] hover:bg-[#4a3173] active:bg-[#3d2760] text-white rounded-lg text-xs font-bold transition text-center shadow-sm">Upgrade
                         to Premium Pro</a>
                 </div>
 
@@ -1186,94 +1192,90 @@
                 <div class="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory scroll-smooth -mx-4 px-4 md:mx-0 md:px-0 scrollbar-none"
                     id="testimonial-carousel">
 
-                    <!-- Card 1: Rendika Azhar (Red Theme) -->
+                    <!-- Card 1: Rendika Azhar (Fresh Graduate) -->
                     <div
-                        class="relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/4] flex flex-col justify-end p-8 group transition-all duration-300 hover:shadow-lg shadow-md shrink-0 w-[85vw] md:w-auto snap-center">
-                        <!-- Background image with red overlay -->
-                        <img src="{{ asset('images/rendikaasli.png') }}" alt="Rendika Azhar"
-                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-red-950 via-red-900/60 to-red-900/40 mix-blend-multiply">
+                        class="bento-card p-6 sm:p-7 flex flex-col justify-between bg-white dark:bg-[#1e1f20] border border-[#dedbd6] dark:border-white/10 rounded-2xl shadow-3xs hover:shadow-xs shrink-0 w-[85vw] md:w-auto snap-center transition-all">
+                        <div>
+                            <div class="flex items-center justify-between gap-3 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="{{ asset('images/rendikaasli.png') }}" alt="Rendika Azhar"
+                                        class="w-11 h-11 rounded-full object-cover border border-[#dedbd6] dark:border-white/10 shadow-3xs">
+                                    <div>
+                                        <h3 class="text-xs font-bold text-zinc-900 dark:text-[#f0f4f9] leading-tight">Rendika Azhar</h3>
+                                        <p class="text-[10px] font-semibold text-zinc-500 dark:text-[#94a3b8]">Graphic Designer</p>
+                                    </div>
+                                </div>
+                                <span class="px-2 py-0.5 bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border border-rose-100 dark:border-rose-500/30 text-[8px] font-bold rounded uppercase">Fresh Graduate</span>
+                            </div>
+                            <p class="text-xs sm:text-[13px] font-normal leading-relaxed text-zinc-700 dark:text-[#f0f4f9]">
+                                "TraKerja transformed my chaotic job application spreadsheet into a super clean, visual Kanban tracker. It's an absolute game-changer for organizing my career search!"
+                            </p>
                         </div>
-                        <div class="absolute inset-0 bg-red-800/20 mix-blend-color"></div>
-
-                        <!-- Overlay Content -->
-                        <div class="relative z-10 text-white flex flex-col justify-between h-full pointer-events-none">
-                            <div class="flex items-center gap-1 opacity-90">
-                                <span class="font-extrabold text-[10px] tracking-wider uppercase font-sans">FRESH
-                                    GRADUATE</span>
-                            </div>
-
-                            <div class="space-y-3 mt-auto">
-                                <p class="text-xs font-semibold leading-relaxed text-zinc-100">
-                                    "TraKerja transformed my chaotic job application spreadsheet into a super clean,
-                                    visual Kanban tracker. It's an absolute game-changer for organizing my career
-                                    search!"
-                                </p>
-                                <p class="text-[10px] font-bold text-zinc-300">
-                                    Rendika Azhar, Graphic Designer
-                                </p>
-                            </div>
+                        <div class="flex items-center gap-1 text-amber-400 text-xs mt-5 pt-4 border-t border-[#dedbd6]/70 dark:border-white/10">
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                            <span class="ml-1.5 text-[10px] font-bold text-zinc-500 dark:text-[#94a3b8]">5.0</span>
                         </div>
                     </div>
 
-                    <!-- Card 2: Fadhail Bima Dharmawan (Blue Theme) -->
+                    <!-- Card 2: Fadhail Bima Dharmawan (Career Switcher) -->
                     <div
-                        class="relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/4] flex flex-col justify-end p-8 group transition-all duration-300 hover:shadow-lg shadow-md shrink-0 w-[85vw] md:w-auto snap-center">
-                        <!-- Background image with blue overlay -->
-                        <img src="{{ asset('images/bima.png') }}" alt="Fadhail Bima Dharmawan"
-                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-blue-950 via-blue-900/60 to-blue-900/40 mix-blend-multiply">
+                        class="bento-card p-6 sm:p-7 flex flex-col justify-between bg-white dark:bg-[#1e1f20] border border-[#dedbd6] dark:border-white/10 rounded-2xl shadow-3xs hover:shadow-xs shrink-0 w-[85vw] md:w-auto snap-center transition-all">
+                        <div>
+                            <div class="flex items-center justify-between gap-3 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="{{ asset('images/bima.png') }}" alt="Fadhail Bima Dharmawan"
+                                        class="w-11 h-11 rounded-full object-cover border border-[#dedbd6] dark:border-white/10 shadow-3xs">
+                                    <div>
+                                        <h3 class="text-xs font-bold text-zinc-900 dark:text-[#f0f4f9] leading-tight">Fadhail Bima Dharmawan</h3>
+                                        <p class="text-[10px] font-semibold text-zinc-500 dark:text-[#94a3b8]">Frontend Developer</p>
+                                    </div>
+                                </div>
+                                <span class="px-2 py-0.5 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-500/30 text-[8px] font-bold rounded uppercase">Career Switcher</span>
+                            </div>
+                            <p class="text-xs sm:text-[13px] font-normal leading-relaxed text-zinc-700 dark:text-[#f0f4f9]">
+                                "The dashboard is incredibly clean and intuitive. Having real-time stage progression metrics and automated AI insights made my entire application process transparent."
+                            </p>
                         </div>
-                        <div class="absolute inset-0 bg-blue-800/20 mix-blend-color"></div>
-
-                        <!-- Overlay Content -->
-                        <div class="relative z-10 text-white flex flex-col justify-between h-full pointer-events-none">
-                            <div class="flex items-center gap-1 opacity-90">
-                                <span class="font-extrabold text-[10px] tracking-wider uppercase font-sans">CAREER
-                                    SWITCHER</span>
-                            </div>
-
-                            <div class="space-y-3 mt-auto">
-                                <p class="text-xs font-semibold leading-relaxed text-zinc-100">
-                                    "The dashboard is incredibly clean and intuitive. Having real-time stage progression
-                                    metrics and automated AI insights made my entire application process transparent."
-                                </p>
-                                <p class="text-[10px] font-bold text-zinc-300">
-                                    Fadhail Bima Dharmawan, Frontend Developer
-                                </p>
-                            </div>
+                        <div class="flex items-center gap-1 text-amber-400 text-xs mt-5 pt-4 border-t border-[#dedbd6]/70 dark:border-white/10">
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                            <span class="ml-1.5 text-[10px] font-bold text-zinc-500 dark:text-[#94a3b8]">5.0</span>
                         </div>
                     </div>
 
-                    <!-- Card 3: Derva Anargya (Amber Theme) -->
+                    <!-- Card 3: Derva Anargya (Product Leader) -->
                     <div
-                        class="relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/4] flex flex-col justify-end p-8 group transition-all duration-300 hover:shadow-lg shadow-md shrink-0 w-[85vw] md:w-auto snap-center">
-                        <!-- Background image with amber overlay -->
-                        <img src="{{ asset('images/dervaril.png') }}" alt="Derva Anargya"
-                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-amber-950 via-amber-900/60 to-amber-900/40 mix-blend-multiply">
+                        class="bento-card p-6 sm:p-7 flex flex-col justify-between bg-white dark:bg-[#1e1f20] border border-[#dedbd6] dark:border-white/10 rounded-2xl shadow-3xs hover:shadow-xs shrink-0 w-[85vw] md:w-auto snap-center transition-all">
+                        <div>
+                            <div class="flex items-center justify-between gap-3 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="{{ asset('images/dervaril.png') }}" alt="Derva Anargya"
+                                        class="w-11 h-11 rounded-full object-cover border border-[#dedbd6] dark:border-white/10 shadow-3xs">
+                                    <div>
+                                        <h3 class="text-xs font-bold text-zinc-900 dark:text-[#f0f4f9] leading-tight">Derva Anargya</h3>
+                                        <p class="text-[10px] font-semibold text-zinc-500 dark:text-[#94a3b8]">Product Manager</p>
+                                    </div>
+                                </div>
+                                <span class="px-2 py-0.5 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-100 dark:border-amber-500/30 text-[8px] font-bold rounded uppercase">Product Leader</span>
+                            </div>
+                            <p class="text-xs sm:text-[13px] font-normal leading-relaxed text-zinc-700 dark:text-[#f0f4f9]">
+                                "The Chrome Extension is spectacular. Saving jobs from LinkedIn directly into my Kanban board in one click saves me hours of manual data entry every single week."
+                            </p>
                         </div>
-                        <div class="absolute inset-0 bg-amber-800/20 mix-blend-color"></div>
-
-                        <!-- Overlay Content -->
-                        <div class="relative z-10 text-white flex flex-col justify-between h-full pointer-events-none">
-                            <div class="flex items-center gap-1 opacity-90">
-                                <span class="font-extrabold text-[10px] tracking-wider uppercase font-sans">PRODUCT
-                                    LEADER</span>
-                            </div>
-
-                            <div class="space-y-3 mt-auto">
-                                <p class="text-xs font-semibold leading-relaxed text-zinc-100">
-                                    "The Chrome Extension is spectacular. Saving jobs from LinkedIn directly into my
-                                    Kanban board in one click saves me hours of manual data entry every single week."
-                                </p>
-                                <p class="text-[10px] font-bold text-zinc-300">
-                                    Derva Anargya, Product Manager
-                                </p>
-                            </div>
+                        <div class="flex items-center gap-1 text-amber-400 text-xs mt-5 pt-4 border-t border-[#dedbd6]/70 dark:border-white/10">
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                            <i class="ph-fill ph-star"></i>
+                            <span class="ml-1.5 text-[10px] font-bold text-zinc-500 dark:text-[#94a3b8]">5.0</span>
                         </div>
                     </div>
 
@@ -1281,7 +1283,7 @@
 
                 <!-- Carousel Indicators (Mobile Only) -->
                 <div class="flex md:hidden items-center justify-center gap-2 mt-6">
-                    <button class="w-2.5 h-2.5 rounded-full bg-[#35264f] transition-colors" id="test-dot-1"
+                    <button class="w-2.5 h-2.5 rounded-full bg-[#5b3d8c] transition-colors" id="test-dot-1"
                         onclick="scrollTestimonial(0)"></button>
                     <button class="w-2.5 h-2.5 rounded-full bg-[#dedbd6] transition-colors" id="test-dot-2"
                         onclick="scrollTestimonial(1)"></button>
@@ -1360,7 +1362,7 @@
                 ATS-friendly CVs, track applications, and optimize your path with AI.</p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <a href="{{ route('register') }}"
-                    class="w-full sm:w-auto px-6 py-3 bg-[#35264f] hover:bg-[#281c3e] text-white text-xs sm:text-sm font-bold rounded-lg transition-colors shadow-sm text-center">Get
+                    class="w-full sm:w-auto px-6 py-3 bg-[#5b3d8c] hover:bg-[#4a3173] active:bg-[#3d2760] text-white text-xs sm:text-sm font-bold rounded-lg transition-colors shadow-sm text-center">Get
                     TraKerja free</a>
                 <a href="#how-it-works"
                     class="w-full sm:w-auto px-6 py-3 bg-white dark:bg-[#1e1f20] border border-[#dedbd6] dark:border-white/10 text-zinc-700 dark:text-[#f0f4f9] hover:bg-[#faf8f5] dark:hover:bg-[#282a2c] text-xs sm:text-sm font-bold rounded-lg transition-colors shadow-3xs text-center">How
@@ -1493,11 +1495,11 @@
                 const p = item.querySelector('p');
                 if (currentIdx === step) {
                     item.classList.remove('border', 'border-[#dedbd6]', 'dark:border-white/10', 'bg-white/70', 'dark:bg-[#1e1f20]/70', 'shadow-3xs');
-                    item.classList.add('border-2', 'border-[#35264f]', 'dark:border-purple-400/60', 'bg-white', 'dark:bg-[#1e1f20]', 'shadow-xs');
+                    item.classList.add('border-2', 'border-[#5b3d8c]', 'dark:border-purple-400/60', 'bg-white', 'dark:bg-[#1e1f20]', 'shadow-xs');
                     if (h3) h3.className = 'font-extrabold text-zinc-900 dark:text-[#f0f4f9] text-xs tracking-tight';
                     if (p) p.className = 'text-[10px] font-semibold text-zinc-600 dark:text-[#94a3b8] mt-1 leading-relaxed';
                 } else {
-                    item.classList.remove('border-2', 'border-[#35264f]', 'dark:border-purple-400/60', 'bg-white', 'dark:bg-[#1e1f20]', 'shadow-xs');
+                    item.classList.remove('border-2', 'border-[#5b3d8c]', 'dark:border-purple-400/60', 'bg-white', 'dark:bg-[#1e1f20]', 'shadow-xs');
                     item.classList.add('border', 'border-[#dedbd6]', 'dark:border-white/10', 'bg-white/70', 'dark:bg-[#1e1f20]/70', 'shadow-3xs');
                     if (h3) h3.className = 'font-bold text-zinc-700 dark:text-zinc-300 text-xs tracking-tight';
                     if (p) p.className = 'text-[10px] font-semibold text-zinc-500 dark:text-[#94a3b8] mt-1 leading-relaxed';
@@ -1542,9 +1544,9 @@
                         if (dot) {
                             if (i === (index + 1)) {
                                 dot.classList.remove('bg-[#dedbd6]');
-                                dot.classList.add('bg-[#35264f]');
+                                dot.classList.add('bg-[#5b3d8c]');
                             } else {
-                                dot.classList.remove('bg-[#35264f]');
+                                dot.classList.remove('bg-[#5b3d8c]');
                                 dot.classList.add('bg-[#dedbd6]');
                             }
                         }

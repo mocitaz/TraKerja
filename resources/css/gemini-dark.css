@@ -65,13 +65,6 @@ html.dark ::-webkit-scrollbar-thumb:hover {
     border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-.dark .welcome-page section#how-it-works,
-.dark .welcome-page section#pricing,
-.dark .welcome-page section#faq {
-    background-color: #18191a !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
-}
-
 .dark .welcome-page h1,
 .dark .welcome-page h2,
 .dark .welcome-page h3,
