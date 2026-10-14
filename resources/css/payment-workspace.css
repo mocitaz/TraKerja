@@ -1257,6 +1257,24 @@
     color: #f0f4f9;
 }
 
+/* Notices & Alerts (/premium, /payment/top-up, /payment/waiting) */
+.dark .pay-notice {
+    background: #18191a !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #cbd5e1 !important;
+}
+.dark .pay-notice strong {
+    color: #f0f4f9 !important;
+}
+.dark .pay-notice--error {
+    background: #201416 !important;
+    border-color: rgba(239, 68, 68, 0.25) !important;
+    color: #fca5a5 !important;
+}
+.dark .pay-notice--error strong {
+    color: #f87171 !important;
+}
+
 /* Product Offer Card & Feature List (/premium, /payment/top-up) */
 .dark .pay-offer {
     background: #1e1f20 !important;
