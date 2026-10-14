@@ -32,7 +32,7 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script>
         function updateErrorToggleUI(isDark) {
@@ -48,6 +48,12 @@
         }
 
         function toggleErrorTheme() {
+            if (typeof window.toggleTheme === 'function') {
+                var nextDark = window.toggleTheme();
+                updateErrorToggleUI(nextDark);
+                return;
+            }
+
             var isDark = document.documentElement.classList.contains('dark');
             var nextDark = !isDark;
             var nextTheme = nextDark ? 'dark' : 'light';

@@ -2,7 +2,6 @@
     {{-- Header with Summary Periods Segmented Control --}}
     <section class="admin-welcome">
         <div>
-            <span class="admin-eyebrow">Platform Intelligence</span>
             <h1>Analytics</h1>
             <p>Deep-dive into platform performance, growth momentum, and user engagements.</p>
         </div>
@@ -468,9 +467,9 @@
                         @forelse($retentionCohort as $cohort)
                             @php($mature = \Carbon\Carbon::parse($cohort['month'])->addMonth()->endOfMonth()->isPast())
                             <tr>
-                                <td class="font-semibold text-[#35264f]">
+                                <td class="font-semibold text-[#35264f] dark:text-[#f0f4f9]">
                                     <div class="flex items-center gap-2">
-                                        <i class="ph-bold ph-calendar text-[#7751a0]"></i>
+                                        <i class="ph-bold ph-calendar text-[#7751a0] dark:text-[#c084fc]"></i>
                                         <span>{{ $cohort['month'] }}</span>
                                     </div>
                                 </td>

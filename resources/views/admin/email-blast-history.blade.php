@@ -14,7 +14,6 @@
     <!-- Header Section -->
     <section class="admin-welcome eb-header">
         <div>
-            <span class="admin-eyebrow">Community messages</span>
             <h1>Campaign history</h1>
             <p>A clear record of your email campaigns and sending results.</p>
         </div>

@@ -6,7 +6,6 @@
              ========================================================================== --}}
         <section class="ast-welcome">
             <div>
-                <span class="ast-eyebrow">Platform Configuration</span>
                 <h1>System Settings</h1>
                 <p>Manage platform identity, external API integrations, and database maintenance in one workspace.</p>
             </div>

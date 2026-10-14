@@ -92,10 +92,6 @@
                 border-left-color: #18181b !important;
             }
 
-            /* Smooth transition for theme colors */
-            body {
-                transition: background-color 0.3s ease;
-            }
 
             /* Skeleton Shimmer Animation */
             @keyframes shimmer {

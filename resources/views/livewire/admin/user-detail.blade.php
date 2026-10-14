@@ -208,7 +208,7 @@
                                 </label>
                             </div>
 
-                            <div class="profile-verification" style="background: #faf8fb; border-color: #ebdff5; color: #594481; margin-bottom: 14px;">
+                            <div class="profile-verification profile-notice-box" style="margin-bottom: 14px;">
                                 <span>Updating membership tier recalculates feature availability and quota limits across candidate tools in real-time.</span>
                             </div>
 
@@ -245,29 +245,29 @@
                         </header>
                         <form wire:submit="saveAiQuotas">
                             <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px;">
-                                <div class="profile-field" style="background: #f8fafb; border: 1px solid #edf0f4; border-radius: 12px; padding: 14px; margin-bottom: 0;">
+                                <div class="profile-field profile-quota-card">
                                     <label for="detail-ai-credits" style="font-size: 11.5px; margin-bottom: 6px;">CV analysis credits</label>
                                     <input id="detail-ai-credits" type="number" wire:model="ai_credits" min="0" step="1" required style="font-size: 18px; font-weight: 600;">
                                     @error('ai_credits')<p class="profile-field-error">{{ $message }}</p>@enderror
-                                    <small style="display: block; font-size: 10.5px; color: #626573; margin-top: 6px; line-height: 1.4;">Full resume ATS audits and recommendations</small>
+                                    <small style="display: block; font-size: 10.5px; margin-top: 6px; line-height: 1.4;">Full resume ATS audits and recommendations</small>
                                 </div>
 
-                                <div class="profile-field" style="background: #f8fafb; border: 1px solid #edf0f4; border-radius: 12px; padding: 14px; margin-bottom: 0;">
+                                <div class="profile-field profile-quota-card">
                                     <label for="detail-cl-credits" style="font-size: 11.5px; margin-bottom: 6px;">Cover letter credits</label>
                                     <input id="detail-cl-credits" type="number" wire:model="cl_credits" min="0" step="1" required style="font-size: 18px; font-weight: 600;">
                                     @error('cl_credits')<p class="profile-field-error">{{ $message }}</p>@enderror
-                                    <small style="display: block; font-size: 10.5px; color: #626573; margin-top: 6px; line-height: 1.4;">Custom cover letter generations</small>
+                                    <small style="display: block; font-size: 10.5px; margin-top: 6px; line-height: 1.4;">Custom cover letter generations</small>
                                 </div>
 
-                                <div class="profile-field" style="background: #f8fafb; border: 1px solid #edf0f4; border-radius: 12px; padding: 14px; margin-bottom: 0;">
+                                <div class="profile-field profile-quota-card">
                                     <label for="detail-photo-credits" style="font-size: 11.5px; margin-bottom: 6px;">AI photo credits</label>
                                     <input id="detail-photo-credits" type="number" wire:model="photo_credits" min="0" step="1" required style="font-size: 18px; font-weight: 600;">
                                     @error('photo_credits')<p class="profile-field-error">{{ $message }}</p>@enderror
-                                    <small style="display: block; font-size: 10.5px; color: #626573; margin-top: 6px; line-height: 1.4;">Professional headshot photo requests</small>
+                                    <small style="display: block; font-size: 10.5px; margin-top: 6px; line-height: 1.4;">Professional headshot photo requests</small>
                                 </div>
                             </div>
 
-                            <div class="profile-verification" style="background: #faf8fb; border-color: #ebdff5; color: #594481; margin-top: 14px; margin-bottom: 0;">
+                            <div class="profile-verification profile-notice-box" style="margin-top: 14px; margin-bottom: 0;">
                                 <span>Trial status: <strong>{{ $user->has_used_ai_analyzer_trial ? 'Free trial used' : 'Free trial available' }}</strong></span>
                                 @if($user->ai_analyzer_trial_used_at)
                                     <span> · Used on {{ $user->ai_analyzer_trial_used_at->format('d M Y') }}</span>
@@ -339,15 +339,15 @@
                             </div>
                             <div class="profile-stat-card">
                                 <span>Accepted</span>
-                                <strong style="color: #1e7e4e;">{{ number_format($recentApplications->where('application_status', 'Accepted')->count()) }}</strong>
+                                <strong class="stat-accepted">{{ number_format($recentApplications->where('application_status', 'Accepted')->count()) }}</strong>
                             </div>
                             <div class="profile-stat-card">
                                 <span>In progress</span>
-                                <strong style="color: #2579ca;">{{ number_format($recentApplications->where('application_status', 'On Process')->count()) }}</strong>
+                                <strong class="stat-progress">{{ number_format($recentApplications->where('application_status', 'On Process')->count()) }}</strong>
                             </div>
                             <div class="profile-stat-card">
                                 <span>Declined</span>
-                                <strong style="color: #a02745;">{{ number_format($declinedApplications) }}</strong>
+                                <strong class="stat-declined">{{ number_format($declinedApplications) }}</strong>
                             </div>
                         </div>
                     </section>
@@ -380,15 +380,15 @@
                                             @endphp
                                             <tr wire:key="job-{{ $job->id }}">
                                                 <td>
-                                                    <strong style="display: block; font-size: 12px; font-weight: 600; color: #30313b;">{{ $job->position }}</strong>
-                                                    <span style="display: block; font-size: 11px; color: #626573; margin-top: 1px;">{{ $job->company_name }}</span>
+                                                    <strong class="profile-table-title">{{ $job->position }}</strong>
+                                                    <span class="profile-table-sub">{{ $job->company_name }}</span>
                                                 </td>
                                                 <td>
                                                     <span class="profile-chip profile-chip--{{ $tone }}">
                                                         {{ $job->application_status }}
                                                     </span>
                                                 </td>
-                                                <td style="text-align: right; font-size: 11px; color: #626573; white-space: nowrap;">
+                                                <td class="profile-table-date">
                                                     {{ $job->application_date ? $job->application_date->format('d M Y') : '—' }}
                                                 </td>
                                             </tr>
@@ -439,7 +439,7 @@
                                 Send custom email
                             </button>
                         </header>
-                        <div style="font-size: 11.5px; color: #626573; line-height: 1.6;">
+                        <div class="profile-templates-list">
                             <p style="margin: 0 0 8px;">Available pre-configured message templates:</p>
                             <ul style="margin: 0; padding-left: 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px;">
                                 <li>Account verification & reminders</li>
@@ -501,7 +501,7 @@
                             </select>
                             @error('emailType')<p class="profile-field-error">{{ $message }}</p>@enderror
                         </div>
-                        <p style="font-size: 11px; color: #626573; margin: 4px 0 16px;">Email will be delivered immediately via the TraKerja mail system.</p>
+                        <p class="profile-modal-hint" style="margin: 4px 0 16px;">Email will be delivered immediately via the TraKerja mail system.</p>
                         <div class="profile-form-footer">
                             <button type="button" wire:click="closeSendEmailModal" class="profile-secondary">Cancel</button>
                             <button type="submit" wire:loading.attr="disabled" wire:target="sendEmail" class="profile-primary">
@@ -556,7 +556,7 @@
                 <div class="profile-modal-box" @click.outside="$wire.closeDeleteConfirm()">
                     <header class="profile-modal-header">
                         <div>
-                            <h2 style="color: #a02745;">Permanently delete account?</h2>
+                            <h2 class="profile-modal-danger-title">Permanently delete account?</h2>
                             <p>This action is irreversible and will delete all user data permanently.</p>
                         </div>
                         <button type="button" wire:click="closeDeleteConfirm" class="profile-modal-close" aria-label="Close dialog">

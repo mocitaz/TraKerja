@@ -8,22 +8,22 @@
                     <i class="ph ph-cloud-arrow-down" aria-hidden="true"></i>
                     Manual Database Backup
                 </h3>
-                <span class="text-xs text-gray-500 font-medium">Daily snapshots active</span>
+                <span class="text-xs text-gray-500 dark:text-slate-400 font-medium">Daily snapshots active</span>
             </div>
 
             <div class="ast-panel-body justify-between">
-                <p class="text-xs text-gray-500 leading-relaxed">
+                <p class="text-xs text-gray-500 dark:text-slate-400 leading-relaxed">
                     Download a full SQL dump of the TraKerja production database. It is strongly recommended to export a backup before performing major system upgrades or migrations.
                 </p>
 
-                <div class="grid grid-cols-2 gap-3 p-3.5 bg-gray-50 rounded-xl border border-gray-200">
+                <div class="grid grid-cols-2 gap-3 p-3.5 bg-gray-50 dark:bg-[#18191a] rounded-xl border border-gray-200 dark:border-white/10">
                     <div>
-                        <span class="text-xs text-gray-500 font-medium block">Database Size</span>
-                        <strong class="text-sm text-gray-800 font-semibold mt-0.5 block">{{ $dbSize }}</strong>
+                        <span class="text-xs text-gray-500 dark:text-slate-400 font-medium block">Database Size</span>
+                        <strong class="text-sm text-gray-800 dark:text-[#f0f4f9] font-semibold mt-0.5 block">{{ $dbSize }}</strong>
                     </div>
-                    <div class="border-l border-gray-200 pl-3">
-                        <span class="text-xs text-gray-500 font-medium block">Last Backup</span>
-                        <strong class="text-sm text-gray-800 font-semibold mt-0.5 block">Automated Daily</strong>
+                    <div class="border-l border-gray-200 dark:border-white/10 pl-3">
+                        <span class="text-xs text-gray-500 dark:text-slate-400 font-medium block">Last Backup</span>
+                        <strong class="text-sm text-gray-800 dark:text-[#f0f4f9] font-semibold mt-0.5 block">Automated Daily</strong>
                     </div>
                 </div>
 
@@ -35,7 +35,7 @@
                 </div>
             </div>
 
-            <div class="px-5 py-3 bg-gray-50/60 border-t border-gray-100 flex items-center gap-2 text-xs text-gray-500">
+            <div class="px-5 py-3 bg-gray-50/60 dark:bg-[#18191a] border-t border-gray-100 dark:border-white/10 flex items-center gap-2 text-xs text-gray-500 dark:text-slate-400">
                 <i class="ph-bold ph-shield-check text-emerald-600" aria-hidden="true"></i>
                 <span>Encrypted & secure database export tunnel</span>
             </div>
@@ -49,31 +49,31 @@
                     Storage Maintenance & Cleanup
                 </h3>
                 @if($unusedFilesCount > 0)
-                    <span class="px-2 py-0.5 bg-amber-50 border border-amber-200 text-amber-700 text-xs font-semibold rounded-lg">
+                    <span class="px-2 py-0.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs font-semibold rounded-lg">
                         Action Needed
                     </span>
                 @else
-                    <span class="px-2 py-0.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold rounded-lg">
+                    <span class="px-2 py-0.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-xs font-semibold rounded-lg">
                         Optimized
                     </span>
                 @endif
             </div>
 
             <div class="ast-panel-body justify-between">
-                <p class="text-xs text-gray-500 leading-relaxed">
+                <p class="text-xs text-gray-500 dark:text-slate-400 leading-relaxed">
                     Purge orphaned files, unlinked CV PDF exports, and temporary image uploads to optimize server disk space and reduce storage footprint.
                 </p>
 
-                <div class="grid grid-cols-2 gap-3 p-3.5 bg-gray-50 rounded-xl border border-gray-200">
+                <div class="grid grid-cols-2 gap-3 p-3.5 bg-gray-50 dark:bg-[#18191a] rounded-xl border border-gray-200 dark:border-white/10">
                     <div>
-                        <span class="text-xs text-gray-500 font-medium block">Orphaned Files</span>
+                        <span class="text-xs text-gray-500 dark:text-slate-400 font-medium block">Orphaned Files</span>
                         <strong class="text-sm {{ $unusedFilesCount > 0 ? 'text-amber-600' : 'text-emerald-600' }} font-semibold mt-0.5 block">
                             {{ $unusedFilesCount }} Files Found
                         </strong>
                     </div>
-                    <div class="border-l border-gray-200 pl-3">
-                        <span class="text-xs text-gray-500 font-medium block">Public Storage</span>
-                        <strong class="text-sm text-gray-800 font-semibold mt-0.5 block truncate">/storage/public</strong>
+                    <div class="border-l border-gray-200 dark:border-white/10 pl-3">
+                        <span class="text-xs text-gray-500 dark:text-slate-400 font-medium block">Public Storage</span>
+                        <strong class="text-sm text-gray-800 dark:text-[#f0f4f9] font-semibold mt-0.5 block truncate">/storage/public</strong>
                     </div>
                 </div>
 
@@ -89,7 +89,7 @@
                 </div>
             </div>
 
-            <div class="px-5 py-3 bg-gray-50/60 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+            <div class="px-5 py-3 bg-gray-50/60 dark:bg-[#18191a] border-t border-gray-100 dark:border-white/10 flex items-center justify-between text-xs text-gray-500 dark:text-slate-400">
                 <span>App Cache: Clear</span>
                 <span>•</span>
                 <span>Logs: Rotated</span>

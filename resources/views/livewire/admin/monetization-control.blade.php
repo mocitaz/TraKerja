@@ -39,7 +39,7 @@
                                     <i class="ph ph-circle" aria-hidden="true"></i> Inactive mode
                                 @endif
                             </span>
-                            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-lg {{ $isActive ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-500' }}">
+                            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-lg {{ $isActive ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400' : 'bg-gray-100 dark:bg-zinc-800 text-gray-500 dark:text-slate-400' }}">
                                 <i class="ph {{ $mode[2] }}" aria-hidden="true"></i>
                             </div>
                         </div>

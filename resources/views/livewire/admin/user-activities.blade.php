@@ -2,7 +2,6 @@
     <!-- Header -->
     <section class="admin-welcome">
         <div>
-            <span class="admin-eyebrow">Workspace history</span>
             <h1>Activity Log</h1>
             <p>Review authentication events, application changes, and feature usage in one timeline.</p>
         </div>
@@ -124,7 +123,7 @@
                                         </div>
                                     @else
                                         <div class="au-avatar-wrapper">
-                                            <div class="au-avatar-img" style="display: grid; place-items: center; color: #887494; font-weight: 700; font-size: 13px;">
+                                            <div class="au-avatar-img au-system-avatar-icon">
                                                 <i class="ph ph-shield-check"></i>
                                             </div>
                                         </div>
@@ -138,12 +137,12 @@
 
                             <!-- Column 2: Event & Description (Inline / Sebaris) -->
                             <td class="text-center" style="text-align: center; vertical-align: middle;">
-                                <div style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; max-width: 100%;">
-                                    <span class="au-chip au-chip--applied" style="font-size: 10px; padding: 2.5px 8px; display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                                <div class="au-activity-event-cell">
+                                    <span class="au-chip au-chip--applied au-activity-chip">
                                         <i class="ph {{ $eventIcon }}"></i>
                                         {{ ucwords(str_replace('_', ' ', $activity->activity_type)) }}
                                     </span>
-                                    <span style="font-size: 11.5px; line-height: 1.4; color: #5c5668; text-align: left; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                    <span class="au-activity-desc">
                                         {{ $activity->description }}
                                     </span>
                                 </div>
@@ -151,11 +150,11 @@
 
                             <!-- Column 3: Recorded At (Center) -->
                             <td class="text-center" style="text-align: center; vertical-align: middle;">
-                                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 2px;">
-                                    <span style="font-size: 11px; font-weight: 600; color: #34313e; font-variant-numeric: tabular-nums;">
+                                <div class="au-activity-time-cell">
+                                    <span class="au-activity-time-human">
                                         {{ $activity->created_at->diffForHumans() }}
                                     </span>
-                                    <span style="font-size: 10px; color: #767082;">
+                                    <span class="au-activity-time-exact">
                                         {{ $activity->created_at->format('d M Y, H:i') }}
                                     </span>
                                 </div>
@@ -165,15 +164,15 @@
                             <td class="text-center" style="text-align: center; vertical-align: middle;">
                                 <div style="display: flex; justify-content: center; align-items: center;">
                                     @if($statusTone === 'success')
-                                        <span class="au-plan-badge" style="background: #ecfdf5; color: #065f46; border: 1px solid #d1fae5; margin: 0;">
+                                        <span class="au-plan-badge au-badge-status--success" style="margin: 0;">
                                             <i class="ph ph-check-circle"></i> Success
                                         </span>
                                     @elseif($statusTone === 'failed')
-                                        <span class="au-plan-badge" style="background: #fbe8e1; color: #a35f47; border: 1px solid #f6d8cd; margin: 0;">
+                                        <span class="au-plan-badge au-badge-status--failed" style="margin: 0;">
                                             <i class="ph ph-x-circle"></i> Failed
                                         </span>
                                     @elseif($statusTone === 'pending')
-                                        <span class="au-plan-badge" style="background: #fef3c7; color: #b45309; border: 1px solid #fde68a; margin: 0;">
+                                        <span class="au-plan-badge au-badge-status--pending" style="margin: 0;">
                                             <i class="ph ph-clock"></i> Pending
                                         </span>
                                     @else
@@ -249,7 +248,7 @@
                                     {{ $selectedActivity->user->isPremium() ? 'Premium' : 'Free' }}
                                 </span>
                             @else
-                                <div class="au-avatar-img" style="width: 42px; height: 42px; display: grid; place-items: center; color: #887494; font-size: 18px;">
+                                <div class="au-avatar-img au-system-avatar-icon au-system-avatar-icon--lg">
                                     <i class="ph ph-shield-check"></i>
                                 </div>
                                 <div>
@@ -280,23 +279,23 @@
                         </dl>
 
                         <!-- Description Box -->
-                        <div class="au-form-section" style="padding-top: 10px; border-top: 1px solid #edf0f4;">
-                            <h3 style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px; color: #7b7487; margin-bottom: 6px;">Event Description</h3>
-                            <div style="padding: 12px 14px; background: #fbf9fc; border: 1px solid #ede7f2; border-radius: 12px; font-size: 12.5px; line-height: 1.6; color: #37303f;">
+                        <div class="au-form-section au-event-desc-section">
+                            <h3 class="au-event-desc-heading">Event Description</h3>
+                            <div class="au-event-desc-box">
                                 {{ $selectedActivity->description }}
                             </div>
                         </div>
 
                         <!-- Technical Specs -->
-                        <details class="au-form-section" style="padding-top: 10px; border-top: 1px solid #edf0f4;" x-data="{ copied: false }">
-                            <summary style="cursor: pointer; font-size: 12px; font-weight: 600; color: #6d587c; padding: 4px 0;">
+                        <details class="au-form-section au-tech-details-section" x-data="{ copied: false }">
+                            <summary class="au-tech-details-summary">
                                 Technical Details (User Agent & Metadata)
                             </summary>
                             
                             @if($selectedActivity->user_agent)
                                 <div style="margin-top: 10px;">
-                                    <span style="font-size: 10.5px; font-weight: 600; color: #767082; text-transform: uppercase;">User Agent:</span>
-                                    <p style="font-size: 11px; color: #565363; line-height: 1.5; margin: 4px 0; background: #f8f9fa; padding: 8px 10px; border-radius: 8px; border: 1px solid #eef0f4; word-break: break-all;">
+                                    <span class="au-tech-label">User Agent:</span>
+                                    <p class="au-user-agent-box">
                                         {{ $selectedActivity->user_agent }}
                                     </p>
                                 </div>
@@ -305,13 +304,13 @@
                             @if($selectedActivity->metadata)
                                 <div style="margin-top: 10px; position: relative;">
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                                        <span style="font-size: 10.5px; font-weight: 600; color: #767082; text-transform: uppercase;">Payload Metadata:</span>
+                                        <span class="au-tech-label">Payload Metadata:</span>
                                         <button type="button" @click="navigator.clipboard.writeText(JSON.stringify({{ json_encode($selectedActivity->metadata) }}, null, 2)); copied = true; setTimeout(() => copied = false, 2000)" class="au-clear" style="padding: 2px 8px; font-size: 10.5px;">
                                             <i class="ph" :class="copied ? 'ph-check' : 'ph-copy'"></i>
                                             <span x-text="copied ? 'Copied!' : 'Copy JSON'"></span>
                                         </button>
                                     </div>
-                                    <pre style="margin: 0; font-size: 11px; background: #2f273b; color: #f4effa; padding: 12px; border-radius: 10px; overflow-x: auto; max-height: 220px; line-height: 1.5;">{{ json_encode($selectedActivity->metadata, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) }}</pre>
+                                    <pre class="au-json-payload-pre">{{ json_encode($selectedActivity->metadata, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) }}</pre>
                                 </div>
                             @endif
                         </details>
@@ -359,7 +358,7 @@
                         </form>
 
                         <section class="au-account-actions" style="margin-top: 8px;">
-                            <h3 style="color: #be123c;">Manual Cleanup</h3>
+                            <h3 class="au-danger-heading">Manual Cleanup</h3>
                             <p class="au-form-hint" style="margin-bottom: 12px;">Manual purging immediately and permanently deletes activity records.</p>
                             <div class="au-account-action-buttons">
                                 <button type="button" wire:click="cleanNow" wire:confirm="Permanently delete logs older than {{ $pruneDays }} days? This cannot be undone." class="au-button" wire:loading.attr="disabled" wire:target="cleanNow">

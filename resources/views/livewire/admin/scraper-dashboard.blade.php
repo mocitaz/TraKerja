@@ -17,7 +17,6 @@
     {{-- Header --}}
     <div class="ascr-welcome">
         <div>
-            <span class="ascr-eyebrow">Data Pipeline & Harvesting</span>
             <h1>Scraper Engine</h1>
             <p>Control web scraping schedules, job ingestion sources, selectors, and sandbox testing.</p>
         </div>
@@ -897,6 +896,16 @@
                 const successData = metrics.map(m => m.success);
                 const failData = metrics.map(m => m.fail);
 
+                const getChartTheme = () => {
+                    const isDark = document.documentElement.classList.contains('dark');
+                    return {
+                        textColor: isDark ? '#94a3b8' : '#71717a',
+                        gridColor: isDark ? 'rgba(255, 255, 255, 0.08)' : '#f4f4f5'
+                    };
+                };
+
+                const theme = getChartTheme();
+
                 window.scraperChart = new Chart(ctx.getContext('2d'), {
                     type: 'bar',
                     data: {
@@ -934,7 +943,7 @@
                                         family: 'Plus Jakarta Sans',
                                         weight: 600
                                     },
-                                    color: '#71717a'
+                                    color: theme.textColor
                                 }
                             }
                         },
@@ -944,19 +953,30 @@
                                 grid: { display: false },
                                 ticks: {
                                     font: { size: 9, family: 'Plus Jakarta Sans', weight: 600 },
-                                    color: '#71717a'
+                                    color: theme.textColor
                                 }
                             },
                             y: {
                                 stacked: true,
-                                grid: { color: '#f4f4f5', drawTicks: false },
+                                grid: { color: theme.gridColor, drawTicks: false },
                                 border: { dash: [4, 4] },
                                 ticks: {
                                     font: { size: 9, family: 'Plus Jakarta Sans', weight: 600 },
-                                    color: '#71717a'
+                                    color: theme.textColor
                                 }
                             }
                         }
+                    }
+                });
+
+                window.addEventListener('theme-changed', function () {
+                    if (window.scraperChart) {
+                        const newTheme = getChartTheme();
+                        window.scraperChart.options.plugins.legend.labels.color = newTheme.textColor;
+                        window.scraperChart.options.scales.x.ticks.color = newTheme.textColor;
+                        window.scraperChart.options.scales.y.ticks.color = newTheme.textColor;
+                        window.scraperChart.options.scales.y.grid.color = newTheme.gridColor;
+                        window.scraperChart.update();
                     }
                 });
             }

@@ -6,7 +6,6 @@
              ========================================================================== --}}
         <section class="af-welcome">
             <div>
-                <span class="af-eyebrow">Helpdesk & Inquiries</span>
                 <h1>User Feedbacks</h1>
                 <p>Review questions, resolve member issues, and reply to support inquiries in real time.</p>
             </div>
@@ -320,7 +319,7 @@
                                     <form method="POST" action="{{ route('admin.feedbacks.status', $ticket->id) }}" class="flex items-center gap-2">
                                         @csrf
                                         @method('PATCH')
-                                        <select name="status" class="text-xs py-1.5 px-2.5 rounded-lg border border-gray-200">
+                                        <select name="status" class="text-xs py-1.5 px-2.5 rounded-lg border border-gray-200 dark:bg-[#1e1f20] dark:border-white/10 dark:text-[#f0f4f9]">
                                             @foreach(['pending' => 'Pending', 'replied' => 'Replied', 'completed' => 'Completed', 'on_hold' => 'On hold'] as $status => $label)
                                                 <option value="{{ $status }}" @selected($ticket->status === $status)>{{ $label }}</option>
                                             @endforeach

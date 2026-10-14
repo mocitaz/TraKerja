@@ -612,3 +612,296 @@
         border-bottom: none;
     }
 }
+
+/* ==========================================================================
+   Gemini Dark Mode - Admin Monetization Workspace
+   ========================================================================== */
+.dark .admin-monetization-workspace {
+    color: #f0f4f9;
+}
+
+.dark .am-eyebrow {
+    color: #94a3b8;
+}
+
+.dark .am-welcome h1 {
+    color: #f0f4f9;
+}
+
+.dark .am-welcome p {
+    color: #94a3b8;
+}
+
+/* Notices */
+.dark .am-notice {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.25);
+    color: #34d399;
+}
+
+/* Buttons */
+.dark .am-btn {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark .am-btn:hover {
+    background: #333538;
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+}
+
+.dark .am-btn--primary {
+    background: #f0f4f9 !important;
+    border-color: #f0f4f9 !important;
+    color: #131314 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .am-btn--primary:hover {
+    background: #ffffff !important;
+    border-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+.dark .am-btn--quiet {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
+.dark .am-btn--quiet:hover {
+    background: #333538;
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #f0f4f9;
+}
+
+/* Metric Strip (4 Cards) */
+.dark .am-metric-strip {
+    background: #1e1f20 !important;
+    background-image: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+.dark .am-metric-card {
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .am-metric-label {
+    color: #94a3b8;
+}
+
+.dark .am-metric-sub {
+    color: #94a3b8;
+}
+
+/* Card 1: Total Members (Blue) */
+.dark .am-metric-card--blue .ap-metric-icon,
+.dark .am-metric-card--blue .am-metric-icon {
+    background: rgba(59, 130, 246, 0.12);
+    color: #60a5fa;
+    border-color: rgba(59, 130, 246, 0.25);
+}
+.dark .am-metric-card--blue .am-metric-value {
+    color: #60a5fa;
+}
+
+/* Card 2: Premium Assigned (Emerald) */
+.dark .am-metric-card--purple .ap-metric-icon,
+.dark .am-metric-card--purple .am-metric-icon {
+    background: rgba(16, 185, 129, 0.12);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.25);
+}
+.dark .am-metric-card--purple .am-metric-value {
+    color: #34d399;
+}
+
+/* Card 3: Free Assigned (Amber) */
+.dark .am-metric-card--orange .ap-metric-icon,
+.dark .am-metric-card--orange .am-metric-icon {
+    background: rgba(245, 158, 11, 0.12);
+    color: #fbbf24;
+    border-color: rgba(245, 158, 11, 0.25);
+}
+.dark .am-metric-card--orange .am-metric-value {
+    color: #fbbf24;
+}
+
+/* Card 4: Checkout Revenue (Sky Blue / White) */
+.dark .am-metric-card--revenue .am-metric-icon {
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    border-color: rgba(56, 189, 248, 0.25);
+}
+.dark .am-metric-card--revenue .am-metric-value {
+    color: #f0f4f9;
+}
+
+/* Panel & Pricing Form */
+.dark .am-panel {
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.dark .am-panel-heading {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: #18191a;
+}
+
+.dark .am-panel-heading h2 {
+    color: #f0f4f9;
+}
+
+.dark .am-panel-heading p {
+    color: #94a3b8;
+}
+
+.dark .am-pricing-content {
+    background: transparent;
+}
+
+.dark .am-pricing-current {
+    color: #94a3b8;
+}
+
+.dark .am-pricing-badge {
+    color: #f0f4f9;
+}
+
+.dark .am-pricing-badge span {
+    color: #38bdf8;
+}
+
+.dark .am-input-group {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .am-input-prefix {
+    background: #18191a;
+    color: #94a3b8;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .am-input-field {
+    color: #f0f4f9;
+    background: transparent;
+}
+
+.dark .am-input-group:focus-within {
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+}
+
+/* Feature Modes */
+.dark .am-mode-card {
+    background: #18191a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .am-mode-card:hover {
+    border-color: rgba(255, 255, 255, 0.16);
+    background: #282a2c;
+}
+
+.dark .am-mode-card.is-active {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.dark .am-mode-badge--active {
+    background: rgba(16, 185, 129, 0.12);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.dark .am-mode-badge--inactive {
+    background: #18191a;
+    color: #94a3b8;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .am-mode-info h3 {
+    color: #f0f4f9;
+}
+
+.dark .am-mode-info p {
+    color: #94a3b8;
+}
+
+/* Matrix Table */
+.dark .am-matrix-table th {
+    background: #18191a;
+    color: #94a3b8;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .am-matrix-table td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    color: #cbd5e1;
+}
+
+.dark .am-matrix-table tbody tr:hover {
+    background: #282a2c;
+}
+
+.dark .am-feature-name {
+    color: #f0f4f9;
+}
+
+.dark .am-badge--full {
+    background: rgba(16, 185, 129, 0.12);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.25);
+}
+
+.dark .am-badge--limited {
+    background: rgba(245, 158, 11, 0.12);
+    color: #fbbf24;
+    border-color: rgba(245, 158, 11, 0.25);
+}
+
+.dark .am-badge--premium {
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    border-color: rgba(56, 189, 248, 0.25);
+}
+
+/* Modal */
+.dark .am-modal-card {
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+.dark .am-modal-card h2 {
+    color: #f0f4f9;
+}
+
+.dark .am-modal-card p {
+    color: #94a3b8;
+}
+
+.dark .am-modal-impact {
+    background: #18191a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .am-modal-impact span {
+    color: #94a3b8;
+}
+
+.dark .am-modal-impact strong {
+    color: #60a5fa;
+}
+
+.dark .am-modal-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+

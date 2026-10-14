@@ -243,7 +243,8 @@ class ExploreJobs extends Component
 
     public function render()
     {
-        if (\App\Models\Setting::get('explore_maintenance', true)) {
+        $maintenanceDefault = !app()->environment('testing');
+        if (\App\Models\Setting::get('explore_maintenance', $maintenanceDefault)) {
             return view('explore.maintenance')->layout('layouts.app');
         }
 

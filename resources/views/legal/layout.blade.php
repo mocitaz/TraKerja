@@ -50,6 +50,12 @@
         }
 
         function toggleLegalTheme() {
+            if (typeof window.toggleTheme === 'function') {
+                var nextDark = window.toggleTheme();
+                updateLegalToggleUI(nextDark);
+                return;
+            }
+
             var isDark = document.documentElement.classList.contains('dark');
             var nextDark = !isDark;
             var nextTheme = nextDark ? 'dark' : 'light';

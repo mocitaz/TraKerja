@@ -60,13 +60,15 @@
             <button type="button"
                     x-data="{
                         toggle() {
-                            var isDark = document.documentElement.classList.toggle('dark');
-                            var theme = isDark ? 'dark' : 'light';
-                            try {
-                                localStorage.setItem('theme', theme);
-                            } catch (e) {}
-                            document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
-                            window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: isDark } }));
+                            if (typeof window.toggleTheme === 'function') {
+                                window.toggleTheme();
+                            } else {
+                                var isDark = document.documentElement.classList.toggle('dark');
+                                var theme = isDark ? 'dark' : 'light';
+                                try { localStorage.setItem('theme', theme); } catch (e) {}
+                                document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
+                                window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: isDark } }));
+                            }
                         }
                     }"
                     @click="toggle()"

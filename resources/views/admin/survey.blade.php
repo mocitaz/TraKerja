@@ -26,7 +26,6 @@
              ========================================================================== --}}
         <section class="as-welcome">
             <div>
-                <span class="as-eyebrow">Voice of Customer</span>
                 <h1>User Satisfaction Survey</h1>
                 <p>Monitor member sentiment, track 12-point feature satisfaction metrics, and inspect qualitative feedback.</p>
             </div>
@@ -272,7 +271,7 @@
                                 <td>
                                     <time datetime="{{ $response->created_at->toIso8601String() }}">
                                         <strong>{{ $response->created_at->format('d M Y') }}</strong>
-                                        <div class="text-xs text-gray-500">{{ $response->created_at->format('H:i') }} WIB</div>
+                                        <div class="text-xs text-gray-500 dark:text-slate-400">{{ $response->created_at->format('H:i') }} WIB</div>
                                     </time>
                                 </td>
 

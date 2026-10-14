@@ -1021,3 +1021,516 @@
     }
 }
 
+/* ==========================================================================
+   Gemini Dark Mode - Admin Workspace
+   ========================================================================== */
+.dark .admin-workspace {
+    color: #f0f4f9;
+}
+
+.dark .workspace-navigation.admin-navigation {
+    background: linear-gradient(180deg, #131314 84%, rgba(19, 19, 20, 0) 100%) !important;
+}
+
+.dark .admin-brand-title {
+    color: #f0f4f9;
+}
+
+.dark .admin-brand-divider {
+    color: #4b5563;
+}
+
+.dark .admin-brand-text {
+    color: #94a3b8;
+}
+
+/* Session Notices */
+.admin-session-note {
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    color: #059669;
+}
+
+.admin-session-note--error {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.2);
+    color: #dc2626;
+}
+
+.dark .admin-session-note {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.25);
+    color: #34d399;
+}
+
+.dark .admin-session-note--error {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.25);
+    color: #f87171;
+}
+
+/* Hero Welcome Header */
+.dark .admin-hero-welcome .dashboard-welcome-copy time,
+.dark .admin-hero-copy time {
+    color: #94a3b8;
+}
+
+.dark .admin-hero-welcome .dashboard-welcome-copy h1,
+.dark .admin-hero-copy h1 {
+    color: #f0f4f9;
+}
+
+.dark .admin-hero-welcome .dashboard-welcome-copy p,
+.dark .admin-hero-copy p {
+    color: #94a3b8;
+}
+
+/* Executive Overview Strip (.summary-overview) on Admin Dashboard */
+.dark .admin-workspace .summary-overview,
+.dark .summary-overview {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+.dark .admin-workspace .summary-overview > .summary-stat,
+.dark .summary-overview > .summary-stat {
+    border-right: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+.dark .admin-workspace .summary-stat > span,
+.dark .summary-stat > span {
+    color: #94a3b8 !important;
+}
+
+.dark .admin-workspace .summary-stat > strong,
+.dark .summary-stat > strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .admin-workspace .summary-stat > p,
+.dark .summary-stat > p {
+    color: #94a3b8 !important;
+}
+
+.dark .admin-workspace .summary-stat--members > strong {
+    color: #f472b6 !important;
+}
+
+.dark .admin-workspace .summary-stat--revenue > strong {
+    color: #c084fc !important;
+}
+
+.dark .admin-workspace .summary-stat--applications > strong {
+    color: #60a5fa !important;
+}
+
+.dark .admin-workspace .summary-stat--exports > strong {
+    color: #fb923c !important;
+}
+
+.dark .admin-workspace .summary-stats-footer,
+.dark .summary-stats-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.07) !important;
+    color: #94a3b8 !important;
+}
+
+.dark .admin-workspace .summary-stats-footer p,
+.dark .summary-stats-footer p {
+    color: #94a3b8 !important;
+}
+
+.dark .admin-workspace .summary-stats-footer a,
+.dark .admin-workspace .summary-analytics-link,
+.dark .summary-stats-footer a {
+    color: #c084fc !important;
+}
+
+.dark .admin-workspace .summary-stats-footer a:hover,
+.dark .admin-workspace .summary-analytics-link:hover,
+.dark .summary-stats-footer a:hover {
+    color: #e9d5ff !important;
+}
+
+/* Radar Strip */
+.dark .admin-radar-strip {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+.dark .admin-radar-lead {
+    color: #94a3b8 !important;
+}
+
+.dark .admin-radar-lead strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .admin-radar-dot {
+    background: #a855f7 !important;
+    box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.2) !important;
+}
+
+.dark .admin-radar-chip {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #cbd5e1 !important;
+}
+
+.dark .admin-radar-chip:hover {
+    background: #333538 !important;
+    color: #f0f4f9 !important;
+}
+
+.dark .admin-radar-chip strong {
+    color: #c084fc !important;
+}
+
+.dark .admin-radar-chip.is-alert {
+    background: rgba(239, 68, 68, 0.12) !important;
+    border-color: rgba(239, 68, 68, 0.25) !important;
+    color: #fca5a5 !important;
+}
+
+.dark .admin-radar-chip.is-alert strong {
+    color: #f87171 !important;
+}
+
+.dark .admin-radar-label {
+    color: #94a3b8 !important;
+}
+
+.dark .admin-radar-label strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .admin-radar-track {
+    background: #282a2c !important;
+}
+
+.dark .admin-radar-track > span {
+    background: #7c3aed !important;
+}
+
+/* Panels & Cards */
+.dark .admin-panel {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+.dark .admin-panel:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+.dark .admin-glass {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+.dark .admin-panel-heading {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+.dark .admin-panel-heading h2 {
+    color: #f0f4f9 !important;
+}
+
+.dark .admin-panel-heading p {
+    color: #94a3b8 !important;
+}
+
+.dark .admin-count-pill {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #cbd5e1 !important;
+}
+
+.dark .admin-panel-foot {
+    border-top: 1px solid rgba(255, 255, 255, 0.07) !important;
+    color: #94a3b8 !important;
+}
+
+.dark .admin-panel-foot a,
+.dark .admin-text-link {
+    color: #c084fc !important;
+}
+
+.dark .admin-panel-foot a:hover,
+.dark .admin-text-link:hover {
+    color: #e9d5ff !important;
+}
+
+/* Growth Bar Chart */
+.dark .admin-growth-column > span {
+    color: #94a3b8 !important;
+}
+
+.dark .admin-growth-track {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background: repeating-linear-gradient(to top, transparent 0, transparent 44px, rgba(255, 255, 255, 0.02) 44px, rgba(255, 255, 255, 0.02) 45px) !important;
+}
+
+.dark .admin-growth-bar {
+    background: #7c3aed !important;
+}
+
+.dark .admin-growth-bar:hover,
+.dark .admin-growth-bar:focus-visible {
+    background: #8b5cf6 !important;
+}
+
+.dark .admin-growth-value {
+    color: #f0f4f9 !important;
+}
+
+.dark .admin-chart-tooltip {
+    background: #282a2c !important;
+    color: #f0f4f9 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Application Pipeline Pulse - Unified with Obsidian Theme */
+.dark .admin-pulse-interview {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+.dark .admin-pulse-interview .admin-panel-heading {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+.dark .admin-pulse-interview .admin-panel-heading h2 {
+    color: #f0f4f9 !important;
+}
+
+.dark .admin-pulse-interview .admin-panel-heading p {
+    color: #94a3b8 !important;
+}
+
+.dark .admin-pulse-interview .admin-count-pill {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #cbd5e1 !important;
+}
+
+.dark .admin-pulse-row {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+.dark .admin-pulse-row:hover {
+    background: #333538 !important;
+}
+
+.dark .admin-pulse-row span {
+    color: #f0f4f9 !important;
+}
+
+.dark .admin-pulse-row small {
+    color: #94a3b8 !important;
+}
+
+.dark .admin-pulse-row strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .admin-number--blue {
+    color: #60a5fa !important;
+}
+
+.dark .admin-number--pink {
+    color: #f472b6 !important;
+}
+
+.dark .admin-number--purple {
+    color: #c084fc !important;
+}
+
+.dark .admin-number--orange {
+    color: #fb923c !important;
+}
+
+.dark .admin-goal-progress {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+.dark .admin-goal-progress-header {
+    color: #94a3b8 !important;
+}
+
+.dark .admin-goal-progress-header strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .admin-multi-track {
+    background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.dark .admin-multi-track > span {
+    background: #7c3aed !important;
+}
+
+.dark .admin-caption {
+    color: #94a3b8 !important;
+}
+
+/* Recent Applications Table */
+.dark .admin-recent-table th {
+    background: #18191a !important;
+    color: #94a3b8 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+.dark .admin-recent-table td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    color: #cbd5e1 !important;
+}
+
+.dark .admin-recent-table tbody tr:hover {
+    background: #282a2c !important;
+}
+
+.dark .admin-recent-table td.text-zinc-500 {
+    color: #94a3b8 !important;
+}
+
+.dark .admin-avatar-mark {
+    background: #282a2c !important;
+    color: #cbd5e1 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .admin-person strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .admin-person small {
+    color: #94a3b8 !important;
+}
+
+.dark .admin-opportunity strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .admin-opportunity small {
+    color: #94a3b8 !important;
+}
+
+.dark .admin-status-chip--accepted {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #34d399 !important;
+}
+
+.dark .admin-status-chip--declined {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #f87171 !important;
+}
+
+.dark .admin-status-chip--progress {
+    background: rgba(59, 130, 246, 0.15) !important;
+    color: #60a5fa !important;
+}
+
+.dark .admin-table-time {
+    color: #94a3b8 !important;
+}
+
+/* Rankings Stack */
+.dark .admin-round-link {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #cbd5e1 !important;
+}
+
+.dark .admin-round-link:hover {
+    background: #333538 !important;
+    color: #f0f4f9 !important;
+}
+
+.dark .admin-ranking-list li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.dark .admin-rank-badge--1 {
+    background: rgba(245, 158, 11, 0.15) !important;
+    color: #fbbf24 !important;
+}
+
+.dark .admin-rank-badge--2 {
+    background: #282a2c !important;
+    color: #cbd5e1 !important;
+}
+
+.dark .admin-rank-badge--3 {
+    background: rgba(234, 88, 12, 0.15) !important;
+    color: #fb923c !important;
+}
+
+.dark .admin-rank-badge--default {
+    background: #282a2c !important;
+    color: #94a3b8 !important;
+}
+
+.dark .admin-rank-badge--alert {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #f87171 !important;
+}
+
+.dark .admin-rank-avatar {
+    background: #282a2c !important;
+    color: #cbd5e1 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .admin-rank-user strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .admin-rank-user small {
+    color: #94a3b8 !important;
+}
+
+.dark .admin-rank-count {
+    color: #cbd5e1 !important;
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .admin-rank-count small {
+    color: #94a3b8 !important;
+}
+
+.dark .admin-rank-count--alert {
+    color: #f87171 !important;
+    background: rgba(239, 68, 68, 0.15) !important;
+    border-color: rgba(239, 68, 68, 0.25) !important;
+}
+
+.dark .admin-rank-count--alert small {
+    color: #fca5a5 !important;
+}
+
+.dark .admin-empty {
+    color: #94a3b8 !important;
+}
+
+/* Admin Profile Footer in Topbar Dropdown */
+.dark .admin-profile-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .admin-profile-footer .admin-signout {
+    color: #f87171 !important;
+}
+
+

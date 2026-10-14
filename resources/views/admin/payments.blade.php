@@ -6,7 +6,6 @@
          ========================================================================== --}}
     <section class="ap-welcome">
         <div>
-            <span class="ap-eyebrow">Financial Transactions</span>
             <h1>Payments & Billing</h1>
             <p>Review member transactions, gateway payment channels, status breakdown, and recorded revenue.</p>
         </div>

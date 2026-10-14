@@ -12,7 +12,7 @@
 
             <div class="ast-panel-body">
                 @if (session()->has('success_identity'))
-                    <div class="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl flex items-center gap-2.5 text-xs">
+                    <div class="p-3.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-300 rounded-xl flex items-center gap-2.5 text-xs">
                         <i class="ph-bold ph-check-circle text-emerald-600 text-base"></i>
                         <span>{{ session('success_identity') }}</span>
                     </div>
@@ -33,7 +33,7 @@
                         </div>
                     </div>
 
-                    <div class="pt-3 border-t border-gray-100 flex justify-end">
+                    <div class="pt-3 border-t border-gray-100 dark:border-white/10 flex justify-end">
                         <button type="submit" class="ast-btn ast-btn--primary">
                             <i class="ph ph-floppy-disk" wire:loading.remove wire:target="updateIdentity" aria-hidden="true"></i>
                             <i class="ph ph-spinner ph-spin" wire:loading wire:target="updateIdentity" aria-hidden="true"></i>
@@ -55,13 +55,13 @@
 
             <div class="ast-panel-body justify-between">
                 @if (session()->has('success_maintenance') || session()->has('warning_maintenance'))
-                    <div class="p-3 {{ session()->has('warning_maintenance') ? 'bg-red-50 border-red-200 text-red-800' : 'bg-emerald-50 border-emerald-200 text-emerald-800' }} border rounded-xl text-xs flex items-center gap-2">
+                    <div class="p-3 {{ session()->has('warning_maintenance') ? 'bg-red-50 dark:bg-rose-950/40 border-red-200 dark:border-rose-500/30 text-red-800 dark:text-rose-300' : 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-300' }} border rounded-xl text-xs flex items-center gap-2">
                         <i class="ph-bold {{ session()->has('warning_maintenance') ? 'ph-warning-circle' : 'ph-check-circle' }}"></i>
                         <span>{{ session('success_maintenance') ?? session('warning_maintenance') }}</span>
                     </div>
                 @endif
 
-                <p class="text-xs text-gray-500 leading-relaxed">
+                <p class="text-xs text-gray-500 dark:text-slate-400 leading-relaxed">
                     Activate maintenance mode to restrict public access during critical upgrades. Admin sessions remain fully functional.
                 </p>
 
@@ -75,7 +75,7 @@
                             role="switch" 
                             aria-label="Maintenance mode" 
                             aria-checked="{{ $maintenanceMode ? 'true' : 'false' }}"
-                            class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none {{ $maintenanceMode ? 'bg-red-600' : 'bg-gray-300' }}">
+                            class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none {{ $maintenanceMode ? 'bg-red-600' : 'bg-gray-300 dark:bg-zinc-700' }}">
                         <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 {{ $maintenanceMode ? 'translate-x-6' : 'translate-x-1' }}"></span>
                     </button>
                 </div>
@@ -93,7 +93,7 @@
 
             <div class="ast-panel-body">
                 @if (session()->has('success_limits'))
-                    <div class="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl flex items-center gap-2.5 text-xs">
+                    <div class="p-3.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-300 rounded-xl flex items-center gap-2.5 text-xs">
                         <i class="ph-bold ph-check-circle text-emerald-600 text-base"></i>
                         <span>{{ session('success_limits') }}</span>
                     </div>
@@ -120,7 +120,7 @@
                         </div>
                     </div>
 
-                    <div class="pt-3 border-t border-gray-100 flex justify-end">
+                    <div class="pt-3 border-t border-gray-100 dark:border-white/10 flex justify-end">
                         <button type="submit" class="ast-btn ast-btn--primary">
                             <i class="ph ph-floppy-disk" wire:loading.remove wire:target="updateLimits" aria-hidden="true"></i>
                             <i class="ph ph-spinner ph-spin" wire:loading wire:target="updateLimits" aria-hidden="true"></i>

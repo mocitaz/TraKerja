@@ -51,7 +51,7 @@
                     <h2>{{ $user->name }}</h2>
                     <p class="profile-identity-email">{{ $user->email }}</p>
                     @if(!$isAdmin && $profile?->headline)<p class="profile-headline">{{ $profile->headline }}</p>@endif
-                    <span class="profile-plan"><i class="ph {{ $user->isAdmin() ? 'ph-shield-check' : ($user->isPremium() ? 'ph-crown' : 'ph-user') }}" aria-hidden="true"></i>{{ $user->isAdmin() ? 'Administrator' : ($user->isPremium() ? 'Premium member' : 'Free account') }}</span>
+                    <span class="profile-plan {{ $user->isAdmin() ? 'profile-plan--admin' : ($user->isPremium() ? 'profile-plan--premium' : 'profile-plan--free') }}"><i class="ph {{ $user->isAdmin() ? 'ph-shield-check' : ($user->isPremium() ? 'ph-crown' : 'ph-user') }}" aria-hidden="true"></i>{{ $user->isAdmin() ? 'Administrator' : ($user->isPremium() ? 'Premium member' : 'Free account') }}</span>
                     <button type="button" @click="tab = 'about'; $nextTick(() => { $refs.avatarSection.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); $refs.avatarSection.focus({ preventScroll: true }); })" class="profile-secondary"><i class="ph ph-palette" aria-hidden="true"></i>Change your look</button>
                     <dl class="profile-account-facts">
                         <div><dt>{{ $isAdmin ? 'Account created' : 'Member since' }}</dt><dd>{{ $user->created_at->format('M Y') }}</dd></div>

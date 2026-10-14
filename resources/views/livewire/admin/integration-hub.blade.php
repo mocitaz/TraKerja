@@ -8,13 +8,13 @@
                     <i class="ph ph-key" aria-hidden="true"></i>
                     Main API Access Key
                 </h3>
-                <span class="px-2.5 py-1 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold rounded-lg">
+                <span class="px-2.5 py-1 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-xs font-semibold rounded-lg">
                     Production Secure
                 </span>
             </div>
 
             <div class="ast-panel-body justify-between">
-                <p class="text-xs text-gray-500 leading-relaxed">
+                <p class="text-xs text-gray-500 dark:text-slate-400 leading-relaxed">
                     Use this secret API key to integrate TraKerja application data with external job boards or corporate HRIS systems. Keep this secret safe and never share it publicly.
                 </p>
 
@@ -58,7 +58,7 @@
                         </div>
                         <button type="button" 
                                 wire:click="$set('webhookEnabled', {{ !$webhookEnabled ? 'true' : 'false' }})"
-                                class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none {{ $webhookEnabled ? 'bg-blue-600' : 'bg-gray-300' }}">
+                                class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none {{ $webhookEnabled ? 'bg-blue-600' : 'bg-gray-300 dark:bg-zinc-700' }}">
                             <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 {{ $webhookEnabled ? 'translate-x-6' : 'translate-x-1' }}"></span>
                         </button>
                     </div>
@@ -68,7 +68,7 @@
                         <input type="url" wire:model="webhookUrl" placeholder="https://api.partner.com/v1/webhook">
                     </div>
 
-                    <div class="pt-3 border-t border-gray-100 flex justify-end">
+                    <div class="pt-3 border-t border-gray-100 dark:border-white/10 flex justify-end">
                         <button type="submit" class="ast-btn ast-btn--primary">
                             <i class="ph ph-check-circle" aria-hidden="true"></i>
                             Save Webhook Config

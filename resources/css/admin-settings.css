@@ -323,3 +323,267 @@
         overflow-x: auto;
     }
 }
+
+/* ==========================================================================
+   Gemini Dark Mode Styles for Settings Workspace
+   ========================================================================== */
+
+.dark .admin-settings-workspace {
+    color: #cbd5e1;
+}
+
+.dark .ast-welcome h1 {
+    color: #f0f4f9;
+}
+
+.dark .ast-welcome p {
+    color: #94a3b8;
+}
+
+.dark .ast-eyebrow {
+    color: #94a3b8;
+}
+
+/* Tab Navigation Switcher */
+.dark .ast-tabs {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .ast-tab {
+    color: #94a3b8;
+}
+
+.dark .ast-tab:hover {
+    color: #f0f4f9;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.dark .ast-tab.is-active {
+    background: #282a2c;
+    color: #f0f4f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dark .ast-tab i {
+    color: #94a3b8;
+}
+
+.dark .ast-tab.is-active i {
+    color: #f0f4f9;
+}
+
+/* Settings Panels & Cards */
+.dark .ast-panel {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.dark .ast-panel-heading {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    background: #18191a;
+}
+
+.dark .ast-panel-heading h3 {
+    color: #f0f4f9;
+}
+
+.dark .ast-panel-heading h3 i {
+    color: #94a3b8;
+}
+
+.dark .ast-panel-body {
+    color: #cbd5e1;
+}
+
+/* Forms & Inputs */
+.dark .ast-form-group label {
+    color: #94a3b8;
+}
+
+.dark .ast-form-group input[type="text"],
+.dark .ast-form-group input[type="email"],
+.dark .ast-form-group input[type="password"],
+.dark .ast-form-group input[type="number"],
+.dark .ast-form-group input[type="url"],
+.dark .ast-form-group select {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark .ast-form-group input:focus,
+.dark .ast-form-group select:focus {
+    border-color: rgba(255, 255, 255, 0.3);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+    background: #282a2c;
+}
+
+/* Buttons */
+.dark .ast-btn {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
+.dark .ast-btn:hover {
+    background: #333538;
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #f0f4f9;
+}
+
+.dark .ast-btn--primary {
+    background: #f0f4f9 !important;
+    border-color: #f0f4f9 !important;
+    color: #131314 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .ast-btn--primary:hover {
+    background: #ffffff !important;
+    border-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+.dark .ast-btn--danger {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #f87171;
+}
+
+.dark .ast-btn--danger:hover {
+    background: rgba(239, 68, 68, 0.25);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+}
+
+.dark .ast-btn--quiet {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
+.dark .ast-btn--quiet:hover {
+    background: #333538;
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #f0f4f9;
+}
+
+/* Specific Feature UI Elements */
+.dark .ast-api-key-box {
+    background: #131314;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .ast-api-key-input {
+    color: #34d399 !important;
+}
+
+.dark .ast-info-note {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.07);
+    color: #94a3b8;
+}
+
+.dark .ast-info-note i {
+    color: #38bdf8;
+}
+
+.dark .ast-toggle-item {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .ast-toggle-item strong {
+    color: #f0f4f9;
+}
+
+.dark .ast-toggle-item p {
+    color: #94a3b8;
+}
+
+/* Embedded Settings Components & Tailwinds */
+.dark .admin-settings-workspace .bg-gray-50,
+.dark .admin-settings-workspace .bg-gray-50\/60,
+.dark .admin-settings-workspace .dark\:bg-\[\#18191a\] {
+    background-color: #18191a !important;
+}
+
+.dark .admin-settings-workspace .border-gray-100,
+.dark .admin-settings-workspace .border-gray-200,
+.dark .admin-settings-workspace .dark\:border-white\/10 {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .admin-settings-workspace .text-gray-800,
+.dark .admin-settings-workspace .dark\:text-\[\#f0f4f9\] {
+    color: #f0f4f9 !important;
+}
+
+.dark .admin-settings-workspace .text-gray-500,
+.dark .admin-settings-workspace .dark\:text-slate-400 {
+    color: #94a3b8 !important;
+}
+
+/* Alert Notifications */
+.dark .admin-settings-workspace .bg-emerald-50,
+.dark .admin-settings-workspace .dark\:bg-emerald-950\/40 {
+    background-color: rgba(16, 185, 129, 0.12) !important;
+    border-color: rgba(16, 185, 129, 0.25) !important;
+    color: #34d399 !important;
+}
+
+.dark .admin-settings-workspace .border-emerald-200,
+.dark .admin-settings-workspace .dark\:border-emerald-500\/30 {
+    border-color: rgba(16, 185, 129, 0.25) !important;
+}
+
+.dark .admin-settings-workspace .text-emerald-700,
+.dark .admin-settings-workspace .text-emerald-800,
+.dark .admin-settings-workspace .dark\:text-emerald-300 {
+    color: #34d399 !important;
+}
+
+.dark .admin-settings-workspace .bg-red-50,
+.dark .admin-settings-workspace .dark\:bg-rose-950\/40 {
+    background-color: rgba(239, 68, 68, 0.12) !important;
+    border-color: rgba(239, 68, 68, 0.25) !important;
+    color: #f87171 !important;
+}
+
+.dark .admin-settings-workspace .border-red-200,
+.dark .admin-settings-workspace .dark\:border-rose-500\/30 {
+    border-color: rgba(239, 68, 68, 0.25) !important;
+}
+
+.dark .admin-settings-workspace .text-red-800,
+.dark .admin-settings-workspace .dark\:text-rose-300 {
+    color: #f87171 !important;
+}
+
+.dark .admin-settings-workspace .bg-amber-50,
+.dark .admin-settings-workspace .dark\:bg-amber-950\/40 {
+    background-color: rgba(245, 158, 11, 0.12) !important;
+    border-color: rgba(245, 158, 11, 0.25) !important;
+    color: #fbbf24 !important;
+}
+
+.dark .admin-settings-workspace .border-amber-200,
+.dark .admin-settings-workspace .dark\:border-amber-500\/30 {
+    border-color: rgba(245, 158, 11, 0.25) !important;
+}
+
+.dark .admin-settings-workspace .text-amber-700,
+.dark .admin-settings-workspace .dark\:text-amber-300 {
+    color: #fbbf24 !important;
+}
+
+/* Switch Toggles */
+.dark .admin-settings-workspace .dark\:bg-zinc-700 {
+    background-color: #333538 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+

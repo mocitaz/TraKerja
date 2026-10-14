@@ -507,7 +507,8 @@
 .as-avatar {
     width: 34px;
     height: 34px;
-    border-radius: 10px;
+    border-radius: 50%;
+    overflow: hidden;
     object-fit: cover;
     background: #eee8f8;
     border: 1px solid #e1d8ea;
@@ -885,3 +886,419 @@
         gap: 12px;
     }
 }
+
+/* ==========================================================================
+   Gemini Dark Mode Styles for Survey Workspace
+   Strict Deep Obsidian Palette:
+   - Canvas: #131314
+   - Card/Panel: #1e1f20
+   - Elevated/Inputs/Tiles: #282a2c
+   - Hover: #333538
+   - Borders: rgba(255, 255, 255, 0.08)
+   - Text: #f0f4f9 (primary), #94a3b8 (secondary/muted)
+   - Zero glowing purple or bright accents
+   ========================================================================== */
+
+.dark .admin-survey-workspace {
+    color: #cbd5e1;
+}
+
+.dark .as-welcome h1 {
+    color: #f0f4f9;
+}
+
+.dark .as-welcome p {
+    color: #94a3b8;
+}
+
+.dark .as-eyebrow {
+    color: #94a3b8;
+}
+
+/* Survey Status Switcher Toggle Card */
+.dark .as-toggle-form {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark .as-toggle-dot {
+    background: #64748b;
+}
+
+.dark .as-toggle-status.is-active .as-toggle-dot {
+    background: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+}
+
+.dark .as-toggle-copy strong {
+    color: #f0f4f9;
+}
+
+.dark .as-toggle-copy span {
+    color: #94a3b8;
+}
+
+/* Alert Notice */
+.dark .as-notice {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.25);
+    color: #34d399;
+}
+
+/* Metric Strip & Cards */
+.dark .as-metric-strip {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.dark .as-metric-card {
+    border-right-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .as-metric-label {
+    color: #94a3b8;
+}
+
+.dark .as-metric-card strong {
+    color: #f0f4f9;
+}
+
+.dark .as-metric-card strong em {
+    color: #64748b;
+}
+
+.dark .as-metric-card small {
+    color: #94a3b8;
+}
+
+.dark .as-metric-card--total strong { color: #60a5fa; }
+.dark .as-metric-card--csat strong { color: #fbbf24; }
+.dark .as-metric-card--nav strong { color: #38bdf8; }
+.dark .as-metric-card--design strong { color: #34d399; }
+
+/* Panels */
+.dark .as-panel {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.dark .as-panel-heading {
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+    background: #18191a;
+}
+
+.dark .as-panel-heading h2 {
+    color: #f0f4f9;
+}
+
+.dark .as-panel-heading h2 span {
+    background: #282a2c;
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .as-panel-heading p {
+    color: #94a3b8;
+}
+
+/* Feature Experience Scores (12 Metrics) */
+.dark .as-score-item {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark .as-score-item:hover {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.dark .as-score-title {
+    color: #cbd5e1;
+}
+
+.dark .as-score-title i {
+    color: #94a3b8;
+}
+
+.dark .as-score-val {
+    color: #f0f4f9;
+}
+
+.dark .as-score-val em {
+    color: #64748b;
+}
+
+.dark .as-track {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.dark .as-fill {
+    background: linear-gradient(90deg, #38bdf8, #60a5fa);
+}
+
+/* Distribution Rows */
+.dark .as-dist-row:hover {
+    background: #282a2c;
+}
+
+.dark .as-dist-stars {
+    color: #cbd5e1;
+}
+
+.dark .as-dist-stars i {
+    color: #fbbf24;
+}
+
+.dark .as-dist-track {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.dark .as-dist-fill {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.dark .as-dist-count {
+    color: #cbd5e1;
+}
+
+/* Sentiment Card */
+.dark .as-sentiment-card {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .as-sentiment-icon {
+    background: rgba(236, 72, 153, 0.15);
+    color: #f472b6;
+}
+
+.dark .as-sentiment-copy strong {
+    color: #f0f4f9;
+}
+
+.dark .as-sentiment-copy span {
+    color: #94a3b8;
+}
+
+/* Responses Table */
+.dark .as-table th {
+    background: #18191a;
+    color: #94a3b8;
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .as-table td {
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+    color: #cbd5e1;
+}
+
+.dark .as-table tbody tr:hover {
+    background: #282a2c;
+}
+
+.dark .as-table tbody.as-response-group {
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark .as-row-main.is-expanded td {
+    background: #282a2c;
+}
+
+.dark .as-member-name {
+    color: #f0f4f9;
+}
+
+.dark .as-member-email {
+    color: #94a3b8;
+}
+
+.dark .as-avatar {
+    border-radius: 50% !important;
+    overflow: hidden;
+    border-color: rgba(255, 255, 255, 0.1);
+    background: transparent;
+}
+
+.dark .as-rating-badge {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: #fbbf24;
+}
+
+.dark .as-rating-badge i {
+    color: #fbbf24;
+}
+
+.dark .as-rating-badge small {
+    color: #fbbf24;
+}
+
+.dark .as-feedback-quote {
+    color: #e2e8f0;
+}
+
+.dark .as-feedback-empty {
+    color: #64748b;
+}
+
+/* Expandable Scorecard */
+.dark .as-scorecard-row td.as-scorecard-cell {
+    background: #18191a;
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .as-scorecard-box {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.dark .as-scorecard-heading {
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .as-scorecard-heading-left h4 {
+    color: #f0f4f9;
+}
+
+.dark .as-scorecard-member {
+    color: #94a3b8;
+}
+
+.dark .as-scorecard-time {
+    color: #94a3b8;
+}
+
+.dark .as-scorecard-item {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark .as-scorecard-item:hover {
+    background: #333538;
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.dark .as-scorecard-item span {
+    color: #94a3b8;
+}
+
+.dark .as-scorecard-item strong {
+    color: #f0f4f9;
+}
+
+.dark .as-scorecard-text {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark .as-scorecard-text strong {
+    color: #f0f4f9;
+}
+
+.dark .as-scorecard-text p {
+    color: #cbd5e1;
+}
+
+/* Buttons */
+.dark .as-btn {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
+.dark .as-btn:hover {
+    background: #333538;
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #f0f4f9;
+}
+
+.dark .as-btn--primary {
+    background: #f0f4f9 !important;
+    border-color: #f0f4f9 !important;
+    color: #131314 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .as-btn--primary:hover {
+    background: #ffffff !important;
+    border-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+.dark .as-btn--quiet {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
+.dark .as-btn--quiet:hover {
+    background: #333538;
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #f0f4f9;
+}
+
+/* Empty State & Footer */
+.dark .as-empty {
+    color: #94a3b8;
+}
+
+.dark .as-empty-icon {
+    background: #282a2c;
+    color: #94a3b8;
+}
+
+.dark .as-empty h3 {
+    color: #f0f4f9;
+}
+
+.dark .as-empty p {
+    color: #94a3b8;
+}
+
+.dark .as-panel-footer {
+    border-top-color: rgba(255, 255, 255, 0.07);
+    color: #94a3b8;
+    background: #18191a;
+}
+
+.dark .as-panel-footer nav span.relative.z-0 {
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .as-panel-footer nav button,
+.dark .as-panel-footer nav a {
+    background-color: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #cbd5e1 !important;
+}
+
+.dark .as-panel-footer nav button:hover,
+.dark .as-panel-footer nav a:hover {
+    background-color: #333538 !important;
+    color: #f0f4f9 !important;
+}
+
+.dark .as-panel-footer nav span[aria-current="page"] span {
+    background-color: #333538 !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #f0f4f9 !important;
+}
+
+.dark .as-panel-footer nav span[aria-disabled="true"] span {
+    background-color: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+    color: #64748b !important;
+}
+
+.as-panel-footer nav > div.hidden.sm\:flex-1 > div:first-child,
+.as-panel-footer nav p.leading-5,
+.as-panel-footer nav p.text-sm {
+    display: none !important;
+}
+
+

@@ -25,10 +25,33 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700|plus-jakarta-sans:400,500,600,700,800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Anti-FOUC & Theme Initialization Script -->
+    <script>
+        (function() {
+            try {
+                if (!localStorage.getItem('trakerja_theme_force_light_v6')) {
+                    localStorage.setItem('theme', 'light');
+                    document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
+                    localStorage.setItem('trakerja_theme_force_light_v6', '1');
+                }
+                var theme = localStorage.getItem('theme');
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                    document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
+                }
+            } catch (e) {}
+        })();
+    </script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="workspace-shell admin-workspace">
+<body class="workspace-shell admin-workspace bg-[#fafafa] dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200">
     <a href="#admin-main" class="admin-skip-link">Skip to content</a>
     <header class="workspace-navigation admin-navigation" x-data="{ profileOpen: false, mobileOpen: false }">
         <nav class="workspace-topbar" aria-label="Admin navigation">
@@ -45,6 +68,28 @@
             </div>
             <div class="workspace-account-actions">
                 <button type="button" class="workspace-mobile-toggle" x-ref="mobileButton" @click="mobileOpen = !mobileOpen; profileOpen = false" :aria-expanded="mobileOpen.toString()" aria-controls="admin-mobile-links"><i class="ph ph-list" aria-hidden="true"></i><span>Menu</span></button>
+                <!-- Theme Toggle Button -->
+                <button type="button"
+                        x-data="{
+                            toggle() {
+                                if (typeof window.toggleTheme === 'function') {
+                                    window.toggleTheme();
+                                } else {
+                                    var isDark = document.documentElement.classList.toggle('dark');
+                                    var theme = isDark ? 'dark' : 'light';
+                                    try { localStorage.setItem('theme', theme); } catch (e) {}
+                                    document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
+                                    window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: isDark } }));
+                                }
+                            }
+                        }"
+                        @click="toggle()"
+                        class="theme-toggle-btn"
+                        aria-label="Toggle dark/light mode"
+                        title="Toggle dark/light mode">
+                    <i class="ph-bold ph-sun theme-icon-sun" aria-hidden="true"></i>
+                    <i class="ph-bold ph-moon theme-icon-moon" aria-hidden="true"></i>
+                </button>
                 <div class="relative" @click.outside="profileOpen = false" @keydown.escape.stop="profileOpen = false; $refs.profileButton.focus()">
                     <button type="button" x-ref="profileButton" @click="profileOpen = !profileOpen; mobileOpen = false" class="workspace-profile-trigger" aria-label="Admin account menu" aria-controls="admin-profile-menu" :aria-expanded="profileOpen.toString()">
                         <img src="{{ $user->avatar_url }}" alt="" class="workspace-avatar">

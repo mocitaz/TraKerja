@@ -2,7 +2,6 @@
     <!-- Header -->
     <section class="admin-welcome">
         <div>
-            <span class="admin-eyebrow">People & access</span>
             <h1>User Management</h1>
             <p>Review and manage members, track job applications, login activity, and permissions in one workspace.</p>
         </div>

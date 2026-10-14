@@ -54,7 +54,6 @@
     <!-- Header Section -->
     <section class="admin-welcome eb-header">
         <div>
-            <span class="admin-eyebrow">Community messages</span>
             <h1>Email Blast</h1>
             <p>Deliver targeted, personalized announcements and updates to your members.</p>
         </div>

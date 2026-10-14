@@ -1406,6 +1406,50 @@ input[type="checkbox"].profile-switch:focus-visible,
     border: 1px solid #f0d7df;
 }
 
+.profile-quota-card {
+    background: #f8fafb;
+    border: 1px solid #edf0f4;
+    border-radius: 12px;
+    padding: 12px;
+}
+.profile-notice-box {
+    background: #faf8fb;
+    border-color: #ebdff5;
+    color: #594481;
+}
+.stat-accepted { color: #10b981; }
+.stat-progress { color: #2579ca; }
+.stat-declined { color: #e11d48; }
+
+.profile-table-title {
+    color: #34313e;
+    font-size: 13px;
+    font-weight: 600;
+    display: block;
+}
+.profile-table-sub {
+    color: #767082;
+    font-size: 11px;
+}
+.profile-table-date {
+    text-align: right;
+    color: #767082;
+    font-size: 11px;
+}
+
+.profile-templates-list {
+    font-size: 11.5px;
+    color: #626573;
+    line-height: 1.6;
+}
+.profile-modal-danger-title {
+    color: #a02745;
+}
+.profile-modal-hint {
+    font-size: 11px;
+    color: #626573;
+}
+
 .profile-modal-overlay {
     position: fixed;
     inset: 0;
@@ -1716,6 +1760,20 @@ input[type="checkbox"].profile-switch:focus-visible,
     color: #ffffff !important;
 }
 
+/* Primary Button */
+.dark .profile-primary {
+    background: #f0f4f9 !important;
+    border-color: #f0f4f9 !important;
+    color: #131314 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+.dark .profile-primary:hover {
+    background: #ffffff !important;
+    border-color: #ffffff !important;
+    color: #000000 !important;
+}
+
 /* Cards & Panels */
 .dark .profile-card,
 .dark .profile-panel,
@@ -1746,7 +1804,44 @@ input[type="checkbox"].profile-switch:focus-visible,
 .dark .profile-plan {
     background: #282a2c !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    color: #60a5fa !important;
+    color: #94a3b8 !important;
+}
+.dark .profile-plan--admin {
+    background: rgba(16, 185, 129, 0.12) !important;
+    border-color: rgba(16, 185, 129, 0.25) !important;
+    color: #34d399 !important;
+}
+.dark .profile-plan--premium {
+    background: rgba(245, 158, 11, 0.12) !important;
+    border-color: rgba(245, 158, 11, 0.25) !important;
+    color: #fbbf24 !important;
+}
+.dark .profile-plan--free {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+}
+.dark .profile-mono-id {
+    color: #f0f4f9 !important;
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .profile-auth-logo-btn {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .profile-auth-logo-btn svg path[stroke="#475569"] {
+    stroke: #94a3b8 !important;
+}
+.dark .profile-verified-badge {
+    color: #38bdf8 !important;
+}
+.dark .profile-verified-badge svg,
+.dark .profile-blue-check-badge svg {
+    fill: #38bdf8 !important;
+}
+.dark .profile-unverified-badge {
+    color: #94a3b8 !important;
 }
 .dark .profile-account-facts div {
     border-color: rgba(255, 255, 255, 0.08) !important;
@@ -1808,14 +1903,19 @@ input[type="checkbox"].profile-switch:focus-visible,
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     color: #f0f4f9 !important;
 }
+.dark .profile-workspace select option,
+.dark .profile-select option {
+    background-color: #282a2c !important;
+    color: #f0f4f9 !important;
+}
 .dark .profile-workspace input:focus,
 .dark .profile-workspace textarea:focus,
 .dark .profile-workspace select:focus,
 .dark .profile-input:focus,
 .dark .profile-select:focus {
-    border-color: rgba(192, 132, 252, 0.5) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
     background: #282a2c !important;
-    box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.15) !important;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08) !important;
 }
 .dark .profile-workspace input::placeholder,
 .dark .profile-workspace textarea::placeholder,
@@ -1849,10 +1949,10 @@ input[type="checkbox"].profile-switch:focus-visible,
     color: #ffffff !important;
 }
 .dark .profile-text-button {
-    color: #60a5fa !important;
+    color: #94a3b8 !important;
 }
 .dark .profile-text-button:hover {
-    color: #93c5fd !important;
+    color: #f0f4f9 !important;
 }
 .dark .profile-danger-button {
     background: rgba(244, 63, 94, 0.15) !important;
@@ -1866,7 +1966,7 @@ input[type="checkbox"].profile-switch:focus-visible,
 
 /* Preference Toggles & Switch */
 .dark .profile-preference-row {
-    background: #1e1f20 !important;
+    background: #18191a !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 .dark .profile-preference-row:hover {
@@ -1905,8 +2005,8 @@ input[type="checkbox"].profile-switch:focus-visible,
 .dark .profile-switch:checked,
 .dark .profile-switch:checked:hover,
 .dark .profile-switch:checked:focus {
-    background-color: #2579ca !important;
-    border-color: #3b82f6 !important;
+    background-color: #10b981 !important;
+    border-color: #059669 !important;
     background-image: none !important;
 }
 .dark input[type="checkbox"].profile-switch:checked::after,
@@ -1923,13 +2023,13 @@ input[type="checkbox"].profile-switch:focus-visible,
 }
 .dark input[type="checkbox"].profile-switch:focus-visible,
 .dark .profile-switch:focus-visible {
-    outline: 2px solid #60a5fa !important;
+    outline: 2px solid rgba(255, 255, 255, 0.3) !important;
     outline-offset: 2px !important;
 }
 
 /* Avatar & Photo Sections */
 .dark .profile-avatar-preview {
-    background: #282a2c !important;
+    background: #18191a !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 .dark .profile-avatar-preview h3 {
@@ -1941,23 +2041,24 @@ input[type="checkbox"].profile-switch:focus-visible,
 }
 .dark .profile-avatar-option {
     border: 2px solid rgba(255, 255, 255, 0.08) !important;
-    background: #282a2c !important;
+    background: #18191a !important;
 }
 .dark .profile-avatar-option:hover {
-    background: #333538 !important;
+    background: #282a2c !important;
     border-color: rgba(255, 255, 255, 0.16) !important;
 }
 .dark .profile-avatar-option.is-selected {
-    border-color: #3b82f6 !important;
+    border-color: #34d399 !important;
     background: #282a2c !important;
 }
 .dark .profile-avatar-option i {
     background: #1e1f20 !important;
-    color: #3b82f6 !important;
+    color: #34d399 !important;
 }
 .dark .profile-photo-section {
-    background: #282a2c !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background: transparent !important;
+    border: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 .dark .profile-photo-section h3 {
     color: #f0f4f9 !important;
@@ -2060,14 +2161,14 @@ input[type="checkbox"].profile-switch:focus-visible,
     color: #f0f4f9 !important;
 }
 .dark .profile-danger {
-    background: #251417 !important;
-    border: 1px solid rgba(244, 63, 94, 0.25) !important;
+    background: #1e1f20 !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
 }
 .dark .profile-danger h2 {
-    color: #fb7185 !important;
+    color: #f87171 !important;
 }
 .dark .profile-danger p {
-    color: #fca5a5 !important;
+    color: #94a3b8 !important;
 }
 .dark .profile-delete-dialog {
     background: #1e1f20 !important;
@@ -2179,8 +2280,8 @@ input[type="checkbox"].profile-switch:focus-visible,
     color: #94a3b8 !important;
 }
 .dark .profile-modal-recipient--warning {
-    background: #2a2310 !important;
-    border-color: rgba(245, 158, 11, 0.3) !important;
+    background: rgba(245, 158, 11, 0.15) !important;
+    border-color: rgba(245, 158, 11, 0.25) !important;
     color: #fde68a !important;
 }
 .dark .profile-modal-recipient--warning strong {
@@ -2190,15 +2291,15 @@ input[type="checkbox"].profile-switch:focus-visible,
     color: #fde68a !important;
 }
 .dark .profile-modal-recipient--danger {
-    background: #2a1519 !important;
-    border-color: rgba(244, 63, 94, 0.3) !important;
-    color: #fecdd3 !important;
+    background: rgba(239, 68, 68, 0.15) !important;
+    border-color: rgba(239, 68, 68, 0.25) !important;
+    color: #fca5a5 !important;
 }
 .dark .profile-modal-recipient--danger strong {
-    color: #fb7185 !important;
+    color: #f87171 !important;
 }
 .dark .profile-modal-recipient--danger span {
-    color: #fecdd3 !important;
+    color: #fca5a5 !important;
 }
 .dark .profile-chip--accepted {
     background: rgba(34, 197, 94, 0.15) !important;
@@ -2215,5 +2316,51 @@ input[type="checkbox"].profile-switch:focus-visible,
     color: #fb7185 !important;
     border: 1px solid rgba(244, 63, 94, 0.3) !important;
 }
+
+.dark .profile-quota-card {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .profile-quota-card label {
+    color: #f0f4f9 !important;
+}
+.dark .profile-quota-card input {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #f0f4f9 !important;
+}
+.dark .profile-quota-card input:focus {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08) !important;
+}
+.dark .profile-quota-card small {
+    color: #94a3b8 !important;
+}
+
+.dark .profile-notice-box {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #cbd5e1 !important;
+}
+.dark .profile-notice-box span,
+.dark .profile-notice-box strong {
+    color: #f0f4f9 !important;
+}
+
+.dark .stat-accepted { color: #34d399 !important; }
+.dark .stat-progress { color: #60a5fa !important; }
+.dark .stat-declined { color: #f87171 !important; }
+
+.dark .profile-table-title { color: #f0f4f9 !important; }
+.dark .profile-table-sub { color: #94a3b8 !important; }
+.dark .profile-table-date { color: #94a3b8 !important; }
+
+.dark .profile-templates-list { color: #94a3b8 !important; }
+.dark .profile-templates-list p,
+.dark .profile-templates-list li { color: #94a3b8 !important; }
+
+.dark .profile-modal-danger-title { color: #f87171 !important; }
+.dark .profile-modal-hint { color: #94a3b8 !important; }
+
 
 

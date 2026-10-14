@@ -15,7 +15,6 @@
          ========================================================================== --}}
     <section class="am-welcome">
         <div>
-            <span class="am-eyebrow">Revenue & Access Control</span>
             <h1>Monetization & Plans</h1>
             <p>Set subscription pricing, switch member access modes, and review feature entitlements.</p>
         </div>

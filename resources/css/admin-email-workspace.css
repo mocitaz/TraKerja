@@ -1748,3 +1748,826 @@
         transition: none;
     }
 }
+
+/* ==========================================================================
+   Gemini Dark Mode - Admin Email Workspace
+   Strict Deep Obsidian Palette:
+   - Canvas: #131314
+   - Card/Panel: #1e1f20
+   - Elevated/Inputs/Tiles: #282a2c
+   - Hover: #333538
+   - Borders: rgba(255, 255, 255, 0.08)
+   - Text: #f0f4f9 (primary), #94a3b8 (secondary/muted)
+   - Zero glowing purple or bright orange accents
+   ========================================================================== */
+.dark .email-workspace {
+    color: #f0f4f9;
+}
+
+.dark .email-workspace .admin-welcome h1 {
+    color: #f0f4f9;
+}
+
+.dark .email-workspace .admin-eyebrow {
+    color: #94a3b8;
+}
+
+.dark .email-workspace .admin-welcome p {
+    color: #94a3b8;
+}
+
+.dark .eb-header-actions .au-button {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark .eb-header-actions .au-button:hover {
+    background: #333538;
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.dark .eb-card {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.dark .eb-card-heading {
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .eb-card-heading h2 {
+    color: #f0f4f9;
+}
+
+.dark .eb-card-heading p {
+    color: #94a3b8;
+}
+
+.dark .eb-step {
+    background: #282a2c;
+    color: #f0f4f9;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.dark .eb-audience-card {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .eb-audience-card:hover {
+    background: #333538;
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+.dark .eb-audience-card.is-selected {
+    background: #232426;
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+.dark .eb-audience-icon {
+    background: #1e1f20;
+    color: #94a3b8;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark .eb-audience-card:hover .eb-audience-icon {
+    color: #f0f4f9;
+}
+
+.dark .eb-audience-card.is-selected .eb-audience-icon {
+    background: #333538;
+    color: #f0f4f9;
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.dark .eb-audience-copy strong {
+    color: #f0f4f9;
+}
+
+.dark .eb-audience-copy span {
+    color: #94a3b8;
+}
+
+.dark .eb-audience-count {
+    color: #94a3b8;
+}
+
+.dark .eb-audience-card.is-selected .eb-audience-count {
+    color: #f0f4f9;
+}
+
+.dark .eb-select-wrapper select {
+    background-color: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark .eb-select-wrapper select option,
+.dark .eb-select-wrapper select optgroup {
+    background-color: #282a2c;
+    color: #f0f4f9;
+}
+
+.dark .eb-select-chevron {
+    color: #94a3b8;
+}
+
+.dark .eb-template-hint {
+    color: #94a3b8;
+}
+
+.dark .eb-editor input[type="text"],
+.dark .eb-editor input[type="url"],
+.dark .eb-editor textarea {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark .eb-editor input[type="text"]:focus,
+.dark .eb-editor input[type="url"]:focus,
+.dark .eb-editor textarea:focus {
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+    background: #282a2c;
+}
+
+.dark .eb-editor ::placeholder {
+    color: #64748b;
+}
+
+.dark .eb-character-count {
+    color: #94a3b8;
+}
+
+.dark .eb-action-details {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .eb-action-details summary {
+    color: #f0f4f9;
+}
+
+.dark .eb-button-fields {
+    border-top-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .eb-button-fields input {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+/* Campaign Summary Panel - Pure Obsidian Benchmark */
+.dark .eb-review-panel.next-move-card {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.dark .eb-review-panel h2 {
+    color: #f0f4f9;
+}
+
+.dark .eb-review-panel .next-move-card-top {
+    color: #94a3b8;
+}
+
+.dark .eb-review-panel .next-move-card-top > span {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #cbd5e1;
+}
+
+.dark .eb-review-panel .next-move-card-top > i {
+    color: #94a3b8;
+}
+
+.dark .eb-review-panel .next-move-subject strong {
+    color: #f0f4f9;
+}
+
+.dark .eb-review-panel .next-move-subject > span {
+    color: #94a3b8;
+}
+
+.dark .eb-review-panel .next-move-description {
+    color: #94a3b8;
+}
+
+.dark .eb-review-panel .eb-task-chip {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark .eb-review-panel .eb-task-chip i {
+    color: #34d399;
+}
+
+.dark .eb-review-panel .next-move-action {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #f0f4f9;
+}
+
+.dark .eb-review-panel .next-move-action:hover {
+    background: #333538;
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark .eb-review-panel .next-move-footnote {
+    color: #94a3b8;
+}
+
+/* Modals & Dialogs */
+.dark .eb-dialog {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.dark .eb-dialog-head-actions .au-dialog-close {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+}
+
+.dark .eb-dialog-head-actions .au-dialog-close:hover {
+    background: #333538;
+    color: #f0f4f9;
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.dark .eb-progress-pill {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
+.dark .eb-progress-pill i {
+    color: #94a3b8;
+}
+
+.dark .eb-progress-pill.is-paused {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: #fbbf24;
+}
+
+.dark .eb-progress-pill.is-done {
+    background: rgba(52, 211, 153, 0.15);
+    border-color: rgba(52, 211, 153, 0.3);
+    color: #34d399;
+}
+
+.dark .eb-progress-pill.is-done i {
+    color: #34d399;
+}
+
+.dark .eb-pulse-dot {
+    background-color: #34d399;
+}
+
+/* Modal View 1: Preview */
+.dark .eb-preview-toolbar {
+    background: #18191a;
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .eb-device-switch {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .eb-device-switch button {
+    color: #94a3b8;
+}
+
+.dark .eb-device-switch button.is-active {
+    background: #1e1f20;
+    color: #f0f4f9;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.dark .eb-badge-recipients {
+    background: #282a2c;
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .eb-preview-stage {
+    background: #131314;
+}
+
+.dark .eb-preview-stage iframe {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: #ffffff;
+}
+
+.dark .eb-preview-loading {
+    color: #94a3b8;
+}
+
+.dark .eb-preview-footer {
+    border-top-color: rgba(255, 255, 255, 0.07);
+    color: #94a3b8;
+}
+
+/* Modal View 2: Confirmation */
+.dark .eb-dialog .au-account-details > div {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 10px 14px;
+}
+
+.dark .eb-dialog .au-account-details dt {
+    color: #94a3b8;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.dark .eb-dialog .au-account-details dd {
+    color: #f0f4f9;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+.dark .eb-count-highlight {
+    color: #f0f4f9 !important;
+}
+
+.dark .eb-confirm-copy {
+    color: #94a3b8;
+}
+
+.dark .eb-confirm-copy strong {
+    color: #f0f4f9;
+}
+
+.dark .eb-recipients-drawer,
+.dark .eb-failures-drawer {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .eb-recipients-drawer summary,
+.dark .eb-failures-drawer summary {
+    color: #f0f4f9;
+}
+
+.dark .eb-recipient-list {
+    border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .eb-recipient-item {
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark .eb-recipient-item strong {
+    color: #f0f4f9;
+}
+
+.dark .eb-recipient-item span {
+    color: #94a3b8;
+}
+
+.dark .eb-recipient-item--failed strong {
+    color: #f87171;
+}
+
+.dark .eb-recipient-item--failed span {
+    color: #fca5a5;
+}
+
+/* Modal View 3: Progress & Delivery */
+.dark .eb-delivery-hero {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.dark .eb-status-tag {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
+.dark .eb-status-tag.is-paused {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: #fbbf24;
+}
+
+.dark .eb-status-tag.is-completed {
+    background: rgba(52, 211, 153, 0.15);
+    border-color: rgba(52, 211, 153, 0.3);
+    color: #34d399;
+}
+
+.dark .eb-live-indicator {
+    background-color: #34d399;
+    box-shadow: 0 0 8px rgba(52, 211, 153, 0.6);
+}
+
+.dark .eb-eta-tag {
+    color: #94a3b8;
+}
+
+.dark .eb-counter-current {
+    color: #f0f4f9;
+}
+
+.dark .eb-counter-sep {
+    color: #64748b;
+}
+
+.dark .eb-counter-total {
+    color: #cbd5e1;
+}
+
+.dark .eb-counter-unit {
+    color: #94a3b8;
+}
+
+.dark .eb-prog-track {
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark .eb-prog-fill {
+    background: linear-gradient(90deg, #38bdf8 0%, #60a5fa 100%);
+}
+
+.dark .eb-prog-subline {
+    color: #94a3b8;
+}
+
+.dark .eb-pct-text {
+    color: #f0f4f9;
+}
+
+.dark .eb-rate-text {
+    color: #94a3b8;
+}
+
+.dark .eb-pmetric-card {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .eb-pmetric-icon {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+}
+
+.dark .eb-pmetric--success .eb-pmetric-icon {
+    background: rgba(52, 211, 153, 0.15);
+    border-color: rgba(52, 211, 153, 0.3);
+    color: #34d399;
+}
+
+.dark .eb-pmetric--failed .eb-pmetric-icon {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #f87171;
+}
+
+.dark .eb-pmetric--queue .eb-pmetric-icon {
+    background: rgba(148, 163, 184, 0.15);
+    border-color: rgba(148, 163, 184, 0.3);
+    color: #94a3b8;
+}
+
+.dark .eb-pmetric-label {
+    color: #94a3b8;
+}
+
+.dark .eb-pmetric-val {
+    color: #f0f4f9;
+}
+
+.dark .eb-active-box {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .eb-active-avatar {
+    background: #1e1f20;
+    color: #f0f4f9;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .eb-avatar-radar {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.dark .eb-active-name {
+    color: #f0f4f9;
+}
+
+.dark .eb-transmitting-badge {
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
+.dark .eb-transmitting-badge.is-paused {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: #fbbf24;
+}
+
+.dark .eb-active-email {
+    color: #94a3b8;
+}
+
+.dark .eb-feed-wrapper {
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .eb-feed-header {
+    background: #282a2c;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark .eb-feed-count {
+    color: #94a3b8;
+}
+
+.dark .eb-feed-item:hover {
+    background: #282a2c;
+}
+
+.dark .eb-feed-status {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #94a3b8;
+}
+
+.dark .eb-feed-item.is-success .eb-feed-status {
+    background: rgba(52, 211, 153, 0.15);
+    border-color: rgba(52, 211, 153, 0.25);
+    color: #34d399;
+}
+
+.dark .eb-feed-item.is-error .eb-feed-status {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.25);
+    color: #f87171;
+}
+
+.dark .eb-feed-name {
+    color: #f0f4f9;
+}
+
+.dark .eb-feed-email {
+    color: #94a3b8;
+}
+
+.dark .eb-feed-error {
+    color: #fca5a5;
+}
+
+.dark .eb-feed-time {
+    color: #64748b;
+}
+
+.dark .eb-complete-banner {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .eb-complete-banner.is-cancelled {
+    background: #282a2c;
+    border-color: rgba(239, 68, 68, 0.25);
+}
+
+.dark .eb-complete-icon {
+    background: rgba(52, 211, 153, 0.15);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    color: #34d399;
+}
+
+.dark .eb-complete-banner.is-cancelled .eb-complete-icon {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    color: #f87171;
+}
+
+.dark .eb-complete-content strong {
+    color: #f0f4f9;
+}
+
+.dark .eb-complete-banner.is-cancelled .eb-complete-content strong {
+    color: #f87171;
+}
+
+.dark .eb-complete-content p {
+    color: #94a3b8;
+}
+
+.dark .eb-delivery-actions,
+.dark .eb-dialog-actions--done {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .eb-dialog .au-button {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark .eb-dialog .au-button:hover {
+    background: #333538;
+    border-color: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+}
+
+.dark .eb-dialog .au-button--primary {
+    background: #f0f4f9 !important;
+    border-color: #f0f4f9 !important;
+    color: #131314 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .eb-dialog .au-button--primary:hover {
+    background: #ffffff !important;
+    border-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+.dark .eb-dialog .au-button--primary:disabled {
+    background: #282a2c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #64748b !important;
+    box-shadow: none !important;
+}
+
+.dark .eb-dialog .au-button--danger {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #f87171;
+}
+
+.dark .eb-dialog .au-button--danger:hover {
+    background: rgba(239, 68, 68, 0.25);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+}
+
+/* Campaign History Page */
+.dark .eb-history-metrics .eb-metric-card {
+    background: #1e1f20;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.dark .eb-metric-label {
+    color: #94a3b8;
+}
+
+.dark .eb-metric-value {
+    color: #f0f4f9;
+}
+
+.dark .eb-metric-sub {
+    color: #94a3b8;
+}
+
+.dark .eb-metric-value--purple {
+    color: #f0f4f9;
+}
+
+.dark .eb-metric-value--success {
+    color: #34d399;
+}
+
+.dark .eb-metric-value--danger {
+    color: #f87171;
+}
+
+.dark .eb-metric-value--muted {
+    color: #64748b;
+}
+
+.dark .eb-history-filters {
+    background: #18191a;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.dark .eb-history-filters input,
+.dark .eb-history-filters select {
+    background-color: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark .eb-history-filters input::placeholder {
+    color: #64748b;
+}
+
+.dark .eb-history-filters button[type="submit"] {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark .eb-history-filters button[type="submit"]:hover {
+    background: #333538;
+    color: #ffffff;
+}
+
+.dark .eb-clear-purple {
+    color: #94a3b8;
+}
+
+.dark .eb-clear-purple:hover {
+    color: #f0f4f9;
+}
+
+.dark .eb-history-table th {
+    background: #18191a;
+    color: #94a3b8;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.dark .eb-history-table td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    color: #cbd5e1;
+}
+
+.dark .eb-history-table tbody tr:hover {
+    background: #282a2c;
+}
+
+.dark .eb-history-table .col-subject strong {
+    color: #f0f4f9;
+}
+
+.dark .eb-history-table .col-subject span {
+    color: #94a3b8;
+}
+
+.dark .eb-failure-btn {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #f87171;
+}
+
+.dark .eb-failure-btn:hover {
+    background: rgba(239, 68, 68, 0.25);
+    color: #fca5a5;
+}
+
+.dark .eb-failure-message {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+}
+
+.dark .eb-count-pill,
+.dark .eb-audience-tag {
+    background: #282a2c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
+.dark .eb-sent-number {
+    color: #34d399;
+}
+
+.dark .eb-target-number {
+    color: #94a3b8;
+}
+
+.dark .eb-failed-number {
+    color: #f87171;
+}
+
+.dark .eb-history-table time {
+    color: #f0f4f9;
+}
+
+.dark .eb-history-table time small {
+    color: #94a3b8;
+}
+
+.dark .ai-event-name {
+    color: #f0f4f9;
+}
+
+

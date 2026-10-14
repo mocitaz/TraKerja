@@ -5,3 +5,271 @@
 @media(max-width:700px){.admin-operations{gap:17px}.ops-page-heading{flex-direction:column;align-items:start;gap:15px}.ops-page-heading h1{font-size:24px}.ops-metric-strip,.ops-scraper-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 0}.ops-metric-strip>:nth-child(2),.ops-scraper-stats>div:nth-child(2){border:0!important}.ops-metric-strip>div,.ops-metric-strip>a{padding:0 16px}.ops-metric-strip strong{font-size:26px}.ops-panel{border-radius:21px}.ops-filter{padding:18px}.ops-filter label{min-width:140px}.ops-survey-grid,.ops-ticket-detail,.ops-mode-grid{grid-template-columns:1fr}.ops-score-grid{gap:20px;padding:4px 18px 22px}.ops-section-heading{padding:20px 18px 15px}.ops-ticket-head{display:none}.ops-ticket-row{grid-template-columns:minmax(0,1fr) 100px;gap:12px;padding:18px}.ops-ticket-row>div{grid-column:1/-1}.ops-ticket-row time{grid-column:1;grid-row:3}.ops-ticket-row>.ops-button{grid-column:2;grid-row:3}.ops-ticket-detail{padding:18px}.ops-panel-footer{padding:15px 18px;flex-direction:column;align-items:start}.ops-mode-grid{padding:0 18px 20px}.ops-mode{flex-direction:row}.ops-tabs{width:100%}.ops-tabs button{flex:1;font-size:11px;padding:10px}.ops-metric-strip .ops-money{font-size:18px}.ops-modal-card{padding:22px}.ops-modal-card h2{font-size:18px}.ops-payment-details>div{grid-template-columns:100px minmax(0,1fr)}.ops-response>div{min-width:220px}.admin-operations .ops-legacy-panel>div:not(:first-child){padding-inline:18px}.ops-scraper-stats>div{padding-inline:16px!important}}
 @media(prefers-reduced-motion:reduce){.admin-operations{animation:none}.admin-operations *, .ops-modal *{transition:none!important;scroll-behavior:auto!important}}
 .admin-operations .ops-legacy-panel [wire\:click=generateApiKey]{color:#7d648f;background:#f1eaf5}.admin-operations .ops-legacy-panel input[readonly]{background:#f4f1f7;color:#746582;padding-right:50px}.ops-scraper-panel:has(canvas){overflow:hidden}
+
+/* ==========================================================================
+   Gemini Dark Mode Styles for Operations & Legacy Admin Components
+   ========================================================================== */
+
+.dark .admin-operations {
+    color: #cbd5e1;
+}
+
+.dark .ops-page-heading h1 {
+    color: #f0f4f9;
+}
+
+.dark .ops-page-heading p {
+    color: #94a3b8;
+}
+
+.dark .ops-refresh-note {
+    color: #94a3b8;
+}
+
+.dark .ops-panel {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.dark .ops-panel--glass,
+.dark .ops-metric-strip {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.dark .ops-section-heading h2 {
+    color: #f0f4f9;
+}
+
+.dark .ops-section-heading p {
+    color: #94a3b8;
+}
+
+.dark .ops-metric-strip > div,
+.dark .ops-metric-strip > a {
+    border-right-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .ops-metric-strip span {
+    color: #94a3b8;
+}
+
+.dark .ops-metric-strip strong {
+    color: #f0f4f9;
+}
+
+.dark .ops-metric-strip small {
+    color: #94a3b8;
+}
+
+.dark .ops-metric-strip em {
+    color: #64748b;
+}
+
+.dark .ops-metric-strip a:hover {
+    background: #282a2c;
+}
+
+.dark .ops-button {
+    background: #7c3aed;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(124, 58, 237, 0.35);
+}
+
+.dark .ops-button:hover {
+    background: #6d28d9;
+}
+
+.dark .ops-button--quiet {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+}
+
+.dark .ops-button--quiet:hover {
+    background: #333538;
+    color: #f0f4f9;
+}
+
+.dark .ops-button--danger {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #f87171;
+}
+
+.dark .ops-button--danger:hover {
+    background: rgba(239, 68, 68, 0.25);
+}
+
+.dark .ops-filter {
+    background: #18191a;
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .admin-operations label {
+    color: #94a3b8;
+}
+
+.dark .admin-operations :is(input:not([type=checkbox]):not([type=radio]):not([type=hidden]),select,textarea) {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+
+.dark .admin-operations :is(input:not([type=checkbox]):not([type=radio]):not([type=hidden]),select,textarea):focus {
+    border-color: #a855f7;
+    outline: none;
+}
+
+.dark .ops-ticket-head {
+    background: #18191a;
+    color: #94a3b8;
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .ops-ticket {
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark .ops-ticket-row:hover {
+    background: #282a2c;
+}
+
+.dark .ops-ticket-row strong {
+    color: #f0f4f9;
+}
+
+.dark .ops-ticket-row p,
+.dark .ops-ticket-row small,
+.dark .ops-table small {
+    color: #94a3b8;
+}
+
+.dark .ops-ticket-detail {
+    background: #18191a;
+    border-top-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .ops-conversation p,
+.dark .ops-reply p {
+    color: #e2e8f0;
+}
+
+.dark .ops-reply {
+    background: rgba(124, 58, 237, 0.12);
+}
+
+.dark .ops-reply small {
+    color: #94a3b8;
+}
+
+.dark .ops-empty {
+    color: #94a3b8;
+}
+
+.dark .ops-empty h3 {
+    color: #f0f4f9;
+}
+
+.dark .ops-panel-footer {
+    border-top-color: rgba(255, 255, 255, 0.07);
+    color: #94a3b8;
+}
+
+.dark .ops-table th {
+    background: #18191a;
+    color: #94a3b8;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .ops-table td {
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+    color: #cbd5e1;
+}
+
+.dark .ops-table tbody tr:hover {
+    background: #282a2c;
+}
+
+.dark .ops-table strong {
+    color: #f0f4f9;
+}
+
+.dark .ops-tabs {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .ops-tabs button {
+    color: #94a3b8;
+}
+
+.dark .ops-tabs button.is-active {
+    background: #282a2c;
+    color: #f0f4f9;
+}
+
+.dark .ops-mode {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .ops-mode.is-active {
+    background: rgba(124, 58, 237, 0.12);
+    border-color: rgba(124, 58, 237, 0.35);
+}
+
+.dark .ops-mode h3 {
+    color: #f0f4f9;
+}
+
+.dark .ops-mode p {
+    color: #94a3b8;
+}
+
+.dark .ops-modal-card {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.5);
+    color: #cbd5e1;
+}
+
+.dark .ops-modal-card h2 {
+    color: #f0f4f9;
+}
+
+.dark .ops-modal-card p {
+    color: #94a3b8;
+}
+
+.dark .ops-mode-impact {
+    background: #18191a;
+    color: #94a3b8;
+}
+
+.dark .ops-mode-impact strong {
+    color: #f0f4f9;
+}
+
+.dark .admin-operations .ops-legacy-panel {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .ops-scraper-panel {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .ops-scraper-panel th {
+    background: #18191a;
+    color: #94a3b8;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .ops-scraper-panel td {
+    color: #cbd5e1;
+}
+
