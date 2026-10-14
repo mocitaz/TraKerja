@@ -34,3 +34,47 @@
 .platform-picker :is(button, summary, input):focus-visible { outline: 2px solid #9562b4; outline-offset: 2px; }
 @media (max-width: 640px) { .platform-picker__grid { grid-template-columns: minmax(0, 1fr); } }
 @media (prefers-reduced-motion: reduce) { .platform-picker * { transition: none; } }
+
+/* Gemini Dark Mode */
+.dark .platform-brand__name {
+    color: #cbd5e1;
+}
+.dark .platform-brand__mark {
+    color: #94a3b8;
+}
+.dark .platform-picker summary {
+    color: #cbd5e1;
+}
+.dark .platform-picker summary:hover {
+    color: #f0f4f9;
+}
+.dark .platform-picker__body {
+    background: #18191a;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+.dark .job-form .platform-picker__body > input,
+.dark .platform-picker__body > input {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f0f4f9;
+}
+.dark .platform-picker__grid > button {
+    background: #1e1f20;
+    border-color: rgba(255, 255, 255, 0.06);
+    color: #f0f4f9;
+}
+.dark .platform-picker__grid > button:hover {
+    background: #282a2c;
+    border-color: rgba(255, 255, 255, 0.15);
+}
+.dark .platform-picker__grid > button.is-selected {
+    background: rgba(37, 121, 202, 0.15);
+    border-color: #3b82f6;
+}
+.dark .platform-picker__grid > button > i {
+    color: #60a5fa;
+}
+.dark .platform-picker__empty {
+    color: #94a3b8;
+}
+

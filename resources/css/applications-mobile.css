@@ -109,3 +109,7 @@
     .account-dialog-overlay .account-confirm-actions button { min-height: 44px; }
     .account-dialog-overlay .account-dialog-close { min-width: 44px; min-height: 44px; }
 }
+
+.dark .tracker-page .tracker-mobile-list .tracker-job-card {
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}

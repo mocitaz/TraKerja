@@ -407,6 +407,11 @@
     border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+.dark .workspace-rewards .gamification-summary,
+.dark .workspace-rewards .gamification-summary > div {
+    color: #f0f4f9 !important;
+}
+
 .dark .workspace-rewards .gamification-summary button {
     background: #1e1f20;
     color: #cbd5e1;

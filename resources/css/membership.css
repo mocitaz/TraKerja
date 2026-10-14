@@ -648,7 +648,7 @@
 
 /* Free Access Banner */
 .dark .membership-free-access {
-    background: #1e1f20 !important;
+    background: #18191a !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
 }
@@ -656,7 +656,7 @@
     color: #f0f4f9 !important;
 }
 .dark .membership-free-access p {
-    color: #94a3b8 !important;
+    color: #cbd5e1 !important;
 }
 
 /* Cards - Pure Obsidian #1e1f20 Foundation (No Coloured Gradients) */
