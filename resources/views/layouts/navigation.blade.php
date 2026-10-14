@@ -23,17 +23,19 @@
             </button>
             <!-- Theme Toggle Button -->
             <div x-data="{
-                isDark: localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches),
+                isDark: document.documentElement.classList.contains('dark'),
                 toggle() {
                     this.isDark = !this.isDark;
                     var theme = this.isDark ? 'dark' : 'light';
+                    try {
+                        localStorage.setItem('theme', theme);
+                    } catch (e) {}
+                    document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
                     if (this.isDark) {
                         document.documentElement.classList.add('dark');
                     } else {
                         document.documentElement.classList.remove('dark');
                     }
-                    localStorage.setItem('theme', theme);
-                    document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
                     window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: this.isDark } }));
                 }
             }" @theme-changed.window="isDark = $event.detail.isDark" x-on:livewire:navigated.window="isDark = document.documentElement.classList.contains('dark')" class="flex items-center">

@@ -43,8 +43,10 @@
             // Otherwise, keep the landing page in its clean, original light mode!
             if (theme === 'dark') {
                 document.documentElement.classList.add('dark');
+                document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
             } else {
                 document.documentElement.classList.remove('dark');
+                document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
             }
         })();
     </script>
@@ -248,13 +250,15 @@
                     toggle() {
                         this.isDark = !this.isDark;
                         var theme = this.isDark ? 'dark' : 'light';
+                        try {
+                            localStorage.setItem('theme', theme);
+                        } catch (e) {}
+                        document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
                         if (this.isDark) {
                             document.documentElement.classList.add('dark');
                         } else {
                             document.documentElement.classList.remove('dark');
                         }
-                        localStorage.setItem('theme', theme);
-                        document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
                         window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: this.isDark } }));
                     }
                 }" @theme-changed.window="isDark = $event.detail.isDark" class="flex items-center">

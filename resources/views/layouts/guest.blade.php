@@ -27,18 +27,12 @@
             (function() {
                 try {
                     var theme = localStorage.getItem('theme');
-                    var supportDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    var isDark = theme === 'dark' || (!theme && supportDark);
-                    if (isDark) {
+                    if (theme === 'dark') {
                         document.documentElement.classList.add('dark');
-                        if (!document.cookie.includes('theme=dark')) {
-                            document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
-                        }
+                        document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
                     } else {
                         document.documentElement.classList.remove('dark');
-                        if (!document.cookie.includes('theme=light')) {
-                            document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
-                        }
+                        document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
                     }
                 } catch (e) {}
             })();
@@ -64,20 +58,26 @@
 
             <!-- Theme Toggle Pill -->
             <div class="pointer-events-auto"
-                 x-data="{ isDark: document.documentElement.classList.contains('dark') }"
+                 x-data="{
+                     isDark: document.documentElement.classList.contains('dark'),
+                     toggle() {
+                         this.isDark = !this.isDark;
+                         var theme = this.isDark ? 'dark' : 'light';
+                         try {
+                             localStorage.setItem('theme', theme);
+                         } catch (e) {}
+                         document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
+                         if (this.isDark) {
+                             document.documentElement.classList.add('dark');
+                         } else {
+                             document.documentElement.classList.remove('dark');
+                         }
+                         window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: this.isDark } }));
+                     }
+                 }"
                  @theme-changed.window="isDark = $event.detail.isDark">
                 <button type="button"
-                    @click="isDark = !isDark;
-                            if (isDark) {
-                                document.documentElement.classList.add('dark');
-                                localStorage.setItem('theme', 'dark');
-                                document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
-                            } else {
-                                document.documentElement.classList.remove('dark');
-                                localStorage.setItem('theme', 'light');
-                                document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
-                            }
-                            window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark } }));"
+                    @click="toggle()"
                     class="inline-flex items-center justify-center w-8 h-8 rounded-full border transition-all duration-200 cursor-pointer shadow-3xs border-[#dedbd6] bg-white text-amber-500 hover:bg-[#faf8f5] dark:border-white/10 dark:bg-[#1e1f20] dark:text-purple-300 dark:hover:bg-[#282a2c]"
                     title="Toggle light/dark mode"
                     aria-label="Toggle dark mode">

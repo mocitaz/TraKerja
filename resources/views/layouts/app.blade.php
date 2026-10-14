@@ -30,54 +30,19 @@
         <!-- Confetti Library -->
         <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
-        <!-- Theme Initialization & Permanent Lock Across Livewire wire:navigate -->
+        <!-- Anti-FOUC & Theme Initialization Script -->
         <script>
             (function() {
-                function enforceTheme() {
-                    try {
-                        var theme = localStorage.getItem('theme');
-                        var supportDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                        var isDark = theme === 'dark' || (!theme && supportDark);
-                        if (isDark) {
-                            if (!document.documentElement.classList.contains('dark')) {
-                                document.documentElement.classList.add('dark');
-                            }
-                            if (!document.cookie.includes('theme=dark')) {
-                                document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
-                            }
-                        } else {
-                            if (document.documentElement.classList.contains('dark')) {
-                                document.documentElement.classList.remove('dark');
-                            }
-                            if (!document.cookie.includes('theme=light')) {
-                                document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
-                            }
-                        }
-                    } catch (e) {}
-                }
-
-                enforceTheme();
-
-                document.addEventListener('livewire:navigating', enforceTheme);
-                document.addEventListener('livewire:navigated', enforceTheme);
-
-                if (window.MutationObserver) {
-                    var observer = new MutationObserver(function(mutations) {
-                        for (var i = 0; i < mutations.length; i++) {
-                            if (mutations[i].attributeName === 'class') {
-                                var theme = localStorage.getItem('theme');
-                                var supportDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                                var isDark = theme === 'dark' || (!theme && supportDark);
-                                if (isDark && !document.documentElement.classList.contains('dark')) {
-                                    document.documentElement.classList.add('dark');
-                                } else if (!isDark && document.documentElement.classList.contains('dark')) {
-                                    document.documentElement.classList.remove('dark');
-                                }
-                            }
-                        }
-                    });
-                    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-                }
+                try {
+                    var theme = localStorage.getItem('theme');
+                    if (theme === 'dark') {
+                        document.documentElement.classList.add('dark');
+                        document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
+                    }
+                } catch (e) {}
             })();
         </script>
 

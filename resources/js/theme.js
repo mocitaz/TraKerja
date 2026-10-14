@@ -1,36 +1,57 @@
 // Theme Persistence and Livewire SPA Lock
-export function initTheme() {
-    function getPreferredTheme() {
-        try {
-            const stored = localStorage.getItem('theme');
-            if (stored === 'dark' || stored === 'light') {
-                return stored;
-            }
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        } catch (e) {
-            return 'light';
-        }
-    }
+let isApplyingTheme = false;
 
-    function applyTheme(theme) {
-        const isDark = theme === 'dark';
+export function getPreferredTheme() {
+    try {
+        const stored = localStorage.getItem('theme');
+        if (stored === 'dark' || stored === 'light') {
+            return stored;
+        }
+        // Default to clean light mode unless user explicitly selected dark
+        return 'light';
+    } catch (e) {
+        return 'light';
+    }
+}
+
+export function applyTheme(theme) {
+    const isDark = theme === 'dark';
+    isApplyingTheme = true;
+    try {
         if (isDark) {
             if (!document.documentElement.classList.contains('dark')) {
                 document.documentElement.classList.add('dark');
             }
-            if (!document.cookie.includes('theme=dark')) {
-                document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
-            }
+            document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
         } else {
             if (document.documentElement.classList.contains('dark')) {
                 document.documentElement.classList.remove('dark');
             }
-            if (!document.cookie.includes('theme=light')) {
-                document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
-            }
+            document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
         }
+    } finally {
+        setTimeout(() => {
+            isApplyingTheme = false;
+        }, 50);
     }
+}
 
+export function setTheme(theme) {
+    const isDark = theme === 'dark';
+    try {
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    } catch (e) {}
+    applyTheme(isDark ? 'dark' : 'light');
+    window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark } }));
+}
+
+// Make setTheme globally accessible
+if (typeof window !== 'undefined') {
+    window.setTheme = setTheme;
+    window.getPreferredTheme = getPreferredTheme;
+}
+
+export function initTheme() {
     function sync() {
         applyTheme(getPreferredTheme());
     }
@@ -45,22 +66,27 @@ export function initTheme() {
 
     // Listen to custom theme-changed event dispatched by toggles
     window.addEventListener('theme-changed', (event) => {
-        const theme = event.detail?.isDark ? 'dark' : 'light';
-        localStorage.setItem('theme', theme);
-        applyTheme(theme);
+        if (event.detail && typeof event.detail.isDark === 'boolean') {
+            const theme = event.detail.isDark ? 'dark' : 'light';
+            try {
+                localStorage.setItem('theme', theme);
+            } catch (e) {}
+            applyTheme(theme);
+        }
     });
 
     // Guard against any framework stripping the class attribute
     if (window.MutationObserver) {
         const observer = new MutationObserver((mutations) => {
+            if (isApplyingTheme) return;
             for (const mutation of mutations) {
                 if (mutation.attributeName === 'class') {
                     const expectedTheme = getPreferredTheme();
                     const hasDark = document.documentElement.classList.contains('dark');
                     if (expectedTheme === 'dark' && !hasDark) {
-                        document.documentElement.classList.add('dark');
+                        applyTheme('dark');
                     } else if (expectedTheme === 'light' && hasDark) {
-                        document.documentElement.classList.remove('dark');
+                        applyTheme('light');
                     }
                 }
             }
