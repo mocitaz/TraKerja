@@ -3,7 +3,6 @@
         <div class="workspace-page__container">
             <header class="workspace-page__header">
                 <div>
-                    <p class="workspace-eyebrow">Your TraKerja account</p>
                     <h1>Membership &amp; Credits</h1>
                     <p>Your plan, your balance, and every purchase in one place.</p>
                 </div>
