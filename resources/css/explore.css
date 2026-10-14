@@ -551,3 +551,55 @@
     border-top-color: rgba(255, 255, 255, 0.08);
 }
 
+/* ==========================================================================
+   Explore Maintenance Card in Dark Mode ("Something massive is cooking.")
+   Obsidian Surface #1e1f20, Elevated #282a2c, crisp #f0f4f9 headings
+   ========================================================================== */
+.dark .explore-maintenance-card {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 16px 48px -12px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+    color: #f0f4f9 !important;
+}
+
+.dark .explore-maintenance-copy h1 {
+    color: #f0f4f9 !important;
+}
+
+.dark .explore-title-dot {
+    color: #c084fc !important;
+}
+
+.dark .explore-lead {
+    color: #cbd5e1 !important;
+}
+
+.dark .explore-desc {
+    color: #94a3b8 !important;
+}
+
+.dark .explore-action-primary {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    color: #f0f4f9 !important;
+}
+
+.dark .explore-action-primary:hover {
+    background: #333538 !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
+}
+
+.dark .explore-action-secondary {
+    color: #cbd5e1 !important;
+}
+
+.dark .explore-action-secondary:hover {
+    color: #f0f4f9 !important;
+}
+
+.dark .explore-footnote {
+    color: #94a3b8 !important;
+}
+
+
