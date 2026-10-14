@@ -2,7 +2,7 @@
     <div class="workspace-page support-page" x-data="{ activeTab: '{{ session('success_message') && !$errors->any() ? 'history' : 'submit' }}' }">
         <div class="workspace-page__container">
             <header class="workspace-page__header">
-                <div><p class="workspace-eyebrow">Here to help</p><h1>Support</h1><p>Get help, share feedback, and follow your requests.</p></div>
+                <div><h1>Support</h1><p>Get help, share feedback, and follow your requests.</p></div>
                 <a href="{{ route('dashboard') }}" wire:navigate class="workspace-button workspace-button--quiet">Back to Home <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
             </header>
             @if(session('success_message'))

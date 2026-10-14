@@ -495,35 +495,251 @@
     }
 }
 
-/* Dark Mode - Gemini Obsidian Style */
-.dark .support-page h1 { color: #f0f4f9 !important; }
-.dark .support-page .workspace-page__header p { color: #94a3b8 !important; }
-.dark .support-page .workspace-eyebrow { color: #c084fc !important; }
-.dark .support-page .workspace-card,
-.dark .support-page .support-ticket-item,
-.dark .support-page .support-form-card {
-    background: #1e1f20 !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
-    color: #f0f4f9 !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+/* ==========================================================================
+   Dark Mode - Gemini Obsidian Style
+   ========================================================================== */
+.dark .support-page {
+    color: #f0f4f9;
 }
-.dark .support-page input,
-.dark .support-page textarea,
-.dark .support-page select {
-    background: #282a2c !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
+.dark .support-page h1,
+.dark .support-page h2,
+.dark .support-page h3 {
     color: #f0f4f9 !important;
 }
-.dark .support-page label {
+.dark .support-page p {
+    color: #94a3b8;
+}
+.dark .support-page .workspace-page__header p {
     color: #94a3b8 !important;
 }
+.dark .support-page .workspace-eyebrow {
+    color: #94a3b8 !important;
+}
+
+/* Notice Banner */
 .dark .support-page .workspace-notice {
-    background: #251833 !important;
-    border-color: rgba(168, 85, 247, 0.22) !important;
-    color: #d8b4fe !important;
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #f0f4f9 !important;
 }
+
+/* Switcher Tabs */
 .dark .support-page .workspace-switcher {
-    background: #131314 !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: none !important;
 }
+.dark .support-page .workspace-switcher button {
+    color: #94a3b8 !important;
+}
+.dark .support-page .workspace-switcher button:hover {
+    background: #282a2c !important;
+    color: #f0f4f9 !important;
+}
+.dark .support-page .workspace-switcher button.is-active {
+    background: #333538 !important;
+    color: #f0f4f9 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+.dark .support-page .workspace-switcher button > span {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #f0f4f9 !important;
+}
+
+/* Cards */
+.dark .support-page .workspace-card {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+.dark .support-page .workspace-card h2 {
+    color: #f0f4f9 !important;
+}
+.dark .support-page .workspace-card p {
+    color: #94a3b8 !important;
+}
+.dark .support-page .workspace-card--glass {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+.dark .support-page .workspace-card--glass .workspace-eyebrow {
+    color: #94a3b8 !important;
+}
+.dark .support-page .workspace-card--glass h2 {
+    color: #f0f4f9 !important;
+}
+.dark .support-page .workspace-card--lavender {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+.dark .support-page .workspace-card--lavender h2 {
+    color: #f0f4f9 !important;
+}
+.dark .support-page .workspace-card--lavender p {
+    color: #94a3b8 !important;
+}
+
+/* Form Layout & Fields */
+.dark .support-page .workspace-form label {
+    color: #cbd5e1 !important;
+}
+.dark .support-page .workspace-form label span {
+    color: #94a3b8 !important;
+}
+.dark .support-page .workspace-form :is(input, select, textarea) {
+    background: #131314 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #f0f4f9 !important;
+}
+.dark .support-page .workspace-form :is(input, select, textarea):focus {
+    background: #1e1f20 !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+}
+.dark .support-page .workspace-form :is(input, textarea)::placeholder {
+    color: #64748b !important;
+}
+.dark .support-page .workspace-form select option {
+    background: #1e1f20;
+    color: #f0f4f9;
+}
+.dark .support-page .workspace-hint {
+    color: #94a3b8 !important;
+}
+.dark .support-page .workspace-error {
+    color: #fca5a5 !important;
+}
+.dark .support-page .workspace-form__footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .support-page .workspace-form__footer p {
+    color: #94a3b8 !important;
+}
+.dark .support-page .workspace-button--quiet {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .support-page .workspace-button--quiet:hover {
+    background: #333538 !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Steps (Right side) */
+.dark .support-page .workspace-steps li > span {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+    font-weight: 600 !important;
+}
+.dark .support-page .workspace-steps h3 {
+    color: #f0f4f9 !important;
+}
+.dark .support-page .workspace-steps p {
+    color: #94a3b8 !important;
+}
+
+/* Ticket History */
+.dark .support-page .workspace-section-heading h2 {
+    color: #f0f4f9 !important;
+}
+.dark .support-page .workspace-section-heading p {
+    color: #94a3b8 !important;
+}
+.dark .support-page .workspace-ticket {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+.dark .support-page .workspace-ticket:hover {
+    border-color: rgba(255, 255, 255, 0.14) !important;
+}
+.dark .support-page .workspace-ticket summary {
+    background: transparent !important;
+    color: #f0f4f9 !important;
+}
+.dark .support-page .workspace-ticket summary:hover {
+    background: #282a2c !important;
+}
+.dark .support-page .workspace-ticket summary > i {
+    color: #94a3b8 !important;
+}
+.dark .support-page .workspace-ticket__identity h3 {
+    color: #f0f4f9 !important;
+}
+.dark .support-page .workspace-ticket__identity p {
+    color: #94a3b8 !important;
+}
+.dark .support-page .workspace-ticket__body {
+    background: #18191a !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .support-page .workspace-message {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .support-page .workspace-message p {
+    color: #f0f4f9 !important;
+}
+.dark .support-page .workspace-message__header strong {
+    color: #f0f4f9 !important;
+}
+.dark .support-page .workspace-message__header time {
+    color: #94a3b8 !important;
+}
+.dark .support-page .workspace-message--reply {
+    background: #202634 !important;
+    border: 1px solid rgba(96, 165, 250, 0.2) !important;
+}
+.dark .support-page .workspace-message--reply strong {
+    color: #93c5fd !important;
+}
+.dark .support-page .workspace-button--danger {
+    background: rgba(239, 68, 68, 0.15) !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+    color: #fca5a5 !important;
+}
+.dark .support-page .workspace-button--danger:hover {
+    background: rgba(239, 68, 68, 0.25) !important;
+}
+
+/* Status Badges */
+.dark .support-page .workspace-status--open {
+    background: rgba(59, 130, 246, 0.15) !important;
+    color: #93c5fd !important;
+    border: 1px solid rgba(59, 130, 246, 0.3) !important;
+}
+.dark .support-page .workspace-status--in_progress {
+    background: rgba(245, 158, 11, 0.15) !important;
+    color: #fcd34d !important;
+    border: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+.dark .support-page .workspace-status--resolved {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #6ee7b7 !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+.dark .support-page .workspace-status--closed {
+    background: #282a2c !important;
+    color: #94a3b8 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Empty State */
+.dark .support-page .workspace-empty {
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .support-page .workspace-empty h2 {
+    color: #f0f4f9 !important;
+}
+.dark .support-page .workspace-empty p {
+    color: #94a3b8 !important;
+}
+
 
