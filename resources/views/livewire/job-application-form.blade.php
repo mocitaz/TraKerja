@@ -63,26 +63,22 @@
         </div>
         @endif
 
-        {{-- Row 3: Work Mode (Segmented Style) --}}
+        {{-- Row 3: Work Mode (Remote & International) --}}
         @if(empty($selectedProvince))
-        <div class="grid grid-cols-2 gap-2 bg-zinc-50/50 p-1 border border-zinc-200/60 rounded-lg animate-fadeIn">
-            <label for="{{ $fieldPrefix }}-isRemote" class="text-xs flex items-center justify-center gap-2 py-1.5 px-3 cursor-pointer group transition-all rounded-md bg-white border border-zinc-200 hover:border-zinc-300 active:scale-97 hover:shadow-3xs">
+        <div class="grid grid-cols-2 gap-3 animate-fadeIn">
+            <label for="{{ $fieldPrefix }}-isRemote" class="job-form__mode-pill text-xs flex items-center justify-center gap-2.5 py-2 px-3 cursor-pointer group transition-all">
                 <input id="{{ $fieldPrefix }}-isRemote" type="checkbox" wire:model.live="isRemote" class="sr-only peer">
-                <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-ui-muted peer-checked:bg-primary-50 peer-checked:text-zinc-800 peer-checked:border-primary-200/60 transition-all">
+                <div class="job-form__mode-icon">
                     <i aria-hidden="true" class="ph-bold ph-house-line text-xs"></i>
                 </div>
-                <div class="flex flex-col">
-                    <span class="text-xs font-bold uppercase tracking-wider text-ui-muted peer-checked:text-zinc-800 transition-colors">Remote</span>
-                </div>
+                <span class="text-xs font-bold uppercase tracking-wider transition-colors">Remote</span>
             </label>
-            <label for="{{ $fieldPrefix }}-isInternational" class="text-xs flex items-center justify-center gap-2 py-1.5 px-3 cursor-pointer group transition-all rounded-md bg-white border border-zinc-200 hover:border-zinc-300 active:scale-97 hover:shadow-3xs">
+            <label for="{{ $fieldPrefix }}-isInternational" class="job-form__mode-pill text-xs flex items-center justify-center gap-2.5 py-2 px-3 cursor-pointer group transition-all">
                 <input id="{{ $fieldPrefix }}-isInternational" type="checkbox" wire:model.live="isInternational" class="sr-only peer">
-                <div class="w-6 h-6 rounded bg-zinc-50 border border-zinc-200 flex items-center justify-center text-ui-muted peer-checked:bg-primary-50 peer-checked:text-zinc-800 peer-checked:border-primary-200/60 transition-all">
+                <div class="job-form__mode-icon">
                     <i aria-hidden="true" class="ph-bold ph-airplane-tilt text-xs"></i>
                 </div>
-                <div class="flex flex-col">
-                    <span class="text-xs font-bold uppercase tracking-wider text-ui-muted peer-checked:text-zinc-800 transition-colors">International</span>
-                </div>
+                <span class="text-xs font-bold uppercase tracking-wider transition-colors">International</span>
             </label>
         </div>
         @endif
@@ -210,7 +206,7 @@
 
         {{-- Interview Fields (visible when status = Interview or stage = HR/User Interview) --}}
         @if(in_array($application_status, ['Interview']) || in_array($recruitment_stage, ['HR - Interview', 'User - Interview']))
-        <div class="bg-primary-50/20 border border-primary-100/50 rounded-lg p-3 space-y-2.5 animate-fadeIn">
+        <div class="job-form__interview-box bg-primary-50/20 border border-primary-100/50 rounded-lg p-3 space-y-2.5 animate-fadeIn">
             <div class="flex items-center gap-2 mb-0.5">
                 <div class="w-5 h-5 bg-primary-100/60 rounded flex items-center justify-center">
                     <i aria-hidden="true" class="ph-bold ph-chats-circle text-zinc-700 text-xs"></i>

@@ -56,9 +56,49 @@
 .job-dialog [data-job-application-form] select:disabled { background-color: #f1f2f5; color: #777783; }
 .job-dialog :is(input, select, textarea, button):focus-visible,
 .job-dialog input[type=checkbox]:focus-visible + div { outline: 2px solid #9162bc; outline-offset: 3px; }
-.job-dialog [data-job-application-form] label:has(input[type=checkbox]) { min-height: 40px; margin-bottom: 0; border-radius: 10px; background: #fff; }
-.job-dialog [data-job-application-form] label:has(input:checked) { border-color: #bba1d4; background: #f1ebfa; }
-.job-dialog [data-job-application-form] label span { text-transform: none; letter-spacing: 0; font-weight: 550; }
+.job-dialog [data-job-application-form] label:has(input[type=checkbox]) {
+    min-height: 40px;
+    margin-bottom: 0;
+    border-radius: 12px;
+    background: #f9fafc;
+    border: 1px solid #e2e3ea;
+    color: #555461;
+    transition: border-color .15s, background-color .15s;
+}
+.job-dialog [data-job-application-form] label:has(input[type=checkbox]):hover {
+    background: #f3f4f7;
+    border-color: #dcdde5;
+}
+.job-dialog [data-job-application-form] label:has(input:checked) {
+    border-color: #bba1d4;
+    background: #f1ebfa;
+    color: #6d28d9;
+}
+.job-dialog [data-job-application-form] label span {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 600;
+}
+.job-dialog [data-job-application-form] label:has(input:checked) span {
+    color: #6d28d9;
+}
+.job-dialog [data-job-application-form] .job-form__mode-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: #f0f1f4;
+    border: 1px solid #e2e3ea;
+    color: #636471;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .15s ease;
+}
+.job-dialog [data-job-application-form] label:has(input:checked) .job-form__mode-icon {
+    background: #e8ddf5;
+    border-color: #d8c7ed;
+    color: #7c3aed;
+}
 .job-dialog [data-scrape-button] { min-height: 40px; border-radius: 12px; background: #efe9f7; color: #513267; font-weight: 600; }
 .job-dialog .job-form__hint { margin-top: 8px; color: #777381; font-size: 11px; line-height: 1.6; }
 .job-dialog .job-form__actions {
@@ -216,18 +256,52 @@
     background: #282a2c;
     border: 1px solid rgba(255, 255, 255, 0.08);
     color: #cbd5e1;
+    border-radius: 12px;
+    transition: all .15s ease;
+}
+
+.dark.job-dialog [data-job-application-form] label:has(input[type=checkbox]):hover,
+.dark .job-dialog [data-job-application-form] label:has(input[type=checkbox]):hover {
+    background: #333538;
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
 .dark.job-dialog [data-job-application-form] label:has(input:checked),
 .dark .job-dialog [data-job-application-form] label:has(input:checked) {
-    border-color: rgba(56, 189, 248, 0.35);
-    background: rgba(56, 189, 248, 0.12);
+    border-color: rgba(168, 85, 247, 0.45);
+    background: rgba(168, 85, 247, 0.18);
     color: #f0f4f9;
+}
+
+.dark.job-dialog [data-job-application-form] label span,
+.dark .job-dialog [data-job-application-form] label span {
+    color: #cbd5e1;
 }
 
 .dark.job-dialog [data-job-application-form] label:has(input:checked) span,
 .dark .job-dialog [data-job-application-form] label:has(input:checked) span {
     color: #f0f4f9;
+}
+
+.dark.job-dialog [data-job-application-form] .job-form__mode-icon,
+.dark .job-dialog [data-job-application-form] .job-form__mode-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .15s ease;
+}
+
+.dark.job-dialog [data-job-application-form] label:has(input:checked) .job-form__mode-icon,
+.dark .job-dialog [data-job-application-form] label:has(input:checked) .job-form__mode-icon {
+    background: rgba(168, 85, 247, 0.25);
+    border-color: rgba(168, 85, 247, 0.4);
+    color: #c4b5fd;
 }
 
 .dark.job-dialog [data-scrape-button],
@@ -331,3 +405,20 @@
 .dark .job-dialog .platform-picker__empty {
     color: #94a3b8;
 }
+
+.dark.job-dialog .job-form__interview-box,
+.dark .job-dialog .job-form__interview-box {
+    background: rgba(168, 85, 247, 0.08);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.dark.job-dialog .job-form__interview-box span,
+.dark .job-dialog .job-form__interview-box span {
+    color: #f0f4f9;
+}
+
+.dark.job-dialog .job-form__interview-box i,
+.dark .job-dialog .job-form__interview-box i {
+    color: #c4b5fd;
+}
+
