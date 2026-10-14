@@ -35,7 +35,7 @@
 }
 
 /* ==========================================================================
-   TraKerja Rewards Dialog (Redesigned & Compact)
+   TraKerja Rewards Dialog (Compact & Harmonized)
    ========================================================================== */
 
 .rewards-dialog {
@@ -118,8 +118,8 @@
 
 /* Overview Banner (Level & Circular Ring) */
 .rewards-overview {
-    background: #faf7fd;
-    border: 1px solid #ebdff5;
+    background: #faf8fd;
+    border: 1px solid #efe8f5;
     border-radius: 14px;
     padding: 12px 16px;
     display: flex;
@@ -128,15 +128,14 @@
     gap: 12px;
 }
 
+/* Level text without heavy badge box */
 .rewards-level-label {
     display: inline-block;
-    background: #ffffff;
-    padding: 2.5px 7px;
-    border-radius: 5px;
-    font-size: 10px;
+    font-size: 10.5px;
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     color: #7c3aed;
-    border: 1px solid #ebdff5;
     line-height: 1.2;
 }
 
@@ -145,7 +144,7 @@
     font-weight: 700;
     letter-spacing: -0.3px;
     line-height: 1.25;
-    margin: 5px 0 2px;
+    margin: 4px 0 2px;
     color: #18181b;
 }
 
@@ -170,11 +169,11 @@
 }
 
 .rewards-ring-track {
-    stroke: #ebdff5;
+    stroke: #ede9fe;
 }
 
 .rewards-ring-fill {
-    stroke: #8b5cf6;
+    stroke: #7c3aed;
     transition: stroke-dashoffset 0.4s ease;
 }
 
@@ -236,7 +235,7 @@
     left: 16px;
     right: 16px;
     height: 2px;
-    background: #e9e2f0;
+    background: #ede9fe;
 }
 
 .rewards-path li {
@@ -271,8 +270,8 @@
 }
 
 .is-unlocked .rewards-milestone {
-    background: #f5f0fa;
-    border-color: #dfcee9;
+    background: #faf5ff;
+    border-color: #ddd6fe;
     color: #7c3aed;
 }
 
@@ -280,7 +279,7 @@
     background: #7c3aed;
     border-color: #7c3aed;
     color: #ffffff;
-    box-shadow: 0 0 0 3px #f3e8ff;
+    box-shadow: 0 0 0 3px #ede9fe;
 }
 
 .is-current .rewards-threshold {
@@ -316,7 +315,7 @@
 }
 
 .rewards-earn-row:hover {
-    background: #faf7fd;
+    background: #faf8fd;
 }
 
 .rewards-earn-row strong {
@@ -334,14 +333,13 @@
     line-height: 1.35;
 }
 
-.rewards-earn-row > span {
-    font-size: 10px;
+/* XP Value without heavy pill badge */
+.rewards-earn-xp {
+    font-size: 12px;
     font-weight: 700;
     white-space: nowrap;
-    background: #f3e8ff;
-    border-radius: 6px;
-    padding: 2.5px 7px;
     color: #7c3aed;
+    letter-spacing: -0.2px;
 }
 
 /* Footer */
@@ -359,6 +357,22 @@
     color: #71717a;
     margin: 0;
     line-height: 1.4;
+}
+
+/* Rewards Primary Button (Harmonized Brand Purple) */
+.rewards-button--primary {
+    background: #7c3aed;
+    border-color: #7c3aed;
+    color: #ffffff;
+}
+
+.rewards-button--primary:hover {
+    background: #6d28d9;
+    border-color: #6d28d9;
+}
+
+.rewards-button--primary:active {
+    transform: scale(0.98);
 }
 
 /* ==========================================================================
@@ -636,14 +650,12 @@
 
 /* Rewards Overview Dark */
 .dark .rewards-overview {
-    background: #252628;
-    border-color: rgba(255, 255, 255, 0.08);
+    background: #232226;
+    border-color: rgba(255, 255, 255, 0.07);
 }
 
 .dark .rewards-level-label {
-    background: #1e1f20;
-    color: #c084fc;
-    border-color: rgba(168, 85, 247, 0.3);
+    color: #a78bfa;
 }
 
 .dark .rewards-overview h3 {
@@ -688,7 +700,7 @@
 }
 
 .dark .rewards-milestone {
-    background: #232527;
+    background: #282a2c;
     border-color: rgba(255, 255, 255, 0.08);
     color: #64748b;
 }
@@ -698,16 +710,16 @@
 }
 
 .dark .is-unlocked .rewards-milestone {
-    background: #2a2035;
-    border-color: rgba(168, 85, 247, 0.4);
+    background: #272132;
+    border-color: rgba(168, 85, 247, 0.35);
     color: #c084fc;
 }
 
 .dark .is-current .rewards-milestone {
-    background: #8b5cf6;
-    border-color: #8b5cf6;
+    background: #7c3aed;
+    border-color: #7c3aed;
     color: #ffffff;
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.25);
 }
 
 .dark .is-current .rewards-threshold {
@@ -717,25 +729,34 @@
 
 /* Rewards Earning Dark */
 .dark .rewards-earn-row {
-    border-top-color: rgba(255, 255, 255, 0.06);
+    border-top-color: rgba(255, 255, 255, 0.05);
 }
 
 .dark .rewards-earn-row:hover {
-    background: #282a2c;
+    background: #252428;
 }
 
 .dark .rewards-earn-row strong {
     color: #f0f4f9;
 }
 
-.dark .rewards-earn-row > span {
-    background: rgba(168, 85, 247, 0.15);
-    color: #c084fc;
-    border: 1px solid rgba(168, 85, 247, 0.25);
+.dark .rewards-earn-xp {
+    color: #a78bfa;
 }
 
 .dark .rewards-footer {
     border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark .rewards-button--primary {
+    background: #7c3aed;
+    border-color: #7c3aed;
+    color: #ffffff;
+}
+
+.dark .rewards-button--primary:hover {
+    background: #6d28d9;
+    border-color: #6d28d9;
 }
 
 /* Account Buttons Dark */

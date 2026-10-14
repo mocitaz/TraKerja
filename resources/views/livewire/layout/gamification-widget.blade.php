@@ -55,12 +55,12 @@
                         @endforeach
                     </ol></section>
                     <section class="rewards-earning"><h3>How you earn XP</h3><p>Progress comes from the updates you make in your tracker.</p>
-                        <div class="rewards-earn-row"><div><strong>Add an application</strong><span>Save a new item in your tracker</span></div><span>+10 XP</span></div>
-                        <div class="rewards-earn-row"><div><strong>Selection stage</strong><span>Move into an interview or assessment stage</span></div><span>+50 XP</span></div>
-                        <div class="rewards-earn-row"><div><strong>Offering or accepted</strong><span>Record a positive outcome</span></div><span>+100 XP</span></div>
+                        <div class="rewards-earn-row"><div><strong>Add an application</strong><span>Save a new item in your tracker</span></div><span class="rewards-earn-xp">+10 XP</span></div>
+                        <div class="rewards-earn-row"><div><strong>Selection stage</strong><span>Move into an interview or assessment stage</span></div><span class="rewards-earn-xp">+50 XP</span></div>
+                        <div class="rewards-earn-row"><div><strong>Offering or accepted</strong><span>Record a positive outcome</span></div><span class="rewards-earn-xp">+100 XP</span></div>
                     </section>
                 </div>
-                <footer class="rewards-footer"><p>XP reflects your tracker activity.</p><button type="button" class="account-dialog-button account-dialog-button--primary" @click="showGamificationInfo = false">Got it</button></footer>
+                <footer class="rewards-footer"><p>XP reflects your tracker activity.</p><button type="button" class="account-dialog-button rewards-button--primary" @click="showGamificationInfo = false">Got it</button></footer>
             </section>
         </div>
     </template>
