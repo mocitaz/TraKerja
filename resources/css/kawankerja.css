@@ -861,7 +861,7 @@
 
 .dark .kawankerja-launcher:hover {
     background: #282a2c;
-    border-color: rgba(168, 85, 247, 0.4);
+    border-color: rgba(59, 130, 246, 0.4);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
@@ -875,7 +875,7 @@
 }
 
 .dark .kawankerja-launcher-label small {
-    color: #c4b5fd;
+    color: #60a5fa;
 }
 
 .dark .kawankerja-online-dot {
@@ -953,12 +953,12 @@
 
 .dark .kawankerja-chip:hover {
     background: #333538;
-    border-color: rgba(168, 85, 247, 0.4);
+    border-color: rgba(59, 130, 246, 0.4);
     color: #ffffff;
 }
 
 .dark .kawankerja-chip:hover i {
-    color: #c4b5fd;
+    color: #60a5fa;
     transform: translateX(2px);
 }
 
@@ -970,9 +970,9 @@
 
 /* Message Bubbles */
 .dark .kawankerja-bubble--user {
-    background: #3b265c;
+    background: #1e3a5f;
     color: #f0f4f9;
-    border-color: rgba(168, 85, 247, 0.35);
+    border-color: rgba(59, 130, 246, 0.45);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
@@ -992,7 +992,7 @@
 }
 
 .dark .kawankerja-bubble-content a {
-    color: #c4b5fd;
+    color: #60a5fa;
 }
 
 .dark .kawankerja-bubble-footer {
@@ -1029,11 +1029,11 @@
 }
 
 .dark .kawankerja-bullet-dot {
-    color: #c4b5fd;
+    color: #60a5fa;
 }
 
 .dark .kawankerja-bullet-num {
-    color: #c4b5fd;
+    color: #60a5fa;
 }
 
 .dark .kawankerja-h3 {
@@ -1052,7 +1052,7 @@
 
 .dark .kawankerja-inline-code {
     background: rgba(255, 255, 255, 0.08);
-    color: #c4b5fd;
+    color: #93c5fd;
 }
 
 /* Action Cards */
@@ -1065,13 +1065,13 @@
 
 .dark .kawankerja-action-card:hover {
     background: #282a2c;
-    border-color: rgba(168, 85, 247, 0.4);
+    border-color: rgba(59, 130, 246, 0.4);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .dark .kawankerja-action-icon {
-    background: rgba(168, 85, 247, 0.15);
-    color: #c4b5fd;
+    background: rgba(37, 121, 202, 0.15);
+    color: #60a5fa;
 }
 
 .dark .kawankerja-action-title {
@@ -1087,7 +1087,7 @@
 }
 
 .dark .kawankerja-action-card:hover .kawankerja-action-arrow {
-    color: #c4b5fd;
+    color: #60a5fa;
 }
 
 /* STAR Scorecard */
@@ -1106,7 +1106,7 @@
 }
 
 .dark .kawankerja-star-title i {
-    color: #c4b5fd;
+    color: #60a5fa;
 }
 
 .dark .kawankerja-star-overall {
@@ -1115,7 +1115,7 @@
 }
 
 .dark .kawankerja-star-overall-pill {
-    color: #c4b5fd;
+    color: #60a5fa;
 }
 
 .dark .kawankerja-star-overall-note {
@@ -1128,7 +1128,7 @@
 }
 
 .dark .kawankerja-star-letter {
-    background: #6d28d9;
+    background: #2579ca;
     color: #ffffff;
 }
 
@@ -1137,7 +1137,7 @@
 }
 
 .dark .kawankerja-star-score {
-    color: #c4b5fd;
+    color: #60a5fa;
 }
 
 .dark .kawankerja-star-track {
@@ -1145,7 +1145,7 @@
 }
 
 .dark .kawankerja-star-fill {
-    background: linear-gradient(90deg, #a855f7 0%, #7c3aed 100%);
+    background: linear-gradient(90deg, #3b82f6 0%, #2579ca 100%);
 }
 
 .dark .kawankerja-star-note {
@@ -1154,7 +1154,7 @@
 
 /* Typing Dots */
 .dark .kawankerja-typing-dots span {
-    background: #c4b5fd;
+    background: #60a5fa;
 }
 
 /* Footer & Input Area */
@@ -1170,8 +1170,8 @@
 
 .dark .kawankerja-input-row:focus-within {
     background: #282a2c;
-    border-color: rgba(168, 85, 247, 0.5);
-    box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2);
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
 .dark .kawankerja-textarea,
@@ -1185,12 +1185,12 @@
 }
 
 .dark .kawankerja-send-btn {
-    background: #7c3aed;
+    background: #2579ca;
     color: #ffffff;
 }
 
 .dark .kawankerja-send-btn:hover:not(:disabled) {
-    background: #6d28d9;
+    background: #1d6bb8;
 }
 
 .dark .kawankerja-send-btn:disabled {
