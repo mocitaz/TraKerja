@@ -633,152 +633,250 @@
 }
 
 /* ==========================================================================
-   Gemini Dark Mode Styles for Membership & Credits
-   Benchmarked directly against Dashboard Next Move Design System
+   Gemini Obsidian Dark Mode Styles for Membership & Credits
+   Benchmarked against TraKerja Obsidian Design System (#1e1f20 surface)
    ========================================================================== */
 .dark .membership-page h1 {
-    color: #f0f4f9;
+    color: #f0f4f9 !important;
 }
 .dark .membership-page .workspace-page__header p {
-    color: #94a3b8;
+    color: #94a3b8 !important;
 }
 .dark .membership-page .workspace-eyebrow {
-    color: #c084fc;
+    color: #94a3b8 !important;
 }
 
 /* Free Access Banner */
 .dark .membership-free-access {
-    background: #1e1f20;
-    border-color: rgba(255, 255, 255, 0.07);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    background: #1e1f20 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
 }
 .dark .membership-free-access strong {
-    color: #f0f4f9;
+    color: #f0f4f9 !important;
 }
 .dark .membership-free-access p {
-    color: #94a3b8;
+    color: #94a3b8 !important;
 }
 
-/* Cards - Soothing jewel tones matching Dashboard */
-.dark .membership-page .next-move-card {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-.dark .membership-page .next-move-interview {
-    background: linear-gradient(135deg, #101e2e 0%, #162438 100%) !important;
-    border: 1px solid rgba(59, 130, 246, 0.22) !important;
-}
-.dark .membership-page .next-move-followup {
-    background: linear-gradient(135deg, #2b1f1a 0%, #352520 100%) !important;
-    border: 1px solid rgba(249, 115, 22, 0.22) !important;
-}
-.dark .membership-page .next-move-cv {
-    background: linear-gradient(135deg, #221c2e 0%, #2a2238 100%) !important;
-    border: 1px solid rgba(168, 85, 247, 0.22) !important;
-}
+/* Cards - Pure Obsidian #1e1f20 Foundation (No Coloured Gradients) */
+.dark .membership-page .next-move-card,
+.dark .membership-page .next-move-interview,
+.dark .membership-page .next-move-followup,
+.dark .membership-page .next-move-cv,
+.dark .membership-page .membership-account-card,
+.dark .membership-page .membership-card-addons,
 .dark .membership-page .membership-card-history {
     background: #1e1f20 !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Card Elements */
+.dark .membership-page .next-move-card:hover,
+.dark .membership-page .membership-account-card:hover,
+.dark .membership-page .membership-card-addons:hover,
+.dark .membership-page .membership-card-history:hover {
+    background: #232426 !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+/* Card Elements & Headers */
 .dark .membership-page .next-move-card h3 {
-    color: #f0f4f9;
+    color: #f0f4f9 !important;
 }
 .dark .membership-page .next-move-description {
-    color: #94a3b8;
+    color: #94a3b8 !important;
 }
 .dark .membership-page .next-move-card-top {
-    color: #cbd5e1;
+    color: #94a3b8 !important;
 }
 .dark .membership-page .next-move-card-top > span {
-    background: rgba(255, 255, 255, 0.08);
-    color: #cbd5e1;
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #cbd5e1 !important;
 }
 .dark .membership-page .next-move-card-top > i {
-    color: #94a3b8;
+    color: #94a3b8 !important;
 }
 .dark .membership-page .next-move-card-top > a {
-    color: #cbd5e1;
+    color: #38bdf8 !important;
+}
+.dark .membership-page .next-move-card-top > a:hover {
+    color: #7dd3fc !important;
 }
 .dark .membership-page .membership-account-col--balance {
-    border-left-color: rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 .dark .membership-page .membership-history-count {
-    background: rgba(255, 255, 255, 0.08);
-    color: #cbd5e1;
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
 }
 
 /* Credit Boxes */
 .dark .membership-page .membership-credit-box {
-    background: rgba(255, 255, 255, 0.06);
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 .dark .membership-page .membership-credit-box:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #333538 !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
 }
 .dark .membership-page .membership-credit-label {
-    color: #94a3b8;
+    color: #94a3b8 !important;
 }
 .dark .membership-page .membership-credit-val {
-    color: #f0f4f9;
+    color: #f0f4f9 !important;
 }
 .dark .membership-page .membership-credit-unit {
-    color: #94a3b8;
+    color: #94a3b8 !important;
 }
 
-/* Action Button */
+/* Action Buttons (.next-move-action) */
 .dark .membership-page .next-move-action {
-    background: rgba(255, 255, 255, 0.08);
-    color: #f0f4f9;
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
 }
 .dark .membership-page .next-move-action:hover {
-    background: rgba(255, 255, 255, 0.14);
-}
-
-/* Checklist & Appointment */
-.dark .membership-page .next-move-checklist li {
-    color: #cbd5e1;
-}
-.dark .membership-page .next-move-checklist .is-added i {
-    color: #60a5fa;
-}
-.dark .membership-page .next-move-appointment > time {
-    background: rgba(255, 255, 255, 0.06);
-}
-.dark .membership-page .next-move-appointment > time strong {
-    color: #f0f4f9;
-}
-.dark .membership-page .next-move-appointment > time span {
-    color: #94a3b8;
-}
-.dark .membership-page .next-move-appointment > div strong {
-    color: #f0f4f9;
-}
-.dark .membership-page .next-move-appointment > div span {
-    color: #94a3b8;
+    background: #333538 !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
+    color: #ffffff !important;
 }
 .dark .membership-page .next-move-footnote {
-    color: #94a3b8;
+    color: #94a3b8 !important;
 }
 
-/* Payment History rows */
-.dark .membership-page .membership-order-row {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.06);
+/* Checklist & Appointment Block */
+.dark .membership-page .next-move-checklist li {
+    color: #cbd5e1 !important;
 }
-.dark .membership-page .membership-order-row:hover {
-    background: rgba(255, 255, 255, 0.08);
+.dark .membership-page .next-move-checklist .is-added i {
+    color: #38bdf8 !important;
 }
-.dark .membership-page .membership-order-row strong {
-    color: #f0f4f9;
+.dark .membership-page .next-move-appointment > time {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
-.dark .membership-page .membership-order-row span {
-    color: #94a3b8;
+.dark .membership-page .next-move-appointment > time strong {
+    color: #f0f4f9 !important;
 }
-.dark .membership-page .membership-empty-history {
-    background: rgba(255, 255, 255, 0.04);
-    color: #94a3b8;
+.dark .membership-page .next-move-appointment > time span {
+    color: #94a3b8 !important;
+}
+.dark .membership-page .next-move-appointment > div strong {
+    color: #f0f4f9 !important;
+}
+.dark .membership-page .next-move-appointment > div span {
+    color: #94a3b8 !important;
+}
+
+/* Payment History Orders Scroll & List */
+.dark .membership-page .membership-orders-scroll {
+    scrollbar-color: #383a3d transparent !important;
+}
+.dark .membership-page .membership-order-item {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .membership-page .membership-order-item:hover {
+    background: #333538 !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
+}
+.dark .membership-page .membership-order-info strong {
+    color: #f0f4f9 !important;
+}
+.dark .membership-page .membership-order-meta {
+    color: #94a3b8 !important;
+}
+.dark .membership-page .membership-order-id-code {
+    color: #94a3b8 !important;
+}
+.dark .membership-page .membership-order-amount {
+    color: #f0f4f9 !important;
+}
+
+/* Order Status Badges */
+.dark .membership-page .membership-order-status--success {
+    background: rgba(34, 197, 94, 0.15) !important;
+    color: #4ade80 !important;
+    border: 1px solid rgba(34, 197, 94, 0.3) !important;
+}
+.dark .membership-page .membership-order-status--waiting,
+.dark .membership-page .membership-order-status--pending {
+    background: rgba(245, 158, 11, 0.15) !important;
+    color: #fbbf24 !important;
+    border: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+.dark .membership-page .membership-order-status--failed,
+.dark .membership-page .membership-order-status--expired {
+    background: rgba(244, 63, 94, 0.15) !important;
+    color: #fb7185 !important;
+    border: 1px solid rgba(244, 63, 94, 0.3) !important;
+}
+.dark .membership-page .membership-order-status--cancelled,
+.dark .membership-page .membership-order-status--canceled {
+    background: rgba(148, 163, 184, 0.15) !important;
+    color: #94a3b8 !important;
+    border: 1px solid rgba(148, 163, 184, 0.25) !important;
+}
+
+/* Order Actions */
+.dark .membership-page .membership-order-btn-view {
+    background: #333538 !important;
+    color: #f0f4f9 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+.dark .membership-page .membership-order-btn-view:hover {
+    background: #3e4145 !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+.dark .membership-page .membership-order-btn-resume {
+    background: #2579ca !important;
+    color: #ffffff !important;
+}
+.dark .membership-page .membership-order-btn-resume:hover {
+    background: #1e65ab !important;
+}
+
+/* Empty State & Pagination */
+.dark .membership-page .membership-empty-icon {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+}
+.dark .membership-page .membership-empty h4 {
+    color: #f0f4f9 !important;
+}
+.dark .membership-page .membership-empty p {
+    color: #94a3b8 !important;
+}
+.dark .membership-page .membership-pagination {
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.dark .membership-page .membership-pagination nav span,
+.dark .membership-page .membership-pagination nav a {
+    background: #282a2c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+.dark .membership-page .membership-pagination nav a:hover {
+    background: #333538 !important;
+    color: #ffffff !important;
+}
+
+/* Page Footer */
+.dark .membership-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 .dark .membership-footer p {
-    color: #94a3b8;
+    color: #94a3b8 !important;
+}
+.dark .membership-footer a {
+    color: #cbd5e1 !important;
+}
+.dark .membership-footer a:hover {
+    color: #f0f4f9 !important;
 }
 
