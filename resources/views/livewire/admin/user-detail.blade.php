@@ -197,14 +197,14 @@
                                         <strong>Premium membership</strong>
                                         <small>Maximized AI feature quotas, full ATS resume audits, and unlimited job tracking privileges.</small>
                                     </span>
-                                    <input class="profile-switch" id="pref-premium" type="checkbox" wire:model.live="is_premium">
+                                    <input class="profile-switch" id="pref-premium" type="checkbox" role="switch" wire:model.live="is_premium">
                                 </label>
                                 <label class="profile-preference-row" for="pref-admin">
                                     <span>
                                         <strong>Administrator privilege</strong>
                                         <small>Full administrative access to the admin dashboard, user management directory, and platform telemetry.</small>
                                     </span>
-                                    <input class="profile-switch" id="pref-admin" type="checkbox" wire:model.live="is_admin">
+                                    <input class="profile-switch" id="pref-admin" type="checkbox" role="switch" wire:model.live="is_admin">
                                 </label>
                             </div>
 

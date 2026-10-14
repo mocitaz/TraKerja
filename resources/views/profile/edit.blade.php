@@ -81,7 +81,7 @@
                                     <div class="profile-verification"><span>Your email is not verified.</span><button type="submit" form="profile-send-verification" class="profile-text-button">Send verification email</button></div>
                                 @endif
                                 @unless($isAdmin)
-                                <label class="profile-preference-row" for="profile-auto-archive"><span><strong>Auto-archive rejected applications</strong><small>Move older rejected or unprocessed applications out of your active tracker after 14 days.</small></span><input class="profile-switch" id="profile-auto-archive" name="auto_archive_rejected" type="checkbox" value="1" @checked(old('auto_archive_rejected', $user->auto_archive_rejected))></label>
+                                <label class="profile-preference-row" for="profile-auto-archive"><span><strong>Auto-archive rejected applications</strong><small>Move older rejected or unprocessed applications out of your active tracker after 14 days.</small></span><input class="profile-switch" id="profile-auto-archive" role="switch" name="auto_archive_rejected" type="checkbox" value="1" @checked(old('auto_archive_rejected', $user->auto_archive_rejected))></label>
                                 @endunless
                                 <div class="profile-form-footer"><span>Changing your email requires verification again.</span><button type="submit" class="profile-primary">Save account</button></div>
                             </form>
@@ -151,7 +151,7 @@
                                             <strong>Set as primary resume</strong>
                                             <small>Mark this file as your default/go-to resume.</small>
                                         </span>
-                                        <input class="profile-switch" id="resume-make-primary" name="is_primary" type="checkbox" value="1" @checked(old('is_primary', isset($resumes) && $resumes->isEmpty()))>
+                                        <input class="profile-switch" id="resume-make-primary" role="switch" name="is_primary" type="checkbox" value="1" @checked(old('is_primary', isset($resumes) && $resumes->isEmpty()))>
                                     </label>
                                 </div>
 
@@ -199,7 +199,7 @@
                                                         <form x-show="editing" x-cloak method="post" action="{{ route('user-resumes.update', $resume) }}" class="flex items-center gap-1.5" @submit="editing = false">
                                                             @csrf
                                                             @method('patch')
-                                                            <input type="text" name="title" x-model="newTitle" class="text-xs px-2 py-1 border border-zinc-300 dark:border-white/10 rounded font-semibold text-zinc-800 dark:text-[#f0f4f9] bg-white dark:bg-[#282a2c] focus:outline-none focus:border-zinc-900 dark:focus:border-purple-400" required maxlength="150">
+                                                            <input type="text" name="title" x-model="newTitle" class="text-xs px-2 py-1 border border-zinc-300 dark:border-white/10 rounded font-semibold text-zinc-800 dark:text-[#f0f4f9] bg-white dark:bg-[#282a2c] focus:outline-none focus:border-zinc-900 dark:focus:border-blue-400" required maxlength="150">
                                                             <button type="submit" class="p-1 text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300" title="Save name"><i class="ph ph-check text-sm"></i></button>
                                                             <button type="button" @click="editing = false; newTitle = '{{ addslashes($resume->title) }}'" class="p-1 text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300" title="Cancel"><i class="ph ph-x text-sm"></i></button>
                                                         </form>
@@ -275,7 +275,7 @@
                                     'notify_interview_reminders' => ['Interview reminders', 'Receive reminders before scheduled interviews.'],
                                     'notify_goal_achieved' => ['Goal achievements', 'Hear when you reach a career goal.'],
                                 ] as $name => [$label, $help])
-                                    <label class="profile-preference-row" for="profile-{{ $name }}"><span><strong>{{ $label }}</strong><small>{{ $help }}</small></span><input id="profile-{{ $name }}" name="{{ $name }}" type="checkbox" value="1" class="profile-switch" @checked(old($name, $user->{$name}))></label>
+                                    <label class="profile-preference-row" for="profile-{{ $name }}"><span><strong>{{ $label }}</strong><small>{{ $help }}</small></span><input id="profile-{{ $name }}" name="{{ $name }}" type="checkbox" role="switch" value="1" class="profile-switch" @checked(old($name, $user->{$name}))></label>
                                 @endforeach
                                 <div class="profile-form-footer"><span>You can change these anytime.</span><button type="submit" class="profile-primary">Save preferences</button></div>
                             </form>
