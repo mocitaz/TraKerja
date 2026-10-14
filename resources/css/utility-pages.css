@@ -338,60 +338,12 @@
     color: #f0f4f9 !important;
 }
 
-/* Legal Theme Toggle Button */
+/* Legal Theme Toggle Button (Delegated to unified .theme-toggle-btn rules in gemini-dark.css) */
 .legal-theme-toggle-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 9999px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    outline: none;
-}
-html:not(.dark) .legal-theme-toggle-btn {
-    background-color: #ffffff;
-    color: #f59e0b;
-    border: 1px solid #dedbd6;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-html:not(.dark) .legal-theme-toggle-btn:hover {
-    background-color: rgba(254, 243, 199, 0.7);
-    color: #d97706;
-}
-html:not(.dark) .legal-icon-sun {
-    display: inline-block !important;
-}
-html:not(.dark) .legal-icon-moon {
-    display: none !important;
+    appearance: none !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
-html.dark .legal-theme-toggle-btn {
-    background-color: #1e1f20;
-    color: #d8b4fe;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-html.dark .legal-theme-toggle-btn:hover {
-    background-color: #282a2c;
-    color: #e9d5ff;
-}
-html.dark .legal-icon-sun {
-    display: none !important;
-}
-html.dark .legal-icon-moon {
-    display: inline-block !important;
-}
-.legal-icon-sun, .legal-icon-moon {
-    font-size: 18px;
-    line-height: 1;
-    transition: transform 0.2s ease;
-}
-.legal-theme-toggle-btn:hover .legal-icon-sun {
-    transform: rotate(45deg);
-}
-.legal-theme-toggle-btn:hover .legal-icon-moon {
-    transform: rotate(-12deg);
-}
 

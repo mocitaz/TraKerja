@@ -56,36 +56,26 @@
 
         <!-- Top Navigation Controls -->
         <header class="w-full pointer-events-none fixed top-0 inset-x-0 z-50 p-4 sm:p-6 flex items-center justify-end">
-            <!-- Theme Toggle Pill -->
-            <div class="pointer-events-auto"
-                 x-data="{
-                     isDark: document.documentElement.classList.contains('dark'),
-                     toggle() {
-                         this.isDark = !this.isDark;
-                         var theme = this.isDark ? 'dark' : 'light';
-                         try {
-                             localStorage.setItem('theme', theme);
-                         } catch (e) {}
-                         document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
-                         if (this.isDark) {
-                             document.documentElement.classList.add('dark');
-                         } else {
-                             document.documentElement.classList.remove('dark');
-                         }
-                         window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: this.isDark } }));
-                     }
-                 }"
-                 @theme-changed.window="isDark = $event.detail.isDark">
-                <button type="button"
+            <!-- Theme Toggle Button -->
+            <button type="button"
+                    x-data="{
+                        toggle() {
+                            var isDark = document.documentElement.classList.toggle('dark');
+                            var theme = isDark ? 'dark' : 'light';
+                            try {
+                                localStorage.setItem('theme', theme);
+                            } catch (e) {}
+                            document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
+                            window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: isDark } }));
+                        }
+                    }"
                     @click="toggle()"
-                    class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer focus:outline-none"
-                    :class="isDark ? 'bg-[#1e1f20] hover:bg-[#282a2c] text-purple-300 hover:text-purple-200 border border-white/10 shadow-sm' : 'bg-white hover:bg-amber-50/70 text-amber-500 hover:text-amber-600 border border-[#dedbd6] shadow-3xs'"
-                    :title="isDark ? 'Mode Gelap aktif (klik untuk ganti ke Mode Terang)' : 'Mode Terang aktif (klik untuk ganti ke Mode Gelap)'"
-                    :aria-label="isDark ? 'Mode gelap aktif, klik untuk beralih ke mode terang' : 'Mode terang aktif, klik untuk beralih ke mode gelap'">
-                    <i x-show="!isDark" class="ph-bold ph-sun text-lg transition-transform duration-200 hover:rotate-45" aria-hidden="true"></i>
-                    <i x-show="isDark" x-cloak class="ph-bold ph-moon text-lg transition-transform duration-200 hover:-rotate-12" aria-hidden="true"></i>
-                </button>
-            </div>
+                    class="theme-toggle-btn pointer-events-auto"
+                    aria-label="Toggle dark/light mode"
+                    title="Toggle dark/light mode">
+                <i class="ph-bold ph-sun theme-icon-sun" aria-hidden="true"></i>
+                <i class="ph-bold ph-moon theme-icon-moon" aria-hidden="true"></i>
+            </button>
         </header>
 
         <div class="min-h-screen flex flex-col">

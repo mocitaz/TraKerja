@@ -70,6 +70,103 @@ html.dark ::-webkit-scrollbar-thumb:hover {
 }
 
 /* ==========================================================================
+   Clean Container-less Theme Toggle Button (Zero FOUC, Instant Pure CSS)
+   ========================================================================== */
+.theme-toggle-btn,
+.legal-theme-toggle-btn {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    border-radius: 9px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    outline: none !important;
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease !important;
+}
+
+.theme-toggle-btn:focus-visible,
+.legal-theme-toggle-btn:focus-visible {
+    outline: 2px solid #2579ca !important;
+    outline-offset: 2px !important;
+}
+
+.theme-toggle-btn i,
+.legal-theme-toggle-btn i {
+    font-size: 19px !important;
+    line-height: 1 !important;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.15s ease !important;
+}
+
+/* Light Mode: Slate-500 resting, subtle dark slate on hover with soft background */
+html:not(.dark) .theme-toggle-btn,
+html:not(.dark) .legal-theme-toggle-btn {
+    color: #64748b !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+html:not(.dark) .theme-toggle-btn:hover,
+html:not(.dark) .legal-theme-toggle-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+    color: #0f172a !important;
+}
+
+html:not(.dark) .theme-toggle-btn:hover i,
+html:not(.dark) .legal-theme-toggle-btn:hover i {
+    transform: rotate(20deg);
+}
+
+html:not(.dark) .theme-icon-sun,
+html:not(.dark) .legal-icon-sun {
+    display: inline-block !important;
+}
+
+html:not(.dark) .theme-icon-moon,
+html:not(.dark) .legal-icon-moon {
+    display: none !important;
+}
+
+/* Dark Mode: Gemini text-muted #94a3b8 resting, text-primary #f0f4f9 on hover with soft wash */
+html.dark .theme-toggle-btn,
+html.dark .legal-theme-toggle-btn {
+    color: #94a3b8 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+html.dark .theme-toggle-btn:hover,
+html.dark .legal-theme-toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    color: #f0f4f9 !important;
+}
+
+html.dark .theme-toggle-btn:hover i,
+html.dark .legal-theme-toggle-btn:hover i {
+    transform: rotate(-15deg);
+}
+
+html.dark .theme-icon-sun,
+html.dark .legal-icon-sun {
+    display: none !important;
+}
+
+html.dark .theme-icon-moon,
+html.dark .legal-icon-moon {
+    display: inline-block !important;
+}
+
+/* ==========================================================================
    Gemini Dark Mode Styles for Landing / Welcome Page
    Canvas #131314, Surface #1e1f20, Elevated #282a2c, Borders rgba(255,255,255,0.08)
    ========================================================================== */

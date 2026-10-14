@@ -22,33 +22,25 @@
                 <i class="ph" :class="mobileOpen ? 'ph-x' : 'ph-list'" aria-hidden="true"></i><span>Menu</span>
             </button>
             <!-- Theme Toggle Button -->
-            <div x-data="{
-                isDark: document.documentElement.classList.contains('dark'),
-                toggle() {
-                    this.isDark = !this.isDark;
-                    var theme = this.isDark ? 'dark' : 'light';
-                    try {
-                        localStorage.setItem('theme', theme);
-                    } catch (e) {}
-                    document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
-                    if (this.isDark) {
-                        document.documentElement.classList.add('dark');
-                    } else {
-                        document.documentElement.classList.remove('dark');
-                    }
-                    window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: this.isDark } }));
-                }
-            }" @theme-changed.window="isDark = $event.detail.isDark" x-on:livewire:navigated.window="isDark = document.documentElement.classList.contains('dark')" class="flex items-center">
-                <button type="button" 
-                        @click="toggle()" 
-                        class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
-                        :class="isDark ? 'bg-[#1e1f20] hover:bg-[#282a2c] text-purple-300 hover:text-purple-200 border border-white/10 shadow-sm' : 'bg-white hover:bg-amber-50/70 text-amber-500 hover:text-amber-600 border border-[#dedbd6] shadow-3xs'"
-                        :aria-label="isDark ? 'Mode gelap aktif, klik untuk beralih ke mode terang' : 'Mode terang aktif, klik untuk beralih ke mode gelap'"
-                        :title="isDark ? 'Mode Gelap aktif (klik untuk ganti ke Mode Terang)' : 'Mode Terang aktif (klik untuk ganti ke Mode Gelap)'">
-                    <i x-show="!isDark" class="ph-bold ph-sun text-lg transition-transform duration-200 hover:rotate-45" aria-hidden="true"></i>
-                    <i x-show="isDark" x-cloak class="ph-bold ph-moon text-lg transition-transform duration-200 hover:-rotate-12" aria-hidden="true"></i>
-                </button>
-            </div>
+            <button type="button"
+                    x-data="{
+                        toggle() {
+                            var isDark = document.documentElement.classList.toggle('dark');
+                            var theme = isDark ? 'dark' : 'light';
+                            try {
+                                localStorage.setItem('theme', theme);
+                            } catch (e) {}
+                            document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
+                            window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: isDark } }));
+                        }
+                    }"
+                    @click="toggle()"
+                    class="theme-toggle-btn"
+                    aria-label="Toggle dark/light mode"
+                    title="Toggle dark/light mode">
+                <i class="ph-bold ph-sun theme-icon-sun" aria-hidden="true"></i>
+                <i class="ph-bold ph-moon theme-icon-moon" aria-hidden="true"></i>
+            </button>
             <div class="relative" @click.outside="profileOpen = false" @keydown.escape.stop="profileOpen = false; $refs.profileButton.focus()">
                 <button type="button" x-ref="profileButton" @click="profileOpen = !profileOpen; mobileOpen = false" aria-label="Account menu for {{ $user->name }}" aria-controls="workspace-profile" aria-expanded="false" :aria-expanded="profileOpen.toString()" class="workspace-profile-trigger">
                     <img src="{{ $user->avatar_url }}" alt="" class="workspace-avatar">
