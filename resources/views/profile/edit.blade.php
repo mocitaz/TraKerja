@@ -176,11 +176,11 @@
 
                             @if(!isset($resumes) || $resumes->isEmpty())
                                 <div class="profile-empty py-10 text-center flex flex-col items-center justify-center">
-                                    <div class="w-12 h-12 rounded-2xl bg-zinc-100 flex items-center justify-center text-zinc-400 mb-3">
+                                    <div class="w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-[#282a2c] border border-transparent dark:border-white/10 flex items-center justify-center text-zinc-400 dark:text-[#94a3b8] mb-3">
                                         <i class="ph ph-files text-2xl" aria-hidden="true"></i>
                                     </div>
-                                    <p class="font-semibold text-zinc-700 text-sm mb-1">No resumes saved yet</p>
-                                    <p class="text-xs text-zinc-500 max-w-sm">Use the form above to upload your first CV. You can save multiple versions for different roles or dates.</p>
+                                    <p class="font-semibold text-zinc-700 dark:text-[#f0f4f9] text-sm mb-1">No resumes saved yet</p>
+                                    <p class="text-xs text-zinc-500 dark:text-[#94a3b8] max-w-sm">Use the form above to upload your first CV. You can save multiple versions for different roles or dates.</p>
                                 </div>
                             @else
                                 <div class="profile-resume-grid">
@@ -199,9 +199,9 @@
                                                         <form x-show="editing" x-cloak method="post" action="{{ route('user-resumes.update', $resume) }}" class="flex items-center gap-1.5" @submit="editing = false">
                                                             @csrf
                                                             @method('patch')
-                                                            <input type="text" name="title" x-model="newTitle" class="text-xs px-2 py-1 border border-zinc-300 rounded font-semibold text-zinc-800 focus:outline-none focus:border-zinc-900" required maxlength="150">
-                                                            <button type="submit" class="p-1 text-emerald-600 hover:text-emerald-700" title="Save name"><i class="ph ph-check text-sm"></i></button>
-                                                            <button type="button" @click="editing = false; newTitle = '{{ addslashes($resume->title) }}'" class="p-1 text-zinc-400 hover:text-zinc-600" title="Cancel"><i class="ph ph-x text-sm"></i></button>
+                                                            <input type="text" name="title" x-model="newTitle" class="text-xs px-2 py-1 border border-zinc-300 dark:border-white/10 rounded font-semibold text-zinc-800 dark:text-[#f0f4f9] bg-white dark:bg-[#282a2c] focus:outline-none focus:border-zinc-900 dark:focus:border-purple-400" required maxlength="150">
+                                                            <button type="submit" class="p-1 text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300" title="Save name"><i class="ph ph-check text-sm"></i></button>
+                                                            <button type="button" @click="editing = false; newTitle = '{{ addslashes($resume->title) }}'" class="p-1 text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300" title="Cancel"><i class="ph ph-x text-sm"></i></button>
                                                         </form>
 
                                                         @if($resume->is_primary)
