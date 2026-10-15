@@ -149,6 +149,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile/personal', [ProfileController::class, 'updatePersonalInfo'])->name('profile.personal.update');
     Route::patch('/profile/notifications', [ProfileController::class, 'updateNotifications'])->name('profile.notifications.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile/api-tokens', [\App\Http\Controllers\ApiTokenController::class, 'destroyAll'])->name('profile.tokens.destroy-all');
+    Route::delete('/profile/api-tokens/{token}', [\App\Http\Controllers\ApiTokenController::class, 'destroy'])->whereNumber('token')->name('profile.tokens.destroy');
     
     // Password verification route
     Route::post('/password/verify', [ProfileController::class, 'verifyPassword'])->name('password.verify');
@@ -168,8 +170,8 @@ Route::middleware('auth')->group(function () {
 
     // KawanKerja AI Assistant routes
     Route::prefix('kawankerja')->name('kawankerja.')->group(function () {
-        Route::post('/chat', [\App\Http\Controllers\KawanKerjaChatController::class, 'chat'])->name('chat');
-        Route::post('/stream', [\App\Http\Controllers\KawanKerjaChatController::class, 'stream'])->name('stream');
+        Route::post('/chat', [\App\Http\Controllers\KawanKerjaChatController::class, 'chat'])->middleware(\App\Http\Middleware\LimitKawanKerja::class)->name('chat');
+        Route::post('/stream', [\App\Http\Controllers\KawanKerjaChatController::class, 'stream'])->middleware(\App\Http\Middleware\LimitKawanKerja::class)->name('stream');
         Route::get('/history', [\App\Http\Controllers\KawanKerjaChatController::class, 'history'])->name('history');
         Route::post('/clear', [\App\Http\Controllers\KawanKerjaChatController::class, 'clear'])->name('clear');
     });
@@ -184,6 +186,7 @@ Route::middleware('auth')->group(function () {
         })->name('cv.builder');
 
         Route::post('/import-pdf', [\App\Http\Controllers\ResumeParserController::class, 'importPdf'])->name('cv.import-pdf');
+        Route::post('/import-pdf/confirm', [\App\Http\Controllers\ResumeParserController::class, 'confirmImport'])->name('cv.import-pdf.confirm');
         Route::get('/site-preview', [\App\Http\Controllers\PortfolioController::class, 'preview'])->name('portfolio.preview');
         
         Route::get('/generator', function () {
@@ -428,6 +431,11 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         return view('admin.index');
     })->name('index');
     
+    Route::get('/control', [\App\Http\Controllers\Admin\AdminControlController::class, 'index'])->name('control');
+    Route::get('/control/snapshot', [\App\Http\Controllers\Admin\AdminControlController::class, 'snapshot'])->middleware('throttle:30,1')->name('control.snapshot');
+    Route::post('/control/ask', [\App\Http\Controllers\Admin\AdminControlController::class, 'ask'])->middleware('throttle:12,1')->name('control.ask');
+    Route::post('/control/clear', [\App\Http\Controllers\Admin\AdminControlController::class, 'clear'])->middleware('throttle:12,1')->name('control.clear');
+
     // Monetization control
     Route::get('/monetization', function () {
         if (!Auth::user()->isAdmin()) {
@@ -671,8 +679,8 @@ Route::get('/@{slug}', [\App\Http\Controllers\PortfolioController::class, 'show'
 Route::post('/contact', [ContactMessageController::class, 'store'])
     ->name('contact.store');
  
-// Admin: kelola pesan masuk (tambahkan middleware 'admin' sesuai kebutuhan)
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+// Compatibility routes for contact messages now managed as support tickets.
+Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/contact-messages', [ContactMessageController::class, 'index'])
         ->name('contact.index');
     Route::get('/contact-messages/{contactMessage}', [ContactMessageController::class, 'show'])

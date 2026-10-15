@@ -44,9 +44,7 @@ class PasswordController extends Controller
             ], 'updatePassword')->withInput();
         }
 
-        $request->user()->update([
-            'password' => Hash::make($validated['password']),
-        ]);
+        app(\App\Services\PasswordTokenRotation::class)->update($request->user(), $validated['password']);
 
         ActivityLogger::log(
             'password_change',

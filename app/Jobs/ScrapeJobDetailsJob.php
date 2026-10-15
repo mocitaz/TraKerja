@@ -2,22 +2,26 @@
 
 namespace App\Jobs;
 
+use App\Models\ScraperLogsAndMetric;
 use App\Models\ScraperSource;
+use App\Services\ScraperPageFetcher;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\DomCrawler\Crawler;
 
 class ScrapeJobDetailsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $tries = 3;
-    
+
     public string $url;
+
     public ScraperSource $source;
 
     public function __construct(string $url, ScraperSource $source)
@@ -29,14 +33,6 @@ class ScrapeJobDetailsJob implements ShouldQueue
 
     public function handle()
     {
-        $proxy = null;
-        $proxies = config('scraper.proxies', []);
-        if (!empty($proxies)) {
-            $proxy = $proxies[array_rand($proxies)];
-            self::logToLiveBuffer("Rotasi Proxy terpilih: " . parse_url($proxy, PHP_URL_HOST) ?: $proxy);
-        }
-
-        $microserviceUrl = config('scraper.microservice_url');
         $html = null;
         $title = null;
         $company = null;
@@ -44,60 +40,15 @@ class ScrapeJobDetailsJob implements ShouldQueue
         $location = null;
         $success = false;
 
-        // ==========================================
-        // TAHAP 1: Headless Puppeteer Render Engine
-        // ==========================================
-        if ($microserviceUrl) {
-            try {
-                self::logToLiveBuffer("Tahap 1: Mengirim ke Headless Puppeteer untuk URL: " . basename($this->url));
-                $response = Http::timeout(45)
-                    ->post($microserviceUrl . '/scrape', [
-                        'url' => $this->url,
-                        'proxy' => $proxy,
-                    ]);
-
-                if ($response->successful() && $response->json('success')) {
-                    $html = $response->json('html');
-                    $title = $response->json('title');
-                    self::logToLiveBuffer("Tahap 1 Sukses: Berhasil merender halaman menggunakan Puppeteer", 'success');
-                    $success = true;
-                }
-            } catch (\Exception $e) {
-                self::logToLiveBuffer("Tahap 1 Gagal: " . $e->getMessage(), 'warning');
-                Log::warning("External microservice failed for {$this->url}: " . $e->getMessage());
-            }
-        }
-
-        // ==========================================
-        // TAHAP 2: Direct HTTP GET + Proxy Rotation
-        // ==========================================
-        if (!$success) {
-            try {
-                self::logToLiveBuffer("Tahap 2: Guzzle Direct GET dengan Rotasi Proxy untuk URL: " . basename($this->url));
-                
-                $request = Http::timeout(25)
-                    ->withHeaders([
-                        'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                        'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-                    ]);
-
-                if ($proxy) {
-                    $request = $request->withOptions(['proxy' => $proxy]);
-                }
-
-                $response = $request->get($this->url);
-
-                if ($response->successful()) {
-                    $html = $response->body();
-                    self::logToLiveBuffer("Tahap 2 Sukses: Berhasil melakukan GET langsung", 'success');
-                    $success = true;
-                } else {
-                    self::logToLiveBuffer("Tahap 2 Gagal: Status HTTP " . $response->status(), 'warning');
-                }
-            } catch (\Exception $e) {
-                self::logToLiveBuffer("Tahap 2 Gagal: " . $e->getMessage(), 'warning');
-                Log::warning("Direct GET failed for {$this->url}: " . $e->getMessage());
-            }
+        try {
+            $page = app(ScraperPageFetcher::class)->fetch($this->url);
+            $html = $page['html'];
+            $title = $page['title'];
+            $success = true;
+            self::logToLiveBuffer('Halaman lowongan berhasil diambil.', 'success');
+        } catch (\Exception $e) {
+            self::logToLiveBuffer('Gagal mengambil halaman lowongan.', 'warning');
+            Log::warning("Job page fetch failed for source {$this->source->id}.");
         }
 
         // ==========================================
@@ -105,8 +56,8 @@ class ScrapeJobDetailsJob implements ShouldQueue
         // ==========================================
         if ($success && $html) {
             try {
-                $crawler = new \Symfony\Component\DomCrawler\Crawler($html);
-                
+                $crawler = new Crawler($html);
+
                 $selectors = $this->source->selectors_config;
                 $titleSelector = $selectors['title'] ?? 'h1';
                 $companySelector = $selectors['company'] ?? '';
@@ -132,19 +83,19 @@ class ScrapeJobDetailsJob implements ShouldQueue
                 if ($locationSelector && $crawler->filter($locationSelector)->count() > 0) {
                     $location = trim($crawler->filter($locationSelector)->first()->text());
                 }
-                
-                self::logToLiveBuffer("CSS Crawler berhasil mengekstrak data detail.", 'success');
+
+                self::logToLiveBuffer('CSS Crawler berhasil mengekstrak data detail.', 'success');
             } catch (\Exception $e) {
-                self::logToLiveBuffer("Gagal mem-parsing HTML dengan CSS Selector: " . $e->getMessage(), 'warning');
+                self::logToLiveBuffer('Gagal mem-parsing HTML dengan CSS Selector: '.$e->getMessage(), 'warning');
             }
         }
 
         // ==========================================
         // TAHAP 3: Regex Fallback (Terakhir)
         // ==========================================
-        if (!$title || !$company) {
-            self::logToLiveBuffer("Tahap 3: Menjalankan Regex Parser Fallback");
-            
+        if (! $title || ! $company) {
+            self::logToLiveBuffer('Tahap 3: Menjalankan Regex Parser Fallback');
+
             if ($html) {
                 preg_match('/<title>(.*?)<\/title>/i', $html, $titleMatch);
                 $pageTitle = trim($titleMatch[1] ?? 'Job Opportunity');
@@ -165,7 +116,7 @@ class ScrapeJobDetailsJob implements ShouldQueue
                     }
                 }
 
-                if (!$title) {
+                if (! $title) {
                     $title = preg_replace('/ - Jobs.*| \| LinkedIn.*| Lowongan.*| Karir.*| \| Kalibrr.*/i', '', $pageTitle);
                 }
             }
@@ -174,7 +125,7 @@ class ScrapeJobDetailsJob implements ShouldQueue
         // Clean company and title
         $title = $title ?: 'Job Opportunity';
         $company = $company ?: ($this->source->name ?: 'Target Portal');
-        
+
         $title = preg_replace('/ - Jobs.*| \| LinkedIn.*| Lowongan.*| Karir.*| \| Kalibrr.*/i', '', $title);
         $company = preg_replace('/ - Jobs.*| \| LinkedIn.*| Lowongan.*| Karir.*| \| Kalibrr.*/i', '', $company);
 
@@ -183,26 +134,26 @@ class ScrapeJobDetailsJob implements ShouldQueue
         // ==========================================
         if ($success) {
             self::logToLiveBuffer("Menyimpan hasil ke database untuk lowongan: {$title}", 'success');
-            
+
             $payload = [
                 'title' => $title,
                 'company' => $company,
                 'description' => $bodyContent ?: 'Job description content. Please refer to the source portal link to view details and apply.',
                 'location' => $location,
                 'isClosed' => str_contains(strtolower($html ?? ''), 'no longer accepting applications') || str_contains(strtolower($html ?? ''), 'sudah ditutup') || str_contains(strtolower($html ?? ''), 'expired'),
-                'success' => true
+                'success' => true,
             ];
 
             StoreAndTagJob::dispatchSync($payload, $this->url, $this->source->id);
-            
+
             // Record success metric
             $this->recordMetric(true);
         } else {
-            self::logToLiveBuffer("Tahap 4 Gagal: Gagal mengekstrak data apa pun untuk URL " . basename($this->url), 'error');
+            self::logToLiveBuffer('Tahap 4 Gagal: Gagal mengekstrak data apa pun untuk URL '.basename($this->url), 'error');
             Log::error("ScrapeJobDetailsJob completely failed for URL: {$this->url}");
-            
+
             $this->recordMetric(false);
-            throw new \Exception("Failed to scrape details for URL: " . $this->url);
+            throw new \Exception('Failed to scrape details for URL: '.$this->url);
         }
     }
 
@@ -211,16 +162,16 @@ class ScrapeJobDetailsJob implements ShouldQueue
      */
     public static function logToLiveBuffer(string $message, string $level = 'info'): void
     {
-        $logs = \Illuminate\Support\Facades\Cache::get('scraper_live_logs', []);
+        $logs = Cache::get('scraper_live_logs', []);
         $logs[] = [
             'timestamp' => now()->timezone('Asia/Jakarta')->format('H:i:s'),
             'level' => strtoupper($level),
-            'message' => $message
+            'message' => $message,
         ];
         if (count($logs) > 30) {
             array_shift($logs);
         }
-        \Illuminate\Support\Facades\Cache::put('scraper_live_logs', $logs, now()->addHours(12));
+        Cache::put('scraper_live_logs', $logs, now()->addHours(12));
     }
 
     /**
@@ -229,7 +180,7 @@ class ScrapeJobDetailsJob implements ShouldQueue
     protected function recordMetric(bool $isSuccess): void
     {
         try {
-            \App\Models\ScraperLogsAndMetric::create([
+            ScraperLogsAndMetric::create([
                 'scraper_source_id' => $this->source->id,
                 'session_started_at' => now(),
                 'session_ended_at' => now(),
@@ -243,7 +194,7 @@ class ScrapeJobDetailsJob implements ShouldQueue
                 'error_summary' => $isSuccess ? null : 'Failed to scrape details',
             ]);
         } catch (\Exception $e) {
-            Log::warning("Failed to record metric: " . $e->getMessage());
+            Log::warning('Failed to record metric: '.$e->getMessage());
         }
     }
 }

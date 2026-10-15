@@ -7,6 +7,12 @@ final class JobApplicationStatus
     public const OPTIONS = ['On Process', 'Accepted', 'Rejected'];
     public const VALIDATION_RULE = 'required|string|in:On Process,Accepted,Rejected';
     public const STAGES = ['Applied', 'Follow Up', 'Assessment Test', 'Psychotest', 'HR - Interview', 'User - Interview', 'LGD', 'Presentation Round', 'Offering', 'Not Processed'];
+    public const SCHEDULED_STAGES = ['HR - Interview', 'User - Interview', 'Psychotest', 'Assessment Test', 'LGD', 'Presentation Round'];
+
+    public static function canSchedule(?string $stage): bool
+    {
+        return in_array($stage, self::SCHEDULED_STAGES, true);
+    }
 
     public static function normalize(?string $status, ?string $stage): array
     {

@@ -167,7 +167,7 @@
             {{-- Tickets List --}}
             <div class="af-tickets-list">
                 @forelse($tickets as $ticket)
-                    <article class="af-ticket-item" x-data="{ expanded: false }">
+                    <article class="af-ticket-item" x-data="{ expanded: @js(request()->integer('ticket') === $ticket->id) }">
                         {{-- Row Summary --}}
                         <div class="af-ticket-row" @click="expanded = !expanded">
                             {{-- Member Info --}}

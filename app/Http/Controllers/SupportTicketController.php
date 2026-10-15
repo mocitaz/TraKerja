@@ -15,7 +15,7 @@ class SupportTicketController extends Controller
     /**
      * Display the support tickets / feedback page.
      */
-    public function index(): View
+    public function index(): View|RedirectResponse
     {
         // Redirect admin users
         if (Auth::user() && (Auth::user()->isAdmin() || Auth::user()->role === 'admin')) {

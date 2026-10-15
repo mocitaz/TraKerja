@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use App\Services\PublicDnsResolver;
+use Illuminate\Support\Facades\Http;
 use App\Models\ScraperSource;
 use App\Models\JobPosting;
 use Livewire\Livewire;
@@ -20,6 +22,11 @@ class ScraperDashboardTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $resolver = \Mockery::mock(PublicDnsResolver::class);
+        $resolver->shouldReceive('resolve')->andReturn(['93.184.216.34']);
+        $this->app->instance(PublicDnsResolver::class, $resolver);
+        config(['scraper.microservice_url' => null, 'scraper.service_token' => null]);
+        Http::preventStrayRequests();
 
         // Create an admin user to test restricted dashboard routes
         $this->adminUser = User::factory()->create([
@@ -50,7 +57,7 @@ class ScraperDashboardTest extends TestCase
         // Transition to Control Tab
         $component->set('activeTab', 'control');
         $component->assertSet('activeTab', 'control');
-        $component->assertSee('Proxy Pool Monitor');
+        $component->assertSee('Status Egress Scraper');
         $component->assertSee('Queue Worker Trigger');
 
         // Transition to Target Tab
@@ -85,6 +92,7 @@ class ScraperDashboardTest extends TestCase
     /** @test */
     public function admin_can_trigger_visual_sandbox_test()
     {
+        Http::fake(['https://id.linkedin.com/jobs/view/12345' => Http::response('<h1 class="topcard__title">Engineer</h1>')]);
         $component = Livewire::actingAs($this->adminUser)
             ->test(\App\Livewire\Admin\ScraperDashboard::class)
             ->set('sandboxUrl', 'https://id.linkedin.com/jobs/view/12345')
@@ -93,20 +101,24 @@ class ScraperDashboardTest extends TestCase
 
         $component->assertHasNoErrors();
         $this->assertTrue(count($component->get('sandboxLogs')) > 0);
+        $component->assertSet('sandboxTestResultStatus', 'SUCCESS');
+        $component->assertSet('sandboxExtractedPayload.title', 'Engineer');
     }
 
     /** @test */
     public function admin_can_check_proxy_health_status()
     {
-        // Mock proxy config values
         config(['scraper.proxies' => ['http://127.0.0.1:8080']]);
+        Http::fake();
 
         $component = Livewire::actingAs($this->adminUser)
             ->test(\App\Livewire\Admin\ScraperDashboard::class)
             ->call('checkProxyHealth');
 
         $component->assertHasNoErrors();
-        $this->assertTrue(count($component->get('proxyStatusList')) > 0);
+        $component->assertSet('proxyStatusList', []);
+        $this->assertSame('Rotasi proxy eksternal dinonaktifkan; scraper memakai egress tervalidasi.', session('success'));
+        Http::assertNothingSent();
     }
 
     /** @test */

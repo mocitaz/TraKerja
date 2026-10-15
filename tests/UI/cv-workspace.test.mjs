@@ -31,19 +31,24 @@ test('PDF imports send CSRF, preserve provider errors and recover for retry', as
     assert.equal(sent.options.body.get('resume').name, 'cv.pdf');
     assert.equal(state.importError, 'Parser unavailable');
     assert.equal(state.importing, false);
-    globalThis.fetch = async () => ({ ok: true, json: async () => ({ success: true }) });
+    globalThis.fetch = async () => ({ ok: true, json: async () => ({ success: true, stage: 'preview', token: 'draft', data: { skills: [{ skill_name: 'PHP' }] } }) });
     await state.uploadPdf(pdf);
-    assert.equal(state.importSuccess, true);
+    assert.equal(state.importSuccess, false);
+    assert.equal(state.importPreview.token, 'draft');
     assert.equal(state.importError, '');
+});
+
+test('spacing applies consistently to every template', () => {
+    for (const template of ['minimal', 'creative', 'professional', 'elegant']) {
+        const state = cvReview(template);
+        assert.equal(state.margin, '15mm');
+        state.spacing = 'compact'; assert.equal(state.margin, '10mm');
+        state.spacing = 'spacious'; assert.equal(state.margin, '20mm');
+    }
 });
 
 test('content checks retain actual scores and allow retry after connection failure', async () => {
     const state = cvReview('minimal', '/preview?canvas=1', '/check');
-    assert.equal(state.margin, '15mm');
-    state.spacing = 'compact';
-    assert.equal(state.margin, '10mm');
-    assert.equal(cvReview('creative').margin, '20mm');
-    assert.equal(cvReview('professional').margin, '0');
     globalThis.fetch = async () => { throw new Error('Offline'); };
     await state.runCheck();
     assert.equal(state.checking, false);

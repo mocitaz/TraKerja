@@ -1,4 +1,4 @@
-<div class="cv-editor-layout" x-data="cvWorkspace(@js(route('cv.import-pdf')))" @cv-data-updated.window="previewVersion++">
+<div class="cv-editor-layout" x-data="cvWorkspace(@js(route('cv.import-pdf')), @js(route('cv.import-pdf.confirm')))" @cv-data-updated.window="previewVersion++">
     <aside class="cv-sidebar">
         <section class="cv-sidebar-intro"><p>Your CV workspace</p><h2>Start with your story.</h2><span>Only include sections relevant to you. Experience is optional.</span></section>
         <nav class="cv-section-nav" aria-label="CV sections">
@@ -45,7 +45,44 @@
     </template>
     <template x-teleport="body">
         <div class="cv-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="cv-import-title" tabindex="-1" x-dialog="importModalOpen" x-show="importModalOpen" x-cloak @click.self="if (!importing) importModalOpen = false">
-            <div class="cv-import-dialog"><header class="cv-modal-header"><div><h2 id="cv-import-title">Import your CV</h2><p>Start from an existing PDF.</p></div><button type="button" class="cv-close" @click="importModalOpen = false" :disabled="importing" aria-label="Close CV import"><i class="ph ph-x" aria-hidden="true"></i></button></header><div class="cv-import-body"><p>The parser adds extracted content to your profile. Review every section afterward. Existing entries may be duplicated.</p><label class="cv-import-dropzone" @dragover.prevent @drop.prevent="uploadPdf($event.dataTransfer.files[0])"><strong x-text="importing ? 'Processing your PDF...' : 'Choose a PDF or drop it here'"></strong><span>PDF only · Up to 10 MB</span><input type="file" accept="application/pdf,.pdf" :disabled="importing" @change="uploadPdf($event.target.files[0]); $event.target.value = ''"><span x-show="importing" role="status" x-text="importFilename"></span></label><p x-show="importError" x-text="importError" class="cv-field-error" role="alert"></p><p x-show="importSuccess" class="cv-import-success" role="status">Import saved. Reload to review your updated content.</p></div><footer class="cv-modal-footer"><button type="button" class="cv-button cv-button-secondary" @click="importModalOpen = false" :disabled="importing">Close</button><button type="button" class="cv-button cv-button-primary" x-show="importSuccess" @click="window.location.reload()">Review imported content</button></footer></div>
+            <div class="cv-import-dialog">
+                <header class="cv-modal-header"><div><h2 id="cv-import-title">Import your CV</h2><p>Preview the extracted content before saving.</p></div><button type="button" class="cv-close" @click="importModalOpen = false" :disabled="importing" aria-label="Close CV import"><i class="ph ph-x" aria-hidden="true"></i></button></header>
+                <div class="cv-import-body" :aria-busy="importing">
+                    <p>Nothing changes when you upload a PDF. After you review and confirm, each section below with extracted entries will replace all existing entries in that section. Sections with no extracted entries stay unchanged.</p>
+                    <label class="cv-import-dropzone" x-show="!importSuccess" @dragover.prevent @drop.prevent="uploadPdf($event.dataTransfer.files[0])"><strong x-text="importing ? 'Processing your request...' : 'Choose a PDF or drop it here'"></strong><span>PDF only · Up to 10 MB</span><input type="file" accept="application/pdf,.pdf" :disabled="importing" @change="uploadPdf($event.target.files[0]); $event.target.value = ''"><span x-show="importing" role="status" x-text="importFilename"></span></label>
+                    <section x-show="importPreview" class="cv-import-review" aria-labelledby="cv-import-review-title" x-cloak>
+                        <h3 id="cv-import-review-title">Review proposed replacements</h3>
+                        <p>Check every field below. Details not found in the PDF remain blank; complete them in CV Builder after importing. If an education start date is missing, enter it below before saving. Close to cancel, or choose another PDF. This preview expires after 15 minutes.</p>
+                        <template x-for="section in importSections" :key="section.key">
+                            <section class="cv-import-review-section">
+                                <h4 x-text="section.label"></h4>
+                                <p x-text="section.entries.length ? section.existing + ' existing entries will be replaced by ' + section.entries.length + ' extracted entries.' : 'No entries extracted. Your ' + section.existing + ' existing entries will be kept.'"></p>
+                                <template x-for="(entry, index) in section.entries" :key="index">
+                                    <dl class="cv-import-entry">
+                                        <template x-for="field in Object.entries(entry).filter(([key]) => key !== 'display_order')" :key="field[0]">
+                                            <div><dt x-text="importFieldLabel(field[0])"></dt><dd x-text="typeof field[1] === 'boolean' ? (field[1] ? 'Yes' : (!entry.start_date && !entry.end_date ? 'Not specified' : 'No')) : (field[1] === '' || field[1] == null ? 'Not specified' : field[1])"></dd></div>
+                                        </template>
+                                        <template x-if="section.key === 'educations' && !entry.start_date">
+                                            <div class="cv-detail-field">
+                                                <label :for="'import-education-start-' + index">Education start date (required)</label>
+                                                <p :id="'import-education-help-' + index" x-text="importPreview?.education_date_hints?.[index] ? 'Date text in PDF: ' + importPreview.education_date_hints[index] + '. Enter the full start date from your records.' : 'No start date was read. Enter it from your records.'"></p>
+                                                <input type="date" :id="'import-education-start-' + index" :aria-describedby="'import-education-help-' + index" x-model="educationStartDates[index]" :disabled="importing" required>
+                                            </div>
+                                        </template>
+                                    </dl>
+                                </template>
+                            </section>
+                        </template>
+                    </section>
+                    <p x-show="importError" x-text="importError" class="cv-field-error" role="alert"></p>
+                    <p x-show="importSuccess" class="cv-import-success" role="status">Import saved. Reload to review your updated content.</p>
+                </div>
+                <footer class="cv-modal-footer">
+                    <button type="button" class="cv-button cv-button-secondary" @click="importModalOpen = false" :disabled="importing">Close</button>
+                    <button type="button" class="cv-button cv-button-primary" x-show="importPreview && !importSuccess" :disabled="importing" @click="await confirmImport(); if (importSuccess) $nextTick(() => $refs.importSavedReview.focus())"><span x-text="importing ? 'Saving...' : 'Confirm replacement'"></span></button>
+                    <button type="button" class="cv-button cv-button-primary" x-show="importSuccess" x-ref="importSavedReview" @click="window.location.reload()">Review imported content</button>
+                </footer>
+            </div>
         </div>
     </template>
 </div>

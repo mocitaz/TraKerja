@@ -7,7 +7,8 @@ use App\Models\JobPosting;
 use App\Models\ScraperLogsAndMetric;
 use App\Services\DeadLinkDetector;
 use Livewire\Component;
-use Illuminate\Support\Facades\Http;
+use App\Services\JobPageFetcher;
+use App\Services\ScraperPageFetcher;
 use Illuminate\Support\Facades\Log;
 
 class ScraperDashboard extends Component
@@ -191,55 +192,9 @@ class ScraperDashboard extends Component
     public function checkProxyHealth()
     {
         $this->authorizeAdmin();
-        $this->isPingingProxies = true;
         $this->proxyStatusList = [];
-        
-        $proxies = config('scraper.proxies', []);
-        
-        if (empty($proxies)) {
-            $this->isPingingProxies = false;
-            session()->flash('error', "Tidak ada proxy yang dikonfigurasi di file .env Anda.");
-            return;
-        }
-
-        foreach ($proxies as $proxy) {
-            $start = microtime(true);
-            try {
-                $response = Http::timeout(8)
-                    ->withOptions(['proxy' => $proxy])
-                    ->get('https://httpbin.org/ip');
-                
-                $latency = round((microtime(true) - $start) * 1000);
-                
-                if ($response->successful()) {
-                    $this->proxyStatusList[] = [
-                        'address' => $proxy,
-                        'ip' => $response->json('origin') ?? parse_url($proxy, PHP_URL_HOST),
-                        'status' => 'ONLINE',
-                        'latency' => $latency,
-                        'class' => 'bg-emerald-50 text-emerald-700 border-emerald-200',
-                    ];
-                } else {
-                    $this->proxyStatusList[] = [
-                        'address' => $proxy,
-                        'ip' => parse_url($proxy, PHP_URL_HOST) ?: $proxy,
-                        'status' => 'BLOCKED (' . $response->status() . ')',
-                        'latency' => $latency,
-                        'class' => 'bg-amber-50 text-amber-700 border-amber-200',
-                    ];
-                }
-            } catch (\Exception $e) {
-                $this->proxyStatusList[] = [
-                    'address' => $proxy,
-                    'ip' => parse_url($proxy, PHP_URL_HOST) ?: $proxy,
-                    'status' => 'OFFLINE',
-                    'latency' => 0,
-                    'class' => 'bg-red-50 text-red-700 border-red-200',
-                ];
-            }
-        }
-
         $this->isPingingProxies = false;
+        session()->flash('success', 'Rotasi proxy eksternal dinonaktifkan; scraper memakai egress tervalidasi.');
     }
 
     public function runVisualSandboxTest()
@@ -257,62 +212,19 @@ class ScraperDashboard extends Component
 
         $this->sandboxLogs[] = "[" . date('H:i:s') . "] [START] Menguji selektor CSS kustom pada URL: " . $this->sandboxUrl;
 
-        // 1. Determine Proxy
-        $proxy = null;
-        $proxies = config('scraper.proxies', []);
-        if (!empty($proxies)) {
-            $proxy = $proxies[array_rand($proxies)];
-            $this->sandboxLogs[] = "[" . date('H:i:s') . "] [PROXY] Menggunakan proxy: " . (parse_url($proxy, PHP_URL_HOST) ?: $proxy);
-        }
-
-        // 2. Fetch Page HTML
         $html = null;
         $title = null;
         $company = null;
         $body = null;
         $success = false;
 
-        $microserviceUrl = config('scraper.microservice_url');
-        if ($microserviceUrl) {
-            try {
-                $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 1] Mengirim ke Headless Puppeteer...";
-                $response = Http::timeout(25)
-                    ->post($microserviceUrl . '/scrape', [
-                        'url' => $this->sandboxUrl,
-                        'proxy' => $proxy,
-                    ]);
-
-                if ($response->successful() && $response->json('success')) {
-                    $html = $response->json('html');
-                    $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 1 SUCCESS] Render HTML berhasil.";
-                    $success = true;
-                } else {
-                    $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 1 FAILED] Puppeteer gagal merender.";
-                }
-            } catch (\Exception $e) {
-                $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 1 ERROR] " . $e->getMessage();
-            }
-        }
-
-        if (!$success) {
-            try {
-                $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 2] Guzzle direct GET...";
-                $request = Http::timeout(15)
-                    ->withHeaders(['User-Agent' => 'Mozilla/5.0']);
-                if ($proxy) {
-                    $request = $request->withOptions(['proxy' => $proxy]);
-                }
-                $response = $request->get($this->sandboxUrl);
-                if ($response->successful()) {
-                    $html = $response->body();
-                    $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 2 SUCCESS] GET langsung berhasil.";
-                    $success = true;
-                } else {
-                    $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 2 FAILED] HTTP status: " . $response->status();
-                }
-            } catch (\Exception $e) {
-                $this->sandboxLogs[] = "[" . date('H:i:s') . "] [STAGE 2 ERROR] " . $e->getMessage();
-            }
+        try {
+            $page = app(ScraperPageFetcher::class)->fetch($this->sandboxUrl);
+            $html = $page['html'];
+            $success = true;
+            $this->sandboxLogs[] = "[" . date('H:i:s') . "] [FETCH] HTML berhasil diambil melalui egress tervalidasi.";
+        } catch (\Exception) {
+            $this->sandboxLogs[] = "[" . date('H:i:s') . "] [FETCH ERROR] URL ditolak atau halaman gagal diambil.";
         }
 
         // 3. Apply Selectors using DomCrawler
@@ -371,16 +283,11 @@ class ScraperDashboard extends Component
         $this->testResultStatus = '';
         $this->testJobStatus = '';
 
-        $source = ScraperSource::find($this->selectedSourceId);
+        $source = $this->selectedSourceId ? ScraperSource::find($this->selectedSourceId) : null;
         $domain = $source ? $source->target_domain : 'unknown-portal';
 
-        // 1. Simulate spin up
-        $this->logs[] = "[" . date('H:i:s') . "] [SPINUP] Initiating Chromium headful container node-test-01";
-        
-        // 2. Select proxy IP
-        $randomIps = ['185.120.44.12', '103.175.49.91', '129.226.92.222', '45.112.33.90'];
-        $this->testProxyIp = $randomIps[array_rand($randomIps)];
-        $this->logs[] = "[" . date('H:i:s') . "] [PROXY] Routing through residential proxy IP: " . $this->testProxyIp . " (Jakarta, Indonesia)";
+        $this->testProxyIp = '';
+        $this->logs[] = "[" . date('H:i:s') . "] [FETCH] Menggunakan egress tervalidasi.";
 
         // 3. Make real validation check using DeadLinkDetector
         $this->logs[] = "[" . date('H:i:s') . "] [NAVIGATE] Fetching URL: " . $this->testUrl;
@@ -396,9 +303,7 @@ class ScraperDashboard extends Component
             $validateStatus = $detector->validate($posting);
             
             // Fetch the title if possible
-            $response = Http::timeout(15)
-                ->withHeaders(['User-Agent' => 'Mozilla/5.0'])
-                ->get($this->testUrl);
+            $response = app(JobPageFetcher::class)->get($this->testUrl);
 
             $title = 'Test Listing Opportunity';
             if ($response->successful()) {

@@ -27,6 +27,12 @@ class SecurityHeaders
             // XSS Protection
             $response->headers->set('X-XSS-Protection', '1; mode=block');
             
+            // Chromium's PDF viewer embeds the same-origin PDF inside its viewer document.
+            $inlineCvPdf = $request->routeIs('cv-builder.preview.get', 'cv-builder.preview')
+                && $request->boolean('canvas')
+                && str_starts_with((string) $response->headers->get('Content-Type'), 'application/pdf');
+            $objectSource = $inlineCvPdf ? "'self'" : "'none'";
+
             // Content Security Policy (relaxed for Livewire, Vite, and Cloudflare)
             $csp = "default-src 'self'; " .
                    "script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.jsdelivr.net unpkg.com challenges.cloudflare.com static.cloudflareinsights.com; " .
@@ -35,7 +41,7 @@ class SecurityHeaders
                    "img-src 'self' data: https: blob:; " .
                    "frame-src 'self' challenges.cloudflare.com; " .
                    "connect-src 'self' ws: wss: cdn.jsdelivr.net; " .
-                   "object-src 'none'; " .
+                   "object-src {$objectSource}; " .
                    "base-uri 'self';";
             $response->headers->set('Content-Security-Policy', $csp);
             

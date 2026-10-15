@@ -64,6 +64,9 @@ return [
         'bot_token' => env('TELEGRAM_BOT_TOKEN'),
         'channel_id' => env('TELEGRAM_CHANNEL_ID'),
         'enabled' => env('TELEGRAM_NOTIF_ENABLED', false),
+        'webhook_secret' => env('TELEGRAM_WEBHOOK_SECRET'),
+        'allowed_user_ids' => array_values(array_filter(array_map('trim', explode(',', (string) env('TELEGRAM_ALLOWED_USER_IDS', ''))), fn ($id) => $id !== '')),
+        'allowed_chat_ids' => array_values(array_filter(array_map('trim', explode(',', (string) env('TELEGRAM_ALLOWED_CHAT_IDS', ''))), fn ($id) => $id !== '')),
     ],
 
     'gemini' => [

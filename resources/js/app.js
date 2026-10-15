@@ -15,6 +15,7 @@ import { installToasts } from './toasts';
 installToasts(window, document);
 
 import './cv-workspace';
+import './job-autofill';
 
 import './cover-letter-detail';
 
@@ -31,3 +32,5 @@ import "./admin-email-workspace";
 import './admin-payments-workspace';
 
 import './job-detail-tabs';
+
+import './admin-control';

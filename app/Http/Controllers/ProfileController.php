@@ -239,9 +239,18 @@ class ProfileController extends Controller
             $user->id
         );
 
-        Auth::logout();
+        try {
+            $user->getConnection()->transaction(function () use ($user) {
+                $user->newQuery()->whereKey($user->id)->lockForUpdate()->firstOrFail();
+                app(\App\Services\AccountResumeCleanup::class)->clean($user);
+                $user->delete();
+            });
+        } catch (\Throwable $e) {
+            \Log::error('Account deletion cleanup failed', ['user_id' => $user->id]);
+            return back()->withErrors(['password' => 'Penghapusan akun belum selesai karena file belum dapat dibersihkan. Silakan coba lagi atau hubungi support.'], 'userDeletion');
+        }
 
-        $user->delete();
+        Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

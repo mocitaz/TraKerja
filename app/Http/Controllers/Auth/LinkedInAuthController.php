@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Two\InvalidStateException;
 
 class LinkedInAuthController extends Controller
 {
@@ -21,7 +22,6 @@ class LinkedInAuthController extends Controller
         try {
             return Socialite::driver('linkedin-openid')
                 ->scopes(['openid', 'profile', 'email'])
-                ->stateless()
                 ->redirect();
         } catch (\Exception $e) {
             \Log::error('LinkedIn OAuth redirect error', [
@@ -41,14 +41,15 @@ class LinkedInAuthController extends Controller
     public function callback(): RedirectResponse
     {
         try {
-            $linkedInUser = Socialite::driver('linkedin-openid')->stateless()->user();
+            $linkedInUser = Socialite::driver('linkedin-openid')->user();
+        } catch (InvalidStateException $e) {
+            return redirect()->route('login')
+                ->withErrors(['email' => 'Sesi login LinkedIn tidak valid atau sudah berakhir. Silakan mulai login kembali.']);
         } catch (\Exception $e) {
             \Log::error('LinkedIn OAuth callback error', [
                 'class'   => get_class($e),
-                'error'   => $e->getMessage(),
                 'code'    => $e->getCode(),
                 'file'    => $e->getFile() . ':' . $e->getLine(),
-                'request' => request()->all(),
             ]);
             return redirect()->route('login')
                 ->withErrors(['email' => 'Login dengan LinkedIn gagal. Silakan coba lagi.']);

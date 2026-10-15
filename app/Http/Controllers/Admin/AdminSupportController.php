@@ -19,6 +19,11 @@ class AdminSupportController extends Controller
         Gate::authorize('viewAny', SupportTicket::class);
         $query = SupportTicket::with('user')->orderBy('created_at', 'desc');
 
+        if ($request->filled('ticket')) {
+            $request->validate(['ticket' => 'required|integer|min:1']);
+            $query->whereKey($request->integer('ticket'));
+        }
+
         // Apply filters
         if ($request->filled('status')) {
             $query->where('status', $request->input('status'));

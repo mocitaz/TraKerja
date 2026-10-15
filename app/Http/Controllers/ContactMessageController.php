@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\SupportTicket;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Auth;
 use App\Services\ActivityLogger;
@@ -68,36 +67,15 @@ class ContactMessageController extends Controller
         ]);
     }
 
-    /**
-     * [ADMIN] Daftar semua pesan masuk.
-     */
     public function index()
     {
-        $messages = ContactMessage::orderByDesc('created_at')->paginate(20);
-        return view('admin.contact-messages.index', compact('messages'));
+        abort_unless(Auth::user()?->isAdmin(), 403);
+        return redirect()->route('admin.feedbacks.index');
     }
 
-    /**
-     * [ADMIN] Detail pesan + tandai sudah dibaca.
-     */
-    public function show(ContactMessage $contactMessage)
+    public function show(SupportTicket $contactMessage)
     {
-        $contactMessage->markAsRead();
-        return view('admin.contact-messages.show', compact('contactMessage'));
+        abort_unless(Auth::user()?->isAdmin(), 403);
+        return redirect()->route('admin.feedbacks.index', ['ticket' => $contactMessage->id]);
     }
-
-    /**
-     * Kirim email notifikasi ke admin.
-     * Aktifkan jika sudah mengkonfigurasi SMTP di .env
-     */
-    // private function sendAdminNotification(ContactMessage $contact): void
-    // {
-    //     Mail::raw(
-    //         "Pesan baru dari: {$contact->name} ({$contact->email})\n\n{$contact->message}",
-    //         function ($mail) use ($contact) {
-    //             $mail->to(config('mail.from.address'))
-    //                  ->subject('[TraKerja] Pesan baru: ' . ($contact->subject ?? 'Tanpa subjek'));
-    //         }
-    //     );
-    // }
 }

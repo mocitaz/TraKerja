@@ -409,7 +409,7 @@
                         </div>
                     </div>
 
-                    <!-- Right: Proxy Pool Monitor (2/3 width) -->
+                    <!-- Right: Status Egress Scraper (2/3 width) -->
                     <div class="lg:col-span-2 bg-white border border-[#e7e3e9]/80 rounded-lg p-4 flex flex-col justify-between ">
                         <div>
                             <div class="flex items-center justify-between pb-3 mb-4 border-b border-zinc-100">
@@ -418,8 +418,8 @@
                                         <i class="ph-bold ph-shield-check text-xs"></i>
                                     </div>
                                     <div>
-                                        <h2 class="text-xs font-sans font-medium text-zinc-500  ">Proxy Pool Monitor</h2>
-                                        <p class="text-[11px] text-zinc-500">Status rotasi IP bypass bot-blocker</p>
+                                        <h2 class="text-xs font-sans font-medium text-zinc-500  ">Status Egress Scraper</h2>
+                                        <p class="text-[11px] text-zinc-500">Rotasi proxy eksternal dinonaktifkan</p>
                                     </div>
                                 </div>
 
@@ -428,7 +428,7 @@
                                         wire:loading.attr="disabled"
                                         class="inline-flex items-center gap-1 bg-zinc-950 hover:bg-zinc-900 text-white font-semibold text-[11px] rounded px-2.5 py-1.5 transition-all duration-150  disabled:opacity-50">
                                     <span wire:loading.remove wire:target="checkProxyHealth" class="flex items-center gap-1">
-                                        <i class="ph ph-heartbeat"></i> Ping Proxy
+                                        <i class="ph ph-heartbeat"></i> Status Egress
                                     </span>
                                     <span wire:loading wire:target="checkProxyHealth" class="flex items-center gap-1">
                                         <span class="w-2.5 h-2.5 border border-white border-t-transparent rounded-full animate-spin"></span>
@@ -463,12 +463,12 @@
                                 @if ($isPingingProxies)
                                     <div class="flex items-center justify-center p-8 text-center border border-dashed rounded bg-zinc-50 border-[#e7e3e9]/80">
                                         <span class="w-5 h-5 border-2 border-zinc-950 border-t-transparent rounded-full animate-spin mr-2"></span>
-                                        <p class="text-[11px] text-zinc-650">Menguji latency proxy pool...</p>
+                                        <p class="text-[11px] text-zinc-650">Memeriksa status egress...</p>
                                     </div>
                                 @else
                                     <div class="flex flex-col items-center justify-center p-8 text-center border border-dashed rounded bg-zinc-50 border-[#e7e3e9]/80 border-dashed">
-                                        <p class="text-[11px] font-semibold text-zinc-500 mb-1">Status Proxy Belum Diuji</p>
-                                        <p class="text-[11px] text-zinc-500">Tekan tombol ping untuk melakukan verifikasi status IP Pool.</p>
+                                        <p class="text-[11px] font-semibold text-zinc-500 mb-1">Proxy Eksternal Dinonaktifkan</p>
+                                        <p class="text-[11px] text-zinc-500">Scraper memakai egress tervalidasi untuk portal lowongan yang didukung.</p>
                                     </div>
                                 @endif
                             @endif

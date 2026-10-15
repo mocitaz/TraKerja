@@ -1196,6 +1196,10 @@ class JobApplicationForm extends Component
             $this->platform_link = $jobApplication->platform_link;
             $this->application_date = $jobApplication->application_date->format('Y-m-d');
             $this->notes = $jobApplication->notes;
+            $this->interview_date = $jobApplication->interview_date?->format('Y-m-d\TH:i') ?? '';
+            $this->interview_type = $jobApplication->interview_type ?? '';
+            $this->interview_location = $jobApplication->interview_location ?? '';
+            $this->interview_notes = $jobApplication->interview_notes ?? '';
         } else {
             // Reset form for new job
             $this->resetForm();
@@ -1325,16 +1329,16 @@ class JobApplicationForm extends Component
             throw $e;
         }
 
-        $interviewDate = (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && !empty(trim((string)$this->interview_date)))
+        $interviewDate = (JobApplicationStatus::canSchedule($this->recruitment_stage) && !empty(trim((string)$this->interview_date)))
             ? $this->interview_date
             : null;
-        $interviewType = (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && !empty(trim((string)$this->interview_type)))
+        $interviewType = (JobApplicationStatus::canSchedule($this->recruitment_stage) && !empty(trim((string)$this->interview_type)))
             ? $this->interview_type
             : null;
-        $interviewLocation = (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && !empty(trim((string)$this->interview_location)))
+        $interviewLocation = (JobApplicationStatus::canSchedule($this->recruitment_stage) && !empty(trim((string)$this->interview_location)))
             ? $this->interview_location
             : null;
-        $interviewNotes = (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && !empty(trim((string)$this->interview_notes)))
+        $interviewNotes = (JobApplicationStatus::canSchedule($this->recruitment_stage) && !empty(trim((string)$this->interview_notes)))
             ? $this->interview_notes
             : null;
 
@@ -1365,7 +1369,7 @@ class JobApplicationForm extends Component
                 $this->jobApplication->update($data);
 
                 // Dispatch interview-updated event for calendar refresh (only if active & scheduled)
-                if (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && !empty($this->interview_date) && $this->application_status !== 'Rejected') {
+                if (JobApplicationStatus::canSchedule($this->recruitment_stage) && !empty($this->interview_date) && $this->application_status !== 'Rejected') {
                     $this->dispatch('interview-updated');
                     
                     // Check if interview was newly scheduled or rescheduled
@@ -1394,7 +1398,7 @@ class JobApplicationForm extends Component
                 $newJob = JobApplication::create($data);
 
                 // Dispatch interview-updated event for calendar refresh (only if active & scheduled)
-                if (in_array($this->recruitment_stage, ['HR - Interview', 'User - Interview']) && !empty($this->interview_date) && $this->application_status !== 'Rejected') {
+                if (JobApplicationStatus::canSchedule($this->recruitment_stage) && !empty($this->interview_date) && $this->application_status !== 'Rejected') {
                     $this->dispatch('interview-updated');
                     $this->sendInterviewScheduledEmail($newJob);
                 }
@@ -1561,6 +1565,45 @@ class JobApplicationForm extends Component
     public function updatedSelectedInternationalCity()
     {
         $this->updateLocation();
+    }
+
+    public function parseAutofillLocation(string $location): bool
+    {
+        $location = mb_substr($location, 0, 255);
+        if (trim($this->location) !== '' || $this->selectedProvince || $this->selectedCountry || $this->isRemote) return false;
+        if (preg_match('/^(remote|wfh|work from home)$/i', trim($location))) {
+            $this->isRemote = true;
+            $this->updateLocation();
+            return true;
+        }
+        $normalize = fn ($text) => trim(preg_replace('/\s+/', ' ', preg_replace('/[^\pL\pN ]/u', ' ', mb_strtolower($text))));
+        $text = ' '.$normalize($location).' ';
+        if (str_contains($location, ' / ')) return false;
+        $matches = [];
+        foreach ($this->provinces as $province => $cities) {
+            foreach ($cities as $city) {
+                $name = preg_replace('/^kota(?: administrasi)? /', '', $normalize($city));
+                if (str_contains($text, ' '.$name.' ')) $matches[] = [$province, $city, mb_strlen($name)];
+            }
+        }
+        usort($matches, fn ($a, $b) => $b[2] <=> $a[2]);
+        if ($matches && (count($matches) === 1 || $matches[0][2] > $matches[1][2])) {
+            [$this->selectedProvince, $this->selectedCity] = $matches[0];
+            $this->cities = $this->provinces[$this->selectedProvince];
+            $this->updateLocation();
+            return true;
+        }
+        foreach ($this->provinces as $province => $cities) {
+            if (str_contains($text, ' '.$normalize($province).' ')
+                || ($province === 'DKI Jakarta' && preg_match('/^\s*(?:dki\s+)?jakarta(?:\s*,\s*indonesia)?\s*$/i', $location))) {
+                $this->selectedProvince = $province;
+                $this->cities = $cities;
+                $this->selectedCity = '';
+                $this->updateLocation();
+                return true;
+            }
+        }
+        return false;
     }
 
     public function parseLocation($location)
@@ -1748,6 +1791,11 @@ class JobApplicationForm extends Component
         $this->platform_link = '';
         $this->application_date = now('Asia/Jakarta')->format('Y-m-d'); // Use WIB timezone
         $this->notes = '';
+        $this->interview_date = '';
+        $this->interview_type = '';
+        $this->interview_location = '';
+        $this->interview_notes = '';
+        $this->resetValidation();
         $this->isEditing = false;
         $this->jobApplication = null;
     }
@@ -1756,7 +1804,7 @@ class JobApplicationForm extends Component
     {
         try {
             $user = $jobApplication->user;
-            if ($user && $user->canAccessEmailNotifications() && $user->notify_interview_reminders) {
+            if ($user && $user->wantsEmailNotification('interview')) {
                 \Illuminate\Support\Facades\Mail::to($user->email)
                     ->send(new \App\Mail\InterviewScheduledMail($jobApplication));
             }

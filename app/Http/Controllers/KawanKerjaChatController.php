@@ -100,6 +100,9 @@ class KawanKerjaChatController extends Controller
                 $request->session()->save();
             }
 
+            if (!$result['success']) {
+                echo "event: error\ndata: " . json_encode(['success' => false, 'message' => 'Response interrupted. Please try again.']) . "\n\n";
+            }
             echo "data: [DONE]\n\n";
             if (ob_get_level() > 0) {
                 ob_flush();

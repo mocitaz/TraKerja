@@ -180,7 +180,7 @@ class JobApplication extends Model
     public function sendInterviewReminder(): bool
     {
         $user = $this->user;
-        if ($user && $user->canAccessEmailNotifications()) {
+        if ($user && $user->wantsEmailNotification('interview')) {
             \Mail::to($user->email)->send(new InterviewReminderMail($this));
             return true;
         }

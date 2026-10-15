@@ -400,7 +400,8 @@ class JobApplicationImportExportController extends Controller
         }
         
         $interviewDate = null;
-        if (!empty($data['interview_date'])) {
+        $canSchedule = \App\Support\JobApplicationStatus::canSchedule($data['recruitment_stage']);
+        if ($canSchedule && !empty($data['interview_date'])) {
             $interviewDate = $this->parseDateTime($data['interview_date']);
             if (!$interviewDate) {
                 $errors[] = 'Interview Date format is invalid. Use YYYY-MM-DD HH:MM or DD/MM/YYYY HH:MM';
@@ -430,9 +431,9 @@ class JobApplicationImportExportController extends Controller
                 'platform_link' => $data['platform_link'] ?? '',
                 'notes' => $data['notes'] === '' ? null : $data['notes'],
                 'interview_date' => $interviewDate,
-                'interview_type' => $data['interview_type'] === '' ? null : $data['interview_type'],
-                'interview_location' => $data['interview_location'] === '' ? null : $data['interview_location'],
-                'interview_notes' => $data['interview_notes'] === '' ? null : $data['interview_notes'],
+                'interview_type' => !$canSchedule || $data['interview_type'] === '' ? null : $data['interview_type'],
+                'interview_location' => !$canSchedule || $data['interview_location'] === '' ? null : $data['interview_location'],
+                'interview_notes' => !$canSchedule || $data['interview_notes'] === '' ? null : $data['interview_notes'],
                 'status' => $data['application_status'], // For backward compatibility
             ]
         ];

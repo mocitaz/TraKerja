@@ -42,7 +42,10 @@ class UserGoal extends Model
             // Check if is_achieved changed from false to true
             if ($goal->isDirty('is_achieved') && $goal->is_achieved && !$goal->getOriginal('is_achieved')) {
                 try {
-                    Mail::to($goal->user->email)->send(new GoalAchievedMail($goal));
+                    $user = $goal->user;
+                    if ($user && $user->wantsEmailNotification('goal_achieved')) {
+                        Mail::to($user->email)->send(new GoalAchievedMail($goal));
+                    }
                 } catch (\Exception $e) {
                     \Log::error('Failed to send goal achieved email: ' . $e->getMessage());
                 }

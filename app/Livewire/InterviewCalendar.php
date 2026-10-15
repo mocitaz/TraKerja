@@ -13,7 +13,7 @@ class InterviewCalendar extends Component
 {
     use WithPagination;
 
-    public const STAGES = ['HR - Interview', 'User - Interview', 'Psychotest', 'Assessment Test', 'LGD', 'Presentation Round'];
+    public const STAGES = \App\Support\JobApplicationStatus::SCHEDULED_STAGES;
     #[Locked] public int $currentMonth;
     #[Locked] public int $currentYear;
     #[Locked] public ?string $selectedDate = null;

@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\RateLimiter;
 use Throwable;
 
 class TelegramService
@@ -410,14 +411,39 @@ class TelegramService
      */
     public function handleIncomingUpdate(array $update): bool
     {
-        $message = $update['message'] ?? $update['channel_post'] ?? null;
-        if (! $message || empty($message['text'])) {
+        $message = $update['message'] ?? null;
+        if (! is_array($message) || ! is_string($message['text'] ?? null)
+            || trim($message['text']) === '' || mb_strlen($message['text'], 'UTF-8') > 4096
+            || isset($message['sender_chat']) || ! is_array($message['from'] ?? null)
+            || ! is_array($message['chat'] ?? null) || ($message['from']['is_bot'] ?? null) !== false
+            || ! in_array($message['chat']['type'] ?? null, ['private', 'group', 'supergroup'], true)) {
             return false;
         }
 
-        $chatId = (string) ($message['chat']['id'] ?? '');
+        $senderId = $message['from']['id'] ?? null;
+        $chatId = $message['chat']['id'] ?? null;
+        if ((! is_int($senderId) && ! is_string($senderId)) || (! is_int($chatId) && ! is_string($chatId))) {
+            return false;
+        }
+        $senderId = (string) $senderId;
+        $chatId = (string) $chatId;
+        $allowedUsers = array_map('strval', (array) config('services.telegram.allowed_user_ids', []));
+        $allowedChats = array_map('strval', (array) config('services.telegram.allowed_chat_ids', []));
+        if (! preg_match('/\A[1-9][0-9]*\z/', $senderId) || ! preg_match('/\A-?[1-9][0-9]*\z/', $chatId)
+            || ! in_array($senderId, $allowedUsers, true) || ! in_array($chatId, $allowedChats, true)) {
+            return false;
+        }
+
+        // Polling and webhook commands share the same sender budget across chats.
+        $limitKey = 'telegram:commands:'.$senderId;
+        if (RateLimiter::tooManyAttempts($limitKey, 10)) {
+            return false;
+        }
+        RateLimiter::hit($limitKey, 60);
+
         $text = trim($message['text']);
-        $sender = $message['from']['first_name'] ?? $message['chat']['title'] ?? 'Admin';
+        $name = $message['from']['first_name'] ?? 'Admin';
+        $sender = htmlspecialchars(is_string($name) ? $name : 'Admin', ENT_QUOTES, 'UTF-8');
 
         // Parse command and arguments
         $parts = explode(' ', $text, 2);

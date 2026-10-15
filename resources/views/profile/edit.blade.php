@@ -16,7 +16,7 @@
         $statusMessages = [
             'profile-updated' => 'Account details saved.', 'personal-info-updated' => 'Profile details saved.',
             'avatar-updated' => 'Your new avatar is ready.', 'photo-updated' => 'Profile photo updated.',
-            'photo-removed' => 'Photo removed. Your avatar is back.', 'password-updated' => 'Password updated.',
+            'photo-removed' => 'Photo removed. Your avatar is back.', 'password-updated' => 'Password updated. API tokens have been revoked.', 'token-revoked' => 'Device access revoked.', 'tokens-revoked' => 'All API device access revoked.',
             'notifications-updated' => 'Notification preferences saved.', 'verification-link-sent' => 'Verification email sent.',
             'resume-uploaded' => 'Resume uploaded to your vault.',
             'resume-updated' => 'Resume title updated.',
@@ -262,6 +262,23 @@
                     @endunless
                     <div id="profile-panel-security" role="tabpanel" aria-labelledby="profile-tab-security" x-show="tab === 'security'" @if($initialTab !== 'security') x-cloak @endif class="profile-panel-stack">
                         <section class="profile-panel"><header class="profile-section-header"><div><h2>Password & security</h2><p>Keep access to your account secure.</p></div></header>@include('profile.partials.update-password-form')</section>
+                        <section class="profile-panel">
+                            <h2>Connected API devices</h2>
+                            <p>Revoke access for Chrome extensions and API clients. This list does not include browser login sessions.</p>
+                            @php $apiDevices = $user->tokens()->latest()->limit(50)->get(['id', 'name', 'created_at', 'last_used_at', 'expires_at']); @endphp
+                            @forelse($apiDevices as $device)
+                                <div class="profile-form-footer">
+                                    <div><strong>{{ $device->name }}</strong><p>Last used: {{ $device->last_used_at?->diffForHumans() ?? 'Never' }} · Expires: {{ $device->expires_at?->format('d M Y') ?? 'No expiry' }}</p></div>
+                                    <form method="post" action="{{ route('profile.tokens.destroy', $device->id) }}">@csrf @method('delete')<button type="submit" class="profile-secondary">Revoke access</button></form>
+                                </div>
+                            @empty
+                                <p>No connected API devices.</p>
+                            @endforelse
+                            @if($apiDevices->isNotEmpty())
+                                <p>Showing up to 50 recent devices.</p>
+                                <form method="post" action="{{ route('profile.tokens.destroy-all') }}">@csrf @method('delete')<button type="submit" class="profile-secondary">Revoke all API devices</button></form>
+                            @endif
+                        </section>
                         <section class="profile-panel profile-danger"><h2>Delete account</h2><p>This permanently removes your account and its associated data. Save any files you need before continuing.</p><button type="button" @click="$dispatch('open-modal', 'confirm-user-deletion')" class="profile-danger-button" aria-haspopup="dialog">Delete my account</button></section>
                     </div>
                     @unless($isAdmin)

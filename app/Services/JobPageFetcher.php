@@ -16,7 +16,7 @@ class JobPageFetcher
 
     public function get(string $url): Response
     {
-        if (!extension_loaded('curl')) {
+        if (! extension_loaded('curl')) {
             throw new \RuntimeException('Secure job fetching requires the cURL extension.');
         }
         for ($hop = 0; $hop <= (int) config('job_scraping.max_redirects', 3); $hop++) {
@@ -40,16 +40,21 @@ class JobPageFetcher
                     CURLOPT_FORBID_REUSE => true,
                 ],
             ])->get($url);
-            if (!in_array($response->status(), [301, 302, 303, 307, 308], true)) {
+            if (! in_array($response->status(), [301, 302, 303, 307, 308], true)) {
                 return $response;
             }
             $location = $response->header('Location');
-            if (!$location || preg_match('/[\x00-\x20\x7f\\\\]/', $location)) {
+            if (! $location || preg_match('/[\x00-\x20\x7f\\\\]/', $location)) {
                 $this->reject();
             }
             $url = (string) UriResolver::resolve(new Uri($url), new Uri($location));
         }
         $this->reject('Terlalu banyak pengalihan pada URL lowongan.');
+    }
+
+    public function validateUrl(string $url): void
+    {
+        $this->destination($url);
     }
 
     private function destination(string $url): array
@@ -60,8 +65,8 @@ class JobPageFetcher
         $parts = parse_url($url);
         $scheme = strtolower($parts['scheme'] ?? '');
         $host = strtolower($parts['host'] ?? '');
-        if (!in_array($scheme, ['http', 'https'], true) || isset($parts['user']) || isset($parts['pass'])
-            || !preg_match('/\A[a-z0-9]+(?:[.-][a-z0-9]+)*\z/D', $host)) {
+        if (! in_array($scheme, ['http', 'https'], true) || isset($parts['user']) || isset($parts['pass'])
+            || ! preg_match('/\A[a-z0-9]+(?:[.-][a-z0-9]+)*\z/D', $host)) {
             $this->reject();
         }
         $port = $parts['port'] ?? ($scheme === 'https' ? 443 : 80);
@@ -75,7 +80,7 @@ class JobPageFetcher
                 break;
             }
         }
-        if (!$allowed) {
+        if (! $allowed) {
             $this->reject('URL harus berasal dari portal lowongan yang didukung.');
         }
         $addresses = $this->dns->resolve($host);
@@ -83,23 +88,25 @@ class JobPageFetcher
             $this->reject('Domain lowongan tidak dapat diresolusikan.');
         }
         foreach ($addresses as $ip) {
-            if (!$this->isPublic($ip)) {
+            if (! $this->isPublic($ip)) {
                 $this->reject();
             }
         }
+
         return [$host, $port, $addresses[0]];
     }
 
     private function isPublic(string $ip): bool
     {
-        if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+        if (! filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
             return false;
         }
         if (str_contains($ip, ':')) {
             return IpUtils::checkIp($ip, '2000::/3')
-                && !IpUtils::checkIp($ip, ['2001::/23', '2001:db8::/32', '2002::/16', '3fff::/20']);
+                && ! IpUtils::checkIp($ip, ['2001::/23', '2001:db8::/32', '2002::/16', '3fff::/20']);
         }
-        return !IpUtils::checkIp($ip, [
+
+        return ! IpUtils::checkIp($ip, [
             '0.0.0.0/8', '100.64.0.0/10', '127.0.0.0/8', '169.254.0.0/16',
             '192.0.0.0/24', '192.0.2.0/24', '192.88.99.0/24',
             '198.18.0.0/15', '198.51.100.0/24', '203.0.113.0/24',

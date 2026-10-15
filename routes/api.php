@@ -20,4 +20,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 // Telegram Interactive Two-Way Bot Webhook
-Route::post('/telegram/webhook', [\App\Http\Controllers\TelegramWebhookController::class, 'handle']);
+Route::post('/telegram/webhook', [\App\Http\Controllers\TelegramWebhookController::class, 'handle'])
+    ->middleware(\App\Http\Middleware\VerifyTelegramWebhook::class);

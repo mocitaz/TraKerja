@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "TraKerja Extension",
-  "version": "1.0",
+  "version": "1.0.2",
   "description": "Simpan lamaran kerja dari LinkedIn, Glints, dan JobStreet langsung ke Kanban Board TraKerja.",
   "icons": {
     "16": "icons/icon.png",
@@ -14,7 +14,6 @@
     "scripting"
   ],
   "host_permissions": [
-    "http://localhost:8000/*",
     "https://trakerja.com/*",
     "*://*.linkedin.com/*",
     "*://*.glints.com/*/opportunities/jobs/*",

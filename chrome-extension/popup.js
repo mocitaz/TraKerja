@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:8000/api'; // Ganti ke URL production nanti
+const API_BASE = TRAKERJA_EXTENSION_CONFIG.apiBase;
 
 document.addEventListener('DOMContentLoaded', async () => {
     const loginView = document.getElementById('login-view');
@@ -78,8 +78,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 3. Handle Logout
     logoutBtn.addEventListener('click', async () => {
-        await chrome.storage.local.remove(['token', 'user']);
-        showLoginView();
+        if (logoutBtn.disabled) return;
+        logoutBtn.disabled = true;
+        const msgDiv = document.getElementById('save-message');
+        try {
+            const { token } = await chrome.storage.local.get('token');
+            if (token) {
+                const response = await fetch(`${API_BASE}/extension/logout`, {
+                    method: 'POST', headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
+                    signal: AbortSignal.timeout(10000),
+                });
+                if (!response.ok && response.status !== 401) throw new Error('Logout gagal. Coba lagi agar token server dapat dicabut.');
+            }
+            await chrome.storage.local.remove(['token', 'user']);
+            showLoginView();
+        } catch (error) {
+            msgDiv.textContent = error.message || 'Tidak dapat mencabut token. Periksa koneksi lalu coba logout lagi.';
+            msgDiv.classList.remove('hidden');
+        } finally { logoutBtn.disabled = false; }
     });
 
     // 4. Handle Save Job

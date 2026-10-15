@@ -2,9 +2,15 @@
 
 namespace App\Models;
 
+use App\Services\JobPageFetcher;
+use App\Services\ScraperPageFetcher;
+use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\Psr7\UriResolver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\DomCrawler\Crawler;
 
 class ScraperSource extends Model
 {
@@ -50,123 +56,56 @@ class ScraperSource extends Model
     public function executeDiscovery(): array
     {
         try {
-            echo "  [HTTP GET] Requesting search page: " . $this->seed_url . "\n";
-            
-            $proxy = null;
-            $proxies = config('scraper.proxies', []);
-            if (!empty($proxies)) {
-                $proxy = $proxies[array_rand($proxies)];
-            }
+            $page = app(ScraperPageFetcher::class)->fetch($this->seed_url);
+            $crawler = new Crawler($page['html']);
+            $target = strtolower($this->target_domain);
+            $urls = [];
+            $seen = [];
+            $validator = app(JobPageFetcher::class);
 
-            $html = null;
-            $success = false;
-
-            // Stage 1: Puppeteer rendering microservice (headless)
-            $microserviceUrl = config('scraper.microservice_url');
-            if ($microserviceUrl) {
+            foreach ($crawler->filter('a[href]') as $link) {
+                $href = trim($link->getAttribute('href'));
+                if ($href === '' || preg_match('/[\x00-\x20\x7f\\\\]/', $href)) {
+                    continue;
+                }
                 try {
-                    echo "  [STAGE 1] Discovery via Headless Puppeteer...\n";
-                    $response = \Illuminate\Support\Facades\Http::timeout(40)
-                        ->post($microserviceUrl . '/scrape', [
-                            'url' => $this->seed_url,
-                            'proxy' => $proxy,
-                        ]);
-
-                    if ($response->successful() && $response->json('success')) {
-                        $html = $response->json('html');
-                        $success = true;
-                        echo "  [STAGE 1 SUCCESS] Rendered search page successfully (" . strlen($html) . " bytes)\n";
-                    } else {
-                        echo "  [STAGE 1 FAILED] Puppeteer render error.\n";
+                    $url = (string) UriResolver::resolve(new Uri($this->seed_url), new Uri($href));
+                    if (isset($seen[$url])) {
+                        continue;
                     }
-                } catch (\Exception $e) {
-                    echo "  [STAGE 1 ERROR] " . $e->getMessage() . "\n";
+                    $seen[$url] = true;
+                    $host = strtolower(parse_url($url, PHP_URL_HOST) ?: '');
+                    if ($host !== $target && ! str_ends_with($host, '.'.$target)) {
+                        continue;
+                    }
+                    $path = parse_url($url, PHP_URL_PATH) ?: '';
+                    if ($target === 'linkedin.com' || str_ends_with($target, '.linkedin.com')) {
+                        if (! str_contains($path, '/jobs/view/') || str_contains($url, 'signup') || str_contains($url, 'login')) {
+                            continue;
+                        }
+                    } elseif ($target === 'jobstreet.co.id' || str_ends_with($target, '.jobstreet.co.id')) {
+                        if (! str_contains($path, '/job/') && ! str_contains($path, '/jobs/')) {
+                            continue;
+                        }
+                    } elseif ($target === 'kalibrr.com' || str_ends_with($target, '.kalibrr.com')) {
+                        if (! str_contains($path, '/c/') || ! str_contains($path, '/jobs/')) {
+                            continue;
+                        }
+                    }
+                    $validator->validateUrl($url);
+                    $urls[] = $url;
+                    if (count($urls) >= 10) {
+                        break;
+                    }
+                } catch (\Exception) {
+                    continue;
                 }
             }
 
-            // Stage 2: Direct HTTP GET with User-Agent & optional proxy fallback
-            if (!$success) {
-                try {
-                    echo "  [STAGE 2] Direct GET fallback...\n";
-                    $request = \Illuminate\Support\Facades\Http::timeout(25)
-                        ->withHeaders([
-                            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                            'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-                            'Accept-Language' => 'en-US,en;q=0.9',
-                        ]);
-
-                    if ($proxy) {
-                        $request = $request->withOptions(['proxy' => $proxy]);
-                        echo "  [PROXY] Routing via: " . (parse_url($proxy, PHP_URL_HOST) ?: $proxy) . "\n";
-                    }
-
-                    $response = $request->get($this->seed_url);
-                        
-                    if ($response->successful()) {
-                        $html = $response->body();
-                        $success = true;
-                        echo "  [STAGE 2 SUCCESS] Received " . strlen($html) . " bytes\n";
-                    } else {
-                        echo "  [STAGE 2 FAIL] Status code: " . $response->status() . "\n";
-                        \Illuminate\Support\Facades\Log::warning("Discovery request failed for source {$this->id} ({$this->name}) with status code: " . $response->status() . " on URL: " . $this->seed_url);
-                    }
-                } catch (\Exception $e) {
-                    echo "  [STAGE 2 ERROR] Exception thrown: " . $e->getMessage() . "\n";
-                }
-            }
-
-            if (!$success || !$html) {
-                return [];
-            }
-            
-            // Parse host from seed_url to handle relative paths
-            $parsedUrl = parse_url($this->seed_url);
-            $scheme = $parsedUrl['scheme'] ?? 'https';
-            $hostName = $parsedUrl['host'] ?? $this->target_domain;
-            $baseUrl = $scheme . '://' . $hostName;
-
-            preg_match_all('/href="([^"]*)"/i', $html, $matches);
-            
-            $rawUrls = array_unique($matches[1] ?? []);
-            $filteredUrls = [];
-            
-            foreach ($rawUrls as $url) {
-                $url = html_entity_decode(trim($url));
-                
-                // Convert relative URLs to absolute
-                if (str_starts_with($url, '/') && !str_starts_with($url, '//')) {
-                    $url = $baseUrl . $url;
-                } elseif (str_starts_with($url, '//')) {
-                    $url = 'https:' . $url;
-                }
-                
-                if (str_contains($this->target_domain, 'linkedin.com')) {
-                    if (str_contains($url, '/jobs/view/') && !str_contains($url, 'signup') && !str_contains($url, 'login')) {
-                        $filteredUrls[] = $url;
-                    }
-                } elseif (str_contains($this->target_domain, 'jobstreet.co.id')) {
-                    if (str_contains($url, '/job/') || str_contains($url, '/jobs/')) {
-                        $filteredUrls[] = $url;
-                    }
-                } elseif (str_contains($this->target_domain, 'kalibrr.com')) {
-                    if (str_contains($url, '/c/') && str_contains($url, '/jobs/')) {
-                        $filteredUrls[] = $url;
-                    }
-                } else {
-                    if (str_contains($url, $this->target_domain)) {
-                        $filteredUrls[] = $url;
-                    }
-                }
-            }
-            
-            $urls = array_slice(array_unique($filteredUrls), 0, 10);
-            
-            \Illuminate\Support\Facades\Log::info("Discovery for source {$this->id} ({$this->name}): status " . $response->status() . ", body size " . strlen($html) . " bytes, found " . count($urls) . " links.");
-            
             return $urls;
         } catch (\Exception $e) {
-            echo "  [HTTP ERROR] Exception thrown: " . $e->getMessage() . "\n";
-            \Illuminate\Support\Facades\Log::error("Discovery failed for source {$this->id}: " . $e->getMessage());
+            Log::warning("Discovery fetch failed for source {$this->id}.");
+
             return [];
         }
     }

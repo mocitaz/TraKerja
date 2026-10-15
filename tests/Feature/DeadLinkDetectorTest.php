@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\ScraperSource;
 use App\Models\JobPosting;
 use App\Services\DeadLinkDetector;
+use App\Services\PublicDnsResolver;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
@@ -19,6 +20,10 @@ class DeadLinkDetectorTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $resolver = \Mockery::mock(PublicDnsResolver::class);
+        $resolver->shouldReceive('resolve')->andReturn(['93.184.216.34']);
+        $this->app->instance(PublicDnsResolver::class, $resolver);
+        Http::preventStrayRequests();
 
         $this->source = ScraperSource::create([
             'name' => 'LinkedIn Indonesia',

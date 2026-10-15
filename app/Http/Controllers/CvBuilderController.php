@@ -106,12 +106,21 @@ class CvBuilderController extends Controller
         $projects = $user->projects()->orderBy('display_order')->get();
 
         if ($request->boolean('canvas')) {
-            $margin = in_array($request->input('margin'), ['0', '10mm', '12mm', '15mm', '20mm', '22mm', '28mm'], true) ? $request->input('margin') : null;
-            $fontSize = in_array($request->input('font_size'), ['8.5pt', '9.5pt', '10.5pt'], true) ? $request->input('font_size') : null;
-            $browserPreview = true;
-            return view("cv-templates.{$template}", compact('user', 'experiences', 'educations', 'skills', 'organizations', 'achievements', 'projects', 'margin', 'fontSize', 'browserPreview'));
+            try {
+                $pdf = $this->renderDocument($request, $template, compact('user', 'experiences', 'educations', 'skills', 'organizations', 'achievements', 'projects'));
+                return response($pdf->output(), 200, [
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="CV-preview.pdf"',
+                    'Cache-Control' => 'private, no-store',
+                    'X-Content-Type-Options' => 'nosniff',
+                ]);
+            } catch (\Throwable $e) {
+                Log::warning('CV preview rendering failed', ['user_id' => $user->id, 'template' => $template]);
+                return response('The CV preview could not be generated. Reload to retry or return to the builder.', 503)
+                    ->header('Content-Type', 'text/plain; charset=UTF-8')->header('Cache-Control', 'private, no-store');
+            }
         }
-        
+
         return view('cv-builder.preview', compact(
             'user',
             'template',
@@ -131,14 +140,6 @@ class CvBuilderController extends Controller
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        
-        // Check CV generation limit for free tier
-        if (!$user->incrementCvGenerationCount()) {
-            $remaining = $user->getRemainingCvGenerations();
-            return redirect()->back()->with('error', 
-                "You've reached your CV generation limit (3 per month). Upgrade to Premium for unlimited CV generations!"
-            );
-        }
         
         // Get template and validate
         $template = $request->input('template', 'minimal');
@@ -174,33 +175,21 @@ class CvBuilderController extends Controller
         $achievements = $user->achievements()->orderBy('display_order')->get();
         $projects = $user->projects()->orderBy('display_order')->get();
         
-        $defaultMargin = '15mm';
-        $margin = in_array($request->input('margin'), ['0', '10mm', '12mm', '15mm', '20mm', '22mm', '28mm'], true) ? $request->input('margin') : $defaultMargin;
-        $fontSize = in_array($request->input('font_size'), ['8.5pt', '9.5pt', '10.5pt'], true) ? $request->input('font_size') : '9.5pt';
-
         try {
-            // Generate PDF using DomPDF
-            $pdf = Pdf::loadView("cv-templates.{$template}", [
-                'user' => $user,
-                'experiences' => $experiences,
-                'educations' => $educations,
-                'skills' => $skills,
-                'organizations' => $organizations,
-                'achievements' => $achievements,
-                'projects' => $projects,
-                'margin' => $margin,
-                'fontSize' => $fontSize,
-            ]);
+            $pdf = $this->renderDocument($request, $template, compact('user', 'experiences', 'educations', 'skills', 'organizations', 'achievements', 'projects'));
 
-            $pdf->setPaper('a4', 'portrait');
-            $pdf->setOptions([
-                'isHtml5ParserEnabled' => true,
-                'isRemoteEnabled' => true,
-                'defaultFont' => ($template === 'elegant') ? 'DejaVu Serif' : 'DejaVu Sans',
-                'dpi' => 96,
-                'defaultMediaType' => 'print',
-            ]);
-        } catch (\Exception $e) {
+            $cleanName = trim(strtoupper(preg_replace('/[^a-zA-Z0-9]+/', '_', $user->name)), '_');
+            // download() eagerly renders; quota may be consumed only after it succeeds.
+            $download = $pdf->download('CV_' . $cleanName . '.pdf');
+            if (!str_starts_with($download->getContent(), '%PDF-')) {
+                throw new \UnexpectedValueException('PDF renderer returned invalid output.');
+            }
+            if (!$user->incrementCvGenerationCount()) {
+                return redirect()->back()->with('error',
+                    "You've reached your CV generation limit (3 per month). Upgrade to Premium for unlimited CV generations!"
+                );
+            }
+        } catch (\Throwable $e) {
             Log::error("Error generating PDF: " . $e->getMessage(), [
                 'user_id' => $user->id,
                 'template' => $template,
@@ -223,13 +212,24 @@ class CvBuilderController extends Controller
             $user->id
         );
         
-        // Generate clean and professional uppercase filename: CV_NAMA_LENGKAP.pdf
-        $cleanName = strtoupper(preg_replace('/[^a-zA-Z0-9]+/', '_', $user->name));
-        $cleanName = trim($cleanName, '_');
-        $filename = 'CV_' . $cleanName . '.pdf';
-        
-        // Download PDF
-        return $pdf->download($filename);
+        return $download;
+    }
+
+    private function renderDocument(Request $request, string $template, array $data): \Barryvdh\DomPDF\PDF
+    {
+        $data['margin'] = in_array($request->input('margin'), ['0', '10mm', '12mm', '15mm', '20mm', '22mm', '28mm'], true) ? $request->input('margin') : '15mm';
+        $data['fontSize'] = in_array($request->input('font_size'), ['8.5pt', '9.5pt', '10.5pt'], true) ? $request->input('font_size') : '9.5pt';
+        $pdf = Pdf::loadView("cv-templates.{$template}", $data);
+        $pdf->setPaper('a4', 'portrait');
+        $pdf->setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => false,
+            'isPhpEnabled' => false,
+            'defaultFont' => $template === 'elegant' ? 'DejaVu Serif' : 'DejaVu Sans',
+            'dpi' => 96,
+            'defaultMediaType' => 'print',
+        ]);
+        return $pdf;
     }
 
     /**

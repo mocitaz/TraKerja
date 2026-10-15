@@ -608,6 +608,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->canAccessFeature('email_notifications');
     }
 
+    public function wantsEmailNotification(string $type): bool
+    {
+        $preference = match ($type) {
+            'interview' => 'notify_interview_reminders',
+            'goal_achieved' => 'notify_goal_achieved',
+            'goal_reminder' => 'notify_goal_reminders',
+            default => null,
+        };
+
+        return $preference !== null && $this->canAccessEmailNotifications()
+            && $this->email_notifications_enabled && $this->{$preference};
+    }
+
     /**
      * Check if user can access AI Analyzer
      */
@@ -692,16 +705,14 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function checkCvGenerationReset(): void
     {
-        $now = now();
-        $lastReset = $this->last_cv_generation_reset;
-        
-        // Reset if it's a new month or never reset before
-        if (!$lastReset || $lastReset->month !== $now->month || $lastReset->year !== $now->year) {
-            $this->update([
-                'cv_generated_this_month' => 0,
-                'last_cv_generation_reset' => $now->toDateString()
-            ]);
-        }
+        $today = now();
+        // Test the stored reset date, not a request's potentially stale model snapshot.
+        $this->newQuery()->whereKey($this->getKey())->where(function ($query) use ($today) {
+            $query->whereNull('last_cv_generation_reset')
+                ->orWhereDate('last_cv_generation_reset', '<', $today->copy()->startOfMonth()->toDateString())
+                ->orWhereDate('last_cv_generation_reset', '>=', $today->copy()->startOfMonth()->addMonth()->toDateString());
+        })->update(['cv_generated_this_month' => 0, 'last_cv_generation_reset' => $today->toDateString()]);
+        $this->refresh();
     }
     
     /**
@@ -717,22 +728,19 @@ class User extends Authenticatable implements MustVerifyEmail
             return true;
         }
         
-        // PREMIUM MODE: Premium users unlimited
-        if ($this->isPremium()) {
+        return $this->getConnection()->transaction(function () {
+            $current = $this->newQuery()->whereKey($this->getKey())->lockForUpdate()->firstOrFail();
+            if ($current->isPremium()) return true;
+
+            $current->checkCvGenerationReset();
+            $limit = $current->getFeatureLimit('cv_generated');
+            if ($current->cv_generated_this_month >= $limit) return false;
+
+            $current->increment('cv_generated_this_month');
+            $this->setRawAttributes($current->getAttributes(), true);
+
             return true;
-        }
-        
-        // PREMIUM MODE: Check free tier limit
-        $this->checkCvGenerationReset();
-        
-        $limit = $this->getFeatureLimit('cv_generated');
-        
-        if ($this->cv_generated_this_month >= $limit) {
-            return false;
-        }
-        
-        $this->increment('cv_generated_this_month');
-        return true;
+        });
     }
     
     /**
@@ -771,13 +779,14 @@ class User extends Authenticatable implements MustVerifyEmail
             return true;
         }
         
-        // Check if balance > 0
-        if ($this->ai_credits <= 0) {
-            return false;
-        }
-        
-        $this->decrement('ai_credits');
-        return true;
+        return $this->reserveAiAnalyzerCredit();
+    }
+
+    public function reserveAiAnalyzerCredit(): bool
+    {
+        // The balance predicate and debit must execute in the same database statement.
+        return $this->newQuery()->whereKey($this->getKey())
+            ->where('ai_credits', '>', 0)->decrement('ai_credits') === 1;
     }
     
     /**

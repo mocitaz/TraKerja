@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\AiAnalyzerResult;
+use App\Models\Setting;
+use App\Support\AnalyzerResultContract;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
@@ -50,18 +53,6 @@ class AiAnalyzerController extends Controller
 
         $user = Auth::user();
 
-        // Check if user can access AI Analyzer with monthly limit
-        if (!$user->canAccessAiAnalyzerWithLimit()) {
-            $isPremium = $user->isPremium();
-            $errorMsg = $isPremium 
-                ? 'Anda sudah mencapai batas 5x analisa bulan ini. Batas akan reset bulan depan.'
-                : 'Anda sudah menggunakan free trial AI Analyzer (1x). Upgrade ke Premium untuk 5x analisa per bulan!';
-            
-            return back()->withErrors([
-                'analyze_error' => $errorMsg
-            ])->withInput();
-        }
-
         // Increase execution time limit for API call (AI analysis can take time)
         // Try both methods to ensure it works in different PHP configurations
         @ini_set('max_execution_time', 180);
@@ -83,6 +74,9 @@ class AiAnalyzerController extends Controller
             'job_description.max' => 'Job description maksimal 2500 karakter.',
         ]);
 
+        $creditReserved = false;
+        $completed = false;
+
         try {
             // Prepare multipart form data for Vercel API
             $file = $request->file('resume');
@@ -92,6 +86,16 @@ class AiAnalyzerController extends Controller
                 return back()->withErrors([
                     'analyze_error' => 'File resume tidak valid atau gagal diunggah.'
                 ])->withInput();
+            }
+
+            if (Setting::isMonetizationEnabled()) {
+                if (!$user->reserveAiAnalyzerCredit()) {
+                    return back()->withErrors([
+                        'analyze_error' => 'Kredit AI Analyzer Anda habis atau sedang digunakan. Isi ulang kredit untuk melanjutkan.',
+                    ])->withInput();
+                }
+                $creditReserved = true;
+                $user->refresh();
             }
 
             // Local parsing removed, directly forwarding the file to the analyzer API
@@ -180,15 +184,22 @@ class AiAnalyzerController extends Controller
                 ])->withInput();
             }
 
-            $analysisResult = $response->json();
+            $analysisResult = app(AnalyzerResultContract::class)->validate($response->json());
 
-            // Increment AI Analyzer usage count
-            $user->incrementAiAnalyzerCount();
-            
-            // Also mark trial as used for tracking (backward compatibility)
-            if (!$user->isPremium() && !$user->has_used_ai_analyzer_trial) {
-                $user->useAiAnalyzerTrial();
-            }
+            $result = DB::transaction(function () use ($user, $jobDescription, $file, $analysisResult) {
+                $result = AiAnalyzerResult::create([
+                    'user_id' => $user->id,
+                    'job_description' => $jobDescription,
+                    'resume_file_name' => $file->getClientOriginalName(),
+                    'analysis_result' => $analysisResult,
+                ]);
+                if (!$user->isPremium() && !$user->has_used_ai_analyzer_trial) {
+                    $user->useAiAnalyzerTrial();
+                }
+
+                return $result;
+            });
+            $completed = true;
 
             ActivityLogger::log(
                 'ai_analyzer_usage',
@@ -198,31 +209,13 @@ class AiAnalyzerController extends Controller
                 $user->id
             );
 
-            // Save analysis result to database
-            try {
-                $result = AiAnalyzerResult::create([
-                    'user_id' => $user->id,
-                    'job_description' => $jobDescription,
-                    'resume_file_name' => $file->getClientOriginalName(),
-                    'analysis_result' => $analysisResult,
-                ]);
+            return redirect()->route('ai-analyzer.show', $result->id);
 
-                // Redirect to show page to avoid MethodNotAllowed on refresh
-                return redirect()->route('ai-analyzer.show', $result->id);
-            } catch (\Exception $e) {
-                \Log::error('Failed to save AI Analyzer result to database: ' . $e->getMessage(), [
-                    'user_id' => $user->id,
-                    'exception' => $e,
-                ]);
-                
-                $unsaved = new AiAnalyzerResult([
-                    'user_id' => $user->id, 'resume_file_name' => $file->getClientOriginalName(),
-                    'analysis_result' => $analysisResult, 'job_description' => $jobDescription,
-                ]);
-                $unsaved->created_at = now();
-                return app(\App\Support\AiStudioWorkspace::class)->render($user, 'analyzer', $unsaved);
-            }
-
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return back()->withErrors([
+                'analyze_error' => 'Hasil analisis belum berhasil disimpan. Kredit Anda tidak terpakai. Silakan coba lagi.',
+            ])->withInput();
         } catch (\Illuminate\Http\Client\ConnectionException $e) {
             return back()->withErrors([
                 'analyze_error' => 'Gagal terhubung ke server analisis. Silakan coba lagi beberapa saat.'
@@ -255,6 +248,10 @@ class AiAnalyzerController extends Controller
             return back()->withErrors([
                 'analyze_error' => 'Terjadi kesalahan: ' . $e->getMessage()
             ])->withInput();
+        } finally {
+            if ($creditReserved && !$completed) {
+                $user->addAiCredits(1);
+            }
         }
     }
 

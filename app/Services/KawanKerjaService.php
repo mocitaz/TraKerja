@@ -389,18 +389,22 @@ PROMPT;
             ],
         ];
 
-        // 1. Try Primary Model
-        $response = $this->executeStreamRequest($this->primaryModel, $payload, $onChunk);
-        if ($response !== null) {
-            return ['success' => true, 'reply' => $response];
-        }
+        $started = false;
+        $emit = function (string $chunk) use ($onChunk, &$started) {
+            if ($chunk !== '') $started = true;
+            $onChunk($chunk);
+        };
+        $response = $this->executeStreamRequest($this->primaryModel, $payload, $emit);
+        if ($response !== null) return ['success' => true, 'reply' => $response];
+        if ($started) return ['success' => false, 'reply' => ''];
 
         // 2. Try Fallback Model
-        $response = $this->executeStreamRequest($this->fallbackModel, $payload, $onChunk);
+        $response = $this->executeStreamRequest($this->fallbackModel, $payload, $emit);
         if ($response !== null) {
             return ['success' => true, 'reply' => $response];
         }
 
+        if ($started) return ['success' => false, 'reply' => ''];
         $onChunk(self::UNAVAILABLE_MESSAGE);
         return [
             'success' => false,

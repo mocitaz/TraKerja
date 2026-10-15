@@ -204,8 +204,7 @@
             </div>
         </div>
 
-        {{-- Interview Fields (visible when status = Interview or stage = HR/User Interview) --}}
-        @if(in_array($application_status, ['Interview']) || in_array($recruitment_stage, ['HR - Interview', 'User - Interview']))
+        @if(\App\Support\JobApplicationStatus::canSchedule($recruitment_stage))
         <div class="job-form__interview-box bg-primary-50/20 border border-primary-100/50 rounded-lg p-3 space-y-2.5 animate-fadeIn">
             <div class="flex items-center gap-2 mb-0.5">
                 <div class="w-5 h-5 bg-primary-100/60 rounded flex items-center justify-center">
@@ -286,7 +285,8 @@ window.updateScrapeStatus = function(state, message = '', root) {
     
     if (!statusDiv || !iconEl || !textEl) return;
     
-    statusDiv.className = "mt-1.5 px-2 py-1 text-xs font-semibold rounded flex items-center gap-1.5 transition-all duration-300";
+    statusDiv.className = "mt-1.5 text-[11px] font-medium leading-snug flex items-start gap-1.5";
+    textEl.className = "min-w-0 break-words";
     
     if (state === 'idle') {
         statusDiv.classList.add('hidden');
@@ -297,51 +297,49 @@ window.updateScrapeStatus = function(state, message = '', root) {
         }
     } else if (state === 'fetching') {
         statusDiv.classList.remove('hidden');
-        statusDiv.className = "mt-1.5 text-xs font-semibold flex items-center gap-1 transition-all duration-300 select-none text-ui-muted";
-        iconEl.className = "ph-bold ph-spinner animate-spin text-xs text-ui-muted";
-        textEl.textContent = message || "Membaca data lowongan...";
+        statusDiv.className = "mt-1.5 text-[11px] font-medium leading-snug flex items-start gap-1.5 transition-colors select-none text-ui-muted";
+        iconEl.className = "mt-0.5 shrink-0 ph-bold ph-spinner animate-spin text-xs text-ui-muted";
+        textEl.textContent = message || "Reading job details…";
         
         if (btn) {
             btn.disabled = true;
             btn.className = "h-[32px] px-3.5 bg-zinc-50 text-ui-muted border border-zinc-200 rounded-md text-xs font-bold transition-all flex items-center justify-center select-none shrink-0";
-            btn.innerHTML = '<i aria-hidden="true" class="ph-bold ph-spinner animate-spin text-xs mr-1"></i><span>Membaca...</span>';
+            btn.innerHTML = '<i aria-hidden="true" class="ph-bold ph-spinner animate-spin text-xs mr-1"></i><span>Reading…</span>';
         }
     } else if (state === 'bypassing') {
         statusDiv.classList.remove('hidden');
-        statusDiv.className = "mt-1.5 text-xs font-semibold flex items-center gap-1 transition-all duration-300 select-none text-amber-800";
-        iconEl.className = "ph-bold ph-shield-warning animate-bounce text-xs text-amber-500";
-        textEl.textContent = message || "Akses dibatasi. Mencoba mengambil data kembali...";
+        statusDiv.className = "mt-1.5 text-[11px] font-medium leading-snug flex items-start gap-1.5 transition-colors select-none text-amber-800";
+        iconEl.className = "mt-0.5 shrink-0 ph-bold ph-shield-warning animate-bounce text-xs text-amber-500";
+        textEl.textContent = message || "Access restricted. Retrying…";
         
         if (btn) {
             btn.disabled = true;
             btn.className = "h-[32px] px-3.5 bg-amber-50 text-amber-800 border border-amber-200 rounded-md text-xs font-bold transition-all flex items-center justify-center select-none shrink-0 animate-pulse";
-            btn.innerHTML = '<i aria-hidden="true" class="ph-bold ph-shield-warning text-xs mr-1"></i><span>Mencoba Lagi...</span>';
+            btn.innerHTML = '<i aria-hidden="true" class="ph-bold ph-shield-warning text-xs mr-1"></i><span>Retrying…</span>';
         }
     } else if (state === 'success') {
         statusDiv.classList.remove('hidden');
-        statusDiv.className = "mt-1.5 text-xs font-semibold flex items-center gap-1 transition-all duration-300 select-none text-emerald-700";
-        iconEl.className = "ph-bold ph-check-circle text-xs text-emerald-700";
-        textEl.textContent = message || "Berhasil memuat data lowongan!";
+        statusDiv.className = "mt-1.5 text-[11px] font-medium leading-snug flex items-start gap-1.5 transition-colors select-none text-emerald-700";
+        iconEl.className = "mt-0.5 shrink-0 ph-bold ph-check-circle text-xs text-emerald-700";
+        textEl.textContent = message || "Job details filled. Review before saving.";
         
         if (btn) {
             btn.disabled = false;
             btn.className = "h-[32px] px-3.5 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-md text-xs font-bold transition-all flex items-center justify-center select-none shrink-0";
-            btn.innerHTML = '<i aria-hidden="true" class="ph-bold ph-check text-xs mr-1"></i><span>Terisi!</span>';
+            btn.innerHTML = '<i aria-hidden="true" class="ph-bold ph-check text-xs mr-1"></i><span>Filled</span>';
         }
         
-        setTimeout(() => {
-            window.updateScrapeStatus('idle', '', root);
-        }, 3000);
+
     } else if (state === 'error') {
         statusDiv.classList.remove('hidden');
-        statusDiv.className = "mt-1.5 text-xs font-semibold flex items-center gap-1 transition-all duration-300 select-none text-rose-600";
-        iconEl.className = "ph-bold ph-warning-circle text-xs text-rose-700";
-        textEl.textContent = message || "Gagal mengambil data dari URL.";
+        statusDiv.className = "mt-1.5 text-[11px] font-medium leading-snug flex items-start gap-1.5 transition-colors select-none text-rose-600";
+        iconEl.className = "mt-0.5 shrink-0 ph-bold ph-warning-circle text-xs text-rose-700";
+        textEl.textContent = message || "Could not read this listing. Please try again.";
         
         if (btn) {
             btn.disabled = false;
             btn.className = "h-[32px] px-3.5 bg-rose-50 text-rose-800 border border-rose-200 rounded-md text-xs font-bold transition-all flex items-center justify-center select-none shrink-0";
-            btn.innerHTML = '<i aria-hidden="true" class="ph-bold ph-x text-xs mr-1"></i><span>Gagal</span>';
+            btn.innerHTML = '<i aria-hidden="true" class="ph-bold ph-x text-xs mr-1"></i><span>Retry</span>';
         }
         
         setTimeout(() => {
@@ -350,136 +348,4 @@ window.updateScrapeStatus = function(state, message = '', root) {
     }
 };
 
-window.fetchJobDetailsFromUrl = function(button) {
-    const root = button.closest('[data-job-application-form]');
-    const component = window.Livewire?.find(root.getAttribute('wire:id'));
-    const updateStatus = (state, message) => window.updateScrapeStatus(state, message, root);
-    const urlInput = root.querySelector('input[type="url"]');
-    const url = urlInput ? urlInput.value.trim() : '';
-    if (!url) {
-        updateStatus('error', 'Silakan masukkan URL lowongan kerja terlebih dahulu!');
-        return;
-    }
-    
-    updateStatus('fetching', 'Menghubungkan ke server untuk mengambil info lowongan...');
-
-    fetch('/jobs/scrape-url', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-        },
-        body: JSON.stringify({ url: url })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            if (data.company_name && component) {
-                component.set('company_name', data.company_name);
-            }
-            if (data.job_title && component) {
-                component.set('position', data.job_title);
-            }
-            if (data.location && component) {
-                component.set('location', data.location);
-                component.call('parseLocation', data.location);
-            }
-
-            // Auto-detect platform from URL
-            let detectPlatform = '';
-            if (url.includes('linkedin.com')) {
-                detectPlatform = 'LinkedIn';
-            } else if (url.includes('jobstreet.com') || url.includes('seek.com')) {
-                detectPlatform = 'JobStreet';
-            } else if (url.includes('talentics.id')) {
-                detectPlatform = 'Talentics';
-            } else if (url.includes('dealls.com')) {
-                detectPlatform = 'Dealls';
-            } else if (url.includes('kalibrr.com')) {
-                detectPlatform = 'Kalibrr';
-            } else if (url.includes('glints.com')) {
-                detectPlatform = 'Glints';
-            }
-            if (detectPlatform && component) {
-                component.set('platform', detectPlatform);
-            }
-
-            updateStatus('success', 'Berhasil mengisi detail lowongan dari ' + (detectPlatform || 'URL') + '!');
-        } else {
-            console.warn('Backend scrape failed. Attempting client-side bypass proxy...');
-            updateStatus('bypassing', 'Melewati proteksi keamanan website (Cloudflare bypass)...');
-            
-            // Try fetching through api.allorigins.win (public CORS proxy)
-            fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(url))
-            .then(proxyRes => {
-                if (!proxyRes.ok) throw new Error('Proxy server returned ' + proxyRes.status);
-                return proxyRes.json();
-            })
-            .then(proxyData => {
-                if (!proxyData || !proxyData.contents) {
-                    throw new Error('Gagal mendapatkan isi halaman dari proxy.');
-                }
-                
-                // Send this raw HTML content to our backend for parsing
-                return fetch('/jobs/scrape-html', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                    },
-                    body: JSON.stringify({
-                        html: proxyData.contents,
-                        url: url
-                    })
-                });
-            })
-            .then(res => res.json())
-            .then(finalData => {
-                if (finalData.success) {
-                    if (finalData.company_name && component) {
-                        component.set('company_name', finalData.company_name);
-                    }
-                    if (finalData.job_title && component) {
-                        component.set('position', finalData.job_title);
-                    }
-                    if (finalData.location && component) {
-                        component.set('location', finalData.location);
-                        component.call('parseLocation', finalData.location);
-                    }
-
-                    // Auto-detect platform from URL
-                    let detectPlatform = '';
-                    if (url.includes('linkedin.com')) {
-                        detectPlatform = 'LinkedIn';
-                    } else if (url.includes('jobstreet.com') || url.includes('seek.com')) {
-                        detectPlatform = 'JobStreet';
-                    } else if (url.includes('talentics.id')) {
-                        detectPlatform = 'Talentics';
-                    } else if (url.includes('dealls.com')) {
-                        detectPlatform = 'Dealls';
-                    } else if (url.includes('kalibrr.com')) {
-                        detectPlatform = 'Kalibrr';
-                    } else if (url.includes('glints.com')) {
-                        detectPlatform = 'Glints';
-                    }
-                    if (detectPlatform && component) {
-                        component.set('platform', detectPlatform);
-                    }
-
-                    updateStatus('success', 'Bypass berhasil! Detail lowongan terisi dari ' + (detectPlatform || 'URL') + '.');
-                } else {
-                    throw new Error(finalData.message || 'Gagal memproses data dari proxy.');
-                }
-            })
-            .catch(proxyErr => {
-                console.error('Proxy bypass failed:', proxyErr);
-                updateStatus('error', 'Gagal memproses data. Keamanan website (403/Cloudflare) memblokir server.');
-            });
-        }
-    })
-    .catch(err => {
-        console.error('Scrape connection error:', err);
-        updateStatus('error', 'Gagal mengambil data dari URL. Silakan masukkan data manual.');
-    });
-};
 </script>

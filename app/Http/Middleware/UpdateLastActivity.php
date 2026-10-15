@@ -21,8 +21,8 @@ class UpdateLastActivity
             // to avoid hitting the database too frequently
             $user = Auth::user();
             if (!$user->last_activity_at || $user->last_activity_at->diffInMinutes(now()) >= 1) {
-                // Use update to avoid triggering model events if not necessary
-                $user->update(['last_activity_at' => now()]);
+                $user->last_activity_at = now();
+                $user->saveQuietly();
             }
         }
 

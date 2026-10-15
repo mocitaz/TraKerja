@@ -44,8 +44,8 @@ class SendInterviewReminders extends Command
         
         foreach ($applications as $application) {
             $user = $application->user;
-            if (!$user || !$user->canAccessEmailNotifications() || !$user->notify_interview_reminders) {
-                $this->info("Skipped {$application->company_name} for user {$user->email} (limit or preferences disabled)");
+            if (!$user || !$user->wantsEmailNotification('interview')) {
+                $this->info("Skipped {$application->company_name} (user unavailable or notifications disabled)");
                 continue;
             }
             
