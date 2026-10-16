@@ -102,7 +102,7 @@ class SummaryWorkspaceTest extends TestCase
         $map = \App\Support\SummaryLocationMap::fromRows($rows);
         $this->assertCount(2, $map['mapped']);
         $this->assertSame(5, $map['maximum']);
-        $this->assertSame('#924681', $map['mapped'][0]['color']);
+        $this->assertSame('#496b60', $map['mapped'][0]['color']);
         $this->assertNotSame($map['mapped'][0]['color'], $map['mapped'][1]['color']);
         $this->assertNotEmpty($map['mapped'][0]['path']);
         $this->assertCount(4, explode(' ', $map['mapped'][0]['view']));
@@ -114,6 +114,42 @@ class SummaryWorkspaceTest extends TestCase
         $this->assertSame('Denpasar', $map['mapped'][1]['name']);
         $this->assertSame(['Remote', 'Unknown town'], array_column($map['unmapped'], 'name'));
         $this->assertEquals(16, collect($map['mapped'])->sum('total') + collect($map['unmapped'])->sum('total'));
+    }
+
+    public function test_location_explorer_uses_city_areas_without_point_markers(): void
+    {
+        $owner = User::factory()->create();
+        foreach (['Jakarta', 'Timika'] as $location) {
+            JobApplication::factory()->create([
+                'user_id' => $owner->id, 'location' => $location,
+                'application_date' => today()->subDay(),
+            ]);
+        }
+        $response = $this->actingAs($owner)->get(route('summary'))->assertOk()
+            ->assertSee('Outside the map')->assertSee('Timika');
+        $document = new \DOMDocument();
+        @$document->loadHTML($response->getContent());
+        $xpath = new \DOMXPath($document);
+        $atlas = "//div[contains(@class, 'summary-region-atlas')]";
+        $this->assertSame(0, $xpath->query($atlas."//*[local-name()='circle']")->length);
+        $this->assertGreaterThan(0, $xpath->query($atlas."//*[local-name()='path' and contains(@class, 'summary-map-city')]")->length);
+    }
+
+    public function test_locations_without_boundaries_stay_in_the_unplotted_totals(): void
+    {
+        $map = \App\Support\SummaryLocationMap::fromRows(collect([
+            ['name' => 'Timika', 'total' => 3, 'interviews' => 1, 'accepted' => 0],
+            ['name' => 'Jakarta', 'total' => 2, 'interviews' => 0, 'accepted' => 1],
+        ]));
+        $this->assertCount(1, $map['mapped']);
+        $this->assertSame('Jakarta', $map['mapped'][0]['name']);
+        $this->assertSame(40.0, $map['mapped'][0]['share']);
+        $this->assertSame('Timika', $map['unmapped'][0]['name']);
+        $this->assertSame(5, collect($map['mapped'])->sum('total') + collect($map['unmapped'])->sum('total'));
+        $this->assertNotEmpty($map['districts']);
+        [$x, $y, $width, $height] = array_map('floatval', explode(' ', $map['mapped'][0]['view']));
+        $this->assertGreaterThan(0, $width);
+        $this->assertGreaterThan(0, $height);
     }
 
     public function test_empty_summary_and_premium_access_keep_honest_states(): void

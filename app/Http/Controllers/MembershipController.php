@@ -31,6 +31,10 @@ class MembershipController extends Controller
                 ['label' => 'Cover Letter', 'field' => 'cl_credits', 'balance' => max(0, (int) $user->cl_credits), 'tone' => 'lavender'],
                 ['label' => 'AI Photo', 'field' => 'photo_credits', 'balance' => max(0, (int) $user->photo_credits), 'tone' => 'peach'],
             ],
+            'pendingPayment' => Payment::where('user_id', $user->id)
+                ->whereIn('status', ['PENDING', 'WAITING'])
+                ->where(fn ($query) => $query->whereNull('expired_at')->orWhere('expired_at', '>', now()))
+                ->orderByDesc('created_at')->orderByDesc('id')->first(),
             'payments' => Payment::where('user_id', $user->id)->orderByDesc('created_at')->orderByDesc('id')->paginate(8)->withQueryString(),
         ]);
     }

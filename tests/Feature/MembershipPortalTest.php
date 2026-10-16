@@ -66,6 +66,23 @@ class MembershipPortalTest extends TestCase
             ->assertSee('href="'.url('/membership').'"', false);
     }
 
+    public function test_pending_payment_notice_is_owned_unexpired_and_visible_beyond_the_history_page(): void
+    {
+        $user = User::factory()->create();
+        $attributes = ['payment_channel_code' => 'qris', 'customer_name' => 'Test User', 'customer_email' => 'test@example.test', 'customer_phone' => '0800000000', 'amount' => 9999];
+        $pending = Payment::create($attributes + ['user_id' => $user->id, 'order_id' => 'PENDING-OWN', 'status' => 'WAITING', 'expired_at' => now()->addDay()]);
+        foreach (range(1, 9) as $number) {
+            Payment::create($attributes + ['user_id' => $user->id, 'order_id' => 'PAID-'.$number, 'status' => 'SUCCESS']);
+        }
+        Payment::create($attributes + ['user_id' => $user->id, 'order_id' => 'EXPIRED-OWN', 'status' => 'WAITING', 'expired_at' => now()->subDay()]);
+        Payment::create($attributes + ['user_id' => User::factory()->create()->id, 'order_id' => 'FOREIGN-PENDING', 'status' => 'WAITING', 'expired_at' => now()->addDay()]);
+        $this->actingAs($user)->get('/membership')->assertOk()
+            ->assertViewHas('pendingPayment', fn ($payment) => $payment->id === $pending->id)
+            ->assertSee('A payment is waiting for you')->assertSee('PENDING-OWN')->assertDontSee('FOREIGN-PENDING');
+        $pending->update(['status' => 'SUCCESS']);
+        $this->get('/membership')->assertOk()->assertViewHas('pendingPayment', null)->assertDontSee('A payment is waiting for you');
+    }
+
     public function test_payment_history_is_paginated_and_expired_orders_cannot_offer_resume(): void
     {
         $user = User::factory()->create();

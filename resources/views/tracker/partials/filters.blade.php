@@ -1,6 +1,8 @@
-<div class="tracker-filters">
+@php($activeFilterCount = (int) filled($platformFilter) + (int) filled($recruitmentStageFilter) + (int) ($mode === 'table' && filled($statusFilter)) + (int) $showArchived)
+<div class="tracker-filters" x-data="{ filtersExpanded: @js($activeFilterCount > 0) }" :class="{ 'is-mobile-expanded': filtersExpanded }">
     <div class="tracker-search"><i class="ph ph-magnifying-glass" aria-hidden="true"></i><input type="search" wire:model.live.debounce.300ms="search" placeholder="Search roles, companies, locations…" aria-label="Search applications"></div>
-    <div class="tracker-filter-controls">
+    <button type="button" class="tracker-mobile-filter-toggle" @click="filtersExpanded = !filtersExpanded" :aria-expanded="filtersExpanded" aria-controls="tracker-filters-{{ $mode }}"><i class="ph ph-sliders-horizontal" aria-hidden="true"></i>Filters @if($activeFilterCount)<span>{{ $activeFilterCount }}</span>@endif</button>
+    <div class="tracker-filter-controls" id="tracker-filters-{{ $mode }}">
         @if($mode === 'table')<select wire:model.live="statusFilter" aria-label="Filter by status"><option value="">All statuses</option>@foreach($statusOptions as $status)<option value="{{ $status }}">{{ $status }}</option>@endforeach</select>@endif
         <select wire:model.live="platformFilter" aria-label="Filter by source"><option value="">All sources</option>@foreach($platformOptions as $platform)<option value="{{ $platform }}">{{ $platform }}</option>@endforeach</select>
         <select wire:model.live="recruitmentStageFilter" aria-label="Filter by recruitment stage"><option value="">All stages</option>@foreach($recruitmentStageOptions as $stage)<option value="{{ $stage }}">{{ $stage }}</option>@endforeach</select>

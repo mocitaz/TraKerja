@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Electrical and electronics">
+<rect width="96" height="96" rx="28" fill="#f2dfe4"/>
+<circle cx="72" cy="21" r="7" fill="#fff7e8"/>
+<ellipse cx="48" cy="78" rx="26" ry="4" fill="#dba7b5" opacity=".35"/>
+<g transform="translate(18 15) scale(2.5)" stroke="#292b30" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" fill="none"><rect x="5" y="5" width="14" height="14" rx="2" fill="#fff7e8"/><path d="M8 1v4m4-4v4m4-4v4M8 19v4m4-4v4m4-4v4M1 8h4m-4 4h4m-4 4h4m14-8h4m-4 4h4m-4 4h4"/><path d="m13 7-4 6h4l-2 5 5-7h-4l1-4Z" fill="#dba7b5"/></g>
+</svg>

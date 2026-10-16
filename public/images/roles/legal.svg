@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Legal and compliance">
+<rect width="96" height="96" rx="28" fill="#f7e5d9"/>
+<circle cx="72" cy="21" r="7" fill="#fff7e8"/>
+<ellipse cx="48" cy="78" rx="26" ry="4" fill="#edb38f" opacity=".35"/>
+<g transform="translate(18 15) scale(2.5)" stroke="#292b30" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M12 2v20M7 22h10M3 6h18M5 6l-4 8h8L5 6Zm14 0-4 8h8l-4-8Z" fill="#edb38f"/><path d="M1 14c0 5 8 5 8 0m6 0c0 5 8 5 8 0" fill="#fff7e8"/></g>
+</svg>

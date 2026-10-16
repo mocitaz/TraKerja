@@ -3,6 +3,14 @@
 .tracker-viewbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
 .tracker-viewbar .workspace-switcher { margin: 0; }
 .tracker-viewbar .workspace-switcher button { display: inline-flex; gap: 9px; align-items: center; justify-content: center; min-width: 105px; }
+.tracker-page .workspace-switcher { background: #fff; border-color: #e4e7e5; box-shadow: none; }
+.tracker-page .workspace-switcher button { color: #707873; border: 0; box-shadow: none; }
+.tracker-page .workspace-switcher button:hover { background: #f5f6f5; color: #303936; }
+.tracker-page .workspace-switcher button.is-active { background: #f5f6f5; color: #303936; font-weight: 600; }
+.dark .tracker-page .workspace-switcher { background: #1e2120; border-color: #39423c; }
+.dark .tracker-page .workspace-switcher button { color: #adb9b1; }
+.dark .tracker-page .workspace-switcher button:hover,
+.dark .tracker-page .workspace-switcher button.is-active { background: #272d29; color: #edf2ef; }
 .tracker-list, .tracker-board { display: grid; gap: 20px; }
 .tracker-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 18px; border-radius: 22px; background: #ffffff80; border: 1.5px solid #ffffffb3; backdrop-filter: blur(16px); }
 .tracker-search { flex: 1 1 270px; position: relative; }
@@ -661,3 +669,9 @@
 .dark .tracker-draft-panel footer {
     border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
+
+.tracker-role-avatar { display: inline-flex; width: 38px; height: 38px; flex: 0 0 38px; border-radius: 12px; overflow: hidden; background: #ece0f1; box-shadow: inset 0 0 0 1px #292b3008; vertical-align: middle; }
+.tracker-role-avatar img { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.tracker-card-identity { display: flex; align-items: flex-start; gap: 10px; margin-top: 12px; min-width: 0; }
+.tracker-card-identity .tracker-card-link { display: block; min-width: 0; margin-top: 0; }
+.tracker-card-identity .tracker-role-avatar { width: 34px; height: 34px; flex-basis: 34px; border-radius: 10px; }

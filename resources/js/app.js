@@ -33,4 +33,4 @@ import './admin-payments-workspace';
 
 import './job-detail-tabs';
 
-import './admin-control';
+import "./nara-chat";

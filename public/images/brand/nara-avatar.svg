@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="nara-title">
+  <title id="nara-title">Nara career partner</title>
+  <defs>
+    <clipPath id="nara-circle"><circle cx="60" cy="60" r="60"/></clipPath>
+  </defs>
+  <g clip-path="url(#nara-circle)">
+    <rect width="120" height="120" fill="#ece0f1"/>
+    <g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M31 52V35Q30 12 59 12Q88 12 88 38V77Q85 89 72 89H39Q30 81 31 68Z" fill="#292b30"/>
+      <path d="M20 120V108Q21 89 48 85H72Q99 89 100 108V120" fill="#c3a1cf"/>
+      <path d="M52 74V86Q60 95 68 86V74" fill="#f2c6a5"/>
+      <path d="M49 88L60 98L71 88L67 120H53Z" fill="#fff7e8"/>
+      <path d="M45 88L39 101L50 106L47 120M75 88L81 101L70 106L73 120" fill="none"/>
+      <path d="M37 48Q29 43 31 54Q32 61 38 60M83 48Q91 43 89 54Q88 61 82 60" fill="#f2c6a5"/>
+      <path d="M37 36Q38 19 60 19Q82 19 83 36V56Q82 77 60 82Q38 77 37 56Z" fill="#f2c6a5"/>
+      <path d="M35 45V32Q35 13 59 13Q85 12 86 35L79 44V29Q65 40 42 31V44Z" fill="#292b30"/>
+      <path d="M45 44L52 43M68 43L75 44M49 50V54M71 50V54M59 53L56 62H61M53 69Q60 74 67 69" fill="none"/>
+      <rect x="41" y="46" width="17" height="13" rx="5" fill="none" stroke="#ff8b38"/>
+      <rect x="63" y="46" width="17" height="13" rx="5" fill="none" stroke="#ff8b38"/>
+      <path d="M58 50H63M36 50H41M80 50H85" fill="none"/>
+      <path d="M29 48V37Q29 8 60 8Q91 8 91 37V48" fill="none"/>
+      <rect x="27" y="45" width="7" height="16" rx="3.5" fill="#b0c8e3"/>
+      <rect x="86" y="45" width="7" height="16" rx="3.5" fill="#b0c8e3"/>
+      <path d="M90 61V64Q90 73 74 73" fill="none"/>
+      <rect x="66" y="70" width="9" height="5" rx="2.5" fill="#b0c8e3"/>
+      <path d="M33 108V120M87 108V120" fill="none"/>
+    </g>
+  </g>
+</svg>

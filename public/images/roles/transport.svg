@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Transport and field services">
+<rect width="96" height="96" rx="28" fill="#e1e6f3"/>
+<circle cx="72" cy="21" r="7" fill="#fff7e8"/>
+<ellipse cx="48" cy="78" rx="26" ry="4" fill="#b0c8e3" opacity=".35"/>
+<g transform="translate(18 15) scale(2.5)" stroke="#292b30" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M1 5h13v13H1V5Z" fill="#fff7e8"/><path d="M14 10h5l4 5v3h-9v-8Z" fill="#b0c8e3"/><circle cx="6" cy="19" r="3" fill="#b0c8e3"/><circle cx="19" cy="19" r="3" fill="#fff7e8"/><path d="M17 12v3h5"/></g>
+</svg>

@@ -1,6 +1,8 @@
 .platform-brand { display: inline-flex; align-items: center; gap: 9px; min-width: 0; vertical-align: middle; }
 .platform-brand__mark { display: inline-grid; place-items: center; flex: 0 0 32px; width: 32px; height: 32px; background: transparent; border: 0; border-radius: 0; color: #766188; }
 .platform-brand__mark img { width: 23px; height: 23px; object-fit: contain; }
+/* The source includes a gray square outside the circular JobStreet mark. */
+.platform-brand__mark img.platform-brand__logo--jobstreet { clip-path: circle(38% at 50% 50%); }
 .platform-brand__mark > i { font-size: 18px; }
 .platform-brand__mark > span { font-size: 11px; font-weight: 600; }
 .platform-brand__name { color: #574b63; font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }

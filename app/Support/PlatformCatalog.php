@@ -45,7 +45,7 @@ class PlatformCatalog
     {
         $slug = self::SLUGS[mb_strtolower(trim($name ?? ''))] ?? null;
         if (!$slug) return null;
-        foreach (['png', 'svg'] as $extension) {
+        foreach (($slug === 'indeed' ? ['svg', 'png'] : ['png', 'svg']) as $extension) {
             $path = "images/platforms/{$slug}.{$extension}";
             if (is_file(public_path($path))) return $path;
         }

@@ -24,10 +24,31 @@
             @if(session('success'))<div class="workspace-notice" role="status">{{ session('success') }}</div>@endif
             @if($job->is_archived)<div class="job-archived-notice" role="status">This application is archived. Restore it to show it in your active tracker.</div>@endif
 
-            <header class="job-heading job-enter">
-                <div class="job-heading-main"><div class="job-heading-labels"><span class="tracker-pill tracker-pill--{{ $tone }}">{{ $job->application_status }}</span>@if($job->is_pinned)<span class="job-pinned"><i class="ph-fill ph-push-pin" aria-hidden="true"></i>Pinned</span>@endif</div><h1>{{ $job->position }}</h1><p class="job-heading-company">{{ $job->company_name }}</p><div class="job-heading-meta"><x-platform-brand :name="$job->platform" class="platform-brand--compact" /><span>Applied {{ $job->application_date?->format('d M Y') ?: 'date not recorded' }}</span></div></div>
+            <header class="job-heading job-enter" x-data="dashboardWelcome()" @pointermove="move($event)" @pointerleave="reset()">
+                <div class="job-heading-orbit" aria-hidden="true"></div>
+                <div class="job-heading-main">
+                    <div class="job-heading-copy">
+                        <div class="job-heading-labels"><span class="job-heading-eyebrow">APPLICATION WORKSPACE</span><span class="tracker-pill tracker-pill--{{ $tone }}">{{ $job->application_status }}</span>@if($job->application_status === 'On Process')<span class="job-current-stage">{{ $currentLabel }}</span>@endif @if($job->is_pinned)<span class="job-pinned"><i class="ph-fill ph-push-pin" aria-hidden="true"></i>Pinned</span>@endif</div>
+                        <p class="job-heading-company">{{ $job->company_name }}</p>
+                        <h1>{{ $job->position }}</h1>
+                        <div class="job-heading-meta"><x-platform-brand :name="$job->platform" class="platform-brand--compact" /><span>Applied {{ $job->application_date?->format('d M Y') ?: 'date not recorded' }}</span></div>
+                    </div>
+                </div>
+                <div class="job-dossier-scene" aria-hidden="true">
+                    <div class="job-dossier-shadow"></div>
+                    <div class="job-dossier-stack">
+                        <div class="job-dossier-sheet job-dossier-sheet--back"></div>
+                        <div class="job-dossier-sheet job-dossier-sheet--middle"></div>
+                        <div class="job-dossier-sheet job-dossier-sheet--front">
+                            <div class="job-dossier-top"><span>TraKerja</span></div>
+                            <svg class="job-dossier-symbol" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 7h15l8 8v26H13V7Z"/><path d="M28 7v9h8M19 23h11M19 29h11M19 35h6"/></svg>
+                            <span class="job-dossier-label">{{ $job->application_status === 'On Process' ? 'Current stage' : 'Recorded outcome' }}</span>
+                            <strong>{{ $currentLabel }}</strong>
+                            <div class="job-dossier-foot"><span class="job-dossier-status"></span><span>{{ $job->is_archived ? 'Archived application' : 'Your application, organized.' }}</span></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="job-heading-bottom">
-                    <p class="job-heading-stage"><span>{{ $job->application_status === 'On Process' ? 'Current stage' : 'Recorded outcome' }}</span><strong>{{ $currentLabel }}</strong></p>
                 <div class="job-heading-actions" role="group" aria-label="Application actions">
                     <a href="{{ $editUrl }}" wire:navigate class="workspace-button workspace-button--primary"><i class="ph ph-pencil-simple" aria-hidden="true"></i>Edit application</a>
                     @if($sourceUrl)
@@ -41,9 +62,7 @@
                     </form>
                 </div>
                 </div>
-                <div class="job-heading-visual" aria-hidden="true">
-                    @include('jobs.partials.office-illustration')
-                </div>
+                <button type="button" class="job-motion-toggle" @click="toggleMotion()" x-show="!reduced" :aria-pressed="paused.toString()" x-text="paused ? 'Enable motion' : 'Pause motion'">Pause motion</button>
             </header>
 
             <div class="job-workspace-grid">
@@ -52,11 +71,11 @@
                     <div class="job-panel-viewport" x-ref="panels">
                     <div class="job-panel" id="job-panel-overview" role="tabpanel" aria-labelledby="job-tab-overview" x-ref="panel_overview" tabindex="-1" x-show="tab === 'overview'" aria-label="Application overview">
                         <section class="job-progress" aria-labelledby="job-progress-heading"><div class="job-section-heading"><h2 id="job-progress-heading">Application progress</h2><a href="{{ $editUrl }}" wire:navigate class="job-text-link">Update stage <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></div>
-                            <ol class="job-stage-track" aria-label="Stage overview" tabindex="0">@foreach($stages as $index => $stage)<li class="{{ $index === $current ? 'is-current' : '' }}" @if($index === $current) aria-current="step" @endif><span class="job-stage-dot" aria-hidden="true"></span><span>{{ $stage['label'] }}</span></li>@endforeach</ol><p class="job-stage-caption">Current stage snapshot · not a completed milestone history.</p>
+                            <ol class="job-stage-track" aria-label="Stage overview" tabindex="0">@foreach($stages as $index => $stage)<li class="{{ $index === $current ? 'is-current' : '' }}" @if($index === $current) aria-current="step" @endif><span class="job-stage-dot" aria-hidden="true">{{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}</span><span>{{ $stage['label'] }}</span></li>@endforeach</ol><p class="job-stage-caption">Only the recorded stage is highlighted. Previous steps are not a verified activity history.</p>
                             <livewire:job-follow-up :job-id="$job->id" :key="'detail-follow-up-'.$job->id" />
                         </section>
                         <section class="job-overview-facts" aria-labelledby="job-facts-heading"><h2 id="job-facts-heading">Application details</h2><dl><div><dt>Location</dt><dd>{{ $job->location ?: 'Not recorded' }}</dd></div><div><dt>Employment</dt><dd>{{ $job->career_level ?: 'Not recorded' }}</dd></div></dl>@if(!$sourceUrl)<p class="job-missing-source">No valid original listing link recorded. Add one when editing this application.</p>@endif</section>
-                        <section class="job-notes-preview" aria-labelledby="job-notes-preview-heading"><div class="job-section-heading"><h2 id="job-notes-preview-heading">Notes at a glance</h2><button type="button" @click="selectTab('notes', true)" class="job-text-link">{{ $job->notes ? 'Read notes' : 'Add notes' }} <i class="ph ph-arrow-right" aria-hidden="true"></i></button></div>@if($job->notes)<p>{{ \Illuminate\Support\Str::limit($job->notes, 230) }}</p>@endif</section>
+                        <section class="job-notes-preview" aria-labelledby="job-notes-preview-heading"><div class="job-section-heading"><h2 id="job-notes-preview-heading">Notes at a glance</h2><button type="button" @click="selectTab('notes', true)" class="job-text-link">{{ $job->notes ? 'Read notes' : 'Add notes' }} <i class="ph ph-arrow-right" aria-hidden="true"></i></button></div>@if($job->notes)<p>{{ \Illuminate\Support\Str::limit($job->notes, 230) }}</p>@else<p class="job-notes-placeholder">Keep recruiter conversations, role requirements, and your next questions here.</p>@endif</section>
                     </div>
 
                     <div class="job-panel" id="job-panel-notes" role="tabpanel" aria-labelledby="job-tab-notes" x-ref="panel_notes" x-show="tab === 'notes'" x-cloak aria-label="Application notes" tabindex="-1"><div class="job-section-heading"><div><h2>Your notes</h2><p>Your conversations, requirements, and questions.</p></div><a href="{{ $editUrl }}" wire:navigate class="job-text-link">{{ $job->notes ? 'Edit notes' : 'Add notes' }}</a></div>@if($job->notes)<div class="job-notes-content">{{ $job->notes }}</div>@else<div class="job-notes-empty"><p>No notes recorded yet.</p><a href="{{ $editUrl }}" wire:navigate class="job-text-link">Write your first note <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></div>@endif @if($job->interview_notes)<section class="job-interview-notes"><h3>Interview notes</h3><p>{{ $job->interview_notes }}</p></section>@endif</div>
@@ -70,7 +89,7 @@
                         @if($interview)<div class="job-interview-when"><div class="job-interview-date"><strong>{{ $interview->format('d') }}</strong><span>{{ $interview->format('M') }}</span></div><div><p>{{ $interview->format('D, d M Y') }}</p><strong>{{ $interview->format('H:i') }} <small>WIB</small></strong><span>{{ $job->interview_type ?: 'Type not recorded' }}</span></div></div>@if($job->interview_location)<div class="job-interview-location"><span>Location / meeting link</span><p>{{ $job->interview_location }}</p>@if(filter_var($job->interview_location, FILTER_VALIDATE_URL) && in_array(strtolower(parse_url($job->interview_location, PHP_URL_SCHEME) ?? ''), ['http', 'https'], true))<a href="{{ $job->interview_location }}" target="_blank" rel="noopener noreferrer" class="job-text-link">Open meeting <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>@endif</div>@endif<a href="{{ $editUrl }}" wire:navigate class="job-text-link">Edit interview details <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>@if($interview->isFuture() && auth()->user()->canAccessEmailNotifications())<form class="job-reminder-form" x-data="{ sending: false, message: '', async send() { if (this.sending) return; this.sending = true; this.message = ''; try { const response = await fetch($el.action, { method: 'POST', credentials: 'same-origin', headers: { 'X-CSRF-TOKEN': $el.querySelector('input[name=_token]').value, 'Accept': 'application/json' } }); const body = await response.json(); if (!response.ok || !body.success) throw new Error(body.message || 'Could not send the reminder. Try again.'); this.message = body.message; } catch (error) { this.message = error.message || 'Could not send the reminder. Try again.'; } finally { this.sending = false; } } }" @submit.prevent="send()" method="POST" action="{{ route('jobs.send-interview-reminder', $job) }}">@csrf<button type="submit" :disabled="sending" class="job-text-link"><span x-text="sending ? 'Sending reminder…' : 'Email me a reminder'">Email me a reminder</span></button><p x-show="message" x-cloak x-text="message" role="status"></p></form>@endif
                         @else<p class="job-interview-empty">No interview scheduled yet.</p><a href="{{ $editUrl }}" wire:navigate class="job-text-link">Schedule interview <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>@endif
                     </section>
-                    <section class="job-research-card job-enter" aria-labelledby="job-research-heading"><div class="job-section-heading"><h2 id="job-research-heading">Company research</h2></div><p>Company profiles &amp; reviews.</p><div class="job-research-links"><a href="https://www.linkedin.com/search/results/companies/?keywords={{ urlencode($job->company_name) }}" target="_blank" rel="noopener noreferrer" aria-label="Research company on LinkedIn (opens in a new tab)" title="LinkedIn"><x-platform-brand name="LinkedIn" :show-name="false" class="platform-brand--compact" /></a><a href="https://www.glassdoor.com/Search/results.htm?keyword={{ urlencode($job->company_name) }}" target="_blank" rel="noopener noreferrer" aria-label="Research company on Glassdoor (opens in a new tab)" title="Glassdoor"><x-platform-brand name="Glassdoor" :show-name="false" class="platform-brand--compact" /></a></div>@include('jobs.partials.salary-reference')</section>
+                    <section class="job-research-card job-enter" aria-labelledby="job-research-heading"><div class="job-section-heading"><h2 id="job-research-heading">Company research</h2></div><p>Company profiles &amp; reviews.</p><div class="job-research-links"><a href="https://www.linkedin.com/search/results/companies/?keywords={{ urlencode($job->company_name) }}" target="_blank" rel="noopener noreferrer" aria-label="Research company on LinkedIn (opens in a new tab)" title="LinkedIn"><x-platform-brand name="LinkedIn" class="platform-brand--compact" /><i class="ph ph-arrow-up-right" aria-hidden="true"></i></a><a href="https://www.glassdoor.com/Search/results.htm?keyword={{ urlencode($job->company_name) }}" target="_blank" rel="noopener noreferrer" aria-label="Research company on Glassdoor (opens in a new tab)" title="Glassdoor"><x-platform-brand name="Glassdoor" class="platform-brand--compact" /><i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></div>@include('jobs.partials.salary-reference')</section>
                 </aside>
             </div>
             <footer class="job-detail-footer"><p>Keep this application up to date.</p><a href="{{ route('tracker') }}" wire:navigate class="job-text-link">Back to tracker <i class="ph ph-arrow-right" aria-hidden="true"></i></a></footer>

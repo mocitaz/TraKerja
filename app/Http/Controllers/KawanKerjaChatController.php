@@ -24,12 +24,13 @@ class KawanKerjaChatController extends Controller
     {
         $validated = $request->validate([
             'message' => 'required|string|min:1|max:1000',
+            'mode' => 'sometimes|string|in:career,interview,writing',
         ]);
 
         $user = Auth::user();
         $history = $request->session()->get('kawankerja_history', []);
 
-        $result = $this->kawanKerja->chat($validated['message'], $user, $history);
+        $result = $this->kawanKerja->chat($validated['message'], $user, $history, $validated['mode'] ?? 'career');
 
         if ($result['success']) {
             $history[] = ['role' => 'user', 'content' => $validated['message']];
@@ -57,6 +58,7 @@ class KawanKerjaChatController extends Controller
     {
         $validated = $request->validate([
             'message' => 'required|string|min:1|max:1000',
+            'mode' => 'sometimes|string|in:career,interview,writing',
         ]);
 
         $user = Auth::user();
@@ -85,7 +87,8 @@ class KawanKerjaChatController extends Controller
                     $fullReply .= $chunk;
                     echo "data: " . json_encode(['chunk' => $chunk]) . "\n\n";
                     @flush();
-                }
+                },
+                $validated['mode'] ?? 'career'
             );
 
             if ($result['success'] && !empty($fullReply)) {

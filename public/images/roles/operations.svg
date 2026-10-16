@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Business operations">
+<rect width="96" height="96" rx="28" fill="#e1e6f3"/>
+<circle cx="72" cy="21" r="7" fill="#fff7e8"/>
+<ellipse cx="48" cy="78" rx="26" ry="4" fill="#b0c8e3" opacity=".35"/>
+<g transform="translate(18 15) scale(2.5)" stroke="#292b30" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M4 4h16v16H4z" fill="#fff7e8"/><path d="M4 9h16M9 9v11M1 1l5 0m-5 0v5M23 23h-5m5 0v-5"/><rect x="12" y="12" width="5" height="5" rx="1" fill="#b0c8e3"/></g>
+</svg>

@@ -44,7 +44,7 @@ class TokenKawanSafetyTest extends TestCase
    public function buildUserContext(User $user):array{return [];}
    protected function executeStreamRequest(string $model,array $payload,callable $onChunk):?string {$this->calls++;$onChunk('Partial primary');return null;}
   };
-  $chunks=[];$result=$service->chatStream('Hello',User::findOrFail(1),[],function($chunk)use(&$chunks){$chunks[]=$chunk;});
+  $chunks=[];$result=$service->chatStream('Review my application pipeline',User::findOrFail(1),[],function($chunk)use(&$chunks){$chunks[]=$chunk;});
   $this->assertFalse($result['success']);$this->assertSame(['Partial primary'],$chunks);$this->assertSame(1,$service->calls);
  }
  public function test_budget_is_shared_over_the_day_and_exception_releases_concurrency_lock():void {

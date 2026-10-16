@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Cloud and infrastructure">
+<rect width="96" height="96" rx="28" fill="#ece0f1"/>
+<circle cx="72" cy="21" r="7" fill="#fff7e8"/>
+<ellipse cx="48" cy="78" rx="26" ry="4" fill="#c3a1cf" opacity=".35"/>
+<g transform="translate(18 15) scale(2.5)" stroke="#292b30" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M5 17C-1 16 0 8 6 8 7 0 19 1 19 9c6 0 6 8 0 8H5Z" fill="#fff7e8"/><path d="m9 12 3-3 3 3m-3-3v11"/><path d="M6 22h12" stroke="#c3a1cf"/></g>
+</svg>

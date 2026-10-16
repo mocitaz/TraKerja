@@ -149,7 +149,6 @@
                 <time datetime="{{ now()->timezone('Asia/Jakarta')->toDateString() }}">{{ now()->timezone('Asia/Jakarta')->locale('en')->translatedFormat('l, F j, Y') }}</time>
                 <h1 id="admin-hero-greeting">Good to see you, {{ explode(' ', Auth::user()->name)[0] }}.</h1>
                 <p>Platform telemetry, member growth momentum, and candidate application pulse at a glance.</p>
-                <a href="{{ route('admin.control') }}" class="control-entry"><i class="ph ph-strategy" aria-hidden="true"></i><span>Open Control</span><span aria-hidden="true">↗</span></a>
             </div>
         </section>
 

@@ -2,7 +2,7 @@
     $user = Auth::user();
     $mainLinks = [
         ['admin.index', 'Dashboard'], ['admin.users', 'User Management'],
-        ['admin.user-activities', 'Activity Log'], ['admin.analytics', 'Analytics'], ['admin.control', 'Control'],
+        ['admin.user-activities', 'Activity Log'], ['admin.analytics', 'Analytics'],
     ];
     $profileLinks = [
         ['admin.email-blast', 'Email Blast', 'paper-plane-tilt'],

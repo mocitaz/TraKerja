@@ -1,238 +1,73 @@
 <x-app-layout>
+    @php
+        $durationLabel = match(true) {
+            $premiumDuration >= 3650 => '10+ years',
+            $premiumDuration === 365 => '1 year',
+            $premiumDuration === 30 => '1 month',
+            default => $premiumDuration.' days',
+        };
+        $planLabel = $active ? 'Premium active' : ($expired ? 'Premium expired' : 'Free account');
+    @endphp
     <div class="workspace-page membership-page">
         <div class="workspace-page__container">
-            <header class="workspace-page__header">
-                <div>
-                    <h1>Membership &amp; Credits</h1>
-                    <p>Your plan, your balance, and every purchase in one place.</p>
-                </div>
-            </header>
+            <header class="workspace-page__header"><div><h1>Membership &amp; Credits</h1><p>Manage your plan, credits, and payments.</p></div><a href="{{ route('support.index') }}" wire:navigate class="membership-help">Billing support <span aria-hidden="true">↗</span></a></header>
 
-            @if(!$monetizationEnabled)
-                <div class="membership-free-access"><strong>Free access is enabled</strong><p>Premium features are currently available without a paid membership. Credit deductions are paused in this mode; the balances below are your stored credits.</p></div>
+            @unless($monetizationEnabled)
+                <aside class="membership-access-note"><strong>Free access is enabled</strong><p>Premium features are currently available without a paid membership. Credit deductions are paused; balances below are your stored credits.</p></aside>
+            @endunless
+
+            @if($pendingPayment ?? null)
+                <aside class="membership-pending-note"><div><strong>A payment is waiting for you</strong><p>Order {{ $pendingPayment->order_id }} · Rp {{ number_format($pendingPayment->amount, 0, ',', '.') }}. Your plan and credits update after payment verification.</p></div><a class="membership-continue" href="{{ route('payment.waiting', $pendingPayment->order_id) }}" wire:navigate>Continue payment</a></aside>
             @endif
 
-            @php
-                $durationLabel = match(true) {
-                    $premiumDuration >= 3650 => 'lifetime access',
-                    $premiumDuration === 365 => '1 year',
-                    $premiumDuration === 30 => '1 month',
-                    default => $premiumDuration . ' days'
-                };
-            @endphp
-
-            {{-- Hero Container (Single Blue #d0e3f3 Card: Plan + Stored Balances) --}}
-            <article class="next-move-card next-move-interview membership-account-card" aria-labelledby="membership-plan-title">
-                <div class="membership-account-grid">
-                    {{-- Left Column: Membership Plan --}}
-                    <div class="membership-account-col membership-account-col--plan">
-                        <div class="next-move-card-top">
-                            <span>Membership plan</span>
-                            @if(!$active && $monetizationEnabled)
-                                <a href="{{ route('payment.premium') }}" wire:navigate aria-label="Explore Premium">Upgrade <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
-                            @endif
-                        </div>
-                        <h3 id="membership-plan-title">{{ $active ? 'Premium active' : ($expired ? 'Premium expired' : 'Free account') }}</h3>
-                        <div class="next-move-content">
-                            <p class="next-move-description">
-                                {{ $active 
-                                    ? 'Your account is active with full access to intelligent career analytics, tracking automation, and priority AI features.' 
-                                    : ($expired 
-                                        ? 'Your Premium access has expired. Renew your plan to restore full access to career intelligence and tracking automation.' 
-                                        : 'Upgrade to TraKerja Premium to unlock advanced career analytics, automated application tracking, and full AI quota.') 
-                                }}
-                            </p>
-
-                            @if(!$active)
-                                <ul class="next-move-checklist" aria-label="Premium features">
-                                    <li class="is-added"><i class="ph ph-check-circle" aria-hidden="true"></i><span>Summary &amp; Analytics</span></li>
-                                    <li class="is-added"><i class="ph ph-check-circle" aria-hidden="true"></i><span>Cover Letter AI</span></li>
-                                    <li class="is-added"><i class="ph ph-check-circle" aria-hidden="true"></i><span>CV Builder AI</span></li>
-                                    <li class="is-added"><i class="ph ph-check-circle" aria-hidden="true"></i><span>Automated tracking</span></li>
-                                </ul>
-                            @else
-                                <div class="next-move-appointment">
-                                    <time>
-                                        <strong>{{ $user->premium_until ? $user->premium_until->format('d') : '∞' }}</strong>
-                                        <span>{{ $user->premium_until ? $user->premium_until->format('M') : 'Plan' }}</span>
-                                    </time>
-                                    <div>
-                                        <strong>{{ $user->premium_until && $user->premium_until->diffInDays(now()) > 3650 ? 'Lifetime Premium' : 'Active Premium' }}</strong>
-                                        <span>Valid until {{ $user->premium_until ? $user->premium_until->timezone('Asia/Jakarta')->format('d M Y') . ' · ' . $user->premium_until->timezone('Asia/Jakarta')->format('H:i') . ' WIB' : 'No expiry recorded' }}</span>
-                                        @if($user->premium_purchased_at)
-                                            <span>Purchased {{ \Carbon\Carbon::parse($user->premium_purchased_at)->timezone('Asia/Jakarta')->format('d M Y') }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-
-                        @if($monetizationEnabled && !$active)
-                            <a class="next-move-action" href="{{ route('payment.premium') }}" wire:navigate>
-                                <span>{{ $expired ? 'Reactivate Premium' : 'Explore Premium' }} · Rp {{ number_format($premiumPrice, 0, ',', '.') }} / {{ $durationLabel }}</span>
-                                <i class="ph ph-arrow-right" aria-hidden="true"></i>
-                            </a>
-                            <p class="next-move-footnote">Instant activation · Official secure checkout via QRIS &amp; e-Wallet</p>
-                        @elseif($active)
-                            <a class="next-move-action" href="#membership-addons">
-                                <span>{{ $monetizationEnabled ? 'Explore add-on packs' : 'View credit balance' }}</span>
-                                <i class="ph ph-arrow-down" aria-hidden="true"></i>
-                            </a>
-                            <p class="next-move-footnote">Verified active Premium membership · All features unlocked</p>
-                        @else
-                            <a class="next-move-action" href="{{ route('dashboard') }}" wire:navigate>
-                                <span>Back to dashboard</span>
-                                <i class="ph ph-arrow-right" aria-hidden="true"></i>
-                            </a>
-                            <p class="next-move-footnote">Free access mode is currently active</p>
-                        @endif
-                    </div>
-
-                    {{-- Right Column: Stored Balances --}}
-                    <div class="membership-account-col membership-account-col--balance">
-                        <div class="next-move-card-top">
-                            <span>Stored balance</span>
-                            <i class="ph ph-wallet" aria-hidden="true"></i>
-                        </div>
-                        <h3 id="membership-balances-title">Your credit balance</h3>
-                        <div class="next-move-content">
-                            <p class="next-move-description">{{ $monetizationEnabled ? 'Stored credits available for your career intelligence tools.' : 'Stored balance · not deducted in free mode.' }}</p>
-                            <div class="membership-credit-grid">
-                                @foreach($creditBalances as $credit)
-                                    <div class="membership-credit-box">
-                                        <span class="membership-credit-label">{{ $credit['label'] }}</span>
-                                        <strong class="membership-credit-val">{{ $credit['balance'] }}</strong>
-                                        <span class="membership-credit-unit">credits</span>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <a class="next-move-action" href="#membership-addons">
-                            <span>Refill credit balance</span>
-                            <i class="ph ph-arrow-down" aria-hidden="true"></i>
-                        </a>
-                        <p class="next-move-footnote">Each tool has its own balance · Add-on purchases reflected instantly</p>
+            <section class="membership-plan-panel" aria-labelledby="membership-plan-title">
+                <div class="membership-plan-copy"><span class="membership-eyebrow">CURRENT MEMBERSHIP</span><div class="membership-plan-heading"><h2 id="membership-plan-title">{{ $active ? 'TraKerja Premium' : 'TraKerja Free' }}</h2><span class="membership-status {{ $active ? 'membership-status--active' : ($expired ? 'membership-status--expired' : '') }}">{{ $planLabel }}</span></div>
+                    <p>{{ !$monetizationEnabled ? 'Your workspace is available in free access mode.' : ($active ? 'Your Premium access is ready to use. Manage your balances and purchases below.' : ($expired ? 'Renew your membership to restore access to Premium features.' : 'Keep tracking your applications. Explore Premium for additional tools and insights.')) }}</p>
+                    <div class="membership-plan-actions">
+                        @if($monetizationEnabled && !$active)<a href="{{ route('payment.premium') }}" wire:navigate class="membership-button">{{ $expired ? 'Reactivate Premium' : 'Explore Premium' }}</a>
+                        @elseif($active && $monetizationEnabled)<a href="#membership-addons" class="membership-button">Buy credits</a>
+                        @else<a href="{{ route('dashboard') }}" wire:navigate class="membership-button membership-button--quiet">Open dashboard</a>@endif
+                        <a href="#membership-history" class="membership-text-link">View payment history</a>
                     </div>
                 </div>
-            </article>
+                <dl class="membership-plan-details">
+                    @if($active)<div><dt>Membership validity</dt><dd>{{ $user->premium_until ? $user->premium_until->timezone('Asia/Jakarta')->format('d M Y') : 'No expiry recorded' }}</dd>@if($user->premium_until)<small>Until {{ $user->premium_until->timezone('Asia/Jakarta')->format('H:i') }} WIB</small>@endif</div>
+                        @if($user->premium_purchased_at)<div><dt>Purchased on</dt><dd>{{ \Carbon\Carbon::parse($user->premium_purchased_at)->timezone('Asia/Jakarta')->format('d M Y') }}</dd></div>@endif
+                    @elseif($monetizationEnabled)<div><dt>Premium access</dt><dd>Rp {{ number_format($premiumPrice, 0, ',', '.') }} <small>/ {{ $durationLabel }}</small></dd><small>Review the package before checkout.</small></div><div><dt>Included tools</dt><dd class="membership-tools">Summary &amp; Analytics · CV Builder · Cover Letter AI</dd><small>Feature access and AI credits follow the selected package.</small></div>
+                    @else<div><dt>Current access</dt><dd>Free access mode</dd><small>No purchase is required while this mode is enabled.</small></div>@endif
+                </dl>
+            </section>
 
-            <div class="membership-bottom-grid">
-                {{-- Card 3: Add-on pack (Lavender #e5e0f5, like Continue your CV) --}}
-                <article id="membership-addons" class="next-move-card next-move-cv membership-card-addons" aria-labelledby="membership-addons-title">
-                    <div class="next-move-card-top">
-                        <span>Add-on booster</span>
-                        <i class="ph ph-package" aria-hidden="true"></i>
-                    </div>
-                    <h3 id="membership-addons-title">A little extra, when you need it</h3>
-                    <div class="next-move-content">
-                        <p class="next-move-description">One add-on pack refills three separate credit balances.</p>
-                        <div class="membership-pack-grid">
-                            @foreach($creditBalances as $credit)
-                                <div class="membership-credit-box">
-                                    <strong class="membership-credit-val">+{{ $addonBenefits[$credit['field']] }}</strong>
-                                    <span class="membership-credit-label">{{ $credit['label'] }}</span>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
+            <section class="membership-balances" aria-labelledby="membership-balances-title">
+                <header class="membership-section-heading"><div><h2 id="membership-balances-title">Credit balances</h2><p>{{ $monetizationEnabled ? 'Separate balances for each AI tool.' : 'Stored credits · no deductions in free access mode.' }}</p></div>@if($active && $monetizationEnabled)<a class="membership-text-link" href="#membership-addons">Add credits</a>@endif</header>
+                <div class="membership-balance-grid">@foreach($creditBalances as $credit)<article class="membership-balance" data-tone="{{ $credit['tone'] }}"><h3>{{ $credit['label'] }}</h3><p><strong>{{ $credit['balance'] }}</strong><span>credits</span></p><span class="membership-balance-caption">{{ !$monetizationEnabled ? 'Stored balance' : ($active ? 'Available to use' : 'Requires active Premium to use') }}</span></article>@endforeach</div>
+            </section>
 
-                    @if(!$monetizationEnabled)
-                        <span class="next-move-action">
-                            <span>Free access is enabled</span>
-                            <i class="ph ph-check" aria-hidden="true"></i>
-                        </span>
-                        <p class="next-move-footnote">Free access is enabled · Credits are not deducted</p>
-                    @elseif($active)
-                        <a class="next-move-action" href="{{ route('payment.topup') }}" wire:navigate>
-                            <span>Get add-on pack · Rp {{ number_format($addonPrice, 0, ',', '.') }}</span>
-                            <i class="ph ph-arrow-right" aria-hidden="true"></i>
-                        </a>
-                        <p class="next-move-footnote">Adds credits to existing balances · Does not extend Premium duration</p>
-                    @else
-                        <a class="next-move-action" href="{{ route('payment.premium') }}" wire:navigate>
-                            <span>Available after Premium · Rp {{ number_format($addonPrice, 0, ',', '.') }}</span>
-                            <i class="ph ph-arrow-right" aria-hidden="true"></i>
-                        </a>
-                        <p class="next-move-footnote">Requires an active Premium membership to purchase and use</p>
-                    @endif
-                </article>
+            <section id="membership-addons" class="membership-addon" aria-labelledby="membership-addons-title">
+                <div><span class="membership-eyebrow">CREDIT TOP-UP</span><h2 id="membership-addons-title">One pack. Three tools.</h2><p>Added to your existing balances. Membership validity stays the same.</p></div>
+                <ul aria-label="Add-on credits">@foreach($creditBalances as $credit)<li><strong>+{{ $addonBenefits[$credit['field']] }}</strong><span>{{ $credit['label'] }}</span></li>@endforeach</ul>
+                <div class="membership-addon-purchase">@if(!$monetizationEnabled)<strong class="membership-addon-free">No top-up needed</strong><p>Credits are not deducted in free access mode.</p>@else<strong>Rp {{ number_format($addonPrice, 0, ',', '.') }}</strong><span>per pack</span><a class="membership-button {{ !$active ? 'membership-button--quiet' : '' }}" href="{{ route($active ? 'payment.topup' : 'payment.premium') }}" wire:navigate>{{ $active ? 'Buy credits' : 'Explore Premium first' }}</a>@unless($active)<p>An active Premium membership is required.</p>@endunless @endif</div>
+            </section>
 
-                {{-- Card 4: Payment History (Peach/Orange #f5ddd2 container, harmonized structure) --}}
-                <article class="next-move-card next-move-followup membership-card-history" aria-labelledby="membership-history-title">
-                    <div class="next-move-card-top">
-                        <span>Payment records</span>
-                        <span class="membership-history-count">{{ $payments->total() }} {{ Str::plural('order', $payments->total()) }}</span>
-                    </div>
-                    <h3 id="membership-history-title">Payment history</h3>
-                    <div class="next-move-content">
-                        <p class="next-move-description">Your Premium and add-on orders, including unfinished payments.</p>
-
-                        @if($payments->isEmpty())
-                            <div class="membership-empty">
-                                <div class="membership-empty-icon"><i class="ph ph-receipt" aria-hidden="true"></i></div>
-                                <h4>No payments yet.</h4>
-                                <p>Your orders and receipts will appear here once you make a purchase.</p>
-                            </div>
-                        @else
-                            <div class="membership-orders-scroll">
-                                <div class="membership-orders-list">
-                                    @foreach($payments as $payment)
-                                        @php
-                                            $package = $payment->notes ?? ($payment->metadata['package_type'] ?? 'premium');
-                                            $addon = in_array($package, ['addon_10', 'cl_addon_15'], true);
-                                            $waiting = in_array($payment->status, ['PENDING', 'WAITING'], true);
-                                            $orderExpired = $waiting && $payment->expired_at?->isPast();
-                                            $status = $orderExpired ? 'EXPIRED' : $payment->status;
-                                            $statusLabel = match($status) { 
-                                                'SUCCESS' => 'Paid', 
-                                                'PENDING', 'WAITING' => 'Awaiting payment', 
-                                                'FAILED' => 'Failed', 
-                                                'EXPIRED' => 'Expired', 
-                                                'CANCELED', 'CANCELLED' => 'Cancelled', 
-                                                default => ucfirst(strtolower($status)) 
-                                            };
-                                        @endphp
-                                        <div class="membership-order-item">
-                                            <div class="membership-order-left">
-                                                <div class="membership-order-info">
-                                                    <strong>{{ $addon ? 'TraKerja Add-On Pack' : 'Premium membership' }}</strong>
-                                                    <span class="membership-order-meta">
-                                                        <span>{{ $payment->created_at->timezone('Asia/Jakarta')->format('d M Y') }}</span>
-                                                        <span>·</span>
-                                                        <span class="membership-order-id-code">{{ Str::limit($payment->order_id, 16) }}</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="membership-order-right">
-                                                <div class="membership-order-pricing-col">
-                                                    <span class="membership-order-amount">Rp {{ number_format($payment->amount, 0, ',', '.') }}</span>
-                                                    <span class="membership-order-status membership-order-status--{{ strtolower($status) }}">{{ $statusLabel }}</span>
-                                                </div>
-                                                @if($waiting && !$orderExpired)
-                                                    <a href="{{ route('payment.waiting', $payment->order_id) }}" wire:navigate class="membership-order-btn-resume" title="Resume payment">
-                                                        <span>Resume</span>
-                                                        <i class="ph ph-arrow-right" aria-hidden="true"></i>
-                                                    </a>
-                                                @elseif($payment->isSuccess())
-                                                    <a href="{{ route('payment.success', $payment->order_id) }}" wire:navigate class="membership-order-btn-view" aria-label="View payment {{ $payment->order_id }}" title="View receipt">
-                                                        <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
-                                                    </a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            @if($payments->hasPages())
-                                <div class="membership-pagination">{{ $payments->links() }}</div>
-                            @endif
-                        @endif
-                    </div>
-                    <p class="next-move-footnote">Orders update automatically after payment verification</p>
-                </article>
-            </div>
-
-            <footer class="membership-footer"><p>Membership status reflects your account record. A pending order becomes active only after payment verification.</p><a href="{{ route('support.index') }}" wire:navigate class="job-text-link">Need help with an order?</a></footer>
+            <section id="membership-history" class="membership-history" aria-labelledby="membership-history-title">
+                <header class="membership-section-heading"><div><h2 id="membership-history-title">Payment history</h2><p>Your membership and credit purchases, including unfinished payments.</p></div><span class="membership-order-count">{{ $payments->total() }} {{ Str::plural('order', $payments->total()) }}</span></header>
+                @if($payments->isEmpty())<div class="membership-empty-state"><h3>No payments yet.</h3><p>Your purchases will appear here. You can return to an unfinished payment from this list.</p></div>
+                @else<div class="membership-transactions"><table><caption class="sr-only">Your payment history</caption><thead><tr><th scope="col">Purchase</th><th scope="col">Date</th><th scope="col">Amount</th><th scope="col">Status</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead><tbody>
+                    @foreach($payments as $payment)
+                        @php
+                            $package = $payment->notes ?? ($payment->metadata['package_type'] ?? 'premium');
+                            $addon = in_array($package, ['addon_10', 'cl_addon_15'], true);
+                            $waiting = in_array($payment->status, ['PENDING', 'WAITING'], true);
+                            $orderExpired = $waiting && $payment->expired_at?->isPast();
+                            $status = $orderExpired ? 'EXPIRED' : $payment->status;
+                            $statusLabel = match($status) { 'SUCCESS' => 'Paid', 'PENDING', 'WAITING' => 'Awaiting payment', 'FAILED' => 'Failed', 'EXPIRED' => 'Expired', 'CANCELED', 'CANCELLED' => 'Cancelled', default => ucfirst(strtolower($status)) };
+                        @endphp
+                        <tr><th scope="row" class="membership-transaction-product"><strong>{{ $addon ? 'TraKerja Add-On Pack' : 'Premium membership' }}</strong><span>{{ $payment->order_id }}</span></th><td class="membership-transaction-date"><time datetime="{{ $payment->created_at->toIso8601String() }}">{{ $payment->created_at->timezone('Asia/Jakarta')->format('d M Y') }}</time></td><td class="membership-transaction-amount">Rp {{ number_format($payment->amount, 0, ',', '.') }}</td><td class="membership-transaction-status"><span class="membership-payment-status membership-payment-status--{{ strtolower($status) }}">{{ $statusLabel }}</span></td><td class="membership-transaction-action">@if($waiting && !$orderExpired)<a href="{{ route('payment.waiting', $payment->order_id) }}" wire:navigate class="membership-continue" aria-label="Continue payment {{ $payment->order_id }}">Continue payment</a>@elseif($payment->isSuccess())<a href="{{ route('payment.success', $payment->order_id) }}" wire:navigate class="membership-text-link" aria-label="View receipt {{ $payment->order_id }}">View receipt</a>@else<span class="sr-only">No payment action available</span>@endif</td></tr>
+                    @endforeach
+                </tbody></table></div>@if($payments->hasPages())<div class="membership-pagination">{{ $payments->links() }}</div>@endif @endif
+                <footer class="membership-history-note">Membership and credits update after payment verification.</footer>
+            </section>
+            <footer class="membership-footer"><p>Need help with a payment or your account?</p><a href="{{ route('support.index') }}" wire:navigate class="membership-text-link">Contact support</a></footer>
         </div>
     </div>
 </x-app-layout>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Cybersecurity">
+<rect width="96" height="96" rx="28" fill="#e1e6f3"/>
+<circle cx="72" cy="21" r="7" fill="#fff7e8"/>
+<ellipse cx="48" cy="78" rx="26" ry="4" fill="#b0c8e3" opacity=".35"/>
+<g transform="translate(18 15) scale(2.5)" stroke="#292b30" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="m12 1 9 4v7c0 5-5 9-9 11-4-2-9-6-9-11V5l9-4Z" fill="#b0c8e3"/><rect x="7" y="10" width="10" height="7" rx="2" fill="#fff7e8"/><path d="M9 10V8a3 3 0 0 1 6 0v2m-3 3v1"/></g>
+</svg>

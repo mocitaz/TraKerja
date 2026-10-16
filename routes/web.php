@@ -431,10 +431,6 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         return view('admin.index');
     })->name('index');
     
-    Route::get('/control', [\App\Http\Controllers\Admin\AdminControlController::class, 'index'])->name('control');
-    Route::get('/control/snapshot', [\App\Http\Controllers\Admin\AdminControlController::class, 'snapshot'])->middleware('throttle:30,1')->name('control.snapshot');
-    Route::post('/control/ask', [\App\Http\Controllers\Admin\AdminControlController::class, 'ask'])->middleware('throttle:12,1')->name('control.ask');
-    Route::post('/control/clear', [\App\Http\Controllers\Admin\AdminControlController::class, 'clear'])->middleware('throttle:12,1')->name('control.clear');
 
     // Monetization control
     Route::get('/monetization', function () {

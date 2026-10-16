@@ -10,7 +10,7 @@
 }
 
 @media (max-width: 640px) {
-    .workspace-page.tracker-page, .workspace-page.job-detail-page { padding-top: 12px; padding-left: 14px; padding-right: 14px; }
+    .workspace-page.tracker-page { padding-top: 12px; padding-left: 14px; padding-right: 14px; }
     .tracker-page .workspace-page__header { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 12px; }
     .workspace-page.tracker-page h1 { font-size: 24px; }
     .tracker-page .workspace-page__header p { font-size: 12px; line-height: 1.6; }
@@ -47,35 +47,6 @@
     .tracker-page .tracker-pagination { padding: 12px; }
     .tracker-page .tracker-pagination nav button, .tracker-page .tracker-column-pagination nav button { min-height: 44px; }
 
-    .job-detail-page .job-heading { padding: 18px 16px 14px; border-radius: 18px; gap: 14px; }
-    .job-detail-page .job-heading h1 { font-size: 25px; line-height: 1.3; text-wrap: wrap; }
-    .job-detail-page .job-heading-labels { margin-bottom: 12px; }
-    .job-detail-page .job-heading-meta { gap: 8px 12px; font-size: 12px; }
-    .job-detail-page .job-heading-bottom { gap: 8px; }
-    .job-detail-page .job-heading-stage { font-size: 12px; }
-    .job-detail-page .job-heading-actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); width: 100%; gap: 8px; }
-    .job-detail-page .job-heading-actions :is(.workspace-button, .job-archive-button) { width: 100%; min-height: 44px; font-size: 11px; padding: 8px; }
-    .job-detail-page .job-heading-actions > form { grid-column: 1 / -1; justify-self: end; }
-    .job-detail-page .job-heading-actions > form button { padding: 8px 12px; }
-    .job-detail-page .job-workspace-grid, .job-detail-page .job-workspace-aside { gap: 14px; }
-    .job-detail-page .job-panel { padding: 16px; }
-    .job-detail-page .job-section-heading { gap: 8px; align-items: center; flex-wrap: wrap; }
-    .job-detail-page h2 { font-size: 14px; }
-    .job-detail-page .job-text-link { min-height: 44px; font-size: 11px; }
-    .job-detail-page .job-stage-track { grid-template-columns: repeat(5, minmax(0, 1fr)); overflow: visible; padding: 14px 2px 8px; gap: 3px; }
-    .job-detail-page .job-stage-track li { font-size: 9px; line-height: 1.5; overflow-wrap: anywhere; gap: 10px; }
-    .job-detail-page .job-stage-caption { line-height: 1.6; }
-    .job-detail-page .job-overview-facts dl { gap: 12px; }
-    .job-detail-page .job-overview-facts dd { font-size: 13px; }
-    .job-detail-page .job-notes-preview p { font-size: 12px; }
-    .job-detail-page .job-notes-content { font-size: 14px; line-height: 1.8; margin-top: 12px; }
-    .job-detail-page .job-record-dates > div { gap: 12px; font-size: 12px; }
-    .job-detail-page .job-record-dates dd { overflow-wrap: anywhere; }
-    .job-detail-page .job-interview-card { padding: 16px; border-radius: 18px; }
-    .job-detail-page .job-interview-card--empty { padding: 14px 16px; }
-    .job-detail-page .job-follow-up-panel { gap: 4px; padding: 12px; margin-top: 12px; }
-    .job-detail-page .job-follow-up-panel .tracker-follow-up { min-height: 44px; }
-    .job-detail-page .job-salary-reference > summary, .job-detail-page .job-salary-method > summary { min-height: 44px; }
 
     .job-dialog { padding: 8px; }
     .job-dialog .job-dialog__panel { max-height: calc(100dvh - 16px); border-radius: 18px; }

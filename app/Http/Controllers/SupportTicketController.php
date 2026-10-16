@@ -68,7 +68,7 @@ class SupportTicketController extends Controller
             logger()->error('Gagal mengirim notifikasi Telegram tiket bantuan: ' . $e->getMessage());
         }
 
-        return redirect()->route('support.index')->with('success_message', 'Pesan bantuan Anda berhasil dikirim! Tim support kami akan segera membalasnya.');
+        return redirect()->route('support.index')->with('success_message', 'Your request was sent. Replies will appear in Your requests.')->with('support_ticket_id', $ticket->id);
     }
 
     /**

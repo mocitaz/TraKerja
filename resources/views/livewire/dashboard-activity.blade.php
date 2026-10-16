@@ -83,7 +83,7 @@
                 @foreach(['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as $weekday)<span class="activity-weekday">{{ $weekday }}</span>@endforeach
                 @foreach($calendarDays as $day)
                     @if($day['inMonth'])
-                    <button type="button" wire:key="mobile-activity-{{ $day['date'] }}" wire:click="selectDate('{{ $day['date'] }}')" @disabled(!$day['enabled']) aria-label="{{ $day['count'] }} {{ Str::plural('application', $day['count']) }} on {{ $day['date'] }}" @if($day['today']) aria-current="date" @endif class="activity-month-day" title="{{ \Carbon\Carbon::parse($day['date'])->format('j M Y') }} · {{ $day['count'] }} {{ Str::plural('application', $day['count']) }}" style="--day-color: {{ $heatmapColors[min(4, $day['count'])] }};"><span aria-hidden="true"></span></button>
+                    <button type="button" wire:key="mobile-activity-{{ $day['date'] }}" wire:click="selectDate('{{ $day['date'] }}')" @disabled(!$day['enabled']) aria-label="{{ $day['count'] }} {{ Str::plural('application', $day['count']) }} on {{ $day['date'] }}" @if($day['today']) aria-current="date" @endif class="activity-month-day" data-activity-level="{{ min(4, $day['count']) }}" title="{{ \Carbon\Carbon::parse($day['date'])->format('j M Y') }} · {{ $day['count'] }} {{ Str::plural('application', $day['count']) }}" style="--day-color: {{ $heatmapColors[min(4, $day['count'])] }};"><span aria-hidden="true">{{ $day['day'] }}</span></button>
                     @else<span class="activity-month-spacer" aria-hidden="true"></span>@endif
                 @endforeach
             </div>

@@ -2364,3 +2364,11 @@ input[type="checkbox"].profile-switch:focus-visible,
 
 
 
+.workspace-shell .profile-workspace .profile-page-header { margin-top: 12px; }
+.workspace-shell .profile-workspace .profile-page-header > div > p:last-child { line-height: 1.75; margin-top: 8px; }
+@media (max-width: 640px) {
+    .workspace-shell .profile-workspace { padding-top: 10px; }
+    .workspace-shell .profile-workspace > .profile-container { padding-inline: 12px; }
+    .workspace-shell .profile-workspace .profile-page-header h1 { font-size: 23px; line-height: 1.25; letter-spacing: -.6px; }
+    .workspace-shell .profile-workspace .profile-page-header > div > p:last-child { font-size: 12px; line-height: 1.6; margin-top: 8px; }
+}

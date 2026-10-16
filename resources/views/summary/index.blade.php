@@ -10,8 +10,9 @@
         ];
         $acceptedShare = $applicationsCount ? round($statuses['Accepted'] / $applicationsCount * 100, 1) : 0;
         $topSource = $summary['sources']->first();
+        $analysisTones = ['sources' => 'sage', 'roles' => 'blue', 'locations' => 'sage', 'companies' => 'plum', 'employment' => 'clay'];
     @endphp
-    <div class="workspace-page summary-page {{ !$hasAccess ? 'summary-page--gate' : '' }}">
+    <div class="workspace-page summary-page {{ !$hasAccess ? 'summary-page--gate' : 'summary-page--workspace' }}">
         <div class="workspace-page__container">
             @if($hasAccess)
                 <header class="workspace-page__header">
@@ -131,37 +132,22 @@
                 {{ $dateRange['end']->format('d M Y') }}@endif</p><span>Includes archived applications · grouped by
                     date applied</span>
             </div>
-            <section class="summary-overview summary-overview--split summary-enter" aria-label="Application totals">
-                <div class="summary-stat-group summary-stat-group--activity">
-                    <div class="summary-stat summary-stat--total"><span>Total
-                            applications</span><strong>{{ $applicationsCount }}</strong>
-                        <p>{{ $periodLabel }}</p>
-                    </div>
-                    <div class="summary-stat summary-stat--progress"><span>In
-                            progress</span><strong>{{ $statuses['On Process'] }}</strong>
-                        <p>{{ $applicationsCount ? round($statuses['On Process'] / $applicationsCount * 100, 1) : 0 }}%
-                            of applications</p>
-                    </div>
+            <section class="summary-report-overview summary-enter" aria-label="Application totals">
+                <div class="summary-report-total">
+                    <span class="summary-report-eyebrow">YOUR APPLICATION OVERVIEW</span>
+                    <div><strong>{{ $applicationsCount }}</strong><span>total<br>applications</span></div>
+                    <p>{{ $periodLabel }} · {{ $summary['archived'] }} archived records included</p>
+                    <a href="{{ route('tracker') }}" wire:navigate>View your applications <span aria-hidden="true">↗</span></a>
                 </div>
-                <div class="summary-stat-group summary-stat-group--outcomes">
-                    <div class="summary-stat summary-stat--offers"><span>Offers &
-                            accepted</span><strong>{{ $summary['offers'] }}</strong>
-                        <p>Offering stage or accepted</p>
-                    </div>
-                    <div class="summary-stat summary-stat--rejected">
-                        <span>Rejected</span><strong>{{ $statuses['Rejected'] }}</strong>
-                        <p>{{ $applicationsCount ? round($statuses['Rejected'] / $applicationsCount * 100, 1) : 0 }}% of
-                            applications</p>
-                    </div>
-                </div>
-                <footer class="summary-stats-footer">
-                    <p>{{ $summary['archived'] }} archived records included · Offers may also be in progress.</p><a
-                        href="{{ route('tracker') }}" wire:navigate>View applications <i class="ph ph-arrow-up-right"
-                            aria-hidden="true"></i></a>
-                </footer>
+                <dl class="summary-report-stats">
+                    <div data-tone="blue"><dt><i aria-hidden="true"></i>In progress</dt><dd><strong>{{ $statuses['On Process'] }}</strong><span>{{ $applicationsCount ? round($statuses['On Process'] / $applicationsCount * 100, 1) : 0 }}% of applications</span></dd></div>
+                    <div data-tone="sage"><dt><i aria-hidden="true"></i>Offers &amp; accepted</dt><dd><strong>{{ $summary['offers'] }}</strong><span>Offering stage or accepted</span></dd></div>
+                    <div data-tone="clay"><dt><i aria-hidden="true"></i>Rejected</dt><dd><strong>{{ $statuses['Rejected'] }}</strong><span>{{ $applicationsCount ? round($statuses['Rejected'] / $applicationsCount * 100, 1) : 0 }}% of applications</span></dd></div>
+                </dl>
+                <p class="summary-report-footnote">Offers can overlap with in-progress applications. Status reflects your current records.</p>
             </section>
 
-            <div class="summary-chart-grid">
+            <div class="summary-chart-grid summary-report-charts">
                 @include('summary.partials.activity-chart')
                 @php($outcomeRows = array_map(fn($row) => ['name' => $row['name'], 'share' => $applicationsCount ? round($statuses[$row['key']] / $applicationsCount * 100, 1) : 0], $statusRows))
                 <section class="workspace-card summary-outcomes summary-enter" aria-labelledby="summary-outcomes-title"
@@ -208,13 +194,13 @@
                 </section>
             </div>
 
-            <section class="summary-insights workspace-card--glass summary-enter"
+            <section class="summary-insights summary-enter"
                 aria-labelledby="summary-insights-title">
                 <h2 id="summary-insights-title">A closer look</h2>
                 <div>
                     <article><span>Most-used
                             source</span><strong>{{ $topSource['name'] ?? 'Not recorded yet' }}</strong>
-                        <p>{{ $topSource ? $topSource['total'] . ' applications in this period.' : 'Your application sources will appear here.' }}
+                        <p>{{ $topSource ? $topSource['total'] . ' applications · ' . round($topSource['total'] / max(1, $applicationsCount) * 100, 1) . '% of your selected records. Volume does not measure source quality.' : 'Your application sources will appear here.' }}
                         </p>
                     </article>
                     <article><span>Accepted outcomes</span><strong>{{ $statuses['Accepted'] }} <small>of
@@ -236,17 +222,19 @@
                         <p>Compare volume and recorded outcomes within {{ strtolower($periodLabel) }}.</p>
                     </div><span class="summary-analysis-count">{{ $applicationsCount }} records</span>
                 </div>
-                <div class="summary-analysis-tabs" role="group" aria-label="Analysis category">
+                <div class="summary-analysis-workbench"><div class="summary-analysis-tabs" role="group" aria-label="Analysis category">
                     @foreach(['sources' => 'Sources', 'roles' => 'Roles', 'locations' => 'Locations', 'companies' => 'Companies', 'employment' => 'Employment'] as $key => $label)<button
-                        type="button" @click="tab = '{{ $key }}'" :class="{ 'is-active': tab === '{{ $key }}' }"
+                        data-tone="{{ $analysisTones[$key] }}" type="button" @click="tab = '{{ $key }}'" :class="{ 'is-active': tab === '{{ $key }}' }"
                         :aria-pressed="tab === '{{ $key }}'"
-                    aria-controls="summary-panel-{{ $key }}">{{ $label }}</button>@endforeach</div>
+                    aria-controls="summary-panel-{{ $key }}"><span>{{ $label }}</span><small>{{ $summary[$key]->count() }}</small></button>@endforeach</div>
+                <div class="summary-analysis-content">
                 @foreach(['sources' => 'Sources', 'roles' => 'Roles', 'locations' => 'Locations', 'companies' => 'Companies', 'employment' => 'Employment types'] as $key => $label)
-                    <div id="summary-panel-{{ $key }}" x-show="tab === '{{ $key }}'" @if($key !== 'sources') x-cloak @endif
+                    <div id="summary-panel-{{ $key }}" class="summary-analysis-panel" data-tone="{{ $analysisTones[$key] }}" x-show="tab === '{{ $key }}'" @if($key !== 'sources') x-cloak @endif
                         aria-label="{{ $label }} analysis">
                         @include('summary.partials.explorer', ['rows' => $summary[$key], 'type' => $key, 'label' => $label])
                     </div>
                 @endforeach
+                </div></div>
                 <p class="workspace-hint">Interview-stage counts use the current recorded HR / User Interview stage.
                     Archived records remain part of this analysis.</p>
             </section>

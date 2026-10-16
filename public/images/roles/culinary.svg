@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Food and culinary">
+<rect width="96" height="96" rx="28" fill="#f2dfe4"/>
+<circle cx="72" cy="21" r="7" fill="#fff7e8"/>
+<ellipse cx="48" cy="78" rx="26" ry="4" fill="#dba7b5" opacity=".35"/>
+<g transform="translate(18 15) scale(2.5)" stroke="#292b30" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M6 15c-8-2-5-13 2-10 1-6 9-6 10 0 7-2 9 9 1 10v7H6v-7Z" fill="#fff7e8"/><path d="M6 17h13M10 12v3m5-3v3" stroke="#dba7b5"/></g>
+</svg>

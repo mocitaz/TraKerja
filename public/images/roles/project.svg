@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Project and program management">
+<rect width="96" height="96" rx="28" fill="#ece0f1"/>
+<circle cx="72" cy="21" r="7" fill="#fff7e8"/>
+<ellipse cx="48" cy="78" rx="26" ry="4" fill="#c3a1cf" opacity=".35"/>
+<g transform="translate(18 15) scale(2.5)" stroke="#292b30" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" fill="none"><rect x="2" y="3" width="20" height="18" rx="2" fill="#fff7e8"/><path d="M2 8h20M7 1v4m10-4v4"/><path d="M6 12h7m-3 4h8" stroke="#c3a1cf" stroke-width="3"/></g>
+</svg>
