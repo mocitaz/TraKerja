@@ -39,6 +39,15 @@ return [
             'after_commit' => true,
         ],
 
+        'ai_studio' => [
+            'driver' => 'database',
+            'connection' => env('DB_QUEUE_CONNECTION'),
+            'table' => env('DB_QUEUE_TABLE', 'jobs'),
+            'queue' => 'ai-studio',
+            'retry_after' => 240,
+            'after_commit' => true,
+        ],
+
         'ai_photos' => [
             'driver' => 'database',
             'connection' => env('DB_QUEUE_CONNECTION'),

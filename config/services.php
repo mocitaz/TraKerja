@@ -72,6 +72,11 @@ return [
     'gemini' => [
         'key' => env('GEMINI_API_KEY'),
         'model' => env('GEMINI_MODEL', 'gemini-flash-lite-latest'),
+        'studio_models' => [
+            'analyzer' => env('GEMINI_STUDIO_ANALYZER_MODEL', env('GEMINI_MODEL', 'gemini-flash-lite-latest')),
+            'cover-letter' => env('GEMINI_STUDIO_WRITING_MODEL', env('GEMINI_MODEL', 'gemini-flash-lite-latest')),
+            'outreach' => env('GEMINI_STUDIO_WRITING_MODEL', env('GEMINI_MODEL', 'gemini-flash-lite-latest')),
+        ],
     ],
 
     'openai' => [

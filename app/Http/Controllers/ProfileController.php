@@ -30,6 +30,7 @@ class ProfileController extends Controller
             'user' => $user,
             'activities' => $activities,
             'resumes' => $resumes,
+            'membership' => $user->isAdmin() ? null : \App\Support\MembershipOverview::forUser($user),
         ]);
     }
 

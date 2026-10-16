@@ -41,6 +41,7 @@ class AiPhotoController extends Controller
             ? ['type' => 'remove_bg', 'background' => $validated['background'] ?? 'transparan', 'size' => $validated['size'] ?? 'original']
             : ['type' => 'enhance', 'style' => $validated['style'] ?? 'auto', 'background' => $validated['background'] ?? 'studio_plain', 'mode' => $validated['mode'] ?? 'portrait'];
         $photo = $service->submit($request->user(), $request->file('photo'), $payload, $validated['request_key']);
+        if ($request->expectsJson()) return response()->json(['success' => true, 'status' => $photo->status, 'url' => route('ai-photo.show', $photo->id)], 202);
         return redirect()->route('ai-photo.show', $photo->id)->with('success', 'Permintaan foto tersimpan. Anda dapat memantau prosesnya di halaman ini.');
     }
 

@@ -11,6 +11,7 @@
             session('status') === 'notifications-updated', session('error') === 'upgrade-required' => 'notifications',
             $errors->has('resume_file'), in_array(session('status'), ['resume-uploaded', 'resume-updated', 'resume-primary-updated', 'resume-deleted']) => 'resumes',
             request('tab') === 'resumes' => 'resumes',
+            request('tab') === 'membership' => 'membership',
             default => 'about',
         };
         $statusMessages = [
@@ -25,7 +26,7 @@
         ];
         $tabs = $isAdmin
             ? ['about' => 'Account', 'security' => 'Security', 'activity' => 'Activity']
-            : ['about' => 'Account', 'resumes' => 'My Resumes', 'security' => 'Security', 'notifications' => 'Notifications', 'activity' => 'Activity'];
+            : ['about' => 'Account', 'resumes' => 'My Resumes', 'membership' => 'Membership & Credits', 'security' => 'Security', 'notifications' => 'Notifications', 'activity' => 'Activity'];
         if (!isset($tabs[$initialTab])) $initialTab = 'about';
     @endphp
     <div class="profile-workspace" x-data="{
@@ -299,6 +300,11 @@
                         @else
                             <div class="profile-locked"><i class="ph ph-lock" aria-hidden="true"></i><h3>Email notifications are a Premium feature</h3><p>Upgrade to manage goal and interview reminders.</p><a href="{{ route('payment.premium') }}" wire:navigate class="profile-primary">Explore Premium</a></div>
                         @endif
+                    </section>
+                    @endunless
+                    @unless($isAdmin)
+                    <section id="profile-panel-membership" role="tabpanel" aria-labelledby="profile-tab-membership" x-show="tab === 'membership'" @if($initialTab !== 'membership') x-cloak @endif class="profile-panel-stack">
+                        @include('profile.partials.membership', $membership)
                     </section>
                     @endunless
                     <section id="profile-panel-activity" role="tabpanel" aria-labelledby="profile-tab-activity" x-show="tab === 'activity'" @if($initialTab !== 'activity') x-cloak @endif class="profile-panel">

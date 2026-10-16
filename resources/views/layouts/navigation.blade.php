@@ -57,9 +57,6 @@
                     <div class="workspace-rewards"><livewire:layout.gamification-widget /></div>
                     <div class="workspace-profile-links">
                     <a href="{{ route('profile.edit') }}" wire:navigate @click="profileOpen = false" class="workspace-menu-link"><span class="workspace-menu-icon"><i class="ph ph-user-circle" aria-hidden="true"></i></span><span>Profile settings</span><i class="ph ph-caret-right workspace-menu-chevron" aria-hidden="true"></i></a>
-                    @if(!$user->isAdmin())
-                        <a href="{{ route('membership.index') }}" wire:navigate @click="profileOpen = false" class="workspace-menu-link"><span class="workspace-menu-icon"><i class="ph ph-crown" aria-hidden="true"></i></span><span>Membership &amp; Credits</span><i class="ph ph-caret-right workspace-menu-chevron" aria-hidden="true"></i></a>
-                    @endif
                     <a href="{{ route('automation.index') }}" wire:navigate @click="profileOpen = false" class="workspace-menu-link"><span class="workspace-menu-icon"><i class="ph ph-sliders" aria-hidden="true"></i></span><span>Automation & CSV</span><i class="ph ph-caret-right workspace-menu-chevron" aria-hidden="true"></i></a>
                     <a href="{{ route('support.index') }}" wire:navigate @click="profileOpen = false" class="workspace-menu-link"><span class="workspace-menu-icon"><i class="ph ph-headset" aria-hidden="true"></i></span><span>Support</span><i class="ph ph-caret-right workspace-menu-chevron" aria-hidden="true"></i></a>
                     @if($user->isAdmin())

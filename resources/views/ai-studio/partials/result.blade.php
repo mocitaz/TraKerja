@@ -8,19 +8,22 @@
     </div>
 </div>
 <article class="ai-message ai-message--response" aria-label="Saved result">
-    <div class="ai-message-label"><x-trakerja-ai-mark /> {{ $task === 'outreach' ? 'TraKerja · Message template' : ($selected->exists ? 'TraKerja AI · Saved result' : 'TraKerja AI · Unsaved result') }}</div>
+    <div class="ai-message-label"><x-trakerja-ai-mark /> {{ $task === 'outreach' && !$generatedWithAi ? 'TraKerja · Message template' : ($selected->exists ? 'TraKerja AI · Saved result' : 'TraKerja AI · Unsaved result') }}</div>
     @if($task === 'analyzer')
         @if(!$selected->exists)<p class="ai-output-notice">The analysis completed, but could not be saved. Keep a copy of this page; this result will not appear in your history.</p>@endif
-        <h2>Your resume review</h2><p class="ai-result-intro">The analysis below is the saved service response. It is guidance, not a hiring decision.</p>
-        @if(!empty($selected->analysis_result))
+        <h2>Your resume review</h2><p class="ai-result-intro">Focus on the most relevant gaps, then review the evidence behind each recommendation.</p>
+        @if(($selected->analysis_result['schema_version'] ?? null) === 2)
+            @include('ai-studio.partials.resume-review')
+        @elseif(!empty($selected->analysis_result))
             <div class="ai-analysis-data">@include('ai-studio.partials.analysis-data', ['data' => $selected->analysis_result, 'depth' => 0])</div>
         @else<p class="ai-output-notice">This saved response has no analysis details. Start a new request below.</p>@endif
     @elseif(in_array($task, ['cover-letter', 'outreach'], true))
         @php $filename = ($task === 'outreach' ? 'Outreach_' : 'Cover_Letter_').\Illuminate\Support\Str::slug($selected->company_name.'_'.$selected->job_title, '_').'.txt'; @endphp
         <div x-data="coverLetterDetail(@js($filename))" class="ai-letter-result">
             <div class="ai-result-title"><h2>{{ $task === 'outreach' ? 'Your outreach draft' : 'Your cover letter' }}</h2><span>{{ $task === 'outreach' ? $selected->channel : (in_array(strtolower($selected->language ?? ''), ['id','indonesian']) ? 'Indonesian' : 'English') }}</span></div>
-            @if($task === 'outreach')<p class="ai-output-notice">A saved template. Edit it to reflect your experience before sending.</p>@endif
-            <div class="ai-letter-text" x-ref="content" id="letter-content" tabindex="0" aria-label="{{ $task === 'outreach' ? 'Outreach draft' : 'Cover letter text' }}">{{ $selected->content }}</div>
+            @if($task === 'outreach' && !$generatedWithAi)<p class="ai-output-notice">A saved template. Edit it to reflect your experience before sending.</p>@endif
+            <div class="ai-letter-text" x-ref="content" id="letter-content" contenteditable="plaintext-only" role="textbox" aria-multiline="true" tabindex="0" aria-label="{{ $task === 'outreach' ? 'Outreach draft' : 'Cover letter text' }}">{{ $selected->content }}</div>
+            <p class="ai-field-hint">Edit the draft above before copying or downloading. Edits apply to this page only.</p>
             <div class="ai-result-actions"><button type="button" @click="copy()" :disabled="copying"><span x-text="copied ? 'Copied' : @js($task === 'outreach' ? 'Copy draft' : 'Copy letter')">Copy letter</span></button><button type="button" @click="download()">Download TXT ↓</button>@if($task === 'cover-letter')<button type="button" @click="window.print()">Print letter ↗</button>@endif<button type="button" x-show="copyFailed" x-cloak @click="selectText()">Select text</button></div><p class="ai-inline-feedback" role="status" aria-live="polite" x-text="notice"></p>
         </div>
     @elseif($task === 'photo')
@@ -44,4 +47,3 @@
         </div>
     @endif
 </article>
-<div class="ai-thread-divider"><span>Start another request below</span></div>

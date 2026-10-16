@@ -1,6 +1,7 @@
 export function coverLetterDetail(filename) {
     return {
         copying: false, copied: false, copyFailed: false, notice: '',
+        plainText() { return this.$refs.content.innerText ?? this.$refs.content.textContent; },
         async copy() {
             if (this.copying) return;
             this.copying = true;
@@ -8,7 +9,7 @@ export function coverLetterDetail(filename) {
             this.copyFailed = false;
             this.notice = '';
             try {
-                await navigator.clipboard.writeText(this.$refs.content.textContent);
+                await navigator.clipboard.writeText(this.plainText());
                 this.copied = true;
                 this.notice = 'Letter copied. Ready to paste into your application.';
             } catch {
@@ -25,7 +26,7 @@ export function coverLetterDetail(filename) {
             this.$refs.content.focus();
         },
         download() {
-            const url = URL.createObjectURL(new Blob([this.$refs.content.textContent], { type: 'text/plain;charset=utf-8' }));
+            const url = URL.createObjectURL(new Blob([this.plainText()], { type: 'text/plain;charset=utf-8' }));
             const link = document.createElement('a');
             link.href = url;
             link.download = filename;

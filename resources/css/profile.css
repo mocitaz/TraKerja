@@ -2372,3 +2372,49 @@ input[type="checkbox"].profile-switch:focus-visible,
     .workspace-shell .profile-workspace .profile-page-header h1 { font-size: 23px; line-height: 1.25; letter-spacing: -.6px; }
     .workspace-shell .profile-workspace .profile-page-header > div > p:last-child { font-size: 12px; line-height: 1.6; margin-top: 8px; }
 }
+/* Billing uses the same panels and controls as the other Profile tabs. */
+.profile-workspace .profile-membership { --membership-surface: #fff; --membership-soft: #f7f8fa; --membership-line: #d7dce2; --membership-ink: #30313b; --membership-muted: #626573; --membership-accent: #2579ca; display: grid; gap: 16px; padding: 0; min-width: 0; background: transparent; }
+.profile-billing-status { font-size: 11px; font-weight: 500; color: #626573; white-space: nowrap; }
+.profile-billing-details { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.profile-billing-details dt { font-size: 11px; color: #626573; margin-bottom: 6px; }
+.profile-billing-details dd { font-size: 13px; font-weight: 600; }
+.profile-billing-note { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--membership-line); }
+.profile-billing-note strong,.profile-billing-pending strong { font-size: 12px; font-weight: 600; }
+.profile-billing-note p,.profile-billing-pending p { font-size: 12px; line-height: 1.6; color: var(--membership-muted); margin-top: 4px; }
+.profile-billing-pending { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.profile-credit-list > div { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--membership-line); }
+.profile-credit-list > div:first-child { padding-top: 0; }
+.profile-credit-list > div:last-child { border-bottom: 0; padding-bottom: 0; }
+.profile-credit-list dt { font-size: 13px; }
+.profile-credit-list dd { display: flex; align-items: baseline; gap: 8px; font-variant-numeric: tabular-nums; }
+.profile-credit-list strong { font-size: 18px; font-weight: 600; }
+.profile-credit-list dd span { font-size: 11px; color: var(--membership-muted); }
+.profile-credit-topup { margin-top: 20px; border-top: 1px solid var(--membership-line); padding-top: 18px; display: grid; gap: 12px; scroll-margin-top: 20px; }
+.profile-credit-topup h3 { font-size: 13px; font-weight: 600; }
+.profile-credit-topup p,.profile-credit-topup small { font-size: 11px; line-height: 1.7; color: var(--membership-muted); }
+.profile-credit-topup p { margin-top: 5px; }
+.profile-credit-purchase { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.profile-credit-purchase > strong { font-size: 14px; font-weight: 600; }
+.profile-workspace .profile-membership .membership-history { border-radius: 20px; }
+.profile-workspace .profile-membership .membership-history > header { margin: 0; padding: 20px; }
+.profile-workspace .profile-membership .membership-empty-state { border: 0; border-radius: 0; padding: 16px 0; margin: 0 20px 20px; text-align: left; }
+.profile-workspace .profile-membership .membership-empty-state h3 { font-size: 13px; font-weight: 500; }
+.profile-workspace .profile-membership .membership-empty-state p { font-size: 11.5px; max-width: none; margin: 5px 0 0; }
+.profile-workspace .profile-membership .membership-transactions thead th:first-child { width: 28%; }
+.profile-workspace .profile-membership .membership-transactions thead th:last-child { width: 21%; }
+.profile-workspace .profile-membership .membership-transactions tbody :is(th,td) { padding-inline: 12px; }
+.profile-workspace .profile-membership .membership-history-note { padding: 12px 20px; }
+.profile-workspace .profile-membership .membership-footer { padding: 0 2px; }
+.profile-workspace .profile-membership .membership-continue { color: var(--membership-accent); background: var(--membership-soft); border-color: var(--membership-line); }
+.dark .profile-workspace .profile-membership { --membership-surface: #1e1f20; --membership-soft: #252628; --membership-line: #383a3d; --membership-ink: #f0f4f9; --membership-muted: #94a3b8; --membership-accent: #a7c7ef; }
+.dark :is(.profile-billing-status,.profile-billing-details dt) { color: #94a3b8; }
+@media (min-width: 641px) and (max-width: 1200px) { .profile-workspace .profile-tabs { display: flex; flex-wrap: wrap; border-radius: 12px; } }
+@media (max-width: 640px) {
+    .workspace-shell .profile-workspace .profile-tabs button { font-size: 11px; padding: 8px 5px; }
+    .profile-billing-details { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .profile-billing-pending { align-items: flex-start; flex-direction: column; }
+    .profile-workspace .profile-membership .membership-history > header { padding: 16px; }
+    .profile-workspace .profile-membership .membership-empty-state { margin-inline: 16px; }
+    .profile-workspace .profile-membership .membership-transactions tbody :is(th,td) { padding: 0; }
+    .profile-workspace .profile-membership .membership-footer { align-items: flex-start; flex-direction: column; gap: 6px; }
+}

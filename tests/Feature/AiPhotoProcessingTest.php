@@ -45,6 +45,15 @@ class AiPhotoProcessingTest extends TestCase
         Queue::assertPushed(ProcessAiPhoto::class, 1);
     }
 
+    public function test_studio_async_photo_submission_returns_the_owned_result_url(): void
+    {
+        $user = User::factory()->create(['photo_credits' => 1]);
+        $this->actingAs($user)->postJson('/ai-photo/process', ['photo' => UploadedFile::fake()->image('portrait.png'), 'type' => 'remove_bg', 'request_key' => (string) Str::uuid()])
+            ->assertAccepted()->assertJsonPath('success', true)->assertJsonPath('status', 'queued')->assertJsonPath('url', route('ai-photo.show', 1));
+        $this->assertSame(0, $user->fresh()->photo_credits);
+        Http::assertNothingSent();
+    }
+
     public function test_duplicate_submission_and_stale_user_cannot_reserve_twice(): void
     {
         $user = User::factory()->create(['photo_credits' => 1]);

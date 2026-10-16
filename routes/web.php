@@ -94,12 +94,14 @@ Route::get('/explore', \App\Livewire\ExploreJobs::class)
 
 // AI Studio routes (Only for regular users)
 Route::get('/ai-studio', [AiStudioController::class, 'index'])->middleware(['auth', 'verified'])->name('ai-studio.index');
-Route::post('/ai-studio/outreach', [AiStudioController::class, 'generateOutreach'])->middleware(['auth', 'verified'])->name('ai-studio.outreach');
+Route::post('/ai-studio/outreach', [AiStudioController::class, 'generateOutreach'])->middleware(['auth', 'verified'])->middleware('throttle:10,1')->name('ai-studio.outreach');
+Route::get('/ai-studio/requests/{run}', [\App\Http\Controllers\StudioRequestController::class, 'status'])->middleware(['auth', 'verified'])->name('ai-studio.status');
+Route::post('/ai-studio/requests/{run}/retry', [\App\Http\Controllers\StudioRequestController::class, 'retry'])->middleware(['auth', 'verified', 'throttle:10,1'])->name('ai-studio.retry');
 
 // AI Analyzer routes (Only for regular users)
 Route::prefix('ai-analyzer')->middleware(['auth', 'verified'])->name('ai-analyzer.')->group(function () {
     Route::get('/', function() { return redirect()->route('ai-studio.index', ['tab' => 'analyzer']); })->name('index');
-    Route::post('/analyze', [AiAnalyzerController::class, 'analyze'])->name('analyze');
+    Route::post('/analyze', [AiAnalyzerController::class, 'analyze'])->middleware('throttle:10,1')->name('analyze');
     Route::get('/analyze', function() { return redirect()->route('ai-studio.index', ['tab' => 'analyzer']); });
     Route::get('/result/{result}', [AiAnalyzerController::class, 'show'])->name('show');
 });
@@ -117,7 +119,7 @@ Route::prefix('ai-photo')->middleware(['auth', 'verified'])->name('ai-photo.')->
 // Cover Letter routes (Only for regular users)
 Route::prefix('cover-letters')->middleware(['auth', 'verified'])->name('cover-letters.')->group(function () {
     Route::get('/', function() { return redirect()->route('ai-studio.index', ['tab' => 'cover-letter']); })->name('index');
-    Route::post('/generate', [CoverLetterController::class, 'generate'])->name('generate');
+    Route::post('/generate', [CoverLetterController::class, 'generate'])->middleware('throttle:10,1')->name('generate');
     Route::get('/history', function() { return redirect()->route('ai-studio.index', ['tab' => 'cover-letter']); })->name('history');
     Route::get('/{coverLetter}', [CoverLetterController::class, 'show'])->name('show');
 });
@@ -337,7 +339,7 @@ Route::middleware('auth')->group(function () {
         }
         // Redirect premium users — no need to see the upgrade page
         if (Auth::user()->isPremium()) {
-            return redirect()->route('membership.index');
+            return redirect()->route('profile.edit', ['tab' => 'membership']);
         }
         return app(PaymentController::class)->premium();
     })->name('payment.premium');

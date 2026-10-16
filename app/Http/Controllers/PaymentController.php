@@ -118,7 +118,7 @@ class PaymentController extends Controller
 
         // Check if user is already premium
         if ($user->isPremium()) {
-            return redirect()->route('membership.index');
+            return redirect()->route('profile.edit', ['tab' => 'membership']);
         }
 
         // Pakasir is simpler, we just need a price and duration
@@ -184,7 +184,7 @@ class PaymentController extends Controller
 
         // Check if package is premium and user is already premium
         if ($packageType === 'premium' && $user->isPremium()) {
-            return redirect()->route('membership.index');
+            return redirect()->route('profile.edit', ['tab' => 'membership']);
         }
 
         // Check if package is an add-on and user is NOT premium

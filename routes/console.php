@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
 
 Schedule::command('ai-photos:recover')->everyMinute()->withoutOverlapping();
+Schedule::command('ai-studio:recover')->everyMinute()->withoutOverlapping();
 Schedule::command('ai-photos:recover --cleanup')->hourly()->withoutOverlapping();
 Schedule::command('data-exports:cleanup')->everyTenMinutes()->withoutOverlapping();
 

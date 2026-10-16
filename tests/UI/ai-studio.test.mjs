@@ -1,16 +1,21 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-globalThis.window = { location: { origin: 'http://localhost', href: 'http://localhost/ai-studio', assign() {} }, addEventListener() {}, removeEventListener() {} };
+globalThis.window = { location: { origin: 'http://localhost', href: 'http://localhost/ai-studio', assign() {} }, history: { replaceState() {} }, addEventListener() {}, removeEventListener() {} };
 globalThis.document = { addEventListener() {} };
-const { aiStudioPortal } = await import('../../resources/js/ai-studio.js');
+const { aiStudioPortal, studioRunStatus } = await import('../../resources/js/ai-studio.js');
 const config = { task: 'cover-letter', endpoints: { analyzer: '/analyze', 'cover-letter': '/generate', photo: '/photo', outreach: '/outreach' }, access: { analyzer: true, 'cover-letter': true, photo: true, outreach: true } };
-function state() { const value = aiStudioPortal({ ...config, access: { ...config.access } }); value.$nextTick = async fn => fn?.(); value.$refs = { composer: { scrollIntoView() {} } }; return value; }
+function state() {
+    const value = aiStudioPortal({ ...config, access: { ...config.access } });
+    value.values = { company_name: 'Actual company', job_title: 'Engineer', job_description: 'Build reliable applications with the engineering team. Design and maintain APIs.' };
+    value.$refs = { file: { value: '', focus() {} }, description: { focus() {} } };
+    return value;
+}
 function event() { return { prevented: false, preventDefault() { this.prevented = true; }, target: { querySelector() { return { value: 'csrf' }; } } }; }
 globalThis.FormData = class { constructor(form) { this.form = form; } };
 
-test('request guard prevents double submissions and does not navigate for an unsaved fallback', async () => {
-    let resolve, calls = 0, assigned = false;
-    window.location.assign = () => { assigned = true; };
+test('one submit saves the request and duplicate clicks do not create another request', async () => {
+    let resolve, calls = 0, assigned;
+    window.location.assign = url => { assigned = url; };
     globalThis.fetch = async (url, options) => { calls++; assert.equal(url, '/generate'); assert.equal(options.headers['X-CSRF-TOKEN'], 'csrf'); return new Promise(finish => { resolve = finish; }); };
     const portal = state(), first = event(), duplicate = event();
     const pending = portal.submit(first);
@@ -18,104 +23,85 @@ test('request guard prevents double submissions and does not navigate for an uns
     await portal.submit(duplicate);
     assert.equal(duplicate.prevented, true);
     assert.equal(calls, 1);
-    resolve(new Response(JSON.stringify({ success: true, is_fallback: true, cover_letter: '<script>literal</script>' }), { headers: { 'content-type': 'application/json' } }));
+    resolve(new Response(JSON.stringify({ success: true, status: 'queued', url: '/ai-studio?run=8' }), { headers: { 'content-type': 'application/json' } }));
     await pending;
-    assert.equal(portal.draftText, '<script>literal</script>');
     assert.equal(portal.busy, false);
-    assert.equal(assigned, false);
+    assert.equal(assigned, 'http://localhost/ai-studio?run=8');
 });
 
-test('validation failures retain composer state and a saved result opens only on the same origin', async () => {
-    const portal = state();
+test('validation errors retain all form values and reject external result links', async () => {
+    const portal = state(), before = { ...portal.values };
     globalThis.fetch = async () => new Response(JSON.stringify({ errors: { company_name: ['Company is required.'] } }), { status: 422, headers: { 'content-type': 'application/json' } });
     await portal.submit(event());
     assert.equal(portal.error, 'Company is required.');
     assert.equal(portal.busy, false);
-    let assigned;
-    window.location.assign = url => { assigned = url; };
-    globalThis.fetch = async () => new Response(JSON.stringify({ success: true, id: 5 }), { headers: { 'content-type': 'application/json' } });
-    await portal.submit(event());
-    assert.equal(assigned, 'http://localhost/cover-letters/5');
-    portal.task = 'outreach';
+    assert.deepEqual(portal.values, before);
     globalThis.fetch = async () => new Response(JSON.stringify({ success: true, url: 'https://other.example/private' }), { headers: { 'content-type': 'application/json' } });
     await portal.submit(event());
     assert.match(portal.error, /Check your history/);
-    assert.equal(assigned, 'http://localhost/cover-letters/5');
 });
 
-test('photo and analyzer preserve native submission while limits and files block invalid requests', async () => {
-    const portal = state();
-    portal.task = 'photo';
-    const native = event();
-    await portal.submit(native);
-    assert.equal(native.prevented, false);
-    assert.equal(portal.busy, true);
-    portal.busy = false; portal.access.photo = false;
-    const blocked = event(); await portal.submit(blocked);
-    assert.equal(blocked.prevented, true);
+test('missing CV and insufficient requirements stop before any network request', async () => {
+    const portal = state(); portal.task = 'analyzer';
+    let calls = 0; globalThis.fetch = async () => { calls++; };
+    await portal.submit(event()); assert.match(portal.error, /Upload a PDF/);
+    portal.resumeId = '5'; portal.values.job_description = 'Short';
+    await portal.submit(event()); assert.match(portal.error, /50 characters/);
+    assert.equal(calls, 0);
     const input = { files: [{ name: 'large.pdf', type: 'application/pdf', size: 11 * 1024 * 1024 }], value: 'chosen' };
     portal.fileChanged({ target: input }, 'pdf');
     assert.equal(input.value, ''); assert.match(portal.error, /10 MB/);
 });
 
-test('destroyed portal ignores late provider responses and cancels its fetch', async () => {
+test('photo uses the same asynchronous submission and requires an attachment', async () => {
+    const portal = state(); portal.task = 'photo';
+    await portal.submit(event()); assert.match(portal.error, /Choose a photo/);
+    portal.fileName = 'portrait.jpg';
+    let endpoint; globalThis.fetch = async url => { endpoint = url; return new Response(JSON.stringify({ success: true, url: '/ai-photo/3' }), { headers: { 'content-type': 'application/json' } }); };
+    await portal.submit(event()); assert.equal(endpoint, '/photo');
+    portal.access.photo = false; endpoint = null;
+    await portal.submit(event()); assert.equal(endpoint, null);
+});
+
+test('changing task keeps typed context, clears incompatible attachments and ignores selecting current task', () => {
+    const portal = state(), before = { ...portal.values };
+    portal.fileName = 'resume.pdf'; portal.$refs.file.value = 'selected';
+    portal.choose('cover-letter'); assert.equal(portal.fileName, 'resume.pdf');
+    portal.choose('outreach');
+    assert.deepEqual(portal.values, before); assert.equal(portal.fileName, '');
+    assert.equal(portal.showRequirements, true);
+    portal.busy = true; portal.choose('photo'); assert.equal(portal.task, 'outreach');
+});
+
+test('application selection supplies company and role and discards requirements for a different role', () => {
+    const portal = state();
+    portal.applications = [{ id: 7, company_name: 'New company', position: 'Designer' }];
+    portal.applicationId = '7'; portal.applyApplication();
+    assert.equal(portal.values.company_name, 'New company'); assert.equal(portal.values.job_title, 'Designer');
+    assert.equal(portal.values.job_description, '');
+    portal.values.job_description = 'Requirements for Designer'; portal.applyApplication();
+    assert.equal(portal.values.job_description, 'Requirements for Designer');
+});
+
+test('destroyed portal cancels its request and ignores late responses', async () => {
     let resolve, assigned = false;
     window.location.assign = () => { assigned = true; };
     globalThis.fetch = () => new Promise(finish => { resolve = finish; });
     const portal = state(), pending = portal.submit(event());
-    const controller = portal.controller;
-    portal.destroy();
+    const controller = portal.controller; portal.destroy();
     assert.equal(controller.signal.aborted, true);
-    resolve(new Response(JSON.stringify({ success: true, id: 1 }), { headers: { 'content-type': 'application/json' } }));
-    await pending;
-    assert.equal(assigned, false);
+    resolve(new Response(JSON.stringify({ success: true, url: '/ai-studio?run=1' }), { headers: { 'content-type': 'application/json' } }));
+    await pending; assert.equal(assigned, false);
 });
 
-
-test('chat collects only missing details and sends the request after the last answer', async () => {
-    const portal = state();
-    let calls = 0;
-    globalThis.fetch = async () => { calls++; return new Response(JSON.stringify({ success: true, is_fallback: true, cover_letter: 'Draft' }), { headers: { 'content-type': 'application/json' } }); };
-    portal.answer = 'Example company';
-    await portal.sendAnswer(event());
-    assert.equal(portal.values.company_name, 'Example company');
-    assert.equal(portal.currentStep.key, 'job_title');
-    assert.equal(calls, 0);
-    portal.answer = 'Software engineer';
-    await portal.sendAnswer(event());
-    assert.equal(portal.currentStep.key, 'job_description');
-    portal.answer = 'Too short';
-    await portal.sendAnswer(event());
-    assert.match(portal.error, /50–2500/);
-    assert.equal(portal.turns.length, 2);
-    portal.answer = 'Build reliable applications with the engineering team. Design and maintain APIs.';
-    await portal.sendAnswer(event());
-    assert.equal(portal.turns.length, 3);
-    assert.equal(portal.completedDetails, true);
-    assert.equal(calls, 1);
-    assert.equal(portal.draftText, 'Draft');
-    portal.editTurn(1);
-    assert.equal(portal.turns.length, 1);
-    assert.equal(portal.answer, 'Software engineer');
-    assert.equal(portal.values.job_description, undefined);
-    assert.equal(portal.completedDetails, false);
-});
-
-test('chat requires attachments and preserves native upload payload after collecting details', async () => {
-    const portal = state();
-    portal.task = 'analyzer';
-    portal.answer = 'A complete job description with enough characters to satisfy the actual provider contract.';
-    await portal.sendAnswer(event());
-    assert.match(portal.error, /Attach your resume PDF/);
-    assert.equal(portal.turns.length, 0);
-    portal.fileName = 'resume.pdf';
-    portal.$refs.form = {};
-    let submitted = 0;
-    globalThis.HTMLFormElement = class { submit() { submitted++; } };
-    await portal.sendAnswer(event());
-    assert.equal(submitted, 1);
-    assert.equal(portal.busy, true);
-    assert.equal(portal.values.job_description.includes('complete job'), true);
-    await portal.sendAnswer(event());
-    assert.equal(submitted, 1);
+test('completed requests open verified local results and failed requests stop polling', async () => {
+    let assigned;
+    window.location.assign = url => { assigned = url; };
+    globalThis.fetch = async () => new Response(JSON.stringify({ status: 'completed', credit_state: 'consumed', url: '/ai-studio?task=analyzer&id=4' }), { headers: { 'content-type': 'application/json' } });
+    const run = studioRunStatus('/status', 'processing', 'reserved'); await run.poll();
+    assert.equal(run.credit, 'consumed'); assert.equal(assigned, 'http://localhost/ai-studio?task=analyzer&id=4');
+    globalThis.fetch = async () => new Response(JSON.stringify({ status: 'failed', credit_state: 'refunded', message: 'Try again later.' }), { headers: { 'content-type': 'application/json' } });
+    await run.poll(); assert.equal(run.credit, 'refunded'); assert.equal(run.message, 'Try again later.'); assert.equal(run.timer, null);
+    globalThis.fetch = async () => new Response(JSON.stringify({ status: 'completed', url: 'https://other.example/' }), { headers: { 'content-type': 'application/json' } });
+    await run.poll(); assert.match(run.error, /could not be verified/);
 });
