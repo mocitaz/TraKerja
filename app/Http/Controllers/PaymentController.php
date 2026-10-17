@@ -49,11 +49,11 @@ class PaymentController extends Controller
         // ONLY allow premium users to top-up!
         if (!$user->isPremium()) {
             return redirect()->route('payment.premium')
-                ->with('error', 'Silakan upgrade ke Premium terlebih dahulu untuk membeli Add-On!');
+                ->with('error', __('Silakan upgrade ke Premium terlebih dahulu untuk membeli Add-On!'));
         }
 
         $package = request()->query('package', 'analyzer');
-        
+
         if ($package === 'cover_letter') {
             $packageType = 'cl_addon_15';
             $packageName = 'TraKerja Add-On Pack';
@@ -190,7 +190,7 @@ class PaymentController extends Controller
         // Check if package is an add-on and user is NOT premium
         if (in_array($packageType, ['addon_10', 'cl_addon_15']) && !$user->isPremium()) {
             return redirect()->route('payment.premium')
-                ->with('error', 'Silakan upgrade ke Premium terlebih dahulu untuk membeli Add-On!');
+                ->with('error', __('Silakan upgrade ke Premium terlebih dahulu untuk membeli Add-On!'));
         }
 
         try {
@@ -225,10 +225,10 @@ class PaymentController extends Controller
 
             // For Pakasir, we can use Integration Via URL (Redirect)
             // or Integration Via API. Redirect is easier.
-            
+
             $qrisOnly = ($request->payment_channel_code === 'qris');
             $redirectUrl = route('payment.callback', ['order_id' => $orderId]);
-            
+
             $paymentUrl = $this->getPakasirService()->generatePaymentUrl(
                 orderId: $orderId,
                 amount: $amount,
@@ -261,7 +261,7 @@ class PaymentController extends Controller
             ]);
 
             return back()->withErrors([
-                'payment_error' => 'Terjadi kesalahan saat memproses pembayaran. Detail: ' . $e->getMessage()
+                'payment_error' => __('Terjadi kesalahan saat memproses pembayaran. Detail: ') . $e->getMessage()
             ]);
         }
     }
@@ -279,22 +279,22 @@ class PaymentController extends Controller
 
         if (!$orderId) {
             return redirect()->route('tracker')
-                ->with('error', 'Data pembayaran tidak valid.');
+                ->with('error', __('Data pembayaran tidak valid.'));
         }
 
         $payment = Payment::where('order_id', $orderId)->first();
 
         if (!$payment) {
             return redirect()->route('tracker')
-                ->with('error', 'Pembayaran tidak ditemukan.');
+                ->with('error', __('Pembayaran tidak ditemukan.'));
         }
 
         // Since this is a simple redirect, we should check status via API
         $statusCheck = $this->getPakasirService()->checkTransactionStatus($orderId, $payment->amount);
-        
+
         if ($statusCheck['success']) {
             $status = $statusCheck['data']['status'] ?? 'pending';
-            
+
             if ($status === 'completed') {
                 $this->handleSuccessfulPayment($payment, $statusCheck['data']);
                 return redirect()->route('payment.success', ['orderId' => $orderId]);
@@ -319,16 +319,16 @@ class PaymentController extends Controller
         $orderId = $data['order_id'];
 
         if ($data['project'] !== config('pakasir.slug')) {
-            return response()->json(['message' => 'Project mismatch'], 400);
+            return response()->json(['message' => __('Project mismatch')], 400);
         }
 
         $payment = Payment::where('order_id', $orderId)->first();
         if (! $payment) {
-            return response()->json(['message' => 'Payment not found'], 404);
+            return response()->json(['message' => __('Payment not found')], 404);
         }
 
         if ($payment->amount !== (int) $data['amount']) {
-            return response()->json(['message' => 'Amount mismatch'], 400);
+            return response()->json(['message' => __('Amount mismatch')], 400);
         }
 
         $payload = $request->all();
@@ -351,7 +351,7 @@ class PaymentController extends Controller
             if (! $verification['success']) {
                 $webhookLog->update(['status' => 'failed', 'notes' => 'Provider verification failed']);
 
-                return response()->json(['message' => 'Unable to verify payment'], 503);
+                return response()->json(['message' => __('Unable to verify payment')], 503);
             }
 
             $transaction = $verification['data'];
@@ -364,7 +364,7 @@ class PaymentController extends Controller
 
             $webhookLog->update(['status' => 'processed']);
 
-            return response()->json(['message' => 'Webhook processed successfully'], 200);
+            return response()->json(['message' => __('Webhook processed successfully')], 200);
         } catch (\Exception $e) {
             Log::error('Pakasir: Webhook processing failed', [
                 'error' => $e->getMessage(),
@@ -372,7 +372,7 @@ class PaymentController extends Controller
             ]);
             $webhookLog->update(['status' => 'failed', 'notes' => $e->getMessage()]);
 
-            return response()->json(['message' => 'Processing failed'], 500);
+            return response()->json(['message' => __('Processing failed')], 500);
         }
     }
 
@@ -396,7 +396,7 @@ class PaymentController extends Controller
 
         if (!$payment) {
             return redirect()->route('tracker')
-                ->with('error', 'Pembayaran tidak ditemukan.');
+                ->with('error', __('Pembayaran tidak ditemukan.'));
         }
 
         return view('payment.success', compact('payment'));
@@ -414,7 +414,7 @@ class PaymentController extends Controller
 
         if (!$payment) {
             return redirect()->route('tracker')
-                ->with('error', 'Pembayaran tidak ditemukan.');
+                ->with('error', __('Pembayaran tidak ditemukan.'));
         }
 
         return view('payment.failed', compact('payment'));
@@ -432,7 +432,7 @@ class PaymentController extends Controller
 
         if (!$payment) {
             return redirect()->route('tracker')
-                ->with('error', 'Pembayaran tidak ditemukan.');
+                ->with('error', __('Pembayaran tidak ditemukan.'));
         }
 
         return view('payment.waiting', compact('payment'));
@@ -444,7 +444,7 @@ class PaymentController extends Controller
     public function history()
     {
         $user = Auth::user();
-        
+
         $payments = Payment::where('user_id', $user->id)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
@@ -488,7 +488,7 @@ class PaymentController extends Controller
             ->first();
 
         if (!$payment) {
-            return response()->json(['success' => false, 'message' => 'Payment not found'], 404);
+            return response()->json(['success' => false, 'message' => __('Payment not found')], 404);
         }
 
         $statusCheck = $this->getPakasirService()->checkTransactionStatus($orderId, $payment->amount);
@@ -496,14 +496,14 @@ class PaymentController extends Controller
         if (!($statusCheck['success'] ?? false)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Status pembayaran belum dapat diverifikasi. Silakan coba lagi.',
+                'message' => __('Status pembayaran belum dapat diverifikasi. Silakan coba lagi.'),
             ], 503);
         }
 
 
         if ($statusCheck['success']) {
             $status = $statusCheck['data']['status'] ?? null;
-            
+
             if ($status === 'completed' && $payment->status !== 'SUCCESS') {
                 $this->handleSuccessfulPayment($payment, $statusCheck['data']);
                 // Refresh data model pembayaran agar status terbarunya langsung terambil (SUCCESS)

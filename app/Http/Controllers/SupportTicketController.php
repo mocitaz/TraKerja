@@ -37,7 +37,7 @@ class SupportTicketController extends Controller
         $request->validate([
             'category' => 'required|string|in:technical_issue,payment_billing,feature_request,general_feedback',
             'subject' => 'required|string|max:255',
-            'message' => 'required|string|min:10|max:5000',
+            'message' => __('required|string|min:10|max:5000'),
         ], [
             'category.required' => 'Kategori bantuan wajib dipilih.',
             'subject.required' => 'Subjek atau judul pesan wajib diisi.',

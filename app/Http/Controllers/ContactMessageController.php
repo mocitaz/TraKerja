@@ -30,7 +30,7 @@ class ContactMessageController extends Controller
             'name'    => 'required|string|max:100',
             'email'   => 'required|email|max:150',
             'subject' => 'nullable|string|max:200',
-            'message' => 'required|string|max:2000',
+            'message' => __('required|string|max:2000'),
         ], [
             'name.required'    => 'Nama wajib diisi.',
             'email.required'   => 'Email wajib diisi.',
@@ -63,7 +63,7 @@ class ContactMessageController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Pesan berhasil dikirim! Kami akan menghubungi Anda segera.',
+            'message' => __('Pesan berhasil dikirim! Kami akan menghubungi Anda segera.'),
         ]);
     }
 

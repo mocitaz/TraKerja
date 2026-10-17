@@ -1,3 +1,4 @@
+import { t } from './i18n.js';
 window.paymentWaitingStatus = ({statusUrl, successUrl, failedUrl, initialStatus}) => ({
     status: initialStatus,
     labels: {PENDING: 'Awaiting payment', WAITING: 'Awaiting payment', SUCCESS: 'Paid', FAILED: 'Failed', CANCELED: 'Canceled', EXPIRED: 'Expired'},
@@ -33,17 +34,17 @@ window.paymentWaitingStatus = ({statusUrl, successUrl, failedUrl, initialStatus}
             if (this.stopped || this.controller !== controller) return;
             if (response.redirected || [401, 419].includes(response.status)) {
                 retry = false;
-                throw new Error('Your session has ended. Sign in again to check this payment.');
+                throw new Error(t("Your session has ended. Sign in again to check this payment."));
             }
             if ([403, 404].includes(response.status)) {
                 retry = false;
-                throw new Error('This payment is unavailable. Open your payment history to continue.');
+                throw new Error(t("This payment is unavailable. Open your payment history to continue."));
             }
-            if (!response.ok) throw new Error('We couldn’t verify the payment status. Please try again shortly.');
+            if (!response.ok) throw new Error(t("We couldn’t verify the payment status. Please try again shortly."));
             const data = await response.json();
             if (this.stopped || this.controller !== controller) return;
             if (!data || data.success !== true || !Object.hasOwn(this.labels, data.status)) {
-                throw new Error('We couldn’t verify the payment status. Please try again shortly.');
+                throw new Error(t("We couldn’t verify the payment status. Please try again shortly."));
             }
             this.status = data.status;
             this.error = '';
@@ -58,7 +59,7 @@ window.paymentWaitingStatus = ({statusUrl, successUrl, failedUrl, initialStatus}
                 this.error = timedOut
                     ? 'The status check timed out. Please try again.'
                     : (error.message.startsWith('Your session') || error.message.startsWith('This payment')
-                        ? error.message : 'We couldn’t verify the payment status. Please try again shortly.');
+                        ? error.message : t("We couldn’t verify the payment status. Please try again shortly."));
             }
         } finally {
             if (this.controller !== controller) return;
@@ -74,9 +75,9 @@ window.paymentWaitingStatus = ({statusUrl, successUrl, failedUrl, initialStatus}
     async copyVA(value) {
         try {
             await navigator.clipboard.writeText(value);
-            this.copyMessage = 'Virtual account number copied.';
+            this.copyMessage = t("Virtual account number copied.");
         } catch {
-            this.copyMessage = 'Couldn’t copy the number. Please select and copy it manually.';
+            this.copyMessage = t("Couldn’t copy the number. Please select and copy it manually.");
         }
     },
     pause() {

@@ -35,14 +35,14 @@ class DatabaseMaintenance extends Component
     private function detectUnusedFiles()
     {
         $this->orphanedFiles = [];
-        
+
         try {
             // 1. Get all logos stored in public storage disk
             $allStorageFiles = Storage::disk('public')->files('logos');
-            
+
             // 2. Get all logo paths stored in database
             $activeLogos = DB::table('users')->whereNotNull('logo')->pluck('logo')->toArray();
-            
+
             // 3. Find files in storage that are not active in database
             foreach ($allStorageFiles as $file) {
                 if (!in_array($file, $activeLogos)) {
@@ -53,7 +53,7 @@ class DatabaseMaintenance extends Component
             // Silently fall back if storage doesn't exist
             $this->orphanedFiles = [];
         }
-        
+
         $this->unusedFilesCount = count($this->orphanedFiles);
     }
 
@@ -61,7 +61,7 @@ class DatabaseMaintenance extends Component
     {
         // Re-detect just in case
         $this->detectUnusedFiles();
-        
+
         $deletedCount = 0;
         foreach ($this->orphanedFiles as $file) {
             // Delete from public storage disk
@@ -69,26 +69,26 @@ class DatabaseMaintenance extends Component
                 Storage::disk('public')->delete($file);
                 $deletedCount++;
             }
-            
+
             // Delete from public_html/storage/logos if exists
             $publicHtmlPath = base_path('public_html/storage/' . $file);
             if (file_exists($publicHtmlPath)) {
                 unlink($publicHtmlPath);
             }
-            
+
             // Delete from public/storage/logos if exists
             $publicPath = public_path('storage/' . $file);
             if (file_exists($publicPath)) {
                 unlink($publicPath);
             }
         }
-        
+
         $this->unusedFilesCount = 0;
         $this->orphanedFiles = [];
-        
+
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Storage Cleaned!',
+            'title' => __('Storage Cleaned!'),
             'message' => "Berhasil menghapus {$deletedCount} file logo sampah dari server.",
         ]);
     }

@@ -16,11 +16,11 @@ class LogoController extends Controller
     {
         $publicHtmlPath = base_path('public_html/storage/' . $logoPath);
         $publicHtmlDir = dirname($publicHtmlPath);
-        
+
         if (!is_dir($publicHtmlDir)) {
             mkdir($publicHtmlDir, 0755, true);
         }
-        
+
         // Copy file to public_html
         copy(storage_path('app/public/' . $logoPath), $publicHtmlPath);
         chmod($publicHtmlPath, 0644);
@@ -48,7 +48,7 @@ class LogoController extends Controller
             if (!$request->hasFile('logo')) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'No profile photo was uploaded.',
+                    'message' => __('No profile photo was uploaded.'),
                     'error_type' => 'no_file'
                 ], 400);
             }
@@ -59,7 +59,7 @@ class LogoController extends Controller
             if ($file->getSize() > 2048 * 1024) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Profile photo size is too large. Maximum size is 2MB.',
+                    'message' => __('Profile photo size is too large. Maximum size is 2MB.'),
                     'error_type' => 'file_too_large'
                 ], 400);
             }
@@ -69,7 +69,7 @@ class LogoController extends Controller
             if (!in_array($file->getMimeType(), $allowedTypes)) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Invalid profile photo type. Please upload a JPEG, PNG, JPG, GIF, or SVG image.',
+                    'message' => __('Invalid profile photo type. Please upload a JPEG, PNG, JPG, GIF, or SVG image.'),
                     'error_type' => 'invalid_file_type'
                 ], 400);
             }
@@ -81,12 +81,12 @@ class LogoController extends Controller
 
             // Store new profile photo
             $logoPath = $file->store('logos', 'public');
-            
+
             // Check if storage was successful
             if (!$logoPath) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Failed to store the profile photo. Please try again.',
+                    'message' => __('Failed to store the profile photo. Please try again.'),
                     'error_type' => 'storage_failed'
                 ], 500);
             }
@@ -97,11 +97,11 @@ class LogoController extends Controller
             // Ensure file is accessible via public URL
             $publicPath = public_path('storage/' . $logoPath);
             $publicDir = dirname($publicPath);
-            
+
             if (!is_dir($publicDir)) {
                 mkdir($publicDir, 0755, true);
             }
-            
+
             if (!file_exists($publicPath)) {
                 copy(storage_path('app/public/' . $logoPath), $publicPath);
             }
@@ -111,14 +111,14 @@ class LogoController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Profile photo uploaded successfully!',
+                'message' => __('Profile photo uploaded successfully!'),
                 'logo_url' => Storage::url($logoPath)
             ]);
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Validation failed: ' . implode(', ', $e->validator->errors()->all()),
+                'message' => __('Validation failed: ') . implode(', ', $e->validator->errors()->all()),
                 'error_type' => 'validation_error',
                 'errors' => $e->validator->errors()
             ], 422);
@@ -126,7 +126,7 @@ class LogoController extends Controller
             \Log::error('Photo upload error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'An unexpected error occurred: ' . $e->getMessage(),
+                'message' => __('An unexpected error occurred: ') . $e->getMessage(),
                 'error_type' => 'server_error'
             ], 500);
         }
@@ -142,14 +142,14 @@ class LogoController extends Controller
         if ($user->logo) {
             // Delete from storage
             Storage::disk('public')->delete($user->logo);
-            
+
             // Delete from public_html with path traversal protection
             $publicHtmlPath = base_path('public_html/storage/' . $user->logo);
-            
+
             // SECURITY: Validate path to prevent path traversal attacks
             $realPath = realpath(dirname($publicHtmlPath));
             $expectedBase = realpath(base_path('public_html/storage'));
-            
+
             // Ensure the file is within the allowed directory
             if ($realPath && $expectedBase && strpos($realPath, $expectedBase) === 0) {
             if (file_exists($publicHtmlPath)) {
@@ -161,13 +161,13 @@ class LogoController extends Controller
                     'logo_path' => $user->logo
                 ]);
             }
-            
+
             $user->update(['logo' => null]);
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Profile photo deleted successfully!'
+            'message' => __('Profile photo deleted successfully!')
         ]);
     }
 
@@ -177,7 +177,7 @@ class LogoController extends Controller
     public function getLogo()
     {
         $user = Auth::user();
-        
+
         if ($user->logo) {
             return response()->json([
                 'success' => true,
@@ -187,7 +187,7 @@ class LogoController extends Controller
 
         return response()->json([
             'success' => false,
-            'message' => 'No profile photo found'
+            'message' => __('No profile photo found')
         ]);
     }
 }

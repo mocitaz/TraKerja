@@ -21,7 +21,7 @@
                         <td style="background-color:#ffffff; padding:36px 32px 30px 32px;">
 
                             <p style="margin:0 0 18px 0; font-size:15px; line-height:24px; color:#211d27;">
-                                Halo <strong>{{ $user->name }}</strong>,
+                                {{ __('Halo') }} <strong>{{ $user->name }}</strong>,
                             </p>
 
                             <!-- Email Content -->
@@ -45,9 +45,9 @@
                             <table role="presentation" style="width:100%; border-collapse:collapse; border-top:1px solid #f3eff6;">
                                 <tr>
                                     <td style="padding-top:18px;">
-                                        <p style="margin:0 0 3px 0; font-size:12px; line-height:19px; color:#857c91;">Salam hangat,</p>
-                                        <p style="margin:0 0 2px 0; font-size:13px; font-weight:700; color:#7b5ea7;">Tim TraKerja</p>
-                                        <p style="margin:0; font-size:11px; color:#a49cb0;">PT Teknalogi Transformasi Digital</p>
+                                        <p style="margin:0 0 3px 0; font-size:12px; line-height:19px; color:#857c91;">{{ __('Salam hangat,') }}</p>
+                                        <p style="margin:0 0 2px 0; font-size:13px; font-weight:700; color:#7b5ea7;">{{ __('Tim TraKerja') }}</p>
+                                        <p style="margin:0; font-size:11px; color:#a49cb0;">{{ __('PT Teknalogi Transformasi Digital') }}</p>
                                     </td>
                                 </tr>
                             </table>

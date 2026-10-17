@@ -119,7 +119,7 @@ class InterviewCalendar extends Component
         }
         $upcoming = $jobs->filter(fn ($job) => $job->interview_date->gte(now('Asia/Jakarta')));
         return view('livewire.interview-calendar', [
-            'monthName' => $month->format('F Y'), 'monthTotal' => $jobs->count(), 'upcomingTotal' => $upcoming->count(),
+            'monthName' => $month->locale(app()->getLocale())->translatedFormat('F Y'), 'monthTotal' => $jobs->count(), 'upcomingTotal' => $upcoming->count(),
             'scheduledDays' => $grouped->count(), 'calendarDays' => $days,
             'daySchedule' => $this->selectedDate ? $grouped->get($this->selectedDate, collect()) : $upcoming->take(5),
             'agenda' => $this->viewMode === 'list' ? $this->monthQuery()->paginate(20, ['*'], 'agendaPage') : null,

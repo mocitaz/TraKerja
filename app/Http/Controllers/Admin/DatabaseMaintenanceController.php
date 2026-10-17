@@ -21,7 +21,7 @@ class DatabaseMaintenanceController extends Controller
                 ->deleteFileAfterSend(true);
         } catch (\Throwable $e) {
             Log::error('Database backup failed', ['admin_id' => Auth::id()]);
-            return back()->with('error', 'Backup database gagal dibuat. Tidak ada file yang diunduh. Hubungi administrator server.');
+            return back()->with('error', __('Backup database gagal dibuat. Tidak ada file yang diunduh. Hubungi administrator server.'));
         }
     }
 }

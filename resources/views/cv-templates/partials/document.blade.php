@@ -4,11 +4,11 @@
     $bodySize = in_array($fontSize ?? null, ['8.5pt', '9.5pt', '10.5pt'], true) ? $fontSize : '9.5pt';
     $profile = $user->profile;
     $sections = [
-        ['title' => 'Work Experience', 'items' => $experiences->map(fn($x) => ['title' => $variant === 'professional' && filled($x->company_name) ? $x->company_name : $x->position, 'subtitle' => $variant === 'professional' && filled($x->company_name) ? $x->position : $x->company_name, 'location' => $x->location, 'date' => format_date_range($x->start_date, $x->end_date, $x->is_current), 'description' => $x->description])],
-        ['title' => 'Education', 'items' => $educations->map(fn($x) => ['title' => $x->institution_name, 'subtitle' => implode(in_array($variant, ['minimal', 'professional', 'elegant'], true) ? ', ' : ' · ', array_filter([$x->degree, $x->major])), 'location' => $x->location, 'date' => format_date_range($x->start_date, $x->end_date, $x->is_current), 'description' => $x->description, 'detail' => $x->gpa !== null ? 'GPA: '.$x->gpa : null])],
-        ['title' => 'Projects', 'items' => $projects->map(fn($x) => ['title' => $x->project_name, 'subtitle' => $x->role, 'date' => format_date_range($x->start_date, $x->end_date, $x->is_ongoing), 'description' => $x->description, 'detail' => is_array($x->technologies) && count($x->technologies) ? 'Technologies: '.implode(', ', $x->technologies) : null, 'links' => array_filter(['Project' => CvDocument::url($x->project_url), 'Repository' => CvDocument::url($x->repository_url)])])],
-        ['title' => 'Leadership & Organizations', 'items' => $organizations->map(fn($x) => ['title' => $variant === 'professional' && filled($x->organization_name) ? $x->organization_name : $x->position, 'subtitle' => $variant === 'professional' && filled($x->organization_name) ? $x->position : $x->organization_name, 'date' => format_date_range($x->start_date, $x->end_date, $x->is_current), 'description' => $x->description])],
-        ['title' => 'Certifications & Awards', 'items' => $achievements->map(fn($x) => ['title' => $x->title, 'subtitle' => $x->issuer, 'date' => $x->date?->format('M Y'), 'description' => $x->description, 'links' => array_filter(['Certificate' => CvDocument::url($x->certificate_url)])])],
+        ['title' => __('Work Experience'), 'items' => $experiences->map(fn($x) => ['title' => $variant === 'professional' && filled($x->company_name) ? $x->company_name : $x->position, 'subtitle' => $variant === 'professional' && filled($x->company_name) ? $x->position : $x->company_name, 'location' => $x->location, 'date' => format_date_range($x->start_date, $x->end_date, $x->is_current), 'description' => $x->description])],
+        ['title' => __('Education'), 'items' => $educations->map(fn($x) => ['title' => $x->institution_name, 'subtitle' => implode(in_array($variant, ['minimal', 'professional', 'elegant'], true) ? ', ' : ' · ', array_filter([$x->degree, $x->major])), 'location' => $x->location, 'date' => format_date_range($x->start_date, $x->end_date, $x->is_current), 'description' => $x->description, 'detail' => $x->gpa !== null ? 'GPA: '.$x->gpa : null])],
+        ['title' => __('Projects'), 'items' => $projects->map(fn($x) => ['title' => $x->project_name, 'subtitle' => $x->role, 'date' => format_date_range($x->start_date, $x->end_date, $x->is_ongoing), 'description' => $x->description, 'detail' => is_array($x->technologies) && count($x->technologies) ? 'Technologies: '.implode(', ', $x->technologies) : null, 'links' => array_filter(['Project' => CvDocument::url($x->project_url), 'Repository' => CvDocument::url($x->repository_url)])])],
+        ['title' => __('Leadership & Organizations'), 'items' => $organizations->map(fn($x) => ['title' => $variant === 'professional' && filled($x->organization_name) ? $x->organization_name : $x->position, 'subtitle' => $variant === 'professional' && filled($x->organization_name) ? $x->position : $x->organization_name, 'date' => format_date_range($x->start_date, $x->end_date, $x->is_current), 'description' => $x->description])],
+        ['title' => __('Certifications & Awards'), 'items' => $achievements->map(fn($x) => ['title' => $x->title, 'subtitle' => $x->issuer, 'date' => $x->date?->locale(app()->getLocale())->translatedFormat('M Y'), 'description' => $x->description, 'links' => array_filter(['Certificate' => CvDocument::url($x->certificate_url)])])],
     ];
     $sectionNumber = 0;
     $contacts = array_filter([$user->email, $profile?->phone_number, $profile?->domicile]);
@@ -22,7 +22,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{{ $user->name }} - CV</title>
+    <title>{{ __(':value1 - CV', ['value1' => ($user->name)]) }}</title>
     <style>
         @page { size: A4 portrait; margin: {{ $pageMargin }}; }
         * { box-sizing: border-box; }
@@ -67,12 +67,12 @@
         <h1 class="name">{!! CvDocument::text($user->name) !!}</h1>
         @if(!in_array($variant, ['minimal', 'professional'], true) && $experiences->first()?->position)<p class="headline">{!! CvDocument::text($experiences->first()->position) !!}</p>@endif
         <div class="contacts">@foreach($contacts as $contact)<span class="contact">{!! CvDocument::text($contact) !!}</span>@if(!$loop->last)<span class="separator">{{ $variant === 'minimal' ? '|' : '·' }}</span>@endif @endforeach</div>
-        @if($links)<div class="profile-links">@foreach($links as $label => $url)<a href="{{ $url }}">{{ $label }}: {!! CvDocument::text(preg_replace('#^https?://#i', '', $url)) !!}</a>@if(!$loop->last)<span class="separator">{{ $variant === 'minimal' ? '|' : '·' }}</span>@endif @endforeach</div>@endif
-        @if($photo)</td><td class="photo-cell"><img class="photo" src="{{ $photo }}" alt="Profile photo"></td></tr></table>@endif
+        @if($links)<div class="profile-links">@foreach($links as $label => $url)<a href="{{ $url }}">{{ __($label) }}: {!! CvDocument::text(preg_replace('#^https?://#i', '', $url)) !!}</a>@if(!$loop->last)<span class="separator">{{ $variant === 'minimal' ? '|' : '·' }}</span>@endif @endforeach</div>@endif
+        @if($photo)</td><td class="photo-cell"><img class="photo" src="{{ $photo }}" alt="{{ __('Profile photo') }}"></td></tr></table>@endif
     </header>
     @endif
     @if(filled($profile?->bio))
-        <section class="section"><h2 class="section-title">@if($variant === 'creative')<span class="section-number">{{ str_pad(++$sectionNumber, 2, '0', STR_PAD_LEFT) }}</span>@endif{{ $variant === 'creative' ? 'Profile' : 'Professional Summary' }}</h2><div class="description">{!! CvDocument::description($profile->bio) !!}</div></section>
+        <section class="section"><h2 class="section-title">@if($variant === 'creative')<span class="section-number">{{ str_pad(++$sectionNumber, 2, '0', STR_PAD_LEFT) }}</span>@endif{{ $variant === 'creative' ? __('Profile') : __('Professional Summary') }}</h2><div class="description">{!! CvDocument::description($profile->bio) !!}</div></section>
     @endif
     @if($variant === 'creative' && $skills->isNotEmpty())
         @php $sectionNumber++; @endphp
@@ -103,7 +103,7 @@
                         </div>
                         @if(filled($entry['detail'] ?? null))<p class="detail">{!! CvDocument::text($entry['detail']) !!}</p>@endif
                         @if(filled($entry['description']))<div class="description">{!! CvDocument::description($entry['description']) !!}</div>@endif
-                        @if(!empty($entry['links']))<p class="entry-links">@foreach($entry['links'] as $label => $url)<a href="{{ $url }}">{{ $label }}: {!! CvDocument::text(preg_replace('#^https?://#i', '', $url)) !!}</a>@if(!$loop->last)<span class="separator">{{ $variant === 'minimal' ? '|' : '·' }}</span>@endif @endforeach</p>@endif
+                        @if(!empty($entry['links']))<p class="entry-links">@foreach($entry['links'] as $label => $url)<a href="{{ $url }}">{{ __($label) }}: {!! CvDocument::text(preg_replace('#^https?://#i', '', $url)) !!}</a>@if(!$loop->last)<span class="separator">{{ $variant === 'minimal' ? '|' : '·' }}</span>@endif @endforeach</p>@endif
                     </article>
                 @endforeach
             </section>

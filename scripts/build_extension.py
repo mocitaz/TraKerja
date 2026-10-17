@@ -13,7 +13,7 @@ PUBLIC = ROOT / 'public'
 PUBLIC_ZIP = PUBLIC / 'downloads/trakerja-extension.zip'
 FILES = (
     'manifest.json', 'config.js', 'popup.html', 'popup.js', 'content.js',
-    'locations.js', 'locations.json', 'style.css', 'icons/icon.png',
+    'translations.js', 'locations.js', 'locations.json', 'style.css', 'icons/icon.png',
 )
 
 

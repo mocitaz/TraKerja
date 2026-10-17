@@ -32,7 +32,7 @@ class SummaryController extends Controller
     private function getDateRange($timeFilter)
     {
         $now = Carbon::now('Asia/Jakarta');
-        
+
         switch ($timeFilter) {
             case 'weekly':
                 return [
@@ -59,28 +59,28 @@ class SummaryController extends Controller
         $startDate = $dateRange['start'];
         $endDate = $dateRange['end'] ?? Carbon::now('Asia/Jakarta')->endOfDay();
         $startDate ??= Carbon::now('Asia/Jakarta')->startOfMonth()->subMonthsNoOverflow(11);
-        
+
         // Determine grouping and labels based on time filter
         if ($timeFilter === 'weekly') {
             $groupBy = 'DATE(application_date)';
             $labels = [];
             for ($i = 6; $i >= 0; $i--) {
-                $labels[] = Carbon::now('Asia/Jakarta')->subDays($i)->format('M d');
+                $labels[] = Carbon::now('Asia/Jakarta')->subDays($i)->locale(app()->getLocale())->translatedFormat('M d');
             }
         } elseif ($timeFilter === 'monthly') {
             $groupBy = 'DATE(application_date)';
             $labels = [];
             for ($i = 29; $i >= 0; $i--) {
-                $labels[] = Carbon::now('Asia/Jakarta')->subDays($i)->format('M d');
+                $labels[] = Carbon::now('Asia/Jakarta')->subDays($i)->locale(app()->getLocale())->translatedFormat('M d');
             }
         } else {
             $groupBy = DatabaseDateExpressions::month('application_date');
             $labels = [];
             for ($i = 11; $i >= 0; $i--) {
-                $labels[] = Carbon::now('Asia/Jakarta')->startOfMonth()->subMonthsNoOverflow($i)->format('M Y');
+                $labels[] = Carbon::now('Asia/Jakarta')->startOfMonth()->subMonthsNoOverflow($i)->locale(app()->getLocale())->translatedFormat('M Y');
             }
         }
-        
+
         $applications = JobApplication::where('user_id', $userId)
             ->when($startDate, function ($query) use ($startDate, $endDate) {
                 return $query->whereDate('application_date', '>=', $startDate->toDateString())->whereDate('application_date', '<=', $endDate->toDateString());
@@ -91,7 +91,7 @@ class SummaryController extends Controller
             ->get();
 
         $interviewGroupBy = str_replace('application_date', 'interview_date', $groupBy);
-        
+
         $interviews = JobApplication::where('user_id', $userId)
             ->whereNotNull('interview_date')
             ->when($startDate, function ($query) use ($startDate, $endDate) {
@@ -105,13 +105,13 @@ class SummaryController extends Controller
         // Create arrays for the timeline
         $applicationData = [];
         $interviewData = [];
-        
+
         if ($timeFilter === 'weekly') {
             for ($i = 6; $i >= 0; $i--) {
                 $date = Carbon::now('Asia/Jakarta')->subDays($i)->format('Y-m-d');
                 $appCount = $applications->where('period', $date)->first();
                 $intCount = $interviews->where('period', $date)->first();
-                
+
                 $applicationData[] = $appCount ? $appCount->applications : 0;
                 $interviewData[] = $intCount ? $intCount->interviews : 0;
             }
@@ -120,7 +120,7 @@ class SummaryController extends Controller
                 $date = Carbon::now('Asia/Jakarta')->subDays($i)->format('Y-m-d');
                 $appCount = $applications->where('period', $date)->first();
                 $intCount = $interviews->where('period', $date)->first();
-                
+
                 $applicationData[] = $appCount ? $appCount->applications : 0;
                 $interviewData[] = $intCount ? $intCount->interviews : 0;
             }
@@ -129,7 +129,7 @@ class SummaryController extends Controller
                 $period = Carbon::now('Asia/Jakarta')->startOfMonth()->subMonthsNoOverflow($i)->format('Y-m');
                 $appCount = $applications->where('period', $period)->first();
                 $intCount = $interviews->where('period', $period)->first();
-                
+
                 $applicationData[] = $appCount ? $appCount->applications : 0;
                 $interviewData[] = $intCount ? $intCount->interviews : 0;
             }
@@ -144,35 +144,35 @@ class SummaryController extends Controller
 
     private function getFunnelData($userId, $dateRange)
     {
-        // For funnel, we want to see the progression, so we include archived data 
+        // For funnel, we want to see the progression, so we include archived data
         // to show where things dropped off.
         $baseQuery = JobApplication::where('user_id', $userId);
-        
+
         if ($dateRange['start']) {
             $baseQuery->where('application_date', '>=', $dateRange['start']);
         }
-        
+
         $allJobs = (clone $baseQuery)->get();
-        
+
         // Map detailed stages into simplified funnel categories
         $stages = [
             'Applied' => $allJobs->count(), // Total awareness/entry
-            
+
             'Interview' => $allJobs->filter(function($job) {
                 return !is_null($job->interview_date) || in_array($job->recruitment_stage, [
-                    'Assessment Test', 'Psychotest', 'HR - Interview', 
+                    'Assessment Test', 'Psychotest', 'HR - Interview',
                     'User - Interview', 'LGD', 'Presentation Round'
                 ]);
             })->count(),
-            
+
             'Accepted' => $allJobs->filter(function($job) {
                 return $job->application_status === 'Accepted';
             })->count(),
-            
+
             'Rejected' => $allJobs->filter(function($job) {
                 return $job->application_status === 'Rejected';
             })->count(),
-            
+
             'Pending' => $allJobs->filter(function($job) {
                 // Not accepted, not rejected
                 $isAccepted = $job->application_status === 'Accepted';
@@ -187,11 +187,11 @@ class SummaryController extends Controller
     private function getStatusDistribution($userId, $dateRange)
     {
         $query = JobApplication::where('user_id', $userId);
-        
+
         if ($dateRange['start']) {
             $query->where('application_date', '>=', $dateRange['start']);
         }
-        
+
         $statuses = $query->selectRaw('application_status, COUNT(*) as count')
             ->groupBy('application_status')
             ->get();
@@ -202,11 +202,11 @@ class SummaryController extends Controller
     private function getPlatformEffectiveness($userId, $dateRange)
     {
         $baseQuery = JobApplication::where('user_id', $userId);
-        
+
         if ($dateRange['start']) {
             $baseQuery->where('application_date', '>=', $dateRange['start']);
         }
-        
+
         $platforms = (clone $baseQuery)->selectRaw('platform, COUNT(*) as total_applications')
             ->groupBy('platform')
             ->get();
@@ -221,7 +221,7 @@ class SummaryController extends Controller
             $interviews = $platformsWithInterviews->where('platform', $platform->platform)->first();
             $interviewCount = $interviews ? $interviews->interviews : 0;
             $conversionRate = $platform->total_applications > 0 ? ($interviewCount / $platform->total_applications) * 100 : 0;
-            
+
             $effectiveness[] = [
                 'platform' => $platform->platform ?: 'Unknown',
                 'total_applications' => $platform->total_applications,
@@ -236,11 +236,11 @@ class SummaryController extends Controller
     private function getPositionAnalysis($userId, $dateRange)
     {
         $baseQuery = JobApplication::where('user_id', $userId);
-        
+
         if ($dateRange['start']) {
             $baseQuery->where('application_date', '>=', $dateRange['start']);
         }
-        
+
         $positions = (clone $baseQuery)->selectRaw('position, COUNT(*) as total_applications')
             ->groupBy('position')
             ->get();
@@ -254,7 +254,7 @@ class SummaryController extends Controller
         foreach ($positions as $position) {
             $interviews = $positionsWithInterviews->where('position', $position->position)->first();
             $interviewCount = $interviews ? $interviews->interviews : 0;
-            
+
             $analysis[] = [
                 'position' => $position->position,
                 'total_applications' => $position->total_applications,
@@ -268,11 +268,11 @@ class SummaryController extends Controller
     private function getCareerLevelAnalysis($userId, $dateRange)
     {
         $baseQuery = JobApplication::where('user_id', $userId);
-        
+
         if ($dateRange['start']) {
             $baseQuery->where('application_date', '>=', $dateRange['start']);
         }
-        
+
         $levels = (clone $baseQuery)->selectRaw('career_level, COUNT(*) as total_applications')
             ->groupBy('career_level')
             ->get();
@@ -287,7 +287,7 @@ class SummaryController extends Controller
             $interviews = $levelsWithInterviews->where('career_level', $level->career_level)->first();
             $interviewCount = $interviews ? $interviews->interviews : 0;
             $conversionRate = $level->total_applications > 0 ? ($interviewCount / $level->total_applications) * 100 : 0;
-            
+
             $analysis[] = [
                 'career_level' => $level->career_level ?: 'Unknown',
                 'total_applications' => $level->total_applications,
@@ -302,11 +302,11 @@ class SummaryController extends Controller
     private function getTopCompanies($userId, $dateRange)
     {
         $query = JobApplication::where('user_id', $userId);
-        
+
         if ($dateRange['start']) {
             $query->where('application_date', '>=', $dateRange['start']);
         }
-        
+
         $companies = $query->get()
             ->groupBy('company_name')
             ->map(function ($jobs, $company) {
@@ -331,18 +331,18 @@ class SummaryController extends Controller
     private function getLocationAnalysis($userId, $dateRange)
     {
         $baseQuery = JobApplication::where('user_id', $userId);
-        
+
         if ($dateRange['start']) {
             $baseQuery->where('application_date', '>=', $dateRange['start']);
         }
-        
+
         // Get location distribution by province
         $provinceData = (clone $baseQuery)->whereNotNull('location')
             ->where('location', '!=', '')
             ->get()
             ->map(function ($job) {
                 $location = $job->location;
-                
+
                 // Case 1: Standard format "City, Province"
                 if (strpos($location, ',') !== false) {
                     $parts = explode(',', $location);
@@ -351,13 +351,13 @@ class SummaryController extends Controller
                     if (stripos($prov, 'Jakarta') !== false) return 'DKI Jakarta';
                     return $prov;
                 }
-                
+
                 // Case 2: No comma, but contains "Jakarta" (e.g. "Jakarta / Remote")
                 if (stripos($location, 'Jakarta') !== false) return 'DKI Jakarta';
-                
+
                 // Case 3: Just "Remote"
                 if (stripos($location, 'Remote') !== false) return 'Remote';
-                
+
                 return $location;
             })
             ->filter()
@@ -371,16 +371,16 @@ class SummaryController extends Controller
             ->get()
             ->map(function ($job) {
                 $location = $job->location;
-                
+
                 // Case 1: Standard format "City, Province"
                 if (strpos($location, ',') !== false) {
                     $parts = explode(',', $location);
                     return trim($parts[0]);
                 }
-                
+
                 // Case 2: No comma, but contains "Jakarta"
                 if (stripos($location, 'Jakarta') !== false) return 'Jakarta';
-                
+
                 return $location;
             })
             ->filter()
@@ -408,7 +408,7 @@ class SummaryController extends Controller
                 $total = $jobs->count();
                 $accepted = $jobs->where('application_status', 'Accepted')->count();
                 $successRate = $total > 0 ? round(($accepted / $total) * 100, 1) : 0;
-                
+
                 return [
                     'total' => $total,
                     'accepted' => $accepted,
@@ -430,13 +430,13 @@ class SummaryController extends Controller
         $today = Carbon::now('Asia/Jakarta')->startOfDay();
         $streak = 0;
         $currentDate = $today->copy();
-        
+
         // Check consecutive days starting from today
         while (true) {
             $hasApplication = JobApplication::where('user_id', $userId)
                 ->whereDate('application_date', $currentDate)
                 ->exists();
-                
+
             if ($hasApplication) {
                 $streak++;
                 $currentDate->subDay();
@@ -444,7 +444,7 @@ class SummaryController extends Controller
                 break;
             }
         }
-        
+
         // Get streak history for the last 30 days
         $streakHistory = [];
         for ($i = 29; $i >= 0; $i--) {
@@ -452,17 +452,17 @@ class SummaryController extends Controller
             $hasApplication = JobApplication::where('user_id', $userId)
                 ->whereDate('application_date', $date)
                 ->exists();
-                
+
             $streakHistory[] = [
-                'date' => $date->format('M d'),
+                'date' => $date->locale(app()->getLocale())->translatedFormat('M d'),
                 'has_application' => $hasApplication,
-                'day_of_week' => $date->format('D')
+                'day_of_week' => $date->locale(app()->getLocale())->translatedFormat('D')
             ];
         }
-        
+
         // Get best streak ever
         $bestStreak = $this->calculateBestStreak($userId);
-        
+
         return [
             'current_streak' => $streak,
             'best_streak' => $bestStreak,
@@ -475,24 +475,24 @@ class SummaryController extends Controller
     {
         $startOfWeek = Carbon::now('Asia/Jakarta')->startOfWeek();
         $endOfWeek = Carbon::now('Asia/Jakarta')->endOfWeek();
-        
+
         // This week's applications
         $thisWeekApplications = JobApplication::where('user_id', $userId)
             ->whereBetween('application_date', [$startOfWeek, $endOfWeek])
             ->count();
-            
+
         // Last week's applications for comparison
         $lastWeekStart = $startOfWeek->copy()->subWeek();
         $lastWeekEnd = $endOfWeek->copy()->subWeek();
-        
+
         $lastWeekApplications = JobApplication::where('user_id', $userId)
             ->whereBetween('application_date', [$lastWeekStart, $lastWeekEnd])
             ->count();
-            
+
         // Weekly goal (assuming 5 applications per week as a reasonable goal)
         $weeklyGoal = 5;
         $progressPercentage = $weeklyGoal > 0 ? min(($thisWeekApplications / $weeklyGoal) * 100, 100) : 0;
-        
+
         // Daily breakdown for this week
         $dailyBreakdown = [];
         for ($i = 0; $i < 7; $i++) {
@@ -500,15 +500,15 @@ class SummaryController extends Controller
             $applications = JobApplication::where('user_id', $userId)
                 ->whereDate('application_date', $date)
                 ->count();
-                
+
             $dailyBreakdown[] = [
-                'day' => $date->format('D'),
-                'date' => $date->format('M d'),
+                'day' => $date->locale(app()->getLocale())->translatedFormat('D'),
+                'date' => $date->locale(app()->getLocale())->translatedFormat('M d'),
                 'applications' => $applications,
                 'is_today' => $date->isToday()
             ];
         }
-        
+
         // Calculate week-over-week change
         $weekOverWeekChange = 0;
         if ($lastWeekApplications > 0) {
@@ -516,7 +516,7 @@ class SummaryController extends Controller
         } elseif ($thisWeekApplications > 0) {
             $weekOverWeekChange = 100; // 100% increase if last week was 0
         }
-        
+
         return [
             'this_week_applications' => $thisWeekApplications,
             'last_week_applications' => $lastWeekApplications,
@@ -536,7 +536,7 @@ class SummaryController extends Controller
             ->where('application_date', '>=', $startDate)
             ->orderBy('application_date')
             ->get();
-            
+
         if ($applications->isEmpty()) {
             return [
                 'average_daily' => 0,
@@ -547,35 +547,35 @@ class SummaryController extends Controller
                 'recommendations' => []
             ];
         }
-        
+
         // Calculate daily application counts
         $dailyCounts = $applications->groupBy(function ($app) {
             return Carbon::parse($app->application_date)->format('Y-m-d');
         })->map->count();
-        
+
         // Calculate averages
         $totalDays = $dailyCounts->count();
         $totalApplications = $applications->count();
         $averageDaily = $totalDays > 0 ? round($totalApplications / $totalDays, 2) : 0;
         $averageWeekly = round($averageDaily * 7, 2);
-        
+
         // Calculate consistency score (lower standard deviation = higher consistency)
         $values = $dailyCounts->values()->toArray();
         $mean = $averageDaily;
         $variance = array_sum(array_map(function($x) use ($mean) { return pow($x - $mean, 2); }, $values)) / count($values);
         $stdDev = sqrt($variance);
         $consistencyScore = $mean > 0 ? max(0, 100 - ($stdDev / $mean) * 100) : 0;
-        
+
         // Find peak days (days with above-average applications)
         $peakDays = $dailyCounts->filter(function ($count) use ($averageDaily) {
             return $count > $averageDaily;
         })->sortDesc()->take(5);
-        
+
         // Analyze application patterns by day of week
         $dayOfWeekPatterns = $applications->groupBy(function ($app) {
             return Carbon::parse($app->application_date)->dayOfWeek;
         })->map->count();
-        
+
         $dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         $applicationPatterns = [];
         foreach ($dayOfWeekPatterns as $dayOfWeek => $count) {
@@ -585,7 +585,7 @@ class SummaryController extends Controller
                 'percentage' => round(($count / $totalApplications) * 100, 1)
             ];
         }
-        
+
         // Generate recommendations
         $recommendations = [];
         if ($averageDaily < 0.5) {
@@ -600,14 +600,14 @@ class SummaryController extends Controller
         if (empty($recommendations)) {
             $recommendations[] = "Great job! You're maintaining a consistent application cadence";
         }
-        
+
         return [
             'average_daily' => $averageDaily,
             'average_weekly' => $averageWeekly,
             'consistency_score' => round($consistencyScore, 1),
             'peak_days' => $peakDays->map(function ($count, $date) {
                 return [
-                    'date' => Carbon::parse($date)->format('M d'),
+                    'date' => Carbon::parse($date)->locale(app()->getLocale())->translatedFormat('M d'),
                     'applications' => $count
                 ];
             })->values(),
@@ -621,18 +621,18 @@ class SummaryController extends Controller
         $applications = JobApplication::where('user_id', $userId)
             ->orderBy('application_date')
             ->get();
-            
+
         if ($applications->isEmpty()) {
             return 0;
         }
-        
+
         $bestStreak = 0;
         $currentStreak = 0;
         $lastDate = null;
-        
+
         foreach ($applications as $app) {
             $appDate = Carbon::parse($app->application_date)->startOfDay();
-            
+
             if ($lastDate === null) {
                 $currentStreak = 1;
             } elseif ($appDate->diffInDays($lastDate) === 1) {
@@ -641,33 +641,33 @@ class SummaryController extends Controller
                 $bestStreak = max($bestStreak, $currentStreak);
                 $currentStreak = 1;
             }
-            
+
             $lastDate = $appDate;
         }
-        
+
         return max($bestStreak, $currentStreak);
     }
 
     private function getComparisonData($userId)
     {
         $now = Carbon::now('Asia/Jakarta');
-        
+
         // This month
         $thisMonthStart = $now->copy()->startOfMonth();
         $thisMonthEnd = $now->copy()->endOfMonth();
-        
+
         // Last month
         $lastMonthStart = $now->copy()->subMonth()->startOfMonth();
         $lastMonthEnd = $now->copy()->subMonth()->endOfMonth();
-        
+
         $thisMonthData = JobApplication::where('user_id', $userId)
             ->whereBetween('application_date', [$thisMonthStart, $thisMonthEnd])
             ->get();
-        
+
         $lastMonthData = JobApplication::where('user_id', $userId)
             ->whereBetween('application_date', [$lastMonthStart, $lastMonthEnd])
             ->get();
-        
+
         return [
             'this_month' => [
                 'total' => $thisMonthData->count(),
@@ -684,8 +684,8 @@ class SummaryController extends Controller
                 'interviews' => $lastMonthData->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview'])->count(),
             ],
             'labels' => [
-                'this_month' => $thisMonthStart->format('M Y'),
-                'last_month' => $lastMonthStart->format('M Y'),
+                'this_month' => $thisMonthStart->locale(app()->getLocale())->translatedFormat('M Y'),
+                'last_month' => $lastMonthStart->locale(app()->getLocale())->translatedFormat('M Y'),
             ]
         ];
     }
@@ -695,17 +695,17 @@ class SummaryController extends Controller
         // Get data for last 6 months
         $now = Carbon::now('Asia/Jakarta');
         $months = [];
-        
+
         for ($i = 5; $i >= 0; $i--) {
             $monthStart = $now->copy()->subMonths($i)->startOfMonth();
             $monthEnd = $now->copy()->subMonths($i)->endOfMonth();
-            
+
             $applications = JobApplication::where('user_id', $userId)
                 ->whereBetween('application_date', [$monthStart, $monthEnd])
                 ->get();
-            
+
             $months[] = [
-                'month' => $monthStart->format('M Y'),
+                'month' => $monthStart->locale(app()->getLocale())->translatedFormat('M Y'),
                 'total' => $applications->count(),
                 'accepted' => $applications->where('application_status', 'Accepted')->count(),
                 'declined' => $applications->where('application_status', 'Rejected')->count(),
@@ -713,34 +713,34 @@ class SummaryController extends Controller
                 'interviews' => $applications->whereIn('recruitment_stage', ['HR - Interview', 'User - Interview'])->count(),
             ];
         }
-        
+
         // Calculate trend (simple linear regression for prediction)
         $totals = array_column($months, 'total');
         $n = count($totals);
         $x = range(1, $n);
         $y = $totals;
-        
+
         $sumX = array_sum($x);
         $sumY = array_sum($y);
         $sumXY = 0;
         $sumX2 = 0;
-        
+
         for ($i = 0; $i < $n; $i++) {
             $sumXY += $x[$i] * $y[$i];
             $sumX2 += $x[$i] * $x[$i];
         }
-        
+
         $slope = ($n * $sumXY - $sumX * $sumY) / ($n * $sumX2 - $sumX * $sumX);
         $intercept = ($sumY - $slope * $sumX) / $n;
-        
+
         // Predict next month
         $nextMonthValue = round($slope * ($n + 1) + $intercept);
         $nextMonthValue = max(0, $nextMonthValue); // Ensure non-negative
-        
+
         // Calculate trend direction
         $trend = $slope > 0 ? 'increasing' : ($slope < 0 ? 'decreasing' : 'stable');
         $trendPercentage = $n > 1 ? abs(($totals[$n-1] - $totals[0]) / max($totals[0], 1) * 100) : 0;
-        
+
         return [
             'months' => $months,
             'prediction' => [
@@ -754,13 +754,13 @@ class SummaryController extends Controller
     private function getSankeyData($userId, $dateRange)
     {
         $baseQuery = JobApplication::where('user_id', $userId);
-        
+
         if ($dateRange['start']) {
             $baseQuery->where('application_date', '>=', $dateRange['start']);
         }
-        
+
         $applications = $baseQuery->get();
-        
+
         // Define stages
         $stages = [
             'Applied',
@@ -776,18 +776,18 @@ class SummaryController extends Controller
             'Rejected',
             'Not Processed'
         ];
-        
+
         // Build flow data
         $nodes = [];
         $links = [];
-        
+
         foreach ($stages as $index => $stage) {
             $nodes[] = [
                 'id' => $index,
                 'name' => $stage
             ];
         }
-        
+
         // Count applications at each stage
         $stageCounts = [];
         foreach ($stages as $index => $stage) {
@@ -803,15 +803,15 @@ class SummaryController extends Controller
                 $stageCounts[$index] = $applications->where('recruitment_stage', $stage)->count();
             }
         }
-        
+
         // Create links (flow from one stage to next)
         for ($i = 0; $i < count($stages) - 1; $i++) {
             $currentStage = $stages[$i];
             $nextStage = $stages[$i + 1];
-            
+
             // Calculate flow (simplified: assume linear progression)
             $flow = min($stageCounts[$i], $stageCounts[$i + 1]);
-            
+
             if ($flow > 0) {
                 $links[] = [
                     'source' => $i,
@@ -820,7 +820,7 @@ class SummaryController extends Controller
                 ];
             }
         }
-        
+
         return [
             'nodes' => $nodes,
             'links' => $links,
@@ -833,18 +833,18 @@ class SummaryController extends Controller
         $baseQuery = JobApplication::where('user_id', $userId)
             ->orderBy('application_date', 'desc')
             ->limit(20); // Limit to 20 most recent for performance
-        
+
         if ($dateRange['start']) {
             $baseQuery->where('application_date', '>=', $dateRange['start']);
         }
-        
+
         $applications = $baseQuery->get();
-        
+
         $ganttData = [];
         foreach ($applications as $app) {
             $startDate = Carbon::parse($app->application_date);
             $endDate = $app->interview_date ? Carbon::parse($app->interview_date) : $startDate->copy()->addDays(30);
-            
+
             // Determine status color
             $color = '#3B82F6'; // Default blue
             if ($app->application_status === 'Accepted') {
@@ -854,7 +854,7 @@ class SummaryController extends Controller
             } elseif ($app->recruitment_stage === 'Offering') {
                 $color = '#F59E0B'; // Amber
             }
-            
+
             $ganttData[] = [
                 'id' => $app->id,
                 'company' => $app->company_name,
@@ -866,7 +866,7 @@ class SummaryController extends Controller
                 'color' => $color,
             ];
         }
-        
+
         return $ganttData;
     }
 
@@ -875,7 +875,7 @@ class SummaryController extends Controller
         $now = Carbon::now('Asia/Jakarta');
         $startDate = $now->copy()->subDays(364); // Last year
         $endDate = $now->copy();
-        
+
         $applications = JobApplication::where('user_id', $userId)
             ->whereBetween('application_date', [$startDate, $endDate])
             ->get()
@@ -883,34 +883,34 @@ class SummaryController extends Controller
                 return Carbon::parse($app->application_date)->format('Y-m-d');
             })
             ->map->count();
-        
+
         // Build heatmap data structure
         $heatmapData = [];
         $currentDate = $startDate->copy();
-        
+
         while ($currentDate <= $endDate) {
             $dateStr = $currentDate->format('Y-m-d');
             $count = $applications->get($dateStr, 0);
-            
+
             $heatmapData[] = [
                 'date' => $dateStr,
                 'value' => $count,
-                'day' => $currentDate->format('D'),
+                'day' => $currentDate->locale(app()->getLocale())->translatedFormat('D'),
                 'week' => $currentDate->format('W'),
-                'month' => $currentDate->format('M'),
+                'month' => $currentDate->locale(app()->getLocale())->translatedFormat('M'),
             ];
-            
+
             $currentDate->addDay();
         }
-        
+
         // Group by week for weekly view
         $weeklyData = [];
         $currentWeek = null;
         $weekApplications = [];
-        
+
         foreach ($heatmapData as $day) {
             $week = Carbon::parse($day['date'])->format('Y-W');
-            
+
             if ($currentWeek !== $week) {
                 if ($currentWeek !== null) {
                     $weeklyData[] = [
@@ -922,10 +922,10 @@ class SummaryController extends Controller
                 $currentWeek = $week;
                 $weekApplications = [];
             }
-            
+
             $weekApplications[] = $day['value'];
         }
-        
+
         if ($currentWeek !== null) {
             $weeklyData[] = [
                 'week' => $currentWeek,
@@ -933,7 +933,7 @@ class SummaryController extends Controller
                 'days' => $weekApplications
             ];
         }
-        
+
         return [
             'daily' => $heatmapData,
             'weekly' => $weeklyData,
@@ -965,15 +965,15 @@ class SummaryController extends Controller
         // Last 8 weeks trend
         $now = \Carbon\Carbon::now('Asia/Jakarta');
         $velocity = [];
-        
+
         for ($i = 7; $i >= 0; $i--) {
             $start = $now->copy()->subWeeks($i)->startOfWeek();
             $end = $now->copy()->subWeeks($i)->endOfWeek();
-            
+
             $count = JobApplication::where('user_id', $userId)
                 ->whereBetween('application_date', [$start, $end])
                 ->count();
-                
+
             $velocity[] = [
                 'week' => 'W' . $start->format('W'),
                 'count' => $count

@@ -24,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->web(append: [
+            \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\SoftMaintenanceMode::class,
             \App\Http\Middleware\UpdateLastActivity::class,
             \App\Http\Middleware\CheckSurveyRedirect::class,
@@ -35,7 +36,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'premium' => \App\Http\Middleware\EnsureUserIsPremium::class,
             'verified' => \App\Http\Middleware\EnsureEmailIsVerifiedExceptAdmin::class,
         ]);
-        
+
         // Security headers - ONLY enable in production
         // Uncomment line below when deploying to production with proper CSP config
         // $middleware->append(\App\Http\Middleware\SecurityHeaders::class);

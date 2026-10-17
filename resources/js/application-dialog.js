@@ -1,3 +1,4 @@
+import { t } from './i18n.js';
 export function installApplicationDialog(win, doc) {
     if (win.__applicationDialogInstalled) return;
     win.__applicationDialogInstalled = true;
@@ -16,7 +17,7 @@ export function installApplicationDialog(win, doc) {
     win.openJobModal = (isEdit = false, defaultStage = null) => {
         const dialog = modal();
         if (!dialog || closing) return;
-        doc.getElementById('modalTitle').textContent = isEdit ? 'Edit application' : 'Add application';
+        doc.getElementById('modalTitle').textContent = isEdit ? 'Edit application' : t("Add application");
         dialog.classList.remove('hidden', 'is-closing');
         dialog.querySelector('.job-dialog__body').scrollTop = 0;
         if (!isEdit) win.Livewire?.dispatch('resetFormForNewJob', { defaultStage });

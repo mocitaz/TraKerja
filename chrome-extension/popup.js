@@ -1,6 +1,7 @@
 const API_BASE = TRAKERJA_EXTENSION_CONFIG.apiBase;
 
 document.addEventListener('DOMContentLoaded', async () => {
+    await ExtensionLocale.ready;
     const loginView = document.getElementById('login-view');
     const saveView = document.getElementById('save-view');
     const logoutBtn = document.getElementById('logout-btn');
@@ -22,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         provinceSelect.addEventListener('change', (e) => {
             const prov = e.target.value;
-            citySelect.innerHTML = '<option value="">Pilih Kota</option>';
+            citySelect.replaceChildren(new Option(ExtensionLocale.t('Pilih Kota'), ''));
             if (prov && INDONESIA_LOCATIONS[prov]) {
                 INDONESIA_LOCATIONS[prov].forEach(city => {
                     const opt = document.createElement('option');
@@ -50,13 +51,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         const errorDiv = document.getElementById('login-error');
         const btn = document.getElementById('btn-login');
 
-        btn.textContent = 'Memproses...';
+        btn.textContent = ExtensionLocale.t('Memproses...');
         errorDiv.classList.add('hidden');
 
         try {
             const res = await fetch(`${API_BASE}/extension/login`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Accept-Language': ExtensionLocale.locale },
                 body: JSON.stringify({ email, password })
             });
             const result = await res.json();
@@ -65,14 +66,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 await chrome.storage.local.set({ token: result.token, user: result.user });
                 showSaveView(result.user);
             } else {
-                errorDiv.textContent = result.message || 'Login gagal';
+                errorDiv.textContent = result.message || ExtensionLocale.t('Login gagal');
                 errorDiv.classList.remove('hidden');
             }
         } catch (err) {
-            errorDiv.textContent = 'Gagal koneksi ke server.';
+            errorDiv.textContent = ExtensionLocale.t('Gagal koneksi ke server.');
             errorDiv.classList.remove('hidden');
         } finally {
-            btn.textContent = 'Login';
+            btn.textContent = ExtensionLocale.t('Login');
         }
     });
 
@@ -93,7 +94,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             await chrome.storage.local.remove(['token', 'user']);
             showLoginView();
         } catch (error) {
-            msgDiv.textContent = error.message || 'Tidak dapat mencabut token. Periksa koneksi lalu coba logout lagi.';
+            msgDiv.textContent = error.message || ExtensionLocale.t('Tidak dapat mencabut token. Periksa koneksi lalu coba logout lagi.');
             msgDiv.classList.remove('hidden');
         } finally { logoutBtn.disabled = false; }
     });
@@ -102,8 +103,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     btnSave.addEventListener('click', async () => {
         const tokenData = await chrome.storage.local.get('token');
         const msgDiv = document.getElementById('save-message');
-        
-        btnSave.textContent = 'Menyimpan...';
+
+        btnSave.textContent = ExtensionLocale.t('Menyimpan...');
         btnSave.disabled = true;
 
         // Ambil nama platform yg sesuai
@@ -118,16 +119,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const prov = document.getElementById('job-province').value;
         const city = document.getElementById('job-city').value;
-        
+
         if (!prov || !city) {
             alert("Mohon pilih Provinsi dan Kota terlebih dahulu.");
-            btnSave.textContent = 'Simpan ke Kanban';
+            btnSave.textContent = ExtensionLocale.t('Simpan ke Kanban');
             btnSave.disabled = false;
             return;
         }
 
         let cleanLink = window.currentJobLink || '';
-        
+
         // Clean up LinkedIn URLs to avoid "Data too long" errors in DB
         try {
             if (cleanLink.includes('linkedin.com')) {
@@ -148,38 +149,38 @@ document.addEventListener('DOMContentLoaded', async () => {
             company_name: document.getElementById('job-company').value,
             location: `${city}, ${prov}`,
             career_level: document.getElementById('job-level').value,
-            platform: platformName, 
+            platform: platformName,
             platform_link: cleanLink
         };
 
         try {
             const res = await fetch(`${API_BASE}/extension/jobs`, {
                 method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json', 
-                    'Accept': 'application/json',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json', 'Accept-Language': ExtensionLocale.locale,
                     'Authorization': `Bearer ${tokenData.token}`
                 },
                 body: JSON.stringify(payload)
             });
-            
+
             const result = await res.json();
             msgDiv.classList.remove('hidden', 'msg-error', 'msg-success');
 
             if (res.ok) {
-                msgDiv.textContent = 'Berhasil disimpan!';
+                msgDiv.textContent = ExtensionLocale.t('Berhasil disimpan!');
                 msgDiv.classList.add('msg-success');
                 setTimeout(() => window.close(), 1500); // Tutup popup otomatis
             } else {
-                msgDiv.textContent = result.message || 'Gagal menyimpan.';
+                msgDiv.textContent = result.message || ExtensionLocale.t('Gagal menyimpan.');
                 msgDiv.classList.add('msg-error');
             }
         } catch (err) {
             msgDiv.classList.remove('hidden');
-            msgDiv.textContent = 'Koneksi error.';
+            msgDiv.textContent = ExtensionLocale.t('Koneksi error.');
             msgDiv.classList.add('msg-error');
         } finally {
-            btnSave.innerHTML = '<i class="ph ph-floppy-disk"></i> Simpan ke Kanban';
+            btnSave.textContent = ExtensionLocale.t('Simpan ke Kanban');
             btnSave.disabled = false;
         }
     });
@@ -195,7 +196,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         loginView.classList.add('hidden');
         saveView.classList.remove('hidden');
         logoutBtn.classList.remove('hidden');
-        document.getElementById('user-greeting').textContent = `Halo, ${user.name.split(' ')[0]}!`;
+        document.getElementById('user-greeting').dataset.name = user.name.split(' ')[0];
+        document.getElementById('user-greeting').textContent = ExtensionLocale.t('Hello, :name!', { name: user.name.split(' ')[0] });
         detectJobInActiveTab();
     }
 
@@ -203,9 +205,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
             const tab = tabs[0];
             // Cek apakah URL valid
-            if (tab.url.includes('linkedin.com') || tab.url.includes('glints.com') || tab.url.includes('jobstreet') || 
+            if (tab.url.includes('linkedin.com') || tab.url.includes('glints.com') || tab.url.includes('jobstreet') ||
                 tab.url.includes('kalibrr') || tab.url.includes('deall') || tab.url.includes('talentics')) {
-                
+
                 // Minta data secara langsung dari halaman aktif (dijamin jalan walau belum di-refresh)
                 chrome.scripting.executeScript({
                     target: { tabId: tab.id },
@@ -217,15 +219,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                     if (!chrome.runtime.lastError && results && results[0] && results[0].result) {
                         const response = results[0].result;
-                        
+
                         document.getElementById('job-position').value = response.position || '';
                         document.getElementById('job-company').value = response.company || '';
-                        
+
                         if (response.location) {
                             let detected = response.location.toLowerCase();
-                            document.getElementById('detected-location').textContent = `Terdeteksi: ${response.location}`;
+                            document.getElementById('detected-location').textContent = ExtensionLocale.t('Detected: :location', { location: response.location });
                             document.getElementById('detected-location-container').style.display = 'flex';
-                            
+
                             // Translate English phrases to Indonesian for matching
                             detected = detected.replace('central jakarta', 'jakarta pusat')
                                              .replace('south jakarta', 'jakarta selatan')
@@ -235,7 +237,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                              .replace('south tangerang', 'tangerang selatan')
                                              .replace('jakarta metropolitan area', 'jakarta pusat')
                                              .replace('greater jakarta', 'jakarta pusat');
-                                             
+
                             if (detected === 'jakarta' || detected === 'dki jakarta') {
                                 detected = 'dki jakarta';
                             }
@@ -274,7 +276,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                     provinceSelect.value = foundProv;
                                     // Trigger event change manual
                                     provinceSelect.dispatchEvent(new Event('change'));
-                                    
+
                                     if (foundCity) {
                                         setTimeout(() => { citySelect.value = foundCity; }, 50);
                                     }
@@ -301,7 +303,7 @@ function scrapeJobData() {
             // 1. Cari elemen Active Card (Panel Kiri)
             const urlObj = new URL(url);
             const jobId = urlObj.searchParams.get('currentJobId') || urlObj.searchParams.get('jobId');
-            
+
             let activeCard = null;
             if (jobId) {
                 activeCard = document.querySelector(`[data-job-id="${jobId}"]`) ||
@@ -324,16 +326,16 @@ function scrapeJobData() {
             // 2. Cari elemen di Right Pane (Panel Kanan) atau Body
             const rightPane = document.querySelector('.jobs-search__job-details--wrapper') ||
                               document.querySelector('.jobs-search__right-rail') ||
-                              document.querySelector('.jobs-search__job-details--container') || 
-                              document.querySelector('.job-view-layout') || 
-                              document.querySelector('.jobs-details__main-content') || 
+                              document.querySelector('.jobs-search__job-details--container') ||
+                              document.querySelector('.job-view-layout') ||
+                              document.querySelector('.jobs-details__main-content') ||
                               document.querySelector('.scaffold-layout__detail') ||
                               document.querySelector('.jobs-search-two-pane__details') ||
                               document.querySelector('main') || document.body;
 
             if (rightPane) {
                 if (!jobData.position) {
-                    const titleEl = rightPane.querySelector(".job-details-jobs-unified-top-card__job-title") || 
+                    const titleEl = rightPane.querySelector(".job-details-jobs-unified-top-card__job-title") ||
                                     rightPane.querySelector(".jobs-unified-top-card__job-title") ||
                                     rightPane.querySelector("h2.t-24") ||
                                     rightPane.querySelector("h1.t-24") ||
@@ -343,20 +345,20 @@ function scrapeJobData() {
                     } else {
                         // Gabungkan pencarian Link JobId dan Heading
                         let candidates = [];
-                        
+
                         if (jobId) {
                             let links = Array.from(rightPane.querySelectorAll(`a[href*="${jobId}"]`)).filter(l => l.innerText.trim().length > 5);
                             candidates.push(...links);
                         }
-                        
+
                         let headings = Array.from(rightPane.querySelectorAll('h1, h2, .t-24')).filter(l => l.innerText.trim().length > 5);
                         candidates.push(...headings);
-                        
+
                         candidates.sort((a, b) => b.innerText.trim().length - a.innerText.trim().length);
-                        
+
                         const blacklist = ["easy apply", "save", "share", "more", "see all", "explore", "sign in", "apply", "notification", "messaging", "profile", "linkedin", "jobs", "hiring", "collections", "results"];
                         const valid = candidates.filter(l => !blacklist.some(b => l.innerText.toLowerCase().includes(b)));
-                        
+
                         if (valid.length > 0) jobData.position = valid[0].innerText.trim();
                     }
                 }
@@ -375,7 +377,7 @@ function scrapeJobData() {
                     if (locEl) jobData.location = locEl.innerText.trim();
                 }
             }
-        } catch(e) {}    } 
+        } catch(e) {}    }
     else if (url.includes("glints.com")) {
         try {
             const titleEl = document.querySelector("h1[class*='JobOverViewTitle']") || document.querySelector("h1");
@@ -388,8 +390,8 @@ function scrapeJobData() {
     }
     else if (url.includes("jobstreet")) {
         try {
-            const titleEl = document.querySelector("[data-automation='job-detail-title']") || 
-                            document.querySelector("[data-automation='job-title']") || 
+            const titleEl = document.querySelector("[data-automation='job-detail-title']") ||
+                            document.querySelector("[data-automation='job-title']") ||
                             document.querySelector("h1.job-title") ||
                             document.querySelector("h1");
             if (titleEl) {
@@ -412,10 +414,10 @@ function scrapeJobData() {
             const titleEl = document.querySelector("h1") || document.querySelector("h2.text-2xl") || document.querySelector(".job-title");
             if (titleEl) jobData.position = titleEl.innerText.trim();
 
-            const companyEl = document.querySelector("a[href*='/company/']") || 
+            const companyEl = document.querySelector("a[href*='/company/']") ||
                               document.querySelector("a[href*='/employer/']") ||
                               document.querySelector("p[class*='company']");
-                              
+
             if (companyEl) {
                 jobData.company = companyEl.innerText.trim();
             } else if (titleEl) {
@@ -433,24 +435,24 @@ function scrapeJobData() {
     }
     else if (url.includes("kalibrr") || url.includes("talentics.id")) {
         try {
-            const titleEl = document.querySelector("h1") || 
-                            document.querySelector(".job-title") || 
-                            document.querySelector("h2[class*='title']") || 
-                            document.querySelector("h2.text-2xl") || 
+            const titleEl = document.querySelector("h1") ||
+                            document.querySelector(".job-title") ||
+                            document.querySelector("h2[class*='title']") ||
+                            document.querySelector("h2.text-2xl") ||
                             document.querySelector("h2.text-3xl") ||
                             document.querySelector(".text-title-1") ||
                             document.querySelector("h2.font-bold");
-            
+
             if (titleEl) {
                 jobData.position = titleEl.innerText.trim();
             }
 
-            const companyEl = document.querySelector(".company-name") || 
-                              document.querySelector("a[href*='/company/']") || 
+            const companyEl = document.querySelector(".company-name") ||
+                              document.querySelector("a[href*='/company/']") ||
                               document.querySelector("a[href*='/employer/']") ||
                               document.querySelector("a[href*='/c/']") ||
                               document.querySelector("p[class*='company']");
-                              
+
             if (companyEl) {
                 jobData.company = companyEl.innerText.trim();
             } else {
@@ -473,7 +475,7 @@ function scrapeJobData() {
     // Ultimate Fallback: Parsing document.title jika posisi atau perusahaan masih kosong
     if (!jobData.position || !jobData.company) {
         let titleText = document.title;
-        
+
         // Batal gunakan judul tab jika ini adalah halaman hasil pencarian/koleksi LinkedIn
         if (titleText.includes("Easy Apply") || titleText.includes("jobs in") || titleText.match(/^\(\d+\)/) || titleText.includes("Search |")) {
             titleText = "";
@@ -493,10 +495,10 @@ function scrapeJobData() {
                                  .replace(/hiring\s*/i, '')
                                  .replace(/job vacancy\s*/i, '')
                                  .trim();
-                                 
+
             // Pecah judul tab berdasarkan pemisah umum ( at , |, - )
             let parts = titleText.split(/\s+at\s+|\s+\|\s+|\s+\-\s+/i).map(s => s.trim()).filter(s => s.length > 2 && s.toLowerCase() !== 'talentics');
-            
+
             if (parts.length >= 2) {
                 if (!jobData.position) jobData.position = parts[0];
                 if (!jobData.company) jobData.company = parts[1];
@@ -510,7 +512,7 @@ function scrapeJobData() {
     const platformNames = ['talentics', 'dealls', 'deall', 'usedeall', 'kalibrr', 'glints', 'linkedin', 'jobstreet'];
     if (!jobData.company || platformNames.some(p => jobData.company.toLowerCase().includes(p))) {
         let slug = null;
-        
+
         // 1. Cek path URL (misal: /company/arya-noble/) - HINDARI KATA "jobs" atau "collections"
         const pathMatch = url.match(/\/(?:company|c|employer|companies|vacancies|job-board)\/([a-z0-9\-]+)/i);
         if (pathMatch && pathMatch[1] && pathMatch[1] !== 'collections' && pathMatch[1] !== 'view' && pathMatch[1] !== 'search') {
@@ -538,9 +540,9 @@ function scrapeJobData() {
         for(let txt of allTexts) {
             // Jika teks pendek dan mengandung nama wilayah populer
             if (txt.length > 3 && txt.length < 50 && !txt.includes("Follow") && !txt.includes("Lowongan")) {
-                if (txt.includes("Indonesia") || txt.includes("Jakarta") || txt.includes("Bandung") || 
-                    txt.includes("Surabaya") || txt.includes("Bali") || txt.includes("Yogyakarta") || 
-                    txt.includes("Tangerang") || txt.includes("Bekasi") || txt.includes("Depok") || 
+                if (txt.includes("Indonesia") || txt.includes("Jakarta") || txt.includes("Bandung") ||
+                    txt.includes("Surabaya") || txt.includes("Bali") || txt.includes("Yogyakarta") ||
+                    txt.includes("Tangerang") || txt.includes("Bekasi") || txt.includes("Depok") ||
                     txt.includes("Bogor") || txt.includes("Medan") || txt.includes("Semarang") ||
                     txt.includes("Makassar") || txt.includes("Batam") || txt.includes("Palembang")) {
                     jobData.location = txt;

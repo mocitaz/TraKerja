@@ -31,7 +31,7 @@ class PancasilaMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Selamat Hari Lahir Pancasila 🇮🇩',
+            subject: __('Selamat Hari Lahir Pancasila 🇮🇩'),
         );
     }
 

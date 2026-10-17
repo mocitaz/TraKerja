@@ -43,7 +43,7 @@ class MainBuilder extends Component
         ]);
         Auth::user()->profile()->updateOrCreate(['user_id' => Auth::id()], $data);
         $this->dispatch('cv-data-updated');
-        $this->dispatch('showNotification', ['type' => 'success', 'title' => 'CV details saved', 'message' => 'Your profile and CV now use these details.']);
+        $this->dispatch('showNotification', ['type' => 'success', 'title' => __('CV details saved'), 'message' => __('Your profile and CV now use these details.')]);
     }
 
     #[On('cv-data-updated')]

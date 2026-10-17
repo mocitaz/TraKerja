@@ -42,7 +42,7 @@ class JobApplication extends Model
     protected static function boot()
     {
         parent::boot();
-        
+
         static::saving(function ($jobApplication) {
             if ($jobApplication->interview_date === '') {
                 $jobApplication->interview_date = null;
@@ -77,21 +77,21 @@ class JobApplication extends Model
                 throw new \Exception('Location is required');
             }
         });
-        
+
         static::updating(function ($jobApplication) {
             // Ensure location is not empty
             if (empty($jobApplication->location)) {
                 throw new \Exception('Location is required');
             }
-            
+
             // Un-archive if status changes to a non-archived status
             $originalStatus = $jobApplication->getOriginal('application_status');
             $originalStage = $jobApplication->getOriginal('recruitment_stage');
             $wasArchived = $jobApplication->getOriginal('is_archived') ?? false;
-            
+
             $shouldBeArchived = in_array($jobApplication->application_status, ['Rejected'])
                 || $jobApplication->recruitment_stage === 'Not Processed';
-            
+
             if (!$shouldBeArchived && $wasArchived) {
                 $jobApplication->is_archived = false;
                 $jobApplication->archived_at = null;
@@ -133,7 +133,7 @@ class JobApplication extends Model
         'is_archived' => 'boolean',
         'archived_at' => 'datetime',
     ];
-    
+
     /**
      * Check if this application has an interview scheduled
      */
@@ -141,7 +141,7 @@ class JobApplication extends Model
     {
         return !is_null($this->interview_date);
     }
-    
+
     /**
      * Check if interview is upcoming (in the future)
      */
@@ -149,7 +149,7 @@ class JobApplication extends Model
     {
         return $this->hasInterview() && $this->interview_date->isFuture();
     }
-    
+
     /**
      * Check if interview was in the past
      */
@@ -157,7 +157,7 @@ class JobApplication extends Model
     {
         return $this->hasInterview() && $this->interview_date->isPast();
     }
-    
+
     /**
      * Get formatted interview date
      */
@@ -181,7 +181,7 @@ class JobApplication extends Model
     {
         $user = $this->user;
         if ($user && $user->wantsEmailNotification('interview')) {
-            \Mail::to($user->email)->send(new InterviewReminderMail($this));
+            \Mail::to($user)->send(new InterviewReminderMail($this));
             return true;
         }
         return false;

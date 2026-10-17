@@ -31,7 +31,7 @@ class WaisakMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Selamat Hari Raya Tri Suci Waisak 2570 BE 🙏',
+            subject: __('Selamat Hari Raya Tri Suci Waisak 2570 BE 🙏'),
         );
     }
 

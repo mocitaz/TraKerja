@@ -36,7 +36,7 @@ class JobApplicationImportExportController extends Controller
     ];
 
     private const ALL_COLUMNS = [
-        'company_name', 'position', 'location', 'platform', 
+        'company_name', 'position', 'location', 'platform',
         'application_status', 'recruitment_stage', 'career_level',
         'application_date', 'platform_link', 'notes',
         'interview_date', 'interview_type', 'interview_location', 'interview_notes'
@@ -56,10 +56,10 @@ class JobApplicationImportExportController extends Controller
     public function downloadTemplate()
     {
         $output = fopen('php://temp', 'r+');
-        
+
         // Add BOM for UTF-8 encoding in Excel
         fwrite($output, "\xEF\xBB\xBF");
-        
+
         // Column Headers (baris 1)
         $headers = [
             'Company Name *',
@@ -77,9 +77,9 @@ class JobApplicationImportExportController extends Controller
             'Interview Location',
             'Interview Notes'
         ];
-        
+
         fputcsv($output, $headers);
-        
+
         // Example Row (baris 2)
         $example = [
             'PT Contoh Perusahaan',
@@ -97,9 +97,9 @@ class JobApplicationImportExportController extends Controller
             'Zoom Meeting',
             'Contoh catatan interview'
         ];
-        
+
         fputcsv($output, $example);
-        
+
         rewind($output);
         $csvContent = stream_get_contents($output);
         fclose($output);
@@ -166,7 +166,7 @@ class JobApplicationImportExportController extends Controller
     {
         $user = Auth::user();
         if (\App\Models\Setting::isMonetizationEnabled() && !$user->isPremium()) {
-            return redirect()->route('payment.premium')->with('error', 'Bulk CSV import is a Premium feature.');
+            return redirect()->route('payment.premium')->with('error', __('Bulk CSV import is a Premium feature.'));
         }
         $this->authorizeImport();
         $parsed = $this->parseUpload($request);
@@ -180,7 +180,7 @@ class JobApplicationImportExportController extends Controller
         $count = count($parsed['rows']);
         $summary = ['imported_count' => $count, 'failed_count' => count($parsed['errors']), 'errors' => $parsed['errors']];
         if (!$count) {
-            return redirect()->back()->withErrors(['csv_file' => 'No valid rows found to import.'])
+            return redirect()->back()->withErrors(['csv_file' => __('No valid rows found to import.')])
                 ->with('import_summary', $summary);
         }
         return redirect()->back()->with('success', "Successfully imported {$count} job application(s).")
@@ -198,17 +198,17 @@ class JobApplicationImportExportController extends Controller
     {
         $request->validate(['csv_file' => 'required|file|mimes:csv,txt|max:2048']);
         $handle = fopen($request->file('csv_file')->getRealPath(), 'r');
-        if (!$handle) throw ValidationException::withMessages(['csv_file' => 'Failed to read CSV file.']);
+        if (!$handle) throw ValidationException::withMessages(['csv_file' => __('Failed to read CSV file.')]);
         try {
             if (fread($handle, 3) !== "\xEF\xBB\xBF") rewind($handle);
             $headers = fgetcsv($handle, 0, ',', '"', '');
-            if (!$headers) throw ValidationException::withMessages(['csv_file' => 'CSV file is empty.']);
+            if (!$headers) throw ValidationException::withMessages(['csv_file' => __('CSV file is empty.')]);
             $headers = array_map(fn ($header) => trim(str_replace('*', '', $header ?? '')), $headers);
             $columns = $this->normalizeHeaders($headers);
             $validation = $this->validateHeaders($columns);
             if (!$validation['valid']) throw ValidationException::withMessages(['csv_file' => $validation['message']]);
             if (count(array_unique($columns)) !== count($columns)) {
-                throw ValidationException::withMessages(['csv_file' => 'CSV contains duplicate columns.']);
+                throw ValidationException::withMessages(['csv_file' => __('CSV contains duplicate columns.')]);
             }
             $rows = []; $errors = []; $number = 1;
             while (($row = fgetcsv($handle, 0, ',', '"', '')) !== false) {
@@ -243,7 +243,7 @@ class JobApplicationImportExportController extends Controller
     private function normalizeHeaders(array $headers): array
     {
         $normalized = [];
-        
+
         // Mapping variations to standard column names
         $columnMapping = [
             // Required columns
@@ -262,7 +262,7 @@ class JobApplicationImportExportController extends Controller
             'application date' => 'application_date',
             'date' => 'application_date',
             'applied date' => 'application_date',
-            
+
             // Optional columns
             'platform link' => 'platform_link',
             'link' => 'platform_link',
@@ -276,13 +276,13 @@ class JobApplicationImportExportController extends Controller
             'interview notes' => 'interview_notes',
             'interview_notes' => 'interview_notes',
         ];
-        
+
         foreach ($headers as $header) {
             $normalizedKey = strtolower(str_replace('_', ' ', trim($header)));
             // Remove special characters and normalize spaces
             $normalizedKey = preg_replace('/[^a-z0-9\s]/', '', $normalizedKey);
             $normalizedKey = preg_replace('/\s+/', ' ', trim($normalizedKey));
-            
+
             if (isset($columnMapping[$normalizedKey])) {
                 $normalized[] = $columnMapping[$normalizedKey];
             } else {
@@ -290,7 +290,7 @@ class JobApplicationImportExportController extends Controller
                 $normalized[] = $normalizedKey;
             }
         }
-        
+
         return $normalized;
     }
 
@@ -300,13 +300,13 @@ class JobApplicationImportExportController extends Controller
     private function validateHeaders(array $headers): array
     {
         $missingRequired = [];
-        
+
         foreach (self::REQUIRED_COLUMNS as $requiredColumn) {
             if (!in_array($requiredColumn, $headers)) {
                 $missingRequired[] = $requiredColumn;
             }
         }
-        
+
         if (!empty($missingRequired)) {
             $missingColumns = implode(', ', $missingRequired);
             return [
@@ -314,7 +314,7 @@ class JobApplicationImportExportController extends Controller
                 'message' => "Missing required columns: {$missingColumns}. Please download the template and use the correct format."
             ];
         }
-        
+
         return ['valid' => true];
     }
 
@@ -324,7 +324,7 @@ class JobApplicationImportExportController extends Controller
     private function importRow(array $rowData, int $rowNumber): array
     {
         $errors = [];
-        
+
         // Prepare data for validation
         $data = [
             'company_name' => $rowData['company_name'] ?? '',
@@ -342,7 +342,7 @@ class JobApplicationImportExportController extends Controller
             'interview_location' => $rowData['interview_location'] ?? null,
             'interview_notes' => $rowData['interview_notes'] ?? null,
         ];
-        
+
         $data = array_replace($data, JobApplicationStatus::normalize($data['application_status'], $data['recruitment_stage']));
 
         $limits = Validator::make($data, [
@@ -378,7 +378,7 @@ class JobApplicationImportExportController extends Controller
         if (empty($data['application_date'])) {
             $errors[] = 'Application Date is required';
         }
-        
+
         // Validate enum values
         if (!empty($data['application_status']) && !in_array($data['application_status'], self::VALID_APPLICATION_STATUS)) {
             $errors[] = "Application Status must be one of: " . implode(', ', self::VALID_APPLICATION_STATUS);
@@ -392,13 +392,13 @@ class JobApplicationImportExportController extends Controller
         if (!empty($data['interview_type']) && !in_array($data['interview_type'], self::VALID_INTERVIEW_TYPE)) {
             $errors[] = "Interview Type must be one of: " . implode(', ', self::VALID_INTERVIEW_TYPE);
         }
-        
+
         // Parse dates
         $applicationDate = $this->parseDate($data['application_date']);
         if (!$applicationDate) {
             $errors[] = 'Application Date format is invalid. Use YYYY-MM-DD or DD/MM/YYYY';
         }
-        
+
         $interviewDate = null;
         $canSchedule = \App\Support\JobApplicationStatus::canSchedule($data['recruitment_stage']);
         if ($canSchedule && !empty($data['interview_date'])) {
@@ -407,14 +407,14 @@ class JobApplicationImportExportController extends Controller
                 $errors[] = 'Interview Date format is invalid. Use YYYY-MM-DD HH:MM or DD/MM/YYYY HH:MM';
             }
         }
-        
+
         if (!empty($errors)) {
             return [
                 'success' => false,
                 'errors' => $errors
             ];
         }
-        
+
         // Prepare data for bulk insert
         return [
             'success' => true,
@@ -447,7 +447,7 @@ class JobApplicationImportExportController extends Controller
         if (empty($dateString)) {
             return null;
         }
-        
+
         // Try different date formats
         $formats = [
             'Y-m-d',        // 2024-01-15
@@ -455,7 +455,7 @@ class JobApplicationImportExportController extends Controller
             'd-m-Y',        // 15-01-2024
             'Y/m/d',        // 2024/01/15
         ];
-        
+
         foreach ($formats as $format) {
             try {
                 $date = \Carbon\Carbon::createFromFormat('!'.$format, trim($dateString));
@@ -466,7 +466,7 @@ class JobApplicationImportExportController extends Controller
                 continue;
             }
         }
-        
+
         return null;
     }
 
@@ -478,7 +478,7 @@ class JobApplicationImportExportController extends Controller
         if (empty($dateTimeString)) {
             return null;
         }
-        
+
         // Try different datetime formats
         $formats = [
             'Y-m-d H:i',        // 2024-01-20 14:00
@@ -488,7 +488,7 @@ class JobApplicationImportExportController extends Controller
             'd-m-Y H:i',        // 20-01-2024 14:00
             'Y/m/d H:i',        // 2024/01/20 14:00
         ];
-        
+
         foreach ($formats as $format) {
             try {
                 $date = \Carbon\Carbon::createFromFormat('!'.$format, trim($dateTimeString));
@@ -499,7 +499,7 @@ class JobApplicationImportExportController extends Controller
                 continue;
             }
         }
-        
+
         return null;
     }
 
@@ -511,20 +511,20 @@ class JobApplicationImportExportController extends Controller
         if (empty($text)) {
             return '';
         }
-        
+
         // Remove or replace problematic characters
         $text = str_replace(["\r\n", "\r", "\n"], ' ', $text);
         $text = preg_replace('/\s+/', ' ', $text); // Replace multiple spaces with single space
         $text = trim($text);
-        
+
         // Prevent CSV/Excel Injection (formula injection)
         if (preg_match('/^[=\-+\@\t\r\n]/', $text)) {
             $text = "'" . $text;
         }
-        
+
         // Remove any remaining control characters except tab
         $text = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', '', $text);
-        
+
         return $text;
     }
 

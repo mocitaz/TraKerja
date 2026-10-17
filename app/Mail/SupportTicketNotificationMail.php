@@ -30,7 +30,7 @@ class SupportTicketNotificationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '[TraKerja Support] Tiket Baru: ' . $this->ticket->subject,
+            subject: __('[TraKerja Support] Tiket Baru: ') . $this->ticket->subject,
         );
     }
 

@@ -10,5 +10,5 @@
         @php($offset += $share)
     @endforeach
     <text x="110" y="108" class="ai-donut-total" text-anchor="middle">{{ number_format($total) }}</text><text x="110" y="130" text-anchor="middle">{{ $name }}</text></svg>
-    <div class="ai-donut-legend">@foreach($labels as $i => $label)<div tabindex="0"><span><i style="background: {{ $colors[$i % count($colors)] }}"></i>{{ $label }}</span><strong>{{ number_format($values[$i] ?? 0) }}<small>{{ $total ? round(($values[$i] ?? 0)/$total*100,1) : 0 }}%</small></strong></div>@endforeach</div>
+    <div class="ai-donut-legend">@foreach($labels as $i => $label)<div tabindex="0"><span><i style="background: {{ $colors[$i % count($colors)] }}"></i>{{ __($label) }}</span><strong>{{ number_format($values[$i] ?? 0) }}<small>{{ $total ? round(($values[$i] ?? 0)/$total*100,1) : 0 }}%</small></strong></div>@endforeach</div>
 </div>

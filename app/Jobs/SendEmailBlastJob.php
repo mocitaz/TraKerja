@@ -40,19 +40,19 @@ class SendEmailBlastJob implements ShouldQueue
         try {
             switch ($this->emailType) {
                 case 'ai_analyzer':
-                    Mail::to($this->user->email)->send(new AiAnalyzerFreeTrialAnnouncementMail($this->user));
+                    Mail::to($this->user)->send(new AiAnalyzerFreeTrialAnnouncementMail($this->user));
                     break;
                 case 'job_reminder':
-                    Mail::to($this->user->email)->send(new JobApplicationReminderMail($this->user));
+                    Mail::to($this->user)->send(new JobApplicationReminderMail($this->user));
                     break;
                 case 'monthly_motivation':
-                    Mail::to($this->user->email)->send(new MonthlyMotivationMail($this->user));
+                    Mail::to($this->user)->send(new MonthlyMotivationMail($this->user));
                     break;
                 case 'new_vibe':
-                    Mail::to($this->user->email)->send(new \App\Mail\NewVibeMail($this->user));
+                    Mail::to($this->user)->send(new \App\Mail\NewVibeMail($this->user));
                     break;
                 case 'custom':
-                    Mail::to($this->user->email)->send(new CustomEmailBlastMail(
+                    Mail::to($this->user)->send(new CustomEmailBlastMail(
                         $this->user,
                         $this->customSubject,
                         $this->customContent,

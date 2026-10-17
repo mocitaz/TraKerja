@@ -79,7 +79,7 @@ class PaymentSettlementService
                     $isAddon ? 'User melakukan Top Up Add-On' : 'User upgrade ke akun Premium',
                     'success', ['order_id' => $locked->order_id, 'amount' => $locked->amount], $user->id);
                 try {
-                    Mail::to($user->email)->send(new PaymentSuccessMail($locked));
+                    Mail::to($user)->send(new PaymentSuccessMail($locked));
                 } catch (\Exception $e) {
                     Log::error('Pakasir: Failed to send success email', ['error' => $e->getMessage()]);
                 }

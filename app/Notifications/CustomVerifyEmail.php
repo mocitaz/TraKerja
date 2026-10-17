@@ -14,7 +14,7 @@ class CustomVerifyEmail extends VerifyEmail
         $verificationUrl = $this->verificationUrl($notifiable);
 
         return (new MailMessage)
-            ->subject('[TraKerja] Verify Your Email Address')
+            ->subject(__('[TraKerja] Verify Your Email Address'))
             ->view('emails.email-verification', [
                 'actionUrl' => $verificationUrl,
             ]);

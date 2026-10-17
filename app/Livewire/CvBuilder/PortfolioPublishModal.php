@@ -68,14 +68,14 @@ class PortfolioPublishModal extends Component
         $wasPublished = $user->is_portfolio_published;
         $user->update(['portfolio_slug' => $this->slug, 'is_portfolio_published' => true, 'portfolio_theme' => $this->theme]);
         $this->isPublished = true;
-        $this->dispatch('showNotification', ['type' => 'success', 'title' => $wasPublished ? 'Portfolio updated' : 'Portfolio published', 'message' => 'Your saved CV content is now available at your portfolio address.']);
+        $this->dispatch('showNotification', ['type' => 'success', 'title' => $wasPublished ? 'Portfolio updated' : 'Portfolio published', 'message' => __('Your saved CV content is now available at your portfolio address.')]);
     }
 
     public function unpublish(): void
     {
         Auth::user()->update(['is_portfolio_published' => false]);
         $this->isPublished = false;
-        $this->dispatch('showNotification', ['type' => 'info', 'title' => 'Portfolio unpublished', 'message' => 'Your public address is no longer available. Your CV content is kept.']);
+        $this->dispatch('showNotification', ['type' => 'info', 'title' => __('Portfolio unpublished'), 'message' => __('Your public address is no longer available. Your CV content is kept.')]);
     }
 
     public function render()

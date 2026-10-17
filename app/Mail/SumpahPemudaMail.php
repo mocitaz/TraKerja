@@ -26,7 +26,7 @@ class SumpahPemudaMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Selamat Hari Sumpah Pemuda 🇮🇩',
+            subject: __('Selamat Hari Sumpah Pemuda 🇮🇩'),
         );
     }
 

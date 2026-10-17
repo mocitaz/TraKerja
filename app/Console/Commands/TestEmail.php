@@ -34,7 +34,7 @@ class TestEmail extends Command
     {
         $type = $this->argument('type');
         $email = $this->argument('email');
-        
+
         try {
             switch ($type) {
                 case 'welcome':
@@ -51,30 +51,30 @@ class TestEmail extends Command
                     $this->info("Available types: welcome, interview, goal");
                     return Command::FAILURE;
             }
-            
+
             return Command::SUCCESS;
         } catch (\Exception $e) {
             $this->error("Failed to send email: {$e->getMessage()}");
             return Command::FAILURE;
         }
     }
-    
+
     private function testWelcomeEmail($email)
     {
-        $user = $email 
+        $user = $email
             ? User::where('email', $email)->firstOrFail()
             : User::first();
-            
+
         if (!$user) {
             $this->error('No users found in database');
             return;
         }
-        
+
         $this->info("Sending welcome email to: {$user->email}");
-        Mail::to($user->email)->send(new WelcomeMail($user));
+        Mail::to($user)->send(new WelcomeMail($user));
         $this->info('✓ Welcome email sent successfully!');
     }
-    
+
     private function testInterviewEmail($email)
     {
         $application = $email
@@ -82,18 +82,18 @@ class TestEmail extends Command
                 $q->where('email', $email);
               })->whereNotNull('interview_date')->first()
             : JobApplication::whereNotNull('interview_date')->with('user')->first();
-            
+
         if (!$application) {
             $this->error('No job applications with interview date found');
             return;
         }
-        
+
         $this->info("Sending interview reminder to: {$application->user->email}");
         $this->info("Interview: {$application->company} - {$application->position}");
-        Mail::to($application->user->email)->send(new InterviewReminderMail($application));
+        Mail::to($application->user)->send(new InterviewReminderMail($application));
         $this->info('✓ Interview reminder sent successfully!');
     }
-    
+
     private function testGoalEmail($email)
     {
         $goal = $email
@@ -101,15 +101,15 @@ class TestEmail extends Command
                 $q->where('email', $email);
               })->with('user')->first()
             : UserGoal::with('user')->first();
-            
+
         if (!$goal) {
             $this->error('No goals found in database');
             return;
         }
-        
+
         $this->info("Sending goal achieved email to: {$goal->user->email}");
         $this->info("Goal: Weekly Goal");
-        Mail::to($goal->user->email)->send(new GoalAchievedMail($goal));
+        Mail::to($goal->user)->send(new GoalAchievedMail($goal));
         $this->info('✓ Goal achieved email sent successfully!');
     }
 }

@@ -1,14 +1,14 @@
 <?php
- 
+
 namespace App\Http\Controllers;
- 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Smalot\PdfParser\Parser;
- 
+
 class ResumeParserController extends Controller
 {
     private const SECTIONS = ['experiences', 'educations', 'projects', 'skills'];
@@ -24,36 +24,36 @@ class ResumeParserController extends Controller
         if (strtolower($file->getClientOriginalExtension()) !== 'pdf') {
             return response()->json([
                 'success' => false,
-                'message' => 'Format file harus berupa PDF.',
+                'message' => __('Format file harus berupa PDF.'),
             ], 422);
         }
 
         $user = Auth::user();
- 
+
         try {
             $path = $request->file('resume')->getRealPath();
-            
+
             // Initialize Smalot PDF Parser
             $parser = new Parser();
             $pdf = $parser->parseFile($path);
             $text = $pdf->getText();
- 
+
             // Strip zero-width characters and normalize text
             $text = preg_replace('/[\x{200B}-\x{200D}\x{FEFF}]/u', '', $text);
             $text = str_replace("\r", "", $text);
             $lines = explode("\n", $text);
             $lines = array_map('trim', $lines);
             $lines = array_values(array_filter($lines));
- 
+
             $experiences = [];
             $projects = [];
             $education = [];
             $skills = [];
             $currentSection = null;
-            
+
             $monthPattern = '(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)';
             $dateRangeRegex = '/\b'.$monthPattern.'\s+\d{4}\s*-\s*(?:'.$monthPattern.'\s+\d{4}|Present)\b/i';
- 
+
             // Pre-identify company names to prevent them from being appended to descriptions
             $companyIndices = [];
             for ($i = 0; $i < count($lines); $i++) {
@@ -63,19 +63,19 @@ class ResumeParserController extends Controller
                     }
                 }
             }
- 
+
             $tempCompany = '';
             $tempPosition = '';
             $tempStart = '';
             $tempEnd = '';
             $tempCurrent = false;
             $tempBullets = [];
- 
+
             for ($i = 0; $i < count($lines); $i++) {
                 $line = $lines[$i];
                 if (empty($line)) continue;
                 $upperLine = strtoupper($line);
-                
+
                 // Section transitions detection
                 if ($upperLine === 'WORK EXPERIENCES' || $upperLine === 'WORK EXPERIENCE' || $upperLine === 'EXPERIENCE') {
                     if ($tempPosition) {
@@ -138,7 +138,7 @@ class ResumeParserController extends Controller
                     $currentSection = 'skills';
                     continue;
                 }
- 
+
                 if ($currentSection === 'experience') {
                     if (preg_match($dateRangeRegex, $line, $matches)) {
                         if ($tempPosition) {
@@ -152,16 +152,16 @@ class ResumeParserController extends Controller
                             ];
                             $tempBullets = [];
                         }
-                        
+
                         $dateRange = $matches[0];
                         $posPart = trim(str_replace($dateRange, '', $line));
                         $tempPosition = $posPart;
                         $tempCompany = isset($lines[$i - 1]) && !$this->isSectionHeading($lines[$i - 1]) ? $lines[$i - 1] : '';
-                        
+
                         $dates = explode('-', $dateRange);
                         $startStr = trim($dates[0]);
                         $endStr = isset($dates[1]) ? trim($dates[1]) : 'Present';
-                        
+
                         $tempStart = date('Y-m-d', strtotime($startStr));
                         if (strtolower($endStr) === 'present') {
                             $tempEnd = null;
@@ -210,7 +210,7 @@ class ResumeParserController extends Controller
                                 }
                             }
                         }
-                        
+
                         if ($isNewProject) {
                             $projects[] = [
                                 'name' => $line,
@@ -241,7 +241,7 @@ class ResumeParserController extends Controller
                             else break;
                             $consumed++;
                         }
-                        
+
                         $education[] = [
                             'institution' => $line,
                             'degree' => $degree,
@@ -255,7 +255,7 @@ class ResumeParserController extends Controller
                         $parts = explode(':', $cleanLine);
                         $cleanLine = isset($parts[1]) ? trim($parts[1]) : $cleanLine;
                     }
-                    
+
                     if (str_contains($cleanLine, ',')) {
                         $parts = explode(',', $cleanLine);
                         foreach ($parts as $p) {
@@ -272,7 +272,7 @@ class ResumeParserController extends Controller
                     }
                 }
             }
- 
+
             // Commit final work experience if exists
             if ($tempPosition) {
                 $experiences[] = [
@@ -284,9 +284,9 @@ class ResumeParserController extends Controller
                     'description' => implode("\n", $tempBullets)
                 ];
             }
- 
+
             $data = array_fill_keys(self::SECTIONS, []);
- 
+
             // Save parsed Experiences
             foreach ($experiences as $index => $exp) {
                 $data['experiences'][] = [
@@ -300,7 +300,7 @@ class ResumeParserController extends Controller
                     'display_order' => $index + 1
                 ];
             }
- 
+
             // Save parsed Projects
             foreach ($projects as $index => $proj) {
                 $cleanedName = $proj['name'];
@@ -308,7 +308,7 @@ class ResumeParserController extends Controller
                     $parts = explode(' | ', $cleanedName);
                     $cleanedName = trim($parts[0]);
                 }
-                
+
                 $data['projects'][] = [
                     'project_name' => substr($cleanedName, 0, 100),
                     'role' => null,
@@ -318,13 +318,13 @@ class ResumeParserController extends Controller
                     'display_order' => $index + 1
                 ];
             }
- 
+
             // Save parsed Educations
             foreach ($education as $index => $edu) {
                 $startEduDate = null;
                 $endEduDate = null;
                 $isEduCurrent = false;
-                
+
                 if (preg_match($dateRangeRegex, $edu['year'], $eduYearMatches)) {
                     [$start, $end] = array_map('trim', explode('-', $eduYearMatches[0], 2));
                     $startEduDate = date('Y-m-d', strtotime($start));
@@ -336,7 +336,7 @@ class ResumeParserController extends Controller
                 } elseif (preg_match('/\bPresent\b/i', $edu['year'])) {
                     $isEduCurrent = true;
                 }
- 
+
                 $data['educations'][] = [
                     'institution_name' => substr($edu['institution'], 0, 100),
                     'degree' => substr($edu['degree'], 0, 100),
@@ -347,7 +347,7 @@ class ResumeParserController extends Controller
                     'display_order' => $index + 1
                 ];
             }
- 
+
             // Save parsed Skills
             $skills = array_unique($skills);
             foreach (array_slice($skills, 0, 12) as $index => $skillName) {
@@ -362,13 +362,13 @@ class ResumeParserController extends Controller
 
             if (!array_filter($data)) {
                 return response()->json(['success' => false,
-                    'message' => 'Tidak ada bagian CV yang berhasil dibaca. Data lama tetap aman. Gunakan PDF dengan teks yang dapat dipilih atau isi CV secara manual.',
+                    'message' => __('Tidak ada bagian CV yang berhasil dibaca. Data lama tetap aman. Gunakan PDF dengan teks yang dapat dipilih atau isi CV secara manual.'),
                 ], 422);
             }
 
             if (!$this->validImportData($data)) {
                 return response()->json(['success' => false,
-                    'message' => 'Hasil pembacaan CV belum valid. Data lama tidak diubah. Periksa isi PDF atau masukkan data secara manual.',
+                    'message' => __('Hasil pembacaan CV belum valid. Data lama tidak diubah. Periksa isi PDF atau masukkan data secara manual.'),
                 ], 422);
             }
 
@@ -378,19 +378,19 @@ class ResumeParserController extends Controller
                 'user_id' => $user->id, 'expires_at' => now()->addMinutes(15)->timestamp,
                 'baseline' => $snapshot['hash'], 'data' => $data,
             ], JSON_THROW_ON_ERROR));
- 
+
             return response()->json([
                 'success' => true,
                 'stage' => 'preview', 'data' => $data, 'token' => $token,
                 'existing_counts' => $snapshot['counts'],
                 'education_date_hints' => array_column($education, 'year'),
-                'message' => 'Periksa hasil pembacaan sebelum mengganti data. Bagian yang tidak terbaca akan tetap dipertahankan.',
+                'message' => __('Periksa hasil pembacaan sebelum mengganti data. Bagian yang tidak terbaca akan tetap dipertahankan.'),
             ]);
         } catch (\Exception $e) {
             report($e);
             return response()->json([
                 'success' => false,
-                'message' => 'Gagal membaca file PDF. Data lama tidak diubah. Coba PDF lain atau isi CV secara manual.',
+                'message' => __('Gagal membaca file PDF. Data lama tidak diubah. Coba PDF lain atau isi CV secara manual.'),
             ], 500);
         }
     }
@@ -411,7 +411,7 @@ class ResumeParserController extends Controller
             }
         } catch (\Exception $e) {
             return response()->json(['success' => false,
-                'message' => 'Preview tidak valid atau sudah kedaluwarsa. Unggah PDF kembali. Data lama tidak diubah.',
+                'message' => __('Preview tidak valid atau sudah kedaluwarsa. Unggah PDF kembali. Data lama tidak diubah.'),
             ], 422);
         }
 
@@ -422,7 +422,7 @@ class ResumeParserController extends Controller
         $completion = Validator::make($request->all(), $completionRules);
         if ($completion->fails()) {
             return response()->json(['success' => false, 'requires_completion' => true,
-                'message' => 'Lengkapi tanggal mulai pendidikan yang tidak terbaca sebelum menyimpan. Data lama tidak diubah.',
+                'message' => __('Lengkapi tanggal mulai pendidikan yang tidak terbaca sebelum menyimpan. Data lama tidak diubah.'),
             ], 422);
         }
         foreach ($draft['data']['educations'] as $index => &$entry) {
@@ -436,7 +436,7 @@ class ResumeParserController extends Controller
                 $user->newQuery()->whereKey($user->id)->lockForUpdate()->firstOrFail();
                 if (!hash_equals($draft['baseline'], $this->snapshot($user, true)['hash'])) {
                     return response()->json(['success' => false,
-                        'message' => 'Data CV berubah setelah preview dibuat. Unggah PDF kembali agar perubahan terbaru tidak tertimpa.',
+                        'message' => __('Data CV berubah setelah preview dibuat. Unggah PDF kembali agar perubahan terbaru tidak tertimpa.'),
                     ], 409);
                 }
 
@@ -449,13 +449,13 @@ class ResumeParserController extends Controller
                 }
 
                 return response()->json(['success' => true, 'stage' => 'saved',
-                    'message' => 'Impor CV berhasil disimpan. Bagian yang tidak terbaca tetap dipertahankan.',
+                    'message' => __('Impor CV berhasil disimpan. Bagian yang tidak terbaca tetap dipertahankan.'),
                 ]);
             });
         } catch (\Exception $e) {
             report($e);
             return response()->json(['success' => false,
-                'message' => 'Impor gagal disimpan. Seluruh perubahan dibatalkan dan data CV sebelumnya tetap utuh.',
+                'message' => __('Impor gagal disimpan. Seluruh perubahan dibatalkan dan data CV sebelumnya tetap utuh.'),
             ], 500);
         }
     }

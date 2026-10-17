@@ -23,7 +23,7 @@ class KawanKerjaChatController extends Controller
     public function chat(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'message' => 'required|string|min:1|max:1000',
+            'message' => __('required|string|min:1|max:1000'),
             'mode' => 'sometimes|string|in:career,interview,writing',
         ]);
 
@@ -57,7 +57,7 @@ class KawanKerjaChatController extends Controller
     public function stream(Request $request): StreamedResponse
     {
         $validated = $request->validate([
-            'message' => 'required|string|min:1|max:1000',
+            'message' => __('required|string|min:1|max:1000'),
             'mode' => 'sometimes|string|in:career,interview,writing',
         ]);
 
@@ -104,7 +104,7 @@ class KawanKerjaChatController extends Controller
             }
 
             if (!$result['success']) {
-                echo "event: error\ndata: " . json_encode(['success' => false, 'message' => 'Response interrupted. Please try again.']) . "\n\n";
+                echo "event: error\ndata: " . json_encode(['success' => false, 'message' => __('Response interrupted. Please try again.')]) . "\n\n";
             }
             echo "data: [DONE]\n\n";
             if (ob_get_level() > 0) {

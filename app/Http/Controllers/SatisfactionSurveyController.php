@@ -108,6 +108,6 @@ class SatisfactionSurveyController extends Controller
             'feedback' => $validated['feedback'] ?? null,
         ]);
 
-        return redirect()->route('survey.show')->with('success', 'Your feedback has been saved. Thank you for sharing.');
+        return redirect()->route('survey.show')->with('success', __('Your feedback has been saved. Thank you for sharing.'));
     }
 }

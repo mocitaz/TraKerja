@@ -26,7 +26,7 @@ class NewVibeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Nikmati Suasana Baru TraKerja: Perubahan Besar untuk Karir Anda',
+            subject: __('Nikmati Suasana Baru TraKerja: Perubahan Besar untuk Karir Anda'),
         );
     }
 

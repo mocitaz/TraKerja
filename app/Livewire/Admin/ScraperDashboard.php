@@ -74,7 +74,7 @@ class ScraperDashboard extends Component
     {
         $this->authorizeAdmin();
         $this->loadSources();
-        
+
         if (count($this->sources) > 0) {
             $this->editSource($this->sources[0]['id']);
             $this->selectedSourceId = $this->sources[0]['id'];
@@ -157,7 +157,7 @@ class ScraperDashboard extends Component
     {
         $this->authorizeAdmin();
         $command = 'php ' . base_path('artisan') . ' queue:work --queue=discovery,extraction --stop-when-empty > /dev/null 2>&1 &';
-        
+
         if (str_starts_with(php_uname('s'), 'Windows')) {
             pclose(popen("start /B " . $command, "r"));
         } else {
@@ -291,17 +291,17 @@ class ScraperDashboard extends Component
 
         // 3. Make real validation check using DeadLinkDetector
         $this->logs[] = "[" . date('H:i:s') . "] [NAVIGATE] Fetching URL: " . $this->testUrl;
-        
+
         try {
             // Re-use detector validator logic
             $posting = new JobPosting([
                 'raw_url' => $this->testUrl,
                 'company_name' => 'Sandbox Test',
-                'title' => 'Sample'
+                'title' => __('Sample')
             ]);
 
             $validateStatus = $detector->validate($posting);
-            
+
             // Fetch the title if possible
             $response = app(JobPageFetcher::class)->get($this->testUrl);
 
@@ -310,7 +310,7 @@ class ScraperDashboard extends Component
                 preg_match('/<title>(.*?)<\/title>/i', $response->body(), $matches);
                 $title = trim($matches[1] ?? 'Test Listing Opportunity');
                 $title = preg_replace('/ - Jobs.*| \| LinkedIn.*| Lowongan.*| Karir.*/i', '', $title);
-                
+
                 $this->logs[] = "[" . date('H:i:s') . "] [NAVIGATE] Navigation complete. HTTP Status: 200 OK";
             } else {
                 $this->logs[] = "[" . date('H:i:s') . "] [NAVIGATE] Navigation failed/throttled. HTTP Status: " . $response->status();

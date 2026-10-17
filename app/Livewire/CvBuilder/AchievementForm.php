@@ -15,7 +15,7 @@ class AchievementForm extends Component
     public $achievementId;
     public $showDeleteConfirm = false;
     public $deleteId = null;
-    
+
     // Form fields
     public $title = '';
     public $issuer = '';
@@ -24,14 +24,14 @@ class AchievementForm extends Component
     public $credential_url = '';
     public $description = '';
     public $display_order = 0;
-    
+
     protected $listeners = ['refreshAchievements' => '$refresh', 'closeAllModals' => 'closeModal'];
-    
+
     public function mount()
     {
         $this->loadAchievements();
     }
-    
+
     public function loadAchievements()
     {
         /** @var \App\Models\User $user */
@@ -40,7 +40,7 @@ class AchievementForm extends Component
             ->orderBy('display_order')
             ->get();
     }
-    
+
     public function openModal()
     {
         $this->resetForm();
@@ -48,15 +48,15 @@ class AchievementForm extends Component
         $this->showModal = true;
         $this->display_order = $this->achievements->count();
     }
-    
+
     public function edit($id)
     {
         $achievement = Auth::user()->achievements()->findOrFail($id);
-        
+
         if ($achievement->user_id !== Auth::id()) {
             abort(403);
         }
-        
+
         $this->achievementId = $achievement->id;
         $this->title = $achievement->title;
         $this->issuer = $achievement->issuer;
@@ -65,11 +65,11 @@ class AchievementForm extends Component
         $this->credential_url = $achievement->certificate_url ?? '';
         $this->description = $achievement->description ?? '';
         $this->display_order = $achievement->display_order;
-        
+
         $this->editMode = true;
         $this->showModal = true;
     }
-    
+
     public function save()
     {
         $validator = Validator::make([
@@ -80,7 +80,7 @@ class AchievementForm extends Component
             'credential_url' => $this->credential_url,
             'description'    => $this->description,
         ], [
-            'title'          => 'required|string|max:255',
+            'title'          => __('required|string|max:255'),
             'issuer'         => 'required|string|max:255',
             'issue_date'     => 'required|date',
             'credential_id'  => 'nullable|string|max:255',
@@ -97,7 +97,7 @@ class AchievementForm extends Component
             $this->setErrorBag($validator->errors());
             $this->dispatch('showNotification', [
                 'type'    => 'error',
-                'title'   => 'Incomplete Form',
+                'title'   => __('Incomplete Form'),
                 'message' => $validator->errors()->first(),
             ]);
             return;
@@ -111,7 +111,7 @@ class AchievementForm extends Component
             'description' => $this->description,
             'display_order' => $this->display_order,
         ];
-        
+
         if ($this->editMode) {
             $achievement = Auth::user()->achievements()->findOrFail($this->achievementId);
             $achievement->update($data);
@@ -120,18 +120,18 @@ class AchievementForm extends Component
             Auth::user()->achievements()->create($data);
             $message = 'Achievement added successfully!';
         }
-        
+
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Success',
+            'title' => __('Success'),
             'message' => $message,
         ]);
-        
+
         $this->closeModal();
         $this->dispatch('cv-data-updated');
         $this->loadAchievements();
     }
-    
+
     public function confirmDelete($id)
     {
         $this->deleteId = $id;
@@ -161,14 +161,14 @@ class AchievementForm extends Component
 
         $this->dispatch('showNotification', [
             'type' => 'info',
-            'title' => 'Deleted',
-            'message' => 'Achievement deleted successfully!',
+            'title' => __('Deleted'),
+            'message' => __('Achievement deleted successfully!'),
         ]);
-        
+
         $this->dispatch('cv-data-updated');
         $this->loadAchievements();
     }
-    
+
     public function moveUp($id)
     {
         $achievement = Auth::user()->achievements()->findOrFail($id);
@@ -176,50 +176,50 @@ class AchievementForm extends Component
             $swapWith = Auth::user()->achievements()
                 ->where('display_order', $achievement->display_order - 1)
                 ->first();
-            
+
             if ($swapWith) {
                 $swapWith->display_order = $achievement->display_order;
                 $swapWith->save();
             }
-            
+
             $achievement->display_order -= 1;
             $achievement->save();
         }
-        
+
         $this->dispatch('cv-data-updated');
         $this->loadAchievements();
     }
-    
+
     public function moveDown($id)
     {
         $achievement = Auth::user()->achievements()->findOrFail($id);
         $maxOrder = $this->achievements->max('display_order');
-        
+
         if ($achievement->display_order < $maxOrder) {
             $swapWith = Auth::user()->achievements()
                 ->where('display_order', $achievement->display_order + 1)
                 ->first();
-            
+
             if ($swapWith) {
                 $swapWith->display_order = $achievement->display_order;
                 $swapWith->save();
             }
-            
+
             $achievement->display_order += 1;
             $achievement->save();
         }
-        
+
         $this->dispatch('cv-data-updated');
         $this->loadAchievements();
     }
-    
+
     public function closeModal()
     {
         $this->showModal = false;
         $this->resetForm();
         $this->dispatch('reset-body-overflow');
     }
-    
+
     private function resetForm()
     {
         $this->achievementId = null;
@@ -231,7 +231,7 @@ class AchievementForm extends Component
         $this->description = '';
         $this->display_order = 0;
     }
-    
+
     public function render()
     {
         return view('livewire.cv-builder.achievement-form');

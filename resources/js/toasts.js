@@ -1,8 +1,9 @@
+import { t } from './i18n.js';
 const tones = {
-    success: { icon: 'ph-check', label: 'Success' },
-    error: { icon: 'ph-warning-circle', label: 'Error' },
-    warning: { icon: 'ph-warning', label: 'Notice' },
-    info: { icon: 'ph-info', label: 'Update' },
+    success: { icon: 'ph-check', label: t("Success") },
+    error: { icon: 'ph-warning-circle', label: t("Error") },
+    warning: { icon: 'ph-warning', label: t("Notice") },
+    info: { icon: 'ph-info', label: t("Update") },
 };
 
 export function installToasts(win, doc) {
@@ -37,7 +38,7 @@ export function installToasts(win, doc) {
         if (message) content.appendChild(element('p', 'action-toast__message', message));
         const close = element('button', 'action-toast__close');
         close.type = 'button';
-        close.setAttribute('aria-label', 'Dismiss notification');
+        close.setAttribute('aria-label', t("Dismiss notification"));
         close.appendChild(element('i', 'ph ph-x'));
         close.firstChild.setAttribute('aria-hidden', 'true');
         toast.append(icon, content, close);

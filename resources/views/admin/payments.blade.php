@@ -6,13 +6,13 @@
          ========================================================================== --}}
     <section class="ap-welcome">
         <div>
-            <h1>Payments & Billing</h1>
-            <p>Review member transactions, gateway payment channels, status breakdown, and recorded revenue.</p>
+            <h1>{{ __('Payments & Billing') }}</h1>
+            <p>{{ __('Review member transactions, gateway payment channels, status breakdown, and recorded revenue.') }}</p>
         </div>
         <div class="ap-header-actions">
             <a class="ap-btn ap-btn--quiet" href="{{ route('admin.payments.export', request()->only(['search','status','date_from','date_to'])) }}">
                 <i class="ph ph-download-simple" aria-hidden="true"></i>
-                <span>Export CSV</span>
+                <span>{{ __('Export CSV') }}</span>
             </a>
         </div>
     </section>
@@ -20,17 +20,17 @@
     {{-- ==========================================================================
          OVERVIEW METRICS STRIP (Biru, Ungu, Orange)
          ========================================================================== --}}
-    <section class="ap-metric-strip" aria-label="Payments summary metrics">
+    <section class="ap-metric-strip" aria-label="{{ __('Payments summary metrics') }}">
         {{-- Card 1: Biru - Total Transactions --}}
         <div class="ap-metric-card ap-metric-card--blue">
             <div class="ap-metric-head">
                 <span class="ap-metric-label">
                     <span class="ap-metric-icon"><i class="ph ph-receipt" aria-hidden="true"></i></span>
-                    Transactions
+                    {{ __('Transactions') }}
                 </span>
             </div>
             <strong class="ap-metric-value">{{ number_format($stats['total']) }}</strong>
-            <span class="ap-metric-sub">All recorded payments</span>
+            <span class="ap-metric-sub">{{ __('All recorded payments') }}</span>
         </div>
 
         {{-- Card 2: Ungu - Successful Payments --}}
@@ -38,11 +38,11 @@
             <div class="ap-metric-head">
                 <span class="ap-metric-label">
                     <span class="ap-metric-icon"><i class="ph ph-check-circle" aria-hidden="true"></i></span>
-                    Successful
+                    {{ __('Successful') }}
                 </span>
             </div>
             <strong class="ap-metric-value">{{ number_format($stats['success']) }}</strong>
-            <span class="ap-metric-sub">Completed payments</span>
+            <span class="ap-metric-sub">{{ __('Completed payments') }}</span>
         </div>
 
         {{-- Card 3: Orange - Pending & Waiting --}}
@@ -50,11 +50,11 @@
             <div class="ap-metric-head">
                 <span class="ap-metric-label">
                     <span class="ap-metric-icon"><i class="ph ph-clock-countdown" aria-hidden="true"></i></span>
-                    Pending & Waiting
+                    {{ __('Pending & Waiting') }}
                 </span>
             </div>
             <strong class="ap-metric-value">{{ number_format($stats['pending']) }}</strong>
-            <span class="ap-metric-sub">Awaiting member payment</span>
+            <span class="ap-metric-sub">{{ __('Awaiting member payment') }}</span>
         </div>
 
         {{-- Card 4: Signature Ungu - Total Gross Revenue --}}
@@ -62,11 +62,11 @@
             <div class="ap-metric-head">
                 <span class="ap-metric-label">
                     <span class="ap-metric-icon"><i class="ph ph-wallet" aria-hidden="true"></i></span>
-                    Gross Revenue
+                    {{ __('Gross Revenue') }}
                 </span>
             </div>
-            <strong class="ap-metric-value">Rp {{ number_format($stats['total_revenue'], 0, ',', '.') }}</strong>
-            <span class="ap-metric-sub">Successful transactions only</span>
+            <strong class="ap-metric-value">{{ __('Rp :value1', ['value1' => (number_format($stats['total_revenue'], 0, ',', '.'))]) }}</strong>
+            <span class="ap-metric-sub">{{ __('Successful transactions only') }}</span>
         </div>
     </section>
 
@@ -76,16 +76,16 @@
     <form class="ap-filter-bar" method="GET" action="{{ route('admin.payments') }}">
         <div class="ap-search-wrap">
             <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
-            <input type="search" 
-                   name="search" 
+            <input type="search"
+                   name="search"
                    class="ap-search-input"
-                   value="{{ request('search') }}" 
-                   placeholder="Search Order ID, member name, or email…" 
+                   value="{{ request('search') }}"
+                   placeholder="{{ __('Search Order ID, member name, or email…') }}"
                    maxlength="100">
         </div>
 
-        <select name="status" class="ap-filter-select" aria-label="Filter by payment status">
-            <option value="">All statuses</option>
+        <select name="status" class="ap-filter-select" aria-label="{{ __('Filter by payment status') }}">
+            <option value="">{{ __('All statuses') }}</option>
             @foreach(['SUCCESS','PENDING','WAITING','FAILED','CANCELED','EXPIRED'] as $status)
                 <option value="{{ $status }}" @selected(request('status') === $status)>
                     {{ ucfirst(strtolower($status)) }}
@@ -94,24 +94,24 @@
         </select>
 
         <div class="ap-date-group">
-            <span class="ap-date-label">From</span>
-            <input type="date" name="date_from" value="{{ request('date_from') }}" class="ap-date-input" aria-label="Filter from date">
+            <span class="ap-date-label">{{ __('From') }}</span>
+            <input type="date" name="date_from" value="{{ request('date_from') }}" class="ap-date-input" aria-label="{{ __('Filter from date') }}">
         </div>
 
         <div class="ap-date-group">
-            <span class="ap-date-label">To</span>
-            <input type="date" name="date_to" value="{{ request('date_to') }}" class="ap-date-input" aria-label="Filter to date">
+            <span class="ap-date-label">{{ __('To') }}</span>
+            <input type="date" name="date_to" value="{{ request('date_to') }}" class="ap-date-input" aria-label="{{ __('Filter to date') }}">
         </div>
 
         <button type="submit" class="ap-btn ap-btn--primary">
             <i class="ph ph-funnel" aria-hidden="true"></i>
-            <span>Filter</span>
+            <span>{{ __('Filter') }}</span>
         </button>
 
         @if(request()->hasAny(['search','status','date_from','date_to']))
             <a class="ap-btn ap-btn--quiet" href="{{ route('admin.payments') }}">
                 <i class="ph ph-x" aria-hidden="true"></i>
-                <span>Clear</span>
+                <span>{{ __('Clear') }}</span>
             </a>
         @endif
     </form>
@@ -123,13 +123,13 @@
         <div class="ap-panel-heading">
             <div>
                 <h2 id="payments-table-heading">
-                    Transactions Directory <span>{{ number_format($payments->total()) }}</span>
+                    {{ __('Transactions Directory') }} <span>{{ number_format($payments->total()) }}</span>
                 </h2>
-                <p>Real-time payment logs and payment gateway synchronization</p>
+                <p>{{ __('Real-time payment logs and payment gateway synchronization') }}</p>
             </div>
         </div>
 
-        <div class="ap-table-scroll" tabindex="0" aria-label="Transactions Directory Table">
+        <div class="ap-table-scroll" tabindex="0" aria-label="{{ __('Transactions Directory Table') }}">
             <table class="ap-table">
                 <colgroup>
                     <col style="width: 24%;">
@@ -141,12 +141,12 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th scope="col">Order ID & Method</th>
-                        <th scope="col">Member</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Created</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">{{ __('Order ID & Method') }}</th>
+                        <th scope="col">{{ __('Member') }}</th>
+                        <th scope="col">{{ __('Amount') }}</th>
+                        <th scope="col">{{ __('Status') }}</th>
+                        <th scope="col">{{ __('Created') }}</th>
+                        <th scope="col">{{ __('Action') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -156,7 +156,7 @@
                             <td>
                                 <strong class="ap-order-id">{{ $payment->order_id }}</strong>
                                 <span class="ap-order-method">
-                                    {{ $payment->payment_method ?: $payment->payment_channel_code ?: 'No method selected' }}
+                                    {{ $payment->payment_method ?: $payment->payment_channel_code ?: __('No method selected') }}
                                 </span>
                             </td>
 
@@ -198,17 +198,17 @@
                             {{-- Created Date --}}
                             <td>
                                 <time class="ap-time" datetime="{{ $payment->created_at->toIso8601String() }}">
-                                    {{ $payment->created_at->format('d M Y') }}
-                                    <small>{{ $payment->created_at->format('H:i') }} WIB</small>
+                                    {{ $payment->created_at->locale(app()->getLocale())->translatedFormat('d M Y') }}
+                                    <small>{{ __(':value1 WIB', ['value1' => ($payment->created_at->format('H:i'))]) }}</small>
                                 </time>
                             </td>
 
                             {{-- Manage / Review Modal --}}
                             <td>
-                                <button type="button" 
-                                        class="ap-btn ap-btn--quiet ap-btn--sm" 
+                                <button type="button"
+                                        class="ap-btn ap-btn--quiet ap-btn--sm"
                                         @click="view({{ $payment->id }})">
-                                    Review
+                                    {{ __('Review') }}
                                 </button>
                             </td>
                         </tr>
@@ -217,8 +217,8 @@
                             <td colspan="6">
                                 <div class="ap-empty">
                                     <i class="ph ph-receipt" aria-hidden="true"></i>
-                                    <h3>{{ request()->hasAny(['search','status','date_from','date_to']) ? 'No matching payments' : 'No payments yet' }}</h3>
-                                    <p>Member transactions will appear here. Try adjusting filters if you’re looking for a specific order.</p>
+                                    <h3>{{ request()->hasAny(['search','status','date_from','date_to']) ? __('No matching payments') : __('No payments yet') }}</h3>
+                                    <p>{{ __('Member transactions will appear here. Try adjusting filters if you’re looking for a specific order.') }}</p>
                                 </div>
                             </td>
                         </tr>
@@ -229,7 +229,7 @@
 
         {{-- Panel Footer & Pagination --}}
         <footer class="ap-panel-footer">
-            <span>Showing {{ $payments->firstItem() ?? 0 }} to {{ $payments->lastItem() ?? 0 }} of {{ number_format($payments->total()) }} matching transactions</span>
+            <span>{{ __('Showing :value1 to :value2 of :value3 matching transactions', ['value1' => ($payments->firstItem() ?? 0), 'value2' => ($payments->lastItem() ?? 0), 'value3' => (number_format($payments->total()))]) }}</span>
             <div>
                 {{ $payments->links() }}
             </div>
@@ -242,21 +242,21 @@
     <section class="ap-panel" aria-labelledby="payment-methods-heading">
         <div class="ap-panel-heading">
             <div>
-                <h2 id="payment-methods-heading">Payment Channels Distribution</h2>
-                <p>Successful transactions grouped by payment gateway channel</p>
+                <h2 id="payment-methods-heading">{{ __('Payment Channels Distribution') }}</h2>
+                <p>{{ __('Successful transactions grouped by payment gateway channel') }}</p>
             </div>
         </div>
         <div class="ap-methods-grid">
             @forelse($paymentMethods as $method)
                 <div class="ap-method-card">
                     <div class="ap-method-top">
-                        <span class="ap-method-code">{{ $method->payment_channel_code ?: 'Unspecified channel' }}</span>
-                        <span class="ap-method-count">{{ number_format($method->count) }} payments</span>
+                        <span class="ap-method-code">{{ $method->payment_channel_code ?: __('Unspecified channel') }}</span>
+                        <span class="ap-method-count">{{ __(':value1 payments', ['value1' => (number_format($method->count))]) }}</span>
                     </div>
-                    <span class="ap-method-revenue">Rp {{ number_format($method->revenue, 0, ',', '.') }}</span>
+                    <span class="ap-method-revenue">{{ __('Rp :value1', ['value1' => (number_format($method->revenue, 0, ',', '.'))]) }}</span>
                 </div>
             @empty
-                <p class="text-xs text-gray-500 p-4">No successful transactions recorded yet.</p>
+                <p class="text-xs text-gray-500 p-4">{{ __('No successful transactions recorded yet.') }}</p>
             @endforelse
         </div>
     </section>
@@ -265,35 +265,35 @@
          ALPINE MODAL: REVIEW PAYMENT DETAILS
          ========================================================================== --}}
     <template x-teleport="body">
-        <div x-show="open" 
-             x-cloak 
-             x-dialog="open" 
-             data-dialog-close="!busy && (open = false)" 
-             class="fixed inset-0 z-[100] flex items-center justify-center p-4" 
-             role="dialog" 
-             aria-modal="true" 
-             aria-labelledby="payment-modal-title" 
+        <div x-show="open"
+             x-cloak
+             x-dialog="open"
+             data-dialog-close="!busy && (open = false)"
+             class="fixed inset-0 z-[100] flex items-center justify-center p-4"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="payment-modal-title"
              tabindex="-1">
-            
+
             {{-- Backdrop --}}
-            <div class="absolute inset-0 bg-zinc-950/40 backdrop-blur-sm transition-opacity" 
+            <div class="absolute inset-0 bg-zinc-950/40 backdrop-blur-sm transition-opacity"
                  @click="!busy && (open=false)"></div>
 
             {{-- Modal Content Card --}}
             <section class="ap-modal-card relative max-w-lg max-h-[88dvh] overflow-y-auto">
                 <header class="ap-modal-header">
-                    <h2 id="payment-modal-title" x-text="confirming ? 'Cancel this payment?' : 'Transaction Details'"></h2>
-                    <button type="button" 
-                            class="ap-btn ap-btn--quiet ap-btn--sm" 
-                            @click="open=false" 
-                            :disabled="busy" 
-                            aria-label="Close dialog">
+                    <h2 id="payment-modal-title" x-text="confirming ? @js(__('Cancel this payment?')) : @js(__('Transaction Details'))"></h2>
+                    <button type="button"
+                            class="ap-btn ap-btn--quiet ap-btn--sm"
+                            @click="open=false"
+                            :disabled="busy"
+                            aria-label="{{ __('Close dialog') }}">
                         <i class="ph ph-x" aria-hidden="true"></i>
                     </button>
                 </header>
 
                 <p x-show="loading" class="text-xs text-gray-500 py-4 flex items-center gap-2" role="status">
-                    <i class="ph ph-spinner ph-spin text-base"></i> Loading transaction details…
+                    <i class="ph ph-spinner ph-spin text-base"></i> {{ __('Loading transaction details…') }}
                 </p>
 
                 <p x-show="error" x-text="error" class="p-3 mb-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs" role="alert"></p>
@@ -303,10 +303,10 @@
                         {{-- Amount Highlight Card --}}
                         <div class="ap-modal-amount-box">
                             <div>
-                                <span class="text-xs text-gray-500 block">Total Amount</span>
+                                <span class="text-xs text-gray-500 block">{{ __('Total Amount') }}</span>
                                 <strong x-text="money(payment.amount)"></strong>
                             </div>
-                            <span class="ap-status" 
+                            <span class="ap-status"
                                   :class="{
                                       'ap-status--success': payment.status === 'SUCCESS',
                                       'ap-status--pending': ['PENDING','WAITING'].includes(payment.status),
@@ -318,58 +318,58 @@
                         {{-- Details List --}}
                         <dl class="ap-modal-dl">
                             <div>
-                                <dt>Order ID</dt>
+                                <dt>{{ __('Order ID') }}</dt>
                                 <dd x-text="payment.order_id"></dd>
                             </div>
                             <div>
-                                <dt>Member</dt>
+                                <dt>{{ __('Member') }}</dt>
                                 <dd>
-                                    <span x-text="user?.name || 'Deleted member'"></span>
+                                    <span x-text="user?.name || @js(__('Deleted member'))"></span>
                                     <small x-text="user?.email || '—'"></small>
                                 </dd>
                             </div>
                             <div>
-                                <dt>Payment Channel</dt>
-                                <dd x-text="payment.payment_method || payment.payment_channel_code || 'Not selected'"></dd>
+                                <dt>{{ __('Payment Channel') }}</dt>
+                                <dd x-text="payment.payment_method || payment.payment_channel_code || @js(__('Not selected'))"></dd>
                             </div>
                             <div>
-                                <dt>Created At</dt>
+                                <dt>{{ __('Created At') }}</dt>
                                 <dd x-text="date(payment.created_at)"></dd>
                             </div>
                             <div x-show="payment.paid_at">
-                                <dt>Paid At</dt>
+                                <dt>{{ __('Paid At') }}</dt>
                                 <dd x-text="date(payment.paid_at)"></dd>
                             </div>
                             <div x-show="payment.va_number">
-                                <dt>Virtual Account</dt>
+                                <dt>{{ __('Virtual Account') }}</dt>
                                 <dd x-text="payment.va_number"></dd>
                             </div>
                             <div x-show="payment.yukk_transaction_code">
-                                <dt>Gateway Code</dt>
+                                <dt>{{ __('Gateway Code') }}</dt>
                                 <dd x-text="payment.yukk_transaction_code"></dd>
                             </div>
                         </dl>
 
                         {{-- Cancellation Warning if Confirming --}}
                         <div x-show="confirming" class="ap-modal-notice">
-                            <strong>Notice:</strong> This action will request transaction cancellation directly from the payment gateway. Verify order details before confirming.
+                            <strong>{{ __('Notice:') }}</strong> {{ __('This action will request transaction cancellation directly from the payment gateway. Verify order details before confirming.') }}
                         </div>
 
                         {{-- Footer Actions --}}
                         <footer class="ap-modal-footer">
-                            <button type="button" 
-                                    class="ap-btn ap-btn--quiet" 
-                                    @click="confirming ? confirming=false : open=false" 
-                                    :disabled="busy" 
-                                    x-text="confirming ? 'Keep payment' : 'Close'"></button>
-                            
+                            <button type="button"
+                                    class="ap-btn ap-btn--quiet"
+                                    @click="confirming ? confirming=false : open=false"
+                                    :disabled="busy"
+                                    x-text="confirming ? @js(__('Keep payment')) : @js(__('Close'))"></button>
+
                             <template x-if="['PENDING','WAITING'].includes(payment.status) && payment.yukk_transaction_code">
-                                <button type="button" 
-                                        class="ap-btn ap-btn--danger" 
-                                        @click="confirming ? cancel() : confirming=true" 
+                                <button type="button"
+                                        class="ap-btn ap-btn--danger"
+                                        @click="confirming ? cancel() : confirming=true"
                                         :disabled="busy">
-                                    <span x-show="!busy" x-text="confirming ? 'Confirm cancellation' : 'Cancel payment'"></span>
-                                    <span x-show="busy" class="flex items-center gap-1.5"><i class="ph ph-spinner ph-spin"></i> Canceling…</span>
+                                    <span x-show="!busy" x-text="confirming ? @js(__('Confirm cancellation')) : @js(__('Cancel payment'))"></span>
+                                    <span x-show="busy" class="flex items-center gap-1.5"><i class="ph ph-spinner ph-spin"></i> {{ __('Canceling…') }}</span>
                                 </button>
                             </template>
                         </footer>

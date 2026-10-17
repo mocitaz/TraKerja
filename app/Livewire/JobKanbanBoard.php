@@ -20,16 +20,16 @@ class JobKanbanBoard extends Component
     ];
 
     public $recruitmentStageOptions = JobApplicationStatus::STAGES;
-    
+
     public $search = '';
     public $platformFilter = '';
     public $careerLevelFilter = '';
     public $recruitmentStageFilter = '';
     public $showAdvancedFilters = false;
     public $showArchived = false;
-    
+
     public $currentFollowUpJobId = null;
-    
+
     private $lastUpdateTime = [];
 
     protected $listeners = [
@@ -83,7 +83,7 @@ class JobKanbanBoard extends Component
         $job = JobApplication::where('id', $jobId)->where('user_id', auth()->id())->first();
         if ($job) {
             $this->dispatch('confirm-action', [
-                'title' => 'Delete Application?',
+                'title' => __('Delete Application?'),
                 'message' => "The application data for {$job->company_name} will be permanently deleted (10 XP will be deducted). You can also edit the application details instead.",
                 'btnText' => 'Delete Now',
                 'onConfirm' => 'delete-confirmed',
@@ -98,21 +98,21 @@ class JobKanbanBoard extends Component
         if ($job) {
             $companyName = $job->company_name;
             $job->delete();
-            
+
             // Deduct XP on delete
             $user = auth()->user();
             if (method_exists($user, 'deductXP')) {
                 $user->deductXP(10);
             }
-            
+
             $this->dispatch('showNotification', [
                 'type' => 'warning',
-                'title' => 'Job Application Deleted',
+                'title' => __('Job Application Deleted'),
                 'message' => "Successfully deleted application for {$companyName}. 10 XP deducted.",
                 'duration' => 3000
             ]);
             $this->dispatch('job-deleted');
-            
+
             // Refresh goals cadence manually to update UI
             $this->dispatch('jobAdded');
         }
@@ -126,7 +126,7 @@ class JobKanbanBoard extends Component
         $job = JobApplication::where('id', $jobId)->where('user_id', auth()->id())->first();
         if ($job) {
             if ($job->application_status === $newStatus) return;
-            
+
             $job->update(['application_status' => $newStatus]);
             $this->dispatch('status-updated');
 
@@ -137,8 +137,8 @@ class JobKanbanBoard extends Component
             $this->dispatch('showNotification', [
                 'type' => $newStatus === 'Accepted' ? 'success' : 'info',
                 'title' => $newStatus === 'Accepted' ? 'Congratulations' : 'Status Updated',
-                'message' => $newStatus === 'Accepted' 
-                    ? "Incredible news! Your application for {$job->company_name} was accepted" 
+                'message' => $newStatus === 'Accepted'
+                    ? "Incredible news! Your application for {$job->company_name} was accepted"
                     : "Application for {$job->company_name} updated to {$newStatus}",
                 'duration' => $newStatus === 'Accepted' ? 6000 : 3000
             ]);
@@ -193,11 +193,11 @@ class JobKanbanBoard extends Component
     private function getStatusColor($status)
     {
         $colors = [
-            'Applied' => '#64748b', 
-            'On Process' => '#3B82F6', 
+            'Applied' => '#64748b',
+            'On Process' => '#3B82F6',
             'Interview' => '#8B5CF6',
-            'Offering' => '#14B8A6', 
-            'Accepted' => '#10B981', 
+            'Offering' => '#14B8A6',
+            'Accepted' => '#10B981',
             'Rejected' => '#EF4444',
         ];
         return $colors[$status] ?? '#6B7280';

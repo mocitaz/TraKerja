@@ -47,8 +47,8 @@ class GoalsCadenceManager extends Component
                 if (!session()->has($welcomeNotificationKey)) {
                     $this->dispatch('showNotification', [
                         'type' => 'info',
-                        'title' => 'Welcome to Goals & Cadence',
-                        'message' => 'Set your weekly targets to track your progress!',
+                        'title' => __('Welcome to Goals & Cadence'),
+                        'message' => __('Set your weekly targets to track your progress!'),
                         'duration' => 4000
                     ]);
                     session()->put($welcomeNotificationKey, true);
@@ -158,7 +158,7 @@ class GoalsCadenceManager extends Component
         $this->dispatch('goalUpdated');
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Goals Updated',
+            'title' => __('Goals Updated'),
             'message' => $message
         ]);
 
@@ -244,7 +244,7 @@ class GoalsCadenceManager extends Component
         if ($progress >= 100 && $this->actualApplied > 0 && !session()->has($targetAchievedKey)) {
             $this->dispatch('showNotification', [
                 'type' => 'success',
-                'title' => ' Target Achieved!',
+                'title' => __(' Target Achieved!'),
                 'message' => "You've reached your weekly application target of {$this->targetAppliedWeekly} applications!",
                 'duration' => 5000
             ]);
@@ -252,7 +252,7 @@ class GoalsCadenceManager extends Component
         } elseif ($progress >= 80 && $progress < 100 && !session()->has($almostThereKey)) {
             $this->dispatch('showNotification', [
                 'type' => 'warning',
-                'title' => '🔥 Almost There!',
+                'title' => __('🔥 Almost There!'),
                 'message' => "You're {$progress}% to your weekly target. Keep going!",
                 'duration' => 3000
             ]);

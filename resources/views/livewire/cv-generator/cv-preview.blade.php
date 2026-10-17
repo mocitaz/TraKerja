@@ -1,17 +1,17 @@
 <div>
     @if($showModal)
-        <div class="fixed inset-0 z-50 overflow-y-auto" 
-             x-data="{ closing: false }" 
-             role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.showModal" data-dialog-close="$wire.closeModal()" aria-label="CV Preview">
-            
+        <div class="fixed inset-0 z-50 overflow-y-auto"
+             x-data="{ closing: false }"
+             role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.showModal" data-dialog-close="$wire.closeModal()" aria-label="{{ __('CV Preview') }}">
+
             <!-- Backdrop -->
-            <div class="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity" 
+            <div class="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
                  @click="closing = true; $wire.closeModal()"></div>
-            
+
             <!-- Modal Container -->
             <div class="flex min-h-screen items-center justify-center p-4">
                 <div class="relative bg-white dark:bg-[#1e1f20] dark:border dark:border-white/10 rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col">
-                    
+
                     <!-- Modal Header -->
                     <div class="sticky top-0 z-10 bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4 rounded-t-2xl">
                         <div class="flex items-center justify-between">
@@ -22,8 +22,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-xl font-bold text-white">CV Preview</h3>
-                                    <p class="text-white/80 text-sm">Review your CV before downloading</p>
+                                    <h3 class="text-xl font-bold text-white">{{ __('CV Preview') }}</h3>
+                                    <p class="text-white/80 text-sm">{{ __('Review your CV before downloading') }}</p>
                                 </div>
                             </div>
                             <button type="button"
@@ -41,7 +41,7 @@
                         <div class="max-w-4xl mx-auto bg-white shadow-lg" style="min-height: 1000px;">
                             <!-- CV Content - Matches PDF Export Exactly -->
                             <div class="p-12" style="font-family: Arial, sans-serif; font-size: 10pt; line-height: 1.4; color: #000;">
-                                
+
                                 <!-- Header -->
                                 <div class="mb-5">
                                     <h1 style="font-size: 18pt; font-weight: bold; margin-bottom: 8px; text-transform: uppercase;">{{ strtoupper($user->name) }}</h1>
@@ -76,7 +76,7 @@
                                 <!-- Work Experience -->
                                 @if($experiences && $experiences->count() > 0)
                                     <div class="mb-5">
-                                        <div style="font-size: 11pt; font-weight: bold; margin-bottom: 8px; padding-bottom: 3px; border-bottom: 2px solid #000; text-transform: uppercase;">Work Experiences</div>
+                                        <div style="font-size: 11pt; font-weight: bold; margin-bottom: 8px; padding-bottom: 3px; border-bottom: 2px solid #000; text-transform: uppercase;">{{ __('Work Experiences') }}</div>
                                         @foreach($experiences as $exp)
                                             <div class="mb-3">
                                                 <div class="flex justify-between items-start mb-1">
@@ -87,8 +87,8 @@
                                                         @endif
                                                     </div>
                                                     <div style="text-align: right; white-space: nowrap; margin-left: 1rem;">
-                                                        {{ $exp->start_date ? $exp->start_date->format('M Y') : '' }} - 
-                                                        {{ $exp->is_current ? 'Present' : ($exp->end_date ? $exp->end_date->format('M Y') : '') }}
+                                                        {{ $exp->start_date ? $exp->start_date->locale(app()->getLocale())->translatedFormat('M Y') : '' }} -
+                                                        {{ $exp->is_current ? __('Present') : ($exp->end_date ? $exp->end_date->locale(app()->getLocale())->translatedFormat('M Y') : '') }}
                                                     </div>
                                                 </div>
                                                 <div style="font-style: italic; margin-bottom: 3px;">{{ $exp->position }}</div>
@@ -109,7 +109,7 @@
                                 <!-- Education -->
                                 @if($educations && $educations->count() > 0)
                                     <div class="mb-5">
-                                        <div style="font-size: 11pt; font-weight: bold; margin-bottom: 8px; padding-bottom: 3px; border-bottom: 2px solid #000; text-transform: uppercase;">Education Level</div>
+                                        <div style="font-size: 11pt; font-weight: bold; margin-bottom: 8px; padding-bottom: 3px; border-bottom: 2px solid #000; text-transform: uppercase;">{{ __('Education Level') }}</div>
                                         @foreach($educations as $edu)
                                             <div class="mb-3">
                                                 <div class="flex justify-between items-start mb-1">
@@ -120,12 +120,12 @@
                                                         @endif
                                                     </div>
                                                     <div style="text-align: right; white-space: nowrap; margin-left: 1rem;">
-                                                        {{ $edu->start_date ? $edu->start_date->format('M Y') : '' }} - 
-                                                        {{ $edu->is_current ? 'Present' : ($edu->end_date ? $edu->end_date->format('M Y') : '') }}
+                                                        {{ $edu->start_date ? $edu->start_date->locale(app()->getLocale())->translatedFormat('M Y') : '' }} -
+                                                        {{ $edu->is_current ? __('Present') : ($edu->end_date ? $edu->end_date->locale(app()->getLocale())->translatedFormat('M Y') : '') }}
                                                     </div>
                                                 </div>
                                                 <div style="font-style: italic; margin-bottom: 2px;">
-                                                    {{ $edu->degree }}{{ $edu->major ? ' of ' . $edu->major : '' }}{{ $edu->gpa ? ', ' . $edu->gpa : '' }}
+                                                    {{ $edu->degree }}{{ $edu->major ? __(' of ') . $edu->major : '' }}{{ $edu->gpa ? ', ' . $edu->gpa : '' }}
                                                 </div>
                                                 @if($edu->description)
                                                     <ul style="margin-left: 15px; margin-top: 3px;">
@@ -144,8 +144,8 @@
                                 <!-- Skills, Achievements & Other Experience -->
                                 @if(($skills && $skills->count() > 0) || ($projects && $projects->count() > 0) || ($achievements && $achievements->count() > 0))
                                     <div class="mb-5">
-                                        <div style="font-size: 11pt; font-weight: bold; margin-bottom: 8px; padding-bottom: 3px; border-bottom: 2px solid #000; text-transform: uppercase;">Skills, Achievements & Other Experience</div>
-                                        
+                                        <div style="font-size: 11pt; font-weight: bold; margin-bottom: 8px; padding-bottom: 3px; border-bottom: 2px solid #000; text-transform: uppercase;">{{ __('Skills, Achievements & Other Experience') }}</div>
+
                                         <!-- Skills by Category -->
                                         @foreach($skills->groupBy('category') as $category => $categorySkills)
                                             <div class="mb-2">
@@ -153,15 +153,15 @@
                                                 @foreach($categorySkills as $skill){{ $skill->skill_name }}{{ !$loop->last ? ', ' : '' }}@endforeach
                                             </div>
                                         @endforeach
-                                        
+
                                         <!-- Projects -->
                                         @foreach($projects as $project)
                                             <div class="mb-2">
-                                                <strong>Projects ({{ $project->start_date ? $project->start_date->format('Y') : date('Y') }}):</strong>
+                                                <strong>{{ __('Projects (:value1):', ['value1' => ($project->start_date ? $project->start_date->format('Y') : date('Y'))]) }}</strong>
                                                 {{ $project->description ?? $project->project_name }}
                                             </div>
                                         @endforeach
-                                        
+
                                         <!-- Achievements -->
                                         @foreach($achievements as $achievement)
                                             <div class="mb-2">
@@ -175,7 +175,7 @@
                                 <!-- Watermark for Free Users -->
                                 @if(!$user->isPremium())
                                     <div class="text-center mt-8 pt-4" style="border-top: 1px solid #ccc; color: #999; font-size: 8pt;">
-                                        Generated by TraKerja - Contact admin to remove watermark
+                                        {{ __('Generated by TraKerja - Contact admin to remove watermark') }}
                                     </div>
                                 @endif
 
@@ -190,24 +190,24 @@
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                 </svg>
-                                Unlimited exports for all users
+                                {{ __('Unlimited exports for all users') }}
                             </p>
                         </div>
                         <div class="flex gap-3">
                             <button type="button"
                                     @click="closing = true; $wire.closeModal()"
                                     class="px-6 py-2.5 bg-white dark:bg-[#282a2c] border border-gray-300 dark:border-white/10 text-gray-700 dark:text-[#f0f4f9] rounded-lg hover:bg-gray-50 hover:dark:bg-[#333538] transition font-medium">
-                                Close
+                                {{ __('Close') }}
                             </button>
                             <form action="{{ route('cv-builder.export') }}" method="POST" class="inline">
                                 @csrf
                                 <input type="hidden" name="template" value="{{ $template }}">
-                                <button type="submit" 
+                                <button type="submit"
                                         class="px-6 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition font-medium shadow-sm flex items-center gap-2">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                     </svg>
-                                    Download PDF
+                                    {{ __('Download PDF') }}
                                 </button>
                             </form>
                         </div>

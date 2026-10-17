@@ -26,21 +26,21 @@ class NotificationService
 
         $userId = Auth::id();
         $currentGoal = UserGoal::getCurrentWeekGoal($userId);
-        
+
         if (!$currentGoal) {
             // Only show this once per day
             Session::put($sessionKey, true);
             return [
                 'type' => 'info',
-                'title' => 'Set Your Weekly Goals',
-                'message' => 'Visit Goals & Cadence page to set your weekly targets and start tracking!',
+                'title' => __('Set Your Weekly Goals'),
+                'message' => __('Visit Goals & Cadence page to set your weekly targets and start tracking!'),
                 'duration' => 5000
             ];
         }
 
         $startOfWeek = $currentGoal->start_date;
         $endOfWeek = $currentGoal->end_date;
-        
+
         $actualApplied = JobApplication::where('user_id', $userId)
             ->whereBetween('application_date', [$startOfWeek, $endOfWeek])
             ->count();
@@ -52,7 +52,7 @@ class NotificationService
             Session::put($sessionKey, true);
             return [
                 'type' => 'success',
-                'title' => 'Weekly Target Achieved!',
+                'title' => __('Weekly Target Achieved!'),
                 'message' => "Great job! You've applied to {$actualApplied} jobs this week.",
                 'duration' => 5000
             ];
@@ -61,7 +61,7 @@ class NotificationService
             Session::put($sessionKey, true);
             return [
                 'type' => 'warning',
-                'title' => 'Almost There!',
+                'title' => __('Almost There!'),
                 'message' => "You're {$progress}% to your weekly target. Keep going!",
                 'duration' => 3000
             ];
@@ -70,7 +70,7 @@ class NotificationService
             Session::put($sessionKey, true);
             return [
                 'type' => 'info',
-                'title' => 'Weekend Reminder',
+                'title' => __('Weekend Reminder'),
                 'message' => "You're {$progress}% to your weekly target. Consider applying to more jobs this weekend!",
                 'duration' => 4000
             ];
@@ -111,7 +111,7 @@ class NotificationService
             Session::put($sessionKey, true);
             return [
                 'type' => 'info',
-                'title' => 'Interview Preparation',
+                'title' => __('Interview Preparation'),
                 'message' => "You have {$upcomingInterviews} interview(s) coming up. Time to prepare!",
                 'duration' => 4000
             ];
@@ -124,7 +124,7 @@ class NotificationService
     {
         return [
             'type' => 'success',
-            'title' => 'Job Application Added',
+            'title' => __('Job Application Added'),
             'message' => "Successfully added application for {$companyName}",
             'duration' => 3000
         ];
@@ -134,7 +134,7 @@ class NotificationService
     {
         return [
             'type' => 'info',
-            'title' => 'Job Application Updated',
+            'title' => __('Job Application Updated'),
             'message' => "Successfully updated application for {$companyName}",
             'duration' => 3000
         ];
@@ -144,7 +144,7 @@ class NotificationService
     {
         return [
             'type' => 'warning',
-            'title' => 'Job Application Deleted',
+            'title' => __('Job Application Deleted'),
             'message' => "Successfully deleted application for {$companyName}",
             'duration' => 3000
         ];
@@ -154,7 +154,7 @@ class NotificationService
     {
         return [
             'type' => 'info',
-            'title' => 'Status Updated',
+            'title' => __('Status Updated'),
             'message' => "Application for {$companyName} updated to {$newStatus}",
             'duration' => 3000
         ];

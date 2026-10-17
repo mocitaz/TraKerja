@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'TraKerja') }}</title>
-        
+
         <!-- Favicon -->
         <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}?v=2">
         <link rel="apple-touch-icon" href="{{ asset('images/icon.png') }}?v=2">
@@ -50,7 +50,8 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
-    </head>
+        @include('partials.locale-config')
+</head>
     <body class="font-sans text-[#1a191e] dark:text-[#f0f4f9] bg-[#fdfcf9] dark:bg-[#131314] antialiased transition-colors duration-200 relative selection:bg-[#5b3d8c]/15">
         <div class="gemini-ambient-glow" aria-hidden="true"></div>
 
@@ -73,8 +74,8 @@
                     }"
                     @click="toggle()"
                     class="theme-toggle-btn pointer-events-auto"
-                    aria-label="Toggle dark/light mode"
-                    title="Toggle dark/light mode">
+                    aria-label="{{ __('Toggle dark/light mode') }}"
+                    title="{{ __('Toggle dark/light mode') }}">
                 <i class="ph-bold ph-sun theme-icon-sun" aria-hidden="true"></i>
                 <i class="ph-bold ph-moon theme-icon-moon" aria-hidden="true"></i>
             </button>
@@ -90,12 +91,13 @@
                 <x-footer />
             @endunless
         </div>
-        
+
         @livewireScripts
-        
+
         <!-- Register PWA Service Worker -->
         <script>
             @include('components.service-worker-registration')
         </script>
-    </body>
+    <div class="guest-language"><x-language-switch location="guest" /></div>
+</body>
 </html>

@@ -178,7 +178,7 @@ final class JobListingExtractor
             unset($result['sources']['job_title']);
         }
         if ($result['job_title'] === '' && $result['company_name'] === '') {
-            return ['success' => false, 'message' => 'Could not read this listing. It may require login, block access, or be a search page. Enter details manually or use the extension.'];
+            return ['success' => false, 'message' => __('Could not read this listing. It may require login, block access, or be a search page. Enter details manually or use the extension.')];
         }
         $missing = array_values(array_filter(['job_title', 'company_name', 'location', 'career_level'], fn ($field) => $result[$field] === ''));
 

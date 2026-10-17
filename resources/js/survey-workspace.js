@@ -1,3 +1,4 @@
+import { t } from './i18n.js';
 export function surveyWorkspace(sections, initialSection = 0) {
     return {
         step: Math.min(Math.max(Number(initialSection) || 0, 0), sections.length - 1),
@@ -24,7 +25,7 @@ export function surveyWorkspace(sections, initialSection = 0) {
         },
         async showMissing(index, name) {
             this.step = index;
-            this.error = 'Choose a rating for each question in this section.';
+            this.error = t("Choose a rating for each question in this section.");
             await this.$nextTick();
             const input = this.$refs.form.querySelector(`input[name="${name}"]`);
             input?.focus();

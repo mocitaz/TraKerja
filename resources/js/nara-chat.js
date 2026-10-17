@@ -1,36 +1,37 @@
+import { t } from './i18n.js';
 const modes = [
     {
-        key: 'career', label: 'Career plan', icon: 'ph-path', heading: 'What’s your next move?',
-        description: 'Turn your applications, priorities, and questions into a clear plan for what comes next.',
-        placeholder: 'What would you like to work through?', thinking: 'Reviewing your question and career context…',
+        key: 'career', label: t("Career plan"), icon: 'ph-path', heading: t("What’s your next move?"),
+        description: t("Turn your applications, priorities, and questions into a clear plan for what comes next."),
+        placeholder: t("What would you like to work through?"), thinking: t("Reviewing your question and career context…"),
         starters: [
-            { title: 'Find my next step', description: 'Prioritize your application pipeline', icon: 'ph-kanban', prompt: 'Review my tracked application pipeline. Summarize what needs attention and suggest up to three next steps, using only the data available.' },
-            { title: 'Prepare for what’s coming', description: 'Plan around your next interview', icon: 'ph-calendar-check', prompt: 'Help me prepare for my nearest upcoming interview. Use my actual schedule if available; otherwise ask which role I am preparing for.' },
-            { title: 'Make TraKerja work for me', description: 'Find the right tool for your task', icon: 'ph-compass', prompt: 'Help me choose a TraKerja feature for my next career task. Ask what I want to accomplish, then point me to the relevant tool.' },
+            { title: t("Find my next step"), description: t("Prioritize your application pipeline"), icon: 'ph-kanban', prompt: t("Review my tracked application pipeline. Summarize what needs attention and suggest up to three next steps, using only the data available.") },
+            { title: t("Prepare for what’s coming"), description: t("Plan around your next interview"), icon: 'ph-calendar-check', prompt: t("Help me prepare for my nearest upcoming interview. Use my actual schedule if available; otherwise ask which role I am preparing for.") },
+            { title: t("Make TraKerja work for me"), description: t("Find the right tool for your task"), icon: 'ph-compass', prompt: t("Help me choose a TraKerja feature for my next career task. Ask what I want to accomplish, then point me to the relevant tool.") },
         ],
-        followups: ['Turn this into a short checklist', 'Which step should I prioritize?'],
+        followups: ['Turn this into a short checklist', 'Which step should I prioritize?'].map(value => t(value)),
     },
     {
-        key: 'interview', label: 'Interview practice', icon: 'ph-microphone', heading: 'Practice with purpose.',
-        description: 'One question at a time. Get specific feedback and build an answer that sounds like you.',
-        placeholder: 'Share a target role or write your practice answer…', thinking: 'Preparing focused interview guidance…',
+        key: 'interview', label: t("Interview practice"), icon: 'ph-microphone', heading: t("Practice with purpose."),
+        description: t("One question at a time. Get specific feedback and build an answer that sounds like you."),
+        placeholder: t("Share a target role or write your practice answer…"), thinking: t("Preparing focused interview guidance…"),
         starters: [
-            { title: 'Start a mock interview', description: 'Practice for a role in your tracker', icon: 'ph-chats-circle', prompt: 'Start a mock interview for a relevant application in my tracker. Explain which role you selected, ask just one question, and wait for my answer. If no role is available, ask me for it.' },
-            { title: 'Improve my answer', description: 'Feedback on clarity, evidence, and impact', icon: 'ph-target', prompt: 'I want to improve an interview answer. Ask me to paste the question and my answer first. Do not score anything until I share my answer.' },
-            { title: 'Prepare questions for the interviewer', description: 'Show curiosity about the role and team', icon: 'ph-question', prompt: 'Help me prepare thoughtful questions for an interviewer. Use a relevant role in my tracked applications if possible; ask me for the target role if it is missing.' },
+            { title: t("Start a mock interview"), description: t("Practice for a role in your tracker"), icon: 'ph-chats-circle', prompt: t("Start a mock interview for a relevant application in my tracker. Explain which role you selected, ask just one question, and wait for my answer. If no role is available, ask me for it.") },
+            { title: t("Improve my answer"), description: t("Feedback on clarity, evidence, and impact"), icon: 'ph-target', prompt: t("I want to improve an interview answer. Ask me to paste the question and my answer first. Do not score anything until I share my answer.") },
+            { title: t("Prepare questions for the interviewer"), description: t("Show curiosity about the role and team"), icon: 'ph-question', prompt: t("Help me prepare thoughtful questions for an interviewer. Use a relevant role in my tracked applications if possible; ask me for the target role if it is missing.") },
         ],
-        followups: ['Ask me the next practice question', 'Help me make my answer more concise'],
+        followups: ['Ask me the next practice question', 'Help me make my answer more concise'].map(value => t(value)),
     },
     {
-        key: 'writing', label: 'Writing desk', icon: 'ph-pencil-simple-line', heading: 'Find the right words.',
-        description: 'Draft a thoughtful follow-up, sharpen a CV bullet, or introduce yourself with confidence.',
-        placeholder: 'Paste a draft or tell me what you need to write…', thinking: 'Shaping a draft around your request…',
+        key: 'writing', label: t("Writing desk"), icon: 'ph-pencil-simple-line', heading: t("Find the right words."),
+        description: t("Draft a thoughtful follow-up, sharpen a CV bullet, or introduce yourself with confidence."),
+        placeholder: t("Paste a draft or tell me what you need to write…"), thinking: t("Shaping a draft around your request…"),
         starters: [
-            { title: 'Write a follow-up', description: 'A polite message for a recruiter', icon: 'ph-envelope-simple', prompt: 'Help me write a concise recruiter follow-up. Ask for the target application and timing if these are unclear. Use placeholders for facts we do not know.' },
-            { title: 'Strengthen a CV bullet', description: 'Clear action, scope, and real impact', icon: 'ph-file-text', prompt: 'Help me improve a CV experience bullet. First ask me to paste the original bullet and any real results. Never invent metrics, tools, or achievements.' },
-            { title: 'Craft my introduction', description: 'A focused professional introduction', icon: 'ph-user-sound', prompt: 'Help me draft a short professional introduction from my available profile. Ask for my target role if needed and use only verified experience and skills.' },
+            { title: t("Write a follow-up"), description: t("A polite message for a recruiter"), icon: 'ph-envelope-simple', prompt: t("Help me write a concise recruiter follow-up. Ask for the target application and timing if these are unclear. Use placeholders for facts we do not know.") },
+            { title: t("Strengthen a CV bullet"), description: t("Clear action, scope, and real impact"), icon: 'ph-file-text', prompt: t("Help me improve a CV experience bullet. First ask me to paste the original bullet and any real results. Never invent metrics, tools, or achievements.") },
+            { title: t("Craft my introduction"), description: t("A focused professional introduction"), icon: 'ph-user-sound', prompt: t("Help me draft a short professional introduction from my available profile. Ask for my target role if needed and use only verified experience and skills.") },
         ],
-        followups: ['Make it shorter and more natural', 'Give me a more formal version'],
+        followups: ['Make it shorter and more natural', 'Give me a more formal version'].map(value => t(value)),
     },
 ];
 
@@ -143,10 +144,10 @@ export function naraChat(config, environment = globalThis) {
                 const response = await environment.fetch(url, { ...options, signal: controller.signal, headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': config.csrfToken, ...options.headers } });
                 const data = await response.json().catch(() => null);
                 if (!response.ok) {
-                    const message = response.status === 429 ? 'Too many requests. Wait a moment before trying again.' : response.status === 401 || response.status === 419 ? 'Your session has expired. Reload the page to sign in again.' : response.status === 403 ? 'Chat is unavailable for this account. Check your account access and email verification.' : 'Could not complete the request. Please try again.';
+                    const message = response.status === 429 ? 'Too many requests. Wait a moment before trying again.' : response.status === 401 || response.status === 419 ? 'Your session has expired. Reload the page to sign in again.' : response.status === 403 ? 'Chat is unavailable for this account. Check your account access and email verification.' : t("Could not complete the request. Please try again.");
                     throw new Error(message);
                 }
-                if (!data || typeof data !== 'object') throw new Error('An unreadable response was received. Please try again.');
+                if (!data || typeof data !== 'object') throw new Error(t("An unreadable response was received. Please try again."));
                 return data;
             } finally {
                 environment.clearTimeout(timer);
@@ -159,12 +160,12 @@ export function naraChat(config, environment = globalThis) {
             this.historyError = '';
             try {
                 const data = await this.request(config.historyUrl);
-                if (!Array.isArray(data.history) || data.history.some(item => !item || !['user', 'model'].includes(item.role) || typeof item.content !== 'string')) throw new Error('Could not read your conversation. Please reload it.');
+                if (!Array.isArray(data.history) || data.history.some(item => !item || !['user', 'model'].includes(item.role) || typeof item.content !== 'string')) throw new Error(t("Could not read your conversation. Please reload it."));
                 if (this.disposed) return;
                 this.messages = data.history;
                 if (this.open && this.messages.length) this.scrollToBottom(true);
             } catch (error) {
-                if (!this.disposed) this.historyError = error.name === 'AbortError' ? 'Loading timed out. Reload your conversation to continue.' : error.message;
+                if (!this.disposed) this.historyError = error.name === t("AbortError") ? 'Loading timed out. Reload your conversation to continue.' : error.message;
             } finally { if (!this.disposed) this.historyLoading = false; }
         },
         selectMode(mode) {
@@ -179,7 +180,7 @@ export function naraChat(config, environment = globalThis) {
         async send(retryText = null) {
             const text = (typeof retryText === 'string' ? retryText : this.input).trim();
             if (!text || this.busy || this.historyError || this.disposed || (this.failedText && typeof retryText !== 'string')) return;
-            if (Array.from(text).length > 1000) { this.error = 'Keep your message within 1,000 characters.'; return; }
+            if (Array.from(text).length > 1000) { this.error = t("Keep your message within 1,000 characters."); return; }
             const requestMode = typeof retryText === 'string' ? this.failedMode : this.mode;
             this.error = ''; this.failedText = ''; this.loading = true;
             const retrying = typeof retryText === 'string';
@@ -191,7 +192,7 @@ export function naraChat(config, environment = globalThis) {
             this.scrollToBottom(true);
             try {
                 const data = await this.request(config.chatUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text, mode: requestMode }) });
-                if (data.success !== true || typeof data.reply !== 'string' || !data.reply.trim()) throw new Error('Nara could not finish a response. Your message is saved here; try again.');
+                if (data.success !== true || typeof data.reply !== 'string' || !data.reply.trim()) throw new Error(t("Nara could not finish a response. Your message is saved here; try again."));
                 if (this.disposed) return;
                 // The server owns successful history; failed requests are never stored as assistant replies.
                 this.messages.push({ role: 'model', content: data.reply });
@@ -200,7 +201,7 @@ export function naraChat(config, environment = globalThis) {
                 if (!this.disposed) {
                     this.failedText = text;
                     this.failedMode = requestMode;
-                    this.error = error.name === 'AbortError' ? 'The response timed out. Try again in a moment.' : error.message;
+                    this.error = error.name === t("AbortError") ? 'The response timed out. Try again in a moment.' : error.message;
                 }
             } finally { if (!this.disposed) this.loading = false; }
         },
@@ -217,11 +218,11 @@ export function naraChat(config, environment = globalThis) {
             this.clearing = true; this.error = '';
             try {
                 const data = await this.request(config.clearUrl, { method: 'POST' });
-                if (data.success !== true) throw new Error('Could not clear this conversation. Please try again.');
+                if (data.success !== true) throw new Error(t("Could not clear this conversation. Please try again."));
                 if (this.disposed) return;
                 this.messages = []; this.failedText = ''; this.confirmClear = false; this.input = ''; this.copied = null;
                 this.resizeComposer();
-            } catch (error) { if (!this.disposed) this.error = error.name === 'AbortError' ? 'Clearing timed out. Please try again.' : error.message; }
+            } catch (error) { if (!this.disposed) this.error = error.name === t("AbortError") ? 'Clearing timed out. Please try again.' : error.message; }
             finally { if (!this.disposed) this.clearing = false; }
         },
         trackScroll() {
@@ -243,7 +244,7 @@ export function naraChat(config, environment = globalThis) {
                 this.copied = index;
                 environment.clearTimeout(this.copyTimer);
                 this.copyTimer = environment.setTimeout(() => { this.copied = null; }, 2000);
-            } catch (_) { this.error = 'Copy was blocked. Select the response text and copy it manually.'; }
+            } catch (_) { this.error = t("Copy was blocked. Select the response text and copy it manually."); }
         },
         formatText(raw, assistant = true) { return formatNaraText(raw, config.routes, assistant); },
         destroy() {

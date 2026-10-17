@@ -13,7 +13,7 @@ class VerifyTelegramWebhook
     {
         $secret = config('services.telegram.webhook_secret');
         if (! is_string($secret) || ! preg_match('/\A[A-Za-z0-9_-]{1,256}\z/', $secret)) {
-            return response()->json(['message' => 'Webhook unavailable.'], 503);
+            return response()->json(['message' => __('Webhook unavailable.')], 503);
         }
         $provided = $request->header('X-Telegram-Bot-Api-Secret-Token');
         abort_unless(is_string($provided) && hash_equals($secret, $provided), 403);
@@ -21,7 +21,7 @@ class VerifyTelegramWebhook
         // One authenticated webhook budget, independent of forwarded client IPs.
         $key = 'telegram:webhook';
         if (RateLimiter::tooManyAttempts($key, 60)) {
-            return response()->json(['message' => 'Too many requests.'], 429)
+            return response()->json(['message' => __('Too many requests.')], 429)
                 ->header('Retry-After', RateLimiter::availableIn($key));
         }
         RateLimiter::hit($key, 60);

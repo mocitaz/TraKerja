@@ -15,7 +15,7 @@ class OrganizationForm extends Component
     public $organizationId;
     public $showDeleteConfirm = false;
     public $deleteId = null;
-    
+
     // Form fields
     public $organization_name = '';
     public $position = '';
@@ -25,14 +25,14 @@ class OrganizationForm extends Component
     public $is_current = false;
     public $description = '';
     public $display_order = 0;
-    
+
     protected $listeners = ['refreshOrganizations' => '$refresh', 'closeAllModals' => 'closeModal'];
-    
+
     public function mount()
     {
         $this->loadOrganizations();
     }
-    
+
     public function loadOrganizations()
     {
         /** @var \App\Models\User $user */
@@ -41,7 +41,7 @@ class OrganizationForm extends Component
             ->orderBy('display_order')
             ->get();
     }
-    
+
     public function openModal()
     {
         $this->resetForm();
@@ -49,15 +49,15 @@ class OrganizationForm extends Component
         $this->showModal = true;
         $this->display_order = $this->organizations->count();
     }
-    
+
     public function edit($id)
     {
         $organization = Auth::user()->organizations()->findOrFail($id);
-        
+
         if ($organization->user_id !== Auth::id()) {
             abort(403);
         }
-        
+
         $this->organizationId = $organization->id;
         $this->organization_name = $organization->organization_name;
         $this->position = $organization->role;
@@ -67,11 +67,11 @@ class OrganizationForm extends Component
         $this->is_current = $organization->is_current;
         $this->description = $organization->description ?? '';
         $this->display_order = $organization->display_order;
-        
+
         $this->editMode = true;
         $this->showModal = true;
     }
-    
+
     public function save()
     {
         $validator = Validator::make([
@@ -99,7 +99,7 @@ class OrganizationForm extends Component
             $this->setErrorBag($validator->errors());
             $this->dispatch('showNotification', [
                 'type'    => 'error',
-                'title'   => 'Incomplete Form',
+                'title'   => __('Incomplete Form'),
                 'message' => $validator->errors()->first(),
             ]);
             return;
@@ -114,7 +114,7 @@ class OrganizationForm extends Component
             'description' => $this->description,
             'display_order' => $this->display_order,
         ];
-        
+
         if ($this->editMode) {
             $organization = Auth::user()->organizations()->findOrFail($this->organizationId);
             $organization->update($data);
@@ -123,18 +123,18 @@ class OrganizationForm extends Component
             Auth::user()->organizations()->create($data);
             $message = 'Organization experience added successfully!';
         }
-        
+
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Success',
+            'title' => __('Success'),
             'message' => $message,
         ]);
-        
+
         $this->closeModal();
         $this->dispatch('cv-data-updated');
         $this->loadOrganizations();
     }
-    
+
     public function confirmDelete($id)
     {
         $this->deleteId = $id;
@@ -164,14 +164,14 @@ class OrganizationForm extends Component
 
         $this->dispatch('showNotification', [
             'type' => 'info',
-            'title' => 'Deleted',
-            'message' => 'Organization deleted successfully!',
+            'title' => __('Deleted'),
+            'message' => __('Organization deleted successfully!'),
         ]);
-        
+
         $this->dispatch('cv-data-updated');
         $this->loadOrganizations();
     }
-    
+
     public function moveUp($id)
     {
         $organization = Auth::user()->organizations()->findOrFail($id);
@@ -179,50 +179,50 @@ class OrganizationForm extends Component
             $swapWith = Auth::user()->organizations()
                 ->where('display_order', $organization->display_order - 1)
                 ->first();
-            
+
             if ($swapWith) {
                 $swapWith->display_order = $organization->display_order;
                 $swapWith->save();
             }
-            
+
             $organization->display_order -= 1;
             $organization->save();
         }
-        
+
         $this->dispatch('cv-data-updated');
         $this->loadOrganizations();
     }
-    
+
     public function moveDown($id)
     {
         $organization = Auth::user()->organizations()->findOrFail($id);
         $maxOrder = $this->organizations->max('display_order');
-        
+
         if ($organization->display_order < $maxOrder) {
             $swapWith = Auth::user()->organizations()
                 ->where('display_order', $organization->display_order + 1)
                 ->first();
-            
+
             if ($swapWith) {
                 $swapWith->display_order = $organization->display_order;
                 $swapWith->save();
             }
-            
+
             $organization->display_order += 1;
             $organization->save();
         }
-        
+
         $this->dispatch('cv-data-updated');
         $this->loadOrganizations();
     }
-    
+
     public function closeModal()
     {
         $this->showModal = false;
         $this->resetForm();
         $this->dispatch('reset-body-overflow');
     }
-    
+
     private function resetForm()
     {
         $this->organizationId = null;
@@ -235,7 +235,7 @@ class OrganizationForm extends Component
         $this->description = '';
         $this->display_order = 0;
     }
-    
+
     public function render()
     {
         return view('livewire.cv-builder.organization-form');

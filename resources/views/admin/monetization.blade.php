@@ -15,13 +15,13 @@
          ========================================================================== --}}
     <section class="am-welcome">
         <div>
-            <h1>Monetization & Plans</h1>
-            <p>Set subscription pricing, switch member access modes, and review feature entitlements.</p>
+            <h1>{{ __('Monetization & Plans') }}</h1>
+            <p>{{ __('Set subscription pricing, switch member access modes, and review feature entitlements.') }}</p>
         </div>
         <div class="am-header-actions">
             <a class="am-btn am-btn--quiet" href="{{ route('admin.payments') }}">
                 <i class="ph ph-receipt" aria-hidden="true"></i>
-                <span>Payment history</span>
+                <span>{{ __('Payment history') }}</span>
             </a>
         </div>
     </section>
@@ -39,17 +39,17 @@
     {{-- ==========================================================================
          METRICS STRIP (Biru, Ungu, Orange)
          ========================================================================== --}}
-    <section class="am-metric-strip" aria-label="Monetization overview metrics">
+    <section class="am-metric-strip" aria-label="{{ __('Monetization overview metrics') }}">
         {{-- Card 1: Biru - Total Members --}}
         <div class="am-metric-card am-metric-card--blue">
             <div class="am-metric-head">
                 <span class="am-metric-label">
                     <span class="am-metric-icon"><i class="ph ph-users" aria-hidden="true"></i></span>
-                    Members
+                    {{ __('Members') }}
                 </span>
             </div>
             <strong class="am-metric-value">{{ number_format($totalUsers) }}</strong>
-            <span class="am-metric-sub">Non-admin accounts</span>
+            <span class="am-metric-sub">{{ __('Non-admin accounts') }}</span>
         </div>
 
         {{-- Card 2: Ungu - Premium Assigned --}}
@@ -57,11 +57,11 @@
             <div class="am-metric-head">
                 <span class="am-metric-label">
                     <span class="am-metric-icon"><i class="ph ph-crown-simple" aria-hidden="true"></i></span>
-                    Premium assigned
+                    {{ __('Premium assigned') }}
                 </span>
             </div>
             <strong class="am-metric-value">{{ number_format($premiumUsers) }}</strong>
-            <span class="am-metric-sub">Active premium accounts</span>
+            <span class="am-metric-sub">{{ __('Active premium accounts') }}</span>
         </div>
 
         {{-- Card 3: Orange - Free Assigned --}}
@@ -69,11 +69,11 @@
             <div class="am-metric-head">
                 <span class="am-metric-label">
                     <span class="am-metric-icon"><i class="ph ph-user" aria-hidden="true"></i></span>
-                    Free assigned
+                    {{ __('Free assigned') }}
                 </span>
             </div>
             <strong class="am-metric-value">{{ number_format($freeUsers) }}</strong>
-            <span class="am-metric-sub">Standard & trial accounts</span>
+            <span class="am-metric-sub">{{ __('Standard & trial accounts') }}</span>
         </div>
 
         {{-- Card 4: Signature Ungu - Recorded Revenue --}}
@@ -81,11 +81,11 @@
             <div class="am-metric-head">
                 <span class="am-metric-label">
                     <span class="am-metric-icon"><i class="ph ph-wallet" aria-hidden="true"></i></span>
-                    Checkout Revenue
+                    {{ __('Checkout Revenue') }}
                 </span>
             </div>
-            <strong class="am-metric-value">Rp {{ number_format($revenue, 0, ',', '.') }}</strong>
-            <span class="am-metric-sub">Successful payments only</span>
+            <strong class="am-metric-value">{{ __('Rp :value1', ['value1' => (number_format($revenue, 0, ',', '.'))]) }}</strong>
+            <span class="am-metric-sub">{{ __('Successful payments only') }}</span>
         </div>
     </section>
 
@@ -95,15 +95,15 @@
     <section class="am-panel" aria-labelledby="pricing-panel-heading">
         <div class="am-panel-heading">
             <div>
-                <h2 id="pricing-panel-heading">Premium Subscription Pricing</h2>
-                <p>Manage the checkout price for member upgrades and premium lifetime packages</p>
+                <h2 id="pricing-panel-heading">{{ __('Premium Subscription Pricing') }}</h2>
+                <p>{{ __('Manage the checkout price for member upgrades and premium lifetime packages') }}</p>
             </div>
         </div>
         <div class="am-pricing-content">
             <div class="am-pricing-info">
-                <span class="am-pricing-current">Active Checkout Price</span>
+                <span class="am-pricing-current">{{ __('Active Checkout Price') }}</span>
                 <div class="am-pricing-badge">
-                    <span>Rp</span> {{ number_format($premiumPrice, 0, ',', '.') }}
+                    <span>{{ __('Rp') }}</span> {{ number_format($premiumPrice, 0, ',', '.') }}
                 </div>
             </div>
 
@@ -111,20 +111,20 @@
                 @csrf
                 @method('PUT')
                 <div class="am-input-group">
-                    <span class="am-input-prefix">Rp</span>
-                    <input type="number" 
-                           name="premium_price" 
-                           class="am-input-field" 
-                           value="{{ old('premium_price', $premiumPrice) }}" 
-                           min="0" 
-                           step="1000" 
-                           placeholder="199000" 
-                           required 
-                           aria-label="Price in Indonesian Rupiah">
+                    <span class="am-input-prefix">{{ __('Rp') }}</span>
+                    <input type="number"
+                           name="premium_price"
+                           class="am-input-field"
+                           value="{{ old('premium_price', $premiumPrice) }}"
+                           min="0"
+                           step="1000"
+                           placeholder="199000"
+                           required
+                           aria-label="{{ __('Price in Indonesian Rupiah') }}">
                 </div>
                 <button type="submit" class="am-btn am-btn--primary">
                     <i class="ph ph-floppy-disk" aria-hidden="true"></i>
-                    <span>Save price</span>
+                    <span>{{ __('Save price') }}</span>
                 </button>
                 @error('premium_price')
                     <p role="alert" class="text-red-600 text-xs w-full mt-1">{{ $message }}</p>

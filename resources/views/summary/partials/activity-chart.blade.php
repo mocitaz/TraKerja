@@ -17,11 +17,11 @@
     $hasActivity = $activityTotal + array_sum($interviewValues) > 0;
 @endphp
 <section class="workspace-card summary-activity summary-enter" aria-labelledby="summary-activity-title" x-data="{ active: null, selected: null, points: @js($points) }">
-    <div class="workspace-section-heading"><div><h2 id="summary-activity-title">Application activity</h2><p>{{ $timeFilter === 'all' ? 'Last 12 months' : ($timeFilter === 'weekly' ? 'Last 7 days' : 'Last 30 days') }} · by event date</p></div><span class="summary-activity-total"><strong>{{ $activityTotal }}</strong> applications</span></div>
-    <div class="summary-chart-toolbar"><div class="summary-chart-legend"><span><i class="summary-dot summary-dot--pink" aria-hidden="true"></i>Applications</span><span><i class="summary-dot summary-dot--blue" aria-hidden="true"></i>Scheduled interviews</span></div><div class="summary-chart-readout" :class="{ 'is-active': (active ?? selected) !== null }"><span x-text="(active ?? selected) === null ? 'Explore a period' : points[active ?? selected].label">Explore a period</span><span><strong x-text="(active ?? selected) === null ? '—' : points[active ?? selected].applications">—</strong> applications</span><span><strong x-text="(active ?? selected) === null ? '—' : points[active ?? selected].interviews">—</strong> interviews</span></div></div>
+    <div class="workspace-section-heading"><div><h2 id="summary-activity-title">{{ __('Application activity') }}</h2><p>{{ __(':value1 · by event date', ['value1' => ($timeFilter === 'all' ? 'Last 12 months' : ($timeFilter === 'weekly' ? 'Last 7 days' : 'Last 30 days'))]) }}</p></div><span class="summary-activity-total"><strong>{{ $activityTotal }}</strong> {{ __('applications') }}</span></div>
+    <div class="summary-chart-toolbar"><div class="summary-chart-legend"><span><i class="summary-dot summary-dot--pink" aria-hidden="true"></i>{{ __('Applications') }}</span><span><i class="summary-dot summary-dot--blue" aria-hidden="true"></i>{{ __('Scheduled interviews') }}</span></div><div class="summary-chart-readout" :class="{ 'is-active': (active ?? selected) !== null }"><span x-text="(active ?? selected) === null ? @js(__('Explore a period')) : points[active ?? selected].label">{{ __('Explore a period') }}</span><span><strong x-text="(active ?? selected) === null ? '—' : points[active ?? selected].applications">—</strong> {{ __('applications') }}</span><span><strong x-text="(active ?? selected) === null ? '—' : points[active ?? selected].interviews">—</strong> {{ __('interviews') }}</span></div></div>
     @if($hasActivity)
         <div class="summary-chart" @mouseleave="active = null">
-            <svg viewBox="0 0 720 245" role="group" aria-label="Applications and scheduled interviews over time">
+            <svg viewBox="0 0 720 245" role="group" aria-label="{{ __('Applications and scheduled interviews over time') }}">
                 <defs><linearGradient id="summary-activity-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#9580b8" stop-opacity=".25"/><stop offset="100%" stop-color="#9580b8" stop-opacity=".02"/></linearGradient></defs>
                 @for($tick = 0; $tick <= 4; $tick++)
                     @php($y = 205 - $tick * 40)
@@ -32,7 +32,7 @@
                 <polyline points="{{ $interviewLine }}" pathLength="100" class="summary-series summary-series--interviews" />
                 @foreach($points as $index => $point)
                     @if($index % ($timeFilter === 'monthly' ? 5 : ($timeFilter === 'weekly' ? 1 : 2)) === 0 || $index === count($points) - 1)<text x="{{ $point['x'] }}" y="232" text-anchor="middle" class="summary-axis-text">{{ $point['label'] }}</text>@endif
-                    <g tabindex="0" role="button" aria-label="{{ $point['label'] }}: {{ $point['applications'] }} applications, {{ $point['interviews'] }} scheduled interviews" @mouseenter="active = {{ $index }}" @focus="active = {{ $index }}" @blur="active = null" @click="selected = {{ $index }}" @keydown.enter.prevent="selected = {{ $index }}" @keydown.space.prevent="selected = {{ $index }}">
+                    <g tabindex="0" role="button" aria-label="{{ __(':value1: :value2 applications, :value3 scheduled interviews', ['value1' => ($point['label']), 'value2' => ($point['applications']), 'value3' => ($point['interviews'])]) }}" @mouseenter="active = {{ $index }}" @focus="active = {{ $index }}" @blur="active = null" @click="selected = {{ $index }}" @keydown.enter.prevent="selected = {{ $index }}" @keydown.space.prevent="selected = {{ $index }}">
                         <rect x="{{ $point['x'] - min(17, $plotWidth / max(1, count($points) - 1) / 2) }}" y="30" width="{{ min(34, $plotWidth / max(1, count($points) - 1)) }}" height="180" fill="transparent" />
                         <line x1="{{ $point['x'] }}" y1="30" x2="{{ $point['x'] }}" y2="205" class="summary-crosshair" :class="{ 'is-visible': (active ?? selected) === {{ $index }} }" />
                         <circle cx="{{ $point['x'] }}" cy="{{ $point['appY'] }}" r="4" class="summary-point summary-point--pink" :class="{ 'is-active': (active ?? selected) === {{ $index }} }" />
@@ -41,11 +41,11 @@
                 @endforeach
             </svg>
         </div>
-        <div class="summary-mobile-activity" role="group" aria-label="Activity by period: applications and interviews">
-            <p>Most recent first · applications / interviews</p>
+        <div class="summary-mobile-activity" role="group" aria-label="{{ __('Activity by period: applications and interviews') }}">
+            <p>{{ __('Most recent first · applications / interviews') }}</p>
             <div>
                 @foreach(array_reverse($points, true) as $index => $point)
-                    <button type="button" @click="selected = {{ $index }}" :aria-pressed="selected === {{ $index }}" aria-label="{{ $point['label'] }}: {{ $point['applications'] }} applications, {{ $point['interviews'] }} scheduled interviews">
+                    <button type="button" @click="selected = {{ $index }}" :aria-pressed="selected === {{ $index }}" aria-label="{{ __(':value1: :value2 applications, :value3 scheduled interviews', ['value1' => ($point['label']), 'value2' => ($point['applications']), 'value3' => ($point['interviews'])]) }}">
                         <span>{{ $point['label'] }}</span>
                         <i aria-hidden="true"><span style="width: {{ $point['applications'] / $ceiling * 100 }}%"></span><span style="width: {{ $point['interviews'] / $ceiling * 100 }}%"></span></i>
                         <strong>{{ $point['applications'] }}<small> / {{ $point['interviews'] }}</small></strong>
@@ -54,7 +54,7 @@
             </div>
         </div>
     @else
-        <div class="summary-chart-empty"><h3>No activity in this window.</h3><p>Add an application, or choose a different period to explore your progress.</p><a href="{{ route('tracker') }}" wire:navigate class="job-text-link">Open applications</a></div>
+        <div class="summary-chart-empty"><h3>{{ __('No activity in this window.') }}</h3><p>{{ __('Add an application, or choose a different period to explore your progress.') }}</p><a href="{{ route('tracker') }}" wire:navigate class="job-text-link">{{ __('Open applications') }}</a></div>
     @endif
-    <div class="summary-chart-footer"><p>Applications use the date applied. Interviews use the scheduled date.</p><details class="summary-data-table"><summary>View chart data</summary><div><table><caption class="sr-only">Application activity data</caption><thead><tr><th scope="col">Period</th><th scope="col">Applications</th><th scope="col">Interviews</th></tr></thead><tbody>@foreach($points as $point)<tr><th scope="row">{{ $point['label'] }}</th><td>{{ $point['applications'] }}</td><td>{{ $point['interviews'] }}</td></tr>@endforeach</tbody></table></div></details></div>
+    <div class="summary-chart-footer"><p>{{ __('Applications use the date applied. Interviews use the scheduled date.') }}</p><details class="summary-data-table"><summary>{{ __('View chart data') }}</summary><div><table><caption class="sr-only">{{ __('Application activity data') }}</caption><thead><tr><th scope="col">{{ __('Period') }}</th><th scope="col">{{ __('Applications') }}</th><th scope="col">{{ __('Interviews') }}</th></tr></thead><tbody>@foreach($points as $point)<tr><th scope="row">{{ $point['label'] }}</th><td>{{ $point['applications'] }}</td><td>{{ $point['interviews'] }}</td></tr>@endforeach</tbody></table></div></details></div>
 </section>

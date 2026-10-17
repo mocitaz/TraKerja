@@ -44,7 +44,7 @@ class UserGoal extends Model
                 try {
                     $user = $goal->user;
                     if ($user && $user->wantsEmailNotification('goal_achieved')) {
-                        Mail::to($user->email)->send(new GoalAchievedMail($goal));
+                        Mail::to($user)->send(new GoalAchievedMail($goal));
                     }
                 } catch (\Exception $e) {
                     \Log::error('Failed to send goal achieved email: ' . $e->getMessage());

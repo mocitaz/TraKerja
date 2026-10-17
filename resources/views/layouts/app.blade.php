@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'TraKerja') }}</title>
-        
+
 
 
         <!-- Favicon -->
@@ -23,7 +23,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600|inter:300,400,500,600,700,800,900|plus-jakarta-sans:400,500,600,700,800&display=swap" rel="stylesheet" />
-        
+
         <!-- Icons -->
         <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
@@ -122,7 +122,8 @@
                 }
             }
         </style>
-    </head>
+        @include('partials.locale-config')
+</head>
     <body class="font-sans antialiased bg-[#fafafa] dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200">
         <div class="gemini-ambient-glow" aria-hidden="true"></div>
 
@@ -149,15 +150,15 @@
         @include('components.toast-notification')
         <x-kawankerja-chat />
         @livewireScripts
-        
+
         <div id="confirmation-modal" data-dialog-native="closeConfirmModal" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-message" tabindex="-1" class="account-dialog-overlay hidden" onclick="if (event.target === this) closeConfirmModal()">
             <section class="account-confirm-panel">
-                <button type="button" class="account-dialog-close" onclick="closeConfirmModal()" aria-label="Close confirmation"><i class="ph ph-x" aria-hidden="true"></i></button>
+                <button type="button" class="account-dialog-close" onclick="closeConfirmModal()" aria-label="{{ __('Close confirmation') }}"><i class="ph ph-x" aria-hidden="true"></i></button>
                 <div class="account-confirm-visual" aria-hidden="true"><i class="ph ph-sign-out account-confirm-logout-icon"></i><i class="ph ph-warning account-confirm-action-icon"></i></div>
-                <h2 id="confirm-title">Confirm action</h2>
-                <p id="confirm-message">Review this action before continuing.</p>
+                <h2 id="confirm-title">{{ __('Confirm action') }}</h2>
+                <p id="confirm-message">{{ __('Review this action before continuing.') }}</p>
                 <p id="confirm-error" role="alert" hidden></p>
-                <div class="account-confirm-actions"><button type="button" id="confirm-cancel" class="account-dialog-button" onclick="closeConfirmModal()">Stay here</button><button type="button" id="confirm-button" class="account-dialog-button account-dialog-button--primary">Confirm</button></div>
+                <div class="account-confirm-actions"><button type="button" id="confirm-cancel" class="account-dialog-button" onclick="closeConfirmModal()">{{ __('Stay here') }}</button><button type="button" id="confirm-button" class="account-dialog-button account-dialog-button--primary">{{ __('Confirm') }}</button></div>
             </section>
         </div>
 
@@ -226,7 +227,7 @@
                         submitLogout,
                         { variant: 'logout' }
                     );
-                } else if (confirm('Are you sure you want to sign out?')) {
+                } else if (confirm(@js(__('Are you sure you want to sign out?')))) {
                     await submitLogout();
                 }
             }

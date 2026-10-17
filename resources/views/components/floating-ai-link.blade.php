@@ -9,6 +9,6 @@
          x-show="isVisible()"
          x-on:livewire:navigated.window="$nextTick(() => { $el.style.display = isVisible() ? '' : 'none'; })"
          x-cloak>
-        <a href="{{ route('ai-studio.index') }}" wire:navigate title="TraKerja AI" aria-label="Prepare with TraKerja AI"><x-trakerja-ai-mark /><span>Prepare with AI</span></a>
+        <a href="{{ route('ai-studio.index') }}" wire:navigate title="{{ __('TraKerja AI') }}" aria-label="{{ __('Prepare with TraKerja AI') }}"><x-trakerja-ai-mark /><span>{{ __('Prepare with AI') }}</span></a>
     </div>
 @endif

@@ -220,4 +220,15 @@ class AiAnalyzerCreditTest extends TestCase
         $this->assertTrue(Storage::disk('local')->exists('ai-studio-sources/999/cv.pdf'));
     }
 
+    public function test_recovery_skips_unmigrated_database_without_dispatching_jobs(): void
+    {
+        \Illuminate\Support\Facades\Schema::drop('ai_studio_runs');
+        app(AiStudioProcessingService::class)->recover();
+        Queue::assertNothingPushed();
+        $this->artisan('ai-studio:recover')
+            ->expectsOutputToContain('AI Studio recovery skipped')
+            ->assertSuccessful();
+        Http::assertNothingSent();
+    }
+
 }

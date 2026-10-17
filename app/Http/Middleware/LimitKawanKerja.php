@@ -19,12 +19,12 @@ class LimitKawanKerja
             ['kk:ip:'.hash('sha256', (string)$request->ip()), 30, 60],
         ];
         $lock = Cache::lock('kk:active:'.$user->id, 180);
-        if (!$lock->get()) return response()->json(['success'=>false,'message'=>'A response is still being processed.'],429)->header('Retry-After','3');
+        if (!$lock->get()) return response()->json(['success'=>false,'message'=>__('A response is still being processed.')],429)->header('Retry-After','3');
         try {
             foreach ($keys as [$key,$limit,$seconds]) {
                 if (RateLimiter::tooManyAttempts($key,$limit)) {
                     $lock->release();
-                    return response()->json(['success'=>false,'message'=>'KawanKerja usage limit reached. Try again later.'],429)
+                    return response()->json(['success'=>false,'message'=>__('KawanKerja usage limit reached. Try again later.')],429)
                         ->header('Retry-After',(string)RateLimiter::availableIn($key));
                 }
             }

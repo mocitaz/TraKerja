@@ -43,14 +43,14 @@ class LandingPagePhotoController extends Controller
         if (!Auth::check() || !Auth::user()->isAdmin()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorized. Admin access required.'
+                'message' => __('Unauthorized. Admin access required.')
             ], 403);
         }
 
         try {
             $request->validate([
                 'photo' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // 5MB max
-                'title' => 'nullable|string|max:255',
+                'title' => __('nullable|string|max:255'),
                 'description' => 'nullable|string|max:1000',
                 'order' => 'nullable|integer|min:0',
             ], [
@@ -63,7 +63,7 @@ class LandingPagePhotoController extends Controller
             if (!$request->hasFile('photo')) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'No photo was uploaded.',
+                    'message' => __('No photo was uploaded.'),
                 ], 400);
             }
 
@@ -73,7 +73,7 @@ class LandingPagePhotoController extends Controller
             if ($file->getSize() > 5120 * 1024) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Photo size is too large. Maximum size is 5MB.',
+                    'message' => __('Photo size is too large. Maximum size is 5MB.'),
                 ], 400);
             }
 
@@ -83,7 +83,7 @@ class LandingPagePhotoController extends Controller
             if (!$photoPath) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Failed to store the photo. Please try again.',
+                    'message' => __('Failed to store the photo. Please try again.'),
                 ], 500);
             }
 
@@ -101,7 +101,7 @@ class LandingPagePhotoController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Photo uploaded successfully!',
+                'message' => __('Photo uploaded successfully!'),
                 'photo' => [
                     'id' => $photo->id,
                     'title' => $photo->title,
@@ -114,14 +114,14 @@ class LandingPagePhotoController extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Validation failed: ' . implode(', ', $e->validator->errors()->all()),
+                'message' => __('Validation failed: ') . implode(', ', $e->validator->errors()->all()),
                 'errors' => $e->validator->errors()
             ], 422);
         } catch (\Exception $e) {
             \Log::error('Photo upload error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'An unexpected error occurred: ' . $e->getMessage(),
+                'message' => __('An unexpected error occurred: ') . $e->getMessage(),
             ], 500);
         }
     }
@@ -135,7 +135,7 @@ class LandingPagePhotoController extends Controller
         if (!Auth::check() || !Auth::user()->isAdmin()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorized. Admin access required.'
+                'message' => __('Unauthorized. Admin access required.')
             ], 403);
         }
 
@@ -162,14 +162,14 @@ class LandingPagePhotoController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Photo deleted successfully!'
+                'message' => __('Photo deleted successfully!')
             ]);
 
         } catch (\Exception $e) {
             \Log::error('Photo delete error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete photo: ' . $e->getMessage(),
+                'message' => __('Failed to delete photo: ') . $e->getMessage(),
             ], 500);
         }
     }
@@ -183,7 +183,7 @@ class LandingPagePhotoController extends Controller
         if (!Auth::check() || !Auth::user()->isAdmin()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorized. Admin access required.'
+                'message' => __('Unauthorized. Admin access required.')
             ], 403);
         }
 
@@ -201,14 +201,14 @@ class LandingPagePhotoController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Photo order updated successfully!'
+                'message' => __('Photo order updated successfully!')
             ]);
 
         } catch (\Exception $e) {
             \Log::error('Photo order update error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update photo order: ' . $e->getMessage(),
+                'message' => __('Failed to update photo order: ') . $e->getMessage(),
             ], 500);
         }
     }
@@ -220,11 +220,11 @@ class LandingPagePhotoController extends Controller
     {
         $publicHtmlPath = base_path('public_html/storage/' . $photoPath);
         $publicHtmlDir = dirname($publicHtmlPath);
-        
+
         if (!is_dir($publicHtmlDir)) {
             mkdir($publicHtmlDir, 0755, true);
         }
-        
+
         // Copy file to public_html
         if (file_exists(storage_path('app/public/' . $photoPath))) {
             copy(storage_path('app/public/' . $photoPath), $publicHtmlPath);

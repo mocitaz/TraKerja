@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,10 +40,10 @@
             if (!btn) return;
             if (isDark) {
                 btn.setAttribute('title', 'Mode Gelap aktif (klik untuk ganti ke Mode Terang)');
-                btn.setAttribute('aria-label', 'Mode gelap aktif, klik untuk beralih ke mode terang');
+                btn.setAttribute('aria-label', @js(__('Mode gelap aktif, klik untuk beralih ke mode terang')));
             } else {
                 btn.setAttribute('title', 'Mode Terang aktif (klik untuk ganti ke Mode Gelap)');
-                btn.setAttribute('aria-label', 'Mode terang aktif, klik untuk beralih ke mode gelap');
+                btn.setAttribute('aria-label', @js(__('Mode terang aktif, klik untuk beralih ke mode gelap')));
             }
         }
 
@@ -88,22 +88,23 @@
             }
         });
     </script>
+    @include('partials.locale-config')
 </head>
 <body class="utility-page error-page bg-[#fdfcf9] dark:bg-[#131314] text-[#34313d] dark:text-[#f0f4f9] transition-colors duration-200 relative">
     <div class="gemini-ambient-glow" aria-hidden="true"></div>
     <div class="error-shell">
         <header class="error-brand-header">
-            <a class="error-brand" href="{{ url('/') }}" aria-label="TraKerja home">
+            <a class="error-brand" href="{{ url('/') }}" aria-label="{{ __('TraKerja home') }}">
                 <img src="{{ asset('images/icon.png') }}" alt="" width="28" height="28">
-                <span>TraKerja</span>
+                <span>{{ __('TraKerja') }}</span>
             </a>
             <div class="error-header-actions">
                 <button type="button"
                     id="error-theme-toggle-btn"
                     onclick="toggleErrorTheme()"
                     class="legal-theme-toggle-btn"
-                    title="Beralih tema (Dark/Light)"
-                    aria-label="Beralih mode gelap atau terang">
+                    title="{{ __('Beralih tema (Dark/Light)') }}"
+                    aria-label="{{ __('Beralih mode gelap atau terang') }}">
                     <i class="ph-bold ph-sun legal-icon-sun" aria-hidden="true"></i>
                     <i class="ph-bold ph-moon legal-icon-moon" aria-hidden="true"></i>
                 </button>
@@ -115,27 +116,27 @@
                     @include('errors.partials.workspace-illustration')
                 </div>
                 <div class="error-copy">
-                    <p class="error-status">Error <span class="error-code">@yield('code')</span></p>
+                    <p class="error-status">{{ __('Error') }} <span class="error-code">@yield('code')</span></p>
                     <h1 id="error-title">@yield('title')</h1>
                     <p class="error-description">@yield('description')</p>
                     <p class="error-recovery">@yield('recovery')</p>
                     <div class="error-actions">
                         @if(trim($__env->yieldContent('code')) === '419')
-                            <a class="error-button error-button--primary" href="{{ url('/login') }}">Sign in again <span aria-hidden="true">→</span></a>
+                            <a class="error-button error-button--primary" href="{{ url('/login') }}">{{ __('Sign in again') }} <span aria-hidden="true">→</span></a>
                         @elseif(trim($__env->yieldContent('code')) === '503')
-                            <a class="error-button error-button--primary" href="{{ url()->current() }}">Try again <span aria-hidden="true">→</span></a>
+                            <a class="error-button error-button--primary" href="{{ url()->current() }}">{{ __('Try again') }} <span aria-hidden="true">→</span></a>
                         @else
-                            <a class="error-button error-button--primary" href="{{ url('/') }}">Back to home <span aria-hidden="true">→</span></a>
+                            <a class="error-button error-button--primary" href="{{ url('/') }}">{{ __('Back to home') }} <span aria-hidden="true">→</span></a>
                         @endif
-                        <a class="error-support" href="mailto:trakerja@teknalogi.id">Contact support <span aria-hidden="true">↗</span></a>
+                        <a class="error-support" href="mailto:trakerja@teknalogi.id">{{ __('Contact support') }} <span aria-hidden="true">↗</span></a>
                     </div>
                     <p class="error-support-note">When contacting support, include error @yield('code') and the page address.</p>
                 </div>
             </section>
         </main>
         <footer class="error-footer">
-            <div><p>© {{ now()->year }} TraKerja. All rights reserved.</p><p>PT Teknalogi Transformasi Digital</p></div>
-            <nav aria-label="Legal"><a href="{{ url('/privacy-policy') }}">Privacy</a><a href="{{ url('/terms-of-service') }}">Terms</a></nav>
+            <div><p>{{ __('© :value1 TraKerja. All rights reserved.', ['value1' => (now()->year)]) }}</p><p>{{ __('PT Teknalogi Transformasi Digital') }}</p></div>
+            <nav aria-label="{{ __('Legal') }}"><a href="{{ url('/privacy-policy') }}">{{ __('Privacy') }}</a><a href="{{ url('/terms-of-service') }}">{{ __('Terms') }}</a></nav>
         </footer>
     </div>
 </body>

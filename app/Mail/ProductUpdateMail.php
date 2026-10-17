@@ -27,7 +27,7 @@ class ProductUpdateMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Pembaruan Besar TraKerja: Transformasi Pengalaman Karier Anda',
+            subject: __('Pembaruan Besar TraKerja: Transformasi Pengalaman Karier Anda'),
         );
     }
 

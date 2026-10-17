@@ -26,7 +26,7 @@ class EmailVerificationReminderMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '⚠️ Verifikasi Email Anda - TraKerja',
+            subject: __('⚠️ Verifikasi Email Anda - TraKerja'),
         );
     }
 

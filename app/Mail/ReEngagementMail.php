@@ -29,7 +29,7 @@ class ReEngagementMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Kami Merindukanmu, ' . $this->user->name . ' — Yuk Kembali ke TraKerja!',
+            subject: __('Kami Merindukanmu, ') . $this->user->name . ' — Yuk Kembali ke TraKerja!',
         );
     }
 

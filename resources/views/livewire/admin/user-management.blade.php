@@ -2,18 +2,18 @@
     <!-- Header -->
     <section class="admin-welcome">
         <div>
-            <h1>User Management</h1>
-            <p>Review and manage members, track job applications, login activity, and permissions in one workspace.</p>
+            <h1>{{ __('User Management') }}</h1>
+            <p>{{ __('Review and manage members, track job applications, login activity, and permissions in one workspace.') }}</p>
         </div>
         <div class="au-header-actions">
             <button type="button" wire:click="exportUsers" wire:loading.attr="disabled" wire:target="exportUsers" class="au-button">
                 <i class="ph ph-download-simple" aria-hidden="true"></i>
-                <span wire:loading.remove wire:target="exportUsers">Export CSV</span>
-                <span wire:loading wire:target="exportUsers">Preparing…</span>
+                <span wire:loading.remove wire:target="exportUsers">{{ __('Export CSV') }}</span>
+                <span wire:loading wire:target="exportUsers">{{ __('Preparing…') }}</span>
             </button>
             <button type="button" wire:click="openCreateAdminModal" class="au-button au-button--primary">
                 <i class="ph ph-user-plus" aria-hidden="true"></i>
-                Add Administrator
+                {{ __('Add Administrator') }}
             </button>
         </div>
     </section>
@@ -23,55 +23,55 @@
         <div class="au-directory-heading">
             <div>
                 <h2 id="member-directory-heading">
-                    Members Directory <span>{{ number_format($users->total()) }}</span>
+                    {{ __('Members Directory') }} <span>{{ number_format($users->total()) }}</span>
                 </h2>
-                <p>All registered TraKerja user accounts with application and activity logs</p>
+                <p>{{ __('All registered TraKerja user accounts with application and activity logs') }}</p>
             </div>
             <span class="au-loading" wire:loading wire:target="search,filterPremium,filterAiAnalyzer,perPage,gotoPage,nextPage,previousPage">
-                <i class="ph ph-spinner ph-spin"></i> Updating data…
+                <i class="ph ph-spinner ph-spin"></i> {{ __('Updating data…') }}
             </span>
         </div>
 
         <!-- Filters Toolbar -->
         <div class="au-filters">
             <label class="au-search">
-                <span class="sr-only">Search members</span>
+                <span class="sr-only">{{ __('Search members') }}</span>
                 <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
-                <input type="search" wire:model.live.debounce.300ms="search" placeholder="Search members by name, email, or ID…">
+                <input type="search" wire:model.live.debounce.300ms="search" placeholder="{{ __('Search members by name, email, or ID…') }}">
             </label>
             <label>
-                <span class="sr-only">Plan filter</span>
+                <span class="sr-only">{{ __('Plan filter') }}</span>
                 <select wire:model.live="filterPremium">
-                    <option value="all">All Plans</option>
-                    <option value="premium">Premium Members</option>
-                    <option value="free">Free Members</option>
+                    <option value="all">{{ __('All Plans') }}</option>
+                    <option value="premium">{{ __('Premium Members') }}</option>
+                    <option value="free">{{ __('Free Members') }}</option>
                 </select>
             </label>
             <label>
-                <span class="sr-only">AI trial filter</span>
+                <span class="sr-only">{{ __('AI trial filter') }}</span>
                 <select wire:model.live="filterAiAnalyzer">
-                    <option value="all">All AI Status</option>
-                    <option value="used">AI Trial Used</option>
-                    <option value="not_used">AI Trial Unused</option>
+                    <option value="all">{{ __('All AI Status') }}</option>
+                    <option value="used">{{ __('AI Trial Used') }}</option>
+                    <option value="not_used">{{ __('AI Trial Unused') }}</option>
                 </select>
             </label>
             <label class="au-page-size">
-                <span class="sr-only">Rows per page</span>
+                <span class="sr-only">{{ __('Rows per page') }}</span>
                 <select wire:model.live="perPage">
                     @foreach([10, 20, 50, 100] as $size)
-                        <option value="{{ $size }}">{{ $size }} rows</option>
+                        <option value="{{ $size }}">{{ __(':value1 rows', ['value1' => ($size)]) }}</option>
                     @endforeach
                 </select>
             </label>
             @if($search !== '' || $filterPremium !== 'all' || $filterAiAnalyzer !== 'all')
                 <button type="button" wire:click="resetFilters" class="au-clear">
-                    Reset filters <i class="ph ph-x" aria-hidden="true"></i>
+                    {{ __('Reset filters') }} <i class="ph ph-x" aria-hidden="true"></i>
                 </button>
             @endif
         </div>
 
         <!-- Table -->
-        <div class="au-table-scroll" tabindex="0" aria-label="Members Directory Table">
+        <div class="au-table-scroll" tabindex="0" aria-label="{{ __('Members Directory Table') }}">
             <table class="au-table">
                 <colgroup>
                     <col style="width: 28%;">
@@ -82,11 +82,11 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th scope="col">Member</th>
-                        <th scope="col" class="text-center">Membership Plan</th>
-                        <th scope="col" class="text-center">Job Applications</th>
-                        <th scope="col" class="text-center">Joined Date</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col">{{ __('Member') }}</th>
+                        <th scope="col" class="text-center">{{ __('Membership Plan') }}</th>
+                        <th scope="col" class="text-center">{{ __('Job Applications') }}</th>
+                        <th scope="col" class="text-center">{{ __('Joined Date') }}</th>
+                        <th scope="col">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,11 +95,11 @@
                             <!-- Column 1: Member Info -->
                             <td>
                                 <div class="au-member">
-                                    <a href="{{ route('admin.users.show', $user) }}" wire:navigate class="au-avatar-wrapper au-member-avatar-link" title="View {{ $user->name }} profile">
+                                    <a href="{{ route('admin.users.show', $user) }}" wire:navigate class="au-avatar-wrapper au-member-avatar-link" title="{{ __('View :value1 profile', ['value1' => ($user->name)]) }}">
                                         <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="au-avatar-img" loading="lazy">
                                     </a>
                                     <div class="au-member-info">
-                                        <a href="{{ route('admin.users.show', $user) }}" wire:navigate class="au-member-name au-member-name-link" title="View {{ $user->name }} profile">
+                                        <a href="{{ route('admin.users.show', $user) }}" wire:navigate class="au-member-name au-member-name-link" title="{{ __('View :value1 profile', ['value1' => ($user->name)]) }}">
                                             {{ $user->name }}
                                         </a>
                                         <span class="au-member-email">{{ $user->email }}</span>
@@ -112,19 +112,19 @@
                                 <div class="au-plan-container">
                                     @if($user->isPremium())
                                         <span class="au-plan-badge au-plan-badge--premium">
-                                            <i class="ph ph-crown-simple"></i> Premium
+                                            <i class="ph ph-crown-simple"></i> {{ __('Premium') }}
                                         </span>
                                         @if($user->premium_until)
-                                            <span class="au-plan-sub">Until {{ $user->premium_until->format('d M Y') }}</span>
+                                            <span class="au-plan-sub">{{ __('Until :value1', ['value1' => ($user->premium_until->locale(app()->getLocale())->translatedFormat('d M Y'))]) }}</span>
                                         @else
-                                            <span class="au-plan-sub">Active access</span>
+                                            <span class="au-plan-sub">{{ __('Active access') }}</span>
                                         @endif
                                     @else
                                         <span class="au-plan-badge au-plan-badge--free">
-                                            <i class="ph ph-user"></i> Free
+                                            <i class="ph ph-user"></i> {{ __('Free') }}
                                         </span>
                                         @if($user->has_used_ai_analyzer_trial)
-                                            <span class="au-plan-sub">AI trial used</span>
+                                            <span class="au-plan-sub">{{ __('AI trial used') }}</span>
                                         @endif
                                     @endif
                                 </div>
@@ -133,13 +133,13 @@
                             <!-- Column 3: Applications Activity (Applied & Declined) -->
                             <td class="text-center">
                                 <div class="au-app-stats">
-                                    <span class="au-chip au-chip--applied" title="Total jobs applied">
+                                    <span class="au-chip au-chip--applied" title="{{ __('Total jobs applied') }}">
                                         <i class="ph ph-paper-plane-tilt"></i>
-                                        <strong>{{ number_format($user->applied_count) }}</strong> applied
+                                        <strong>{{ number_format($user->applied_count) }}</strong> {{ __('applied') }}
                                     </span>
-                                    <span class="au-chip {{ $user->declined_count > 0 ? 'au-chip--declined' : 'au-chip--empty' }}" title="Total applications declined">
+                                    <span class="au-chip {{ $user->declined_count > 0 ? 'au-chip--declined' : 'au-chip--empty' }}" title="{{ __('Total applications declined') }}">
                                         <i class="ph ph-x-circle"></i>
-                                        <strong>{{ number_format($user->declined_count) }}</strong> declined
+                                        <strong>{{ number_format($user->declined_count) }}</strong> {{ __('declined') }}
                                     </span>
                                 </div>
                             </td>
@@ -147,20 +147,20 @@
                             <!-- Column 4: Joined Date -->
                             <td class="text-center">
                                 <div class="au-joined au-joined--center">
-                                    <strong class="au-joined-date">{{ $user->created_at->format('d M Y') }}</strong>
-                                    <small class="au-joined-sub">{{ $user->created_at->format('H:i') }} WIB</small>
+                                    <strong class="au-joined-date">{{ $user->created_at->locale(app()->getLocale())->translatedFormat('d M Y') }}</strong>
+                                    <small class="au-joined-sub">{{ __(':value1 WIB', ['value1' => ($user->created_at->format('H:i'))]) }}</small>
                                 </div>
                             </td>
 
                             <!-- Column 5: Manage Access Actions -->
                             <td>
                                 <div class="au-row-actions" x-data="{ open: false, left: 0, top: 0 }">
-                                    <a href="{{ route('admin.users.show', $user) }}" class="au-manage" aria-label="Manage {{ $user->name }}" wire:navigate>
-                                        Manage <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+                                    <a href="{{ route('admin.users.show', $user) }}" class="au-manage" aria-label="{{ __('Manage :value1', ['value1' => ($user->name)]) }}" wire:navigate>
+                                        {{ __('Manage') }} <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
                                     </a>
                                     <button type="button" class="au-more" x-ref="more"
                                         @click="const rect = $el.getBoundingClientRect(); left = Math.max(12, Math.min(rect.right - 220, window.innerWidth - 232)); top = Math.max(12, Math.min(rect.bottom + 8, window.innerHeight - 200)); open = !open; if(open) $nextTick(() => $refs.firstAction.focus())"
-                                        :aria-expanded="open.toString()" aria-controls="member-actions-{{ $user->id }}" aria-label="Action menu for {{ $user->name }}">
+                                        :aria-expanded="open.toString()" aria-controls="member-actions-{{ $user->id }}" aria-label="{{ __('Action menu for :value1', ['value1' => ($user->name)]) }}">
                                         <i class="ph ph-dots-three" aria-hidden="true"></i>
                                     </button>
 
@@ -169,23 +169,23 @@
                                         <div id="member-actions-{{ $user->id }}" class="au-action-menu" x-cloak x-show="open"
                                             x-transition.opacity.duration.120ms :style="`left: ${left}px; top: ${top}px`"
                                             @click.outside="open = false" @keydown.escape.stop="open = false; $refs.more.focus()"
-                                            @scroll.window="open = false" @resize.window="open = false" role="region" aria-label="Quick actions for {{ $user->name }}">
+                                            @scroll.window="open = false" @resize.window="open = false" role="region" aria-label="{{ __('Quick actions for :value1', ['value1' => ($user->name)]) }}">
                                             <p>{{ $user->name }}</p>
                                             <a href="{{ route('admin.users.show', $user) }}" wire:navigate x-ref="firstAction" class="au-action-menu-link">
                                                 <i class="ph ph-user-circle" aria-hidden="true"></i>
-                                                View & Manage Profile
+                                                {{ __('View & Manage Profile') }}
                                             </a>
                                             <button type="button" @click="open = false" wire:click="openPremiumConfirmModal({{ $user->id }})">
                                                 <i class="ph ph-crown" aria-hidden="true"></i>
-                                                {{ $user->is_premium ? 'Revoke Premium Access' : 'Grant Premium Access' }}
+                                                {{ $user->is_premium ? __('Revoke Premium Access') : __('Grant Premium Access') }}
                                             </button>
                                             <button type="button" @click="open = false" wire:click="openSendEmailModal({{ $user->id }})">
                                                 <i class="ph ph-paper-plane-tilt" aria-hidden="true"></i>
-                                                Send Email
+                                                {{ __('Send Email') }}
                                             </button>
                                             <button type="button" @click="open = false" wire:click="confirmDeleteUserModal({{ $user->id }})" class="au-danger">
                                                 <i class="ph ph-trash" aria-hidden="true"></i>
-                                                Delete Account
+                                                {{ __('Delete Account') }}
                                             </button>
                                         </div>
                                     </template>
@@ -197,11 +197,11 @@
                             <td colspan="5">
                                 <div class="au-empty">
                                     <div class="au-empty-icon"><i class="ph ph-users"></i></div>
-                                    <h3>No members found</h3>
-                                    <p>{{ $search !== '' || $filterPremium !== 'all' || $filterAiAnalyzer !== 'all' ? 'Try adjusting your search query or reset your active filters.' : 'New members will appear here once they register.' }}</p>
+                                    <h3>{{ __('No members found') }}</h3>
+                                    <p>{{ $search !== '' || $filterPremium !== 'all' || $filterAiAnalyzer !== 'all' ? __('Try adjusting your search query or reset your active filters.') : __('New members will appear here once they register.') }}</p>
                                     @if($search !== '' || $filterPremium !== 'all' || $filterAiAnalyzer !== 'all')
                                         <button type="button" wire:click="resetFilters" class="au-button" style="margin-top: 14px;">
-                                            Reset All Filters
+                                            {{ __('Reset All Filters') }}
                                         </button>
                                     @endif
                                 </div>
@@ -214,7 +214,7 @@
 
         <!-- Footer -->
         <footer class="au-directory-footer">
-            <span>Showing <strong>{{ $users->firstItem() ?? 0 }}–{{ $users->lastItem() ?? 0 }}</strong> of {{ number_format($users->total()) }} members</span>
+            <span>{{ __('Showing') }} <strong>{{ $users->firstItem() ?? 0 }}–{{ $users->lastItem() ?? 0 }}</strong> {{ __('of :value1 members', ['value1' => (number_format($users->total()))]) }}</span>
             <div class="au-pagination-wrap">{{ $users->links() }}</div>
         </footer>
     </section>
@@ -228,10 +228,10 @@
                 <section class="au-dialog">
                     <header class="au-dialog-heading">
                         <div>
-                            <h2 id="showEditModal-title">Manage account</h2>
-                            <p>Profile details, membership privileges, and AI credit quotas.</p>
+                            <h2 id="showEditModal-title">{{ __('Manage account') }}</h2>
+                            <p>{{ __('Profile details, membership privileges, and AI credit quotas.') }}</p>
                         </div>
-                        <button type="button" wire:click="closeModal" class="au-dialog-close" aria-label="Close dialog">
+                        <button type="button" wire:click="closeModal" class="au-dialog-close" aria-label="{{ __('Close dialog') }}">
                             <i class="ph ph-x" aria-hidden="true"></i>
                         </button>
                     </header>
@@ -246,55 +246,55 @@
                                 </div>
                                 <div style="display: flex; gap: 6px;">
                                     <span class="au-plan-badge {{ $editingUser->isAdmin() ? 'au-plan-badge--premium' : 'au-plan-badge--free' }}">
-                                        {{ $editingUser->isAdmin() ? 'Admin' : 'Member' }}
+                                        {{ $editingUser->isAdmin() ? __('Admin') : __('Member') }}
                                     </span>
                                     <span class="au-plan-badge {{ $editingUser->isPremium() ? 'au-plan-badge--premium' : 'au-plan-badge--free' }}">
-                                        {{ $editingUser->isPremium() ? 'Premium' : 'Free' }}
+                                        {{ $editingUser->isPremium() ? __('Premium') : __('Free') }}
                                     </span>
                                 </div>
                             </div>
                         @endif
 
                         <form wire:submit="updateUser" class="au-form au-form-section">
-                            <h3>Account & Access Information</h3>
+                            <h3>{{ __('Account & Access Information') }}</h3>
                             <label for="edit-member-name">
-                                Full Name
-                                <input id="edit-member-name" type="text" wire:model="editName" required placeholder="Member full name…">
+                                {{ __('Full Name') }}
+                                <input id="edit-member-name" type="text" wire:model="editName" required placeholder="{{ __('Member full name…') }}">
                                 @error('editName')<span class="au-field-error">{{ $message }}</span>@enderror
                             </label>
                             <label for="edit-member-email">
-                                Email Address
+                                {{ __('Email Address') }}
                                 <input id="edit-member-email" type="email" wire:model="editEmail" required placeholder="member@email.com">
                                 @error('editEmail')<span class="au-field-error">{{ $message }}</span>@enderror
                             </label>
                             <div class="au-form-actions">
                                 <button type="submit" class="au-button au-button--primary" wire:loading.attr="disabled" wire:target="updateUser">
-                                    <span wire:loading.remove wire:target="updateUser">Save Account Changes</span>
-                                    <span wire:loading wire:target="updateUser">Saving…</span>
+                                    <span wire:loading.remove wire:target="updateUser">{{ __('Save Account Changes') }}</span>
+                                    <span wire:loading wire:target="updateUser">{{ __('Saving…') }}</span>
                                 </button>
                             </div>
                         </form>
 
                         <form wire:submit="saveAiQuotas" class="au-form au-form-section" style="margin-top: 18px;">
-                            <h3>AI Feature Quota Credits</h3>
+                            <h3>{{ __('AI Feature Quota Credits') }}</h3>
                             <div class="au-quota-grid">
                                 <div class="au-quota-tile">
                                     <label for="credit-editAiCredits">
-                                        Analyze CV
+                                        {{ __('Analyze CV') }}
                                         <input id="credit-editAiCredits" type="number" wire:model="editAiCredits" min="0" step="1" required>
                                         @error('editAiCredits')<span class="au-field-error">{{ $message }}</span>@enderror
                                     </label>
                                 </div>
                                 <div class="au-quota-tile">
                                     <label for="credit-editClCredits">
-                                        Cover Letter
+                                        {{ __('Cover Letter') }}
                                         <input id="credit-editClCredits" type="number" wire:model="editClCredits" min="0" step="1" required>
                                         @error('editClCredits')<span class="au-field-error">{{ $message }}</span>@enderror
                                     </label>
                                 </div>
                                 <div class="au-quota-tile">
                                     <label for="credit-editPhotoCredits">
-                                        AI Photo Studio
+                                        {{ __('AI Photo Studio') }}
                                         <input id="credit-editPhotoCredits" type="number" wire:model="editPhotoCredits" min="0" step="1" required>
                                         @error('editPhotoCredits')<span class="au-field-error">{{ $message }}</span>@enderror
                                     </label>
@@ -302,8 +302,8 @@
                             </div>
                             <div class="au-form-actions">
                                 <button type="submit" class="au-button au-button--primary" wire:loading.attr="disabled" wire:target="saveAiQuotas">
-                                    <span wire:loading.remove wire:target="saveAiQuotas">Save AI Quotas</span>
-                                    <span wire:loading wire:target="saveAiQuotas">Saving…</span>
+                                    <span wire:loading.remove wire:target="saveAiQuotas">{{ __('Save AI Quotas') }}</span>
+                                    <span wire:loading wire:target="saveAiQuotas">{{ __('Saving…') }}</span>
                                 </button>
                             </div>
                         </form>
@@ -322,41 +322,41 @@
                 <section class="au-dialog">
                     <header class="au-dialog-heading">
                         <div>
-                            <h2 id="showCreateAdminModal-title">Add Administrator</h2>
-                            <p>Create a new administrator account with full platform management privileges.</p>
+                            <h2 id="showCreateAdminModal-title">{{ __('Add Administrator') }}</h2>
+                            <p>{{ __('Create a new administrator account with full platform management privileges.') }}</p>
                         </div>
-                        <button type="button" wire:click="closeCreateAdminModal" class="au-dialog-close" aria-label="Close dialog">
+                        <button type="button" wire:click="closeCreateAdminModal" class="au-dialog-close" aria-label="{{ __('Close dialog') }}">
                             <i class="ph ph-x" aria-hidden="true"></i>
                         </button>
                     </header>
                     <div class="au-dialog-body">
                         <form wire:submit="createAdmin" class="au-form">
                             <label for="admin-name">
-                                Full Name
-                                <input id="admin-name" type="text" wire:model="newAdminName" required placeholder="Administrator full name…">
+                                {{ __('Full Name') }}
+                                <input id="admin-name" type="text" wire:model="newAdminName" required placeholder="{{ __('Administrator full name…') }}">
                                 @error('newAdminName')<span class="au-field-error">{{ $message }}</span>@enderror
                             </label>
                             <label for="admin-email">
-                                Email Address
+                                {{ __('Email Address') }}
                                 <input id="admin-email" type="email" wire:model="newAdminEmail" required placeholder="admin@trakerja.com">
                                 @error('newAdminEmail')<span class="au-field-error">{{ $message }}</span>@enderror
                             </label>
                             <label for="admin-password">
-                                Password
-                                <input id="admin-password" type="password" wire:model="newAdminPassword" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters…">
+                                {{ __('Password') }}
+                                <input id="admin-password" type="password" wire:model="newAdminPassword" required minlength="8" autocomplete="new-password" placeholder="{{ __('At least 8 characters…') }}">
                                 @error('newAdminPassword')<span class="au-field-error">{{ $message }}</span>@enderror
                             </label>
                             <label for="admin-password-confirmation">
-                                Confirm Password
-                                <input id="admin-password-confirmation" type="password" wire:model="newAdminPasswordConfirmation" required minlength="8" autocomplete="new-password" placeholder="Re-type password…">
+                                {{ __('Confirm Password') }}
+                                <input id="admin-password-confirmation" type="password" wire:model="newAdminPasswordConfirmation" required minlength="8" autocomplete="new-password" placeholder="{{ __('Re-type password…') }}">
                                 @error('newAdminPasswordConfirmation')<span class="au-field-error">{{ $message }}</span>@enderror
                             </label>
 
                             <div class="au-dialog-actions">
-                                <button type="button" wire:click="closeCreateAdminModal" class="au-button">Cancel</button>
+                                <button type="button" wire:click="closeCreateAdminModal" class="au-button">{{ __('Cancel') }}</button>
                                 <button type="submit" wire:loading.attr="disabled" wire:target="createAdmin" class="au-button au-button--primary">
-                                    <span wire:loading.remove wire:target="createAdmin">Create Administrator</span>
-                                    <span wire:loading wire:target="createAdmin">Creating…</span>
+                                    <span wire:loading.remove wire:target="createAdmin">{{ __('Create Administrator') }}</span>
+                                    <span wire:loading wire:target="createAdmin">{{ __('Creating…') }}</span>
                                 </button>
                             </div>
                         </form>
@@ -375,10 +375,10 @@
                 <section class="au-dialog au-dialog--small">
                     <header class="au-dialog-heading">
                         <div>
-                            <h2 id="showSendEmailModal-title">Send Email to Member</h2>
-                            <p>Choose an automated email template to dispatch directly to the user's inbox.</p>
+                            <h2 id="showSendEmailModal-title">{{ __('Send Email to Member') }}</h2>
+                            <p>{{ __('Choose an automated email template to dispatch directly to the user\'s inbox.') }}</p>
                         </div>
-                        <button type="button" wire:click="closeSendEmailModal" class="au-dialog-close" aria-label="Close dialog">
+                        <button type="button" wire:click="closeSendEmailModal" class="au-dialog-close" aria-label="{{ __('Close dialog') }}">
                             <i class="ph ph-x" aria-hidden="true"></i>
                         </button>
                     </header>
@@ -389,7 +389,7 @@
                         </div>
                         <form wire:submit="sendEmail" class="au-form">
                             <label for="member-email-type">
-                                Message Template
+                                {{ __('Message Template') }}
                                 <select id="member-email-type" wire:model.live="emailType">
                                     @foreach([
                                         'welcome'=>'Welcome Email',
@@ -411,17 +411,17 @@
                                         'natal'=>'Christmas Greeting',
                                         'tahun_baru_islam'=>'Islamic New Year Greeting'
                                     ] as $type => $label)
-                                        <option value="{{ $type }}">{{ $label }}</option>
+                                        <option value="{{ $type }}">{{ __($label) }}</option>
                                     @endforeach
                                 </select>
                                 @error('emailType')<span class="au-field-error">{{ $message }}</span>@enderror
                             </label>
-                            <p class="au-form-hint">Email will be delivered immediately via the TraKerja mail system to the recipient above.</p>
+                            <p class="au-form-hint">{{ __('Email will be delivered immediately via the TraKerja mail system to the recipient above.') }}</p>
                             <div class="au-dialog-actions">
-                                <button type="button" wire:click="closeSendEmailModal" class="au-button">Cancel</button>
+                                <button type="button" wire:click="closeSendEmailModal" class="au-button">{{ __('Cancel') }}</button>
                                 <button type="submit" wire:loading.attr="disabled" wire:target="sendEmail" class="au-button au-button--primary">
-                                    <span wire:loading.remove wire:target="sendEmail">Send Email Now</span>
-                                    <span wire:loading wire:target="sendEmail">Sending…</span>
+                                    <span wire:loading.remove wire:target="sendEmail">{{ __('Send Email Now') }}</span>
+                                    <span wire:loading wire:target="sendEmail">{{ __('Sending…') }}</span>
                                 </button>
                             </div>
                         </form>
@@ -441,11 +441,11 @@
                     <header class="au-dialog-heading">
                         <div>
                             <h2 id="showPremiumConfirmModal-title">
-                                {{ $confirmTargetUserIsPremium ? 'Revoke premium access?' : 'Grant premium access?' }}
+                                {{ $confirmTargetUserIsPremium ? __('Revoke premium access?') : __('Grant premium access?') }}
                             </h2>
-                            <p>Confirm the membership tier change for this user account.</p>
+                            <p>{{ __('Confirm the membership tier change for this user account.') }}</p>
                         </div>
-                        <button type="button" wire:click="closePremiumConfirmModal" class="au-dialog-close" aria-label="Close dialog">
+                        <button type="button" wire:click="closePremiumConfirmModal" class="au-dialog-close" aria-label="{{ __('Close dialog') }}">
                             <i class="ph ph-x" aria-hidden="true"></i>
                         </button>
                     </header>
@@ -453,16 +453,16 @@
                         <div class="au-recipient au-recipient--warning">
                             <strong>{{ $confirmTargetUserName }}</strong>
                             <span>
-                                {{ $confirmTargetUserIsPremium 
-                                    ? 'Premium access will be deactivated. Exclusive AI features and priority quotas will return to standard free tier.' 
-                                    : 'Premium access will be activated for ' . config('pakasir.premium_duration_days', 365) . ' days with maximized AI feature quotas.' }}
+                                {{ $confirmTargetUserIsPremium
+                                    ? __('Premium access will be deactivated. Exclusive AI features and priority quotas will return to standard free tier.')
+                                    : __('Premium access will be activated for ') . config('pakasir.premium_duration_days', 365) . __(' days with maximized AI feature quotas.') }}
                             </span>
                         </div>
                         <div class="au-dialog-actions">
-                            <button type="button" wire:click="closePremiumConfirmModal" class="au-button">Cancel</button>
+                            <button type="button" wire:click="closePremiumConfirmModal" class="au-button">{{ __('Cancel') }}</button>
                             <button type="button" wire:click="toggleManualPremium" wire:loading.attr="disabled" wire:target="toggleManualPremium" class="au-button au-button--primary">
-                                <span wire:loading.remove wire:target="toggleManualPremium">{{ $confirmTargetUserIsPremium ? 'Yes, Revoke Premium' : 'Yes, Grant Premium' }}</span>
-                                <span wire:loading wire:target="toggleManualPremium">Processing…</span>
+                                <span wire:loading.remove wire:target="toggleManualPremium">{{ $confirmTargetUserIsPremium ? __('Yes, Revoke Premium') : __('Yes, Grant Premium') }}</span>
+                                <span wire:loading wire:target="toggleManualPremium">{{ __('Processing…') }}</span>
                             </button>
                         </div>
                     </div>
@@ -480,23 +480,23 @@
                 <section class="au-dialog au-dialog--small">
                     <header class="au-dialog-heading">
                         <div>
-                            <h2 id="showDeleteConfirmModal-title" style="color: #ef4444;">Delete this account?</h2>
-                            <p>This action is irreversible and will delete all user data permanently.</p>
+                            <h2 id="showDeleteConfirmModal-title" style="color: #ef4444;">{{ __('Delete this account?') }}</h2>
+                            <p>{{ __('This action is irreversible and will delete all user data permanently.') }}</p>
                         </div>
-                        <button type="button" wire:click="closeDeleteConfirmModal" class="au-dialog-close" aria-label="Close dialog">
+                        <button type="button" wire:click="closeDeleteConfirmModal" class="au-dialog-close" aria-label="{{ __('Close dialog') }}">
                             <i class="ph ph-x" aria-hidden="true"></i>
                         </button>
                     </header>
                     <div class="au-dialog-body">
                         <div class="au-recipient au-recipient--danger">
                             <strong>{{ $deleteTargetUserName }}</strong>
-                            <span>All account data, tracked job applications, activity records, and resumes will be permanently purged from the database.</span>
+                            <span>{{ __('All account data, tracked job applications, activity records, and resumes will be permanently purged from the database.') }}</span>
                         </div>
                         <div class="au-dialog-actions">
-                            <button type="button" wire:click="closeDeleteConfirmModal" class="au-button">Cancel, Keep Account</button>
+                            <button type="button" wire:click="closeDeleteConfirmModal" class="au-button">{{ __('Cancel, Keep Account') }}</button>
                             <button type="button" wire:click="performDelete" wire:loading.attr="disabled" wire:target="performDelete" class="au-button au-button--danger">
-                                <span wire:loading.remove wire:target="performDelete">Permanently Delete</span>
-                                <span wire:loading wire:target="performDelete">Deleting…</span>
+                                <span wire:loading.remove wire:target="performDelete">{{ __('Permanently Delete') }}</span>
+                                <span wire:loading wire:target="performDelete">{{ __('Deleting…') }}</span>
                             </button>
                         </div>
                     </div>

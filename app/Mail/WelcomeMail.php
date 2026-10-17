@@ -26,7 +26,7 @@ class WelcomeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Siap Wujudkan Karier Impian Anda? Mari Mulai di TraKerja!',
+            subject: __('Siap Wujudkan Karier Impian Anda? Mari Mulai di TraKerja!'),
         );
     }
 

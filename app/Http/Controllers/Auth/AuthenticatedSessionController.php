@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
             $user = \App\Models\User::where('email', $request->email)->first();
             if ($user && is_null($user->password)) {
                 return redirect()->route('login')
-                    ->withErrors(['email' => 'Akun ini terdaftar via Google. Silakan login dengan tombol "Continue with Google".']);
+                    ->withErrors(['email' => __('Akun ini terdaftar via Google. Silakan login dengan tombol "Continue with Google".')]);
             }
 
             $request->authenticate();
@@ -57,9 +57,9 @@ class AuthenticatedSessionController extends Controller
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
-            
+
             return redirect()->route('login')
-                ->withErrors(['email' => 'Terjadi kesalahan saat login. Silakan coba lagi atau hubungi support jika masalah berlanjut.']);
+                ->withErrors(['email' => __('Terjadi kesalahan saat login. Silakan coba lagi atau hubungi support jika masalah berlanjut.')]);
         }
     }
 

@@ -6,14 +6,14 @@
                 <i class="ph ph-briefcase text-base"></i>
             </div>
             <div>
-                <h3 class="text-[13px] font-bold text-zinc-800 tracking-tight uppercase tracking-wider">Work Experience</h3>
-                <p class="text-[11px] text-zinc-400 font-medium leading-none mt-0.5">Add your professional work history</p>
+                <h3 class="text-[13px] font-bold text-zinc-800 tracking-tight uppercase tracking-wider">{{ __('Work Experience') }}</h3>
+                <p class="text-[11px] text-zinc-400 font-medium leading-none mt-0.5">{{ __('Add your professional work history') }}</p>
             </div>
         </div>
         <button wire:click="openModal"
                 class="w-full md:w-auto px-4 py-1.5 bg-primary-50 text-zinc-800 border border-primary-200/60 rounded-md font-bold text-[11px] uppercase tracking-wider hover:bg-primary-100 transition-colors shadow-3xs flex items-center justify-center gap-1.5 focus:outline-none shrink-0">
             <i class="ph ph-plus text-[13px]"></i>
-            Add Experience
+            {{ __('Add Experience') }}
         </button>
     </div>
 
@@ -32,7 +32,7 @@
                             <div class="flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5 leading-none">
                                 <span class="text-[11px] font-black text-primary-600 /* [BRAND_PRIMARY] */ uppercase tracking-wider bg-primary-50 px-1.5 py-0.5 rounded">{{ $experience->employment_type }}</span>
                                 <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">
-                                    {{ $experience->start_date?->format('M Y') }} - {{ $experience->is_current ? 'PRESENT' : $experience->end_date?->format('M Y') }}
+                                    {{ $experience->start_date?->locale(app()->getLocale())->translatedFormat('M Y') }} - {{ $experience->is_current ? __('PRESENT') : $experience->end_date?->locale(app()->getLocale())->translatedFormat('M Y') }}
                                 </span>
                                 @if($experience->location)
                                     <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1">
@@ -46,17 +46,17 @@
                     <!-- Actions -->
                     <div class="flex items-center gap-2 md:opacity-100 group-hover:opacity-100 transition-opacity">
                         <div class="flex bg-zinc-50 p-0.5 rounded border border-zinc-200/60 shadow-3xs">
-                            <button aria-label="Move entry up" wire:click="moveUp({{ $experience->id }})" class="w-6 h-6 flex items-center justify-center text-zinc-400 hover:text-zinc-700 rounded transition-colors focus:outline-none">
+                            <button aria-label="{{ __('Move entry up') }}" wire:click="moveUp({{ $experience->id }})" class="w-6 h-6 flex items-center justify-center text-zinc-400 hover:text-zinc-700 rounded transition-colors focus:outline-none">
                                 <i class="ph ph-caret-up"></i>
                             </button>
-                            <button aria-label="Move entry down" wire:click="moveDown({{ $experience->id }})" class="w-6 h-6 flex items-center justify-center text-zinc-400 hover:text-zinc-700 rounded transition-colors focus:outline-none">
+                            <button aria-label="{{ __('Move entry down') }}" wire:click="moveDown({{ $experience->id }})" class="w-6 h-6 flex items-center justify-center text-zinc-400 hover:text-zinc-700 rounded transition-colors focus:outline-none">
                                 <i class="ph ph-caret-down"></i>
                             </button>
                         </div>
-                        <button aria-label="Edit entry" wire:click="edit({{ $experience->id }})" class="w-7 h-7 flex items-center justify-center bg-zinc-50 border border-zinc-200 text-zinc-600 rounded-md hover:bg-zinc-150 transition-colors focus:outline-none">
+                        <button aria-label="{{ __('Edit entry') }}" wire:click="edit({{ $experience->id }})" class="w-7 h-7 flex items-center justify-center bg-zinc-50 border border-zinc-200 text-zinc-600 rounded-md hover:bg-zinc-150 transition-colors focus:outline-none">
                             <i class="ph ph-pencil-simple"></i>
                         </button>
-                        <button aria-label="Delete entry" wire:click="confirmDelete({{ $experience->id }})" class="w-7 h-7 flex items-center justify-center bg-rose-50 border border-rose-100/50 text-rose-600 rounded-md hover:bg-rose-600 hover:text-white hover:border-rose-600 transition-colors focus:outline-none">
+                        <button aria-label="{{ __('Delete entry') }}" wire:click="confirmDelete({{ $experience->id }})" class="w-7 h-7 flex items-center justify-center bg-rose-50 border border-rose-100/50 text-rose-600 rounded-md hover:bg-rose-600 hover:text-white hover:border-rose-600 transition-colors focus:outline-none">
                             <i class="ph ph-trash"></i>
                         </button>
                     </div>
@@ -68,20 +68,20 @@
             <div class="w-10 h-10 bg-white border border-zinc-200 rounded-md flex items-center justify-center text-zinc-400 mx-auto mb-3 shadow-3xs group-hover:scale-105 transition-transform">
                 <i class="ph ph-briefcase text-xl"></i>
             </div>
-            <p class="text-[11px] font-bold text-zinc-500 mb-3">No work experience added yet</p>
+            <p class="text-[11px] font-bold text-zinc-500 mb-3">{{ __('No work experience added yet') }}</p>
             <button wire:click="openModal" class="text-[11px] font-black text-primary-600 /* [BRAND_PRIMARY] */ uppercase tracking-widest hover:text-primary-700">
-                ADD YOUR FIRST EXPERIENCE
+                {{ __('ADD YOUR FIRST EXPERIENCE') }}
             </button>
         </div>
     @endif
 
     <!-- Clean Modal (Tracker & Dashboard Style) -->
     @teleport('body')
-    <div x-data role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.showModal" data-dialog-close="$wire.closeModal()" aria-label="Edit CV experience" class="cv-entry-dialog {{ !$showModal ? 'hidden' : '' }}" wire:click.self="closeModal">
+    <div x-data role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.showModal" data-dialog-close="$wire.closeModal()" aria-label="{{ __('Edit CV experience') }}" class="cv-entry-dialog {{ !$showModal ? 'hidden' : '' }}" wire:click.self="closeModal">
         <div class="cv-dialog-panel" @click.stop>
             <header class="cv-dialog-header">
-                <h2>{{ $editMode ? 'Edit Experience' : 'Add Experience' }}</h2>
-                <button type="button" aria-label="Close modal" wire:click="closeModal" class="cv-dialog-close">
+                <h2>{{ $editMode ? __('Edit Experience') : __('Add Experience') }}</h2>
+                <button type="button" aria-label="{{ __('Close modal') }}" wire:click="closeModal" class="cv-dialog-close">
                     <i class="ph ph-x" aria-hidden="true"></i>
                 </button>
             </header>
@@ -90,21 +90,21 @@
                 <div class="cv-dialog-body">
                     <div class="cv-dialog-grid">
                         <div class="cv-dialog-field cv-dialog-col-full">
-                            <label for="exp-company-name">Company name</label>
-                            <input id="exp-company-name" type="text" wire:model="company_name" placeholder="e.g. Google, Microsoft">
+                            <label for="exp-company-name">{{ __('Company name') }}</label>
+                            <input id="exp-company-name" type="text" wire:model="company_name" placeholder="{{ __('e.g. Google, Microsoft') }}">
                             @error('company_name') <p class="cv-dialog-error">{{ $message }}</p> @enderror
                         </div>
 
                         <div class="cv-dialog-field cv-dialog-col-full">
-                            <label for="exp-position">Job title</label>
-                            <input id="exp-position" type="text" wire:model="position" placeholder="e.g. Senior Software Engineer">
+                            <label for="exp-position">{{ __('Job title') }}</label>
+                            <input id="exp-position" type="text" wire:model="position" placeholder="{{ __('e.g. Senior Software Engineer') }}">
                             @error('position') <p class="cv-dialog-error">{{ $message }}</p> @enderror
                         </div>
 
                         <div class="cv-dialog-field">
-                            <label for="exp-emp-type">Employment type</label>
+                            <label for="exp-emp-type">{{ __('Employment type') }}</label>
                             <select id="exp-emp-type" wire:model="employment_type">
-                                <option value="">Select type</option>
+                                <option value="">{{ __('Select type') }}</option>
                                 @foreach($employmentTypes as $type)
                                     <option value="{{ $type }}">{{ $type }}</option>
                                 @endforeach
@@ -113,41 +113,41 @@
                         </div>
 
                         <div class="cv-dialog-field">
-                            <label for="exp-location">Location</label>
-                            <input id="exp-location" type="text" wire:model="location" placeholder="e.g. Jakarta, Indonesia">
+                            <label for="exp-location">{{ __('Location') }}</label>
+                            <input id="exp-location" type="text" wire:model="location" placeholder="{{ __('e.g. Jakarta, Indonesia') }}">
                         </div>
 
                         <div class="cv-dialog-field">
-                            <label for="exp-start-date">Start date</label>
+                            <label for="exp-start-date">{{ __('Start date') }}</label>
                             <input id="exp-start-date" type="date" wire:model="start_date">
                             @error('start_date') <p class="cv-dialog-error">{{ $message }}</p> @enderror
                         </div>
 
                         <div class="cv-dialog-field">
-                            <label for="exp-end-date">End date</label>
+                            <label for="exp-end-date">{{ __('End date') }}</label>
                             <input id="exp-end-date" type="date" wire:model="end_date" :disabled="$wire.is_current" class="disabled:opacity-40">
                         </div>
 
                         <div class="cv-dialog-col-full">
                             <label class="cv-dialog-checkbox-card">
                                 <input type="checkbox" wire:model="is_current">
-                                <span>I currently work here</span>
+                                <span>{{ __('I currently work here') }}</span>
                             </label>
                         </div>
 
                         <div class="cv-dialog-field cv-dialog-col-full">
-                            <label for="exp-description">Job description</label>
-                            <textarea id="exp-description" wire:model="description" rows="3" placeholder="• Describe your responsibilities..."></textarea>
-                            <p class="cv-dialog-hint">💡 One bullet point per line</p>
+                            <label for="exp-description">{{ __('Job description') }}</label>
+                            <textarea id="exp-description" wire:model="description" rows="3" placeholder="{{ __('• Describe your responsibilities...') }}"></textarea>
+                            <p class="cv-dialog-hint">{{ __('💡 One bullet point per line') }}</p>
                         </div>
                     </div>
                 </div>
 
                 <footer class="cv-dialog-footer">
-                    <button type="button" wire:click="closeModal" class="cv-dialog-btn-cancel">Cancel</button>
+                    <button type="button" wire:click="closeModal" class="cv-dialog-btn-cancel">{{ __('Cancel') }}</button>
                     <button type="submit" class="cv-dialog-btn-submit" wire:loading.attr="disabled" wire:target="save">
-                        <span wire:loading.remove wire:target="save">{{ $editMode ? 'Update' : 'Save Experience' }}</span>
-                        <span wire:loading wire:target="save" class="flex items-center gap-1.5"><i class="ph ph-spinner animate-spin"></i> Saving...</span>
+                        <span wire:loading.remove wire:target="save">{{ $editMode ? __('Update') : __('Save Experience') }}</span>
+                        <span wire:loading wire:target="save" class="flex items-center gap-1.5"><i class="ph ph-spinner animate-spin"></i> {{ __('Saving...') }}</span>
                     </button>
                 </footer>
             </form>
@@ -157,17 +157,17 @@
 
     {{-- Delete Confirmation Modal --}}
     @teleport('body')
-    <div x-data role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.showDeleteConfirm" data-dialog-close="$wire.cancelDelete()" aria-label="Delete CV experience" class="cv-entry-dialog {{ !$showDeleteConfirm ? 'hidden' : '' }}" wire:click.self="cancelDelete">
+    <div x-data role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.showDeleteConfirm" data-dialog-close="$wire.cancelDelete()" aria-label="{{ __('Delete CV experience') }}" class="cv-entry-dialog {{ !$showDeleteConfirm ? 'hidden' : '' }}" wire:click.self="cancelDelete">
         <div class="cv-delete-panel" @click.stop>
             <div class="cv-delete-icon">
                 <i class="ph ph-trash" aria-hidden="true"></i>
             </div>
-            <h3>Confirm Delete?</h3>
-            <p>Are you sure you want to delete this experience? This action cannot be undone.</p>
+            <h3>{{ __('Confirm Delete?') }}</h3>
+            <p>{{ __('Are you sure you want to delete this experience? This action cannot be undone.') }}</p>
             <div class="cv-delete-actions">
-                <button type="button" wire:click="cancelDelete" class="cv-dialog-btn-cancel">Cancel</button>
+                <button type="button" wire:click="cancelDelete" class="cv-dialog-btn-cancel">{{ __('Cancel') }}</button>
                 <button type="button" wire:click="delete" class="cv-dialog-btn-delete">
-                    <i class="ph ph-trash" aria-hidden="true"></i> Delete
+                    <i class="ph ph-trash" aria-hidden="true"></i> {{ __('Delete') }}
                 </button>
             </div>
         </div>

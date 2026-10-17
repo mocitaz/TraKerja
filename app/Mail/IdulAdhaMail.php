@@ -31,7 +31,7 @@ class IdulAdhaMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Selamat Hari Raya Idul Adha 1447 H 🙏',
+            subject: __('Selamat Hari Raya Idul Adha 1447 H 🙏'),
         );
     }
 

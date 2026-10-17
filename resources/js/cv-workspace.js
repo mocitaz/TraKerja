@@ -1,3 +1,4 @@
+import { t } from './i18n.js';
 export function cvWorkspace(importUrl, confirmUrl = importUrl + '/confirm') {
     return {
         previewOpen: false, previewLoading: true, previewVersion: 0,
@@ -9,19 +10,19 @@ export function cvWorkspace(importUrl, confirmUrl = importUrl + '/confirm') {
                 .map((entry, index) => ({ entry, index })).filter(({ entry }) => !entry.start_date);
         },
         get importSections() {
-            const labels = { experiences: 'Work experience', educations: 'Education', projects: 'Projects', skills: 'Skills' };
+            const labels = { experiences: t("Work experience"), educations: t("Education"), projects: t("Projects"), skills: t("Skills") };
             return Object.entries(labels).map(([key, label]) => ({
                 key, label, entries: this.importPreview?.data?.[key] || [],
                 existing: this.importPreview?.existing_counts?.[key] || 0,
             }));
         },
         importFieldLabel(key) {
-            const labels = { company_name: 'Company', position: 'Position', location: 'Location',
-                start_date: 'Start date', end_date: 'End date', is_current: 'Current', description: 'Description',
-                project_name: 'Project', role: 'Role', is_ongoing: 'Ongoing', institution_name: 'Institution',
-                degree: 'Degree', major: 'Major', skill_name: 'Skill', category: 'Category',
+            const labels = { company_name: t("Company"), position: t("Position"), location: t("Location"),
+                start_date: t("Start date"), end_date: t("End date"), is_current: t("Current"), description: t("Description"),
+                project_name: t("Project"), role: t("Role"), is_ongoing: t("Ongoing"), institution_name: t("Institution"),
+                degree: t("Degree"), major: 'Major', skill_name: 'Skill', category: 'Category',
                 proficiency_level: 'Proficiency', years_of_experience: 'Years of experience' };
-            return labels[key] || key;
+            return labels[key] ? t(labels[key]) : key;
         },
         async uploadPdf(file) {
             if (!file || this.importing) return;
@@ -30,11 +31,11 @@ export function cvWorkspace(importUrl, confirmUrl = importUrl + '/confirm') {
             this.importPreview = null;
             this.educationStartDates = {};
             if (!file.name.toLowerCase().endsWith('.pdf') || (file.type && file.type !== 'application/pdf')) {
-                this.importError = 'Choose a PDF file.';
+                this.importError = t("Choose a PDF file.");
                 return;
             }
             if (file.size > 10 * 1024 * 1024) {
-                this.importError = 'Your PDF must be 10 MB or smaller.';
+                this.importError = t("Your PDF must be 10 MB or smaller.");
                 return;
             }
             this.importing = true;
@@ -49,11 +50,11 @@ export function cvWorkspace(importUrl, confirmUrl = importUrl + '/confirm') {
                 });
                 const result = await response.json().catch(() => ({}));
                 if (!response.ok || !result.success || result.stage !== 'preview' || !result.token || !result.data) {
-                    throw new Error(result.message || 'The PDF could not be imported. Please try again.');
+                    throw new Error(result.message || t('The PDF could not be imported. Please try again.'));
                 }
                 this.importPreview = result;
             } catch (error) {
-                this.importError = error.message || 'Connection interrupted. Please try again.';
+                this.importError = error.message || t("Connection interrupted. Please try again.");
             } finally {
                 this.importing = false;
             }
@@ -61,7 +62,7 @@ export function cvWorkspace(importUrl, confirmUrl = importUrl + '/confirm') {
         async confirmImport() {
             if (!this.importPreview || this.importing) return;
             if (this.missingEducationDates.some(({ index }) => !this.educationStartDates[index])) {
-                this.importError = 'Enter the missing education start dates before confirming. Use the dates from your records.';
+                this.importError = t("Enter the missing education start dates before confirming. Use the dates from your records.");
                 return;
             }
             this.importing = true;
@@ -81,12 +82,12 @@ export function cvWorkspace(importUrl, confirmUrl = importUrl + '/confirm') {
                 const result = await response.json().catch(() => ({}));
                 if (!response.ok || !result.success || result.stage !== 'saved') {
                     if (response.status === 409 || (response.status === 422 && !result.requires_completion)) this.importPreview = null;
-                    throw new Error(result.message || 'The import could not be saved. Reload to check your CV before trying again.');
+                    throw new Error(result.message || t('The import could not be saved. Reload to check your CV before trying again.'));
                 }
                 this.importSuccess = true;
                 this.importPreview = null;
             } catch (error) {
-                this.importError = error.message || 'Connection interrupted. Reload to check whether the import was saved before trying again.';
+                this.importError = error.message || t("Connection interrupted. Reload to check whether the import was saved before trying again.");
             } finally {
                 this.importing = false;
             }
@@ -99,7 +100,7 @@ else document.addEventListener('alpine:init', register, { once: true });
 
 export function cvReview(template, previewUrl, checkUrl) {
     return {
-        template, previewUrl, spacing: 'standard', fontSize: '9.5pt', loading: true,
+        template, previewUrl, documentLanguage: 'en', spacing: 'standard', fontSize: '9.5pt', loading: true,
         checkOpen: false, checking: false, checkError: '', result: null,
         get margin() {
             const sizes = { compact: '10mm', standard: '15mm', spacious: '20mm' };
@@ -117,10 +118,10 @@ export function cvReview(template, previewUrl, checkUrl) {
                     headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content, Accept: 'application/json' },
                 });
                 const result = await response.json().catch(() => ({}));
-                if (!response.ok || !result.success) throw new Error(result.message || 'The check could not be completed. Please try again.');
+                if (!response.ok || !result.success) throw new Error(result.message || t('The check could not be completed. Please try again.'));
                 this.result = result;
             } catch (error) {
-                this.checkError = error.message || 'Connection interrupted. Please try again.';
+                this.checkError = error.message || t("Connection interrupted. Please try again.");
             } finally { this.checking = false; }
         },
     };

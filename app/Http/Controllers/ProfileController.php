@@ -41,7 +41,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $user->fill($request->validated());
-        
+
         if (!$user->isAdmin()) {
             $user->auto_archive_rejected = $request->boolean('auto_archive_rejected');
         }
@@ -59,11 +59,11 @@ class ProfileController extends Controller
             [],
             $request->user()->id
         );
-        
+
         if ($request->expectsJson()) {
             return response()->json(['success' => true, 'status' => 'profile-updated']);
         }
-        
+
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
@@ -121,7 +121,7 @@ class ProfileController extends Controller
         // Check if user has premium access to notifications (if restricted)
         if (!$user->canAccessEmailNotifications()) {
             if ($request->expectsJson()) {
-                return response()->json(['success' => false, 'message' => 'Fitur ini hanya tersedia untuk pengguna Premium.'], 403);
+                return response()->json(['success' => false, 'message' => __('Fitur ini hanya tersedia untuk pengguna Premium.')], 403);
             }
             return Redirect::route('profile.edit')->with('error', 'upgrade-required');
         }
@@ -248,7 +248,7 @@ class ProfileController extends Controller
             });
         } catch (\Throwable $e) {
             \Log::error('Account deletion cleanup failed', ['user_id' => $user->id]);
-            return back()->withErrors(['password' => 'Penghapusan akun belum selesai karena file belum dapat dibersihkan. Silakan coba lagi atau hubungi support.'], 'userDeletion');
+            return back()->withErrors(['password' => __('Penghapusan akun belum selesai karena file belum dapat dibersihkan. Silakan coba lagi atau hubungi support.')], __('userDeletion'));
         }
 
         Auth::logout();

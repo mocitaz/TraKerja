@@ -31,14 +31,14 @@ trait DraftsApplicationFollowUp
 
         $this->isGeneratingFollowUp = true;
 
-        $prompt = "CRITICAL INSTRUCTION: DO NOT WRITE A COVER LETTER. Write a highly professional follow-up email to HR. Context: The applicant applied for this position on {$job->application_date->format('d M Y')} and wants to ask about the current status. The email should politely ask for a status update. Use formal Indonesian language. Keep it concise, empathetic, and professional.";
-        
+        $prompt = "CRITICAL INSTRUCTION: DO NOT WRITE A COVER LETTER. Write a highly professional follow-up email to HR. Context: The applicant applied for this position on {$job->application_date->locale(app()->getLocale())->translatedFormat('d M Y')} and wants to ask about the current status. The email should politely ask for a status update. Use formal Indonesian language. Keep it concise, empathetic, and professional.";
+
         $context = [
             'experiences' => [
                 [
                     'company_name' => $job->company_name,
                     'position' => $job->position,
-                    'description' => "Applied on " . $job->application_date->format('d M Y') . ". Application stage: " . ($job->recruitment_stage ?: $job->application_status),
+                    'description' => "Applied on " . $job->application_date->locale(app()->getLocale())->translatedFormat('d M Y') . ". Application stage: " . ($job->recruitment_stage ?: $job->application_status),
                 ]
             ]
         ];

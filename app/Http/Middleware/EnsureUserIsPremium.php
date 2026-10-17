@@ -25,7 +25,7 @@ class EnsureUserIsPremium
         if (!$user->isPremium()) {
             // Redirect to payment page with message
             return redirect()->route('payment.index')
-                ->with('error', 'Fitur ini hanya tersedia untuk member Premium. Silakan upgrade akun Anda terlebih dahulu.');
+                ->with('error', __('Fitur ini hanya tersedia untuk member Premium. Silakan upgrade akun Anda terlebih dahulu.'));
         }
 
         return $next($request);

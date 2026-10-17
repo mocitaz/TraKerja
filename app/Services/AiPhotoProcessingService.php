@@ -25,7 +25,7 @@ class AiPhotoProcessingService
     {
         abort_unless($source->user_id === $user->id, 404);
         if ($source->status !== 'failed' || !$source->source_path || !Storage::disk('local')->exists($source->source_path)) {
-            throw ValidationException::withMessages(['photo' => 'Foto sumber tidak tersedia untuk dicoba lagi. Unggah foto baru.']);
+            throw ValidationException::withMessages(['photo' => __('Foto sumber tidak tersedia untuk dicoba lagi. Unggah foto baru.')]);
         }
         return $this->createRequest($user, $source->request_payload, $key, $source->original_photo_name, function () use ($source) {
             $path = 'ai-photo-sources/'.Str::uuid().'.'.pathinfo($source->source_path, PATHINFO_EXTENSION);
@@ -44,7 +44,7 @@ class AiPhotoProcessingService
                 if ($existing) return $existing;
                 $metered = Setting::isMonetizationEnabled();
                 if ($metered && User::whereKey($user->id)->where('photo_credits', '>', 0)->decrement('photo_credits') !== 1) {
-                    throw ValidationException::withMessages(['photo' => 'Kredit Photo AI Anda telah habis.']);
+                    throw ValidationException::withMessages(['photo' => __('Kredit Photo AI Anda telah habis.')]);
                 }
                 $path = $store();
                 if (!$path) throw new \RuntimeException('Could not store private photo source');

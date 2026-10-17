@@ -1,3 +1,4 @@
+import { t } from './i18n.js';
 export function coverLetterDetail(filename) {
     return {
         copying: false, copied: false, copyFailed: false, notice: '',
@@ -11,10 +12,10 @@ export function coverLetterDetail(filename) {
             try {
                 await navigator.clipboard.writeText(this.plainText());
                 this.copied = true;
-                this.notice = 'Letter copied. Ready to paste into your application.';
+                this.notice = t("Letter copied. Ready to paste into your application.");
             } catch {
                 this.copyFailed = true;
-                this.notice = 'Copy is unavailable. Select the text and copy it manually.';
+                this.notice = t("Copy is unavailable. Select the text and copy it manually.");
             } finally { this.copying = false; }
         },
         selectText() {
@@ -32,7 +33,7 @@ export function coverLetterDetail(filename) {
             link.download = filename;
             link.click();
             URL.revokeObjectURL(url);
-            this.notice = 'TXT download requested.';
+            this.notice = t("TXT download requested.");
         },
     };
 }

@@ -12,7 +12,7 @@ class CustomResetPassword extends ResetPassword
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('[TraKerja] Password Reset Request')
+            ->subject(__('[TraKerja] Password Reset Request'))
             ->view('emails.password-reset', [
                 'actionUrl' => $this->resetUrl($notifiable),
             ]);

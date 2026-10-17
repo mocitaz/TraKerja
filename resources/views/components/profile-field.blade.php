@@ -1,6 +1,6 @@
 @props(['name', 'label', 'value' => '', 'type' => 'text', 'multiline' => false, 'autocomplete' => null])
 <div class="profile-field">
-    <label for="profile-{{ $name }}">{{ $label }}</label>
+    <label for="profile-{{ $name }}">{{ __($label) }}</label>
     @if($multiline)
         <textarea id="profile-{{ $name }}" name="{{ $name }}" rows="4" {{ $attributes }} @error($name) aria-invalid="true" aria-describedby="profile-{{ $name }}-error" @enderror>{{ old($name, $value) }}</textarea>
     @else

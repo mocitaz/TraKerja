@@ -2,9 +2,9 @@
     <x-slot name="header">
         <div class="flex flex-col">
             <h1 class="text-2xl font-black text-slate-900 leading-tight tracking-tight">
-                AI <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-primary-600 to-[#4e71c5]">Analyzer</span>
+                {{ __('AI') }} <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-primary-600 to-[#4e71c5]">{{ __('Analyzer') }}</span>
             </h1>
-            <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mt-1">Smart resume matching against job requirements</p>
+            <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mt-1">{{ __('Smart resume matching against job requirements') }}</p>
         </div>
     </x-slot>
 
@@ -35,10 +35,10 @@
             background-color: rgb(245,243,255) !important;
         }
         .char-bar-fill { transition: width 0.3s ease; }
-        
+
         .mesh-gradient-ai {
             background-color: #ffffff;
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, rgba(217, 131, 228, 0.05) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(78, 113, 197, 0.05) 0px, transparent 50%);
         }
@@ -71,8 +71,8 @@
                             <div class="px-6 sm:px-8 py-5 sm:pt-7 sm:pb-5 border-b border-slate-100 flex items-center gap-4">
                                 <div class="w-10 h-10 bg-primary-600 rounded-2xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-primary-100">1</div>
                                 <div>
-                                    <h3 class="text-base font-black text-slate-900 tracking-tight">Upload Resume</h3>
-                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">High precision parsing</p>
+                                    <h3 class="text-base font-black text-slate-900 tracking-tight">{{ __('Upload Resume') }}</h3>
+                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{{ __('High precision parsing') }}</p>
                                 </div>
                             </div>
 
@@ -90,8 +90,8 @@
                                             <i class="ph-bold ph-file-arrow-up text-slate-400 group-hover:text-primary-500 text-3xl transition-colors"></i>
                                         </div>
                                         <div>
-                                            <p class="text-sm sm:text-base font-black text-slate-800">Drop your PDF here or <span class="text-primary-600 underline decoration-2 underline-offset-4">browse</span></p>
-                                            <p class="text-[10px] sm:text-xs text-slate-400 font-bold mt-1.5 uppercase tracking-widest">PDF format · Max 10 MB</p>
+                                            <p class="text-sm sm:text-base font-black text-slate-800">{{ __('Drop your PDF here or') }} <span class="text-primary-600 underline decoration-2 underline-offset-4">{{ __('browse') }}</span></p>
+                                            <p class="text-[10px] sm:text-xs text-slate-400 font-bold mt-1.5 uppercase tracking-widest">{{ __('PDF format · Max 10 MB') }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -109,7 +109,7 @@
                                             </div>
                                         </div>
                                         <div class="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto border-t border-slate-100 sm:border-t-0 pt-3 sm:pt-0">
-                                            <span class="text-[9px] sm:text-[10px] font-black text-emerald-600 bg-emerald-50 border border-emerald-100 px-3 py-1.5 rounded-full uppercase tracking-widest">Analysis Ready</span>
+                                            <span class="text-[9px] sm:text-[10px] font-black text-emerald-600 bg-emerald-50 border border-emerald-100 px-3 py-1.5 rounded-full uppercase tracking-widest">{{ __('Analysis Ready') }}</span>
                                             <button type="button" id="remove-file" class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all border border-transparent hover:border-rose-100 shrink-0">
                                                 <i class="ph-bold ph-trash text-lg"></i>
                                             </button>
@@ -124,8 +124,8 @@
                             <div class="px-6 sm:px-8 py-5 sm:pt-7 sm:pb-5 border-b border-slate-100 flex items-center gap-4">
                                 <div class="w-10 h-10 bg-primary-600 rounded-2xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-primary-100">2</div>
                                 <div>
-                                    <h3 class="text-base font-black text-slate-900 tracking-tight">Job Requirements</h3>
-                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">contextual matching engine</p>
+                                    <h3 class="text-base font-black text-slate-900 tracking-tight">{{ __('Job Requirements') }}</h3>
+                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{{ __('contextual matching engine') }}</p>
                                 </div>
                             </div>
 
@@ -133,7 +133,7 @@
                                 <div class="relative group">
                                     <textarea id="job_description" name="job_description" rows="10"
                                               class="w-full px-6 pt-5 pb-12 bg-slate-50/50 border border-slate-200 rounded-[1.5rem] text-[15px] font-bold text-slate-700 focus:ring-4 focus:ring-primary-500/5 focus:border-primary-400 focus:bg-white transition-all outline-none resize-none leading-relaxed shadow-inner"
-                                              placeholder="Paste the job description here. Include requirements, responsibilities, and key skills for best results..." required minlength="50" maxlength="2500">{{ old('job_description') }}</textarea>
+                                              placeholder="{{ __('Paste the job description here. Include requirements, responsibilities, and key skills for best results...') }}" required minlength="50" maxlength="2500">{{ old('job_description') }}</textarea>
 
                                     {{-- Char counter bar --}}
                                     <div class="absolute bottom-4 left-6 right-6">
@@ -142,7 +142,7 @@
                                                 <div id="char-indicator" class="w-2 h-2 rounded-full bg-slate-300"></div>
                                                 <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest"><span id="char-count">0</span> / 2500</span>
                                             </div>
-                                            <span id="char-hint" class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Detail is key</span>
+                                            <span id="char-hint" class="text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ __('Detail is key') }}</span>
                                         </div>
                                         <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden shadow-inner">
                                             <div id="char-bar" class="char-bar-fill h-full rounded-full bg-slate-300 shadow-sm" style="width:0%"></div>
@@ -156,13 +156,13 @@
                         <div class="flex items-center justify-between px-2">
                             <a href="{{ route('tracker') }}"
                                class="flex items-center gap-2 text-xs sm:text-sm font-black text-slate-400 hover:text-slate-900 transition-colors uppercase tracking-[0.15em]">
-                                <i class="ph ph-arrow-left text-base"></i> Back
+                                <i class="ph ph-arrow-left text-base"></i> {{ __('Back') }}
                             </a>
                             <button type="submit" id="submit-btn"
                                     class="group flex items-center gap-2.5 sm:gap-3 px-6 sm:px-10 py-3 sm:py-4 bg-primary-600 text-white rounded-[1.25rem] font-black text-xs sm:text-sm hover:bg-primary-700 transition-all shadow-2xl shadow-primary-200 active:scale-95">
                                 <i id="loading-spinner" class="ph ph-spinner animate-spin hidden text-base sm:text-lg"></i>
                                 <i id="submit-icon" class="ph ph-lightning text-base sm:text-lg group-hover:scale-125 transition-transform"></i>
-                                <span id="submit-text" class="uppercase tracking-widest">Start Analysis</span>
+                                <span id="submit-text" class="uppercase tracking-widest">{{ __('Start Analysis') }}</span>
                             </button>
                         </div>
                     </form>
@@ -185,9 +185,9 @@
                                         <i class="ph-bold {{ $isPremium ? 'ph-crown text-amber-300' : 'ph-user text-slate-300' }} text-base"></i>
                                     </div>
                                     <div>
-                                        <p class="text-[7.5px] font-black tracking-widest text-slate-400 uppercase">Membership</p>
+                                        <p class="text-[7.5px] font-black tracking-widest text-slate-400 uppercase">{{ __('Membership') }}</p>
                                         <p class="text-[10px] font-black {{ $isPremium ? 'text-indigo-300' : 'text-slate-300' }} uppercase tracking-wider mt-0.5">
-                                            {{ $isPremium ? 'Premium Plan' : 'Free Trial' }}
+                                            {{ $isPremium ? __('Premium Plan') : __('Free Trial') }}
                                         </p>
                                     </div>
                                 </div>
@@ -199,15 +199,15 @@
 
                             {{-- Credit Info --}}
                             <div class="my-6">
-                                <p class="text-[8px] font-black tracking-widest text-slate-400 uppercase">Sisa Kredit Analisa</p>
+                                <p class="text-[8px] font-black tracking-widest text-slate-400 uppercase">{{ __('Sisa Kredit Analisa') }}</p>
                                 <div class="flex items-baseline gap-1 mt-1.5">
                                     <span class="text-3xl font-black tracking-tight {{ $isPremium ? 'text-white' : 'text-slate-100' }}">
                                         {{ $remainingUses === 'unlimited' ? '∞' : $remainingUses }}
                                     </span>
-                                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Kredit</span>
+                                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ __('Kredit') }}</span>
                                 </div>
                                 <p class="text-[10px] text-slate-400 font-bold mt-1.5 italic">
-                                    {{ $isPremium ? 'Kredit aktif untuk analisa resume presisi tinggi.' : 'Trial berlaku untuk 1x analisa awal.' }}
+                                    {{ $isPremium ? __('Kredit aktif untuk analisa resume presisi tinggi.') : __('Trial berlaku untuk 1x analisa awal.') }}
                                 </p>
                             </div>
 
@@ -216,15 +216,15 @@
                                 @if($isPremium)
                                     <a href="{{ route('payment.topup', ['package' => 'analyzer']) }}" class="group flex items-center justify-center gap-2 w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-black text-[9px] uppercase tracking-widest transition-all shadow-lg shadow-indigo-950/40">
                                         <i class="ph-bold ph-plus-circle text-sm group-hover:scale-125 transition-transform"></i>
-                                        Top Up +10 AI & +15 CL Kredit
+                                        {{ __('Top Up +10 AI & +15 CL Kredit') }}
                                     </a>
-                                    <p class="text-[7px] text-center text-indigo-300/80 font-black uppercase tracking-widest mt-2">Super Hemat! Hanya Rp 14.999 saja</p>
+                                    <p class="text-[7px] text-center text-indigo-300/80 font-black uppercase tracking-widest mt-2">{{ __('Super Hemat! Hanya Rp 14.999 saja') }}</p>
                                 @else
                                     <a href="{{ route('payment.premium') }}" class="group flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-primary-500 to-indigo-600 hover:from-primary-600 hover:to-indigo-700 text-white rounded-xl font-black text-[9px] uppercase tracking-widest transition-all shadow-lg shadow-primary-950/40">
                                         <i class="ph-bold ph-lightning text-sm group-hover:animate-bounce"></i>
-                                        Upgrade ke Premium
+                                        {{ __('Upgrade ke Premium') }}
                                     </a>
-                                    <p class="text-[7px] text-center text-primary-300/80 font-black uppercase tracking-widest mt-2">Dapatkan Bonus 5 Kredit & Unlimited PDF Export!</p>
+                                    <p class="text-[7px] text-center text-primary-300/80 font-black uppercase tracking-widest mt-2">{{ __('Dapatkan Bonus 5 Kredit & Unlimited PDF Export!') }}</p>
                                 @endif
                             </div>
                         </div>
@@ -232,7 +232,7 @@
 
                     {{-- How it works --}}
                     <div class="bg-white border border-slate-200/70 rounded-[2.5rem] p-8 shadow-sm bento-step-card">
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.25em] mb-7">Analysis Engine</p>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.25em] mb-7">{{ __('Analysis Engine') }}</p>
                         <div class="space-y-6">
                             @foreach([
                                 ['ph-upload-simple',    'blue',      'Data Extraction',  'Advanced NLP parsing of your professional history and skills.'],
@@ -260,9 +260,9 @@
                             <div class="w-11 h-11 bg-white/10 border border-white/10 rounded-2xl flex items-center justify-center mb-5 shadow-lg">
                                 <i class="ph-fill ph-shield-check text-primary-400 text-xl"></i>
                             </div>
-                            <h4 class="text-[15px] font-black tracking-tight mb-2 uppercase tracking-wide">Privacy Standard</h4>
+                            <h4 class="text-[15px] font-black tracking-tight mb-2 uppercase tracking-wide">{{ __('Privacy Standard') }}</h4>
                             <p class="text-xs text-slate-400 font-bold leading-relaxed italic opacity-80">
-                                Secure end-to-end processing. Your data is analyzed in-memory and never persistent on our storage.
+                                {{ __('Secure end-to-end processing. Your data is analyzed in-memory and never persistent on our storage.') }}
                             </p>
                         </div>
                     </div>
@@ -273,7 +273,7 @@
                             <div class="w-8 h-8 bg-amber-100 rounded-xl flex items-center justify-center text-amber-600">
                                 <i class="ph-fill ph-lightbulb text-lg"></i>
                             </div>
-                            <p class="text-[10px] font-black text-amber-700 uppercase tracking-[0.15em]">Pro Tips</p>
+                            <p class="text-[10px] font-black text-amber-700 uppercase tracking-[0.15em]">{{ __('Pro Tips') }}</p>
                         </div>
                         <ul class="space-y-3">
                             @foreach([
@@ -308,7 +308,7 @@
         function showFile(file) {
             const mb = (file.size / (1024 * 1024)).toFixed(2);
             fileNameEl.textContent = file.name;
-            fileSizeEl.textContent = mb + ' MB';
+            fileSizeEl.textContent = mb + @js(__(' MB'));
             fileSuccess.classList.remove('hidden');
             uploadArea.classList.add('hidden');
         }
@@ -359,17 +359,17 @@
             if (len < 50) {
                 charIndicator.className = 'w-1.5 h-1.5 rounded-full bg-rose-400';
                 charBar.className       = 'char-bar-fill h-full rounded-full bg-rose-400';
-                charHint.textContent    = 'Minimum 50 characters';
+                charHint.textContent    = @js(__('Minimum 50 characters'));
                 charHint.className      = 'text-[10px] font-bold text-rose-500';
             } else if (len < 300) {
                 charIndicator.className = 'w-1.5 h-1.5 rounded-full bg-amber-400';
                 charBar.className       = 'char-bar-fill h-full rounded-full bg-amber-400';
-                charHint.textContent    = 'Add more detail for better accuracy';
+                charHint.textContent    = @js(__('Add more detail for better accuracy'));
                 charHint.className      = 'text-[10px] font-bold text-amber-500';
             } else {
                 charIndicator.className = 'w-1.5 h-1.5 rounded-full bg-emerald-400';
                 charBar.className       = 'char-bar-fill h-full rounded-full bg-emerald-400';
-                charHint.textContent    = 'Looking good!';
+                charHint.textContent    = @js(__('Looking good!'));
                 charHint.className      = 'text-[10px] font-bold text-emerald-500';
             }
         });
@@ -379,7 +379,7 @@
             const btn = document.getElementById('submit-btn');
             btn.disabled = true;
             btn.classList.add('opacity-70', 'cursor-not-allowed');
-            document.getElementById('submit-text').textContent = 'Analyzing…';
+            document.getElementById('submit-text').textContent = @js(__('Analyzing…'));
             document.getElementById('submit-icon').classList.add('hidden');
             document.getElementById('loading-spinner').classList.remove('hidden');
         });

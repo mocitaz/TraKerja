@@ -5,46 +5,46 @@
             <!-- Queue Worker Status -->
             <div class="mb-4 sm:mb-6 bg-white dark:bg-[#1e1f20] rounded-lg shadow-sm border border-gray-200 dark:border-white/10 overflow-hidden">
                 <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 dark:border-white/10">
-                    <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-[#f0f4f9]">Queue Worker Status</h3>
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-[#f0f4f9]">{{ __('Queue Worker Status') }}</h3>
                 </div>
                 <div class="p-4 sm:p-6">
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center space-x-3">
                             @if($queueWorkerRunning)
                                 <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                                <span class="text-sm font-medium text-gray-700 dark:text-slate-300">Queue worker sedang berjalan</span>
+                                <span class="text-sm font-medium text-gray-700 dark:text-slate-300">{{ __('Queue worker sedang berjalan') }}</span>
                             @else
                                 <div class="w-3 h-3 bg-red-500 rounded-full"></div>
-                                <span class="text-sm font-medium text-gray-700 dark:text-slate-300">Queue worker tidak berjalan</span>
+                                <span class="text-sm font-medium text-gray-700 dark:text-slate-300">{{ __('Queue worker tidak berjalan') }}</span>
                             @endif
                         </div>
                     </div>
-                    
+
                     <!-- Instructions -->
                     <div class="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-500/30 rounded-lg p-3 sm:p-4 mt-3 sm:mt-4">
-                        <h4 class="text-xs sm:text-sm font-semibold text-blue-900 dark:text-blue-300 mb-2">Cara Menjalankan Queue Worker:</h4>
+                        <h4 class="text-xs sm:text-sm font-semibold text-blue-900 dark:text-blue-300 mb-2">{{ __('Cara Menjalankan Queue Worker:') }}</h4>
                         <div class="space-y-2 text-xs sm:text-sm text-blue-800 dark:text-blue-200">
-                            <p><strong>1. Development (Terminal):</strong></p>
+                            <p><strong>{{ __('1. Development (Terminal):') }}</strong></p>
                             <code class="block bg-white dark:bg-[#131314] p-2 rounded border border-blue-200 dark:border-blue-500/30 text-[10px] sm:text-xs font-mono overflow-x-auto text-blue-950 dark:text-blue-200">
                                 php artisan queue:work
                             </code>
-                            
-                            <p class="mt-2 sm:mt-3"><strong>2. Production (Supervisor):</strong></p>
-                            <p class="text-[10px] sm:text-xs text-blue-700 dark:text-blue-300 mb-2">Setup supervisor untuk auto-restart queue worker:</p>
+
+                            <p class="mt-2 sm:mt-3"><strong>{{ __('2. Production (Supervisor):') }}</strong></p>
+                            <p class="text-[10px] sm:text-xs text-blue-700 dark:text-blue-300 mb-2">{{ __('Setup supervisor untuk auto-restart queue worker:') }}</p>
                             <div class="bg-white dark:bg-[#131314] rounded border border-blue-200 dark:border-blue-500/30 p-2 sm:p-3 space-y-2 text-[10px] sm:text-xs">
-                                <p class="font-medium text-gray-700 dark:text-slate-300">a. Tentukan path absolut project:</p>
+                                <p class="font-medium text-gray-700 dark:text-slate-300">{{ __('a. Tentukan path absolut project:') }}</p>
                                 <code class="block font-mono text-gray-800 dark:text-slate-200 bg-gray-50 dark:bg-[#18191a] p-2 rounded overflow-x-auto">
                                     cd domains/trakerja.web.id<br>
                                     pwd<br>
                                     # Output: /home/username/domains/trakerja.web.id
                                 </code>
-                                
-                                <p class="font-medium text-gray-700 dark:text-slate-300 mt-2 sm:mt-3">b. Install supervisor:</p>
+
+                                <p class="font-medium text-gray-700 dark:text-slate-300 mt-2 sm:mt-3">{{ __('b. Install supervisor:') }}</p>
                                 <code class="block font-mono text-gray-800 dark:text-slate-200 bg-gray-50 dark:bg-[#18191a] p-2 rounded overflow-x-auto">
                                     sudo apt-get install supervisor
                                 </code>
-                                
-                                <p class="font-medium text-gray-700 dark:text-slate-300 mt-2 sm:mt-3">c. Create config: /etc/supervisor/conf.d/trakerja-worker.conf</p>
+
+                                <p class="font-medium text-gray-700 dark:text-slate-300 mt-2 sm:mt-3">{{ __('c. Create config: /etc/supervisor/conf.d/trakerja-worker.conf') }}</p>
                                 <code class="block font-mono text-gray-800 dark:text-slate-200 bg-gray-50 dark:bg-[#18191a] p-2 rounded overflow-x-auto">
                                     [program:trakerja-worker]<br>
                                     process_name=%(program_name)s_%(process_num)02d<br>
@@ -58,8 +58,8 @@
                                 </code>
                                 <p class="text-[10px] sm:text-xs text-red-600 dark:text-red-400 mt-2">⚠️ Ganti <code>/home/username/domains/trakerja.web.id</code> dengan path absolut project Anda (hasil dari pwd)</p>
                             </div>
-                            
-                            <p class="mt-2 sm:mt-3"><strong>3. Manual Check:</strong></p>
+
+                            <p class="mt-2 sm:mt-3"><strong>{{ __('3. Manual Check:') }}</strong></p>
                             <code class="block bg-white dark:bg-[#131314] p-2 rounded border border-blue-200 dark:border-blue-500/30 text-[10px] sm:text-xs font-mono overflow-x-auto text-blue-950 dark:text-blue-200">
                                 # Cek pending jobs di database<br>
                                 SELECT COUNT(*) FROM jobs;<br><br>
@@ -83,17 +83,17 @@
                                 </svg>
                             </div>
                             <div class="min-w-0 flex-1">
-                                <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-[#f0f4f9]">Pending Jobs</h3>
-                                <p class="text-xs text-gray-500 dark:text-slate-400">Email yang sedang menunggu dikirim</p>
+                                <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-[#f0f4f9]">{{ __('Pending Jobs') }}</h3>
+                                <p class="text-xs text-gray-500 dark:text-slate-400">{{ __('Email yang sedang menunggu dikirim') }}</p>
                             </div>
                         </div>
                     </div>
                     <div class="p-4 sm:p-6">
                         <p class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-[#f0f4f9]">{{ $pendingJobs }}</p>
                         @if($pendingJobs > 0)
-                            <p class="text-xs text-gray-500 dark:text-slate-400 mt-2">Pastikan queue worker sedang berjalan untuk memproses email</p>
+                            <p class="text-xs text-gray-500 dark:text-slate-400 mt-2">{{ __('Pastikan queue worker sedang berjalan untuk memproses email') }}</p>
                         @else
-                            <p class="text-xs text-green-600 dark:text-emerald-400 mt-2">✓ Semua email sudah diproses</p>
+                            <p class="text-xs text-green-600 dark:text-emerald-400 mt-2">{{ __('✓ Semua email sudah diproses') }}</p>
                         @endif
                     </div>
                 </div>
@@ -108,17 +108,17 @@
                                 </svg>
                             </div>
                             <div class="min-w-0 flex-1">
-                                <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-[#f0f4f9]">Failed Jobs</h3>
-                                <p class="text-xs text-gray-500 dark:text-slate-400">Email yang gagal dikirim</p>
+                                <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-[#f0f4f9]">{{ __('Failed Jobs') }}</h3>
+                                <p class="text-xs text-gray-500 dark:text-slate-400">{{ __('Email yang gagal dikirim') }}</p>
                             </div>
                         </div>
                     </div>
                     <div class="p-4 sm:p-6">
                         <p class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-[#f0f4f9]">{{ $failedJobs }}</p>
                         @if($failedJobs > 0)
-                            <p class="text-xs text-red-600 dark:text-rose-400 mt-2">Ada email yang gagal dikirim. Cek detail di bawah.</p>
+                            <p class="text-xs text-red-600 dark:text-rose-400 mt-2">{{ __('Ada email yang gagal dikirim. Cek detail di bawah.') }}</p>
                         @else
-                            <p class="text-xs text-green-600 dark:text-emerald-400 mt-2">✓ Tidak ada email yang gagal</p>
+                            <p class="text-xs text-green-600 dark:text-emerald-400 mt-2">{{ __('✓ Tidak ada email yang gagal') }}</p>
                         @endif
                     </div>
                 </div>
@@ -128,17 +128,17 @@
             @if($failedJobs > 0)
                 <div class="bg-white dark:bg-[#1e1f20] rounded-lg shadow-sm border border-gray-200 dark:border-white/10 overflow-hidden">
                     <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 dark:border-white/10">
-                        <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-[#f0f4f9]">Recent Failed Jobs</h3>
-                        <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">10 email terakhir yang gagal dikirim</p>
+                        <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-[#f0f4f9]">{{ __('Recent Failed Jobs') }}</h3>
+                        <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">{{ __('10 email terakhir yang gagal dikirim') }}</p>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-white/10">
                             <thead class="bg-gray-50 dark:bg-[#18191a]">
                                 <tr>
-                                    <th class="px-3 sm:px-6 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">Queue</th>
-                                    <th class="px-3 sm:px-6 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">Connection</th>
-                                    <th class="px-3 sm:px-6 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">Failed At</th>
-                                    <th class="px-3 sm:px-6 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">Exception</th>
+                                    <th class="px-3 sm:px-6 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">{{ __('Queue') }}</th>
+                                    <th class="px-3 sm:px-6 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">{{ __('Connection') }}</th>
+                                    <th class="px-3 sm:px-6 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">{{ __('Failed At') }}</th>
+                                    <th class="px-3 sm:px-6 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">{{ __('Exception') }}</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white dark:bg-[#1e1f20] divide-y divide-gray-200 dark:divide-white/10">
@@ -165,7 +165,7 @@
                                 @empty
                                     <tr>
                                         <td colspan="4" class="px-4 sm:px-6 py-4 text-center text-xs sm:text-sm text-gray-500 dark:text-slate-400">
-                                            Tidak ada failed jobs
+                                            {{ __('Tidak ada failed jobs') }}
                                         </td>
                                     </tr>
                                 @endforelse
@@ -174,7 +174,7 @@
                     </div>
                     <div class="px-4 sm:px-6 py-3 sm:py-4 border-t border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-[#18191a]">
                         <p class="text-[10px] sm:text-xs text-gray-600 dark:text-slate-400">
-                            <strong>Note:</strong> Untuk retry failed jobs, gunakan command: 
+                            <strong>{{ __('Note:') }}</strong> Untuk retry failed jobs, gunakan command:
                             <code class="bg-white dark:bg-[#131314] px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border dark:border-white/10 text-[10px] sm:text-xs text-slate-800 dark:text-slate-300">php artisan queue:retry all</code>
                         </p>
                     </div>
@@ -184,10 +184,10 @@
             <!-- Actions -->
             <div class="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-end gap-2 sm:gap-3">
                 <a href="{{ route('admin.email-blast') }}" class="w-full sm:w-auto px-4 py-2 text-sm font-medium text-gray-700 dark:text-slate-300 bg-white dark:bg-[#282a2c] border border-gray-300 dark:border-white/10 rounded-lg hover:bg-gray-50 dark:hover:bg-[#333538] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 text-center">
-                    Kembali ke Email Blast
+                    {{ __('Kembali ke Email Blast') }}
                 </a>
                 <button onclick="location.reload()" class="w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                    Refresh Status
+                    {{ __('Refresh Status') }}
                 </button>
             </div>
         </div>

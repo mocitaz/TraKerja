@@ -30,7 +30,7 @@ class NewUserRegistrationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '[TraKerja] New User Registration - ' . $this->user->name,
+            subject: __('[TraKerja] New User Registration - ') . $this->user->name,
         );
     }
 

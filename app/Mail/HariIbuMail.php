@@ -26,7 +26,7 @@ class HariIbuMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Selamat Hari Ibu Nasional 💐',
+            subject: __('Selamat Hari Ibu Nasional 💐'),
         );
     }
 

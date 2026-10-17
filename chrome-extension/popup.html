@@ -19,38 +19,39 @@
                     <img src="icons/icon.png" alt="TraKerja">
                 </div>
                 <div class="header-text">
-                    <h1>TraKerja</h1>
-                    <p>Extension</p>
+                    <h1 data-i18n="TraKerja">TraKerja</h1>
+                    <p data-i18n="Extension">Extension</p>
                 </div>
             </div>
-            <button id="logout-btn" class="hidden" title="Logout"><i class="ph-bold ph-sign-out"></i></button>
+            <button id="logout-btn" class="hidden" title="Logout" data-i18n-title="Logout"><i class="ph-bold ph-sign-out"></i></button>
         </header>
 
+        <div class="extension-language"><label for="extension-language" data-i18n="Language">Language</label><select id="extension-language"><option value="en">English</option><option value="id">Bahasa Indonesia</option></select></div>
         <!-- MAIN CONTENT -->
         <main>
             <!-- LOGIN VIEW -->
             <div id="login-view" class="view">
                 <div class="login-header">
-                    <h2>Welcome back</h2>
-                    <p>Masuk untuk menyinkronkan lamaran</p>
+                    <h2 data-i18n="Welcome back">Welcome back</h2>
+                    <p data-i18n="Masuk untuk menyinkronkan lamaran">Masuk untuk menyinkronkan lamaran</p>
                 </div>
                 <form id="login-form">
                     <div class="input-group">
-                        <label>Email Address</label>
+                        <label data-i18n="Email Address">Email Address</label>
                         <div class="input-wrapper">
                             <i class="ph ph-envelope-simple"></i>
-                            <input type="email" id="email" required placeholder="email@trakerja.com">
+                            <input type="email" id="email" required placeholder="email@trakerja.com" data-i18n-placeholder="email@trakerja.com">
                         </div>
                     </div>
                     <div class="input-group">
-                        <label>Password</label>
+                        <label data-i18n="Password">Password</label>
                         <div class="input-wrapper">
                             <i class="ph ph-lock-key"></i>
                             <input type="password" id="password" required placeholder="••••••••">
                         </div>
                     </div>
                     <button type="submit" id="btn-login" class="btn-primary">
-                        <span>Masuk ke Akun</span>
+                        <span data-i18n="Masuk ke Akun">Masuk ke Akun</span>
                         <i class="ph-bold ph-arrow-right"></i>
                     </button>
                     <div id="login-error" class="error-msg hidden"></div>
@@ -61,7 +62,7 @@
             <div id="save-view" class="view hidden">
                 <div class="welcome-banner">
                     <div class="welcome-text">
-                        <span class="greeting" id="user-greeting">Halo, Luthfi!</span>
+                        <span class="greeting" id="user-greeting" data-i18n="Hello!">Hello!</span>
                     </div>
                 </div>
                 
@@ -69,26 +70,26 @@
                     <div class="job-card">
                         <div class="card-header">
                             <i class="ph-fill ph-briefcase"></i>
-                            <span>Detail Lamaran</span>
+                            <span data-i18n="Detail Lamaran">Detail Lamaran</span>
                         </div>
                         <div class="card-body">
                             <div class="input-group">
-                                <label>Posisi Pekerjaan</label>
-                                <input type="text" id="job-position" required placeholder="Contoh: Software Engineer">
+                                <label data-i18n="Posisi Pekerjaan">Posisi Pekerjaan</label>
+                                <input type="text" id="job-position" required placeholder="Contoh: Software Engineer" data-i18n-placeholder="Contoh: Software Engineer">
                             </div>
                             <div class="input-group">
-                                <label>Perusahaan</label>
-                                <input type="text" id="job-company" required placeholder="Nama Perusahaan">
+                                <label data-i18n="Perusahaan">Perusahaan</label>
+                                <input type="text" id="job-company" required placeholder="Nama Perusahaan" data-i18n-placeholder="Nama Perusahaan">
                             </div>
                             <div class="input-group">
-                                <label>Tipe Pekerjaan</label>
+                                <label data-i18n="Tipe Pekerjaan">Tipe Pekerjaan</label>
                                 <div class="select-wrapper">
                                     <select id="job-level">
-                                        <option value="Full Time">Full Time</option>
-                                        <option value="Intern">Intern</option>
-                                        <option value="Contract">Contract</option>
-                                        <option value="MT">MT</option>
-                                        <option value="Freelance">Freelance</option>
+                                        <option value="Full Time" data-i18n="Full Time">Full Time</option>
+                                        <option value="Intern" data-i18n="Intern">Intern</option>
+                                        <option value="Contract" data-i18n="Contract">Contract</option>
+                                        <option value="MT" data-i18n="MT">MT</option>
+                                        <option value="Freelance" data-i18n="Freelance">Freelance</option>
                                     </select>
                                     <i class="ph-bold ph-caret-down select-icon"></i>
                                 </div>
@@ -96,19 +97,19 @@
                             
                             <div class="row-group">
                                 <div class="input-group w-50">
-                                    <label>Provinsi</label>
+                                    <label data-i18n="Provinsi">Provinsi</label>
                                     <div class="select-wrapper">
                                         <select id="job-province" required>
-                                            <option value="">Pilih Provinsi</option>
+                                            <option value="" data-i18n="Pilih Provinsi">Pilih Provinsi</option>
                                         </select>
                                         <i class="ph-bold ph-caret-down select-icon"></i>
                                     </div>
                                 </div>
                                 <div class="input-group w-50">
-                                    <label>Kota</label>
+                                    <label data-i18n="Kota">Kota</label>
                                     <div class="select-wrapper">
                                         <select id="job-city" required>
-                                            <option value="">Pilih Kota</option>
+                                            <option value="" data-i18n="Pilih Kota">Pilih Kota</option>
                                         </select>
                                         <i class="ph-bold ph-caret-down select-icon"></i>
                                     </div>
@@ -124,7 +125,7 @@
 
                     <button id="btn-save" class="btn-primary btn-save">
                         <i class="ph-bold ph-paper-plane-tilt"></i>
-                        <span>Simpan ke Kanban</span>
+                        <span data-i18n="Simpan ke Kanban">Simpan ke Kanban</span>
                     </button>
                 </div>
 
@@ -133,11 +134,11 @@
                         <div class="scanner-line"></div>
                         <i class="ph-duotone ph-radar"></i>
                     </div>
-                    <h3>Menunggu Loker...</h3>
-                    <p>Buka halaman lowongan kerja di platform yang didukung untuk menyimpan data otomatis.</p>
+                    <h3 data-i18n="Menunggu Loker...">Menunggu Loker...</h3>
+                    <p data-i18n="Buka halaman lowongan kerja di platform yang didukung untuk menyimpan data otomatis.">Buka halaman lowongan kerja di platform yang didukung untuk menyimpan data otomatis.</p>
                     <div class="supported-platforms">
-                        <span>LinkedIn</span> • <span>JobStreet</span> • <span>Glints</span><br>
-                        <span>Kalibrr</span> • <span>Dealls</span> • <span>Talentics</span>
+                        <span data-i18n="LinkedIn">LinkedIn</span> • <span data-i18n="JobStreet">JobStreet</span> • <span data-i18n="Glints">Glints</span><br>
+                        <span data-i18n="Kalibrr">Kalibrr</span> • <span data-i18n="Dealls">Dealls</span> • <span data-i18n="Talentics">Talentics</span>
                     </div>
                 </div>
                 
@@ -148,14 +149,15 @@
             <div class="beta-warning">
                 <i class="ph-duotone ph-warning-circle"></i>
                 <div class="warning-text">
-                    <strong>Versi Beta (Tahap Pengembangan)</strong>
-                    <p>Mohon maaf jika terjadi ketidaksesuaian pembacaan data lamaran. Silakan sesuaikan secara manual jika diperlukan.</p>
+                    <strong data-i18n="Versi Beta (Tahap Pengembangan)">Versi Beta (Tahap Pengembangan)</strong>
+                    <p data-i18n="Mohon maaf jika terjadi ketidaksesuaian pembacaan data lamaran. Silakan sesuaikan secara manual jika diperlukan.">Mohon maaf jika terjadi ketidaksesuaian pembacaan data lamaran. Silakan sesuaikan secara manual jika diperlukan.</p>
                 </div>
             </div>
         </main>
     </div>
     <script src="locations.js"></script>
     <script src="config.js"></script>
+    <script src="translations.js"></script>
     <script src="popup.js"></script>
 </body>
 </html>

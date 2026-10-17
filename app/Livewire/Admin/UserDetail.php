@@ -103,8 +103,8 @@ class UserDetail extends Component
 
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Profile Updated',
-            'message' => 'Member information has been saved successfully.',
+            'title' => __('Profile Updated'),
+            'message' => __('Member information has been saved successfully.'),
         ]);
     }
 
@@ -134,8 +134,8 @@ class UserDetail extends Component
 
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Quotas Updated',
-            'message' => 'AI feature quotas saved successfully.',
+            'title' => __('Quotas Updated'),
+            'message' => __('AI feature quotas saved successfully.'),
         ]);
     }
 
@@ -166,8 +166,8 @@ class UserDetail extends Component
 
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Quotas Reset',
-            'message' => 'All AI quotas reset to plan defaults.',
+            'title' => __('Quotas Reset'),
+            'message' => __('All AI quotas reset to plan defaults.'),
         ]);
     }
 
@@ -201,8 +201,8 @@ class UserDetail extends Component
 
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Membership Updated',
-            'message' => 'User is now ' . ($this->user->is_premium ? 'PREMIUM' : 'FREE') . '.',
+            'title' => __('Membership Updated'),
+            'message' => __('User is now ') . ($this->user->is_premium ? 'PREMIUM' : 'FREE') . '.',
         ]);
     }
 
@@ -245,15 +245,15 @@ class UserDetail extends Component
             if ($this->emailType === 'verification') {
                 $this->user->sendEmailVerificationNotification();
             } else {
-                Mail::to($this->user->email)->send(new $mailClass($this->user));
+                Mail::to($this->user)->send(new $mailClass($this->user));
             }
 
             $this->closeSendEmailModal();
 
             $this->dispatch('showNotification', [
                 'type' => 'success',
-                'title' => 'Email Dispatched',
-                'message' => 'Email sent successfully to ' . $this->user->email,
+                'title' => __('Email Dispatched'),
+                'message' => __('Email sent successfully to ') . $this->user->email,
             ]);
         } catch (\Throwable $e) {
             Log::error('Admin failed to send email to user', [
@@ -263,7 +263,7 @@ class UserDetail extends Component
 
             $this->dispatch('showNotification', [
                 'type' => 'error',
-                'title' => 'Failed to Send Email',
+                'title' => __('Failed to Send Email'),
                 'message' => $e->getMessage(),
             ]);
         }
@@ -284,8 +284,8 @@ class UserDetail extends Component
         if ($this->user->id === Auth::id()) {
             $this->dispatch('showNotification', [
                 'type' => 'error',
-                'title' => 'Action Prohibited',
-                'message' => 'You cannot delete your own active administrator account!',
+                'title' => __('Action Prohibited'),
+                'message' => __('You cannot delete your own active administrator account!'),
             ]);
             $this->closeDeleteConfirm();
             return;

@@ -1,3 +1,4 @@
+import { t } from './i18n.js';
 export async function autofillJob({ url, read, write, fetcher = fetch, csrf, isCurrent = () => true }) {
     const fields = ['company_name', 'position', 'location', 'career_level', 'platform', 'notes'];
     const before = Object.fromEntries(fields.map(field => [field, read(field) ?? '']));
@@ -8,7 +9,7 @@ export async function autofillJob({ url, read, write, fetcher = fetch, csrf, isC
     });
     const data = await response.json().catch(() => ({}));
     if (!isCurrent()) return { stale: true };
-    if (!response.ok || !data.success) throw new Error(data.message || 'Could not read this listing. Enter details manually or use the extension.');
+    if (!response.ok || !data.success) throw new Error(data.message || t('Could not read this listing. Enter details manually or use the extension.'));
     const details = [data.location ? `Source location: ${data.location}` : '',
         data.work_mode ? `Work mode: ${data.work_mode}` : '',
         data.description ? `Job description (${data.platform || 'URL'}):\n${data.description}` : ''].filter(Boolean);
@@ -45,12 +46,12 @@ export async function fetchJobDetailsFromUrl(button) {
             isCurrent: () => root.isConnected && input.value.trim() === url,
         });
         if (result.stale) { status('error', 'URL changed. Run Autofill again.'); return; }
-        const labels = { job_title: 'job title', company_name: 'company', location: 'location', career_level: 'employment type' };
+        const labels = { job_title: t("job title"), company_name: 'company', location: 'location', career_level: t("employment type") };
         const missing = result.missing.map(field => labels[field] || field).join(', ');
         status('success', `${result.filled} ${result.filled === 1 ? 'field' : 'fields'} filled. Existing entries kept.`
             + (missing ? ` Check: ${missing}.` : ' Review before saving.'));
     } catch (error) {
-        status('error', error.name === 'TimeoutError' ? 'The portal took too long. Try again or enter details manually.' : (error.message === 'Failed to fetch' ? 'Connection interrupted. Please try again.' : error.message));
+        status('error', error.name === 'TimeoutError' ? 'The portal took too long. Try again or enter details manually.' : (error.message === t("Failed to fetch") ? 'Connection interrupted. Please try again.' : error.message));
     } finally { pending.delete(root); }
 }
 if (typeof window !== 'undefined') window.fetchJobDetailsFromUrl = fetchJobDetailsFromUrl;

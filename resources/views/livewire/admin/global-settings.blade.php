@@ -6,7 +6,7 @@
             <div class="ast-panel-heading">
                 <h3>
                     <i class="ph ph-identification-card" aria-hidden="true"></i>
-                    Platform Identity
+                    {{ __('Platform Identity') }}
                 </h3>
             </div>
 
@@ -21,13 +21,13 @@
                 <form wire:submit.prevent="updateIdentity" class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="ast-form-group">
-                            <label>Application Name</label>
-                            <input type="text" wire:model="appName" placeholder="TraKerja">
+                            <label>{{ __('Application Name') }}</label>
+                            <input type="text" wire:model="appName" placeholder="{{ __('TraKerja') }}">
                             @error('appName') <span class="text-xs text-red-500 font-medium">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="ast-form-group">
-                            <label>Support Contact Email</label>
+                            <label>{{ __('Support Contact Email') }}</label>
                             <input type="email" wire:model="contactEmail" placeholder="support@trakerja.com">
                             @error('contactEmail') <span class="text-xs text-red-500 font-medium">{{ $message }}</span> @enderror
                         </div>
@@ -37,7 +37,7 @@
                         <button type="submit" class="ast-btn ast-btn--primary">
                             <i class="ph ph-floppy-disk" wire:loading.remove wire:target="updateIdentity" aria-hidden="true"></i>
                             <i class="ph ph-spinner ph-spin" wire:loading wire:target="updateIdentity" aria-hidden="true"></i>
-                            Save Platform Identity
+                            {{ __('Save Platform Identity') }}
                         </button>
                     </div>
                 </form>
@@ -49,7 +49,7 @@
             <div class="ast-panel-heading">
                 <h3>
                     <i class="ph ph-warning-octagon {{ $maintenanceMode ? 'text-red-600' : '' }}" aria-hidden="true"></i>
-                    Maintenance Mode
+                    {{ __('Maintenance Mode') }}
                 </h3>
             </div>
 
@@ -62,18 +62,18 @@
                 @endif
 
                 <p class="text-xs text-gray-500 dark:text-slate-400 leading-relaxed">
-                    Activate maintenance mode to restrict public access during critical upgrades. Admin sessions remain fully functional.
+                    {{ __('Activate maintenance mode to restrict public access during critical upgrades. Admin sessions remain fully functional.') }}
                 </p>
 
                 <div class="ast-toggle-item mt-4">
                     <div>
-                        <strong>{{ $maintenanceMode ? 'Maintenance Active' : 'System Live' }}</strong>
-                        <p>{{ $maintenanceMode ? 'Public access is disabled' : 'All systems operational' }}</p>
+                        <strong>{{ $maintenanceMode ? __('Maintenance Active') : __('System Live') }}</strong>
+                        <p>{{ $maintenanceMode ? __('Public access is disabled') : __('All systems operational') }}</p>
                     </div>
                     <button type="button"
-                            wire:click="toggleMaintenance" 
-                            role="switch" 
-                            aria-label="Maintenance mode" 
+                            wire:click="toggleMaintenance"
+                            role="switch"
+                            aria-label="{{ __('Maintenance mode') }}"
                             aria-checked="{{ $maintenanceMode ? 'true' : 'false' }}"
                             class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none {{ $maintenanceMode ? 'bg-red-600' : 'bg-gray-300 dark:bg-zinc-700' }}">
                         <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 {{ $maintenanceMode ? 'translate-x-6' : 'translate-x-1' }}"></span>
@@ -87,7 +87,7 @@
             <div class="ast-panel-heading">
                 <h3>
                     <i class="ph ph-sliders-horizontal" aria-hidden="true"></i>
-                    Quota & Platform Limits
+                    {{ __('Quota & Platform Limits') }}
                 </h3>
             </div>
 
@@ -102,20 +102,20 @@
                 <form wire:submit.prevent="updateLimits" class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                         <div class="ast-form-group">
-                            <label>AI Analyzer Limit (Free Tier)</label>
-                            <input type="number" min="0" wire:model="aiLimitFree" placeholder="e.g. 1">
+                            <label>{{ __('AI Analyzer Limit (Free Tier)') }}</label>
+                            <input type="number" min="0" wire:model="aiLimitFree" placeholder="{{ __('e.g. 1') }}">
                             @error('aiLimitFree') <span class="text-xs text-red-500 font-medium">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="ast-form-group">
-                            <label>AI Analyzer Limit (Premium Tier)</label>
-                            <input type="number" min="0" wire:model="aiLimitPremium" placeholder="e.g. 50">
+                            <label>{{ __('AI Analyzer Limit (Premium Tier)') }}</label>
+                            <input type="number" min="0" wire:model="aiLimitPremium" placeholder="{{ __('e.g. 50') }}">
                             @error('aiLimitPremium') <span class="text-xs text-red-500 font-medium">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="ast-form-group">
-                            <label>Max Job Applications (Free Tier)</label>
-                            <input type="number" min="1" wire:model="jobLimitFree" placeholder="e.g. 50">
+                            <label>{{ __('Max Job Applications (Free Tier)') }}</label>
+                            <input type="number" min="1" wire:model="jobLimitFree" placeholder="{{ __('e.g. 50') }}">
                             @error('jobLimitFree') <span class="text-xs text-red-500 font-medium">{{ $message }}</span> @enderror
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                         <button type="submit" class="ast-btn ast-btn--primary">
                             <i class="ph ph-floppy-disk" wire:loading.remove wire:target="updateLimits" aria-hidden="true"></i>
                             <i class="ph ph-spinner ph-spin" wire:loading wire:target="updateLimits" aria-hidden="true"></i>
-                            Save Platform Quotas
+                            {{ __('Save Platform Quotas') }}
                         </button>
                     </div>
                 </form>

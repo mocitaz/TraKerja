@@ -14,7 +14,7 @@ class SendAiAnalyzerAnnouncementBlast extends Command
      *
      * @var string
      */
-    protected $signature = 'email:send-ai-analyzer-announcement 
+    protected $signature = 'email:send-ai-analyzer-announcement
                             {--dry-run : Run without sending emails}
                             {--limit= : Limit number of emails to send}';
 
@@ -32,10 +32,10 @@ class SendAiAnalyzerAnnouncementBlast extends Command
     {
         $dryRun = $this->option('dry-run');
         $limit = $this->option('limit') ? (int) $this->option('limit') : null;
-        
+
         $this->info("🔍 Looking for free tier users to send AI Analyzer announcement...");
         $this->newLine();
-        
+
         // Find users who:
         // 1. Not premium (is_premium = false OR payment_status != 'paid')
         // 2. Not admin (admins don't need this)
@@ -46,31 +46,31 @@ class SendAiAnalyzerAnnouncementBlast extends Command
                   ->orWhere('payment_status', '!=', 'paid');
             })
             ->orderBy('created_at', 'desc');
-        
+
         if ($limit) {
             $query->limit($limit);
             $this->info("📋 Limit: {$limit} emails");
         }
-        
+
         $users = $query->get();
-        
+
         if ($users->isEmpty()) {
             $this->info("✅ No free tier users found.");
             return 0;
         }
-        
+
         $this->info("📧 Found {$users->count()} free tier user(s):");
         $this->newLine();
-        
+
         $successCount = 0;
         $failCount = 0;
-        
+
         $progressBar = $this->output->createProgressBar($users->count());
         $progressBar->start();
-        
+
         foreach ($users as $user) {
             $hasUsedTrial = $user->has_used_ai_analyzer_trial ? 'Yes' : 'No';
-            
+
             if ($dryRun) {
                 $this->newLine();
                 $this->line("  [DRY RUN] Would send to: {$user->name} ({$user->email}) - Trial used: {$hasUsedTrial}");
@@ -78,9 +78,9 @@ class SendAiAnalyzerAnnouncementBlast extends Command
                 $progressBar->advance();
                 continue;
             }
-            
+
             try {
-                Mail::to($user->email)->send(new AiAnalyzerFreeTrialAnnouncementMail($user));
+                Mail::to($user)->send(new AiAnalyzerFreeTrialAnnouncementMail($user));
                 $successCount++;
                 $progressBar->advance();
             } catch (\Exception $e) {
@@ -91,17 +91,17 @@ class SendAiAnalyzerAnnouncementBlast extends Command
                 $progressBar->advance();
             }
         }
-        
+
         $progressBar->finish();
         $this->newLine(2);
-        
+
         $this->info("📊 Summary:");
         $this->info("  • Total users: {$users->count()}");
         $this->info("  • Successfully sent: {$successCount}");
         if ($failCount > 0) {
             $this->error("  • Failed: {$failCount}");
         }
-        
+
         if ($dryRun) {
             $this->newLine();
             $this->warn("⚠️  This was a DRY RUN - No emails were actually sent.");
@@ -111,7 +111,7 @@ class SendAiAnalyzerAnnouncementBlast extends Command
             $this->info("✅ AI Analyzer announcement emails sent successfully!");
             $this->info("🎉 Free tier users can now try AI Analyzer for FREE (1x)!");
         }
-        
+
         return 0;
     }
 }

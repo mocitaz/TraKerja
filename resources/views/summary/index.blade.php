@@ -17,14 +17,14 @@
             @if($hasAccess)
                 <header class="workspace-page__header">
                     <div>
-                        <h1>Summary</h1>
-                        <p>Understand your progress and where your opportunities come from.</p>
+                        <h1>{{ __('Summary') }}</h1>
+                        <p>{{ __('Understand your progress and where your opportunities come from.') }}</p>
                     </div>
-                    <nav class="summary-periods" aria-label="Summary period">
+                    <nav class="summary-periods" aria-label="{{ __('Summary period') }}">
                         @foreach(['weekly' => '7 days', 'monthly' => '30 days', 'all' => 'All time'] as $value => $label)
                             <a href="{{ route('summary', ['timeFilter' => $value]) }}" wire:navigate
                                 class="{{ $timeFilter === $value ? 'is-active' : '' }}" @if($timeFilter === $value)
-                                aria-current="page" @endif>{{ $label }}</a>
+                                aria-current="page" @endif>{{ __($label) }}</a>
                         @endforeach
                     </nav>
                 </header>
@@ -32,32 +32,29 @@
             @if(!$hasAccess)
                 <section class="summary-premium summary-enter" aria-labelledby="summary-premium-title">
                     <div class="summary-premium-copy">
-                        <h2 id="summary-premium-title">A clearer view<br class="summary-desktop-break"> of your job
-                            search<span class="summary-heading-dot">.</span></h2>
-                        <p class="summary-premium-intro">Track your velocity and see where<br class="summary-desktop-break">
-                            your best opportunities come from.</p>
-                        <p class="summary-premium-desc">Summary brings together your weekly application momentum, interview
-                            conversion stages, and top recruitment sources into one connected intelligence view — so you can
-                            spend energy where offers actually happen.</p>
+                        <h2 id="summary-premium-title">{{ __('A clearer view') }}<br class="summary-desktop-break"> {{ __('of your job search') }}<span class="summary-heading-dot">.</span></h2>
+                        <p class="summary-premium-intro">{{ __('Track your velocity and see where') }}<br class="summary-desktop-break">
+                            {{ __('your best opportunities come from.') }}</p>
+                        <p class="summary-premium-desc">{{ __('Summary brings together your weekly application momentum, interview conversion stages, and top recruitment sources into one connected intelligence view — so you can spend energy where offers actually happen.') }}</p>
 
                         <div class="summary-premium-actions">
                             <a href="{{ route('payment.premium') }}" class="summary-action-primary">
-                                <span>Explore Premium</span>
+                                <span>{{ __('Explore Premium') }}</span>
                             </a>
                             <a href="{{ route('tracker') }}" wire:navigate class="summary-action-secondary">
-                                <span>Back to applications</span>
+                                <span>{{ __('Back to applications') }}</span>
                                 <span aria-hidden="true">→</span>
                             </a>
                         </div>
 
                         <p class="summary-premium-footnote">
                             <i class="ph-fill ph-shield-check" aria-hidden="true"></i>
-                            <span>Instant access · Included with your TraKerja Premium membership.</span>
+                            <span>{{ __('Instant access · Included with your TraKerja Premium membership.') }}</span>
                         </p>
                     </div>
 
                     <div class="summary-premium-art" aria-hidden="true">
-                        <div class="summary-art-caption">A clearer view · Connected together</div>
+                        <div class="summary-art-caption">{{ __('A clearer view · Connected together') }}</div>
                         <svg class="summary-art-connections" viewBox="0 0 380 380" fill="none">
                             <path class="summary-orbit-path summary-orbit-path--one"
                                 d="M45 280C20 180 90 80 200 90C300 100 350 200 300 300" stroke="#b4cce2" stroke-width="1.6"
@@ -72,7 +69,7 @@
 
                         <div class="summary-art-speech">
                             <span class="summary-speech-dot"></span>
-                            <span>See where your offers happen!</span>
+                            <span>{{ __('See where your offers happen!') }}</span>
                             <i class="ph-fill ph-sparkle summary-speech-spark" aria-hidden="true"></i>
                         </div>
 
@@ -86,8 +83,8 @@
                                         stroke-dasharray="28 100" stroke-dashoffset="-47" stroke-linecap="round" />
                                 </svg>
                                 <div class="summary-float-ring-text">
-                                    <strong>3 Offers</strong>
-                                    <small>78% in progress</small>
+                                    <strong>{{ __('3 Offers') }}</strong>
+                                    <small>{{ __('78% in progress') }}</small>
                                 </div>
                             </div>
                         </div>
@@ -97,8 +94,8 @@
                                 <i class="ph-fill ph-briefcase" aria-hidden="true"></i>
                             </div>
                             <div class="summary-source-info">
-                                <span>Top Source</span>
-                                <strong>LinkedIn (85%)</strong>
+                                <span>{{ __('Top Source') }}</span>
+                                <strong>{{ __('LinkedIn (85%)') }}</strong>
                             </div>
                             <i class="ph ph-arrow-up-right summary-source-arrow" aria-hidden="true"></i>
                         </div>
@@ -112,8 +109,8 @@
                                 <span class="summary-spark-bar summary-spark-bar--highlight" style="height: 26px"></span>
                             </div>
                             <div class="summary-bars-info">
-                                <strong>18 Applied</strong>
-                                <small>+35% velocity</small>
+                                <strong>{{ __('18 Applied') }}</strong>
+                                <small>{{ __('+35% velocity') }}</small>
                             </div>
                         </div>
 
@@ -121,30 +118,29 @@
                         <span class="summary-art-spark summary-spark-two">✦</span>
 
                         <div class="summary-art-footer">
-                            <span>Every application, stage &amp; outcome.</span>
-                            <strong>All connected in one view.</strong>
+                            <span>{{ __('Every application, stage & outcome.') }}</span>
+                            <strong>{{ __('All connected in one view.') }}</strong>
                         </div>
                     </div>
                 </section>
             @else
             <div class="summary-scope">
-                <p>{{ $periodLabel }}@if($dateRange['start']) · {{ $dateRange['start']->format('d M') }} –
-                {{ $dateRange['end']->format('d M Y') }}@endif</p><span>Includes archived applications · grouped by
-                    date applied</span>
+                <p>{{ __($periodLabel) }}@if($dateRange['start']) · {{ $dateRange['start']->locale(app()->getLocale())->translatedFormat('d M') }} –
+                {{ $dateRange['end']->locale(app()->getLocale())->translatedFormat('d M Y') }}@endif</p><span>{{ __('Includes archived applications · grouped by date applied') }}</span>
             </div>
-            <section class="summary-report-overview summary-enter" aria-label="Application totals">
+            <section class="summary-report-overview summary-enter" aria-label="{{ __('Application totals') }}">
                 <div class="summary-report-total">
-                    <span class="summary-report-eyebrow">YOUR APPLICATION OVERVIEW</span>
-                    <div><strong>{{ $applicationsCount }}</strong><span>total<br>applications</span></div>
-                    <p>{{ $periodLabel }} · {{ $summary['archived'] }} archived records included</p>
-                    <a href="{{ route('tracker') }}" wire:navigate>View your applications <span aria-hidden="true">↗</span></a>
+                    <span class="summary-report-eyebrow">{{ __('YOUR APPLICATION OVERVIEW') }}</span>
+                    <div><strong>{{ $applicationsCount }}</strong><span>{{ __('total') }}<br>{{ __('applications') }}</span></div>
+                    <p>{{ __(':value1 · :value2 archived records included', ['value1' => ($periodLabel), 'value2' => ($summary['archived'])]) }}</p>
+                    <a href="{{ route('tracker') }}" wire:navigate>{{ __('View your applications') }} <span aria-hidden="true">↗</span></a>
                 </div>
                 <dl class="summary-report-stats">
-                    <div data-tone="blue"><dt><i aria-hidden="true"></i>In progress</dt><dd><strong>{{ $statuses['On Process'] }}</strong><span>{{ $applicationsCount ? round($statuses['On Process'] / $applicationsCount * 100, 1) : 0 }}% of applications</span></dd></div>
-                    <div data-tone="sage"><dt><i aria-hidden="true"></i>Offers &amp; accepted</dt><dd><strong>{{ $summary['offers'] }}</strong><span>Offering stage or accepted</span></dd></div>
-                    <div data-tone="clay"><dt><i aria-hidden="true"></i>Rejected</dt><dd><strong>{{ $statuses['Rejected'] }}</strong><span>{{ $applicationsCount ? round($statuses['Rejected'] / $applicationsCount * 100, 1) : 0 }}% of applications</span></dd></div>
+                    <div data-tone="blue"><dt><i aria-hidden="true"></i>{{ __('In progress') }}</dt><dd><strong>{{ $statuses['On Process'] }}</strong><span>{{ __(':value1% of applications', ['value1' => ($applicationsCount ? round($statuses['On Process'] / $applicationsCount * 100, 1) : 0)]) }}</span></dd></div>
+                    <div data-tone="sage"><dt><i aria-hidden="true"></i>{{ __('Offers & accepted') }}</dt><dd><strong>{{ $summary['offers'] }}</strong><span>{{ __('Offering stage or accepted') }}</span></dd></div>
+                    <div data-tone="clay"><dt><i aria-hidden="true"></i>{{ __('Rejected') }}</dt><dd><strong>{{ $statuses['Rejected'] }}</strong><span>{{ __(':value1% of applications', ['value1' => ($applicationsCount ? round($statuses['Rejected'] / $applicationsCount * 100, 1) : 0)]) }}</span></dd></div>
                 </dl>
-                <p class="summary-report-footnote">Offers can overlap with in-progress applications. Status reflects your current records.</p>
+                <p class="summary-report-footnote">{{ __('Offers can overlap with in-progress applications. Status reflects your current records.') }}</p>
             </section>
 
             <div class="summary-chart-grid summary-report-charts">
@@ -154,13 +150,13 @@
                     x-data="{ selected: 1, hovered: null, rows: @js($outcomeRows) }">
                     <div class="workspace-section-heading">
                         <div>
-                            <h2 id="summary-outcomes-title">Where things stand</h2>
-                            <p>Status distribution · {{ strtolower($periodLabel) }}</p>
+                            <h2 id="summary-outcomes-title">{{ __('Where things stand') }}</h2>
+                            <p>{{ __('Status distribution · :value1', ['value1' => (strtolower($periodLabel))]) }}</p>
                         </div>
                     </div>
                     <div class="summary-donut" id="summary-outcome-chart">
                         <svg viewBox="0 0 200 200" role="img"
-                            aria-label="{{ $statuses['On Process'] }} in progress, {{ $statuses['Accepted'] }} accepted, {{ $statuses['Rejected'] }} rejected">
+                            aria-label="{{ __(':value1 in progress, :value2 accepted, :value3 rejected', ['value1' => ($statuses['On Process']), 'value2' => ($statuses['Accepted']), 'value3' => ($statuses['Rejected'])]) }}">
                             <circle cx="100" cy="100" r="78" fill="none" stroke="#edf0f4" stroke-width="18" />
                             @php($offset = 0)
                             @foreach($statusRows as $index => $row)
@@ -174,7 +170,7 @@
                             @endforeach
                         </svg>
                         <div><strong x-text="rows[hovered ?? selected].share + '%'">{{ $acceptedShare }}%</strong><span
-                                x-text="rows[hovered ?? selected].name">Accepted</span></div>
+                                x-text="rows[hovered ?? selected].name">{{ __('Accepted') }}</span></div>
                     </div>
                     <dl class="summary-status-legend">
                         @foreach($statusRows as $index => $row)
@@ -190,26 +186,23 @@
                             </div>
                         @endforeach
                     </dl>
-                    <p class="workspace-hint">Select a status to explore. Offers are shown separately above.</p>
+                    <p class="workspace-hint">{{ __('Select a status to explore. Offers are shown separately above.') }}</p>
                 </section>
             </div>
 
             <section class="summary-insights summary-enter"
                 aria-labelledby="summary-insights-title">
-                <h2 id="summary-insights-title">A closer look</h2>
+                <h2 id="summary-insights-title">{{ __('A closer look') }}</h2>
                 <div>
-                    <article><span>Most-used
-                            source</span><strong>{{ $topSource['name'] ?? 'Not recorded yet' }}</strong>
-                        <p>{{ $topSource ? $topSource['total'] . ' applications · ' . round($topSource['total'] / max(1, $applicationsCount) * 100, 1) . '% of your selected records. Volume does not measure source quality.' : 'Your application sources will appear here.' }}
+                    <article><span>{{ __('Most-used source') }}</span><strong>{{ $topSource['name'] ?? 'Not recorded yet' }}</strong>
+                        <p>{{ $topSource ? $topSource['total'] . __(' applications · ') . round($topSource['total'] / max(1, $applicationsCount) * 100, 1) . __('% of your selected records. Volume does not measure source quality.') : __('Your application sources will appear here.') }}
                         </p>
                     </article>
-                    <article><span>Accepted outcomes</span><strong>{{ $statuses['Accepted'] }} <small>of
-                                {{ $applicationsCount }}</small></strong>
-                        <p>{{ $acceptedShare }}% have Accepted status.</p>
+                    <article><span>{{ __('Accepted outcomes') }}</span><strong>{{ $statuses['Accepted'] }} <small>{{ __('of :value1', ['value1' => ($applicationsCount)]) }}</small></strong>
+                        <p>{{ __(':value1% have Accepted status.', ['value1' => ($acceptedShare)]) }}</p>
                     </article>
-                    <article><span>Recorded interview
-                            stages</span>@php($interviewStageCount = $summary['sources']->sum('interviews'))<strong>{{ $interviewStageCount }}</strong>
-                        <p>Currently recorded as HR or User Interview. This is not a historical conversion rate.</p>
+                    <article><span>{{ __('Recorded interview stages') }}</span>@php($interviewStageCount = $summary['sources']->sum('interviews'))<strong>{{ $interviewStageCount }}</strong>
+                        <p>{{ __('Currently recorded as HR or User Interview. This is not a historical conversion rate.') }}</p>
                     </article>
                 </div>
             </section>
@@ -218,32 +211,30 @@
                 x-data="{ tab: 'sources' }">
                 <div class="workspace-section-heading">
                     <div>
-                        <h2 id="summary-analysis-title">Explore your applications</h2>
-                        <p>Compare volume and recorded outcomes within {{ strtolower($periodLabel) }}.</p>
-                    </div><span class="summary-analysis-count">{{ $applicationsCount }} records</span>
+                        <h2 id="summary-analysis-title">{{ __('Explore your applications') }}</h2>
+                        <p>{{ __('Compare volume and recorded outcomes within :value1.', ['value1' => (strtolower($periodLabel))]) }}</p>
+                    </div><span class="summary-analysis-count">{{ __(':value1 records', ['value1' => ($applicationsCount)]) }}</span>
                 </div>
-                <div class="summary-analysis-workbench"><div class="summary-analysis-tabs" role="group" aria-label="Analysis category">
+                <div class="summary-analysis-workbench"><div class="summary-analysis-tabs" role="group" aria-label="{{ __('Analysis category') }}">
                     @foreach(['sources' => 'Sources', 'roles' => 'Roles', 'locations' => 'Locations', 'companies' => 'Companies', 'employment' => 'Employment'] as $key => $label)<button
                         data-tone="{{ $analysisTones[$key] }}" type="button" @click="tab = '{{ $key }}'" :class="{ 'is-active': tab === '{{ $key }}' }"
                         :aria-pressed="tab === '{{ $key }}'"
-                    aria-controls="summary-panel-{{ $key }}"><span>{{ $label }}</span><small>{{ $summary[$key]->count() }}</small></button>@endforeach</div>
+                    aria-controls="summary-panel-{{ $key }}"><span>{{ __($label) }}</span><small>{{ $summary[$key]->count() }}</small></button>@endforeach</div>
                 <div class="summary-analysis-content">
                 @foreach(['sources' => 'Sources', 'roles' => 'Roles', 'locations' => 'Locations', 'companies' => 'Companies', 'employment' => 'Employment types'] as $key => $label)
                     <div id="summary-panel-{{ $key }}" class="summary-analysis-panel" data-tone="{{ $analysisTones[$key] }}" x-show="tab === '{{ $key }}'" @if($key !== 'sources') x-cloak @endif
-                        aria-label="{{ $label }} analysis">
+                        aria-label="{{ __($label) }} analysis">
                         @include('summary.partials.explorer', ['rows' => $summary[$key], 'type' => $key, 'label' => $label])
                     </div>
                 @endforeach
                 </div></div>
-                <p class="workspace-hint">Interview-stage counts use the current recorded HR / User Interview stage.
-                    Archived records remain part of this analysis.</p>
+                <p class="workspace-hint">{{ __('Interview-stage counts use the current recorded HR / User Interview stage. Archived records remain part of this analysis.') }}</p>
             </section>
 
             @include('summary.partials.stage-chart')
             <footer class="summary-footer">
-                <p>Keep your stages and outcomes up to date for a more useful summary.</p><a
-                    href="{{ route('tracker') }}" wire:navigate class="workspace-button workspace-button--primary">Go to
-                    applications</a>
+                <p>{{ __('Keep your stages and outcomes up to date for a more useful summary.') }}</p><a
+                    href="{{ route('tracker') }}" wire:navigate class="workspace-button workspace-button--primary">{{ __('Go to applications') }}</a>
             </footer>
             @endif
         </div>

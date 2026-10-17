@@ -87,3 +87,35 @@
         }
     }
 }
+
+/* Language choices share a compact footprint in menus and the public header. */
+.language-switch { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 8px 10px; color: #454650; font-size: 12px; }
+.language-switch__options { display: flex; align-items: center; gap: 4px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.language-switch__choice { position: relative; display: grid; place-items: center; width: 40px; height: 40px; margin: 0; border: 1px solid transparent; border-radius: 50%; cursor: pointer; transition: background-color .15s, border-color .15s; }
+.language-switch__choice input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.language-switch__flag { display: block; width: 25px; height: 25px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 1px rgb(30 34 44 / 12%); }
+.language-switch__flag svg { display: block; width: 100%; height: 100%; }
+.language-switch button.language-switch__choice { padding: 0; background: transparent; }
+.language-switch__choice:hover { background: #f0eef4; }
+.language-switch__choice:has(input:checked) { border-color: #837296; background: #f0edf5; }
+.language-switch__choice:focus-visible, .language-switch__choice:has(input:focus-visible) { outline: 2px solid #655080; outline-offset: 2px; }
+.language-switch[data-busy="true"] .language-switch__options { opacity: .55; cursor: wait; }
+.language-switch [data-language-error] { flex-basis: 100%; color: #a44450; line-height: 1.6; }
+.profile-language-section { padding-top: 20px; margin-top: 20px; border-top: 1px solid #e5e7eb; }
+.profile-language-section .language-switch { padding: 0; }
+.guest-language,.public-language { width: fit-content; margin: 18px auto; }
+.dark .language-switch { color: #d0d3db; }
+.dark .language-switch__choice:hover { background: #333039; }
+.dark .language-switch__choice:has(input:checked) { background: #393240; border-color: #b9a5ce; }
+.dark .language-switch__choice:has(input:focus-visible) { outline-color: #cbb5e0; }
+.public-language-inline .language-switch { padding: 0; flex-wrap: nowrap; }
+@media(max-width:640px) { .language-switch__choice { width: 44px; height: 44px; }.welcome-page .workspace-topbar { gap: 8px; }.welcome-page .workspace-account-actions { gap: 6px; } }
+
+.language-switch--labelled { padding: 10px; gap: 12px; }
+.language-switch__label { font-size: 13px; font-weight: 500; line-height: 1.5; }
+.language-switch--labelled .language-switch__options { margin-left: auto; gap: 2px; }
+.language-switch--labelled .language-switch__choice { width: 38px; height: 38px; border-radius: 10px; }
+.language-switch--labelled .language-switch__flag { width: 20px; height: 20px; }
+.language-switch--labelled .language-switch__choice:has(input:checked) { border-color: #ddd6e5; background: #f3f0f7; }
+.dark .language-switch--labelled .language-switch__choice:has(input:checked) { border-color: #65566f; background: #393240; }
+@media(max-width:640px) { .language-switch--labelled .language-switch__choice { width: 44px; height: 44px; } }

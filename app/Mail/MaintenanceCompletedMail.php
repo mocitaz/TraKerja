@@ -31,7 +31,7 @@ class MaintenanceCompletedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Pemberitahuan: Pemeliharaan Sistem Selesai - TraKerja Siap Digunakan',
+            subject: __('Pemberitahuan: Pemeliharaan Sistem Selesai - TraKerja Siap Digunakan'),
         );
     }
 

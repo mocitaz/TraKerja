@@ -15,7 +15,7 @@ class SendVerificationReminders extends Command
      *
      * @var string
      */
-    protected $signature = 'email:send-verification-reminders 
+    protected $signature = 'email:send-verification-reminders
                             {--min-days=3 : Minimum days after registration}
                             {--max-reminders=3 : Maximum number of reminders per user}
                             {--reminder-interval=3 : Days between reminders}
@@ -37,14 +37,14 @@ class SendVerificationReminders extends Command
         $maxReminders = (int) $this->option('max-reminders');
         $reminderInterval = (int) $this->option('reminder-interval');
         $dryRun = $this->option('dry-run');
-        
+
         $this->info("🔍 Looking for users who registered at least {$minDays} days ago without email verification...");
         $this->info("📋 Settings: Max {$maxReminders} reminders, interval {$reminderInterval} days");
         $this->newLine();
-        
+
         // Calculate cutoff date (users registered at least X days ago)
         $cutoffDate = Carbon::now()->subDays($minDays);
-        
+
         // Find users who:
         // 1. Registered at least X days ago (created_at <= cutoff)
         // 2. Email not verified
@@ -63,36 +63,36 @@ class SendVerificationReminders extends Command
             })
             ->orderBy('created_at', 'asc')
             ->get();
-        
+
         if ($users->isEmpty()) {
             $this->info("✅ No users found who need verification reminders.");
             return 0;
         }
-        
+
         $this->info("📧 Found {$users->count()} user(s) who need verification reminders:");
         $this->newLine();
-        
+
         $successCount = 0;
         $failCount = 0;
         $skippedCount = 0;
-        
+
         foreach ($users as $user) {
             $registeredDaysAgo = $user->created_at->diffInDays(now());
             $remindersSent = $user->verification_reminder_count ?? 0;
-            $lastSent = $user->last_verification_reminder_sent_at 
-                ? $user->last_verification_reminder_sent_at->diffForHumans() 
+            $lastSent = $user->last_verification_reminder_sent_at
+                ? $user->last_verification_reminder_sent_at->diffForHumans()
                 : 'never';
-            
+
             $this->line("  • {$user->name} ({$user->email})");
             $this->line("    Registered: {$registeredDaysAgo} days ago | Reminders sent: {$remindersSent} | Last sent: {$lastSent}");
-            
+
             // Check if we should skip this user
             if ($remindersSent >= $maxReminders) {
                 $this->line("    ⏭️  Skipped - Max reminders reached");
                 $skippedCount++;
                 continue;
             }
-            
+
             // Check interval (if reminder was sent before)
             if ($user->last_verification_reminder_sent_at) {
                 $daysSinceLastReminder = $user->last_verification_reminder_sent_at->diffInDays(now());
@@ -102,21 +102,21 @@ class SendVerificationReminders extends Command
                     continue;
                 }
             }
-            
+
             if ($dryRun) {
                 $this->line("    [DRY RUN] Would send email to {$user->email}");
                 $successCount++;
                 continue;
             }
-            
+
             try {
-                Mail::to($user->email)->send(new EmailVerificationReminderMail($user));
-                
+                Mail::to($user)->send(new EmailVerificationReminderMail($user));
+
                 // Update tracking fields
                 $user->last_verification_reminder_sent_at = now();
                 $user->verification_reminder_count = $remindersSent + 1;
                 $user->save();
-                
+
                 $this->line("    ✅ Reminder sent successfully (#{$user->verification_reminder_count})");
                 $successCount++;
             } catch (\Exception $e) {
@@ -125,7 +125,7 @@ class SendVerificationReminders extends Command
                 $failCount++;
             }
         }
-        
+
         $this->newLine();
         $this->info("📊 Summary:");
         $this->info("  • Total users found: {$users->count()}");
@@ -136,14 +136,14 @@ class SendVerificationReminders extends Command
         if ($failCount > 0) {
             $this->error("  • Failed: {$failCount}");
         }
-        
+
         if ($dryRun) {
             $this->warn("⚠️  This was a DRY RUN - No emails were actually sent.");
             $this->info("💡 Run without --dry-run to send emails.");
         } else {
             $this->info("✅ Email verification reminders sent successfully!");
         }
-        
+
         return 0;
     }
 }

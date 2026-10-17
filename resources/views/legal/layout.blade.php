@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,10 +42,10 @@
             if (!btn) return;
             if (isDark) {
                 btn.setAttribute('title', 'Mode Gelap aktif (klik untuk ganti ke Mode Terang)');
-                btn.setAttribute('aria-label', 'Mode gelap aktif, klik untuk beralih ke mode terang');
+                btn.setAttribute('aria-label', @js(__('Mode gelap aktif, klik untuk beralih ke mode terang')));
             } else {
                 btn.setAttribute('title', 'Mode Terang aktif (klik untuk ganti ke Mode Gelap)');
-                btn.setAttribute('aria-label', 'Mode terang aktif, klik untuk beralih ke mode gelap');
+                btn.setAttribute('aria-label', @js(__('Mode terang aktif, klik untuk beralih ke mode gelap')));
             }
         }
 
@@ -90,15 +90,16 @@
             }
         });
     </script>
+    @include('partials.locale-config')
 </head>
 <body class="utility-page legal-page bg-[#fdfcf9] dark:bg-[#131314] text-[#34313d] dark:text-[#f0f4f9] transition-colors duration-200 relative">
     <div class="gemini-ambient-glow" aria-hidden="true"></div>
-    <a class="utility-skip" href="#document">Skip to document</a>
+    <a class="utility-skip" href="#document">{{ __('Skip to document') }}</a>
     <div class="utility-shell legal-shell">
         <header class="legal-topbar">
-            <a class="legal-brand" href="{{ url('/') }}" aria-label="TraKerja home">
+            <a class="legal-brand" href="{{ url('/') }}" aria-label="{{ __('TraKerja home') }}">
                 <img src="{{ asset('images/icon.png') }}" alt="" width="24" height="24">
-                <span>TraKerja</span>
+                <span>{{ __('TraKerja') }}</span>
             </a>
             <div class="legal-topbar-actions">
                 <!-- Theme Toggle Pill -->
@@ -106,33 +107,33 @@
                     id="legal-theme-toggle-btn"
                     onclick="toggleLegalTheme()"
                     class="legal-theme-toggle-btn"
-                    title="Beralih tema (Dark/Light)"
-                    aria-label="Beralih mode gelap atau terang">
+                    title="{{ __('Beralih tema (Dark/Light)') }}"
+                    aria-label="{{ __('Beralih mode gelap atau terang') }}">
                     <i class="ph-bold ph-sun legal-icon-sun" aria-hidden="true"></i>
                     <i class="ph-bold ph-moon legal-icon-moon" aria-hidden="true"></i>
                 </button>
-                <a class="legal-back-link" href="{{ url('/') }}">Back to home <span aria-hidden="true">→</span></a>
+                <a class="legal-back-link" href="{{ url('/') }}">{{ __('Back to home') }} <span aria-hidden="true">→</span></a>
             </div>
         </header>
         <main id="document" tabindex="-1">
             <header class="legal-heading">
-                <p class="legal-eyebrow">Legal information</p>
+                <p class="legal-eyebrow">{{ __('Legal information') }}</p>
                 <h1>@yield('title')</h1>
                 <p class="legal-description">@yield('description')</p>
             </header>
-            <nav class="legal-tabs" aria-label="Legal documents">
+            <nav class="legal-tabs" aria-label="{{ __('Legal documents') }}">
                 <a href="{{ url('/terms-of-service') }}" @if(trim($__env->yieldContent('document')) === 'terms-of-service') aria-current="page" @endif>Terms of Service</a>
                 <a href="{{ url('/privacy-policy') }}" @if(trim($__env->yieldContent('document')) === 'privacy-policy') aria-current="page" @endif>Privacy Policy</a>
             </nav>
             <div class="legal-grid">
                 <aside class="legal-sidebar">
-                    <nav aria-label="On this page">
-                        <h2>On this page</h2>
+                    <nav aria-label="{{ __('On this page') }}">
+                        <h2>{{ __('On this page') }}</h2>
                         @yield('contents')
                     </nav>
                     <div class="legal-contact">
-                        <h2>Have a question?</h2>
-                        <p>Contact the TraKerja team.</p>
+                        <h2>{{ __('Have a question?') }}</h2>
+                        <p>{{ __('Contact the TraKerja team.') }}</p>
                         <a href="mailto:trakerja@teknalogi.id">trakerja@teknalogi.id <span aria-hidden="true">↗</span></a>
                     </div>
                 </aside>
@@ -141,15 +142,15 @@
                 </article>
             </div>
         </main>
-        <footer class="legal-footer">
+        <footer class="legal-footer"><x-language-switch location="legal" />
             <div>
-                <p>© {{ now()->year }} TraKerja. All rights reserved.</p>
-                <p>PT Teknalogi Transformasi Digital</p>
+                <p>{{ __('© :value1 TraKerja. All rights reserved.', ['value1' => (now()->year)]) }}</p>
+                <p>{{ __('PT Teknalogi Transformasi Digital') }}</p>
             </div>
-            <nav aria-label="Legal">
-                <a href="{{ url('/privacy-policy') }}">Privacy Policy</a>
-                <a href="{{ url('/terms-of-service') }}">Terms of Service</a>
-                <a href="#document">Back to top ↑</a>
+            <nav aria-label="{{ __('Legal') }}">
+                <a href="{{ url('/privacy-policy') }}">{{ __('Privacy Policy') }}</a>
+                <a href="{{ url('/terms-of-service') }}">{{ __('Terms of Service') }}</a>
+                <a href="#document">{{ __('Back to top ↑') }}</a>
             </nav>
         </footer>
     </div>

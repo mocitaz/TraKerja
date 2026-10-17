@@ -31,7 +31,7 @@ class LinkedInAuthController extends Controller
                 'file'    => $e->getFile() . ':' . $e->getLine(),
             ]);
             return redirect()->route('login')
-                ->withErrors(['email' => 'Login dengan LinkedIn tidak tersedia saat ini. Silakan coba cara lain.']);
+                ->withErrors(['email' => __('Login dengan LinkedIn tidak tersedia saat ini. Silakan coba cara lain.')]);
         }
     }
 
@@ -44,7 +44,7 @@ class LinkedInAuthController extends Controller
             $linkedInUser = Socialite::driver('linkedin-openid')->user();
         } catch (InvalidStateException $e) {
             return redirect()->route('login')
-                ->withErrors(['email' => 'Sesi login LinkedIn tidak valid atau sudah berakhir. Silakan mulai login kembali.']);
+                ->withErrors(['email' => __('Sesi login LinkedIn tidak valid atau sudah berakhir. Silakan mulai login kembali.')]);
         } catch (\Exception $e) {
             \Log::error('LinkedIn OAuth callback error', [
                 'class'   => get_class($e),
@@ -52,7 +52,7 @@ class LinkedInAuthController extends Controller
                 'file'    => $e->getFile() . ':' . $e->getLine(),
             ]);
             return redirect()->route('login')
-                ->withErrors(['email' => 'Login dengan LinkedIn gagal. Silakan coba lagi.']);
+                ->withErrors(['email' => __('Login dengan LinkedIn gagal. Silakan coba lagi.')]);
         }
 
         // Cari user berdasarkan linkedin_id terlebih dahulu
@@ -116,7 +116,7 @@ class LinkedInAuthController extends Controller
 
         // Kirim welcome email
         try {
-            Mail::to($newUser->email)->send(new WelcomeMail($newUser));
+            Mail::to($newUser)->send(new WelcomeMail($newUser));
         } catch (\Exception $e) {
             \Log::error('Failed to send welcome email (LinkedIn OAuth): ' . $e->getMessage());
         }

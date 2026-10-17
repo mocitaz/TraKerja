@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>TraKerja - Platform Pelacakan & Manajemen Lamaran Kerja ala Notion</title>
+    <title>{{ __('TraKerja - Platform Pelacakan & Manajemen Lamaran Kerja ala Notion') }}</title>
     <meta name="description"
         content="TraKerja adalah platform ATS & tracker lamaran kerja gratis. Pantau status lamaran, buat CV standar ATS, dan dapatkan insight analitik untuk karir impian Anda.">
     <meta name="keywords"
@@ -228,6 +228,7 @@
             transform: translateY(0);
         }
     </style>
+    @include('partials.locale-config')
 </head>
 
 <body class="antialiased workspace-shell welcome-page bg-[#fdfcf9] dark:bg-[#131314] text-[#30313b] dark:text-[#f0f4f9] transition-colors duration-200">
@@ -236,20 +237,21 @@
     {{-- ============ NAVIGATION (MATCHING USER WORKSPACE TOPBAR) ============ --}}
     <header id="workspace-navigation" class="workspace-navigation fixed top-0 inset-x-0 z-50 pointer-events-none"
         x-data="{ mobileOpen: false }">
-        <nav class="workspace-topbar pointer-events-auto" aria-label="Main navigation">
-            <a href="{{ url('/') }}" class="workspace-brand" aria-label="TraKerja home">
+        <nav class="workspace-topbar pointer-events-auto" aria-label="{{ __('Main navigation') }}">
+            <a href="{{ url('/') }}" class="workspace-brand" aria-label="{{ __('TraKerja home') }}">
                 <img src="{{ asset('images/icon.png') }}" alt="" width="28" height="28">
-                <span>TraKerja</span>
+                <span>{{ __('TraKerja') }}</span>
             </a>
 
             <div class="workspace-desktop-links">
-                <a href="#how-it-works" class="workspace-nav-link">How it Works</a>
-                <a href="#pricing" class="workspace-nav-link">Pricing</a>
-                <a href="#testimonials" class="workspace-nav-link">Testimonials</a>
-                <a href="#faq" class="workspace-nav-link">FAQ</a>
+                <a href="#how-it-works" class="workspace-nav-link">{{ __('How it Works') }}</a>
+                <a href="#pricing" class="workspace-nav-link">{{ __('Pricing') }}</a>
+                <a href="#testimonials" class="workspace-nav-link">{{ __('Testimonials') }}</a>
+                <a href="#faq" class="workspace-nav-link">{{ __('FAQ') }}</a>
             </div>
 
             <div class="workspace-account-actions">
+                <div class="public-language-inline"><x-language-switch location="public" /></div>
                 <!-- Theme Toggle Button -->
                 <button type="button"
                         x-data="{
@@ -267,8 +269,8 @@
                         }"
                         @click="toggle()"
                         class="theme-toggle-btn"
-                        aria-label="Toggle dark/light mode"
-                        title="Toggle dark/light mode">
+                        aria-label="{{ __('Toggle dark/light mode') }}"
+                        title="{{ __('Toggle dark/light mode') }}">
                     <i class="ph-bold ph-sun theme-icon-sun" aria-hidden="true"></i>
                     <i class="ph-bold ph-moon theme-icon-moon" aria-hidden="true"></i>
                 </button>
@@ -276,41 +278,41 @@
                 <button type="button" x-ref="mobileButton" @click="mobileOpen = !mobileOpen"
                     aria-controls="workspace-mobile-menu" aria-expanded="false" :aria-expanded="mobileOpen.toString()"
                     class="workspace-mobile-toggle">
-                    <i class="ph" :class="mobileOpen ? 'ph-x' : 'ph-list'" aria-hidden="true"></i><span>Menu</span>
+                    <i class="ph" :class="mobileOpen ? 'ph-x' : 'ph-list'" aria-hidden="true"></i><span>{{ __('Menu') }}</span>
                 </button>
 
                 @auth
                     <a href="{{ url('/dashboard') }}" class="workspace-nav-link"
                         style="color: #fff; background: #5b3d8c; font-weight: 600;">
-                        <span>Dashboard</span>
+                        <span>{{ __('Dashboard') }}</span>
                     </a>
                 @else
                     <a href="{{ route('login') }}" class="workspace-nav-link hidden sm:inline-flex">
-                        Log in
+                        {{ __('Log in') }}
                     </a>
                     <a href="{{ route('register') }}" class="workspace-nav-link"
                         style="color: #fff; background: #5b3d8c; font-weight: 600;">
-                        Get Started
+                        {{ __('Get Started') }}
                     </a>
                 @endauth
             </div>
         </nav>
 
         <nav id="workspace-mobile-menu" x-cloak x-show="mobileOpen" x-transition.opacity.duration.150ms
-            class="workspace-mobile-menu pointer-events-auto" aria-label="Mobile navigation"
+            class="workspace-mobile-menu pointer-events-auto" aria-label="{{ __('Mobile navigation') }}"
             @click.outside="mobileOpen = false" @keydown.escape.stop="mobileOpen = false; $refs.mobileButton.focus()">
-            <a href="#how-it-works" @click="mobileOpen = false" class="workspace-nav-link">How it Works</a>
-            <a href="#pricing" @click="mobileOpen = false" class="workspace-nav-link">Pricing</a>
-            <a href="#testimonials" @click="mobileOpen = false" class="workspace-nav-link">Testimonials</a>
-            <a href="#faq" @click="mobileOpen = false" class="workspace-nav-link">FAQ</a>
+            <a href="#how-it-works" @click="mobileOpen = false" class="workspace-nav-link">{{ __('How it Works') }}</a>
+            <a href="#pricing" @click="mobileOpen = false" class="workspace-nav-link">{{ __('Pricing') }}</a>
+            <a href="#testimonials" @click="mobileOpen = false" class="workspace-nav-link">{{ __('Testimonials') }}</a>
+            <a href="#faq" @click="mobileOpen = false" class="workspace-nav-link">{{ __('FAQ') }}</a>
             @auth
                 <a href="{{ url('/dashboard') }}" @click="mobileOpen = false"
                     class="workspace-nav-link col-span-2 text-center"
-                    style="color: #fff; background: #5b3d8c; font-weight: 600;">Dashboard</a>
+                    style="color: #fff; background: #5b3d8c; font-weight: 600;">{{ __('Dashboard') }}</a>
             @else
-                <a href="{{ route('login') }}" @click="mobileOpen = false" class="workspace-nav-link text-center">Log in</a>
+                <a href="{{ route('login') }}" @click="mobileOpen = false" class="workspace-nav-link text-center">{{ __('Log in') }}</a>
                 <a href="{{ route('register') }}" @click="mobileOpen = false" class="workspace-nav-link text-center"
-                    style="color: #fff; background: #5b3d8c; font-weight: 600;">Get Started</a>
+                    style="color: #fff; background: #5b3d8c; font-weight: 600;">{{ __('Get Started') }}</a>
             @endauth
         </nav>
     </header>
@@ -366,35 +368,31 @@
             </div>
 
             <h1 class="notion-h1 text-5xl sm:text-7xl text-[#1a191e] mb-8 leading-[1.1] tracking-tight reveal">
-                Where job seekers &amp; careers <br class="hidden sm:inline">
+                {{ __('Where job seekers & careers') }} <br class="hidden sm:inline">
                 <span
                     class="inline-block mt-5 px-6 py-2.5 bg-[#faecd4]/60 rounded-full border border-[#f2d29e] text-[#30313b] select-none shadow-3xs">
-                    Grow together.
+                    {{ __('Grow together.') }}
                 </span>
             </h1>
 
             <p class="text-base sm:text-lg text-[#545761] max-w-2xl mx-auto mb-10 font-medium leading-relaxed reveal">
-                A unified, minimalist workspace to manage your entire job application pipeline, build ATS-optimized
-                resumes, and accelerate your career using AI.
+                {{ __('A unified, minimalist workspace to manage your entire job application pipeline, build ATS-optimized resumes, and accelerate your career using AI.') }}
             </p>
 
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-12 reveal">
                 @auth
                     <a href="{{ url('/dashboard') }}"
-                        class="px-6 py-3 bg-[#5b3d8c] hover:bg-[#4a3173] active:bg-[#3d2760] text-white rounded-xl text-base font-bold transition shadow-sm w-full sm:w-auto">Open
-                        Dashboard</a>
+                        class="px-6 py-3 bg-[#5b3d8c] hover:bg-[#4a3173] active:bg-[#3d2760] text-white rounded-xl text-base font-bold transition shadow-sm w-full sm:w-auto">{{ __('Open Dashboard') }}</a>
                 @else
                     <a href="{{ route('register') }}"
-                        class="px-6 py-3 bg-[#5b3d8c] hover:bg-[#4a3173] active:bg-[#3d2760] text-white rounded-xl text-base font-bold transition shadow-sm w-full sm:w-auto">Get
-                        TraKerja Free</a>
+                        class="px-6 py-3 bg-[#5b3d8c] hover:bg-[#4a3173] active:bg-[#3d2760] text-white rounded-xl text-base font-bold transition shadow-sm w-full sm:w-auto">{{ __('Get TraKerja Free') }}</a>
                     <a href="#how-it-works"
-                        class="px-6 py-3 bg-white text-[#30313b] border border-[#dedbd6] hover:border-zinc-400 rounded-xl text-base font-bold hover:bg-[#faf8f5] transition shadow-3xs w-full sm:w-auto">How
-                        It Works</a>
+                        class="px-6 py-3 bg-white text-[#30313b] border border-[#dedbd6] hover:border-zinc-400 rounded-xl text-base font-bold hover:bg-[#faf8f5] transition shadow-3xs w-full sm:w-auto">{{ __('How It Works') }}</a>
                 @endauth
             </div>
 
             <p class="text-xs text-[#70737d] font-bold uppercase tracking-wider reveal">
-                100% Free to Start • No Credit Card Required
+                {{ __('100% Free to Start • No Credit Card Required') }}
             </p>
         </div>
 
@@ -411,7 +409,7 @@
                         </div>
                         <div
                             class="mx-auto bg-white/80 border border-[#dedbd6] rounded-md text-[10px] text-zinc-500 font-bold px-12 py-0.5 select-none truncate max-w-xs md:max-w-md">
-                            trakerja.com/dashboard
+                            {{ __('trakerja.com/dashboard') }}
                         </div>
                     </div>
                     <!-- Simulated Premium Notion-Style Dashboard Layout -->
@@ -429,20 +427,19 @@
                             <!-- Main Header Content -->
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-center gap-1.5">
-                                    <h1 class="text-[11px] font-bold text-zinc-800 tracking-tight">Dashboard Overview
+                                    <h1 class="text-[11px] font-bold text-zinc-800 tracking-tight">{{ __('Dashboard Overview') }}
                                     </h1>
                                     <span
-                                        class="px-1 py-0.2 bg-emerald-50 text-emerald-700 text-[7px] font-bold uppercase rounded border border-emerald-100/65">Live</span>
+                                        class="px-1 py-0.2 bg-emerald-50 text-emerald-700 text-[7px] font-bold uppercase rounded border border-emerald-100/65">{{ __('Live') }}</span>
                                 </div>
                                 <div class="flex items-center justify-between gap-2 mt-0.5">
                                     <p class="text-[8px] text-zinc-400">
-                                        Welcome back, <span class="font-bold text-zinc-650">amib</span>! Here is your
-                                        career momentum and tracking progress.
+                                        {{ __('Welcome back,') }} <span class="font-bold text-zinc-650">{{ __('amib') }}</span>{{ __('! Here is your career momentum and tracking progress.') }}
                                     </p>
                                     <div
                                         class="flex items-center gap-1 text-[8.5px] font-semibold text-zinc-550 shrink-0">
                                         <i class="ph ph-calendar-blank text-zinc-450"></i>
-                                        <span>Friday, 10 July 2026</span>
+                                        <span>{{ __('Friday, 10 July 2026') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -460,9 +457,8 @@
                                     <div class="min-w-0">
                                         <p
                                             class="text-[5px] font-bold text-zinc-400 uppercase tracking-wider leading-none">
-                                            On Process</p>
-                                        <p class="text-[7px] text-zinc-500 font-semibold mt-0.5 leading-none">Active
-                                            Apps</p>
+                                            {{ __('On Process') }}</p>
+                                        <p class="text-[7px] text-zinc-500 font-semibold mt-0.5 leading-none">{{ __('Active Apps') }}</p>
                                     </div>
                                 </div>
                                 <p class="text-xs font-bold text-zinc-800 leading-none">12</p>
@@ -478,9 +474,8 @@
                                     <div class="min-w-0">
                                         <p
                                             class="text-[5px] font-bold text-zinc-400 uppercase tracking-wider leading-none">
-                                            Success</p>
-                                        <p class="text-[7px] text-zinc-500 font-semibold mt-0.5 leading-none">Offers &
-                                            Recs</p>
+                                            {{ __('Success') }}</p>
+                                        <p class="text-[7px] text-zinc-500 font-semibold mt-0.5 leading-none">{{ __('Offers & Recs') }}</p>
                                     </div>
                                 </div>
                                 <p class="text-xs font-bold text-zinc-800 leading-none">3</p>
@@ -496,8 +491,8 @@
                                     <div class="min-w-0">
                                         <p
                                             class="text-[5px] font-bold text-zinc-400 uppercase tracking-wider leading-none">
-                                            Declined</p>
-                                        <p class="text-[7px] text-zinc-500 font-semibold mt-0.5 leading-none">Rejected
+                                            {{ __('Declined') }}</p>
+                                        <p class="text-[7px] text-zinc-500 font-semibold mt-0.5 leading-none">{{ __('Rejected') }}
                                         </p>
                                     </div>
                                 </div>
@@ -514,9 +509,8 @@
                                     <div class="min-w-0">
                                         <p
                                             class="text-[5px] font-bold text-zinc-400 uppercase tracking-wider leading-none">
-                                            Interviews</p>
-                                        <p class="text-[7px] text-zinc-500 font-semibold mt-0.5 leading-none">Total
-                                            Scheduled</p>
+                                            {{ __('Interviews') }}</p>
+                                        <p class="text-[7px] text-zinc-500 font-semibold mt-0.5 leading-none">{{ __('Total Scheduled') }}</p>
                                     </div>
                                 </div>
                                 <p class="text-xs font-bold text-zinc-800 leading-none">4</p>
@@ -532,60 +526,53 @@
                                     <div class="flex items-center justify-between mb-3">
                                         <div>
                                             <span
-                                                class="font-bold text-zinc-800 text-[9px] uppercase tracking-wider">Recent
-                                                Applications</span>
-                                            <p class="text-[7px] text-zinc-400 mt-0.5">Your latest job submissions</p>
+                                                class="font-bold text-zinc-800 text-[9px] uppercase tracking-wider">{{ __('Recent Applications') }}</span>
+                                            <p class="text-[7px] text-zinc-400 mt-0.5">{{ __('Your latest job submissions') }}</p>
                                         </div>
                                         <span
-                                            class="px-2 py-0.5 bg-white border border-zinc-200 rounded text-[7px] font-bold text-zinc-650 hover:bg-zinc-50 transition cursor-pointer">View
-                                            Tracker →</span>
+                                            class="px-2 py-0.5 bg-white border border-zinc-200 rounded text-[7px] font-bold text-zinc-650 hover:bg-zinc-50 transition cursor-pointer">{{ __('View Tracker →') }}</span>
                                     </div>
                                     <div class="space-y-1.5">
                                         <div
                                             class="bg-zinc-50 border border-zinc-200/50 p-2 rounded flex items-center justify-between">
                                             <div class="flex items-center gap-1.5">
-                                                <span class="font-bold text-zinc-800 text-[10px]">Gojek</span>
+                                                <span class="font-bold text-zinc-800 text-[10px]">{{ __('Gojek') }}</span>
                                                 <span class="text-zinc-300 text-[8px]">•</span>
-                                                <span class="text-zinc-550 font-semibold text-[9px]">Product
-                                                    Designer</span>
+                                                <span class="text-zinc-550 font-semibold text-[9px]">{{ __('Product Designer') }}</span>
                                             </div>
                                             <div class="flex items-center gap-1.5">
                                                 <span
-                                                    class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-amber-50 text-amber-700 border border-amber-100">HR
-                                                    - Interview</span>
+                                                    class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-amber-50 text-amber-700 border border-amber-100">{{ __('HR - Interview') }}</span>
                                                 <span
-                                                    class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-blue-50 text-blue-700 border border-blue-100">On
-                                                    Process</span>
+                                                    class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-blue-50 text-blue-700 border border-blue-100">{{ __('On Process') }}</span>
                                             </div>
                                         </div>
                                         <div
                                             class="bg-zinc-50 border border-zinc-200/50 p-2 rounded flex items-center justify-between">
                                             <div class="flex items-center gap-1.5">
-                                                <span class="font-bold text-zinc-800 text-[10px]">Tokopedia</span>
+                                                <span class="font-bold text-zinc-800 text-[10px]">{{ __('Tokopedia') }}</span>
                                                 <span class="text-zinc-300 text-[8px]">•</span>
-                                                <span class="text-zinc-550 font-semibold text-[9px]">Frontend
-                                                    Engineer</span>
+                                                <span class="text-zinc-550 font-semibold text-[9px]">{{ __('Frontend Engineer') }}</span>
                                             </div>
                                             <div class="flex items-center gap-1.5">
                                                 <span
-                                                    class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-blue-50 text-blue-700 border border-blue-100">Applied</span>
+                                                    class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-blue-50 text-blue-700 border border-blue-100">{{ __('Applied') }}</span>
                                                 <span
-                                                    class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-blue-50 text-blue-700 border border-blue-100">On
-                                                    Process</span>
+                                                    class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-blue-50 text-blue-700 border border-blue-100">{{ __('On Process') }}</span>
                                             </div>
                                         </div>
                                         <div
                                             class="bg-zinc-50 border border-zinc-200/50 p-2 rounded flex items-center justify-between">
                                             <div class="flex items-center gap-1.5">
-                                                <span class="font-bold text-zinc-800 text-[10px]">Traveloka</span>
+                                                <span class="font-bold text-zinc-800 text-[10px]">{{ __('Traveloka') }}</span>
                                                 <span class="text-zinc-300 text-[8px]">•</span>
-                                                <span class="text-zinc-550 font-semibold text-[9px]">UI Designer</span>
+                                                <span class="text-zinc-550 font-semibold text-[9px]">{{ __('UI Designer') }}</span>
                                             </div>
                                             <div class="flex items-center gap-1.5">
                                                 <span
-                                                    class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-emerald-50 text-emerald-700 border border-emerald-100">Offering</span>
+                                                    class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-emerald-50 text-emerald-700 border border-emerald-100">{{ __('Offering') }}</span>
                                                 <span
-                                                    class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-emerald-50 text-emerald-700 border border-emerald-100">Accepted</span>
+                                                    class="px-1.5 py-0.2 rounded text-[7px] font-bold uppercase bg-emerald-50 text-emerald-700 border border-emerald-100">{{ __('Accepted') }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -597,26 +584,22 @@
                                 class="bg-white rounded border border-zinc-200/60 p-3 shadow-3xs flex flex-col justify-between">
                                 <div>
                                     <div class="flex items-center justify-between mb-2">
-                                        <span class="font-bold text-zinc-850 text-[9px] uppercase tracking-wider">Weekly
-                                            Target</span>
+                                        <span class="font-bold text-zinc-850 text-[9px] uppercase tracking-wider">{{ __('Weekly Target') }}</span>
                                     </div>
-                                    <p class="text-[7.5px] text-zinc-400 font-medium leading-relaxed mb-3">Keep up your
-                                        momentum this week!</p>
+                                    <p class="text-[7.5px] text-zinc-400 font-medium leading-relaxed mb-3">{{ __('Keep up your momentum this week!') }}</p>
                                     <div class="space-y-2.5">
                                         <div class="flex justify-between text-[8px] font-bold text-zinc-650">
-                                            <span>Progress</span>
-                                            <span class="text-emerald-700 font-extrabold">8 / 10 applied</span>
+                                            <span>{{ __('Progress') }}</span>
+                                            <span class="text-emerald-700 font-extrabold">{{ __('8 / 10 applied') }}</span>
                                         </div>
                                         <div class="h-1.5 w-full bg-zinc-100 rounded-full overflow-hidden">
                                             <div class="h-full bg-emerald-500 rounded-full" style="width: 80%;"></div>
                                         </div>
                                         <div class="flex flex-wrap gap-1.5 pt-1.5 select-none">
                                             <span
-                                                class="px-1 py-0.2 bg-blue-50 text-blue-700 border border-blue-100 text-[6.5px] font-bold rounded">3
-                                                applied</span>
+                                                class="px-1 py-0.2 bg-blue-50 text-blue-700 border border-blue-100 text-[6.5px] font-bold rounded">{{ __('3 applied') }}</span>
                                             <span
-                                                class="px-1 py-0.2 bg-amber-50 text-amber-700 border border-amber-100 text-[6.5px] font-bold rounded">2
-                                                interview</span>
+                                                class="px-1 py-0.2 bg-amber-50 text-amber-700 border border-amber-100 text-[6.5px] font-bold rounded">{{ __('2 interview') }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -627,14 +610,12 @@
                         <div class="bg-white rounded border border-zinc-200/60 p-3 shadow-3xs">
                             <div class="flex items-center justify-between mb-2.5">
                                 <div>
-                                    <span class="font-bold text-zinc-800 text-[9px] uppercase tracking-wider">Job Search
-                                        Momentum</span>
-                                    <p class="text-[7px] text-zinc-400 font-medium mt-0.5">Visualizing your daily
-                                        application consistency over the last 12 months</p>
+                                    <span class="font-bold text-zinc-800 text-[9px] uppercase tracking-wider">{{ __('Job Search Momentum') }}</span>
+                                    <p class="text-[7px] text-zinc-400 font-medium mt-0.5">{{ __('Visualizing your daily application consistency over the last 12 months') }}</p>
                                 </div>
                                 <div
                                     class="text-[7px] font-semibold bg-zinc-50 border border-zinc-200 px-1.5 py-0.5 rounded text-zinc-500">
-                                    Avg: <strong class="text-zinc-700">1.2</strong> / day
+                                    {{ __('Avg:') }} <strong class="text-zinc-700">1.2</strong> {{ '/ day' }}
                                 </div>
                             </div>
 
@@ -883,13 +864,13 @@
         </div>
     </section>
 
-    
+
 
     {{-- ============ HOW IT WORKS (Notion interactive switcher) ============ --}}
     <section id="how-it-works" class="py-20 sm:py-24 bg-[#fdfcf9] dark:bg-[#131314] border-b border-[#dedbd6]/80 dark:border-white/10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-14 reveal">
-                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 dark:text-[#f0f4f9]">Start in 3 simple steps.</h2>
+                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 dark:text-[#f0f4f9]">{{ __('Start in 3 simple steps.') }}</h2>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -911,11 +892,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="font-extrabold text-zinc-900 dark:text-[#f0f4f9] text-xs tracking-tight">Register & Set Career
-                                    Profile</h3>
-                                <p class="text-[10px] font-semibold text-zinc-600 dark:text-[#94a3b8] mt-1 leading-relaxed">Fill out your
-                                    profile once. This information is automatically used to customize application
-                                    documents.</p>
+                                <h3 class="font-extrabold text-zinc-900 dark:text-[#f0f4f9] text-xs tracking-tight">{{ __('Register & Set Career Profile') }}</h3>
+                                <p class="text-[10px] font-semibold text-zinc-600 dark:text-[#94a3b8] mt-1 leading-relaxed">{{ __('Fill out your profile once. This information is automatically used to customize application documents.') }}</p>
                             </div>
                         </div>
                     </div>
@@ -936,9 +914,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="font-bold text-zinc-700 dark:text-zinc-300 text-xs tracking-tight">Track Job Applications</h3>
-                                <p class="text-[10px] font-semibold text-zinc-500 dark:text-[#94a3b8] mt-1 leading-relaxed">Add applications
-                                    manually or via PDF upload. Monitor interview status and job offers easily.</p>
+                                <h3 class="font-bold text-zinc-700 dark:text-zinc-300 text-xs tracking-tight">{{ __('Track Job Applications') }}</h3>
+                                <p class="text-[10px] font-semibold text-zinc-500 dark:text-[#94a3b8] mt-1 leading-relaxed">{{ __('Add applications manually or via PDF upload. Monitor interview status and job offers easily.') }}</p>
                             </div>
                         </div>
                     </div>
@@ -957,10 +934,9 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="font-bold text-zinc-700 dark:text-zinc-300 text-xs tracking-tight">Optimize & Win Your Dream Job
+                                <h3 class="font-bold text-zinc-700 dark:text-zinc-300 text-xs tracking-tight">{{ __('Optimize & Win Your Dream Job') }}
                                 </h3>
-                                <p class="text-[10px] font-semibold text-zinc-500 dark:text-[#94a3b8] mt-1 leading-relaxed">Use career
-                                    analytics, AI CV Analyzer, and Cover Letter Generator to accelerate your path.</p>
+                                <p class="text-[10px] font-semibold text-zinc-500 dark:text-[#94a3b8] mt-1 leading-relaxed">{{ __('Use career analytics, AI CV Analyzer, and Cover Letter Generator to accelerate your path.') }}</p>
                             </div>
                         </div>
                     </div>
@@ -976,14 +952,14 @@
                             <div
                                 class="relative w-full h-full rounded-t-xl overflow-hidden bg-[#fdfcf9] dark:bg-[#131314] border border-zinc-200 dark:border-zinc-700/60">
                                 <img id="how-it-works-img-1" src="{{ asset('images/sslogin.png') }}"
-                                    alt="Register & setup profile"
+                                    alt="{{ __('Register & setup profile') }}"
                                     class="how-it-works-image absolute inset-0 w-full h-full object-cover object-top rounded-t-xl transition-opacity duration-300"
                                     style="opacity:1;">
                                 <img id="how-it-works-img-2" src="{{ asset('images/sstrack.png') }}"
-                                    alt="Manage applications"
+                                    alt="{{ __('Manage applications') }}"
                                     class="how-it-works-image absolute inset-0 w-full h-full object-cover object-top rounded-t-xl transition-opacity duration-300 hidden opacity-0">
                                 <img id="how-it-works-img-3" src="{{ asset('images/ssoptimasi.png') }}"
-                                    alt="Analyze & optimize"
+                                    alt="{{ __('Analyze & optimize') }}"
                                     class="how-it-works-image absolute inset-0 w-full h-full object-cover object-top rounded-t-xl transition-opacity duration-300 hidden opacity-0">
                             </div>
                         </div>
@@ -1010,32 +986,31 @@
             </div>
 
             <h2 class="text-3xl sm:text-4xl font-black text-zinc-900 tracking-tight mt-4 mb-4 leading-tight">
-                Join Our Job Seeker Community
+                {{ __('Join Our Job Seeker Community') }}
             </h2>
 
             <p class="text-xs sm:text-sm font-semibold text-zinc-500 mb-8 leading-relaxed max-w-xl mx-auto">
-                Stay ahead with real-time job alerts, daily vacancy updates, CV reviews with peers, and share strategic
-                career insights with thousands of active candidates instantly.
+                {{ __('Stay ahead with real-time job alerts, daily vacancy updates, CV reviews with peers, and share strategic career insights with thousands of active candidates instantly.') }}
             </p>
 
             <!-- Mock Community Members Avatars & Info -->
             <div class="flex flex-col items-center justify-center gap-3 mb-8">
                 <div class="flex items-center -space-x-2">
                     <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100&q=80"
-                        alt="Community Member"
+                        alt="{{ __('Community Member') }}"
                         class="w-7 h-7 rounded-full border-2 border-[#fdfcf9] dark:border-[#131314] object-cover shadow-3xs z-30">
                     <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=80"
-                        alt="Community Member"
+                        alt="{{ __('Community Member') }}"
                         class="w-7 h-7 rounded-full border-2 border-[#fdfcf9] dark:border-[#131314] object-cover shadow-3xs z-20">
                     <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&h=100&q=80"
-                        alt="Community Member"
+                        alt="{{ __('Community Member') }}"
                         class="w-7 h-7 rounded-full border-2 border-[#fdfcf9] dark:border-[#131314] object-cover shadow-3xs z-10">
                     <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&h=100&q=80"
-                        alt="Community Member"
+                        alt="{{ __('Community Member') }}"
                         class="w-7 h-7 rounded-full border-2 border-[#fdfcf9] dark:border-[#131314] object-cover shadow-3xs z-0">
                 </div>
                 <p class="text-[9.5px] font-black text-zinc-400 uppercase tracking-widest">
-                    ⚡️ Active discussions happening daily
+                    {{ __('⚡️ Active discussions happening daily') }}
                 </p>
             </div>
 
@@ -1043,7 +1018,7 @@
                 <a href="https://t.me/HubTrakerja" target="_blank" rel="noopener noreferrer"
                     class="px-8 py-3.5 bg-[#2383e2] hover:bg-[#1c72cb] text-white text-xs font-bold rounded-lg transition-colors shadow-3xs hover:shadow-2xs text-center flex items-center justify-center gap-2">
                     <i class="ph-bold ph-paper-plane-tilt text-sm"></i>
-                    Connect to t.me/HubTrakerja
+                    {{ __('Connect to t.me/HubTrakerja') }}
                 </a>
             </div>
         </div>
@@ -1053,7 +1028,7 @@
     <section class="py-20 sm:py-24 bg-[#fdfcf9] dark:bg-[#18191a] border-b border-[#dedbd6]/80 dark:border-white/10" id="pricing">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-14 reveal">
-                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 dark:text-[#f0f4f9] mt-3">Simple pricing. No hidden fees.</h2>
+                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-900 dark:text-[#f0f4f9] mt-3">{{ __('Simple pricing. No hidden fees.') }}</h2>
             </div>
 
             <!-- Pricing Grid (3 columns) -->
@@ -1064,74 +1039,62 @@
                     class="bento-card p-6 flex flex-col justify-between transition-all bg-white dark:bg-[#1e1f20] hover:border-zinc-400 dark:hover:border-white/20 border border-[#dedbd6] dark:border-white/10 shadow-3xs rounded-xl">
                     <div>
                         <div class="flex items-center justify-between">
-                            <h3 class="font-extrabold text-zinc-400 text-[10px] uppercase tracking-widest">Free Standard
+                            <h3 class="font-extrabold text-zinc-400 text-[10px] uppercase tracking-widest">{{ __('Free Standard') }}
                             </h3>
                             <span
-                                class="px-2 py-0.5 bg-zinc-100 dark:bg-[#282a2c] text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-white/10 text-[8px] font-bold rounded uppercase">Free</span>
+                                class="px-2 py-0.5 bg-zinc-100 dark:bg-[#282a2c] text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-white/10 text-[8px] font-bold rounded uppercase">{{ __('Free') }}</span>
                         </div>
-                        <p class="text-3xl font-black text-zinc-950 dark:text-[#f0f4f9] mt-4 mb-1">Free</p>
-                        <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-6">Lifetime Access</p>
+                        <p class="text-3xl font-black text-zinc-950 dark:text-[#f0f4f9] mt-4 mb-1">{{ __('Free') }}</p>
+                        <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-6">{{ __('Lifetime Access') }}</p>
 
                         <div class="border-t border-[#dedbd6]/80 dark:border-white/10 pt-6 space-y-3.5 text-xs font-semibold text-zinc-700 dark:text-[#94a3b8]">
                             <div class="flex items-center gap-2"><i
-                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>Up to 25 job
-                                    trackers</span></div>
+                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>{{ __('Up to 25 job trackers') }}</span></div>
                             <div class="flex items-center gap-2"><i
-                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>2 standard ATS
-                                    templates</span></div>
+                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>{{ __('2 standard ATS templates') }}</span></div>
                             <div class="flex items-center gap-2"><i
-                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>1 free AI Resume
-                                    credit</span></div>
+                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>{{ __('1 free AI Resume credit') }}</span></div>
                             <div class="flex items-center gap-2"><i
-                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>3 Cover Letter
-                                    credits</span></div>
+                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>{{ __('3 Cover Letter credits') }}</span></div>
                         </div>
                     </div>
 
                     <a href="{{ route('register') }}"
-                        class="w-full mt-8 py-2.5 bg-white dark:bg-[#282a2c] hover:bg-[#faf8f5] dark:hover:bg-[#333538] text-zinc-800 dark:text-[#f0f4f9] border border-[#dedbd6] dark:border-white/10 hover:border-zinc-400 dark:hover:border-white/20 rounded-lg text-xs font-bold transition text-center shadow-3xs">Get
-                        Started Free</a>
+                        class="w-full mt-8 py-2.5 bg-white dark:bg-[#282a2c] hover:bg-[#faf8f5] dark:hover:bg-[#333538] text-zinc-800 dark:text-[#f0f4f9] border border-[#dedbd6] dark:border-white/10 hover:border-zinc-400 dark:hover:border-white/20 rounded-lg text-xs font-bold transition text-center shadow-3xs">{{ __('Get Started Free') }}</a>
                 </div>
 
                 <!-- Premium Tier -->
                 <div
                     class="bento-card p-6 flex flex-col justify-between relative border-2 border-[#5b3d8c] dark:border-purple-400/60 shadow-sm hover:shadow-md transition-all bg-white dark:bg-[#1e1f20] rounded-xl">
                     <span
-                        class="absolute -top-3 left-6 bg-[#5b3d8c] dark:bg-purple-600 text-white text-[8px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider select-none shadow-3xs">Best
-                        Value</span>
+                        class="absolute -top-3 left-6 bg-[#5b3d8c] dark:bg-purple-600 text-white text-[8px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider select-none shadow-3xs">{{ __('Best Value') }}</span>
                     <div>
                         <div class="flex items-center justify-between mt-1">
-                            <h3 class="font-extrabold text-zinc-900 dark:text-[#f0f4f9] text-[10px] uppercase tracking-widest">Premium Pro
+                            <h3 class="font-extrabold text-zinc-900 dark:text-[#f0f4f9] text-[10px] uppercase tracking-widest">{{ __('Premium Pro') }}
                             </h3>
                             <span
-                                class="px-2 py-0.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 text-[8px] font-bold rounded border border-emerald-100 dark:border-emerald-500/30 uppercase">Pro</span>
+                                class="px-2 py-0.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 text-[8px] font-bold rounded border border-emerald-100 dark:border-emerald-500/30 uppercase">{{ __('Pro') }}</span>
                         </div>
                         <div class="flex items-baseline gap-2 mt-4 mb-1">
-                            <span class="text-3xl font-black text-zinc-950 dark:text-[#f0f4f9]">Rp 9.999</span>
-                            <span class="text-xs font-semibold text-zinc-400 dark:text-zinc-500 line-through">Rp 19.999</span>
+                            <span class="text-3xl font-black text-zinc-950 dark:text-[#f0f4f9]">{{ __('Rp 9.999') }}</span>
+                            <span class="text-xs font-semibold text-zinc-400 dark:text-zinc-500 line-through">{{ __('Rp 19.999') }}</span>
                         </div>
-                        <p class="text-[9px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-6">One-time,
-                            lifetime access</p>
+                        <p class="text-[9px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-6">{{ __('One-time, lifetime access') }}</p>
 
                         <div class="border-t border-[#dedbd6]/80 dark:border-white/10 pt-6 space-y-3.5 text-xs font-semibold text-zinc-800 dark:text-[#f0f4f9]">
                             <div class="flex items-center gap-2 font-bold"><i
-                                    class="ph ph-check text-emerald-500 dark:text-emerald-400 text-sm font-bold"></i> <span>Unlimited job
-                                    trackers</span></div>
+                                    class="ph ph-check text-emerald-500 dark:text-emerald-400 text-sm font-bold"></i> <span>{{ __('Unlimited job trackers') }}</span></div>
                             <div class="flex items-center gap-2 font-bold"><i
-                                    class="ph ph-check text-emerald-500 dark:text-emerald-400 text-sm font-bold"></i> <span>50+ premium
-                                    templates</span></div>
+                                    class="ph ph-check text-emerald-500 dark:text-emerald-400 text-sm font-bold"></i> <span>{{ __('50+ premium templates') }}</span></div>
                             <div class="flex items-center gap-2"><i
-                                    class="ph ph-check text-emerald-500 dark:text-emerald-400 text-sm font-bold"></i> <span>Bulk job importer
-                                    (.csv)</span></div>
+                                    class="ph ph-check text-emerald-500 dark:text-emerald-400 text-sm font-bold"></i> <span>{{ __('Bulk job importer (.csv)') }}</span></div>
                             <div class="flex items-center gap-2"><i
-                                    class="ph ph-check text-emerald-500 dark:text-emerald-400 text-sm font-bold"></i> <span>Full advanced
-                                    dashboard</span></div>
+                                    class="ph ph-check text-emerald-500 dark:text-emerald-400 text-sm font-bold"></i> <span>{{ __('Full advanced dashboard') }}</span></div>
                         </div>
                     </div>
 
                     <a href="{{ route('payment.index') }}"
-                        class="w-full mt-8 py-2.5 bg-[#5b3d8c] hover:bg-[#4a3173] active:bg-[#3d2760] text-white rounded-lg text-xs font-bold transition text-center shadow-sm">Upgrade
-                        to Premium Pro</a>
+                        class="w-full mt-8 py-2.5 bg-[#5b3d8c] hover:bg-[#4a3173] active:bg-[#3d2760] text-white rounded-lg text-xs font-bold transition text-center shadow-sm">{{ __('Upgrade to Premium Pro') }}</a>
                 </div>
 
                 <!-- Add-On Pack -->
@@ -1139,34 +1102,28 @@
                     class="bento-card p-6 flex flex-col justify-between transition-all bg-white dark:bg-[#1e1f20] hover:border-zinc-400 dark:hover:border-white/20 border border-[#dedbd6] dark:border-white/10 shadow-3xs rounded-xl">
                     <div>
                         <div class="flex items-center justify-between">
-                            <h3 class="font-extrabold text-zinc-400 text-[10px] uppercase tracking-widest">Top Up Add-On
+                            <h3 class="font-extrabold text-zinc-400 text-[10px] uppercase tracking-widest">{{ __('Top Up Add-On') }}
                             </h3>
                             <span
-                                class="px-2 py-0.5 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 text-[8px] font-bold rounded uppercase border border-blue-100 dark:border-blue-500/30">Add-On</span>
+                                class="px-2 py-0.5 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 text-[8px] font-bold rounded uppercase border border-blue-100 dark:border-blue-500/30">{{ __('Add-On') }}</span>
                         </div>
-                        <p class="text-3xl font-black text-zinc-950 dark:text-[#f0f4f9] mt-4 mb-1">Rp 14.999</p>
-                        <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-6">Kredit Langsung
-                            Aktif</p>
+                        <p class="text-3xl font-black text-zinc-950 dark:text-[#f0f4f9] mt-4 mb-1">{{ __('Rp 14.999') }}</p>
+                        <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-6">{{ __('Kredit Langsung Aktif') }}</p>
 
                         <div class="border-t border-[#dedbd6]/80 dark:border-white/10 pt-6 space-y-3.5 text-xs font-semibold text-zinc-700 dark:text-[#94a3b8]">
                             <div class="flex items-center gap-2"><i
-                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>10 Kredit AI
-                                    Analyzer</span></div>
+                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>{{ __('10 Kredit AI Analyzer') }}</span></div>
                             <div class="flex items-center gap-2"><i
-                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>15 Kredit Cover
-                                    Letter</span></div>
+                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>{{ __('15 Kredit Cover Letter') }}</span></div>
                             <div class="flex items-center gap-2"><i
-                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>5 Kredit AI Photo
-                                    Studio</span></div>
+                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>{{ __('5 Kredit AI Photo Studio') }}</span></div>
                             <div class="flex items-center gap-2"><i
-                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>Kredit Permanen
-                                    (No Expired)</span></div>
+                                    class="ph ph-check text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i> <span>{{ __('Kredit Permanen (No Expired)') }}</span></div>
                         </div>
                     </div>
 
                     <a href="{{ route('payment.topup') }}"
-                        class="w-full mt-8 py-2.5 bg-white dark:bg-[#282a2c] hover:bg-[#faf8f5] dark:hover:bg-[#333538] text-zinc-800 dark:text-[#f0f4f9] border border-[#dedbd6] dark:border-white/10 hover:border-zinc-400 dark:hover:border-white/20 rounded-lg text-xs font-bold transition text-center shadow-3xs">Buy
-                        Add-On Pack</a>
+                        class="w-full mt-8 py-2.5 bg-white dark:bg-[#282a2c] hover:bg-[#faf8f5] dark:hover:bg-[#333538] text-zinc-800 dark:text-[#f0f4f9] border border-[#dedbd6] dark:border-white/10 hover:border-zinc-400 dark:hover:border-white/20 rounded-lg text-xs font-bold transition text-center shadow-3xs">{{ __('Buy Add-On Pack') }}</a>
                 </div>
             </div>
         </div>
@@ -1176,8 +1133,7 @@
     <section class="py-20 sm:py-24 bg-[#fdfcf9] dark:bg-[#131314] border-b border-[#dedbd6]/80 dark:border-white/10" id="testimonials">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="mb-12 reveal">
-                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-950 dark:text-[#f0f4f9] font-black tracking-tight">Trusted by candidates
-                    who land.</h2>
+                <h2 class="notion-h1 text-3xl sm:text-4xl text-zinc-950 dark:text-[#f0f4f9] font-black tracking-tight">{{ __('Trusted by candidates who land.') }}</h2>
             </div>
 
             <!-- Responsive Testimonial Carousel -->
@@ -1192,17 +1148,17 @@
                         <div>
                             <div class="flex items-center justify-between gap-3 mb-4">
                                 <div class="flex items-center gap-3">
-                                    <img src="{{ asset('images/rendikaasli.png') }}" alt="Rendika Azhar"
+                                    <img src="{{ asset('images/rendikaasli.png') }}" alt="{{ __('Rendika Azhar') }}"
                                         class="w-11 h-11 rounded-full object-cover border border-[#dedbd6] dark:border-white/10 shadow-3xs">
                                     <div>
-                                        <h3 class="text-xs font-bold text-zinc-900 dark:text-[#f0f4f9] leading-tight">Rendika Azhar</h3>
-                                        <p class="text-[10px] font-semibold text-zinc-500 dark:text-[#94a3b8]">Graphic Designer</p>
+                                        <h3 class="text-xs font-bold text-zinc-900 dark:text-[#f0f4f9] leading-tight">{{ __('Rendika Azhar') }}</h3>
+                                        <p class="text-[10px] font-semibold text-zinc-500 dark:text-[#94a3b8]">{{ __('Graphic Designer') }}</p>
                                     </div>
                                 </div>
-                                <span class="px-2 py-0.5 bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border border-rose-100 dark:border-rose-500/30 text-[8px] font-bold rounded uppercase">Fresh Graduate</span>
+                                <span class="px-2 py-0.5 bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border border-rose-100 dark:border-rose-500/30 text-[8px] font-bold rounded uppercase">{{ __('Fresh Graduate') }}</span>
                             </div>
                             <p class="text-xs sm:text-[13px] font-normal leading-relaxed text-zinc-700 dark:text-[#f0f4f9]">
-                                "TraKerja transformed my chaotic job application spreadsheet into a super clean, visual Kanban tracker. It's an absolute game-changer for organizing my career search!"
+                                {{ __('"TraKerja transformed my chaotic job application spreadsheet into a super clean, visual Kanban tracker. It\'s an absolute game-changer for organizing my career search!"') }}
                             </p>
                         </div>
                         <div class="flex items-center gap-1 text-amber-400 text-xs mt-5 pt-4 border-t border-[#dedbd6]/70 dark:border-white/10">
@@ -1221,17 +1177,17 @@
                         <div>
                             <div class="flex items-center justify-between gap-3 mb-4">
                                 <div class="flex items-center gap-3">
-                                    <img src="{{ asset('images/bima.png') }}" alt="Fadhail Bima Dharmawan"
+                                    <img src="{{ asset('images/bima.png') }}" alt="{{ __('Fadhail Bima Dharmawan') }}"
                                         class="w-11 h-11 rounded-full object-cover border border-[#dedbd6] dark:border-white/10 shadow-3xs">
                                     <div>
-                                        <h3 class="text-xs font-bold text-zinc-900 dark:text-[#f0f4f9] leading-tight">Fadhail Bima Dharmawan</h3>
-                                        <p class="text-[10px] font-semibold text-zinc-500 dark:text-[#94a3b8]">Frontend Developer</p>
+                                        <h3 class="text-xs font-bold text-zinc-900 dark:text-[#f0f4f9] leading-tight">{{ __('Fadhail Bima Dharmawan') }}</h3>
+                                        <p class="text-[10px] font-semibold text-zinc-500 dark:text-[#94a3b8]">{{ __('Frontend Developer') }}</p>
                                     </div>
                                 </div>
-                                <span class="px-2 py-0.5 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-500/30 text-[8px] font-bold rounded uppercase">Career Switcher</span>
+                                <span class="px-2 py-0.5 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-500/30 text-[8px] font-bold rounded uppercase">{{ __('Career Switcher') }}</span>
                             </div>
                             <p class="text-xs sm:text-[13px] font-normal leading-relaxed text-zinc-700 dark:text-[#f0f4f9]">
-                                "The dashboard is incredibly clean and intuitive. Having real-time stage progression metrics and automated AI insights made my entire application process transparent."
+                                {{ __('"The dashboard is incredibly clean and intuitive. Having real-time stage progression metrics and automated AI insights made my entire application process transparent."') }}
                             </p>
                         </div>
                         <div class="flex items-center gap-1 text-amber-400 text-xs mt-5 pt-4 border-t border-[#dedbd6]/70 dark:border-white/10">
@@ -1250,17 +1206,17 @@
                         <div>
                             <div class="flex items-center justify-between gap-3 mb-4">
                                 <div class="flex items-center gap-3">
-                                    <img src="{{ asset('images/dervaril.png') }}" alt="Derva Anargya"
+                                    <img src="{{ asset('images/dervaril.png') }}" alt="{{ __('Derva Anargya') }}"
                                         class="w-11 h-11 rounded-full object-cover border border-[#dedbd6] dark:border-white/10 shadow-3xs">
                                     <div>
-                                        <h3 class="text-xs font-bold text-zinc-900 dark:text-[#f0f4f9] leading-tight">Derva Anargya</h3>
-                                        <p class="text-[10px] font-semibold text-zinc-500 dark:text-[#94a3b8]">Product Manager</p>
+                                        <h3 class="text-xs font-bold text-zinc-900 dark:text-[#f0f4f9] leading-tight">{{ __('Derva Anargya') }}</h3>
+                                        <p class="text-[10px] font-semibold text-zinc-500 dark:text-[#94a3b8]">{{ __('Product Manager') }}</p>
                                     </div>
                                 </div>
-                                <span class="px-2 py-0.5 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-100 dark:border-amber-500/30 text-[8px] font-bold rounded uppercase">Product Leader</span>
+                                <span class="px-2 py-0.5 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-100 dark:border-amber-500/30 text-[8px] font-bold rounded uppercase">{{ __('Product Leader') }}</span>
                             </div>
                             <p class="text-xs sm:text-[13px] font-normal leading-relaxed text-zinc-700 dark:text-[#f0f4f9]">
-                                "The Chrome Extension is spectacular. Saving jobs from LinkedIn directly into my Kanban board in one click saves me hours of manual data entry every single week."
+                                {{ __('"The Chrome Extension is spectacular. Saving jobs from LinkedIn directly into my Kanban board in one click saves me hours of manual data entry every single week."') }}
                             </p>
                         </div>
                         <div class="flex items-center gap-1 text-amber-400 text-xs mt-5 pt-4 border-t border-[#dedbd6]/70 dark:border-white/10">
@@ -1291,7 +1247,7 @@
     {{-- ============ FAQ ============ --}}
     <section class="py-20 sm:py-24 bg-[#fdfcf9] dark:bg-[#18191a] border-b border-[#dedbd6]/80 dark:border-white/10" id="faq">
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
-            <h2 class="text-center notion-h1 text-2xl sm:text-3xl text-zinc-900 dark:text-[#f0f4f9] mb-10 reveal">Frequently Asked Questions
+            <h2 class="text-center notion-h1 text-2xl sm:text-3xl text-zinc-900 dark:text-[#f0f4f9] mb-10 reveal">{{ __('Frequently Asked Questions') }}
             </h2>
 
             <div class="space-y-3.5 reveal">
@@ -1350,17 +1306,13 @@
     {{-- ============ CTA BANNER ============ --}}
     <section class="py-28 bg-[#fdfcf9] dark:bg-[#131314] border-b border-[#dedbd6]/80 dark:border-white/10 select-none">
         <div class="max-w-2xl mx-auto px-4 text-center reveal">
-            <h2 class="text-4xl sm:text-5xl font-black text-zinc-900 dark:text-[#f0f4f9] tracking-tight leading-none mb-4">Get started
-                today.</h2>
-            <p class="text-sm sm:text-base font-semibold text-zinc-500 dark:text-[#94a3b8] mb-8 leading-relaxed max-w-lg mx-auto">Build
-                ATS-friendly CVs, track applications, and optimize your path with AI.</p>
+            <h2 class="text-4xl sm:text-5xl font-black text-zinc-900 dark:text-[#f0f4f9] tracking-tight leading-none mb-4">{{ __('Get started today.') }}</h2>
+            <p class="text-sm sm:text-base font-semibold text-zinc-500 dark:text-[#94a3b8] mb-8 leading-relaxed max-w-lg mx-auto">{{ __('Build ATS-friendly CVs, track applications, and optimize your path with AI.') }}</p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <a href="{{ route('register') }}"
-                    class="w-full sm:w-auto px-6 py-3 bg-[#5b3d8c] hover:bg-[#4a3173] active:bg-[#3d2760] text-white text-xs sm:text-sm font-bold rounded-lg transition-colors shadow-sm text-center">Get
-                    TraKerja free</a>
+                    class="w-full sm:w-auto px-6 py-3 bg-[#5b3d8c] hover:bg-[#4a3173] active:bg-[#3d2760] text-white text-xs sm:text-sm font-bold rounded-lg transition-colors shadow-sm text-center">{{ __('Get TraKerja free') }}</a>
                 <a href="#how-it-works"
-                    class="w-full sm:w-auto px-6 py-3 bg-white dark:bg-[#1e1f20] border border-[#dedbd6] dark:border-white/10 text-zinc-700 dark:text-[#f0f4f9] hover:bg-[#faf8f5] dark:hover:bg-[#282a2c] text-xs sm:text-sm font-bold rounded-lg transition-colors shadow-3xs text-center">How
-                    it Works</a>
+                    class="w-full sm:w-auto px-6 py-3 bg-white dark:bg-[#1e1f20] border border-[#dedbd6] dark:border-white/10 text-zinc-700 dark:text-[#f0f4f9] hover:bg-[#faf8f5] dark:hover:bg-[#282a2c] text-xs sm:text-sm font-bold rounded-lg transition-colors shadow-3xs text-center">{{ __('How it Works') }}</a>
             </div>
         </div>
     </section>
@@ -1373,41 +1325,37 @@
                 <!-- Brand Column -->
                 <div class="col-span-2 md:col-span-4 space-y-4">
                     <div class="flex items-center gap-2 text-xs font-bold text-zinc-800 dark:text-[#f0f4f9] tracking-tight select-none">
-                        <img src="{{ asset('images/icon.png') }}" alt="TraKerja Logo" class="w-5 h-5 object-contain">
-                        <span>TraKerja</span>
+                        <img src="{{ asset('images/icon.png') }}" alt="{{ __('TraKerja Logo') }}" class="w-5 h-5 object-contain">
+                        <span>{{ __('TraKerja') }}</span>
                     </div>
                     <p class="text-zinc-400 dark:text-zinc-500 font-medium leading-relaxed max-w-xs">
-                        A unified, minimalist workspace to manage your entire job application pipeline, build
-                        ATS-friendly CVs, and accelerate your career using AI.
+                        {{ __('A unified, minimalist workspace to manage your entire job application pipeline, build ATS-friendly CVs, and accelerate your career using AI.') }}
                     </p>
                 </div>
 
                 <!-- Product Links Column -->
                 <div class="col-span-1 md:col-span-2 space-y-3">
-                    <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Product</h4>
+                    <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">{{ __('Product') }}</h4>
                     <ul class="space-y-2">
-                        <li><a href="#how-it-works" class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">How it Works</a></li>
-                        <li><a href="#pricing" class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">Pricing Plans</a></li>
-                        <li><a href="#testimonials" class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">Testimonials</a></li>
+                        <li><a href="#how-it-works" class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">{{ __('How it Works') }}</a></li>
+                        <li><a href="#pricing" class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">{{ __('Pricing Plans') }}</a></li>
+                        <li><a href="#testimonials" class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">{{ __('Testimonials') }}</a></li>
                     </ul>
                 </div>
 
                 <!-- Legal/Resources Column -->
                 <div class="col-span-1 md:col-span-3 space-y-3">
-                    <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Legal & Info</h4>
+                    <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">{{ __('Legal & Info') }}</h4>
                     <ul class="space-y-2">
-                        <li><a href="{{ route('legal.privacy') }}" class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">Privacy
-                                Policy</a></li>
-                        <li><a href="{{ route('legal.terms') }}" class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">Terms of
-                                Service</a></li>
-                        <li><span class="text-zinc-400 dark:text-zinc-500 font-medium leading-relaxed">PT Teknalogi Transformasi
-                                Digital</span></li>
+                        <li><a href="{{ route('legal.privacy') }}" class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">{{ __('Privacy Policy') }}</a></li>
+                        <li><a href="{{ route('legal.terms') }}" class="hover:text-zinc-800 dark:hover:text-[#f0f4f9] transition-colors">{{ __('Terms of Service') }}</a></li>
+                        <li><span class="text-zinc-400 dark:text-zinc-500 font-medium leading-relaxed">{{ __('PT Teknalogi Transformasi Digital') }}</span></li>
                     </ul>
                 </div>
 
                 <!-- Contact & Social Column -->
                 <div class="col-span-2 md:col-span-3 space-y-3">
-                    <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Contact & Socials</h4>
+                    <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-wider">{{ __('Contact & Socials') }}</h4>
                     <ul class="space-y-2.5">
                         <li class="flex items-center gap-2">
                             <i class="ph ph-envelope text-zinc-700 dark:text-zinc-400 text-xs"></i>
@@ -1422,11 +1370,11 @@
                         <li class="flex items-center gap-2">
                             <i class="ph ph-telegram-logo text-zinc-700 text-xs"></i>
                             <a href="https://t.me/HubTrakerja" target="_blank" rel="noopener noreferrer"
-                                class="hover:text-zinc-800 transition-colors">Telegram Community</a>
+                                class="hover:text-zinc-800 transition-colors">{{ __('Telegram Community') }}</a>
                         </li>
                         <li class="flex items-center gap-2">
                             <i class="ph ph-globe text-zinc-700 text-xs"></i>
-                            <span class="text-zinc-400 font-medium">teknalogi.id</span>
+                            <span class="text-zinc-400 font-medium">{{ __('teknalogi.id') }}</span>
                         </li>
                     </ul>
                 </div>
@@ -1435,7 +1383,7 @@
 
             <!-- Bottom Copyright -->
             <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-zinc-400 font-medium">
-                <p>© 2026 PT Teknalogi Transformasi Digital. All rights reserved.</p>
+                <p>{{ __('© 2026 PT Teknalogi Transformasi Digital. All rights reserved.') }}</p>
             </div>
         </div>
     </footer>
@@ -1563,6 +1511,7 @@
             }
 });
     </script>
+
 </body>
 
 </html>

@@ -23,12 +23,12 @@ class ExtensionController extends Controller
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
-                'message' => 'Email atau password salah.'
+                'message' => __('Email atau password salah.')
             ], 401);
         }
 
         if (!$user->hasVerifiedEmail()) {
-            return response()->json(['message' => 'Verifikasi email Anda terlebih dahulu.'], 403);
+            return response()->json(['message' => __('Verifikasi email Anda terlebih dahulu.')], 403);
         }
 
         $token = $user->createToken(
@@ -61,7 +61,7 @@ class ExtensionController extends Controller
         if ($token instanceof \Laravel\Sanctum\PersonalAccessToken) {
             $token->delete();
         }
-        return response()->json(['message' => 'Logged out successfully']);
+        return response()->json(['message' => __('Logged out successfully')]);
     }
 
     public function saveJob(Request $request)
@@ -69,7 +69,7 @@ class ExtensionController extends Controller
         $user = $request->user();
         if (\App\Models\Setting::isMonetizationEnabled() && !$user->isPremium()) {
             return response()->json([
-                'message' => 'Menyimpan lowongan via Chrome Extension adalah fitur Premium. Silakan upgrade akun Anda.'
+                'message' => __('Menyimpan lowongan via Chrome Extension adalah fitur Premium. Silakan upgrade akun Anda.')
             ], 403);
         }
 
@@ -106,14 +106,14 @@ class ExtensionController extends Controller
             );
 
             return response()->json([
-                'message' => 'Lamaran berhasil disimpan!',
+                'message' => __('Lamaran berhasil disimpan!'),
                 'job' => $job
             ], 201);
-            
+
         } catch (\Exception $e) {
             Log::error('Error saving job from extension: ' . $e->getMessage());
             return response()->json([
-                'message' => 'Gagal menyimpan lamaran. ' . $e->getMessage()
+                'message' => __('Gagal menyimpan lamaran. ') . $e->getMessage()
             ], 500);
         }
     }

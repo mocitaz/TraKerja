@@ -26,7 +26,7 @@ class TahunBaruIslamMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Selamat Tahun Baru Islam 1448 H 🙏',
+            subject: __('Selamat Tahun Baru Islam 1448 H 🙏'),
         );
     }
 

@@ -17,13 +17,13 @@
     {{-- Header --}}
     <div class="ascr-welcome">
         <div>
-            <h1>Scraper Engine</h1>
-            <p>Control web scraping schedules, job ingestion sources, selectors, and sandbox testing.</p>
+            <h1>{{ __('Scraper Engine') }}</h1>
+            <p>{{ __('Control web scraping schedules, job ingestion sources, selectors, and sandbox testing.') }}</p>
         </div>
         <div class="ascr-header-actions">
             <span class="ascr-refresh-badge">
                 <span class="ascr-refresh-dot"></span>
-                Refreshes every 5s while visible
+                {{ __('Refreshes every 5s while visible') }}
             </span>
         </div>
     </div>
@@ -35,11 +35,11 @@
             <div class="ascr-metric-head">
                 <span class="ascr-metric-label">
                     <i class="ph ph-database" aria-hidden="true"></i>
-                    Total Ingested Jobs
+                    {{ __('Total Ingested Jobs') }}
                 </span>
             </div>
             <strong>{{ number_format($stats['total_ingested']) }}</strong>
-            <small>Aggregated job listings across platforms</small>
+            <small>{{ __('Aggregated job listings across platforms') }}</small>
         </div>
 
         {{-- Scraped Today --}}
@@ -47,11 +47,11 @@
             <div class="ascr-metric-head">
                 <span class="ascr-metric-label">
                     <i class="ph ph-calendar-check" aria-hidden="true"></i>
-                    Scraped Today
+                    {{ __('Scraped Today') }}
                 </span>
             </div>
             <strong>{{ number_format($stats['jobs_scraped_today']) }}</strong>
-            <small>Ingested in the last 24 hours</small>
+            <small>{{ __('Ingested in the last 24 hours') }}</small>
         </div>
 
         {{-- Active Platforms --}}
@@ -59,11 +59,11 @@
             <div class="ascr-metric-head">
                 <span class="ascr-metric-label">
                     <i class="ph ph-globe" aria-hidden="true"></i>
-                    Active Platforms
+                    {{ __('Active Platforms') }}
                 </span>
             </div>
             <strong>{{ $stats['active_sources'] }} / {{ count($sources) }}</strong>
-            <small>LinkedIn, JobStreet, Kalibrr & others</small>
+            <small>{{ __('LinkedIn, JobStreet, Kalibrr & others') }}</small>
         </div>
 
         {{-- Queue & Worker --}}
@@ -71,20 +71,20 @@
             <div class="ascr-metric-head">
                 <span class="ascr-metric-label">
                     <i class="ph ph-cpu" aria-hidden="true"></i>
-                    Queue & Worker
+                    {{ __('Queue & Worker') }}
                 </span>
             </div>
             <strong>{{ $stats['worker_status'] }}</strong>
-            <small>{{ $stats['jobs_pending_in_queue'] }} pending jobs · {{ $stats['jobs_failed'] }} failed</small>
+            <small>{{ __(':value1 pending jobs · :value2 failed', ['value1' => ($stats['jobs_pending_in_queue']), 'value2' => ($stats['jobs_failed'])]) }}</small>
         </div>
     </div>
 
     {{-- Tabs Navigation --}}
-    <nav class="ascr-tabs ops-tabs ops-scraper-tabs" aria-label="Scraper sections">
+    <nav class="ascr-tabs ops-tabs ops-scraper-tabs" aria-label="{{ __('Scraper sections') }}">
         @foreach(['dashboard'=>'Overview','control'=>'Engine controls','target'=>'Targeted search','sandbox'=>'Selector sandbox','reports'=>'Job reports'] as $key=>$label)
-            <button type="button" 
-                    wire:click="$set('activeTab', '{{ $key }}')" 
-                    aria-current="{{ $activeTab === $key ? 'page' : 'false' }}" 
+            <button type="button"
+                    wire:click="$set('activeTab', '{{ $key }}')"
+                    aria-current="{{ $activeTab === $key ? 'page' : 'false' }}"
                     class="ascr-tab {{ $activeTab === $key ? 'is-active' : '' }}">
                 @switch($key)
                     @case('dashboard') <i class="ph ph-chart-bar" aria-hidden="true"></i> @break
@@ -93,7 +93,7 @@
                     @case('sandbox') <i class="ph ph-code" aria-hidden="true"></i> @break
                     @case('reports') <i class="ph ph-flag" aria-hidden="true"></i> @break
                 @endswitch
-                <span>{{ $label }}</span>
+                <span>{{ __($label) }}</span>
                 @if($key === 'reports' && count($reportedJobs) > 0)
                     <span class="ascr-tab-badge">{{ count($reportedJobs) }}</span>
                 @endif
@@ -113,7 +113,7 @@
                             <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                 <i class="ph-bold ph-chart-bar text-xs"></i>
                             </div>
-                            <h2 class="text-xs font-sans font-medium text-zinc-500  ">Metrik Grafik Performa Platform</h2>
+                            <h2 class="text-xs font-sans font-medium text-zinc-500  ">{{ __('Metrik Grafik Performa Platform') }}</h2>
                         </div>
 
                         <div class="flex-1 min-h-[300px] relative w-full" wire:ignore>
@@ -130,12 +130,12 @@
                                 <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                     <i class="ph-bold ph-terminal text-xs"></i>
                                 </div>
-                                <h2 class="text-xs font-sans font-medium text-zinc-500   font-semibold">Live Logs Streamer</h2>
+                                <h2 class="text-xs font-sans font-medium text-zinc-500   font-semibold">{{ __('Live Logs Streamer') }}</h2>
                             </div>
                             <button type="button"
                                     wire:click="clearLiveLogs"
                                     class="text-[11px] font-sans font-medium text-rose-600 hover:text-rose-800 transition-colors   flex items-center gap-1 focus:outline-hidden">
-                                <i class="ph ph-trash text-xs"></i> Hapus Log
+                                <i class="ph ph-trash text-xs"></i> {{ __('Hapus Log') }}
                             </button>
                         </div>
 
@@ -164,7 +164,7 @@
                                                 </div>
                                                 <div class="min-w-0">
                                                     <p class="text-[11px] font-medium text-zinc-800 leading-tight break-words">{{ $log['message'] }}</p>
-                                                    <span class="text-[11px] font-sans text-zinc-500 block mt-0.5">{{ $log['level'] }} Event</span>
+                                                    <span class="text-[11px] font-sans text-zinc-500 block mt-0.5">{{ __(':value1 Event', ['value1' => ($log['level'])]) }}</span>
                                                 </div>
                                             </div>
                                             <span class="text-[11px] font-sans text-zinc-500 shrink-0 mt-0.5">{{ $log['timestamp'] }}</span>
@@ -177,15 +177,15 @@
                                 <div class="w-10 h-10 rounded-full bg-zinc-100 border border-[#e7e3e9] flex items-center justify-center text-zinc-500 mb-3 ">
                                     <i class="ph-bold ph-bell-simple-slash text-base"></i>
                                 </div>
-                                <h3 class="text-xs font-medium text-zinc-800 tracking-tight">Tidak ada aktivitas baru</h3>
-                                <p class="text-[11px] text-zinc-500 max-w-[220px] mt-1 leading-normal">Log aktivitas penarikan data akan mengalir secara live ke sini saat scraper sedang berjalan.</p>
+                                <h3 class="text-xs font-medium text-zinc-800 tracking-tight">{{ __('Tidak ada aktivitas baru') }}</h3>
+                                <p class="text-[11px] text-zinc-500 max-w-[220px] mt-1 leading-normal">{{ __('Log aktivitas penarikan data akan mengalir secara live ke sini saat scraper sedang berjalan.') }}</p>
                             </div>
                         @endif
                     </div>
 
                     <div class="text-[11px] font-sans text-zinc-500 pt-3 border-t border-zinc-150 leading-tight mt-4 flex items-center justify-between">
-                        <span>Polling visual terupdate secara berkala setiap 5 detik.</span>
-                        <span class="text-zinc-500 font-medium   flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 "></span> Live</span>
+                        <span>{{ __('Polling visual terupdate secara berkala setiap 5 detik.') }}</span>
+                        <span class="text-zinc-500 font-medium   flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 "></span> {{ __('Live') }}</span>
                     </div>
                 </div>
             </div>
@@ -205,22 +205,22 @@
                                     <i class="ph-bold ph-cpu text-xs"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xs font-medium text-zinc-900 tracking-tight">Queue Worker Trigger</h3>
-                                    <p class="text-[11px] text-zinc-500">Jalankan worker di latar belakang VM</p>
+                                    <h3 class="text-xs font-medium text-zinc-900 tracking-tight">{{ __('Queue Worker Trigger') }}</h3>
+                                    <p class="text-[11px] text-zinc-500">{{ __('Jalankan worker di latar belakang VM') }}</p>
                                 </div>
                             </div>
 
                             <div class="mt-3.5 space-y-2 text-[11px] font-sans">
                                 <div class="flex justify-between">
-                                    <span class="text-zinc-500">Status Worker:</span>
+                                    <span class="text-zinc-500">{{ __('Status Worker:') }}</span>
                                     <span class="font-medium text-emerald-600 flex items-center gap-1">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 "></span>
                                         {{ $stats['worker_status'] }}
                                     </span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-zinc-500">Jumlah Antrean:</span>
-                                    <span class="font-medium text-zinc-800">{{ $stats['jobs_pending_in_queue'] }} jobs</span>
+                                    <span class="text-zinc-500">{{ __('Jumlah Antrean:') }}</span>
+                                    <span class="font-medium text-zinc-800">{{ __(':value1 jobs', ['value1' => ($stats['jobs_pending_in_queue'])]) }}</span>
                                 </div>
                             </div>
                         </div>
@@ -231,11 +231,11 @@
                                 class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-md py-2 transition-all duration-150  flex items-center justify-center gap-1.5">
                             <span wire:loading.remove wire:target="startQueueWorker" class="flex items-center gap-1.5">
                                 <i class="ph ph-play-circle text-base"></i>
-                                Jalankan Queue Worker
+                                {{ __('Jalankan Queue Worker') }}
                             </span>
                             <span wire:loading wire:target="startQueueWorker" class="flex items-center gap-1.5">
                                 <span class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                                Memicu Worker...
+                                {{ __('Memicu Worker...') }}
                             </span>
                         </button>
                     </div>
@@ -248,19 +248,19 @@
                                     <i class="ph-bold ph-shield-warning text-xs"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xs font-medium text-zinc-900 tracking-tight">Dead-Link Synchronizer</h3>
-                                    <p class="text-[11px] text-zinc-500">Verifikasi status keaktifan URL lowongan</p>
+                                    <h3 class="text-xs font-medium text-zinc-900 tracking-tight">{{ __('Dead-Link Synchronizer') }}</h3>
+                                    <p class="text-[11px] text-zinc-500">{{ __('Verifikasi status keaktifan URL lowongan') }}</p>
                                 </div>
                             </div>
 
                             <div class="mt-3.5 space-y-2 text-[11px] font-sans">
                                 <div class="flex justify-between">
-                                    <span class="text-zinc-500">Metode Validasi:</span>
-                                    <span class="font-medium text-zinc-800">404 / Footprint Check</span>
+                                    <span class="text-zinc-500">{{ __('Metode Validasi:') }}</span>
+                                    <span class="font-medium text-zinc-800">{{ __('404 / Footprint Check') }}</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-zinc-500">Target Validasi:</span>
-                                    <span class="font-medium text-zinc-800">Loker Status 'active'</span>
+                                    <span class="text-zinc-500">{{ __('Target Validasi:') }}</span>
+                                    <span class="font-medium text-zinc-800">{{ __('Loker Status \'active\'') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -271,11 +271,11 @@
                                 class="w-full bg-white hover:bg-zinc-50 border border-zinc-250 text-zinc-700 font-semibold text-xs rounded-md py-2 transition-all duration-150 flex items-center justify-center gap-1.5 ">
                             <span wire:loading.remove wire:target="verifyActiveListings" class="flex items-center gap-1.5">
                                 <i class="ph ph-arrows-counter-clockwise text-base"></i>
-                                Cek & Sinkronisasi Link Tutup
+                                {{ __('Cek & Sinkronisasi Link Tutup') }}
                             </span>
                             <span wire:loading wire:target="verifyActiveListings" class="flex items-center gap-1.5">
                                 <span class="w-3 h-3 border-2 border-zinc-500 border-t-transparent rounded-full animate-spin"></span>
-                                Sinkronisasi Berjalan...
+                                {{ __('Sinkronisasi Berjalan...') }}
                             </span>
                         </button>
                     </div>
@@ -288,19 +288,19 @@
                                     <i class="ph-bold ph-play text-[11px]"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xs font-medium text-zinc-900 tracking-tight">Manual Scraper Ingestion</h3>
-                                    <p class="text-[11px] text-zinc-500">Trigger penelusuran tautan semua platform</p>
+                                    <h3 class="text-xs font-medium text-zinc-900 tracking-tight">{{ __('Manual Scraper Ingestion') }}</h3>
+                                    <p class="text-[11px] text-zinc-500">{{ __('Trigger penelusuran tautan semua platform') }}</p>
                                 </div>
                             </div>
 
                             <div class="mt-3.5 space-y-2 text-[11px] font-sans">
                                 <div class="flex justify-between">
-                                    <span class="text-zinc-500">Metode Ingesti:</span>
-                                    <span class="font-medium text-zinc-800">Multi-Keyword Discovery</span>
+                                    <span class="text-zinc-500">{{ __('Metode Ingesti:') }}</span>
+                                    <span class="font-medium text-zinc-800">{{ __('Multi-Keyword Discovery') }}</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-zinc-500">Tingkat Penjelajahan:</span>
-                                    <span class="font-medium text-zinc-800">Halaman 1 (Semua Sektor)</span>
+                                    <span class="text-zinc-500">{{ __('Tingkat Penjelajahan:') }}</span>
+                                    <span class="font-medium text-zinc-800">{{ __('Halaman 1 (Semua Sektor)') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -311,11 +311,11 @@
                                 class="w-full bg-zinc-950 hover:bg-zinc-900 text-white font-semibold text-xs rounded-md py-2 transition-all duration-150  flex items-center justify-center gap-1.5">
                             <span wire:loading.remove wire:target="triggerManualCrawl" class="flex items-center gap-1.5">
                                 <i class="ph ph-lightning text-base"></i>
-                                Jalankan Scrape Manual
+                                {{ __('Jalankan Scrape Manual') }}
                             </span>
                             <span wire:loading wire:target="triggerManualCrawl" class="flex items-center gap-1.5">
                                 <span class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                                Memicu Scraper...
+                                {{ __('Memicu Scraper...') }}
                             </span>
                         </button>
                     </div>
@@ -330,7 +330,7 @@
                                 <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                     <i class="ph-bold ph-sliders text-xs"></i>
                                 </div>
-                                <h2 class="text-xs font-sans font-medium text-zinc-500  ">Throttling Rules</h2>
+                                <h2 class="text-xs font-sans font-medium text-zinc-500  ">{{ __('Throttling Rules') }}</h2>
                             </div>
 
                             <!-- Domain Selector Tabs -->
@@ -355,8 +355,8 @@
                                     <!-- Toggle Switch -->
                                     <div class="flex items-center justify-between bg-zinc-50/50 border border-[#e7e3e9]/80 rounded-md p-3">
                                         <div>
-                                            <label class="text-xs font-semibold text-zinc-900 tracking-tight">Active Crawler Status</label>
-                                            <p class="text-[11px] text-zinc-500">Run cron cycles for this target</p>
+                                            <label class="text-xs font-semibold text-zinc-900 tracking-tight">{{ __('Active Crawler Status') }}</label>
+                                            <p class="text-[11px] text-zinc-500">{{ __('Run cron cycles for this target') }}</p>
                                         </div>
                                         <button type="button"
                                                 wire:click="$set('is_active', {{ $is_active ? 'false' : 'true' }})"
@@ -368,8 +368,8 @@
                                     <!-- Politeness Delay -->
                                     <div>
                                         <div class="flex justify-between items-baseline mb-1">
-                                            <label class="text-[11px] font-sans font-medium text-zinc-500  ">Politeness Delay</label>
-                                            <span class="text-xs font-sans font-semibold text-zinc-955">{{ $delay_between_requests_ms }}ms</span>
+                                            <label class="text-[11px] font-sans font-medium text-zinc-500  ">{{ __('Politeness Delay') }}</label>
+                                            <span class="text-xs font-sans font-semibold text-zinc-955">{{ __(':value1ms', ['value1' => ($delay_between_requests_ms)]) }}</span>
                                         </div>
                                         <input type="range" min="0" max="10000" step="250"
                                                wire:model.live="delay_between_requests_ms"
@@ -379,8 +379,8 @@
                                     <!-- Concurrency Limit -->
                                     <div>
                                         <div class="flex justify-between items-baseline mb-1">
-                                            <label class="text-[11px] font-sans font-medium text-zinc-500  ">Concurrency Limit</label>
-                                            <span class="text-xs font-sans font-semibold text-zinc-955">{{ $max_concurrency }} parallel</span>
+                                            <label class="text-[11px] font-sans font-medium text-zinc-500  ">{{ __('Concurrency Limit') }}</label>
+                                            <span class="text-xs font-sans font-semibold text-zinc-955">{{ __(':value1 parallel', ['value1' => ($max_concurrency)]) }}</span>
                                         </div>
                                         <input type="range" min="1" max="15" step="1"
                                                wire:model.live="max_concurrency"
@@ -389,20 +389,20 @@
 
                                     <!-- Schedule Interval -->
                                     <div>
-                                        <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Crawl Frequency Interval</label>
+                                        <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">{{ __('Crawl Frequency Interval') }}</label>
                                         <div class="relative">
                                             <input type="number"
                                                    wire:model="frequency_minutes"
                                                    class="w-full text-xs bg-zinc-50/50 border border-[#e7e3e9] rounded-md px-3 py-2 text-zinc-900 font-sans focus:bg-white focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 focus:outline-hidden"
                                                    required>
-                                            <span class="absolute right-3 top-2 text-[11px] font-sans text-zinc-500">minutes</span>
+                                            <span class="absolute right-3 top-2 text-[11px] font-sans text-zinc-500">{{ __('minutes') }}</span>
                                         </div>
                                     </div>
 
                                     <button type="submit"
                                             class="w-full bg-zinc-950 hover:bg-zinc-900 text-white font-medium text-xs rounded-md py-2 transition-all duration-150  flex items-center justify-center gap-1.5">
                                         <i class="ph ph-check"></i>
-                                        Save Config Settings
+                                        {{ __('Save Config Settings') }}
                                     </button>
                                 </form>
                             @endif
@@ -418,8 +418,8 @@
                                         <i class="ph-bold ph-shield-check text-xs"></i>
                                     </div>
                                     <div>
-                                        <h2 class="text-xs font-sans font-medium text-zinc-500  ">Status Egress Scraper</h2>
-                                        <p class="text-[11px] text-zinc-500">Rotasi proxy eksternal dinonaktifkan</p>
+                                        <h2 class="text-xs font-sans font-medium text-zinc-500  ">{{ __('Status Egress Scraper') }}</h2>
+                                        <p class="text-[11px] text-zinc-500">{{ __('Rotasi proxy eksternal dinonaktifkan') }}</p>
                                     </div>
                                 </div>
 
@@ -428,11 +428,11 @@
                                         wire:loading.attr="disabled"
                                         class="inline-flex items-center gap-1 bg-zinc-950 hover:bg-zinc-900 text-white font-semibold text-[11px] rounded px-2.5 py-1.5 transition-all duration-150  disabled:opacity-50">
                                     <span wire:loading.remove wire:target="checkProxyHealth" class="flex items-center gap-1">
-                                        <i class="ph ph-heartbeat"></i> Status Egress
+                                        <i class="ph ph-heartbeat"></i> {{ __('Status Egress') }}
                                     </span>
                                     <span wire:loading wire:target="checkProxyHealth" class="flex items-center gap-1">
                                         <span class="w-2.5 h-2.5 border border-white border-t-transparent rounded-full animate-spin"></span>
-                                        Memverifikasi...
+                                        {{ __('Memverifikasi...') }}
                                     </span>
                                 </button>
                             </div>
@@ -443,18 +443,18 @@
                                     @foreach ($proxyStatusList as $index => $proxyItem)
                                         <div class="border rounded-md p-3 flex flex-col justify-between space-y-2  {{ $proxyItem['class'] }}">
                                             <div class="flex items-center justify-between">
-                                                <span class="text-[11px] font-sans font-medium   text-zinc-500">PROXY #{{ $index + 1 }}</span>
+                                                <span class="text-[11px] font-sans font-medium   text-zinc-500">{{ __('PROXY #:value1', ['value1' => ($index + 1)]) }}</span>
                                                 <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[7px] font-sans font-semibold border border-current">
                                                     {{ $proxyItem['status'] }}
                                                 </span>
                                             </div>
                                             <div class="space-y-1 text-[11px] font-sans">
                                                 <span class="text-zinc-800 truncate block">{{ parse_url($proxyItem['address'], PHP_URL_HOST) ?? $proxyItem['address'] }}</span>
-                                                <span class="text-zinc-500 font-medium block">IP: {{ $proxyItem['ip'] }}</span>
+                                                <span class="text-zinc-500 font-medium block">{{ __('IP: :value1', ['value1' => ($proxyItem['ip'])]) }}</span>
                                             </div>
                                             <div class="flex justify-between border-t border-[#e7e3e9]/50 pt-1.5 text-[11px] font-sans">
-                                                <span>Latency:</span>
-                                                <span class="font-medium text-zinc-850">{{ $proxyItem['latency'] > 0 ? $proxyItem['latency'] . ' ms' : 'N/A' }}</span>
+                                                <span>{{ __('Latency:') }}</span>
+                                                <span class="font-medium text-zinc-850">{{ $proxyItem['latency'] > 0 ? $proxyItem['latency'] . __(' ms') : __('N/A') }}</span>
                                             </div>
                                         </div>
                                     @endforeach
@@ -463,12 +463,12 @@
                                 @if ($isPingingProxies)
                                     <div class="flex items-center justify-center p-8 text-center border border-dashed rounded bg-zinc-50 border-[#e7e3e9]/80">
                                         <span class="w-5 h-5 border-2 border-zinc-950 border-t-transparent rounded-full animate-spin mr-2"></span>
-                                        <p class="text-[11px] text-zinc-650">Memeriksa status egress...</p>
+                                        <p class="text-[11px] text-zinc-650">{{ __('Memeriksa status egress...') }}</p>
                                     </div>
                                 @else
                                     <div class="flex flex-col items-center justify-center p-8 text-center border border-dashed rounded bg-zinc-50 border-[#e7e3e9]/80 border-dashed">
-                                        <p class="text-[11px] font-semibold text-zinc-500 mb-1">Proxy Eksternal Dinonaktifkan</p>
-                                        <p class="text-[11px] text-zinc-500">Scraper memakai egress tervalidasi untuk portal lowongan yang didukung.</p>
+                                        <p class="text-[11px] font-semibold text-zinc-500 mb-1">{{ __('Proxy Eksternal Dinonaktifkan') }}</p>
+                                        <p class="text-[11px] text-zinc-500">{{ __('Scraper memakai egress tervalidasi untuk portal lowongan yang didukung.') }}</p>
                                     </div>
                                 @endif
                             @endif
@@ -488,17 +488,17 @@
                             <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                 <i class="ph-bold ph-crosshair text-xs"></i>
                             </div>
-                            <h2 class="text-xs font-sans font-medium text-zinc-500  ">Scraping Target Goal</h2>
+                            <h2 class="text-xs font-sans font-medium text-zinc-500  ">{{ __('Scraping Target Goal') }}</h2>
                         </div>
 
                         <form wire:submit.prevent="runTargetedScraping" class="space-y-4">
                             <!-- Sector Select -->
                             <div>
-                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Pilih Sektor Ekonomi</label>
+                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">{{ __('Pilih Sektor Ekonomi') }}</label>
                                 <select wire:model.live="targetSector"
                                         class="w-full text-xs bg-zinc-50/50 border border-[#e7e3e9] rounded-md px-3 py-2 text-zinc-900 focus:bg-white focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 focus:outline-hidden"
                                         required>
-                                    <option value="">-- Pilih Sektor --</option>
+                                    <option value="">{{ __('-- Pilih Sektor --') }}</option>
                                     @foreach (\App\Helpers\CategoryHelper::getSektors() as $sektor)
                                         <option value="{{ $sektor }}">{{ $sektor }}</option>
                                     @endforeach
@@ -507,12 +507,12 @@
 
                             <!-- Major Select -->
                             <div>
-                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Pilih Rumpun Jurusan</label>
+                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">{{ __('Pilih Rumpun Jurusan') }}</label>
                                 <select wire:model="targetMajor"
                                         class="w-full text-xs bg-zinc-50/50 border border-[#e7e3e9] rounded-md px-3 py-2 text-zinc-900 focus:bg-white focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 focus:outline-hidden"
                                         {{ empty($targetSector) ? 'disabled' : '' }}
                                         required>
-                                    <option value="">-- Pilih Jurusan --</option>
+                                    <option value="">{{ __('-- Pilih Jurusan --') }}</option>
                                     @foreach ($this->targetMajorsList as $majorOption)
                                         <option value="{{ $majorOption }}">{{ $majorOption }}</option>
                                     @endforeach
@@ -521,22 +521,22 @@
 
                             <!-- Quantity Limit -->
                             <div>
-                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Target Jumlah Loker Baru</label>
+                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">{{ __('Target Jumlah Loker Baru') }}</label>
                                 <div class="relative">
                                     <input type="number"
                                            wire:model="targetJobsCount"
                                            min="5" max="300"
                                            class="w-full text-xs bg-zinc-50/50 border border-[#e7e3e9] rounded-md px-3 py-2 text-zinc-900 font-sans focus:bg-white focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 focus:outline-hidden"
                                            required>
-                                    <span class="absolute right-3 top-2 text-[11px] font-sans text-zinc-500">loker baru</span>
+                                    <span class="absolute right-3 top-2 text-[11px] font-sans text-zinc-500">{{ __('loker baru') }}</span>
                                 </div>
-                                <span class="text-[11px] text-zinc-500 mt-1 block">Scraper akan berhenti secara otomatis saat database bertambah sebanyak jumlah target di atas.</span>
+                                <span class="text-[11px] text-zinc-500 mt-1 block">{{ __('Scraper akan berhenti secara otomatis saat database bertambah sebanyak jumlah target di atas.') }}</span>
                             </div>
 
                             <button type="submit"
                                     class="w-full bg-zinc-950 hover:bg-zinc-900 text-white font-medium text-xs rounded-md py-2 transition-all duration-150  flex items-center justify-center gap-1.5">
                                 <i class="ph ph-rocket-launch"></i>
-                                Jalankan Misi Targeted Ingestion
+                                {{ __('Jalankan Misi Targeted Ingestion') }}
                             </button>
                         </form>
                     </div>
@@ -544,7 +544,7 @@
                     <div class="mt-6 pt-4 border-t border-zinc-150 text-[11px] text-zinc-500 space-y-1.5 font-sans leading-tight">
                         <div class="flex items-center gap-1.5">
                             <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                            <span>Misi berjalan otomatis di background.</span>
+                            <span>{{ __('Misi berjalan otomatis di background.') }}</span>
                         </div>
                     </div>
                 </div>
@@ -557,7 +557,7 @@
                                 <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                     <i class="ph-bold ph-activity text-xs"></i>
                                 </div>
-                                <h2 class="text-xs font-sans font-medium text-zinc-500  ">Misi Aktif & Status Real-Time</h2>
+                                <h2 class="text-xs font-sans font-medium text-zinc-500  ">{{ __('Misi Aktif & Status Real-Time') }}</h2>
                             </div>
                         </div>
 
@@ -568,7 +568,7 @@
                                     <div class="flex justify-between items-start">
                                         <div>
                                             <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-sans font-medium {{ $targetedProgress['status'] === 'RUNNING' ? 'bg-amber-50 text-amber-700 border border-amber-200 ' : 'bg-emerald-50 text-emerald-700 border border-emerald-200' }}">
-                                                STATUS: {{ $targetedProgress['status'] }}
+                                                {{ __('STATUS: :value1', ['value1' => ($targetedProgress['status'])]) }}
                                             </span>
                                             <h3 class="text-sm font-semibold text-zinc-900 mt-1.5">{{ $targetedProgress['major'] }}</h3>
                                             <p class="text-[11px] text-zinc-500">{{ $targetedProgress['sector'] }}</p>
@@ -578,7 +578,7 @@
                                             <button type="button"
                                                     wire:click="cancelTargetedScraping"
                                                     class="text-xs text-red-600 hover:text-red-800 font-medium px-2.5 py-1.5 border border-red-200 rounded-md hover:bg-red-50 transition-colors">
-                                                Batalkan Misi
+                                                {{ __('Batalkan Misi') }}
                                             </button>
                                         @endif
                                     </div>
@@ -586,8 +586,8 @@
                                     <!-- Progress Bar -->
                                     <div>
                                         <div class="flex justify-between text-xs font-semibold mb-1">
-                                            <span class="text-zinc-600">Perkembangan Ingesti</span>
-                                            <span class="text-zinc-900 font-sans">{{ $targetedProgress['current'] }} / {{ $targetedProgress['target'] }} Loker Baru ({{ round(($targetedProgress['current'] / $targetedProgress['target']) * 100) }}%)</span>
+                                            <span class="text-zinc-600">{{ __('Perkembangan Ingesti') }}</span>
+                                            <span class="text-zinc-900 font-sans">{{ __(':value1 / :value2 Loker Baru (:value3%)', ['value1' => ($targetedProgress['current']), 'value2' => ($targetedProgress['target']), 'value3' => (round(($targetedProgress['current'] / $targetedProgress['target']) * 100))]) }}</span>
                                         </div>
                                         <div class="w-full bg-zinc-200 h-2 rounded-full overflow-hidden">
                                             <div class="bg-zinc-950 h-full rounded-full transition-all duration-300" style="width: {{ min(100, ($targetedProgress['current'] / $targetedProgress['target']) * 100) }}%"></div>
@@ -595,25 +595,25 @@
                                     </div>
 
                                     <div class="grid grid-cols-2 gap-4 text-[11px] font-sans text-zinc-500 border-t border-zinc-150 pt-3">
-                                        <div>Mulai: {{ $targetedProgress['started_at'] }}</div>
-                                        <div>Selesai: {{ $targetedProgress['completed_at'] ?? '-' }}</div>
+                                        <div>{{ __('Mulai: :value1', ['value1' => ($targetedProgress['started_at'])]) }}</div>
+                                        <div>{{ __('Selesai: :value1', ['value1' => ($targetedProgress['completed_at'] ?? '-')]) }}</div>
                                     </div>
                                 </div>
 
                                 <div class="bg-zinc-50 border border-zinc-150 rounded-lg p-5">
-                                    <h4 class="text-[11px] font-sans font-medium text-zinc-500   mb-2.5">Panduan Prosedur Targeted Ingestion</h4>
+                                    <h4 class="text-[11px] font-sans font-medium text-zinc-500   mb-2.5">{{ __('Panduan Prosedur Targeted Ingestion') }}</h4>
                                     <ul class="text-[11px] text-zinc-500 space-y-1.5 leading-relaxed list-disc list-inside">
-                                        <li>Background worker akan secara khusus memprioritaskan antrean keyword relasi rumpun jurusan pilihan.</li>
-                                        <li>Loker yang di-update (sudah terdaftar di DB sebelumnya) tidak dihitung dalam pertambahan kuota agar data yang masuk murni 100% baru.</li>
-                                        <li>Anda dapat memantau detil lowongan baru yang masuk secara live pada box <strong>Live Log Streamer Console</strong> di halaman depan.</li>
+                                        <li>{{ __('Background worker akan secara khusus memprioritaskan antrean keyword relasi rumpun jurusan pilihan.') }}</li>
+                                        <li>{{ __('Loker yang di-update (sudah terdaftar di DB sebelumnya) tidak dihitung dalam pertambahan kuota agar data yang masuk murni 100% baru.') }}</li>
+                                        <li>{{ __('Anda dapat memantau detil lowongan baru yang masuk secara live pada box') }} <strong>{{ __('Live Log Streamer Console') }}</strong> {{ __('di halaman depan.') }}</li>
                                     </ul>
                                 </div>
                             </div>
                         @else
                             <div class="bg-zinc-50 border border-zinc-150 rounded-lg p-12 text-center flex flex-col items-center justify-center border-dashed h-full min-h-[300px]">
                                 <i class="ph ph-crosshair text-zinc-300 text-4xl mb-3"></i>
-                                <p class="text-xs font-semibold text-zinc-600 mb-1">Belum Ada Misi Targeted Ingestion</p>
-                                <p class="text-[11px] text-zinc-500 max-w-sm">Tentukan Sektor Ekonomi, Rumpun Jurusan, dan kuota target loker baru pada form kiri, lalu klik jalankan untuk memicu background crawling khusus.</p>
+                                <p class="text-xs font-semibold text-zinc-600 mb-1">{{ __('Belum Ada Misi Targeted Ingestion') }}</p>
+                                <p class="text-[11px] text-zinc-500 max-w-sm">{{ __('Tentukan Sektor Ekonomi, Rumpun Jurusan, dan kuota target loker baru pada form kiri, lalu klik jalankan untuk memicu background crawling khusus.') }}</p>
                             </div>
                         @endif
                     </div>
@@ -631,13 +631,13 @@
                             <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                 <i class="ph-bold ph-terminal-window text-xs"></i>
                             </div>
-                            <h2 class="text-xs font-sans font-medium text-zinc-500  ">DOM Selectors Configuration</h2>
+                            <h2 class="text-xs font-sans font-medium text-zinc-500  ">{{ __('DOM Selectors Configuration') }}</h2>
                         </div>
 
                         <form wire:submit.prevent="runVisualSandboxTest" class="space-y-4">
                             <!-- Target URL -->
                             <div>
-                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Target URL Lowongan Detail</label>
+                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">{{ __('Target URL Lowongan Detail') }}</label>
                                 <input type="url"
                                        wire:model="sandboxUrl"
                                        placeholder="https://example.com/jobs/view/123"
@@ -650,10 +650,10 @@
 
                             <!-- Title Selector -->
                             <div>
-                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Selector CSS Judul Lowongan</label>
+                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">{{ __('Selector CSS Judul Lowongan') }}</label>
                                 <input type="text"
                                        wire:model="sandboxTitleSelector"
-                                       placeholder="h1.job-title atau .title-class"
+                                       placeholder="{{ __('h1.job-title atau .title-class') }}"
                                        class="w-full text-xs bg-zinc-50/50 border border-[#e7e3e9] rounded-md px-3 py-2 text-zinc-900 font-sans focus:bg-white focus:ring-1 focus:ring-zinc-955 focus:border-zinc-955 focus:outline-hidden"
                                        required>
                                 @error('sandboxTitleSelector')
@@ -663,26 +663,26 @@
 
                             <!-- Company Selector -->
                             <div>
-                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Selector CSS Perusahaan (Opsional)</label>
+                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">{{ __('Selector CSS Perusahaan (Opsional)') }}</label>
                                 <input type="text"
                                        wire:model="sandboxCompanySelector"
-                                       placeholder="span.company atau .company-name"
+                                       placeholder="{{ __('span.company atau .company-name') }}"
                                        class="w-full text-xs bg-zinc-50/50 border border-[#e7e3e9] rounded-md px-3 py-2 text-zinc-900 font-sans focus:bg-white focus:ring-1 focus:ring-zinc-955 focus:border-zinc-955 focus:outline-hidden">
                             </div>
 
                             <!-- Body Selector -->
                             <div>
-                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">Selector CSS Deskripsi Lowongan (Opsional)</label>
+                                <label class="text-[11px] font-sans font-medium text-zinc-500   block mb-1">{{ __('Selector CSS Deskripsi Lowongan (Opsional)') }}</label>
                                 <input type="text"
                                        wire:model="sandboxBodySelector"
-                                       placeholder="div.job-description atau #details"
+                                       placeholder="{{ __('div.job-description atau #details') }}"
                                        class="w-full text-xs bg-zinc-50/50 border border-[#e7e3e9] rounded-md px-3 py-2 text-zinc-900 font-sans focus:bg-white focus:ring-1 focus:ring-zinc-955 focus:border-zinc-955 focus:outline-hidden">
                             </div>
 
                             <button type="submit"
                                     wire:loading.attr="disabled"
                                     class="w-full bg-zinc-950 hover:bg-zinc-900 disabled:bg-zinc-400 text-white font-medium text-xs rounded-md py-2 transition-all duration-150  flex items-center justify-center gap-1.5">
-                                <span wire:loading.remove wire:target="runVisualSandboxTest">Uji Coba Selektor CSS</span>
+                                <span wire:loading.remove wire:target="runVisualSandboxTest">{{ __('Uji Coba Selektor CSS') }}</span>
                                 <span wire:loading wire:target="runVisualSandboxTest" class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                             </button>
                         </form>
@@ -691,7 +691,7 @@
                     <div class="mt-6 pt-4 border-t border-zinc-150 text-[11px] text-zinc-500 space-y-1.5 font-sans leading-tight">
                         <div class="flex items-center gap-1.5">
                             <span class="w-1.5 h-1.5 rounded-full bg-zinc-300"></span>
-                            <span>Mendukung rendering Puppeteer jika diaktifkan.</span>
+                            <span>{{ __('Mendukung rendering Puppeteer jika diaktifkan.') }}</span>
                         </div>
                     </div>
                 </div>
@@ -704,13 +704,13 @@
                                 <div class="w-6 h-6 rounded bg-zinc-50 border border-[#e7e3e9] flex items-center justify-center text-zinc-650">
                                     <i class="ph-bold ph-eye text-xs"></i>
                                 </div>
-                                <h2 class="text-xs font-sans font-medium text-zinc-500  ">Hasil Ekstraksi & Pratinjau DOM</h2>
+                                <h2 class="text-xs font-sans font-medium text-zinc-500  ">{{ __('Hasil Ekstraksi & Pratinjau DOM') }}</h2>
                             </div>
                         </div>
 
                         <!-- Sandbox Console Logs -->
                         <div class="mb-5">
-                            <p class="text-[11px] font-sans font-medium text-zinc-500   mb-2">Logs Jalur Sandbox</p>
+                            <p class="text-[11px] font-sans font-medium text-zinc-500   mb-2">{{ __('Logs Jalur Sandbox') }}</p>
                             @if (count($sandboxLogs) > 0)
                                 <div class="bg-[#121214] text-[#a1a1aa] border border-zinc-800 p-4 rounded-lg font-sans text-[11px] leading-relaxed shadow-inner max-h-[150px] overflow-y-auto space-y-1.5 custom-scrollbar">
                                     @foreach ($sandboxLogs as $log)
@@ -720,15 +720,15 @@
                                     @if ($sandboxIsTesting)
                                         <div class="flex items-center gap-1.5 text-zinc-550 mt-1 ">
                                             <span class="w-1.5 h-1.5 bg-zinc-500 rounded-full "></span>
-                                            <span>Mengekstrak DOM dengan selectors...</span>
+                                            <span>{{ __('Mengekstrak DOM dengan selectors...') }}</span>
                                         </div>
                                     @endif
                                 </div>
                             @else
                                 <div class="bg-zinc-50 border border-zinc-150 rounded-lg p-8 text-center flex flex-col items-center justify-center border-dashed">
                                     <i class="ph ph-code text-zinc-500 text-2xl mb-2"></i>
-                                    <p class="text-xs font-semibold text-zinc-650 mb-0.5">Logs pengujian kosong</p>
-                                    <p class="text-[11px] text-zinc-500 max-w-sm">Masukkan URL dan selector CSS kustom Anda di sisi kiri, lalu klik uji coba untuk melihat hasil parsing secara detail.</p>
+                                    <p class="text-xs font-semibold text-zinc-650 mb-0.5">{{ __('Logs pengujian kosong') }}</p>
+                                    <p class="text-[11px] text-zinc-500 max-w-sm">{{ __('Masukkan URL dan selector CSS kustom Anda di sisi kiri, lalu klik uji coba untuk melihat hasil parsing secara detail.') }}</p>
                                 </div>
                             @endif
                         </div>
@@ -737,7 +737,7 @@
                         @if ($sandboxExtractedPayload)
                             <div class="border border-[#e7e3e9] rounded-lg p-4 bg-zinc-50/50 space-y-3.5 ">
                                 <div class="flex items-center justify-between border-b border-[#e7e3e9] pb-2.5">
-                                    <span class="text-[11px] font-sans font-medium text-zinc-500  ">Payload Terurai (Extracted)</span>
+                                    <span class="text-[11px] font-sans font-medium text-zinc-500  ">{{ __('Payload Terurai (Extracted)') }}</span>
                                     <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-sans font-semibold {{ $sandboxTestResultStatus === 'SUCCESS' ? 'bg-emerald-50 text-emerald-700 border border-emerald-205' : 'bg-red-50 text-red-700 border border-red-200' }}">
                                         [{{ $sandboxTestResultStatus }}]
                                     </span>
@@ -745,15 +745,15 @@
 
                                 <div class="space-y-3 text-xs tracking-tight">
                                     <div>
-                                        <span class="text-[11px] text-zinc-500 font-sans block   mb-0.5">Judul Lowongan</span>
+                                        <span class="text-[11px] text-zinc-500 font-sans block   mb-0.5">{{ __('Judul Lowongan') }}</span>
                                         <span class="font-semibold text-zinc-900 text-sm">{{ $sandboxExtractedPayload['title'] }}</span>
                                     </div>
                                     <div>
-                                        <span class="text-[11px] text-zinc-500 font-sans block   mb-0.5">Nama Perusahaan</span>
+                                        <span class="text-[11px] text-zinc-500 font-sans block   mb-0.5">{{ __('Nama Perusahaan') }}</span>
                                         <span class="font-semibold text-zinc-900">{{ $sandboxExtractedPayload['company'] }}</span>
                                     </div>
                                     <div>
-                                        <span class="text-[11px] text-zinc-500 font-sans block   mb-0.5">Potongan Deskripsi Loker</span>
+                                        <span class="text-[11px] text-zinc-500 font-sans block   mb-0.5">{{ __('Potongan Deskripsi Loker') }}</span>
                                         <div class="bg-white border border-[#e7e3e9] rounded p-2.5 font-sans text-[11px] text-zinc-650 max-h-[100px] overflow-y-auto leading-relaxed">
                                             {{ $sandboxExtractedPayload['description'] }}
                                         </div>
@@ -764,7 +764,7 @@
                     </div>
 
                     <div class="mt-6 pt-4 border-t border-zinc-100 text-[11px] font-sans text-zinc-500">
-                        Visual selector builder bermanfaat untuk memotong bug perubahan struktur HTML pada platform loker eksternal.
+                        {{ __('Visual selector builder bermanfaat untuk memotong bug perubahan struktur HTML pada platform loker eksternal.') }}
                     </div>
                 </div>
             </div>
@@ -788,8 +788,8 @@
                                 <i class="ph-bold ph-warning-octagon text-base"></i>
                             </div>
                             <div>
-                                <h3 class="text-xs font-medium text-zinc-800 tracking-tight">Moderasi Laporan Lowongan Ditutup</h3>
-                                <p class="text-zinc-500 text-[11px] font-medium mt-0.5">Daftar lowongan kerja yang dilaporkan sudah ditutup oleh pengguna di halaman pencarian.</p>
+                                <h3 class="text-xs font-medium text-zinc-800 tracking-tight">{{ __('Moderasi Laporan Lowongan Ditutup') }}</h3>
+                                <p class="text-zinc-500 text-[11px] font-medium mt-0.5">{{ __('Daftar lowongan kerja yang dilaporkan sudah ditutup oleh pengguna di halaman pencarian.') }}</p>
                             </div>
                         </div>
                     </div>
@@ -799,11 +799,11 @@
                             <table class="w-full text-[11px] text-zinc-650 border-collapse">
                                 <thead>
                                     <tr class="bg-zinc-50 border-b border-[#e7e3e9] text-left font-sans font-medium text-zinc-500   text-[11px]">
-                                        <th class="py-2.5 px-3">Detail Lowongan</th>
-                                        <th class="py-2.5 px-3">Platform</th>
-                                        <th class="py-2.5 px-3 text-center">Jumlah Laporan</th>
-                                        <th class="py-2.5 px-3">Status Saat Ini</th>
-                                        <th class="py-2.5 px-3 text-right">Aksi Audit</th>
+                                        <th class="py-2.5 px-3">{{ __('Detail Lowongan') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('Platform') }}</th>
+                                        <th class="py-2.5 px-3 text-center">{{ __('Jumlah Laporan') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('Status Saat Ini') }}</th>
+                                        <th class="py-2.5 px-3 text-right">{{ __('Aksi Audit') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-zinc-150/60">
@@ -811,7 +811,7 @@
                                         <tr class="hover:bg-zinc-50/30 transition-colors duration-150">
                                             <td class="py-3 px-3">
                                                 <div class="font-medium text-zinc-800">{{ $job->title }}</div>
-                                                <div class="text-[11px] text-zinc-500 font-medium mt-0.5">{{ $job->company_name }} &bull; {{ $job->location ?: 'Indonesia' }}</div>
+                                                <div class="text-[11px] text-zinc-500 font-medium mt-0.5">{{ __(':value1 • :value2', ['value1' => ($job->company_name), 'value2' => ($job->location ?: __('Indonesia'))]) }}</div>
                                             </td>
                                             <td class="py-3 px-3 font-sans font-medium text-[11px]">
                                                 @php
@@ -830,16 +830,16 @@
                                             <td class="py-3 px-3 text-center">
                                                 <div class="inline-flex items-center gap-1 px-2 py-0.5 bg-rose-50 border border-rose-150 rounded text-rose-700 font-sans font-medium text-[11px]">
                                                     <i class="ph-bold ph-warning text-[11px]"></i>
-                                                    {{ $job->report_dead_count }}x Dilaporkan
+                                                    {{ __(':value1x Dilaporkan', ['value1' => ($job->report_dead_count)]) }}
                                                 </div>
                                             </td>
                                             <td class="py-3 px-3 font-sans font-medium text-[11px] ">
                                                 @if($job->status === 'closed')
-                                                    <span class="text-zinc-500 bg-zinc-100 border border-[#e7e3e9] px-1.5 py-0.5 rounded">Closed/Archived</span>
+                                                    <span class="text-zinc-500 bg-zinc-100 border border-[#e7e3e9] px-1.5 py-0.5 rounded">{{ __('Closed/Archived') }}</span>
                                                 @elseif($job->status === 'reported_dead')
-                                                    <span class="text-red-700 bg-red-50 border border-red-200 px-1.5 py-0.5 rounded">Reported Dead</span>
+                                                    <span class="text-red-700 bg-red-50 border border-red-200 px-1.5 py-0.5 rounded">{{ __('Reported Dead') }}</span>
                                                 @else
-                                                    <span class="text-emerald-700 bg-emerald-50 border border-emerald-250 px-1.5 py-0.5 rounded">Active</span>
+                                                    <span class="text-emerald-700 bg-emerald-50 border border-emerald-250 px-1.5 py-0.5 rounded">{{ __('Active') }}</span>
                                                 @endif
                                             </td>
                                             <td class="py-3 px-3 text-right">
@@ -848,21 +848,21 @@
                                                     <a href="{{ $job->raw_url }}"
                                                        target="_blank"
                                                        class="text-[9.5px] font-medium text-zinc-500 hover:text-zinc-800 transition-colors   flex items-center gap-0.5">
-                                                        <i class="ph ph-arrow-square-out text-xs"></i> Cek Link
+                                                        <i class="ph ph-arrow-square-out text-xs"></i> {{ __('Cek Link') }}
                                                     </a>
                                                     <span class="text-zinc-200">|</span>
                                                     <!-- Restore / Re-activate -->
                                                     <button type="button"
                                                             wire:click="restoreReportedJob({{ $job->id }})"
                                                             class="text-[9.5px] font-medium text-emerald-600 hover:text-emerald-800 transition-colors   flex items-center gap-0.5">
-                                                        <i class="ph ph-check text-xs"></i> Pulihkan
+                                                        <i class="ph ph-check text-xs"></i> {{ __('Pulihkan') }}
                                                     </button>
                                                     <span class="text-zinc-200">|</span>
                                                     <!-- Close permanently -->
                                                     <button type="button"
                                                             wire:click="closeReportedJob({{ $job->id }})"
                                                             class="text-[9.5px] font-medium text-rose-600 hover:text-rose-800 transition-colors   flex items-center gap-0.5">
-                                                        <i class="ph ph-archive text-xs"></i> Arsipkan
+                                                        <i class="ph ph-archive text-xs"></i> {{ __('Arsipkan') }}
                                                     </button>
                                                 </div>
                                             </td>
@@ -876,8 +876,8 @@
                             <div class="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-500 mb-3 ">
                                 <i class="ph-bold ph-shield-check text-base"></i>
                             </div>
-                            <h3 class="text-xs font-medium text-zinc-800 tracking-tight">Semua Bersih</h3>
-                            <p class="text-[11px] text-zinc-500 max-w-[280px] mt-1 leading-normal">Tidak ada laporan aktif dari pengguna saat ini. Semua lowongan dalam status operasional normal.</p>
+                            <h3 class="text-xs font-medium text-zinc-800 tracking-tight">{{ __('Semua Bersih') }}</h3>
+                            <p class="text-[11px] text-zinc-500 max-w-[280px] mt-1 leading-normal">{{ __('Tidak ada laporan aktif dari pengguna saat ini. Semua lowongan dalam status operasional normal.') }}</p>
                         </div>
                     @endif
                 </div>
@@ -912,14 +912,14 @@
                         labels: labels,
                         datasets: [
                             {
-                                label: 'Sukses',
+                                label: @js(__('Sukses')),
                                 data: successData,
                                 backgroundColor: '#729c94', // emerald-500
                                 borderRadius: 4,
                                 maxBarThickness: 24,
                             },
                             {
-                                label: 'Gagal / Diblokir',
+                                label: @js(__('Gagal / Diblokir')),
                                 data: failData,
                                 backgroundColor: '#c58299', // rose-500
                                 borderRadius: 4,

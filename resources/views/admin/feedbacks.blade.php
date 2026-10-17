@@ -6,13 +6,13 @@
              ========================================================================== --}}
         <section class="af-welcome">
             <div>
-                <h1>User Feedbacks</h1>
-                <p>Review questions, resolve member issues, and reply to support inquiries in real time.</p>
+                <h1>{{ __('User Feedbacks') }}</h1>
+                <p>{{ __('Review questions, resolve member issues, and reply to support inquiries in real time.') }}</p>
             </div>
             <div class="af-header-actions">
                 <span class="af-badge-total">
                     <i class="ph ph-ticket" aria-hidden="true"></i>
-                    <strong>{{ number_format($totalFeedbacks) }}</strong> Total Tickets
+                    <strong>{{ number_format($totalFeedbacks) }}</strong> {{ __('Total Tickets') }}
                 </span>
             </div>
         </section>
@@ -37,65 +37,65 @@
         {{-- ==========================================================================
              OVERVIEW METRIC STRIP (Interactive Status Filtering)
              ========================================================================== --}}
-        <section class="af-metric-strip" aria-label="Support tickets status summary">
+        <section class="af-metric-strip" aria-label="{{ __('Support tickets status summary') }}">
             {{-- Pending --}}
-            <a href="{{ route('admin.feedbacks.index', array_merge(request()->except('status', 'page'), ['status' => 'pending'])) }}" 
+            <a href="{{ route('admin.feedbacks.index', array_merge(request()->except('status', 'page'), ['status' => 'pending'])) }}"
                class="af-metric-card af-metric-card--pending {{ request('status') === 'pending' ? 'is-active' : '' }}"
-               title="Filter by Pending tickets">
+               title="{{ __('Filter by Pending tickets') }}">
                 <div class="af-metric-head">
                     <span class="af-metric-label">
                         <i class="ph ph-clock-countdown" aria-hidden="true"></i>
-                        Pending Review
+                        {{ __('Pending Review') }}
                     </span>
                     <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
                 </div>
                 <strong>{{ number_format($pendingFeedbacks) }}</strong>
-                <small>Awaiting administrative response</small>
+                <small>{{ __('Awaiting administrative response') }}</small>
             </a>
 
             {{-- Replied --}}
-            <a href="{{ route('admin.feedbacks.index', array_merge(request()->except('status', 'page'), ['status' => 'replied'])) }}" 
+            <a href="{{ route('admin.feedbacks.index', array_merge(request()->except('status', 'page'), ['status' => 'replied'])) }}"
                class="af-metric-card af-metric-card--replied {{ request('status') === 'replied' ? 'is-active' : '' }}"
-               title="Filter by Replied tickets">
+               title="{{ __('Filter by Replied tickets') }}">
                 <div class="af-metric-head">
                     <span class="af-metric-label">
                         <i class="ph ph-paper-plane-tilt" aria-hidden="true"></i>
-                        Replied
+                        {{ __('Replied') }}
                     </span>
                     <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
                 </div>
                 <strong>{{ number_format($repliedFeedbacks) }}</strong>
-                <small>Response sent to member</small>
+                <small>{{ __('Response sent to member') }}</small>
             </a>
 
             {{-- Completed --}}
-            <a href="{{ route('admin.feedbacks.index', array_merge(request()->except('status', 'page'), ['status' => 'completed'])) }}" 
+            <a href="{{ route('admin.feedbacks.index', array_merge(request()->except('status', 'page'), ['status' => 'completed'])) }}"
                class="af-metric-card af-metric-card--completed {{ request('status') === 'completed' ? 'is-active' : '' }}"
-               title="Filter by Completed tickets">
+               title="{{ __('Filter by Completed tickets') }}">
                 <div class="af-metric-head">
                     <span class="af-metric-label">
                         <i class="ph ph-check-circle" aria-hidden="true"></i>
-                        Completed
+                        {{ __('Completed') }}
                     </span>
                     <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
                 </div>
                 <strong>{{ number_format($completedFeedbacks) }}</strong>
-                <small>Issue successfully resolved</small>
+                <small>{{ __('Issue successfully resolved') }}</small>
             </a>
 
             {{-- On Hold --}}
-            <a href="{{ route('admin.feedbacks.index', array_merge(request()->except('status', 'page'), ['status' => 'on_hold'])) }}" 
+            <a href="{{ route('admin.feedbacks.index', array_merge(request()->except('status', 'page'), ['status' => 'on_hold'])) }}"
                class="af-metric-card af-metric-card--on_hold {{ request('status') === 'on_hold' ? 'is-active' : '' }}"
-               title="Filter by On hold tickets">
+               title="{{ __('Filter by On hold tickets') }}">
                 <div class="af-metric-head">
                     <span class="af-metric-label">
                         <i class="ph ph-pause-circle" aria-hidden="true"></i>
-                        On Hold
+                        {{ __('On Hold') }}
                     </span>
                     <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
                 </div>
                 <strong>{{ number_format($onHoldFeedbacks) }}</strong>
-                <small>Requires further follow-up</small>
+                <small>{{ __('Requires further follow-up') }}</small>
             </a>
         </section>
 
@@ -106,14 +106,14 @@
             <div class="af-panel-heading">
                 <div>
                     <h2 id="tickets-directory-heading">
-                        Support Tickets <span>{{ number_format($tickets->total()) }}</span>
+                        {{ __('Support Tickets') }} <span>{{ number_format($tickets->total()) }}</span>
                     </h2>
-                    <p>All incoming inquiries, issues, and feature suggestions from users</p>
+                    <p>{{ __('All incoming inquiries, issues, and feature suggestions from users') }}</p>
                 </div>
                 @if(request()->hasAny(['search', 'status', 'category']))
                     <a href="{{ route('admin.feedbacks.index') }}" class="af-btn af-btn--quiet af-btn--sm">
                         <i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i>
-                        Clear All Filters
+                        {{ __('Clear All Filters') }}
                     </a>
                 @endif
             </div>
@@ -121,45 +121,45 @@
             {{-- Filters Bar --}}
             <form action="{{ route('admin.feedbacks.index') }}" method="GET" class="af-filters">
                 <label class="af-search">
-                    <span class="sr-only">Search tickets</span>
+                    <span class="sr-only">{{ __('Search tickets') }}</span>
                     <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
-                    <input type="search" name="search" value="{{ request('search') }}" placeholder="Search by subject, email, or message keyword…" maxlength="100">
+                    <input type="search" name="search" value="{{ request('search') }}" placeholder="{{ __('Search by subject, email, or message keyword…') }}" maxlength="100">
                 </label>
 
                 <label>
-                    <span class="sr-only">Status</span>
+                    <span class="sr-only">{{ __('Status') }}</span>
                     <select name="status">
-                        <option value="">All Statuses</option>
+                        <option value="">{{ __('All Statuses') }}</option>
                         @foreach(['pending' => 'Pending', 'replied' => 'Replied', 'completed' => 'Completed', 'on_hold' => 'On Hold'] as $key => $label)
-                            <option value="{{ $key }}" @selected(request('status') === $key)>{{ $label }}</option>
+                            <option value="{{ $key }}" @selected(request('status') === $key)>{{ __($label) }}</option>
                         @endforeach
                     </select>
                 </label>
 
                 <label>
-                    <span class="sr-only">Category</span>
+                    <span class="sr-only">{{ __('Category') }}</span>
                     <select name="category">
-                        <option value="">All Categories</option>
+                        <option value="">{{ __('All Categories') }}</option>
                         @foreach([
                             'technical_issue' => 'Technical Issue',
                             'payment_billing' => 'Payment & Billing',
                             'feature_request' => 'Feature Request',
                             'general_feedback' => 'General Feedback'
                         ] as $key => $label)
-                            <option value="{{ $key }}" @selected(request('category') === $key)>{{ $label }}</option>
+                            <option value="{{ $key }}" @selected(request('category') === $key)>{{ __($label) }}</option>
                         @endforeach
                     </select>
                 </label>
 
                 <button type="submit" class="af-btn af-btn--primary">
                     <i class="ph ph-funnel" aria-hidden="true"></i>
-                    Filter
+                    {{ __('Filter') }}
                 </button>
 
                 @if(request()->hasAny(['search', 'status', 'category']))
                     <a href="{{ route('admin.feedbacks.index') }}" class="af-btn af-btn--quiet">
                         <i class="ph ph-x" aria-hidden="true"></i>
-                        Reset
+                        {{ __('Reset') }}
                     </a>
                 @endif
             </form>
@@ -172,9 +172,9 @@
                         <div class="af-ticket-row" @click="expanded = !expanded">
                             {{-- Member Info --}}
                             <div class="af-member-col">
-                                <img src="{{ $ticket->user?->avatar_url ?? \App\Support\AvatarCatalog::url('amber') }}" 
-                                     alt="" 
-                                     class="af-avatar" 
+                                <img src="{{ $ticket->user?->avatar_url ?? \App\Support\AvatarCatalog::url('amber') }}"
+                                     alt=""
+                                     class="af-avatar"
                                      loading="lazy">
                                 <div class="af-member-meta">
                                     <strong class="af-member-name">{{ $ticket->user?->name ?? $ticket->guest_name ?? 'Guest User' }}</strong>
@@ -182,12 +182,12 @@
                                     @if($ticket->user)
                                         <span class="af-member-tag">
                                             <i class="ph-fill ph-check-circle" aria-hidden="true"></i>
-                                            Member
+                                            {{ __('Member') }}
                                         </span>
                                     @else
                                         <span class="af-member-tag af-member-tag--guest">
                                             <i class="ph ph-user" aria-hidden="true"></i>
-                                            Guest
+                                            {{ __('Guest') }}
                                         </span>
                                     @endif
                                 </div>
@@ -226,31 +226,31 @@
                             {{-- Received Time --}}
                             <div class="af-time-col">
                                 <time datetime="{{ $ticket->created_at->toIso8601String() }}">
-                                    <strong>{{ $ticket->created_at->format('d M Y') }}</strong>
-                                    <small>{{ $ticket->created_at->format('H:i') }} WIB · {{ $ticket->created_at->diffForHumans() }}</small>
+                                    <strong>{{ $ticket->created_at->locale(app()->getLocale())->translatedFormat('d M Y') }}</strong>
+                                    <small>{{ __(':value1 WIB · :value2', ['value1' => ($ticket->created_at->format('H:i')), 'value2' => ($ticket->created_at->diffForHumans())]) }}</small>
                                 </time>
                             </div>
 
                             {{-- Action Button --}}
                             <div class="af-action-col">
-                                <button type="button" 
-                                        class="af-btn af-btn--quiet af-btn--sm" 
+                                <button type="button"
+                                        class="af-btn af-btn--quiet af-btn--sm"
                                         :aria-expanded="expanded.toString()"
                                         aria-controls="ticket-drawer-{{ $ticket->id }}"
                                         @click.stop="expanded = !expanded">
-                                    <span x-text="expanded ? 'Close' : 'Review & Reply'"></span>
+                                    <span x-text="expanded ? @js(__('Close')) : @js(__('Review & Reply'))"></span>
                                     <i class="ph ph-caret-down transition-transform duration-200" :class="{ 'rotate-180': expanded }" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>
 
                         {{-- Expanded Detail Drawer --}}
-                        <div id="ticket-drawer-{{ $ticket->id }}" 
-                             x-show="expanded" 
-                             x-collapse 
-                             x-cloak 
+                        <div id="ticket-drawer-{{ $ticket->id }}"
+                             x-show="expanded"
+                             x-collapse
+                             x-cloak
                              class="af-detail-drawer">
-                            
+
                             {{-- Conversation Thread --}}
                             <div class="af-thread">
                                 {{-- Member Inquiry --}}
@@ -258,9 +258,9 @@
                                     <div class="af-bubble-head">
                                         <div class="af-bubble-author">
                                             <i class="ph ph-user-circle" aria-hidden="true"></i>
-                                            <span>Inquiry from {{ $ticket->user?->name ?? $ticket->guest_name ?? 'Guest' }}</span>
+                                            <span>{{ __('Inquiry from :value1', ['value1' => ($ticket->user?->name ?? $ticket->guest_name ?? 'Guest')]) }}</span>
                                         </div>
-                                        <span class="af-bubble-time">{{ $ticket->created_at->format('d M Y, H:i') }} WIB</span>
+                                        <span class="af-bubble-time">{{ __(':value1 WIB', ['value1' => ($ticket->created_at->locale(app()->getLocale())->translatedFormat('d M Y, H:i'))]) }}</span>
                                     </div>
                                     <div class="af-bubble-body">{{ $ticket->message }}</div>
                                 </div>
@@ -271,9 +271,9 @@
                                         <div class="af-bubble-head">
                                             <div class="af-bubble-author">
                                                 <i class="ph ph-shield-check" aria-hidden="true"></i>
-                                                <span>Administrator Reply</span>
+                                                <span>{{ __('Administrator Reply') }}</span>
                                             </div>
-                                            <span class="af-bubble-time">{{ $ticket->replied_at?->format('d M Y, H:i') }} WIB</span>
+                                            <span class="af-bubble-time">{{ __(':value1 WIB', ['value1' => ($ticket->replied_at?->locale(app()->getLocale())->translatedFormat('d M Y, H:i'))]) }}</span>
                                         </div>
                                         <div class="af-bubble-body">{{ $ticket->admin_reply }}</div>
                                     </div>
@@ -284,33 +284,33 @@
                             <div class="af-actions-panel">
                                 <h3 class="af-actions-title">
                                     <i class="ph ph-paper-plane-tilt" aria-hidden="true"></i>
-                                    {{ $ticket->admin_reply ? 'Update Reply & Status' : 'Write Response' }}
+                                    {{ $ticket->admin_reply ? __('Update Reply & Status') : __('Write Response') }}
                                 </h3>
 
                                 <form action="{{ route('admin.feedbacks.reply', $ticket->id) }}" method="POST" class="af-reply-form">
                                     @csrf
                                     <label>
-                                        <span>Response message</span>
-                                        <textarea name="admin_reply" 
-                                                  rows="4" 
-                                                  minlength="5" 
-                                                  maxlength="5000" 
-                                                  required 
-                                                  placeholder="Write a clear, helpful response to the member…">{{ old('admin_reply', $ticket->admin_reply) }}</textarea>
+                                        <span>{{ __('Response message') }}</span>
+                                        <textarea name="admin_reply"
+                                                  rows="4"
+                                                  minlength="5"
+                                                  maxlength="5000"
+                                                  required
+                                                  placeholder="{{ __('Write a clear, helpful response to the member…') }}">{{ old('admin_reply', $ticket->admin_reply) }}</textarea>
                                     </label>
 
                                     <label>
-                                        <span>Update ticket status</span>
+                                        <span>{{ __('Update ticket status') }}</span>
                                         <select name="status">
                                             @foreach(['replied' => 'Replied', 'completed' => 'Completed', 'on_hold' => 'On hold', 'pending' => 'Pending'] as $key => $label)
-                                                <option value="{{ $key }}" @selected($key === $ticket->status)>{{ $label }}</option>
+                                                <option value="{{ $key }}" @selected($key === $ticket->status)>{{ __($label) }}</option>
                                             @endforeach
                                         </select>
                                     </label>
 
                                     <button type="submit" class="af-btn af-btn--primary">
                                         <i class="ph ph-paper-plane-tilt" aria-hidden="true"></i>
-                                        Send Reply & Update Status
+                                        {{ __('Send Reply & Update Status') }}
                                     </button>
                                 </form>
 
@@ -321,10 +321,10 @@
                                         @method('PATCH')
                                         <select name="status" class="text-xs py-1.5 px-2.5 rounded-lg border border-gray-200 dark:bg-[#1e1f20] dark:border-white/10 dark:text-[#f0f4f9]">
                                             @foreach(['pending' => 'Pending', 'replied' => 'Replied', 'completed' => 'Completed', 'on_hold' => 'On hold'] as $status => $label)
-                                                <option value="{{ $status }}" @selected($ticket->status === $status)>{{ $label }}</option>
+                                                <option value="{{ $status }}" @selected($ticket->status === $status)>{{ __($label) }}</option>
                                             @endforeach
                                         </select>
-                                        <button type="submit" class="af-btn af-btn--quiet af-btn--sm">Status only</button>
+                                        <button type="submit" class="af-btn af-btn--quiet af-btn--sm">{{ __('Status only') }}</button>
                                     </form>
 
                                     <form method="POST" action="{{ route('admin.feedbacks.destroy', $ticket->id) }}" onsubmit="return confirm('Delete this support ticket permanently? This action cannot be undone.')">
@@ -332,7 +332,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="af-btn af-btn--danger af-btn--sm">
                                             <i class="ph ph-trash" aria-hidden="true"></i>
-                                            Delete
+                                            {{ __('Delete') }}
                                         </button>
                                     </form>
                                 </div>
@@ -344,15 +344,15 @@
                         <div class="af-empty-icon">
                             <i class="ph ph-tray" aria-hidden="true"></i>
                         </div>
-                        <h3>{{ request()->hasAny(['search', 'status', 'category']) ? 'No matching tickets found' : 'No support tickets received yet' }}</h3>
-                        <p>{{ request()->hasAny(['search', 'status', 'category']) ? 'Try clearing or modifying your search filters to find tickets.' : 'Member inquiries and feedback submissions will appear here.' }}</p>
+                        <h3>{{ request()->hasAny(['search', 'status', 'category']) ? __('No matching tickets found') : __('No support tickets received yet') }}</h3>
+                        <p>{{ request()->hasAny(['search', 'status', 'category']) ? __('Try clearing or modifying your search filters to find tickets.') : __('Member inquiries and feedback submissions will appear here.') }}</p>
                     </div>
                 @endforelse
             </div>
 
             {{-- Panel Footer --}}
             <div class="af-panel-footer">
-                <span>Showing {{ $tickets->firstItem() ?? 0 }} to {{ $tickets->lastItem() ?? 0 }} of {{ number_format($tickets->total()) }} tickets</span>
+                <span>{{ __('Showing :value1 to :value2 of :value3 tickets', ['value1' => ($tickets->firstItem() ?? 0), 'value2' => ($tickets->lastItem() ?? 0), 'value3' => (number_format($tickets->total()))]) }}</span>
                 <div>
                     {{ $tickets->links() }}
                 </div>

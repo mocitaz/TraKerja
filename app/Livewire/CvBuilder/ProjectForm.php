@@ -15,7 +15,7 @@ class ProjectForm extends Component
     public $projectId;
     public $showDeleteConfirm = false;
     public $deleteId = null;
-    
+
     // Form fields
     public $project_name = '';
     public $role = '';
@@ -26,14 +26,14 @@ class ProjectForm extends Component
     public $technologies = '';
     public $description = '';
     public $display_order = 0;
-    
+
     protected $listeners = ['refreshProjects' => '$refresh', 'closeAllModals' => 'closeModal'];
-    
+
     public function mount()
     {
         $this->loadProjects();
     }
-    
+
     public function loadProjects()
     {
         /** @var \App\Models\User $user */
@@ -42,7 +42,7 @@ class ProjectForm extends Component
             ->orderBy('display_order')
             ->get();
     }
-    
+
     public function openModal()
     {
         $this->resetForm();
@@ -50,15 +50,15 @@ class ProjectForm extends Component
         $this->showModal = true;
         $this->display_order = $this->projects->count();
     }
-    
+
     public function edit($id)
     {
         $project = Auth::user()->projects()->findOrFail($id);
-        
+
         if ($project->user_id !== Auth::id()) {
             abort(403);
         }
-        
+
         $this->projectId = $project->id;
         $this->project_name = $project->project_name;
         $this->role = $project->role ?? '';
@@ -69,11 +69,11 @@ class ProjectForm extends Component
         $this->technologies = is_array($project->technologies) ? implode(', ', $project->technologies) : ($project->technologies ?? '');
         $this->description = $project->description ?? '';
         $this->display_order = $project->display_order;
-        
+
         $this->editMode = true;
         $this->showModal = true;
     }
-    
+
     public function save()
     {
         $validator = Validator::make([
@@ -103,7 +103,7 @@ class ProjectForm extends Component
             $this->setErrorBag($validator->errors());
             $this->dispatch('showNotification', [
                 'type'    => 'error',
-                'title'   => 'Incomplete Form',
+                'title'   => __('Incomplete Form'),
                 'message' => $validator->errors()->first(),
             ]);
             return;
@@ -119,7 +119,7 @@ class ProjectForm extends Component
             'description' => $this->description,
             'display_order' => $this->display_order,
         ];
-        
+
         if ($this->editMode) {
             $project = Auth::user()->projects()->findOrFail($this->projectId);
             $project->update($data);
@@ -128,18 +128,18 @@ class ProjectForm extends Component
             Auth::user()->projects()->create($data);
             $message = 'Project added successfully!';
         }
-        
+
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Success',
+            'title' => __('Success'),
             'message' => $message,
         ]);
-        
+
         $this->closeModal();
         $this->dispatch('cv-data-updated');
         $this->loadProjects();
     }
-    
+
     public function confirmDelete($id)
     {
         $this->deleteId = $id;
@@ -169,14 +169,14 @@ class ProjectForm extends Component
 
         $this->dispatch('showNotification', [
             'type' => 'info',
-            'title' => 'Deleted',
-            'message' => 'Project deleted successfully!',
+            'title' => __('Deleted'),
+            'message' => __('Project deleted successfully!'),
         ]);
-        
+
         $this->dispatch('cv-data-updated');
         $this->loadProjects();
     }
-    
+
     public function moveUp($id)
     {
         $project = Auth::user()->projects()->findOrFail($id);
@@ -184,50 +184,50 @@ class ProjectForm extends Component
             $swapWith = Auth::user()->projects()
                 ->where('display_order', $project->display_order - 1)
                 ->first();
-            
+
             if ($swapWith) {
                 $swapWith->display_order = $project->display_order;
                 $swapWith->save();
             }
-            
+
             $project->display_order -= 1;
             $project->save();
         }
-        
+
         $this->dispatch('cv-data-updated');
         $this->loadProjects();
     }
-    
+
     public function moveDown($id)
     {
         $project = Auth::user()->projects()->findOrFail($id);
         $maxOrder = $this->projects->max('display_order');
-        
+
         if ($project->display_order < $maxOrder) {
             $swapWith = Auth::user()->projects()
                 ->where('display_order', $project->display_order + 1)
                 ->first();
-            
+
             if ($swapWith) {
                 $swapWith->display_order = $project->display_order;
                 $swapWith->save();
             }
-            
+
             $project->display_order += 1;
             $project->save();
         }
-        
+
         $this->dispatch('cv-data-updated');
         $this->loadProjects();
     }
-    
+
     public function closeModal()
     {
         $this->showModal = false;
         $this->resetForm();
         $this->dispatch('reset-body-overflow');
     }
-    
+
     private function resetForm()
     {
         $this->projectId = null;
@@ -241,7 +241,7 @@ class ProjectForm extends Component
         $this->description = '';
         $this->display_order = 0;
     }
-    
+
     public function render()
     {
         return view('livewire.cv-builder.project-form');

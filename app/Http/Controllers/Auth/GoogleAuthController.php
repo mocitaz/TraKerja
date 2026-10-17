@@ -33,7 +33,7 @@ class GoogleAuthController extends Controller
                 'error' => $e->getMessage(),
             ]);
             return redirect()->route('login')
-                ->withErrors(['email' => 'Login dengan Google gagal. Silakan coba lagi.']);
+                ->withErrors(['email' => __('Login dengan Google gagal. Silakan coba lagi.')]);
         }
 
         // Cari user berdasarkan google_id terlebih dahulu
@@ -97,7 +97,7 @@ class GoogleAuthController extends Controller
 
         // Kirim welcome email
         try {
-            Mail::to($newUser->email)->send(new WelcomeMail($newUser));
+            Mail::to($newUser)->send(new WelcomeMail($newUser));
         } catch (\Exception $e) {
             \Log::error('Failed to send welcome email (Google OAuth): ' . $e->getMessage());
         }

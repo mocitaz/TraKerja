@@ -14,35 +14,35 @@
     @endphp
     <main class="workspace-page export-workspace">
         <div class="workspace-page__container">
-            <header class="workspace-page__header"><div><p class="workspace-eyebrow">Automation · Data export</p><h1>Your data, ready to go.</h1><p>Track your request and download a private CSV copy.</p></div><a class="workspace-button workspace-button--quiet" href="{{ $returnUrl }}">Back to exports ↗</a></header>
+            <header class="workspace-page__header"><div><p class="workspace-eyebrow">{{ __('Automation · Data export') }}</p><h1>{{ __('Your data, ready to go.') }}</h1><p>{{ __('Track your request and download a private CSV copy.') }}</p></div><a class="workspace-button workspace-button--quiet" href="{{ $returnUrl }}">{{ __('Back to exports ↗') }}</a></header>
             <div class="export-grid">
                 <section class="workspace-card export-status" aria-labelledby="export-title" data-export-state="{{ $state }}">
-                    <div class="export-status__top"><span class="export-status__badge export-status__badge--{{ $state }}">{{ $label }}</span><span class="export-format">CSV <span aria-hidden="true">↗</span></span></div>
+                    <div class="export-status__top"><span class="export-status__badge export-status__badge--{{ $state }}">{{ __($label) }}</span><span class="export-format">{{ __('CSV') }} <span aria-hidden="true">↗</span></span></div>
                     <div role="status" aria-live="polite"><h2 id="export-title">{{ $title }}</h2><p>{{ $description }}</p></div>
                     @if(in_array($state, ['queued', 'processing', 'ready'], true))
-                        <ol class="export-steps" aria-label="Export progress">
+                        <ol class="export-steps" aria-label="{{ __('Export progress') }}">
                             @foreach(['queued' => 'Requested', 'processing' => 'Preparing', 'ready' => 'Ready'] as $step => $stepLabel)
                                 @php $done = array_search($step, ['queued', 'processing', 'ready']) <= array_search($state, ['queued', 'processing', 'ready']); @endphp
                                 <li class="{{ $done ? 'is-reached' : '' }}" @if($step === $state) aria-current="step" @endif><span aria-hidden="true">{{ $loop->iteration }}</span>{{ $stepLabel }}</li>
                             @endforeach
                         </ol>
                     @else
-                        <div class="export-resolution"><p>{{ $state === 'expired' ? 'A new export has its own download window.' : 'You can request a new file without changing your application data.' }}</p></div>
+                        <div class="export-resolution"><p>{{ $state === 'expired' ? __('A new export has its own download window.') : __('You can request a new file without changing your application data.') }}</p></div>
                     @endif
                     <div class="export-actions">
                         @if($state === 'ready')
-                            <a class="workspace-button workspace-button--primary" href="{{ route('data-exports.download', $export->id) }}">Download CSV · {{ number_format($export->row_count) }} rows ↓</a>
+                            <a class="workspace-button workspace-button--primary" href="{{ route('data-exports.download', $export->id) }}">{{ __('Download CSV · :value1 rows ↓', ['value1' => (number_format($export->row_count))]) }}</a>
                         @elseif($active)
-                            <a class="workspace-button workspace-button--primary" href="{{ route('data-exports.show', $export->id) }}">Check status ↻</a><span>Status updates when you refresh.</span>
+                            <a class="workspace-button workspace-button--primary" href="{{ route('data-exports.show', $export->id) }}">{{ __('Check status ↻') }}</a><span>{{ __('Status updates when you refresh.') }}</span>
                         @else
-                            <a class="workspace-button workspace-button--primary" href="{{ $returnUrl }}">Create a new export ↗</a>
+                            <a class="workspace-button workspace-button--primary" href="{{ $returnUrl }}">{{ __('Create a new export ↗') }}</a>
                         @endif
                     </div>
                 </section>
-                <aside class="workspace-card workspace-card--glass export-details" aria-label="Export details">
-                    <h2>Request details</h2>
-                    <dl><div><dt>Data</dt><dd>{{ $export->kind === 'users' ? 'User records' : 'Job applications' }}</dd></div><div><dt>Format</dt><dd>CSV · UTF-8</dd></div><div><dt>Requested</dt><dd>{{ $export->created_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB</dd></div><div><dt>{{ $state === 'expired' ? 'Expired at' : 'Available until' }}</dt><dd>{{ $export->expires_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB</dd></div>@if($state === 'ready')<div><dt>Exported rows</dt><dd>{{ number_format($export->row_count) }}</dd></div>@endif</dl>
-                    <p>Data is read when the worker processes your request. Downloads expire 24 hours after the request is created.</p>
+                <aside class="workspace-card workspace-card--glass export-details" aria-label="{{ __('Export details') }}">
+                    <h2>{{ __('Request details') }}</h2>
+                    <dl><div><dt>{{ __('Data') }}</dt><dd>{{ $export->kind === 'users' ? __('User records') : __('Job applications') }}</dd></div><div><dt>{{ __('Format') }}</dt><dd>{{ __('CSV · UTF-8') }}</dd></div><div><dt>{{ __('Requested') }}</dt><dd>{{ __(':value1 WIB', ['value1' => ($export->created_at->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M Y, H:i'))]) }}</dd></div><div><dt>{{ $state === 'expired' ? __('Expired at') : __('Available until') }}</dt><dd>{{ __(':value1 WIB', ['value1' => ($export->expires_at->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M Y, H:i'))]) }}</dd></div>@if($state === 'ready')<div><dt>{{ __('Exported rows') }}</dt><dd>{{ number_format($export->row_count) }}</dd></div>@endif</dl>
+                    <p>{{ __('Data is read when the worker processes your request. Downloads expire 24 hours after the request is created.') }}</p>
                 </aside>
             </div>
         </div>

@@ -35,18 +35,18 @@ class VerifyEmailController extends Controller
         // Mark email as verified
         if ($user->markEmailAsVerified()) {
             event(new Verified($user));
-            
+
             // Send welcome email after successful verification
             try {
-                Mail::to($user->email)->send(new WelcomeMail($user));
+                Mail::to($user)->send(new WelcomeMail($user));
             } catch (\Exception $e) {
                 \Log::error('Failed to send welcome email after verification: ' . $e->getMessage());
             }
 
-            
+
             // Auto-login user after verification
             Auth::login($user);
-            
+
             // Redirect to dashboard with success message
             return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
         }

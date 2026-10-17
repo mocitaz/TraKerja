@@ -26,7 +26,7 @@ class KemerdekaanRiMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Selamat Hari Kemerdekaan Republik Indonesia 🇮🇩',
+            subject: __('Selamat Hari Kemerdekaan Republik Indonesia 🇮🇩'),
         );
     }
 

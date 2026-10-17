@@ -25,7 +25,7 @@ class Analytics extends Component
     public $activeUsers = 0;
     public $totalExports = 0;
     public $periodFilter = 'all'; // Default
-    
+
     // Chart data
     public $jobApplicationsOverTime = [];
     public $jobApplicationsByStatus = [];
@@ -70,7 +70,7 @@ class Analytics extends Component
     public function loadAnalytics()
     {
         $cacheKey = 'admin_analytics_workspace_v2_' . $this->periodFilter;
-        
+
         // Cache data selama 10 menit (600 detik) untuk membebani load page instan
         $data = Cache::remember($cacheKey, 600, function() {
             return [
@@ -128,16 +128,16 @@ class Analytics extends Component
     {
         $days = $this->periodFilter === 'all' ? 30 : (int) $this->periodFilter;
         $startDate = Carbon::now('Asia/Jakarta')->subDays($days - 1)->startOfDay();
-        
+
         $dateRange = [];
         $totalData = [];
         $premiumData = [];
-        
+
         // Ambil baseline count sebelum range tanggal filter dimulai (hanya 2 query count)
         $baseTotal = User::where('role', '!=', 'admin')
             ->where('created_at', '<', $startDate)
             ->count();
-            
+
         $basePremium = User::where('role', '!=', 'admin')
             ->where('is_premium', true)
             ->where('created_at', '<', $startDate)
@@ -157,13 +157,13 @@ class Analytics extends Component
         for ($i = $days - 1; $i >= 0; $i--) {
             $d = Carbon::now('Asia/Jakarta')->subDays($i);
             $dateStr = $d->format('Y-m-d');
-            $dateRange[] = $d->format('M d');
-            
+            $dateRange[] = $d->locale(app()->getLocale())->translatedFormat('M d');
+
             if (isset($registrations[$dateStr])) {
                 $runningTotal += $registrations[$dateStr]->total;
                 $runningPremium += $registrations[$dateStr]->premium;
             }
-            
+
             $totalData[] = $runningTotal;
             $premiumData[] = $runningPremium;
         }
@@ -178,7 +178,7 @@ class Analytics extends Component
     private function fetchActiveUsers()
     {
         $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter - 1)->startOfDay();
-        
+
         return User::where('role', '!=', 'admin')
             ->where('created_at', '>=', $startDate)
             ->where(function($query) {
@@ -195,22 +195,22 @@ class Analytics extends Component
         $startDate = Carbon::now('Asia/Jakarta')->subDays($days - 1)->startOfDay();
         $dateRange = [];
         $data = [];
-        
+
         // Ambil statistik per hari menggunakan GROUP BY (hanya 1 query)
         $applications = JobApplication::where('created_at', '>=', $startDate)
             ->selectRaw("DATE(created_at) as date, COUNT(*) as count")
             ->groupBy('date')
             ->get()
             ->keyBy('date');
-            
+
         for ($i = $days - 1; $i >= 0; $i--) {
             $d = Carbon::now('Asia/Jakarta')->subDays($i);
             $dateStr = $d->format('Y-m-d');
-            $dateRange[] = $d->format('M d');
-            
+            $dateRange[] = $d->locale(app()->getLocale())->translatedFormat('M d');
+
             $data[] = isset($applications[$dateStr]) ? $applications[$dateStr]->count : 0;
         }
-        
+
         return [
             'labels' => $dateRange,
             'data' => $data,
@@ -220,32 +220,32 @@ class Analytics extends Component
     private function fetchJobApplicationsByStatus()
     {
         $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter - 1)->startOfDay();
-        
+
         $allJobs = JobApplication::where('created_at', '>=', $startDate)->get();
-        
+
         $applied = $allJobs->count();
-        
+
         $interview = $allJobs->filter(function($job) {
             return !is_null($job->interview_date) || in_array($job->recruitment_stage, [
-                'Assessment Test', 'Psychotest', 'HR - Interview', 
+                'Assessment Test', 'Psychotest', 'HR - Interview',
                 'User - Interview', 'LGD', 'Presentation Round'
             ]);
         })->count();
-        
+
         $accepted = $allJobs->filter(function($job) {
             return $job->application_status === 'Accepted';
         })->count();
-        
+
         $rejected = $allJobs->filter(function($job) {
             return $job->application_status === 'Rejected';
         })->count();
-        
+
         $pending = $allJobs->filter(function($job) {
             $isAccepted = $job->application_status === 'Accepted';
             $isRejected = $job->application_status === 'Rejected';
             return !$isAccepted && !$isRejected;
         })->count();
-        
+
         return [
             'labels' => ['Applied', 'Interview', 'Accepted', 'Rejected', 'Pending'],
             'data' => [$applied, $interview, $accepted, $rejected, $pending],
@@ -255,14 +255,14 @@ class Analytics extends Component
     private function fetchJobApplicationsByPlatform()
     {
         $startDate = $this->periodFilter === 'all' ? Carbon::create(2000, 1, 1) : Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter - 1)->startOfDay();
-        
+
         $platformData = JobApplication::where('created_at', '>=', $startDate)
             ->selectRaw('platform, COUNT(*) as count')
             ->groupBy('platform')
             ->orderByDesc('count')
             ->limit(10)
             ->get();
-        
+
         return [
             'labels' => $platformData->pluck('platform')->toArray(),
             'data' => $platformData->pluck('count')->toArray(),
@@ -275,7 +275,7 @@ class Analytics extends Component
         $startDate = Carbon::now('Asia/Jakarta')->subDays($days - 1)->startOfDay();
         $dateRange = [];
         $data = [];
-        
+
         // Ambil group registrasi harian
         $registrations = User::where('role', '!=', 'admin')
             ->where('created_at', '>=', $startDate)
@@ -283,15 +283,15 @@ class Analytics extends Component
             ->groupBy('date')
             ->get()
             ->keyBy('date');
-            
+
         for ($i = $days - 1; $i >= 0; $i--) {
             $d = Carbon::now('Asia/Jakarta')->subDays($i);
             $dateStr = $d->format('Y-m-d');
-            $dateRange[] = $d->format('M d');
-            
+            $dateRange[] = $d->locale(app()->getLocale())->translatedFormat('M d');
+
             $data[] = isset($registrations[$dateStr]) ? $registrations[$dateStr]->count : 0;
         }
-        
+
         return [
             'labels' => $dateRange,
             'data' => $data,
@@ -303,7 +303,7 @@ class Analytics extends Component
         $totalUsers = User::where('role', '!=', 'admin')->count();
         $premiumUsers = User::where('role', '!=', 'admin')->where('is_premium', true)->where('payment_status', 'paid')->where(fn ($q) => $q->whereNull('premium_until')->orWhere('premium_until', '>', now()))->count();
         $freeUsers = $totalUsers - $premiumUsers;
-        
+
         return [
             'labels' => ['Premium', 'Free'],
             'data' => [$premiumUsers, $freeUsers],
@@ -315,7 +315,7 @@ class Analytics extends Component
         $totalGoals = UserGoal::count();
         $achievedGoals = UserGoal::where('is_achieved', true)->count();
         $pendingGoals = $totalGoals - $achievedGoals;
-        
+
         return [
             'labels' => ['Achieved', 'Pending'],
             'data' => [$achievedGoals, $pendingGoals],
@@ -326,7 +326,7 @@ class Analytics extends Component
     {
         $verifiedUsers = User::where('role', '!=', 'admin')->whereNotNull('email_verified_at')->count();
         $unverifiedUsers = User::where('role', '!=', 'admin')->whereNull('email_verified_at')->count();
-        
+
         return [
             'labels' => ['Verified', 'Unverified'],
             'data' => [$verifiedUsers, $unverifiedUsers],
@@ -340,7 +340,7 @@ class Analytics extends Component
             $startDate = Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter - 1)->startOfDay();
             $query->where('created_at', '>=', $startDate);
         }
-        
+
         return $query->select('company_name', DB::raw('count(*) as count'))
             ->groupBy('company_name')
             ->orderByDesc('count')
@@ -356,7 +356,7 @@ class Analytics extends Component
             $startDate = Carbon::now('Asia/Jakarta')->subDays((int) $this->periodFilter - 1)->startOfDay();
             $query->where('created_at', '>=', $startDate);
         }
-        
+
         return $query->select('position', DB::raw('count(*) as count'))
             ->groupBy('position')
             ->orderByDesc('count')
@@ -376,7 +376,7 @@ class Analytics extends Component
         // Weekly trend (GROUP BY tanggal, hanya 1 query)
         $trend = [];
         $trendLabels = [];
-        
+
         $analyzerTrend = AiAnalyzerResult::where('created_at', '>=', Carbon::now('Asia/Jakarta')->subDays(7)->startOfDay())
             ->selectRaw("DATE(created_at) as date, COUNT(*) as count")
             ->groupBy('date')
@@ -386,7 +386,7 @@ class Analytics extends Component
         for ($i = 6; $i >= 0; $i--) {
             $d = Carbon::now('Asia/Jakarta')->subDays($i);
             $dateStr = $d->format('Y-m-d');
-            $trendLabels[] = $d->format('D');
+            $trendLabels[] = $d->locale(app()->getLocale())->translatedFormat('D');
             $trend[] = isset($analyzerTrend[$dateStr]) ? $analyzerTrend[$dateStr]->count : 0;
         }
 
@@ -464,7 +464,7 @@ class Analytics extends Component
         // Daily trend (last 14 days, GROUP BY untuk performa instan)
         $trend = [];
         $labels = [];
-        
+
         $clTrend = CoverLetter::where('created_at', '>=', Carbon::now('Asia/Jakarta')->subDays(14)->startOfDay())
             ->selectRaw("DATE(created_at) as date, COUNT(*) as count")
             ->groupBy('date')
@@ -474,7 +474,7 @@ class Analytics extends Component
         for ($i = 13; $i >= 0; $i--) {
             $d = Carbon::now('Asia/Jakarta')->subDays($i);
             $dateStr = $d->format('Y-m-d');
-            $labels[] = $d->format('M d');
+            $labels[] = $d->locale(app()->getLocale())->translatedFormat('M d');
             $trend[]  = isset($clTrend[$dateStr]) ? $clTrend[$dateStr]->count : 0;
         }
 
@@ -530,7 +530,7 @@ class Analytics extends Component
             $total = $registered->count();
 
             if ($total === 0) {
-                $cohorts[] = ['month' => $monthStart->format('M Y'), 'total' => 0, 'retained' => 0, 'rate' => 0];
+                $cohorts[] = ['month' => $monthStart->locale(app()->getLocale())->translatedFormat('M Y'), 'total' => 0, 'retained' => 0, 'rate' => 0];
                 continue;
             }
 
@@ -544,7 +544,7 @@ class Analytics extends Component
                 ->count('user_id');
 
             $cohorts[] = [
-                'month'    => $monthStart->format('M Y'),
+                'month'    => $monthStart->locale(app()->getLocale())->translatedFormat('M Y'),
                 'total'    => $total,
                 'retained' => $retained,
                 'rate'     => $total > 0 ? round(($retained / $total) * 100, 1) : 0,
@@ -617,7 +617,7 @@ class Analytics extends Component
     {
         $cacheKey = 'admin_analytics_workspace_v2_' . $this->periodFilter;
         $data = Cache::get($cacheKey);
-        
+
         $stats = $data ? $data['statsSummary'] : $this->fetchStatsSummary();
 
         return view('livewire.admin.analytics', [

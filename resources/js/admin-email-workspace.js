@@ -1,3 +1,4 @@
+import { t } from './i18n.js';
 window.emailBlastWorkspace = function (routes) {
     const templateLabels = {
         brand_transformation: 'Suasana Baru TraKerja (Teman Perjuangan Karier)',
@@ -39,9 +40,9 @@ window.emailBlastWorkspace = function (routes) {
         templateLabel() { return templateLabels[this.emailType] || this.$refs.composer?.querySelector('[name=email_type]')?.selectedOptions[0]?.textContent || this.emailType; },
         templateDescription() {
             const descriptions = {
-                brand_transformation: 'Sapaan hangat dan pengenalan suasana baru TraKerja yang lebih ramah, adem, dan nemenin cari kerja.',
-                product_update: 'Rangkuman pembaruan fitur platform terbaru TraKerja.',
-                new_vibe: 'Pemberitahuan pembaruan workspace dan papan pelacakan lamaran.',
+                brand_transformation: t("Sapaan hangat dan pengenalan suasana baru TraKerja yang lebih ramah, adem, dan nemenin cari kerja."),
+                product_update: t("Rangkuman pembaruan fitur platform terbaru TraKerja."),
+                new_vibe: t("Pemberitahuan pembaruan workspace dan papan pelacakan lamaran."),
                 ai_analyzer: 'Pengumuman fasilitas uji coba gratis AI ATS Resume Scanner.',
                 ai_photo: 'Pemberitahuan studio foto profil AI profesional.',
                 follow_up_feature: 'Pengingat fitur tindak lanjut dan pengingat jadwal wawancara.',
@@ -97,7 +98,7 @@ window.emailBlastWorkspace = function (routes) {
             try {
                 const response = await fetch(url, { method: 'POST', signal: controller.signal, headers: { 'Content-Type': 'application/json', 'Accept': html ? 'text/html' : 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, 'X-Requested-With': 'XMLHttpRequest' }, body: JSON.stringify(payload) });
                 if (!response.ok) {
-                    let message = 'The request could not be completed. Please check the form and try again.';
+                    let message = t("The request could not be completed. Please check the form and try again.");
                     try { const data = await response.json(); message = Object.values(data.errors || {}).flat()[0] || data.message || data.error || message; } catch {}
                     throw new Error(message);
                 }
@@ -108,7 +109,7 @@ window.emailBlastWorkspace = function (routes) {
             if (this.loading || this.sending || !this.$refs.composer.reportValidity()) return;
             this.error = '';
             if (this.emailType === 'custom' && Boolean(this.custom.buttonText.trim()) !== Boolean(this.custom.buttonUrl.trim())) {
-                this.error = 'Add both button text and a destination URL, or leave both empty.'; return;
+                this.error = t("Add both button text and a destination URL, or leave both empty."); return;
             }
             this.loading = true; this.previewReady = false; this.modal = 'preview'; this.users = [];
             this.payload = { email_type: this.emailType, target_user: this.audience, custom_subject: this.custom.subject, custom_content: this.custom.content, custom_button_text: this.custom.buttonText || null, custom_button_url: this.custom.buttonUrl || null };
@@ -117,7 +118,7 @@ window.emailBlastWorkspace = function (routes) {
                 this.$refs.previewFrame.srcdoc = html;
                 this.users = audience.users;
                 this.previewReady = true;
-            } catch (error) { this.error = error.name === 'AbortError' ? 'Preview timed out. Close this dialog and try again.' : error.message; }
+            } catch (error) { this.error = error.name === t("AbortError") ? 'Preview timed out. Close this dialog and try again.' : error.message; }
             finally { this.loading = false; }
         },
         async send() {
@@ -143,7 +144,7 @@ window.emailBlastWorkspace = function (routes) {
                 let errorMsg = '';
                 try {
                     const result = await this.request(routes.sendUrl, { ...this.payload, user_id: user.id }, false, 60000);
-                    if (!result.success) throw new Error(result.error || 'Delivery was not confirmed.');
+                    if (!result.success) throw new Error(result.error || t('Delivery was not confirmed.'));
                     this.successCount++;
                     isSuccess = true;
                 } catch (error) {
@@ -179,7 +180,7 @@ window.emailBlastWorkspace = function (routes) {
                     failed_details: this.failures
                 });
             } catch {
-                this.logError = 'Delivery finished, but the history could not be saved. Keep these counts before closing.';
+                this.logError = t("Delivery finished, but the history could not be saved. Keep these counts before closing.");
             } finally {
                 this.sending = false;
             }

@@ -14,7 +14,7 @@ class AiPhotoController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
+
         $stats = [
             'total_generated' => $user->aiPhotos()->where('status', 'completed')->count(),
             'remaining_credits' => $user->getRemainingPhoto(),
@@ -42,7 +42,7 @@ class AiPhotoController extends Controller
             : ['type' => 'enhance', 'style' => $validated['style'] ?? 'auto', 'background' => $validated['background'] ?? 'studio_plain', 'mode' => $validated['mode'] ?? 'portrait'];
         $photo = $service->submit($request->user(), $request->file('photo'), $payload, $validated['request_key']);
         if ($request->expectsJson()) return response()->json(['success' => true, 'status' => $photo->status, 'url' => route('ai-photo.show', $photo->id)], 202);
-        return redirect()->route('ai-photo.show', $photo->id)->with('success', 'Permintaan foto tersimpan. Anda dapat memantau prosesnya di halaman ini.');
+        return redirect()->route('ai-photo.show', $photo->id)->with('success', __('Permintaan foto tersimpan. Anda dapat memantau prosesnya di halaman ini.'));
     }
 
     public function status(Request $request, int $aiPhoto)
@@ -60,7 +60,7 @@ class AiPhotoController extends Controller
         $photo = $request->user()->aiPhotos()->findOrFail($aiPhoto);
         $validated = $request->validate(['request_key' => 'required|uuid']);
         $attempt = $service->retry($request->user(), $photo, $validated['request_key']);
-        return redirect()->route('ai-photo.show', $attempt->id)->with('success', 'Percobaan baru tersimpan.');
+        return redirect()->route('ai-photo.show', $attempt->id)->with('success', __('Percobaan baru tersimpan.'));
     }
 
     /**

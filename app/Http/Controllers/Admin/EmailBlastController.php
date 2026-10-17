@@ -24,7 +24,7 @@ class EmailBlastController extends Controller
 {
     /**
      * Display the email blast page
-     * 
+     *
      * Fitur Email Blast mendukung:
      * - Predefined email templates (welcome, verification, ai_analyzer, job_reminder, monthly_motivation)
      * - Custom email dengan konten yang dapat dikustomisasi
@@ -37,7 +37,7 @@ class EmailBlastController extends Controller
 
     /**
      * Send email blast synchronously
-     * 
+     *
      * Support email types:
      * - welcome: Welcome email untuk user baru
      * - verification: Email verifikasi
@@ -45,7 +45,7 @@ class EmailBlastController extends Controller
      * - job_reminder: Reminder untuk mencatat lamaran kerja
      * - monthly_motivation: Motivasi bulanan
      * - custom: Custom email dengan subject, content, dan button yang dapat dikustomisasi
-     * 
+     *
      * Custom email fields:
      * - custom_subject (required): Subject email
      * - custom_content (required): Konten email
@@ -78,7 +78,7 @@ class EmailBlastController extends Controller
         $users = $query->get(['id', 'email', 'name', 'created_at', 'email_verified_at']);
 
         if ($users->isEmpty()) {
-            return back()->with('error', 'Tidak ada user yang ditemukan untuk target yang dipilih.');
+            return back()->with('error', __('Tidak ada user yang ditemukan untuk target yang dipilih.'));
         }
 
         $totalUsers = $users->count();
@@ -94,16 +94,16 @@ class EmailBlastController extends Controller
             try {
                 switch ($emailType) {
                     case 'ai_analyzer':
-                        Mail::to($user->email)->send(new AiAnalyzerFreeTrialAnnouncementMail($user));
+                        Mail::to($user)->send(new AiAnalyzerFreeTrialAnnouncementMail($user));
                         break;
                     case 'job_reminder':
-                        Mail::to($user->email)->send(new JobApplicationReminderMail($user));
+                        Mail::to($user)->send(new JobApplicationReminderMail($user));
                         break;
                     case 'monthly_motivation':
-                        Mail::to($user->email)->send(new MonthlyMotivationMail($user));
+                        Mail::to($user)->send(new MonthlyMotivationMail($user));
                         break;
                     case 'welcome':
-                        Mail::to($user->email)->send(new WelcomeMail($user));
+                        Mail::to($user)->send(new WelcomeMail($user));
                         break;
                     case 'verification':
                         // Kirim verification email untuk user yang belum terverifikasi
@@ -112,70 +112,70 @@ class EmailBlastController extends Controller
                         }
                         break;
                     case 'verification_reminder':
-                        Mail::to($user->email)->send(new \App\Mail\EmailVerificationReminderMail($user));
+                        Mail::to($user)->send(new \App\Mail\EmailVerificationReminderMail($user));
                         break;
                     case 'product_update':
-                        Mail::to($user->email)->send(new \App\Mail\ProductUpdateMail($user));
+                        Mail::to($user)->send(new \App\Mail\ProductUpdateMail($user));
                         break;
                     case 'new_vibe':
-                        Mail::to($user->email)->send(new \App\Mail\NewVibeMail($user));
+                        Mail::to($user)->send(new \App\Mail\NewVibeMail($user));
                         break;
                     case 'brand_transformation':
-                        Mail::to($user->email)->send(new \App\Mail\BrandTransformationMail($user));
+                        Mail::to($user)->send(new \App\Mail\BrandTransformationMail($user));
                         break;
                     case 'hiring_season':
-                        Mail::to($user->email)->send(new HiringSeasonAlertMail($user));
+                        Mail::to($user)->send(new HiringSeasonAlertMail($user));
                         break;
                     case 're_engagement':
-                        Mail::to($user->email)->send(new ReEngagementMail($user));
+                        Mail::to($user)->send(new ReEngagementMail($user));
                         break;
                     case 'chrome_extension':
-                        Mail::to($user->email)->send(new ChromeExtensionPromoMail($user));
+                        Mail::to($user)->send(new ChromeExtensionPromoMail($user));
                         break;
                     case 'ai_photo':
-                        Mail::to($user->email)->send(new \App\Mail\AiPhotoAnnouncementMail($user));
+                        Mail::to($user)->send(new \App\Mail\AiPhotoAnnouncementMail($user));
                         break;
                     case 'follow_up_feature':
-                        Mail::to($user->email)->send(new \App\Mail\FollowUpFeatureAnnouncementMail($user));
+                        Mail::to($user)->send(new \App\Mail\FollowUpFeatureAnnouncementMail($user));
                         break;
                     case 'idul_adha':
-                        Mail::to($user->email)->send(new \App\Mail\IdulAdhaMail($user));
+                        Mail::to($user)->send(new \App\Mail\IdulAdhaMail($user));
                         break;
                     case 'waisak':
-                        Mail::to($user->email)->send(new \App\Mail\WaisakMail($user));
+                        Mail::to($user)->send(new \App\Mail\WaisakMail($user));
                         break;
                     case 'pancasila':
-                        Mail::to($user->email)->send(new \App\Mail\PancasilaMail($user));
+                        Mail::to($user)->send(new \App\Mail\PancasilaMail($user));
                         break;
                     case 'sumpah_pemuda':
-                        Mail::to($user->email)->send(new \App\Mail\SumpahPemudaMail($user));
+                        Mail::to($user)->send(new \App\Mail\SumpahPemudaMail($user));
                         break;
                     case 'pahlawan':
-                        Mail::to($user->email)->send(new \App\Mail\PahlawanMail($user));
+                        Mail::to($user)->send(new \App\Mail\PahlawanMail($user));
                         break;
                     case 'guru_nasional':
-                        Mail::to($user->email)->send(new \App\Mail\GuruNasionalMail($user));
+                        Mail::to($user)->send(new \App\Mail\GuruNasionalMail($user));
                         break;
                     case 'hari_ibu':
-                        Mail::to($user->email)->send(new \App\Mail\HariIbuMail($user));
+                        Mail::to($user)->send(new \App\Mail\HariIbuMail($user));
                         break;
                     case 'natal':
-                        Mail::to($user->email)->send(new \App\Mail\NatalMail($user));
+                        Mail::to($user)->send(new \App\Mail\NatalMail($user));
                         break;
                     case 'kemerdekaan_ri':
-                        Mail::to($user->email)->send(new \App\Mail\KemerdekaanRiMail($user));
+                        Mail::to($user)->send(new \App\Mail\KemerdekaanRiMail($user));
                         break;
                     case 'maulid_nabi':
-                        Mail::to($user->email)->send(new \App\Mail\MaulidNabiMail($user));
+                        Mail::to($user)->send(new \App\Mail\MaulidNabiMail($user));
                         break;
                     case 'tahun_baru_islam':
-                        Mail::to($user->email)->send(new \App\Mail\TahunBaruIslamMail($user));
+                        Mail::to($user)->send(new \App\Mail\TahunBaruIslamMail($user));
                         break;
                     case 'maintenance_completed':
-                        Mail::to($user->email)->send(new MaintenanceCompletedMail($user));
+                        Mail::to($user)->send(new MaintenanceCompletedMail($user));
                         break;
                     case 'custom':
-                        Mail::to($user->email)->send(new CustomEmailBlastMail(
+                        Mail::to($user)->send(new CustomEmailBlastMail(
                             $user,
                             $request->custom_subject,
                             $request->custom_content,
@@ -185,7 +185,7 @@ class EmailBlastController extends Controller
                         break;
                 }
                 $successCount++;
-                
+
                 // Add 1 second delay between emails to prevent Hostinger SMTP rate-limiting
                 sleep(1);
             } catch (\Exception $e) {
@@ -241,7 +241,7 @@ class EmailBlastController extends Controller
         if ($users->isEmpty()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Tidak ada user yang ditemukan untuk target yang dipilih.'
+                'message' => __('Tidak ada user yang ditemukan untuk target yang dipilih.')
             ], 422);
         }
 
@@ -277,16 +277,16 @@ class EmailBlastController extends Controller
         try {
             switch ($emailType) {
                 case 'ai_analyzer':
-                    Mail::to($user->email)->send(new AiAnalyzerFreeTrialAnnouncementMail($user));
+                    Mail::to($user)->send(new AiAnalyzerFreeTrialAnnouncementMail($user));
                     break;
                 case 'job_reminder':
-                    Mail::to($user->email)->send(new JobApplicationReminderMail($user));
+                    Mail::to($user)->send(new JobApplicationReminderMail($user));
                     break;
                 case 'monthly_motivation':
-                    Mail::to($user->email)->send(new MonthlyMotivationMail($user));
+                    Mail::to($user)->send(new MonthlyMotivationMail($user));
                     break;
                 case 'welcome':
-                    Mail::to($user->email)->send(new WelcomeMail($user));
+                    Mail::to($user)->send(new WelcomeMail($user));
                     break;
                 case 'verification':
                     if (!$user->hasVerifiedEmail()) {
@@ -294,70 +294,70 @@ class EmailBlastController extends Controller
                     }
                     break;
                 case 'verification_reminder':
-                    Mail::to($user->email)->send(new \App\Mail\EmailVerificationReminderMail($user));
+                    Mail::to($user)->send(new \App\Mail\EmailVerificationReminderMail($user));
                     break;
                 case 'product_update':
-                    Mail::to($user->email)->send(new \App\Mail\ProductUpdateMail($user));
+                    Mail::to($user)->send(new \App\Mail\ProductUpdateMail($user));
                     break;
                 case 'new_vibe':
-                    Mail::to($user->email)->send(new \App\Mail\NewVibeMail($user));
+                    Mail::to($user)->send(new \App\Mail\NewVibeMail($user));
                     break;
                 case 'brand_transformation':
-                    Mail::to($user->email)->send(new \App\Mail\BrandTransformationMail($user));
+                    Mail::to($user)->send(new \App\Mail\BrandTransformationMail($user));
                     break;
                 case 'hiring_season':
-                    Mail::to($user->email)->send(new HiringSeasonAlertMail($user));
+                    Mail::to($user)->send(new HiringSeasonAlertMail($user));
                     break;
                 case 're_engagement':
-                    Mail::to($user->email)->send(new ReEngagementMail($user));
+                    Mail::to($user)->send(new ReEngagementMail($user));
                     break;
                 case 'chrome_extension':
-                    Mail::to($user->email)->send(new ChromeExtensionPromoMail($user));
+                    Mail::to($user)->send(new ChromeExtensionPromoMail($user));
                     break;
                 case 'ai_photo':
-                    Mail::to($user->email)->send(new \App\Mail\AiPhotoAnnouncementMail($user));
+                    Mail::to($user)->send(new \App\Mail\AiPhotoAnnouncementMail($user));
                     break;
                 case 'follow_up_feature':
-                    Mail::to($user->email)->send(new \App\Mail\FollowUpFeatureAnnouncementMail($user));
+                    Mail::to($user)->send(new \App\Mail\FollowUpFeatureAnnouncementMail($user));
                     break;
                 case 'idul_adha':
-                    Mail::to($user->email)->send(new \App\Mail\IdulAdhaMail($user));
+                    Mail::to($user)->send(new \App\Mail\IdulAdhaMail($user));
                     break;
                 case 'waisak':
-                    Mail::to($user->email)->send(new \App\Mail\WaisakMail($user));
+                    Mail::to($user)->send(new \App\Mail\WaisakMail($user));
                     break;
                 case 'pancasila':
-                    Mail::to($user->email)->send(new \App\Mail\PancasilaMail($user));
+                    Mail::to($user)->send(new \App\Mail\PancasilaMail($user));
                     break;
                 case 'sumpah_pemuda':
-                    Mail::to($user->email)->send(new \App\Mail\SumpahPemudaMail($user));
+                    Mail::to($user)->send(new \App\Mail\SumpahPemudaMail($user));
                     break;
                 case 'pahlawan':
-                    Mail::to($user->email)->send(new \App\Mail\PahlawanMail($user));
+                    Mail::to($user)->send(new \App\Mail\PahlawanMail($user));
                     break;
                 case 'guru_nasional':
-                    Mail::to($user->email)->send(new \App\Mail\GuruNasionalMail($user));
+                    Mail::to($user)->send(new \App\Mail\GuruNasionalMail($user));
                     break;
                 case 'hari_ibu':
-                    Mail::to($user->email)->send(new \App\Mail\HariIbuMail($user));
+                    Mail::to($user)->send(new \App\Mail\HariIbuMail($user));
                     break;
                 case 'natal':
-                    Mail::to($user->email)->send(new \App\Mail\NatalMail($user));
+                    Mail::to($user)->send(new \App\Mail\NatalMail($user));
                     break;
                 case 'kemerdekaan_ri':
-                    Mail::to($user->email)->send(new \App\Mail\KemerdekaanRiMail($user));
+                    Mail::to($user)->send(new \App\Mail\KemerdekaanRiMail($user));
                     break;
                 case 'maulid_nabi':
-                    Mail::to($user->email)->send(new \App\Mail\MaulidNabiMail($user));
+                    Mail::to($user)->send(new \App\Mail\MaulidNabiMail($user));
                     break;
                 case 'tahun_baru_islam':
-                    Mail::to($user->email)->send(new \App\Mail\TahunBaruIslamMail($user));
+                    Mail::to($user)->send(new \App\Mail\TahunBaruIslamMail($user));
                     break;
                 case 'maintenance_completed':
-                    Mail::to($user->email)->send(new MaintenanceCompletedMail($user));
+                    Mail::to($user)->send(new MaintenanceCompletedMail($user));
                     break;
                 case 'custom':
-                    Mail::to($user->email)->send(new CustomEmailBlastMail(
+                    Mail::to($user)->send(new CustomEmailBlastMail(
                         $user,
                         $request->custom_subject,
                         $request->custom_content,

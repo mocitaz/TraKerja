@@ -163,7 +163,7 @@ class CareerSummaryPro extends Component
             $interviews = $platformsWithInterviews->where('platform', $platform->platform)->first();
             $interviewCount = $interviews ? $interviews->interviews : 0;
             $conversionRate = $platform->total_applications > 0 ? ($interviewCount / $platform->total_applications) * 100 : 0;
-            
+
             $effectiveness[] = [
                 'platform' => $platform->platform,
                 'total_applications' => $platform->total_applications,
@@ -201,7 +201,7 @@ class CareerSummaryPro extends Component
         foreach ($positions as $position) {
             $interviews = $positionsWithInterviews->where('position', $position->position)->first();
             $interviewCount = $interviews ? $interviews->interviews : 0;
-            
+
             $analysis[] = [
                 'position' => $position->position,
                 'total_applications' => $position->total_applications,
@@ -239,7 +239,7 @@ class CareerSummaryPro extends Component
             $interviews = $levelsWithInterviews->where('career_level', $level->career_level)->first();
             $interviewCount = $interviews ? $interviews->interviews : 0;
             $conversionRate = $level->total_applications > 0 ? ($interviewCount / $level->total_applications) * 100 : 0;
-            
+
             $analysis[] = [
                 'career_level' => $level->career_level,
                 'total_applications' => $level->total_applications,
@@ -338,7 +338,7 @@ class CareerSummaryPro extends Component
                 $total = $jobs->count();
                 $accepted = $jobs->where('application_status', 'Accepted')->count();
                 $successRate = $total > 0 ? round(($accepted / $total) * 100, 1) : 0;
-                
+
                 return [
                     'total' => $total,
                     'accepted' => $accepted,
@@ -388,16 +388,16 @@ class CareerSummaryPro extends Component
 
         if ($this->timeFilter === 'weekly') {
             for ($i = 6; $i >= 0; $i--) {
-                $labels[] = Carbon::now('Asia/Jakarta')->subDays($i)->format('M d');
+                $labels[] = Carbon::now('Asia/Jakarta')->subDays($i)->locale(app()->getLocale())->translatedFormat('M d');
             }
         } elseif ($this->timeFilter === 'monthly') {
             for ($i = 11; $i >= 0; $i--) {
-                $labels[] = Carbon::now('Asia/Jakarta')->subMonths($i)->format('M Y');
+                $labels[] = Carbon::now('Asia/Jakarta')->subMonths($i)->locale(app()->getLocale())->translatedFormat('M Y');
             }
         } else {
             // All time - show last 12 months
             for ($i = 11; $i >= 0; $i--) {
-                $labels[] = Carbon::now('Asia/Jakarta')->subMonths($i)->format('M Y');
+                $labels[] = Carbon::now('Asia/Jakarta')->subMonths($i)->locale(app()->getLocale())->translatedFormat('M Y');
             }
         }
 

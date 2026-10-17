@@ -2,9 +2,9 @@
     <x-slot name="header">
         <div class="flex flex-col">
             <h1 class="text-2xl font-black text-slate-900 leading-tight tracking-tight">
-                Bulk <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-primary-600 to-[#4e71c5]">Importer</span>
+                {{ __('Bulk') }} <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#d983e4] via-primary-600 to-[#4e71c5]">{{ __('Importer') }}</span>
             </h1>
-            <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mt-1">Transform your CSV data into professional records</p>
+            <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mt-1">{{ __('Transform your CSV data into professional records') }}</p>
         </div>
     </x-slot>
 
@@ -16,17 +16,17 @@
         .step-complete { background-color: #a570f0; color: white; border-color: #a570f0; }
         .drag-active { border-color: #a570f0 !important; background-color: rgba(165, 112, 240, 0.05) !important; transform: scale(1.02); }
         .drag-active .upload-icon { color: #a570f0; animation: bounce 1s infinite; }
-        
+
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
-        
+
         @keyframes pulse-ring {
             0% { transform: scale(.33); }
             80%, 100% { opacity: 0; }
         }
-        
+
         .pulse-btn::before {
             content: '';
             position: absolute;
@@ -45,7 +45,7 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
-        
+
         .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); }
     </style>
 
@@ -54,10 +54,10 @@
         $hasAccess = \App\Models\Setting::isMonetizationEnabled() ? $user->isPremium() : true;
     @endphp
 
-    <div class="bg-[#f8fafc] {{ !$hasAccess ? 'h-[calc(100vh-73px)] overflow-hidden flex items-center justify-center' : 'min-h-screen pb-20' }}" x-data="{ 
-        currentStep: 1, 
-        fileName: '', 
-        isScanning: false, 
+    <div class="bg-[#f8fafc] {{ !$hasAccess ? 'h-[calc(100vh-73px)] overflow-hidden flex items-center justify-center' : 'min-h-screen pb-20' }}" x-data="{
+        currentStep: 1,
+        fileName: '',
+        isScanning: false,
         scanProgress: 0,
         mapping: {
             company: 'company_name',
@@ -86,32 +86,32 @@
                     <div class="bg-white rounded-[2rem] border border-slate-200/60 shadow-sm overflow-hidden relative text-center p-8 sm:p-10">
                         <div class="absolute top-0 right-0 w-48 h-48 bg-amber-50 rounded-full blur-[60px] -mr-24 -mt-24 opacity-60"></div>
                         <div class="absolute bottom-0 left-0 w-48 h-48 bg-primary-50 rounded-full blur-[60px] -ml-24 -mb-24 opacity-60"></div>
-                        
+
                         <div class="relative z-10 flex flex-col items-center">
                             <div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl shadow-lg shadow-amber-200/50 flex items-center justify-center text-white mb-6 border border-white/20">
                                 <i class="ph-fill ph-crown text-3xl"></i>
                             </div>
-                            
-                            <h2 class="text-xl font-black text-slate-900 tracking-tight mb-3">Enterprise-Grade Ingestion</h2>
-                            <p class="text-xs font-medium text-slate-500 leading-relaxed max-w-sm mb-8">Seamlessly map and ingest thousands of records instantly. This advanced data migration tool is exclusively available for Premium members.</p>
-                            
+
+                            <h2 class="text-xl font-black text-slate-900 tracking-tight mb-3">{{ __('Enterprise-Grade Ingestion') }}</h2>
+                            <p class="text-xs font-medium text-slate-500 leading-relaxed max-w-sm mb-8">{{ __('Seamlessly map and ingest thousands of records instantly. This advanced data migration tool is exclusively available for Premium members.') }}</p>
+
                             <a href="{{ route('payment.premium') }}" class="px-8 py-3.5 bg-slate-900 text-white rounded-xl font-black text-[10px] uppercase tracking-[0.15em] hover:bg-slate-800 transition-all shadow-md active:scale-95 flex items-center gap-2">
-                                Upgrade to Premium
+                                {{ __('Upgrade to Premium') }}
                                 <i class="ph-bold ph-arrow-right"></i>
                             </a>
-                            
+
                             <div class="mt-8 pt-6 border-t border-slate-100 flex flex-wrap gap-4 sm:gap-6 justify-center w-full">
                                 <div class="text-center">
                                     <i class="ph-duotone ph-lightning text-lg text-primary-500 mb-1.5"></i>
-                                    <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest">Instant Sync</p>
+                                    <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest">{{ __('Instant Sync') }}</p>
                                 </div>
                                 <div class="text-center">
                                     <i class="ph-duotone ph-git-merge text-emerald-500 mb-1.5"></i>
-                                    <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest">Smart Map</p>
+                                    <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest">{{ __('Smart Map') }}</p>
                                 </div>
                                 <div class="text-center">
                                     <i class="ph-duotone ph-shield-check text-blue-500 mb-1.5"></i>
-                                    <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest">Data Integrity</p>
+                                    <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest">{{ __('Data Integrity') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -122,10 +122,10 @@
             <div class="mb-8 sm:mb-12 max-w-5xl mx-auto">
                 <div class="relative flex justify-between items-center">
                     <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-slate-200 rounded-full">
-                        <div class="h-full bg-gradient-to-r from-primary-400 to-primary-600 transition-all duration-700 rounded-full" 
+                        <div class="h-full bg-gradient-to-r from-primary-400 to-primary-600 transition-all duration-700 rounded-full"
                              :style="'width: ' + ((currentStep - 1) * 33.3) + '%'"></div>
                     </div>
-                    
+
                     @foreach([
                         ['icon' => 'ph-file-arrow-up', 'label' => 'Source'],
                         ['icon' => 'ph-git-merge', 'label' => 'Mapping'],
@@ -147,46 +147,46 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 items-start">
-                
+
                 {{-- ── Main Stage ─────────────────────────────────── --}}
                 <div class="lg:col-span-8">
-                    
+
                     {{-- Step 1: Upload --}}
                     <div x-show="currentStep === 1" class="space-y-6" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0">
                         <div class="bg-white rounded-[2rem] sm:rounded-[3rem] border border-slate-200/60 shadow-[0_20px_50px_rgba(0,0,0,0.03)] overflow-hidden relative">
                             <div class="absolute top-0 right-0 w-64 h-64 bg-primary-50 rounded-full blur-[80px] -mr-32 -mt-32 opacity-60"></div>
-                            
+
                             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-6 sm:px-10 py-6 sm:py-8 border-b border-slate-50 relative z-10 w-full">
                                 <div class="flex items-center gap-4 sm:gap-5 w-full sm:w-auto">
                                     <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-slate-900 flex items-center justify-center text-white shadow-xl shadow-slate-200 shrink-0">
                                         <i class="ph-duotone ph-cloud-arrow-up text-2xl sm:text-3xl"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Ingestion Hub</h3>
-                                        <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">Select your CSV or TXT data source</p>
+                                        <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">{{ __('Ingestion Hub') }}</h3>
+                                        <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">{{ __('Select your CSV or TXT data source') }}</p>
                                     </div>
                                 </div>
                                 <a href="{{ route('csv.template') }}" class="w-full sm:w-auto justify-center group flex items-center gap-2.5 px-6 py-3 bg-emerald-50 text-emerald-700 rounded-2xl font-black text-[11px] uppercase tracking-widest border border-emerald-100 hover:bg-emerald-600 hover:text-white transition-all shadow-sm">
                                     <i class="ph-bold ph-microsoft-excel-logo text-lg group-hover:rotate-12 transition-transform"></i>
-                                    Get Template
+                                    {{ __('Get Template') }}
                                 </a>
                             </div>
 
                             <div class="p-6 sm:p-10 relative z-10">
                                 <template x-if="!isScanning">
-                                    <div id="drop-zone" 
+                                    <div id="drop-zone"
                                          class="relative border-4 border-dashed border-slate-100 rounded-[2rem] sm:rounded-[2.5rem] p-8 sm:p-20 text-center cursor-pointer transition-all duration-500 hover:border-primary-200 hover:bg-primary-50/10 group"
                                          onclick="document.getElementById('csv_file').click()">
-                                        <input type="file" id="csv_file" name="csv_file" accept=".csv,.txt" class="hidden" 
+                                        <input type="file" id="csv_file" name="csv_file" accept=".csv,.txt" class="hidden"
                                                @change="fileName = $event.target.files[0].name; startScan()">
-                                        
+
                                         <div class="upload-icon flex flex-col items-center gap-4 sm:gap-6 transition-all duration-500">
                                             <div class="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl sm:rounded-[2rem] bg-white flex items-center justify-center text-slate-300 border border-slate-100 shadow-xl group-hover:shadow-primary-100 group-hover:text-primary-600 group-hover:border-primary-200 transition-all duration-500">
                                                 <i class="ph-bold ph-file-csv text-3xl sm:text-5xl"></i>
                                             </div>
                                             <div class="space-y-1 sm:space-y-2">
-                                                <p class="text-lg sm:text-2xl font-black text-slate-900 tracking-tight">Drop your batch here</p>
-                                                <p class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-[0.15em] sm:tracking-[0.2em]">or browse your professional archive</p>
+                                                <p class="text-lg sm:text-2xl font-black text-slate-900 tracking-tight">{{ __('Drop your batch here') }}</p>
+                                                <p class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-[0.15em] sm:tracking-[0.2em]">{{ __('or browse your professional archive') }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -202,7 +202,7 @@
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <p class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Scanning Structure...</p>
+                                            <p class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">{{ __('Scanning Structure...') }}</p>
                                             <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-2" x-text="scanProgress + '%'"></p>
                                         </div>
                                         <div class="w-48 sm:w-64 h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -219,7 +219,7 @@
                         {{-- Mapping Controls --}}
                         <div class="bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200/60 shadow-sm p-5 sm:p-8">
                             <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6 sm:mb-8 flex items-center gap-3">
-                                <i class="ph-bold ph-git-merge text-primary-600"></i> Smart Field Mapping
+                                <i class="ph-bold ph-git-merge text-primary-600"></i> {{ __('Smart Field Mapping') }}
                             </h4>
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                                 @foreach([
@@ -231,11 +231,11 @@
                                     'application_date' => 'Date'
                                 ] as $key => $label)
                                     <div class="space-y-2">
-                                        <label class="block text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">{{ $label }}</label>
+                                        <label class="block text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">{{ __($label) }}</label>
                                         <div class="relative group">
                                             <select class="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-[11px] font-bold text-slate-700 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all appearance-none outline-none">
-                                                <option value="{{ $key }}">{{ $key }} (Auto)</option>
-                                                <option value="custom">Custom Column...</option>
+                                                <option value="{{ $key }}">{{ __(':value1 (Auto)', ['value1' => ($key)]) }}</option>
+                                                <option value="custom">{{ __('Custom Column...') }}</option>
                                             </select>
                                             <i class="ph-bold ph-caret-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-600 transition-colors"></i>
                                         </div>
@@ -252,12 +252,12 @@
                                         <i class="ph-bold ph-table text-xl"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-sm font-black text-slate-900 tracking-tight">Pre-Ingestion Preview</h3>
+                                        <h3 class="text-sm font-black text-slate-900 tracking-tight">{{ __('Pre-Ingestion Preview') }}</h3>
                                         <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5" x-text="fileName"></p>
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
-                                    <span class="px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg text-[9px] font-black uppercase tracking-widest border border-emerald-100">3 Rows Detected</span>
+                                    <span class="px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg text-[9px] font-black uppercase tracking-widest border border-emerald-100">{{ __('3 Rows Detected') }}</span>
                                     <button @click="currentStep = 1" class="p-2.5 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all">
                                         <i class="ph-bold ph-trash text-base sm:text-lg"></i>
                                     </button>
@@ -302,14 +302,14 @@
 
                             <div class="p-6 sm:p-10 bg-white flex flex-col-reverse sm:flex-row items-center justify-between gap-4 w-full border-t border-slate-100 sm:border-t-0">
                                 <button @click="currentStep = 1" class="flex items-center gap-2 text-xs font-black text-slate-400 hover:text-slate-600 uppercase tracking-widest transition-all w-full sm:w-auto justify-center py-2">
-                                    <i class="ph-bold ph-arrow-left"></i> Re-Upload
+                                    <i class="ph-bold ph-arrow-left"></i> {{ __('Re-Upload') }}
                                 </button>
                                 <form action="{{ route('csv.import.process') }}" method="POST" enctype="multipart/form-data" id="finalForm" class="w-full sm:w-auto">
                                     @csrf
                                     {{-- Hidden inputs for real processing --}}
                                     <button type="submit" class="w-full sm:w-auto justify-center relative overflow-hidden px-10 sm:px-12 py-4 sm:py-5 bg-primary-600 text-white rounded-2xl sm:rounded-[2rem] font-black text-[11px] sm:text-xs uppercase tracking-[0.2em] hover:bg-primary-700 transition-all shadow-2xl shadow-primary-200 active:scale-95 group flex items-center gap-3">
                                         <i class="ph-bold ph-rocket-launch text-lg sm:text-xl group-hover:rotate-12 transition-transform"></i>
-                                        Finalize Ingestion
+                                        {{ __('Finalize Ingestion') }}
                                     </button>
                                 </form>
                             </div>
@@ -323,7 +323,7 @@
                     <div class="bg-white rounded-[2.5rem] border border-slate-200/60 p-8 shadow-sm relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-full blur-3xl opacity-60"></div>
                         <h4 class="relative z-10 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6 flex items-center gap-2">
-                            <i class="ph-bold ph-shield-check text-emerald-500"></i> Validation Protocol
+                            <i class="ph-bold ph-shield-check text-emerald-500"></i> {{ __('Validation Protocol') }}
                         </h4>
                         <div class="space-y-4 relative z-10">
                             @foreach([
@@ -347,20 +347,20 @@
                     <div class="bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-2xl shadow-slate-200 relative overflow-hidden group">
                         <div class="absolute -right-12 -top-12 w-48 h-48 bg-primary-600/20 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-1000"></div>
                         <div class="relative z-10 space-y-8">
-                            <h4 class="text-[10px] font-black text-primary-400 uppercase tracking-[0.3em]">Batch Ingestion Stats</h4>
+                            <h4 class="text-[10px] font-black text-primary-400 uppercase tracking-[0.3em]">{{ __('Batch Ingestion Stats') }}</h4>
                             <div class="grid grid-cols-2 gap-6">
                                 <div class="space-y-1">
                                     <p class="text-3xl font-black tracking-tighter">500</p>
-                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Max Records</p>
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">{{ __('Max Records') }}</p>
                                 </div>
                                 <div class="space-y-1">
-                                    <p class="text-3xl font-black tracking-tighter">0.8s</p>
-                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Avg Process</p>
+                                    <p class="text-3xl font-black tracking-tighter">{{ __('0.8s') }}</p>
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">{{ __('Avg Process') }}</p>
                                 </div>
                             </div>
                             <div class="pt-6 border-t border-white/10">
                                 <div class="flex items-center justify-between mb-2">
-                                    <span class="text-[10px] font-black text-slate-400 uppercase">System Capacity</span>
+                                    <span class="text-[10px] font-black text-slate-400 uppercase">{{ __('System Capacity') }}</span>
                                     <span class="text-[10px] font-black text-primary-400">98%</span>
                                 </div>
                                 <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
@@ -379,7 +379,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const dropZone = document.getElementById('drop-zone');
-            
+
             if (dropZone) {
                 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                     dropZone.addEventListener(eventName, e => {
@@ -403,7 +403,7 @@
                     const dt = e.dataTransfer;
                     const files = dt.files;
                     const input = document.getElementById('csv_file');
-                    
+
                     if (files.length > 0) {
                         input.files = files;
                         const event = new Event('change', { bubbles: true });

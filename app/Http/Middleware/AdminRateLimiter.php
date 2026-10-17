@@ -30,16 +30,16 @@ class AdminRateLimiter
     public function handle(Request $request, Closure $next): Response
     {
         $key = 'admin-access:' . $request->ip();
-        
+
         // 60 requests per minute for admin panel
         if ($this->limiter->tooManyAttempts($key, 60)) {
             return response()->view('errors.429', [
-                'message' => 'Too many requests. Please try again in a few minutes.'
+                'message' => __('Too many requests. Please try again in a few minutes.')
             ], 429);
         }
-        
+
         $this->limiter->hit($key, 60); // Decay after 60 seconds
-        
+
         return $next($request);
     }
 }

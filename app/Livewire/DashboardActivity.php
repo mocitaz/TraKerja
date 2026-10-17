@@ -70,12 +70,12 @@ class DashboardActivity extends Component
         $counts = JobApplication::where('user_id', auth()->id())->whereBetween('application_date', [$start->toDateString(), $end->copy()->endOfDay()])->selectRaw('DATE(application_date) as date, COUNT(*) as count')->groupBy('date')->pluck('count', 'date');
         $heatmapWeeks = [];
         for ($date = $start->copy(); $date->lte($end); $date->addDay()) {
-            $heatmapWeeks[$date->copy()->startOfWeek()->format('Y-m-d')][$date->dayOfWeek] = ['date' => $date->format('Y-m-d'), 'count' => $counts[$date->format('Y-m-d')] ?? 0, 'formattedDate' => $date->format('d M Y')];
+            $heatmapWeeks[$date->copy()->startOfWeek()->format('Y-m-d')][$date->dayOfWeek] = ['date' => $date->format('Y-m-d'), 'count' => $counts[$date->format('Y-m-d')] ?? 0, 'formattedDate' => $date->locale(app()->getLocale())->translatedFormat('d M Y')];
         }
         $totalHeatmapApps = $counts->sum();
         $dailyAverage = $totalHeatmapApps / ($start->diffInDays($end) + 1);
         $dayApplications = $this->showDay && $this->selectedDate ? JobApplication::where('user_id', auth()->id())->whereDate('application_date', $this->selectedDate)->orderByDesc('id')->paginate(8, ['*'], 'activityDayPage') : null;
-        $selectedLabel = $this->selectedDate ? Carbon::parse($this->selectedDate)->format('l, d M Y') : '';
+        $selectedLabel = $this->selectedDate ? Carbon::parse($this->selectedDate)->locale(app()->getLocale())->translatedFormat('l, d M Y') : '';
 
         $monthStart = Carbon::parse($this->calendarMonth.'-01');
         $calendarDays = [];
@@ -85,7 +85,7 @@ class DashboardActivity extends Component
                 'enabled' => $date->month === $monthStart->month && $date->betweenIncluded($start, $end),
                 'count' => (int) ($counts[$date->toDateString()] ?? 0), 'today' => $date->isToday()];
         }
-        $monthLabel = $monthStart->format('F Y');
+        $monthLabel = $monthStart->locale(app()->getLocale())->translatedFormat('F Y');
         $canPreviousMonth = $monthStart->gt($start->copy()->startOfMonth());
         $canNextMonth = $monthStart->lt(today()->startOfMonth());
 

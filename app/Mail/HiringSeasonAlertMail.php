@@ -29,7 +29,7 @@ class HiringSeasonAlertMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: ' Musim Rekrutmen Telah Tiba — Persiapkan Diri Anda!',
+            subject: __(' Musim Rekrutmen Telah Tiba — Persiapkan Diri Anda!'),
         );
     }
 

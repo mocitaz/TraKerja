@@ -79,7 +79,7 @@ class PaymentController extends Controller
     public function show(string $id)
     {
         $payment = Payment::with('user')->findOrFail($id);
-        
+
         return response()->json([
             'success' => true,
             'payment' => $payment,
@@ -97,14 +97,14 @@ class PaymentController extends Controller
         if (!in_array($payment->status, ['PENDING', 'WAITING'])) {
             return response()->json([
                 'success' => false,
-                'message' => 'Hanya payment dengan status PENDING atau WAITING yang bisa dibatalkan',
+                'message' => __('Hanya payment dengan status PENDING atau WAITING yang bisa dibatalkan'),
             ], 400);
         }
 
         if (!$payment->yukk_transaction_code) {
             return response()->json([
                 'success' => false,
-                'message' => 'Payment tidak memiliki YUKK transaction code',
+                'message' => __('Payment tidak memiliki YUKK transaction code'),
             ], 400);
         }
 
@@ -113,7 +113,7 @@ class PaymentController extends Controller
 
             if ($response['success']) {
                 $payment->markAsCanceled();
-                
+
                 Log::info('Payment canceled by admin', [
                     'payment_id' => $payment->id,
                     'order_id' => $payment->order_id,
@@ -121,7 +121,7 @@ class PaymentController extends Controller
 
                 return response()->json([
                     'success' => true,
-                    'message' => 'Payment berhasil dibatalkan',
+                    'message' => __('Payment berhasil dibatalkan'),
                 ]);
             }
 
@@ -138,7 +138,7 @@ class PaymentController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Error: ' . $e->getMessage(),
+                'message' => __('Error: ') . $e->getMessage(),
             ], 500);
         }
     }
@@ -184,7 +184,7 @@ class PaymentController extends Controller
 
         $callback = function() use ($payments) {
             $file = fopen('php://output', 'w');
-            
+
             // CSV Headers
             fputcsv($file, [
                 'Order ID',

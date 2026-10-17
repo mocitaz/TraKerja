@@ -15,7 +15,7 @@ class ExperienceForm extends Component
     public $experienceId;
     public $showDeleteConfirm = false;
     public $deleteId = null;
-    
+
     // Form fields
     public $company_name = '';
     public $position = '';
@@ -26,7 +26,7 @@ class ExperienceForm extends Component
     public $is_current = false;
     public $description = '';
     public $display_order = 0;
-    
+
     public $employmentTypes = [
         'Full Time',
         'Part Time',
@@ -35,14 +35,14 @@ class ExperienceForm extends Component
         'Freelance',
         'Self-employed'
     ];
-    
+
     protected $listeners = ['refreshExperiences' => '$refresh', 'closeAllModals' => 'closeModal'];
-    
+
     public function mount()
     {
         $this->loadExperiences();
     }
-    
+
     public function loadExperiences()
     {
         /** @var \App\Models\User $user */
@@ -51,7 +51,7 @@ class ExperienceForm extends Component
             ->orderBy('display_order')
             ->get();
     }
-    
+
     public function openModal()
     {
         $this->resetForm();
@@ -59,16 +59,16 @@ class ExperienceForm extends Component
         $this->showModal = true;
         $this->display_order = $this->experiences->count();
     }
-    
+
     public function edit($id)
     {
         $experience = Auth::user()->experiences()->findOrFail($id);
-        
+
         // Security check
         if ($experience->user_id !== Auth::id()) {
             abort(403);
         }
-        
+
         $this->experienceId = $experience->id;
         $this->company_name = $experience->company_name;
         $this->position = $experience->position ?? $experience->role; // Fallback for old data
@@ -79,11 +79,11 @@ class ExperienceForm extends Component
         $this->is_current = $experience->is_current;
         $this->description = $experience->description;
         $this->display_order = $experience->display_order;
-        
+
         $this->editMode = true;
         $this->showModal = true;
     }
-    
+
     public function save()
     {
         $validator = Validator::make([
@@ -114,7 +114,7 @@ class ExperienceForm extends Component
             $this->setErrorBag($validator->errors());
             $this->dispatch('showNotification', [
                 'type'    => 'error',
-                'title'   => 'Incomplete Form',
+                'title'   => __('Incomplete Form'),
                 'message' => $validator->errors()->first(),
             ]);
             return;
@@ -130,7 +130,7 @@ class ExperienceForm extends Component
             'description' => $this->description,
             'display_order' => $this->display_order,
         ];
-        
+
         if ($this->editMode) {
             $experience = Auth::user()->experiences()->findOrFail($this->experienceId);
             $experience->update($data);
@@ -139,18 +139,18 @@ class ExperienceForm extends Component
             Auth::user()->experiences()->create($data);
             $message = 'Experience added successfully!';
         }
-        
+
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Success',
+            'title' => __('Success'),
             'message' => $message,
         ]);
-        
+
         $this->closeModal();
         $this->dispatch('cv-data-updated');
         $this->loadExperiences();
     }
-    
+
     public function confirmDelete($id)
     {
         $this->deleteId = $id;
@@ -178,17 +178,17 @@ class ExperienceForm extends Component
 
         $this->deleteId = null;
         $this->showDeleteConfirm = false;
-        
+
         $this->dispatch('showNotification', [
             'type' => 'info',
-            'title' => 'Deleted',
-            'message' => 'Experience deleted successfully!',
+            'title' => __('Deleted'),
+            'message' => __('Experience deleted successfully!'),
         ]);
-        
+
         $this->dispatch('cv-data-updated');
         $this->loadExperiences();
     }
-    
+
     public function moveUp($id)
     {
         $experience = Auth::user()->experiences()->findOrFail($id);
@@ -196,50 +196,50 @@ class ExperienceForm extends Component
             $swapWith = Auth::user()->experiences()
                 ->where('display_order', $experience->display_order - 1)
                 ->first();
-            
+
             if ($swapWith) {
                 $swapWith->display_order = $experience->display_order;
                 $swapWith->save();
             }
-            
+
             $experience->display_order -= 1;
             $experience->save();
         }
-        
+
         $this->dispatch('cv-data-updated');
         $this->loadExperiences();
     }
-    
+
     public function moveDown($id)
     {
         $experience = Auth::user()->experiences()->findOrFail($id);
         $maxOrder = $this->experiences->max('display_order');
-        
+
         if ($experience->display_order < $maxOrder) {
             $swapWith = Auth::user()->experiences()
                 ->where('display_order', $experience->display_order + 1)
                 ->first();
-            
+
             if ($swapWith) {
                 $swapWith->display_order = $experience->display_order;
                 $swapWith->save();
             }
-            
+
             $experience->display_order += 1;
             $experience->save();
         }
-        
+
         $this->dispatch('cv-data-updated');
         $this->loadExperiences();
     }
-    
+
     public function closeModal()
     {
         $this->showModal = false;
         $this->resetForm();
         $this->dispatch('reset-body-overflow');
     }
-    
+
     private function resetForm()
     {
         $this->experienceId = null;
@@ -253,7 +253,7 @@ class ExperienceForm extends Component
         $this->description = '';
         $this->display_order = 0;
     }
-    
+
     public function render()
     {
         return view('livewire.cv-builder.experience-form');

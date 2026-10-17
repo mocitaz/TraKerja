@@ -20,7 +20,7 @@ class UserResumeController extends Controller
     {
         $request->validate([
             'resume_file' => 'required|file|mimes:pdf,doc,docx|max:10240',
-            'title' => 'nullable|string|max:150',
+            'title' => __('nullable|string|max:150'),
             'is_primary' => 'nullable|boolean',
         ], [
             'resume_file.required' => 'Please select a resume file to upload.',
@@ -102,7 +102,7 @@ class UserResumeController extends Controller
         abort_unless($resume->user_id === Auth::id(), 403);
 
         $validated = $request->validate([
-            'title' => 'required|string|max:150',
+            'title' => __('required|string|max:150'),
         ]);
 
         $resume->update([

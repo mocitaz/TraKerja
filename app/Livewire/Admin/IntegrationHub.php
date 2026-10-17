@@ -24,11 +24,11 @@ class IntegrationHub extends Component
     {
         $this->apiKey = 'tk_' . Str::random(32);
         Setting::set('api_key', $this->apiKey);
-        
+
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'API Key Generated!',
-            'message' => 'API Key baru telah berhasil dibuat.',
+            'title' => __('API Key Generated!'),
+            'message' => __('API Key baru telah berhasil dibuat.'),
         ]);
     }
 
@@ -39,8 +39,8 @@ class IntegrationHub extends Component
 
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Webhook Saved!',
-            'message' => 'Konfigurasi webhook telah diperbarui.',
+            'title' => __('Webhook Saved!'),
+            'message' => __('Konfigurasi webhook telah diperbarui.'),
         ]);
     }
 

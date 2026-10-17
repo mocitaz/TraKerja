@@ -34,7 +34,7 @@ class JobApplicationForm extends Component
     public $platform_link = '';
     public $application_date = '';
     public $notes = '';
-    
+
     // Interview fields
     public $interview_date = '';
     public $interview_type = '';
@@ -60,17 +60,17 @@ class JobApplicationForm extends Component
             // Kota otonom
             'Kota Banda Aceh', 'Kota Langsa', 'Kota Lhokseumawe', 'Kota Sabang', 'Kota Subulussalam',
             // Kabupaten
-            'Kabupaten Aceh Barat', 'Kabupaten Aceh Barat Daya', 'Kabupaten Aceh Besar', 'Kabupaten Aceh Jaya', 
+            'Kabupaten Aceh Barat', 'Kabupaten Aceh Barat Daya', 'Kabupaten Aceh Besar', 'Kabupaten Aceh Jaya',
             'Kabupaten Aceh Selatan', 'Kabupaten Aceh Singkil', 'Kabupaten Aceh Tamiang', 'Kabupaten Aceh Tengah',
             'Kabupaten Aceh Tenggara', 'Kabupaten Aceh Timur', 'Kabupaten Aceh Utara', 'Kabupaten Bener Meriah',
-            'Kabupaten Bireuen', 'Kabupaten Gayo Lues', 'Kabupaten Nagan Raya', 'Kabupaten Pidie', 
+            'Kabupaten Bireuen', 'Kabupaten Gayo Lues', 'Kabupaten Nagan Raya', 'Kabupaten Pidie',
             'Kabupaten Pidie Jaya', 'Kabupaten Simeulue'
         ],
         'Bali' => [
             // Kota otonom
             'Kota Denpasar',
             // Kabupaten
-            'Kabupaten Badung', 'Kabupaten Bangli', 'Kabupaten Buleleng', 'Kabupaten Gianyar', 
+            'Kabupaten Badung', 'Kabupaten Bangli', 'Kabupaten Buleleng', 'Kabupaten Gianyar',
             'Kabupaten Jembrana', 'Kabupaten Karangasem', 'Kabupaten Klungkung', 'Kabupaten Tabanan'
         ],
         'Banten' => [
@@ -95,7 +95,7 @@ class JobApplicationForm extends Component
         ],
         'DKI Jakarta' => [
             // Kota administrasi
-            'Jakarta Barat', 'Jakarta Pusat', 'Jakarta Selatan', 
+            'Jakarta Barat', 'Jakarta Pusat', 'Jakarta Selatan',
             'Jakarta Timur', 'Jakarta Utara',
             // Kabupaten administrasi
             'Kabupaten Administrasi Kepulauan Seribu'
@@ -111,13 +111,13 @@ class JobApplicationForm extends Component
             // Kota otonom
             'Kota Jambi', 'Kota Sungai Penuh',
             // Kabupaten
-            'Kabupaten Batang Hari', 'Kabupaten Bungo', 'Kabupaten Kerinci', 'Kabupaten Merangin', 
-            'Kabupaten Muaro Jambi', 'Kabupaten Sarolangun', 'Kabupaten Tanjung Jabung Barat', 
+            'Kabupaten Batang Hari', 'Kabupaten Bungo', 'Kabupaten Kerinci', 'Kabupaten Merangin',
+            'Kabupaten Muaro Jambi', 'Kabupaten Sarolangun', 'Kabupaten Tanjung Jabung Barat',
             'Kabupaten Tanjung Jabung Timur', 'Kabupaten Tebo'
         ],
         'Jawa Barat' => [
             // Kota otonom
-            'Kota Bandung', 'Kota Banjar', 'Kota Bekasi', 'Kota Bogor', 'Kota Cimahi', 'Kota Cirebon', 
+            'Kota Bandung', 'Kota Banjar', 'Kota Bekasi', 'Kota Bogor', 'Kota Cimahi', 'Kota Cirebon',
             'Kota Depok', 'Kota Sukabumi', 'Kota Tasikmalaya',
             // Kabupaten
             'Kabupaten Bandung', 'Kabupaten Bandung Barat', 'Kabupaten Bekasi', 'Kabupaten Bogor',
@@ -157,7 +157,7 @@ class JobApplicationForm extends Component
             'Kota Pontianak', 'Kota Singkawang',
             // Kabupaten
             'Kabupaten Bengkayang', 'Kabupaten Kapuas Hulu', 'Kabupaten Ketapang', 'Kabupaten Kubu Raya',
-            'Kabupaten Landak', 'Kabupaten Melawi', 'Kabupaten Mempawah', 'Kabupaten Sanggau', 
+            'Kabupaten Landak', 'Kabupaten Melawi', 'Kabupaten Mempawah', 'Kabupaten Sanggau',
             'Kabupaten Sekadau', 'Kabupaten Sintang'
         ],
         'Kalimantan Selatan' => [
@@ -165,7 +165,7 @@ class JobApplicationForm extends Component
             'Kota Banjarbaru', 'Kota Banjarmasin',
             // Kabupaten
             'Kabupaten Balangan', 'Kabupaten Banjar', 'Kabupaten Barito Kuala', 'Kabupaten Hulu Sungai Selatan',
-            'Kabupaten Hulu Sungai Tengah', 'Kabupaten Hulu Sungai Utara', 'Kabupaten Tabalong', 
+            'Kabupaten Hulu Sungai Tengah', 'Kabupaten Hulu Sungai Utara', 'Kabupaten Tabalong',
             'Kabupaten Tanah Bumbu', 'Kabupaten Tanah Laut'
         ],
         'Kalimantan Tengah' => [
@@ -173,7 +173,7 @@ class JobApplicationForm extends Component
             'Kota Palangka Raya',
             // Kabupaten
             'Kabupaten Barito Selatan', 'Kabupaten Barito Timur', 'Kabupaten Barito Utara', 'Kabupaten Gunung Mas',
-            'Kabupaten Kapuas', 'Kabupaten Kotawaringin Barat', 'Kabupaten Kotawaringin Timur', 
+            'Kabupaten Kapuas', 'Kabupaten Kotawaringin Barat', 'Kabupaten Kotawaringin Timur',
             'Kabupaten Kualakapuas', 'Kabupaten Lamandau', 'Kabupaten Murung Raya', 'Kabupaten Pulang Pisau',
             'Kabupaten Seruyan', 'Kabupaten Sukamara', 'Kabupaten Suku'
         ],
@@ -208,7 +208,7 @@ class JobApplicationForm extends Component
             // Kota otonom
             'Kota Bandar Lampung', 'Kota Metro', 'Kota Prabumulih',
             // Kabupaten
-            'Kabupaten Lampung Barat', 'Kabupaten Lampung Selatan', 'Kabupaten Lampung Tengah', 
+            'Kabupaten Lampung Barat', 'Kabupaten Lampung Selatan', 'Kabupaten Lampung Tengah',
             'Kabupaten Lampung Timur', 'Kabupaten Lampung Utara', 'Kabupaten Mesuji', 'Kabupaten Pesisir Barat',
             'Kabupaten Tanggamus', 'Kabupaten Tulang Bawang Barat', 'Kabupaten Way Kanan'
         ],
@@ -238,11 +238,11 @@ class JobApplicationForm extends Component
             // Kota otonom
             'Kota Kupang',
             // Kabupaten
-            'Kabupaten Alor', 'Kabupaten Belu', 'Kabupaten Ende', 'Kabupaten Flores Timur', 
+            'Kabupaten Alor', 'Kabupaten Belu', 'Kabupaten Ende', 'Kabupaten Flores Timur',
             'Kabupaten Kupang', 'Kabupaten Lembata', 'Kabupaten Malaka', 'Kabupaten Manggarai',
-            'Kabupaten Manggarai Barat', 'Kabupaten Manggarai Timur', 'Kabupaten Nagekeo', 
+            'Kabupaten Manggarai Barat', 'Kabupaten Manggarai Timur', 'Kabupaten Nagekeo',
             'Kabupaten Ngada', 'Kabupaten Rote Ndao', 'Kabupaten Sabu Raijua', 'Kabupaten Sikka',
-            'Kabupaten Sumba Barat', 'Kabupaten Sumba Barat Daya', 'Kabupaten Sumba Tengah', 
+            'Kabupaten Sumba Barat', 'Kabupaten Sumba Barat Daya', 'Kabupaten Sumba Tengah',
             'Kabupaten Sumba Timur', 'Kabupaten Timor Tengah Selatan', 'Kabupaten Timor Tengah Utara'
         ],
         'Papua' => [
@@ -265,8 +265,8 @@ class JobApplicationForm extends Component
             // Kota otonom
             'Kota Sorong',
             // Kabupaten
-            'Kabupaten Manokwari Selatan', 'Kabupaten Maybrat', 'Kabupaten Pegunungan Arfak', 
-            'Kabupaten Sorong', 'Kabupaten Sorong Selatan', 'Kabupaten Tambrauw', 
+            'Kabupaten Manokwari Selatan', 'Kabupaten Maybrat', 'Kabupaten Pegunungan Arfak',
+            'Kabupaten Sorong', 'Kabupaten Sorong Selatan', 'Kabupaten Tambrauw',
             'Kabupaten Teluk Bintuni', 'Kabupaten Teluk Wondama'
         ],
         'Papua Pegunungan' => [
@@ -287,14 +287,14 @@ class JobApplicationForm extends Component
             // Kota otonom
             'Kota Timika',
             // Kabupaten
-            'Kabupaten Deiyai', 'Kabupaten Dogiyai', 'Kabupaten Intan Jaya', 'Kabupaten Mimika', 
+            'Kabupaten Deiyai', 'Kabupaten Dogiyai', 'Kabupaten Intan Jaya', 'Kabupaten Mimika',
             'Kabupaten Nabire', 'Kabupaten Paniai', 'Kabupaten Puncak Jaya'
         ],
         'Riau' => [
             // Kota otonom
             'Kota Dumai', 'Kota Pekanbaru',
             // Kabupaten
-            'Kabupaten Bengkalis', 'Kabupaten Indragiri Hilir', 'Kabupaten Indragiri Hulu', 
+            'Kabupaten Bengkalis', 'Kabupaten Indragiri Hilir', 'Kabupaten Indragiri Hulu',
             'Kabupaten Kampar', 'Kabupaten Kepulauan Meranti', 'Kabupaten Pelalawan', 'Kabupaten Rokan Hilir',
             'Kabupaten Rokan Hulu', 'Kabupaten Siak'
         ],
@@ -309,8 +309,8 @@ class JobApplicationForm extends Component
             // Kota otonom
             'Kota Makassar', 'Kota Palopo', 'Kota Parepare',
             // Kabupaten
-            'Kabupaten Bantaeng', 'Kabupaten Barru', 'Kabupaten Bone', 'Kabupaten Bulukumba', 
-            'Kabupaten Enrekang', 'Kabupaten Gowa', 'Kabupaten Jeneponto', 'Kabupaten Luwu', 
+            'Kabupaten Bantaeng', 'Kabupaten Barru', 'Kabupaten Bone', 'Kabupaten Bulukumba',
+            'Kabupaten Enrekang', 'Kabupaten Gowa', 'Kabupaten Jeneponto', 'Kabupaten Luwu',
             'Kabupaten Luwu Timur', 'Kabupaten Luwu Utara', 'Kabupaten Maros', 'Kabupaten Pinrang',
             'Kabupaten Selayar', 'Kabupaten Sidenreng Rappang', 'Kabupaten Sinjai', 'Kabupaten Takalar',
             'Kabupaten Tana Toraja', 'Kabupaten Toraja Utara', 'Kabupaten Wajo'
@@ -319,7 +319,7 @@ class JobApplicationForm extends Component
             // Kota otonom
             'Kota Palu',
             // Kabupaten
-            'Kabupaten Banggai', 'Kabupaten Banggai Kepulauan', 'Kabupaten Banggai Laut', 
+            'Kabupaten Banggai', 'Kabupaten Banggai Kepulauan', 'Kabupaten Banggai Laut',
             'Kabupaten Buol', 'Kabupaten Donggala', 'Kabupaten Morowali', 'Kabupaten Morowali Utara',
             'Kabupaten Parigi Moutong', 'Kabupaten Poso', 'Kabupaten Sigi', 'Kabupaten Tojo Una-Una',
             'Kabupaten Tolitoli'
@@ -337,14 +337,14 @@ class JobApplicationForm extends Component
             // Kota otonom
             'Kota Bitung', 'Kota Kotamobagu', 'Kota Manado', 'Kota Tomohon',
             // Kabupaten
-            'Kabupaten Bolaang Mongondow', 'Kabupaten Bolaang Mongondow Selatan', 
-            'Kabupaten Bolaang Mongondow Timur', 'Kabupaten Bolaang Mongondow Utara', 
+            'Kabupaten Bolaang Mongondow', 'Kabupaten Bolaang Mongondow Selatan',
+            'Kabupaten Bolaang Mongondow Timur', 'Kabupaten Bolaang Mongondow Utara',
             'Kabupaten Kepulauan Sangihe', 'Kabupaten Kepulauan Talaud', 'Kabupaten Minahasa',
             'Kabupaten Minahasa Selatan', 'Kabupaten Minahasa Utara'
         ],
         'Sumatera Barat' => [
             // Kota otonom
-            'Kota Bukittinggi', 'Kota Padang', 'Kota Padang Panjang', 'Kota Pariaman', 
+            'Kota Bukittinggi', 'Kota Padang', 'Kota Padang Panjang', 'Kota Pariaman',
             'Kota Payakumbuh', 'Kota Sawahlunto', 'Kota Solok',
             // Kabupaten
             'Kabupaten Agam', 'Kabupaten Dharmasraya', 'Kabupaten Kepulauan Mentawai', 'Kabupaten Lima Puluh Kota',
@@ -358,20 +358,20 @@ class JobApplicationForm extends Component
             'Kabupaten Banyuasin', 'Kabupaten Empat Lawang', 'Kabupaten Lahat', 'Kabupaten Muara Enim',
             'Kabupaten Musi Banyuasin', 'Kabupaten Musi Rawas', 'Kabupaten Musi Rawas Utara',
             'Kabupaten Ogan Ilir', 'Kabupaten Ogan Komering Ilir', 'Kabupaten Ogan Komering Ulu',
-            'Kabupaten Ogan Komering Ulu Selatan', 'Kabupaten Ogan Komering Ulu Timur', 
+            'Kabupaten Ogan Komering Ulu Selatan', 'Kabupaten Ogan Komering Ulu Timur',
             'Kabupaten Penukal Abab Lematang Ilir'
         ],
         'Sumatera Utara' => [
             // Kota otonom
-            'Kota Binjai', 'Kota Medan', 'Kota Padang Sidimpuan', 'Kota Pematangsiantar', 'Kota Sibolga', 
+            'Kota Binjai', 'Kota Medan', 'Kota Padang Sidimpuan', 'Kota Pematangsiantar', 'Kota Sibolga',
             'Kota Tanjung Balai', 'Kota Tebing Tinggi',
             // Kabupaten
             'Kabupaten Asahan', 'Kabupaten Batubara', 'Kabupaten Dairi', 'Kabupaten Deli Serdang',
             'Kabupaten Dhuaka', 'Kabupaten Gunungsitoli', 'Kabupaten Humbang Hasundutan', 'Kabupaten Karo',
-            'Kabupaten Labuhanbatu', 'Kabupaten Labuhanbatu Selatan', 'Kabupaten Labuhanbatu Utara', 
+            'Kabupaten Labuhanbatu', 'Kabupaten Labuhanbatu Selatan', 'Kabupaten Labuhanbatu Utara',
             'Kabupaten Langkat', 'Kabupaten Mandailing Natal', 'Kabupaten Nias', 'Kabupaten Nias Barat',
             'Kabupaten Nias Selatan', 'Kabupaten Nias Utara', 'Kabupaten Pakpak Bharat', 'Kabupaten Samosir',
-            'Kabupaten Serdang Bedagai', 'Kabupaten Simalungun', 'Kabupaten Tapanuli Selatan', 
+            'Kabupaten Serdang Bedagai', 'Kabupaten Simalungun', 'Kabupaten Tapanuli Selatan',
             'Kabupaten Tapanuli Tengah', 'Kabupaten Tapanuli Utara'
         ]
     ];
@@ -1139,15 +1139,15 @@ class JobApplicationForm extends Component
             ->get()
             ->pluck('platform')
             ->toArray();
-        
+
         // If user has no platforms yet, show common platforms
         if (empty($userPlatforms)) {
             return ['JobStreet', 'LinkedIn', 'Glints', 'Kalibrr', 'Karir.com'];
         }
-        
+
         return $userPlatforms;
     }
-    
+
     public function getListeners()
     {
         return [
@@ -1175,10 +1175,10 @@ class JobApplicationForm extends Component
             $this->company_name = $jobApplication->company_name;
             $this->position = $jobApplication->position;
             $this->location = $jobApplication->location;
-            
+
             // Parse existing location to set province and city
             $this->parseLocation($jobApplication->location);
-            
+
             // Check if platform is in the predefined list
             if (in_array($jobApplication->platform, $this->platformOptions)) {
                 $this->platform = $jobApplication->platform;
@@ -1187,7 +1187,7 @@ class JobApplicationForm extends Component
                 $this->platform = 'Other';
                 $this->platformOther = $jobApplication->platform;
             }
-            
+
             // Keep legacy status loaded but unused
             $this->status = $jobApplication->status;
             $this->application_status = $jobApplication->application_status ?? 'On Process';
@@ -1212,28 +1212,28 @@ class JobApplicationForm extends Component
         if ($this->isEditing && $this->jobApplication && $this->jobApplication->id == $jobId) {
             return;
         }
-        
+
         // Ensure jobId is an integer
         $jobId = (int) $jobId;
-        
+
         // Store job ID in session to trigger component re-render
         session(['edit-job-id' => $jobId]);
-        
+
         $jobApplication = JobApplication::where('id', $jobId)
             ->where('user_id', Auth::id())
             ->first();
 
         if ($jobApplication) {
-            
+
             $this->isEditing = true;
             $this->jobApplication = $jobApplication;
             $this->company_name = $jobApplication->company_name;
             $this->position = $jobApplication->position;
             $this->location = $jobApplication->location;
-            
+
             // Parse existing location to set province and city
             $this->parseLocation($jobApplication->location);
-            
+
             // Check if platform is in the predefined list
             if (in_array($jobApplication->platform, $this->platformOptions)) {
                 $this->platform = $jobApplication->platform;
@@ -1242,7 +1242,7 @@ class JobApplicationForm extends Component
                 $this->platform = 'Other';
                 $this->platformOther = $jobApplication->platform;
             }
-            
+
             // Keep legacy status loaded but unused
             $this->status = $jobApplication->status;
             $this->application_status = $jobApplication->application_status ?? 'On Process';
@@ -1251,16 +1251,16 @@ class JobApplicationForm extends Component
             $this->platform_link = $jobApplication->platform_link;
             $this->application_date = $jobApplication->application_date->format('Y-m-d');
             $this->notes = $jobApplication->notes;
-            
+
             // Load interview details
             $this->interview_date = $jobApplication->interview_date ? $jobApplication->interview_date->format('Y-m-d\TH:i') : '';
             $this->interview_type = $jobApplication->interview_type ?? '';
             $this->interview_location = $jobApplication->interview_location ?? '';
             $this->interview_notes = $jobApplication->interview_notes ?? '';
-            
+
             // Force re-render
             $this->dispatch('$refresh');
-            
+
             // Also try to emit a custom event to refresh the form
             $this->dispatch('job-loaded', [
                 'company_name' => $this->company_name,
@@ -1278,7 +1278,7 @@ class JobApplicationForm extends Component
             $user = Auth::user();
             if (!$user->canCreateJobApplication()) {
                 $remaining = $user->getRemainingJobApplications();
-                $this->dispatch('showNotification', 
+                $this->dispatch('showNotification',
                     type: 'error',
                     title: 'Limit Reached',
                     message: "You've reached your job application limit (50 applications). Upgrade to Premium for unlimited access!",
@@ -1287,14 +1287,14 @@ class JobApplicationForm extends Component
                 return;
             }
         }
-        
+
         // Ensure location is set before validation
         $this->updateLocation();
-        
+
         // Custom validation for location
         if (!$this->isRemote && !$this->isSeluruhIndonesia && !$this->isInternational && empty($this->selectedProvince)) {
             $this->addError('selectedProvince', 'The selected province field is required.');
-            $this->dispatch('showNotification', 
+            $this->dispatch('showNotification',
                 type: 'error',
                 title: 'Validation Error',
                 message: 'Please select a province for the job location',
@@ -1302,10 +1302,10 @@ class JobApplicationForm extends Component
             );
             return;
         }
-        
+
         if ($this->isInternational && empty($this->selectedCountry)) {
             $this->addError('selectedCountry', 'The selected country field is required.');
-            $this->dispatch('showNotification', 
+            $this->dispatch('showNotification',
                 type: 'error',
                 title: 'Validation Error',
                 message: 'Please select a country for international location',
@@ -1313,14 +1313,14 @@ class JobApplicationForm extends Component
             );
             return;
         }
-        
+
         try {
             $normalized = JobApplicationStatus::normalize($this->application_status, $this->recruitment_stage);
             $this->application_status = $normalized['application_status'];
             $this->recruitment_stage = $normalized['recruitment_stage'];
             $this->validate();
         } catch (\Illuminate\Validation\ValidationException $e) {
-            $this->dispatch('showNotification', 
+            $this->dispatch('showNotification',
                 type: 'error',
                 title: 'Validation Error',
                 message: 'Please check all required fields and try again',
@@ -1371,7 +1371,7 @@ class JobApplicationForm extends Component
                 // Dispatch interview-updated event for calendar refresh (only if active & scheduled)
                 if (JobApplicationStatus::canSchedule($this->recruitment_stage) && !empty($this->interview_date) && $this->application_status !== 'Rejected') {
                     $this->dispatch('interview-updated');
-                    
+
                     // Check if interview was newly scheduled or rescheduled
                     $newInterviewDate = $this->jobApplication->interview_date;
                     if ($newInterviewDate) {
@@ -1413,20 +1413,20 @@ class JobApplicationForm extends Component
                 'stage' => $this->recruitment_stage,
                 'status' => $this->application_status,
             ]);
-            
-            $this->dispatch('showNotification', 
+
+            $this->dispatch('showNotification',
                 type: 'error',
                 title: 'Save Failed',
                 message: 'Failed to save job application. Please try again.',
                 duration: 5000
             );
-            
+
             return;
         }
 
         // Dispatch global events for auto-refresh
         $this->dispatch('job-saved');
-        
+
         $this->dispatch('application-saved',
             type: 'success',
             title: $this->isEditing ? 'Application updated' : 'Application added',
@@ -1439,7 +1439,7 @@ class JobApplicationForm extends Component
     {
         // Clear selected city when province changes
         $this->selectedCity = '';
-        
+
         // Uncheck remote, seluruh indonesia, and international when province is selected
         $this->isRemote = false;
         $this->isSeluruhIndonesia = false;
@@ -1447,13 +1447,13 @@ class JobApplicationForm extends Component
         $this->selectedCountry = '';
         $this->selectedInternationalCity = '';
         $this->internationalCities = [];
-        
+
         $this->updateLocation();
     }
 
     public function updatedSelectedCity()
     {
-        
+
         // Uncheck remote, seluruh indonesia, and international when city is selected
         $this->isRemote = false;
         $this->isSeluruhIndonesia = false;
@@ -1461,7 +1461,7 @@ class JobApplicationForm extends Component
         $this->selectedCountry = '';
         $this->selectedInternationalCity = '';
         $this->internationalCities = [];
-        
+
         $this->updateLocation();
     }
 
@@ -1618,18 +1618,18 @@ class JobApplicationForm extends Component
         $this->selectedCountry = '';
         $this->selectedInternationalCity = '';
         $this->internationalCities = [];
-        
+
         if (empty($location)) {
             return;
         }
-        
+
         // 1. Check for remote/virtual/wfh keywords
         if (preg_match('/remote|wfh|virtual|work from home/i', $location)) {
             $this->isRemote = true;
             $this->updateLocation();
             return;
         }
-        
+
         // 2. Check for "Seluruh Indonesia"
         if (preg_match('/seluruh indonesia/i', $location)) {
             $this->isSeluruhIndonesia = true;
@@ -1650,14 +1650,14 @@ class JobApplicationForm extends Component
         $cleanLoc = trim(preg_replace('/\b(indonesia)\b/i', '', $location));
         $cleanLoc = trim(preg_replace('/[^a-zA-Z\s]/u', ' ', $cleanLoc)); // replace punctuation with spaces
         $cleanLoc = preg_replace('/\s+/', ' ', $cleanLoc); // normalize spaces
-        
+
         // 3. Search in Indonesian Provinces and Cities
         // Check if there is an exact or partial match for province name
         foreach ($this->provinces as $provinceName => $cityList) {
             if (stripos($cleanLoc, $provinceName) !== false || stripos($provinceName, $cleanLoc) !== false) {
                 $this->selectedProvince = $provinceName;
                 $this->cities = $cityList;
-                
+
                 // Search for a matching city in the location string
                 foreach ($cityList as $city) {
                     $cleanCity = preg_replace('/^(Kota|Kabupaten)\s+/i', '', $city);
@@ -1667,7 +1667,7 @@ class JobApplicationForm extends Component
                         return;
                     }
                 }
-                
+
                 // If no city found, select first city
                 if (!empty($cityList)) {
                     $this->selectedCity = $cityList[0];
@@ -1676,7 +1676,7 @@ class JobApplicationForm extends Component
                 return;
             }
         }
-        
+
         // Check if any Indonesian city name is in the location string
         foreach ($this->provinces as $provinceName => $cityList) {
             foreach ($cityList as $city) {
@@ -1690,7 +1690,7 @@ class JobApplicationForm extends Component
                 }
             }
         }
-        
+
         // 4. Search in International Countries and Cities
         // Check if country matches
         foreach ($this->countries as $countryName => $cityList) {
@@ -1698,7 +1698,7 @@ class JobApplicationForm extends Component
                 $this->isInternational = true;
                 $this->selectedCountry = $countryName;
                 $this->internationalCities = $cityList;
-                
+
                 // Search for matching city
                 foreach ($cityList as $city) {
                     if (stripos($cleanLoc, $city) !== false) {
@@ -1707,7 +1707,7 @@ class JobApplicationForm extends Component
                         return;
                     }
                 }
-                
+
                 if (!empty($cityList)) {
                     $this->selectedInternationalCity = $cityList[0];
                 }
@@ -1715,7 +1715,7 @@ class JobApplicationForm extends Component
                 return;
             }
         }
-        
+
         // Check if any international city matches
         foreach ($this->countries as $countryName => $cityList) {
             foreach ($cityList as $city) {
@@ -1729,7 +1729,7 @@ class JobApplicationForm extends Component
                 }
             }
         }
-        
+
         // Fallback: If still not matched, check if it's outside Indonesia (we can mark as International Other)
         if (!empty($location)) {
             $this->isInternational = true;
@@ -1740,7 +1740,7 @@ class JobApplicationForm extends Component
                 $this->selectedInternationalCity = $this->internationalCities[0] ?? '';
             }
         }
-        
+
         $this->updateLocation();
     }
 
@@ -1752,7 +1752,7 @@ class JobApplicationForm extends Component
     public function resetFormForNewJob($defaultStage = null)
     {
         $this->resetForm();
-        
+
         if ($defaultStage) {
             $this->recruitment_stage = in_array($defaultStage, JobApplicationStatus::STAGES, true) ? $defaultStage : 'Applied';
             if (in_array($defaultStage, ['Accepted', 'Rejected'])) {
@@ -1762,7 +1762,7 @@ class JobApplicationForm extends Component
             }
             $this->updateLocation();
         }
-        
+
         // Force component refresh to update the UI
         $this->dispatch('$refresh');
     }
@@ -1805,7 +1805,7 @@ class JobApplicationForm extends Component
         try {
             $user = $jobApplication->user;
             if ($user && $user->wantsEmailNotification('interview')) {
-                \Illuminate\Support\Facades\Mail::to($user->email)
+                \Illuminate\Support\Facades\Mail::to($user)
                     ->send(new \App\Mail\InterviewScheduledMail($jobApplication));
             }
         } catch (\Exception $e) {
@@ -1816,7 +1816,7 @@ class JobApplicationForm extends Component
     public function render()
     {
         $userId = Auth::id();
-        
+
         $topPlatforms = JobApplication::where('user_id', $userId)
             ->select('platform', \DB::raw('count(*) as total'))
             ->whereNotNull('platform')

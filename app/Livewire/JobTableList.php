@@ -203,31 +203,31 @@ class JobTableList extends Component
                 $pinnedCount = JobApplication::where('user_id', auth()->id())
                     ->where('is_pinned', true)
                     ->count();
-                
+
                 if ($pinnedCount >= 5) {
                     $this->dispatch('showNotification', [
                         'type' => 'error',
-                        'title' => 'Pin Limit Reached',
-                        'message' => 'You can only pin up to 5 jobs. Unpin another job first.',
+                        'title' => __('Pin Limit Reached'),
+                        'message' => __('You can only pin up to 5 jobs. Unpin another job first.'),
                         'duration' => 3000
                     ]);
                     return;
                 }
             }
-            
+
             $job->update(['is_pinned' => !$job->is_pinned]);
-            
-            $message = $job->is_pinned 
-                ? "Pinned {$job->company_name} to top" 
+
+            $message = $job->is_pinned
+                ? "Pinned {$job->company_name} to top"
                 : "Unpinned {$job->company_name}";
-            
+
             $this->dispatch('showNotification', [
                 'type' => 'info',
                 'title' => $job->is_pinned ? 'Job Pinned' : 'Job Unpinned',
                 'message' => $message,
                 'duration' => 2000
             ]);
-            
+
             $this->dispatch('job-pinned');
         }
     }
@@ -237,7 +237,7 @@ class JobTableList extends Component
         $job = JobApplication::where('id', $jobId)->where('user_id', auth()->id())->first();
         if ($job) {
             $this->dispatch('confirm-action', [
-                'title' => 'Delete Application?',
+                'title' => __('Delete Application?'),
                 'message' => "The application data for {$job->company_name} will be permanently deleted (10 XP will be deducted). You can also edit the application details instead.",
                 'btnText' => 'Delete Now',
                 'onConfirm' => 'delete-confirmed',
@@ -249,7 +249,7 @@ class JobTableList extends Component
     public function delete($jobId)
     {
         \Log::info('JobTableList delete method called with jobId:', ['jobId' => $jobId]);
-        
+
         $job = JobApplication::where('id', $jobId)
             ->where('user_id', auth()->id())
             ->first();
@@ -258,7 +258,7 @@ class JobTableList extends Component
             \Log::info('Job found, deleting...', ['jobId' => $jobId, 'company' => $job->company_name]);
             $companyName = $job->company_name;
             $job->delete();
-            
+
             // Deduct XP on delete
             $user = auth()->user();
             if (method_exists($user, 'deductXP')) {
@@ -267,11 +267,11 @@ class JobTableList extends Component
 
             $this->dispatch('showNotification', [
                 'type' => 'warning',
-                'title' => 'Job Application Deleted',
+                'title' => __('Job Application Deleted'),
                 'message' => "Successfully deleted application for {$companyName}. 10 XP deducted.",
                 'duration' => 3000
             ]);
-            
+
             // Dispatch global events for auto-refresh
             $this->dispatch('job-deleted');
             \Log::info('Job deleted successfully');
@@ -283,11 +283,11 @@ class JobTableList extends Component
     public function getStatusColor($status)
     {
         $colors = [
-            'Applied' => '#64748b', 
-            'On Process' => '#3B82F6', 
+            'Applied' => '#64748b',
+            'On Process' => '#3B82F6',
             'Interview' => '#8B5CF6',
-            'Offering' => '#14B8A6', 
-            'Accepted' => '#10B981', 
+            'Offering' => '#14B8A6',
+            'Accepted' => '#10B981',
             'Rejected' => '#EF4444',
         ];
 

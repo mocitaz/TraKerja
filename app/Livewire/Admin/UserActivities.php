@@ -17,7 +17,7 @@ class UserActivities extends Component
     public $filterType = 'all';
     public $filterStatus = 'all';
     public $perPage = 15;
-    
+
     public $showSettingsModal = false;
     public $pruneDays = 90;
     public ?int $selectedActivityId = null;
@@ -47,7 +47,7 @@ class UserActivities extends Component
     {
         $this->resetPage();
     }
-    
+
     public function resetFilters()
     {
         $this->reset('search', 'filterType', 'filterStatus');
@@ -75,37 +75,37 @@ class UserActivities extends Component
         $setting = Setting::where('key', 'activity_log_prune_days')->first();
         $this->pruneDays = $setting ? (int) $setting->value : 90;
     }
-    
+
     public function saveSettings()
     {
         $this->validate([
             'pruneDays' => 'required|integer|min:1|max:3650',
         ]);
-        
+
         Setting::updateOrCreate(
             ['key' => 'activity_log_prune_days'],
             ['value' => (string) $this->pruneDays]
         );
-        
+
         $this->showSettingsModal = false;
-        
+
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Settings Saved',
-            'message' => 'Activity log retention period updated successfully.',
+            'title' => __('Settings Saved'),
+            'message' => __('Activity log retention period updated successfully.'),
         ]);
     }
-    
+
     public function cleanNow()
     {
         $this->validate(['pruneDays' => 'required|integer|min:1|max:3650']);
         $deletedCount = UserActivity::where('created_at', '<', now()->subDays($this->pruneDays))->delete();
-        
+
         $this->showSettingsModal = false;
-        
+
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'Cleanup Successful',
+            'title' => __('Cleanup Successful'),
             'message' => number_format($deletedCount) . ' obsolete activity logs (>' . $this->pruneDays . ' days) deleted.',
         ]);
     }
@@ -114,12 +114,12 @@ class UserActivities extends Component
     {
         $deletedCount = UserActivity::count();
         UserActivity::truncate();
-        
+
         $this->showSettingsModal = false;
-        
+
         $this->dispatch('showNotification', [
             'type' => 'success',
-            'title' => 'All Logs Purged',
+            'title' => __('All Logs Purged'),
             'message' => number_format($deletedCount) . ' activity logs permanently deleted.',
         ]);
     }
@@ -146,7 +146,7 @@ class UserActivities extends Component
         }
 
         $activities = $query->latest()->orderByDesc('id')->paginate(in_array((int) $this->perPage, [15, 30, 50, 100], true) ? (int) $this->perPage : 15)->onEachSide(1);
-        
+
         $rawTypes = UserActivity::select('activity_type')
             ->distinct()
             ->orderBy('activity_type')
@@ -166,7 +166,7 @@ class UserActivities extends Component
 
         $groupedTypes = [];
         $uncategorized = [];
-        
+
         foreach ($rawTypes as $type) {
             $found = false;
             foreach ($categories as $cat => $types) {
@@ -180,7 +180,7 @@ class UserActivities extends Component
                 $uncategorized[] = $type;
             }
         }
-        
+
         if (!empty($uncategorized)) {
             $groupedTypes['Other events'] = $uncategorized;
         }

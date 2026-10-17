@@ -26,7 +26,7 @@ class JobApplicationReminderMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Apa anda belum melamar pekerjaan lagi?',
+            subject: __('Apa anda belum melamar pekerjaan lagi?'),
         );
     }
 

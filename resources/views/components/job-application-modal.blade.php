@@ -4,10 +4,10 @@
     <div class="job-dialog__panel">
         <header class="job-dialog__header">
             <div>
-                <h2 id="modalTitle">Add application</h2>
-                <p id="job-modal-description">Keep your next opportunity in one place.</p>
+                <h2 id="modalTitle">{{ __('Add application') }}</h2>
+                <p id="job-modal-description">{{ __('Keep your next opportunity in one place.') }}</p>
             </div>
-            <button type="button" onclick="closeJobModal()" class="job-dialog__close" aria-label="Close application form">
+            <button type="button" onclick="closeJobModal()" class="job-dialog__close" aria-label="{{ __('Close application form') }}">
                 <i class="ph ph-x" aria-hidden="true"></i>
             </button>
         </header>

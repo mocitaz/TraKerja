@@ -6,23 +6,23 @@
              ========================================================================== --}}
         <section class="ast-welcome">
             <div>
-                <h1>System Settings</h1>
-                <p>Manage platform identity, external API integrations, and database maintenance in one workspace.</p>
+                <h1>{{ __('System Settings') }}</h1>
+                <p>{{ __('Manage platform identity, external API integrations, and database maintenance in one workspace.') }}</p>
             </div>
         </section>
 
         {{-- ==========================================================================
              SETTINGS TABS SWITCHER
              ========================================================================== --}}
-        <nav class="ast-tabs" role="tablist" aria-label="Settings sections">
+        <nav class="ast-tabs" role="tablist" aria-label="{{ __('Settings sections') }}">
             @foreach(['general' => 'General', 'integration' => 'Integrations', 'database' => 'Database & storage'] as $key => $label)
-                <button type="button" 
-                        role="tab" 
-                        id="settings-tab-{{ $key }}" 
-                        aria-controls="settings-panel-{{ $key }}" 
-                        :aria-selected="activeTab === '{{ $key }}'" 
+                <button type="button"
+                        role="tab"
+                        id="settings-tab-{{ $key }}"
+                        aria-controls="settings-panel-{{ $key }}"
+                        :aria-selected="activeTab === '{{ $key }}'"
                         class="ast-tab"
-                        :class="activeTab === '{{ $key }}' ? 'is-active' : ''" 
+                        :class="activeTab === '{{ $key }}' ? 'is-active' : ''"
                         @click="activeTab = '{{ $key }}'; window.history.replaceState(null, '', '?tab={{ $key }}')">
                     @switch($key)
                         @case('general')
@@ -35,7 +35,7 @@
                             <i class="ph ph-database" aria-hidden="true"></i>
                             @break
                     @endswitch
-                    <span>{{ $label }}</span>
+                    <span>{{ __($label) }}</span>
                 </button>
             @endforeach
         </nav>

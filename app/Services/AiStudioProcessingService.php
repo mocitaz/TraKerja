@@ -13,7 +13,7 @@ final class AiStudioProcessingService
 {
     public function submit(Request $request, string $task): AiStudioRun
     {
-        if (!\Illuminate\Support\Facades\Schema::hasTable('ai_studio_runs')) throw ValidationException::withMessages(['request' => 'AI Studio is being updated. Please try again shortly.']);
+        if (!\Illuminate\Support\Facades\Schema::hasTable('ai_studio_runs')) throw ValidationException::withMessages(['request' => __('AI Studio is being updated. Please try again shortly.')]);
         $context = app(StudioContextService::class)->prepare($request, $task);
         $path = null;
         $created = false;
@@ -22,14 +22,14 @@ final class AiStudioProcessingService
                 $user = User::whereKey($request->user()->id)->lockForUpdate()->firstOrFail();
                 $existing = AiStudioRun::where('user_id', $user->id)->where('request_key', $request->input('request_key'))->first();
                 if ($existing) {
-                    if ($existing->task !== $task) throw ValidationException::withMessages(['request_key' => 'Start a new request for a different task.']);
+                    if ($existing->task !== $task) throw ValidationException::withMessages(['request_key' => __('Start a new request for a different task.')]);
                     return $existing;
                 }
-                if (AiStudioRun::where('user_id', $user->id)->whereIn('status', ['queued', 'processing'])->count() >= 2) throw ValidationException::withMessages(['request' => 'Two requests are already processing. Wait for a result before starting another.']);
-                if (AiStudioRun::where('user_id', $user->id)->where('created_at', '>=', now()->subDay())->count() >= 60) throw ValidationException::withMessages(['request' => 'Your daily Studio request limit has been reached. Please try again later.']);
+                if (AiStudioRun::where('user_id', $user->id)->whereIn('status', ['queued', 'processing'])->count() >= 2) throw ValidationException::withMessages(['request' => __('Two requests are already processing. Wait for a result before starting another.')]);
+                if (AiStudioRun::where('user_id', $user->id)->where('created_at', '>=', now()->subDay())->count() >= 60) throw ValidationException::withMessages(['request' => __('Your daily Studio request limit has been reached. Please try again later.')]);
                 $field = $this->creditField($task);
                 $metered = $field && Setting::isMonetizationEnabled();
-                if ($metered && User::whereKey($user->id)->where($field, '>', 0)->decrement($field) !== 1) throw ValidationException::withMessages(['credits' => 'No credits available for this task. Manage credits in Profile.']);
+                if ($metered && User::whereKey($user->id)->where($field, '>', 0)->decrement($field) !== 1) throw ValidationException::withMessages(['credits' => __('No credits available for this task. Manage credits in Profile.')]);
                 $sourceName = null;
                 if ($context['file'] || $context['resume']) {
                     $path = 'ai-studio-sources/'.$user->id.'/'.Str::uuid().'.pdf';
@@ -109,9 +109,9 @@ final class AiStudioProcessingService
                 $run->credit_state = 'refunded';
             }
             $message = match ($code) {
-                'unreadable_pdf' => 'The PDF could not be read as a CV. Upload a readable PDF and try again.',
-                'rate_limit' => 'The AI service is busy. Please try again later.',
-                'configuration' => 'The AI service is unavailable. Please contact support if this continues.',
+                'unreadable_pdf' => __('The PDF could not be read as a CV. Upload a readable PDF and try again.'),
+                'rate_limit' => __('The AI service is busy. Please try again later.'),
+                'configuration' => __('The AI service is unavailable. Please contact support if this continues.'),
                 'expired' => 'This request exceeded its processing time. Please try again.',
                 default => 'This request could not be completed. Your saved inputs are available to retry.',
             };
@@ -126,11 +126,11 @@ final class AiStudioProcessingService
         abort_unless($source->status === 'failed', 422);
         $request->validate(['request_key' => 'required|uuid']);
         $payload = $source->payload;
-        if (!$payload) throw ValidationException::withMessages(['request' => 'The saved inputs expired. Start a new request.']);
+        if (!$payload) throw ValidationException::withMessages(['request' => __('The saved inputs expired. Start a new request.')]);
         $retry = Request::create('/', 'POST', $payload + ['request_key' => $request->input('request_key')]);
         $retry->setUserResolver(fn () => $request->user());
         if ($source->source_path) {
-            if (!Storage::disk('local')->exists($source->source_path)) throw ValidationException::withMessages(['resume' => 'The saved PDF expired. Upload it again.']);
+            if (!Storage::disk('local')->exists($source->source_path)) throw ValidationException::withMessages(['resume' => __('The saved PDF expired. Upload it again.')]);
             $retry->files->set('resume', new \Illuminate\Http\UploadedFile(Storage::disk('local')->path($source->source_path), $source->source_name, 'application/pdf', null, true));
         }
         return $this->submit($retry, $source->task);
@@ -138,6 +138,7 @@ final class AiStudioProcessingService
 
     public function recover(): void
     {
+        if (!\Illuminate\Support\Facades\Schema::hasTable('ai_studio_runs')) return;
         AiStudioRun::whereIn('status', ['queued', 'processing'])->select('id')->chunkById(100, function ($runs) {
             foreach ($runs as $row) {
                 $run = AiStudioRun::find($row->id);

@@ -15,7 +15,7 @@ class EducationForm extends Component
     public $editingId = null;
     public $showDeleteConfirm = false;
     public $deleteId = null;
-    
+
     // Form fields
     public $institution_name;
     public $degree;
@@ -26,7 +26,7 @@ class EducationForm extends Component
     public $end_date;
     public $is_current = false;
     public $description;
-    
+
     // Degree types
     public $degreeTypes = [
         'SMA/SMK',
@@ -39,9 +39,9 @@ class EducationForm extends Component
         'Bootcamp',
         'Online Course'
     ];
-    
+
     protected $listeners = ['closeAllModals' => 'closeModal'];
-    
+
     protected $rules = [
         'institution_name' => 'required|string|max:255',
         'degree' => 'required|string|max:100',
@@ -98,7 +98,7 @@ class EducationForm extends Component
     public function edit($id)
     {
         $education = Auth::user()->educations()->findOrFail($id);
-        
+
         $this->editMode = true;
         $this->editingId = $education->id;
         $this->institution_name = $education->institution_name;
@@ -110,7 +110,7 @@ class EducationForm extends Component
         $this->end_date = $education->end_date;
         $this->is_current = $education->is_current;
         $this->description = $education->description;
-        
+
         $this->showModal = true;
     }
 
@@ -138,7 +138,7 @@ class EducationForm extends Component
             $this->setErrorBag($validator->errors());
             $this->dispatch('showNotification', [
                 'type'    => 'error',
-                'title'   => 'Incomplete Form',
+                'title'   => __('Incomplete Form'),
                 'message' => $validator->errors()->first(),
             ]);
             return;
@@ -198,10 +198,10 @@ class EducationForm extends Component
 
         $this->dispatch('showNotification', [
             'type' => 'info',
-            'title' => 'Deleted',
-            'message' => 'Education deleted successfully!',
+            'title' => __('Deleted'),
+            'message' => __('Education deleted successfully!'),
         ]);
-        
+
         $this->dispatch('cv-data-updated');
         $this->loadEducations();
     }

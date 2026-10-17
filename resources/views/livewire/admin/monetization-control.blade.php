@@ -6,8 +6,8 @@
     <section class="am-panel" aria-labelledby="mode-panel-heading">
         <div class="am-panel-heading">
             <div>
-                <h2 id="mode-panel-heading">Feature Access Mode</h2>
-                <p>Changes apply globally to all member sessions upon confirmation</p>
+                <h2 id="mode-panel-heading">{{ __('Feature Access Mode') }}</h2>
+                <p>{{ __('Changes apply globally to all member sessions upon confirmation') }}</p>
             </div>
         </div>
 
@@ -50,16 +50,16 @@
                     </div>
 
                     <div>
-                        <button type="button" 
-                                class="am-btn {{ $isActive ? 'am-btn--quiet' : 'am-btn--primary' }} w-full justify-center" 
-                                wire:click="toggleMonetization({{ $enabled ? 'true' : 'false' }})" 
-                                @disabled($isActive) 
+                        <button type="button"
+                                class="am-btn {{ $isActive ? 'am-btn--quiet' : 'am-btn--primary' }} w-full justify-center"
+                                wire:click="toggleMonetization({{ $enabled ? 'true' : 'false' }})"
+                                @disabled($isActive)
                                 wire:loading.attr="disabled">
                             <span wire:loading.remove wire:target="toggleMonetization({{ $enabled ? 'true' : 'false' }})">
-                                {{ $isActive ? 'Active' : 'Use this mode' }}
+                                {{ $isActive ? __('Active') : __('Use this mode') }}
                             </span>
                             <span wire:loading wire:target="toggleMonetization({{ $enabled ? 'true' : 'false' }})" class="flex items-center gap-1.5">
-                                <i class="ph ph-spinner ph-spin"></i> Switching…
+                                <i class="ph ph-spinner ph-spin"></i> {{ __('Switching…') }}
                             </span>
                         </button>
                     </div>
@@ -74,12 +74,12 @@
     <section class="am-panel" aria-labelledby="matrix-panel-heading">
         <div class="am-panel-heading">
             <div>
-                <h2 id="matrix-panel-heading">Feature Access Matrix</h2>
-                <p>Detailed permission entitlements between Free and Premium accounts under current mode</p>
+                <h2 id="matrix-panel-heading">{{ __('Feature Access Matrix') }}</h2>
+                <p>{{ __('Detailed permission entitlements between Free and Premium accounts under current mode') }}</p>
             </div>
         </div>
 
-        <div class="am-table-scroll" tabindex="0" aria-label="Feature Access Matrix Table">
+        <div class="am-table-scroll" tabindex="0" aria-label="{{ __('Feature Access Matrix Table') }}">
             <table class="am-matrix-table">
                 <colgroup>
                     <col style="width: 40%;">
@@ -88,9 +88,9 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th scope="col">Feature Capability</th>
-                        <th scope="col">Free Members</th>
-                        <th scope="col">Premium Members</th>
+                        <th scope="col">{{ __('Feature Capability') }}</th>
+                        <th scope="col">{{ __('Free Members') }}</th>
+                        <th scope="col">{{ __('Premium Members') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -126,48 +126,48 @@
          CONFIRMATION DIALOG MODAL
          ========================================================================== --}}
     @if($showConfirmation)
-        <div x-data 
-             role="dialog" 
-             aria-modal="true" 
-             tabindex="-1" 
-             x-dialog="$wire.showConfirmation" 
-             data-dialog-close="$wire.cancelToggle()" 
-             aria-labelledby="mode-confirm-title" 
+        <div x-data
+             role="dialog"
+             aria-modal="true"
+             tabindex="-1"
+             x-dialog="$wire.showConfirmation"
+             data-dialog-close="$wire.cancelToggle()"
+             aria-labelledby="mode-confirm-title"
              class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            
+
             {{-- Backdrop --}}
-            <div class="absolute inset-0 bg-zinc-950/40 backdrop-blur-sm transition-opacity" 
+            <div class="absolute inset-0 bg-zinc-950/40 backdrop-blur-sm transition-opacity"
                  wire:click="cancelToggle"></div>
 
             {{-- Modal Card --}}
             <section class="am-modal-card relative max-w-md">
                 <h2 id="mode-confirm-title">
-                    {{ $actionType === 'enable' ? 'Switch to premium access?' : 'Switch to open access?' }}
+                    {{ $actionType === 'enable' ? __('Switch to premium access?') : __('Switch to open access?') }}
                 </h2>
                 <p>
-                    {{ $actionType === 'enable' 
-                        ? 'Free members will use trial limits for premium features. Premium members keep their plan access.' 
-                        : 'Premium restrictions will be removed, making features available to all members.' }}
+                    {{ $actionType === 'enable'
+                        ? __('Free members will use trial limits for premium features. Premium members keep their plan access.')
+                        : __('Premium restrictions will be removed, making features available to all members.') }}
                 </p>
 
                 <div class="am-modal-impact">
-                    <span>Members affected by this change</span>
-                    <strong>{{ number_format($totalUsers) }} accounts</strong>
+                    <span>{{ __('Members affected by this change') }}</span>
+                    <strong>{{ __(':value1 accounts', ['value1' => (number_format($totalUsers))]) }}</strong>
                 </div>
 
                 <footer class="am-modal-footer">
-                    <button type="button" 
-                            class="am-btn am-btn--quiet" 
+                    <button type="button"
+                            class="am-btn am-btn--quiet"
                             wire:click="cancelToggle">
-                        Cancel
+                        {{ __('Cancel') }}
                     </button>
-                    <button type="button" 
-                            class="am-btn am-btn--primary" 
-                            wire:click="confirmToggle" 
+                    <button type="button"
+                            class="am-btn am-btn--primary"
+                            wire:click="confirmToggle"
                             wire:loading.attr="disabled">
-                        <span wire:loading.remove wire:target="confirmToggle">Confirm change</span>
+                        <span wire:loading.remove wire:target="confirmToggle">{{ __('Confirm change') }}</span>
                         <span wire:loading wire:target="confirmToggle" class="flex items-center gap-1.5">
-                            <i class="ph ph-spinner ph-spin"></i> Saving…
+                            <i class="ph ph-spinner ph-spin"></i> {{ __('Saving…') }}
                         </span>
                     </button>
                 </footer>

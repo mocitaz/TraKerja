@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -24,7 +25,7 @@ use App\Models\Setting;
  * @property array|null $grandfathered_benefits
  * @property int $cv_exports_this_month
  * @property \Illuminate\Support\Carbon|null $last_export_reset
- * 
+ *
  * @method \Illuminate\Database\Eloquent\Relations\HasMany jobApplications()
  * @method \Illuminate\Database\Eloquent\Relations\HasMany goals()
  * @method \Illuminate\Database\Eloquent\Relations\HasOne profile()
@@ -48,8 +49,13 @@ use App\Models\Setting;
  * @method bool incrementExportCount()
  * @method mixed getRemainingExports()
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference
 {
+    public function preferredLocale(): string
+    {
+        return \App\Support\AppLocale::valid($this->getAttribute('locale')) ? $this->getAttribute('locale') : 'en';
+    }
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -192,12 +198,12 @@ class User extends Authenticatable implements MustVerifyEmail
         // Validate payment_status before saving
         static::saving(function ($user) {
             $validStatuses = [self::PAYMENT_STATUS_FREE, self::PAYMENT_STATUS_PAID, self::PAYMENT_STATUS_EXPIRED];
-            
+
             if ($user->payment_status && !in_array($user->payment_status, $validStatuses)) {
                 // Auto-fix invalid payment_status to 'free'
                 $user->payment_status = self::PAYMENT_STATUS_FREE;
             }
-            
+
             // If payment_status is null, set to 'free'
             if (empty($user->payment_status)) {
                 $user->payment_status = self::PAYMENT_STATUS_FREE;
@@ -380,7 +386,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Check if user has grandfathered benefit
-     * 
+     *
      * @param string $benefit Benefit identifier (e.g., 'cv_templates_3_free')
      * @return bool
      */
@@ -389,16 +395,16 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!$this->grandfathered_benefits) {
             return false;
         }
-        
+
         return in_array($benefit, $this->grandfathered_benefits);
     }
-    
+
     /**
      * Get CV templates count for this user
-     * 
+     *
      * FREE MODE: Semua user dapat akses semua template (5 templates)
      * PREMIUM MODE: Free tier = 1 template, Premium = 5 templates
-     * 
+     *
      * @return int Number of CV templates available
      */
     public function getCvTemplatesCount(): int
@@ -407,45 +413,45 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!Setting::isMonetizationEnabled()) {
             return 4;
         }
-        
+
         // PREMIUM MODE: Premium users get all 4 templates
         if ($this->isPremium()) {
             return 4;
         }
-        
+
         // PREMIUM MODE: Free tier users only get 2 template
         return 2;
     }
-    
+
     /**
      * Get premium price for this user (with grandfather discount if applicable)
-     * 
+     *
      * @return int Price in IDR
      */
     public function getPremiumPrice(): int
     {
         $basePrice = Setting::get('premium_price', 199000);
-        
+
         // Phase 1 users get 50% discount forever
         if ($this->registered_phase == 1 || $this->hasGrandfatheredBenefit('premium_discount_50')) {
             return (int) ($basePrice * 0.5);
         }
-        
+
         // Check for active promotional discount
         if (Setting::get('premium_discount_active', false)) {
             $discount = Setting::get('premium_discount_percent', 0);
             return (int) ($basePrice * (1 - $discount / 100));
         }
-        
+
         return (int) $basePrice;
     }
-    
+
     /**
      * Check if user can access feature
-     * 
+     *
      * FREE MODE: Semua user dapat akses semua fitur
      * PREMIUM MODE: Free tier dibatasi, Premium unlimited
-     * 
+     *
      * @param string $feature Feature name
      * @return bool
      */
@@ -455,19 +461,19 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!Setting::isMonetizationEnabled()) {
             return true;
         }
-        
+
         // PREMIUM MODE: Premium users get full access
         if ($this->isPremium()) {
             return true;
         }
-        
+
         // PREMIUM MODE: Free tier limited access
         return Setting::canAccess($feature, $this);
     }
-    
+
     /**
      * Get feature limit for this user
-     * 
+     *
      * @param string $feature Feature name (e.g., 'cv_exports', 'cv_templates')
      * @return mixed "unlimited" or integer limit
      */
@@ -475,17 +481,17 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return Setting::getLimit($feature, $this);
     }
-    
+
     /**
      * Check and reset monthly export counter if needed
-     * 
+     *
      * @return void
      */
     public function checkExportReset(): void
     {
         $now = now();
         $lastReset = $this->last_export_reset;
-        
+
         // Reset if it's a new month or never reset before
         if (!$lastReset || $lastReset->month !== $now->month || $lastReset->year !== $now->year) {
             $this->update([
@@ -494,13 +500,13 @@ class User extends Authenticatable implements MustVerifyEmail
             ]);
         }
     }
-    
+
     /**
      * Increment CV export counter for free tier limits
-     * 
+     *
      * FREE MODE: Tidak perlu tracking (unlimited)
      * PREMIUM MODE: Track untuk free tier, unlimited untuk premium
-     * 
+     *
      * @return bool True if increment successful, false if limit reached
      */
     public function incrementExportCount(): bool
@@ -509,35 +515,35 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!Setting::isMonetizationEnabled()) {
             return true;
         }
-        
+
         // PREMIUM MODE: Premium users have unlimited exports
         if ($this->isPremium()) {
             return true;
         }
-        
+
         // PREMIUM MODE: Check free tier limit
         // Check and reset counter if needed
         $this->checkExportReset();
-        
+
         // Get export limit for free tier
         $limit = $this->getFeatureLimit('cv_exports');
-        
+
         // Check if limit reached
         if ($this->cv_exports_this_month >= $limit) {
             return false;
         }
-        
+
         // Increment counter
         $this->increment('cv_exports_this_month');
         return true;
     }
-    
+
     /**
      * Get remaining CV exports this month
-     * 
+     *
      * FREE MODE: Unlimited untuk semua user
      * PREMIUM MODE: Limited untuk free tier, unlimited untuk premium
-     * 
+     *
      * @return mixed "unlimited" or integer remaining
      */
     public function getRemainingExports()
@@ -546,21 +552,21 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!Setting::isMonetizationEnabled()) {
             return 'unlimited';
         }
-        
+
         // PREMIUM MODE: Premium users have unlimited
         if ($this->isPremium()) {
             return 'unlimited';
         }
-        
+
         // PREMIUM MODE: Free tier users have limits
         // Check and reset if needed
         $this->checkExportReset();
-        
+
         $limit = $this->getFeatureLimit('cv_exports');
-        
+
         return max(0, $limit - $this->cv_exports_this_month);
     }
-    
+
     /**
      * Generate and send OTP for email verification
      */
@@ -570,7 +576,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->otp_code = $otp;
         $this->otp_expires_at = now()->addMinutes(10);
         $this->save();
-        \Mail::to($this->email)->send(new \App\Mail\OtpVerificationMail($this, $otp));
+        \Mail::to($this)->send(new \App\Mail\OtpVerificationMail($this, $otp));
     }
 
     /**
@@ -597,7 +603,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->otp_code = $otp;
         $this->otp_expires_at = now()->addMinutes(10);
         $this->save();
-        \Mail::to($this->email)->send(new \App\Mail\OtpVerificationMail($this, $otp));
+        \Mail::to($this)->send(new \App\Mail\OtpVerificationMail($this, $otp));
     }
 
     /**
@@ -644,7 +650,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->ai_credits <= 0;
     }
-    
+
     /**
      * Get total job applications count for this user
      */
@@ -652,10 +658,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->jobApplications()->count();
     }
-    
+
     /**
      * Check if user can create new job application
-     * 
+     *
      * FREE MODE: Unlimited
      * PREMIUM MODE: Free tier = 50, Premium = unlimited
      */
@@ -665,19 +671,19 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!Setting::isMonetizationEnabled()) {
             return true;
         }
-        
+
         // PREMIUM MODE: Premium users unlimited
         if ($this->isPremium()) {
             return true;
         }
-        
+
         // PREMIUM MODE: Check free tier limit
         $limit = $this->getFeatureLimit('job_applications');
         $currentCount = $this->getJobApplicationsCount();
-        
+
         return $currentCount < $limit;
     }
-    
+
     /**
      * Get remaining job applications slots
      */
@@ -687,19 +693,19 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!Setting::isMonetizationEnabled()) {
             return 'unlimited';
         }
-        
+
         // PREMIUM MODE: Premium users unlimited
         if ($this->isPremium()) {
             return 'unlimited';
         }
-        
+
         // PREMIUM MODE: Calculate remaining
         $limit = $this->getFeatureLimit('job_applications');
         $currentCount = $this->getJobApplicationsCount();
-        
+
         return max(0, $limit - $currentCount);
     }
-    
+
     /**
      * Check and reset monthly CV generation counter if needed
      */
@@ -714,10 +720,10 @@ class User extends Authenticatable implements MustVerifyEmail
         })->update(['cv_generated_this_month' => 0, 'last_cv_generation_reset' => $today->toDateString()]);
         $this->refresh();
     }
-    
+
     /**
      * Increment CV generation counter for free tier limits
-     * 
+     *
      * FREE MODE: Unlimited
      * PREMIUM MODE: Track untuk free tier (max 3), unlimited untuk premium
      */
@@ -727,7 +733,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!Setting::isMonetizationEnabled()) {
             return true;
         }
-        
+
         return $this->getConnection()->transaction(function () {
             $current = $this->newQuery()->whereKey($this->getKey())->lockForUpdate()->firstOrFail();
             if ($current->isPremium()) return true;
@@ -742,7 +748,7 @@ class User extends Authenticatable implements MustVerifyEmail
             return true;
         });
     }
-    
+
     /**
      * Get remaining CV generations this month
      */
@@ -752,23 +758,23 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!Setting::isMonetizationEnabled()) {
             return 'unlimited';
         }
-        
+
         // PREMIUM MODE: Premium users unlimited
         if ($this->isPremium()) {
             return 'unlimited';
         }
-        
+
         // PREMIUM MODE: Calculate remaining
         $this->checkCvGenerationReset();
-        
+
         $limit = $this->getFeatureLimit('cv_generated');
-        
+
         return max(0, $limit - $this->cv_generated_this_month);
     }
-    
+
     /**
      * Increment AI Analyzer counter (Deduct credit)
-     * 
+     *
      * FREE MODE: Unlimited
      * PREMIUM MODE: Deduct from ai_credits balance
      */
@@ -778,7 +784,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!Setting::isMonetizationEnabled()) {
             return true;
         }
-        
+
         return $this->reserveAiAnalyzerCredit();
     }
 
@@ -788,7 +794,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->newQuery()->whereKey($this->getKey())
             ->where('ai_credits', '>', 0)->decrement('ai_credits') === 1;
     }
-    
+
     /**
      * Get remaining AI Analyzer uses (credit balance)
      */
@@ -798,10 +804,10 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!Setting::isMonetizationEnabled()) {
             return 'unlimited';
         }
-        
+
         return max(0, $this->ai_credits);
     }
-    
+
     /**
      * Check if user has enough AI credits
      */
@@ -811,13 +817,13 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!Setting::isMonetizationEnabled()) {
             return true;
         }
-        
+
         return $this->ai_credits > 0;
     }
 
     /**
      * Add AI credits to user balance (e.g. from Add-on Top-up or Premium upgrade)
-     * 
+     *
      * @param int $amount Number of credits to add
      * @return void
      */
@@ -837,16 +843,16 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!Setting::isMonetizationEnabled()) {
             return true;
         }
-        
+
         // Check if balance > 0
         if ($this->cl_credits <= 0) {
             return false;
         }
-        
+
         $this->decrement('cl_credits');
         return true;
     }
-    
+
     /**
      * Get remaining Cover Letter uses (credit balance)
      */
@@ -856,10 +862,10 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!Setting::isMonetizationEnabled()) {
             return 'unlimited';
         }
-        
+
         return max(0, $this->cl_credits);
     }
-    
+
     /**
      * Check if user has enough Cover Letter credits
      */
@@ -869,7 +875,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!Setting::isMonetizationEnabled()) {
             return true;
         }
-        
+
         return $this->cl_credits > 0;
     }
 
@@ -950,7 +956,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!Setting::isMonetizationEnabled()) {
             return true;
         }
-        
+
         $deducted = static::whereKey($this->id)->where('photo_credits', '>', 0)->decrement('photo_credits');
         $this->refresh();
         return $deducted === 1;
@@ -966,7 +972,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
         return max(0, $this->photo_credits);
     }
-    
+
     /**
      * Add Photo credits to user balance
      */

@@ -1,3 +1,4 @@
+import './i18n.js';
 import './bootstrap';
 import './theme';
 import './ai-photo-status';

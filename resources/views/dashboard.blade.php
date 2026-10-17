@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="dashboard-workspace">
         <div class="dashboard-container">
-            
+
             @include('dashboard.welcome')
 
             <style>
@@ -30,8 +30,8 @@
                     <div class="workspace-panel h-full flex flex-col justify-between">
                         <div>
                             <header class="dashboard-recent-header">
-                                <h3>Recent applications</h3>
-                                <a href="{{ route('tracker') }}" wire:navigate>View all <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+                                <h3>{{ __('Recent applications') }}</h3>
+                                <a href="{{ route('tracker') }}" wire:navigate>{{ __('View all') }} <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
                             </header>
 
                             @if($recentApplications->isEmpty())
@@ -39,26 +39,26 @@
                                     <div class="w-10 h-10 bg-zinc-100 rounded-md flex items-center justify-center text-zinc-400 mb-2.5">
                                         <i class="ph ph-briefcase text-lg"></i>
                                     </div>
-                                    <h4 class="text-sm font-semibold text-zinc-700">No applications yet</h4>
-                                    <p class="text-xs text-ui-muted mt-1 max-w-[260px]">Add your first application or explore jobs to get started.</p>
+                                    <h4 class="text-sm font-semibold text-zinc-700">{{ __('No applications yet') }}</h4>
+                                    <p class="text-xs text-ui-muted mt-1 max-w-[260px]">{{ __('Add your first application or explore jobs to get started.') }}</p>
                                     <button onclick="openJobModal()" class="mt-3 flex items-center gap-1.5 px-2.5 py-1 bg-zinc-900 hover:bg-zinc-800 text-white text-[10px] font-bold rounded-md transition-all active:scale-95">
                                         <i class="ph ph-plus text-xs"></i>
-                                        <span>Add application</span>
+                                        <span>{{ __('Add application') }}</span>
                                     </button>
                                 </div>
                             @else
-                                <ul class="dashboard-application-cards" aria-label="Recent applications">
+                                <ul class="dashboard-application-cards" aria-label="{{ __('Recent applications') }}">
                                     @foreach($recentApplications as $job)
                                         <li>
-                                            <a href="{{ route('jobs.show', $job) }}" wire:navigate class="dashboard-application-card" aria-label="{{ $job->position }} at {{ $job->company_name }}: application details">
-                                                <span class="dashboard-application-status">{{ $job->application_status }}</span>
+                                            <a href="{{ route('jobs.show', $job) }}" wire:navigate class="dashboard-application-card" aria-label="{{ __(':value1 at :value2: application details', ['value1' => ($job->position), 'value2' => ($job->company_name)]) }}">
+                                                <span class="dashboard-application-status">{{ \App\Support\UiLabel::value($job->application_status) }}</span>
                                                 <h4>{{ $job->position }}</h4>
                                                 <p class="dashboard-application-company">{{ $job->company_name }}</p>
-                                                <span class="dashboard-application-date">{{ $job->application_date ? 'Applied '.$job->application_date->format('d M Y') : 'Application date not set' }}</span>
+                                                <span class="dashboard-application-date">{{ $job->application_date ? __('Applied ').$job->application_date->locale(app()->getLocale())->translatedFormat('d M Y') : __('Application date not set') }}</span>
                                                 <div class="dashboard-application-footer">
                                                     <div>
-                                                        <span class="dashboard-application-stage-label">Current stage</span>
-                                                        <strong class="dashboard-application-stage">{{ $job->recruitment_stage ?: 'Not set' }}</strong>
+                                                        <span class="dashboard-application-stage-label">{{ __('Current stage') }}</span>
+                                                        <strong class="dashboard-application-stage">{{ \App\Support\UiLabel::value($job->recruitment_stage ?: __('Not set')) }}</strong>
                                                     </div>
                                                     <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
                                                 </div>
@@ -74,21 +74,21 @@
                 <section class="dashboard-overview" aria-labelledby="application-overview-title">
                     @php
                         $overviewMetrics = [
-                            ['label' => 'In progress', 'count' => $onProcessCount, 'note' => 'Active applications', 'color' => '#6bade0', 'radius' => 61],
-                            ['label' => 'Offers & accepted', 'count' => $offeringAcceptedCount, 'note' => 'Offers and positive outcomes', 'color' => '#a98bd2', 'radius' => 82],
-                            ['label' => 'Rejected', 'count' => $declinedCount, 'note' => 'Including archived applications', 'color' => '#e78766', 'radius' => 40],
+                            ['label' => __('In progress'), 'count' => $onProcessCount, 'note' => 'Active applications', 'color' => '#6bade0', 'radius' => 61],
+                            ['label' => __('Offers & accepted'), 'count' => $offeringAcceptedCount, 'note' => 'Offers and positive outcomes', 'color' => '#a98bd2', 'radius' => 82],
+                            ['label' => __('Rejected'), 'count' => $declinedCount, 'note' => 'Including archived applications', 'color' => '#e78766', 'radius' => 40],
                         ];
                     @endphp
                     <div class="dashboard-overview-header">
-                        <h3 id="application-overview-title">Application overview</h3>
-                        <span class="dashboard-overview-total"><span>Total applications</span><strong>{{ $totalTrackedApplications }}</strong></span>
+                        <h3 id="application-overview-title">{{ __('Application overview') }}</h3>
+                        <span class="dashboard-overview-total"><span>{{ __('Total applications') }}</span><strong>{{ $totalTrackedApplications }}</strong></span>
                     </div>
                     <div class="dashboard-overview-body">
                         <dl class="dashboard-overview-metrics">
                             @foreach($overviewMetrics as $metric)
                                 <div>
                                     <dt><span style="background: {{ $metric['color'] }}" aria-hidden="true"></span>{{ $metric['label'] }}</dt>
-                                    <dd><strong>{{ $metric['count'] }}</strong><span>{{ $metric['note'] }}</span></dd>
+                                    <dd><strong>{{ $metric['count'] }}</strong><span>{{ __($metric['note']) }}</span></dd>
                                 </div>
                             @endforeach
                         </dl>
@@ -100,10 +100,10 @@
                                 @endif
                             @endforeach
                             <text x="100" y="98" text-anchor="middle" class="overview-ring-total">{{ $totalTrackedApplications }}</text>
-                            <text x="100" y="114" text-anchor="middle" class="overview-ring-label">tracked</text>
+                            <text x="100" y="114" text-anchor="middle" class="overview-ring-label">{{ __('tracked') }}</text>
                         </svg>
                     </div>
-                    <p class="dashboard-overview-note">Each ring is measured against all applications. Offers can also be in progress.</p>
+                    <p class="dashboard-overview-note">{{ __('Each ring is measured against all applications. Offers can also be in progress.') }}</p>
                 </section>
             </div>
 

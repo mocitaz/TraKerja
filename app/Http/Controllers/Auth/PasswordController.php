@@ -40,8 +40,8 @@ class PasswordController extends Controller
         // Additional check: ensure new password is different from current password
         if (Hash::check($validated['password'], $request->user()->password)) {
             return back()->withErrors([
-                'password' => 'New password must be different from your current password.'
-            ], 'updatePassword')->withInput();
+                'password' => __('New password must be different from your current password.')
+            ], __('updatePassword'))->withInput();
         }
 
         app(\App\Services\PasswordTokenRotation::class)->update($request->user(), $validated['password']);
