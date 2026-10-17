@@ -39,6 +39,9 @@ class GoalsCadenceManager extends Component
                 $this->targetFollowupWeekly = $currentGoal->target_followup_weekly;
                 $this->startDate = $currentGoal->start_date->format('Y-m-d');
                 $this->endDate = $currentGoal->end_date->format('Y-m-d');
+                $this->goalPeriod = $this->startDate === $currentGoal->start_date->copy()->startOfMonth()->toDateString()
+                    && $this->endDate === $currentGoal->start_date->copy()->endOfMonth()->toDateString()
+                    ? 'monthly' : 'weekly';
             }
 
             // Only send welcome notification if no goals are set and not already shown today

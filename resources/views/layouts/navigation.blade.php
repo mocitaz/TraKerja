@@ -52,7 +52,11 @@
                 <div id="workspace-profile" x-cloak x-show="profileOpen" x-transition:enter="workspace-profile-transition" x-transition:enter-start="workspace-profile-hidden" x-transition:enter-end="workspace-profile-visible" x-transition:leave="workspace-profile-transition" x-transition:leave-start="workspace-profile-visible" x-transition:leave-end="workspace-profile-hidden" class="workspace-dropdown workspace-profile-menu" role="region" aria-label="{{ __('Account settings') }}">
                     <div class="workspace-profile-summary">
                         <img src="{{ $user->avatar_url }}" alt="" class="workspace-profile-avatar">
-                        <div class="workspace-profile-identity"><div class="workspace-profile-identity-heading"><strong>{{ $user->name }}</strong><span class="workspace-account-badge"><i class="ph {{ $user->isAdmin() ? 'ph-shield-check' : ($user->isPremium() ? 'ph-crown' : 'ph-user') }}" aria-hidden="true"></i>{{ $user->isAdmin() ? __('Admin') : ($user->isPremium() ? __('Premium') : __('Free')) }}</span></div><span>{{ $user->email }}</span></div>
+                        <div class="workspace-profile-identity"><div class="workspace-profile-identity-heading"><strong>{{ $user->name }}</strong>@if($user->isAdmin())
+                            <span class="workspace-account-badge"><i class="ph ph-shield-check" aria-hidden="true"></i>{{ __('Admin') }}</span>
+                        @else
+                            <a href="{{ route('profile.edit', ['tab' => 'membership']) }}" wire:navigate @click="profileOpen = false" class="workspace-account-badge" aria-label="{{ __('Membership & credits') }}"><i class="ph {{ $user->isPremium() ? 'ph-crown' : 'ph-user' }}" aria-hidden="true"></i>{{ $user->isPremium() ? __('Premium') : __('Free') }}</a>
+                        @endif</div><span>{{ $user->email }}</span></div>
                     </div>
                     <div class="workspace-rewards"><livewire:layout.gamification-widget /></div>
                     <x-language-switch location="account-menu" />

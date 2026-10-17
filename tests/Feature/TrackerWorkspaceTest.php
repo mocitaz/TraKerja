@@ -14,6 +14,36 @@ class TrackerWorkspaceTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_application_detail_opens_its_own_edit_dialog_and_rejects_other_owners(): void
+    {
+        $owner = User::factory()->create();
+        $job = JobApplication::factory()->create(['user_id' => $owner->id]);
+        $response = $this->actingAs($owner)->get(route('jobs.show', $job))->assertOk()
+            ->assertSee('id="jobModal"', false)->assertSee('data-refresh-on-save="true"', false)
+            ->assertDontSee(route('tracker', ['edit' => $job->id]), false);
+        $document = new \DOMDocument();
+        @$document->loadHTML($response->getContent());
+        $actions = (new \DOMXPath($document))->query('//button[@data-edit-application="'.$job->id.'"]');
+        $this->assertGreaterThanOrEqual(4, $actions->length);
+        $this->actingAs(User::factory()->create())->get(route('jobs.show', $job))->assertForbidden();
+    }
+
+    public function test_detail_edit_saves_the_owned_application_without_redirecting(): void
+    {
+        $owner = User::factory()->create();
+        $job = JobApplication::factory()->create([
+            'user_id' => $owner->id, 'company_name' => 'Original Company',
+            'position' => 'Original Position', 'location' => 'Remote', 'platform' => 'LinkedIn',
+            'application_status' => 'On Process', 'recruitment_stage' => 'Applied',
+        ]);
+        Livewire::actingAs($owner)->test(\App\Livewire\JobApplicationForm::class)
+            ->dispatch('edit-job', jobId: $job->id)->assertSet('isEditing', true)
+            ->assertSet('company_name', 'Original Company')->set('position', 'Updated Position')
+            ->call('save')->assertHasNoErrors()->assertDispatched('application-saved')->assertNoRedirect();
+        $this->assertSame('Updated Position', $job->fresh()->position);
+        $this->actingAs($owner)->get(route('jobs.show', $job))->assertOk()->assertSee('Updated Position');
+    }
+
     public function test_list_filters_work_together_and_clear_without_exposing_other_users(): void
     {
         $owner = User::factory()->create();

@@ -1,0 +1,127 @@
+/* Shared surface tokens keep progress dialogs aligned with the workspace. */
+.goal-dialog--workspace,
+.rewards-dialog--workspace {
+    --progress-surface: #fff;
+    --progress-soft: #f5f5f3;
+    --progress-ink: #30313b;
+    --progress-muted: #656570;
+    --progress-border: #e5e4e8;
+    --progress-accent: #655080;
+    --progress-accent-hover: #534168;
+    --progress-sage: #4d7263;
+    --progress-sage-soft: #edf3ef;
+}
+.dark .goal-dialog--workspace,
+.dark .rewards-dialog--workspace {
+    --progress-surface: #1e1f20;
+    --progress-soft: #27292b;
+    --progress-ink: #f0f2f6;
+    --progress-muted: #b1b4be;
+    --progress-border: #3c3e43;
+    --progress-accent: #c6b1df;
+    --progress-accent-hover: #d6c4e9;
+    --progress-sage: #add2be;
+    --progress-sage-soft: #27362f;
+}
+.goal-dialog-overlay:has(.goal-dialog--workspace),
+.account-dialog-overlay:has(.rewards-dialog--workspace) { background: rgb(33 34 43 / 42%); backdrop-filter: blur(4px); }
+:is(.goal-dialog-overlay,.account-dialog-overlay) :is(.goal-dialog--workspace,.rewards-dialog--workspace) {
+    width: 100%; max-width: 520px; max-height: calc(100dvh - 40px); display: flex; flex-direction: column; overflow: hidden;
+    background: var(--progress-surface); border: 1px solid var(--progress-border); border-radius: 20px; color: var(--progress-ink);
+    box-shadow: 0 20px 70px rgb(24 24 35 / 18%); text-align: left;
+}
+:is(.goal-dialog--workspace,.rewards-dialog--workspace) :is(.goal-dialog-header,.account-dialog-heading) { padding: 24px 24px 20px; align-items: flex-start; gap: 16px; flex-shrink: 0; }
+:is(.goal-dialog--workspace,.rewards-dialog--workspace) :is(.goal-dialog-header,.account-dialog-heading) h2 { color: var(--progress-ink); font-size: 20px; font-weight: 650; letter-spacing: -.6px; line-height: 1.3; }
+:is(.goal-dialog--workspace,.rewards-dialog--workspace) :is(.goal-dialog-header,.account-dialog-heading) p { color: var(--progress-muted); font-size: 12px; line-height: 1.65; margin-top: 5px; }
+:is(.goal-dialog--workspace,.rewards-dialog--workspace) :is(.goal-dialog-close,.account-dialog-close) { width: 36px; height: 36px; border-radius: 10px; background: var(--progress-soft); color: var(--progress-muted); border: 1px solid var(--progress-border); font-size: 18px; }
+:is(.goal-dialog--workspace,.rewards-dialog--workspace) :is(.goal-dialog-close,.account-dialog-close):hover { color: var(--progress-ink); background: var(--progress-soft); }
+:is(.goal-dialog--workspace,.rewards-dialog--workspace) button:focus-visible { outline: 2px solid var(--progress-accent); outline-offset: 3px; }
+.goal-dialog--workspace > form { min-height: 0; display: flex; flex-direction: column; }
+.goal-dialog--workspace .goal-dialog-body,
+.rewards-dialog--workspace .rewards-body { padding: 0 24px 22px; overflow-y: auto; min-height: 0; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--progress-border) transparent; }
+.goal-dialog--workspace .goal-period-label { font-size: 12px; color: var(--progress-ink); margin-bottom: 10px; }
+.goal-dialog--workspace .goal-period-label span:last-child { padding: 0; color: var(--progress-muted); background: none; border: 0; font-size: 11px; font-weight: 400; }
+.goal-dialog--workspace .goal-period-switch { padding: 4px; border: 1px solid var(--progress-border); border-radius: 11px; background: var(--progress-soft); }
+.goal-dialog--workspace .goal-period-switch button { min-height: 36px; color: var(--progress-muted); border: 1px solid transparent; border-radius: 8px; font-size: 12px; }
+.goal-dialog--workspace .goal-period-switch button.is-selected { background: var(--progress-surface); color: var(--progress-ink); border-color: var(--progress-border); box-shadow: 0 1px 2px rgb(24 24 35 / 4%); }
+.goal-dialog--workspace .goal-period-dates { margin: 12px 0 22px; color: var(--progress-muted); font-size: 11px; flex-wrap: wrap; }
+.goal-dialog--workspace .goal-period-dates span:last-child { border: 0; background: none; color: var(--progress-muted); padding: 0; font-size: 10px; font-weight: 500; }
+.goal-dialog--workspace .goal-target-grid { display: grid; grid-template-columns: 1fr; gap: 0; margin-bottom: 0; border-block: 1px solid var(--progress-border); }
+.goal-dialog--workspace .goal-target-grid.is-refreshing { opacity: .55; }
+.goal-dialog--workspace .goal-target-field { display: grid; grid-template-columns: minmax(0,1fr) 140px; gap: 10px 16px; align-items: center; padding: 18px 0; background: transparent; border: 0; border-radius: 0; }
+.goal-dialog--workspace .goal-target-field + .goal-target-field { border-top: 1px solid var(--progress-border); }
+.goal-dialog--workspace .goal-target-header { align-items: center; margin: 0; gap: 10px; }
+.goal-dialog--workspace .goal-target-icon { width: 32px; height: 32px; background: var(--progress-soft); color: var(--progress-muted); border-radius: 9px; font-size: 17px; }
+.goal-dialog--workspace .goal-target-header label { color: var(--progress-ink); font-size: 13px; font-weight: 600; line-height: 1.5; }
+.goal-dialog--workspace .goal-target-header p { color: var(--progress-muted); font-size: 11px; line-height: 1.5; margin-top: 3px; }
+.goal-dialog--workspace .goal-target-input { height: 46px; padding: 0 10px; border: 1px solid var(--progress-border); border-radius: 10px; background: var(--progress-surface); gap: 4px; }
+.goal-dialog--workspace .goal-target-input:focus-within { border-color: var(--progress-accent); box-shadow: 0 0 0 2px color-mix(in srgb,var(--progress-accent) 14%,transparent); }
+.goal-dialog--workspace .goal-target-input input { font-size: 20px; font-weight: 600; color: var(--progress-ink); appearance: textfield; }
+.goal-dialog--workspace .goal-target-input input::-webkit-inner-spin-button { appearance: none; }
+.goal-dialog--workspace .goal-target-input span { font-size: 10px; color: var(--progress-muted); font-weight: 400; }
+.goal-dialog--workspace .goal-dialog-hint { padding: 14px 0 0; margin: 0; border: 0; border-radius: 0; background: none; color: var(--progress-muted); align-items: flex-start; font-size: 11px; line-height: 1.65; }
+.goal-dialog--workspace .goal-dialog-hint i { color: var(--progress-muted); margin-top: 2px; }
+.goal-dialog--workspace .goal-field-error { grid-column: 1/-1; color: #b24353; margin: 0; font-size: 11px; }
+.dark .goal-dialog--workspace .goal-field-error { color: #ffafbb; }
+.goal-dialog--workspace .goal-dialog-footer,
+.rewards-dialog--workspace .rewards-footer { padding: 16px 24px; margin-top: 0; border-top: 1px solid var(--progress-border); gap: 10px; background: var(--progress-surface); flex-shrink: 0; }
+.goal-dialog--workspace .goal-dialog-footer button,
+.rewards-dialog--workspace .account-dialog-button { min-height: 40px; border-radius: 10px; font-size: 12px; padding: 0 18px; font-weight: 600; }
+.goal-dialog--workspace .goal-dialog-cancel { color: var(--progress-ink); background: var(--progress-surface); border: 1px solid var(--progress-border); }
+.goal-dialog--workspace .goal-dialog-cancel:hover { background: var(--progress-soft); }
+.goal-dialog--workspace .goal-dialog-save,
+.rewards-dialog--workspace .rewards-button--primary { background: var(--progress-accent); color: var(--progress-surface); border: 1px solid var(--progress-accent); }
+.goal-dialog--workspace .goal-dialog-save:hover,
+.rewards-dialog--workspace .rewards-button--primary:hover { background: var(--progress-accent-hover); color: var(--progress-surface); border-color: var(--progress-accent-hover); }
+.rewards-dialog--workspace .rewards-overview { display: block; background: var(--progress-sage-soft); border: 1px solid color-mix(in srgb,var(--progress-sage) 18%,transparent); padding: 18px; border-radius: 14px; }
+.rewards-overview-heading { display: flex; align-items: center; gap: 12px; }
+.rewards-level-emblem { display: grid; place-items: center; width: 44px; height: 48px; flex-shrink: 0; background: var(--progress-surface); border: 1px solid color-mix(in srgb,var(--progress-sage) 20%,transparent); color: var(--progress-sage); border-radius: 12px; font-size: 17px; font-weight: 650; }
+.rewards-level-copy { flex: 1; min-width: 0; }
+.rewards-dialog--workspace .rewards-level-label { color: var(--progress-sage); font-size: 10px; text-transform: none; letter-spacing: 0; font-weight: 600; }
+.rewards-dialog--workspace .rewards-overview h3 { color: var(--progress-ink); font-size: 16px; font-weight: 650; line-height: 1.4; margin: 2px 0 0; letter-spacing: -.3px; }
+.rewards-xp-total { display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0; }
+.rewards-xp-total strong { color: var(--progress-ink); font-size: 25px; line-height: 1.25; font-weight: 650; letter-spacing: -.7px; font-variant-numeric: tabular-nums; }
+.rewards-xp-total span { color: var(--progress-muted); font-size: 10px; }
+.rewards-progress-caption { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 18px 0 8px; }
+.rewards-dialog--workspace .rewards-overview p,
+.rewards-progress-caption > span { color: var(--progress-sage); font-size: 11px; line-height: 1.5; margin: 0; }
+.rewards-progress-bar { height: 5px; overflow: hidden; border-radius: 5px; background: color-mix(in srgb,var(--progress-sage) 17%,transparent); }
+.rewards-progress-bar > span { display: block; height: 100%; background: var(--progress-sage); border-radius: inherit; }
+.rewards-dialog--workspace .rewards-path { padding: 20px 0; border: 0; }
+.rewards-dialog--workspace :is(.rewards-path,.rewards-earning) h3 { color: var(--progress-ink); font-size: 12px; font-weight: 600; }
+.rewards-dialog--workspace .rewards-path ol { margin-top: 14px; }
+.rewards-dialog--workspace .rewards-path ol::before { top: 16px; height: 1px; background: var(--progress-border); }
+.rewards-dialog--workspace .rewards-path li { gap: 7px; min-width: 0; }
+.rewards-dialog--workspace .rewards-milestone { width: 32px; height: 32px; background: var(--progress-surface); border: 1px solid var(--progress-border); color: var(--progress-muted); font-size: 10px; }
+.rewards-dialog--workspace .is-unlocked .rewards-milestone { background: var(--progress-sage-soft); border-color: var(--progress-sage); color: var(--progress-sage); }
+.rewards-dialog--workspace .is-current .rewards-milestone { color: var(--progress-surface); background: var(--progress-sage); border-color: var(--progress-sage); box-shadow: 0 0 0 3px var(--progress-surface); }
+.rewards-dialog--workspace .rewards-threshold { font-size: 10px; color: var(--progress-muted); }
+.rewards-dialog--workspace .is-current .rewards-threshold { color: var(--progress-sage); font-weight: 600; }
+.rewards-dialog--workspace .rewards-earning { padding: 16px 0 0; border-top: 1px solid var(--progress-border); }
+.rewards-dialog--workspace .rewards-earning > p { font-size: 11px; color: var(--progress-muted); line-height: 1.6; margin: 4px 0 12px; }
+.rewards-dialog--workspace .rewards-earn-row { border: 0; border-radius: 0; padding: 11px 0; gap: 10px; }
+.rewards-dialog--workspace .rewards-earn-row + .rewards-earn-row { border-top: 1px solid var(--progress-border); }
+.rewards-dialog--workspace .rewards-earn-row:hover { background: transparent; }
+.rewards-earn-icon { display: grid; place-items: center; width: 30px; height: 32px; color: var(--progress-muted); background: var(--progress-soft); border-radius: 8px; flex-shrink: 0; font-size: 17px; }
+.rewards-dialog--workspace .rewards-earn-row > div { flex: 1; }
+.rewards-dialog--workspace .rewards-earn-row strong { color: var(--progress-ink); font-size: 12px; font-weight: 600; }
+.rewards-dialog--workspace .rewards-earn-row div > span { color: var(--progress-muted); font-size: 10px; line-height: 1.5; margin-top: 3px; }
+.rewards-dialog--workspace .rewards-earn-xp { color: var(--progress-sage); font-size: 12px; font-weight: 600; }
+.rewards-dialog--workspace .rewards-footer p { color: var(--progress-muted); font-size: 10px; max-width: none; }
+@media(max-width:600px) {
+    :is(.goal-dialog-overlay,.account-dialog-overlay) :is(.goal-dialog--workspace,.rewards-dialog--workspace) { max-width: 100%; max-height: calc(100dvh - 20px); border-radius: 18px; }
+    :is(.goal-dialog--workspace,.rewards-dialog--workspace) :is(.goal-dialog-header,.account-dialog-heading) { padding: 18px 18px 16px; }
+    :is(.goal-dialog--workspace,.rewards-dialog--workspace) :is(.goal-dialog-close,.account-dialog-close) { width: 40px; height: 40px; }
+    .goal-dialog--workspace .goal-dialog-body,.rewards-dialog--workspace .rewards-body { padding: 0 18px 18px; }
+    .goal-dialog--workspace .goal-target-field { grid-template-columns: minmax(0,1fr) 116px; gap: 10px; padding: 16px 0; }
+    .goal-dialog--workspace .goal-target-icon { display: none; }
+    .goal-dialog--workspace .goal-target-input { height: 48px; }
+    .goal-dialog--workspace .goal-target-input input { font-size: 20px; }
+    .goal-dialog--workspace .goal-dialog-footer,.rewards-dialog--workspace .rewards-footer { padding: 14px 18px max(14px,env(safe-area-inset-bottom)); }
+    .goal-dialog--workspace .goal-dialog-footer button,.rewards-dialog--workspace .account-dialog-button { min-height: 44px; }
+    .rewards-dialog--workspace .rewards-overview { padding: 14px; }
+    .rewards-level-emblem { display: none; }
+    .rewards-dialog--workspace .rewards-overview h3 { font-size: 15px; }
+    .rewards-xp-total strong { font-size: 23px; }
+}
+@media(prefers-reduced-motion:reduce) { .goal-dialog--workspace,.rewards-dialog--workspace { animation: none; } }

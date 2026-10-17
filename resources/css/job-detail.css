@@ -233,7 +233,7 @@
 .job-dossier-sheet--back { background: #b6a5c9; transform: translateZ(-24px) rotate(-12deg) translate(-10px, 4px); }
 .job-dossier-sheet--middle { background: #d7c9e5; transform: translateZ(-12px) rotate(-6deg) translate(-4px, 2px); }
 .job-dossier-sheet--front { display: flex; flex-direction: column; padding: 16px; color: #3b2b4d; background: #fffdff; transform: translateZ(8px); box-shadow: 3px 4px 0 #dfd5e9, 8px 12px 22px #7461851a; }
-.job-dossier-top { color: #644d79; font-size: 11px; font-weight: 650; line-height: 1.5; }
+.job-dossier-top { display: flex; align-items: center; gap: 5px; color: #644d79; font-size: 11px; font-weight: 650; line-height: 1.5; }
 .job-dossier-symbol { display: none; }
 .job-dossier-label { margin-top: 20px; color: #695578; font-size: 10px; font-weight: 500; line-height: 1.5; }
 .job-dossier-sheet strong { color: #3b2b4d; font-size: 21px; font-weight: 650; letter-spacing: -.5px; line-height: 1.25; margin-top: 4px; }
@@ -284,3 +284,6 @@
     .job-dossier-stack { transform: none; transition: none; }
     .job-heading-orbit { display: none; }
 }
+
+.job-dossier-top img { width: 14px; height: 14px; object-fit: contain; flex-shrink: 0; }
+@media(max-width:640px) { .job-dossier-top img { width: 12px; height: 12px; } }

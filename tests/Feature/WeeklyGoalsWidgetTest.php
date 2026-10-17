@@ -13,6 +13,20 @@ class WeeklyGoalsWidgetTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_saved_monthly_goal_displays_the_matching_period_when_reopened(): void
+    {
+        $this->travelTo(now('Asia/Jakarta')->setDate(2026, 10, 18)->setTime(12, 0));
+        $user = User::factory()->create();
+        $user->goals()->create([
+            'start_date' => '2026-10-01', 'end_date' => '2026-10-31',
+            'target_applied_weekly' => 20, 'target_followup_weekly' => 0,
+        ]);
+        Livewire::actingAs($user)->test(GoalsCadenceManager::class)
+            ->call('openGoalModal')->assertSet('goalPeriod', 'monthly')
+            ->assertSet('startDate', '2026-10-01')->assertSet('endDate', '2026-10-31')
+            ->assertSee('Monthly goals')->assertSee('This month');
+    }
+
     public function test_invalid_targets_remain_in_dialog_and_do_not_save(): void
     {
         $user = User::factory()->create();

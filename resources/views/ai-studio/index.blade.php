@@ -12,7 +12,7 @@
                     <div class="ai-history-top">
                         <a href="{{ route('ai-studio.index') }}" class="ai-new-chat">
                             <i class="ph ph-plus" aria-hidden="true"></i>
-                            <span>{{ __('New request') }}</span>
+                            <span>{{ __('New task') }}</span>
                         </a>
 
                     </div>
@@ -56,7 +56,7 @@
                 <section class="ai-chat" aria-label="{{ __('Career conversation') }}">
                     <header class="ai-chat-header">
                         <div class="ai-chat-identity"><x-trakerja-ai-mark /><h1>{{ __('AI Studio') }}</h1></div>
-                        <div class="ai-header-actions"><button type="button" class="ai-history-toggle" @click="historyOpen = !historyOpen" :aria-expanded="historyOpen.toString()" aria-controls="ai-history-list">{{ __('History') }}</button>@if($selected || $run)<a href="{{ route('ai-studio.index', ['task' => $task]) }}" class="ai-new-request-link">{{ __('New request') }} <span aria-hidden="true">＋</span></a>@else<span class="ai-header-note">{{ __('Your career workspace') }}</span>@endif</div>
+                        <div class="ai-header-actions"><button type="button" class="ai-history-toggle" @click="historyOpen = !historyOpen" :aria-expanded="historyOpen.toString()" aria-controls="ai-history-list">{{ __('History') }}</button>@if($selected || $run)<a href="{{ route('ai-studio.index', ['task' => $task]) }}" class="ai-new-request-link">{{ __('New task') }} <span aria-hidden="true">＋</span></a>@else<span class="ai-header-note">{{ __('Your career workspace') }}</span>@endif</div>
                     </header>
                     @if($selected || $run)
                         <div class="ai-conversation ai-conversation--result">

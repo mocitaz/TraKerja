@@ -4843,5 +4843,10 @@
     "Delivery was not confirmed.": "Delivery was not confirmed.",
     "Your next conversation": "Your next conversation",
     "file": "file",
-    "files": "files"
+    "files": "files",
+    "New task": "New task",
+    "month": "month",
+    "week": "week",
+    "This month": "This month",
+    "This week": "This week"
 }

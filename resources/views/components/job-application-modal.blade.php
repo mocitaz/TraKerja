@@ -1,4 +1,4 @@
-<div id="jobModal" data-dialog-native="closeJobModal" data-refresh-on-save="{{ request()->routeIs('dashboard') ? 'true' : 'false' }}" role="dialog" aria-modal="true"
+<div id="jobModal" data-dialog-native="closeJobModal" data-refresh-on-save="{{ request()->routeIs('dashboard', 'jobs.show') ? 'true' : 'false' }}" role="dialog" aria-modal="true"
      aria-labelledby="modalTitle" aria-describedby="job-modal-description" tabindex="-1"
      class="job-dialog hidden fixed inset-0 z-[99999] flex items-center justify-center">
     <div class="job-dialog__panel">

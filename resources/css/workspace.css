@@ -702,3 +702,6 @@
 }
 
 
+
+.workspace-profile-identity a.workspace-account-badge:hover { text-decoration: underline; text-underline-offset: 3px; }
+.workspace-profile-identity a.workspace-account-badge:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }

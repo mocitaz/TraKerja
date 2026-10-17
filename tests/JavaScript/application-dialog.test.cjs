@@ -24,7 +24,7 @@ function setup(refresh = false, reduced = false) {
         Livewire: { dispatch: (...values) => calls.push(['dispatch', ...values]), navigate: url => calls.push(['navigate', url]) },
         TraKerjaDialogs: { close: () => calls.push(['release-focus']) },
     };
-    vm.runInNewContext(fs.readFileSync('resources/js/application-dialog.js', 'utf8').replace('export function', 'function') + '\ninstallApplicationDialog(win, doc);', { win, doc, URL });
+    vm.runInNewContext(fs.readFileSync('resources/js/application-dialog.js', 'utf8').replace(/^import .*;$/gm, '').replace('export function', 'function') + '\ninstallApplicationDialog(win, doc);', { win, doc, URL, t: key => key });
     const finishClose = () => { const [id, timer] = [...timers].find(([, timer]) => timer.delay < 1000); timers.delete(id); timer.fn(); };
     return { win, events, documentEvents, calls, classes, timers, finishClose };
 }
@@ -68,4 +68,27 @@ test('save feedback is retained if the user starts closing during the request', 
     app.events['application-saved']({ detail: { title: 'Application added' } });
     app.finishClose();
     assert.equal(app.calls.filter(c => c[0] === 'toast').length, 1);
+});
+
+
+test('detail edit refreshes the same application URL and restores scroll after saving', () => {
+    const app = setup(true);
+    app.win.location.href = 'http://localhost/jobs/2164';
+    app.events['edit-job']();
+    assert.equal(app.calls.some(call => call[0] === 'navigate'), false);
+    app.events['application-saved']({ detail: { title: 'Application updated' } });
+    app.finishClose();
+    assert.deepEqual(app.calls.find(call => call[0] === 'navigate'), ['navigate', 'http://localhost/jobs/2164']);
+    app.documentEvents['livewire:navigated']();
+    assert.deepEqual(app.calls.find(call => call[0] === 'scroll'), ['scroll', 0, 240]);
+    assert.equal(app.calls.filter(call => call[0] === 'toast').length, 1);
+});
+
+test('cancelling a detail edit closes the dialog without navigating away', () => {
+    const app = setup(true);
+    app.win.location.href = 'http://localhost/jobs/2164';
+    app.events['edit-job']();
+    app.win.closeJobModal(); app.finishClose();
+    assert.equal(app.calls.some(call => call[0] === 'navigate'), false);
+    assert.equal(app.classes.has('hidden'), true);
 });

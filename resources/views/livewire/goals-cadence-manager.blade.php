@@ -53,7 +53,7 @@
              aria-labelledby="goal-dialog-title" aria-describedby="goal-dialog-description"
              x-show="$wire.showGoalModal" x-transition.opacity.duration.150ms
              class="goal-dialog-overlay" style="display: none;">
-            <div class="goal-dialog" @click.away="$wire.showGoalModal = false">
+            <div class="goal-dialog goal-dialog--workspace" @click.away="$wire.showGoalModal = false">
                 <header class="goal-dialog-header">
                     <div>
                         <h2 id="goal-dialog-title">{{ __('Configure goals') }}</h2>
@@ -63,41 +63,41 @@
                 </header>
                 <form wire:submit="setWeeklyGoals">
                     <div class="goal-dialog-body">
-                        <div class="goal-period-label"><span>{{ __('Goal period') }}</span><span>{{ __('WIB') }}</span></div>
+                        <div class="goal-period-label"><span>{{ __('Goal period') }}</span><span>{{ $goalPeriod === 'monthly' ? __('This month') : __('This week') }}</span></div>
                         <div class="goal-period-switch" role="group" aria-label="{{ __('Goal period') }}">
                             @foreach(['weekly' => 'Weekly', 'monthly' => 'Monthly'] as $period => $label)
                                 <button type="button" wire:click="$set('goalPeriod', '{{ $period }}')" aria-pressed="{{ $goalPeriod === $period ? 'true' : 'false' }}" class="{{ $goalPeriod === $period ? 'is-selected' : '' }}" wire:loading.attr="disabled" wire:target="goalPeriod,setWeeklyGoals">{{ __($label) }}</button>
                             @endforeach
                         </div>
-                        <p class="goal-period-dates" aria-live="polite"><span><i class="ph ph-calendar-blank" aria-hidden="true"></i> {{ __(':value1 – :value2', ['value1' => (\Carbon\Carbon::parse($startDate)->locale(app()->getLocale())->translatedFormat('M j')), 'value2' => (\Carbon\Carbon::parse($endDate)->locale(app()->getLocale())->translatedFormat('M j, Y'))]) }}</span><span>{{ __('Current :value1', ['value1' => ($goalPeriod === 'monthly' ? 'month' : 'week')]) }}</span></p>
+                        <p class="goal-period-dates" aria-live="polite"><span><i class="ph ph-calendar-blank" aria-hidden="true"></i> {{ __(':value1 – :value2', ['value1' => (\Carbon\Carbon::parse($startDate)->locale(app()->getLocale())->translatedFormat('M j')), 'value2' => (\Carbon\Carbon::parse($endDate)->locale(app()->getLocale())->translatedFormat('M j, Y'))]) }}</span><span>{{ __('WIB') }}</span></p>
                         @error('goalPeriod') <p class="goal-field-error" role="alert">{{ $message }}</p> @enderror
 
-                        <div class="goal-target-grid">
+                        <div class="goal-target-grid" wire:loading.class="is-refreshing" wire:target="goalPeriod">
                             <div class="goal-target-field goal-target-applications">
                                 <div class="goal-target-header">
-                                    <div class="goal-target-icon goal-target-icon--app"><i class="ph-bold ph-paper-plane-tilt"></i></div>
+                                    <div class="goal-target-icon goal-target-icon--app"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i></div>
                                     <div>
                                         <label for="goal-applications-target">{{ __('Applications') }}</label>
                                         <p id="goal-applications-help">{{ __('How many will you apply to?') }}</p>
                                     </div>
                                 </div>
                                 <div class="goal-target-input">
-                                    <input id="goal-applications-target" type="number" min="1" step="1" required wire:model="targetAppliedWeekly" aria-describedby="goal-applications-help{{ $errors->has('targetAppliedWeekly') ? __(' goal-applications-error') : '' }}" aria-invalid="{{ $errors->has('targetAppliedWeekly') ? 'true' : 'false' }}">
-                                    <span>/ {{ $goalPeriod === 'monthly' ? 'month' : 'week' }}</span>
+                                    <input id="goal-applications-target" type="number" min="1" step="1" required wire:model="targetAppliedWeekly" aria-describedby="goal-applications-help{{ $errors->has('targetAppliedWeekly') ? ' goal-applications-error' : '' }}" aria-invalid="{{ $errors->has('targetAppliedWeekly') ? 'true' : 'false' }}">
+                                    <span>/ {{ $goalPeriod === 'monthly' ? __('month') : __('week') }}</span>
                                 </div>
                                 @error('targetAppliedWeekly') <p id="goal-applications-error" class="goal-field-error" role="alert">{{ $message }}</p> @enderror
                             </div>
                             <div class="goal-target-field goal-target-followups">
                                 <div class="goal-target-header">
-                                    <div class="goal-target-icon goal-target-icon--follow"><i class="ph-bold ph-arrows-clockwise"></i></div>
+                                    <div class="goal-target-icon goal-target-icon--follow"><i class="ph ph-arrows-clockwise" aria-hidden="true"></i></div>
                                     <div>
                                         <label for="goal-followups-target">{{ __('Follow-ups') }}</label>
                                         <p id="goal-followups-help">{{ __('Use 0 to leave this target off.') }}</p>
                                     </div>
                                 </div>
                                 <div class="goal-target-input">
-                                    <input id="goal-followups-target" type="number" min="0" step="1" required wire:model="targetFollowupWeekly" aria-describedby="goal-followups-help{{ $errors->has('targetFollowupWeekly') ? __(' goal-followups-error') : '' }}" aria-invalid="{{ $errors->has('targetFollowupWeekly') ? 'true' : 'false' }}">
-                                    <span>/ {{ $goalPeriod === 'monthly' ? 'month' : 'week' }}</span>
+                                    <input id="goal-followups-target" type="number" min="0" step="1" required wire:model="targetFollowupWeekly" aria-describedby="goal-followups-help{{ $errors->has('targetFollowupWeekly') ? ' goal-followups-error' : '' }}" aria-invalid="{{ $errors->has('targetFollowupWeekly') ? 'true' : 'false' }}">
+                                    <span>/ {{ $goalPeriod === 'monthly' ? __('month') : __('week') }}</span>
                                 </div>
                                 @error('targetFollowupWeekly') <p id="goal-followups-error" class="goal-field-error" role="alert">{{ $message }}</p> @enderror
                             </div>

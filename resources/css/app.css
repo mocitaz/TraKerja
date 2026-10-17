@@ -49,6 +49,7 @@
 @import './gemini-dark.css';
 @import './mobile-workspace.css';
 @import './tools-workspace.css';
+@import './progress-dialogs.css';
 
 @tailwind base;
 @tailwind components;

@@ -28,7 +28,17 @@ Run the normal frontend build after deployment. Restart queue workers after depl
 
 ## Voice
 
-Professional, warm, direct, and respectful. Indonesian uses **Anda** consistently. Prefer short verbs for actions and clear nouns for navigation. Avoid slang, unnecessary apologies, exaggerated promises, literal English sentence order and decorative emoji. Keep TraKerja, Nara, platform names and legal entity names recognizable.
+Professional, warm, direct, and respectful. Indonesian addresses the user as **kamu**, never **Anda**. Keep the tone friendly, capable, and respectful; avoid forced slang. Use short actions and natural Indonesian rather than literal English translations. Omit possessive pronouns when the context is obvious. Keep limits, irreversible effects, privacy instructions, and credit conditions explicit even when shortening copy. Prefer short verbs for actions and clear nouns for navigation. Avoid slang, unnecessary apologies, exaggerated promises, literal English sentence order and decorative emoji. Keep TraKerja, Nara, platform names and legal entity names recognizable.
+
+Headlines can have a conversational rhythm and one clear benefit. Buttons name the action, rather than repeating the headline. Use light invitations such as “yuk” in empty states, never to soften a destructive action. Support messages, AI tasks, and recruitment stages have different purposes: use separate translation keys when an English phrase would need different Indonesian copy.
+
+Examples of the Indonesian voice:
+
+- Page introduction: “Semua lamaranmu, jelas kabarnya.”
+- Support: “Ada yang bikin bingung? Cerita ke kami.”
+- Chat prompt: “Mau bahas apa hari ini?”
+- Action feedback: “Detailnya sudah terisi. Tinggal cek, lalu simpan.”
+- Failed action: state what failed and the next action. Use “ya” sparingly, never in every message or irreversible-action warning.
 
 Preferred glossary: application → lamaran; recruitment stage → tahap rekrutmen; credits → kredit; support → bantuan; cover letter → surat lamaran; resume → CV. A recruitment “User Interview” is “Wawancara user”, not an interview about software users.
 

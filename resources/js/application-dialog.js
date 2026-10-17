@@ -17,7 +17,7 @@ export function installApplicationDialog(win, doc) {
     win.openJobModal = (isEdit = false, defaultStage = null) => {
         const dialog = modal();
         if (!dialog || closing) return;
-        doc.getElementById('modalTitle').textContent = isEdit ? 'Edit application' : t("Add application");
+        doc.getElementById('modalTitle').textContent = isEdit ? t('Edit application') : t("Add application");
         dialog.classList.remove('hidden', 'is-closing');
         dialog.querySelector('.job-dialog__body').scrollTop = 0;
         if (!isEdit) win.Livewire?.dispatch('resetFormForNewJob', { defaultStage });
