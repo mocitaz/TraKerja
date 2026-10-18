@@ -18,12 +18,12 @@
             <div class="export-grid">
                 <section class="workspace-card export-status" aria-labelledby="export-title" data-export-state="{{ $state }}">
                     <div class="export-status__top"><span class="export-status__badge export-status__badge--{{ $state }}">{{ __($label) }}</span><span class="export-format">{{ __('CSV') }} <span aria-hidden="true">↗</span></span></div>
-                    <div role="status" aria-live="polite"><h2 id="export-title">{{ $title }}</h2><p>{{ $description }}</p></div>
+                    <div role="status" aria-live="polite"><h2 id="export-title">{{ __($title) }}</h2><p>{{ __($description) }}</p></div>
                     @if(in_array($state, ['queued', 'processing', 'ready'], true))
                         <ol class="export-steps" aria-label="{{ __('Export progress') }}">
                             @foreach(['queued' => 'Requested', 'processing' => 'Preparing', 'ready' => 'Ready'] as $step => $stepLabel)
                                 @php $done = array_search($step, ['queued', 'processing', 'ready']) <= array_search($state, ['queued', 'processing', 'ready']); @endphp
-                                <li class="{{ $done ? 'is-reached' : '' }}" @if($step === $state) aria-current="step" @endif><span aria-hidden="true">{{ $loop->iteration }}</span>{{ $stepLabel }}</li>
+                                <li class="{{ $done ? 'is-reached' : '' }}" @if($step === $state) aria-current="step" @endif><span aria-hidden="true">{{ $loop->iteration }}</span>{{ __($stepLabel) }}</li>
                             @endforeach
                         </ol>
                     @else

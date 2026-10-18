@@ -1,6 +1,13 @@
 <div class="cv-editor-layout" x-data="cvWorkspace(@js(route('cv.import-pdf')), @js(route('cv.import-pdf.confirm')))" @cv-data-updated.window="previewVersion++">
     <aside class="cv-sidebar">
         <section class="cv-sidebar-intro"><p>{{ __('Your CV workspace') }}</p><h2>{{ __('Start with your story.') }}</h2><span>{{ __('Only include sections relevant to you. Experience is optional.') }}</span></section>
+        <div class="cv-mobile-section-picker">
+            <label for="cv-mobile-section">{{ __('CV sections') }}</label>
+            <select id="cv-mobile-section" wire:change="selectSection($event.target.value)">
+                <option value="details" @selected($section === 'details')>{{ __('Your details') }}</option>
+                @foreach($sections as $item)<option value="{{ $item['key'] }}" @selected($section === $item['key'])>{{ $item['label'] }} ({{ $item['count'] }})</option>@endforeach
+            </select>
+        </div>
         <nav class="cv-section-nav" aria-label="{{ __('CV sections') }}">
             <button type="button" wire:click="selectSection('details')" @class(['is-selected' => $section === 'details']) @if($section === 'details') aria-current="page" @endif><span>{{ __('Your details') }}</span><span class="cv-section-count">{{ __('Profile') }}</span></button>
             @foreach($sections as $item)

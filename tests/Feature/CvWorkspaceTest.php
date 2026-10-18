@@ -21,7 +21,10 @@ class CvWorkspaceTest extends TestCase
         $this->get(route('cv.generator'))->assertOk()->assertSee('Your story starts here.')->assertDontSee('95%')->assertDontSee('ATS GOLD');
         $user->skills()->create(['skill_name' => 'Real TypeScript', 'category' => 'Technical', 'proficiency_level' => 'Intermediate']);
         $this->get(route('cv.generator'))->assertOk()->assertDontSee('Your story starts here.');
-        $this->get(route('cv-builder.preview.get', ['canvas' => 1]))->assertOk()->assertSee('Real TypeScript')->assertDontSee('cv-generator-layout');
+        $preview = $this->get(route('cv-builder.preview.get', ['canvas' => 1]))->assertOk()->assertHeader('Content-Type', 'application/pdf');
+        $text = (new \Smalot\PdfParser\Parser)->parseContent($preview->getContent())->getText();
+        $this->assertStringContainsString('Real TypeScript', $text);
+        $this->assertStringNotContainsString('cv-generator-layout', $text);
     }
 
     public function test_contact_details_save_only_the_current_profile_and_validate_links(): void
@@ -35,7 +38,10 @@ class CvWorkspaceTest extends TestCase
             ->set('website_url', 'https://example.test/portfolio')->call('saveDetails')->assertHasNoErrors();
         $this->assertSame('Do not change', $other->profile()->first()->headline);
         $this->assertDatabaseHas('user_profiles', ['user_id' => $owner->id, 'headline' => 'Actual engineer']);
-        $this->actingAs($owner)->get(route('cv-builder.preview.get', ['canvas' => 1]))->assertSee('Actual introduction')->assertDontSee('Do not change');
+        $preview = $this->actingAs($owner)->get(route('cv-builder.preview.get', ['canvas' => 1]))->assertOk()->assertHeader('Content-Type', 'application/pdf');
+        $text = (new \Smalot\PdfParser\Parser)->parseContent($preview->getContent())->getText();
+        $this->assertStringContainsString('Actual introduction', $text);
+        $this->assertStringNotContainsString('Do not change', $text);
     }
 
     public function test_canvas_preview_preserves_template_access_and_ownership(): void
@@ -63,12 +69,19 @@ class CvWorkspaceTest extends TestCase
     {
         $user = User::factory()->create();
         $this->actingAs($user);
+        $renderedLayout = [];
+        \Illuminate\Support\Facades\View::composer(['cv-templates.minimal', 'cv-templates.professional', 'cv-templates.creative', 'cv-templates.elegant'], function ($view) use (&$renderedLayout) {
+            $data = $view->getData();
+            $renderedLayout = [$view->name(), $data['margin'], $data['fontSize']];
+        });
         foreach (['minimal', 'professional', 'creative', 'elegant'] as $template) {
             $this->post(route('cv-builder.preview'), ['template' => $template])->assertOk()->assertSee('Review your CV')->assertSee('Download PDF');
             $this->get(route('cv-builder.preview.get', ['canvas' => 1, 'template' => $template, 'margin' => '22mm', 'font_size' => '10.5pt']))
-                ->assertOk()->assertSee('padding: 22mm', false);
+                ->assertOk()->assertHeader('Content-Type', 'application/pdf');
+            $this->assertSame(['cv-templates.'.$template, '22mm', '10.5pt'], $renderedLayout);
         }
-        $this->get(route('cv-builder.preview.get', ['canvas' => 1, 'margin' => 'INVALID_CSS', 'font_size' => 'INVALID_CSS']))->assertOk()->assertDontSee('INVALID_CSS');
+        $this->get(route('cv-builder.preview.get', ['canvas' => 1, 'margin' => 'INVALID_CSS', 'font_size' => 'INVALID_CSS']))->assertOk()->assertHeader('Content-Type', 'application/pdf');
+        $this->assertSame(['cv-templates.minimal', '15mm', '9.5pt'], $renderedLayout);
         $this->assertSame(0, $user->fresh()->cv_generated_this_month);
     }
 

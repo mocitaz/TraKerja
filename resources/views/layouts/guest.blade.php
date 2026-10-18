@@ -52,7 +52,7 @@
         @livewireStyles
         @include('partials.locale-config')
 </head>
-    <body class="font-sans text-[#1a191e] dark:text-[#f0f4f9] bg-[#fdfcf9] dark:bg-[#131314] antialiased transition-colors duration-200 relative selection:bg-[#5b3d8c]/15">
+    <body class="guest-shell font-sans text-[#1a191e] dark:text-[#f0f4f9] bg-[#fdfcf9] dark:bg-[#131314] antialiased transition-colors duration-200 relative selection:bg-[#5b3d8c]/15">
         <div class="gemini-ambient-glow" aria-hidden="true"></div>
 
         <!-- Top Navigation Controls -->

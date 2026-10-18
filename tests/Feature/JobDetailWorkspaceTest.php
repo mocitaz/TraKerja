@@ -26,7 +26,7 @@ class JobDetailWorkspaceTest extends TestCase
         ]);
         $this->actingAs($owner)->get(route('jobs.show', $job))->assertOk()
             ->assertSee('Backend Engineer')->assertSee("O'Brien & Partners")
-            ->assertSee('Application progress')->assertSee('Upcoming interview')->assertSee('WIB')
+            ->assertSee('Application progress')->assertSee('Interview schedule')->assertSee('WIB')
             ->assertSee('First line')->assertSee('Second line')
             ->assertSee(route('jobs.toggle-archive', $job), false)
             ->assertSee(route('jobs.destroy', $job), false)
@@ -44,10 +44,24 @@ class JobDetailWorkspaceTest extends TestCase
             'platform_link' => 'javascript:alert(1)', 'notes' => '<script>alert(1)</script>',
         ]);
         $this->actingAs($owner)->get(route('jobs.show', $job))->assertOk()
-            ->assertSee('Recorded outcome')->assertSee('Rejected')->assertSee('No interview scheduled yet.')
+            ->assertSee('Recorded outcome')->assertSee('Rejected')->assertSee('No selection schedule recorded yet.')
             ->assertSee('No valid original listing link recorded.')
             ->assertDontSee('href="javascript:', false)->assertDontSee('<script>alert(1)</script>', false)
             ->assertDontSee('Ready to check in?');
+    }
+
+    public function test_assessment_detail_uses_the_actual_stage_and_online_platform(): void
+    {
+        $owner = User::factory()->create();
+        $job = JobApplication::factory()->create([
+            'user_id' => $owner->id, 'application_status' => 'On Process',
+            'recruitment_stage' => 'Assessment Test', 'interview_date' => now()->addDay(),
+            'interview_type' => 'Online', 'interview_platform' => 'Assessment portal',
+        ]);
+
+        $this->actingAs($owner)->get(route('jobs.show', $job))->assertOk()
+            ->assertSee('Assessment schedule')->assertSee('Assessment portal')
+            ->assertDontSee('Upcoming interview');
     }
 
     public function test_detail_follow_up_uses_owned_eligible_application_and_resets_draft(): void

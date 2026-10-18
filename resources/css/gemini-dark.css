@@ -19,7 +19,7 @@ html:not(.dark) {
     color-scheme: light;
 }
 
-html:not(.dark) body {
+html:not(.dark) body:not(.portfolio-page) {
     background-color: #fdfcf9 !important;
     color: #1a191e !important;
 }

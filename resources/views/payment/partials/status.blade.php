@@ -26,27 +26,30 @@
     <div class="pay-status-grid">
         <section class="pay-panel pay-state pay-state--{{ strtolower($state) }}">
             <span class="pay-state-icon" aria-hidden="true"><i class="ph {{ $paid ? 'ph-check' : ($pending ? 'ph-hourglass-medium' : 'ph-minus') }}"></i></span>
-            <span class="pay-tag">{{ PaymentPresentation::label($state) }}</span><h2>{{ $title }}</h2><p>{{ $description }}</p>
-            <ol class="pay-timeline" aria-label="{{ __('Payment progress') }}">
-                <li class="is-done"><span aria-hidden="true">✓</span><div><strong>{{ __('Order created') }}</strong><small>{{ __(':value1 WIB', ['value1' => ($payment->created_at->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M Y · H:i'))]) }}</small></div></li>
-                <li class="{{ $paid ? 'is-done' : '' }}"><span aria-hidden="true">{{ $paid ? '✓' : '2' }}</span><div><strong>{{ $paid ? __('Provider verified') : ($pending ? __('Waiting for provider confirmation') : PaymentPresentation::label($state)) }}</strong><small>{{ $payment->paid_at && $paid ? $payment->paid_at->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M Y · H:i').__(' WIB') : ($pending ? __('Checked automatically while this page is open') : __('Recorded order status')) }}</small></div></li>
-                <li class="{{ $paid ? 'is-done' : '' }}"><span aria-hidden="true">{{ $paid ? '✓' : '3' }}</span><div><strong>{{ $paid ? __('View your benefits') : __('Membership or credits') }}</strong><small>{{ $paid ? __('Your current balances are in your membership portal') : __('Available after successful verification') }}</small></div></li>
-            </ol>
-            @if($pending)
-                <div class="pay-notice pay-notice--error" x-cloak x-show="error"><p role="alert" x-text="error"></p><p>{{ __('A problem checking status does not mean your payment failed.') }}</p></div>
-                <div class="pay-check-status" role="status" aria-live="polite"><span class="pay-live-dot" aria-hidden="true"></span><span x-text="busy ? @js(__('Checking payment…')) : (error ? @js(__('Status check paused. Try again below.')) : @js(__('Checking automatically')))">{{ __('Checking automatically') }}</span></div>
-            @endif
+            <span class="pay-eyebrow">{{ __('PAYMENT UPDATE') }}</span><h2>{{ __($title) }}</h2><p>{{ __($description) }}</p>
             <div class="pay-actions">
                 @if($paid)<a class="pay-button pay-button--primary" href="{{ route('membership.index') }}" wire:navigate>{{ __('View membership & credits ↗') }}</a>
                 @elseif($pending)
                     @if($resumeUrl)<a class="pay-button pay-button--primary" href="{{ $resumeUrl }}" target="_blank" rel="noopener noreferrer">{{ __('Resume payment ↗') }}</a>@endif
-                    <button class="pay-button" type="button" id="checkStatusBtn" @click="poll()" :disabled="busy || stopped"><span x-text="busy ? @js(__('Checking…')) : (error ? @js(__('Try again')) : @js(__('Check status')))">{{ __('Try again') }}</span></button>
+                    <button class="pay-button {{ !$resumeUrl ? 'pay-button--primary' : '' }}" type="button" id="checkStatusBtn" :aria-busy="busy" @click="poll()" :disabled="busy || stopped"><span x-text="busy ? @js(__('Checking…')) : (error ? @js(__('Try again')) : @js(__('Check status')))">{{ __('Try again') }}</span></button>
                 @else<a class="pay-button pay-button--primary" href="{{ auth()->user()->isPremium() ? route('payment.topup') : route('payment.premium') }}" wire:navigate>{{ __('Start a new checkout ↗') }}</a>@endif
             </div>
+            <ol class="pay-timeline" aria-label="{{ __('Payment progress') }}">
+                <li class="is-done"><span aria-hidden="true">✓</span><div><strong>{{ __('Order created') }}</strong><small>{{ $payment->created_at->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M Y · H:i') }} WIB</small></div></li>
+                <li class="{{ $paid ? 'is-done' : ($pending ? 'is-current' : 'is-ended') }}" @if($pending) aria-current="step" @endif><span aria-hidden="true">{{ $paid ? '✓' : ($pending ? '2' : '−') }}</span><div><strong>{{ $paid ? __('Provider verified') : ($pending ? __('Confirm payment') : __(PaymentPresentation::label($state))) }}</strong><small>{{ $paid ? __('Payment confirmed by the provider') : ($pending ? __('Complete payment, then return here') : __('This order has not been confirmed as paid')) }}</small></div></li>
+                @if($paid || $pending)
+                    <li class="{{ $paid ? 'is-done' : '' }}"><span aria-hidden="true">{{ $paid ? '✓' : '3' }}</span><div><strong>{{ __('Membership & credits') }}</strong><small>{{ $paid ? __('Check your current benefits in your profile') : __('Available after verification') }}</small></div></li>
+                @endif
+            </ol>
+            @if($pending)
+                <div class="pay-notice pay-notice--error" x-cloak x-show="error"><p role="alert" x-text="error"></p><p>{{ __('A problem checking status does not mean your payment failed.') }}</p></div>
+                <div class="pay-check-status" role="status" aria-live="polite"><span class="pay-live-dot" aria-hidden="true"></span><span x-text="busy ? @js(__('Checking payment…')) : (error ? @js(__('Status check interrupted. Try again.')) : @js(__('Checking automatically')))">{{ __('Checking automatically') }}</span></div>
+            @endif
+
         </section>
-        <aside class="pay-panel pay-receipt"><div class="pay-receipt-heading"><h2>{{ __('Order summary') }}</h2><span class="pay-badge pay-badge--{{ strtolower($state) }}">{{ PaymentPresentation::label($state) }}</span></div>
-            <h3>{{ PaymentPresentation::package($payment) }}</h3><div class="pay-receipt-total">{{ $payment->formatted_amount }}</div>
-            <dl class="pay-facts"><div><dt>{{ __('Order number') }}</dt><dd class="pay-mono">{{ $payment->order_id }}</dd></div><div><dt>{{ __('Payment method') }}</dt><dd>{{ PaymentPresentation::method($payment) }}</dd></div><div><dt>{{ __('Account') }}</dt><dd>{{ $payment->customer_email }}</dd></div>
+        <aside class="pay-panel pay-receipt"><div class="pay-receipt-heading"><h2>{{ $paid ? __('Your receipt') : __('Order details') }}</h2><span class="pay-badge pay-badge--{{ strtolower($state) }}">{{ __(PaymentPresentation::label($state)) }}</span></div>
+            <h3>{{ __(PaymentPresentation::package($payment)) }}</h3><div class="pay-receipt-total">{{ $payment->formatted_amount }}</div>
+            <dl class="pay-facts"><div><dt>{{ __('Order number') }}</dt><dd class="pay-mono">{{ $payment->order_id }}</dd></div><div><dt>{{ __('Payment method') }}</dt><dd>{{ __(PaymentPresentation::method($payment)) }}</dd></div><div><dt>{{ __('Account') }}</dt><dd>{{ $payment->customer_email }}</dd></div>
                 @if($payment->paid_at && $paid)<div><dt>{{ __('Paid on') }}</dt><dd>{{ __(':value1 WIB', ['value1' => ($payment->paid_at->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M Y, H:i'))]) }}</dd></div>@endif
                 @if($expiry && !$paid)<div><dt>{{ __('Payment deadline') }}</dt><dd>{{ __(':value1 WIB', ['value1' => ($expiry->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M Y, H:i'))]) }}</dd></div>@endif
             </dl>

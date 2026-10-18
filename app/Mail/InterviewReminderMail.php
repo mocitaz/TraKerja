@@ -29,7 +29,7 @@ class InterviewReminderMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('Pengingat Interview: ') . $this->jobApplication->company_name,
+            subject: __('Selection reminder: ') . $this->jobApplication->company_name,
         );
     }
 

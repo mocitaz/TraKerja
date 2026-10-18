@@ -51,9 +51,10 @@ final class PaymentPresentation
     public static function benefit(string $benefit, int $quantity): string
     {
         return match ($benefit) {
-            'premium' => 'Premium membership', 'ai_credits' => "$quantity AI credits",
-            'cl_credits' => "$quantity cover letters", 'photo_credits' => "$quantity photo credits",
-            default => 'Recorded benefit',
+            'premium' => __('Premium membership'), 'ai_credits' => __(':quantity AI credits', ['quantity' => $quantity]),
+            'cl_credits' => __(':quantity cover letters', ['quantity' => $quantity]),
+            'photo_credits' => __(':quantity photo credits', ['quantity' => $quantity]),
+            default => __('Recorded benefit'),
         };
     }
 }

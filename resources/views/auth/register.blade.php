@@ -147,7 +147,7 @@
 
             <!-- Workspace Footer Disclaimer -->
             <div class="w-full text-center space-y-2 pt-4 mt-5 border-t border-[#dedbd6]/70 dark:border-white/10">
-                <p class="text-[10px] text-zinc-400 dark:text-zinc-500 leading-normal">
+                <p class="auth-disclaimer text-[10px] text-zinc-400 dark:text-zinc-500 leading-normal">
                     {{ __('By continuing, you acknowledge that you understand and agree to the') }} <a href="{{ route('legal.terms') }}" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white font-semibold underline underline-offset-2">{{ __('Terms & Conditions') }}</a> {{ __('and') }} <a href="{{ route('legal.privacy') }}" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white font-semibold underline underline-offset-2">{{ __('Privacy Policy') }}</a>.
                 </p>
                 <div class="flex items-center justify-center gap-1.5 text-[9px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">

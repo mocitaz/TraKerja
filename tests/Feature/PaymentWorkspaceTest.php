@@ -87,4 +87,23 @@ class PaymentWorkspaceTest extends TestCase
         Http::assertNothingSent();
     }
 
+    public function test_status_copy_and_recorded_benefits_follow_the_selected_language(): void
+    {
+        $user = User::factory()->create(['locale' => 'id']);
+        $order = $this->order($user, 'SUCCESS', ['paid_at' => now()]);
+        PaymentGrant::create(['payment_id' => $order->id, 'benefit' => 'ai_credits', 'quantity' => 10, 'granted_at' => now()]);
+
+        $this->actingAs($user)->get(route('payment.success', $order->order_id))->assertOk()
+            ->assertSee('Pembayaran diterima')->assertSee('10 kredit AI')
+            ->assertDontSee('Your payment has been verified');
+    }
+
+    public function test_coming_soon_keeps_existing_orders_reachable_without_claiming_a_waitlist(): void
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user)->get('/payment/coming-soon')->assertOk()
+            ->assertSee(route('payment.history'), false)->assertSee(route('membership.index'), false)
+            ->assertDontSee('65% Complete')->assertDontSee("You're on the list");
+    }
+
 }

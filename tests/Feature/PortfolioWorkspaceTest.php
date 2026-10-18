@@ -61,4 +61,16 @@ class PortfolioWorkspaceTest extends TestCase
         $this->assertSame('saved.example.test', $user->fresh()->portfolio_custom_domain);
         $this->actingAs($user)->get(route('cv.builder'))->assertOk()->assertSee('Open live site');
     }
+    public function test_public_portfolio_uses_its_selected_theme_and_the_page_language(): void
+    {
+        $user = User::factory()->create(['portfolio_slug' => 'theme-owner', 'is_portfolio_published' => true, 'portfolio_theme' => 'dark']);
+        $this->withSession(['locale' => 'id'])->get('/@theme-owner')->assertOk()
+            ->assertSeeHtml('<html class="dark" lang="id">')
+            ->assertSeeHtml('data-theme="dark"')->assertSee('Hubungi saya');
+
+        $user->forceFill(['portfolio_theme' => 'emerald'])->save();
+        $this->get('/@theme-owner')->assertOk()->assertSeeHtml('data-theme="emerald"')
+            ->assertDontSeeHtml('<html class="dark"');
+    }
+
 }

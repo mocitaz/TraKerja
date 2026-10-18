@@ -33,13 +33,14 @@ class JobApplicationImportExportController extends Controller
         'interview_type',
         'interview_location',
         'interview_notes',
+        'interview_platform',
     ];
 
     private const ALL_COLUMNS = [
         'company_name', 'position', 'location', 'platform',
         'application_status', 'recruitment_stage', 'career_level',
         'application_date', 'platform_link', 'notes',
-        'interview_date', 'interview_type', 'interview_location', 'interview_notes'
+        'interview_date', 'interview_type', 'interview_location', 'interview_notes', 'interview_platform'
     ];
 
     /**
@@ -48,7 +49,7 @@ class JobApplicationImportExportController extends Controller
     private const VALID_APPLICATION_STATUS = JobApplicationStatus::OPTIONS;
     private const VALID_RECRUITMENT_STAGE = JobApplicationStatus::STAGES;
     private const VALID_CAREER_LEVEL = ['Intern', 'Full Time', 'Contract', 'MT', 'Freelance'];
-    private const VALID_INTERVIEW_TYPE = ['Phone', 'Video', 'In-person', 'Panel'];
+    private const VALID_INTERVIEW_TYPE = \App\Support\SelectionSchedule::IMPORT_TYPES;
 
     /**
      * Download CSV template
@@ -75,7 +76,8 @@ class JobApplicationImportExportController extends Controller
             'Interview Date',
             'Interview Type',
             'Interview Location',
-            'Interview Notes'
+            'Interview Notes',
+            'Interview Platform'
         ];
 
         fputcsv($output, $headers);
@@ -87,15 +89,16 @@ class JobApplicationImportExportController extends Controller
             'Jakarta',
             'LinkedIn',
             'On Process',
-            'Applied',
+            'HR - Interview',
             'Full Time',
             '2024-01-15',
             'https://linkedin.com/jobs/example',
             'Contoh catatan aplikasi',
             '2024-01-20 14:00',
-            'Video',
-            'Zoom Meeting',
-            'Contoh catatan interview'
+            'Online',
+            'https://example.com/meeting',
+            'Contoh instruksi seleksi',
+            'Zoom'
         ];
 
         fputcsv($output, $example);
@@ -269,6 +272,8 @@ class JobApplicationImportExportController extends Controller
             'notes' => 'notes',
             'csv encoding' => 'csv_encoding',
             'interview date' => 'interview_date',
+            'interview_platform' => 'interview_platform',
+            'interview platform' => 'interview_platform',
             'interview_type' => 'interview_type',
             'interview type' => 'interview_type',
             'interview location' => 'interview_location',
@@ -338,6 +343,7 @@ class JobApplicationImportExportController extends Controller
             'platform_link' => $rowData['platform_link'] ?? null,
             'notes' => $rowData['notes'] ?? null,
             'interview_date' => $rowData['interview_date'] ?? null,
+            'interview_platform' => $rowData['interview_platform'] ?? null,
             'interview_type' => $rowData['interview_type'] ?? null,
             'interview_location' => $rowData['interview_location'] ?? null,
             'interview_notes' => $rowData['interview_notes'] ?? null,
@@ -350,6 +356,7 @@ class JobApplicationImportExportController extends Controller
             'location' => 'string|max:255', 'platform' => 'string|max:255',
             'platform_link' => 'nullable|url|max:255', 'interview_location' => 'nullable|string|max:255',
             'interview_type' => 'nullable|string|max:50',
+            'interview_platform' => ['nullable', \Illuminate\Validation\Rule::in(\App\Support\SelectionSchedule::PLATFORMS)],
         ]);
         $errors = $limits->errors()->all();
         foreach (['notes', 'interview_notes'] as $field) {
@@ -431,6 +438,7 @@ class JobApplicationImportExportController extends Controller
                 'platform_link' => $data['platform_link'] ?? '',
                 'notes' => $data['notes'] === '' ? null : $data['notes'],
                 'interview_date' => $interviewDate,
+                ... (\App\Support\SelectionSchedule::platformAvailable() ? ['interview_platform' => $canSchedule && \App\Support\SelectionSchedule::online($data['interview_type']) ? ($data['interview_platform'] ?: null) : null] : []),
                 'interview_type' => !$canSchedule || $data['interview_type'] === '' ? null : $data['interview_type'],
                 'interview_location' => !$canSchedule || $data['interview_location'] === '' ? null : $data['interview_location'],
                 'interview_notes' => !$canSchedule || $data['interview_notes'] === '' ? null : $data['interview_notes'],

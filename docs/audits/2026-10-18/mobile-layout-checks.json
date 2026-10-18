@@ -1,0 +1,1417 @@
+{
+  "date": "2026-10-18",
+  "method": "Synthetic Laravel-rendered HTML, bundled application styles, Chromium responsive and touch emulation. Livewire is stubbed in visual fixtures; server interactions are tested separately.",
+  "before390": [
+    {
+      "page": "dashboard",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 0,
+      "wide": []
+    },
+    {
+      "page": "tracker",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 0,
+      "wide": []
+    },
+    {
+      "page": "summary",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 0,
+      "wide": [
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "page": "detail",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 0,
+      "wide": [
+        "job-heading-orbit"
+      ]
+    },
+    {
+      "page": "explore",
+      "overflow": 0,
+      "smallInputs": 4,
+      "smallButtons": 0,
+      "wide": []
+    },
+    {
+      "page": "interviews",
+      "overflow": 0,
+      "smallInputs": 1,
+      "smallButtons": 44,
+      "wide": [
+        "interview-weekdays",
+        "interview-days"
+      ]
+    },
+    {
+      "page": "profile",
+      "overflow": 0,
+      "smallInputs": 1,
+      "smallButtons": 0,
+      "wide": []
+    },
+    {
+      "page": "membership",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 0,
+      "wide": []
+    },
+    {
+      "page": "cv-builder",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 1,
+      "wide": [
+        "cv-sidebar",
+        "cv-section-nav",
+        "cv-sidebar-actions"
+      ]
+    },
+    {
+      "page": "cv-generator",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 2,
+      "wide": []
+    },
+    {
+      "page": "studio",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 1,
+      "wide": []
+    },
+    {
+      "page": "studio-letter",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 1,
+      "wide": []
+    },
+    {
+      "page": "studio-photo",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 1,
+      "wide": []
+    },
+    {
+      "page": "studio-outreach",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 1,
+      "wide": []
+    },
+    {
+      "page": "analysis-result",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 2,
+      "wide": []
+    },
+    {
+      "page": "letter-result",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 2,
+      "wide": []
+    },
+    {
+      "page": "support",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 0,
+      "wide": []
+    },
+    {
+      "page": "automation",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 0,
+      "wide": []
+    },
+    {
+      "page": "community",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 0,
+      "wide": []
+    },
+    {
+      "page": "topup",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 2,
+      "wide": []
+    },
+    {
+      "page": "waiting",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 1,
+      "wide": []
+    },
+    {
+      "page": "payment-history",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 1,
+      "wide": [
+        "pay-table",
+        "",
+        ""
+      ]
+    },
+    {
+      "page": "coming-soon",
+      "overflow": 0,
+      "smallInputs": 0,
+      "smallButtons": 1,
+      "wide": []
+    }
+  ],
+  "after320English": [
+    {
+      "page": "dashboard",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "tracker",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "summary",
+      "width": 320,
+      "overflow": 0,
+      "wide": [
+        "",
+        ""
+      ],
+      "smallInputs": []
+    },
+    {
+      "page": "detail",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "explore",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "interviews",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "profile",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "membership",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "cv-builder",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "cv-generator",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "studio",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "studio-letter",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "studio-photo",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "studio-outreach",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "analysis-result",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "letter-result",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "support",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "automation",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "community",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "topup",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "waiting",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "payment-history",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "coming-soon",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "cv-review",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "cv-review-professional",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "cv-review-creative",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "cv-review-elegant",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "portfolio",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "photo-result",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "studio-failed",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    },
+    {
+      "page": "premium",
+      "width": 320,
+      "overflow": 0,
+      "wide": [],
+      "smallInputs": []
+    }
+  ],
+  "after390IndonesianDark": [
+    {
+      "page": "dashboard",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "tracker",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "summary",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "detail",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "explore",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "interviews",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "profile",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "membership",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "cv-builder",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "cv-generator",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "studio",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "studio-letter",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "studio-photo",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "studio-outreach",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "analysis-result",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "letter-result",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "support",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "automation",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "community",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "topup",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "waiting",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "payment-history",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "coming-soon",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "cv-review",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "cv-review-professional",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "cv-review-creative",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "cv-review-elegant",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "portfolio",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "photo-result",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "studio-failed",
+      "overflow": 0,
+      "width": 390
+    },
+    {
+      "page": "premium",
+      "overflow": 0,
+      "width": 390
+    }
+  ],
+  "guest320IndonesianAfter": [
+    {
+      "page": "login",
+      "overflow": 0,
+      "smallInputs": []
+    },
+    {
+      "page": "register",
+      "overflow": 0,
+      "smallInputs": []
+    },
+    {
+      "page": "forgot-password",
+      "overflow": 0,
+      "smallInputs": []
+    },
+    {
+      "page": "reset-password",
+      "overflow": 0,
+      "smallInputs": []
+    },
+    {
+      "page": "landing",
+      "overflow": 0,
+      "smallInputs": []
+    },
+    {
+      "page": "terms",
+      "overflow": 0,
+      "smallInputs": []
+    },
+    {
+      "page": "privacy",
+      "overflow": 0,
+      "smallInputs": []
+    }
+  ],
+  "conditional320IndonesianAfter": [
+    {
+      "page": "survey",
+      "overflow": 0,
+      "smallInputs": 0
+    },
+    {
+      "page": "data-export",
+      "overflow": 0,
+      "smallInputs": 0
+    }
+  ],
+  "after430Indonesian": [
+    {
+      "page": "interviews",
+      "overflow": 0
+    },
+    {
+      "page": "cv-builder",
+      "overflow": 0
+    },
+    {
+      "page": "cv-generator",
+      "overflow": 0
+    },
+    {
+      "page": "cv-review",
+      "overflow": 0
+    },
+    {
+      "page": "explore",
+      "overflow": 0
+    },
+    {
+      "page": "payment-history",
+      "overflow": 0
+    },
+    {
+      "page": "waiting",
+      "overflow": 0
+    },
+    {
+      "page": "premium",
+      "overflow": 0
+    },
+    {
+      "page": "profile",
+      "overflow": 0
+    },
+    {
+      "page": "studio",
+      "overflow": 0
+    },
+    {
+      "page": "support",
+      "overflow": 0
+    },
+    {
+      "page": "automation",
+      "overflow": 0
+    },
+    {
+      "page": "landing",
+      "overflow": 0
+    },
+    {
+      "page": "login",
+      "overflow": 0
+    }
+  ],
+  "touch390After": [
+    {
+      "page": "interviews",
+      "overflow": 0,
+      "coarse": true
+    },
+    {
+      "page": "cv-builder",
+      "overflow": 0,
+      "coarse": true
+    },
+    {
+      "page": "explore",
+      "overflow": 0,
+      "coarse": true
+    },
+    {
+      "page": "payment-history",
+      "overflow": 0,
+      "coarse": true
+    },
+    {
+      "page": "studio",
+      "overflow": 0,
+      "coarse": true
+    },
+    {
+      "page": "profile",
+      "overflow": 0,
+      "coarse": true
+    },
+    {
+      "page": "survey",
+      "overflow": 0,
+      "coarse": true
+    },
+    {
+      "page": "login",
+      "overflow": 0,
+      "coarse": true
+    }
+  ],
+  "shortViewportModals390x500": [
+    {
+      "modal": "experience",
+      "overflow": 0,
+      "dialogs": [
+        {
+          "h": 480,
+          "scroll": true
+        }
+      ],
+      "smallInputs": 0
+    },
+    {
+      "modal": "education",
+      "overflow": 0,
+      "dialogs": [
+        {
+          "h": 480,
+          "scroll": true
+        }
+      ],
+      "smallInputs": 0
+    },
+    {
+      "modal": "skills",
+      "overflow": 0,
+      "dialogs": [
+        {
+          "h": 412,
+          "scroll": false
+        }
+      ],
+      "smallInputs": 0
+    },
+    {
+      "modal": "projects",
+      "overflow": 0,
+      "dialogs": [
+        {
+          "h": 480,
+          "scroll": true
+        }
+      ],
+      "smallInputs": 0
+    },
+    {
+      "modal": "organizations",
+      "overflow": 0,
+      "dialogs": [
+        {
+          "h": 480,
+          "scroll": true
+        }
+      ],
+      "smallInputs": 0
+    },
+    {
+      "modal": "achievements",
+      "overflow": 0,
+      "dialogs": [
+        {
+          "h": 480,
+          "scroll": true
+        }
+      ],
+      "smallInputs": 0
+    },
+    {
+      "modal": "publish",
+      "overflow": 0,
+      "dialogs": [
+        {
+          "h": 480,
+          "scroll": true
+        }
+      ],
+      "smallInputs": 0
+    },
+    {
+      "modal": "interview",
+      "overflow": 0,
+      "dialogs": [
+        {
+          "h": 480,
+          "scroll": false
+        }
+      ],
+      "smallInputs": 0
+    },
+    {
+      "modal": "explore",
+      "overflow": 0,
+      "dialogs": [
+        {
+          "h": 480,
+          "scroll": false
+        }
+      ],
+      "smallInputs": 0
+    }
+  ],
+  "desktop1366Before": [
+    {
+      "page": "dashboard",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 848,
+          "font": "26px",
+          "columns": "none"
+        }
+      ]
+    },
+    {
+      "page": "tracker",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 293,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1320,
+          "font": "16px",
+          "columns": "none"
+        }
+      ]
+    },
+    {
+      "page": "summary",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 390,
+          "font": "30px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1320,
+          "font": "16px",
+          "columns": "1240px"
+        }
+      ]
+    },
+    {
+      "page": "detail",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 814,
+          "font": "32px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1200,
+          "font": "16px",
+          "columns": "none"
+        }
+      ]
+    },
+    {
+      "page": "explore",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 340,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1320,
+          "font": "16px",
+          "columns": "1240px"
+        }
+      ]
+    },
+    {
+      "page": "interviews",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 377,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1320,
+          "font": "16px",
+          "columns": "1240px"
+        },
+        {
+          "s": ".interview-layout",
+          "width": 1240,
+          "font": "16px",
+          "columns": "763.75px 458.25px"
+        }
+      ]
+    },
+    {
+      "page": "profile",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 315,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".profile-layout",
+          "width": 1240,
+          "font": "16px",
+          "columns": "280px 940px"
+        }
+      ]
+    },
+    {
+      "page": "membership",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 315,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".profile-layout",
+          "width": 1240,
+          "font": "16px",
+          "columns": "280px 940px"
+        }
+      ]
+    },
+    {
+      "page": "cv-builder",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 219,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".cv-editor-layout",
+          "width": 1240,
+          "font": "16px",
+          "columns": "240px 982px"
+        }
+      ]
+    },
+    {
+      "page": "cv-generator",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 298,
+          "font": "26px",
+          "columns": "none"
+        }
+      ]
+    },
+    {
+      "page": "studio",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 60,
+          "font": "14px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1320,
+          "font": "16px",
+          "columns": "none"
+        },
+        {
+          "s": ".ai-portal-grid",
+          "width": 1240,
+          "font": "16px",
+          "columns": "218px 1020px"
+        }
+      ]
+    },
+    {
+      "page": "support",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 274,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1320,
+          "font": "16px",
+          "columns": "1240px"
+        }
+      ]
+    },
+    {
+      "page": "automation",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 359,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1320,
+          "font": "16px",
+          "columns": "1240px"
+        }
+      ]
+    },
+    {
+      "page": "community",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 279,
+          "font": "42px",
+          "columns": "none"
+        }
+      ]
+    },
+    {
+      "page": "topup",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 356,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".pay-checkout-grid",
+          "width": 1000,
+          "font": "16px",
+          "columns": "571.664px 408.328px"
+        }
+      ]
+    },
+    {
+      "page": "waiting",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 250,
+          "font": "26px",
+          "columns": "none"
+        }
+      ]
+    },
+    {
+      "page": "payment-history",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 314,
+          "font": "26px",
+          "columns": "none"
+        }
+      ]
+    },
+    {
+      "page": "coming-soon",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 459,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".pay-checkout-grid",
+          "width": 1000,
+          "font": "16px",
+          "columns": "571.664px 408.328px"
+        }
+      ]
+    }
+  ],
+  "desktop1366After": [
+    {
+      "page": "dashboard",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 848,
+          "font": "26px",
+          "columns": "none"
+        }
+      ]
+    },
+    {
+      "page": "tracker",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 293,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1320,
+          "font": "16px",
+          "columns": "none"
+        }
+      ]
+    },
+    {
+      "page": "summary",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 390,
+          "font": "30px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1320,
+          "font": "16px",
+          "columns": "1240px"
+        }
+      ]
+    },
+    {
+      "page": "detail",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 814,
+          "font": "32px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1200,
+          "font": "16px",
+          "columns": "none"
+        }
+      ]
+    },
+    {
+      "page": "explore",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 340,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1320,
+          "font": "16px",
+          "columns": "1240px"
+        }
+      ]
+    },
+    {
+      "page": "interviews",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 377,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1320,
+          "font": "16px",
+          "columns": "1240px"
+        },
+        {
+          "s": ".interview-layout",
+          "width": 1240,
+          "font": "16px",
+          "columns": "763.75px 458.25px"
+        }
+      ]
+    },
+    {
+      "page": "profile",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 315,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".profile-layout",
+          "width": 1240,
+          "font": "16px",
+          "columns": "280px 940px"
+        }
+      ]
+    },
+    {
+      "page": "membership",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 315,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".profile-layout",
+          "width": 1240,
+          "font": "16px",
+          "columns": "280px 940px"
+        }
+      ]
+    },
+    {
+      "page": "cv-builder",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 219,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".cv-editor-layout",
+          "width": 1240,
+          "font": "16px",
+          "columns": "240px 982px"
+        }
+      ]
+    },
+    {
+      "page": "cv-generator",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 298,
+          "font": "26px",
+          "columns": "none"
+        }
+      ]
+    },
+    {
+      "page": "studio",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 60,
+          "font": "14px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1320,
+          "font": "16px",
+          "columns": "none"
+        },
+        {
+          "s": ".ai-portal-grid",
+          "width": 1240,
+          "font": "16px",
+          "columns": "218px 1020px"
+        }
+      ]
+    },
+    {
+      "page": "support",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 274,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1320,
+          "font": "16px",
+          "columns": "1240px"
+        }
+      ]
+    },
+    {
+      "page": "automation",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 359,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".workspace-page__container",
+          "width": 1320,
+          "font": "16px",
+          "columns": "1240px"
+        }
+      ]
+    },
+    {
+      "page": "community",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 279,
+          "font": "42px",
+          "columns": "none"
+        }
+      ]
+    },
+    {
+      "page": "topup",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 356,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".pay-checkout-grid",
+          "width": 1000,
+          "font": "16px",
+          "columns": "571.664px 408.328px"
+        }
+      ]
+    },
+    {
+      "page": "waiting",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 250,
+          "font": "26px",
+          "columns": "none"
+        }
+      ]
+    },
+    {
+      "page": "payment-history",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 314,
+          "font": "26px",
+          "columns": "none"
+        }
+      ]
+    },
+    {
+      "page": "coming-soon",
+      "elements": [
+        {
+          "s": "h1",
+          "width": 459,
+          "font": "26px",
+          "columns": "none"
+        },
+        {
+          "s": ".pay-checkout-grid",
+          "width": 1000,
+          "font": "16px",
+          "columns": "571.664px 408.328px"
+        }
+      ]
+    }
+  ],
+  "desktopDifferences": [],
+  "additionalAuth320Touch": [
+    {
+      "page": "confirm-password",
+      "overflow": 0,
+      "smallInputs": 0
+    },
+    {
+      "page": "verify-email",
+      "overflow": 0,
+      "smallInputs": 0
+    },
+    {
+      "page": "support",
+      "overflow": 0,
+      "smallInputs": 0
+    }
+  ],
+  "renderedVariants": 42,
+  "renderedLocales": [
+    "en",
+    "id"
+  ],
+  "http200Responses": 84
+}

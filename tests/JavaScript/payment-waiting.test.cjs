@@ -9,7 +9,9 @@ function fixture(fetcher) {
     const window = {location: {assign: url => redirects.push(url)}, addEventListener: (name, cb) => listeners.set(name, cb), removeEventListener: (name, cb) => { if (listeners.get(name) === cb) listeners.delete(name); }};
     const context = {window, document: window, fetch: fetcher, AbortController, navigator: {clipboard: {writeText: async () => {}}}, setTimeout: (cb, delay) => {timers.set(++id, {cb, delay}); return id;}, clearTimeout: id => timers.delete(id)};
     const source = fs.existsSync('resources/js/payment-waiting.js') ? fs.readFileSync('resources/js/payment-waiting.js', 'utf8') : '';
-    vm.runInNewContext(source, context);
+    vm.runInNewContext(source.replace(/^import \{ t \} from '\.\/i18n\.js';\s*/m, ''), {
+        ...context, t: value => value,
+    });
     assert.equal(typeof window.paymentWaitingStatus, 'function', 'compiled helper must expose an Alpine component');
     const state = window.paymentWaitingStatus({statusUrl: '/status', successUrl: '/success', failedUrl: '/failed', initialStatus: 'WAITING'});
     return {state, timers, listeners, redirects};

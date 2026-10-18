@@ -171,7 +171,7 @@ class KawanKerjaService
                     'position' => $app->position,
                     'date' => $app->interview_date?->format('d M Y H:i'),
                     'stage' => $app->recruitment_stage,
-                    'type' => $app->interview_type ?? 'Online/Offline',
+                    'type' => \App\Support\SelectionSchedule::methodLabel($app->interview_type),
                 ])
                 ->toArray();
 

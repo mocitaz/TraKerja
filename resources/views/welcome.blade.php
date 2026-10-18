@@ -965,7 +965,7 @@
                         </div>
                         <!-- MacBook Base/Keyboard Lip -->
                         <div
-                            class="relative -mt-0.5 w-[114%] -ml-[7%] h-3 bg-[#e4e2dd] dark:bg-[#282a2c] border-t border-[#d5d2cc] dark:border-white/10 rounded-b-xl shadow-md flex items-center justify-center z-10">
+                            class="landing-laptop-base relative -mt-0.5 w-[114%] -ml-[7%] h-3 bg-[#e4e2dd] dark:bg-[#282a2c] border-t border-[#d5d2cc] dark:border-white/10 rounded-b-xl shadow-md flex items-center justify-center z-10">
                             <!-- Display Opening Notch -->
                             <div class="w-16 h-1.5 bg-[#c2bfb8] dark:bg-[#3b3d40] rounded-b-md -mt-1 shadow-inner"></div>
                         </div>

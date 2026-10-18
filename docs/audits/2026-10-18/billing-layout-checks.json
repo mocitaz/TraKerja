@@ -1,0 +1,334 @@
+{
+  "mobile320": [
+    {
+      "page": "premium",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":314,\"heading\":\"Upgrade ke Premium\",\"buttons\":[{\"text\":\"Lanjutkan ke pembayaran\\n↗\",\"height\":44}]}\n```"
+        }
+      ]
+    },
+    {
+      "page": "topup",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":314,\"heading\":\"Tambah kredit\",\"buttons\":[{\"text\":\"Lanjutkan ke pembayaran\\n↗\",\"height\":44}]}\n```"
+        }
+      ]
+    },
+    {
+      "page": "waiting",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":314,\"heading\":\"Detail pembayaran\",\"buttons\":[{\"text\":\"Lanjutkan pembayaran ↗\",\"height\":44},{\"text\":\"Periksa status\",\"height\":44},{\"text\":\"Salin\",\"height\":44}]}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-success",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":314,\"heading\":\"Detail pembayaran\",\"buttons\":[{\"text\":\"Lihat keanggotaan & kredit ↗\",\"height\":44}]}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-failed",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":314,\"heading\":\"Detail pembayaran\",\"buttons\":[{\"text\":\"Mulai proses pembayaran baru ↗\",\"height\":44}]}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-canceled",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":314,\"heading\":\"Detail pembayaran\",\"buttons\":[{\"text\":\"Mulai proses pembayaran baru ↗\",\"height\":44}]}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-expired",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":314,\"heading\":\"Detail pembayaran\",\"buttons\":[{\"text\":\"Mulai proses pembayaran baru ↗\",\"height\":44}]}\n```"
+        }
+      ]
+    },
+    {
+      "page": "payment-history",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":314,\"heading\":\"Riwayat pembayaran\",\"buttons\":[{\"text\":\"Dapatkan lebih banyak kredit ↗\",\"height\":44}]}\n```"
+        }
+      ]
+    },
+    {
+      "page": "coming-soon",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":314,\"heading\":\"Pembayaran\",\"buttons\":[{\"text\":\"Lihat paket saya\\n↗\",\"height\":44},{\"text\":\"Kembali ke lamaran\",\"height\":44}]}\n```"
+        }
+      ]
+    }
+  ],
+  "desktop1366": [
+    {
+      "page": "premium",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":1080,\"grid\":\"580px 400px\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "topup",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":1080,\"grid\":\"580px 400px\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "waiting",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":1080,\"grid\":\"580px 400px\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-success",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":1080,\"grid\":\"580px 400px\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-failed",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":1080,\"grid\":\"580px 400px\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-canceled",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":1080,\"grid\":\"580px 400px\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-expired",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":1080,\"grid\":\"580px 400px\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "payment-history",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":1080,\"grid\":\"none\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "coming-soon",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"width\":1080,\"grid\":\"512.398px 341.602px\"}\n```"
+        }
+      ]
+    }
+  ],
+  "mobile390dark": [
+    {
+      "page": "premium",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"theme\":\"#242426\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "topup",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"theme\":\"#242426\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "waiting",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"theme\":\"#242426\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-success",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"theme\":\"#242426\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-failed",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"theme\":\"#242426\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-canceled",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"theme\":\"#242426\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-expired",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"theme\":\"#242426\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "payment-history",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"theme\":\"#242426\"}\n```"
+        }
+      ]
+    },
+    {
+      "page": "coming-soon",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0,\"theme\":\"#242426\"}\n```"
+        }
+      ]
+    }
+  ],
+  "tablet768": [
+    {
+      "page": "premium",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0}\n```"
+        }
+      ]
+    },
+    {
+      "page": "topup",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0}\n```"
+        }
+      ]
+    },
+    {
+      "page": "waiting",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-success",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-failed",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-canceled",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0}\n```"
+        }
+      ]
+    },
+    {
+      "page": "billing-expired",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0}\n```"
+        }
+      ]
+    },
+    {
+      "page": "payment-history",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0}\n```"
+        }
+      ]
+    },
+    {
+      "page": "coming-soon",
+      "result": [
+        {
+          "type": "text",
+          "text": "Script ran on page and returned:\n```json\n{\"overflow\":0}\n```"
+        }
+      ]
+    }
+  ]
+}

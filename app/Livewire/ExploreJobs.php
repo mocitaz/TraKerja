@@ -3,6 +3,13 @@
 namespace App\Livewire;
 
 use App\Models\JobPosting;
+use App\Models\JobBookmark;
+use App\Models\SavedJobSearch;
+use App\Models\ExplorePreference;
+use App\Models\JobApplication;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -10,6 +17,14 @@ class ExploreJobs extends Component
 {
     use WithPagination;
 
+    private const FILTERS = ['search', 'sortBy', 'selectedPlatform', 'selectedField', 'selectedMajor', 'selectedWorkType', 'selectedProvince', 'selectedLocation', 'collection'];
+    private ?bool $workspaceAvailable = null;
+    public string $collection = 'all';
+    public string $searchName = '';
+    public string $appliedOn = '';
+    public string $applicationLocation = '';
+    #[\Livewire\Attributes\Locked]
+    public string $feedback = '';
     public $search = '';
     public $sortBy = 'newest';
     #[\Livewire\Attributes\Locked]
@@ -34,6 +49,7 @@ class ExploreJobs extends Component
     public $confirmingReportJobCompany = '';
 
     protected $queryString = [
+        'collection' => ['except' => 'all'],
         'search' => ['except' => ''],
         'sortBy' => ['except' => 'newest'],
         'selectedPlatform' => ['except' => ''],
@@ -49,6 +65,121 @@ class ExploreJobs extends Component
         if (auth()->check() && (auth()->user()->isAdmin() || auth()->user()->role === 'admin')) {
             return redirect()->route('admin.index');
         }
+        $this->appliedOn = now('Asia/Jakarta')->toDateString();
+        $hasQuery = collect(self::FILTERS)->contains(fn ($key) => request()->query->has($key));
+        if (!$hasQuery && $this->workspaceReady()) {
+            $this->fill($this->normalizeFilters(ExplorePreference::where('user_id', auth()->id())->value('filters') ?? []));
+        }
+    }
+
+    public function workspaceReady(): bool
+    {
+        return $this->workspaceAvailable ??= Schema::hasTable('job_bookmarks') && Schema::hasTable('saved_job_searches') && Schema::hasTable('explore_preferences');
+    }
+
+    private function normalizeFilters(array|string $filters): array
+    {
+        if (is_string($filters)) $filters = json_decode($filters, true) ?: [];
+        $result = [];
+        foreach (self::FILTERS as $key) {
+            $value = $filters[$key] ?? '';
+            $result[$key] = is_string($value) ? mb_substr(trim($value), 0, 200) : '';
+        }
+        $result['sortBy'] = $result['sortBy'] === 'oldest' ? 'oldest' : 'newest';
+        $result['collection'] = in_array($result['collection'], ['all', 'saved', 'applied'], true) ? $result['collection'] : 'all';
+        if (!in_array($result['selectedWorkType'], ['', 'Onsite', 'Remote', 'Hybrid'], true)) $result['selectedWorkType'] = '';
+        return $result;
+    }
+
+    private function currentFilters(): array
+    {
+        return $this->normalizeFilters($this->only(self::FILTERS));
+    }
+
+    private function rememberFilters(): void
+    {
+        if ($this->workspaceReady()) {
+            ExplorePreference::updateOrCreate(['user_id' => auth()->id()], ['filters' => $this->currentFilters()]);
+        }
+    }
+
+    public function dismissFeedback(): void { $this->feedback = ''; }
+
+    public function updated($name): void
+    {
+        if (in_array($name, self::FILTERS, true)) {
+            $this->fill($this->currentFilters());
+            $this->resetPage();
+            $this->rememberFilters();
+        }
+    }
+
+    public function setCollection(string $collection): void
+    {
+        abort_unless(in_array($collection, ['all', 'saved', 'applied'], true), 422);
+        $this->collection = $collection;
+        $this->resetPage();
+        $this->rememberFilters();
+    }
+
+    public function toggleBookmark(int $id): void
+    {
+        abort_unless(auth()->check(), 401);
+        if (!$this->workspaceReady()) { $this->feedback = __('Saved jobs will be available after the workspace update.'); return; }
+        DB::transaction(function () use ($id) {
+            User::whereKey(auth()->id())->lockForUpdate()->firstOrFail();
+            $bookmark = JobBookmark::where('user_id', auth()->id())->where('job_posting_id', $id)->first();
+            if ($bookmark) {
+                $bookmark->delete();
+                $this->feedback = __('Removed from saved jobs. Your applications are unchanged.');
+                return;
+            }
+            JobPosting::where('status', 'active')->findOrFail($id);
+            JobBookmark::create(['user_id' => auth()->id(), 'job_posting_id' => $id]);
+            $this->feedback = __('Saved for later. No application has been recorded.');
+        });
+        if ($this->collection === 'saved') $this->resetPage();
+    }
+
+    public function saveSearch(): void
+    {
+        abort_unless(auth()->check(), 401);
+        if (!$this->workspaceReady()) { $this->feedback = __('Saved searches will be available after the workspace update.'); return; }
+        $this->resetValidation('searchName');
+        $this->searchName = trim($this->searchName);
+        $this->validate(['searchName' => 'required|string|max:60']);
+        $filters = $this->currentFilters();
+        $fingerprint = hash('sha256', json_encode($filters));
+        DB::transaction(function () use ($filters, $fingerprint) {
+            User::whereKey(auth()->id())->lockForUpdate()->firstOrFail();
+            $searches = SavedJobSearch::where('user_id', auth()->id());
+            if (!(clone $searches)->where('fingerprint', $fingerprint)->exists() && (clone $searches)->count() >= 20) {
+                $this->addError('searchName', __('You can save up to 20 searches. Remove one to make room.'));
+                return;
+            }
+            SavedJobSearch::updateOrCreate(['user_id' => auth()->id(), 'fingerprint' => $fingerprint], ['name' => $this->searchName, 'filters' => $filters]);
+            $this->feedback = __('Search saved. Your filters are ready for next time.');
+            $this->searchName = '';
+        });
+        $this->rememberFilters();
+    }
+
+    public function applySavedSearch(int $id): void
+    {
+        abort_unless($this->workspaceReady(), 503);
+        $search = SavedJobSearch::where('user_id', auth()->id())->findOrFail($id);
+        $this->fill($this->normalizeFilters($search->filters));
+        $this->resetPage();
+        $this->rememberFilters();
+        $this->dispatch('explore-filters-restored');
+        $this->feedback = __('Saved search applied.');
+    }
+
+    public function deleteSavedSearch(int $id): void
+    {
+        abort_unless($this->workspaceReady(), 503);
+        SavedJobSearch::where('user_id', auth()->id())->findOrFail($id)->delete();
+        $this->feedback = __('Saved search removed.');
     }
 
     public function updatingSortBy()
@@ -74,6 +205,7 @@ class ExploreJobs extends Component
         if ($name === 'selectedProvince') $this->selectedLocation = '';
         if ($name === 'selectedField') $this->selectedMajor = '';
         $this->resetPage();
+        $this->rememberFilters();
     }
 
     public function updatingSearch()
@@ -118,6 +250,7 @@ class ExploreJobs extends Component
         $this->selectedProvince = $province;
         $this->selectedLocation = $location;
         $this->resetPage();
+        $this->rememberFilters();
     }
 
     public function resetLocationFilter()
@@ -125,6 +258,7 @@ class ExploreJobs extends Component
         $this->selectedProvince = '';
         $this->selectedLocation = '';
         $this->resetPage();
+        $this->rememberFilters();
     }
 
     public function resetFilters()
@@ -138,6 +272,7 @@ class ExploreJobs extends Component
         $this->selectedProvince = '';
         $this->selectedLocation = '';
         $this->resetPage();
+        $this->rememberFilters();
     }
 
     public function getMajorsProperty()
@@ -175,15 +310,19 @@ class ExploreJobs extends Component
     {
         abort_unless(auth()->check(), 401);
         $accepted = app(\App\Services\JobPostingReportService::class)->report(auth()->user(), (int) $id);
-        session()->flash('report_success_' . $id, $accepted
-            ? 'Report submitted. The listing will be checked.'
-            : 'Your report is already recorded, or the listing is no longer active.');
+        $this->feedback = $accepted
+            ? __('Report submitted. The listing will be checked.')
+            : __('Your report is already recorded, or the listing is no longer active.');
+        session()->flash('report_success_' . $id, $this->feedback);
     }
 
     public function initiateTrackJob($id)
     {
         $posting = JobPosting::with('scraperSource')->where('status', 'active')->findOrFail($id);
         if ($posting) {
+            $this->appliedOn = now('Asia/Jakarta')->toDateString();
+            $this->applicationLocation = $posting->location ?? '';
+            $this->resetValidation();
             $this->previewJobId = null;
             $this->confirmingTrackJobId = $id;
             $this->confirmingJobTitle = $posting->title;
@@ -211,34 +350,27 @@ class ExploreJobs extends Component
         abort_unless(auth()->check(), 401);
         $posting = JobPosting::with('scraperSource')->where('status', 'active')->findOrFail($id);
         
-        if ($posting) {
-            $exists = \App\Models\JobApplication::where('user_id', auth()->id())
-                ->where('company_name', $posting->company_name)
-                ->where('position', $posting->title)
-                ->exists();
-                
+        $this->applicationLocation = trim($this->applicationLocation);
+        $this->validate(['applicationLocation' => 'required|string|max:255', 'appliedOn' => 'required|date_format:Y-m-d|before_or_equal:'.now('Asia/Jakarta')->toDateString()]);
+        DB::transaction(function () use ($posting) {
+            User::whereKey(auth()->id())->lockForUpdate()->firstOrFail();
+            $exists = JobApplication::where('user_id', auth()->id())->where('platform_link', $posting->raw_url)->exists();
             if ($exists) {
-                session()->flash('track_info_' . $id, 'Already in your tracker.');
+                session()->flash('track_info_'.$posting->id, __('Already in your tracker.'));
+                $this->feedback = __('Already in your tracker.');
                 return;
             }
-
-            $portalName = $posting->source_platform;
-
-            \App\Models\JobApplication::create([
-                'user_id' => auth()->id(),
-                'company_name' => $posting->company_name,
-                'position' => $posting->title,
-                'location' => $posting->location ?: 'Indonesia',
-                'platform' => $portalName,
-                'platform_link' => $posting->raw_url,
-                'application_status' => 'On Process',
-                'recruitment_stage' => 'Applied',
-                'application_date' => now()->format('Y-m-d'),
-                'notes' => 'Lowongan disimpan secara otomatis dari halaman Cari Lowongan.',
+            JobApplication::create([
+                'user_id' => auth()->id(), 'company_name' => $posting->company_name,
+                'position' => $posting->title, 'location' => $this->applicationLocation,
+                'platform' => $posting->source_platform, 'platform_link' => $posting->raw_url,
+                'application_status' => 'On Process', 'recruitment_stage' => 'Applied',
+                'application_date' => $this->appliedOn,
+                'notes' => __('Application recorded from Explore Jobs.'),
             ]);
-
-            session()->flash('track_success_' . $id, 'Added to your tracker.');
-        }
+            session()->flash('track_success_'.$posting->id, __('Added to your tracker.'));
+            $this->feedback = __('Application recorded. Your saved jobs are kept separately.');
+        });
     }
 
     public function render()
@@ -248,7 +380,18 @@ class ExploreJobs extends Component
             return view('explore.maintenance')->layout('layouts.app');
         }
 
-        $query = JobPosting::with('scraperSource')->where('status', 'active');
+        $this->fill($this->currentFilters());
+        $ready = $this->workspaceReady();
+        $query = JobPosting::with('scraperSource');
+        if ($this->collection === 'saved' && $ready) {
+            $query->whereIn('id', JobBookmark::where('user_id', auth()->id())->select('job_posting_id'));
+        } else {
+            $query->where('status', 'active');
+            if ($this->collection === 'saved') $query->whereRaw('1 = 0');
+        }
+        if ($this->collection === 'applied') {
+            $query->whereIn('raw_url', JobApplication::where('user_id', auth()->id())->whereNotNull('platform_link')->where('platform_link', '!=', '')->select('platform_link'));
+        }
 
         if (!empty($this->search)) {
             $query->where(function($q) {
@@ -289,14 +432,14 @@ class ExploreJobs extends Component
         $direction = $this->sortBy === 'oldest' ? 'asc' : 'desc';
         $postings = $query->orderBy('created_at', $direction)->orderBy('id', $direction)->paginate(12);
         $applications = \App\Models\JobApplication::where('user_id', auth()->id())
-            ->whereIn('company_name', $postings->pluck('company_name'))->get(['id', 'company_name', 'position']);
+            ->whereIn('platform_link', $postings->pluck('raw_url'))->get(['id', 'platform_link']);
         $savedJobs = [];
         foreach ($postings as $posting) {
-            $saved = $applications->first(fn ($application) => $application->company_name === $posting->company_name && $application->position === $posting->title);
+            $saved = $applications->first(fn ($application) => $application->platform_link === $posting->raw_url);
             if ($saved) $savedJobs[$posting->id] = $saved->id;
         }
         $reportedIds = \Illuminate\Support\Facades\DB::table('job_posting_reports')->where('user_id', auth()->id())
-            ->whereIn('job_posting_id', $postings->pluck('id'))->pluck('job_posting_id')->all();
+            ->whereIn('job_posting_id', $postings->pluck('id')->push($this->previewJobId)->filter())->pluck('job_posting_id')->all();
 
         $fieldsList = \App\Helpers\CategoryHelper::getSektorList();
         sort($fieldsList);
@@ -307,6 +450,11 @@ class ExploreJobs extends Component
         return view('livewire.explore-jobs', [
             'postings' => $postings,
             'savedJobs' => $savedJobs,
+            'bookmarkedIds' => $ready ? JobBookmark::where('user_id', auth()->id())->whereIn('job_posting_id', $postings->pluck('id')->push($this->previewJobId)->filter())->pluck('job_posting_id')->all() : [],
+            'bookmarkCount' => $ready ? JobBookmark::where('user_id', auth()->id())->count() : 0,
+            'savedSearches' => $ready ? SavedJobSearch::where('user_id', auth()->id())->latest('updated_at')->get() : collect(),
+            'workspaceReady' => $ready,
+            'previewApplicationId' => $this->previewJobId ? JobApplication::where('user_id', auth()->id())->where('platform_link', JobPosting::whereKey($this->previewJobId)->value('raw_url'))->value('id') : null,
             'reportedIds' => $reportedIds,
             'userSkills' => auth()->user()->skills()->pluck('skill_name')->map(fn ($skill) => mb_strtolower(trim($skill)))->all(),
             'previewJob' => $this->previewJobId ? JobPosting::with('scraperSource')->where('status', 'active')->find($this->previewJobId) : null,

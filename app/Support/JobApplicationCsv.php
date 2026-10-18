@@ -6,8 +6,8 @@ use App\Models\JobApplication;
 
 class JobApplicationCsv
 {
-    public const HEADERS = ['Company Name', 'Position', 'Location', 'Platform', 'Application Status', 'Recruitment Stage', 'Career Level', 'Application Date', 'Platform Link', 'Notes', 'Interview Date', 'Interview Type', 'Interview Location', 'Interview Notes', 'CSV Encoding'];
-    private const COLUMNS = ['company_name', 'position', 'location', 'platform', 'application_status', 'recruitment_stage', 'career_level', 'application_date', 'platform_link', 'notes', 'interview_date', 'interview_type', 'interview_location', 'interview_notes'];
+    public const HEADERS = ['Company Name', 'Position', 'Location', 'Platform', 'Application Status', 'Recruitment Stage', 'Career Level', 'Application Date', 'Platform Link', 'Notes', 'Interview Date', 'Interview Type', 'Interview Location', 'Interview Notes', 'Interview Platform', 'CSV Encoding'];
+    private const COLUMNS = ['company_name', 'position', 'location', 'platform', 'application_status', 'recruitment_stage', 'career_level', 'application_date', 'platform_link', 'notes', 'interview_date', 'interview_type', 'interview_location', 'interview_notes', 'interview_platform'];
 
     public static function text(mixed $value): string
     {

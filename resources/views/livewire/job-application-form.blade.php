@@ -205,47 +205,11 @@
         </div>
 
         @if(\App\Support\JobApplicationStatus::canSchedule($recruitment_stage))
-        <div class="job-form__interview-box bg-primary-50/20 border border-primary-100/50 rounded-lg p-3 space-y-2.5 animate-fadeIn">
-            <div class="flex items-center gap-2 mb-0.5">
-                <div class="w-5 h-5 bg-primary-100/60 rounded flex items-center justify-center">
-                    <i aria-hidden="true" class="ph-bold ph-chats-circle text-zinc-700 text-xs"></i>
-                </div>
-                <span class="text-xs font-bold text-zinc-800 uppercase tracking-wider">{{ __('Interview details') }}</span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                <div>
-                    <label for="{{ $fieldPrefix }}-interview_date" class="block text-xs font-bold text-ui-muted uppercase tracking-wider mb-1">{{ __('Interview date & time') }}</label>
-                    <input id="{{ $fieldPrefix }}-interview_date" wire:model.live="interview_date" type="datetime-local"
-                           class="block w-full px-3 h-[30px] bg-white border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 outline-none focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
-                    @error('interview_date') <p class="text-rose-700 text-xs font-semibold mt-1 ml-0.5">{{ $message }}</p> @enderror
-                </div>
-
-                <div>
-                    <label for="{{ $fieldPrefix }}-interview_type" class="block text-xs font-bold text-ui-muted uppercase tracking-wider mb-1">{{ __('Interview type') }}</label>
-                    <select id="{{ $fieldPrefix }}-interview_type" wire:model.live="interview_type"
-                            class="block w-full py-0 pl-2.5 pr-8 h-[30px] bg-white border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 outline-none focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-all cursor-pointer">
-                        <option value="">{{ __('Select type') }}</option>
-                        @foreach(['Phone', 'Video', 'In-person', 'Panel'] as $t)
-                            <option value="{{ $t }}">{{ $t }}</option>
-                        @endforeach
-                    </select>
-                    @error('interview_type') <p class="text-rose-700 text-xs font-semibold mt-1 ml-0.5">{{ $message }}</p> @enderror
-                </div>
-            </div>
-
-            <div>
-                <label for="{{ $fieldPrefix }}-interview_location" class="block text-xs font-bold text-ui-muted uppercase tracking-wider mb-1">
-                    {{ in_array($interview_type, ['Phone','Video']) ? __('Meeting link') : __('Location / link') }}
-                </label>
-                <div class="relative">
-                    <input id="{{ $fieldPrefix }}-interview_location" wire:model.live="interview_location" type="text"
-                           class="block w-full pl-8 pr-3 h-[30px] bg-white border border-zinc-200 rounded-md text-xs font-semibold text-zinc-700 outline-none focus:ring-1 focus:ring-primary-500/20 focus:border-primary-500 transition-all"
-                           placeholder="{{ in_array($interview_type, ['Phone','Video']) ? 'https://meet.google.com/...' : __('Office address or meeting link') }}">
-                </div>
-                @error('interview_location') <p class="text-rose-700 text-xs font-semibold mt-1 ml-0.5">{{ $message }}</p> @enderror
-            </div>
-        </div>
+            <section class="job-form__interview-box selection-schedule" aria-labelledby="{{ $fieldPrefix }}-schedule-title">
+                <header><h3 id="{{ $fieldPrefix }}-schedule-title">{{ \App\Support\SelectionSchedule::heading($recruitment_stage) }}</h3><span>WIB · UTC+7</span></header>
+                <div class="selection-schedule-field"><label for="{{ $fieldPrefix }}-interview_date">{{ __('Date & time · WIB') }}</label><input id="{{ $fieldPrefix }}-interview_date" wire:model="interview_date" type="datetime-local"><p class="selection-field-help">{{ __('Leave blank if the schedule has not been confirmed.') }}</p>@error('interview_date')<p class="selection-field-error" role="alert">{{ $message }}</p>@enderror</div>
+                @include('selection.schedule-fields', ['calendarForm' => false])
+            </section>
         @endif
 
         {{-- Notes --}}

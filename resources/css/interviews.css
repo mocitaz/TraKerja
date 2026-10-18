@@ -1519,3 +1519,75 @@
 }
 
 
+.interview-focus { border: 1px solid #e3dfe7; background: #fff; border-radius: 16px; margin-top: 20px; margin-bottom: 20px; }
+.interview-focus > header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; border-bottom: 1px solid #eeeaf1; }
+.interview-focus h2 { font-size: 17px; font-weight: 650; letter-spacing: -.4px; margin: 0; }
+.interview-focus header p:not(.workspace-eyebrow) { font-size: 11px; color: #79717f; margin: 5px 0 0; }
+.interview-focus .workspace-eyebrow { font-size: 10px; margin: 0 0 5px; }
+.interview-focus-tabs { display: flex; align-items: center; gap: 4px; background: #f3f1f6; padding: 4px; border-radius: 10px; }
+.interview-focus-tabs button { min-height: 44px; padding: 9px 14px; font-size: 11px; color: #746b7d; border-radius: 7px; }
+.interview-focus-tabs button.is-active { color: #fff; background: #65507c; font-weight: 600; }
+.interview-focus-list { padding: 0 24px; }
+.interview-focus-list.is-loading { opacity: .55; }
+.interview-focus-empty { padding: 24px 0; }
+.interview-focus-empty strong { font-size: 13px; font-weight: 600; }
+.interview-focus-empty p { color: #79717f; font-size: 11px; line-height: 1.8; margin-top: 6px; }
+.interview-focus-pagination { border-top: 1px solid #eeeaf1; padding: 14px 24px; }
+.interview-focus .interview-schedule-row { padding-block: 18px; }
+.interview-workspace .interview-row-time strong { font-size: 20px; letter-spacing: -.4px; font-weight: 650; line-height: 1.3; }
+.interview-workspace .interview-row-time { min-width: 75px; }
+.interview-workspace .interview-row-copy button { min-height: 44px; text-align: left; }
+.interviews-page .interview-metrics { background: #f5f3f7; border-color: #e5dfe9; box-shadow: none; }
+.interviews-page .interview-metrics > div { background: transparent; border-color: #e6e0eb; }
+.interviews-page .interview-metrics strong { color: #584669; }
+.interviews-page .interview-metrics span, .interviews-page .interview-metrics p { color: #716979; }
+.interview-feedback { display: flex; align-items: center; gap: 12px; background: #edf4ef; border: 1px solid #dce8e0; padding: 10px 16px; border-radius: 10px; margin-bottom: 18px; color: #42634f; font-size: 12px; }
+.interview-feedback span { flex: 1; }
+.interview-feedback button { min-height: 44px; min-width: 44px; }
+.interview-edit-form { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.interview-edit-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; margin-top: 22px; }
+.interview-edit-wide { grid-column: 1/-1; }
+.interview-edit-grid label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 7px; }
+.interview-edit-grid :is(input,select,textarea) { min-width: 0; width: 100%; min-height: 44px; border: 1px solid #ded9e5; border-radius: 9px; background: #fcfbfd; color: #38323f; padding: 10px 12px; font-size: 14px; }
+.interview-edit-grid textarea { resize: vertical; }
+.interview-edit-grid p { color: #a14c57; font-size: 11px; margin-top: 7px; }
+.interview-edit-note { color: #746b7c; font-size: 11px; line-height: 1.8; margin-top: 18px; }
+.interview-edit-form footer { display: flex; justify-content: flex-end; gap: 10px; padding: 18px 24px; border-top: 1px solid #e9e3ee; flex-shrink: 0; }
+.interview-edit-form button:disabled { opacity: .6; cursor: wait; }
+.interview-edit-form :is(input,textarea,select,button):focus-visible, .interview-focus-tabs button:focus-visible { outline: 2px solid #8b749f; outline-offset: 3px; }
+.dark .interview-focus { background: #202022; border-color: #3c3741; }
+.dark .interview-focus > header, .dark .interview-focus-pagination { border-color: #3c3741; }
+.dark .interview-focus :is(header p:not(.workspace-eyebrow),.interview-focus-empty p) { color: #b8afc1; }
+.dark .interview-focus-tabs { background: #302b36; }
+.dark .interview-focus-tabs button { color: #c1b5cc; }
+.dark .interview-focus-tabs button.is-active { background: #826a9c; color: #fff; }
+.dark .interviews-page .interview-metrics { background: #242127 !important; border-color: #3e3845 !important; }
+.dark .interviews-page .interview-metrics > div { background: transparent !important; }
+.dark .interviews-page .interview-metrics strong { color: #d3c1e5; }
+.dark .interviews-page .interview-metrics :is(span,p) { color: #beb3ca; }
+.dark .interview-edit-grid :is(input,select,textarea) { background: #242127; color: #eee9f3; border-color: #443b4d; color-scheme: dark; }
+.dark .interview-edit-note { color: #b8afc1; }
+.dark .interview-feedback { background: #28392e; border-color: #3b5144; color: #b3cebc; }
+@media(max-width:640px) {
+    .interview-workspace { display: flex; flex-direction: column; }
+    .interview-workspace .interview-feedback { order: -2; }
+    .interview-focus > header { padding: 16px; gap: 12px; }
+    .interview-focus h2 { font-size: 16px; }
+    .interview-focus-tabs { width: 100%; }
+    .interview-focus-tabs button { flex: 1; }
+    .interview-focus-list { padding: 0 16px; }
+    .interview-focus .interview-schedule-row { gap: 10px; }
+    .interview-focus .interview-row-details { display: none; }
+    .interview-workspace .interview-row-time strong { font-size: 19px; }
+    .interview-workspace .interview-row-time { min-width: 62px; }
+    .interview-focus .interview-row-copy strong { font-size: 12px; }
+    .interview-edit-grid :is(input,select,textarea) { font-size: 16px; }
+    .interview-edit-grid { grid-template-columns: minmax(0,1fr); }
+    .interview-edit-form footer { flex-wrap: wrap; padding: 16px; }
+    .interview-edit-form footer button { flex: 1; min-height: 44px; }
+}
+.interview-dialog footer .workspace-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 16px; border: 1px solid #e1dbe7; border-radius: 9px; font-size: 12px; line-height: 1.5; }
+.interview-dialog footer .workspace-button--primary { background: #65507c; color: #fff; border-color: #65507c; }
+.interview-dialog footer .workspace-button--quiet { background: #f7f5f9; color: #62566d; }
+.dark .interview-dialog footer .workspace-button--primary { background: #826a9c; border-color: #826a9c; color: #fff; }
+.dark .interview-dialog footer .workspace-button--quiet { background: #302b36; color: #d0c2de; border-color: #443b4d; }

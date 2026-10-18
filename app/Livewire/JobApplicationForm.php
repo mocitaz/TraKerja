@@ -38,6 +38,7 @@ class JobApplicationForm extends Component
     // Interview fields
     public $interview_date = '';
     public $interview_type = '';
+    public $interview_platform = '';
     public $interview_location = '';
     public $interview_notes = '';
 
@@ -1051,9 +1052,10 @@ class JobApplicationForm extends Component
         'notes' => 'nullable|string',
         // Interview fields (conditional validation)
         'interview_date' => 'nullable|date',
-        'interview_type' => 'nullable|string|in:Phone,Video,In-person,Panel',
-        'interview_location' => 'nullable|string|max:500',
-        'interview_notes' => 'nullable|string',
+        'interview_type' => 'nullable|string|in:Phone,Video,In-person,Panel,Online,Onsite',
+        'interview_platform' => 'nullable|string|in:Google Meet,Zoom,Microsoft Teams,WhatsApp,Assessment portal,Other',
+        'interview_location' => 'nullable|string|max:255',
+        'interview_notes' => 'nullable|string|max:10000',
     ];
 
     protected $listeners = [
@@ -1198,6 +1200,7 @@ class JobApplicationForm extends Component
             $this->notes = $jobApplication->notes;
             $this->interview_date = $jobApplication->interview_date?->format('Y-m-d\TH:i') ?? '';
             $this->interview_type = $jobApplication->interview_type ?? '';
+            $this->interview_platform = $jobApplication->interview_platform ?? '';
             $this->interview_location = $jobApplication->interview_location ?? '';
             $this->interview_notes = $jobApplication->interview_notes ?? '';
         } else {
@@ -1255,6 +1258,7 @@ class JobApplicationForm extends Component
             // Load interview details
             $this->interview_date = $jobApplication->interview_date ? $jobApplication->interview_date->format('Y-m-d\TH:i') : '';
             $this->interview_type = $jobApplication->interview_type ?? '';
+            $this->interview_platform = $jobApplication->interview_platform ?? '';
             $this->interview_location = $jobApplication->interview_location ?? '';
             $this->interview_notes = $jobApplication->interview_notes ?? '';
 
@@ -1319,6 +1323,11 @@ class JobApplicationForm extends Component
             $this->application_status = $normalized['application_status'];
             $this->recruitment_stage = $normalized['recruitment_stage'];
             $this->validate();
+            if (JobApplicationStatus::canSchedule($this->recruitment_stage)) {
+                $existingType = $this->isEditing && $this->jobApplication
+                    ? \App\Models\JobApplication::where('user_id', auth()->id())->whereKey($this->jobApplication->id)->value('interview_type') : null;
+                $this->validate(['interview_type' => ['nullable', \Illuminate\Validation\Rule::in(array_keys(\App\Support\SelectionSchedule::methods($this->recruitment_stage, $existingType)))]]);
+            }
         } catch (\Illuminate\Validation\ValidationException $e) {
             $this->dispatch('showNotification',
                 type: 'error',
@@ -1362,6 +1371,10 @@ class JobApplicationForm extends Component
             'interview_location' => $interviewLocation,
             'interview_notes' => $interviewNotes,
         ];
+
+        if (\App\Support\SelectionSchedule::platformAvailable()) {
+            $data['interview_platform'] = JobApplicationStatus::canSchedule($this->recruitment_stage) && \App\Support\SelectionSchedule::online($interviewType) ? ($this->interview_platform ?: null) : null;
+        }
 
         try {
             if ($this->isEditing) {
@@ -1793,6 +1806,7 @@ class JobApplicationForm extends Component
         $this->notes = '';
         $this->interview_date = '';
         $this->interview_type = '';
+        $this->interview_platform = '';
         $this->interview_location = '';
         $this->interview_notes = '';
         $this->resetValidation();

@@ -27,6 +27,7 @@ class JobApplication extends Model
         'interview_date',
         'interview_notes',
         'interview_type',
+        'interview_platform',
         'interview_location',
         'notes',
         'is_pinned',

@@ -422,3 +422,29 @@
     color: #c4b5fd;
 }
 
+.selection-schedule { padding: 18px; border: 1px solid #e3dce9; background: #f8f6fa; border-radius: 12px; }
+.selection-schedule > header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.selection-schedule > header h3 { font-size: 13px; font-weight: 650; color: #51435e; line-height: 1.5; margin: 0; }
+.selection-schedule > header span { font-size: 10px; color: #786b83; white-space: nowrap; }
+.selection-schedule-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; margin-top: 16px; }
+.selection-schedule-field { min-width: 0; }
+.selection-schedule-wide { grid-column: 1/-1; }
+.selection-schedule-field > label { display: block; font-size: 11px; font-weight: 600; color: #5c5167; margin-bottom: 7px; }
+.selection-schedule-field :is(input,select,textarea) { width: 100%; min-width: 0; min-height: 42px; padding: 10px 12px; font-size: 12px; line-height: 1.5; border: 1px solid #ddd6e4; border-radius: 8px; background: #fff; color: #36313e; box-shadow: none; }
+.selection-schedule-field select { padding-right: 32px; }
+.selection-schedule-field textarea { resize: vertical; }
+.selection-schedule-field :is(input,select,textarea):focus { outline: 2px solid #9883ab; outline-offset: 2px; border-color: #806796; --tw-ring-shadow: 0 0 transparent; }
+.selection-schedule-field .selection-field-help, .selection-schedule-fields > .selection-field-help { font-size: 10px; color: #776d80; line-height: 1.7; margin: 6px 0 0; }
+.selection-schedule-field .selection-field-error { font-size: 11px; color: #a14050; margin-top: 6px; }
+.dark .selection-schedule { background: #28232f; border-color: #453b4f; }
+.dark .selection-schedule > header h3, .dark .selection-schedule-field > label { color: #d4c6e2; }
+.dark .selection-schedule > header span, .dark .selection-schedule-field .selection-field-help, .dark .selection-schedule-fields > .selection-field-help { color: #b8acc3; }
+.dark .selection-schedule-field :is(input,select,textarea) { background: #242127; border-color: #4b4055; color: #eee7f5; color-scheme: dark; }
+.dark .selection-schedule-field .selection-field-error { color: #edacb8; }
+@media(max-width:640px) {
+    .selection-schedule { padding: 15px; }
+    .selection-schedule-fields { grid-template-columns: minmax(0,1fr); }
+    .selection-schedule > header { align-items: flex-start; flex-wrap: wrap; gap: 6px; }
+    .selection-schedule-field :is(input,select,textarea) { font-size: 16px; min-height: 44px; }
+    .selection-schedule-field input::placeholder, .selection-schedule-field textarea::placeholder { font-size: 12px; }
+}

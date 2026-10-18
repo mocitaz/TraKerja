@@ -1,0 +1,266 @@
+[
+  {
+    "width": 320,
+    "locale": "en",
+    "theme": "slate",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(250, 249, 246)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 320,
+    "locale": "en",
+    "theme": "dark",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(25, 25, 27)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 320,
+    "locale": "en",
+    "theme": "emerald",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(247, 249, 247)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 320,
+    "locale": "en",
+    "theme": "violet",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(250, 248, 252)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 320,
+    "locale": "id",
+    "theme": "slate",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(250, 249, 246)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 320,
+    "locale": "id",
+    "theme": "dark",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(25, 25, 27)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 320,
+    "locale": "id",
+    "theme": "emerald",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(247, 249, 247)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 320,
+    "locale": "id",
+    "theme": "violet",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(250, 248, 252)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 768,
+    "locale": "en",
+    "theme": "slate",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(250, 249, 246)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 768,
+    "locale": "en",
+    "theme": "dark",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(25, 25, 27)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 768,
+    "locale": "en",
+    "theme": "emerald",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(247, 249, 247)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 768,
+    "locale": "en",
+    "theme": "violet",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(250, 248, 252)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 768,
+    "locale": "id",
+    "theme": "slate",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(250, 249, 246)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 768,
+    "locale": "id",
+    "theme": "dark",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(25, 25, 27)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 768,
+    "locale": "id",
+    "theme": "emerald",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(247, 249, 247)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 768,
+    "locale": "id",
+    "theme": "violet",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(250, 248, 252)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 1366,
+    "locale": "en",
+    "theme": "slate",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(250, 249, 246)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 1366,
+    "locale": "en",
+    "theme": "dark",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(25, 25, 27)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 1366,
+    "locale": "en",
+    "theme": "emerald",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(247, 249, 247)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 1366,
+    "locale": "en",
+    "theme": "violet",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(250, 248, 252)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 1366,
+    "locale": "id",
+    "theme": "slate",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(250, 249, 246)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 1366,
+    "locale": "id",
+    "theme": "dark",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(25, 25, 27)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 1366,
+    "locale": "id",
+    "theme": "emerald",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(247, 249, 247)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  },
+  {
+    "width": 1366,
+    "locale": "id",
+    "theme": "violet",
+    "data": {
+      "overflow": 0,
+      "bg": "rgb(250, 248, 252)",
+      "photoOverlap": false,
+      "brokenAnchors": 0
+    }
+  }
+]
