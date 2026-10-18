@@ -69,7 +69,7 @@ class Analytics extends Component
 
     public function loadAnalytics()
     {
-        $cacheKey = 'admin_analytics_workspace_v2_' . $this->periodFilter;
+        $cacheKey = 'admin_analytics_workspace_v3_' . app()->getLocale() . '_' . $this->periodFilter;
 
         // Cache data selama 10 menit (600 detik) untuk membebani load page instan
         $data = Cache::remember($cacheKey, 600, function() {
@@ -520,8 +520,11 @@ class Analytics extends Component
         // Simple monthly retention: users who registered in month X and were still active (activity) in month X+1
         $cohorts = [];
         for ($i = 5; $i >= 0; $i--) {
-            $monthStart = Carbon::now('Asia/Jakarta')->subMonths($i)->startOfMonth();
-            $monthEnd   = Carbon::now('Asia/Jakarta')->subMonths($i)->endOfMonth();
+            $monthStart = Carbon::now('Asia/Jakarta')->startOfMonth()->subMonths($i);
+            $monthEnd   = $monthStart->copy()->endOfMonth();
+            $nextMonthStart = $monthStart->copy()->addMonth();
+            $nextMonthEnd = $nextMonthStart->copy()->endOfMonth();
+            $mature = $nextMonthEnd->isPast();
 
             $registered = User::where('role', '!=', 'admin')
                 ->whereBetween('created_at', [$monthStart, $monthEnd])
@@ -530,14 +533,11 @@ class Analytics extends Component
             $total = $registered->count();
 
             if ($total === 0) {
-                $cohorts[] = ['month' => $monthStart->locale(app()->getLocale())->translatedFormat('M Y'), 'total' => 0, 'retained' => 0, 'rate' => 0];
+                $cohorts[] = ['month' => $monthStart->locale(app()->getLocale())->translatedFormat('M Y'), 'total' => 0, 'retained' => 0, 'rate' => 0, 'mature' => $mature];
                 continue;
             }
 
             // Count how many of those users had any activity in the next month
-            $nextMonthStart = $monthEnd->copy()->addDay()->startOfMonth();
-            $nextMonthEnd   = $nextMonthStart->copy()->endOfMonth();
-
             $retained = UserActivity::whereIn('user_id', $registered)
                 ->whereBetween('created_at', [$nextMonthStart, $nextMonthEnd])
                 ->distinct('user_id')
@@ -548,6 +548,7 @@ class Analytics extends Component
                 'total'    => $total,
                 'retained' => $retained,
                 'rate'     => $total > 0 ? round(($retained / $total) * 100, 1) : 0,
+                'mature'   => $mature,
             ];
         }
 
@@ -615,7 +616,7 @@ class Analytics extends Component
 
     public function render()
     {
-        $cacheKey = 'admin_analytics_workspace_v2_' . $this->periodFilter;
+        $cacheKey = 'admin_analytics_workspace_v3_' . app()->getLocale() . '_' . $this->periodFilter;
         $data = Cache::get($cacheKey);
 
         $stats = $data ? $data['statsSummary'] : $this->fetchStatsSummary();

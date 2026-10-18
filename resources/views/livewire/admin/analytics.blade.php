@@ -465,7 +465,7 @@
                     </thead>
                     <tbody>
                         @forelse($retentionCohort as $cohort)
-                            @php($mature = \Carbon\Carbon::parse($cohort['month'])->addMonth()->endOfMonth()->isPast())
+                            @php($mature = $cohort['mature'])
                             <tr>
                                 <td class="font-semibold text-[#35264f] dark:text-[#f0f4f9]">
                                     <div class="flex items-center gap-2">
