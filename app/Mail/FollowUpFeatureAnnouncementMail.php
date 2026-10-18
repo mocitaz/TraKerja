@@ -31,7 +31,7 @@ class FollowUpFeatureAnnouncementMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('Rilis Fitur Baru: AI Follow-Up Email (Tanya Kabar)'),
+            subject: __('emails.follow_up_feature_announcement.subject'),
         );
     }
 

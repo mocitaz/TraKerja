@@ -26,7 +26,7 @@ class GuruNasionalMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('Selamat Hari Guru Nasional 🎓'),
+            subject: __('emails.guru_nasional.subject'),
         );
     }
 

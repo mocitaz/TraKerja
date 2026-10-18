@@ -31,7 +31,7 @@ class AiPhotoAnnouncementMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('Rilis Fitur Baru: TraKerja AI Photo Studio'),
+            subject: __('emails.ai_photo_announcement.subject'),
         );
     }
 

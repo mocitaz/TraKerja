@@ -27,7 +27,7 @@ class PremiumGrantedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('Selamat! Anda Terpilih Mendapatkan Akses TraKerja Premium Gratis'),
+            subject: __('emails.premium_granted.subject'),
         );
     }
 

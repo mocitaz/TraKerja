@@ -26,7 +26,7 @@ class NatalMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('Selamat Hari Raya Natal 🎄'),
+            subject: __('emails.natal.subject'),
         );
     }
 

@@ -1,106 +1,26 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ __('Kode Verifikasi OTP — TraKerja') }}</title>
-</head>
-<body style="margin:0; padding:0; background-color:#f4f4f5; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color:#18181b;">
+@extends('emails.layouts.base')
 
-    <table role="presentation" style="width:100%; border-collapse:collapse;">
-        <tr>
-            <td align="center" style="padding:40px 16px;">
-                <table role="presentation" style="width:100%; max-width:600px; border-collapse:collapse;">
+@section('email_title')
+{{ __('emails.otp_verification.heading') }}
+@endsection
 
-                    @include('emails.partials.header', [
-                        'title'    => 'Kode Verifikasi',
-                        'subtitle' => 'Masukkan kode berikut untuk menyelesaikan proses verifikasi'
-                    ])
+@section('email_header')
+@include('emails.partials.header', [
+    'title' => __('emails.otp_verification.heading'),
+    'subtitle' => __('emails.otp_verification.subtitle')
+])
+@endsection
 
-                    <tr>
-                        <td style="background-color:#ffffff; padding:40px 40px 32px 40px; border-left:1px solid #e4e4e7; border-right:1px solid #e4e4e7;">
-
-                            <p style="margin:0 0 20px 0; font-size:15px; line-height:24px; color:#18181b;">
-                                {{ __('Yth.') }} <strong>{{ $user->name }}</strong>,
-                            </p>
-
-                            <p style="margin:0 0 32px 0; font-size:15px; line-height:26px; color:#3f3f46;">
-                                {{ __('Kami menerima permintaan verifikasi untuk akun TraKerja Anda. Gunakan kode satu kali berikut untuk menyelesaikan proses tersebut.') }}
-                            </p>
-
-                            <!-- Section Label -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:28px;">
-                                <tr>
-                                    <td style="border-top:1px solid #e4e4e7; padding-top:24px;">
-                                        <p style="margin:0 0 20px 0; font-size:11px; font-weight:700; color:#7c3aed; letter-spacing:0.1em; text-transform:uppercase;">
-                                            {{ __('Kode OTP Anda') }}
-                                        </p>
-
-                                        <!-- OTP Display -->
-                                        <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:24px;">
-                                            <tr>
-                                                <td align="center" style="background-color:#faf5ff; border:1px solid #ede9fe; border-left:3px solid #6d28d9; border-radius:4px; padding:28px 20px;">
-                                                    <p style="margin:0 0 8px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">{{ __('Kode Verifikasi') }}</p>
-                                                    <p style="margin:0; font-size:36px; font-weight:700; letter-spacing:10px; color:#18181b; font-family:'Courier New', Courier, monospace;">{{ $otp }}</p>
-                                                </td>
-                                            </tr>
-                                        </table>
-
-                                        <!-- Instructions -->
-                                        <table role="presentation" style="width:100%; border-collapse:collapse;">
-                                            <tr>
-                                                <td style="padding:14px 0; border-bottom:1px solid #f4f4f5;">
-                                                    <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">{{ __('Masa Berlaku Kode') }}</p>
-                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">{{ __('Kode OTP ini hanya berlaku selama') }} <strong style="color:#18181b;">{{ __('10 menit') }}</strong> {{ __('sejak email ini dikirimkan. Segera masukkan kode sebelum kedaluwarsa.') }}</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding:14px 0; border-bottom:1px solid #f4f4f5;">
-                                                    <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">{{ __('Hanya Untuk Sekali Pakai') }}</p>
-                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">{{ __('Kode ini bersifat unik dan hanya dapat digunakan satu kali. Apabila Anda membutuhkan kode baru, silakan ajukan permintaan ulang melalui aplikasi.') }}</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding:14px 0;">
-                                                    <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">{{ __('Jaga Kerahasiaan Kode') }}</p>
-                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">{{ __('Jangan bagikan kode ini kepada siapa pun, termasuk pihak yang mengaku sebagai tim TraKerja. Kami tidak pernah meminta kode verifikasi Anda.') }}</p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <!-- Security Notice -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:36px;">
-                                <tr>
-                                    <td style="background-color:#f4f4f5; border:1px solid #e4e4e7; border-radius:4px; padding:14px 18px;">
-                                        <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">
-                                            {{ __('Apabila Anda tidak merasa melakukan permintaan verifikasi ini, abaikan email ini. Akun Anda tetap aman dan tidak ada perubahan yang akan terjadi.') }}
-                                        </p>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <!-- Sign-off -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; border-top:1px solid #e4e4e7;">
-                                <tr>
-                                    <td style="padding-top:24px;">
-                                        <p style="margin:0 0 4px 0; font-size:14px; line-height:22px; color:#3f3f46;">{{ __('Hormat kami,') }}</p>
-                                        <p style="margin:0 0 2px 0; font-size:14px; font-weight:700; color:#6d28d9;">{{ __('Tim TraKerja') }}</p>
-                                        <p style="margin:0; font-size:13px; color:#a1a1aa;">{{ __('PT Teknalogi Transformasi Digital') }}</p>
-                                    </td>
-                                </tr>
-                            </table>
-
-                        </td>
-                    </tr>
-
-                    @include('emails.partials.footer')
-                </table>
-            </td>
-        </tr>
-    </table>
-
-</body>
-</html>
+@section('email_content')
+@include('emails.partials.greeting', ['recipientName' => $user->name ?? null])
+<p style="margin:0 0 18px;font-size:15px;line-height:25px;color:#55515d;">{{ __('emails.otp_verification.intro') }}</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;margin:24px 0;background-color:#f7f6f8;border:1px solid #e7e5e9;border-radius:8px;">
+    <tr><td align="center" style="padding:22px 16px;">
+        <p style="margin:0 0 14px;font-size:32px;line-height:42px;letter-spacing:6px;font-weight:700;font-family:'Courier New',monospace;color:#29252f;">{{ $otp }}</p>
+        <p style="margin:0;font-size:13px;line-height:22px;color:#716c78;">{{ __('emails.common.otp_expiry') }}</p>
+    </td></tr>
+</table>
+@include('emails.partials.notice', ['noticeText' => __('emails.common.security_note')])
+<p style="margin:20px 0 0;font-size:13px;line-height:22px;color:#716c78;">{{ __('emails.common.unexpected_otp') }}</p>
+@include('emails.partials.signoff')
+@endsection

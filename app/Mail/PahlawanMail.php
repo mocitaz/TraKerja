@@ -26,7 +26,7 @@ class PahlawanMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('Selamat Hari Pahlawan Nasional 🇮🇩'),
+            subject: __('emails.pahlawan.subject'),
         );
     }
 

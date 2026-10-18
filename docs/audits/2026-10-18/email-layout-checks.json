@@ -1,0 +1,650 @@
+{
+  "date": "2026-10-18",
+  "scope": "Final email copy and shared presentation",
+  "engine": "Chromium",
+  "syntheticFixtures": true,
+  "checks": [
+    {
+      "width": 320,
+      "locale": "en",
+      "view": "welcome",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [
+        {
+          "width": 262,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 320,
+      "locale": "en",
+      "view": "email-verification",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [
+        {
+          "width": 262,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 320,
+      "locale": "en",
+      "view": "password-reset",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [
+        {
+          "width": 262,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 320,
+      "locale": "en",
+      "view": "otp_verification",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [],
+      "logoLoaded": true
+    },
+    {
+      "width": 320,
+      "locale": "en",
+      "view": "payment-success",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [
+        {
+          "width": 262,
+          "height": 66
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 320,
+      "locale": "en",
+      "view": "interview_scheduled",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [
+        {
+          "width": 262,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 320,
+      "locale": "en",
+      "view": "custom-email-blast",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [
+        {
+          "width": 262,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 320,
+      "locale": "en",
+      "view": "brand_transformation",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [
+        {
+          "width": 262,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 320,
+      "locale": "id",
+      "view": "welcome",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [
+        {
+          "width": 262,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 320,
+      "locale": "id",
+      "view": "email-verification",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [
+        {
+          "width": 262,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 320,
+      "locale": "id",
+      "view": "password-reset",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [
+        {
+          "width": 262,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 320,
+      "locale": "id",
+      "view": "otp_verification",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [],
+      "logoLoaded": true
+    },
+    {
+      "width": 320,
+      "locale": "id",
+      "view": "payment-success",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [
+        {
+          "width": 262,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 320,
+      "locale": "id",
+      "view": "interview_scheduled",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [
+        {
+          "width": 262,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 320,
+      "locale": "id",
+      "view": "custom-email-blast",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [
+        {
+          "width": 262,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 320,
+      "locale": "id",
+      "view": "brand_transformation",
+      "overflow": 0,
+      "frameWidth": 304,
+      "buttons": [
+        {
+          "width": 262,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "en",
+      "view": "welcome",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [
+        {
+          "width": 542,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "en",
+      "view": "email-verification",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [
+        {
+          "width": 542,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "en",
+      "view": "password-reset",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [
+        {
+          "width": 542,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "en",
+      "view": "otp_verification",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "en",
+      "view": "payment-success",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [
+        {
+          "width": 542,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "en",
+      "view": "interview_scheduled",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [
+        {
+          "width": 542,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "en",
+      "view": "custom-email-blast",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [
+        {
+          "width": 542,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "en",
+      "view": "brand_transformation",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [
+        {
+          "width": 542,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "id",
+      "view": "welcome",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [
+        {
+          "width": 542,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "id",
+      "view": "email-verification",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [
+        {
+          "width": 542,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "id",
+      "view": "password-reset",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [
+        {
+          "width": 542,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "id",
+      "view": "otp_verification",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "id",
+      "view": "payment-success",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [
+        {
+          "width": 542,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "id",
+      "view": "interview_scheduled",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [
+        {
+          "width": 542,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "id",
+      "view": "custom-email-blast",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [
+        {
+          "width": 542,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 600,
+      "locale": "id",
+      "view": "brand_transformation",
+      "overflow": 0,
+      "frameWidth": 584,
+      "buttons": [
+        {
+          "width": 542,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "en",
+      "view": "welcome",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [
+        {
+          "width": 178.6015625,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "en",
+      "view": "email-verification",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [
+        {
+          "width": 145.953125,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "en",
+      "view": "password-reset",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [
+        {
+          "width": 175.5,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "en",
+      "view": "otp_verification",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "en",
+      "view": "payment-success",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [
+        {
+          "width": 265.4921875,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "en",
+      "view": "interview_scheduled",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [
+        {
+          "width": 165.3828125,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "en",
+      "view": "custom-email-blast",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [
+        {
+          "width": 156.046875,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "en",
+      "view": "brand_transformation",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [
+        {
+          "width": 119.21875,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "id",
+      "view": "welcome",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [
+        {
+          "width": 194.953125,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "id",
+      "view": "email-verification",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [
+        {
+          "width": 145.1796875,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "id",
+      "view": "password-reset",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [
+        {
+          "width": 181.703125,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "id",
+      "view": "otp_verification",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "id",
+      "view": "payment-success",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [
+        {
+          "width": 188.703125,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "id",
+      "view": "interview_scheduled",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [
+        {
+          "width": 139.7109375,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "id",
+      "view": "custom-email-blast",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [
+        {
+          "width": 156.046875,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    },
+    {
+      "width": 1050,
+      "locale": "id",
+      "view": "brand_transformation",
+      "overflow": 0,
+      "frameWidth": 600,
+      "buttons": [
+        {
+          "width": 173.125,
+          "height": 46
+        }
+      ],
+      "logoLoaded": true
+    }
+  ]
+}

@@ -26,7 +26,7 @@ class AiAnalyzerFreeTrialAnnouncementMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('GRATIS! AI Resume Analyzer - Tingkatkan CV Anda Sekarang'),
+            subject: __('emails.ai_analyzer_free_trial_announcement.subject'),
         );
     }
 

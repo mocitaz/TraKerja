@@ -1,6 +1,6 @@
 @component('mail::message')
 @php
-    $greet = $greeting ?? 'Hello!';
+    $greet = $greeting ?? __('emails.common.hello');
     $color = match ($level ?? null) {
         'success' => 'success',
         'error' => 'error',
@@ -29,15 +29,13 @@
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-Regards,
-{{ config('app.name') }}
+{{ __('emails.common.signoff') }}
+{{ __('emails.common.team') }}
 @endif
 
 @isset($actionText)
 @slot('subcopy')
-@component('mail::subcopy')
-Jika tombol di atas tidak berfungsi, salin dan tempel URL berikut ke browser Anda: [{{ $displayableActionUrl }}]({{ $actionUrl }})
-@endcomponent
+{{ __('emails.common.fallback') }} [{{ $displayableActionUrl }}]({{ $actionUrl }})
 @endslot
 @endisset
 

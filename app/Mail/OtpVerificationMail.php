@@ -21,7 +21,7 @@ class OtpVerificationMail extends Mailable
 
     public function build()
     {
-        return $this->subject(__('TraKerja - Email Verification OTP'))
+        return $this->subject(__('emails.otp_verification.subject'))
             ->view('emails.otp_verification');
     }
 }

@@ -34,7 +34,7 @@ class MonthlyMotivationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Bulan Baru Semangat Baru - {$this->monthName} {$this->year}",
+            subject: __('emails.monthly_motivation.subject'),
         );
     }
 

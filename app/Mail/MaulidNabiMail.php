@@ -26,7 +26,7 @@ class MaulidNabiMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('Selamat Memperingati Maulid Nabi Muhammad SAW 🙏'),
+            subject: __('emails.maulid_nabi.subject'),
         );
     }
 

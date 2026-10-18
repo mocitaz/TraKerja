@@ -30,7 +30,7 @@ class UserEmailVerifiedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('[TraKerja] User Email Verified - ') . $this->user->name,
+            subject: __('emails.user_email_verified.subject'),
         );
     }
 

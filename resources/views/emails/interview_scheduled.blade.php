@@ -1,150 +1,35 @@
-<!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ \App\Support\SelectionSchedule::heading($jobApplication->recruitment_stage) }} — TraKerja</title>
-</head>
-<body style="margin:0; padding:0; background-color:#f4f4f5; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color:#18181b;">
+@extends('emails.layouts.base')
 
-    <table role="presentation" style="width:100%; border-collapse:collapse;">
-        <tr>
-            <td align="center" style="padding:40px 16px;">
-                <table role="presentation" style="width:100%; max-width:600px; border-collapse:collapse;">
+@section('email_title')
+{{ \App\Support\SelectionSchedule::heading($jobApplication->recruitment_stage) }}
+@endsection
 
-                    @include('emails.partials.header', [
-                        'title'    => \App\Support\SelectionSchedule::heading($jobApplication->recruitment_stage),
-                        'subtitle' => __('Your selection schedule has been saved.')
-                    ])
+@section('email_header')
+@include('emails.partials.header', [
+    'title' => \App\Support\SelectionSchedule::heading($jobApplication->recruitment_stage),
+    'subtitle' => __('emails.interview_scheduled.subtitle')
+])
+@endsection
 
-                    <tr>
-                        <td style="background-color:#ffffff; padding:40px 40px 32px 40px; border-left:1px solid #e4e4e7; border-right:1px solid #e4e4e7;">
-
-                            <p style="margin:0 0 20px 0; font-size:15px; line-height:24px; color:#18181b;">
-                                {{ __('Yth.') }} <strong>{{ $jobApplication->user->name }}</strong>,
-                            </p>
-
-                            <p style="margin:0 0 20px 0; font-size:15px; line-height:26px; color:#3f3f46;">
-                                {{ __('Your selection schedule has been saved. Review the details below.') }}
-                            </p>
-
-                            <!-- Section Label -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:28px;">
-                                <tr>
-                                    <td style="border-top:1px solid #e4e4e7; padding-top:24px;">
-                                        <p style="margin:0 0 20px 0; font-size:11px; font-weight:700; color:#7c3aed; letter-spacing:0.1em; text-transform:uppercase;">
-                                            {{ \App\Support\SelectionSchedule::heading($jobApplication->recruitment_stage) }}
-                                        </p>
-
-                                        <!-- Interview Detail Card -->
-                                        <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:28px;">
-                                            <tr>
-                                                <td style="background-color:#faf5ff; border:1px solid #ede9fe; border-left:3px solid #6d28d9; border-radius:4px; padding:20px;">
-                                                    <table role="presentation" style="width:100%; border-collapse:collapse;">
-                                                        <tr>
-                                                            <td style="padding-bottom:10px; border-bottom:1px solid #ede9fe;">
-                                                                <p style="margin:0 0 3px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">{{ __('Posisi') }}</p>
-                                                                <p style="margin:0; font-size:15px; font-weight:600; color:#18181b;">{{ $jobApplication->position }}</p>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="padding:10px 0; border-bottom:1px solid #ede9fe;">
-                                                                <p style="margin:0 0 3px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">{{ __('Perusahaan') }}</p>
-                                                                <p style="margin:0; font-size:14px; color:#18181b;">{{ $jobApplication->company_name }}</p>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="padding:10px 0; {{ ($jobApplication->interview_location || $jobApplication->interview_notes) ? 'border-bottom:1px solid #ede9fe;' : '' }}">
-                                                                <p style="margin:0 0 3px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">{{ __('Tanggal dan Waktu') }}</p>
-                                                                <p style="margin:0; font-size:14px; color:#18181b;">{{ $jobApplication->getFormattedInterviewDateAttribute() }} WIB</p>
-                                                            </td>
-                                                        </tr>
-                                                        <tr><td style="padding:10px 0;"><p style="margin:0;font-size:11px;color:#6d28d9;">{{ __('Delivery method') }}</p><p style="margin:4px 0 0;font-size:14px;">{{ \App\Support\SelectionSchedule::methodLabel($jobApplication->interview_type) }}@if(\App\Support\SelectionSchedule::online($jobApplication->interview_type) && $jobApplication->interview_platform) · {{ __($jobApplication->interview_platform) }}@endif</p></td></tr>
-                                                        @if($jobApplication->interview_location)
-                                                        <tr>
-                                                            <td style="padding:10px 0; {{ $jobApplication->interview_notes ? 'border-bottom:1px solid #ede9fe;' : '' }}">
-                                                                <p style="margin:0 0 3px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">{{ \App\Support\SelectionSchedule::locationLabel($jobApplication->interview_type) }}</p>
-                                                                <p style="margin:0; font-size:14px; color:#18181b;">{{ $jobApplication->interview_location }}</p>
-                                                            </td>
-                                                        </tr>
-                                                        @endif
-                                                        @if($jobApplication->interview_notes)
-                                                        <tr>
-                                                            <td style="padding-top:10px;">
-                                                                <p style="margin:0 0 3px 0; font-size:11px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.08em;">{{ __('Catatan Tambahan') }}</p>
-                                                                <p style="margin:0; font-size:13px; line-height:21px; color:#52525b;">{{ $jobApplication->interview_notes }}</p>
-                                                            </td>
-                                                        </tr>
-                                                        @endif
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </table>
-
-                                        <!-- Preparation Checklist -->
-                                        <p style="margin:0 0 20px 0; font-size:11px; font-weight:700; color:#7c3aed; letter-spacing:0.1em; text-transform:uppercase;">
-                                            {{ __('Selection preparation') }}
-                                        </p>
-
-                                        <table role="presentation" style="width:100%; border-collapse:collapse;">
-                                            <tr>
-                                                <td style="padding:14px 0; border-bottom:1px solid #f4f4f5;">
-                                                    <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">{{ __('Pelajari Profil Perusahaan') }}</p>
-                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">{{ __('Review the company and the instructions for this selection round.') }}</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding:14px 0; border-bottom:1px solid #f4f4f5;">
-                                                    <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">{{ __('Siapkan Dokumen Pendukung') }}</p>
-                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">{{ __('Pastikan CV terbaru, portofolio, dan dokumen pendukung lainnya sudah siap diakses.') }}</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding:14px 0;">
-                                                    <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#18181b;">{{ __('Lakukan Konfirmasi Kehadiran') }}</p>
-                                                    <p style="margin:0; font-size:13px; line-height:21px; color:#71717a;">{{ __('Check the invitation and confirm attendance if requested by the recruiter.') }}</p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <!-- CTA -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; margin-bottom:36px;">
-                                <tr>
-                                    <td>
-                                        <a href="{{ config('app.url') }}/interviews"
-                                           style="display:inline-block; padding:12px 22px; background-color:#6d28d9; color:#ffffff; text-decoration:none; border-radius:6px; font-size:14px; font-weight:600; margin-right:10px; margin-bottom:8px;">
-                                            {{ __('View selection calendar') }}
-                                        </a>
-                                        <a href="{{ config('app.url') }}/dashboard"
-                                           style="display:inline-block; padding:12px 22px; background-color:#ffffff; color:#18181b; text-decoration:none; border-radius:6px; font-size:14px; font-weight:600; border:1px solid #d4d4d8; margin-bottom:8px;">
-                                            {{ __('Buka Dashboard') }}
-                                        </a>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <!-- Sign-off -->
-                            <table role="presentation" style="width:100%; border-collapse:collapse; border-top:1px solid #e4e4e7;">
-                                <tr>
-                                    <td style="padding-top:24px;">
-                                        <p style="margin:0 0 4px 0; font-size:14px; line-height:22px; color:#3f3f46;">{{ __('Hormat kami,') }}</p>
-                                        <p style="margin:0 0 2px 0; font-size:14px; font-weight:700; color:#6d28d9;">{{ __('Tim TraKerja') }}</p>
-                                        <p style="margin:0; font-size:13px; color:#a1a1aa;">{{ __('PT Teknalogi Transformasi Digital') }}</p>
-                                    </td>
-                                </tr>
-                            </table>
-
-                        </td>
-                    </tr>
-
-                    @include('emails.partials.footer')
-                </table>
-            </td>
-        </tr>
-    </table>
-
-</body>
-</html>
+@section('email_content')
+@include('emails.partials.greeting', ['recipientName' => $jobApplication->user?->name])
+<p style="margin:0 0 18px;font-size:15px;line-height:25px;color:#55515d;">{{ __('emails.interview_scheduled.intro') }}</p>
+@php
+    $scheduleFacts = [
+        ['label' => __('emails.common.role'), 'value' => $jobApplication->position],
+        ['label' => __('emails.common.company'), 'value' => $jobApplication->company_name],
+        ['label' => __('emails.common.date_time'), 'value' => $jobApplication->interview_date ? $jobApplication->interview_date->copy()->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M Y, H:i').' WIB' : __('emails.common.not_recorded')],
+        ['label' => __('emails.common.method'), 'value' => \App\Support\SelectionSchedule::methodLabel($jobApplication->interview_type)],
+    ];
+    if (\App\Support\SelectionSchedule::online($jobApplication->interview_type) && $jobApplication->interview_platform) $scheduleFacts[] = ['label' => __('emails.common.platform'), 'value' => __($jobApplication->interview_platform)];
+    if ($jobApplication->interview_location) $scheduleFacts[] = ['label' => \App\Support\SelectionSchedule::locationLabel($jobApplication->interview_type), 'value' => $jobApplication->interview_location];
+@endphp
+@include('emails.partials.facts', ['facts' => $scheduleFacts])
+@if($jobApplication->interview_notes)
+    <p style="margin:22px 0 6px;font-size:14px;font-weight:700;color:#29252f;">{{ __('emails.common.preparation') }}</p>
+    <p style="margin:0;font-size:14px;line-height:24px;color:#55515d;white-space:pre-line;">{{ $jobApplication->interview_notes }}</p>
+@endif
+@include('emails.partials.action', ['actionLink' => config('app.url').'/interviews', 'actionLabel' => __('emails.interview_scheduled.cta')])
+@include('emails.partials.notice', ['noticeText' => __('emails.interview_scheduled.notice')])
+@include('emails.partials.signoff')
+@endsection

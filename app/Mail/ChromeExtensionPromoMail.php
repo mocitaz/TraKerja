@@ -29,7 +29,7 @@ class ChromeExtensionPromoMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('Pembaruan Fitur: Otomatisasi Penyimpanan Lowongan Pekerjaan dengan Ekstensi TraKerja'),
+            subject: __('emails.chrome_extension_promo.subject'),
         );
     }
 

@@ -29,7 +29,7 @@ class PaymentSuccessMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('Payment Successful - TraKerja Premium'),
+            subject: __('emails.payment_success.subject'),
         );
     }
 

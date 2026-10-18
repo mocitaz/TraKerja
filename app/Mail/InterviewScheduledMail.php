@@ -29,7 +29,7 @@ class InterviewScheduledMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('Schedule confirmed: ') . $this->jobApplication->company_name,
+            subject: __('emails.interview_scheduled.subject', ['company' => $this->jobApplication->company_name]),
         );
     }
 

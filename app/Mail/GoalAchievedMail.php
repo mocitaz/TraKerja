@@ -27,7 +27,7 @@ class GoalAchievedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('Selamat! Goal Tercapai: ') . $this->goal->title,
+            subject: __('emails.goal_achieved.subject', ['goal' => $this->goal->title]),
         );
     }
 

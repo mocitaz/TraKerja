@@ -26,7 +26,7 @@ class BrandTransformationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('Ada yang Baru Menyapa di Dashboard Kamu'),
+            subject: __('emails.brand_transformation.subject'),
         );
     }
 
