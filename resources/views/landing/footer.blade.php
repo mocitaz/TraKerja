@@ -1,5 +1,5 @@
-@include('landing.footer-landscape')
 <footer class="lp-footer" data-reveal>
+    @include('landing.footer-landscape')
     <div class="lp-footer-inner lp-wrap">
         <div class="lp-footer-top">
             <div class="lp-footer-contact"><p>{{ __('landing.footer.contact_intro') }}</p><a href="mailto:trakerja@teknalogi.id">trakerja@teknalogi.id @include('landing.icon', ['name' => 'arrow'])</a></div>

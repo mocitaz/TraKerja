@@ -1,0 +1,101 @@
+{
+  "checks": [
+    {
+      "width": 320,
+      "dark": false,
+      "overflow": false,
+      "artInsideFooter": true,
+      "artOutsideFaq": true,
+      "noAddedSpace": true,
+      "body": "rgb(255, 255, 255)",
+      "footer": "rgb(247, 244, 249)",
+      "questions": 6,
+      "communityAbsent": true
+    },
+    {
+      "width": 320,
+      "dark": true,
+      "overflow": false,
+      "artInsideFooter": true,
+      "artOutsideFaq": true,
+      "noAddedSpace": true,
+      "body": "rgb(27, 25, 29)",
+      "footer": "rgb(19, 16, 23)",
+      "questions": 6,
+      "communityAbsent": true
+    },
+    {
+      "width": 390,
+      "dark": false,
+      "overflow": false,
+      "artInsideFooter": true,
+      "artOutsideFaq": true,
+      "noAddedSpace": true,
+      "body": "rgb(255, 255, 255)",
+      "footer": "rgb(247, 244, 249)",
+      "questions": 6,
+      "communityAbsent": true
+    },
+    {
+      "width": 390,
+      "dark": true,
+      "overflow": false,
+      "artInsideFooter": true,
+      "artOutsideFaq": true,
+      "noAddedSpace": true,
+      "body": "rgb(27, 25, 29)",
+      "footer": "rgb(19, 16, 23)",
+      "questions": 6,
+      "communityAbsent": true
+    },
+    {
+      "width": 820,
+      "dark": false,
+      "overflow": false,
+      "artInsideFooter": true,
+      "artOutsideFaq": true,
+      "noAddedSpace": true,
+      "body": "rgb(255, 255, 255)",
+      "footer": "rgb(247, 244, 249)",
+      "questions": 6,
+      "communityAbsent": true
+    },
+    {
+      "width": 820,
+      "dark": true,
+      "overflow": false,
+      "artInsideFooter": true,
+      "artOutsideFaq": true,
+      "noAddedSpace": true,
+      "body": "rgb(27, 25, 29)",
+      "footer": "rgb(19, 16, 23)",
+      "questions": 6,
+      "communityAbsent": true
+    },
+    {
+      "width": 1440,
+      "dark": false,
+      "overflow": false,
+      "artInsideFooter": true,
+      "artOutsideFaq": true,
+      "noAddedSpace": true,
+      "body": "rgb(255, 255, 255)",
+      "footer": "rgb(247, 244, 249)",
+      "questions": 6,
+      "communityAbsent": true
+    },
+    {
+      "width": 1440,
+      "dark": true,
+      "overflow": false,
+      "artInsideFooter": true,
+      "artOutsideFaq": true,
+      "noAddedSpace": true,
+      "body": "rgb(27, 25, 29)",
+      "footer": "rgb(19, 16, 23)",
+      "questions": 6,
+      "communityAbsent": true
+    }
+  ],
+  "pageErrors": []
+}

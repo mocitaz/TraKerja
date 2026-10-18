@@ -320,11 +320,6 @@ summary .lp-icon { width:17px; height:17px; transition:transform .2s; }
 .lp-person--6 { width:15%; left:55.5%; top:12cqw; }
 .lp-person--7 { width:18%; left:70.5%; top:5cqw; }
 .lp-person--8 { width:11%; left:89%; top:11cqw; }
-.lp-community { display:flex; align-items:center; justify-content:space-between; gap:60px; padding:64px clamp(22px,3.4vw,48px); border:1px solid #ffffffcc; border-radius:30px; background:linear-gradient(150deg,#ffffff26,#ffffff00 48%,#ffffff14),#ffffff08; backdrop-filter:blur(12px) saturate(170%); -webkit-backdrop-filter:blur(12px) saturate(170%); box-shadow:inset 0 1px 1px #fff,inset 1px 0 1px #ffffff99,inset 0 -1px 1px #ffffff73,0 10px 36px -24px #49355245; }
-.dark .lp-community { background:linear-gradient(150deg,#ffffff14,#ffffff00 48%,#ffffff08),#211c2914; border-color:#ffffff4d; box-shadow:inset 0 1px 1px #ffffff66,inset 1px 0 1px #ffffff26,inset 0 -1px 1px #ffffff21,0 10px 36px -24px #0009; }
-.lp-community h2 { font-size:26px; font-weight:450; letter-spacing:-.7px; }
-.lp-community p { margin-top:10px; max-width:600px; font-size:14px; color:var(--lp-ink); }
-.lp-community .lp-button { flex-shrink:0; }
 .lp-faq { display:grid; grid-template-columns:.85fr 1.15fr; gap:90px; }
 .lp-faq.lp-section { --faq-rise:clamp(24px,3.34vw,48px); padding-top:calc(var(--lp-section-gap) - var(--faq-rise)); padding-bottom:calc(var(--lp-section-gap) + var(--faq-rise)); }
 .lp-faq > div > p:last-child { font-size:13px; color:var(--lp-muted); margin-top:22px; }
@@ -338,16 +333,14 @@ summary .lp-icon { width:17px; height:17px; transition:transform .2s; }
 .lp-closing p { font-size:16px; color:var(--lp-muted); margin-top:22px; }
 .lp-closing .lp-button { margin-top:28px; }
 .landing-page { isolation:isolate; }
-.lp-footer-landscape { --landscape-base:#f7f4f9; position:relative; z-index:-1; height:0; pointer-events:none; }
-.lp-footer-landscape::before { content:''; position:absolute; inset:auto 0 0; height:clamp(280px,30vw,460px); background:linear-gradient(to bottom,transparent,var(--landscape-base)); }
-.dark .lp-footer-landscape { --landscape-base:#131017; }
-.lp-footer-landscape img { position:absolute; bottom:0; display:block; width:100%; height:clamp(280px,30vw,460px); object-fit:cover; object-position:center bottom; opacity:.52; mix-blend-mode:multiply; mask-image:linear-gradient(to bottom,transparent 0%,#000 20%,#000 78%,transparent 100%); -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 20%,#000 78%,transparent 100%); }
-.dark .lp-footer-landscape img { filter:invert(1) hue-rotate(180deg); mix-blend-mode:screen; opacity:.38; }
+.lp-footer-landscape { position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+.lp-footer-landscape img { position:absolute; bottom:0; display:block; width:100%; height:clamp(220px,24vw,360px); max-height:72%; object-fit:cover; object-position:center bottom; opacity:.25; mix-blend-mode:multiply; mask-image:linear-gradient(to bottom,transparent 0%,#000 32%,#000 72%,transparent 100%); -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 32%,#000 72%,transparent 100%); }
+.dark .lp-footer-landscape img { filter:invert(1) hue-rotate(180deg); mix-blend-mode:screen; opacity:.24; }
 .lp-footer { --footer-base:#f7f4f9; --footer-ink:#332a3b; --footer-muted:#716579; position:relative; isolation:isolate; overflow:clip; background:var(--footer-base); color:var(--footer-ink); padding-block:48px 20px; }
 .lp-footer::before { content:''; position:absolute; inset:0; z-index:-1; pointer-events:none; background:radial-gradient(ellipse at 68% 65%,#e5cff08c,transparent 52%),radial-gradient(ellipse at 39% 95%,#f1d6e180,transparent 48%),radial-gradient(ellipse at 30% 35%,#dce0f35c,transparent 50%); }
 .dark .lp-footer { --footer-base:#131017; --footer-ink:#faf7fc; --footer-muted:#c1b7c8; }
 .dark .lp-footer::before { background:radial-gradient(ellipse at 68% 65%,#59297466,transparent 52%),radial-gradient(ellipse at 39% 95%,#74324c47,transparent 48%),radial-gradient(ellipse at 30% 35%,#29346040,transparent 50%); }
-.lp-footer-inner { container-type:inline-size; }
+.lp-footer-inner { position:relative; z-index:1; container-type:inline-size; }
 .lp-footer-top { display:flex; align-items:flex-end; justify-content:space-between; gap:40px; }
 .lp-footer-contact p { color:var(--footer-muted); font-size:13px; margin-bottom:5px; }
 .lp-footer-contact a { display:inline-flex; align-items:center; gap:15px; min-height:44px; font-size:clamp(17px,1.65vw,24px); letter-spacing:-.6px; }
@@ -389,7 +382,7 @@ summary .lp-icon { width:17px; height:17px; transition:transform .2s; }
 
 
 
-    .lp-community { gap:30px; padding-block:48px; }.lp-community h2 { font-size:23px; }.lp-faq { gap:35px; }.lp-faq .lp-heading { font-size:32px; }.lp-faq-list summary { font-size:14px; }
+    .lp-faq { gap:35px; }.lp-faq .lp-heading { font-size:32px; }.lp-faq-list summary { font-size:14px; }
     .lp-review-stage { --review-height:500px; }.lp-review-grid { gap:14px; grid-template-columns:.65fr 1.2fr .65fr; }.lp-review-content { padding:20px; }.lp-review-author { align-items:flex-start; flex-direction:column; }.lp-review-card blockquote { font-size:12px; margin-top:25px; }.lp-review-card[data-position='center'] .lp-review-author h3 { font-size:18px; }.lp-review-nav [data-review-previous] { left:calc(26% - 15px); }.lp-review-nav [data-review-next] { right:calc(26% - 15px); }
 }
 @media (min-width:601px) and (max-width:1000px) {
@@ -422,7 +415,6 @@ summary .lp-icon { width:17px; height:17px; transition:transform .2s; }
     .lp-plans-section { margin-top:var(--lp-section-gap); }.lp-plans-section > .lp-section { padding-block:40px 0; }.lp-plans-section .lp-section-top { gap:16px; margin-bottom:27px; }.lp-plans-section .lp-section-top > .lp-section-intro { font-size:14px; max-width:310px; }.lp-plans-section .lp-heading { font-size:35px; }.lp-plan-notice { font-size:12px; margin-bottom:24px; }.lp-plan-grid { gap:20px; }.lp-plan { border-radius:18px; }.lp-plan-head { padding:26px 25px 20px; }.lp-plan-intro { min-height:0; }.lp-plan-rate { padding-block:23px 12px; }.lp-plan-price { font-size:40px; }.lp-plan-body { padding:0 25px 24px; }.lp-plan ul { font-size:13px; gap:13px; padding-top:20px; }.lp-plan-terms { min-height:0; margin-top:16px; font-size:12px; }.lp-plans-login { margin-top:17px; }
 
 
-    .lp-community { display:block; padding-block:43px; }.lp-community h2 { font-size:25px; line-height:1.25; }.lp-community p { font-size:13px; margin-top:14px; }.lp-community .lp-button { margin-top:23px; }
     .lp-reviews-heading { text-align:left; margin-bottom:29px; }.lp-review-stage { --review-height:480px; }.lp-review-grid { display:block; }.lp-review-card:not([data-position='center']) { display:none; }.lp-review-content { padding:26px; }.lp-review-card[data-position='center'] .lp-review-author h3 { font-size:19px; }.lp-review-card[data-position='center'] blockquote { font-size:13px; margin-bottom:16px; padding:12px; }.lp-review-nav [data-review-previous] { left:-10px; }.lp-review-nav [data-review-next] { right:-10px; }
     .lp-faq { grid-template-columns:1fr; gap:25px; }.lp-faq .lp-heading { font-size:34px; }.lp-faq > div > p:last-child { margin-top:13px; font-size:12px; }.lp-faq-list summary { min-height:65px; font-size:14px; gap:20px; padding-block:18px; }.lp-faq-list details p { font-size:13px; padding-right:16px; }
     .lp-closing { padding-block:20px 65px; }.lp-closing .lp-heading { font-size:44px; }.lp-closing p { font-size:14px; margin-top:18px; }.lp-closing .lp-button { margin-top:23px; }
