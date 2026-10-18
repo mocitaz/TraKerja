@@ -79,14 +79,13 @@
                                     <x-profile-field name="email" label="{{ __('Email address') }}" :value="$user->email" type="email" autocomplete="email" required maxlength="255" />
                                 </div>
                                 @if(!$user->hasVerifiedEmail())
-                                    <div class="profile-verification"><span>{{ __('Your email is not verified.') }}</span><button type="submit" form="profile-send-verification" class="profile-text-button">{{ __('Send verification email') }}</button></div>
+                                    <div class="profile-verification"><span>{{ __('Your email is not verified.') }}</span><a href="{{ route('verification.notice') }}" class="profile-text-button">{{ __('verification.submit') }}</a></div>
                                 @endif
                                 @unless($isAdmin)
                                 <label class="profile-preference-row" for="profile-auto-archive"><span><strong>{{ __('Auto-archive rejected applications') }}</strong><small>{{ __('Move older rejected or unprocessed applications out of your active tracker after 14 days.') }}</small></span><input class="profile-switch" id="profile-auto-archive" role="switch" name="auto_archive_rejected" type="checkbox" value="1" @checked(old('auto_archive_rejected', $user->auto_archive_rejected))></label>
                                 @endunless
                                 <div class="profile-form-footer"><span>{{ __('Changing your email requires verification again.') }}</span><button type="submit" class="profile-primary">{{ __('Save account') }}</button></div>
                             </form>
-                            <form id="profile-send-verification" action="{{ route('verification.send') }}" method="post">@csrf</form>
                         </section>
                     <section id="profile-avatar-section" x-ref="avatarSection" tabindex="-1" aria-labelledby="profile-avatar-heading" class="profile-panel" style="scroll-margin-top: 110px;">
                         <header class="profile-section-header"><div><h2 id="profile-avatar-heading">{{ __('Your profile image') }}</h2><p>{{ __('Choose an illustrated avatar or use a photo of your own.') }}</p></div></header>

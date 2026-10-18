@@ -3,55 +3,24 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Mail\WelcomeMail;
-use App\Models\User;
-use Illuminate\Auth\Events\Verified;
+use App\Services\EmailVerificationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 
 class VerifyEmailController extends Controller
 {
-    /**
-     * Mark the user's email address as verified.
-     */
-    public function __invoke(Request $request, $id, $hash): RedirectResponse
+    public function __invoke(Request $request, EmailVerificationService $verification): RedirectResponse
     {
-        $user = User::findOrFail($id);
+        $request->validate(['otp' => ['required', 'string', 'regex:/^[0-9]{6}$/D']]);
+        $verification->verify($request->user(), $request->string('otp')->toString());
+        $request->session()->regenerate();
 
-        // Verify hash matches (hash is sha1 of email)
-        if (!hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
-            abort(403, 'Invalid verification link.');
-        }
+        return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
+    }
 
-        // Check if already verified
-        if ($user->hasVerifiedEmail()) {
-            // If already verified, login and redirect to dashboard
-            Auth::login($user);
-            return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
-        }
-
-        // Mark email as verified
-        if ($user->markEmailAsVerified()) {
-            event(new Verified($user));
-
-            // Send welcome email after successful verification
-            try {
-                Mail::to($user)->send(new WelcomeMail($user));
-            } catch (\Exception $e) {
-                \Log::error('Failed to send welcome email after verification: ' . $e->getMessage());
-            }
-
-
-            // Auto-login user after verification
-            Auth::login($user);
-
-            // Redirect to dashboard with success message
-            return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
-        }
-
-        // Fallback: redirect to login
-        return redirect()->route('login')->with('status', 'verification-failed');
+    public function legacy(Request $request): RedirectResponse
+    {
+        return redirect()->route($request->user() ? 'verification.notice' : 'login')
+            ->with('status', __('verification.legacy'));
     }
 }

@@ -54,7 +54,7 @@
         $hasAccess = \App\Models\Setting::isMonetizationEnabled() ? $user->isPremium() : true;
     @endphp
 
-    <div class="bg-[#f8fafc] {{ !$hasAccess ? 'h-[calc(100vh-73px)] overflow-hidden flex items-center justify-center' : 'min-h-screen pb-20' }}" x-data="{
+    <div class="bg-white {{ !$hasAccess ? 'h-[calc(100vh-73px)] overflow-hidden flex items-center justify-center' : 'min-h-screen pb-20' }}" x-data="{
         currentStep: 1,
         fileName: '',
         isScanning: false,

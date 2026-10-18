@@ -37,6 +37,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        \Illuminate\Support\Facades\RateLimiter::for('verification-submit', function (\Illuminate\Http\Request $request) {
+            return [
+                \Illuminate\Cache\RateLimiting\Limit::perMinute(30)->by('verification-ip:'.$request->ip()),
+                \Illuminate\Cache\RateLimiting\Limit::perMinute(15)->by('verification-user:'.$request->user()->id),
+            ];
+        });
+        \Illuminate\Support\Facades\RateLimiter::for('verification-send', function (\Illuminate\Http\Request $request) {
+            return \Illuminate\Cache\RateLimiting\Limit::perMinute(6)->by('verification-send-ip:'.$request->ip());
+        });
+
         \Illuminate\Support\Facades\Gate::policy(\App\Models\SupportTicket::class, \App\Policies\SupportTicketPolicy::class);
         \Livewire\Livewire::addPersistentMiddleware([\App\Http\Middleware\EnsureUserIsAdmin::class]);
         Carbon::setLocale(config('app.locale', 'id'));

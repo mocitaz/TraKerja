@@ -1,4 +1,4 @@
-.error-page { background: #fdfcf9; color: #34313d; }
+.error-page { background: #ffffff; color: #34313d; }
 .error-shell { display: flex; flex-direction: column; min-height: 100dvh; width: min(1120px, 100%); padding: 28px 40px 18px; margin-inline: auto; }
 .error-brand-header { display: flex; align-items: center; justify-content: space-between; margin: 0 0 22px; width: 100%; }
 .error-header-actions { display: inline-flex; align-items: center; gap: 12px; }

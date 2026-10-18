@@ -124,7 +124,7 @@
         </style>
         @include('partials.locale-config')
 </head>
-    <body class="font-sans antialiased bg-[#fafafa] dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200">
+    <body class="font-sans antialiased bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200">
         <div class="gemini-ambient-glow" aria-hidden="true"></div>
 
 

@@ -33,12 +33,10 @@
 
             body {
                 font-family: 'Outfit', sans-serif;
-                background-color: #030303;
-                background-image:
-                    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
-                    radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.05) 0px, transparent 50%),
-                    radial-gradient(circle at 50% 50%, rgba(9, 9, 11, 0.5), #030303);
+                background-color: #ffffff;
             }
+
+            .dark body { background-color: #030303; }
 
             /* Custom Premium Scrollbar for Dark Mode */
             .custom-scrollbar::-webkit-scrollbar {

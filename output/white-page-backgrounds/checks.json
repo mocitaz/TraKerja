@@ -1,0 +1,762 @@
+[
+  {
+    "name": "landing",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": "rgb(255, 255, 255)",
+    "dark": "rgb(27, 25, 29)"
+  },
+  {
+    "name": "landing",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": "rgb(255, 255, 255)",
+    "dark": "rgb(27, 25, 29)"
+  },
+  {
+    "name": "login",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(20, 18, 22)"
+  },
+  {
+    "name": "login",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(20, 18, 22)"
+  },
+  {
+    "name": "register",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(20, 18, 22)"
+  },
+  {
+    "name": "register",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(20, 18, 22)"
+  },
+  {
+    "name": "forgot",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(20, 18, 22)"
+  },
+  {
+    "name": "forgot",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(20, 18, 22)"
+  },
+  {
+    "name": "reset",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(20, 18, 22)"
+  },
+  {
+    "name": "reset",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(20, 18, 22)"
+  },
+  {
+    "name": "terms",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "terms",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "privacy",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "privacy",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "error",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "error",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "dashboard",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "dashboard",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "tracker",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "class": "workspace-page tracker-page",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "tracker",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "class": "workspace-page tracker-page",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "summary",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "class": "workspace-page summary-page summary-page--workspace",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "summary",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "class": "workspace-page summary-page summary-page--workspace",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "profile",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "profile",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "interviews",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "class": "workspace-page interviews-page",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "interviews",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "class": "workspace-page interviews-page",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "ai-studio",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "class": "workspace-page ai-portal",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "ai-studio",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "class": "workspace-page ai-portal",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "automation",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "class": "workspace-page automation-page",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "automation",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "class": "workspace-page automation-page",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "community",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "community",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "cv",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "class": "workspace-page cv-workspace",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "cv",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell flex-1 flex flex-col min-w-0 relative overflow-hidden",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "class": "workspace-page cv-workspace",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "portfolio-slate",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(255, 255, 255)"
+  },
+  {
+    "name": "portfolio-slate",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(255, 255, 255)"
+  },
+  {
+    "name": "portfolio-emerald",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(255, 255, 255)"
+  },
+  {
+    "name": "portfolio-emerald",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(255, 255, 255)"
+  },
+  {
+    "name": "portfolio-violet",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(255, 255, 255)"
+  },
+  {
+    "name": "portfolio-violet",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(255, 255, 255)"
+  },
+  {
+    "name": "verify",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(20, 18, 22)"
+  },
+  {
+    "name": "verify",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [],
+    "footer": null,
+    "dark": "rgb(20, 18, 22)"
+  },
+  {
+    "name": "admin-index",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-index",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-users",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-users",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-settings",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-settings",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-user-activities",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-user-activities",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-analytics",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-analytics",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-email-blast",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-email-blast",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-feedbacks-index",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-feedbacks-index",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-survey-index",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-survey-index",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-scraper",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-scraper",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-payments",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-payments",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-monetization",
+    "width": 390,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  },
+  {
+    "name": "admin-monetization",
+    "width": 1440,
+    "body": "rgb(255, 255, 255)",
+    "shells": [
+      {
+        "class": "workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ],
+    "footer": null,
+    "dark": "rgb(19, 19, 20)"
+  }
+]

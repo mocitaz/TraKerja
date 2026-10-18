@@ -1,0 +1,1 @@
+<button type="submit" class="auth-button auth-button--primary" data-auth-submit data-pending-label="{{ __('auth-ui.working') }}"><span data-submit-label>{{ $label }}</span><span class="auth-spinner" aria-hidden="true"></span></button>

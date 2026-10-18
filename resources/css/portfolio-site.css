@@ -1,5 +1,5 @@
 body.portfolio-page {
-    --port-bg: #faf9f6;
+    --port-bg: #ffffff;
     --port-text: #302f36;
     --port-muted: #66636e;
     --port-card: #fff;
@@ -15,8 +15,8 @@ body.portfolio-page {
     line-height: 1.7;
     margin: 0;
 }
-body.portfolio-page[data-theme='emerald'] { --port-bg: #f7f9f7; --port-accent: #3f6657; --port-button: #426a59; --port-tint: #edf3ef; --port-line: #dfe6e0; --port-soft: #eef1ec; }
-body.portfolio-page[data-theme='violet'] { --port-bg: #faf8fc; --port-accent: #71548a; --port-button: #71548a; --port-tint: #f1ebf6; --port-line: #e6dfee; --port-soft: #f0ecf3; }
+body.portfolio-page[data-theme='emerald'] { --port-bg: #ffffff; --port-accent: #3f6657; --port-button: #426a59; --port-tint: #edf3ef; --port-line: #dfe6e0; --port-soft: #eef1ec; }
+body.portfolio-page[data-theme='violet'] { --port-bg: #ffffff; --port-accent: #71548a; --port-button: #71548a; --port-tint: #f1ebf6; --port-line: #e6dfee; --port-soft: #f0ecf3; }
 body.portfolio-page[data-theme='dark'] { --port-bg: #19191b; --port-text: #eeecf1; --port-muted: #b3aebc; --port-card: #222224; --port-soft: #2e2c32; --port-line: #3a373f; --port-accent: #c5b2d9; --port-button: #d7c6e8; --port-tint: #302a37; }
 .portfolio-page :is(h1,h2,h3,h4,p,ul) { margin: 0; }
 .portfolio-page :is(p,a,h1,h2,h3,h4,span,time) { overflow-wrap: anywhere; }

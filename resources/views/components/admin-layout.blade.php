@@ -52,7 +52,7 @@
     @livewireStyles
     @include('partials.locale-config')
 </head>
-<body class="workspace-shell admin-workspace bg-[#fafafa] dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200">
+<body class="workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200">
     <a href="#admin-main" class="admin-skip-link">{{ __('Skip to content') }}</a>
     <header class="workspace-navigation admin-navigation" x-data="{ profileOpen: false, mobileOpen: false }">
         <nav class="workspace-topbar" aria-label="{{ __('Admin navigation') }}">

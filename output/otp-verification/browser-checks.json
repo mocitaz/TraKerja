@@ -1,0 +1,187 @@
+{
+  "checks": [
+    {
+      "width": 320,
+      "dark": false,
+      "locale": "en",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    },
+    {
+      "width": 320,
+      "dark": true,
+      "locale": "en",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    },
+    {
+      "width": 390,
+      "dark": false,
+      "locale": "en",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    },
+    {
+      "width": 390,
+      "dark": true,
+      "locale": "en",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    },
+    {
+      "width": 820,
+      "dark": false,
+      "locale": "en",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    },
+    {
+      "width": 820,
+      "dark": true,
+      "locale": "en",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    },
+    {
+      "width": 1440,
+      "dark": false,
+      "locale": "en",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    },
+    {
+      "width": 1440,
+      "dark": true,
+      "locale": "en",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    },
+    {
+      "width": 320,
+      "dark": false,
+      "locale": "id",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    },
+    {
+      "width": 320,
+      "dark": true,
+      "locale": "id",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    },
+    {
+      "width": 390,
+      "dark": false,
+      "locale": "id",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    },
+    {
+      "width": 390,
+      "dark": true,
+      "locale": "id",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    },
+    {
+      "width": 820,
+      "dark": false,
+      "locale": "id",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    },
+    {
+      "width": 820,
+      "dark": true,
+      "locale": "id",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    },
+    {
+      "width": 1440,
+      "dark": false,
+      "locale": "id",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    },
+    {
+      "width": 1440,
+      "dark": true,
+      "locale": "id",
+      "overflow": false,
+      "inputInside": true,
+      "inputHeight": 50,
+      "labels": 1,
+      "otpValue": ""
+    }
+  ],
+  "scenarios": [
+    "empty input validation",
+    "incorrect code and focused error",
+    "code not echoed",
+    "resend and countdown",
+    "paste entire code",
+    "successful verification and redirect",
+    "verified account redirected from OTP screen",
+    "language switch to Indonesian",
+    "theme toggle and restore",
+    "logout returns to homepage"
+  ],
+  "pageErrors": [],
+  "contrast_ratios": {
+    "light hint on surface": 5.28,
+    "light email caption on soft": 4.74,
+    "dark hint on surface": 8.39,
+    "dark email caption on soft": 7.24,
+    "light primary label": 14.9,
+    "dark primary label": 14.95,
+    "light hover primary label": 6.32,
+    "dark hover primary label": 9.78
+  }
+}

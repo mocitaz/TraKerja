@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="bg-[#fafafa] dark:bg-[#131314] min-h-screen pb-16">
+    <div class="bg-white dark:bg-[#131314] min-h-screen pb-16">
         <div class="workspace-page-frame max-w-[1120px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
 
             <!-- Premium Page Header -->

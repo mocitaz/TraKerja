@@ -35,17 +35,21 @@ Route::middleware('guest')->group(function () {
         ->name('password.store');
 });
 
-// Email verification route - harus bisa diakses tanpa login karena user di-logout setelah registrasi
-Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-    ->middleware(['signed', 'throttle:6,1'])
+// Previously issued links lead to the OTP flow without verifying or logging anyone in.
+Route::get('verify-email/{id}/{hash}', [VerifyEmailController::class, 'legacy'])
+    ->middleware('throttle:6,1')
     ->name('verification.verify');
 
 Route::middleware('auth')->group(function () {
+    Route::post('verify-email', VerifyEmailController::class)
+        ->middleware('throttle:verification-submit')
+        ->name('verification.confirm');
+
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-        ->middleware('throttle:6,1')
+        ->middleware('throttle:verification-send')
         ->name('verification.send');
 
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])

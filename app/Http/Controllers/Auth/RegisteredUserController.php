@@ -100,11 +100,13 @@ class RegisteredUserController extends Controller
             $user->id
         );
 
+        $verificationFailed = false;
         try {
             event(new Registered($user));
             \Log::info('Registered event dispatched');
         } catch (\Exception $e) {
-            \Log::error('Registered event error: ' . $e->getMessage());
+            $verificationFailed = true;
+            \Log::warning('Registration verification delivery failed', ['user_id' => $user->id, 'exception' => get_class($e)]);
         }
 
         // Send admin notification to Telegram channel asynchronously
@@ -118,8 +120,11 @@ class RegisteredUserController extends Controller
 
         // Keep user authenticated and redirect directly to verification notice page
         Auth::login($user);
+        $request->session()->regenerate();
         \Log::info('User logged in, redirecting to verification.notice');
 
-        return redirect()->route('verification.notice');
+        $response = redirect()->route('verification.notice');
+
+        return $verificationFailed ? $response->withErrors(['otp' => __('verification.delivery_failed')]) : $response;
     }
 }

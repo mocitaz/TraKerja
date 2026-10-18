@@ -1,0 +1,858 @@
+{
+  "date": "2026-10-19",
+  "pages": [
+    "/login",
+    "/register",
+    "/forgot-password",
+    "/reset-password/{token}",
+    "/verify-email",
+    "/confirm-password"
+  ],
+  "englishLayout": [
+    {
+      "page": "login",
+      "width": 320,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "login",
+      "width": 320,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "register",
+      "width": 320,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "register",
+      "width": 320,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "forgot",
+      "width": 320,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "forgot",
+      "width": 320,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "reset",
+      "width": 320,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "reset",
+      "width": 320,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "verify",
+      "width": 320,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "verify",
+      "width": 320,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "confirm",
+      "width": 320,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "confirm",
+      "width": 320,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "login",
+      "width": 390,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "login",
+      "width": 390,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "register",
+      "width": 390,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "register",
+      "width": 390,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "forgot",
+      "width": 390,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "forgot",
+      "width": 390,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "reset",
+      "width": 390,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "reset",
+      "width": 390,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "verify",
+      "width": 390,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "verify",
+      "width": 390,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "confirm",
+      "width": 390,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "confirm",
+      "width": 390,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": false,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "login",
+      "width": 820,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "login",
+      "width": 820,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "register",
+      "width": 820,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "register",
+      "width": 820,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "forgot",
+      "width": 820,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "forgot",
+      "width": 820,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "reset",
+      "width": 820,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "reset",
+      "width": 820,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "verify",
+      "width": 820,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "verify",
+      "width": 820,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "confirm",
+      "width": 820,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "confirm",
+      "width": 820,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "login",
+      "width": 1440,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "login",
+      "width": 1440,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "register",
+      "width": 1440,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "register",
+      "width": 1440,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "forgot",
+      "width": 1440,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "forgot",
+      "width": 1440,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "reset",
+      "width": 1440,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "reset",
+      "width": 1440,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "verify",
+      "width": 1440,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "verify",
+      "width": 1440,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "confirm",
+      "width": 1440,
+      "dark": false,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    },
+    {
+      "page": "confirm",
+      "width": 1440,
+      "dark": true,
+      "overflow": false,
+      "outside": [],
+      "small": [],
+      "oneHeading": true,
+      "artVisible": true,
+      "noExtraArtText": true,
+      "font": true
+    }
+  ],
+  "indonesianLayout": [
+    {
+      "page": "login",
+      "width": 320,
+      "locale": "id",
+      "dark": false,
+      "overflow": false,
+      "heading": "Selamat datang kembali."
+    },
+    {
+      "page": "login",
+      "width": 320,
+      "locale": "id",
+      "dark": true,
+      "overflow": false,
+      "heading": "Selamat datang kembali."
+    },
+    {
+      "page": "register",
+      "width": 320,
+      "locale": "id",
+      "dark": false,
+      "overflow": false,
+      "heading": "Mulai langkah berikutnya."
+    },
+    {
+      "page": "register",
+      "width": 320,
+      "locale": "id",
+      "dark": true,
+      "overflow": false,
+      "heading": "Mulai langkah berikutnya."
+    },
+    {
+      "page": "forgot",
+      "width": 320,
+      "locale": "id",
+      "dark": false,
+      "overflow": false,
+      "heading": "Kembali ke akunmu."
+    },
+    {
+      "page": "forgot",
+      "width": 320,
+      "locale": "id",
+      "dark": true,
+      "overflow": false,
+      "heading": "Kembali ke akunmu."
+    },
+    {
+      "page": "reset",
+      "width": 320,
+      "locale": "id",
+      "dark": false,
+      "overflow": false,
+      "heading": "Mulai lagi dengan tenang."
+    },
+    {
+      "page": "reset",
+      "width": 320,
+      "locale": "id",
+      "dark": true,
+      "overflow": false,
+      "heading": "Mulai lagi dengan tenang."
+    },
+    {
+      "page": "verify",
+      "width": 320,
+      "locale": "id",
+      "dark": false,
+      "overflow": false,
+      "heading": "Cek kotak masukmu."
+    },
+    {
+      "page": "verify",
+      "width": 320,
+      "locale": "id",
+      "dark": true,
+      "overflow": false,
+      "heading": "Cek kotak masukmu."
+    },
+    {
+      "page": "confirm",
+      "width": 320,
+      "locale": "id",
+      "dark": false,
+      "overflow": false,
+      "heading": "Pastikan ini kamu."
+    },
+    {
+      "page": "confirm",
+      "width": 320,
+      "locale": "id",
+      "dark": true,
+      "overflow": false,
+      "heading": "Pastikan ini kamu."
+    },
+    {
+      "page": "login",
+      "width": 1440,
+      "locale": "id",
+      "dark": false,
+      "overflow": false,
+      "heading": "Selamat datang kembali."
+    },
+    {
+      "page": "login",
+      "width": 1440,
+      "locale": "id",
+      "dark": true,
+      "overflow": false,
+      "heading": "Selamat datang kembali."
+    },
+    {
+      "page": "register",
+      "width": 1440,
+      "locale": "id",
+      "dark": false,
+      "overflow": false,
+      "heading": "Mulai langkah berikutnya."
+    },
+    {
+      "page": "register",
+      "width": 1440,
+      "locale": "id",
+      "dark": true,
+      "overflow": false,
+      "heading": "Mulai langkah berikutnya."
+    },
+    {
+      "page": "forgot",
+      "width": 1440,
+      "locale": "id",
+      "dark": false,
+      "overflow": false,
+      "heading": "Kembali ke akunmu."
+    },
+    {
+      "page": "forgot",
+      "width": 1440,
+      "locale": "id",
+      "dark": true,
+      "overflow": false,
+      "heading": "Kembali ke akunmu."
+    },
+    {
+      "page": "reset",
+      "width": 1440,
+      "locale": "id",
+      "dark": false,
+      "overflow": false,
+      "heading": "Mulai lagi dengan tenang."
+    },
+    {
+      "page": "reset",
+      "width": 1440,
+      "locale": "id",
+      "dark": true,
+      "overflow": false,
+      "heading": "Mulai lagi dengan tenang."
+    },
+    {
+      "page": "verify",
+      "width": 1440,
+      "locale": "id",
+      "dark": false,
+      "overflow": false,
+      "heading": "Cek kotak masukmu."
+    },
+    {
+      "page": "verify",
+      "width": 1440,
+      "locale": "id",
+      "dark": true,
+      "overflow": false,
+      "heading": "Cek kotak masukmu."
+    },
+    {
+      "page": "confirm",
+      "width": 1440,
+      "locale": "id",
+      "dark": false,
+      "overflow": false,
+      "heading": "Pastikan ini kamu."
+    },
+    {
+      "page": "confirm",
+      "width": 1440,
+      "locale": "id",
+      "dark": true,
+      "overflow": false,
+      "heading": "Pastikan ini kamu."
+    }
+  ],
+  "finalEmailFirst": [
+    {
+      "page": "login",
+      "width": 320,
+      "emailFirst": true,
+      "opened": true,
+      "formBelowEmail": true,
+      "providersBelowForm": true,
+      "overflow": false
+    },
+    {
+      "page": "register",
+      "width": 320,
+      "emailFirst": true,
+      "opened": true,
+      "formBelowEmail": true,
+      "providersBelowForm": true,
+      "overflow": false
+    },
+    {
+      "page": "login",
+      "width": 390,
+      "emailFirst": true,
+      "opened": true,
+      "formBelowEmail": true,
+      "providersBelowForm": true,
+      "overflow": false
+    },
+    {
+      "page": "register",
+      "width": 390,
+      "emailFirst": true,
+      "opened": true,
+      "formBelowEmail": true,
+      "providersBelowForm": true,
+      "overflow": false
+    },
+    {
+      "page": "login",
+      "width": 820,
+      "emailFirst": true,
+      "opened": true,
+      "formBelowEmail": true,
+      "providersBelowForm": true,
+      "overflow": false
+    },
+    {
+      "page": "register",
+      "width": 820,
+      "emailFirst": true,
+      "opened": true,
+      "formBelowEmail": true,
+      "providersBelowForm": true,
+      "overflow": false
+    },
+    {
+      "page": "login",
+      "width": 1440,
+      "emailFirst": true,
+      "opened": true,
+      "formBelowEmail": true,
+      "providersBelowForm": true,
+      "overflow": false
+    },
+    {
+      "page": "register",
+      "width": 1440,
+      "emailFirst": true,
+      "opened": true,
+      "formBelowEmail": true,
+      "providersBelowForm": true,
+      "overflow": false
+    }
+  ],
+  "protectedScreenMethod": "Read-only rendered HTML fixtures with a synthetic unsaved User; no real login, account creation, verification email or reset email sent."
+}

@@ -90,7 +90,7 @@
     </script>
     @include('partials.locale-config')
 </head>
-<body class="utility-page error-page bg-[#fdfcf9] dark:bg-[#131314] text-[#34313d] dark:text-[#f0f4f9] transition-colors duration-200 relative">
+<body class="utility-page error-page bg-white dark:bg-[#131314] text-[#34313d] dark:text-[#f0f4f9] transition-colors duration-200 relative">
     <div class="gemini-ambient-glow" aria-hidden="true"></div>
     <div class="error-shell">
         <header class="error-brand-header">

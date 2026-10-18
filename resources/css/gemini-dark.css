@@ -1,6 +1,6 @@
 /* Gemini Dark Mode Tokens & Ambient Backdrop */
 :root {
-    --gemini-canvas: #fafafa;
+    --gemini-canvas: #ffffff;
     --gemini-surface: #ffffff;
     --gemini-elevated: #f1f5f9;
     --gemini-border: #e2e8f0;
@@ -14,13 +14,13 @@
     color-scheme: light;
 }
 
-/* Hard light mode safeguard: guarantee 100% bright ivory background when dark is absent */
 html:not(.dark) {
     color-scheme: light;
 }
 
 html:not(.dark) body:not(.portfolio-page) {
-    background-color: #fdfcf9 !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
     color: #1a191e !important;
 }
 

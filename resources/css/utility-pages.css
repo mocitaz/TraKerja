@@ -1,6 +1,6 @@
-.utility-page { margin: 0; background: #fdfcf9; color: #34313d; font-family: 'Plus Jakarta Sans', sans-serif; }
+.utility-page { margin: 0; background: #ffffff; color: #34313d; font-family: 'Plus Jakarta Sans', sans-serif; }
 .utility-shell { max-width: 1280px; min-height: 100dvh; margin: auto; padding: 24px 40px; display: flex; flex-direction: column; }
-.legal-page { background: #fdfcf9; color: #34313d; }
+.legal-page { background: #ffffff; color: #34313d; }
 .legal-shell { width: min(1120px, 100%); max-width: 1120px; min-height: 100dvh; margin: 0 auto; padding: 24px 32px 20px; display: flex; flex-direction: column; }
 .legal-topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-bottom: 18px; border-bottom: 1px solid #e6e3df; margin-bottom: 28px; }
 .legal-brand { display: inline-flex; align-items: center; gap: 10px; min-height: 38px; color: #34313d; font-size: 20px; font-weight: 700; letter-spacing: -.8px; text-decoration: none; }

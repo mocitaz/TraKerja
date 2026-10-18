@@ -1,0 +1,792 @@
+{
+  "date": "2026-10-18",
+  "scope": "Landing mobile and motion audit",
+  "indonesian": [
+    {
+      "width": 320,
+      "theme": "light",
+      "documentWidth": 320,
+      "outside": [],
+      "smallTargets": [],
+      "prices": [
+        "Rp 0",
+        "Rp 9.999",
+        "Rp 14.999"
+      ],
+      "sections": [
+        {
+          "name": "lp-hero lp-wrap",
+          "y": 77,
+          "height": 863
+        },
+        {
+          "name": "product",
+          "y": 940,
+          "height": 956
+        },
+        {
+          "name": "our-story",
+          "y": 1896,
+          "height": 530
+        },
+        {
+          "name": "preparation",
+          "y": 2426,
+          "height": 738
+        },
+        {
+          "name": "pricing",
+          "y": 3220,
+          "height": 1968
+        },
+        {
+          "name": "testimonials",
+          "y": 5187,
+          "height": 809
+        },
+        {
+          "name": "lp-people lp-wrap",
+          "y": 5996,
+          "height": 196
+        },
+        {
+          "name": "lp-community lp-wrap",
+          "y": 6192,
+          "height": 296
+        },
+        {
+          "name": "faq",
+          "y": 6488,
+          "height": 766
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "theme": "dark",
+      "documentWidth": 320,
+      "outside": [],
+      "smallTargets": [],
+      "prices": [
+        "Rp 0",
+        "Rp 9.999",
+        "Rp 14.999"
+      ],
+      "sections": [
+        {
+          "name": "lp-hero lp-wrap",
+          "y": 77,
+          "height": 863
+        },
+        {
+          "name": "product",
+          "y": 940,
+          "height": 956
+        },
+        {
+          "name": "our-story",
+          "y": 1896,
+          "height": 530
+        },
+        {
+          "name": "preparation",
+          "y": 2426,
+          "height": 738
+        },
+        {
+          "name": "pricing",
+          "y": 3220,
+          "height": 1968
+        },
+        {
+          "name": "testimonials",
+          "y": 5187,
+          "height": 809
+        },
+        {
+          "name": "lp-people lp-wrap",
+          "y": 5996,
+          "height": 196
+        },
+        {
+          "name": "lp-community lp-wrap",
+          "y": 6192,
+          "height": 296
+        },
+        {
+          "name": "faq",
+          "y": 6488,
+          "height": 766
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "theme": "light",
+      "documentWidth": 390,
+      "outside": [],
+      "smallTargets": [],
+      "prices": [
+        "Rp 0",
+        "Rp 9.999",
+        "Rp 14.999"
+      ],
+      "sections": [
+        {
+          "name": "lp-hero lp-wrap",
+          "y": 77,
+          "height": 836
+        },
+        {
+          "name": "product",
+          "y": 913,
+          "height": 883
+        },
+        {
+          "name": "our-story",
+          "y": 1797,
+          "height": 530
+        },
+        {
+          "name": "preparation",
+          "y": 2326,
+          "height": 688
+        },
+        {
+          "name": "pricing",
+          "y": 3070,
+          "height": 1924
+        },
+        {
+          "name": "testimonials",
+          "y": 4994,
+          "height": 770
+        },
+        {
+          "name": "lp-people lp-wrap",
+          "y": 5764,
+          "height": 227
+        },
+        {
+          "name": "lp-community lp-wrap",
+          "y": 5991,
+          "height": 244
+        },
+        {
+          "name": "faq",
+          "y": 6235,
+          "height": 712
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "documentWidth": 390,
+      "outside": [],
+      "smallTargets": [],
+      "prices": [
+        "Rp 0",
+        "Rp 9.999",
+        "Rp 14.999"
+      ],
+      "sections": [
+        {
+          "name": "lp-hero lp-wrap",
+          "y": 77,
+          "height": 836
+        },
+        {
+          "name": "product",
+          "y": 913,
+          "height": 883
+        },
+        {
+          "name": "our-story",
+          "y": 1797,
+          "height": 530
+        },
+        {
+          "name": "preparation",
+          "y": 2326,
+          "height": 688
+        },
+        {
+          "name": "pricing",
+          "y": 3070,
+          "height": 1924
+        },
+        {
+          "name": "testimonials",
+          "y": 4994,
+          "height": 770
+        },
+        {
+          "name": "lp-people lp-wrap",
+          "y": 5764,
+          "height": 227
+        },
+        {
+          "name": "lp-community lp-wrap",
+          "y": 5991,
+          "height": 244
+        },
+        {
+          "name": "faq",
+          "y": 6235,
+          "height": 712
+        }
+      ]
+    },
+    {
+      "width": 600,
+      "theme": "light",
+      "documentWidth": 600,
+      "outside": [],
+      "smallTargets": [],
+      "prices": [
+        "Rp 0",
+        "Rp 9.999",
+        "Rp 14.999"
+      ],
+      "sections": [
+        {
+          "name": "lp-hero lp-wrap",
+          "y": 77,
+          "height": 873
+        },
+        {
+          "name": "product",
+          "y": 950,
+          "height": 869
+        },
+        {
+          "name": "our-story",
+          "y": 1819,
+          "height": 530
+        },
+        {
+          "name": "preparation",
+          "y": 2348,
+          "height": 688
+        },
+        {
+          "name": "pricing",
+          "y": 3092,
+          "height": 1841
+        },
+        {
+          "name": "testimonials",
+          "y": 4933,
+          "height": 770
+        },
+        {
+          "name": "lp-people lp-wrap",
+          "y": 5704,
+          "height": 332
+        },
+        {
+          "name": "lp-community lp-wrap",
+          "y": 6036,
+          "height": 244
+        },
+        {
+          "name": "faq",
+          "y": 6279,
+          "height": 696
+        }
+      ]
+    },
+    {
+      "width": 600,
+      "theme": "dark",
+      "documentWidth": 600,
+      "outside": [],
+      "smallTargets": [],
+      "prices": [
+        "Rp 0",
+        "Rp 9.999",
+        "Rp 14.999"
+      ],
+      "sections": [
+        {
+          "name": "lp-hero lp-wrap",
+          "y": 77,
+          "height": 873
+        },
+        {
+          "name": "product",
+          "y": 950,
+          "height": 869
+        },
+        {
+          "name": "our-story",
+          "y": 1819,
+          "height": 530
+        },
+        {
+          "name": "preparation",
+          "y": 2348,
+          "height": 688
+        },
+        {
+          "name": "pricing",
+          "y": 3092,
+          "height": 1841
+        },
+        {
+          "name": "testimonials",
+          "y": 4933,
+          "height": 770
+        },
+        {
+          "name": "lp-people lp-wrap",
+          "y": 5704,
+          "height": 332
+        },
+        {
+          "name": "lp-community lp-wrap",
+          "y": 6036,
+          "height": 244
+        },
+        {
+          "name": "faq",
+          "y": 6279,
+          "height": 696
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "theme": "light",
+      "documentWidth": 768,
+      "outside": [],
+      "smallTargets": [],
+      "prices": [
+        "Rp 0",
+        "Rp 9.999",
+        "Rp 14.999"
+      ],
+      "sections": [
+        {
+          "name": "lp-hero lp-wrap",
+          "y": 83,
+          "height": 974
+        },
+        {
+          "name": "product",
+          "y": 1057,
+          "height": 900
+        },
+        {
+          "name": "our-story",
+          "y": 1957,
+          "height": 602
+        },
+        {
+          "name": "preparation",
+          "y": 2560,
+          "height": 430
+        },
+        {
+          "name": "pricing",
+          "y": 3062,
+          "height": 2151
+        },
+        {
+          "name": "testimonials",
+          "y": 5213,
+          "height": 835
+        },
+        {
+          "name": "lp-people lp-wrap",
+          "y": 6048,
+          "height": 282
+        },
+        {
+          "name": "lp-community lp-wrap",
+          "y": 6330,
+          "height": 190
+        },
+        {
+          "name": "faq",
+          "y": 6519,
+          "height": 583
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "theme": "dark",
+      "documentWidth": 768,
+      "outside": [],
+      "smallTargets": [],
+      "prices": [
+        "Rp 0",
+        "Rp 9.999",
+        "Rp 14.999"
+      ],
+      "sections": [
+        {
+          "name": "lp-hero lp-wrap",
+          "y": 83,
+          "height": 974
+        },
+        {
+          "name": "product",
+          "y": 1057,
+          "height": 900
+        },
+        {
+          "name": "our-story",
+          "y": 1957,
+          "height": 602
+        },
+        {
+          "name": "preparation",
+          "y": 2560,
+          "height": 430
+        },
+        {
+          "name": "pricing",
+          "y": 3062,
+          "height": 2151
+        },
+        {
+          "name": "testimonials",
+          "y": 5213,
+          "height": 835
+        },
+        {
+          "name": "lp-people lp-wrap",
+          "y": 6048,
+          "height": 282
+        },
+        {
+          "name": "lp-community lp-wrap",
+          "y": 6330,
+          "height": 190
+        },
+        {
+          "name": "faq",
+          "y": 6519,
+          "height": 583
+        }
+      ]
+    },
+    {
+      "width": 1024,
+      "theme": "light",
+      "documentWidth": 1024,
+      "outside": [],
+      "smallTargets": [],
+      "prices": [
+        "Rp 0",
+        "Rp 9.999",
+        "Rp 14.999"
+      ],
+      "sections": [
+        {
+          "name": "lp-hero lp-wrap",
+          "y": 89,
+          "height": 1069
+        },
+        {
+          "name": "product",
+          "y": 1158,
+          "height": 948
+        },
+        {
+          "name": "our-story",
+          "y": 2106,
+          "height": 548
+        },
+        {
+          "name": "preparation",
+          "y": 2655,
+          "height": 460
+        },
+        {
+          "name": "pricing",
+          "y": 3203,
+          "height": 972
+        },
+        {
+          "name": "testimonials",
+          "y": 4174,
+          "height": 862
+        },
+        {
+          "name": "lp-people lp-wrap",
+          "y": 5037,
+          "height": 366
+        },
+        {
+          "name": "lp-community lp-wrap",
+          "y": 5403,
+          "height": 226
+        },
+        {
+          "name": "faq",
+          "y": 5629,
+          "height": 615
+        }
+      ]
+    },
+    {
+      "width": 1024,
+      "theme": "dark",
+      "documentWidth": 1024,
+      "outside": [],
+      "smallTargets": [],
+      "prices": [
+        "Rp 0",
+        "Rp 9.999",
+        "Rp 14.999"
+      ],
+      "sections": [
+        {
+          "name": "lp-hero lp-wrap",
+          "y": 89,
+          "height": 1069
+        },
+        {
+          "name": "product",
+          "y": 1158,
+          "height": 948
+        },
+        {
+          "name": "our-story",
+          "y": 2106,
+          "height": 548
+        },
+        {
+          "name": "preparation",
+          "y": 2655,
+          "height": 460
+        },
+        {
+          "name": "pricing",
+          "y": 3203,
+          "height": 972
+        },
+        {
+          "name": "testimonials",
+          "y": 4174,
+          "height": 862
+        },
+        {
+          "name": "lp-people lp-wrap",
+          "y": 5037,
+          "height": 366
+        },
+        {
+          "name": "lp-community lp-wrap",
+          "y": 5403,
+          "height": 226
+        },
+        {
+          "name": "faq",
+          "y": 5629,
+          "height": 615
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "theme": "light",
+      "documentWidth": 1440,
+      "outside": [],
+      "smallTargets": [],
+      "prices": [
+        "Rp 0",
+        "Rp 9.999",
+        "Rp 14.999"
+      ],
+      "sections": [
+        {
+          "name": "lp-hero lp-wrap",
+          "y": 89,
+          "height": 1106
+        },
+        {
+          "name": "product",
+          "y": 1195,
+          "height": 971
+        },
+        {
+          "name": "our-story",
+          "y": 2166,
+          "height": 560
+        },
+        {
+          "name": "preparation",
+          "y": 2725,
+          "height": 460
+        },
+        {
+          "name": "pricing",
+          "y": 3273,
+          "height": 994
+        },
+        {
+          "name": "testimonials",
+          "y": 4267,
+          "height": 885
+        },
+        {
+          "name": "lp-people lp-wrap",
+          "y": 5152,
+          "height": 430
+        },
+        {
+          "name": "lp-community lp-wrap",
+          "y": 5582,
+          "height": 226
+        },
+        {
+          "name": "faq",
+          "y": 5809,
+          "height": 615
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "theme": "dark",
+      "documentWidth": 1440,
+      "outside": [],
+      "smallTargets": [],
+      "prices": [
+        "Rp 0",
+        "Rp 9.999",
+        "Rp 14.999"
+      ],
+      "sections": [
+        {
+          "name": "lp-hero lp-wrap",
+          "y": 89,
+          "height": 1106
+        },
+        {
+          "name": "product",
+          "y": 1195,
+          "height": 971
+        },
+        {
+          "name": "our-story",
+          "y": 2166,
+          "height": 560
+        },
+        {
+          "name": "preparation",
+          "y": 2725,
+          "height": 460
+        },
+        {
+          "name": "pricing",
+          "y": 3273,
+          "height": 994
+        },
+        {
+          "name": "testimonials",
+          "y": 4267,
+          "height": 885
+        },
+        {
+          "name": "lp-people lp-wrap",
+          "y": 5152,
+          "height": 430
+        },
+        {
+          "name": "lp-community lp-wrap",
+          "y": 5582,
+          "height": 226
+        },
+        {
+          "name": "faq",
+          "y": 5809,
+          "height": 615
+        }
+      ]
+    }
+  ],
+  "english": [
+    {
+      "width": 320,
+      "locale": "en",
+      "overflow": false,
+      "cards": [
+        {
+          "name": "Andi Ahyaul Wajdi",
+          "contained": true
+        },
+        {
+          "name": "Derva Anargya",
+          "contained": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "contained": true
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "locale": "en",
+      "overflow": false,
+      "cards": [
+        {
+          "name": "Andi Ahyaul Wajdi",
+          "contained": true
+        },
+        {
+          "name": "Derva Anargya",
+          "contained": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "contained": true
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "locale": "en",
+      "overflow": false,
+      "cards": [
+        {
+          "name": "Andi Ahyaul Wajdi",
+          "contained": true
+        },
+        {
+          "name": "Derva Anargya",
+          "contained": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "contained": true
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "locale": "en",
+      "overflow": false,
+      "cards": [
+        {
+          "name": "Andi Ahyaul Wajdi",
+          "contained": true
+        },
+        {
+          "name": "Derva Anargya",
+          "contained": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "contained": true
+        }
+      ]
+    }
+  ]
+}

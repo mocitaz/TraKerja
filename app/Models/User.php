@@ -143,6 +143,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     protected $hidden = [
         'password',
         'remember_token',
+        'otp_code',
+        'otp_expires_at',
     ];
 
     /**
@@ -154,6 +156,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     {
         return [
             'email_verified_at' => 'datetime',
+            'otp_expires_at' => 'datetime',
             'password' => 'hashed',
             'is_admin' => 'boolean',
             'is_premium' => 'boolean',
@@ -187,6 +190,15 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     protected static function boot()
     {
         parent::boot();
+
+        static::updating(function (User $user) {
+            if ($user->isDirty('email')) {
+                EmailVerificationCode::where('user_id', $user->id)->update(['code_hash' => null, 'expires_at' => null]);
+                $user->otp_code = null;
+                $user->otp_expires_at = null;
+                $user->email_verified_at = null;
+            }
+        });
 
         static::creating(function ($user) {
             if (empty($user->avatar_id)) {
@@ -570,13 +582,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     /**
      * Generate and send OTP for email verification
      */
-    public function sendOtpVerification(): void
+    public function sendEmailVerificationNotification(): void
     {
-        $otp = str_pad(random_int(100000, 999999), 6, '0', STR_PAD_LEFT);
-        $this->otp_code = $otp;
-        $this->otp_expires_at = now()->addMinutes(10);
-        $this->save();
-        \Mail::to($this)->send(new \App\Mail\OtpVerificationMail($this, $otp));
+        app(\App\Services\EmailVerificationService::class)->send($this);
     }
 
     /**
@@ -584,26 +592,20 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
      */
     public function verifyOtp(string $otp): bool
     {
-        if ($this->otp_code === $otp && $this->otp_expires_at && now()->lessThanOrEqualTo($this->otp_expires_at)) {
-            $this->otp_code = null;
-            $this->otp_expires_at = null;
-            $this->email_verified_at = now();
-            $this->save();
+        try {
+            app(\App\Services\EmailVerificationService::class)->verify($this, $otp);
             return true;
+        } catch (\Illuminate\Validation\ValidationException) {
+            return false;
         }
-        return false;
     }
 
     /**
-     * Generate and send OTP for password reset
+     * Compatibility entry point for email verification callers.
      */
-    public function sendOtpPasswordReset(): void
+    public function sendOtpVerification(): void
     {
-        $otp = str_pad(random_int(100000, 999999), 6, '0', STR_PAD_LEFT);
-        $this->otp_code = $otp;
-        $this->otp_expires_at = now()->addMinutes(10);
-        $this->save();
-        \Mail::to($this)->send(new \App\Mail\OtpVerificationMail($this, $otp));
+        $this->sendEmailVerificationNotification();
     }
 
     /**

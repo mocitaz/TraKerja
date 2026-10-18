@@ -17,9 +17,16 @@ class EmailVerificationNotificationController extends Controller
             return redirect()->intended(route('dashboard', absolute: false));
         }
 
-        // Send immediately (not queued)
-        $request->user()->sendEmailVerificationNotification();
+        try {
+            $request->user()->sendEmailVerificationNotification();
+        } catch (\Illuminate\Validation\ValidationException $exception) {
+            throw $exception;
+        } catch (\Throwable $exception) {
+            \Log::warning('Verification code delivery failed', ['user_id' => $request->user()->id, 'exception' => get_class($exception)]);
 
-        return back()->with('status', 'verification-link-sent');
+            return back()->withErrors(['otp' => __('verification.delivery_failed')]);
+        }
+
+        return back()->with('status', __('verification.sent'));
     }
 }

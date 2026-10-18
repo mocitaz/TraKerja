@@ -1,0 +1,930 @@
+{
+  "date": "2026-10-18",
+  "engine": "Chromium",
+  "checks": [
+    {
+      "locale": "id",
+      "width": 320,
+      "dark": false,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "id",
+      "width": 320,
+      "dark": true,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "id",
+      "width": 390,
+      "dark": false,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "id",
+      "width": 390,
+      "dark": true,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "id",
+      "width": 600,
+      "dark": false,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "id",
+      "width": 600,
+      "dark": true,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "id",
+      "width": 768,
+      "dark": false,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "id",
+      "width": 768,
+      "dark": true,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "id",
+      "width": 1024,
+      "dark": false,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "id",
+      "width": 1024,
+      "dark": true,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "id",
+      "width": 1440,
+      "dark": false,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "id",
+      "width": 1440,
+      "dark": true,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "id",
+      "width": 1920,
+      "dark": false,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "id",
+      "width": 1920,
+      "dark": true,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "en",
+      "width": 320,
+      "dark": false,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "en",
+      "width": 320,
+      "dark": true,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "dark": false,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "dark": true,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "en",
+      "width": 600,
+      "dark": false,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "en",
+      "width": 600,
+      "dark": true,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "en",
+      "width": 768,
+      "dark": false,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "en",
+      "width": 768,
+      "dark": true,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "en",
+      "width": 1024,
+      "dark": false,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "en",
+      "width": 1024,
+      "dark": true,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "dark": false,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "dark": true,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "en",
+      "width": 1920,
+      "dark": false,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    },
+    {
+      "locale": "en",
+      "width": 1920,
+      "dark": true,
+      "overflow": 0,
+      "fontLoaded": true,
+      "unresolved": false,
+      "smallControls": [],
+      "states": [
+        {
+          "name": "Fadhail Bima Dharmawan",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Derva Anargya",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        },
+        {
+          "name": "Rendika Azhar",
+          "quoteVisible": true,
+          "contentFits": true,
+          "stars": 5,
+          "logoLoaded": true
+        }
+      ],
+      "noStoryAction": true
+    }
+  ]
+}

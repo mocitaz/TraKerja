@@ -1,4 +1,4 @@
-:root { --workspace-background: #fdfcf9; }
+:root { --workspace-background: #ffffff; }
 .workspace-shell { background: var(--workspace-background); }
 .workspace-navigation,
 .dashboard-workspace {

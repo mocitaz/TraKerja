@@ -1,0 +1,30 @@
+[
+  {
+    "width": 320,
+    "rise": 24,
+    "mountainShift": 0,
+    "heightChange": 0,
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "rise": 24,
+    "mountainShift": 0,
+    "heightChange": 0,
+    "overflow": false
+  },
+  {
+    "width": 820,
+    "rise": 27.390625,
+    "mountainShift": -0.015625,
+    "heightChange": 0,
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "rise": 48,
+    "mountainShift": 0,
+    "heightChange": 0,
+    "overflow": false
+  }
+]

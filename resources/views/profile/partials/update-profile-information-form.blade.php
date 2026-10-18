@@ -1,7 +1,3 @@
-<form id="send-verification" method="post" action="{{ route('verification.send') }}">
-    @csrf
-</form>
-
 <form method="post" action="{{ route('profile.update') }}" class="space-y-4" id="identityUpdateForm">
     @csrf
     @method('patch')
@@ -48,15 +44,10 @@
                     <div class="flex-1">
                         <p class="text-[11px] text-amber-800 leading-normal font-semibold">
                             {{ __('Your email address is unverified.') }}
-                            <button form="send-verification" class="font-bold underline hover:no-underline focus:outline-none">
-                                {{ __('Re-send verification email') }}
-                            </button>
+                            <a href="{{ route('verification.notice') }}" class="font-bold underline hover:no-underline">
+                                {{ __('verification.submit') }}
+                            </a>
                         </p>
-                        @if (session('status') === 'verification-link-sent')
-                            <p class="mt-1 text-[9px] font-bold text-emerald-600 uppercase tracking-wider">
-                                {{ __('✓ A new verification link has been sent!') }}
-                            </p>
-                        @endif
                     </div>
                 </div>
             </div>
