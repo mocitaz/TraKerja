@@ -30,3 +30,15 @@ Evidence is recorded in `output/footer-landscape/checks.json` and the desktop/mo
 ## FAQ position adjustment
 
 FAQ content is raised 24px on narrow screens and up to 48px on desktop by redistributing its existing top/bottom padding. The section's total height and the mountain/footer position are preserved. Browser checks at 320/390/820/1440px measured rises of 24/24/27.39/48px, zero document-height change, no horizontal overflow and at most 0.016px rounding in the mountain position. Build and whitespace checks passed. Gate PASS: the existing direction and controls are preserved, the adjusted content remains responsive, and no space or motion was added. Evidence: `output/footer-landscape/faq-rise-checks.json` and `faq-raised.png`.
+
+## Telegram community glass container
+
+The community section now follows FAQ and uses the user's requested translucent Apple-style glass treatment. A thin white-tinted gradient, 24px backdrop blur, saturation and inset edge highlights let the plum mountain colors show through. Dark mode uses the same treatment with a dark translucent base. The description uses the primary ink color for readability. The original Telegram link and text remain; the container stacks on small screens with an inset gutter and a 30px radius.
+
+Delivery gate: Hard PASS, eight width/theme checks at 320/390/820/1440px verify card/button bounds, no horizontal overflow and a button at least 44px high. Purpose PASS, translucency and local backdrop blur implement the supplied glass direction while helping text remain distinct from the halftone texture. Liveliness PASS, the existing 2/2/1 direction is retained without ongoing motion. Craftsmanship PASS, production build and whitespace checks pass; desktop-light and mobile-dark screenshots inspected, and the Telegram destination is unchanged. Evidence: `output/footer-landscape/community-glass-checks.json` and `community-glass-1440.png` / `community-glass-390.png`.
+
+## Lavender footer restored
+
+At the user's request, the landing footer is again the exception to the white page canvas: its light base is `#F7F4F9` with the original lavender/blush/mist radial tints. The landscape fade ends on the same base, preserving the seamless boundary. Other light page canvases remain white. Browser computed-color checks confirm the light footer and blend base match, the page body remains white, and the dark footer remains `#131017`. Build and whitespace checks passed. Gate PASS: the original footer direction is restored without new content, controls, layout or motion; source colors and rendered theme colors agree.
+
+Glass refinement: reduced the light base tint from approximately 8% to 3%, thinned the highlight gradient, reduced backdrop blur to 12px and increased saturation to 170%. Dark tint is lighter as well; rim highlights are stronger. This exposes more terrain detail without moving the container. Updated build, whitespace and eight viewport/theme checks pass; refreshed desktop/mobile evidence is in the existing community-glass files. Delivery gate PASS: same layout and controls, reference-directed translucency, existing motion direction, and verified viewport bounds.

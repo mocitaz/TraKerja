@@ -23,3 +23,5 @@ Design direction remains the existing TraKerja identity, energy 2 / rhythm 2 / m
 - Purpose gate PASS: the white canvas implements the user's requested color; component and status colors continue to carry their existing hierarchy and meaning.
 - Liveliness PASS: existing 2/2/1 direction and focal points retained; this change adds no animation or decoration.
 - Craftsmanship PASS: source tokens and layout fallbacks agree, current admin and user shells were rendered and measured, representative screenshots inspected, and 21 related feature tests passed.
+
+Subsequent user adjustment: the landing footer was explicitly restored to its lavender `#F7F4F9` base and original gradient tints. Other light page canvases remain white; see `footer-landscape.md` for the updated rendered-color checks.
