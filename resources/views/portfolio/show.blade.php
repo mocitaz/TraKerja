@@ -2,7 +2,7 @@
 <html @class(['dark' => $theme === 'dark']) lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ __(':value1 | Portfolio', ['value1' => ($user->name)]) }}</title>
+    <title>{{ __('page-titles.portfolio') }} | TraKerja</title>
     @if($preview)<meta name="robots" content="noindex,nofollow">@endif
     <meta name="description" content="{{ \Illuminate\Support\Str::limit(strip_tags($user->profile?->bio ?? $user->profile?->headline ?? 'Portfolio of '.$user->name), 160) }}">
     <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}?v=2">

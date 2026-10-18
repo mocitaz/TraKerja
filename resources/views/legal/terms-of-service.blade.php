@@ -1,6 +1,7 @@
 @extends('legal.layout')
 
 @section('title', __('Terms of Service'))
+@section('page_title', __('page-titles.terms'))
 @section('description', __('The terms for using your TraKerja workspace.'))
 @section('document', 'terms-of-service')
 

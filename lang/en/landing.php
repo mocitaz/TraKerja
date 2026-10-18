@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'meta_title' => 'TraKerja | Your next career move, in focus',
+    'meta_title' => 'TraKerja',
     'meta_description' => 'Keep applications, selection schedules, CVs and career preparation in one workspace. Make your next move with TraKerja.',
     'nav' => ['product' => 'Product', 'workflow' => 'Our story', 'plans' => 'Plans', 'faq' => 'FAQ', 'support' => 'Support', 'login' => 'Log in', 'start' => 'Create your workspace', 'dashboard' => 'Open workspace', 'menu' => 'Menu', 'close' => 'Close menu', 'theme' => 'Switch appearance', 'skip' => 'Skip to content'],
     'hero' => [

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ __(':value1 - Admin', ['value1' => (config('app.name', 'Laravel'))]) }}</title>
+        <title>Admin | TraKerja</title>
 
         <!-- Favicon -->
         <link class="favicon" rel="icon" type="image/png" href="{{ asset('images/icon.png') }}?v=2">

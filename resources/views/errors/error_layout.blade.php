@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
-    <title>@yield('code') · @yield('title') · TraKerja</title>
+    <title>@yield('code') | TraKerja</title>
     <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}?v=2">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <!-- Anti-FOUC & Theme Initialization Script -->

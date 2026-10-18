@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'meta_title' => 'TraKerja | Langkah kariermu, lebih terarah',
+    'meta_title' => 'TraKerja',
     'meta_description' => 'Satukan lamaran, jadwal seleksi, CV, dan persiapan karier dalam satu ruang kerja. Siapkan langkah berikutnya bareng TraKerja.',
     'nav' => ['product' => 'Produk', 'workflow' => 'Cerita kami', 'plans' => 'Paket', 'faq' => 'FAQ', 'support' => 'Bantuan', 'login' => 'Masuk', 'start' => 'Buat ruang kerjamu', 'dashboard' => 'Buka ruang kerja', 'menu' => 'Menu', 'close' => 'Tutup menu', 'theme' => 'Ganti tampilan', 'skip' => 'Langsung ke konten'],
     'hero' => [

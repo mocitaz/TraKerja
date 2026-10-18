@@ -14,7 +14,7 @@
     </div>
     <div class="lp-hero-art" data-perspective>
         <div class="lp-art-wash" aria-hidden="true"></div>
-        <img draggable="false" class="lp-hero-portrait" src="{{ asset('images/landing/hero-portrait.webp') }}" alt="{{ __('landing.hero.portrait_alt') }}" width="1254" height="1254" fetchpriority="high">
+        <img draggable="false" class="lp-hero-portrait" src="{{ asset('images/landing/hero-portrait-branded-v3.webp') }}" alt="{{ __('landing.hero.portrait_alt') }}" width="1254" height="1254" fetchpriority="high">
         <div class="lp-paper-ribbon lp-paper-ribbon--back" aria-hidden="true"></div>
         <div class="lp-paper-ribbon" aria-hidden="true"></div>
         <div class="lp-float-card lp-float-card--schedule">

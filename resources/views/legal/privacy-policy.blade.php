@@ -1,6 +1,7 @@
 @extends('legal.layout')
 
 @section('title', __('Privacy Policy'))
+@section('page_title', __('page-titles.privacy'))
 @section('description', __('How your information is collected, used, and managed.'))
 @section('document', 'privacy-policy')
 

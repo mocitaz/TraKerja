@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createDemoPlayer, pointerOffset, reviewPositions } from '../../resources/js/landing-motion.js';
+import { createDemoPlayer, pointerOffset, reviewPositions, productEntranceEffect } from '../../resources/js/landing-motion.js';
 
 test('demo playback finishes, can replay, and never makes a provider request', () => {
     let callback;
@@ -51,7 +51,7 @@ test('testimonial navigation keeps one centered card and wraps in both direction
 
 const { createEntranceObserver } = await import('../../resources/js/landing-motion.js');
 
-function entranceFixture(reduced = false) {
+function entranceFixture(reduced = false, effect) {
     let notify, preference;
     const observed = new Set(), calls = [], animations = [];
     const target = {
@@ -70,7 +70,7 @@ function entranceFixture(reduced = false) {
         unobserve(element) { observed.delete(element); }
         disconnect() { observed.clear(); }
     }
-    const cleanup = createEntranceObserver({ elements: [target], motion, Observer });
+    const cleanup = createEntranceObserver({ elements: [target], motion, Observer, effect });
     return { target, calls, animations, observed, cleanup,
         intersect(visible = true) { notify([{ target, isIntersecting: visible }]); },
         reduce() { motion.matches = true; preference(); },
@@ -104,4 +104,32 @@ test('reduced motion skips entrances and changing the preference cancels active 
 test('unsupported observers leave section content untouched', () => {
     const element = { animate() { assert.fail('unsupported browsers must keep static content'); } };
     assert.doesNotThrow(() => createEntranceObserver({ elements: [element], motion: { matches: false }, Observer: null })());
+});
+
+test('custom product entrances still wait for visibility and cancel when motion is reduced', () => {
+    let calls = 0;
+    const effect = () => { calls++; return productEntranceEffect('window'); };
+    const view = entranceFixture(false, effect);
+    assert.equal(calls, 0);
+    view.intersect();
+    assert.equal(calls, 1);
+    assert.equal(view.calls[0].frames.at(-1).opacity, 1);
+    assert.equal(view.calls[0].options.fill, 'backwards');
+    view.reduce();
+    assert.equal(view.animations[0].canceled, true);
+    view.intersect();
+    assert.equal(calls, 1);
+    const reduced = entranceFixture(true, effect);
+    reduced.intersect();
+    assert.equal(calls, 1);
+});
+
+test('product motion presets finish within a bounded interval and settle on visible content', () => {
+    for (const kind of ['headline', 'window', 'track', 'panel', 'row', 'content']) {
+        const { frames, options } = productEntranceEffect(kind, 30);
+        assert.ok(Number.isFinite(options.duration + options.delay));
+        assert.ok(options.duration + options.delay < 1800);
+        assert.notEqual(options.iterations, Infinity);
+        assert.notEqual(frames.at(-1).opacity, 0);
+    }
 });

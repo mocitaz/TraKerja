@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="robots" content="noindex,follow">
-    <title>{{ __('auth-ui.'.$page.'.title') }} · TraKerja</title>
+    <title>{{ __('page-titles.'.$page) }} | TraKerja</title>
     <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('images/icon.png') }}">
     <link rel="preload" href="{{ asset('fonts/google-sans-flex/latin.woff2') }}" as="font" type="font/woff2" crossorigin>

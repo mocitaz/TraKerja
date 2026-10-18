@@ -22,7 +22,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{{ __(':value1 - CV', ['value1' => ($user->name)]) }}</title>
+    <title>CV | TraKerja</title>
     <style>
         @page { size: A4 portrait; margin: {{ $pageMargin }}; }
         * { box-sizing: border-box; }
