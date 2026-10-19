@@ -1,7 +1,7 @@
 @php
     $reviews = [
         ['name' => 'Bintang Syafrian Rizal', 'role' => 'Data Analyst at CIMB Niaga', 'image' => 'review-bintang.webp', 'portrait_top' => true, 'quote' => '"TraKerja transformed my chaotic job application spreadsheet into a super clean, visual Kanban tracker. It\'s an absolute game-changer for organizing my career search!"'],
-        ['name' => 'Aretha', 'role' => 'IT Project Management Officer', 'company' => 'PT Asuransi Kredit Indonesia (Askrindo)', 'image' => 'review-aretha.webp', 'portrait_top' => true, 'quote' => '"The dashboard is incredibly clean and intuitive. Having real-time stage progression metrics and automated AI insights made my entire application process transparent."'],
+        ['name' => 'Aretha Khansa', 'role' => 'IT Project Management Officer', 'company' => 'PT Asuransi Kredit Indonesia (Askrindo)', 'image' => 'review-aretha.webp', 'portrait_top' => true, 'quote' => '"The dashboard is incredibly clean and intuitive. Having real-time stage progression metrics and automated AI insights made my entire application process transparent."'],
         ['name' => 'Al Ferro Putra', 'role' => 'App Developer at BRI', 'image' => 'review-al-ferro.webp', 'portrait_top' => true, 'quote' => '"The Chrome Extension is spectacular. Saving jobs from LinkedIn directly into my Kanban board in one click saves me hours of manual data entry every single week."'],
     ];
 @endphp

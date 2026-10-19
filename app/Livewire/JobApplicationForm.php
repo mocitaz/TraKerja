@@ -1150,14 +1150,6 @@ class JobApplicationForm extends Component
         return $userPlatforms;
     }
 
-    public function getListeners()
-    {
-        return [
-            'edit-job' => 'editJob',
-            'editJob' => 'editJob'
-        ];
-    }
-
     public function selectPlatform(string $name): void
     {
         if (in_array($name, \App\Support\PlatformCatalog::OPTIONS, true)) {
@@ -1211,11 +1203,6 @@ class JobApplicationForm extends Component
 
     public function editJob($jobId)
     {
-        // Prevent multiple calls for the same job
-        if ($this->isEditing && $this->jobApplication && $this->jobApplication->id == $jobId) {
-            return;
-        }
-
         // Ensure jobId is an integer
         $jobId = (int) $jobId;
 

@@ -16,6 +16,41 @@ class SelectionScheduleTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_tracker_close_event_discards_unsaved_schedule_before_reopening(): void
+    {
+        $user = User::factory()->create();
+        $job = JobApplication::factory()->create([
+            'user_id' => $user->id, 'location' => 'Remote', 'platform' => 'LinkedIn',
+            'application_status' => 'On Process', 'recruitment_stage' => 'HR - Interview',
+            'interview_date' => '2026-11-02 10:00:00',
+        ]);
+
+        Livewire::actingAs($user)->test(JobApplicationForm::class)
+            ->dispatch('edit-job', jobId: $job->id)
+            ->set('interview_date', '2026-11-04T14:30')
+            ->dispatch('resetFormForNewJob')
+            ->assertSet('isEditing', false)
+            ->assertSet('interview_date', '')
+            ->dispatch('edit-job', jobId: $job->id)
+            ->assertSet('interview_date', '2026-11-02T10:00')
+            ->set('interview_date', '2026-11-05T09:15')
+            ->call('save')->assertHasNoErrors()->assertDispatched('application-saved');
+
+        $this->assertSame('2026-11-05 09:15', $job->fresh()->interview_date->format('Y-m-d H:i'));
+    }
+
+    public function test_reopening_same_tracker_application_reloads_the_saved_schedule(): void
+    {
+        $user = User::factory()->create();
+        $job = JobApplication::factory()->create([
+            'user_id' => $user->id, 'location' => 'Remote', 'platform' => 'LinkedIn',
+            'recruitment_stage' => 'HR - Interview', 'interview_date' => '2026-11-02 10:00:00',
+        ]);
+        $form = Livewire::actingAs($user)->test(JobApplicationForm::class)->dispatch('edit-job', jobId: $job->id);
+        $job->update(['interview_date' => '2026-11-06 11:00:00']);
+        $form->dispatch('edit-job', jobId: $job->id)->assertSet('interview_date', '2026-11-06T11:00');
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
