@@ -112,6 +112,7 @@ class AuthPresentationTest extends TestCase
         foreach (['/login', '/register'] as $url) {
             $html = $this->get('https://example.test'.$url)->assertOk()->getContent();
             $this->assertStringContainsString('class="cf-turnstile"', $html);
+            $this->assertStringContainsString('data-size="flexible"', $html);
             $this->assertStringContainsString('challenges.cloudflare.com/turnstile/v0/api.js', $html);
         }
     }
