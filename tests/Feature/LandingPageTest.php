@@ -33,7 +33,7 @@ class LandingPageTest extends TestCase
             $this->assertStringContainsString('27.000', $html);
             $this->assertStringContainsString('data-demo-player', $html);
             $this->assertStringContainsString('id="testimonials"', $html);
-            foreach (['Rendika Azhar', 'Andi Ahyaul Wajdi', 'Derva Anargya'] as $name) $this->assertStringContainsString($name, $html);
+            foreach (['Bintang Syafrian Rizal', 'Aretha', 'Al Ferro Putra'] as $name) $this->assertStringContainsString($name, $html);
             foreach ($document->getElementsByTagName('a') as $link) {
                 $href = $link->getAttribute('href');
                 if (str_starts_with($href, '#')) {

@@ -286,9 +286,11 @@ summary .lp-icon { width:17px; height:17px; transition:transform .2s; }
 .lp-review-card[data-position='center'] .lp-review-photo { display:block; position:absolute; inset:0; }
 .lp-review-card[data-position='center']::after { content:''; position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg,#211b27d9 0%,#211b27c4 20%,#211b2700 52%,#211b2700 65%,#211b27d9 100%); }
 .lp-review-photo img { filter:grayscale(1) contrast(1.06) brightness(.88); width:100%; height:100%; object-fit:cover; object-position:center 45%; transform:scale(1.18); transform-origin:center 42%; }
+.lp-review-photo--top img { object-position:center top; transform:none; }
 .lp-review-content { padding:28px; height:100%; display:flex; flex-direction:column; }
 .lp-review-author { display:flex; align-items:center; gap:11px; }
-.lp-review-author > img { filter:grayscale(1) contrast(1.06) brightness(.9); width:42px; height:42px; border-radius:50%; object-fit:cover; object-position:center 35%; }
+.lp-review-author > img { filter:grayscale(1) contrast(1.06) brightness(.9); width:42px; height:42px; flex-shrink:0; aspect-ratio:1; border-radius:50%; object-fit:cover; object-position:center top; }
+.lp-review-author > div { min-width:0; }
 .lp-review-author h3 { font-size:13px; font-weight:550; line-height:1.5; }
 .lp-review-author p { font-size:11px; color:var(--lp-muted); margin-top:3px; }
 .lp-review-card blockquote { margin:36px 0 20px; font-size:14px; line-height:1.85; color:var(--lp-muted); }
@@ -302,6 +304,7 @@ summary .lp-icon { width:17px; height:17px; transition:transform .2s; }
 .lp-review-card[data-position='center'] .lp-review-content { position:relative; z-index:2; }
 .lp-review-card[data-position='center'] .lp-review-author h3 { font-size:21px; font-weight:550; color:#fff; }
 .lp-review-card[data-position='center'] .lp-review-author p { color:#fff; font-size:13px; }
+.lp-review-card[data-position='center'] .lp-review-company { display:block; }
 .lp-review-card[data-position='center'] .lp-review-signature { color:#fff; }
 .lp-review-card[data-position='center'] blockquote { margin: auto 0 18px; padding:13px 15px; border-radius:12px; border:1px solid #ffffffb3; background:#ffffffe0; color:#302735; backdrop-filter:blur(18px) saturate(.7); -webkit-backdrop-filter:blur(18px) saturate(.7); box-shadow:0 8px 24px -18px #0006; font-size:14px; line-height:1.7; }
 .lp-review-card[data-position='center'] .lp-review-footer { margin-top:0; }
