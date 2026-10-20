@@ -30,7 +30,9 @@ class SyncPendingPayments extends Command
             $this->info("Checking Order ID: {$payment->order_id} (Amount: Rp " . number_format($payment->amount) . ")...");
 
             try {
-                $statusCheck = $pakasir->checkTransactionStatus($payment->order_id, $payment->amount);
+                $statusCheck = $pakasir->checkTransactionStatus(
+                    $payment->order_id, $payment->amount, $payment->pakasir_txn_id, $payment->pakasir_is_sandbox
+                );
 
                 if ($statusCheck['success']) {
                     $apiStatus = $statusCheck['data']['status'] ?? null;
@@ -41,18 +43,15 @@ class SyncPendingPayments extends Command
                         $this->info($granted
                             ? '-> SUCCESS: Payment synchronized and benefits granted.'
                             : '-> SUCCESS: Payment already settled; no duplicate benefits.');
-                    } elseif (in_array($apiStatus, ['failed', 'canceled'])) {
-                        $apiStatus === 'canceled' ? $payment->markAsCanceled() : $payment->markAsFailed();
-                        $this->warn("-> FAILED: Payment updated to FAILED status.");
+                    } elseif ($apiStatus === 'canceled') {
+                        $payment->markAsCanceled();
+                        $this->warn('-> CANCELED: Provider canceled or expired this payment.');
                     } else {
                         $this->line("-> No change: Payment remains in pending/waiting status.");
                     }
                 } else {
                     $errorMsg = $statusCheck['error'] ?? 'Unknown Error';
                     $this->error("-> Failed to check status from API: " . $errorMsg);
-                    if (isset($statusCheck['debug'])) {
-                        $this->line("   Debug: " . json_encode($statusCheck['debug']));
-                    }
                 }
             } catch (\Exception $e) {
                 $this->error("-> Error processing Order ID {$payment->order_id}: " . $e->getMessage());

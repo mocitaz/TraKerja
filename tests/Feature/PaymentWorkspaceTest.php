@@ -17,7 +17,9 @@ class PaymentWorkspaceTest extends TestCase
     {
         return Payment::create(array_merge(['user_id' => $user->id, 'order_id' => 'ORDER-'.$user->id.'-'.$status,
             'amount' => 14999, 'status' => $status, 'notes' => 'addon_10', 'customer_name' => $user->name,
-            'customer_email' => $user->email, 'customer_phone' => '0800000000', 'redirect_url' => 'https://app.pakasir.com/pay/test/14999'], $extra));
+            'pakasir_txn_id' => 'txn-'.$user->id.'-'.$status, 'pakasir_is_sandbox' => false,
+            'customer_email' => $user->email, 'customer_phone' => '0800000000',
+            'redirect_url' => 'https://app.pakasir.com/pay-v2/txn-'.$user->id.'-'.$status], $extra));
     }
 
     public function test_checkout_displays_configured_price_duration_and_complete_addon_bundle(): void
@@ -70,21 +72,29 @@ class PaymentWorkspaceTest extends TestCase
     public function test_checkout_accepts_qris_and_bank_transfer_and_rejects_unknown_methods(): void
     {
         Http::preventStrayRequests();
-        config(['pakasir.slug' => 'test-merchant']);
+        config(['pakasir.slug' => 'test-merchant', 'pakasir.api_key' => 'test-key', 'pakasir.sandbox' => false]);
+        $counter = 0;
+        Http::fake(function ($request) use (&$counter) {
+            $id = 'txn-checkout-'.++$counter;
+            return Http::response(['txn_id' => $id, 'payment_link' => 'https://app.pakasir.com/pay-v2/'.$id]);
+        });
         $user = User::factory()->create();
         foreach (['qris', 'bank_transfer'] as $method) {
             $response = $this->actingAs($user)->post(route('payment.checkout'), [
                 'package_type' => 'premium', 'payment_channel_code' => $method,
             ]);
             $response->assertRedirect();
-            $this->assertStringStartsWith('https://app.pakasir.com/pay/test-merchant/', $response->headers->get('Location'));
+            $this->assertStringStartsWith('https://app.pakasir.com/pay-v2/txn-checkout-', $response->headers->get('Location'));
             $this->assertSame($method === 'qris', str_contains($response->headers->get('Location'), 'qris_only=1'));
             $this->assertDatabaseHas('payments', ['user_id' => $user->id, 'status' => 'WAITING', 'payment_channel_code' => $method]);
         }
         $this->post(route('payment.checkout'), ['package_type' => 'premium', 'payment_channel_code' => 'unknown'])
             ->assertSessionHasErrors('payment_channel_code');
         $this->assertDatabaseCount('payments', 2);
-        Http::assertNothingSent();
+        Http::assertSentCount(2);
+        Http::assertSent(fn ($request) => $request->method() === 'POST'
+            && str_starts_with($request->url(), 'https://app.pakasir.com/api/v2/create-transaction/test-merchant/')
+            && $request['method'] === 'payment_link' && $request->hasHeader('X-Api-Key', 'test-key'));
     }
 
     public function test_status_copy_and_recorded_benefits_follow_the_selected_language(): void

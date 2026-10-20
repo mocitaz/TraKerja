@@ -13,6 +13,8 @@ return [
 
     'slug' => env('PAKASIR_SLUG', 'depodomain'),
     'api_key' => env('PAKASIR_API_KEY', ''),
+    'webhook_secret' => env('PAKASIR_WEBHOOK_SECRET', ''),
+    'sandbox' => filter_var(env('PAKASIR_SANDBOX', false), FILTER_VALIDATE_BOOLEAN),
     
     /*
     |--------------------------------------------------------------------------

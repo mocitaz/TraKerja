@@ -82,8 +82,10 @@ class PremiumEntitlementTest extends TestCase
     {
         $user = $this->premiumUser(['premium_until' => $oldExpiry]);
         $payment = Payment::create(['user_id' => $user->id, 'order_id' => 'PREMIUM-RENEWAL', 'amount' => 199000,
-            'status' => 'PENDING', 'notes' => 'premium', 'customer_name' => $user->name, 'customer_email' => $user->email, 'customer_phone' => '0800000000']);
-        $detail = ['project' => 'test-merchant', 'order_id' => $payment->order_id, 'amount' => 199000, 'status' => 'completed'];
+            'status' => 'PENDING', 'notes' => 'premium', 'pakasir_txn_id' => 'txn-renewal', 'pakasir_is_sandbox' => false,
+            'customer_name' => $user->name, 'customer_email' => $user->email, 'customer_phone' => '0800000000']);
+        $detail = ['project' => 'test-merchant', 'order_id' => $payment->order_id, 'amount' => 199000,
+            'status' => 'completed', 'txn_id' => 'txn-renewal', 'is_sandbox' => false];
         $this->assertTrue(app(PaymentSettlementService::class)->settle($payment, $detail));
         $this->assertSame($expected, (string) $user->fresh()->premium_until);
         $this->assertTrue($user->fresh()->isPremium());

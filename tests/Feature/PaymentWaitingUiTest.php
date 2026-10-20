@@ -22,6 +22,7 @@ class PaymentWaitingUiTest extends TestCase
     private function payment(User $user): Payment
     {
         return Payment::create(['user_id' => $user->id, 'order_id' => 'WAIT-UI-1', 'amount' => 14999,
+            'pakasir_txn_id' => 'txn-waiting-ui', 'pakasir_is_sandbox' => false,
             'status' => 'WAITING', 'payment_method' => 'bca_va', 'va_number' => '1234567890',
             'customer_phone' => '0800000000', 'customer_name' => $user->name, 'customer_email' => $user->email]);
     }

@@ -175,7 +175,7 @@ class PaymentController extends Controller
     public function checkout(Request $request)
     {
         $request->validate([
-            'payment_channel_code' => 'required|string|in:qris,bank_transfer,bca_va,bni_va,bri_va,permata_va',
+            'payment_channel_code' => 'required|string|in:qris,bank_transfer',
             'package_type' => 'nullable|string|in:premium,addon_10,cl_addon_15',
         ]);
 
@@ -220,18 +220,22 @@ class PaymentController extends Controller
                 'callback_url' => route('payment.callback', ['order_id' => $orderId]),
                 'notification_url' => route('payment.webhook'),
                 'notes' => $packageType,
-                'metadata' => ['package_type' => $packageType],
+                'metadata' => ['package_type' => $packageType, 'pakasir_api_version' => 2],
             ]);
 
-            // For Pakasir, we can use Integration Via URL (Redirect)
-            // or Integration Via API. Redirect is easier.
-
             $qrisOnly = ($request->payment_channel_code === 'qris');
+            if ($qrisOnly && $amount > 10000000) {
+                throw new \RuntimeException('Amount exceeds QRIS limit');
+            }
+            $created = $this->getPakasirService()->createTransaction($orderId, $amount, 'payment_link');
+            if (! $created['success']) {
+                throw new \RuntimeException($created['error']);
+            }
+            $txnId = $created['data']['txn_id'];
             $redirectUrl = route('payment.callback', ['order_id' => $orderId]);
 
             $paymentUrl = $this->getPakasirService()->generatePaymentUrl(
-                orderId: $orderId,
-                amount: $amount,
+                txnId: $txnId,
                 qrisOnly: $qrisOnly,
                 redirectUrl: $redirectUrl
             );
@@ -239,6 +243,8 @@ class PaymentController extends Controller
             // Update payment with redirect URL
             $payment->update([
                 'redirect_url' => $paymentUrl,
+                'pakasir_txn_id' => $txnId,
+                'pakasir_is_sandbox' => (bool) config('pakasir.sandbox'),
                 'status' => 'WAITING',
             ]);
 
@@ -261,7 +267,7 @@ class PaymentController extends Controller
             ]);
 
             return back()->withErrors([
-                'payment_error' => __('Terjadi kesalahan saat memproses pembayaran. Detail: ') . $e->getMessage()
+                'payment_error' => __('Terjadi kesalahan saat memproses pembayaran. Silakan coba lagi.')
             ]);
         }
     }
@@ -290,7 +296,9 @@ class PaymentController extends Controller
         }
 
         // Since this is a simple redirect, we should check status via API
-        $statusCheck = $this->getPakasirService()->checkTransactionStatus($orderId, $payment->amount);
+        $statusCheck = $this->getPakasirService()->checkTransactionStatus(
+            $orderId, $payment->amount, $payment->pakasir_txn_id, $payment->pakasir_is_sandbox
+        );
 
         if ($statusCheck['success']) {
             $status = $statusCheck['data']['status'] ?? 'pending';
@@ -298,6 +306,10 @@ class PaymentController extends Controller
             if ($status === 'completed') {
                 $this->handleSuccessfulPayment($payment, $statusCheck['data']);
                 return redirect()->route('payment.success', ['orderId' => $orderId]);
+            }
+            if ($status === 'canceled') {
+                $payment->markAsCanceled();
+                return redirect()->route('payment.failed', ['orderId' => $orderId]);
             }
         }
 
@@ -310,15 +322,28 @@ class PaymentController extends Controller
      */
     public function webhook(Request $request)
     {
+        $secret = (string) config('pakasir.webhook_secret');
+        if ($secret === '') {
+            return response()->json(['message' => 'Webhook configuration unavailable'], 503);
+        }
+        if (! hash_equals($secret, (string) $request->header('X-Secret', ''))) {
+            return response()->json(['message' => 'Invalid webhook secret'], 401);
+        }
+        // Pakasir's documented curl example sends JSON without a JSON content type.
+        if (! $request->isJson() && is_array($json = json_decode($request->getContent(), true))) {
+            $request->merge($json);
+        }
         $data = $request->validate([
+            'txn_id' => 'required|string|max:100|regex:/\A[a-zA-Z0-9_-]+\z/',
             'order_id' => 'required|string|max:255',
-            'project' => 'required|string|max:255',
+            'project' => 'sometimes|required|string|max:255',
             'amount' => 'required|integer|min:1',
-            'status' => 'required|string|max:50',
+            'status' => 'required|in:pending,completed,canceled',
+            'is_sandbox' => 'required|boolean',
         ]);
         $orderId = $data['order_id'];
 
-        if ($data['project'] !== config('pakasir.slug')) {
+        if (isset($data['project']) && $data['project'] !== config('pakasir.slug')) {
             return response()->json(['message' => __('Project mismatch')], 400);
         }
 
@@ -329,6 +354,11 @@ class PaymentController extends Controller
 
         if ($payment->amount !== (int) $data['amount']) {
             return response()->json(['message' => __('Amount mismatch')], 400);
+        }
+        if ($payment->pakasir_txn_id !== $data['txn_id'] || $payment->pakasir_is_sandbox === null
+            || ! is_bool($data['is_sandbox']) || $payment->pakasir_is_sandbox !== $data['is_sandbox']
+            || $data['is_sandbox'] !== (bool) config('pakasir.sandbox')) {
+            return response()->json(['message' => 'Transaction or environment mismatch'], 400);
         }
 
         $payload = $request->all();
@@ -347,7 +377,9 @@ class PaymentController extends Controller
         ]);
 
         try {
-            $verification = $this->getPakasirService()->checkTransactionStatus($payment->order_id, $payment->amount);
+            $verification = $this->getPakasirService()->checkTransactionStatus(
+                $payment->order_id, $payment->amount, $payment->pakasir_txn_id, $payment->pakasir_is_sandbox
+            );
             if (! $verification['success']) {
                 $webhookLog->update(['status' => 'failed', 'notes' => 'Provider verification failed']);
 
@@ -356,10 +388,15 @@ class PaymentController extends Controller
 
             $transaction = $verification['data'];
             $status = $transaction['status'];
+            if ($data['status'] === 'completed' && $status === 'pending') {
+                $webhookLog->update(['status' => 'failed', 'notes' => 'Provider completion not yet visible']);
+
+                return response()->json(['message' => 'Payment confirmation pending; retry shortly'], 503);
+            }
             if ($status === 'completed') {
                 $this->handleSuccessfulPayment($payment, $transaction);
-            } elseif ($status === 'failed' || $status === 'canceled') {
-                $status === 'canceled' ? $payment->markAsCanceled() : $payment->markAsFailed();
+            } elseif ($status === 'canceled') {
+                $payment->markAsCanceled();
             }
 
             $webhookLog->update(['status' => 'processed']);
@@ -491,7 +528,9 @@ class PaymentController extends Controller
             return response()->json(['success' => false, 'message' => __('Payment not found')], 404);
         }
 
-        $statusCheck = $this->getPakasirService()->checkTransactionStatus($orderId, $payment->amount);
+        $statusCheck = $this->getPakasirService()->checkTransactionStatus(
+            $orderId, $payment->amount, $payment->pakasir_txn_id, $payment->pakasir_is_sandbox
+        );
 
         if (!($statusCheck['success'] ?? false)) {
             return response()->json([
@@ -508,6 +547,9 @@ class PaymentController extends Controller
                 $this->handleSuccessfulPayment($payment, $statusCheck['data']);
                 // Refresh data model pembayaran agar status terbarunya langsung terambil (SUCCESS)
                 $payment->refresh();
+            }
+            if ($status === 'canceled') {
+                $payment->markAsCanceled();
             }
         }
 

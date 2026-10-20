@@ -15,6 +15,8 @@ class Payment extends Model
     protected $fillable = [
         'user_id',
         'order_id',
+        'pakasir_txn_id',
+        'pakasir_is_sandbox',
         'yukk_transaction_code',
         'yukk_token',
         'amount',
@@ -41,6 +43,7 @@ class Payment extends Model
 
     protected $casts = [
         'amount' => 'integer',
+        'pakasir_is_sandbox' => 'boolean',
         'request_at' => 'datetime',
         'paid_at' => 'datetime',
         'expired_at' => 'datetime',

@@ -35,8 +35,12 @@ final class PaymentPresentation
             return null;
         }
         $url = $payment->redirect_url;
-        return is_string($url) && filter_var($url, FILTER_VALIDATE_URL)
-            && in_array(strtolower(parse_url($url, PHP_URL_SCHEME) ?? ''), ['https', 'http'], true) ? $url : null;
+        return $payment->pakasir_txn_id && is_string($url) && filter_var($url, FILTER_VALIDATE_URL)
+            && parse_url($url, PHP_URL_SCHEME) === 'https'
+            && parse_url($url, PHP_URL_HOST) === 'app.pakasir.com'
+            && ! parse_url($url, PHP_URL_USER) && ! parse_url($url, PHP_URL_PASS)
+            && ! parse_url($url, PHP_URL_PORT)
+            && parse_url($url, PHP_URL_PATH) === '/pay-v2/'.$payment->pakasir_txn_id ? $url : null;
     }
 
     public static function method(Payment $payment): string

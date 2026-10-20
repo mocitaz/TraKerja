@@ -27,18 +27,21 @@ class PaymentIdempotencyTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        config(['pakasir.slug' => 'test-merchant', 'pakasir.api_key' => 'test-key']);
+        config(['pakasir.slug' => 'test-merchant', 'pakasir.api_key' => 'test-key',
+            'pakasir.webhook_secret' => 'test-webhook-secret', 'pakasir.sandbox' => false]);
+        $this->withHeader('X-Secret', 'test-webhook-secret');
         Mail::fake();
         Http::preventStrayRequests();
         $this->user = User::factory()->create(['ai_credits' => 0, 'cl_credits' => 0, 'photo_credits' => 0]);
         $this->payment = Payment::create([
             'user_id' => $this->user->id, 'order_id' => 'IDEMPOTENCY-1', 'amount' => 14999,
+            'pakasir_txn_id' => 'txn-idempotency', 'pakasir_is_sandbox' => false,
             'status' => 'PENDING', 'notes' => 'addon_10', 'customer_name' => $this->user->name,
             'customer_email' => $this->user->email, 'customer_phone' => '0800000000',
         ]);
         $this->transaction = ['project' => 'test-merchant', 'order_id' => $this->payment->order_id,
-            'amount' => 14999, 'status' => 'completed'];
-        Http::fake(['app.pakasir.com/*' => Http::response(['transaction' => $this->transaction])]);
+            'amount' => 14999, 'status' => 'completed', 'txn_id' => 'txn-idempotency', 'is_sandbox' => false];
+        Http::fake(['app.pakasir.com/*' => Http::response($this->transaction)]);
     }
 
     public static function unsuccessfulTransitions(): array
@@ -81,10 +84,10 @@ class PaymentIdempotencyTest extends TestCase
         Http::fake(function () use (&$duringLookup) {
             if (! $duringLookup) {
                 $duringLookup = true;
-                $this->postJson('/payment/webhook', $this->transaction)->assertOk();
+                app(\App\Services\PaymentSettlementService::class)->settle($this->payment, $this->transaction);
             }
 
-            return Http::response(['transaction' => $this->transaction]);
+            return Http::response($this->transaction);
         });
 
         $this->artisan('payments:sync-pending')->assertExitCode(0);

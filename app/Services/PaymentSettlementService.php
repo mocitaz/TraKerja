@@ -22,10 +22,15 @@ class PaymentSettlementService
             if (Validator::make($verifiedTransaction, [
                 'project' => 'required|string', 'order_id' => 'required|string',
                 'amount' => 'required|integer|min:1', 'status' => 'required|in:completed',
+                'txn_id' => 'required|string', 'is_sandbox' => 'required|boolean',
             ])->fails()
                 || $verifiedTransaction['project'] !== config('pakasir.slug')
                 || $verifiedTransaction['order_id'] !== $locked->order_id
-                || (int) $verifiedTransaction['amount'] !== $locked->amount) {
+                || (int) $verifiedTransaction['amount'] !== $locked->amount
+                || $verifiedTransaction['txn_id'] !== $locked->pakasir_txn_id
+                || ! is_bool($verifiedTransaction['is_sandbox'])
+                || $verifiedTransaction['is_sandbox'] !== $locked->pakasir_is_sandbox
+                || $verifiedTransaction['is_sandbox'] !== (bool) config('pakasir.sandbox')) {
                 throw new InvalidArgumentException('Verified transaction does not match payment');
             }
 

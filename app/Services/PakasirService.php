@@ -2,147 +2,166 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Validator;
+use InvalidArgumentException;
 
 class PakasirService
 {
-    private string $slug;
-    private string $apiKey;
-    private string $baseUrl;
+    private const BASE_URL = 'https://app.pakasir.com';
+    private const METHODS = ['payment_link', 'qris', 'bri_va', 'bni_va', 'cimb_niaga_va',
+        'danamon_va', 'maybank_va', 'bnc_va', 'bsi_va', 'muamalat_va', 'ocbc_va'];
 
-    public function __construct()
+    public function generatePaymentUrl(string $txnId, bool $qrisOnly = false, ?string $redirectUrl = null): string
     {
-        $this->slug = config('pakasir.slug');
-        $this->apiKey = config('pakasir.api_key');
-        $this->baseUrl = 'https://app.pakasir.com';
-    }
-
-    /**
-     * Generate Payment URL for redirection
-     */
-    public function generatePaymentUrl(string $orderId, int $amount, bool $qrisOnly = false, ?string $redirectUrl = null): string
-    {
-        $url = "{$this->baseUrl}/pay/{$this->slug}/{$amount}?order_id={$orderId}";
-
-        if ($qrisOnly) {
-            $url .= "&qris_only=1";
+        if (! $this->validTransactionId($txnId)) {
+            throw new InvalidArgumentException('Invalid Pakasir transaction identifier');
         }
 
-        if ($redirectUrl) {
-            $url .= "&redirect=" . urlencode($redirectUrl);
-        }
+        $query = array_filter(['qris_only' => $qrisOnly ? 1 : null, 'redirect' => $redirectUrl], fn ($value) => $value !== null);
 
-        return $url;
+        return self::BASE_URL.'/pay-v2/'.$txnId.($query ? '?'.http_build_query($query, '', '&', PHP_QUERY_RFC3986) : '');
     }
 
-    /**
-     * Check transaction status via API
-     */
-    public function checkTransactionStatus(string $orderId, int $amount): array
+    public function createTransaction(string $orderId, int $amount, string $method = 'payment_link'): array
     {
+        if (! in_array($method, self::METHODS, true) || $amount < ($method === 'payment_link' || $method === 'qris' ? 500 : 10000)
+            || $amount > ($method === 'qris' ? 10000000 : 50000000)) {
+            return $this->failure('Unsupported payment method or amount');
+        }
+
+        $result = $this->request('POST', 'create-transaction', $orderId, ['method' => $method, 'amount' => $amount]);
+        if (! $result['success']) {
+            return $result;
+        }
+
+        $data = $result['data'];
+        if (! $this->validTransactionId($data['txn_id'] ?? null)) {
+            return $this->failure('Invalid transaction response');
+        }
+
+        if ($method === 'payment_link') {
+            if (($data['payment_link'] ?? null) !== $this->generatePaymentUrl($data['txn_id'])) {
+                return $this->failure('Invalid payment link');
+            }
+        } elseif (! $this->matchesTransaction($data, $orderId, $amount, $data['txn_id'], (bool) config('pakasir.sandbox'))
+            || ($data['project'] ?? null) !== config('pakasir.slug')) {
+            return $this->failure('Transaction does not match order');
+        }
+
+        return $result;
+    }
+
+    public function checkTransactionStatus(string $orderId, int $amount, ?string $txnId = null, ?bool $sandbox = null): array
+    {
+        // V1 order IDs cannot be used as V2 transaction IDs or silently recreated.
+        if (! $this->validTransactionId($txnId) || $sandbox === null || $sandbox !== (bool) config('pakasir.sandbox')) {
+            return $this->failure('Payment requires a valid V2 transaction and matching environment');
+        }
+
+        $key = 'pakasir:v2:status:'.hash('sha256', config('pakasir.slug').'|'.$txnId);
         try {
-            $response = Http::timeout(30)
-                ->get("{$this->baseUrl}/api/transactiondetail", [
-                    'project' => $this->slug,
-                    'amount' => $amount,
-                    'order_id' => $orderId,
-                    'api_key' => $this->apiKey,
-                ]);
-
-            if ($response->successful()) {
-                $transaction = $response->json('transaction');
-                if (! is_array($transaction) || Validator::make($transaction, [
-                    'project' => 'required|string',
-                    'order_id' => 'required|string',
-                    'amount' => 'required|integer|min:1',
-                    'status' => 'required|string',
-                ])->fails()
-                    || $transaction['project'] !== $this->slug
-                    || $transaction['order_id'] !== $orderId
-                    || (int) $transaction['amount'] !== $amount) {
-                    Log::warning('Pakasir: Transaction detail does not match stored order', [
-                        'order_id' => $orderId,
-                    ]);
-
-                    return ['success' => false, 'error' => 'Invalid transaction detail'];
+            $result = Cache::lock($key.':lock', 40)->block(3, function () use ($key, $txnId) {
+                if (($cached = Cache::get($key)) !== null) {
+                    return $cached;
                 }
 
-                return [
-                    'success' => true,
-                    'data' => $transaction,
-                ];
+                $result = $this->request('GET', 'transaction-status', $txnId);
+                // Share the result between polling, browser returns, webhook and sync.
+                Cache::put($key, $result, now()->addSeconds(4));
+
+                return $result;
+            });
+        } catch (\Throwable $e) {
+            Log::warning('Pakasir V2: Status lookup unavailable', ['order_id' => $orderId]);
+
+            return $this->failure('Payment status temporarily unavailable');
+        }
+
+        if ($result['success']) {
+            if (! isset($result['data']['status']) || ! $this->matchesTransaction($result['data'], $orderId, $amount, $txnId, $sandbox)) {
+                return $this->failure('Transaction does not match order');
+            }
+            $result['data']['project'] = config('pakasir.slug');
+        }
+
+        return $result;
+    }
+
+    public function cancelTransaction(string $txnId): array
+    {
+        return $this->validTransactionId($txnId)
+            ? $this->request('POST', 'cancel-transaction', $txnId)
+            : $this->failure('Invalid transaction identifier');
+    }
+
+    public function simulatePayment(string $txnId): array
+    {
+        if (! config('pakasir.sandbox') || ! $this->validTransactionId($txnId)) {
+            return $this->failure('Payment simulation is only available in sandbox');
+        }
+
+        return $this->request('POST', 'payment-simulation', $txnId);
+    }
+
+    private function matchesTransaction(array $data, string $orderId, int $amount, string $txnId, bool $sandbox): bool
+    {
+        return ! Validator::make($data, [
+            'txn_id' => 'required|string', 'order_id' => 'required|string',
+            'amount' => 'required|integer|min:1', 'status' => 'sometimes|required|in:pending,completed,canceled',
+            'is_sandbox' => 'required|boolean',
+        ])->fails()
+            && ($data['project'] ?? config('pakasir.slug')) === config('pakasir.slug')
+            && $data['txn_id'] === $txnId && $data['order_id'] === $orderId
+            && (int) $data['amount'] === $amount && is_bool($data['is_sandbox']) && $data['is_sandbox'] === $sandbox
+            && (isset($data['status']) || isset($data['payment_method']));
+    }
+
+    private function validTransactionId(mixed $txnId): bool
+    {
+        return is_string($txnId) && preg_match('/\A[a-zA-Z0-9_-]{1,100}\z/', $txnId) === 1;
+    }
+
+    private function request(string $method, string $operation, string $identifier, array $body = []): array
+    {
+        $slug = (string) config('pakasir.slug');
+        $apiKey = (string) config('pakasir.api_key');
+        if ($slug === '' || $apiKey === '') {
+            return $this->failure('Pakasir configuration is incomplete');
+        }
+        if ($method === 'POST') {
+            $limitKey = 'pakasir:v2:write:'.hash('sha256', $slug.'|'.$operation);
+            if (RateLimiter::tooManyAttempts($limitKey, 2)) {
+                return $this->failure('Payment provider rate limit reached; retry shortly');
+            }
+            RateLimiter::hit($limitKey, 1);
+        }
+
+        try {
+            $response = Http::acceptJson()->asJson()->withHeaders(['X-Api-Key' => $apiKey])->timeout(30)
+                ->withOptions(['allow_redirects' => false])
+                ->send($method, self::BASE_URL.'/api/v2/'.$operation.'/'.rawurlencode($slug).'/'.rawurlencode($identifier),
+                    $method === 'POST' ? ['json' => $body] : []);
+            $data = $response->json();
+            if (! $response->successful() || ! is_array($data) || $data === [] || array_is_list($data)) {
+                Log::warning('Pakasir V2: Request failed', ['operation' => $operation, 'http_status' => $response->status()]);
+
+                return $this->failure('Payment provider request failed');
             }
 
-            Log::error('Pakasir: Failed to check transaction status', [
-                'status' => $response->status(),
-                'response' => $response->body(),
-            ]);
+            return ['success' => true, 'data' => $data];
+        } catch (\Throwable $e) {
+            Log::warning('Pakasir V2: Connection failed', ['operation' => $operation]);
 
-            return [
-                'success' => false,
-                'error' => 'Failed to check transaction status',
-                'debug' => [
-                    'http_status' => $response->status(),
-                    'response_body' => $response->json() ?? $response->body(),
-                ]
-            ];
-        } catch (\Exception $e) {
-            Log::error('Pakasir: Exception checking transaction status', [
-                'error' => $e->getMessage(),
-            ]);
-
-            return [
-                'success' => false,
-                'error' => $e->getMessage(),
-                'debug' => [
-                    'exception' => $e->getMessage(),
-                    'trace' => substr($e->getTraceAsString(), 0, 300)
-                ]
-            ];
+            return $this->failure('Payment provider temporarily unavailable');
         }
     }
 
-    /**
-     * Create transaction via API (useful if we want to show QR in our own UI)
-     */
-    public function createTransaction(string $orderId, int $amount, string $method = 'qris'): array
+    private function failure(string $message): array
     {
-        try {
-            $response = Http::timeout(30)
-                ->post("{$this->baseUrl}/api/transactioncreate/{$method}", [
-                    'project' => $this->slug,
-                    'order_id' => $orderId,
-                    'amount' => $amount,
-                    'api_key' => $this->apiKey,
-                ]);
-
-            if ($response->successful()) {
-                return [
-                    'success' => true,
-                    'data' => $response->json()['payment'] ?? [],
-                ];
-            }
-
-            Log::error('Pakasir: Failed to create transaction', [
-                'status' => $response->status(),
-                'response' => $response->body(),
-            ]);
-
-            return [
-                'success' => false,
-                'error' => $response->json()['message'] ?? 'Failed to create transaction',
-            ];
-        } catch (\Exception $e) {
-            Log::error('Pakasir: Exception creating transaction', [
-                'error' => $e->getMessage(),
-            ]);
-
-            return [
-                'success' => false,
-                'error' => $e->getMessage(),
-            ];
-        }
+        return ['success' => false, 'error' => $message];
     }
 }

@@ -22,13 +22,16 @@ class PaymentWebhookTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        config(['pakasir.slug' => 'test-merchant', 'pakasir.api_key' => 'test-key']);
+        config(['pakasir.slug' => 'test-merchant', 'pakasir.api_key' => 'test-key',
+            'pakasir.webhook_secret' => 'test-webhook-secret', 'pakasir.sandbox' => false]);
+        $this->withHeader('X-Secret', 'test-webhook-secret');
         Mail::fake();
         Http::preventStrayRequests();
         $this->user = User::factory()->create(['ai_credits' => 0, 'cl_credits' => 0, 'photo_credits' => 0]);
         $this->payment = Payment::create([
             'user_id' => $this->user->id,
             'order_id' => 'WEBHOOK-TEST-1',
+            'pakasir_txn_id' => 'txn-webhook-1', 'pakasir_is_sandbox' => false,
             'amount' => 14999,
             'status' => 'PENDING',
             'notes' => 'addon_10',
@@ -42,6 +45,7 @@ class PaymentWebhookTest extends TestCase
     {
         return array_replace([
             'order_id' => $this->payment->order_id,
+            'txn_id' => $this->payment->pakasir_txn_id, 'is_sandbox' => false,
             'amount' => $this->payment->amount,
             'project' => 'test-merchant',
             'status' => 'completed',
@@ -61,24 +65,21 @@ class PaymentWebhookTest extends TestCase
 
     public function test_forged_completed_payload_cannot_grant_benefits_when_provider_is_pending(): void
     {
-        Http::fake(['app.pakasir.com/*' => Http::response(['transaction' => $this->payload(['status' => 'pending'])])]);
+        Http::fake(['app.pakasir.com/*' => Http::response($this->payload(['status' => 'pending']))]);
 
-        $this->postJson('/payment/webhook', $this->payload())->assertOk();
+        $this->postJson('/payment/webhook', $this->payload())->assertStatus(503);
 
         $this->assertNoBenefits();
         Http::assertSent(fn ($request) => $request->method() === 'GET'
-            && str_starts_with($request->url(), 'https://app.pakasir.com/api/transactiondetail?')
-            && $request['order_id'] === $this->payment->order_id
-            && (int) $request['amount'] === $this->payment->amount
-            && $request['project'] === 'test-merchant'
-            && $request['api_key'] === 'test-key');
+            && $request->url() === 'https://app.pakasir.com/api/v2/transaction-status/test-merchant/txn-webhook-1'
+            && $request->hasHeader('X-Api-Key', 'test-key') && ! str_contains($request->url(), 'test-key'));
     }
 
     public function test_verified_completion_grants_benefits_once_even_if_payload_claims_failure(): void
     {
-        Http::fake(['app.pakasir.com/*' => Http::response(['transaction' => $this->payload()])]);
+        Http::fake(['app.pakasir.com/*' => Http::response($this->payload())]);
 
-        $this->postJson('/payment/webhook', $this->payload(['status' => 'failed']))->assertOk();
+        $this->postJson('/payment/webhook', $this->payload(['status' => 'canceled']))->assertOk();
         $this->postJson('/payment/webhook', $this->payload())->assertOk();
 
         $this->assertSame('SUCCESS', $this->payment->fresh()->status);
@@ -92,7 +93,7 @@ class PaymentWebhookTest extends TestCase
     #[DataProvider('invalidTransactions')]
     public function test_invalid_provider_detail_does_not_grant_benefits(array $overrides): void
     {
-        Http::fake(['app.pakasir.com/*' => Http::response(['transaction' => $this->payload($overrides)])]);
+        Http::fake(['app.pakasir.com/*' => Http::response($this->payload($overrides))]);
 
         $this->postJson('/payment/webhook', $this->payload())->assertStatus(503);
 
@@ -108,15 +109,20 @@ class PaymentWebhookTest extends TestCase
             'missing order' => [['order_id' => null]],
             'missing status' => [['status' => null]],
             'invalid amount' => [['amount' => '14999garbage']],
+            'wrong transaction' => [['txn_id' => 'other-txn']],
+            'wrong environment' => [['is_sandbox' => true]],
+            'missing environment' => [['is_sandbox' => null]],
+            'unknown status' => [['status' => 'failed']],
         ];
     }
 
     public function test_provider_failure_leaves_payment_pending_and_allows_retry(): void
     {
-        Http::fakeSequence()->push([], 500)->push(['transaction' => $this->payload()]);
+        Http::fakeSequence()->push([], 500)->push($this->payload());
 
         $this->postJson('/payment/webhook', $this->payload())->assertStatus(503);
         $this->assertNoBenefits();
+        $this->travel(5)->seconds();
         $this->postJson('/payment/webhook', $this->payload())->assertOk();
 
         $this->assertSame('SUCCESS', $this->payment->fresh()->status);
@@ -152,11 +158,14 @@ class PaymentWebhookTest extends TestCase
     public function test_identical_payload_is_reverified_after_provider_was_pending(): void
     {
         Http::fakeSequence()
-            ->push(['transaction' => $this->payload(['status' => 'pending'])])
-            ->push(['transaction' => $this->payload()]);
+            ->push($this->payload(['status' => 'pending']))
+            ->push($this->payload());
 
-        $this->postJson('/payment/webhook', $this->payload())->assertOk();
+        $this->postJson('/payment/webhook', $this->payload())->assertStatus(503);
         $this->assertNoBenefits();
+        $this->postJson('/payment/webhook', $this->payload())->assertStatus(503);
+        Http::assertSentCount(1);
+        $this->travel(5)->seconds();
         $this->postJson('/payment/webhook', $this->payload())->assertOk();
 
         $this->assertSame('SUCCESS', $this->payment->fresh()->status);
@@ -167,13 +176,15 @@ class PaymentWebhookTest extends TestCase
     public function test_verified_failure_cannot_downgrade_success_or_grant_again(): void
     {
         Http::fakeSequence()
-            ->push(['transaction' => $this->payload()])
-            ->push(['transaction' => $this->payload(['status' => 'failed'])])
-            ->push(['transaction' => $this->payload()]);
+            ->push($this->payload())
+            ->push($this->payload(['status' => 'canceled']))
+            ->push($this->payload());
 
         $this->postJson('/payment/webhook', $this->payload())->assertOk();
-        $this->postJson('/payment/webhook', $this->payload(['status' => 'failed']))->assertOk();
+        $this->travel(5)->seconds();
+        $this->postJson('/payment/webhook', $this->payload(['status' => 'canceled']))->assertOk();
         $this->assertSame('SUCCESS', $this->payment->fresh()->status);
+        $this->travel(5)->seconds();
         $this->postJson('/payment/webhook', $this->payload())->assertOk();
 
         $this->assertSame(10, $this->user->fresh()->ai_credits);
@@ -184,11 +195,12 @@ class PaymentWebhookTest extends TestCase
     {
         $this->payment->update(['notes' => 'premium']);
         Http::fakeSequence()
-            ->push(['transaction' => $this->payload(['status' => 'pending'])])
-            ->push(['transaction' => $this->payload()]);
+            ->push($this->payload(['status' => 'pending']))
+            ->push($this->payload());
 
-        $this->postJson('/payment/webhook', $this->payload())->assertOk();
+        $this->postJson('/payment/webhook', $this->payload())->assertStatus(503);
         $this->assertNoBenefits();
+        $this->travel(5)->seconds();
         $this->postJson('/payment/webhook', $this->payload())->assertOk();
 
         $this->assertTrue($this->user->fresh()->isPremium());
@@ -216,6 +228,52 @@ class PaymentWebhookTest extends TestCase
     {
         $this->postJson('/payment/webhook', $this->payload(['order_id' => ['invalid']]))->assertUnprocessable();
 
+        $this->assertNoBenefits();
+        Http::assertNothingSent();
+    }
+
+    public function test_missing_or_invalid_secret_cannot_reach_provider_or_grant(): void
+    {
+        $this->withHeader('X-Secret', 'wrong-secret')->postJson('/payment/webhook', $this->payload())->assertUnauthorized();
+        $this->withHeader('X-Secret', '')->postJson('/payment/webhook', $this->payload())->assertUnauthorized();
+        $this->assertNoBenefits();
+        Http::assertNothingSent();
+    }
+
+    public function test_unconfigured_webhook_fails_closed(): void
+    {
+        config(['pakasir.webhook_secret' => '']);
+        $this->postJson('/payment/webhook', $this->payload())->assertStatus(503);
+        $this->assertNoBenefits();
+        Http::assertNothingSent();
+    }
+
+    public function test_v2_webhook_without_project_field_and_without_json_content_type_is_supported(): void
+    {
+        $data = $this->payload();
+        unset($data['project']);
+        Http::fake(['app.pakasir.com/*' => Http::response($data)]);
+        $this->call('POST', '/payment/webhook', [], [], [], [
+            'CONTENT_TYPE' => 'application/x-www-form-urlencoded', 'HTTP_ACCEPT' => 'application/json',
+            'HTTP_X_SECRET' => 'test-webhook-secret',
+        ], json_encode($data))->assertOk();
+        $this->assertSame('SUCCESS', $this->payment->fresh()->status);
+        $this->assertSame(10, $this->user->fresh()->ai_credits);
+    }
+
+    public function test_wrong_transaction_or_sandbox_webhook_is_rejected_before_provider_lookup(): void
+    {
+        foreach ([['txn_id' => 'wrong-txn'], ['is_sandbox' => true]] as $overrides) {
+            $this->postJson('/payment/webhook', $this->payload($overrides))->assertStatus(400);
+        }
+        $this->assertNoBenefits();
+        Http::assertNothingSent();
+    }
+
+    public function test_legacy_payment_is_not_bound_to_an_untrusted_webhook_transaction(): void
+    {
+        $this->payment->update(['pakasir_txn_id' => null, 'pakasir_is_sandbox' => null]);
+        $this->postJson('/payment/webhook', $this->payload(['txn_id' => 'txn-claim']))->assertStatus(400);
         $this->assertNoBenefits();
         Http::assertNothingSent();
     }
