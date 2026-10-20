@@ -5094,5 +5094,12 @@
     "of": "dari",
     "records": "catatan",
     "roles": "posisi",
-    "sources": "sumber"
+    "sources": "sumber",
+    "Installation guide": "Panduan instalasi",
+    "Review captured details before saving.": "Periksa detail lowongan sebelum menyimpan.",
+    "Support varies by job page.": "Dukungan bergantung pada halaman lowongan.",
+    "Paste this address into Chrome:": "Tempel alamat ini di Chrome:",
+    "Bring your application history with you.": "Kelola riwayat lamaranmu dengan mudah.",
+    "CSV or TXT · up to 2 MB": "CSV atau TXT · maksimal 2 MB",
+    "Download a CSV copy of your application history.": "Unduh salinan riwayat lamaranmu dalam format CSV."
 }

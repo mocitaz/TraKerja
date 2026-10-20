@@ -160,7 +160,10 @@ class JobApplicationImportExportController extends Controller
         return response()->json([
             'valid_count' => count($parsed['rows']), 'failed_count' => count($parsed['errors']),
             'total_count' => count($parsed['rows']) + count($parsed['errors']),
-            'rows' => array_slice($parsed['rows'], 0, 10), 'errors' => $parsed['errors'],
+            'rows' => array_map(function ($row) {
+                $row['application_date'] = $row['application_date']->toDateString();
+                return $row;
+            }, array_slice($parsed['rows'], 0, 10)), 'errors' => $parsed['errors'],
             'columns' => $parsed['columns'],
         ]);
     }

@@ -44,7 +44,8 @@ class CsvRoundTripTest extends TestCase
         Setting::set('monetization_enabled', false);
         $csv = "Company Name,Position,Location,Platform,Application Status,Recruitment Stage,Career Level,Application Date\nValid,Engineer,Jakarta,LinkedIn,On Process,Applied,Full Time,2026-10-08\nInvalid,Engineer,,LinkedIn,On Process,Applied,Full Time,2026-10-08\n";
         $this->actingAs(User::factory()->create())->postJson('/csv/import/preview', ['csv_file' => UploadedFile::fake()->createWithContent('import.csv', $csv)])
-            ->assertOk()->assertJsonPath('valid_count', 1)->assertJsonPath('failed_count', 1)->assertJsonPath('errors.0.row', 3);
+            ->assertOk()->assertJsonPath('valid_count', 1)->assertJsonPath('failed_count', 1)->assertJsonPath('errors.0.row', 3)
+            ->assertJsonPath('rows.0.application_date', '2026-10-08');
         $this->assertDatabaseCount('job_applications', 0);
     }
 

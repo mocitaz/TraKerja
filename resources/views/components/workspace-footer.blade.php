@@ -20,6 +20,7 @@
                 <li><a href="{{ route('jobs.explore') }}" wire:navigate>{{ __('Explore Jobs') }}</a></li>
                 <li><a href="{{ route('cv.builder') }}" wire:navigate>{{ __('CV Builder') }}</a></li>
                 <li><a href="{{ route('ai-studio.index') }}" wire:navigate>{{ __('AI Studio') }}</a></li>
+                <li><a href="{{ route('automation.index') }}" wire:navigate>{{ __('Automation & CSV') }}</a></li>
                 @endif
             </ul></div>
             <div class="workspace-footer-group"><h2>TraKerja</h2><ul>
