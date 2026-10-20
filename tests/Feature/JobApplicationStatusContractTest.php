@@ -43,8 +43,8 @@ class JobApplicationStatusContractTest extends TestCase
     {
         $user = User::factory()->create();
         $source = ScraperSource::create(['name' => 'LinkedIn', 'target_domain' => 'linkedin.com', 'seed_url' => 'https://linkedin.com/jobs', 'selectors_config' => []]);
-        $posting = JobPosting::create(['scraper_source_id' => $source->id, 'title' => 'Contract engineer', 'description' => 'An engineering vacancy', 'company_name' => 'Contract Corp', 'raw_url' => 'https://linkedin.com/jobs/contract', 'unique_hash' => md5('contract'), 'status' => 'active']);
-        Livewire::actingAs($user)->test(ExploreJobs::class)->call('trackJob', $posting->id);
+        $posting = JobPosting::create(['scraper_source_id' => $source->id, 'title' => 'Contract engineer', 'description' => 'An engineering vacancy', 'company_name' => 'Contract Corp', 'location' => 'Bandung', 'raw_url' => 'https://linkedin.com/jobs/contract', 'unique_hash' => md5('contract'), 'status' => 'active']);
+        Livewire::actingAs($user)->test(ExploreJobs::class)->call('initiateTrackJob', $posting->id)->call('confirmTrackJob');
         $this->assertDatabaseHas('job_applications', ['user_id' => $user->id, 'application_status' => 'On Process', 'recruitment_stage' => 'Applied']);
         Livewire::actingAs($user)->test(JobKanbanBoard::class)->assertSee('Contract Corp');
     }

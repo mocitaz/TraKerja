@@ -23,48 +23,50 @@
             @if(session('success'))<div class="workspace-notice" role="status">{{ session('success') }}</div>@endif
             @if($job->is_archived)<div class="job-archived-notice" role="status">{{ __('This application is archived. Restore it to show it in your active tracker.') }}</div>@endif
 
-            <header class="job-heading job-enter" x-data="dashboardWelcome()" @pointermove="move($event)" @pointerleave="reset()">
-                <div class="job-heading-orbit" aria-hidden="true"></div>
-                <div class="job-heading-main">
-                    <div class="job-heading-copy">
-                        <div class="job-heading-labels"><span class="job-heading-eyebrow">{{ __('APPLICATION WORKSPACE') }}</span><span class="tracker-pill tracker-pill--{{ $tone }}">{{ \App\Support\UiLabel::value($job->application_status) }}</span>@if($job->application_status === 'On Process')<span class="job-current-stage">{{ $currentLabel }}</span>@endif @if($job->is_pinned)<span class="job-pinned"><i class="ph-fill ph-push-pin" aria-hidden="true"></i>{{ __('Pinned') }}</span>@endif</div>
-                        <p class="job-heading-company">{{ $job->company_name }}</p>
-                        <h1>{{ $job->position }}</h1>
-                        <div class="job-heading-meta"><x-platform-brand :name="$job->platform" class="platform-brand--compact" /><span>{{ __('Applied :value1', ['value1' => ($job->application_date?->locale(app()->getLocale())->translatedFormat('d M Y') ?: __('date not recorded'))]) }}</span></div>
-                    </div>
-                </div>
-                <div class="job-dossier-scene" aria-hidden="true">
-                    <div class="job-dossier-shadow"></div>
-                    <div class="job-dossier-stack">
-                        <div class="job-dossier-sheet job-dossier-sheet--back"></div>
-                        <div class="job-dossier-sheet job-dossier-sheet--middle"></div>
-                        <div class="job-dossier-sheet job-dossier-sheet--front">
-                            <div class="job-dossier-top"><img src="{{ asset('images/icon.png') }}" alt="" width="14" height="14"><span>{{ __('TraKerja') }}</span></div>
-                            <svg class="job-dossier-symbol" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 7h15l8 8v26H13V7Z"/><path d="M28 7v9h8M19 23h11M19 29h11M19 35h6"/></svg>
-                            <span class="job-dossier-label">{{ $job->application_status === 'On Process' ? __('Current stage') : __('Recorded outcome') }}</span>
-                            <strong>{{ $currentLabel }}</strong>
-                            <div class="job-dossier-foot"><span class="job-dossier-status"></span><span>{{ $job->is_archived ? __('Archived application') : __('Your application, organized.') }}</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="job-heading-bottom">
-                <div class="job-heading-actions" role="group" aria-label="{{ __('Application actions') }}">
-                    <button type="button" @click="$dispatch('edit-job', { jobId: {{ $job->id }} })" data-edit-application="{{ $job->id }}" aria-haspopup="dialog" aria-controls="jobModal" class="workspace-button workspace-button--primary"><i class="ph ph-pencil-simple" aria-hidden="true"></i>{{ __('Edit application') }}</button>
-                    @if($sourceUrl)
-                        <a href="{{ $sourceUrl }}" target="_blank" rel="noopener noreferrer" class="workspace-button workspace-button--quiet">{{ __('Open listing') }} <i class="ph ph-arrow-up-right" aria-hidden="true"></i><span class="sr-only">{{ __('(opens in a new tab)') }}</span></a>
-                    @endif
-                    <form action="{{ route('jobs.toggle-archive', $job) }}" method="POST"
-                        x-data="{ company: @js($job->company_name), archived: @js((bool) $job->is_archived) }"
-                        @submit.prevent="if (archived) { $el.submit(); } else { window.openConfirmModal('Archive application?', 'Move ' + company + ' to the archive? You can restore it anytime.', 'Archive', () => $el.submit(), { variant: 'archive' }); }">
-                        @csrf
-                        <button type="submit" class="job-archive-button"><i class="ph {{ $job->is_archived ? 'ph-archive-out' : 'ph-archive' }}" aria-hidden="true"></i>{{ $job->is_archived ? __('Restore application') : __('Archive') }}</button>
-                    </form>
-                </div>
-                </div>
-                <button type="button" class="job-motion-toggle" @click="toggleMotion()" x-show="!reduced" :aria-pressed="paused.toString()" x-text="paused ? @js(__('Enable motion')) : @js(__('Pause motion'))">{{ __('Pause motion') }}</button>
-            </header>
-
             <div class="job-workspace-grid">
+                    <header class="job-heading job-enter">
+                        <div class="job-heading-top">
+                            <div class="job-heading-identity">
+                                <x-role-avatar :position="$job->position" class="job-profession-avatar" />
+                                <div class="job-heading-copy">
+                                    <p class="job-heading-company">{{ $job->company_name }}</p>
+                                    <h1>{{ $job->position }}</h1>
+                                </div>
+                            </div>
+                            <div class="job-heading-labels">
+                                <span class="tracker-pill tracker-pill--{{ $tone }}">{{ \App\Support\UiLabel::value($job->application_status) }}</span>
+                                @if($job->is_pinned)<span class="job-pinned"><i class="ph-fill ph-push-pin" aria-hidden="true"></i>{{ __('Pinned') }}</span>@endif
+                            </div>
+                        </div>
+                        <div class="job-heading-meta">
+                            <span><i class="ph ph-briefcase" aria-hidden="true"></i>{{ \App\Support\UiLabel::value($job->career_level ?: __('Employment not recorded')) }}</span>
+                            <span><i class="ph ph-map-pin" aria-hidden="true"></i>{{ $job->location ?: __('Location not recorded') }}</span>
+                        </div>
+                        <div class="job-heading-actions" role="group" aria-label="{{ __('Application actions') }}">
+                            <button type="button" @click="$dispatch('edit-job', { jobId: {{ $job->id }} })" data-edit-application="{{ $job->id }}" aria-haspopup="dialog" aria-controls="jobModal" class="workspace-button workspace-button--primary"><i class="ph ph-pencil-simple" aria-hidden="true"></i>{{ __('Edit application') }}</button>
+                            @if($sourceUrl)
+                                <a href="{{ $sourceUrl }}" target="_blank" rel="noopener noreferrer" class="workspace-button workspace-button--quiet">{{ __('Open listing') }} <i class="ph ph-arrow-up-right" aria-hidden="true"></i><span class="sr-only">{{ __('(opens in a new tab)') }}</span></a>
+                            @endif
+                            <form action="{{ route('jobs.toggle-archive', $job) }}" method="POST"
+                                x-data="{ company: @js($job->company_name), archived: @js((bool) $job->is_archived) }"
+                                @submit.prevent="if (archived) { $el.submit(); } else { window.openConfirmModal('Archive application?', 'Move ' + company + ' to the archive? You can restore it anytime.', 'Archive', () => $el.submit(), { variant: 'archive' }); }">
+                                @csrf
+                                <button type="submit" class="job-archive-button"><i class="ph {{ $job->is_archived ? 'ph-archive-out' : 'ph-archive' }}" aria-hidden="true"></i>{{ $job->is_archived ? __('Restore application') : __('Archive') }}</button>
+                            </form>
+                        </div>
+                        <dl class="job-summary" aria-label="{{ __('Application summary') }}">
+                            <div><dt>{{ $job->application_status === 'On Process' ? __('Current stage') : __('Recorded outcome') }}</dt><dd>{{ \App\Support\UiLabel::value($currentLabel) }}</dd></div>
+                            <div><dt>{{ __('Applied') }}</dt><dd>{{ $job->application_date?->locale(app()->getLocale())->translatedFormat('d M Y') ?: __('Not recorded') }}</dd></div>
+                            <div><dt>{{ __('Source') }}</dt><dd><x-platform-brand :name="$job->platform" class="platform-brand--compact" /></dd></div>
+                            <div><dt>{{ __('Last edited') }}</dt><dd>{{ $job->updated_at?->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M Y') ?: __('Not recorded') }}</dd></div>
+                        </dl>
+                    </header>
+                    <section class="job-preparation-card job-enter" aria-labelledby="job-preparation-heading">
+                        <div class="job-preparation-brand"><x-trakerja-ai-mark /><span>{{ __('TraKerja AI') }}</span></div>
+                        <h2 id="job-preparation-heading">{{ __('A little more prepared.') }}</h2>
+                        <p>{{ __('Review your CV, draft a cover letter, and prepare for your next conversation.') }}</p>
+                        <a href="{{ route('ai-studio.index') }}" wire:navigate class="job-preparation-action">{{ __('Open AI Studio') }} <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+                    </section>
                 <section class="job-workspace-main job-enter" aria-label="{{ __('Application workspace') }}">
                     <div class="job-workspace-tabs" role="tablist" aria-label="{{ __('Application sections') }}" @keydown="keyTab($event)">@foreach(['overview' => 'Overview', 'notes' => 'Notes', 'record' => 'Record'] as $key => $label)<button type="button" @click="selectTab('{{ $key }}')" id="job-tab-{{ $key }}" x-ref="tab_{{ $key }}" role="tab" :tabindex="tab === '{{ $key }}' ? 0 : -1" :class="{ 'is-active': tab === '{{ $key }}' }" :aria-selected="(tab === '{{ $key }}').toString()" aria-controls="job-panel-{{ $key }}">{{ __($label) }}@if($key === 'notes' && ($job->notes || $job->interview_notes))<span class="job-tab-dot" aria-label="{{ __('Notes recorded') }}"></span>@endif</button>@endforeach</div>
                     <div class="job-panel-viewport" x-ref="panels">
@@ -83,15 +85,13 @@
                     </div>
                 </section>
 
-                <aside class="job-workspace-aside" aria-label="{{ __('Selection and company resources') }}">
+                <aside class="job-workspace-aside" aria-label="{{ __('Selection schedule') }}">
                     <section class="job-interview-card job-enter {{ !$interview ? 'job-interview-card--empty' : '' }}" aria-labelledby="job-interview-heading"><div class="job-section-heading"><h2 id="job-interview-heading">{{ \App\Support\SelectionSchedule::heading($job->recruitment_stage) }}</h2>@if($interview)<a href="{{ route('interviews') }}" wire:navigate class="job-text-link">{{ __('Calendar') }}</a>@endif</div>
                         @if($interview)<div class="job-interview-when"><div class="job-interview-date"><strong>{{ $interview->format('d') }}</strong><span>{{ $interview->locale(app()->getLocale())->translatedFormat('M') }}</span></div><div><p>{{ $interview->locale(app()->getLocale())->translatedFormat('D, d M Y') }}</p><strong>{{ $interview->format('H:i') }} <small>{{ __('WIB') }}</small></strong><span>{{ \App\Support\SelectionSchedule::methodLabel($job->interview_type) }}</span></div></div>@if(\App\Support\SelectionSchedule::online($job->interview_type) && $job->interview_platform)<div class="job-interview-location"><span>{{ __('Online platform') }}</span><p>{{ __($job->interview_platform) }}</p></div>@endif @if($job->interview_location)<div class="job-interview-location"><span>{{ \App\Support\SelectionSchedule::locationLabel($job->interview_type) }}</span><p>{{ $job->interview_location }}</p>@if(filter_var($job->interview_location, FILTER_VALIDATE_URL) && in_array(strtolower(parse_url($job->interview_location, PHP_URL_SCHEME) ?? ''), ['http', 'https'], true))<a href="{{ $job->interview_location }}" target="_blank" rel="noopener noreferrer" class="job-text-link">{{ __('Open access link') }} <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>@endif</div>@endif<button type="button" @click="$dispatch('edit-job', { jobId: {{ $job->id }} })" data-edit-application="{{ $job->id }}" aria-haspopup="dialog" aria-controls="jobModal" class="job-text-link">{{ __('Edit selection schedule') }} <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button>@if($interview->isFuture() && auth()->user()->canAccessEmailNotifications())<form class="job-reminder-form" x-data="{ sending: false, message: '', async send() { if (this.sending) return; this.sending = true; this.message = ''; try { const response = await fetch($el.action, { method: 'POST', credentials: 'same-origin', headers: { 'X-CSRF-TOKEN': $el.querySelector('input[name=_token]').value, 'Accept': 'application/json' } }); const body = await response.json(); if (!response.ok || !body.success) throw new Error(body.message || 'Could not send the reminder. Try again.'); this.message = body.message; } catch (error) { this.message = error.message || 'Could not send the reminder. Try again.'; } finally { this.sending = false; } } }" @submit.prevent="send()" method="POST" action="{{ route('jobs.send-interview-reminder', $job) }}">@csrf<button type="submit" :disabled="sending" class="job-text-link"><span x-text="sending ? @js(__('Sending reminder…')) : @js(__('Email me a reminder'))">{{ __('Email me a reminder') }}</span></button><p x-show="message" x-cloak x-text="message" role="status"></p></form>@endif
                         @else<p class="job-interview-empty">{{ __('No selection schedule recorded yet.') }}</p><button type="button" @click="$dispatch('edit-job', { jobId: {{ $job->id }} })" data-edit-application="{{ $job->id }}" aria-haspopup="dialog" aria-controls="jobModal" class="job-text-link">{{ __('Add selection schedule') }} <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button>@endif
                     </section>
-                    <section class="job-research-card job-enter" aria-labelledby="job-research-heading"><div class="job-section-heading"><h2 id="job-research-heading">{{ __('Company research') }}</h2></div><p>{{ __('Company profiles & reviews.') }}</p><div class="job-research-links"><a href="https://www.linkedin.com/search/results/companies/?keywords={{ urlencode($job->company_name) }}" target="_blank" rel="noopener noreferrer" aria-label="{{ __('Research company on LinkedIn (opens in a new tab)') }}" title="{{ __('LinkedIn') }}"><x-platform-brand name="LinkedIn" class="platform-brand--compact" /><i class="ph ph-arrow-up-right" aria-hidden="true"></i></a><a href="https://www.glassdoor.com/Search/results.htm?keyword={{ urlencode($job->company_name) }}" target="_blank" rel="noopener noreferrer" aria-label="{{ __('Research company on Glassdoor (opens in a new tab)') }}" title="{{ __('Glassdoor') }}"><x-platform-brand name="Glassdoor" class="platform-brand--compact" /><i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></div>@include('jobs.partials.salary-reference')</section>
                 </aside>
             </div>
-            <footer class="job-detail-footer"><p>{{ __('Keep this application up to date.') }}</p><a href="{{ route('tracker') }}" wire:navigate class="job-text-link">{{ __('Back to tracker') }} <i class="ph ph-arrow-right" aria-hidden="true"></i></a></footer>
         </div>
     </div>
     <x-job-application-modal />

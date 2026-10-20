@@ -1,0 +1,3 @@
+:root { --app-canvas: #f7f7f9; }
+
+html:not(.dark) .landing-page { background-color: var(--app-canvas); }

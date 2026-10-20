@@ -1,3 +1,4 @@
+@import './canvas.css';
 @import './admin-operations.css';
 @import './admin-email-workspace.css';
 @import './workspace-footer.css';
@@ -32,7 +33,6 @@
 @import './dashboard-next-move.css';
 @import './dashboard-panels.css';
 @import './tracker-density.css';
-@import './support.css';
 @import './trakerja-ai-brand.css';
 @import './admin-workspace.css';
 @import './admin-users.css';
@@ -49,6 +49,8 @@
 @import './gemini-dark.css';
 @import './mobile-workspace.css';
 @import './tools-workspace.css';
+@import './support.css';
+@import './summary-report.css';
 @import './progress-dialogs.css';
 @import './user-mobile.css';
 @import './portfolio-site.css';

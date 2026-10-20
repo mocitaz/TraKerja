@@ -63,7 +63,6 @@
                     <div class="workspace-profile-links">
                     <a href="{{ route('profile.edit') }}" wire:navigate @click="profileOpen = false" class="workspace-menu-link"><span class="workspace-menu-icon"><i class="ph ph-user-circle" aria-hidden="true"></i></span><span>{{ __('Profile settings') }}</span><i class="ph ph-caret-right workspace-menu-chevron" aria-hidden="true"></i></a>
                     <a href="{{ route('automation.index') }}" wire:navigate @click="profileOpen = false" class="workspace-menu-link"><span class="workspace-menu-icon"><i class="ph ph-sliders" aria-hidden="true"></i></span><span>{{ __('Automation & CSV') }}</span><i class="ph ph-caret-right workspace-menu-chevron" aria-hidden="true"></i></a>
-                    <a href="{{ route('support.index') }}" wire:navigate @click="profileOpen = false" class="workspace-menu-link"><span class="workspace-menu-icon"><i class="ph ph-headset" aria-hidden="true"></i></span><span>{{ __('Support') }}</span><i class="ph ph-caret-right workspace-menu-chevron" aria-hidden="true"></i></a>
                     @if($user->isAdmin())
                         <a href="{{ route('admin.index') }}" wire:navigate @click="profileOpen = false" class="workspace-menu-link"><span class="workspace-menu-icon"><i class="ph ph-shield-check" aria-hidden="true"></i></span><span>{{ __('Admin panel') }}</span><i class="ph ph-caret-right workspace-menu-chevron" aria-hidden="true"></i></a>
                     @endif

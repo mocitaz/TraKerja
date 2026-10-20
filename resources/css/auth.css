@@ -1,3 +1,5 @@
+@import './canvas.css';
+
 @font-face {
     font-family:'Google Sans Flex';
     src:url('../../public/fonts/google-sans-flex/latin.woff2') format('woff2');
@@ -5,7 +7,7 @@
     font-weight:400 700;
     font-display:swap;
 }
-:root { color-scheme:light; --auth-page:#ffffff; --auth-surface:#fff; --auth-soft:#f4f2f6; --auth-ink:#29262d; --auth-muted:#706978; --auth-line:#e5dfe9; --auth-plum:#70567e; --auth-error:#a32a43; --auth-error-bg:#fff3f5; }
+:root { color-scheme:light; --auth-page:var(--app-canvas); --auth-surface:#fff; --auth-soft:#f4f2f6; --auth-ink:#29262d; --auth-muted:#706978; --auth-line:#e5dfe9; --auth-plum:#70567e; --auth-error:#a32a43; --auth-error-bg:#fff3f5; }
 :root.dark { color-scheme:dark; --auth-page:#141216; --auth-surface:#201d23; --auth-soft:#2d2832; --auth-ink:#f6f1f8; --auth-muted:#bfb4c8; --auth-line:#463c4d; --auth-plum:#d7bde8; --auth-error:#ffb4c4; --auth-error-bg:#39232d; }
 *,*::before,*::after { box-sizing:border-box; }
 body,h1,h2,p { margin:0; }

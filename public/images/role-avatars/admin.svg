@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Administration and office · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#ece5f1"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M29 73V36Q29 8 60 8Q91 8 91 37V73Q80 87 60 80Q39 88 29 73Z" fill="#292b30" /><path d="M15 120V108Q15 91 48 85H72Q105 91 105 108V120" fill="#cbb2cf" /><path d="M48 86L48 98L60 92L72 98V86M60 94V120" fill="none" /><rect x="29" y="103" width="15" height="10" rx="2" fill="#cbb2cf"/><path d="M52 74V87Q60 96 68 87V74" fill="#f7dfc2" /><g transform="rotate(-3 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#f7dfc2" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M32 38Q33 18 60 18Q87 18 88 38V57Q87 77 60 81Q33 77 32 57Z" fill="#f7dfc2" /><path d="M34 49V32Q34 11 60 12Q87 11 87 36V60L78 46V29L66 40H59V29L41 39V52Z" fill="#292b30" /><path d="M43 44Q47 42 51 44M69 44Q73 42 77 44" fill="none" /><path d="M47 51V54M73 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M52 69Q61 78 70 68" fill="none" /><circle cx="35" cy="60" r="2" fill="#efbd65"/><circle cx="85" cy="60" r="2" fill="#efbd65"/></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><path d="M0 5H13L17 10H34V33H0Z" fill="#a9c6dc" /><path d="M2 3V0H18L22 5H32V10M0 16H34" fill="none" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#f7dfc2" />
+</g></g></svg>

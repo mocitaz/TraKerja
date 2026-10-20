@@ -672,7 +672,7 @@
     ]
   },
   "construction": {
-    "label": "Architecture and construction",
+    "label": "Civil engineering and construction",
     "roles": [
       "Civil Engineer",
       "Structural Engineer",
@@ -714,7 +714,7 @@
     ]
   },
   "health": {
-    "label": "Healthcare and medicine",
+    "label": "Doctors and clinical medicine",
     "roles": [
       "Doctor",
       "Physician",
@@ -735,7 +735,7 @@
     ]
   },
   "education": {
-    "label": "Education and learning",
+    "label": "School education and training",
     "roles": [
       "Teacher",
       "Lecturer",
@@ -777,7 +777,7 @@
     ]
   },
   "culinary": {
-    "label": "Food and culinary",
+    "label": "Cooking and kitchen operations",
     "roles": [
       "Chef",
       "Sous Chef",
@@ -819,7 +819,7 @@
     ]
   },
   "transport": {
-    "label": "Transport and field services",
+    "label": "Road transport and delivery",
     "roles": [
       "Driver",
       "Delivery Driver",
@@ -840,7 +840,7 @@
     ]
   },
   "environment": {
-    "label": "Agriculture and environment",
+    "label": "Environment and sustainability",
     "roles": [
       "Agronomist",
       "Agricultural Engineer",
@@ -861,7 +861,7 @@
     ]
   },
   "service": {
-    "label": "Community and personal services",
+    "label": "Community services",
     "roles": [
       "Security Guard",
       "Petugas Keamanan",

@@ -15,7 +15,6 @@
 :is(.support-page,.automation-page) .workspace-form :is(input,select,textarea) { border-radius: 9px; background: #faf9fc; border-color: var(--tools-line); box-shadow: none; color: var(--tools-ink); }
 :is(.support-page,.automation-page) .workspace-form label { font-size: 12px; }
 :is(.support-page,.automation-page) :is(button,a,summary,input,textarea,select):focus-visible { outline: 2px solid #9573b1; outline-offset: 3px; }
-.support-page #support-submit { grid-template-columns: minmax(0,1.7fr) minmax(260px,1fr); gap: 24px; align-items: start; }
 .support-page .workspace-form { gap: 18px; }
 .support-page .workspace-form textarea { min-height: 180px; resize: vertical; }
 .support-page .support-context-hint { color: #6c5880; background: #f3eef9; border-radius: 8px; padding: 10px 12px; font-size: 11px; line-height: 1.8; margin: -6px 0 0; }

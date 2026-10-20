@@ -1,6 +1,6 @@
 /* Gemini Dark Mode Tokens & Ambient Backdrop */
 :root {
-    --gemini-canvas: #ffffff;
+    --gemini-canvas: var(--app-canvas);
     --gemini-surface: #ffffff;
     --gemini-elevated: #f1f5f9;
     --gemini-border: #e2e8f0;
@@ -19,7 +19,7 @@ html:not(.dark) {
 }
 
 html:not(.dark) body:not(.portfolio-page) {
-    background-color: #ffffff !important;
+    background-color: var(--app-canvas) !important;
     background-image: none !important;
     color: #1a191e !important;
 }

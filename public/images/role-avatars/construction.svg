@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Civil engineering and construction · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#f3e7dc"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M15 120V108Q15 91 48 85H72Q105 91 105 108V120" fill="#efbd65" /><path d="M46 88Q60 105 74 88" fill="none" /><path d="M42 88L38 120M78 88L82 120M24 108H96" fill="none" stroke="#fffaf5" stroke-width="5"/><path d="M52 74V87Q60 96 68 87V74" fill="#f2c6a5" /><g transform="rotate(-3 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#f2c6a5" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M32 38Q33 18 60 18Q87 18 88 38V57Q87 77 60 81Q33 77 32 57Z" fill="#f2c6a5" /><path d="M34 46V31Q34 14 53 14L80 16Q90 22 84 43L78 45V28Q60 40 41 30V45Z" fill="#392f32" /><path d="M43 44Q47 42 51 44M69 44Q73 42 77 44" fill="none" /><path d="M44 52Q47 48 50 52M70 52Q73 48 76 52" fill="none" /><path d="M59 56Q55 64 61 63" fill="none" /><path d="M50 68Q60 72 71 67Q69 79 60 78Q52 77 50 68Z" fill="#fffaf5" /><path d="M54 75H67" fill="none" stroke-width="1.3"/><path d="M30 34Q31 12 60 12Q89 12 90 34Z" fill="#efbd65" /><rect x="27" y="32" width="66" height="7" rx="3" fill="#efbd65"/><path d="M52 14V30M68 14V30" fill="none" /></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><rect x="0" y="3" width="34" height="28" rx="2" fill="#a9c6dc"/><path d="M5 26V9H17V15H28V26ZM5 18H17M17 15V26M23 18V23M0 3Q4-3 7 3V31" fill="none" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#f2c6a5" />
+</g></g></svg>

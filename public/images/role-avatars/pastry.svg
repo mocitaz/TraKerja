@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Pastry and baking · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#e8edf3"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M29 73V36Q29 8 60 8Q91 8 91 37V73Q80 87 60 80Q39 88 29 73Z" fill="#634535" /><path d="M20 120V108Q20 91 48 85H72Q100 91 100 108V120" fill="#fffaf5" /><path d="M46 88Q60 105 74 88" fill="none" /><path d="M48 86L45 97L54 100L60 91L69 99L76 91M54 100V120M62 107H63M72 107H73M62 115H63M72 115H73" fill="none" /><path d="M52 74V87Q60 96 68 87V74" fill="#dca580" /><g transform="rotate(-3 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#dca580" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M35 37Q36 17 60 17Q84 17 85 37V56Q86 82 60 84Q34 82 35 56Z" fill="#dca580" /><path d="M34 49V32Q34 11 60 12Q87 11 87 36V60L78 46V29L66 40H59V29L41 39V52Z" fill="#634535" /><path d="M43 44Q47 42 51 44M69 44Q73 42 77 44" fill="none" /><path d="M47 51V54M73 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M52 69Q61 78 70 68" fill="none" /><circle cx="35" cy="60" r="2" fill="#efbd65"/><circle cx="85" cy="60" r="2" fill="#efbd65"/><path d="M35 33V23Q22 15 34 7Q43 0 51 8Q61-6 71 8Q83 1 90 13Q95 23 84 26V34Z" fill="#fffaf5" /><path d="M35 26H84M45 19V25M74 19V25" fill="none" /></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><path d="M7 34L18 19M18 19C-4 10 10-11 27 0C46 13 25 29 18 19ZM18 19Q5 3 26 0M18 19Q34 9 26 0" fill="none" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#dca580" />
+</g></g></svg>

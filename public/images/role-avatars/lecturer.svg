@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Higher education · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#e8edf3"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M25 120V108Q25 91 48 85H72Q95 91 95 108V120" fill="#69617a" /><path d="M48 86L42 98L54 105L60 93L66 105L78 98L72 86" fill="#fffaf5" /><path d="M60 94V120" fill="none" /><path d="M52 74V87Q60 96 68 87V74" fill="#f7dfc2" /><g transform="rotate(-3 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#f7dfc2" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M39 33Q39 16 60 16Q81 16 81 33V60Q80 82 60 88Q40 82 39 60Z" fill="#f7dfc2" /><path d="M35 43V29Q36 14 60 14Q85 14 85 31V45L78 39V29Q57 34 42 29V45Z" fill="#b6aca3" /><path d="M45 44Q49 42 53 44M67 44Q71 42 75 44" fill="none" /><path d="M49 51V54M71 51V54" fill="none" stroke-width="3"/><path d="M60 53L57 61L62 62" fill="none" /><path d="M39 63L47 68L51 65Q60 62 69 65L74 69L81 62Q80 82 60 86Q41 82 39 63Z" fill="#b6aca3" /><path d="M54 71Q61 74 67 70" fill="none" /><path d="M53 71Q60 75 67 70" fill="none" stroke="#fffaf5"/><circle cx="49" cy="52" r="10" fill="none"/><circle cx="71" cy="52" r="10" fill="none"/><path d="M59 51H61M35 50H39M81 50H86" fill="none" /></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><rect x="0" y="6" width="10" height="28" rx="2" fill="#efbd65"/><rect x="11" y="0" width="11" height="34" rx="2" fill="#b8a0c8"/><rect x="23" y="10" width="11" height="24" rx="2" fill="#a9c6dc"/><path d="M3 12H7M14 7H19M26 16H31M3 28H7M14 28H19M26 28H31" fill="none" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#f7dfc2" />
+</g></g></svg>

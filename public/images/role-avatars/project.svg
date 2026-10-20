@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Project and program management · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#ece5f1"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M28 95L31 39Q31 10 60 10Q90 10 90 39L94 96L63 105Z" fill="#b4a9c6" /><path d="M24 120V108Q24 91 48 85H72Q96 91 96 108V120" fill="#b4a9c6" /><path d="M48 86L42 98L54 105L60 93L66 105L78 98L72 86" fill="#fffaf5" /><path d="M60 94V120" fill="none" /><g transform="rotate(-4 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#dca580" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M36 36Q36 17 60 17Q84 17 84 36V52Q83 70 60 85Q37 70 36 52Z" fill="#dca580" /><path d="M32 55V35Q33 13 60 13Q87 13 88 35V64L80 47V33Q60 25 41 41V62Z" fill="#b4a9c6" /><path d="M45 44Q49 42 53 44M67 44Q71 42 75 44" fill="none" /><path d="M49 51V54M71 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M54 71Q61 74 67 70" fill="none" /><path d="M34 63Q40 82 62 90L86 69L91 92L63 107L31 91Z" fill="#b4a9c6" /><path d="M41 85L61 98L78 87" fill="none" /></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><rect x="0" y="2" width="33" height="29" rx="2" fill="#fffaf5"/><path d="M0 11H33M8-1V6M25-1V6M7 17H10M16 17H19M25 17H27M7 25H10M16 25H19" fill="none" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#dca580" />
+</g></g></svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Legal and compliance · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#f3e7dc"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M29 91V37Q28 9 59 9Q92 9 92 39L94 91L81 94H36Z" fill="#392f32" /><path d="M24 120V108Q24 91 48 85H72Q96 91 96 108V120" fill="#69617a" /><path d="M48 86L42 98L54 105L60 93L66 105L78 98L72 86" fill="#fffaf5" /><path d="M60 94V120" fill="none" /><path d="M52 74V87Q60 96 68 87V74" fill="#dca580" /><g transform="rotate(-4 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#dca580" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M36 36Q36 17 60 17Q84 17 84 36V52Q83 70 60 85Q37 70 36 52Z" fill="#dca580" /><path d="M33 56V33Q34 10 60 11Q87 10 87 35V59L78 46V28Q61 45 43 32L40 59Z" fill="#392f32" /><path d="M45 44Q49 42 53 44M67 44Q71 42 75 44" fill="none" /><path d="M49 51V54M71 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M54 71Q61 74 67 70" fill="none" /><rect x="39" y="46" width="19" height="14" rx="4" fill="none"/><rect x="62" y="46" width="19" height="14" rx="4" fill="none"/><path d="M58 51H62M35 50H39M81 50H86" fill="none" /></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><path d="M17 0V31M8 32H26M0 8H34M6 8L0 22H12ZM28 8L22 22H34Z" fill="#efbd65" /><path d="M0 22Q6 30 12 22M22 22Q28 30 34 22" fill="#fffaf5" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#dca580" />
+</g></g></svg>

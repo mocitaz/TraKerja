@@ -31,7 +31,11 @@ class JobDetailWorkspaceTest extends TestCase
             ->assertSee(route('jobs.toggle-archive', $job), false)
             ->assertSee(route('jobs.destroy', $job), false)
             ->assertSee('https://meet.example.test/interview', false)
-            ->assertSeeLivewire(JobFollowUp::class);
+            ->assertSeeLivewire(JobFollowUp::class)
+            ->assertDontSee('Company research')->assertDontSee('Salary reference')
+            ->assertDontSee('Keep this application up to date.')->assertDontSee('Back to tracker')
+            ->assertSee('workspace-footer', false)->assertSee('All rights reserved.')
+            ->assertSee('All applications');
         $this->actingAs(User::factory()->create())->get(route('jobs.show', $job))->assertForbidden();
     }
 
@@ -48,6 +52,32 @@ class JobDetailWorkspaceTest extends TestCase
             ->assertSee('No valid original listing link recorded.')
             ->assertDontSee('href="javascript:', false)->assertDontSee('<script>alert(1)</script>', false)
             ->assertDontSee('Ready to check in?');
+    }
+
+    public function test_portal_header_uses_the_profession_avatar_and_only_recorded_summary_facts(): void
+    {
+        $owner = User::factory()->create();
+        $job = JobApplication::factory()->create([
+            'user_id' => $owner->id, 'position' => 'Perawat', 'company_name' => 'Example clinic',
+            'location' => 'Jakarta', 'career_level' => 'Full Time', 'platform' => 'LinkedIn',
+            'application_status' => 'On Process', 'recruitment_stage' => 'Applied',
+            'application_date' => '2026-10-12',
+        ]);
+        $response = $this->actingAs($owner)->get(route('jobs.show', $job))->assertOk()
+            ->assertSee('images/role-avatars/nurse.svg', false)
+            ->assertSee(route('ai-studio.index'), false)->assertSee('Jakarta')->assertSee('Full Time')
+            ->assertDontSee('Match Score')->assertDontSee('Matched Applicants')->assertDontSee('job-dossier-scene', false);
+
+        $document = new \DOMDocument;
+        @$document->loadHTML($response->getContent());
+        $xpath = new \DOMXPath($document);
+        $this->assertSame(1, $document->getElementsByTagName('h1')->length);
+        $this->assertSame(4, $xpath->query('//dl[@class="job-summary"]/div')->length);
+        $this->assertSame(1, $xpath->query('//header[contains(@class, "job-heading")]//img[contains(@src, "nurse.svg")]')->length);
+        foreach (['overview', 'notes', 'record'] as $tab) {
+            $this->assertSame('job-panel-'.$tab, $document->getElementById('job-tab-'.$tab)->getAttribute('aria-controls'));
+            $this->assertSame('job-tab-'.$tab, $document->getElementById('job-panel-'.$tab)->getAttribute('aria-labelledby'));
+        }
     }
 
     public function test_assessment_detail_uses_the_actual_stage_and_online_platform(): void

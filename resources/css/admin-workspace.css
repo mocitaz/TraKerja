@@ -28,7 +28,7 @@
     position: sticky !important;
     top: 0 !important;
     z-index: 99 !important;
-    background: linear-gradient(180deg, #ffffff 84%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(180deg, var(--app-canvas) 84%, transparent 100%);
     padding-top: 14px;
     padding-bottom: 12px;
 }

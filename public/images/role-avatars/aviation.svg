@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Aircraft maintenance · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#eee3ec"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M25 120V108Q25 91 48 85H72Q95 91 95 108V120" fill="#a8c0d1" /><path d="M48 86L48 98L60 92L72 98V86M60 94V120" fill="none" /><rect x="29" y="103" width="15" height="10" rx="2" fill="#a8c0d1"/><path d="M52 74V87Q60 96 68 87V74" fill="#93634d" /><g transform="rotate(-3 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#93634d" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M39 33Q39 16 60 16Q81 16 81 33V60Q80 82 60 88Q40 82 39 60Z" fill="#93634d" /><path d="M35 40V31Q35 15 60 15Q85 15 85 31V41L79 37V27Q60 23 41 29V41Z" fill="#926343" /><path d="M45 44Q49 42 53 44M67 44Q71 42 75 44" fill="none" /><path d="M49 51V54M71 51V54" fill="none" stroke-width="3"/><path d="M60 53L57 61L62 62" fill="none" /><path d="M43 67L44 69M46 73L47 75M50 77L51 79M69 77L70 75M74 73L75 71M78 68L79 66" fill="none" stroke-width="1.4"/><path d="M55 72H65M44 43L52 45M68 45L76 43" fill="none" /><path d="M30 50V35Q30 5 60 5Q90 5 90 35V50" fill="none" stroke-width="4"/><rect x="26" y="43" width="11" height="22" rx="5" fill="#efbd65"/><rect x="84" y="43" width="11" height="22" rx="5" fill="#efbd65"/></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><rect x="1" y="0" width="31" height="32" rx="2" fill="#a9c6dc"/><path d="M8 8L25 25M21 5L6 25M5 25L9 28M19 6L24 4M14 13L25 13M14 13V4" fill="none" stroke="#fffaf5"/></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#93634d" />
+</g></g></svg>

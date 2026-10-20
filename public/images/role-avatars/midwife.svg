@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Midwifery · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#eee3ec"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M28 95L31 39Q31 10 60 10Q90 10 90 39L94 96L63 105Z" fill="#c5b1ce" /><path d="M20 120V108Q20 91 48 85H72Q100 91 100 108V120" fill="#a9c6dc" /><path d="M46 88Q60 105 74 88" fill="none" /><path d="M47 86L60 101L73 86M33 106H44V114H33Z" fill="none" /><g transform="rotate(-3 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#b87c59" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M35 37Q36 17 60 17Q84 17 85 37V56Q86 82 60 84Q34 82 35 56Z" fill="#b87c59" /><path d="M32 55V35Q33 13 60 13Q87 13 88 35V64L80 47V33Q60 25 41 41V62Z" fill="#c5b1ce" /><path d="M43 44Q47 42 51 44M69 44Q73 42 77 44" fill="none" /><path d="M47 51V54M73 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M52 69Q61 78 70 68" fill="none" /><path d="M34 63Q40 82 62 90L86 69L91 92L63 107L31 91Z" fill="#c5b1ce" /><path d="M41 85L61 98L78 87" fill="none" /></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><path d="M17 35Q-3 26 0 12Q3 2 17 2Q32 2 34 12Q37 26 17 35Z" fill="#b8a0c8" /><circle cx="17" cy="11" r="8" fill="#f4d2b4"/><path d="M12 10V11M22 10V11M14 15Q17 18 20 15M0 17L28 28M34 17L8 29" fill="none" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#b87c59" />
+</g></g></svg>

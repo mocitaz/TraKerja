@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Mobile development · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#eee3ec"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M28 95L31 39Q31 10 60 10Q90 10 90 39L94 96L63 105Z" fill="#d9abc0" /><path d="M23 120V108Q23 91 48 85H72Q97 91 97 108V120" fill="#d9abc0" /><path d="M46 88Q60 105 74 88" fill="none" /><g transform="rotate(3 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#f2c6a5" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M38 35Q39 18 60 18Q81 18 82 35V56Q80 78 60 85Q40 78 38 56Z" fill="#f2c6a5" /><path d="M32 55V35Q33 13 60 13Q87 13 88 35V64L80 47V33Q60 25 41 41V62Z" fill="#d9abc0" /><path d="M45 44Q49 42 53 44M67 44Q71 42 75 44" fill="none" /><path d="M49 51V54M71 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M52 69Q61 78 70 68" fill="none" /><path d="M34 63Q40 82 62 90L86 69L91 92L63 107L31 91Z" fill="#d9abc0" /><path d="M41 85L61 98L78 87" fill="none" /></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><rect x="7" y="-1" width="21" height="35" rx="4" fill="#b8a0c8"/><rect x="10" y="5" width="15" height="20" rx="2" fill="#fffaf5"/><path d="M14 2H20M16 29H18M14 13L17 16L22 10" fill="none" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#f2c6a5" />
+</g></g></svg>

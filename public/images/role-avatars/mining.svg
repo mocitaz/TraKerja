@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Mining and geology · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#e8edf3"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M18 120V108Q18 91 48 85H72Q102 91 102 108V120" fill="#efbd65" /><path d="M46 88Q60 105 74 88" fill="none" /><path d="M42 88L38 120M78 88L82 120M24 108H96" fill="none" stroke="#fffaf5" stroke-width="5"/><path d="M52 74V87Q60 96 68 87V74" fill="#b87c59" /><g transform="rotate(-2 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#b87c59" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M34 37Q36 18 60 18Q84 18 86 37V62Q85 77 74 81H46Q35 77 34 62Z" fill="#b87c59" /><path d="M35 40V31Q35 15 60 15Q85 15 85 31V41L79 37V27Q60 23 41 29V41Z" fill="#634535" /><path d="M43 44Q47 42 51 44M69 44Q73 42 77 44" fill="none" /><path d="M47 51V54M73 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M39 63L47 68L51 65Q60 62 69 65L74 69L81 62Q80 82 60 86Q41 82 39 63Z" fill="#634535" /><path d="M52 72Q61 74 70 67M69 66L72 67" fill="none" /><path d="M53 71Q60 75 67 70" fill="none" stroke="#fffaf5"/><path d="M30 34Q31 12 60 12Q89 12 90 34Z" fill="#efbd65" /><rect x="27" y="32" width="66" height="7" rx="3" fill="#efbd65"/><path d="M52 14V30M68 14V30" fill="none" /><circle cx="60" cy="26" r="7" fill="#a9c6dc"/><circle cx="60" cy="26" r="3" fill="#fffaf5"/></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><path d="M0 25L7 8L22 0L34 13L30 32L11 35Z" fill="#b3a3a4" /><path d="M7 8L17 18L34 13M17 18L11 35M17 18L22 0" fill="none" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#b87c59" />
+</g></g></svg>

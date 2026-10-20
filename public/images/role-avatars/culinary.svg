@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Cooking and kitchen operations · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#eee3ec"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M20 120V108Q20 91 48 85H72Q100 91 100 108V120" fill="#fffaf5" /><path d="M46 88Q60 105 74 88" fill="none" /><path d="M48 86L45 97L54 100L60 91L69 99L76 91M54 100V120M62 107H63M72 107H73M62 115H63M72 115H73" fill="none" /><path d="M52 74V87Q60 96 68 87V74" fill="#b87c59" /><g transform="rotate(2 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#b87c59" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M35 37Q36 17 60 17Q84 17 85 37V56Q86 82 60 84Q34 82 35 56Z" fill="#b87c59" /><path d="M35 43V29Q36 14 60 14Q85 14 85 31V45L78 39V29Q57 34 42 29V45Z" fill="#926343" /><path d="M43 44Q47 42 51 44M69 44Q73 42 77 44" fill="none" /><path d="M44 52Q47 48 50 52M70 52Q73 48 76 52" fill="none" /><path d="M59 56Q55 64 61 63" fill="none" /><path d="M60 65Q54 60 49 68L45 69Q54 73 60 68Q67 73 75 69L70 68Q65 60 60 65Z" fill="#926343" /><path d="M50 68Q60 72 71 67Q69 79 60 78Q52 77 50 68Z" fill="#fffaf5" /><path d="M54 75H67" fill="none" stroke-width="1.3"/><path d="M35 33V23Q22 15 34 7Q43 0 51 8Q61-6 71 8Q83 1 90 13Q95 23 84 26V34Z" fill="#fffaf5" /><path d="M35 26H84M45 19V25M74 19V25" fill="none" /></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><path d="M0 11H27Q27 28 14 28Q1 28 0 11Z" fill="#a9c6dc" /><path d="M27 13L40 7M5 4Q1 0 5-4M16 4Q12 0 16-4" fill="none" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#b87c59" />
+</g></g></svg>

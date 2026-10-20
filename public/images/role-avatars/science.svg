@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Science and laboratory · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#eee3ec"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><circle cx="85" cy="30" r="13" fill="#926343"/><path d="M25 120V108Q25 91 48 85H72Q95 91 95 108V120" fill="#fffaf5" /><path d="M48 86L42 98L54 105L60 93L66 105L78 98L72 86" fill="#fffaf5" /><path d="M60 94V120" fill="none" /><path d="M52 74V87Q60 96 68 87V74" fill="#f4d2b4" /><g transform="rotate(3 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#f4d2b4" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M39 33Q39 16 60 16Q81 16 81 33V60Q80 82 60 88Q40 82 39 60Z" fill="#f4d2b4" /><path d="M34 47V32Q34 13 60 14Q87 13 87 36L80 45L77 29Q61 38 42 30V46Z" fill="#926343" /><path d="M45 44Q49 42 53 44M67 44Q71 42 75 44" fill="none" /><path d="M49 51V54M71 51V54" fill="none" stroke-width="3"/><path d="M60 53L57 61L62 62" fill="none" /><path d="M55 72H65M44 43L52 45M68 45L76 43" fill="none" /><circle cx="35" cy="60" r="2" fill="#efbd65"/><circle cx="85" cy="60" r="2" fill="#efbd65"/><rect x="39" y="44" width="43" height="16" rx="5" fill="none"/><path d="M35 49H39M82 49H87M60 44V60" fill="none" /></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><path d="M11 0H23M13 0V12L1 28Q-1 33 6 33H28Q35 33 32 28L21 12V0" fill="#fffaf5" /><path d="M6 23H28L32 29Q33 32 28 32H6Q1 32 3 28Z" fill="#b8a0c8" /><circle cx="14" cy="25" r="2" fill="#fffaf5"/><circle cx="23" cy="29" r="1" fill="#fffaf5"/></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#f4d2b4" />
+</g></g></svg>

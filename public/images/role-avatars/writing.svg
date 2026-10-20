@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Writing and communications · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#e8edf3"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M25 120V108Q25 91 48 85H72Q95 91 95 108V120" fill="#b5b6d4" /><path d="M46 88Q60 105 74 88" fill="none" /><path d="M46 84H74V97Q60 104 46 97Z" fill="#b5b6d4" /><path d="M49 87V96M55 87V98M62 87V98M69 87V96" fill="none" stroke-width="1.5"/><path d="M52 74V87Q60 96 68 87V74" fill="#f4d2b4" /><g transform="rotate(4 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#f4d2b4" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M39 33Q39 16 60 16Q81 16 81 33V60Q80 82 60 88Q40 82 39 60Z" fill="#f4d2b4" /><path d="M34 44V31Q34 14 59 14Q86 14 86 34V46L78 42V34H42V46Z" fill="#634535" /><path d="M31 30Q30 5 60 5Q90 5 90 30Z" fill="#b89acb" /><rect x="29" y="27" width="62" height="11" rx="4" fill="#b89acb"/><path d="M42 13L40 25M55 10L54 25M68 10L69 25M80 15L82 25" fill="none" stroke-width="1.5"/><path d="M45 44Q49 42 53 44M67 44Q71 42 75 44" fill="none" /><path d="M49 51V54M71 51V54" fill="none" stroke-width="3"/><path d="M60 53L57 61L62 62" fill="none" /><path d="M43 67L44 69M46 73L47 75M50 77L51 79M69 77L70 75M74 73L75 71M78 68L79 66" fill="none" stroke-width="1.4"/><path d="M54 71Q61 74 67 70" fill="none" /><circle cx="49" cy="52" r="10" fill="none"/><circle cx="71" cy="52" r="10" fill="none"/><path d="M59 51H61M35 50H39M81 50H86" fill="none" /></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><rect x="3" y="0" width="27" height="33" rx="2" fill="#efbd65"/><path d="M9 0V33M0 7H6M0 15H6M0 24H6M15 10H25M15 17H24M15 24H21" fill="none" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#f4d2b4" />
+</g></g></svg>

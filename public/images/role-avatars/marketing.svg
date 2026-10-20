@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Marketing and growth · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#ece5f1"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><circle cx="85" cy="30" r="13" fill="#292b30"/><path d="M86 34Q108 49 92 89L82 76L88 53Z" fill="#292b30" /><path d="M24 120V108Q24 91 48 85H72Q96 91 96 108V120" fill="#dcadbb" /><path d="M48 86L42 98L54 105L60 93L66 105L78 98L72 86" fill="#fffaf5" /><path d="M60 94V120" fill="none" /><path d="M52 74V87Q60 96 68 87V74" fill="#b87c59" /><g transform="rotate(-3 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#b87c59" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M36 36Q36 17 60 17Q84 17 84 36V52Q83 70 60 85Q37 70 36 52Z" fill="#b87c59" /><path d="M34 46V30Q34 12 60 13Q86 11 87 35L80 44L77 29Q58 41 41 31V47Z" fill="#292b30" /><path d="M45 44Q49 42 53 44M67 44Q71 42 75 44" fill="none" /><path d="M46 52Q49 48 52 52M68 52Q71 48 74 52" fill="none" /><path d="M59 56Q55 64 61 63" fill="none" /><path d="M50 68Q60 72 71 67Q69 79 60 78Q52 77 50 68Z" fill="#fffaf5" /><path d="M54 75H67" fill="none" stroke-width="1.3"/><circle cx="35" cy="60" r="2" fill="#efbd65"/><circle cx="85" cy="60" r="2" fill="#efbd65"/></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><path d="M2 12H12L31 2V29L12 19H2ZM9 20L12 32H19L16 22" fill="#b8a0c8" /><path d="M34 11L39 8M35 20L40 22" fill="none" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#b87c59" />
+</g></g></svg>

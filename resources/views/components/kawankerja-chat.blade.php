@@ -16,9 +16,8 @@
     @include('components.nara-icons')
     <button type="button" class="nara-launcher" x-ref="launcher" x-show="!open" @click="open = true"
             aria-controls="nara-drawer" :aria-expanded="open.toString()" aria-label="{{ __('Open Nara career assistant') }}">
-        <img src="{{ asset('images/brand/nara-avatar.svg') }}" width="32" height="32" alt="">
-        <span>{{ __('Nara') }}</span>
-        <svg class="nara-svg" aria-hidden="true"><use href="#nara-icon-ph-chat-circle"/></svg>
+        <img src="{{ asset('images/brand/nara-avatar.svg') }}" width="44" height="44" alt="">
+        <span class="nara-launcher-hint" aria-hidden="true">{{ __('Ask Nara') }}</span>
     </button>
 
     <dialog id="nara-drawer" class="nara-drawer" :class="{ 'nara-drawer--wide': expanded }" x-ref="drawer"

@@ -80,14 +80,14 @@ class SummaryWorkspaceTest extends TestCase
         $document = new \DOMDocument();
         @$document->loadHTML($response->getContent());
         $xpath = new \DOMXPath($document);
-        $segments = $xpath->query('//div[@id="summary-panel-sources"]//circle[@stroke-dasharray]');
+        $segments = $xpath->query('//*[@id="summary-panel-sources"]//*[@data-share]');
         $this->assertCount(8, $segments);
         $share = 0;
         foreach ($segments as $segment) {
-            $share += (float) explode(' ', $segment->getAttribute('stroke-dasharray'))[0];
+            $share += (float) $segment->getAttribute('data-share');
         }
         $this->assertEquals(100, $share);
-        $this->assertCount(9, $xpath->query('//div[@id="summary-panel-sources"]//details[contains(@class,"summary-chart-data")]//tbody/tr'));
+        $this->assertCount(9, $xpath->query('//*[@id="summary-panel-sources"]//noscript//tbody/tr'));
     }
 
     public function test_location_map_combines_city_labels_and_keeps_unmatched_counts_off_map(): void
@@ -116,7 +116,7 @@ class SummaryWorkspaceTest extends TestCase
         $this->assertEquals(16, collect($map['mapped'])->sum('total') + collect($map['unmapped'])->sum('total'));
     }
 
-    public function test_location_explorer_uses_city_areas_without_point_markers(): void
+    public function test_location_report_keeps_city_boundaries_and_legible_location_markers(): void
     {
         $owner = User::factory()->create();
         foreach (['Jakarta', 'Timika'] as $location) {
@@ -133,6 +133,7 @@ class SummaryWorkspaceTest extends TestCase
         $atlas = "//div[contains(@class, 'summary-region-atlas')]";
         $this->assertSame(0, $xpath->query($atlas."//*[local-name()='circle']")->length);
         $this->assertGreaterThan(0, $xpath->query($atlas."//*[local-name()='path' and contains(@class, 'summary-map-city')]")->length);
+        $this->assertGreaterThan(0, $xpath->query($atlas."//*[local-name()='path' and contains(@class, 'insights-map-pin')]")->length);
     }
 
     public function test_locations_without_boundaries_stay_in_the_unplotted_totals(): void
@@ -162,5 +163,26 @@ class SummaryWorkspaceTest extends TestCase
         Setting::set('monetization_enabled', true);
         $this->actingAs($user)->get(route('summary'))->assertOk()->assertSee('Explore Premium')
             ->assertDontSee('id="summary-activity-title"', false);
+    }
+
+    public function test_report_exposes_every_analysis_without_category_tabs(): void
+    {
+        $owner = User::factory()->create();
+        JobApplication::factory()->create([
+            'user_id' => $owner->id, 'application_date' => today()->subDay(),
+            'position' => 'Software Engineer', 'company_name' => 'A & B <Research>',
+            'platform' => 'LinkedIn', 'location' => 'Bandung', 'career_level' => 'Full Time',
+        ]);
+        $response = $this->actingAs($owner)->get(route('summary'))->assertOk()
+            ->assertSee('How is your search moving?')->assertSee('Which sources do you use?')
+            ->assertSee('Where is your search taking you?')->assertSee('What roles are you pursuing?')
+            ->assertSee('How do you want to work?')->assertSee('Companies on your radar')
+            ->assertDontSee('summary-analysis-tabs', false)->assertDontSee('role="tab"', false)
+            ->assertSee('name="timeFilter"', false)->assertSee('Search companies')
+            ->assertSee('Sort companies')->assertSee('Next companies page')
+            ->assertSee('A &amp; B &lt;Research&gt;', false)->assertDontSee('A & B <Research>', false);
+        $document = new \DOMDocument;
+        @$document->loadHTML($response->getContent());
+        $this->assertSame(1, $document->getElementsByTagName('h1')->length);
     }
 }

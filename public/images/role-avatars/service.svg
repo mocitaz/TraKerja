@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Community services · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#eee3ec"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M20 120V108Q20 91 48 85H72Q100 91 100 108V120" fill="#d8b7a3" /><path d="M48 86L48 98L60 92L72 98V86M60 94V120" fill="none" /><rect x="29" y="103" width="15" height="10" rx="2" fill="#d8b7a3"/><path d="M52 74V87Q60 96 68 87V74" fill="#b87c59" /><g transform="rotate(-4 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#b87c59" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M35 37Q36 17 60 17Q84 17 85 37V56Q86 82 60 84Q34 82 35 56Z" fill="#b87c59" /><path d="M32 49Q20 47 25 35Q17 26 29 20Q25 8 39 11Q45 0 56 9Q67-1 76 10Q91 4 93 19Q106 23 97 35Q103 47 87 51L80 42V32Q68 39 59 29Q49 39 40 33L39 49Z" fill="#926343" /><path d="M43 44Q47 42 51 44M69 44Q73 42 77 44" fill="none" /><path d="M47 51V54M73 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M52 69Q61 78 70 68" fill="none" /></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><path d="M17 32L3 18C-8 4 9-5 17 7C26-5 42 4 31 18Z" fill="#b8a0c8" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#b87c59" />
+</g></g></svg>

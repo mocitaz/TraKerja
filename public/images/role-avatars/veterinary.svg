@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Veterinary care · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#eee3ec"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><circle cx="85" cy="30" r="13" fill="#926343"/><path d="M86 34Q108 49 92 89L82 76L88 53Z" fill="#926343" /><path d="M15 120V108Q15 91 48 85H72Q105 91 105 108V120" fill="#fffaf5" /><path d="M48 86L42 98L54 105L60 93L66 105L78 98L72 86" fill="#fffaf5" /><path d="M60 94V120" fill="none" /><path d="M52 74V87Q60 96 68 87V74" fill="#dca580" /><g transform="rotate(-3 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#dca580" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M32 38Q33 18 60 18Q87 18 88 38V57Q87 77 60 81Q33 77 32 57Z" fill="#dca580" /><path d="M34 46V30Q34 12 60 13Q86 11 87 35L80 44L77 29Q58 41 41 31V47Z" fill="#926343" /><path d="M43 44Q47 42 51 44M69 44Q73 42 77 44" fill="none" /><path d="M47 51V54M73 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M52 69Q61 78 70 68" fill="none" /><circle cx="35" cy="60" r="2" fill="#efbd65"/><circle cx="85" cy="60" r="2" fill="#efbd65"/></g><path d="M46 85V98Q46 111 57 111Q68 111 68 98V85M57 111V116H79V105" fill="none" stroke-width="3"/><circle cx="79" cy="103" r="5" fill="#a9c6dc"/></g>
+<g data-part="work-tool" transform="translate(68 83)"><circle cx="17" cy="22" r="9" fill="#b8a0c8"/><circle cx="4" cy="13" r="4" fill="#b8a0c8"/><circle cx="12" cy="5" r="4" fill="#b8a0c8"/><circle cx="23" cy="5" r="4" fill="#b8a0c8"/><circle cx="31" cy="13" r="4" fill="#b8a0c8"/></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#dca580" />
+</g></g></svg>

@@ -35,3 +35,4 @@ import './admin-payments-workspace';
 import './job-detail-tabs';
 
 import "./nara-chat";
+import './summary-report';

@@ -11,12 +11,30 @@ final class JobRoleCatalog
 
     public static function all(): array
     {
-        return self::$fields ??= json_decode(
-            file_get_contents(dirname(__DIR__, 2).'/resources/data/job-roles.json'),
-            true,
-            512,
-            JSON_THROW_ON_ERROR
-        );
+        if (self::$fields !== null) {
+            return self::$fields;
+        }
+
+        $directory = dirname(__DIR__, 2).'/resources/data/';
+        $fields = json_decode(file_get_contents($directory.'job-roles.json'), true, 512, JSON_THROW_ON_ERROR);
+        $specialists = json_decode(file_get_contents($directory.'job-role-specialists.json'), true, 512, JSON_THROW_ON_ERROR);
+        $specialistTitles = [];
+        foreach ($specialists as $field) {
+            foreach ($field['roles'] as $title) {
+                $specialistTitles[self::normalize($title)] = true;
+            }
+        }
+
+        // Move existing titles into their more specific profession without duplicating matches.
+        foreach ($fields as &$field) {
+            $field['roles'] = array_values(array_filter(
+                $field['roles'],
+                fn (string $title) => !isset($specialistTitles[self::normalize($title)])
+            ));
+        }
+        unset($field);
+
+        return self::$fields = array_merge($fields, $specialists);
     }
 
     public static function resolve(?string $title): array
@@ -36,12 +54,12 @@ final class JobRoleCatalog
         if ($normalized !== '') {
             foreach (self::$index as $entry) {
                 if (str_contains(' '.$normalized.' ', ' '.$entry['phrase'].' ')) {
-                    return ['id' => $entry['id'], 'label' => $entry['label'], 'matched_role' => $entry['role'], 'asset' => 'images/roles/'.$entry['id'].'.svg'];
+                    return ['id' => $entry['id'], 'label' => $entry['label'], 'matched_role' => $entry['role'], 'asset' => 'images/role-avatars/'.$entry['id'].'.svg'];
                 }
             }
         }
 
-        return ['id' => 'general', 'label' => 'General role', 'matched_role' => null, 'asset' => 'images/roles/general.svg'];
+        return ['id' => 'general', 'label' => 'General role', 'matched_role' => null, 'asset' => 'images/role-avatars/general.svg'];
     }
 
     private static function normalize(string $title): string

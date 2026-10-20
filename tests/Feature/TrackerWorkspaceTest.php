@@ -96,4 +96,31 @@ class TrackerWorkspaceTest extends TestCase
         $list->assertSee('aria-sort="descending"', false)->call('sortBy', 'position')->assertSet('sortDirection', 'asc')->assertSee('aria-sort="ascending"', false);
     }
 
+    public function test_table_mobile_cards_and_board_use_profession_portraits_with_a_general_fallback(): void
+    {
+        $owner = User::factory()->create();
+        foreach (['Perawat', 'Software Engineer', 'Dokter Gigi', 'Unclassified opportunity'] as $position) {
+            JobApplication::factory()->create([
+                'user_id' => $owner->id, 'position' => $position,
+                'application_status' => 'On Process', 'recruitment_stage' => 'Applied',
+            ]);
+        }
+
+        foreach ([JobTableList::class, JobKanbanBoard::class] as $component) {
+            $html = Livewire::actingAs($owner)->test($component)->html();
+            $document = new \DOMDocument;
+            @$document->loadHTML($html);
+            $xpath = new \DOMXPath($document);
+            foreach (['nurse', 'software', 'dental', 'general'] as $profession) {
+                $images = $xpath->query('//img[contains(@src, "/images/role-avatars/'.$profession.'.svg")]');
+                $this->assertGreaterThanOrEqual($component === JobTableList::class ? 2 : 1, $images->length);
+                foreach ($images as $image) {
+                    $this->assertSame('40', $image->getAttribute('width'));
+                    $this->assertSame('40', $image->getAttribute('height'));
+                    $this->assertNotEmpty($image->parentNode->getAttribute('aria-label'));
+                }
+            }
+        }
+    }
+
 }

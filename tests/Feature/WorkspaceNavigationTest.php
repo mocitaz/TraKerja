@@ -26,6 +26,11 @@ class WorkspaceNavigationTest extends TestCase
         $document->loadHTML($response->getContent());
         libxml_clear_errors();
         $xpath = new \DOMXPath($document);
+        $this->assertSame(0, $xpath->query('//*[@id="workspace-navigation"]//a[@href="'.route('support.index').'"]')->length);
+        $this->assertSame(1, $xpath->query('//footer//a[@href="'.route('support.index').'"]')->length);
+        foreach (['legal.privacy', 'legal.terms', 'cv.builder', 'ai-studio.index'] as $footerRoute) {
+            $this->assertSame(1, $xpath->query('//footer//a[@href="'.route($footerRoute).'"]')->length);
+        }
         $this->assertSame(4, $xpath->query('//nav[@aria-label="Mobile primary navigation"]/a')->length);
         $this->assertSame(1, $xpath->query('//nav[@aria-label="Mobile primary navigation"]/a[@aria-current="page"]')->length);
         $profile = $xpath->query('//button[@aria-controls="workspace-profile"]')->item(0);

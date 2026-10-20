@@ -1,3 +1,5 @@
+@import './canvas.css';
+
 @font-face {
     font-family: 'Google Sans Flex';
     src: url('../../public/fonts/google-sans-flex/latin.woff2') format('woff2');

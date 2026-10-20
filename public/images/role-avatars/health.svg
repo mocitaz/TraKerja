@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Doctors and clinical medicine · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#ece5f1"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M18 120V108Q18 91 48 85H72Q102 91 102 108V120" fill="#fffaf5" /><path d="M48 86L42 98L54 105L60 93L66 105L78 98L72 86" fill="#fffaf5" /><path d="M60 94V120" fill="none" /><path d="M52 74V87Q60 96 68 87V74" fill="#b87c59" /><g transform="rotate(-2 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#b87c59" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M34 37Q36 18 60 18Q84 18 86 37V62Q85 77 74 81H46Q35 77 34 62Z" fill="#b87c59" /><path d="M34 46Q27 36 34 29Q29 17 42 18Q48 7 59 14Q73 3 79 16Q95 14 88 32L82 45L76 30Q65 41 52 31L41 39V48Z" fill="#292b30" /><path d="M43 44Q47 42 51 44M69 44Q73 42 77 44" fill="none" /><path d="M47 51V54M73 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M60 65Q54 60 49 68L45 69Q54 73 60 68Q67 73 75 69L70 68Q65 60 60 65Z" fill="#292b30" /><path d="M52 69Q61 78 70 68" fill="none" /><circle cx="47" cy="52" r="10" fill="none"/><circle cx="73" cy="52" r="10" fill="none"/><path d="M57 51H63M35 50H37M83 50H86" fill="none" /></g><path d="M46 85V98Q46 111 57 111Q68 111 68 98V85M57 111V116H79V105" fill="none" stroke-width="3"/><circle cx="79" cy="103" r="5" fill="#a9c6dc"/></g>
+<g data-part="work-tool" transform="translate(68 83)"><rect x="2" y="0" width="27" height="34" rx="2" fill="#fffaf5"/><rect x="10" y="-2" width="12" height="5" rx="2" fill="#b8a0c8"/><path d="M12 10H20V15H25V23H20V28H12V23H7V15H12Z" fill="#b8a0c8" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#b87c59" />
+</g></g></svg>

@@ -139,7 +139,9 @@
                         @include('components.survey-invitation')
                         {{ $slot }}
                     </div>
-                    <x-workspace-footer />
+                    @if($showFooter ?? true)
+                        <x-workspace-footer />
+                    @endif
                 </main>
 
 

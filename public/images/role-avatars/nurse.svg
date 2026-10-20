@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Nursing · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#ece5f1"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><circle cx="85" cy="30" r="13" fill="#292b30"/><path d="M24 120V108Q24 91 48 85H72Q96 91 96 108V120" fill="#a9c6dc" /><path d="M46 88Q60 105 74 88" fill="none" /><path d="M47 86L60 101L73 86M33 106H44V114H33Z" fill="none" /><path d="M52 74V87Q60 96 68 87V74" fill="#f4d2b4" /><g transform="rotate(3 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#f4d2b4" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M36 36Q36 17 60 17Q84 17 84 36V52Q83 70 60 85Q37 70 36 52Z" fill="#f4d2b4" /><path d="M34 47V32Q34 13 60 14Q87 13 87 36L80 45L77 29Q61 38 42 30V46Z" fill="#292b30" /><path d="M45 44Q49 42 53 44M67 44Q71 42 75 44" fill="none" /><path d="M49 51V54M71 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M52 69Q61 78 70 68" fill="none" /><circle cx="35" cy="60" r="2" fill="#efbd65"/><circle cx="85" cy="60" r="2" fill="#efbd65"/><path d="M34 19L44 9H77L87 19L80 33H41Z" fill="#fffaf5" /><path d="M56 16H65V21H70V27H65V31H56V27H51V21H56Z" fill="#b8a0c8" stroke="none"/></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><rect x="2" y="0" width="27" height="34" rx="2" fill="#fffaf5"/><rect x="10" y="-2" width="12" height="5" rx="2" fill="#b8a0c8"/><path d="M12 10H20V15H25V23H20V28H12V23H7V15H12Z" fill="#b8a0c8" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#f4d2b4" />
+</g></g></svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Workplace safety · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#ece5f1"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M28 95L31 39Q31 10 60 10Q90 10 90 39L94 96L63 105Z" fill="#dca587" /><path d="M23 120V108Q23 91 48 85H72Q97 91 97 108V120" fill="#efbd65" /><path d="M46 88Q60 105 74 88" fill="none" /><path d="M42 88L38 120M78 88L82 120M24 108H96" fill="none" stroke="#fffaf5" stroke-width="5"/><g transform="rotate(3 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#93634d" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M38 35Q39 18 60 18Q81 18 82 35V56Q80 78 60 85Q40 78 38 56Z" fill="#93634d" /><path d="M32 55V35Q33 13 60 13Q87 13 88 35V64L80 47V33Q60 25 41 41V62Z" fill="#dca587" /><path d="M45 44Q49 42 53 44M67 44Q71 42 75 44" fill="none" /><path d="M49 51V54M71 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M54 71Q61 74 67 70" fill="none" /><path d="M34 63Q40 82 62 90L86 69L91 92L63 107L31 91Z" fill="#dca587" /><path d="M41 85L61 98L78 87" fill="none" /><path d="M30 34Q31 12 60 12Q89 12 90 34Z" fill="#fffaf5" /><rect x="27" y="32" width="66" height="7" rx="3" fill="#fffaf5"/><path d="M52 14V30M68 14V30" fill="none" /></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><rect x="2" y="0" width="27" height="34" rx="2" fill="#fffaf5"/><rect x="10" y="-2" width="12" height="5" rx="2" fill="#b8a0c8"/><path d="M8 12L16 8L24 12V20Q23 26 16 29Q9 26 8 20Z" fill="#efbd65" /><path d="M12 18L15 21L21 15" fill="none" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#93634d" />
+</g></g></svg>

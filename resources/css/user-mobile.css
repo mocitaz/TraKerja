@@ -97,8 +97,8 @@
     .ai-portal :is(.ai-result-actions,.ai-result-footer,.ai-request-status-actions) { flex-wrap: wrap; gap: 8px; }
     .ai-portal :is(pre,.ai-analysis-section p,.ai-letter-content) { white-space: pre-wrap; overflow-wrap: anywhere; }
     .ai-portal .ai-history-list { max-height: 44dvh; overflow-y: auto; }
-    .nara-widget .nara-launcher { height: 42px; padding: 5px 10px 5px 6px; gap: 6px; font-size: 12px; }
-    .nara-widget .nara-launcher img { width: 28px; height: 28px; }
+    .nara-widget .nara-launcher { width: 52px; height: 52px; padding: 4px; }
+    .nara-widget .nara-launcher img { width: 44px; height: 44px; }
     .nara-drawer .nara-focus { gap: 8px; }
     .nara-drawer .nara-focus button { flex: 1; min-height: 44px; white-space: normal; line-height: 1.4; }
     .nara-drawer .nara-messages { padding-inline: 16px; }

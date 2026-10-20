@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Frontend engineering · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#e8edf3"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M29 73V36Q29 8 60 8Q91 8 91 37V73Q80 87 60 80Q39 88 29 73Z" fill="#634535" /><path d="M24 120V108Q24 91 48 85H72Q96 91 96 108V120" fill="#b6cadb" /><path d="M46 88Q60 105 74 88" fill="none" /><path d="M47 87L58 108L72 87L77 120H42Z" fill="#fffaf5" /><path d="M58 108V120M64 112H65M64 118H65" fill="none" /><path d="M52 74V87Q60 96 68 87V74" fill="#f4d2b4" /><g transform="rotate(4 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#f4d2b4" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M36 36Q36 17 60 17Q84 17 84 36V52Q83 70 60 85Q37 70 36 52Z" fill="#f4d2b4" /><path d="M34 49V32Q34 11 60 12Q87 11 87 36V60L78 46V29L66 40H59V29L41 39V52Z" fill="#634535" /><path d="M45 44Q49 42 53 44M67 44Q71 42 75 44" fill="none" /><path d="M49 51V54M71 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M52 69Q61 78 70 68" fill="none" /><circle cx="35" cy="60" r="2" fill="#efbd65"/><circle cx="85" cy="60" r="2" fill="#efbd65"/></g></g>
+<g data-part="work-tool" transform="translate(48 92) scale(1.3)"><rect x="0" y="1" width="33" height="23" rx="2" fill="#a9c6dc"/><path d="M-3 25H36L32 29H1Z" fill="#fffaf5" /><path d="M1 7H32M6 4H7M11 4H12M5 11H13V19H5ZM17 12H27M17 17H24" fill="none" /></g>
+<path d="M45 115Q38 108 44 106L52 113M86 114L91 106Q97 105 97 110L91 119" fill="#f4d2b4" />
+</g></g></svg>

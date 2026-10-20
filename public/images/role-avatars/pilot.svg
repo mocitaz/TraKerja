@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Piloting · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#e8edf3"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M18 120V108Q18 91 48 85H72Q102 91 102 108V120" fill="#fffaf5" /><path d="M48 86L48 98L60 92L72 98V86M60 94V120" fill="none" /><rect x="29" y="103" width="15" height="10" rx="2" fill="#fffaf5"/><path d="M28 95H43M77 95H92" fill="none" stroke="#efbd65" stroke-width="5"/><path d="M55 94L60 99L65 94L62 118H58Z" fill="#69617a" /><path d="M52 74V87Q60 96 68 87V74" fill="#dca580" /><g transform="rotate(-2 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#dca580" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M34 37Q36 18 60 18Q84 18 86 37V62Q85 77 74 81H46Q35 77 34 62Z" fill="#dca580" /><path d="M35 43V29Q36 14 60 14Q85 14 85 31V45L78 39V29Q57 34 42 29V45Z" fill="#634535" /><path d="M43 44Q47 42 51 44M69 44Q73 42 77 44" fill="none" /><path d="M47 51V54M73 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M60 65Q54 60 49 68L45 69Q54 73 60 68Q67 73 75 69L70 68Q65 60 60 65Z" fill="#634535" /><path d="M51 70Q60 77 70 69" fill="none" /><path d="M43 43L52 42M69 41L77 44" fill="none" /><path d="M29 22L60 12L91 22L84 32H36Z" fill="#727b96" /><path d="M35 30H85V35H35Z" fill="#efbd65" /><path d="M36 35H85Q78 46 48 39Z" fill="#292b30" /><path d="M47 24L56 25L60 21L64 25L74 24L68 29H53Z" fill="#efbd65" /></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><path d="M15 0H20L22 12L35 21V26L22 21L21 29L26 32V35L17 33L9 35V32L14 29L13 21L0 26V21L13 12Z" fill="#fffaf5" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#dca580" />
+</g></g></svg>

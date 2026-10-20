@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Backend engineering · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#f3e7dc"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M18 120V108Q18 91 48 85H72Q102 91 102 108V120" fill="#a4a1c2" /><path d="M46 88Q60 105 74 88" fill="none" /><path d="M47 86L44 98L56 104L60 92L66 104L77 97L72 86M60 94V120" fill="none" /><path d="M27 107H42V116H27ZM78 107H93V116H78ZM28 109H41M79 109H92" fill="none" /><path d="M52 74V87Q60 96 68 87V74" fill="#b87c59" /><g transform="rotate(-2 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#b87c59" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M34 37Q36 18 60 18Q84 18 86 37V62Q85 77 74 81H46Q35 77 34 62Z" fill="#b87c59" /><path d="M34 53V44L39 37V54ZM81 37L86 45V54H81Z" fill="#392f32" /><path d="M43 44Q47 42 51 44M69 44Q73 42 77 44" fill="none" /><path d="M47 51V54M73 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M39 63L47 68L51 65Q60 62 69 65L74 69L81 62Q80 82 60 86Q41 82 39 63Z" fill="#392f32" /><path d="M54 71Q61 74 67 70" fill="none" /><path d="M53 71Q60 75 67 70" fill="none" stroke="#fffaf5"/><rect x="37" y="46" width="19" height="14" rx="4" fill="none"/><rect x="64" y="46" width="19" height="14" rx="4" fill="none"/><path d="M56 51H64M35 50H37M83 50H86" fill="none" /></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><rect x="3" y="0" width="27" height="31" rx="2" fill="#a9c6dc"/><path d="M3 10H30M3 21H30M9 5H10M9 15H10M9 26H10M16 5H24M16 15H24M16 26H24" fill="none" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#b87c59" />
+</g></g></svg>

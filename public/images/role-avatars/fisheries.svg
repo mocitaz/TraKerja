@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Fisheries and aquaculture · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#eee3ec"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M20 120V108Q20 91 48 85H72Q100 91 100 108V120" fill="#a9c6d6" /><path d="M46 88Q60 105 74 88" fill="none" /><path d="M40 87L43 101H77L80 87M43 101L36 120H84L77 101Z" fill="#a9c6dc" /><path d="M52 74V87Q60 96 68 87V74" fill="#93634d" /><g transform="rotate(-3 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#93634d" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M35 37Q36 17 60 17Q84 17 85 37V56Q86 82 60 84Q34 82 35 56Z" fill="#93634d" /><path d="M34 46V31Q34 14 53 14L80 16Q90 22 84 43L78 45V28Q60 40 41 30V45Z" fill="#926343" /><path d="M43 44Q47 42 51 44M69 44Q73 42 77 44" fill="none" /><path d="M47 51V54M73 51V54" fill="none" stroke-width="3"/><path d="M59 56Q55 64 61 63" fill="none" /><path d="M60 65Q54 60 49 68L45 69Q54 73 60 68Q67 73 75 69L70 68Q65 60 60 65Z" fill="#926343" /><path d="M54 71Q61 74 67 70" fill="none" /><path d="M33 31V22Q60 8 87 22V31Z" fill="#a9c6dc" /><path d="M31 31H88L98 37Q79 44 61 35H31Z" fill="#a9c6dc" /><path d="M61 17L63 30" fill="none" stroke-width="1.5"/></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><path d="M0 16Q15-3 28 12L36 5V28L28 21Q14 36 0 16Z" fill="#a9c6dc" /><circle cx="10" cy="14" r="2" fill="#292b30"/><path d="M20 11L16 5M20 22L16 29" fill="none" /></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#93634d" />
+</g></g></svg>

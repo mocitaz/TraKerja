@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Land surveying · illustrated profession avatar</title>
+<defs><clipPath id="portrait"><circle cx="60" cy="60" r="60"/></clipPath></defs>
+<g clip-path="url(#portrait)">
+<rect width="120" height="120" fill="#eee3ec"/>
+<g stroke="#292b30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<g data-part="portrait"><path d="M25 120V108Q25 91 48 85H72Q95 91 95 108V120" fill="#efbd65" /><path d="M46 88Q60 105 74 88" fill="none" /><path d="M42 88L38 120M78 88L82 120M24 108H96" fill="none" stroke="#fffaf5" stroke-width="5"/><path d="M52 74V87Q60 96 68 87V74" fill="#dca580" /><g transform="rotate(-3 60 78)"><path d="M36 48Q28 43 30 54Q31 63 38 60M84 48Q92 43 90 54Q89 63 82 60" fill="#dca580" /><path d="M33 51L35 56M87 51L85 56" fill="none" stroke-width="1.4"/><path d="M39 33Q39 16 60 16Q81 16 81 33V60Q80 82 60 88Q40 82 39 60Z" fill="#dca580" /><path d="M35 43V29Q36 14 60 14Q85 14 85 31V45L78 39V29Q57 34 42 29V45Z" fill="#926343" /><path d="M45 44Q49 42 53 44M67 44Q71 42 75 44" fill="none" /><path d="M49 51V54M71 51V54" fill="none" stroke-width="3"/><path d="M60 53L57 61L62 62" fill="none" /><path d="M60 65Q54 60 49 68L45 69Q54 73 60 68Q67 73 75 69L70 68Q65 60 60 65Z" fill="#926343" /><path d="M51 70Q60 77 70 69" fill="none" /><path d="M43 43L52 42M69 41L77 44" fill="none" /><path d="M30 34Q31 12 60 12Q89 12 90 34Z" fill="#efbd65" /><rect x="27" y="32" width="66" height="7" rx="3" fill="#efbd65"/><path d="M52 14V30M68 14V30" fill="none" /></g></g>
+<g data-part="work-tool" transform="translate(68 83)"><path d="M17 12L5 34M17 12L29 34M17 12V34" fill="none" /><rect x="2" y="1" width="30" height="12" rx="2" fill="#efbd65"/><circle cx="26" cy="7" r="4" fill="#a9c6dc"/></g>
+<path d="M73 108Q66 103 69 99Q72 97 77 103L82 110" fill="#dca580" />
+</g></g></svg>
