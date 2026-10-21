@@ -263,20 +263,22 @@
                     @endunless
                     <div id="profile-panel-security" role="tabpanel" aria-labelledby="profile-tab-security" x-show="tab === 'security'" @if($initialTab !== 'security') x-cloak @endif class="profile-panel-stack">
                         <section class="profile-panel"><header class="profile-section-header"><div><h2>{{ __('Password & security') }}</h2><p>{{ __('Keep access to your account secure.') }}</p></div></header>@include('profile.partials.update-password-form')</section>
-                        <section class="profile-panel">
-                            <h2>{{ __('Connected API devices') }}</h2>
-                            <p>{{ __('Revoke access for Chrome extensions and API clients. This list does not include browser login sessions.') }}</p>
+                        <section class="profile-panel profile-api-devices">
+                            <header class="profile-section-header"><div>
+                                <h2>{{ __('Connected API devices') }}</h2>
+                                <p>{{ __('Revoke access for Chrome extensions and API clients. This list does not include browser login sessions.') }}</p>
+                            </div></header>
                             @php $apiDevices = $user->tokens()->latest()->limit(50)->get(['id', 'name', 'created_at', 'last_used_at', 'expires_at']); @endphp
                             @forelse($apiDevices as $device)
-                                <div class="profile-form-footer">
+                                <div class="profile-form-footer profile-api-device">
                                     <div><strong>{{ $device->name }}</strong><p>{{ __('Last used: :value1 · Expires: :value2', ['value1' => ($device->last_used_at?->diffForHumans() ?? 'Never'), 'value2' => ($device->expires_at?->locale(app()->getLocale())->translatedFormat('d M Y') ?? 'No expiry')]) }}</p></div>
                                     <form method="post" action="{{ route('profile.tokens.destroy', $device->id) }}">@csrf @method('delete')<button type="submit" class="profile-secondary">{{ __('Revoke access') }}</button></form>
                                 </div>
                             @empty
-                                <p>{{ __('No connected API devices.') }}</p>
+                                <p class="profile-empty">{{ __('No connected API devices.') }}</p>
                             @endforelse
                             @if($apiDevices->isNotEmpty())
-                                <p>{{ __('Showing up to 50 recent devices.') }}</p>
+                                <p class="profile-api-note">{{ __('Showing up to 50 recent devices.') }}</p>
                                 <form method="post" action="{{ route('profile.tokens.destroy-all') }}">@csrf @method('delete')<button type="submit" class="profile-secondary">{{ __('Revoke all API devices') }}</button></form>
                             @endif
                         </section>
