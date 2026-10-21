@@ -55,6 +55,7 @@ class EmailBlastController extends Controller
     public function send(Request $request)
     {
         $validationRules = [
+            'banner' => \App\Support\EmailBannerCatalog::rules(),
             'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam,maintenance_completed,new_vibe,brand_transformation',
             'target_user' => 'required|in:all,verified,premium,free,new,unverified',
         ];
@@ -94,88 +95,88 @@ class EmailBlastController extends Controller
             try {
                 switch ($emailType) {
                     case 'ai_analyzer':
-                        Mail::to($user)->send(new AiAnalyzerFreeTrialAnnouncementMail($user));
+                        $this->sendWithBanner($user, $request, new AiAnalyzerFreeTrialAnnouncementMail($user));
                         break;
                     case 'job_reminder':
-                        Mail::to($user)->send(new JobApplicationReminderMail($user));
+                        $this->sendWithBanner($user, $request, new JobApplicationReminderMail($user));
                         break;
                     case 'monthly_motivation':
-                        Mail::to($user)->send(new MonthlyMotivationMail($user));
+                        $this->sendWithBanner($user, $request, new MonthlyMotivationMail($user));
                         break;
                     case 'welcome':
-                        Mail::to($user)->send(new WelcomeMail($user));
+                        $this->sendWithBanner($user, $request, new WelcomeMail($user));
                         break;
                     case 'verification':
                         // Kirim verification email untuk user yang belum terverifikasi
                         if (!$user->hasVerifiedEmail()) {
-                            $user->sendEmailVerificationNotification();
+                            app(\App\Services\EmailVerificationService::class)->send($user, $request->input('banner'));
                         }
                         break;
                     case 'verification_reminder':
-                        Mail::to($user)->send(new \App\Mail\EmailVerificationReminderMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\EmailVerificationReminderMail($user));
                         break;
                     case 'product_update':
-                        Mail::to($user)->send(new \App\Mail\ProductUpdateMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\ProductUpdateMail($user));
                         break;
                     case 'new_vibe':
-                        Mail::to($user)->send(new \App\Mail\NewVibeMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\NewVibeMail($user));
                         break;
                     case 'brand_transformation':
-                        Mail::to($user)->send(new \App\Mail\BrandTransformationMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\BrandTransformationMail($user));
                         break;
                     case 'hiring_season':
-                        Mail::to($user)->send(new HiringSeasonAlertMail($user));
+                        $this->sendWithBanner($user, $request, new HiringSeasonAlertMail($user));
                         break;
                     case 're_engagement':
-                        Mail::to($user)->send(new ReEngagementMail($user));
+                        $this->sendWithBanner($user, $request, new ReEngagementMail($user));
                         break;
                     case 'chrome_extension':
-                        Mail::to($user)->send(new ChromeExtensionPromoMail($user));
+                        $this->sendWithBanner($user, $request, new ChromeExtensionPromoMail($user));
                         break;
                     case 'ai_photo':
-                        Mail::to($user)->send(new \App\Mail\AiPhotoAnnouncementMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\AiPhotoAnnouncementMail($user));
                         break;
                     case 'follow_up_feature':
-                        Mail::to($user)->send(new \App\Mail\FollowUpFeatureAnnouncementMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\FollowUpFeatureAnnouncementMail($user));
                         break;
                     case 'idul_adha':
-                        Mail::to($user)->send(new \App\Mail\IdulAdhaMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\IdulAdhaMail($user));
                         break;
                     case 'waisak':
-                        Mail::to($user)->send(new \App\Mail\WaisakMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\WaisakMail($user));
                         break;
                     case 'pancasila':
-                        Mail::to($user)->send(new \App\Mail\PancasilaMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\PancasilaMail($user));
                         break;
                     case 'sumpah_pemuda':
-                        Mail::to($user)->send(new \App\Mail\SumpahPemudaMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\SumpahPemudaMail($user));
                         break;
                     case 'pahlawan':
-                        Mail::to($user)->send(new \App\Mail\PahlawanMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\PahlawanMail($user));
                         break;
                     case 'guru_nasional':
-                        Mail::to($user)->send(new \App\Mail\GuruNasionalMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\GuruNasionalMail($user));
                         break;
                     case 'hari_ibu':
-                        Mail::to($user)->send(new \App\Mail\HariIbuMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\HariIbuMail($user));
                         break;
                     case 'natal':
-                        Mail::to($user)->send(new \App\Mail\NatalMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\NatalMail($user));
                         break;
                     case 'kemerdekaan_ri':
-                        Mail::to($user)->send(new \App\Mail\KemerdekaanRiMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\KemerdekaanRiMail($user));
                         break;
                     case 'maulid_nabi':
-                        Mail::to($user)->send(new \App\Mail\MaulidNabiMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\MaulidNabiMail($user));
                         break;
                     case 'tahun_baru_islam':
-                        Mail::to($user)->send(new \App\Mail\TahunBaruIslamMail($user));
+                        $this->sendWithBanner($user, $request, new \App\Mail\TahunBaruIslamMail($user));
                         break;
                     case 'maintenance_completed':
-                        Mail::to($user)->send(new MaintenanceCompletedMail($user));
+                        $this->sendWithBanner($user, $request, new MaintenanceCompletedMail($user));
                         break;
                     case 'custom':
-                        Mail::to($user)->send(new CustomEmailBlastMail(
+                        $this->sendWithBanner($user, $request, new CustomEmailBlastMail(
                             $user,
                             $request->custom_subject,
                             $request->custom_content,
@@ -215,6 +216,7 @@ class EmailBlastController extends Controller
     public function initProgress(Request $request)
     {
         $validationRules = [
+            'banner' => \App\Support\EmailBannerCatalog::rules(),
             'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam,maintenance_completed,new_vibe,brand_transformation',
             'target_user' => 'required|in:all,verified,premium,free,new,unverified',
         ];
@@ -258,6 +260,7 @@ class EmailBlastController extends Controller
     public function sendSingleProgress(Request $request)
     {
         $validationRules = [
+            'banner' => \App\Support\EmailBannerCatalog::rules(),
             'user_id' => 'required|exists:users,id',
             'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam,maintenance_completed,new_vibe,brand_transformation',
         ];
@@ -277,87 +280,87 @@ class EmailBlastController extends Controller
         try {
             switch ($emailType) {
                 case 'ai_analyzer':
-                    Mail::to($user)->send(new AiAnalyzerFreeTrialAnnouncementMail($user));
+                    $this->sendWithBanner($user, $request, new AiAnalyzerFreeTrialAnnouncementMail($user));
                     break;
                 case 'job_reminder':
-                    Mail::to($user)->send(new JobApplicationReminderMail($user));
+                    $this->sendWithBanner($user, $request, new JobApplicationReminderMail($user));
                     break;
                 case 'monthly_motivation':
-                    Mail::to($user)->send(new MonthlyMotivationMail($user));
+                    $this->sendWithBanner($user, $request, new MonthlyMotivationMail($user));
                     break;
                 case 'welcome':
-                    Mail::to($user)->send(new WelcomeMail($user));
+                    $this->sendWithBanner($user, $request, new WelcomeMail($user));
                     break;
                 case 'verification':
                     if (!$user->hasVerifiedEmail()) {
-                        $user->sendEmailVerificationNotification();
+                        app(\App\Services\EmailVerificationService::class)->send($user, $request->input('banner'));
                     }
                     break;
                 case 'verification_reminder':
-                    Mail::to($user)->send(new \App\Mail\EmailVerificationReminderMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\EmailVerificationReminderMail($user));
                     break;
                 case 'product_update':
-                    Mail::to($user)->send(new \App\Mail\ProductUpdateMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\ProductUpdateMail($user));
                     break;
                 case 'new_vibe':
-                    Mail::to($user)->send(new \App\Mail\NewVibeMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\NewVibeMail($user));
                     break;
                 case 'brand_transformation':
-                    Mail::to($user)->send(new \App\Mail\BrandTransformationMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\BrandTransformationMail($user));
                     break;
                 case 'hiring_season':
-                    Mail::to($user)->send(new HiringSeasonAlertMail($user));
+                    $this->sendWithBanner($user, $request, new HiringSeasonAlertMail($user));
                     break;
                 case 're_engagement':
-                    Mail::to($user)->send(new ReEngagementMail($user));
+                    $this->sendWithBanner($user, $request, new ReEngagementMail($user));
                     break;
                 case 'chrome_extension':
-                    Mail::to($user)->send(new ChromeExtensionPromoMail($user));
+                    $this->sendWithBanner($user, $request, new ChromeExtensionPromoMail($user));
                     break;
                 case 'ai_photo':
-                    Mail::to($user)->send(new \App\Mail\AiPhotoAnnouncementMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\AiPhotoAnnouncementMail($user));
                     break;
                 case 'follow_up_feature':
-                    Mail::to($user)->send(new \App\Mail\FollowUpFeatureAnnouncementMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\FollowUpFeatureAnnouncementMail($user));
                     break;
                 case 'idul_adha':
-                    Mail::to($user)->send(new \App\Mail\IdulAdhaMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\IdulAdhaMail($user));
                     break;
                 case 'waisak':
-                    Mail::to($user)->send(new \App\Mail\WaisakMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\WaisakMail($user));
                     break;
                 case 'pancasila':
-                    Mail::to($user)->send(new \App\Mail\PancasilaMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\PancasilaMail($user));
                     break;
                 case 'sumpah_pemuda':
-                    Mail::to($user)->send(new \App\Mail\SumpahPemudaMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\SumpahPemudaMail($user));
                     break;
                 case 'pahlawan':
-                    Mail::to($user)->send(new \App\Mail\PahlawanMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\PahlawanMail($user));
                     break;
                 case 'guru_nasional':
-                    Mail::to($user)->send(new \App\Mail\GuruNasionalMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\GuruNasionalMail($user));
                     break;
                 case 'hari_ibu':
-                    Mail::to($user)->send(new \App\Mail\HariIbuMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\HariIbuMail($user));
                     break;
                 case 'natal':
-                    Mail::to($user)->send(new \App\Mail\NatalMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\NatalMail($user));
                     break;
                 case 'kemerdekaan_ri':
-                    Mail::to($user)->send(new \App\Mail\KemerdekaanRiMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\KemerdekaanRiMail($user));
                     break;
                 case 'maulid_nabi':
-                    Mail::to($user)->send(new \App\Mail\MaulidNabiMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\MaulidNabiMail($user));
                     break;
                 case 'tahun_baru_islam':
-                    Mail::to($user)->send(new \App\Mail\TahunBaruIslamMail($user));
+                    $this->sendWithBanner($user, $request, new \App\Mail\TahunBaruIslamMail($user));
                     break;
                 case 'maintenance_completed':
-                    Mail::to($user)->send(new MaintenanceCompletedMail($user));
+                    $this->sendWithBanner($user, $request, new MaintenanceCompletedMail($user));
                     break;
                 case 'custom':
-                    Mail::to($user)->send(new CustomEmailBlastMail(
+                    $this->sendWithBanner($user, $request, new CustomEmailBlastMail(
                         $user,
                         $request->custom_subject,
                         $request->custom_content,
@@ -433,6 +436,11 @@ class EmailBlastController extends Controller
         ]);
     }
 
+    private function sendWithBanner(User $user, Request $request, \Illuminate\Mail\Mailable $mailable): void
+    {
+        Mail::to($user)->send($mailable->with('emailBannerId', $request->input('banner')));
+    }
+
     private function audienceQuery(string $target)
     {
         $query = User::where('role', '!=', 'admin');
@@ -454,6 +462,7 @@ class EmailBlastController extends Controller
     public function preview(Request $request)
     {
         $validationRules = [
+            'banner' => \App\Support\EmailBannerCatalog::rules(),
             'email_type' => 'required|in:ai_analyzer,job_reminder,monthly_motivation,welcome,verification,verification_reminder,custom,product_update,hiring_season,re_engagement,chrome_extension,ai_photo,follow_up_feature,idul_adha,waisak,pancasila,sumpah_pemuda,pahlawan,guru_nasional,hari_ibu,natal,kemerdekaan_ri,maulid_nabi,tahun_baru_islam,maintenance_completed,new_vibe,brand_transformation',
         ];
 
@@ -485,7 +494,8 @@ class EmailBlastController extends Controller
                     $mailable = new WelcomeMail($user);
                     break;
                 case 'verification':
-                    return response((new \Illuminate\Auth\Notifications\VerifyEmail)->toMail($user)->render(), 200)->header('Content-Type', 'text/html');
+                    $mailable = new \App\Mail\OtpVerificationMail($user, '123456');
+                    break;
                 case 'verification_reminder':
                     $mailable = new \App\Mail\EmailVerificationReminderMail($user);
                     break;
@@ -561,7 +571,7 @@ class EmailBlastController extends Controller
             }
 
             if ($mailable) {
-                return response($mailable->render(), 200)->header('Content-Type', 'text/html');
+                return response($mailable->with('emailBannerId', $request->input('banner'))->render(), 200)->header('Content-Type', 'text/html');
             }
 
             return response('Preview not available', 404);

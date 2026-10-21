@@ -31,7 +31,7 @@ window.emailBlastWorkspace = function (routes) {
     };
 
     return {
-        audience: 'all', emailType: 'brand_transformation', custom: { subject: '', content: '', buttonText: '', buttonUrl: '' },
+        audience: 'all', emailType: 'brand_transformation', banner: '', custom: { subject: '', content: '', buttonText: '', buttonUrl: '' },
         modal: null, device: 'desktop', loading: false, previewReady: false, error: '', users: [], payload: null,
         sending: false, paused: false, cancelled: false, processed: 0, successCount: 0, failures: [],
         currentUser: null, recentLogs: [], elapsedSeconds: 0, timerInterval: null,
@@ -112,7 +112,7 @@ window.emailBlastWorkspace = function (routes) {
                 this.error = t("Add both button text and a destination URL, or leave both empty."); return;
             }
             this.loading = true; this.previewReady = false; this.modal = 'preview'; this.users = [];
-            this.payload = { email_type: this.emailType, target_user: this.audience, custom_subject: this.custom.subject, custom_content: this.custom.content, custom_button_text: this.custom.buttonText || null, custom_button_url: this.custom.buttonUrl || null };
+            this.payload = { email_type: this.emailType, target_user: this.audience, banner: this.banner || null, custom_subject: this.custom.subject, custom_content: this.custom.content, custom_button_text: this.custom.buttonText || null, custom_button_url: this.custom.buttonUrl || null };
             try {
                 const [html, audience] = await Promise.all([this.request(routes.previewUrl, this.payload, true), this.request(routes.initUrl, this.payload)]);
                 this.$refs.previewFrame.srcdoc = html;

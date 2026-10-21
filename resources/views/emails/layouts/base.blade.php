@@ -15,6 +15,9 @@
             <!--[if mso]><table role="presentation" width="600" align="center"><tr><td><![endif]-->
             <table role="presentation" class="email-frame" width="100%" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;margin:0 auto;background-color:#ffffff;border:1px solid #e7e5e9;border-radius:12px;border-spacing:0;">
                 @yield('email_header')
+                @if($banner = \App\Support\EmailBannerCatalog::find($emailBannerId ?? null))
+                    <tr><td style="padding:0;background-color:#f7f5f8;"><img src="{{ asset($banner['path']) }}" alt="" width="600" height="200" style="display:block;width:100%;max-width:600px;height:auto;border:0;"></td></tr>
+                @endif
                 <tr>
                     <td class="email-content" style="padding:28px 36px 32px;word-break:break-word;overflow-wrap:anywhere;">
                         @yield('email_content')

@@ -1,6 +1,26 @@
 /* TraKerja Admin Email Workspace — Modern Compact Symmetrical System */
 /* Theme: Only Campaign Container is Dashboard Orange; all other elements are subtle soft lilac/purple ("ungu soft tipis kaya awal") */
 
+.eb-banner-picker { min-width: 0; margin: 22px 0; padding: 0; border: 0; }
+.eb-banner-picker legend { font-size: 13px; font-weight: 600; color: #352f40; }
+.eb-banner-picker legend span { margin-left: 8px; font-size: 11px; font-weight: 400; color: #716a7b; }
+.eb-banner-picker > p { margin: 6px 0 14px; font-size: 12px; line-height: 1.6; color: #716a7b; }
+.eb-banner-options { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+.email-workspace .eb-banner-option { position: relative; display: flex; flex-direction: column; gap: 0; border: 1px solid #ddd7e4; border-radius: 10px; overflow: hidden; cursor: pointer; background: #fff; }
+.email-workspace .eb-editor.au-form .eb-banner-option input[type=radio] { position: absolute; left: 9px; top: 9px; width: 16px; height: 16px; min-width: 16px; min-height: 16px; padding: 0; margin: 0; appearance: auto; accent-color: #70538b; z-index: 1; box-shadow: none; }
+.eb-banner-option > img,.eb-banner-none { display: block; width: 100%; aspect-ratio: 3/1; object-fit: cover; height: auto; }
+.eb-banner-none { display: grid; place-items: center; background: #f5f3f7; color: #716a7b; font-size: 23px; }
+.email-workspace .eb-banner-option > span:last-child { padding: 9px 10px; color: #51475f; font-size: 11px; line-height: 1.5; }
+.eb-banner-option:hover { border-color: #9b84b1; }
+.email-workspace .eb-banner-option.is-selected { border-color: #70538b; box-shadow: 0 0 0 1px #70538b; }
+.eb-banner-option:has(input:focus-visible) { outline: 2px solid #70538b; outline-offset: 3px; }
+.dark .email-workspace .eb-banner-option { background: #24262a; border-color: #45434b; }
+.dark .eb-banner-picker legend,.dark .email-workspace .eb-banner-option > span:last-child { color: #eeeaf2; }
+.dark .eb-banner-picker > p,.dark .eb-banner-picker legend span { color: #b8b2c1; }
+.dark .eb-banner-none { background: #303035; color: #c3bdce; }
+.dark .email-workspace .eb-banner-option.is-selected { border-color: #c8b4da; box-shadow: 0 0 0 1px #c8b4da; }
+@media(max-width:640px) { .eb-banner-options { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+
 .email-workspace {
     display: grid;
     gap: 18px;

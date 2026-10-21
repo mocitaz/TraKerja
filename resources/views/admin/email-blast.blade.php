@@ -120,6 +120,25 @@
                         <p class="au-form-hint eb-template-hint" x-show="emailType !== 'custom'" x-text="templateDescription()"></p>
                     </label>
 
+                    <fieldset class="eb-banner-picker">
+                        <legend>{{ __('Email banner') }} <span>{{ __('Optional') }}</span></legend>
+                        <p>{{ __('Choose a visual for this campaign, or keep your email text-only.') }}</p>
+                        <div class="eb-banner-options">
+                            <label class="eb-banner-option" :class="{ 'is-selected': banner === '' }">
+                                <input type="radio" name="banner" value="" x-model="banner">
+                                <span class="eb-banner-none"><i class="ph ph-text-align-left" aria-hidden="true"></i></span>
+                                <span>{{ __('No banner') }}</span>
+                            </label>
+                            @foreach(\App\Support\EmailBannerCatalog::all() as $key => $banner)
+                                <label class="eb-banner-option" :class="{ 'is-selected': banner === '{{ $key }}' }">
+                                    <input type="radio" name="banner" value="{{ $key }}" x-model="banner">
+                                    <img src="{{ asset($banner['path']) }}" width="300" height="100" alt="" loading="lazy" decoding="async">
+                                    <span>{{ __($banner['label']) }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </fieldset>
+
                     <!-- Custom Fields (shown only if emailType === 'custom') -->
                     <div class="eb-custom-fields" x-show="emailType === 'custom'" x-cloak>
                         <label for="blast-subject">
