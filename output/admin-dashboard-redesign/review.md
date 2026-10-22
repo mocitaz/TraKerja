@@ -171,3 +171,12 @@ Scope: /admin/user-activities. Reused the admin shell, compact statistics, direc
 - PASS R-35: production build, git diff --check, and 20 relevant Laravel tests pass (31,622 assertions, including catalogue checks). New tests cover filtered counts, IP search, failed/error grouping, null identity, escaped metadata, timestamps, and retention validation. Browser console has no errors or warnings.
 - PASS R-36: retention copy accurately distinguishes saving settings from manual deletion. Existing confirmation prompts remain for deletion. No production/local activity records were purged during validation; destructive validation uses the isolated testing database only.
 - Delivery gate PASS: existing neutral admin palette, semantic icons, typography, and established controls retained; no fabricated activity data or decorative media introduced.
+
+## Recent applications height follow-up
+
+The recent application pool increases from 20 to 30. On two-column desktop layouts, the primary column uses a bounded flex allocation with size containment on the scroll region, so table contents do not force the grid taller than the right-hand content. The table grows into the available space, its header stays sticky, and the footer aligns with the end of the ranking column. Below 851 px the existing tablet/mobile layout remains; phones still show five cards until expanded.
+
+- Hard gate PASS: real query-backed rows and existing search/empty states retained; no horizontal overflow at 1440 or 390 px.
+- Purpose gate PASS: additional records and a taller scroll viewport fill the previously empty left-column space without stretching row padding or changing the right-hand rankings.
+- Liveliness PASS: energy 1, rhythm 2, motion 1 retained; dense application rows remain distinct from the compact rankings and growth chart.
+- Craftsmanship PASS: with five QA entries in each ranking, the left and right content bottoms both measured 1568.875 px; the table viewport grew to approximately 701 px. Thirty records load, while the 390 px phone still shows five with no size containment. Four AdminWorkspace tests (38 assertions), production build and whitespace checks passed. All added layout fixtures were confined to the isolated QA database.

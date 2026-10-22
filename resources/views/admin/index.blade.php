@@ -37,7 +37,7 @@
         $offerRate = $interviewApps > 0 ? round(($offeredApps / $interviewApps) * 100) : 0;
         $overallSuccessRate = $totalApps > 0 ? round(($offeredApps / $totalApps) * 100) : 0;
 
-        $recentApplications = \App\Models\JobApplication::with('user')->latest()->take(20)->get();
+        $recentApplications = \App\Models\JobApplication::with('user')->latest()->take(30)->get();
 
         $topAppliedUsers = \App\Models\User::where('role', '!=', 'admin')
             ->withCount('jobApplications')
