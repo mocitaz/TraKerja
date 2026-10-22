@@ -1,379 +1,64 @@
-<div class="admin-users-workspace">
-    <!-- Header -->
-    <section class="admin-welcome">
-        <div>
-            <h1>{{ __('Activity Log') }}</h1>
-            <p>{{ __('Review authentication events, application changes, and feature usage in one timeline.') }}</p>
-        </div>
-        <button type="button" wire:click="$set('showSettingsModal', true)" class="au-button">
-            <i class="ph ph-sliders-horizontal" aria-hidden="true"></i>
-            {{ __('Log Settings') }}
-        </button>
+<div class="al-workspace">
+    <header class="am-page-heading"><div><h1>{{ __('Activity Log') }}</h1><p>{{ __('Review account events, feature usage, and recorded outcomes.') }}</p></div><button type="button" wire:click="$set('showSettingsModal', true)" class="am-button"><i class="ph ph-sliders-horizontal" aria-hidden="true"></i>{{ __('Log Settings') }}</button></header>
+    <section class="ac-stats" aria-label="{{ __('Filtered activity overview') }}">
+        @foreach([[__('Recorded events'), $stats['total'], __('Matching current filters'), 'activity'], [__('Successful events'), $stats['successful'], __('Success status'), 'check-circle'], [__('Failed events'), $stats['failed'], __('Failed or error status'), 'warning-circle'], [__('People'), $stats['people'], __('Distinct linked accounts'), 'users']] as [$label, $value, $hint, $icon])<article><span class="ac-stat-icon"><i class="ph-fill ph-{{ $icon }}" aria-hidden="true"></i></span><div><h2>{{ $label }}</h2><div class="ac-stat-value"><strong>{{ number_format($value) }}</strong><span class="ac-stat-note--neutral">{{ $hint }}</span></div></div></article>@endforeach
     </section>
-
-    <!-- Activity Directory Panel -->
-    <section class="au-directory" aria-labelledby="activity-heading">
-        <div class="au-directory-heading">
-            <div>
-                <h2 id="activity-heading">
-                    {{ __('Recorded Activity') }} <span>{{ number_format($activities->total()) }}</span>
-                </h2>
-                <p>{{ __('Latest events first · :value1', ['value1' => (config('app.timezone'))]) }}</p>
-            </div>
-            <span wire:loading wire:target="search,filterType,filterStatus,perPage,resetFilters,gotoPage,nextPage,previousPage" class="au-loading">
-                <i class="ph ph-spinner ph-spin"></i> {{ __('Updating activity…') }}
-            </span>
+    <section class="am-directory-panel" aria-labelledby="al-records-heading">
+        <div class="am-directory-heading"><div><h2 id="al-records-heading">{{ __('Recorded Activity') }}<span class="am-count">{{ number_format($activities->total()) }}</span></h2><p>{{ __('Newest first · Asia/Jakarta (WIB) · Summary follows your filters') }}</p></div><span class="am-loading" role="status" wire:loading wire:target="search,filterType,filterStatus,perPage,resetFilters,gotoPage,nextPage,previousPage"><i class="ph ph-spinner ph-spin" aria-hidden="true"></i>{{ __('Updating activity…') }}</span></div>
+        <div class="am-toolbar">
+            <label class="am-search"><i class="ph ph-magnifying-glass" aria-hidden="true"></i><span class="sr-only">{{ __('Search activity') }}</span><input type="search" placeholder="{{ __('Search member, IP, or description') }}" wire:model.live.debounce.300ms="search"></label>
+            <label class="am-filter"><span>{{ __('Activity type') }}</span><select wire:model.live="filterType"><option value="all">{{ __('All Events') }}</option>@foreach($groupedTypes as $category => $types)<optgroup label="{{ __($category) }}">@foreach($types as $type)<option value="{{ $type }}">{{ __(ucwords(str_replace('_', ' ', $type))) }}</option>@endforeach</optgroup>@endforeach</select></label>
+            <label class="am-filter"><span>{{ __('Activity status') }}</span><select wire:model.live="filterStatus"><option value="all">{{ __('All Statuses') }}</option><option value="success">{{ __('Success') }}</option><option value="failed">{{ __('Failed') }}</option><option value="pending">{{ __('Pending') }}</option></select></label>
+            @if($search !== '' || $filterType !== 'all' || $filterStatus !== 'all')<button type="button" wire:click="resetFilters" class="am-reset"><i class="ph ph-x" aria-hidden="true"></i>{{ __('Reset filters') }}</button>@endif
         </div>
-
-        <!-- Filters Toolbar -->
-        <div class="au-filters">
-            <label class="au-search">
-                <span class="sr-only">{{ __('Search activity') }}</span>
-                <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
-                <input type="search" placeholder="{{ __('Search members or activity description…') }}" wire:model.live.debounce.300ms="search">
-            </label>
-            <label>
-                <span class="sr-only">{{ __('Activity type') }}</span>
-                <select wire:model.live="filterType">
-                    <option value="all">{{ __('All Events') }}</option>
-                    @foreach($groupedTypes as $category => $types)
-                        <optgroup label="{{ $category }}">
-                            @foreach($types as $type)
-                                <option value="{{ $type }}">{{ ucwords(str_replace('_',' ',$type)) }}</option>
-                            @endforeach
-                        </optgroup>
-                    @endforeach
-                </select>
-            </label>
-            <label>
-                <span class="sr-only">{{ __('Activity status') }}</span>
-                <select wire:model.live="filterStatus">
-                    <option value="all">{{ __('All Statuses') }}</option>
-                    <option value="success">{{ __('Success') }}</option>
-                    <option value="failed">{{ __('Failed') }}</option>
-                    <option value="pending">{{ __('Pending') }}</option>
-                </select>
-            </label>
-            <label class="au-page-size">
-                <span class="sr-only">{{ __('Rows per page') }}</span>
-                <select wire:model.live="perPage">
-                    @foreach([15, 30, 50, 100] as $size)
-                        <option value="{{ $size }}">{{ __(':value1 rows', ['value1' => ($size)]) }}</option>
-                    @endforeach
-                </select>
-            </label>
-            @if($search || $filterType !== 'all' || $filterStatus !== 'all')
-                <button type="button" wire:click="resetFilters" class="au-clear">
-                    {{ __('Reset filters') }} <i class="ph ph-x" aria-hidden="true"></i>
-                </button>
-            @endif
-        </div>
-
-        <!-- Table matching /tracker density, style, font, and borders -->
-        <div class="au-table-scroll" tabindex="0" aria-label="{{ __('Activity Table') }}">
-            <table class="au-table">
-                <colgroup>
-                    <col style="width: 25%;">
-                    <col style="width: 37%;">
-                    <col style="width: 14%;">
-                    <col style="width: 12%;">
-                    <col style="width: 12%;">
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th scope="col">{{ __('Person') }}</th>
-                        <th scope="col" class="text-center" style="text-align: center;">{{ __('Event & Action') }}</th>
-                        <th scope="col" class="text-center" style="text-align: center;">{{ __('Recorded At') }}</th>
-                        <th scope="col" class="text-center" style="text-align: center;">{{ __('Status') }}</th>
-                        <th scope="col" class="text-center" style="text-align: center;">{{ __('Details') }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($activities as $activity)
-                        @php
-                            $eventIcon = match(true) {
-                                str_contains($activity->activity_type, 'login') || str_contains($activity->activity_type, 'password') => 'ph-key',
-                                str_contains($activity->activity_type, 'register') => 'ph-user-plus',
-                                str_contains($activity->activity_type, 'job') || str_contains($activity->activity_type, 'interview') => 'ph-briefcase',
-                                str_contains($activity->activity_type, 'cv') => 'ph-file-text',
-                                str_contains($activity->activity_type, 'ai') || str_contains($activity->activity_type, 'photo') => 'ph-sparkle',
-                                str_contains($activity->activity_type, 'premium') || str_contains($activity->activity_type, 'top_up') => 'ph-crown',
-                                default => 'ph-activity',
-                            };
-                            $statusTone = match(strtolower($activity->status ?? '')) {
-                                'success' => 'success',
-                                'failed', 'error' => 'failed',
-                                'pending' => 'pending',
-                                default => 'other',
-                            };
-                        @endphp
-                        <tr wire:key="activity-{{ $activity->id }}">
-                            <!-- Column 1: Person -->
-                            <td>
-                                <div class="au-member">
-                                    @if($activity->user)
-                                        <a href="{{ route('admin.users.show', $activity->user) }}" wire:navigate class="au-avatar-wrapper au-member-avatar-link" title="{{ __('View :value1 profile', ['value1' => ($activity->user->name)]) }}">
-                                            <img src="{{ $activity->user->avatar_url }}" alt="{{ $activity->user->name }}" class="au-avatar-img" loading="lazy">
-                                        </a>
-                                        <div class="au-member-info">
-                                            <a href="{{ route('admin.users.show', $activity->user) }}" wire:navigate class="au-member-name au-member-name-link" title="{{ __('View :value1 profile', ['value1' => ($activity->user->name)]) }}">
-                                                {{ $activity->user->name }}
-                                            </a>
-                                            <span class="au-member-email">{{ $activity->user->email }}</span>
-                                        </div>
-                                    @else
-                                        <div class="au-avatar-wrapper">
-                                            <div class="au-avatar-img au-system-avatar-icon">
-                                                <i class="ph ph-shield-check"></i>
-                                            </div>
-                                        </div>
-                                        <div class="au-member-info">
-                                            <strong class="au-member-name">{{ __('System / Guest') }}</strong>
-                                            <span class="au-member-email">{{ __('No linked account') }}</span>
-                                        </div>
-                                    @endif
-                                </div>
-                            </td>
-
-                            <!-- Column 2: Event & Description (Inline / Sebaris) -->
-                            <td class="text-center" style="text-align: center; vertical-align: middle;">
-                                <div class="au-activity-event-cell">
-                                    <span class="au-chip au-chip--applied au-activity-chip">
-                                        <i class="ph {{ $eventIcon }}"></i>
-                                        {{ ucwords(str_replace('_', ' ', $activity->activity_type)) }}
-                                    </span>
-                                    <span class="au-activity-desc">
-                                        {{ $activity->description }}
-                                    </span>
-                                </div>
-                            </td>
-
-                            <!-- Column 3: Recorded At (Center) -->
-                            <td class="text-center" style="text-align: center; vertical-align: middle;">
-                                <div class="au-activity-time-cell">
-                                    <span class="au-activity-time-human">
-                                        {{ $activity->created_at->diffForHumans() }}
-                                    </span>
-                                    <span class="au-activity-time-exact">
-                                        {{ $activity->created_at->locale(app()->getLocale())->translatedFormat('d M Y, H:i') }}
-                                    </span>
-                                </div>
-                            </td>
-
-                            <!-- Column 4: Status -->
-                            <td class="text-center" style="text-align: center; vertical-align: middle;">
-                                <div style="display: flex; justify-content: center; align-items: center;">
-                                    @if($statusTone === 'success')
-                                        <span class="au-plan-badge au-badge-status--success" style="margin: 0;">
-                                            <i class="ph ph-check-circle"></i> {{ __('Success') }}
-                                        </span>
-                                    @elseif($statusTone === 'failed')
-                                        <span class="au-plan-badge au-badge-status--failed" style="margin: 0;">
-                                            <i class="ph ph-x-circle"></i> {{ __('Failed') }}
-                                        </span>
-                                    @elseif($statusTone === 'pending')
-                                        <span class="au-plan-badge au-badge-status--pending" style="margin: 0;">
-                                            <i class="ph ph-clock"></i> {{ __('Pending') }}
-                                        </span>
-                                    @else
-                                        <span class="au-plan-badge au-plan-badge--free" style="margin: 0;">
-                                            {{ ucfirst($activity->status ?? 'Logged') }}
-                                        </span>
-                                    @endif
-                                </div>
-                            </td>
-
-                            <!-- Column 5: Details Action -->
-                            <td class="text-center" style="text-align: center; vertical-align: middle;">
-                                <div style="display: flex; justify-content: center; align-items: center;">
-                                    <button type="button" class="au-manage" wire:click="showActivity({{ $activity->id }})" aria-label="{{ __('View :value1 details', ['value1' => (str_replace('_',' ',$activity->activity_type))]) }}">
-                                        {{ __('Details') }} <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5">
-                                <div class="au-empty">
-                                    <div class="au-empty-icon"><i class="ph ph-activity"></i></div>
-                                    <h3>{{ __('No activity records found') }}</h3>
-                                    <p>{{ $search || $filterType !== 'all' || $filterStatus !== 'all' ? __('Try adjusting your search query or reset your active filters.') : __('New activity will appear here automatically when members use TraKerja.') }}</p>
-                                    @if($search || $filterType !== 'all' || $filterStatus !== 'all')
-                                        <button type="button" wire:click="resetFilters" class="au-button" style="margin-top: 12px;">
-                                            {{ __('Reset All Filters') }}
-                                        </button>
-                                    @endif
-                                </div>
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Footer -->
-        <footer class="au-directory-footer">
-            <span>{{ __('Showing') }} <strong>{{ $activities->firstItem() ?? 0 }}–{{ $activities->lastItem() ?? 0 }}</strong> {{ __('of :value1 events', ['value1' => (number_format($activities->total()))]) }}</span>
-            <div class="au-pagination-wrap">{{ $activities->links() }}</div>
-        </footer>
+        <div class="am-table-wrap" role="region" tabindex="0" aria-label="{{ __('Activity Table') }}" wire:loading.class="am-is-loading" wire:target="search,filterType,filterStatus,perPage,resetFilters,gotoPage,nextPage,previousPage"><table class="am-table al-table" role="table"><thead><tr><th scope="col">{{ __('Person') }}</th><th scope="col">{{ __('Event & Action') }}</th><th scope="col">{{ __('Status') }}</th><th scope="col">{{ __('Recorded At') }}</th><th scope="col"><span class="sr-only">{{ __('Details') }}</span></th></tr></thead><tbody>
+            @forelse($activities as $activity)
+                @php
+                    $eventIcon = match(true) {
+                        str_contains($activity->activity_type, 'login') || str_contains($activity->activity_type, 'password') => 'key',
+                        str_contains($activity->activity_type, 'logout') => 'sign-out',
+                        str_contains($activity->activity_type, 'register') => 'user-plus',
+                        str_contains($activity->activity_type, 'profile') => 'user-circle',
+                        str_contains($activity->activity_type, 'job') || str_contains($activity->activity_type, 'interview') => 'briefcase',
+                        str_contains($activity->activity_type, 'photo') => 'camera',
+                        str_contains($activity->activity_type, 'cv') => 'file-text',
+                        str_contains($activity->activity_type, 'cover_letter') => 'envelope-open',
+                        str_starts_with($activity->activity_type, 'ai_') => 'cpu',
+                        str_contains($activity->activity_type, 'premium') || str_contains($activity->activity_type, 'top_up') => 'credit-card',
+                        str_contains($activity->activity_type, 'goal') => 'target',
+                        str_contains($activity->activity_type, 'support') || str_contains($activity->activity_type, 'feedback') => 'chat-circle-text',
+                        default => 'activity',
+                    };
+                    $tone = match(strtolower($activity->status ?? '')) { 'success' => 'success', 'failed', 'error' => 'danger', 'pending' => 'blue', default => '' };
+                    $statusLabel = match(strtolower($activity->status ?? '')) { 'success' => __('Success'), 'failed', 'error' => __('Failed'), 'pending' => __('Pending'), default => __(ucfirst($activity->status ?: 'Logged')) };
+                    $eventLabel = __(ucwords(str_replace('_', ' ', $activity->activity_type)));
+                @endphp
+                <tr class="al-event-row" wire:key="activity-{{ $activity->id }}">
+                    <td>@if($activity->user)<a class="am-person" href="{{ route('admin.users.show', $activity->user) }}" wire:navigate><span class="am-avatar" aria-hidden="true"><span>{{ mb_strtoupper(mb_substr($activity->user->name, 0, 1)) }}</span><img src="{{ $activity->user->avatar_url }}" alt="" width="34" height="34" loading="lazy" x-on:error="$el.remove()"></span><span><strong>{{ $activity->user->name }}</strong><small>{{ $activity->user->email }}</small></span></a>@else<div class="am-person"><span class="am-avatar" aria-hidden="true"><i class="ph ph-desktop" aria-hidden="true"></i></span><span><strong>{{ __('System / Guest') }}</strong><small>{{ __('No linked account') }}</small></span></div>@endif</td>
+                    <td><div class="al-event"><span class="al-event-icon"><i class="ph ph-{{ $eventIcon }}" aria-hidden="true"></i></span><div><strong>{{ $eventLabel }}</strong><p>{{ $activity->description }}</p></div></div></td>
+                    <td><span class="am-badge {{ $tone ? 'am-badge--'.$tone : '' }}">{{ $statusLabel }}</span></td>
+                    <td><time datetime="{{ $activity->created_at->toIso8601String() }}" class="al-time"><strong>{{ $activity->created_at->diffForHumans() }}</strong><small>{{ $activity->created_at->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M Y, H:i') }} WIB</small></time></td>
+                    <td><button type="button" wire:click="showActivity({{ $activity->id }})" class="al-detail-button" aria-label="{{ __('View :value1 details', ['value1' => $eventLabel]) }}"><span>{{ __('Details') }}</span><i class="ph ph-caret-right" aria-hidden="true"></i></button></td>
+                </tr>
+            @empty
+                <tr><td colspan="5"><div class="am-empty"><i class="ph ph-clock-counter-clockwise" aria-hidden="true"></i><h3>{{ __('No activity records found') }}</h3><p>{{ $search !== '' || $filterType !== 'all' || $filterStatus !== 'all' ? __('Try another search or reset your filters.') : __('Recorded events will appear here as the platform is used.') }}</p>@if($search !== '' || $filterType !== 'all' || $filterStatus !== 'all')<button type="button" wire:click="resetFilters" class="am-button">{{ __('Reset filters') }}</button>@endif</div></td></tr>
+            @endforelse
+        </tbody></table></div>
+        <footer class="am-directory-footer"><div><span>{{ __('Showing') }} <strong>{{ $activities->firstItem() ?? 0 }}–{{ $activities->lastItem() ?? 0 }}</strong> {{ __('of :value1 events', ['value1' => number_format($activities->total())]) }}</span><label><span class="sr-only">{{ __('Rows per page') }}</span><select wire:model.live="perPage">@foreach([15, 30, 50, 100] as $size)<option value="{{ $size }}">{{ __(':value1 rows', ['value1' => $size]) }}</option>@endforeach</select></label></div><div class="am-pagination">{{ $activities->links() }}</div></footer>
     </section>
-
-    <!-- =====================================================================
-         MODAL 1: Activity Details ($selectedActivity)
-         ===================================================================== -->
     @if($selectedActivity)
-        <template x-teleport="body">
-            <div x-data role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.selectedActivityId" data-dialog-close="$wire.closeActivity()" aria-labelledby="activity-detail-title" class="au-dialog-overlay">
-                <section class="au-dialog">
-                    <header class="au-dialog-heading">
-                        <div>
-                            <h2 id="activity-detail-title">{{ __('Event Details') }}</h2>
-                            <p>{{ $selectedActivity->created_at->locale(app()->getLocale())->translatedFormat('d M Y · H:i:s') }} · {{ config('app.timezone') }}</p>
-                        </div>
-                        <button type="button" wire:click="closeActivity" class="au-dialog-close" aria-label="{{ __('Close event details') }}">
-                            <i class="ph ph-x" aria-hidden="true"></i>
-                        </button>
-                    </header>
-                    <div class="au-dialog-body">
-                        <!-- Person Banner -->
-                        <div class="au-dialog-person">
-                            @if($selectedActivity->user)
-                                <img src="{{ $selectedActivity->user->avatar_url }}" alt="{{ $selectedActivity->user->name }}">
-                                <div>
-                                    <strong>{{ $selectedActivity->user->name }}</strong>
-                                    <span>{{ $selectedActivity->user->email }}</span>
-                                </div>
-                                <span class="au-plan-badge {{ $selectedActivity->user->isPremium() ? 'au-plan-badge--premium' : 'au-plan-badge--free' }}">
-                                    {{ $selectedActivity->user->isPremium() ? __('Premium') : __('Free') }}
-                                </span>
-                            @else
-                                <div class="au-avatar-img au-system-avatar-icon au-system-avatar-icon--lg">
-                                    <i class="ph ph-shield-check"></i>
-                                </div>
-                                <div>
-                                    <strong>{{ __('System / Guest') }}</strong>
-                                    <span>{{ __('No linked user account') }}</span>
-                                </div>
-                            @endif
-                        </div>
-
-                        <!-- Details Grid -->
-                        <dl class="au-account-details">
-                            <div class="au-detail-tile">
-                                <dt>{{ __('Event Type') }}</dt>
-                                <dd>{{ ucwords(str_replace('_', ' ', $selectedActivity->activity_type)) }}</dd>
-                            </div>
-                            <div class="au-detail-tile">
-                                <dt>{{ __('Status') }}</dt>
-                                <dd style="text-transform: capitalize;">{{ $selectedActivity->status ?? 'Logged' }}</dd>
-                            </div>
-                            <div class="au-detail-tile">
-                                <dt>{{ __('IP Address') }}</dt>
-                                <dd>{{ $selectedActivity->ip_address ?: __('Not recorded') }}</dd>
-                            </div>
-                            <div class="au-detail-tile">
-                                <dt>{{ __('Recorded Time') }}</dt>
-                                <dd>{{ $selectedActivity->created_at->format('H:i:s T') }}</dd>
-                            </div>
-                        </dl>
-
-                        <!-- Description Box -->
-                        <div class="au-form-section au-event-desc-section">
-                            <h3 class="au-event-desc-heading">{{ __('Event Description') }}</h3>
-                            <div class="au-event-desc-box">
-                                {{ $selectedActivity->description }}
-                            </div>
-                        </div>
-
-                        <!-- Technical Specs -->
-                        <details class="au-form-section au-tech-details-section" x-data="{ copied: false }">
-                            <summary class="au-tech-details-summary">
-                                {{ __('Technical Details (User Agent & Metadata)') }}
-                            </summary>
-
-                            @if($selectedActivity->user_agent)
-                                <div style="margin-top: 10px;">
-                                    <span class="au-tech-label">{{ __('User Agent:') }}</span>
-                                    <p class="au-user-agent-box">
-                                        {{ $selectedActivity->user_agent }}
-                                    </p>
-                                </div>
-                            @endif
-
-                            @if($selectedActivity->metadata)
-                                <div style="margin-top: 10px; position: relative;">
-                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                                        <span class="au-tech-label">{{ __('Payload Metadata:') }}</span>
-                                        <button type="button" @click="navigator.clipboard.writeText(JSON.stringify({{ json_encode($selectedActivity->metadata) }}, null, 2)); copied = true; setTimeout(() => copied = false, 2000)" class="au-clear" style="padding: 2px 8px; font-size: 10.5px;">
-                                            <i class="ph" :class="copied ? 'ph-check' : 'ph-copy'"></i>
-                                            <span x-text="copied ? @js(__('Copied!')) : @js(__('Copy JSON'))"></span>
-                                        </button>
-                                    </div>
-                                    <pre class="au-json-payload-pre">{{ json_encode($selectedActivity->metadata, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) }}</pre>
-                                </div>
-                            @endif
-                        </details>
-
-                        <div class="au-dialog-actions" style="margin-top: 8px;">
-                            <button type="button" wire:click="closeActivity" class="au-button">{{ __('Close') }}</button>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </template>
+        <template x-teleport="body"><div x-data="{ payload: @js($selectedActivity->metadata ?? []), copied: false, copyError: false, async copyPayload() { try { await navigator.clipboard.writeText(JSON.stringify(this.payload, null, 2)); this.copied = true; this.copyError = false; setTimeout(() => this.copied = false, 2000) } catch (error) { this.copyError = true } } }" role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.selectedActivityId" data-dialog-close="$wire.closeActivity()" aria-labelledby="activity-detail-title" class="au-dialog-overlay am-member-modal al-event-modal"><section class="au-dialog"><header class="au-dialog-heading"><div><h2 id="activity-detail-title">{{ __('Event Details') }}</h2><p>{{ __('Record #:value1', ['value1' => $selectedActivity->id]) }}</p></div><button type="button" wire:click="closeActivity" class="au-dialog-close" aria-label="{{ __('Close event details') }}"><i class="ph ph-x" aria-hidden="true"></i></button></header><div class="au-dialog-body">
+            <div class="al-dialog-person">@if($selectedActivity->user)<span class="am-avatar" aria-hidden="true"><span>{{ mb_strtoupper(mb_substr($selectedActivity->user->name, 0, 1)) }}</span><img src="{{ $selectedActivity->user->avatar_url }}" alt="" width="38" height="38" x-on:error="$el.remove()"></span><div><strong>{{ $selectedActivity->user->name }}</strong><span>{{ $selectedActivity->user->email }}</span></div><a href="{{ route('admin.users.show', $selectedActivity->user) }}" wire:navigate class="am-button">{{ __('View profile') }}</a>@else<span class="am-avatar" aria-hidden="true"><i class="ph ph-desktop"></i></span><div><strong>{{ __('System / Guest') }}</strong><span>{{ __('No linked account') }}</span></div>@endif</div>
+            <dl class="am-facts am-facts-grid al-detail-facts"><div><dt>{{ __('Event Type') }}</dt><dd>{{ __(ucwords(str_replace('_', ' ', $selectedActivity->activity_type))) }}</dd></div><div><dt>{{ __('Stored status') }}</dt><dd>{{ __(ucfirst($selectedActivity->status ?: 'Logged')) }}</dd></div><div><dt>{{ __('IP Address') }}</dt><dd>{{ $selectedActivity->ip_address ?: __('Not recorded') }}</dd></div><div><dt>{{ __('Recorded At') }}</dt><dd>{{ $selectedActivity->created_at->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M Y, H:i:s') }} WIB</dd></div></dl>
+            <section class="al-description"><h3>{{ __('Event Description') }}</h3><p>{{ $selectedActivity->description }}</p></section>
+            <details class="al-technical"><summary>{{ __('Technical details') }}<i class="ph ph-caret-down" aria-hidden="true"></i></summary><div><h3>{{ __('User Agent:') }}</h3><p class="al-user-agent">{{ $selectedActivity->user_agent ?: __('Not recorded') }}</p><div class="al-payload-heading"><h3>{{ __('Payload Metadata:') }}</h3>@if($selectedActivity->metadata)<button type="button" @click="copyPayload()" class="am-button"><i class="ph" :class="copied ? 'ph-check' : 'ph-copy'" aria-hidden="true"></i><span x-text="copied ? @js(__('Copied!')) : @js(__('Copy JSON'))" aria-live="polite"></span></button>@endif</div>@if($selectedActivity->metadata)<pre class="al-json" tabindex="0" aria-label="{{ __('Payload Metadata:') }}">{{ json_encode($selectedActivity->metadata, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) }}</pre>@else<p class="al-user-agent">{{ __('Not recorded') }}</p>@endif<p class="am-field-error" x-show="copyError" x-cloak role="alert">{{ __('Copy failed. Select and copy the text above.') }}</p><p class="al-raw-type">{{ __('Event key') }}: {{ $selectedActivity->activity_type }}</p></div></details>
+            <div class="au-dialog-actions"><button type="button" wire:click="closeActivity" class="au-button">{{ __('Close') }}</button></div>
+        </div></section></div></template>
     @endif
-
-    <!-- =====================================================================
-         MODAL 2: Log Retention Settings ($showSettingsModal)
-         ===================================================================== -->
     @if($showSettingsModal)
-        <template x-teleport="body">
-            <div x-data role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.showSettingsModal" data-dialog-close="$wire.set('showSettingsModal', false)" aria-labelledby="log-settings-title" class="au-dialog-overlay">
-                <section class="au-dialog au-dialog--small">
-                    <header class="au-dialog-heading">
-                        <div>
-                            <h2 id="log-settings-title">{{ __('Activity Retention Settings') }}</h2>
-                            <p>{{ __('Configure how long audit trail records are retained in database.') }}</p>
-                        </div>
-                        <button type="button" wire:click="$set('showSettingsModal', false)" class="au-dialog-close" aria-label="{{ __('Close log settings') }}">
-                            <i class="ph ph-x" aria-hidden="true"></i>
-                        </button>
-                    </header>
-                    <div class="au-dialog-body">
-                        <form wire:submit="saveSettings" class="au-form">
-                            <label for="log-retention">
-                                {{ __('Retention Period (Days)') }}
-                                <input id="log-retention" type="number" wire:model="pruneDays" min="1" max="3650" required placeholder="{{ __('e.g. 90') }}">
-                                @error('pruneDays')<span class="au-field-error">{{ $message }}</span>@enderror
-                            </label>
-                            <p class="au-form-hint">{{ __('Automated pruning cleans records older than this retention threshold. Saving does not purge active records immediately.') }}</p>
-                            <div class="au-form-actions">
-                                <button type="button" wire:click="$set('showSettingsModal', false)" class="au-button">{{ __('Cancel') }}</button>
-                                <button type="submit" class="au-button au-button--primary" wire:loading.attr="disabled" wire:target="saveSettings">
-                                    <span wire:loading.remove wire:target="saveSettings">{{ __('Save Retention') }}</span>
-                                    <span wire:loading wire:target="saveSettings">{{ __('Saving…') }}</span>
-                                </button>
-                            </div>
-                        </form>
-
-                        <section class="au-account-actions" style="margin-top: 8px;">
-                            <h3 class="au-danger-heading">{{ __('Manual Cleanup') }}</h3>
-                            <p class="au-form-hint" style="margin-bottom: 12px;">{{ __('Manual purging immediately and permanently deletes activity records.') }}</p>
-                            <div class="au-account-action-buttons">
-                                <button type="button" wire:click="cleanNow" wire:confirm="Permanently delete logs older than {{ $pruneDays }} days? This cannot be undone." class="au-button" wire:loading.attr="disabled" wire:target="cleanNow">
-                                    <i class="ph ph-trash"></i>
-                                    {{ __('Delete Older Logs (more than :value1 days)', ['value1' => ($pruneDays)]) }}
-                                </button>
-                                <button type="button" wire:click="cleanAll" wire:confirm="Permanently delete ALL activity logs? This action is irreversible." class="au-button au-button--danger" wire:loading.attr="disabled" wire:target="cleanAll">
-                                    <i class="ph ph-warning"></i>
-                                    {{ __('Delete All Logs') }}
-                                </button>
-                            </div>
-                        </section>
-                    </div>
-                </section>
-            </div>
-        </template>
+        <template x-teleport="body"><div x-data role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.showSettingsModal" data-dialog-close="$wire.set('showSettingsModal', false)" aria-labelledby="log-settings-title" class="au-dialog-overlay am-member-modal al-settings-modal"><section class="au-dialog au-dialog--small"><header class="au-dialog-heading"><div><h2 id="log-settings-title">{{ __('Activity Retention Settings') }}</h2><p>{{ __('Manage the retention period and manual log cleanup.') }}</p></div><button type="button" wire:click="$set('showSettingsModal', false)" class="au-dialog-close" aria-label="{{ __('Close log settings') }}"><i class="ph ph-x" aria-hidden="true"></i></button></header><div class="au-dialog-body">
+            <form wire:submit="saveSettings" class="au-form"><label for="log-retention">{{ __('Retention Period (Days)') }}<input id="log-retention" type="number" wire:model="pruneDays" min="1" max="3650" step="1" inputmode="numeric" required>@error('pruneDays')<span class="au-field-error" role="alert">{{ $message }}</span>@enderror</label><p class="au-form-hint">{{ __('Saving this value does not delete logs. Manual cleanup uses the number of days entered above.') }}</p><div class="au-form-actions"><button type="button" wire:click="$set('showSettingsModal', false)" class="au-button">{{ __('Cancel') }}</button><button type="submit" class="au-button au-button--primary" wire:loading.attr="disabled" wire:target="saveSettings"><span wire:loading.remove wire:target="saveSettings">{{ __('Save Retention') }}</span><span wire:loading wire:target="saveSettings">{{ __('Saving…') }}</span></button></div></form>
+            <details class="al-cleanup"><summary>{{ __('Manual Cleanup') }}<i class="ph ph-caret-down" aria-hidden="true"></i></summary><p>{{ __('Manual purging immediately and permanently deletes activity records.') }}</p><div><button type="button" wire:click="cleanNow" wire:confirm="{{ __('Permanently delete logs older than the retention period entered above? This cannot be undone.') }}" class="am-button" wire:loading.attr="disabled" wire:target="cleanNow,cleanAll">{{ __('Delete older logs') }}</button><button type="button" wire:click="cleanAll" wire:confirm="{{ __('Permanently delete ALL activity logs? This action is irreversible.') }}" class="am-button am-button--danger" wire:loading.attr="disabled" wire:target="cleanNow,cleanAll">{{ __('Delete All Logs') }}</button></div></details>
+        </div></section></div></template>
     @endif
 </div>

@@ -5,8 +5,6 @@ namespace App\Livewire\Admin;
 use App\Models\UserActivity;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use App\Models\Setting;
 
 class UserActivities extends Component
@@ -106,7 +104,7 @@ class UserActivities extends Component
         $this->dispatch('showNotification', [
             'type' => 'success',
             'title' => __('Cleanup Successful'),
-            'message' => number_format($deletedCount) . ' obsolete activity logs (>' . $this->pruneDays . ' days) deleted.',
+            'message' => __(':value1 activity logs older than :value2 days deleted.', ['value1' => number_format($deletedCount), 'value2' => $this->pruneDays]),
         ]);
     }
 
@@ -120,7 +118,7 @@ class UserActivities extends Component
         $this->dispatch('showNotification', [
             'type' => 'success',
             'title' => __('All Logs Purged'),
-            'message' => number_format($deletedCount) . ' activity logs permanently deleted.',
+            'message' => __(':value1 activity logs permanently deleted.', ['value1' => number_format($deletedCount)]),
         ]);
     }
 
@@ -128,12 +126,14 @@ class UserActivities extends Component
     {
         $query = UserActivity::with('user');
 
-        if ($this->search) {
-            $query->where(function ($q) {
-                $q->whereHas('user', function ($uq) {
-                    $uq->where('name', 'like', '%' . $this->search . '%')
-                       ->orWhere('email', 'like', '%' . $this->search . '%');
-                })->orWhere('description', 'like', '%' . $this->search . '%');
+        $search = trim((string) $this->search);
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('user', function ($uq) use ($search) {
+                    $uq->where('name', 'like', '%' . $search . '%')
+                       ->orWhere('email', 'like', '%' . $search . '%');
+                })->orWhere('description', 'like', '%' . $search . '%')
+                  ->orWhere('ip_address', 'like', '%' . $search . '%');
             });
         }
 
@@ -142,8 +142,15 @@ class UserActivities extends Component
         }
 
         if ($this->filterStatus !== 'all') {
-            $query->where('status', $this->filterStatus);
+            $this->filterStatus === 'failed'
+                ? $query->whereIn('status', ['failed', 'error'])
+                : $query->where('status', $this->filterStatus);
         }
+
+        $summary = (clone $query)->toBase()->selectRaw(
+            'COUNT(*) AS total, SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) AS successful, SUM(CASE WHEN status IN (?, ?) THEN 1 ELSE 0 END) AS failed, COUNT(DISTINCT user_id) AS people',
+            ['success', 'failed', 'error']
+        )->first();
 
         $activities = $query->latest()->orderByDesc('id')->paginate(in_array((int) $this->perPage, [15, 30, 50, 100], true) ? (int) $this->perPage : 15)->onEachSide(1);
 
@@ -188,6 +195,12 @@ class UserActivities extends Component
         return view('livewire.admin.user-activities', [
             'activities' => $activities,
             'groupedTypes' => $groupedTypes,
+            'stats' => [
+                'total' => (int) $summary->total,
+                'successful' => (int) $summary->successful,
+                'failed' => (int) $summary->failed,
+                'people' => (int) $summary->people,
+            ],
             'selectedActivity' => $this->selectedActivityId ? UserActivity::with('user')->find($this->selectedActivityId) : null,
         ]);
     }

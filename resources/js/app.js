@@ -36,3 +36,9 @@ import './job-detail-tabs';
 
 import "./nara-chat";
 import './summary-report';
+import './admin-growth';
+
+import "./admin-settings-workspace";
+import './admin-feedback-review';
+import './admin-analytics';
+import './profile-settings';

@@ -436,12 +436,14 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     })->name('index');
 
 
+    Route::view('/operations-center', 'admin.operations-center')->name('operations-center');
+
     // Monetization control
     Route::get('/monetization', function () {
         if (!Auth::user()->isAdmin()) {
             abort(403, 'Unauthorized - Admin access required');
         }
-        return view('admin.monetization');
+        return redirect()->route('admin.payments', ['view' => 'plans']);
     })->name('monetization');
 
     // Update premium price
@@ -451,13 +453,13 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         }
 
         $validated = $request->validate([
-            'premium_price' => 'required|numeric|min:0'
+            'premium_price' => 'required|integer|min:0|max:2000000000'
         ]);
 
         \App\Models\Setting::set('premium_price', $validated['premium_price']);
         \App\Models\Setting::clearCache();
 
-        return redirect()->route('admin.monetization')
+        return redirect()->route('admin.payments', ['view' => 'plans'])
             ->with('success', 'Premium price updated successfully to Rp ' . number_format($validated['premium_price'], 0, ',', '.'));
     })->name('update-premium-price');
 
@@ -465,8 +467,6 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::get('/survey', [\App\Http\Controllers\Admin\AdminSurveyController::class, 'index'])->name('survey.index');
     Route::post('/survey/toggle', [\App\Http\Controllers\Admin\AdminSurveyController::class, 'toggle'])->name('survey.toggle');
 
-    // Scraper Dashboard
-    Route::get('/scraper', \App\Livewire\Admin\ScraperDashboard::class)->name('scraper');
 
     // Users management
     Route::get('/users', function () {
@@ -548,6 +548,10 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         return app(\App\Http\Controllers\Admin\EmailBlastController::class)->index();
     })->name('email-blast');
 
+    Route::post('/email-blast/templates/generate', [\App\Http\Controllers\Admin\EmailBlastTemplateController::class, 'generate'])->middleware('throttle:6,1')->name('email-blast.templates.generate');
+    Route::post('/email-blast/templates/preview', [\App\Http\Controllers\Admin\EmailBlastTemplateController::class, 'preview'])->name('email-blast.templates.preview');
+    Route::post('/email-blast/templates', [\App\Http\Controllers\Admin\EmailBlastTemplateController::class, 'store'])->name('email-blast.templates.store');
+
     // Global Settings
     Route::get('/settings', function () {
         if (!Auth::user()->isAdmin()) {
@@ -561,7 +565,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         if (!Auth::user()->isAdmin()) {
             abort(403, 'Unauthorized - Admin access required');
         }
-        return redirect()->route('admin.settings', ['tab' => 'integration']);
+        return redirect()->to(route('admin.settings').'#integrations');
     })->name('integration-hub');
 
     // Database & Maintenance (Redirect to Settings Tab)
@@ -569,7 +573,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         if (!Auth::user()->isAdmin()) {
             abort(403, 'Unauthorized - Admin access required');
         }
-        return redirect()->route('admin.settings', ['tab' => 'database']);
+        return redirect()->to(route('admin.settings').'#maintenance');
     })->name('database-maintenance');
 
     // Backup Download (Controller)

@@ -23,54 +23,39 @@ class PaymentController extends Controller
      */
     public function index(Request $request)
     {
+        $query = $this->filteredPayments($request);
+        $payments = (clone $query)->latest()->orderByDesc('id')->paginate((int) $request->input('per_page', 15))->withQueryString();
+        $summary = (clone $query)->toBase()->selectRaw(
+            "COUNT(*) AS total, SUM(CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END) AS success, SUM(CASE WHEN status IN ('PENDING', 'WAITING') THEN 1 ELSE 0 END) AS pending, SUM(CASE WHEN status = 'SUCCESS' THEN amount ELSE 0 END) AS total_revenue"
+        )->first();
+        $stats = array_map('intval', (array) $summary);
+        return view('admin.payments', compact('payments', 'stats'));
+    }
+
+    private function filteredPayments(Request $request)
+    {
+        $filters = $request->validate([
+            'search' => 'nullable|string|max:100', 'status' => 'nullable|in:SUCCESS,PENDING,WAITING,FAILED,CANCELED,EXPIRED',
+            'environment' => 'nullable|in:live,sandbox,unknown', 'date_from' => 'nullable|date_format:Y-m-d',
+            'date_to' => ['nullable', 'date_format:Y-m-d', \Illuminate\Validation\Rule::when($request->filled('date_from'), 'after_or_equal:date_from')], 'per_page' => 'nullable|in:15,30,50,100',
+        ]);
         $query = Payment::with('user');
-
-        // Filters
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
+        if (!empty($filters['status'])) $query->where('status', $filters['status']);
+        if ($search = trim($filters['search'] ?? '')) {
+            $query->where(fn ($q) => $q->where('order_id', 'like', '%'.$search.'%')
+                ->orWhere('yukk_transaction_code', 'like', '%'.$search.'%')->orWhere('pakasir_txn_id', 'like', '%'.$search.'%')
+                ->orWhere('customer_name', 'like', '%'.$search.'%')->orWhere('customer_email', 'like', '%'.$search.'%')
+                ->orWhereHas('user', fn ($uq) => $uq->where('name', 'like', '%'.$search.'%')->orWhere('email', 'like', '%'.$search.'%')));
         }
-
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('order_id', 'like', "%{$search}%")
-                  ->orWhere('yukk_transaction_code', 'like', "%{$search}%")
-                  ->orWhereHas('user', function($userQuery) use ($search) {
-                      $userQuery->where('name', 'like', "%{$search}%")
-                                ->orWhere('email', 'like', "%{$search}%");
-                  });
-            });
-        }
-
-        if ($request->filled('date_from')) {
-            $query->whereDate('created_at', '>=', $request->date_from);
-        }
-
-        if ($request->filled('date_to')) {
-            $query->whereDate('created_at', '<=', $request->date_to);
-        }
-
-        $payments = $query->orderBy('created_at', 'desc')->paginate(20)->withQueryString();
-
-        // Statistics
-        $stats = [
-            'total' => Payment::count(),
-            'success' => Payment::where('status', 'SUCCESS')->count(),
-            'pending' => Payment::whereIn('status', ['PENDING', 'WAITING'])->count(),
-            'failed' => Payment::whereIn('status', ['FAILED', 'CANCELED', 'EXPIRED'])->count(),
-            'total_revenue' => Payment::where('status', 'SUCCESS')->sum('amount'),
-            'today_revenue' => Payment::where('status', 'SUCCESS')
-                ->whereDate('paid_at', today())
-                ->sum('amount'),
-        ];
-
-        // Payment method distribution
-        $paymentMethods = Payment::where('status', 'SUCCESS')
-            ->select('payment_channel_code', DB::raw('count(*) as count'), DB::raw('sum(amount) as revenue'))
-            ->groupBy('payment_channel_code')
-            ->get();
-
-        return view('admin.payments', compact('payments', 'stats', 'paymentMethods'));
+        if (!empty($filters['date_from'])) $query->whereDate('created_at', '>=', $filters['date_from']);
+        if (!empty($filters['date_to'])) $query->whereDate('created_at', '<=', $filters['date_to']);
+        match ($filters['environment'] ?? '') {
+            'live' => $query->where('pakasir_is_sandbox', false),
+            'sandbox' => $query->where('pakasir_is_sandbox', true),
+            'unknown' => $query->whereNull('pakasir_is_sandbox'),
+            default => null,
+        };
+        return $query;
     }
 
     /**
@@ -82,8 +67,11 @@ class PaymentController extends Controller
 
         return response()->json([
             'success' => true,
-            'payment' => $payment,
-            'user' => $payment->user,
+            'payment' => $payment->only(['id', 'order_id', 'amount', 'status', 'payment_channel_code', 'payment_channel_name', 'payment_category', 'va_number', 'created_at', 'paid_at', 'expired_at', 'va_expired_at', 'yukk_transaction_code', 'pakasir_txn_id', 'pakasir_is_sandbox', 'notes', 'customer_name', 'customer_email']) + [
+                'payment_method' => $payment->payment_method,
+                'can_cancel' => in_array($payment->status, ['PENDING', 'WAITING'], true) && (bool) $payment->yukk_transaction_code,
+            ],
+            'user' => $payment->user ? ['id' => $payment->user->id, 'name' => $payment->user->name, 'email' => $payment->user->email, 'avatar_url' => $payment->user->avatar_url] : null,
         ]);
     }
 
@@ -148,33 +136,7 @@ class PaymentController extends Controller
      */
     public function export(Request $request)
     {
-        $query = Payment::with('user');
-
-        if ($request->filled('search')) {
-            $search = mb_substr((string) $request->input('search'), 0, 100);
-            $query->where(function ($query) use ($search) {
-                $query->where('order_id', 'like', '%'.$search.'%')
-                    ->orWhere('yukk_transaction_code', 'like', '%'.$search.'%')
-                    ->orWhereHas('user', function ($query) use ($search) {
-                        $query->where('name', 'like', '%'.$search.'%')->orWhere('email', 'like', '%'.$search.'%');
-                    });
-            });
-        }
-
-        // Apply same filters as index
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        if ($request->filled('date_from')) {
-            $query->whereDate('created_at', '>=', $request->date_from);
-        }
-
-        if ($request->filled('date_to')) {
-            $query->whereDate('created_at', '<=', $request->date_to);
-        }
-
-        $payments = $query->orderBy('created_at', 'desc')->get();
+        $payments = $this->filteredPayments($request)->latest()->orderByDesc('id')->get();
 
         $filename = 'payments_' . date('Y-m-d_His') . '.csv';
         $headers = [
@@ -196,15 +158,15 @@ class PaymentController extends Controller
                 'VA Number',
                 'Created At',
                 'Paid At',
-                'YUKK Transaction Code',
+                'YUKK Transaction Code', 'Pakasir Transaction ID', 'Environment',
             ]);
 
             // CSV Data
             foreach ($payments as $payment) {
                 fputcsv($file, [
                     $payment->order_id,
-                    $payment->user->name ?? 'N/A',
-                    $payment->user->email ?? 'N/A',
+                    $payment->user->name ?? $payment->customer_name ?? 'N/A',
+                    $payment->user->email ?? $payment->customer_email ?? 'N/A',
                     $payment->amount,
                     $payment->payment_method,
                     $payment->status,
@@ -212,6 +174,8 @@ class PaymentController extends Controller
                     $payment->created_at->format('Y-m-d H:i:s'),
                     $payment->paid_at?->format('Y-m-d H:i:s') ?? 'N/A',
                     $payment->yukk_transaction_code ?? 'N/A',
+                    $payment->pakasir_txn_id ?? 'N/A',
+                    $payment->pakasir_is_sandbox === null ? 'Unspecified' : ($payment->pakasir_is_sandbox ? 'Sandbox' : 'Live'),
                 ]);
             }
 

@@ -251,6 +251,8 @@ class ProfileController extends Controller
             return back()->withErrors(['password' => __('Penghapusan akun belum selesai karena file belum dapat dibersihkan. Silakan coba lagi atau hubungi support.')], __('userDeletion'));
         }
 
+        // Logout must not rotate and save the remember token on the deleted model.
+        $user->setRememberToken(null);
         Auth::logout();
 
         $request->session()->invalidate();

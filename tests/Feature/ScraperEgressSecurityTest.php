@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use App\Jobs\ScrapeJobDetailsJob;
-use App\Livewire\Admin\ScraperDashboard;
-use App\Models\User;
 use App\Models\JobPosting;
 use App\Models\ScraperSource;
 use App\Services\DeadLinkDetector;
@@ -226,73 +224,6 @@ class ScraperEgressSecurityTest extends TestCase
         Http::fake(['*' => Http::response($body, $status)]);
         $this->assertSame($expected, (new DeadLinkDetector)->validate($posting));
         Http::assertSentCount(1);
-    }
-
-    public function test_visual_sandbox_rejects_private_urls_before_renderer_dispatch(): void
-    {
-        $this->actingAs(new User(['role' => 'admin']));
-        Http::fake(['*' => Http::response(['success' => true, 'html' => '<h1>Private</h1>', 'title' => 'Private'])]);
-        $dashboard = new ScraperDashboard;
-        $dashboard->sandboxUrl = 'http://169.254.169.254/latest/meta-data';
-        $dashboard->sandboxTitleSelector = 'h1';
-        $dashboard->runVisualSandboxTest();
-        $this->assertSame('FAILED', $dashboard->sandboxTestResultStatus);
-        $this->assertFalse($dashboard->sandboxIsTesting);
-        $this->assertNull($dashboard->sandboxExtractedPayload);
-        Http::assertNothingSent();
-    }
-
-    public function test_visual_sandbox_extracts_valid_page_through_authenticated_renderer(): void
-    {
-        $this->actingAs(new User(['role' => 'admin']));
-        Http::fake(['*' => Http::response(['success' => true, 'html' => '<h1>Engineer</h1><p class="company">Example</p>', 'title' => 'Jobs'])]);
-        $dashboard = new ScraperDashboard;
-        $dashboard->sandboxUrl = 'https://linkedin.com/jobs/view/42';
-        $dashboard->sandboxTitleSelector = 'h1';
-        $dashboard->sandboxCompanySelector = '.company';
-        $dashboard->runVisualSandboxTest();
-        $this->assertSame('SUCCESS', $dashboard->sandboxTestResultStatus);
-        $this->assertSame('Engineer', $dashboard->sandboxExtractedPayload['title']);
-        $this->assertSame('Example', $dashboard->sandboxExtractedPayload['company']);
-        Http::assertSent(fn ($request) => $request->url() === 'http://renderer.test/scrape'
-            && $request->hasHeader('Authorization', 'Bearer '.str_repeat('t', 32))
-            && $request->data() === ['url' => 'https://linkedin.com/jobs/view/42']);
-    }
-
-    public function test_listing_sandbox_rejects_private_url_without_any_outgoing_request(): void
-    {
-        $this->actingAs(new User(['role' => 'admin']));
-        Http::fake(['*' => Http::response('<title>Private</title>')]);
-        $dashboard = new ScraperDashboard;
-        $dashboard->testUrl = 'http://169.254.169.254/latest/meta-data';
-        $dashboard->runTestSandbox(new DeadLinkDetector);
-        $this->assertSame('FAILED', $dashboard->testResultStatus);
-        $this->assertSame('UNKNOWN', $dashboard->testJobStatus);
-        Http::assertNothingSent();
-    }
-
-    public function test_listing_sandbox_fetches_title_through_safe_transport_without_proxy_simulation(): void
-    {
-        $this->actingAs(new User(['role' => 'admin']));
-        Http::fake(['*' => Http::response('<title>Engineer</title><p>Apply here</p>')]);
-        $dashboard = new ScraperDashboard;
-        $dashboard->testUrl = 'https://linkedin.com/jobs/view/42';
-        $dashboard->runTestSandbox(new DeadLinkDetector);
-        $this->assertSame('SUCCESS', $dashboard->testResultStatus);
-        $this->assertSame('Engineer', $dashboard->extractedPayload['title']);
-        $this->assertSame('', $dashboard->testProxyIp);
-        Http::assertSentCount(2);
-    }
-
-    public function test_proxy_health_action_is_disabled_without_any_outgoing_request(): void
-    {
-        $this->actingAs(new User(['role' => 'admin']));
-        Http::fake(['*' => Http::response(['origin' => '93.184.216.34'])]);
-        $dashboard = new ScraperDashboard;
-        $dashboard->checkProxyHealth();
-        $this->assertSame([], $dashboard->proxyStatusList);
-        $this->assertFalse($dashboard->isPingingProxies);
-        Http::assertNothingSent();
     }
 
     public function test_extraction_rejects_unsafe_url_without_http_or_persistence(): void

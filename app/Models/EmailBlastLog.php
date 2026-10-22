@@ -10,7 +10,7 @@ class EmailBlastLog extends Model
     use HasFactory;
 
     protected $fillable = [
-        'email_type',
+        'email_type', 'template_name', 'subject', 'language', 'banner',
         'target_audience',
         'total_target',
         'success_count',

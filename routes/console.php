@@ -39,12 +39,6 @@ Schedule::command('jobs:validate-dead-links --limit=100')
     ->timezone('Asia/Jakarta')
     ->description('Validate active job postings URLs for dead-links and footprint markers');
 
-// Run active job scraper sources dynamically based on their configured frequency
-Schedule::command('jobs:run-scraper')
-    ->hourly()
-    ->timezone('Asia/Jakarta')
-    ->description('Run active job scraper sources dynamically based on their configured frequency');
-
 // Telegram Admin Channel: Daily Morning Briefing (10:00 WIB)
 Schedule::command('report:telegram-daily morning')
     ->dailyAt('10:00')

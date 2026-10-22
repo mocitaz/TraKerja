@@ -2,100 +2,109 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\Setting;
+use Illuminate\Support\Facades\{DB, Storage};
+use Livewire\Attributes\Locked;
 use Livewire\Component;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
 
 class DatabaseMaintenance extends Component
 {
-    public $unusedFilesCount = 0;
-    public $dbSize = '0 MB';
-    public $orphanedFiles = [];
+    #[Locked] public $unusedFilesCount = 0;
+    #[Locked] public $dbSize = null;
+    #[Locked] public $databaseDriver = '';
+    #[Locked] public $orphanedFiles = [];
+    #[Locked] public $unusedBytes = 0;
+    #[Locked] public $scanFailed = false;
+    #[Locked] public $lastScannedAt = null;
+    #[Locked] public $maintenanceMode = false;
 
     public function mount()
     {
+        abort_unless(auth()->user()?->isAdmin(), 403);
+        $this->maintenanceMode = (bool) Setting::get('maintenance_mode', false);
         $this->calculateStats();
     }
 
     public function calculateStats()
     {
-        // Get DB Size (MySQL)
+        abort_unless(auth()->user()?->isAdmin(), 403);
+        $this->databaseDriver = DB::connection()->getDriverName();
         try {
-            $dbName = config('database.connections.mysql.database');
-            $size = DB::select("SELECT ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) AS size FROM information_schema.TABLES WHERE table_schema = ?", [$dbName]);
-            $this->dbSize = ($size[0]->size ?? 0) . ' MB';
-        } catch (\Exception $e) {
-            $this->dbSize = '1.2 MB'; // Safe local fallback
-        }
-
-        // Real unused file detection (logo photos)
+            $bytes = match ($this->databaseDriver) {
+                'sqlite' => DB::selectOne('PRAGMA page_count')->page_count * DB::selectOne('PRAGMA page_size')->page_size,
+                'mysql', 'mariadb' => DB::selectOne('SELECT COALESCE(SUM(data_length + index_length), 0) AS bytes FROM information_schema.TABLES WHERE table_schema = ?', [DB::connection()->getDatabaseName()])->bytes,
+                'pgsql' => DB::selectOne('SELECT pg_database_size(current_database()) AS bytes')->bytes,
+                default => null,
+            };
+            $this->dbSize = $bytes === null ? null : $this->formatBytes((int) $bytes);
+        } catch (\Throwable) { $this->dbSize = null; }
         $this->detectUnusedFiles();
+        $this->lastScannedAt = now()->toIso8601String();
     }
 
-    private function detectUnusedFiles()
+    private function detectUnusedFiles(): void
     {
         $this->orphanedFiles = [];
-
+        $this->unusedBytes = 0;
+        $this->unusedFilesCount = 0;
+        $this->scanFailed = false;
         try {
-            // 1. Get all logos stored in public storage disk
-            $allStorageFiles = Storage::disk('public')->files('logos');
-
-            // 2. Get all logo paths stored in database
-            $activeLogos = DB::table('users')->whereNotNull('logo')->pluck('logo')->toArray();
-
-            // 3. Find files in storage that are not active in database
-            foreach ($allStorageFiles as $file) {
-                if (!in_array($file, $activeLogos)) {
-                    $this->orphanedFiles[] = $file;
-                }
+            $references = DB::table('users')->whereNotNull('logo')->pluck('logo')->map(function ($logo) {
+                return basename(rawurldecode(parse_url($logo, PHP_URL_PATH) ?: $logo));
+            })->all();
+            $disk = Storage::disk('public');
+            foreach ($disk->files('logos') as $file) {
+                if (str_starts_with(basename($file), '.') || in_array(basename($file), $references, true)) continue;
+                $this->orphanedFiles[] = $file;
+                $this->unusedBytes += $disk->size($file);
             }
-        } catch (\Exception $e) {
-            // Silently fall back if storage doesn't exist
+            $this->unusedFilesCount = count($this->orphanedFiles);
+        } catch (\Throwable) {
+            $this->scanFailed = true;
             $this->orphanedFiles = [];
+            $this->unusedBytes = 0;
         }
-
-        $this->unusedFilesCount = count($this->orphanedFiles);
     }
 
     public function cleanStorage()
     {
-        // Re-detect just in case
+        abort_unless(auth()->user()?->isAdmin(), 403);
+        $this->resetErrorBag('cleanup');
         $this->detectUnusedFiles();
-
-        $deletedCount = 0;
-        foreach ($this->orphanedFiles as $file) {
-            // Delete from public storage disk
-            if (Storage::disk('public')->exists($file)) {
-                Storage::disk('public')->delete($file);
-                $deletedCount++;
-            }
-
-            // Delete from public_html/storage/logos if exists
-            $publicHtmlPath = base_path('public_html/storage/' . $file);
-            if (file_exists($publicHtmlPath)) {
-                unlink($publicHtmlPath);
-            }
-
-            // Delete from public/storage/logos if exists
-            $publicPath = public_path('storage/' . $file);
-            if (file_exists($publicPath)) {
-                unlink($publicPath);
-            }
+        if ($this->scanFailed) {
+            $this->addError('cleanup', __('Storage could not be scanned. No files were deleted.'));
+            return;
         }
+        $deleted = 0;
+        try {
+            foreach ($this->orphanedFiles as $file) {
+                if (!Storage::disk('public')->delete($file)) continue;
+                $deleted++;
+            }
+        } catch (\Throwable) {
+            $this->addError('cleanup', __('Some files could not be removed. Refresh the scan before trying again.'));
+        }
+        $this->calculateStats();
+        session()->flash('storage_result', __(':value1 unused logo files removed.', ['value1' => $deleted]));
+        $this->dispatch('storage-cleaned');
+    }
 
-        $this->unusedFilesCount = 0;
-        $this->orphanedFiles = [];
+    public function toggleMaintenance()
+    {
+        abort_unless(auth()->user()?->isAdmin(), 403);
+        $this->maintenanceMode = !(bool) Setting::get('maintenance_mode', false);
+        Setting::set('maintenance_mode', $this->maintenanceMode);
+        session()->flash('maintenance_result', $this->maintenanceMode ? __('Maintenance mode is on. Member access is restricted.') : __('Maintenance mode is off. Member access is available.'));
+        $this->dispatch('maintenance-updated');
+    }
 
-        $this->dispatch('showNotification', [
-            'type' => 'success',
-            'title' => __('Storage Cleaned!'),
-            'message' => "Berhasil menghapus {$deletedCount} file logo sampah dari server.",
-        ]);
+    public function formatBytes(int $bytes): string
+    {
+        return $bytes >= 1048576 ? number_format($bytes / 1048576, 2).' MB' : number_format($bytes / 1024, 1).' KB';
     }
 
     public function render()
     {
-        return view('livewire.admin.database-maintenance')
-            ->layout('components.admin-layout');
+        return view('livewire.admin.database-maintenance', ['unusedSize' => $this->formatBytes($this->unusedBytes)]);
     }
 }

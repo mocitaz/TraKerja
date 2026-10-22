@@ -83,10 +83,11 @@ class LanguagePreferenceTest extends TestCase
         $this->assertSame('Home', $user->fresh()->name);
     }
 
-    public function test_admin_and_public_layouts_have_language_controls(): void
+    public function test_admin_language_controls_are_available_on_profile_instead_of_sidebar(): void
     {
         $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]); $admin->forceFill(['locale' => 'id'])->save();
-        $this->actingAs($admin)->get('/admin')->assertOk()->assertSee('data-language-form', false)->assertSee('lang="id"', false);
+        $this->actingAs($admin)->get('/admin')->assertOk()->assertDontSee('data-language-form', false)->assertSee('lang="id"', false);
+        $this->get('/profile')->assertOk()->assertSee('data-language-form', false)->assertSee('lang="id"', false);
         $this->postJson(route('locale.update'), ['locale' => 'en'])->assertOk();
         $this->actingAs($admin->fresh())->get('/profile')->assertOk()->assertHeader('Content-Language', 'en');
     }

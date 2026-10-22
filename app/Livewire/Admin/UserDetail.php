@@ -8,24 +8,6 @@ use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\AdminCustomNotificationMail;
-use App\Mail\WelcomeEmail;
-use App\Mail\VerificationReminderMail;
-use App\Mail\JobReminderMail;
-use App\Mail\MonthlyMotivationMail;
-use App\Mail\ReEngagementMail;
-use App\Mail\ProductUpdateMail;
-use App\Mail\NewVibeAnnouncementMail;
-use App\Mail\AiAnalyzerAnnouncementMail;
-use App\Mail\AiPhotoAnnouncementMail;
-use App\Mail\ApplicationFollowUpAnnouncementMail;
-use App\Mail\PremiumAccessGrantedMail;
-use App\Mail\HiringSeasonMail;
-use App\Mail\HariKemerdekaanMail;
-use App\Mail\HariPahlawanMail;
-use App\Mail\HariIbuMail;
-use App\Mail\HariRayaNatalMail;
-use App\Mail\TahunBaruIslamMail;
 
 class UserDetail extends Component
 {
@@ -219,32 +201,32 @@ class UserDetail extends Component
 
     public function sendEmail(): void
     {
-        $mailClass = match($this->emailType) {
-            'welcome' => WelcomeEmail::class,
-            'verification' => fn($user) => $user->sendEmailVerificationNotification(),
-            'verification_reminder' => VerificationReminderMail::class,
-            'job_reminder' => JobReminderMail::class,
-            'monthly_motivation' => MonthlyMotivationMail::class,
-            're_engagement' => ReEngagementMail::class,
-            'product_update' => ProductUpdateMail::class,
-            'new_vibe' => NewVibeAnnouncementMail::class,
-            'ai_analyzer' => AiAnalyzerAnnouncementMail::class,
-            'ai_photo' => AiPhotoAnnouncementMail::class,
-            'follow_up_feature' => ApplicationFollowUpAnnouncementMail::class,
-            'premium_granted' => PremiumAccessGrantedMail::class,
-            'hiring_season' => HiringSeasonMail::class,
-            'kemerdekaan_ri' => HariKemerdekaanMail::class,
-            'pahlawan' => HariPahlawanMail::class,
-            'hari_ibu' => HariIbuMail::class,
-            'natal' => HariRayaNatalMail::class,
-            'tahun_baru_islam' => TahunBaruIslamMail::class,
-            default => WelcomeEmail::class,
-        };
+        $templates = [
+            'welcome' => \App\Mail\WelcomeMail::class,
+            'verification_reminder' => \App\Mail\EmailVerificationReminderMail::class,
+            'job_reminder' => \App\Mail\JobApplicationReminderMail::class,
+            'monthly_motivation' => \App\Mail\MonthlyMotivationMail::class,
+            're_engagement' => \App\Mail\ReEngagementMail::class,
+            'product_update' => \App\Mail\ProductUpdateMail::class,
+            'new_vibe' => \App\Mail\NewVibeMail::class,
+            'ai_analyzer' => \App\Mail\AiAnalyzerFreeTrialAnnouncementMail::class,
+            'ai_photo' => \App\Mail\AiPhotoAnnouncementMail::class,
+            'follow_up_feature' => \App\Mail\FollowUpFeatureAnnouncementMail::class,
+            'premium_granted' => \App\Mail\PremiumGrantedMail::class,
+            'hiring_season' => \App\Mail\HiringSeasonAlertMail::class,
+            'kemerdekaan_ri' => \App\Mail\KemerdekaanRiMail::class,
+            'pahlawan' => \App\Mail\PahlawanMail::class,
+            'hari_ibu' => \App\Mail\HariIbuMail::class,
+            'natal' => \App\Mail\NatalMail::class,
+            'tahun_baru_islam' => \App\Mail\TahunBaruIslamMail::class,
+        ];
+        $this->validate(['emailType' => ['required', \Illuminate\Validation\Rule::in([...array_keys($templates), 'verification'])]]);
 
         try {
             if ($this->emailType === 'verification') {
                 $this->user->sendEmailVerificationNotification();
             } else {
+                $mailClass = $templates[$this->emailType];
                 Mail::to($this->user)->send(new $mailClass($this->user));
             }
 
@@ -313,6 +295,8 @@ class UserDetail extends Component
             ->get();
 
         $totalApplications = $this->user->jobApplications()->count();
+        $acceptedApplications = $this->user->jobApplications()->where('application_status', 'Accepted')->count();
+        $inProgressApplications = $this->user->jobApplications()->where('application_status', 'On Process')->count();
         $declinedApplications = $this->user->jobApplications()
             ->where(function ($q) {
                 $q->where('application_status', 'Rejected')
@@ -323,6 +307,8 @@ class UserDetail extends Component
             'recentApplications' => $recentApplications,
             'recentActivities' => $recentActivities,
             'totalApplications' => $totalApplications,
+            'acceptedApplications' => $acceptedApplications,
+            'inProgressApplications' => $inProgressApplications,
             'declinedApplications' => $declinedApplications,
         ]);
     }

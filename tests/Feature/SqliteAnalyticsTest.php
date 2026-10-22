@@ -38,13 +38,13 @@ class SqliteAnalyticsTest extends TestCase
         }
 
         $response = $this->actingAs($admin)->get(route('admin.index'))->assertOk();
-        $ranking = explode('</section>', explode('data-admin-rejection-ranking>', $response->getContent(), 2)[1], 2)[0];
+        $ranking = explode('</section>', explode('data-admin-rejection-ranking', $response->getContent(), 2)[1], 2)[0];
         $this->assertStringContainsString($first->email, $ranking);
         $this->assertStringContainsString($second->email, $ranking);
         $this->assertStringNotContainsString($excluded->email, $ranking);
         $this->assertStringNotContainsString($admin->email, $ranking);
-        $this->assertMatchesRegularExpression('/2\s+<small>(?:fail|unplaced)/', $ranking);
-        $this->assertMatchesRegularExpression('/1\s+<small>(?:fail|unplaced)/', $ranking);
+        $this->assertMatchesRegularExpression('/2\s*<small>(?:fail|unplaced)/', $ranking);
+        $this->assertMatchesRegularExpression('/1\s*<small>(?:fail|unplaced)/', $ranking);
     }
 
     public function test_summary_renders_each_filter_with_owner_scoped_timeline_counts(): void
@@ -83,7 +83,7 @@ class SqliteAnalyticsTest extends TestCase
 
     public function test_admin_analytics_renders_with_day_hour_and_resolution_aggregates(): void
     {
-        $this->travelTo(now()->setDate(2026, 10, 9)->setTime(12, 0));
+        $this->travelTo(now()->setDate(2026, 10, 9)->setTime(16, 0));
         $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]);
         $user = User::factory()->create();
         $ticket = new SupportTicket;
@@ -101,7 +101,7 @@ class SqliteAnalyticsTest extends TestCase
         $this->actingAs($admin)->get(route('admin.analytics'))->assertOk();
         $component = new \App\Livewire\Admin\Analytics;
         $stats = (new \ReflectionMethod($component, 'fetchSupportTicketStats'))->invoke($component);
-        $this->assertSame(2.0, $stats['avg_resolution_hrs']);
+        $this->assertSame(3.0, $stats['avg_resolution_hrs']);
         $hours = (new \ReflectionMethod($component, 'fetchPeakActivityHours'))->invoke($component);
         $this->assertSame(1, $hours['data'][15]);
     }

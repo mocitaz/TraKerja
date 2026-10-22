@@ -1,125 +1,57 @@
-@php
-    $user = Auth::user();
-    $mainLinks = [
-        ['admin.index', __('Dashboard')], ['admin.users', __('User Management')],
-        ['admin.user-activities', __('Activity Log')], ['admin.analytics', __('Analytics')],
-    ];
-    $profileLinks = [
-        ['admin.email-blast', __('Email Blast'), 'paper-plane-tilt'],
-        ['admin.feedbacks.index', __('User Feedback'), 'chat-circle-dots'],
-        ['admin.survey.index', __('User Survey'), 'clipboard-text'],
-        ['admin.scraper', __('Scraper engine'), 'globe'],
-        ['admin.settings', __('Settings'), 'sliders'],
-        ['admin.payments', __('Payments'), 'credit-card'],
-        ['admin.monetization', 'Monetization', 'crown'],
-    ];
-@endphp
+@php($user = Auth::user())
+@php($sidebarName = \Illuminate\Support\Str::before(trim($user->name), ' '))
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Admin | TraKerja</title>
+    <title>TraKerja | Admin</title>
     <link rel="icon" href="{{ asset('images/icon.png') }}">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700|plus-jakarta-sans:400,500,600,700,800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-    <!-- Anti-FOUC & Theme Initialization Script -->
     <script>
-        (function() {
-            try {
-                if (!localStorage.getItem('trakerja_theme_force_light_v6')) {
-                    localStorage.setItem('theme', 'light');
-                    document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
-                    localStorage.setItem('trakerja_theme_force_light_v6', '1');
-                }
-                var theme = localStorage.getItem('theme');
-                if (theme === 'dark') {
-                    document.documentElement.classList.add('dark');
-                    document.cookie = 'theme=dark; path=/; max-age=31536000; SameSite=Lax';
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('theme', 'light');
-                    document.cookie = 'theme=light; path=/; max-age=31536000; SameSite=Lax';
-                }
-            } catch (e) {}
-        })();
+        try { document.documentElement.classList.toggle('dark', localStorage.getItem('theme') === 'dark'); } catch (e) {}
+        try { document.documentElement.classList.toggle('admin-sidebar-collapsed', localStorage.getItem('admin_sidebar_collapsed') === 'true'); } catch (e) {}
     </script>
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     @include('partials.locale-config')
 </head>
-<body class="workspace-shell admin-workspace bg-white dark:bg-[#131314] text-slate-900 dark:text-[#f0f4f9] transition-colors duration-200">
+<body class="workspace-shell admin-workspace admin-console" x-data="{ sidebarOpen: false, menuReturnFocus: null, sidebarCollapsed: document.documentElement.classList.contains('admin-sidebar-collapsed'), toggleSidebar() { this.sidebarCollapsed = !this.sidebarCollapsed; try { localStorage.setItem('admin_sidebar_collapsed', String(this.sidebarCollapsed)) } catch (e) {} } }" @keydown.escape.window="if (sidebarOpen) { sidebarOpen = false; (menuReturnFocus || $refs.menuButton).focus({ preventScroll: true }) }" @resize.window.debounce.100ms="if (window.innerWidth >= 1100) sidebarOpen = false" x-effect="document.body.classList.toggle('admin-menu-open', sidebarOpen); document.documentElement.classList.toggle('admin-sidebar-collapsed', sidebarCollapsed)">
     <a href="#admin-main" class="admin-skip-link">{{ __('Skip to content') }}</a>
-    <header class="workspace-navigation admin-navigation" x-data="{ profileOpen: false, mobileOpen: false }">
-        <nav class="workspace-topbar" aria-label="{{ __('Admin navigation') }}">
-            <a href="{{ route('admin.index') }}" class="workspace-brand admin-brand" aria-label="{{ __('TraKerja admin home') }}">
-                <img src="{{ asset('images/icon.png') }}" alt="" width="21" height="21">
-                <span class="admin-brand-title">{{ __('TraKerja') }}</span>
-                <span class="admin-brand-divider" aria-hidden="true">\</span>
-                <span class="admin-brand-text">{{ __('admin') }}</span>
-            </a>
-            <div class="workspace-desktop-links">
-                @foreach($mainLinks as [$route, $label])
-                    <a href="{{ route($route) }}" class="workspace-nav-link" @if(request()->routeIs($route)) aria-current="page" @endif>{{ __($label) }}</a>
-                @endforeach
-            </div>
-            <div class="workspace-account-actions">
-                <button type="button" class="workspace-mobile-toggle" x-ref="mobileButton" @click="mobileOpen = !mobileOpen; profileOpen = false" :aria-expanded="mobileOpen.toString()" aria-controls="admin-mobile-links"><i class="ph ph-list" aria-hidden="true"></i><span>{{ __('Menu') }}</span></button>
-                <!-- Theme Toggle Button -->
-                <button type="button"
-                        x-data="{
-                            toggle() {
-                                if (typeof window.toggleTheme === 'function') {
-                                    window.toggleTheme();
-                                } else {
-                                    var isDark = document.documentElement.classList.toggle('dark');
-                                    var theme = isDark ? 'dark' : 'light';
-                                    try { localStorage.setItem('theme', theme); } catch (e) {}
-                                    document.cookie = 'theme=' + theme + '; path=/; max-age=31536000; SameSite=Lax';
-                                    window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: isDark } }));
-                                }
-                            }
-                        }"
-                        @click="toggle()"
-                        class="theme-toggle-btn"
-                        aria-label="{{ __('Toggle dark/light mode') }}"
-                        title="{{ __('Toggle dark/light mode') }}">
-                    <i class="ph-bold ph-sun theme-icon-sun" aria-hidden="true"></i>
-                    <i class="ph-bold ph-moon theme-icon-moon" aria-hidden="true"></i>
-                </button>
-                <div class="relative" @click.outside="profileOpen = false" @keydown.escape.stop="profileOpen = false; $refs.profileButton.focus()">
-                    <button type="button" x-ref="profileButton" @click="profileOpen = !profileOpen; mobileOpen = false" class="workspace-profile-trigger" aria-label="{{ __('Admin account menu') }}" aria-controls="admin-profile-menu" :aria-expanded="profileOpen.toString()">
-                        <img src="{{ $user->avatar_url }}" alt="" class="workspace-avatar">
-                        <span class="workspace-account-copy"><strong>{{ $user->name }}</strong><span>{{ $user->email }}</span></span>
-                        <i class="ph ph-caret-down workspace-profile-chevron" :class="{ 'is-open': profileOpen }" aria-hidden="true"></i>
-                    </button>
-                    <div id="admin-profile-menu" class="workspace-dropdown workspace-profile-menu admin-profile-menu" x-cloak x-show="profileOpen" x-transition.opacity.duration.150ms role="region" aria-label="{{ __('Admin account and tools') }}">
-                        <div class="workspace-profile-summary"><img src="{{ $user->avatar_url }}" alt="" class="workspace-profile-avatar"><div class="workspace-profile-identity"><div class="workspace-profile-identity-heading"><strong>{{ $user->name }}</strong><span class="workspace-account-badge">{{ __('Admin') }}</span></div><span>{{ $user->email }}</span></div></div>
-                        <div class="workspace-profile-links">
-                            @foreach($profileLinks as [$route, $label, $icon])
-                                <a href="{{ route($route) }}" class="workspace-menu-link" @if(request()->routeIs($route)) aria-current="page" @endif><span class="workspace-menu-icon"><i class="ph ph-{{ $icon }}" aria-hidden="true"></i></span><span>{{ __($label) }}</span><i class="ph ph-caret-right workspace-menu-chevron" aria-hidden="true"></i></a>
-                            @endforeach
-                        </div>
-                        <div class="admin-profile-footer"><a href="{{ route('dashboard') }}" class="workspace-menu-link"><i class="ph ph-arrow-square-out" aria-hidden="true"></i><span>{{ __('User workspace') }}</span></a><a href="{{ route('profile.edit') }}" class="workspace-menu-link"><i class="ph ph-user-circle" aria-hidden="true"></i><span>{{ __('Profile settings') }}</span></a><x-language-switch location="admin" />
-<form method="POST" action="{{ route('logout') }}" id="admin-logout-form" class="hidden">@csrf</form><button type="button" class="workspace-menu-link admin-signout" @click="profileOpen = false" onclick="confirmLogout('admin-logout-form')"><i class="ph ph-sign-out" aria-hidden="true"></i><span>{{ __('Sign out') }}</span></button></div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <nav id="admin-mobile-links" class="workspace-mobile-menu" x-cloak x-show="mobileOpen" @click.outside="mobileOpen = false" @keydown.escape.stop="mobileOpen = false; $refs.mobileButton.focus()" aria-label="{{ __('Mobile admin navigation') }}">
-            @foreach($mainLinks as [$route, $label])<a href="{{ route($route) }}" class="workspace-menu-link" @if(request()->routeIs($route)) aria-current="page" @endif>{{ __($label) }}</a>@endforeach
-        </nav>
-    </header>
-    <main id="admin-main" class="admin-page-frame" tabindex="-1">
-        @if(session('success'))<div class="admin-session-note" role="status">{{ session('success') }}</div>@endif
-        @if(session('error'))<div class="admin-session-note admin-session-note--error" role="alert">{{ session('error') }}</div>@endif
-        {{ $slot }}
-    </main>
-    <x-workspace-footer />
+    <div class="ac-mobile-heading">
+        <a href="{{ route('admin.index') }}" class="ac-mobile-brand workspace-brand"><img src="{{ asset('images/icon.png') }}" alt="" width="23" height="23">TraKerja <span>| {{ __('Admin') }}</span></a>
+        <button type="button" class="ac-menu-button" x-ref="menuButton" @click="menuReturnFocus = $el; sidebarOpen = !sidebarOpen; if (sidebarOpen) $nextTick(() => requestAnimationFrame(() => $refs.closeMenu.focus({ preventScroll: true })))" :aria-expanded="sidebarOpen.toString()" aria-controls="admin-sidebar"><i class="ph ph-list" aria-hidden="true"></i>{{ __('Menu') }}</button>
+    </div>
+    <button class="ac-backdrop" type="button" x-cloak x-show="sidebarOpen" @click="sidebarOpen = false; (menuReturnFocus || $refs.menuButton).focus({ preventScroll: true })" aria-label="{{ __('Close menu') }}"></button>
+    <aside id="admin-sidebar" class="ac-sidebar" :role="sidebarOpen ? 'dialog' : 'complementary'" :aria-modal="sidebarOpen ? 'true' : null" aria-label="{{ __('Admin navigation') }}" :class="{ 'is-open': sidebarOpen }" @keydown.tab="if (window.innerWidth < 1100 && sidebarOpen) { const controls = [...$el.querySelectorAll('a, button, input')].filter(el => el.getClientRects().length && !el.disabled); const first = controls[0]; const last = controls[controls.length - 1]; if ($event.shiftKey && document.activeElement === first) { $event.preventDefault(); last.focus() } else if (!$event.shiftKey && document.activeElement === last) { $event.preventDefault(); first.focus() } }">
+        <button type="button" class="ac-sidebar-toggle" @click="toggleSidebar()" :aria-expanded="(!sidebarCollapsed).toString()" aria-controls="admin-sidebar" :aria-label="sidebarCollapsed ? @js(__('Expand sidebar')) : @js(__('Collapse sidebar'))" :title="sidebarCollapsed ? @js(__('Expand sidebar')) : @js(__('Collapse sidebar'))"><i class="ph-bold ph-caret-left" aria-hidden="true"></i></button>
+        <div class="ac-sidebar-brand">
+            <a href="{{ route('admin.index') }}" class="workspace-brand" aria-label="{{ __('TraKerja admin home') }}"><img src="{{ asset('images/icon.png') }}" alt="" width="21" height="21"><span>{{ __('TraKerja') }}<small class="ac-brand-context">| {{ __('Admin') }}</small></span></a>
+            <button type="button" x-ref="closeMenu" class="ac-close-menu" @click="sidebarOpen = false; (menuReturnFocus || $refs.menuButton).focus({ preventScroll: true })" aria-label="{{ __('Close menu') }}"><i class="ph ph-x" aria-hidden="true"></i></button>
+        </div>
+        @include('layouts.admin-sidebar')
+        <div class="ac-sidebar-account">
+            <a href="{{ route('profile.edit') }}" class="ac-account" aria-label="{{ __('Profile settings') }}" title="{{ $user->name }} · {{ __('Profile settings') }}" @if(request()->routeIs('profile.edit')) aria-current="page" @endif><img src="{{ $user->avatar_url }}" alt="" width="38" height="38"><span><strong>{{ $sidebarName }}</strong></span></a>
+            <form method="POST" action="{{ route('logout') }}" id="admin-logout-form">@csrf<button type="button" class="ac-signout" onclick="confirmLogout('admin-logout-form')" aria-label="{{ __('Sign out') }}" title="{{ __('Sign out') }}"><i class="ph-fill ph-sign-out" aria-hidden="true"></i><span>{{ __('Sign out') }}</span></button></form>
+        </div>
+    </aside>
+    <div class="ac-main-column">
+        <main id="admin-main" class="admin-page-frame" tabindex="-1">
+            @if(session('success'))<div class="admin-session-note" role="status">{{ session('success') }}</div>@endif
+            @if(session('error'))<div class="admin-session-note admin-session-note--error" role="alert">{{ session('error') }}</div>@endif
+            {{ $slot }}
+        </main>
+        <footer class="ac-footer"><span>© {{ now()->year }} TraKerja</span><span>{{ __('Administration') }}<span aria-hidden="true"> / </span><a href="{{ route('legal.privacy') }}">{{ __('Privacy policy') }}</a></span></footer>
+    </div>
+    <nav class="ac-mobile-dock" aria-label="{{ __('Primary admin navigation') }}">
+        <a href="{{ route('admin.index') }}" @if(request()->routeIs('admin.index')) aria-current="page" @endif><i class="ph-fill ph-squares-four" aria-hidden="true"></i><span>{{ __('Dashboard') }}</span></a>
+        <a href="{{ route('admin.users') }}" @if(request()->routeIs('admin.users*')) aria-current="page" @endif><i class="ph-fill ph-users" aria-hidden="true"></i><span>{{ __('Users') }}</span></a>
+        <a href="{{ route('admin.payments') }}" @if(request()->routeIs('admin.payments*')) aria-current="page" @endif><i class="ph-fill ph-credit-card" aria-hidden="true"></i><span>{{ __('Payments') }}</span></a>
+        <button type="button" @click="menuReturnFocus = $el; sidebarOpen = !sidebarOpen; if (sidebarOpen) $nextTick(() => requestAnimationFrame(() => $refs.closeMenu.focus({ preventScroll: true })))" :aria-expanded="sidebarOpen.toString()" aria-controls="admin-sidebar"><i class="ph ph-list" aria-hidden="true"></i><span>{{ __('Menu') }}</span></button>
+    </nav>
     @stack('scripts')
     <div id="confirmation-modal" data-dialog-native="closeConfirmModal" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-message" tabindex="-1" class="account-dialog-overlay hidden" onclick="if (event.target === this) closeConfirmModal()">
         <section class="account-confirm-panel">
@@ -134,11 +66,9 @@
             </div>
         </section>
     </div>
-
     <script>
         var activeConfirmCallback = activeConfirmCallback || null;
         var confirmBusy = false;
-
         function openConfirmModal(title, message, btnText, callback, options = {}) {
             if (confirmBusy) return;
             const modal = document.getElementById('confirmation-modal');
@@ -153,15 +83,12 @@
             modal.classList.remove('hidden');
             document.body.classList.add('overflow-hidden');
         }
-
         function closeConfirmModal(force = false) {
             if (confirmBusy && !force) return;
-            const modal = document.getElementById('confirmation-modal');
-            if (modal) modal.classList.add('hidden');
+            document.getElementById('confirmation-modal')?.classList.add('hidden');
             document.body.classList.remove('overflow-hidden');
             activeConfirmCallback = null;
         }
-
         document.getElementById('confirm-button').onclick = async function() {
             if (confirmBusy || !activeConfirmCallback) return;
             const callback = activeConfirmCallback;
@@ -171,10 +98,8 @@
             confirmBusy = true;
             buttons.forEach(button => { button.disabled = true; });
             this.innerText = modal.dataset.variant === 'logout' ? 'Signing out…' : 'Working…';
-            try {
-                await callback();
-                closeConfirmModal(true);
-            } catch (error) {
+            try { await callback(); closeConfirmModal(true); }
+            catch (error) {
                 const notice = document.getElementById('confirm-error');
                 notice.innerText = 'We couldn’t complete this action. Please try again.';
                 notice.hidden = false;
@@ -184,39 +109,17 @@
                 this.innerText = label;
             }
         };
-
         async function confirmLogout(formId = 'admin-logout-form') {
-            const submitLogout = async () => {
+            openConfirmModal(@js(__('Sign out of TraKerja?')), @js(__('You’ll need to sign in again to return to your workspace.')), @js(__('Sign out')), async () => {
                 const form = document.getElementById(formId) || document.getElementById('admin-logout-form');
                 if (!form) return;
-                try {
-                    await window.prepareTraKerjaLogout?.();
-                } catch (error) {
-                    console.error(error);
-                }
+                try { await window.prepareTraKerjaLogout?.(); } catch (error) { console.error(error); }
                 form.submit();
-            };
-            if (typeof window.openConfirmModal === 'function') {
-                window.openConfirmModal(
-                    'Sign out of TraKerja?',
-                    'You’ll need to sign in again to return to your workspace.',
-                    'Sign out',
-                    submitLogout,
-                    { variant: 'logout' }
-                );
-            } else if (confirm(@js(__('Are you sure you want to sign out?')))) {
-                await submitLogout();
-            }
+            }, { variant: 'logout' });
         }
-
-        function openLogoutModal() {
-            confirmLogout('admin-logout-form');
-        }
-        function closeLogoutModal() {
-            closeConfirmModal();
-        }
+        function openLogoutModal() { confirmLogout('admin-logout-form'); }
+        function closeLogoutModal() { closeConfirmModal(); }
     </script>
-
     @include('components.toast-notification')
     @livewireScripts
 </body>

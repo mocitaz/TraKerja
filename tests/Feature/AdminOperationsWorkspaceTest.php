@@ -19,10 +19,13 @@ class AdminOperationsWorkspaceTest extends TestCase
     public function test_all_six_operations_pages_render_for_admin(): void
     {
         $this->actingAs(User::factory()->create(['role'=>'admin']));
-        foreach (['/admin/feedbacks','/admin/survey','/admin/scraper','/admin/settings','/admin/payments','/admin/monetization'] as $url) {
-            $this->get($url)->assertOk()->assertSee('admin-operations');
+        foreach (['/admin/feedbacks','/admin/survey'] as $url) {
+            $this->get($url)->assertOk()->assertSee('av-workspace');
         }
-        $this->get('/admin/settings?tab=unknown')->assertOk()->assertSee("activeTab: 'general'", false);
+        $this->get('/admin/scraper')->assertNotFound();
+        $this->get('/admin/settings?tab=unknown')->assertOk()->assertSee('as-workspace');
+        $this->get('/admin/payments')->assertOk()->assertSee('bc-workspace');
+        $this->get('/admin/monetization')->assertRedirect(route('admin.payments', ['view' => 'plans']));
     }
 
     public function test_ticket_search_keeps_filters_in_pagination(): void
@@ -40,7 +43,7 @@ class AdminOperationsWorkspaceTest extends TestCase
         $response=['user_id'=>User::factory()->create()->id,'feedback'=>'Make mobile navigation clearer'];
         foreach(['q1_overall','q2_navigation','q3_speed','q4_cv_builder','q5_ai_analyzer','q6_job_tracker','q7_cover_letter','q8_interviews','q9_premium','q10_recommend','q11_design','q12_cv_templates'] as $field) $response[$field]=4;
         SatisfactionSurvey::create($response);
-        $this->get('/admin/survey')->assertOk()->assertViewHas('avgQ1Overall','4.0')->assertSee('Make mobile navigation clearer')->assertSee('Likelihood to recommend');
+        $this->get('/admin/survey')->assertOk()->assertViewHas('avgQ1Overall','4.0')->assertSee('Make mobile navigation clearer')->assertSee('Recommending TraKerja');
     }
 
     public function test_payment_search_and_export_show_the_same_orders(): void

@@ -107,20 +107,20 @@ class AdminSupportAuthorizationTest extends TestCase
     public function test_persistent_admin_middleware_rejects_livewire_after_role_revocation(): void
     {
         $admin = User::factory()->create(['role' => 'admin']);
-        $response = $this->actingAs($admin)->get('/admin/scraper')->assertOk();
+        $response = $this->actingAs($admin)->get('/admin/settings')->assertOk();
         preg_match_all('/wire:snapshot="([^"]+)"/', $response->getContent(), $matches);
         $snapshot = null;
         foreach ($matches[1] as $encoded) {
             $json = html_entity_decode($encoded, ENT_QUOTES);
-            if (json_decode($json, true)['memo']['name'] === 'admin.scraper-dashboard') {
+            if (json_decode($json, true)['memo']['name'] === 'admin.global-settings') {
                 $snapshot = $json;
             }
         }
-        $this->assertNotNull($snapshot, 'Scraper component snapshot must be present');
+        $this->assertNotNull($snapshot, 'Settings component snapshot must be present');
         $admin->update(['role' => 'user', 'is_admin' => false]);
         $this->actingAs($admin->fresh())->postJson('/livewire/update', [
             'components' => [['snapshot' => $snapshot, 'updates' => [],
-                'calls' => [['path' => '', 'method' => 'saveSourceSettings', 'params' => []]]]],
+                'calls' => [['path' => '', 'method' => 'updateIdentity', 'params' => []]]]],
         ])->assertForbidden();
     }
 }

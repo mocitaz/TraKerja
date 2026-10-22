@@ -1,59 +1,21 @@
 <x-admin-layout>
-    <div class="admin-operations admin-settings-workspace" x-data="{ activeTab: @js(in_array(request('tab'), ['general','integration','database']) ? request('tab') : 'general') }">
-
-        {{-- ==========================================================================
-             PAGE HEADER (Harmonized with User Management & Summary)
-             ========================================================================== --}}
-        <section class="ast-welcome">
-            <div>
-                <h1>{{ __('System Settings') }}</h1>
-                <p>{{ __('Manage platform identity, external API integrations, and database maintenance in one workspace.') }}</p>
-            </div>
-        </section>
-
-        {{-- ==========================================================================
-             SETTINGS TABS SWITCHER
-             ========================================================================== --}}
-        <nav class="ast-tabs" role="tablist" aria-label="{{ __('Settings sections') }}">
-            @foreach(['general' => 'General', 'integration' => 'Integrations', 'database' => 'Database & storage'] as $key => $label)
-                <button type="button"
-                        role="tab"
-                        id="settings-tab-{{ $key }}"
-                        aria-controls="settings-panel-{{ $key }}"
-                        :aria-selected="activeTab === '{{ $key }}'"
-                        class="ast-tab"
-                        :class="activeTab === '{{ $key }}' ? 'is-active' : ''"
-                        @click="activeTab = '{{ $key }}'; window.history.replaceState(null, '', '?tab={{ $key }}')">
-                    @switch($key)
-                        @case('general')
-                            <i class="ph ph-sliders" aria-hidden="true"></i>
-                            @break
-                        @case('integration')
-                            <i class="ph ph-plugs-connected" aria-hidden="true"></i>
-                            @break
-                        @case('database')
-                            <i class="ph ph-database" aria-hidden="true"></i>
-                            @break
-                    @endswitch
-                    <span>{{ __($label) }}</span>
-                </button>
-            @endforeach
+@php
+    $initial = ['integration' => 'integrations', 'database' => 'maintenance'][is_string(request('tab')) ? request('tab') : ''] ?? 'general';
+    $sections = ['general' => ['General', 'Identity & saved defaults', 'sliders-horizontal'], 'integrations' => ['Integrations', 'Services & custom connections', 'plugs-connected'], 'maintenance' => ['Maintenance', 'Access, backup & storage', 'wrench']];
+@endphp
+<div class="as-workspace" x-data="adminSettingsWorkspace(@js($initial))">
+    <header class="am-page-heading"><div><h1>{{ __('Settings') }}</h1><p>{{ __('One place for platform settings, integrations, and maintenance.') }}</p></div><span class="as-save-note"><i class="ph ph-check-circle" aria-hidden="true"></i>{{ __('Each form saves independently') }}</span></header>
+    <div class="as-layout">
+        <nav class="as-navigation" aria-label="{{ __('Settings sections') }}">
+            <p>{{ __('Platform controls') }}</p>
+            @foreach($sections as $key => [$label, $description, $icon])<a href="#{{ $key }}" @click.prevent="navigate('{{ $key }}')" :aria-current="section === '{{ $key }}' ? 'location' : null"><i class="ph ph-{{ $icon }}" aria-hidden="true"></i><span><strong>{{ __($label) }}</strong><small>{{ __($description) }}</small></span><i class="ph ph-caret-right as-nav-caret" aria-hidden="true"></i></a>@endforeach
+            <div class="as-navigation-note"><i class="ph ph-info" aria-hidden="true"></i><span>{{ __('Review a section, make your changes, then save its form.') }}</span></div>
         </nav>
-
-        {{-- ==========================================================================
-             TAB PANELS
-             ========================================================================== --}}
-        <section role="tabpanel" id="settings-panel-general" aria-labelledby="settings-tab-general" x-show="activeTab === 'general'" x-transition.opacity x-cloak>
-            @livewire('admin.global-settings')
-        </section>
-
-        <section role="tabpanel" id="settings-panel-integration" aria-labelledby="settings-tab-integration" x-show="activeTab === 'integration'" x-transition.opacity x-cloak>
-            @livewire('admin.integration-hub')
-        </section>
-
-        <section role="tabpanel" id="settings-panel-database" aria-labelledby="settings-tab-database" x-show="activeTab === 'database'" x-transition.opacity x-cloak>
-            @livewire('admin.database-maintenance')
-        </section>
-
+        <div class="as-sections">
+            <section id="general" class="as-section" aria-labelledby="settings-general-heading"><header class="as-section-heading"><div><h2 tabindex="-1" id="settings-general-heading">{{ __('General') }}</h2><p>{{ __('Platform identity and saved quota defaults.') }}</p></div><span class="as-section-number">01</span></header>@livewire('admin.global-settings')</section>
+            <section id="integrations" class="as-section" aria-labelledby="settings-integrations-heading"><header class="as-section-heading"><div><h2 tabindex="-1" id="settings-integrations-heading">{{ __('Integrations') }}</h2><p>{{ __('Review service configuration and manage custom connection settings.') }}</p></div><span class="as-section-number">02</span></header>@livewire('admin.integration-hub')</section>
+            <section id="maintenance" class="as-section" aria-labelledby="settings-maintenance-heading"><header class="as-section-heading"><div><h2 tabindex="-1" id="settings-maintenance-heading">{{ __('Maintenance') }}</h2><p>{{ __('Control member access, export your database, and review unused logo files.') }}</p></div><span class="as-section-number">03</span></header>@livewire('admin.database-maintenance')</section>
+        </div>
     </div>
+</div>
 </x-admin-layout>

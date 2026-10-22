@@ -17,6 +17,11 @@ class AdminSupportController extends Controller
     public function index(Request $request): View
     {
         Gate::authorize('viewAny', SupportTicket::class);
+        $request->validate([
+            'search' => 'nullable|string|max:100',
+            'status' => 'nullable|in:pending,replied,completed,on_hold',
+            'category' => 'nullable|in:technical_issue,payment_billing,feature_request,general_feedback',
+        ]);
         $query = SupportTicket::with('user')->orderBy('created_at', 'desc');
 
         if ($request->filled('ticket')) {
@@ -36,7 +41,9 @@ class AdminSupportController extends Controller
         if ($request->filled('search')) {
             $search = mb_substr((string) $request->input('search'), 0, 100);
             $query->where(function ($query) use ($search) {
-                $query->where('subject', 'like', '%'.$search.'%')->orWhere('message', 'like', '%'.$search.'%');
+                $query->where('subject', 'like', '%'.$search.'%')->orWhere('message', 'like', '%'.$search.'%')
+                    ->orWhere('guest_name', 'like', '%'.$search.'%')->orWhere('guest_email', 'like', '%'.$search.'%')
+                    ->orWhereHas('user', fn ($user) => $user->where('name', 'like', '%'.$search.'%')->orWhere('email', 'like', '%'.$search.'%'));
             });
         }
 

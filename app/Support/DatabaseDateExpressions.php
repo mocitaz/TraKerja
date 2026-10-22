@@ -34,4 +34,15 @@ final class DatabaseDateExpressions
             ? "CAST((strftime('%s', {$end}) - strftime('%s', {$start})) / 3600 AS INTEGER)"
             : "TIMESTAMPDIFF(HOUR, {$start}, {$end})";
     }
+
+    public static function fractionalHoursBetween(string $start, string $end): string
+    {
+        $grammar = DB::connection()->getQueryGrammar();
+        $start = $grammar->wrap($start);
+        $end = $grammar->wrap($end);
+
+        return DB::connection()->getDriverName() === 'sqlite'
+            ? "((julianday({$end}) - julianday({$start})) * 24.0)"
+            : "(TIMESTAMPDIFF(SECOND, {$start}, {$end}) / 3600.0)";
+    }
 }

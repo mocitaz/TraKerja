@@ -27,15 +27,24 @@ class ExtensionController extends Controller
             ], 401);
         }
 
+        if (\App\Models\OperationRestriction::blocks($user, 'api')) {
+            return response()->json(['message' => __('Your account access is temporarily restricted. Please contact support.')], 403);
+        }
+
         if (!$user->hasVerifiedEmail()) {
             return response()->json(['message' => __('Verifikasi email Anda terlebih dahulu.')], 403);
         }
 
-        $token = $user->createToken(
-            'extension_token',
-            ['jobs:create', 'account:read', 'token:revoke'],
-            now()->addDays(30)
-        )->plainTextToken;
+        $token = \Illuminate\Support\Facades\DB::transaction(function () use ($user) {
+            $lockedUser = User::whereKey($user->id)->lockForUpdate()->firstOrFail();
+            abort_if(\App\Models\OperationRestriction::blocks($lockedUser, 'api'), 403,
+                __('Your account access is temporarily restricted. Please contact support.'));
+            return $lockedUser->createToken(
+                'extension_token',
+                ['jobs:create', 'account:read', 'token:revoke'],
+                now()->addDays(30)
+            )->plainTextToken;
+        });
 
         ActivityLogger::log(
             'extension_login',

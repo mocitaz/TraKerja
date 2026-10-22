@@ -1,10 +1,20 @@
 import { currentLocale } from './i18n.js';
 import { t } from './i18n.js';
-window.adminPaymentsWorkspace = function () {
+window.adminPaymentsWorkspace = function (initialView = 'transactions') {
     return {
+        activeView: initialView === 'plans' ? 'plans' : 'transactions',
+        selectView(view) {
+            if (!['plans', 'transactions'].includes(view)) return;
+            this.activeView = view;
+            const url = new URL(window.location.href);
+            if (view === 'plans') url.searchParams.set('view', 'plans'); else url.searchParams.delete('view');
+            window.history.replaceState(null, '', url);
+        },
+        statusLabel(status) { return { SUCCESS: t('Successful'), PENDING: t('Pending'), WAITING: t('Waiting'), FAILED: t('Failed'), CANCELED: t('Canceled'), EXPIRED: t('Expired') }[status] || status; },
+        environment(value) { return value === null ? t('Unspecified') : (value ? t('Sandbox') : t('Live')); },
         open: false, loading: false, busy: false, confirming: false, error: '', payment: null, user: null, requestId: 0,
         money(value) { return new Intl.NumberFormat(currentLocale(), { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(Number(value)); },
-        date(value) { return value ? new Intl.DateTimeFormat(currentLocale(), { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Jakarta' }).format(new Date(value)) + ' WIB' : '—'; },
+        date(value) { return value ? new Intl.DateTimeFormat(currentLocale(), { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Jakarta' }).format(new Date(value)) + ' WIB' : t('Not recorded'); },
         async view(id) {
             if (this.busy) return;
             const requestId = ++this.requestId;
@@ -26,7 +36,7 @@ window.adminPaymentsWorkspace = function () {
                 const data = await response.json();
                 if (!response.ok || !data.success) throw new Error(data.message || t('Cancellation was not confirmed. Review the payment before trying again.'));
                 window.location.reload();
-            } catch (error) { this.error = [t("TimeoutError"), t("AbortError")].includes(error.name) || error instanceof TypeError ? 'Cancellation could not be confirmed. Close and review the payment before trying again.' : error.message; }
+            } catch (error) { this.error = ['TimeoutError', 'AbortError'].includes(error.name) || error instanceof TypeError ? t('Cancellation could not be confirmed. Close and review the payment before trying again.') : error.message; }
             finally { this.busy = false; }
         },
     };

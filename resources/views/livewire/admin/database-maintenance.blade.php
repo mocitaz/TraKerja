@@ -1,102 +1,25 @@
-<div class="space-y-5">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 text-left">
-
-        {{-- Database Backup Card --}}
-        <div class="ast-panel">
-            <div class="ast-panel-heading">
-                <h3>
-                    <i class="ph ph-cloud-arrow-down" aria-hidden="true"></i>
-                    {{ __('Manual Database Backup') }}
-                </h3>
-                <span class="text-xs text-gray-500 dark:text-slate-400 font-medium">{{ __('Daily snapshots active') }}</span>
-            </div>
-
-            <div class="ast-panel-body justify-between">
-                <p class="text-xs text-gray-500 dark:text-slate-400 leading-relaxed">
-                    {{ __('Download a full SQL dump of the TraKerja production database. It is strongly recommended to export a backup before performing major system upgrades or migrations.') }}
-                </p>
-
-                <div class="grid grid-cols-2 gap-3 p-3.5 bg-gray-50 dark:bg-[#18191a] rounded-xl border border-gray-200 dark:border-white/10">
-                    <div>
-                        <span class="text-xs text-gray-500 dark:text-slate-400 font-medium block">{{ __('Database Size') }}</span>
-                        <strong class="text-sm text-gray-800 dark:text-[#f0f4f9] font-semibold mt-0.5 block">{{ $dbSize }}</strong>
-                    </div>
-                    <div class="border-l border-gray-200 dark:border-white/10 pl-3">
-                        <span class="text-xs text-gray-500 dark:text-slate-400 font-medium block">{{ __('Last Backup') }}</span>
-                        <strong class="text-sm text-gray-800 dark:text-[#f0f4f9] font-semibold mt-0.5 block">{{ __('Automated Daily') }}</strong>
-                    </div>
-                </div>
-
-                <div class="pt-2">
-                    <a href="{{ route('admin.database.download') }}" class="ast-btn ast-btn--primary w-full justify-center">
-                        <i class="ph ph-download-simple" aria-hidden="true"></i>
-                        {{ __('Download SQL Backup (.sql)') }}
-                    </a>
-                </div>
-            </div>
-
-            <div class="px-5 py-3 bg-gray-50/60 dark:bg-[#18191a] border-t border-gray-100 dark:border-white/10 flex items-center gap-2 text-xs text-gray-500 dark:text-slate-400">
-                <i class="ph-bold ph-shield-check text-emerald-600" aria-hidden="true"></i>
-                <span>{{ __('Encrypted & secure database export tunnel') }}</span>
-            </div>
-        </div>
-
-        {{-- Storage Maintenance Card --}}
-        <div class="ast-panel">
-            <div class="ast-panel-heading">
-                <h3>
-                    <i class="ph ph-broom" aria-hidden="true"></i>
-                    {{ __('Storage Maintenance & Cleanup') }}
-                </h3>
-                @if($unusedFilesCount > 0)
-                    <span class="px-2 py-0.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs font-semibold rounded-lg">
-                        {{ __('Action Needed') }}
-                    </span>
-                @else
-                    <span class="px-2 py-0.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-xs font-semibold rounded-lg">
-                        {{ __('Optimized') }}
-                    </span>
-                @endif
-            </div>
-
-            <div class="ast-panel-body justify-between">
-                <p class="text-xs text-gray-500 dark:text-slate-400 leading-relaxed">
-                    {{ __('Purge orphaned files, unlinked CV PDF exports, and temporary image uploads to optimize server disk space and reduce storage footprint.') }}
-                </p>
-
-                <div class="grid grid-cols-2 gap-3 p-3.5 bg-gray-50 dark:bg-[#18191a] rounded-xl border border-gray-200 dark:border-white/10">
-                    <div>
-                        <span class="text-xs text-gray-500 dark:text-slate-400 font-medium block">{{ __('Orphaned Files') }}</span>
-                        <strong class="text-sm {{ $unusedFilesCount > 0 ? 'text-amber-600' : 'text-emerald-600' }} font-semibold mt-0.5 block">
-                            {{ __(':value1 Files Found', ['value1' => ($unusedFilesCount)]) }}
-                        </strong>
-                    </div>
-                    <div class="border-l border-gray-200 dark:border-white/10 pl-3">
-                        <span class="text-xs text-gray-500 dark:text-slate-400 font-medium block">{{ __('Public Storage') }}</span>
-                        <strong class="text-sm text-gray-800 dark:text-[#f0f4f9] font-semibold mt-0.5 block truncate">{{ '/storage/public' }}</strong>
-                    </div>
-                </div>
-
-                <div class="pt-2">
-                    <button type="button"
-                            wire:click="cleanStorage"
-                            wire:loading.attr="disabled"
-                            class="ast-btn {{ $unusedFilesCount > 0 ? 'ast-btn--primary' : 'ast-btn--quiet' }} w-full justify-center">
-                        <i class="ph ph-sparkles" wire:loading.remove wire:target="cleanStorage" aria-hidden="true"></i>
-                        <i class="ph ph-spinner ph-spin" wire:loading wire:target="cleanStorage" aria-hidden="true"></i>
-                        {{ $unusedFilesCount > 0 ? __('Clean Unused Files') : __('System Optimized') }}
-                    </button>
-                </div>
-            </div>
-
-            <div class="px-5 py-3 bg-gray-50/60 dark:bg-[#18191a] border-t border-gray-100 dark:border-white/10 flex items-center justify-between text-xs text-gray-500 dark:text-slate-400">
-                <span>{{ __('App Cache: Clear') }}</span>
-                <span>•</span>
-                <span>{{ __('Logs: Rotated') }}</span>
-                <span>•</span>
-                <span>{{ __('PDF Storage: Managed') }}</span>
-            </div>
-        </div>
-
+<div class="as-maintenance" x-data="{ dialog: null, busy: false }" x-on:storage-cleaned.window="dialog = null" x-on:maintenance-updated.window="dialog = null">
+    <article class="as-panel"><header class="as-panel-heading"><span class="as-panel-icon"><i class="ph ph-traffic-signal" aria-hidden="true"></i></span><div><h3>{{ __('Member access') }}</h3><p>{{ __('Maintenance mode restricts non-admin access. Administrators can still sign in.') }}</p></div><span class="am-badge {{ $maintenanceMode ? 'am-badge--danger' : 'am-badge--success' }}">{{ $maintenanceMode ? __('Restricted') : __('Available') }}</span></header><div class="as-access-body"><div><strong>{{ $maintenanceMode ? __('Maintenance mode is on') : __('Maintenance mode is off') }}</strong><p>{{ $maintenanceMode ? __('Regular members currently see the maintenance page.') : __('Regular members can access the application.') }}</p></div><button type="button" @click="dialog = 'maintenance'" class="am-button {{ $maintenanceMode ? 'am-button--primary' : '' }}">{{ $maintenanceMode ? __('Restore member access') : __('Enable maintenance') }}</button></div>@if(session()->has('maintenance_result'))<p class="as-feedback as-feedback--inset" role="status">{{ session('maintenance_result') }}</p>@endif</article>
+    <div class="as-maintenance-grid">
+        <article class="as-panel"><header class="as-panel-heading"><span class="as-panel-icon"><i class="ph ph-database" aria-hidden="true"></i></span><div><h3>{{ __('Database export') }}</h3><p>{{ __('Create a manual SQL backup of the active MySQL database.') }}</p></div></header><div class="as-tool-body">
+            @if(session('error'))<p class="as-field-error" role="alert">{{ session('error') }}</p>@endif
+            <dl class="as-measurements"><div><dt>{{ __('Connection') }}</dt><dd>{{ strtoupper($databaseDriver) }}</dd></div><div><dt>{{ __('Database Size') }}</dt><dd>{{ $dbSize ?? __('Unavailable') }}</dd></div></dl>
+            @if($databaseDriver === 'mysql')<a href="{{ route('admin.database.download') }}" class="am-button"><i class="ph ph-download-simple" aria-hidden="true"></i>{{ __('Download SQL backup') }}</a>@else<button type="button" class="am-button" disabled><i class="ph ph-download-simple" aria-hidden="true"></i>{{ __('SQL export unavailable') }}</button>@endif
+            <p class="as-note">{{ $databaseDriver === 'mysql' ? __('A backup is created when you request it. Automatic snapshots are not tracked here.') : __('The SQL export tool supports MySQL. Use a database-specific backup tool for this connection.') }}</p>
+        </div></article>
+        <article class="as-panel"><header class="as-panel-heading"><span class="as-panel-icon"><i class="ph ph-folder" aria-hidden="true"></i></span><div><h3>{{ __('Unused logo files') }}</h3><p>{{ __('Public logo files that are not referenced by a user account.') }}</p></div></header><div class="as-tool-body">
+            <dl class="as-measurements"><div><dt>{{ __('Files found') }}</dt><dd>{{ $scanFailed ? __('Unavailable') : number_format($unusedFilesCount) }}</dd></div><div><dt>{{ __('Potential space') }}</dt><dd>{{ $scanFailed ? __('Unavailable') : $unusedSize }}</dd></div></dl>
+            @if($scanFailed)<p class="as-field-error" role="alert">{{ __('Storage could not be scanned. No files were deleted.') }}</p>@endif
+            <div class="as-tool-actions"><button type="button" wire:click="calculateStats" wire:loading.attr="disabled" wire:target="calculateStats,cleanStorage" class="am-button"><i class="ph ph-arrows-clockwise" wire:loading.remove wire:target="calculateStats" aria-hidden="true"></i><i class="ph ph-spinner ph-spin" wire:loading wire:target="calculateStats" aria-hidden="true"></i>{{ __('Refresh scan') }}</button><button type="button" @click="dialog = 'cleanup'" @disabled($scanFailed || !$unusedFilesCount) class="am-button am-button--danger">{{ __('Review cleanup') }}</button></div>
+            <p class="as-note">{{ __('Only unlinked files in the public logos folder are considered. CV exports, other images, caches, and logs are not included.') }}</p>
+            @if($lastScannedAt)<p class="as-scan-time">{{ __('Last checked') }} {{ \Carbon\Carbon::parse($lastScannedAt)->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M Y, H:i:s') }} WIB</p>@endif
+            @if(session()->has('storage_result'))<p class="as-feedback" role="status">{{ session('storage_result') }}</p>@endif
+            @error('cleanup')<p class="as-field-error" role="alert">{{ $message }}</p>@enderror
+        </div></article>
     </div>
+    <template x-teleport="body"><div x-show="dialog" x-cloak x-dialog="dialog" data-dialog-close="!busy && (dialog = null)" class="au-dialog-overlay am-member-modal" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="maintenance-dialog-title"><section class="au-dialog au-dialog--small"><header class="au-dialog-heading"><div><h2 id="maintenance-dialog-title" x-text="dialog === 'cleanup' ? @js(__('Remove unused logo files?')) : @js($maintenanceMode ? __('Restore member access?') : __('Enable maintenance mode?'))"></h2><p x-text="dialog === 'cleanup' ? @js(__('Review the files before continuing.')) : @js(__('This changes access for regular members.'))"></p></div><button type="button" @click="dialog = null" :disabled="busy" class="au-dialog-close" aria-label="{{ __('Close dialog') }}"><i class="ph ph-x" aria-hidden="true"></i></button></header><div class="au-dialog-body">
+        <div x-show="dialog === 'cleanup'"><p class="as-note">{{ __(':value1 logo files are currently unlinked. Files are scanned again before deletion. This action cannot be undone.', ['value1' => $unusedFilesCount]) }}</p><ul class="as-file-list">@foreach(array_slice($orphanedFiles, 0, 5) as $file)<li>{{ $file }}</li>@endforeach</ul>@if($unusedFilesCount > 5)<p class="as-note">{{ __('And :value1 more files.', ['value1' => $unusedFilesCount - 5]) }}</p>@endif @error('cleanup')<p class="as-field-error" role="alert">{{ $message }}</p>@enderror</div>
+        <p x-show="dialog === 'maintenance'" class="as-note">{{ $maintenanceMode ? __('Members will be able to access the application again.') : __('Regular members will see a maintenance page. Admin access remains available so you can finish your work and restore access.') }}</p>
+        <div class="au-dialog-actions"><button type="button" @click="dialog = null" :disabled="busy" class="au-button">{{ __('Cancel') }}</button><button type="button" @click="busy = true; try { if (dialog === 'cleanup') { await $wire.cleanStorage() } else { await $wire.toggleMaintenance() } } finally { busy = false }" :disabled="busy" class="au-button" :class="dialog === 'cleanup' ? 'au-button--danger' : 'au-button--primary'"><span x-text="busy ? @js(__('Working…')) : (dialog === 'cleanup' ? @js(__('Delete unused files')) : @js(__('Confirm change')))"></span></button></div>
+    </div></section></div></template>
 </div>

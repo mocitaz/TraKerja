@@ -1,10 +1,7 @@
 @import './canvas.css';
 @import './admin-operations.css';
-@import './admin-email-workspace.css';
 @import './workspace-footer.css';
-@import './admin-insights.css';
 @import './workspace.css';
-@import './profile.css';
 @import './job-dialog.css';
 @import './workspace-pages.css';
 @import './tracker.css';
@@ -36,12 +33,6 @@
 @import './trakerja-ai-brand.css';
 @import './admin-workspace.css';
 @import './admin-users.css';
-@import './admin-feedbacks.css';
-@import './admin-survey.css';
-@import './admin-settings.css';
-@import './admin-scraper.css';
-@import './admin-payments.css';
-@import './admin-monetization.css';
 @import './dashboard-mobile.css';
 @import './applications-mobile.css';
 @import './floating-ai-link.css';
@@ -55,6 +46,16 @@
 @import './progress-dialogs.css';
 @import './user-mobile.css';
 @import './portfolio-site.css';
+@import './admin-console.css';
+@import './admin-members.css';
+@import './admin-activity-log.css';
+@import './admin-email-composer.css';
+@import './admin-system-settings.css';
+@import './admin-billing.css';
+@import './admin-voice.css';
+@import './admin-analytics.css';
+@import './admin-operations-center.css';
+@import './profile-settings.css';
 
 @tailwind base;
 @tailwind components;

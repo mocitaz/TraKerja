@@ -42,4 +42,28 @@ class AdminEmailWorkspaceTest extends TestCase
         EmailBlastLog::create(['email_type'=>'custom','target_audience'=>'free','total_target'=>3,'success_count'=>3,'failed_count'=>0]);
         $this->get(route('admin.email-blast.history',['audience'=>'free']))->assertOk()->assertViewHas('logs',fn ($logs)=>$logs->total()===1)->assertViewHas('totalSuccess',11);
     }
+    public function test_history_filters_outcomes_and_searches_recorded_template_and_subject(): void
+    {
+        $this->actingAs(User::factory()->create(['role' => 'admin']));
+        $complete = EmailBlastLog::create(['email_type' => 'custom', 'template_name' => 'Weekly check-in', 'subject' => 'One small step', 'language' => 'id', 'target_audience' => 'all', 'total_target' => 4, 'success_count' => 4, 'failed_count' => 0]);
+        EmailBlastLog::create(['email_type' => 'welcome', 'target_audience' => 'new', 'total_target' => 4, 'success_count' => 2, 'failed_count' => 1, 'failed_details' => [['email' => 'member@example.test', 'error' => '<script>alert(1)</script>']]]);
+        $this->get(route('admin.email-blast.history', ['search' => 'small step']))->assertOk()
+            ->assertViewHas('logs', fn ($logs) => $logs->total() === 1 && $logs->first()->id === $complete->id)
+            ->assertSee('Weekly check-in')->assertViewHas('totalSuccess', 6);
+        foreach (['complete', 'issues', 'partial'] as $status) {
+            $this->get(route('admin.email-blast.history', ['status' => $status]))->assertOk()->assertViewHas('logs', fn ($logs) => $logs->total() === 1);
+        }
+        $this->get(route('admin.email-blast.history', ['status' => 'issues']))->assertOk()->assertDontSee('<script>alert(1)</script>', false);
+    }
+
+    public function test_campaign_log_keeps_message_details_and_rejects_impossible_totals(): void
+    {
+        $this->actingAs(User::factory()->create(['role' => 'admin']));
+        $data = ['email_type' => 'custom', 'template_name' => 'Check-in', 'subject' => 'Next steps', 'language' => 'id', 'banner' => 'next-step', 'target_audience' => 'all', 'total_target' => 3, 'success_count' => 1, 'failed_count' => 1];
+        $this->postJson(route('admin.email-blast.store-log'), $data)->assertOk();
+        $this->assertDatabaseHas('email_blast_logs', ['subject' => 'Next steps', 'language' => 'id', 'banner' => 'next-step']);
+        $this->postJson(route('admin.email-blast.store-log'), array_replace($data, ['success_count' => 3, 'failed_count' => 1]))->assertUnprocessable()->assertJsonValidationErrors('total_target');
+        $this->assertDatabaseCount('email_blast_logs', 1);
+    }
+
 }

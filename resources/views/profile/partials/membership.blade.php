@@ -1,9 +1,9 @@
 @php
     $durationLabel = match(true) {
-        $premiumDuration >= 3650 => '10+ years',
-        $premiumDuration === 365 => '1 year',
-        $premiumDuration === 30 => '1 month',
-        default => $premiumDuration.' days',
+        $premiumDuration >= 3650 => __('10+ years'),
+        $premiumDuration === 365 => __('1 year'),
+        $premiumDuration === 30 => __('1 month'),
+        default => __(':count days', ['count'=>$premiumDuration]),
     };
     $planLabel = $active ? 'Premium active' : ($expired ? 'Premium expired' : 'Free account');
 @endphp
@@ -57,7 +57,7 @@
     </section>
 
             <section id="membership-history" class="membership-history" aria-labelledby="membership-history-title">
-                <header class="profile-section-header"><div><h2 id="membership-history-title">{{ __('Payment history') }}</h2><p>{{ __('Your membership and credit purchases.') }}</p></div><span class="membership-order-count">{{ $payments->total() }} {{ Str::plural('order', $payments->total()) }}</span></header>
+                <header class="profile-section-header"><div><h2 id="membership-history-title">{{ __('Payment history') }}</h2><p>{{ __('Your membership and credit purchases.') }}</p></div><span class="membership-order-count">{{ __($payments->total() === 1 ? ':count order' : ':count orders', ['count'=>$payments->total()]) }}</span></header>
                 @if($payments->isEmpty())<div class="membership-empty-state"><h3>{{ __('No payments yet.') }}</h3><p>{{ __('Your membership and credit purchases will appear here.') }}</p></div>
                 @else<div class="membership-transactions"><table><caption class="sr-only">{{ __('Your payment history') }}</caption><thead><tr><th scope="col">{{ __('Purchase') }}</th><th scope="col">{{ __('Date') }}</th><th scope="col">{{ __('Amount') }}</th><th scope="col">{{ __('Status') }}</th><th scope="col"><span class="sr-only">{{ __('Action') }}</span></th></tr></thead><tbody>
                     @foreach($payments as $payment)

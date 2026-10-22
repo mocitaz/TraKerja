@@ -1,187 +1,46 @@
 <x-admin-layout>
 @php
-    $audiences = [
-        'all' => 'All members',
-        'verified' => 'Verified',
-        'unverified' => 'Unverified',
-        'premium' => 'Premium',
-        'free' => 'Free',
-        'new' => 'New members',
-    ];
+    $audiences = ['all' => 'All members', 'verified' => 'Verified', 'unverified' => 'Unverified', 'premium' => 'Premium', 'free' => 'Free', 'new' => 'New members'];
+    $filtered = $search !== '' || $audience !== 'all-segments' || $status !== 'all';
 @endphp
-
-<div class="email-workspace" x-data="{ open: false, failures: [], campaign: '' }">
-    <!-- Header Section -->
-    <section class="admin-welcome eb-header">
-        <div>
-            <h1>{{ __('Campaign history') }}</h1>
-            <p>{{ __('A clear record of your email campaigns and sending results.') }}</p>
-        </div>
-        <div class="eb-header-actions">
-            <a href="{{ route('admin.email-blast') }}" class="au-button au-button--primary">
-                <i class="ph ph-plus" aria-hidden="true"></i>
-                <span>{{ __('Compose email') }}</span>
-            </a>
-        </div>
+<div class="eh-workspace" x-data="{ open: false, record: null, showRecord(record) { this.record = record; this.open = true; } }">
+    <header class="am-page-heading"><div><h1>{{ __('Campaign history') }}</h1><p>{{ __('Review past sends, recorded outcomes, and delivery issues.') }}</p></div><a href="{{ route('admin.email-blast') }}" class="am-button am-button--primary"><i class="ph ph-plus" aria-hidden="true"></i>{{ __('Compose email') }}</a></header>
+    <section class="ac-stats" aria-label="{{ __('All-time campaign totals') }}">
+        @foreach([[__('Campaigns'), $totalCampaigns, __('All recorded campaigns'), 'envelope-simple'], [__('Recipients targeted'), $totalTarget, __('Recipient entries across campaigns'), 'users'], [__('Sent successfully'), $totalSuccess, __('Accepted by the mail server'), 'paper-plane-tilt'], [__('Failed / unconfirmed'), $totalFailed, __('Recorded sending issues'), 'warning-circle']] as [$label, $value, $hint, $icon])<article><span class="ac-stat-icon"><i class="ph-fill ph-{{ $icon }}" aria-hidden="true"></i></span><div><h2>{{ $label }}</h2><div class="ac-stat-value"><strong>{{ number_format($value) }}</strong><span class="ac-stat-note--neutral">{{ $hint }}</span></div></div></article>@endforeach
     </section>
-
-    <!-- Compact Symmetrical Metrics Grid -->
-    <section class="eb-history-metrics" aria-label="{{ __('Campaign totals') }}">
-        <div class="eb-metric-card">
-            <span class="eb-metric-label">{{ __('Campaigns') }}</span>
-            <strong class="eb-metric-value">{{ number_format($totalCampaigns) }}</strong>
-            <small class="eb-metric-sub">{{ __('All recorded campaigns') }}</small>
-        </div>
-        <div class="eb-metric-card">
-            <span class="eb-metric-label">{{ __('Recipients targeted') }}</span>
-            <strong class="eb-metric-value eb-metric-value--purple">{{ number_format($totalTarget) }}</strong>
-            <small class="eb-metric-sub">{{ __('Total recipients reached') }}</small>
-        </div>
-        <div class="eb-metric-card">
-            <span class="eb-metric-label">{{ __('Sent successfully') }}</span>
-            <strong class="eb-metric-value eb-metric-value--success">{{ number_format($totalSuccess) }}</strong>
-            <small class="eb-metric-sub">{{ __('Confirmed SMTP deliveries') }}</small>
-        </div>
-        <div class="eb-metric-card">
-            <span class="eb-metric-label">{{ __('Failed / unconfirmed') }}</span>
-            <strong class="eb-metric-value {{ $totalFailed ? 'eb-metric-value--danger' : 'eb-metric-value--muted' }}">{{ number_format($totalFailed) }}</strong>
-            <small class="eb-metric-sub">{{ __('Delivery errors logged') }}</small>
-        </div>
+    <section class="am-directory-panel" aria-labelledby="history-heading">
+        <header class="am-directory-heading"><div><h2 id="history-heading">{{ __('Campaign logs') }}<span class="am-count">{{ number_format($logs->total()) }}</span></h2><p>{{ __('Newest first · Asia/Jakarta (WIB) · Totals above cover all campaigns') }}</p></div></header>
+        <form action="{{ route('admin.email-blast.history') }}" method="GET" class="am-toolbar eh-filters"><label class="am-search"><i class="ph ph-magnifying-glass" aria-hidden="true"></i><span class="sr-only">{{ __('Search campaigns') }}</span><input type="search" name="search" maxlength="100" placeholder="{{ __('Search template or subject') }}" value="{{ $search }}"></label><label class="am-filter"><span>{{ __('Audience') }}</span><select name="audience"><option value="all-segments">{{ __('All audiences') }}</option>@foreach($audiences as $key => $label)<option value="{{ $key }}" @selected($audience === $key)>{{ __($label) }}</option>@endforeach</select></label><label class="am-filter"><span>{{ __('Result') }}</span><select name="status">@foreach(['all' => 'All results', 'complete' => 'All sent', 'issues' => 'With issues', 'partial' => 'Missing results'] as $key => $label)<option value="{{ $key }}" @selected($status === $key)>{{ __($label) }}</option>@endforeach</select></label><button type="submit" class="am-button">{{ __('Filter') }}</button>@if($filtered)<a href="{{ route('admin.email-blast.history') }}" class="am-reset">{{ __('Clear filters') }}</a>@endif</form>
+        <div class="am-table-wrap eh-table-wrap" role="region" tabindex="0" aria-label="{{ __('Campaign history table') }}"><table class="am-table eh-table" role="table"><thead><tr><th scope="col">{{ __('Campaign') }}</th><th scope="col">{{ __('Audience') }}</th><th scope="col">{{ __('Sending results') }}</th><th scope="col">{{ __('Result') }}</th><th scope="col">{{ __('Recorded At') }}</th><th scope="col"><span class="sr-only">{{ __('Details') }}</span></th></tr></thead><tbody>
+            @forelse($logs as $log)
+                @php
+                    $missing = max(0, $log->total_target - $log->success_count - $log->failed_count);
+                    $label = $log->template_name ?: __(ucwords(str_replace('_', ' ', $log->email_type)));
+                    $result = $log->failed_count ? __('With issues') : ($missing || !$log->total_target ? __('Missing results') : __('All sent'));
+                    $tone = $log->failed_count ? 'danger' : ($missing || !$log->total_target ? 'blue' : 'success');
+                    $record = [
+                        'id' => $log->id, 'name' => $label, 'subject' => $log->subject, 'audience' => __($audiences[$log->target_audience] ?? $log->target_audience),
+                        'total' => $log->total_target, 'sent' => $log->success_count, 'failed' => $log->failed_count, 'missing' => $missing,
+                        'result' => $result, 'language' => $log->language ? ($log->language === 'id' ? 'Bahasa Indonesia' : 'English') : __('Not recorded'),
+                        'banner' => $log->language ? ($log->banner ? (\App\Support\EmailBannerCatalog::find($log->banner)['label'] ?? $log->banner) : __('No banner')) : __('Not recorded'),
+                        'time' => $log->created_at->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M Y, H:i:s').' WIB',
+                        'failures' => $log->failed_details ?? [],
+                    ];
+                @endphp
+                <tr class="eh-campaign-row"><td><div class="eh-campaign-name"><span class="ec-tool-icon"><i class="ph ph-envelope-simple" aria-hidden="true"></i></span><div><strong>{{ $label }}</strong><small>{{ $log->subject ?: __('Campaign #:value1', ['value1' => $log->id]) }}</small></div></div></td><td data-label="{{ __('Audience') }}">{{ __($audiences[$log->target_audience] ?? $log->target_audience) }}</td><td data-label="{{ __('Sending results') }}"><span class="eh-sent"><strong>{{ number_format($log->success_count) }}</strong> / {{ number_format($log->total_target) }} {{ __('sent') }}</span><small class="eh-result-note">{{ __(':value1 failed · :value2 without result', ['value1' => $log->failed_count, 'value2' => $missing]) }}</small></td><td data-label="{{ __('Result') }}"><span class="am-badge am-badge--{{ $tone }}">{{ $result }}</span></td><td data-label="{{ __('Recorded At') }}"><time datetime="{{ $log->created_at->toIso8601String() }}">{{ $log->created_at->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M Y') }}<small>{{ $log->created_at->timezone('Asia/Jakarta')->format('H:i') }} WIB</small></time></td><td><button type="button" class="eh-detail-button" data-record="{{ json_encode($record) }}" @click="showRecord(JSON.parse($el.dataset.record))" aria-label="{{ __('View :value1 details', ['value1' => $label]) }}">{{ __('Details') }}<i class="ph ph-caret-right" aria-hidden="true"></i></button></td></tr>
+            @empty<tr><td colspan="6"><div class="am-empty"><i class="ph ph-envelope-open" aria-hidden="true"></i><h3>{{ $filtered ? __('No matching campaigns') : __('No campaigns yet') }}</h3><p>{{ $filtered ? __('Try another search or clear your filters.') : __('Campaign results appear here after a sending process finishes.') }}</p><a href="{{ $filtered ? route('admin.email-blast.history') : route('admin.email-blast') }}" class="am-button">{{ $filtered ? __('Clear filters') : __('Compose email') }}</a></div></td></tr>@endforelse
+        </tbody></table></div>
+        <footer class="am-directory-footer"><span>{{ __('Showing :value1–:value2 of :value3 campaigns', ['value1' => $logs->firstItem() ?? 0, 'value2' => $logs->lastItem() ?? 0, 'value3' => number_format($logs->total())]) }}</span><div class="am-pagination">{{ $logs->links() }}</div></footer>
+        <p class="eh-history-note">{{ __('Sent means accepted by the mail server. Inbox delivery and opens are not tracked.') }}</p>
     </section>
-
-    <!-- Campaigns Table Card -->
-    <section class="ai-panel eb-card">
-        <header class="ai-panel-heading eb-card-heading">
-            <div>
-                <h2>
-                    <span>{{ __('Campaign logs') }}</span>
-                    <span class="eb-count-pill">{{ number_format($logs->total()) }}</span>
-                </h2>
-                <p>{{ __('Latest campaigns listed first with send-time delivery metrics.') }}</p>
-            </div>
-        </header>
-
-        <!-- Filter Bar -->
-        <form action="{{ route('admin.email-blast.history') }}" method="GET" class="au-filters eb-history-filters">
-            <label class="au-search">
-                <span class="sr-only">{{ __('Search template') }}</span>
-                <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
-                <input type="search" name="search" placeholder="{{ __('Search campaign template…') }}" value="{{ $search }}">
-            </label>
-            <label>
-                <span class="sr-only">{{ __('Audience') }}</span>
-                <select name="audience">
-                    <option value="all-segments">{{ __('All audiences') }}</option>
-                    @foreach($audiences as $key => $label)
-                        <option value="{{ $key }}" @selected($audience === $key)>{{ __($label) }}</option>
-                    @endforeach
-                </select>
-            </label>
-            <button class="au-button" type="submit">{{ __('Filter') }}</button>
-            @if($search || $audience !== 'all-segments')
-                <a href="{{ route('admin.email-blast.history') }}" class="au-clear eb-clear-purple">{{ __('Clear filters') }}</a>
-            @endif
-        </form>
-
-        <!-- Table Scroll Container -->
-        <div class="ai-log-scroll" tabindex="0" aria-label="{{ __('Campaign history table') }}">
-            <table class="ai-log-table eb-history-table">
-                <thead>
-                    <tr>
-                        <th scope="col">{{ __('Campaign') }}</th>
-                        <th scope="col">{{ __('Audience') }}</th>
-                        <th scope="col">{{ __('Sent / target') }}</th>
-                        <th scope="col">{{ __('Failed / unconfirmed') }}</th>
-                        <th scope="col">{{ __('When') }}</th>
-                        <th scope="col" class="text-right"><span class="sr-only">{{ __('Details') }}</span></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($logs as $log)
-                        <tr>
-                            <td>
-                                <strong class="ai-event-name">{{ ucwords(str_replace('_', ' ', $log->email_type)) }}</strong>
-                            </td>
-                            <td>
-                                <span class="eb-audience-tag">{{ $audiences[$log->target_audience] ?? ucwords($log->target_audience) }}</span>
-                            </td>
-                            <td>
-                                <span class="eb-sent-number">{{ number_format($log->success_count) }}</span>
-                                <span class="eb-target-number"> / {{ number_format($log->total_target) }}</span>
-                            </td>
-                            <td>
-                                @if($log->failed_count)
-                                    <span class="eb-failed-number">{{ number_format($log->failed_count) }}</span>
-                                @else
-                                    <span class="eb-target-number">—</span>
-                                @endif
-                            </td>
-                            <td>
-                                <time datetime="{{ $log->created_at->toIso8601String() }}">
-                                    <span>{{ $log->created_at->locale(app()->getLocale())->translatedFormat('d M Y') }}</span>
-                                    <small>{{ __(':value1 WIB', ['value1' => ($log->created_at->format('H:i'))]) }}</small>
-                                </time>
-                            </td>
-                            <td class="text-right">
-                                @if($log->failed_count && $log->failed_details)
-                                    <button type="button" class="au-more eb-failure-btn" data-failures="{{ json_encode($log->failed_details) }}" data-campaign="{{ ucwords(str_replace('_',' ',$log->email_type)) }}" @click="failures = JSON.parse($el.dataset.failures); campaign = $el.dataset.campaign; open = true" aria-label="{{ __('View failures for :value1', ['value1' => (str_replace('_',' ',$log->email_type))]) }}">
-                                        <i class="ph ph-warning-circle" aria-hidden="true"></i>
-                                    </button>
-                                @else
-                                    <span class="eb-target-number">—</span>
-                                @endif
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6">
-                                <div class="ai-empty">
-                                    <h3>{{ $search || $audience !== 'all-segments' ? __('No matching campaigns') : __('No campaigns yet') }}</h3>
-                                    <p>{{ $search || $audience !== 'all-segments' ? __('Try another search or clear your filters.') : __('Completed email campaigns will appear here.') }}</p>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-
-        <footer class="au-directory-footer">
-            <span>{{ __('Showing :value1–:value2 of :value3 campaigns', ['value1' => ($logs->firstItem() ?? 0), 'value2' => ($logs->lastItem() ?? 0), 'value3' => (number_format($logs->total()))]) }}</span>
-            <div>{{ $logs->links() }}</div>
-        </footer>
-    </section>
-
-    <!-- Failures Details Modal -->
-    <template x-teleport="body">
-        <div x-show="open" x-cloak x-dialog="open" data-dialog-close="open = false" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="campaign-failures-title" class="au-dialog-overlay">
-            <section class="au-dialog eb-dialog">
-                <header class="au-dialog-heading">
-                    <div>
-                        <h2 id="campaign-failures-title">{{ __('Delivery details') }}</h2>
-                        <p x-text="campaign + @js(__(' · failed or unconfirmed sends'))"></p>
-                    </div>
-                    <button type="button" @click="open = false" class="au-dialog-close" aria-label="{{ __('Close delivery details') }}">
-                        <i class="ph ph-x" aria-hidden="true"></i>
-                    </button>
-                </header>
-                <div class="au-dialog-body">
-                    <p class="eb-confirm-copy">{{ __('Review each result before sending another email.') }}</p>
-                    <div class="eb-recipient-list">
-                        <template x-for="(failure,index) in failures" :key="index">
-                            <div class="eb-recipient-item eb-recipient-item--failed">
-                                <strong x-text="failure.name || @js(__('Member'))"></strong>
-                                <span x-text="failure.email"></span>
-                                <p class="eb-failure-message" x-text="failure.error || @js(__('No error details were recorded.'))"></p>
-                            </div>
-                        </template>
-                    </div>
-                    <div class="au-dialog-actions">
-                        <button type="button" @click="open = false" class="au-button">{{ __('Close') }}</button>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </template>
+    <template x-teleport="body"><div x-show="open" x-cloak x-dialog="open" data-dialog-close="open = false" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="campaign-detail-title" class="au-dialog-overlay am-member-modal eh-history-modal"><section class="au-dialog"><header class="au-dialog-heading"><div><h2 id="campaign-detail-title">{{ __('Campaign details') }}</h2><p x-text="record ? '#' + record.id + ' · ' + record.time : ''"></p></div><button type="button" @click="open = false" class="au-dialog-close" aria-label="{{ __('Close delivery details') }}"><i class="ph ph-x" aria-hidden="true"></i></button></header><div class="au-dialog-body">
+        <div class="eh-detail-identity"><h3 x-text="record?.name"></h3><p x-show="record?.subject" x-text="record?.subject"></p><span class="am-badge" x-text="record?.result"></span></div>
+        <div class="ec-delivery-metrics"><div><span>{{ __('Sent / target') }}</span><strong x-text="record ? record.sent + ' / ' + record.total : ''"></strong></div><div><span>{{ __('Failed / unconfirmed') }}</span><strong x-text="record?.failed"></strong></div><div><span>{{ __('No recorded result') }}</span><strong x-text="record?.missing"></strong></div></div>
+        <dl class="am-facts am-facts-grid"><div><dt>{{ __('Audience') }}</dt><dd x-text="record?.audience"></dd></div><div><dt>{{ __('Language') }}</dt><dd x-text="record?.language"></dd></div><div><dt>{{ __('Banner') }}</dt><dd x-text="record?.banner"></dd></div><div><dt>{{ __('Recorded At') }}</dt><dd x-text="record?.time"></dd></div></dl>
+        <p class="ec-note">{{ __('Sent means accepted by the mail server. Inbox delivery and opens are not tracked.') }}</p>
+        <details class="ec-disclosure" x-show="record?.failed"><summary>{{ __('Delivery errors') }}<span class="am-count" x-text="record?.failed"></span></summary><div class="ec-recipient-list"><template x-for="(failure, index) in (record?.failures || [])" :key="index"><div><strong x-text="failure.name || @js(__('Member'))"></strong><span x-text="failure.email"></span><p x-text="failure.error || @js(__('No error details were recorded.'))"></p></div></template><p class="ec-note" x-show="!record?.failures?.length">{{ __('No error details were recorded.') }}</p></div></details>
+        <p class="ec-note eh-missing-note" x-show="record?.missing">{{ __('Some recipients have no recorded sending result. This can happen when a campaign is stopped or its history is incomplete.') }}</p>
+        <div class="au-dialog-actions"><button type="button" @click="open = false" class="au-button">{{ __('Close') }}</button></div>
+    </div></section></div></template>
 </div>
 </x-admin-layout>

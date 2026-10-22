@@ -8,7 +8,7 @@ use App\Http\Middleware\ThrottleExtensionLogin;
 
 Route::post('/extension/login', [ExtensionController::class, 'login'])->middleware([\App\Http\Middleware\SetLocale::class, ThrottleExtensionLogin::class]);
 
-Route::middleware(['auth:sanctum', \App\Http\Middleware\SetLocale::class])->group(function () {
+Route::middleware(['auth:sanctum', \App\Http\Middleware\EnforceAccountRestriction::class, \App\Http\Middleware\SetLocale::class])->group(function () {
     Route::post('/extension/logout', [ExtensionController::class, 'logout'])
         ->middleware(EnsureVerifiedExtensionToken::class.':token:revoke');
     Route::post('/extension/jobs', [ExtensionController::class, 'saveJob'])

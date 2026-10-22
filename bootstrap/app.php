@@ -26,6 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\SoftMaintenanceMode::class,
+            \App\Http\Middleware\EnforceAccountRestriction::class,
             \App\Http\Middleware\UpdateLastActivity::class,
             \App\Http\Middleware\CheckSurveyRedirect::class,
         ]);

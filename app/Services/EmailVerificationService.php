@@ -15,9 +15,9 @@ use Illuminate\Validation\ValidationException;
 
 class EmailVerificationService
 {
-    public function send(User $user, ?string $emailBannerId = null): void
+    public function send(User $user, ?string $emailBannerId = null, ?string $emailLocale = null): void
     {
-        DB::transaction(function () use ($user, $emailBannerId) {
+        DB::transaction(function () use ($user, $emailBannerId, $emailLocale) {
             $account = User::query()->lockForUpdate()->findOrFail($user->id);
             if ($account->hasVerifiedEmail()) {
                 return;
@@ -49,7 +49,7 @@ class EmailVerificationService
             ])->save();
 
             // Delivery failure rolls back the replacement so an existing code remains usable.
-            Mail::to($account)->locale($account->preferredLocale())->send((new OtpVerificationMail($account, $otp))->with('emailBannerId', $emailBannerId));
+            Mail::to($account)->locale($emailLocale ?? $account->preferredLocale())->send((new OtpVerificationMail($account, $otp))->with('emailBannerId', $emailBannerId));
         }, 1);
     }
 

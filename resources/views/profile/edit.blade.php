@@ -1,327 +1,57 @@
 <x-dynamic-component :component="$user->isAdmin() ? 'admin-layout' : 'app-layout'">
-    @php
-        $isAdmin = $user->isAdmin();
-        $profile = $user->profile;
-        $avatarId = \App\Support\AvatarCatalog::resolve($user->avatar_id, (int) $user->id);
-        $previousChoice = old('avatar_id', $avatarId);
-        $avatarChoice = is_string($previousChoice) && isset(\App\Support\AvatarCatalog::all()[$previousChoice]) ? $previousChoice : $avatarId;
-        $initialTab = match (true) {
-            $errors->updatePassword->any(), $errors->userDeletion->any(), session('status') === 'password-updated' => 'security',
-            $errors->has('avatar_id'), $errors->has('logo'), in_array(session('status'), ['avatar-updated', 'photo-updated', 'photo-removed']) => 'about',
-            session('status') === 'notifications-updated', session('error') === 'upgrade-required' => 'notifications',
-            $errors->has('resume_file'), in_array(session('status'), ['resume-uploaded', 'resume-updated', 'resume-primary-updated', 'resume-deleted']) => 'resumes',
-            request('tab') === 'resumes' => 'resumes',
-            request('tab') === 'membership' => 'membership',
-            default => 'about',
-        };
-        $statusMessages = [
-            'profile-updated' => __('Account details saved.'), 'personal-info-updated' => __('Profile details saved.'),
-            'avatar-updated' => __('Your new avatar is ready.'), 'photo-updated' => __('Profile photo updated.'),
-            'photo-removed' => __('Photo removed. Your avatar is back.'), 'password-updated' => __('Password updated. API tokens have been revoked.'), 'token-revoked' => 'Device access revoked.', 'tokens-revoked' => 'All API device access revoked.',
-            'notifications-updated' => 'Notification preferences saved.', 'verification-link-sent' => 'Verification email sent.',
-            'resume-uploaded' => 'Resume uploaded to your vault.',
-            'resume-updated' => 'Resume title updated.',
-            'resume-primary-updated' => 'Primary resume updated.',
-            'resume-deleted' => 'Resume removed from your vault.',
-        ];
-        $tabs = $isAdmin
-            ? ['about' => __('Account'), 'security' => __('Security'), 'activity' => __('Activity')]
-            : ['about' => __('Account'), 'resumes' => __('My Resumes'), 'membership' => __('Membership & Credits'), 'security' => __('Security'), 'notifications' => __('Notifications'), 'activity' => __('Activity')];
-        if (!isset($tabs[$initialTab])) $initialTab = 'about';
-    @endphp
-    <div class="profile-workspace" x-data="{
-        tab: @js($initialTab), avatarChoice: @js($avatarChoice),
-        moveTab(event, direction) {
-            const tabs = [...this.$refs.profileTabs.querySelectorAll('[role=tab]')];
-            const index = tabs.indexOf(event.target);
-            const next = tabs[(index + direction + tabs.length) % tabs.length];
-            next.click(); next.focus();
-        }
-    }">
-        <div class="profile-container">
-            <header class="profile-page-header">
-                <div><h1>{{ $isAdmin ? __('Admin profile') : __('Profile settings') }}</h1><p>{{ $isAdmin ? __('Manage your identity, profile image, and account security.') : __('Manage your profile, preferences, and account security.') }}</p></div>
-                <a href="{{ route($isAdmin ? 'admin.index' : 'dashboard') }}" class="profile-back"><i class="ph ph-arrow-left" aria-hidden="true"></i>{{ $isAdmin ? __('Back to admin dashboard') : __('Back to home') }}</a>
-            </header>
-            @if(isset($statusMessages[session('status')]))
-                <div class="profile-notice" role="status"><i class="ph ph-check-circle" aria-hidden="true"></i>{{ $statusMessages[session('status')] }}</div>
-            @endif
-            <div class="profile-layout">
-                <aside class="profile-identity-card">
-                    <div class="profile-avatar-frame"><img src="{{ $user->avatar_url }}" alt="{{ __(':value1\'s profile image', ['value1' => ($user->name)]) }}" width="88" height="88"></div>
-                    <h2>{{ $user->name }}</h2>
-                    <p class="profile-identity-email">{{ $user->email }}</p>
-                    @if(!$isAdmin && $profile?->headline)<p class="profile-headline">{{ $profile->headline }}</p>@endif
-                    <span class="profile-plan {{ $user->isAdmin() ? 'profile-plan--admin' : ($user->isPremium() ? 'profile-plan--premium' : 'profile-plan--free') }}"><i class="ph {{ $user->isAdmin() ? 'ph-shield-check' : ($user->isPremium() ? 'ph-crown' : 'ph-user') }}" aria-hidden="true"></i>{{ $user->isAdmin() ? __('Administrator') : ($user->isPremium() ? __('Premium member') : __('Free account')) }}</span>
-                    <button type="button" @click="tab = 'about'; $nextTick(() => { $refs.avatarSection.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); $refs.avatarSection.focus({ preventScroll: true }); })" class="profile-secondary"><i class="ph ph-palette" aria-hidden="true"></i>{{ __('Change your look') }}</button>
-                    <dl class="profile-account-facts">
-                        <div><dt>{{ $isAdmin ? __('Account created') : __('Member since') }}</dt><dd>{{ $user->created_at->locale(app()->getLocale())->translatedFormat('M Y') }}</dd></div>
-                        <div><dt>{{ __('Email status') }}</dt><dd>{{ $user->hasVerifiedEmail() ? __('Verified') : __('Not verified') }}</dd></div>
-                        @if(!$isAdmin && isset($resumes))<div><dt>{{ __('Saved resumes') }}</dt><dd>{{ $resumes->count() }} {{ __($resumes->count() === 1 ? 'file' : 'files') }}</dd></div>@endif
-                        @if(!$isAdmin && $profile?->domicile)<div><dt>{{ __('Location') }}</dt><dd>{{ $profile->domicile }}</dd></div>@endif
-                    </dl>
-                    @if($isAdmin)<div class="profile-admin-access"><strong>{{ __('Administrator access') }}</strong><p>{{ __('Manage members, platform settings, and operational tools from the admin workspace.') }}</p></div>@endif
-                    <p class="profile-identity-note">{{ __('Your photo or avatar appears across your workspace.') }}</p>
-                </aside>
-                <div class="profile-content">
-                    <nav class="profile-tabs" x-ref="profileTabs" role="tablist" aria-label="{{ __('Profile settings') }}" @keydown.right.prevent="moveTab($event, 1)" @keydown.left.prevent="moveTab($event, -1)" @keydown.home.prevent="$refs.profileTabs.firstElementChild.click(); $refs.profileTabs.firstElementChild.focus()" @keydown.end.prevent="$refs.profileTabs.lastElementChild.click(); $refs.profileTabs.lastElementChild.focus()">
-                        @foreach($tabs as $id => $label)
-                            <button type="button" id="profile-tab-{{ $id }}" role="tab" aria-controls="profile-panel-{{ $id }}" :aria-selected="(tab === '{{ $id }}').toString()" :tabindex="tab === '{{ $id }}' ? 0 : -1" @click="tab = '{{ $id }}'">{{ __($label) }}</button>
-                        @endforeach
-                    </nav>
-                    <div id="profile-panel-about" role="tabpanel" aria-labelledby="profile-tab-about" x-show="tab === 'about'" @if($initialTab !== 'about') x-cloak @endif class="profile-panel-stack">
-                        <section class="profile-panel">
-                            <header class="profile-section-header"><div><h2>{{ __('Account details') }}</h2><p>{{ $isAdmin ? __('The name and email used for your admin account.') : __('Your name, email, and tracker preferences.') }}</p></div></header>
-                            <form method="post" action="{{ route('profile.update') }}">
-                                @csrf @method('patch')
-                                <div class="profile-field-grid">
-                                    <x-profile-field name="name" label="{{ __('Full name') }}" :value="$user->name" autocomplete="name" required maxlength="255" />
-                                    <x-profile-field name="email" label="{{ __('Email address') }}" :value="$user->email" type="email" autocomplete="email" required maxlength="255" />
-                                </div>
-                                @if(!$user->hasVerifiedEmail())
-                                    <div class="profile-verification"><span>{{ __('Your email is not verified.') }}</span><a href="{{ route('verification.notice') }}" class="profile-text-button">{{ __('verification.submit') }}</a></div>
-                                @endif
-                                @unless($isAdmin)
-                                <label class="profile-preference-row" for="profile-auto-archive"><span><strong>{{ __('Auto-archive rejected applications') }}</strong><small>{{ __('Move older rejected or unprocessed applications out of your active tracker after 14 days.') }}</small></span><input class="profile-switch" id="profile-auto-archive" role="switch" name="auto_archive_rejected" type="checkbox" value="1" @checked(old('auto_archive_rejected', $user->auto_archive_rejected))></label>
-                                @endunless
-                                <div class="profile-form-footer"><span>{{ __('Changing your email requires verification again.') }}</span><button type="submit" class="profile-primary">{{ __('Save account') }}</button></div>
-                            </form>
-                        </section>
-                    <section id="profile-avatar-section" x-ref="avatarSection" tabindex="-1" aria-labelledby="profile-avatar-heading" class="profile-panel" style="scroll-margin-top: 110px;">
-                        <header class="profile-section-header"><div><h2 id="profile-avatar-heading">{{ __('Your profile image') }}</h2><p>{{ __('Choose an illustrated avatar or use a photo of your own.') }}</p></div></header>
-                        <form method="post" action="{{ route('profile.avatar.update') }}">
-                            @csrf @method('patch')
-                            <div class="profile-avatar-preview"><img :src="@js(asset('images/avatars')).replace(/\/$/, '') + '/' + avatarChoice + '.svg'" alt="{{ __('Selected avatar preview') }}" width="54" height="54"><div><h3>{{ __('Choose an avatar') }}</h3><p>{{ __('Pick the illustration you want to use.') }}</p><span>{{ __('Choosing an avatar replaces your uploaded photo.') }}</span></div></div>
-                            <fieldset class="profile-avatar-options"><legend class="sr-only">{{ __('Available avatars') }}</legend>
-                                @foreach(\App\Support\AvatarCatalog::all() as $id => $label)
-                                    <label class="profile-avatar-option" :class="{ 'is-selected': avatarChoice === '{{ $id }}' }"><input type="radio" name="avatar_id" value="{{ $id }}" x-model="avatarChoice" @checked($avatarChoice === $id)><img src="{{ \App\Support\AvatarCatalog::url($id) }}" alt="" width="48" height="48"><span class="sr-only">{{ __($label) }}</span><i class="ph-fill ph-check-circle" x-show="avatarChoice === '{{ $id }}'" aria-hidden="true"></i></label>
-                                @endforeach
-                            </fieldset>
-                            @error('avatar_id')<p class="profile-field-error">{{ $message }}</p>@enderror
-                            <div class="profile-form-footer"><span>{{ __('Available to every account.') }}</span><button type="submit" class="profile-primary">{{ __('Use this avatar') }}</button></div>
-                        </form>
-                        <section class="profile-language-section"><header class="profile-section-header"><div><h2>{{ __('Display language') }}</h2><p>{{ __('Choose the language used across TraKerja. Your documents keep their original language.') }}</p></div></header><x-language-switch location="profile" /></section>
-                        <div class="profile-photo-section">
-                            <div><h3>{{ __('Prefer a photo?') }}</h3><p>{{ __('JPG, PNG, or GIF. Up to 2 MB.') }}</p></div>
-                            <form method="post" action="{{ route('profile.photo.update') }}" enctype="multipart/form-data" x-data="{ fileName: '' }">
-                                @csrf
-                                <label for="profile-photo-file" class="profile-file-input"><i class="ph ph-upload-simple" aria-hidden="true"></i><span x-text="fileName || @js(__('Choose a photo'))">{{ __('Choose a photo') }}</span><input id="profile-photo-file" type="file" name="logo" accept="image/jpeg,image/png,image/gif" required @change="fileName = $event.target.files[0]?.name || ''"></label>
-                                @error('logo')<p class="profile-field-error">{{ $message }}</p>@enderror
-                                <button type="submit" class="profile-secondary">{{ __('Upload photo') }}</button>
-                            </form>
-                            @if($user->logo)<form method="post" action="{{ route('profile.photo.destroy') }}">@csrf @method('delete')<button type="submit" class="profile-text-button">{{ __('Remove photo & use avatar') }}</button></form>@endif
-                        </div>
-                    </section>
-                    </div>
-                    @unless($isAdmin)
-                    <div id="profile-panel-resumes" role="tabpanel" aria-labelledby="profile-tab-resumes" x-show="tab === 'resumes'" @if($initialTab !== 'resumes') x-cloak @endif class="profile-panel-stack">
-                        <!-- Upload Resume Section -->
-                        <section class="profile-panel">
-                            <header class="profile-section-header">
-                                <div>
-                                    <h2>{{ __('Save a resume') }}</h2>
-                                    <p>{{ __('Store different versions of your CV (Tech, Corporate, English, or archives). PDF, DOC, or DOCX up to 10 MB.') }}</p>
-                                </div>
-                            </header>
-
-                            <form method="post" action="{{ route('user-resumes.store') }}" enctype="multipart/form-data" x-data="{ selectedFile: null }">
-                                @csrf
-                                <div class="profile-field-grid">
-                                    <div class="profile-field">
-                                        <label for="resume-title">{{ __('Resume label or target role') }} <small class="text-zinc-400 font-normal">{{ __('(Optional)') }}</small></label>
-                                        <input type="text" id="resume-title" name="title" class="profile-input" placeholder="{{ __('e.g. CV Frontend Engineer (English), CV BUMN') }}" maxlength="150" value="{{ old('title') }}">
-                                        <span class="profile-field-hint">{{ __('Helps you distinguish between different versions or dates.') }}</span>
-                                    </div>
-                                    <div class="profile-field">
-                                        <label for="resume-file-input">{{ __('Choose file') }} <span class="text-rose-500">*</span></label>
-                                        <label for="resume-file-input" class="profile-file-input">
-                                            <i class="ph ph-upload-simple" aria-hidden="true"></i>
-                                            <span x-text="selectedFile ? selectedFile : @js(__('Select PDF, DOC, or DOCX file'))">{{ __('Select PDF, DOC, or DOCX file') }}</span>
-                                            <input id="resume-file-input" type="file" name="resume_file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required @change="selectedFile = $event.target.files[0]?.name || null">
-                                        </label>
-                                        <span class="profile-field-hint">{{ __('PDF, DOC, or DOCX up to 10 MB.') }}</span>
-                                        @error('resume_file')
-                                            <p class="profile-field-error">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="mt-4">
-                                    <label class="profile-preference-row" for="resume-make-primary">
-                                        <span>
-                                            <strong>{{ __('Set as primary resume') }}</strong>
-                                            <small>{{ __('Mark this file as your default/go-to resume.') }}</small>
-                                        </span>
-                                        <input class="profile-switch" id="resume-make-primary" role="switch" name="is_primary" type="checkbox" value="1" @checked(old('is_primary', isset($resumes) && $resumes->isEmpty()))>
-                                    </label>
-                                </div>
-
-                                <div class="profile-form-footer">
-                                    <span>{{ __('Files are stored privately in your personal vault.') }}</span>
-                                    <button type="submit" class="profile-primary">
-                                        <i class="ph ph-cloud-arrow-up text-base mr-1" aria-hidden="true"></i>
-                                        <span>{{ __('Upload to vault') }}</span>
-                                    </button>
-                                </div>
-                            </form>
-                        </section>
-
-                        <!-- Saved Resumes List Section -->
-                        <section class="profile-panel">
-                            <header class="profile-section-header">
-                                <div>
-                                    <h2>{{ __('Your saved resumes (:value1)', ['value1' => (isset($resumes) ? $resumes->count() : 0)]) }}</h2>
-                                    <p>{{ __('Your library of uploaded CV files. Preview, download, rename, or set your primary version.') }}</p>
-                                </div>
-                            </header>
-
-                            @if(!isset($resumes) || $resumes->isEmpty())
-                                <div class="profile-empty py-10 text-center flex flex-col items-center justify-center">
-                                    <div class="w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-[#282a2c] border border-transparent dark:border-white/10 flex items-center justify-center text-zinc-400 dark:text-[#94a3b8] mb-3">
-                                        <i class="ph ph-files text-2xl" aria-hidden="true"></i>
-                                    </div>
-                                    <p class="font-semibold text-zinc-700 dark:text-[#f0f4f9] text-sm mb-1">{{ __('No resumes saved yet') }}</p>
-                                    <p class="text-xs text-zinc-500 dark:text-[#94a3b8] max-w-sm">{{ __('Use the form above to upload your first CV. You can save multiple versions for different roles or dates.') }}</p>
-                                </div>
-                            @else
-                                <div class="profile-resume-grid">
-                                    @foreach($resumes as $resume)
-                                        <div class="profile-resume-card {{ $resume->is_primary ? 'is-primary' : '' }}" x-data="{ editing: false, newTitle: '{{ addslashes($resume->title) }}' }">
-                                            <div class="profile-resume-meta">
-                                                <div class="profile-resume-icon-badge {{ $resume->is_pdf ? 'profile-resume-icon-badge--pdf' : 'profile-resume-icon-badge--doc' }}">
-                                                    <span>{{ $resume->extension }}</span>
-                                                </div>
-                                                <div class="profile-resume-details">
-                                                    <div class="profile-resume-title-row">
-                                                        <!-- Normal Title Display -->
-                                                        <h3 x-show="!editing" class="profile-resume-title">{{ $resume->title }}</h3>
-
-                                                        <!-- Inline Rename Form -->
-                                                        <form x-show="editing" x-cloak method="post" action="{{ route('user-resumes.update', $resume) }}" class="flex items-center gap-1.5" @submit="editing = false">
-                                                            @csrf
-                                                            @method('patch')
-                                                            <input type="text" name="title" x-model="newTitle" class="text-xs px-2 py-1 border border-zinc-300 dark:border-white/10 rounded font-semibold text-zinc-800 dark:text-[#f0f4f9] bg-white dark:bg-[#282a2c] focus:outline-none focus:border-zinc-900 dark:focus:border-blue-400" required maxlength="150">
-                                                            <button type="submit" class="p-1 text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300" title="{{ __('Save name') }}"><i class="ph ph-check text-sm"></i></button>
-                                                            <button type="button" @click="editing = false; newTitle = '{{ addslashes($resume->title) }}'" class="p-1 text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300" title="{{ __('Cancel') }}"><i class="ph ph-x text-sm"></i></button>
-                                                        </form>
-
-                                                        @if($resume->is_primary)
-                                                            <span class="profile-resume-primary-tag">
-                                                                <i class="ph-fill ph-star" aria-hidden="true"></i>
-                                                                <span>{{ __('Primary') }}</span>
-                                                            </span>
-                                                        @endif
-                                                    </div>
-                                                    <p class="profile-resume-subtitle">
-                                                        <span>{{ $resume->file_name }}</span>
-                                                        <span class="profile-resume-dot">•</span>
-                                                        <span>{{ $resume->formatted_size }}</span>
-                                                        <span class="profile-resume-dot">•</span>
-                                                        <span>{{ $resume->created_at->locale(app()->getLocale())->translatedFormat('d M Y') }}</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div class="profile-resume-actions">
-                                                @if($resume->is_pdf)
-                                                    <a href="{{ route('user-resumes.preview', $resume) }}" target="_blank" rel="noopener noreferrer" class="profile-icon-action" title="{{ __('Preview PDF in new tab') }}" aria-label="{{ __('Preview resume') }}">
-                                                        <i class="ph ph-eye" aria-hidden="true"></i>
-                                                    </a>
-                                                @endif
-
-                                                <a href="{{ route('user-resumes.download', $resume) }}" class="profile-icon-action" title="{{ __('Download file') }}" aria-label="{{ __('Download resume') }}">
-                                                    <i class="ph ph-download-simple" aria-hidden="true"></i>
-                                                </a>
-
-                                                <button type="button" @click="editing = !editing" class="profile-icon-action" title="{{ __('Rename label') }}" aria-label="{{ __('Rename resume') }}">
-                                                    <i class="ph ph-pencil-simple" aria-hidden="true"></i>
-                                                </button>
-
-                                                @unless($resume->is_primary)
-                                                    <form method="post" action="{{ route('user-resumes.primary', $resume) }}" class="inline">
-                                                        @csrf
-                                                        <button type="submit" class="profile-icon-action profile-icon-action--primary-toggle" title="{{ __('Set as primary resume') }}" aria-label="{{ __('Set as primary') }}">
-                                                            <i class="ph ph-star" aria-hidden="true"></i>
-                                                        </button>
-                                                    </form>
-                                                @endunless
-
-                                                <form method="post" action="{{ route('user-resumes.destroy', $resume) }}" class="inline" onsubmit="return confirm('Are you sure you want to delete this resume from your vault?');">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="profile-icon-action profile-icon-action--danger" title="{{ __('Delete resume') }}" aria-label="{{ __('Delete resume') }}">
-                                                        <i class="ph ph-trash" aria-hidden="true"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endif
-                        </section>
-                    </div>
-                    @endunless
-                    <div id="profile-panel-security" role="tabpanel" aria-labelledby="profile-tab-security" x-show="tab === 'security'" @if($initialTab !== 'security') x-cloak @endif class="profile-panel-stack">
-                        <section class="profile-panel"><header class="profile-section-header"><div><h2>{{ __('Password & security') }}</h2><p>{{ __('Keep access to your account secure.') }}</p></div></header>@include('profile.partials.update-password-form')</section>
-                        <section class="profile-panel profile-api-devices">
-                            <header class="profile-section-header"><div>
-                                <h2>{{ __('Connected API devices') }}</h2>
-                                <p>{{ __('Revoke access for Chrome extensions and API clients. This list does not include browser login sessions.') }}</p>
-                            </div></header>
-                            @php $apiDevices = $user->tokens()->latest()->limit(50)->get(['id', 'name', 'created_at', 'last_used_at', 'expires_at']); @endphp
-                            @forelse($apiDevices as $device)
-                                <div class="profile-form-footer profile-api-device">
-                                    <div><strong>{{ $device->name }}</strong><p>{{ __('Last used: :value1 · Expires: :value2', ['value1' => ($device->last_used_at?->diffForHumans() ?? 'Never'), 'value2' => ($device->expires_at?->locale(app()->getLocale())->translatedFormat('d M Y') ?? 'No expiry')]) }}</p></div>
-                                    <form method="post" action="{{ route('profile.tokens.destroy', $device->id) }}">@csrf @method('delete')<button type="submit" class="profile-secondary">{{ __('Revoke access') }}</button></form>
-                                </div>
-                            @empty
-                                <p class="profile-empty">{{ __('No connected API devices.') }}</p>
-                            @endforelse
-                            @if($apiDevices->isNotEmpty())
-                                <p class="profile-api-note">{{ __('Showing up to 50 recent devices.') }}</p>
-                                <form method="post" action="{{ route('profile.tokens.destroy-all') }}">@csrf @method('delete')<button type="submit" class="profile-secondary">{{ __('Revoke all API devices') }}</button></form>
-                            @endif
-                        </section>
-                        <section class="profile-panel profile-danger"><h2>{{ __('Delete account') }}</h2><p>{{ __('This permanently removes your account and its associated data. Save any files you need before continuing.') }}</p><button type="button" @click="$dispatch('open-modal', 'confirm-user-deletion')" class="profile-danger-button" aria-haspopup="dialog">{{ __('Delete my account') }}</button></section>
-                    </div>
-                    @unless($isAdmin)
-                    <section id="profile-panel-notifications" role="tabpanel" aria-labelledby="profile-tab-notifications" x-show="tab === 'notifications'" @if($initialTab !== 'notifications') x-cloak @endif class="profile-panel">
-                        <header class="profile-section-header"><div><h2>{{ __('Email notifications') }}</h2><p>{{ __('Choose what arrives in your inbox.') }}</p></div></header>
-                        @if($user->canAccessEmailNotifications())
-                            <form method="post" action="{{ route('profile.notifications.update') }}">@csrf @method('patch')
-                                @foreach([
-                                    'email_notifications_enabled' => ['Email notifications', 'Turn automated email notifications on or off.'],
-                                    'notify_goal_reminders' => ['Goal reminders', 'Receive reminders about your career goals.'],
-                                    'notify_interview_reminders' => ['Interview reminders', 'Receive reminders before scheduled interviews.'],
-                                    'notify_goal_achieved' => ['Goal achievements', 'Hear when you reach a career goal.'],
-                                ] as $name => [$label, $help])
-                                    <label class="profile-preference-row" for="profile-{{ $name }}"><span><strong>{{ __($label) }}</strong><small>{{ __($help) }}</small></span><input id="profile-{{ $name }}" name="{{ $name }}" type="checkbox" role="switch" value="1" class="profile-switch" @checked(old($name, $user->{$name}))></label>
-                                @endforeach
-                                <div class="profile-form-footer"><span>{{ __('You can change these anytime.') }}</span><button type="submit" class="profile-primary">{{ __('Save preferences') }}</button></div>
-                            </form>
-                        @else
-                            <div class="profile-locked"><i class="ph ph-lock" aria-hidden="true"></i><h3>{{ __('Email notifications are a Premium feature') }}</h3><p>{{ __('Upgrade to manage goal and interview reminders.') }}</p><a href="{{ route('payment.premium') }}" wire:navigate class="profile-primary">{{ __('Explore Premium') }}</a></div>
-                        @endif
-                    </section>
-                    @endunless
-                    @unless($isAdmin)
-                    <section id="profile-panel-membership" role="tabpanel" aria-labelledby="profile-tab-membership" x-show="tab === 'membership'" @if($initialTab !== 'membership') x-cloak @endif class="profile-panel-stack">
-                        @include('profile.partials.membership', $membership)
-                    </section>
-                    @endunless
-                    <section id="profile-panel-activity" role="tabpanel" aria-labelledby="profile-tab-activity" x-show="tab === 'activity'" @if($initialTab !== 'activity') x-cloak @endif class="profile-panel">
-                        <header class="profile-section-header"><div><h2>{{ __('Recent account activity') }}</h2><p>{{ __('Your ten most recent account events.') }}</p></div></header>
-                        @forelse($activities as $activity)
-                            <div class="profile-activity-item"><span class="profile-activity-icon"><i class="ph ph-{{ $activity->status === 'success' ? 'check' : 'info' }}" aria-hidden="true"></i></span><div><strong>{{ ucwords(str_replace('_', ' ', $activity->activity_type)) }}</strong><p>{{ $activity->description }}</p><span>{{ $activity->ip_address ?: __('System event') }}</span></div><time datetime="{{ $activity->created_at->toIso8601String() }}">{{ $activity->created_at->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M, H:i') }}</time></div>
-                        @empty<p class="profile-empty">{{ __('No account activity recorded yet.') }}</p>@endforelse
-                    </section>
+@php
+    $isAdmin = $user->isAdmin();
+    $avatarId = \App\Support\AvatarCatalog::resolve($user->avatar_id, (int) $user->id);
+    $avatarChoice = old('avatar_id', $avatarId);
+    if (!is_string($avatarChoice) || !array_key_exists($avatarChoice, \App\Support\AvatarCatalog::all())) $avatarChoice = $avatarId;
+    $tabs = ['about'=>['Account','user-circle','Identity and appearance']];
+    if (!$isAdmin) $tabs += ['resumes'=>['My Resumes','files','Your private CV library'],'membership'=>['Membership & Credits','credit-card','Plan, balances and payments']];
+    $tabs += ['security'=>['Security','lock-key','Password and device access']];
+    if (!$isAdmin) $tabs += ['notifications'=>['Notifications','bell','Email preferences']];
+    $tabs += ['activity'=>['Activity','clock-counter-clockwise','Recent account events']];
+    $status = session('status');
+    $initialTab = match (true) {
+        $errors->updatePassword->any(), $errors->userDeletion->any(), in_array($status,['password-updated','token-revoked','tokens-revoked']) => 'security',
+        $errors->has('avatar_id'), $errors->has('logo'), in_array($status,['avatar-updated','photo-updated','photo-removed']) => 'about',
+        $errors->has('resume_file'), str_starts_with((string)old('profile_dialog'), 'resume-'), in_array($status,['resume-uploaded','resume-updated','resume-primary-updated','resume-deleted']) => 'resumes',
+        $status === 'notifications-updated', session('error') === 'upgrade-required' => 'notifications',
+        default => request('tab', 'about'),
+    };
+    if (!isset($tabs[$initialTab])) $initialTab = 'about';
+    $initialDialog = match(true) {
+        $errors->userDeletion->any() => 'delete-account',
+        $errors->has('avatar_id'), $errors->has('logo') => 'appearance',
+        $errors->has('resume_file') => 'resume-upload',
+        $errors->has('title') && old('profile_dialog') === 'resume-upload' => 'resume-upload',
+        $errors->has('title') && old('profile_dialog') === 'resume-rename' => 'resume-rename',
+        default => null,
+    };
+    $renameResume = $resumes->firstWhere('id', (int)old('resume_id'));
+    $initialRecord = $renameResume ? ['id'=>$renameResume->id,'title'=>old('title',$renameResume->title),'renameUrl'=>route('user-resumes.update',$renameResume)] : [];
+    if ($initialDialog === 'resume-rename' && !$renameResume) $initialDialog = null;
+    $messages = ['profile-updated'=>'Account details saved.','personal-info-updated'=>'Profile details saved.','avatar-updated'=>'Your new avatar is ready.','photo-updated'=>'Profile photo updated.','photo-removed'=>'Photo removed. Your avatar is back.','password-updated'=>'Password updated. API tokens have been revoked.','token-revoked'=>'Device access revoked.','tokens-revoked'=>'All API device access revoked.','notifications-updated'=>'Notification preferences saved.','verification-link-sent'=>'Verification email sent.','resume-uploaded'=>'Resume uploaded to your vault.','resume-updated'=>'Resume title updated.','resume-primary-updated'=>'Primary resume updated.','resume-deleted'=>'Resume removed from your vault.'];
+@endphp
+<div class="pf-workspace {{ $isAdmin ? 'pf-admin' : '' }}" x-data="profileSettings(@js(['tabs'=>array_keys($tabs),'tab'=>$initialTab,'avatar'=>$avatarChoice,'dialog'=>$initialDialog,'record'=>$initialRecord]))" @resize.window.debounce.100ms="horizontal = window.innerWidth < 900">
+    <div class="profile-container">
+        <header class="profile-page-header"><div><h1>{{ $isAdmin ? __('Admin profile') : __('Profile settings') }}</h1><p>{{ __('Your account, preferences, and access in one place.') }}</p></div><a class="profile-secondary" href="{{ route($isAdmin ? 'admin.index' : 'dashboard') }}"><i class="ph ph-arrow-left" aria-hidden="true"></i>{{ $isAdmin ? __('Back to admin dashboard') : __('Back to home') }}</a></header>
+        @if(isset($messages[$status]))<div class="profile-notice" role="status"><i class="ph ph-check-circle" aria-hidden="true"></i>{{ __($messages[$status]) }}</div>@endif
+        <section class="pf-identity" aria-label="{{ __('Account overview') }}"><button type="button" class="pf-identity-image" @click="openDialog('appearance')" aria-label="{{ __('Change profile image') }}" aria-haspopup="dialog"><img src="{{ $user->avatar_url }}" width="56" height="56" alt=""><i class="ph ph-camera" aria-hidden="true"></i></button><div class="pf-identity-copy"><h2>{{ $user->name }}</h2><p>{{ $user->email }}</p><div class="pf-identity-tags"><span class="pf-badge">{{ $isAdmin ? __('Administrator') : ($user->isPremium() ? __('Premium member') : __('Free account')) }}</span><span class="pf-verification"><i class="ph ph-{{ $user->hasVerifiedEmail() ? 'seal-check' : 'envelope' }}" aria-hidden="true"></i>{{ $user->hasVerifiedEmail() ? __('Email verified') : __('Not verified') }}</span></div></div><div class="pf-member-since"><span>{{ $isAdmin ? __('Account created') : __('Member since') }}</span><strong>{{ $user->created_at->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M Y') }}</strong></div><button type="button" class="profile-secondary" @click="openDialog('appearance')" aria-haspopup="dialog"><i class="ph ph-image" aria-hidden="true"></i>{{ __('Change image') }}</button></section>
+        <div class="profile-layout"><nav class="profile-tabs" role="tablist" x-ref="profileTabs" :aria-orientation="horizontal ? 'horizontal' : 'vertical'" aria-label="{{ __('Profile settings') }}" @keydown.arrow-right.prevent="moveTab(1)" @keydown.arrow-down.prevent="moveTab(1)" @keydown.arrow-left.prevent="moveTab(-1)" @keydown.arrow-up.prevent="moveTab(-1)" @keydown.home.prevent="selectTab(tabs[0]); $nextTick(() => document.getElementById('profile-tab-' + tab).focus())" @keydown.end.prevent="selectTab(tabs[tabs.length-1]); $nextTick(() => document.getElementById('profile-tab-' + tab).focus())">@foreach($tabs as $key=>[$label,$icon,$help])<button type="button" id="profile-tab-{{ $key }}" role="tab" aria-controls="profile-panel-{{ $key }}" :aria-selected="tab === '{{ $key }}'" :tabindex="tab === '{{ $key }}' ? 0 : -1" @click="selectTab('{{ $key }}')"><i class="ph ph-{{ $icon }}" aria-hidden="true"></i><span><strong>{{ __($label) }}</strong><small>{{ __($help) }}</small></span><i class="ph ph-caret-right" aria-hidden="true"></i></button>@endforeach</nav>
+            <div class="profile-content">
+                <div id="profile-panel-about" role="tabpanel" aria-labelledby="profile-tab-about" x-show="tab === 'about'" @if($initialTab !== 'about') x-cloak @endif class="profile-panel-stack">
+                    <section class="profile-panel"><header class="profile-section-header"><div><h2>{{ __('Account details') }}</h2><p>{{ $isAdmin ? __('The name and email used for your admin account.') : __('Your name, email, and tracker preferences.') }}</p></div></header><form method="post" action="{{ route('profile.update') }}">@csrf @method('patch')<div class="profile-field-grid"><x-profile-field name="name" label="{{ __('Full name') }}" :value="$user->name" autocomplete="name" required maxlength="255" /><x-profile-field name="email" label="{{ __('Email address') }}" :value="$user->email" type="email" autocomplete="email" required maxlength="255" /></div>@if(!$user->hasVerifiedEmail())<div class="profile-verification"><span>{{ __('Your email is not verified.') }}</span><a href="{{ route('verification.notice') }}" class="profile-text-button">{{ __('Verify email') }}</a></div>@endif @unless($isAdmin)<label class="profile-preference-row" for="profile-auto-archive"><span><strong>{{ __('Auto-archive rejected applications') }}</strong><small>{{ __('Move older rejected or unprocessed applications out of your active tracker after 14 days.') }}</small></span><input class="profile-switch" id="profile-auto-archive" role="switch" name="auto_archive_rejected" type="checkbox" value="1" @checked(old('auto_archive_rejected',$user->auto_archive_rejected))></label>@endunless<div class="profile-form-footer"><span>{{ __('Changing your email requires verification again.') }}</span><button class="profile-primary" type="submit">{{ __('Save account') }}</button></div></form></section>
+                    <section class="profile-panel" aria-labelledby="profile-avatar-heading"><header class="profile-section-header"><div><h2 id="profile-avatar-heading">{{ __('Appearance & language') }}</h2><p>{{ __('Choose how you appear and the language you use.') }}</p></div></header><div class="pf-settings-row"><div class="pf-image-setting"><img src="{{ $user->avatar_url }}" alt="" width="44" height="44"><span><strong>{{ __('Your profile image') }}</strong><small>{{ __('Your photo or avatar appears across your workspace.') }}</small></span></div><button type="button" @click="openDialog('appearance')" class="profile-secondary" aria-haspopup="dialog">{{ __('Change image') }}</button></div><div class="pf-settings-row"><div><strong>{{ __('Display language') }}</strong><p>{{ __('Choose the language used across TraKerja. Your documents keep their original language.') }}</p></div><x-language-switch location="profile" /></div><div class="pf-settings-row"><div><strong>{{ __('Color theme') }}</strong><p>{{ __('Switch between light and dark mode.') }}</p></div><button type="button" class="profile-secondary" @click="window.toggleTheme()" aria-label="{{ __('Toggle dark/light mode') }}"><i class="ph ph-moon" aria-hidden="true"></i>{{ __('Switch theme') }}</button></div></section>
                 </div>
+                @unless($isAdmin)<div id="profile-panel-resumes" role="tabpanel" aria-labelledby="profile-tab-resumes" x-show="tab === 'resumes'" @if($initialTab !== 'resumes') x-cloak @endif class="profile-panel-stack">@include('profile.partials.resume-library')</div>@endunless
+                <div id="profile-panel-security" role="tabpanel" aria-labelledby="profile-tab-security" x-show="tab === 'security'" @if($initialTab !== 'security') x-cloak @endif class="profile-panel-stack">@include('profile.partials.security-settings')</div>
+                @unless($isAdmin)
+                <section id="profile-panel-notifications" role="tabpanel" aria-labelledby="profile-tab-notifications" x-show="tab === 'notifications'" @if($initialTab !== 'notifications') x-cloak @endif class="profile-panel"><header class="profile-section-header"><div><h2>{{ __('Email notifications') }}</h2><p>{{ __('Choose what arrives in your inbox.') }}</p></div></header>@if($user->canAccessEmailNotifications())<form method="post" action="{{ route('profile.notifications.update') }}">@csrf @method('patch')@foreach(['email_notifications_enabled'=>['Email notifications','Turn automated email notifications on or off.'],'notify_goal_reminders'=>['Goal reminders','Receive reminders about your career goals.'],'notify_interview_reminders'=>['Interview reminders','Receive reminders before scheduled interviews.'],'notify_goal_achieved'=>['Goal achievements','Hear when you reach a career goal.']] as $name=>[$label,$help])<label class="profile-preference-row" for="profile-{{ $name }}"><span><strong>{{ __($label) }}</strong><small>{{ __($help) }}</small></span><input id="profile-{{ $name }}" name="{{ $name }}" type="checkbox" role="switch" value="1" class="profile-switch" @checked(old($name,$user->{$name}))></label>@endforeach<div class="profile-form-footer"><span>{{ __('You can change these anytime.') }}</span><button type="submit" class="profile-primary">{{ __('Save preferences') }}</button></div></form>@else<div class="profile-locked"><i class="ph ph-lock" aria-hidden="true"></i><h3>{{ __('Email notifications are a Premium feature') }}</h3><p>{{ __('Upgrade to manage goal and interview reminders.') }}</p><a href="{{ route('payment.premium') }}" class="profile-primary">{{ __('Explore Premium') }}</a></div>@endif</section>
+                <section id="profile-panel-membership" role="tabpanel" aria-labelledby="profile-tab-membership" x-show="tab === 'membership'" @if($initialTab !== 'membership') x-cloak @endif class="profile-panel-stack">@include('profile.partials.membership',$membership)</section>
+                @endunless
+                <section id="profile-panel-activity" role="tabpanel" aria-labelledby="profile-tab-activity" x-show="tab === 'activity'" @if($initialTab !== 'activity') x-cloak @endif class="profile-panel"><header class="profile-section-header"><div><h2>{{ __('Recent account activity') }}</h2><p>{{ __('Your ten most recent account events.') }}</p></div></header><div class="pf-activity-list">@forelse($activities as $activity)<article class="profile-activity-item"><span class="profile-activity-icon"><i class="ph ph-{{ $activity->status === 'success' ? 'check' : 'info' }}" aria-hidden="true"></i></span><div><strong>{{ __(ucwords(str_replace('_',' ',$activity->activity_type))) }}</strong><p>{{ $activity->description }}</p><small>{{ $activity->ip_address ?: __('System event') }}</small></div><time datetime="{{ $activity->created_at->toIso8601String() }}">{{ $activity->created_at->timezone('Asia/Jakarta')->locale(app()->getLocale())->translatedFormat('d M, H:i') }} WIB</time></article>@empty<div class="profile-empty"><i class="ph ph-clock-counter-clockwise" aria-hidden="true"></i><p>{{ __('No account activity recorded yet.') }}</p></div>@endforelse</div></section>
             </div>
         </div>
     </div>
-    @push('modals')
-        <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" maxWidth="md" label="{{ __('Delete account') }}">
-            <div class="profile-delete-dialog"><h2>{{ __('Delete your account?') }}</h2><p>{{ __('Your account and its associated data will be permanently removed. Enter your password to confirm.') }}</p><form action="{{ route('profile.destroy') }}" method="post">@csrf @method('delete')<div class="profile-field"><label for="profile-delete-password">{{ __('Current password') }}</label><input type="password" id="profile-delete-password" name="password" autocomplete="current-password" required>@error('password', 'userDeletion')<p class="profile-field-error">{{ $message }}</p>@enderror</div><div class="profile-form-footer"><button type="button" @click="$dispatch('close')" class="profile-secondary">{{ __('Cancel') }}</button><button type="submit" class="profile-danger-button">{{ __('Delete account') }}</button></div></form></div>
-        </x-modal>
-    @endpush
+    @include('profile.partials.settings-dialog')
+</div>
 </x-dynamic-component>
