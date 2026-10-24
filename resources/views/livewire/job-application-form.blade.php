@@ -33,7 +33,7 @@
                     @if(!empty($previousPositions))
                     <datalist id="{{ $fieldPrefix }}-position-suggestions">
                         @foreach($previousPositions as $pos)
-                            <option value="{{ $pos }}">
+                            <option value="{{ $pos }}"></option>
                         @endforeach
                     </datalist>
                     @endif
