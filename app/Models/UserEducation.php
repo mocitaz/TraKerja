@@ -30,7 +30,6 @@ class UserEducation extends Model
         'start_date' => 'date',
         'end_date' => 'date',
         'is_current' => 'boolean',
-        'gpa' => 'decimal:2',
     ];
 
     public function user(): BelongsTo
