@@ -153,7 +153,8 @@ class Promotions extends Component
         DB::table('job_promotions')->where('id', $this->promotionId)->update([
             'posted_on' => json_encode($posted ?: null),
             'status' => $posted ? 'posted' : 'draft',
-            'posted_at' => $posted ? max(array_column($posted, 'at')) : null,
+            // posted_on keeps ISO strings in JSON; the datetime column needs a plain value (MySQL rejects "+07:00").
+            'posted_at' => $posted ? \Illuminate\Support\Carbon::parse(max(array_column($posted, 'at')))->timezone(config('app.timezone'))->format('Y-m-d H:i:s') : null,
             'post_url' => $posted[$platform]['url'] ?? collect($posted)->pluck('url')->filter()->first(),
             'updated_at' => now(),
         ]);
@@ -221,23 +222,9 @@ class Promotions extends Component
         ];
     }
 
-    /**
-     * ALL-CAPS titles read as shouting on a poster: turn them into title case and keep short acronyms
-     * ("SALES INTERNET RAKYAT (IRA) - C" becomes "Sales Internet Rakyat (IRA) - C").
-     */
+    /** ALL-CAPS titles read as shouting on a poster; see TitleCase. */
     public static function tidyTitle(string $title): string
     {
-        $letters = preg_replace('/[^\p{L}]/u', '', $title);
-        if ($letters === '' || mb_strtoupper($letters) !== $letters) {
-            return $title;
-        }
-
-        return preg_replace_callback('/\p{L}+/u', function ($m) use ($title) {
-            $word = $m[0];
-            $inParens = (bool) preg_match('/\(\s*'.preg_quote($word, '/').'\s*\)/u', $title);
-
-            return mb_strlen($word) === 1 || ($inParens && mb_strlen($word) <= 5) || in_array($word, ['IT', 'HR', 'HRD', 'QA', 'UI', 'UX', 'PT', 'CV', 'SPG', 'SPB', 'CS', 'BD', 'AI', 'SEO', 'CEO', 'CFO', 'CTO', 'B2B', 'F&B'], true)
-                ? $word : mb_convert_case(mb_strtolower($word), MB_CASE_TITLE);
-        }, $title);
+        return \App\JobEngine\Intelligence\TitleCase::tidy($title);
     }
 }

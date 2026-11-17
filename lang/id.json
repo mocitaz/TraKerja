@@ -6191,5 +6191,6 @@
     "post link": "tautan post",
     "Create social promotion": "Buat promosi media sosial",
     ":source: new jobs dropped sharply": ":source: loker baru turun drastis",
-    ":today new jobs in the last 24 hours, usually ~:average per day. The site layout may have changed; check the run history.": ":today loker baru 24 jam terakhir, biasanya ~:average/hari. Kemungkinan tata letak situs berubah; cek riwayat run."
+    ":today new jobs in the last 24 hours, usually ~:average per day. The site layout may have changed; check the run history.": ":today loker baru 24 jam terakhir, biasanya ~:average/hari. Kemungkinan tata letak situs berubah; cek riwayat run.",
+    ":lead +:count countries": ":lead +:count negara"
 }

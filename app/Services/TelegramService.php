@@ -37,6 +37,10 @@ class TelegramService
         if (! $this->enabled || empty($this->token) || empty($chatId) || app()->environment('testing')) {
             return false;
         }
+        // A laptop with a copy of the production .env must not post test users, payments or errors to the admin channel.
+        if (! app()->isProduction() && ! config('services.telegram.allow_non_production')) {
+            return false;
+        }
 
         try {
             $payload = [

@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Livewire\JobApplicationForm;
 use App\Services\JobListingExtractor;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class JobListingExtractionTest extends TestCase
 {

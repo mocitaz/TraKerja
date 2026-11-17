@@ -24,6 +24,8 @@ class VerificationService
         $run = CrawlRun::create(['run_type' => 'verify', 'trigger' => 'manual', 'started_at' => now(), 'status' => 'running', 'worker_host' => gethostname() ?: null]);
         $clients = [];
         $counts = ['open' => 0, 'suspect' => 0, 'closed' => 0, 'blocked' => 0];
+        // Free check first: jobs whose own deadline passed are closed without fetching anything.
+        $counts['closed'] += $this->closeExpired();
 
         $listings = VacancyListing::query()->with('source')
             ->whereIn('status', ['active', 'suspect'])
@@ -48,6 +50,26 @@ class VerificationService
         ]);
 
         return $counts;
+    }
+
+    /**
+     * Close open vacancies whose application deadline (valid_through) passed more than a day ago. The page check
+     * only notices this for JSON-LD sources, so API and ATS jobs could otherwise stay "open" past their deadline.
+     * Updated one by one so the closed-vacancy notifications (Vacancy::booted) still fire.
+     */
+    public function closeExpired(): int
+    {
+        $closed = 0;
+        \App\Models\Vacancy::whereIn('status', ['active', 'suspect'])->whereNotNull('valid_through')
+            ->where('valid_through', '<', now()->subDay())->chunkById(200, function ($vacancies) use (&$closed) {
+                foreach ($vacancies as $vacancy) {
+                    $vacancy->update(['status' => 'closed', 'closed_at' => now(), 'closed_reason' => 'valid_through']);
+                    VacancyListing::where('vacancy_id', $vacancy->id)->whereIn('status', ['active', 'suspect'])->update(['status' => 'closed', 'last_checked_at' => now()]);
+                    $closed++;
+                }
+            });
+
+        return $closed;
     }
 
     public function apply(VacancyListing $listing, array $check): void

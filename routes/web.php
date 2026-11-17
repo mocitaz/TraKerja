@@ -122,9 +122,9 @@ Route::prefix('ai-analyzer')->middleware(['auth', 'verified'])->name('ai-analyze
 // AI Photo Studio routes (Only for regular users)
 Route::prefix('ai-photo')->middleware(['auth', 'verified'])->name('ai-photo.')->group(function () {
     Route::get('/', function() { return redirect()->route('ai-studio.index', ['tab' => 'photo']); })->name('index');
-    Route::post('/process', [\App\Http\Controllers\AiPhotoController::class, 'process'])->name('process');
+    Route::post('/process', [\App\Http\Controllers\AiPhotoController::class, 'process'])->middleware('throttle:10,1')->name('process');
     Route::get('/{aiPhoto}/status', [\App\Http\Controllers\AiPhotoController::class, 'status'])->name('status');
-    Route::post('/{aiPhoto}/retry', [\App\Http\Controllers\AiPhotoController::class, 'retry'])->name('retry');
+    Route::post('/{aiPhoto}/retry', [\App\Http\Controllers\AiPhotoController::class, 'retry'])->middleware('throttle:10,1')->name('retry');
     Route::get('/history', function() { return redirect()->route('ai-studio.index', ['tab' => 'photo']); })->name('history');
     Route::get('/{aiPhoto}', [\App\Http\Controllers\AiPhotoController::class, 'show'])->name('show');
 });
@@ -200,8 +200,8 @@ Route::middleware('auth')->group(function () {
             return app(CvBuilderController::class)->index();
         })->name('cv.builder');
 
-        Route::post('/import-pdf', [\App\Http\Controllers\ResumeParserController::class, 'importPdf'])->name('cv.import-pdf');
-        Route::post('/import-pdf/confirm', [\App\Http\Controllers\ResumeParserController::class, 'confirmImport'])->name('cv.import-pdf.confirm');
+        Route::post('/import-pdf', [\App\Http\Controllers\ResumeParserController::class, 'importPdf'])->middleware('throttle:10,1')->name('cv.import-pdf');
+        Route::post('/import-pdf/confirm', [\App\Http\Controllers\ResumeParserController::class, 'confirmImport'])->middleware('throttle:10,1')->name('cv.import-pdf.confirm');
         Route::get('/site-preview', [\App\Http\Controllers\PortfolioController::class, 'preview'])->name('portfolio.preview');
 
         Route::get('/generator', function () {
@@ -231,7 +231,7 @@ Route::middleware('auth')->group(function () {
                 abort(403, 'Admin cannot access CV builder');
             }
             return app(CvBuilderController::class)->export($request);
-        })->name('cv-builder.export');
+        })->middleware('throttle:10,1')->name('cv-builder.export');
 
         Route::post('/simulate-ats', function (Illuminate\Http\Request $request) {
             if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
@@ -331,17 +331,17 @@ Route::middleware('auth')->group(function () {
         return redirect()->route('automation.index', ['tab' => 'csv']);
     })->name('csv.import');
 
-    Route::post('/csv/import/preview', [JobApplicationImportExportController::class, 'previewImport'])->name('csv.import.preview');
+    Route::post('/csv/import/preview', [JobApplicationImportExportController::class, 'previewImport'])->middleware('throttle:20,1')->name('csv.import.preview');
 
     Route::post('/csv/import', function (Request $request) {
         if (Auth::user()->isAdmin() || Auth::user()->role === 'admin') {
             abort(403, 'Admin cannot import CSV');
         }
         return app(JobApplicationImportExportController::class)->importFromCsv($request);
-    })->name('csv.import.process');
+    })->middleware('throttle:10,1')->name('csv.import.process');
 
-    Route::post('/jobs/scrape-url', [\App\Http\Controllers\JobScraperController::class, 'scrapeUrl'])->name('jobs.scrape-url');
-    Route::post('/jobs/scrape-html', [\App\Http\Controllers\JobScraperController::class, 'scrapeHtml'])->name('jobs.scrape-html');
+    Route::post('/jobs/scrape-url', [\App\Http\Controllers\JobScraperController::class, 'scrapeUrl'])->middleware('throttle:30,1')->name('jobs.scrape-url');
+    Route::post('/jobs/scrape-html', [\App\Http\Controllers\JobScraperController::class, 'scrapeHtml'])->middleware('throttle:30,1')->name('jobs.scrape-html');
 
     Route::get('/membership', [\App\Http\Controllers\MembershipController::class, 'index'])->name('membership.index');
 
@@ -673,9 +673,10 @@ Route::get('/livewire/{file}', function ($file) {
         ->header('Cache-Control', 'public, max-age=31536000');
 })->where('file', '.*');
 
-// Test Error Pages (Development/Testing only)
-// Remove or comment these routes in production
+// Test Error Pages (Development/Testing only). In production /test/error/500 would let anyone trigger
+// "SYSTEM ERROR" Telegram alerts, so the route answers 404 there.
 Route::get('/test/error/{code}', function ($code) {
+    abort_if(app()->isProduction(), 404);
     $allowedCodes = [404, 403, 500, 419, 429, 503];
     if (!in_array((int)$code, $allowedCodes)) {
         abort(404, 'Error code not found');

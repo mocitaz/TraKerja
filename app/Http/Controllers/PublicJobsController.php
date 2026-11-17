@@ -18,6 +18,7 @@ class PublicJobsController extends Controller
     /** Public job search for guests: /loker?q=&lokasi=&remote=1 */
     public function index(Request $request)
     {
+        app()->setLocale('id'); // public SEO pages are written in Indonesian (labels, salary, dates)
         $q = trim(mb_substr((string) $request->query('q', ''), 0, 80));
         $lokasi = trim(mb_substr((string) $request->query('lokasi', ''), 0, 80));
         $remote = $request->boolean('remote');
@@ -53,6 +54,7 @@ class PublicJobsController extends Controller
 
     public function show(string $slug)
     {
+        app()->setLocale('id'); // public SEO pages are written in Indonesian (labels, salary, dates)
         // "{slug}-{ulid}": the id is the last 26 characters.
         $publicId = strtolower(substr($slug, -26));
         $vacancy = Vacancy::with(['company', 'region.parent', 'sector', 'listings.source', 'primaryListing.source'])
@@ -83,6 +85,7 @@ class PublicJobsController extends Controller
 
     public function company(string $slug)
     {
+        app()->setLocale('id'); // public SEO pages are written in Indonesian (labels, salary, dates)
         $company = Company::where('slug', $slug)->firstOrFail();
         $vacancies = Vacancy::visible()->with(['region', 'listings.source', 'primaryListing.source'])
             ->where('company_id', $company->id)->orderByRaw('COALESCE(date_posted, first_seen_at) desc')->paginate(20);

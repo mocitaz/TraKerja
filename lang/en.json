@@ -6191,5 +6191,6 @@
     "post link": "post link",
     "Create social promotion": "Create social promotion",
     ":source: new jobs dropped sharply": ":source: new jobs dropped sharply",
-    ":today new jobs in the last 24 hours, usually ~:average per day. The site layout may have changed; check the run history.": ":today new jobs in the last 24 hours, usually ~:average per day. The site layout may have changed; check the run history."
+    ":today new jobs in the last 24 hours, usually ~:average per day. The site layout may have changed; check the run history.": ":today new jobs in the last 24 hours, usually ~:average per day. The site layout may have changed; check the run history.",
+    ":lead +:count countries": ":lead +:count countries"
 }

@@ -76,8 +76,8 @@ class ProfileController extends Controller
             'phone_number' => ['nullable', 'string', 'max:20'],
             'domicile'     => ['nullable', 'string', 'max:255'],
             'headline'     => ['nullable', 'string', 'max:255'],
-            'linkedin_url' => ['nullable', 'url', 'max:255'],
-            'website_url'  => ['nullable', 'url', 'max:255'],
+            'linkedin_url' => ['nullable', 'url:http,https', 'max:255'],
+            'website_url'  => ['nullable', 'url:http,https', 'max:255'],
             'bio'          => ['nullable', 'string', 'max:1000'],
         ]);
 

@@ -64,6 +64,8 @@ return [
         'bot_token' => env('TELEGRAM_BOT_TOKEN'),
         'channel_id' => env('TELEGRAM_CHANNEL_ID'),
         'enabled' => env('TELEGRAM_NOTIF_ENABLED', false),
+        // Local and staging copies often share the production bot and channel; they stay silent unless this is on.
+        'allow_non_production' => (bool) env('TELEGRAM_ALLOW_NON_PRODUCTION', false),
         'webhook_secret' => env('TELEGRAM_WEBHOOK_SECRET'),
         'allowed_user_ids' => array_values(array_filter(array_map('trim', explode(',', (string) env('TELEGRAM_ALLOWED_USER_IDS', ''))), fn ($id) => $id !== '')),
         'allowed_chat_ids' => array_values(array_filter(array_map('trim', explode(',', (string) env('TELEGRAM_ALLOWED_CHAT_IDS', ''))), fn ($id) => $id !== '')),

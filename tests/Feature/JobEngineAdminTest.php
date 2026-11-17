@@ -126,6 +126,8 @@ class JobEngineAdminTest extends TestCase
     public function test_review_queue_explains_reasons_and_check_clears_it(): void
     {
         $caps = $this->storeVacancy('caps', 'SALES INTERNET RAKYAT SURABAYA');
+        $this->assertSame('Sales Internet Rakyat Surabaya', $caps->title, 'ingest tidies ALL-CAPS titles');
+        $caps->update(['title' => 'SALES INTERNET RAKYAT SURABAYA']); // a title stored before that fix
         $fine = $this->storeVacancy('fine', 'Staff Admin Gudang');
         $fine->update(['enriched_at' => now()]);
         DB::table('vacancy_reports')->insert(['vacancy_id' => $fine->id, 'user_id' => $this->admin()->id, 'reason' => 'closed', 'created_at' => now(), 'updated_at' => now()]);
@@ -218,6 +220,7 @@ class JobEngineAdminTest extends TestCase
         $this->assertSame($vacancy->id, (int) $row->vacancy_id);
         $this->assertSame(['linkedin'], array_keys(json_decode($row->posted_on, true)));
         $this->assertSame('https://www.linkedin.com/posts/abc', $row->post_url);
+        $this->assertMatchesRegularExpression('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', (string) $row->posted_at, 'plain datetime: MySQL rejects ISO strings with an offset');
         $this->assertSame($captions['x'], json_decode($row->captions, true)['x']);
 
         // Reopening the job restores every caption and the posted marks.

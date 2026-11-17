@@ -160,7 +160,7 @@ class IngestService
     {
         $status = $this->status($job);
         $description = PiiScrubber::scrub($job->description);
-        $title = trim(preg_replace('/\s+/u', ' ', (string) $job->title));
+        $title = \App\JobEngine\Intelligence\TitleCase::tidy(trim(preg_replace('/\s+/u', ' ', (string) $job->title)));
 
         // Rule-based Indonesian readers fill only what the source left empty.
         if ($job->salaryMin === null) {

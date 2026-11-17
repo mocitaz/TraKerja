@@ -157,6 +157,22 @@ class JobVerificationTest extends TestCase
         Http::assertNotSent(fn ($r) => str_contains($r->url(), 'api.telegram.org'));
     }
 
+    public function test_vacancies_past_their_deadline_are_closed_without_a_page_check(): void
+    {
+        $expired = $this->storeDealls('expired')->vacancy;
+        $expired->update(['valid_through' => now()->subDays(3)]);
+        $today = $this->storeDealls('today', 'Kasir Toko')->vacancy;
+        $today->update(['valid_through' => now()]); // deadline is today: still open
+
+        $closed = app(\App\JobEngine\Verify\VerificationService::class)->closeExpired();
+
+        $this->assertSame(1, $closed);
+        $this->assertSame('closed', $expired->fresh()->status);
+        $this->assertSame('valid_through', $expired->fresh()->closed_reason);
+        $this->assertSame('closed', $expired->listings()->first()->status);
+        $this->assertSame('active', $today->fresh()->status);
+    }
+
     public function test_tick_is_off_until_enabled(): void
     {
         Queue::fake();

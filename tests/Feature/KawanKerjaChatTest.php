@@ -96,34 +96,24 @@ class KawanKerjaChatTest extends TestCase
         $resOver->assertUnprocessable();
     }
 
+    /** The chat drawer is rendered on every workspace page; replies are formatted client-side in nara-chat.js. */
     public function test_assistant_bubble_includes_copy_action_attributes(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->get(route('dashboard'));
-
-        $response->assertStatus(200);
-        $response->assertSee('kawankerja-copy-btn');
+        $this->actingAs(User::factory()->create())->get(route('dashboard'))->assertOk()->assertSee('id="nara-drawer"', false);
+        $this->assertStringContainsString('copyMessage(', file_get_contents(resource_path('js/nara-chat.js')));
     }
 
     public function test_chat_view_includes_action_card_routes_and_deep_navigation_support(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->get(route('dashboard'));
-
-        $response->assertStatus(200);
-        $response->assertSee('actionRoutes');
-        $response->assertSee('kawankerja-action-card');
+        $this->assertStringContainsString('[action:', file_get_contents(resource_path('js/nara-chat.js')), 'action cards from [action:key|title|subtitle] are rendered');
+        $html = $this->actingAs(User::factory()->create())->get(route('dashboard'))->assertOk()->getContent();
+        foreach (['tracker', 'interviews', 'ai-studio', 'cv-builder', 'explore', 'profile'] as $key) {
+            $this->assertStringContainsString("'{$key}': { url:", $html, "route for action card {$key}");
+        }
     }
 
     public function test_chat_view_includes_star_scorecard_support(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->get(route('dashboard'));
-
-        $response->assertStatus(200);
-        $response->assertSee('kawankerja-star-card');
+        $this->assertStringContainsString('star_scorecard', file_get_contents(resource_path('js/nara-chat.js')));
     }
 }

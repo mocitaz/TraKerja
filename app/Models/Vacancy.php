@@ -79,7 +79,7 @@ class Vacancy extends Model
         if (count($parts) > 3) {
             $lead = in_array('Indonesia', $parts, true) ? 'Indonesia' : $parts[0];
 
-            return $lead.' +'.(count($parts) - 1).' negara';
+            return __(':lead +:count countries', ['lead' => $lead, 'count' => count($parts) - 1]);
         }
 
         return $this->location_text;

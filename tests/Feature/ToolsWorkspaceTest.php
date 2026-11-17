@@ -40,7 +40,7 @@ class ToolsWorkspaceTest extends TestCase
         $document = new \DOMDocument();
         @$document->loadHTML($response->getContent());
         $xpath = new \DOMXPath($document);
-        $this->assertSame(1, $xpath->query('//details[contains(@class, "workspace-ticket") and @open]')->length);
+        $this->assertSame(1, $xpath->query('//details[contains(@class, "support-ticket") and @open]')->length);
     }
 
     public function test_support_validation_keeps_the_original_fields_for_correction(): void
@@ -60,7 +60,7 @@ class ToolsWorkspaceTest extends TestCase
             ->assertOk()->assertSee('Explore Premium')->assertDontSee('id="csvImportForm"', false);
         Setting::set('monetization_enabled', false);
         $this->get(route('automation.index', ['tab' => 'csv']))->assertOk()
-            ->assertSee('Download CSV template')->assertSee('automation-mobile-preview')
+            ->assertSee('Download template')->assertSee('id="csvImportForm"', false)
             ->assertSee('Importing a file again adds new applications.');
         $this->get(route('automation.index'))->assertOk()->assertSee('Copy address')
             ->assertSee('Extension-tagged records')->assertSee('not a connection status.');

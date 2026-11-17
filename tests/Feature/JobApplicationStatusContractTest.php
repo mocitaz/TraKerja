@@ -33,17 +33,19 @@ class JobApplicationStatusContractTest extends TestCase
         $this->assertSame(0, $funnel['Accepted']);
         $this->assertSame(0, $funnel['Rejected']);
         $this->assertSame(2, $funnel['Pending']);
-        $admin = new \App\Livewire\Admin\Analytics;
-        $admin->periodFilter = 'all';
-        $adminMethod = new \ReflectionMethod($admin, 'fetchJobApplicationsByStatus');
-        $this->assertSame([2, 0, 0, 0, 2], $adminMethod->invoke($admin)['data']);
+        // Admin analytics groups by the canonical status, not by the recruitment stage.
+        $admin = Livewire::actingAs(User::factory()->create(['role' => 'admin']))->test(\App\Livewire\Admin\Analytics::class)->set('periodFilter', 'all')->call('loadAnalytics');
+        $this->assertSame([['name' => 'On Process', 'total' => 2]], $admin->get('report')['statuses']);
     }
 
     public function test_explore_saved_job_is_visible_in_process_column(): void
     {
         $user = User::factory()->create();
-        $source = ScraperSource::create(['name' => 'LinkedIn', 'target_domain' => 'linkedin.com', 'seed_url' => 'https://linkedin.com/jobs', 'selectors_config' => []]);
-        $posting = JobPosting::create(['scraper_source_id' => $source->id, 'title' => 'Contract engineer', 'description' => 'An engineering vacancy', 'company_name' => 'Contract Corp', 'location' => 'Bandung', 'raw_url' => 'https://linkedin.com/jobs/contract', 'unique_hash' => md5('contract'), 'status' => 'active']);
+        $this->seed(\Database\Seeders\JobEngineReferenceSeeder::class);
+        app(\App\JobEngine\Ingest\IngestService::class)->ingest(\App\Models\JobSource::where('slug', 'dealls')->first(), new \App\JobEngine\ScrapedJob(
+            source: 'dealls', url: 'https://dealls.com/loker/contract', externalId: 'contract', title: 'Contract engineer', company: 'Contract Corp', city: 'Bandung', extractionMethod: 'jsonld',
+        ));
+        $posting = \App\Models\Vacancy::where('title', 'Contract engineer')->firstOrFail();
         Livewire::actingAs($user)->test(ExploreJobs::class)->call('initiateTrackJob', $posting->id)->call('confirmTrackJob');
         $this->assertDatabaseHas('job_applications', ['user_id' => $user->id, 'application_status' => 'On Process', 'recruitment_stage' => 'Applied']);
         Livewire::actingAs($user)->test(JobKanbanBoard::class)->assertSee('Contract Corp');
