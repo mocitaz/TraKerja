@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Notifications\ActivityNotice;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,6 +16,7 @@ class JobApplication extends Model
 
     protected $fillable = [
         'user_id',
+        'vacancy_id',
         'company_name',
         'position',
         'location',
@@ -97,6 +100,39 @@ class JobApplication extends Model
                 $jobApplication->is_archived = false;
                 $jobApplication->archived_at = null;
             }
+        });
+    }
+
+    /** In-app activity notices for the owner (TraKerja 2.0, Fase 6). */
+    protected static function booted(): void
+    {
+        $label = fn (self $app) => ['position' => (string) $app->position, 'company' => (string) $app->company_name];
+        $url = fn (self $app) => route('jobs.show', $app->id);
+
+        static::created(function (self $app) use ($label, $url) {
+            ActivityNotice::toOwner($app->user_id, new ActivityNotice('application_created', 'ph-briefcase', 'plum',
+                'Application recorded: :position', $label($app), 'At :company. Keep it updated as you move through selection.', $label($app), $url($app)));
+        });
+
+        static::updated(function (self $app) use ($label, $url) {
+            if ($app->wasChanged('application_status') && $app->application_status === 'Accepted') {
+                $notice = new ActivityNotice('application_accepted', 'ph-confetti', 'green', 'Congratulations! You were accepted', [], ':position at :company', $label($app), $url($app));
+            } elseif ($app->wasChanged('application_status') && $app->application_status === 'Rejected') {
+                $notice = new ActivityNotice('application_rejected', 'ph-x-circle', 'grey', 'Application marked as not successful', [], ':position at :company. Every step counts.', $label($app), $url($app));
+            } elseif ($app->wasChanged('interview_date') && $app->interview_date) {
+                $notice = new ActivityNotice('interview_scheduled', 'ph-calendar-check', 'blue', 'Selection scheduled: :position', $label($app),
+                    ':date WIB', ['date' => $app->interview_date->copy()->timezone('Asia/Jakarta')->translatedFormat('d M Y · H:i')], route('interviews'));
+            } elseif ($app->wasChanged('recruitment_stage')) {
+                $notice = new ActivityNotice('stage_changed', 'ph-arrow-circle-right', 'plum', 'New stage: :stage', ['stage' => (string) $app->recruitment_stage], ':position at :company', $label($app), $url($app));
+            } else {
+                return;
+            }
+            ActivityNotice::toOwner($app->user_id, $notice);
+        });
+
+        static::deleted(function (self $app) use ($label) {
+            ActivityNotice::toOwner($app->user_id, new ActivityNotice('application_deleted', 'ph-trash', 'red',
+                'Application deleted: :position', $label($app), 'At :company. It is no longer in your tracker.', $label($app), route('tracker')));
         });
     }
 

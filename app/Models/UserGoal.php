@@ -41,6 +41,8 @@ class UserGoal extends Model
         static::updating(function ($goal) {
             // Check if is_achieved changed from false to true
             if ($goal->isDirty('is_achieved') && $goal->is_achieved && !$goal->getOriginal('is_achieved')) {
+                \App\Notifications\ActivityNotice::toOwner($goal->user_id, new \App\Notifications\ActivityNotice('goal_achieved', 'ph-trophy', 'amber',
+                    'Goal achieved: :title', ['title' => (string) $goal->title], 'Nice work. Set your next target when you are ready.', [], route('dashboard')));
                 try {
                     $user = $goal->user;
                     if ($user && $user->wantsEmailNotification('goal_achieved')) {

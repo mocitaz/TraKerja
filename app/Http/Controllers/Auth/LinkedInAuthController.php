@@ -81,7 +81,7 @@ class LinkedInAuthController extends Controller
                 return redirect()->intended(route('admin.index'))->with('show_admin_welcome_popup', true);
             }
 
-            return redirect()->intended(route('dashboard'))->with('show_telegram_popup', true);
+            return redirect()->intended(\App\Support\WorkspaceHome::path())->with('show_telegram_popup', true);
         }
 
         // User belum ada — buat akun baru
@@ -130,6 +130,6 @@ class LinkedInAuthController extends Controller
 
         Auth::login($newUser, remember: true);
 
-        return redirect()->intended(route('dashboard'))->with('show_telegram_popup', true);
+        return redirect()->intended(\App\Support\WorkspaceHome::path())->with('show_telegram_popup', true);
     }
 }

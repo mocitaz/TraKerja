@@ -49,7 +49,7 @@ class EmailVerificationTest extends TestCase
         $user = User::factory()->unverified()->create();
         $otp = $this->issue($user);
         $this->actingAs($user)->post('/verify-email', ['otp' => $otp])
-            ->assertRedirect(route('dashboard', absolute: false).'?verified=1');
+            ->assertRedirect(route('jobs.explore', absolute: false).'?verified=1');
         $this->assertTrue($user->fresh()->hasVerifiedEmail());
         $this->assertNull(EmailVerificationCode::first()->code_hash);
         Event::assertDispatchedTimes(Verified::class, 1);

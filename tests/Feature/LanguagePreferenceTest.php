@@ -34,7 +34,7 @@ class LanguagePreferenceTest extends TestCase
         $this->withHeader('Accept-Language', 'id-ID,id;q=0.9')->get('/login')
             ->assertOk()->assertHeader('Content-Language', 'en')
             ->assertSee('class="language-switch__flag"', false)
-            ->assertSee('type="radio" name="locale" value="en" checked', false);
+            ->assertSee('name="locale" value="id"', false); // the auth pages offer a one-click switch to the other language
     }
 
     public function test_guest_switch_persists_in_session_and_cookie_and_preserves_local_destination(): void

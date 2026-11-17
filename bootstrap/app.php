@@ -61,6 +61,11 @@ return Application::configure(basePath: dirname(__DIR__))
                 return;
             }
 
+            // Job-engine jobs send their own, clearer alert from failed() (see EngineAlerts).
+            if ($e instanceof \Illuminate\Queue\MaxAttemptsExceededException && preg_match('/App\\\\Jobs\\\\(DiscoverSourceJob|EnrichVacancyJob)/', $e->getMessage())) {
+                return;
+            }
+
             try {
                 app(\App\Services\TelegramService::class)->reportException($e);
             } catch (\Throwable) {

@@ -4,8 +4,6 @@ namespace Tests\Feature;
 
 use App\Livewire\ExploreJobs;
 use App\Livewire\JobApplicationForm;
-use App\Models\JobPosting;
-use App\Models\ScraperSource;
 use App\Models\User;
 use DOMDocument;
 use DOMXPath;
@@ -20,6 +18,7 @@ class UiLanguageReadabilityTest extends TestCase
     public function test_sidebar_uses_readable_tokens_and_indonesian_names(): void
     {
         $this->actingAs(User::factory()->create());
+        app()->setLocale('id');
         $html = view('layouts.sidebar')->render();
         $xpath = $this->dom($html);
         foreach ($xpath->query('//nav/a') as $link) {
@@ -48,10 +47,14 @@ class UiLanguageReadabilityTest extends TestCase
 
     public function test_explore_shows_source_validation_time_and_limits_of_http_check(): void
     {
-        $source = ScraperSource::create(['name' => 'LinkedIn Indonesia', 'target_domain' => 'linkedin.com', 'seed_url' => 'https://linkedin.com/jobs', 'selectors_config' => []]);
-        JobPosting::create(['scraper_source_id' => $source->id, 'title' => 'Engineer', 'company_name' => 'Company', 'description' => 'Description', 'raw_url' => 'https://linkedin.com/jobs/1', 'unique_hash' => md5('job1'), 'status' => 'active', 'last_validated_at' => '2026-10-08 09:30:00']);
+        $this->seed(\Database\Seeders\JobEngineReferenceSeeder::class);
+        app(\App\JobEngine\Ingest\IngestService::class)->ingest(\App\Models\JobSource::where('slug', 'dealls')->first(), new \App\JobEngine\ScrapedJob(
+            source: 'dealls', url: 'https://dealls.com/loker/1', externalId: '1', title: 'Engineer', company: 'Company', city: 'Bekasi', extractionMethod: 'jsonld',
+        ));
+        \App\Models\Vacancy::query()->update(['last_verified_at' => '2026-10-08 02:30:00']);
         $component = Livewire::actingAs(User::factory()->create())->test(ExploreJobs::class);
-        $component->assertSee('Source:')->assertSee('LinkedIn Indonesia')->assertSee('08 Oct 2026 · 09:30')->assertSee('HTTP')->assertSee('not a guarantee that applications are still open');
+        $component->assertSee('Check the original listing before applying.')->assertSee('Latest page check')->assertSee('08 Oct 2026')
+            ->assertSee('An HTTP check confirms page availability, not whether the employer is still hiring.');
         $component->assertDontSee('anti-ghosting')->assertDontSee('real-time')->assertDontSee('thousands')->assertDontSee('Verified');
     }
 

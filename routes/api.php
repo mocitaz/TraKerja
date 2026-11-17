@@ -22,3 +22,10 @@ Route::middleware(['auth:sanctum', \App\Http\Middleware\EnforceAccountRestrictio
 // Telegram Interactive Two-Way Bot Webhook
 Route::post('/telegram/webhook', [\App\Http\Controllers\TelegramWebhookController::class, 'handle'])
     ->middleware(\App\Http\Middleware\VerifyTelegramWebhook::class);
+
+// Read-only vacancy feed (TraKerja 2.0, Fase 6). Keys: php artisan feed:client create <name>
+Route::prefix('v1')->middleware(\App\Http\Middleware\AuthenticateFeedClient::class)->group(function () {
+    Route::get('/vacancies', [\App\Http\Controllers\Api\FeedController::class, 'index'])->name('feed.vacancies');
+    Route::get('/vacancies/{publicId}', [\App\Http\Controllers\Api\FeedController::class, 'show'])->where('publicId', '[0-9A-Za-z]{26}')->name('feed.vacancy');
+    Route::get('/sources', [\App\Http\Controllers\Api\FeedController::class, 'sources'])->name('feed.sources');
+});

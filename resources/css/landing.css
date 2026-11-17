@@ -440,3 +440,23 @@ summary .lp-icon { width:17px; height:17px; transition:transform .2s; }
     .lp-sources-toggle { display:none; }.lp-sources-row { overflow-x:auto; scrollbar-width:thin; }.lp-sources-group[aria-hidden] { display:none; }.lp-sources-rows { mask-image:none; }.lp-sources-track { transform:none; }
     :root { scroll-behavior:auto; } *,*::before,*::after { animation:none !important; transition:none !important; }.lp-hero-portrait { transform:translateX(-50%); }.lp-float-card { transform:none; }.lp-button:hover { transform:none; }
 }
+
+/* TraKerja 2.0: live jobs board (Fase 6) */
+.lp-jobs-stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px; margin:0 0 28px; border:1px solid var(--lp-line); border-radius:22px; overflow:hidden; background:var(--lp-line); }
+.lp-jobs-stats > div { background:var(--lp-bg); padding:20px 22px; }
+.lp-jobs-stats dt { color:var(--lp-muted); font-size:13px; }
+.lp-jobs-stats dd { margin:6px 0 0; font-size:clamp(22px,2.4vw,30px); font-weight:500; letter-spacing:-.03em; color:var(--lp-ink); font-variant-numeric:tabular-nums; }
+.lp-jobs-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin:0; padding:0; list-style:none; }
+.lp-job-card { display:flex; flex-direction:column; gap:6px; height:100%; padding:20px; border:1px solid var(--lp-line); border-radius:20px; background:var(--lp-bg); color:var(--lp-ink); text-decoration:none; transition:border-color .2s, transform .2s; }
+.lp-job-card:hover, .lp-job-card:focus-visible { border-color:var(--lp-plum); transform:translateY(-2px); }
+.lp-job-company { font-size:13px; color:var(--lp-muted); }
+.lp-job-card strong { font-size:17px; font-weight:500; line-height:1.35; letter-spacing:-.01em; }
+.lp-job-meta { font-size:14px; color:var(--lp-muted); }
+.lp-job-foot { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:auto; padding-top:10px; font-size:12.5px; color:var(--lp-muted); }
+.lp-job-open { display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:999px; background:#e3f5ec; color:#17734f; font-weight:500; }
+:root.dark .lp-job-open { background:#173a2c; color:#8fdcb6; }
+.lp-jobs-actions { display:flex; flex-wrap:wrap; align-items:center; gap:18px; margin-top:28px; }
+.lp-jobs-actions p { color:var(--lp-muted); font-size:14px; }
+@media (max-width: 900px) { .lp-jobs-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .lp-jobs-stats { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width: 600px) { .lp-jobs-grid { grid-template-columns:minmax(0,1fr); } }
+@media (prefers-reduced-motion: reduce) { .lp-job-card { transition:none; } .lp-job-card:hover { transform:none; } }

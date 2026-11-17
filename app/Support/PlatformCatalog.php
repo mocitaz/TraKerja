@@ -23,6 +23,14 @@ class PlatformCatalog
         'linkedin' => 'linkedin', 'loker.id' => 'loker', 'microsoft forms' => 'microsoft-forms',
         'pintarnya.com' => 'pintarnya', 'pintarnya' => 'pintarnya', 'skillacademy' => 'skillacademy',
         'talentics' => 'talentics', 'tech in asia' => 'tech-in-asia', 'urbanhire' => 'urbanhire',
+        // Job-engine source names (TraKerja 2.0) and the boards they read.
+        'jobstreet (seek)' => 'jobstreet', 'karirhub kemnaker' => 'karirhub', 'tech in asia jobs' => 'tech-in-asia',
+        'himalayas' => 'himalayas', 'jobicy' => 'jobicy', 'we work remotely' => 'weworkremotely',
+        'greenhouse' => 'greenhouse', 'greenhouse job boards' => 'greenhouse', 'lever' => 'lever', 'lever postings' => 'lever',
+        'workable' => 'workable', 'workable job boards' => 'workable', 'ashby' => 'ashby', 'ashby job boards' => 'ashby',
+        'smartrecruiters' => 'smartrecruiters', 'smartrecruiters postings' => 'smartrecruiters',
+        'careerjet' => 'careerjet', 'careerjet (official api)' => 'careerjet', 'jooble' => 'jooble', 'jooble (official api)' => 'jooble',
+        'remoteok' => 'remoteok', 'remotive' => 'remotive',
     ];
 
     public static function nameForDomain(?string $domain): ?string
@@ -35,6 +43,10 @@ class PlatformCatalog
             'jora.com' => 'Jora', 'karir.com' => 'Karir.com', 'kitalulus.com' => 'KitaLulus',
             'loker.id' => 'Loker.id', 'disnakerja.com' => 'Disnakerja.com', 'cakeresume.com' => 'Cake: Cari Lowongan',
             'cake.me' => 'Cake: Cari Lowongan', 'pintarnya.com' => 'Pintarnya.com',
+            'himalayas.app' => 'Himalayas', 'jobicy.com' => 'Jobicy', 'weworkremotely.com' => 'We Work Remotely',
+            'greenhouse.io' => 'Greenhouse', 'lever.co' => 'Lever', 'workable.com' => 'Workable', 'ashbyhq.com' => 'Ashby',
+            'smartrecruiters.com' => 'SmartRecruiters', 'jooble.org' => 'Jooble', 'careerjet.co.id' => 'Careerjet',
+            'remoteok.com' => 'RemoteOK', 'remotive.com' => 'Remotive',
         ] as $knownHost => $name) {
             if ($host === $knownHost || str_ends_with($host, '.'.$knownHost)) return $name;
         }

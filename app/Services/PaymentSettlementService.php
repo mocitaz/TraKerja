@@ -83,6 +83,8 @@ class PaymentSettlementService
                 ActivityLogger::log($isAddon ? 'top_up' : 'premium_upgrade',
                     $isAddon ? 'User melakukan Top Up Add-On' : 'User upgrade ke akun Premium',
                     'success', ['order_id' => $locked->order_id, 'amount' => $locked->amount], $user->id);
+                rescue(fn () => $user->notify(new \App\Notifications\ActivityNotice($isAddon ? 'payment_topup' : 'payment_premium', 'ph-seal-check', 'green',
+                    $isAddon ? 'Top-up successful' : 'Premium is active', [], 'Payment :order received.', ['order' => $locked->order_id], route('profile.edit'))), null, false);
                 try {
                     Mail::to($user)->send(new PaymentSuccessMail($locked));
                 } catch (\Exception $e) {

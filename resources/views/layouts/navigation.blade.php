@@ -1,5 +1,11 @@
 @php
-    $navigationLinks = [
+    // TraKerja 2.0: once Explore is live it is the home tab and the dashboard follows the tracker.
+    $navigationLinks = \App\Support\WorkspaceHome::exploreLive() ? [
+        ['route' => 'jobs.explore', 'match' => 'jobs.explore', 'label' => __('Explore Jobs')],
+        ['route' => 'tracker', 'match' => ['tracker', 'jobs.show'], 'label' => __('Applications')],
+        ['route' => 'dashboard', 'match' => 'dashboard', 'label' => __('Dashboard')],
+        ['route' => 'summary', 'match' => 'summary', 'label' => __('Summary')],
+    ] : [
         ['route' => 'dashboard', 'match' => 'dashboard', 'label' => __('Home')],
         ['route' => 'tracker', 'match' => ['tracker', 'jobs.show'], 'label' => __('Applications')],
         ['route' => 'jobs.explore', 'match' => 'jobs.explore', 'label' => __('Explore Jobs')],
@@ -9,7 +15,7 @@
 @endphp
 <header id="workspace-navigation" class="workspace-navigation" x-data="{ profileOpen: false, mobileOpen: false }">
     <nav class="workspace-topbar" aria-label="{{ __('Main navigation') }}">
-        <a href="{{ route('dashboard') }}" wire:navigate class="workspace-brand" aria-label="{{ __('TraKerja home') }}">
+        <a href="{{ url(\App\Support\WorkspaceHome::path()) }}" wire:navigate class="workspace-brand" aria-label="{{ __('TraKerja home') }}">
             <img src="{{ asset('images/icon.png') }}" alt="" width="28" height="28"><span>{{ __('TraKerja') }}</span>
         </a>
         <div class="workspace-desktop-links">
@@ -43,6 +49,7 @@
                 <i class="ph-bold ph-sun theme-icon-sun" aria-hidden="true"></i>
                 <i class="ph-bold ph-moon theme-icon-moon" aria-hidden="true"></i>
             </button>
+            <livewire:layout.inbox-bell />
             <div class="relative" @click.outside="profileOpen = false" @keydown.escape.stop="profileOpen = false; $refs.profileButton.focus()">
                 <button type="button" x-ref="profileButton" @click="profileOpen = !profileOpen; mobileOpen = false" aria-label="{{ __('Account menu for :value1', ['value1' => ($user->name)]) }}" aria-controls="workspace-profile" aria-expanded="false" :aria-expanded="profileOpen.toString()" class="workspace-profile-trigger">
                     <img src="{{ $user->avatar_url }}" alt="" class="workspace-avatar">

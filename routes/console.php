@@ -33,11 +33,36 @@ Schedule::command('jobs:archive-old-declined')
     ->timezone('Asia/Jakarta')
     ->description('Archive old job applications with Declined status or Not Processed stage');
 
-// Schedule dead-link check for job postings (Anti-Ghost Jobs)
-Schedule::command('jobs:validate-dead-links --limit=100')
-    ->dailyAt('03:00')
-    ->timezone('Asia/Jakarta')
-    ->description('Validate active job postings URLs for dead-links and footprint markers');
+// The Laravel scraper is frozen (TraKerja 2.0 Blueprint, Fase 0) until it is rebuilt in
+// Fase 2 with cross-platform dedup and a proper closed-job verifier. The old dead-link check is no longer
+// scheduled because it marks open jobs as closed when any page contains words such as
+// "closed" or "expired". Run `php artisan jobs:audit` to inspect the existing data.
+
+// Job-data engine (TraKerja 2.0). Every command is a no-op until JOB_ENGINE_SCHEDULE_ENABLED=true.
+if (config('job_sources.schedule_enabled')) {
+    Schedule::command('jobs:tick')->everyFifteenMinutes()->withoutOverlapping()
+        ->description('Queue discovery for job sources whose adaptive interval has passed');
+    Schedule::command('jobs:verify')->hourly()->withoutOverlapping(120)->runInBackground()
+        ->description('Check whether stored vacancies are still open');
+    Schedule::command('jobs:enrich --queue --limit=500')->everyThirtyMinutes()->withoutOverlapping()
+        ->description('Queue AI enrichment for new vacancies (within the daily AI budget)');
+    Schedule::command('jobs:embed --limit=1000')->hourlyAt(40)->withoutOverlapping()
+        ->description('Embed new vacancies for CV match scores');
+    Schedule::command('jobs:alerts')->dailyAt('07:30')->timezone('Asia/Jakarta')->withoutOverlapping()
+        ->description('Send saved-search alerts for new matching vacancies');
+    Schedule::command('jobs:housekeeping')->dailyAt('03:15')->timezone('Asia/Jakarta')->withoutOverlapping()
+        ->description('Archive long-closed vacancies, prune logs, weekly QA sample, retry failed engine jobs');
+    Schedule::command('jobs:daily-report')->dailyAt('08:00')->timezone('Asia/Jakarta')
+        ->description('Daily job-engine summary to the admin Telegram channel');
+    Schedule::command('jobs:dedup --no-ai')->dailyAt('04:00')->timezone('Asia/Jakarta')->withoutOverlapping()
+        ->description('Merge duplicates the ingest-time matcher missed (no AI)');
+}
+
+// Job-engine watchdog: stuck queues, failed jobs, stale scrapers, verification and AI budget, alerted on
+// Telegram once per problem (and again when it is resolved). Runs even with the engine schedule off, because
+// the queue checks also cover the other workers.
+Schedule::command('jobs:watchdog')->everyTenMinutes()->withoutOverlapping()
+    ->description('Alert on stuck queues, failed jobs, stale scrapers and AI budget (Telegram)');
 
 // Telegram Admin Channel: Daily Morning Briefing (10:00 WIB)
 Schedule::command('report:telegram-daily morning')

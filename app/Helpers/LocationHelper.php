@@ -77,7 +77,7 @@ class LocationHelper
         ],
         'Jawa Tengah' => [
             // Kota otonom
-            'Kota Magelang', 'Kota Pekalongan', 'Kota Salatiga', 'Kota Semarang', 'Kota Surakarta',
+            'Kota Magelang', 'Kota Pekalongan', 'Kota Salatiga', 'Kota Semarang', 'Kota Surakarta', 'Kota Tegal',
             // Kabupaten
             'Kabupaten Banjarnegara', 'Kabupaten Banyumas', 'Kabupaten Batang', 'Kabupaten Blora',
             'Kabupaten Boyolali', 'Kabupaten Brebes', 'Kabupaten Cilacap', 'Kabupaten Demak',
@@ -515,46 +515,6 @@ class LocationHelper
         }
         
         return 'Lainnya';
-    }
-
-    /**
-     * Get statistics of jobs per province and city.
-     */
-    public static function getLocationStatistics(): array
-    {
-        $jobLocations = \App\Models\JobPosting::where('status', 'active')
-            ->whereNotNull('location')
-            ->select('location', \DB::raw('count(*) as count'))
-            ->groupBy('location')
-            ->get();
-            
-        $stats = [];
-        
-        foreach ($jobLocations as $item) {
-            $city = $item->location;
-            $count = $item->count;
-            $province = self::getProvinceForCity($city);
-            
-            if (!isset($stats[$province])) {
-                $stats[$province] = [
-                    'count' => 0,
-                    'cities' => []
-                ];
-            }
-            
-            $stats[$province]['count'] += $count;
-            $stats[$province]['cities'][] = [
-                'name' => $city,
-                'count' => $count
-            ];
-        }
-        
-        // Sort provinces by job count descending
-        uasort($stats, function ($a, $b) {
-            return $b['count'] <=> $a['count'];
-        });
-        
-        return $stats;
     }
 
     /**

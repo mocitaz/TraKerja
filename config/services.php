@@ -64,6 +64,8 @@ return [
         'bot_token' => env('TELEGRAM_BOT_TOKEN'),
         'channel_id' => env('TELEGRAM_CHANNEL_ID'),
         'enabled' => env('TELEGRAM_NOTIF_ENABLED', false),
+        // Local and staging copies often share the production bot and channel; they stay silent unless this is on.
+        'allow_non_production' => (bool) env('TELEGRAM_ALLOW_NON_PRODUCTION', false),
         'webhook_secret' => env('TELEGRAM_WEBHOOK_SECRET'),
         'allowed_user_ids' => array_values(array_filter(array_map('trim', explode(',', (string) env('TELEGRAM_ALLOWED_USER_IDS', ''))), fn ($id) => $id !== '')),
         'allowed_chat_ids' => array_values(array_filter(array_map('trim', explode(',', (string) env('TELEGRAM_ALLOWED_CHAT_IDS', ''))), fn ($id) => $id !== '')),
@@ -80,8 +82,26 @@ return [
         ],
     ],
 
+    // Jooble official job API (free key: https://jooble.org/api/about). Used by the job engine.
+    'jooble' => [
+        'key' => env('JOOBLE_API_KEY'),
+    ],
+
     'openai' => [
         'key' => env('OPENAI_API_KEY'),
+
+        // Job-data engine only (scraping, extraction, cleanup). Uses its own key so it never
+        // activates the admin copilot's OpenAI fallback, and has its own daily spending cap.
+        'jobs' => [
+            'key' => env('OPENAI_JOBS_API_KEY'),
+            'model' => env('OPENAI_JOBS_MODEL', 'gpt-5-nano'),
+            'fallback_model' => env('OPENAI_JOBS_MODEL_FALLBACK', 'gpt-5-mini'),
+            'embedding_model' => env('OPENAI_JOBS_EMBEDDING_MODEL', 'text-embedding-3-small'),
+            // 'flex' is about half the standard price in exchange for slower, occasionally queued responses;
+            // fine for background extraction. Use 'default' only for interactive needs.
+            'service_tier' => env('OPENAI_JOBS_SERVICE_TIER', 'flex'),
+            'daily_budget_usd' => (float) env('OPENAI_JOBS_DAILY_BUDGET_USD', 0.25),
+        ],
     ],
 
 ];

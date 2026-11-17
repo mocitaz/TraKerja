@@ -100,7 +100,7 @@ class LandingPageTest extends TestCase
         Cache::put('setting_monetization_enabled', false);
         \Illuminate\Support\Facades\Auth::setUser(new \App\Models\User(['name' => 'Preview user']));
         $html = view('welcome')->render();
-        $this->assertStringContainsString('href="'.url('/dashboard').'"', $html);
+        $this->assertStringContainsString('href="'.url('/explore').'"', $html); // TraKerja 2.0: Explore is home
         $this->assertStringContainsString('href="'.url('/cv/builder').'"', $html);
         $this->assertStringContainsString('href="'.url('/ai-studio').'"', $html);
         $this->assertStringNotContainsString('href="'.route('register').'"', $html);

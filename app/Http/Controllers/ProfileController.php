@@ -76,8 +76,8 @@ class ProfileController extends Controller
             'phone_number' => ['nullable', 'string', 'max:20'],
             'domicile'     => ['nullable', 'string', 'max:255'],
             'headline'     => ['nullable', 'string', 'max:255'],
-            'linkedin_url' => ['nullable', 'url', 'max:255'],
-            'website_url'  => ['nullable', 'url', 'max:255'],
+            'linkedin_url' => ['nullable', 'url:http,https', 'max:255'],
+            'website_url'  => ['nullable', 'url:http,https', 'max:255'],
             'bio'          => ['nullable', 'string', 'max:1000'],
         ]);
 
@@ -131,6 +131,8 @@ class ProfileController extends Controller
             'notify_goal_reminders' => $request->boolean('notify_goal_reminders'),
             'notify_interview_reminders' => $request->boolean('notify_interview_reminders'),
             'notify_goal_achieved' => $request->boolean('notify_goal_achieved'),
+            'notify_job_alerts' => $request->boolean('notify_job_alerts'),
+            'notify_job_closed' => $request->boolean('notify_job_closed'),
         ]);
 
         ActivityLogger::log(

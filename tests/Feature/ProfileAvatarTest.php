@@ -112,7 +112,7 @@ class ProfileAvatarTest extends TestCase
 
         $response = $this->get(route('auth.google.callback'));
 
-        $response->assertRedirect(route('dashboard'));
+        $response->assertRedirect(route('jobs.explore')); // TraKerja 2.0: Explore is home
         $this->assertAuthenticatedAs($user);
         $fresh = $user->fresh();
         $this->assertSame('google-12345', $fresh->google_id);

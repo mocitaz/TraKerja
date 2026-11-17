@@ -19,12 +19,11 @@ return new class extends Migration
         }
 
         // Auto-backfill locations for already scraped job postings using title/description scanning
-        \App\Models\JobPosting::chunk(100, function ($postings) {
+        // Query builder instead of the old JobPosting model, which was removed with the legacy scraper.
+        \Illuminate\Support\Facades\DB::table('job_postings')->select('id', 'title', 'description')->orderBy('id')->chunkById(100, function ($postings) {
             foreach ($postings as $posting) {
                 $classification = \App\Helpers\LocationHelper::classify('', $posting->title, $posting->description);
-                $posting->update([
-                    'location' => $classification['city']
-                ]);
+                \Illuminate\Support\Facades\DB::table('job_postings')->where('id', $posting->id)->update(['location' => $classification['city']]);
             }
         });
     }

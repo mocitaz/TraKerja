@@ -28,14 +28,14 @@ class JobApplicationExportTest extends TestCase
         fwrite($file, substr($csv, 3));
         rewind($file);
         $header = fgetcsv($file, 0, ',', '"', '');
-        $this->assertSame(['Company Name', 'Position', 'Location', 'Platform', 'Application Status', 'Recruitment Stage', 'Career Level', 'Application Date', 'Platform Link', 'Notes', 'Interview Date', 'Interview Type', 'Interview Location', 'Interview Notes', 'CSV Encoding'], $header);
+        $this->assertSame(['Company Name', 'Position', 'Location', 'Platform', 'Application Status', 'Recruitment Stage', 'Career Level', 'Application Date', 'Platform Link', 'Notes', 'Interview Date', 'Interview Type', 'Interview Location', 'Interview Notes', 'Interview Platform', 'CSV Encoding'], $header);
         $rows = [];
         while (($row = fgetcsv($file, 0, ',', '"', '')) !== false) $rows[] = $row;
         fclose($file);
         $this->assertCount(3, $rows);
         $this->assertSame('Test Company', $rows[0][0]);
         $this->assertSame('Software Engineer', $rows[0][1]);
-        $this->assertSame('trakerja-v1', $rows[0][14]);
+        $this->assertSame('trakerja-v1', $rows[0][15]);
         $this->assertStringNotContainsString('EXPORT SUMMARY', $csv);
     }
 

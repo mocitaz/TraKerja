@@ -2,10 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Jobs\ScrapeJobDetailsJob;
-use App\Models\JobPosting;
-use App\Models\ScraperSource;
-use App\Services\DeadLinkDetector;
 use App\Services\PublicDnsResolver;
 use App\Services\ScraperPageFetcher;
 use Illuminate\Contracts\Console\Kernel;
@@ -14,6 +10,7 @@ use Illuminate\Validation\ValidationException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
+/** The autofill renderer client (ScraperPageFetcher) must never reach private addresses. */
 class ScraperEgressSecurityTest extends TestCase
 {
     public function createApplication()
@@ -43,69 +40,6 @@ class ScraperEgressSecurityTest extends TestCase
         $resolver = \Mockery::mock(PublicDnsResolver::class);
         $resolver->shouldReceive('resolve')->andReturn($addresses);
         $this->app->instance(PublicDnsResolver::class, $resolver);
-    }
-
-    public function test_discovery_rejects_private_seed_before_any_http_request(): void
-    {
-        Http::fake(['*' => Http::response(['success' => true, 'html' => '<a href="https://linkedin.com/jobs/view/1">job</a>', 'title' => 'Jobs'])]);
-        $source = new ScraperSource(['target_domain' => 'linkedin.com', 'seed_url' => 'http://127.0.0.1/admin']);
-        $this->assertSame([], $source->executeDiscovery());
-        Http::assertNothingSent();
-    }
-
-    public function test_discovery_filters_by_parsed_host_and_resolves_relative_job_links(): void
-    {
-        $html = '<a href="https://linkedin.com.attacker.test/jobs/view/1">bad</a>'
-            .'<a href="https://attacker.test/jobs/view/2?linkedin.com">bad</a>'
-            .'<a href="https://glints.com/jobs/view/3">other portal</a>'
-            .'<a href="//127.0.0.1/jobs/view/4">private</a>'
-            .'<a href="https://user:pass@linkedin.com/jobs/view/5">credentials</a>'
-            .'<a href="/jobs/view/6">root relative</a>'
-            ."<a href='view/7'>relative</a>"
-            .'<a href="https://id.linkedin.com/jobs/view/8">valid subdomain</a>';
-        Http::fake(['*' => Http::response(['success' => true, 'html' => $html, 'title' => 'Jobs'])]);
-        $source = new ScraperSource(['target_domain' => 'linkedin.com', 'seed_url' => 'https://linkedin.com/jobs/search']);
-        $this->assertSame(['https://linkedin.com/jobs/view/6', 'https://linkedin.com/jobs/view/7',
-            'https://id.linkedin.com/jobs/view/8'], $source->executeDiscovery());
-    }
-
-    public static function supportedDiscoveryCases(): array
-    {
-        return [
-            ['jobstreet.co.id', '<a href="/job/1">job</a><a href="/jobs/2">job</a><a href="/about">no</a>',
-                ['https://jobstreet.co.id/job/1', 'https://jobstreet.co.id/jobs/2']],
-            ['kalibrr.com', '<a href="/c/example/jobs/1">job</a><a href="/jobs/2">no</a>',
-                ['https://kalibrr.com/c/example/jobs/1']],
-            ['glints.com', '<a href="/opportunities/jobs/1">job</a><a href="https://glints.com.evil.test/">no</a>',
-                ['https://glints.com/opportunities/jobs/1']],
-        ];
-    }
-
-    #[DataProvider('supportedDiscoveryCases')]
-    public function test_supported_discovery_paths_are_preserved(string $domain, string $html, array $expected): void
-    {
-        Http::fake(['*' => Http::response(['success' => true, 'html' => $html, 'title' => 'Jobs'])]);
-        $source = new ScraperSource(['target_domain' => $domain, 'seed_url' => 'https://'.$domain.'/search']);
-        $this->assertSame($expected, $source->executeDiscovery());
-    }
-
-    public function test_discovery_rejects_subdomain_with_private_dns_and_keeps_ten_unique_links(): void
-    {
-        $resolver = \Mockery::mock(PublicDnsResolver::class);
-        $resolver->shouldReceive('resolve')->with('linkedin.com')->times(11)->andReturn(['93.184.216.34']);
-        $resolver->shouldReceive('resolve')->with('private.linkedin.com')->once()->andReturn(['10.0.0.1']);
-        $this->app->instance(PublicDnsResolver::class, $resolver);
-        $html = '<a href="https://private.linkedin.com/jobs/view/99">no</a>';
-        for ($i = 0; $i < 12; $i++) {
-            $html .= '<a href="/jobs/view/'.$i.'">job</a><a href="/jobs/view/'.$i.'">duplicate</a>';
-        }
-        Http::fake(['*' => Http::response(['success' => true, 'html' => $html, 'title' => 'Jobs'])]);
-        $source = new ScraperSource(['target_domain' => 'linkedin.com', 'seed_url' => 'https://linkedin.com/search']);
-        $this->assertSame(['https://linkedin.com/jobs/view/0', 'https://linkedin.com/jobs/view/1',
-            'https://linkedin.com/jobs/view/2', 'https://linkedin.com/jobs/view/3',
-            'https://linkedin.com/jobs/view/4', 'https://linkedin.com/jobs/view/5',
-            'https://linkedin.com/jobs/view/6', 'https://linkedin.com/jobs/view/7',
-            'https://linkedin.com/jobs/view/8', 'https://linkedin.com/jobs/view/9'], $source->executeDiscovery());
     }
 
     public function test_microservice_is_authenticated_and_receives_only_validated_url(): void
@@ -201,45 +135,5 @@ class ScraperEgressSecurityTest extends TestCase
         } catch (ValidationException) {
             Http::assertSentCount(1);
         }
-    }
-
-    public function test_dead_link_check_rejects_private_urls_without_http(): void
-    {
-        Http::fake(['*' => Http::response('active')]);
-        $posting = new JobPosting(['raw_url' => 'http://169.254.169.254/latest/meta-data']);
-        $this->assertSame('escalate', (new DeadLinkDetector)->validate($posting));
-        Http::assertNothingSent();
-    }
-
-    public static function deadLinkCases(): array
-    {
-        return [[404, '', 'closed'], [200, 'This listing is closed', 'closed'],
-            [200, 'Apply here', 'active'], [403, '', 'escalate']];
-    }
-
-    #[DataProvider('deadLinkCases')]
-    public function test_dead_link_check_preserves_closed_active_and_blocked_results(int $status, string $body, string $expected): void
-    {
-        $posting = new JobPosting(['raw_url' => 'https://linkedin.com/jobs/view/42']);
-        Http::fake(['*' => Http::response($body, $status)]);
-        $this->assertSame($expected, (new DeadLinkDetector)->validate($posting));
-        Http::assertSentCount(1);
-    }
-
-    public function test_extraction_rejects_unsafe_url_without_http_or_persistence(): void
-    {
-        Http::fake(['*' => Http::response(['success' => true, 'html' => '<h1>Private</h1>', 'title' => 'Private'])]);
-        $job = new class('http://169.254.169.254/latest/meta-data', new ScraperSource(['name' => 'Test'])) extends ScrapeJobDetailsJob
-        {
-            protected function recordMetric(bool $isSuccess): void {}
-        };
-        $failed = false;
-        try {
-            $job->handle();
-        } catch (\Exception) {
-            $failed = true;
-        }
-        $this->assertTrue($failed);
-        Http::assertNothingSent();
     }
 }

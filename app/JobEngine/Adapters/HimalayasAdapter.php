@@ -1,0 +1,65 @@
+<?php
+
+namespace App\JobEngine\Adapters;
+
+use App\JobEngine\Http\PoliteHttpClient;
+use App\JobEngine\ScrapedJob;
+use App\JobEngine\Vocabulary;
+
+/** Himalayas public API (offset paging; ?page= HTML paths are disallowed, the API is not). */
+class HimalayasAdapter implements SourceAdapter
+{
+    public function slug(): string
+    {
+        return 'himalayas';
+    }
+
+    public function discover(PoliteHttpClient $http, array $config, int $limit, ?callable $isKnown = null): iterable
+    {
+        $yielded = 0;
+        for ($offset = 0; $offset < 200 && $yielded < $limit; $offset += 20) {
+            $jobs = $http->getJson("https://himalayas.app/jobs/api?limit=20&offset={$offset}")['jobs'] ?? [];
+            if ($jobs === []) {
+                return;
+            }
+            foreach ($jobs as $job) {
+                // Eligibility is judged on the full list; the shortened label is only for display.
+                $countries = (array) ($job['locationRestrictions'] ?? []);
+                $restrictions = self::locationLabel($countries);
+                $full = implode(', ', array_map(fn ($c) => is_array($c) ? (string) ($c['name'] ?? '') : (string) $c, $countries));
+                if (! RemoteEligibility::openToIndonesia($full)) {
+                    continue;
+                }
+                if ($yielded++ >= $limit) {
+                    return;
+                }
+
+                yield new ScrapedJob(
+                    source: 'himalayas', url: $job['applicationLink'] ?? $job['guid'] ?? '', externalId: (string) ($job['guid'] ?? md5($job['title'].$job['companyName'])),
+                    title: $job['title'] ?? null, company: $job['companyName'] ?? null, companyLogo: $job['companyLogo'] ?? null,
+                    locationText: $restrictions ?: 'Worldwide', workMode: 'remote',
+                    employmentType: Vocabulary::employmentType($job['employmentType'] ?? null),
+                    salaryMin: isset($job['minSalary']) ? (int) $job['minSalary'] : null,
+                    salaryMax: isset($job['maxSalary']) ? (int) $job['maxSalary'] : null,
+                    salaryCurrency: $job['currency'] ?? null, salaryPeriod: isset($job['minSalary']) ? (Vocabulary::salaryPeriod($job['salaryPeriod'] ?? null) ?? 'year') : null,
+                    datePosted: isset($job['pubDate']) ? date('Y-m-d', (int) $job['pubDate']) : null,
+                    validThrough: isset($job['expiryDate']) ? date('Y-m-d', (int) $job['expiryDate']) : null,
+                    description: isset($job['description']) ? trim(strip_tags(html_entity_decode($job['description']))) : null,
+                    applyUrl: $job['applicationLink'] ?? null, isOpen: true, extractionMethod: 'api',
+                    raw: array_diff_key($job, ['description' => true, 'excerpt' => true]),
+                );
+            }
+        }
+    }
+
+    /** Eligible countries as a short label: long lists (often every country) become "Worldwide". */
+    public static function locationLabel(array $countries): string
+    {
+        $names = array_values(array_filter(array_map(fn ($c) => trim(is_array($c) ? (string) ($c['name'] ?? '') : (string) $c), $countries)));
+
+        return match (true) {
+            $names === [] || count($names) > 20 => 'Worldwide',
+            default => implode(', ', $names),
+        };
+    }
+}

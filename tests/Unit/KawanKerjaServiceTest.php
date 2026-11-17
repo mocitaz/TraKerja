@@ -115,7 +115,7 @@ class KawanKerjaServiceTest extends TestCase
 
         $user = User::factory()->create();
         $service = new KawanKerjaService();
-        $result = $service->chat('Halo', $user);
+        $result = $service->chat('Bagaimana cara menyiapkan interview?', $user); // "Halo" alone is answered locally as a greeting
 
         $this->assertTrue($result['success']);
         $this->assertStringContainsString('fallback model', $result['reply']);
@@ -156,7 +156,7 @@ class KawanKerjaServiceTest extends TestCase
 
         $user = User::factory()->create();
         $service = new KawanKerjaService();
-        $result = $service->chat('Halo', $user);
+        $result = $service->chat('Bagaimana cara menyiapkan interview?', $user); // "Halo" alone is answered locally as a greeting
 
         $this->assertFalse($result['success']);
         $this->assertStringContainsString('sedang tidak tersedia', $result['reply']);

@@ -11,6 +11,7 @@ Disallow: /cv/
 
 # Sitemap
 Sitemap: https://trakerja.com/sitemap.xml
+Sitemap: https://trakerja.com/sitemap-loker.xml
 
 # Crawl-delay
 Crawl-delay: 10

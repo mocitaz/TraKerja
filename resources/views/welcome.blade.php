@@ -21,7 +21,7 @@
 </head>
 <body class="landing-page" id="top">
     @php
-        $workspaceUrl = auth()->check() ? url('/dashboard') : route('register');
+        $workspaceUrl = auth()->check() ? url(\App\Support\WorkspaceHome::path()) : route('register');
         $cvUrl = auth()->check() ? url('/cv/builder') : route('register');
         $studioUrl = auth()->check() ? url('/ai-studio') : route('register');
     @endphp
@@ -29,6 +29,7 @@
     @include('landing.navigation')
     <main id="main">
         @include('landing.hero')
+        {{-- Jobs-today board hidden for now; restore with @include('landing.jobs') --}}
         @include('landing.demo')
         @include('landing.story')
         @include('landing.ai')
