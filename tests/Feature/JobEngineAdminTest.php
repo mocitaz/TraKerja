@@ -202,9 +202,12 @@ class JobEngineAdminTest extends TestCase
         foreach (PromoWriterAlias::PLATFORMS as $key => [, $limit]) {
             $this->assertLessThanOrEqual($limit, mb_strlen($captions[$key]), $key);
         }
-        $this->assertStringContainsString('utm_source=threads', $captions['threads']);
-        $this->assertStringContainsString('utm_source=linkedin', $captions['linkedin']);
-        $this->assertStringContainsString('utm_source=x', $captions['x']);
+        $this->assertStringContainsString("/l/{$vacancy->id}/t", $captions['threads']);
+        $this->assertStringContainsString("/l/{$vacancy->id}/l", $captions['linkedin']);
+        $this->assertStringContainsString("/l/{$vacancy->id}/x", $captions['x']);
+        $this->assertStringNotContainsString('utm_', $captions['threads'], 'short link, tags are added on redirect');
+        $this->get("/l/{$vacancy->id}/l")->assertRedirect()->assertRedirectContains('utm_source=linkedin');
+        $this->get("/l/{$vacancy->id}")->assertRedirect();
         $this->assertStringNotContainsString('http', $captions['instagram'], 'Instagram links are not clickable: point to the bio');
         $this->assertStringContainsString('bio', $captions['instagram']);
 

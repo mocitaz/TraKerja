@@ -27,6 +27,9 @@ class PromoWriter
         'whatsapp' => ['WhatsApp / Telegram', 1500, 'url', null],
     ];
 
+    /** One-letter platform codes used in short links (trakerja.com/l/{id}/{code}). */
+    public const SHORT_CODES = ['t' => 'threads', 'i' => 'instagram', 'l' => 'linkedin', 'x' => 'x', 'w' => 'whatsapp'];
+
     public function __construct(private AiGateway $ai) {}
 
     /** @return array{headline: string, highlights: array<int, string>, captions: array<string, string>, caption: string, ai: bool} */
@@ -53,9 +56,12 @@ class PromoWriter
         ];
     }
 
+    /** Short link such as https://trakerja.com/l/158/t; it redirects to the job page with UTM tags for the platform. */
     public static function link(Vacancy $v, string $platform = 'threads'): string
     {
-        return $v->public_path.'?utm_source='.$platform.'&utm_medium=social&utm_campaign=promo';
+        $code = array_search($platform, self::SHORT_CODES, true) ?: 't';
+
+        return route('loker.short', ['id' => $v->id, 'platform' => $code]);
     }
 
     /** Fit a caption to its platform: limit, link handling and the right UTM source. */

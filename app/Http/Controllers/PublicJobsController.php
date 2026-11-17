@@ -37,6 +37,20 @@ class PublicJobsController extends Controller
         ]);
     }
 
+    /** Short social link: /l/158/t goes to the job page tagged utm_source=threads. */
+    public function short(int $id, ?string $platform = null)
+    {
+        $vacancy = Vacancy::findOrFail($id);
+        if ($vacancy->merged_into_id && ($target = Vacancy::find($vacancy->merged_into_id))) {
+            $vacancy = $target;
+        }
+        abort_if($vacancy->scam_flag === 'suspected' || $vacancy->status === 'archived', 404);
+        $source = \App\JobEngine\Promotion\PromoWriter::SHORT_CODES[$platform] ?? null;
+        $query = $source ? '?utm_source='.$source.'&utm_medium=social&utm_campaign=promo' : '';
+
+        return redirect(parse_url($vacancy->public_path, PHP_URL_PATH).$query, 302);
+    }
+
     public function show(string $slug)
     {
         // "{slug}-{ulid}": the id is the last 26 characters.

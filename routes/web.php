@@ -94,6 +94,9 @@ Route::get('/interviews', function () {
 Route::get('/loker', [\App\Http\Controllers\PublicJobsController::class, 'index'])->name('loker.index');
 Route::get('/loker/{slug}', [\App\Http\Controllers\PublicJobsController::class, 'show'])
     ->where('slug', '[a-z0-9-]*[0-9a-z]{26}')->name('loker.show');
+// Short links for social posts: /l/{id}/{t|i|l|x|w} redirects to the full job page with the platform's UTM tags.
+Route::get('/l/{id}/{platform?}', [\App\Http\Controllers\PublicJobsController::class, 'short'])
+    ->where(['id' => '[0-9]+', 'platform' => '[a-z]'])->name('loker.short');
 Route::get('/perusahaan/{slug}', [\App\Http\Controllers\PublicJobsController::class, 'company'])
     ->where('slug', '[a-z0-9-]+')->name('perusahaan.show');
 Route::get('/sitemap-loker.xml', [\App\Http\Controllers\PublicJobsController::class, 'sitemap'])->name('loker.sitemap');
