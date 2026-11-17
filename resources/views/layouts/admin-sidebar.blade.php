@@ -8,6 +8,8 @@
         ],
         __('Operations') => [
             ['admin.operations-center', __('Operations Center'), 'pulse', 'admin.operations-center'],
+            ['admin.job-engine', __('Mesin Data Loker'), 'gear-six', 'admin.job-engine'],
+            ['admin.golden-set', __('Golden Set Review'), 'check-square-offset', 'admin.golden-set'],
             ['admin.payments', __('Payments & plans'), 'credit-card', 'admin.payments*'],
             ['admin.email-blast', __('Email Blast'), 'envelope-simple', 'admin.email-blast*'],
             ['admin.feedbacks.index', __('User Feedback'), 'chat-circle-text', 'admin.feedbacks*'],

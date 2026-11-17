@@ -437,6 +437,8 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
 
 
     Route::view('/operations-center', 'admin.operations-center')->name('operations-center');
+    Route::view('/golden-set', 'admin.golden-set')->name('golden-set');
+    Route::view('/job-engine', 'admin.job-engine')->name('job-engine');
 
     // Monetization control
     Route::get('/monetization', function () {

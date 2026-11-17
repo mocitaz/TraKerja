@@ -10,6 +10,11 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
 
+/**
+ * @deprecated Frozen in TraKerja 2.0 Fase 0. The job-ingestion pipeline is rebuilt in Fase 2
+ *             (source adapters, cross-platform dedup, closed-job verifier) and replaces
+ *             this class. Do not extend it.
+ */
 class TargetedScraperJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;

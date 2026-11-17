@@ -9,6 +9,11 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * @deprecated Frozen in TraKerja 2.0 Fase 0. The job-ingestion pipeline is rebuilt in Fase 2
+ *             (source adapters, cross-platform dedup, closed-job verifier) and replaces
+ *             this class. Do not extend it.
+ */
 class StoreAndTagJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;

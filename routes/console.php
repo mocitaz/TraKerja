@@ -33,11 +33,20 @@ Schedule::command('jobs:archive-old-declined')
     ->timezone('Asia/Jakarta')
     ->description('Archive old job applications with Declined status or Not Processed stage');
 
-// Schedule dead-link check for job postings (Anti-Ghost Jobs)
-Schedule::command('jobs:validate-dead-links --limit=100')
-    ->dailyAt('03:00')
-    ->timezone('Asia/Jakarta')
-    ->description('Validate active job postings URLs for dead-links and footprint markers');
+// The Laravel scraper is frozen (TraKerja 2.0 Blueprint, Fase 0) until it is rebuilt in
+// Fase 2 with cross-platform dedup and a proper closed-job verifier. The old dead-link check is no longer
+// scheduled because it marks open jobs as closed when any page contains words such as
+// "closed" or "expired". Run `php artisan jobs:audit` to inspect the existing data.
+
+// Job-data engine (TraKerja 2.0). Every command is a no-op until JOB_ENGINE_SCHEDULE_ENABLED=true.
+if (config('job_sources.schedule_enabled')) {
+    Schedule::command('jobs:tick')->everyFifteenMinutes()->withoutOverlapping()
+        ->description('Queue discovery for job sources whose adaptive interval has passed');
+    Schedule::command('jobs:verify')->hourly()->withoutOverlapping(120)->runInBackground()
+        ->description('Check whether stored vacancies are still open');
+    Schedule::command('jobs:enrich --queue --limit=500')->everyThirtyMinutes()->withoutOverlapping()
+        ->description('Queue AI enrichment for new vacancies (within the daily AI budget)');
+}
 
 // Telegram Admin Channel: Daily Morning Briefing (10:00 WIB)
 Schedule::command('report:telegram-daily morning')

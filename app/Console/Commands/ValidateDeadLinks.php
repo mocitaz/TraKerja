@@ -7,6 +7,11 @@ use App\Services\DeadLinkDetector;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * @deprecated Frozen in TraKerja 2.0 Fase 0. The job-ingestion pipeline is rebuilt in Fase 2
+ *             (source adapters, cross-platform dedup, closed-job verifier) and replaces
+ *             this class. Do not extend it.
+ */
 class ValidateDeadLinks extends Command
 {
     /**
