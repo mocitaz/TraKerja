@@ -92,18 +92,32 @@ class JobEngineWatchdog extends Command
         ]]];
     }
 
-    /** Runs still "running" long after the job timeout: the worker died mid-run. */
+    /**
+     * Runs still "running" well past the job timeout (900 s): the worker died mid-run and nothing will ever finish
+     * them. Close them as failed (so they stop counting as open) and report them once, not as an open problem.
+     */
     private function stuckRuns(): array
     {
         $stuck = CrawlRun::with('source')->where('status', 'running')->where('started_at', '<', now()->subMinutes(30))->get();
         if ($stuck->isEmpty()) {
             return [];
         }
+        $list = $stuck->map(fn ($r) => ($r->source?->name ?? 'all sources').' #'.$r->id.' since '.$r->started_at->timezone('Asia/Jakarta')->format('d M, H:i'))->implode(', ');
+        if ($this->option('print')) {
+            return ['stuck_runs' => [EngineAlerts::WARNING, "{$stuck->count()} scraper run(s) stuck in \"running\" (closed as failed on the next scheduled check)", ['Runs' => $list]]];
+        }
 
-        return ['stuck_runs' => [EngineAlerts::WARNING, "{$stuck->count()} scraper run(s) stuck in \"running\"", [
-            'Runs' => $stuck->map(fn ($r) => ($r->source?->name ?? 'all sources').' #'.$r->id.' since '.$r->started_at->timezone('Asia/Jakarta')->format('H:i'))->implode(', '),
+        CrawlRun::whereKey($stuck->pluck('id'))->update([
+            'status' => 'failed', 'finished_at' => now(),
+            'error_summary' => 'Closed by the watchdog: the worker stopped before the run finished (timeout, restart or crash).',
+        ]);
+        app(EngineAlerts::class)->notify(EngineAlerts::INFO, "{$stuck->count()} interrupted scraper run(s) closed as failed", [
+            'Runs' => $list,
             'Likely cause' => 'the worker was killed or restarted during the run',
-        ]]];
+            'Next' => 'each source is retried on its next scheduled discovery',
+        ]);
+
+        return [];
     }
 
     /** Active sources without a successful discovery for a day, even if no error was raised. */

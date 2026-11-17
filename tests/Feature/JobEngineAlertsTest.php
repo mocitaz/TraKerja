@@ -54,6 +54,22 @@ class JobEngineAlertsTest extends TestCase
         $this->assertSame([], app(EngineAlerts::class)->openKeys());
     }
 
+    public function test_watchdog_closes_runs_left_running_by_a_dead_worker(): void
+    {
+        $source = JobSource::create(['slug' => 'workable', 'name' => 'Workable', 'kind' => 'ats', 'tier' => 1, 'is_active' => true, 'health' => 'ok']);
+        $old = \App\Models\CrawlRun::create(['job_source_id' => $source->id, 'run_type' => 'discover', 'trigger' => 'schedule', 'status' => 'running', 'started_at' => now()->subHours(13)]);
+        $live = \App\Models\CrawlRun::create(['job_source_id' => $source->id, 'run_type' => 'discover', 'trigger' => 'schedule', 'status' => 'running', 'started_at' => now()->subMinutes(5)]);
+
+        $this->artisan('jobs:watchdog --print')->expectsOutputToContain('stuck in "running"')->assertSuccessful();
+        $this->assertSame('running', $old->fresh()->status, '--print changes nothing');
+
+        $this->artisan('jobs:watchdog')->expectsOutput('All clear.')->assertSuccessful();
+        $this->assertSame('failed', $old->fresh()->status);
+        $this->assertNotNull($old->fresh()->finished_at);
+        $this->assertSame('running', $live->fresh()->status, 'a run inside the job timeout is left alone');
+        $this->assertSame([], app(EngineAlerts::class)->openKeys(), 'reported once, not kept open');
+    }
+
     public function test_watchdog_flags_a_rejected_openai_key(): void
     {
         foreach (range(1, 3) as $i) {
